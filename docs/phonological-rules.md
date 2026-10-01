@@ -8,7 +8,7 @@ Implemented core rules:
 
 Planned evidence-gated rules:
 
-- ห นำ and other class-changing constructions;
+- broader ห นำ and class-changing constructions beyond the implemented leading ห + low-single rule;
 - assimilation;
 - resyllabification;
 - connected-speech reduction;
