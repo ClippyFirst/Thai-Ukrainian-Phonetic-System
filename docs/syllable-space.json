@@ -1,0 +1,11 @@
+{
+  "initial_grapheme_options": 44,
+  "vowel_records": 26,
+  "coda_grapheme_options": 39,
+  "tone_mark_states": 5,
+  "open_syllable_structural_upper_bound": 5720,
+  "closed_syllable_structural_upper_bound": 223080,
+  "combined_upper_bound": 228800,
+  "status": "structural-combinatorial-space",
+  "warning": "These counts are not counts of valid Thai syllables, lexical forms, or corpus-attested forms."
+}
