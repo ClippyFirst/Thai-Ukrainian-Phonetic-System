@@ -1,5 +1,6 @@
 from __future__ import annotations
 import unicodedata
+import re
 
 TONE_MARKS={"่":"mai_ek","้":"mai_tho","๊":"mai_tri","๋":"mai_chattawa"}
 TONE_CHARS=set(TONE_MARKS)
@@ -61,19 +62,20 @@ def detect_vowel(text:str):
     # Resolve multi-sign vowel sequences before single-sign signatures.
     # Thai preposed/surrounding spelling can otherwise cause a shorter vowel
     # such as เ- to win before เ-ีย / เ-ือ / related sequences.
-    x="".join(c for c in s if not (0x0E01<=ord(c)<=0x0E2E))
+    consonants = "กขฃคฅฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮ"
+    c = f"[{re.escape(consonants)}]"
     sequence_patterns=[
-        ("เ"+"ี"+"ยะ","ia","short","V-19"),("เ"+"ี"+"ย","iaː","long","V-20"),
-        ("เ"+"ื"+"อะ","ɯa","short","V-21"),("เ"+"ื"+"อ","ɯaː","long","V-22"),
-        ("เ"+"อ"+"ะ","ɤ","short","V-09"),("เ"+"อ","ɤː","long","V-10"),
-        ("เ"+"าะ","ɔ","short","V-17"),("เ"+"า","aw","short","V-X-AW-S"),
-        ("เ"+"ะ","e","short","V-03"),("เ","eː","long","V-04"),
-        ("แ"+"ะ","ɛ","short","V-05"),("แ","ɛː","long","V-06"),
-        ("โ"+"ะ","o","short","V-15"),("โ","oː","long","V-16"),
+        (rf"เ{c}ียะ","ia","short","V-19"), (rf"เ{c}ีย","iaː","long","V-20"),
+        (rf"เ{c}ือะ","ɯa","short","V-21"), (rf"เ{c}ือ","ɯaː","long","V-22"),
+        (rf"เ{c}อะ","ɤ","short","V-09"), (rf"เ{c}อ","ɤː","long","V-10"),
+        (rf"เ{c}าะ","ɔ","short","V-17"), (rf"เ{c}า","aw","short","V-X-AW-S"),
+        (rf"เ{c}ะ","e","short","V-03"), (rf"เ{c}","eː","long","V-04"),
+        (rf"แ{c}ะ","ɛ","short","V-05"), (rf"แ{c}","ɛː","long","V-06"),
+        (rf"โ{c}ะ","o","short","V-15"), (rf"โ{c}","oː","long","V-16"),
     ]
-    for pat,ipa,length,vid in sequence_patterns:
-        if pat in x:
-            return {"pattern":pat,"ipa":ipa,"length":length,"id":vid,"explicit":True,"terminal_glide":"w" if vid=="V-X-AW-S" else None}
+    for pattern,ipa,length,vid in sequence_patterns:
+        if re.search(pattern, s):
+            return {"pattern":pattern,"ipa":ipa,"length":length,"id":vid,"explicit":True,"terminal_glide":"w" if vid=="V-X-AW-S" else None}
     for pattern in sorted(VOWEL_SIGNATURES,key=len,reverse=True):
         if pattern in s:
             ipa,length,vid=VOWEL_SIGNATURES[pattern]
