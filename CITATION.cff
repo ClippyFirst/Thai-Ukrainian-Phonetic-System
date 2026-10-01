@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+title: "Thai → Ukrainian Phonetic-Graphemic Correspondence System"
+type: software
+message: "If you use this research software, please cite it."
+authors:
+  - family-names: Tkachuk
+    given-names: Vitalii
+version: 0.3.0
+date-released: 2026-10-01
+repository-code: "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System"
+license: MIT
+keywords:
+  - Thai
+  - Ukrainian
+  - phonetics
+  - phonology
+  - graphemics
+  - transliteration
+  - IPA
+  - corpus validation
