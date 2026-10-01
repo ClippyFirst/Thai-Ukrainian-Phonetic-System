@@ -49,6 +49,14 @@ class CoreTests(unittest.TestCase):
         self.assertEqual({r["thai_grapheme"] for r in rows},consonants)
         self.assertEqual(len(rows),len(consonants))
 
+    def test_coda_registry_boolean_count(self):
+        import csv
+        from pathlib import Path
+        root=Path(__file__).resolve().parents[1]
+        with (root/"data"/"thai"/"consonants.csv").open(encoding="utf-8",newline="") as f:
+            rows=list(csv.DictReader(f))
+        self.assertEqual(sum(r["coda_allowed"].strip().lower()=="true" for r in rows),38)
+
     def test_open_long_is_live(self):
         self.assertEqual(parse_syllable("กา").live_dead,"live")
 
