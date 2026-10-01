@@ -1,22 +1,45 @@
-thai_ipa,ua_candidate,distance,dimension,status
-p,p,0,segmental,seed
-pʰ,p,1,segmental,heuristic
-t,t,0,segmental,seed
-tʰ,t,1,segmental,heuristic
-k,k,0,segmental,seed
-kʰ,k,1,segmental,heuristic
-b,b,0,segmental,seed
-d,d,0,segmental,seed
-tɕ,tʃ,1,segmental,heuristic
-tɕʰ,tʃ,2,segmental,heuristic
-m,m,0,segmental,seed
-n,n,0,segmental,seed
-ŋ,UNRESOLVED,99,segmental,unresolved
-f,f,0,segmental,seed
-s,s,0,segmental,seed
-h,h,0,segmental,seed
-w,w,0,segmental,seed
-j,j,0,segmental,seed
-r,r,0,segmental,seed
-l,l,0,segmental,seed
-ʔ,UNRESOLVED,99,segmental,unresolved
+thai_grapheme,thai_class,onset_ipa,coda_ipa,ua_approx_onset,ua_approx_coda,ua_candidate_onset,ua_candidate_coda,correspondence_type,status,notes
+ก,mid,k,k,к,к,к,к,grapheme_to_segment,seed,
+ข,high,kʰ,k,к,к,к,к,grapheme_to_segment,heuristic,aspiration is not represented by a separate Ukrainian letter
+ฃ,high,kʰ,k,к,к,к,к,grapheme_to_segment,heuristic,obsolete Thai grapheme
+ค,low,kʰ,k,к,к,к,к,grapheme_to_segment,heuristic,
+ฅ,low,kʰ,k,к,к,к,к,grapheme_to_segment,heuristic,obsolete Thai grapheme
+ฆ,low,kʰ,k,к,к,к,к,grapheme_to_segment,heuristic,
+ง,low,ŋ,ŋ,н,н,н,н,grapheme_to_segment,heuristic,Ukrainian н is an approximate orthographic/phonetic substitute; it is not identical to Thai ŋ
+จ,mid,tɕ,t,ч,т,ч,т,grapheme_to_segment,heuristic,
+ฉ,high,tɕʰ,,ч,,ч,,grapheme_to_segment,heuristic,no productive final realization in the standard inventory
+ช,low,tɕʰ,t,ч,т,ч,т,grapheme_to_segment,heuristic,
+ซ,low,s,t,с,т,с,т,grapheme_to_segment,seed,
+ฌ,low,tɕʰ,t,ч,т,ч,т,grapheme_to_segment,heuristic,
+ญ,low,j,n,й,н,й,н,grapheme_to_segment,heuristic,
+ฎ,mid,d,t,д,т,д,т,grapheme_to_segment,seed,
+ฏ,mid,t,t,т,т,т,т,grapheme_to_segment,seed,
+ฐ,high,tʰ,t,т,т,т,т,grapheme_to_segment,heuristic,
+ฑ,low,tʰ,t,т,т,т,т,grapheme_to_segment,heuristic,
+ฒ,low,tʰ,t,т,т,т,т,grapheme_to_segment,heuristic,
+ณ,low,n,n,н,н,н,н,grapheme_to_segment,seed,
+ด,mid,d,t,д,т,д,т,grapheme_to_segment,seed,Thai final /t/ is neutralized
+ต,mid,t,t,т,т,т,т,grapheme_to_segment,seed,
+ถ,high,tʰ,t,т,т,т,т,grapheme_to_segment,heuristic,
+ท,low,tʰ,t,т,т,т,т,grapheme_to_segment,heuristic,
+ธ,low,tʰ,t,т,т,т,т,grapheme_to_segment,heuristic,
+น,low,n,n,н,н,н,н,grapheme_to_segment,seed,
+บ,mid,b,p,б,п,б,п,grapheme_to_segment,seed,Thai final /p/ is neutralized
+ป,mid,p,p,п,п,п,п,grapheme_to_segment,seed,
+ผ,high,pʰ,,п,,п,,grapheme_to_segment,heuristic,no productive final realization in the standard inventory
+ฝ,high,f,,ф,,ф,,grapheme_to_segment,seed,no productive final realization in the standard inventory
+พ,low,pʰ,p,п,п,п,п,grapheme_to_segment,heuristic,
+ฟ,low,f,p,ф,п,ф,п,grapheme_to_segment,seed,Thai final /p/ is neutralized
+ภ,low,pʰ,p,п,п,п,п,grapheme_to_segment,heuristic,
+ม,low,m,m,м,м,м,м,grapheme_to_segment,seed,
+ย,low,j,j,й,й,й,й,grapheme_to_segment,heuristic,
+ร,low,r,n,р,н,р,н,grapheme_to_segment,seed,Thai final /r/ is neutralized to /n/
+ล,low,l,n,л,н,л,н,grapheme_to_segment,seed,Thai final /l/ is neutralized to /n/
+ว,low,w,w,в,в,в,в,grapheme_to_segment,heuristic,Ukrainian в is an approximation to Thai /w/, not an identity
+ศ,high,s,t,с,т,с,т,grapheme_to_segment,seed,
+ษ,high,s,t,с,т,с,т,grapheme_to_segment,seed,
+ส,high,s,t,с,т,с,т,grapheme_to_segment,seed,
+ห,high,h,,г,,г,,grapheme_to_segment,heuristic,Ukrainian г /ɦ/ is only an approximate target for Thai /h/
+ฬ,low,l,n,л,н,л,н,grapheme_to_segment,seed,
+อ,mid,ʔ,,∅,,∅,,grapheme_to_segment,heuristic,glottal stop/carrier; ∅ means no independent Ukrainian consonant letter
+ฮ,low,h,,г,,г,,grapheme_to_segment,heuristic,Ukrainian г /ɦ/ is only an approximate target for Thai /h/
