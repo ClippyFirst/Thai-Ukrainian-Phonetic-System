@@ -1,17 +1,8 @@
 {
-  "consonant_graphemes": 44,
-  "vowel_records": 24,
-  "tone_marks_including_null": 5,
-  "tone_categories": 5,
-  "formal_tone_rules": 15,
-  "provenance_sources": 4,
-  "phonotactic_records": 4,
-  "correspondence_records": 21,
-  "validated_examples": 12,
-  "test_files": 3,
-  "generated_syllable_structures": "not yet generated",
-  "lexically_attested_forms": "not yet measured",
-  "repository_tree_entries_at_audit": 50,
-  "status": "research-foundation",
-  "ci_status_at_audit": "queued; result not yet verified"
+  "release":"0.2.0",
+  "status":"research-foundation",
+  "implemented":["orthography","syllable_structure","tone","broad_ipa","ukrainian_feature_candidates","evidence_registry","combinatorial_accounting","validation_protocol"],
+  "not_claimed":["complete_lexical_segmentation","complete_special_orthography","connected_speech","corpus_accuracy","calibrated_probability","universal_ukrainian_orthography"],
+  "lexical_attestation":"not measured",
+  "corpus_attestation":"not measured"
 }
