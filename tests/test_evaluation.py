@@ -37,5 +37,19 @@ class EvaluationTests(unittest.TestCase):
         self.assertIsNone(r["tone_accuracy"])
 
 
+(unittest.TestCase):
+    def test_cli_emits_machine_readable_metrics(self):
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / "gold.jsonl"
+            p.write_text(json.dumps({"id":"x1","thai":"กา","ipa":"kaː","tone":"mid","source":"fixture"}, ensure_ascii=False)+"\n", encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, "scripts/evaluate_corpus.py", str(p)],
+                capture_output=True, text=True, check=False
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            payload = json.loads(result.stdout)
+            self.assertEqual(payload["ipa_exact_accuracy"], 1.0)
+            self.assertEqual(payload["tone_accuracy"], 1.0)
+
 if __name__ == "__main__":
     unittest.main()
