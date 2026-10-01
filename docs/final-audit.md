@@ -4,7 +4,7 @@
 
 **v0.4.0 — research-ready positional model.**
 
-The repository is designed as a coherent research software foundation: source tables are separated from derived artifacts, the transformation layers are explicit, and validation is deterministic. The latest HEAD has a successful GitHub Actions CI run.
+The repository is designed as a coherent research software foundation: source tables are separated from derived artifacts, the transformation layers are explicit, and validation is deterministic. The previous HEAD has a successful GitHub Actions CI run; the current malformed-syllable hardening commit requires a fresh run.
 
 ## Gate A — structural reproducibility
 
@@ -74,7 +74,7 @@ A clean checkout is release-ready when:
 4. schemas and documentation agree with the implementation;
 5. no empirical claim exceeds the evidence actually processed.
 
-A previous CI run completed successfully before the latest adversarial hardening. The current HEAD is CI-verified by GitHub Actions run 156; the successful run covered regeneration checks and the full 44-test suite.
+A previous CI run completed successfully before the latest adversarial hardening. The previous audited HEAD was CI-verified by GitHub Actions run 158. The current HEAD adds malformed-syllable adversarial probes and therefore requires a fresh CI run before that new HEAD is called CI-verified.
 
 ## What would change the status
 
@@ -111,3 +111,8 @@ A further parser audit identified a higher-risk false-positive class: treating e
 
 Current HEAD: `812334f23eae12150b3dd517b0f3110490722283`.
 GitHub Actions run **156** completed successfully. The workflow regenerated the derived artifacts without diff and completed the full test suite (**44 tests**).
+
+
+## Adversarial audit extension — malformed syllable surfaces
+
+The parser audit identified another false-positive class: a detector could select one vowel/rime pattern and silently ignore additional vowel signs, additional syllabic material, repeated tone marks, or unsupported symbols. The parser now requires the detected vowel/rime match to consume all vowel-sign material in the supplied syllable surface, rejects multiple tone marks, and rejects unsupported symbols instead of silently discarding them. Regression probes cover repeated vowel signs, concatenated syllable-like material such as `กาเก` and `กากา`, repeated tone marks, ASCII punctuation and Thai repetition mark `ๆ`. These cases are treated as unresolved input rather than assigned invented phonology.
