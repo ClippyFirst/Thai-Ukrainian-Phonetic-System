@@ -2,7 +2,7 @@
 
 ## Release
 
-**v0.3.0 — research-ready foundation.**
+**v0.4.0 — research-ready positional model.**
 
 The repository is internally coherent as a research software foundation: source tables are separated from derived artifacts, the transformation layers are explicit, validation is deterministic, and CI verifies generated state.
 
@@ -79,3 +79,8 @@ The current CI run for commit 3e2617418e8b4423700866d4c675ec24f0fe5e27 completed
 ## What would change the status
 
 The next status transition is **empirically validated**, not merely “more complete”. It requires an actually processed, named/versioned gold corpus and published error analysis. After that, special orthography, lexical segmentation, connected speech and expert-adjudicated Ukrainian realizations can be evaluated as separate coverage expansions.
+
+
+## Positional completion — 2026-10-01
+
+The release now includes an explicit word model with syllable index, total count, and standalone/initial/medial/final position metadata. Automatic Thai segmentation is intentionally not inferred without lexical or corpus evidence. Positional metadata is kept separate from phonological rules.
