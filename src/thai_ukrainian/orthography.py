@@ -75,7 +75,7 @@ def detect_vowel(text:str):
     ]
     for pattern,ipa,length,vid in sequence_patterns:
         if re.search(pattern, s):
-            return {"pattern":pattern,"ipa":ipa,"length":length,"id":vid,"explicit":True,"terminal_glide":"w" if vid=="V-X-AW-S" else None}
+            return {"pattern":pattern,"ipa":ipa,"length":length,"id":vid,"explicit":True,"terminal_glide":("j" if vid in {"V-19","V-20"} else ("w" if vid=="V-X-AW-S" else None))}
     for pattern in sorted(VOWEL_SIGNATURES,key=len,reverse=True):
         if pattern in s:
             ipa,length,vid=VOWEL_SIGNATURES[pattern]
