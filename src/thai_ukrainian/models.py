@@ -57,3 +57,49 @@ class SyllableAnalysis:
         d["tone"]=None if self.tone is None else self.tone.__dict__
         d["ukrainian_candidates"]=[x.__dict__ for x in self.ukrainian_candidates]
         return d
+
+@dataclass(frozen=True)
+class SyllablePosition:
+    index: int
+    total: int
+    label: str
+
+    @property
+    def is_initial(self) -> bool:
+        return self.label in {"standalone", "initial"}
+
+    @property
+    def is_final(self) -> bool:
+        return self.label in {"standalone", "final"}
+
+@dataclass
+class WordAnalysis:
+    input: str
+    syllables: list[SyllableAnalysis] = field(default_factory=list)
+    positions: list[SyllablePosition] = field(default_factory=list)
+    segmentation_status: str = "explicit"
+    warnings: list[str] = field(default_factory=list)
+    status: str = "analyzed"
+
+    @property
+    def phonemic_ipa(self) -> str:
+        return ".".join(a.phonemic_ipa or "?" for a in self.syllables)
+
+    @property
+    def phonetic_ipa(self) -> str:
+        return ".".join(a.phonetic_ipa or "?" for a in self.syllables)
+
+    def as_dict(self) -> dict[str, Any]:
+        return {
+            "input": self.input,
+            "segmentation_status": self.segmentation_status,
+            "status": self.status,
+            "syllables": [
+                {"position": {"index": p.index, "total": p.total, "label": p.label},
+                 "analysis": a.as_dict()}
+                for a, p in zip(self.syllables, self.positions)
+            ],
+            "phonemic_ipa": self.phonemic_ipa,
+            "phonetic_ipa": self.phonetic_ipa,
+            "warnings": self.warnings,
+        }
