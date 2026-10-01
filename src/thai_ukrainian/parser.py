@@ -1,7 +1,8 @@
 from __future__ import annotations
+import re
 from .models import SyllableAnalysis
 from .inventory import load_consonants
-from .orthography import normalize_thai,tone_mark,detect_vowel,decompose_thai
+from .orthography import normalize_thai,tone_mark,detect_vowel,decompose_thai,TONE_CHARS
 
 SHORT_CODA={"p","t","k","ʔ"}
 SONORANT_CODA={"m","n","ŋ","j","w"}
@@ -9,8 +10,18 @@ TRUE_CLUSTER_FIRST={"ก","ข","ค","ต","ป","ผ","พ"}
 TRUE_CLUSTER_SECOND={"ร","ล","ว"}
 LEADING_H_FIRST={"ห"}
 LEADING_H_SECOND={"ง","ญ","น","ม","ย","ร","ล","ว"}
+VOWEL_SIGN_CHARS=set("ะาิีึืุูเแโใไำั็")
+SUPPORTED_SPECIAL_CHARS={"์"}
 
 def _consonants(s,inv):return [c for c in s if c in inv]
+
+def _surface_residual_vowel_signs(s, vowel):
+    cleaned="".join(c for c in s if c not in TONE_CHARS)
+    matched=vowel.get("matched_text","")
+    if not matched:
+        return [c for c in cleaned if c in VOWEL_SIGN_CHARS]
+    residual=cleaned.replace(matched,"",1)
+    return [c for c in residual if c in VOWEL_SIGN_CHARS]
 
 def _is_valid_complex_onset(onset):
     if len(onset)!=2:return True
@@ -45,9 +56,25 @@ def _split_onset_coda(s,inv,vowel):
     return cs,None
 
 def parse_syllable(syllable:str)->SyllableAnalysis:
-    s=normalize_thai(syllable);inv=load_consonants();cs=_consonants(s,inv)
+    s=normalize_thai(s);inv=load_consonants();cs=_consonants(s,inv)
+    allowed=set(inv)|TONE_CHARS|VOWEL_SIGN_CHARS|SUPPORTED_SPECIAL_CHARS
+    unsupported=[c for c in s if c not in allowed]
+    if unsupported:
+        return SyllableAnalysis(syllable,s,grapheme_order=[x["char"] for x in decompose_thai(s)],
+            status="unresolved:unsupported-symbol",
+            warnings=[f"Unsupported symbol(s) in syllable: {''.join(dict.fromkeys(unsupported))}"])
+    if len([c for c in s if c in TONE_CHARS])>1:
+        return SyllableAnalysis(syllable,s,grapheme_order=[x["char"] for x in decompose_thai(s)],
+            status="unresolved:multiple-tone-marks",
+            warnings=["More than one Thai tone mark occurs in a single supplied syllable; tone cannot be inferred deterministically."])
     if not cs:return SyllableAnalysis(syllable,s,status="unresolved:no-onset",warnings=["No Thai consonant grapheme detected."])
-    v=detect_vowel(s);onset,coda=_split_onset_coda(s,inv,v)
+    v=detect_vowel(s)
+    residual_vowels=_surface_residual_vowel_signs(s,v)
+    if residual_vowels:
+        return SyllableAnalysis(syllable,s,grapheme_order=[x["char"] for x in decompose_thai(s)],
+            onset=cs[:1],onset_class=inv[cs[0]].class_,status="unresolved:multiple-vowel-signs",
+            warnings=[f"Unconsumed vowel sign(s) remain outside the detected vowel/rime pattern: {''.join(residual_vowels)}"])
+    onset,coda=_split_onset_coda(s,inv,v)
     first=inv[onset[0]]
     coda_ipa=inv[coda].coda_ipa if coda else None
     warnings=[]
