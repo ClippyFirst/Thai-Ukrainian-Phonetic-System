@@ -16,7 +16,7 @@ The repository is internally coherent as a research software foundation: source 
 - Live/dead classification is explicit.
 - Generated audit and syllable-space artifacts are checked by CI.
 - Unicode and malformed-input regression tests exist.
-- The test suite passes in GitHub Actions.
+- The repository has a regression suite including adversarial probes; the latest post-audit commits still require a fresh GitHub Actions run before CI-passed status can be asserted.
 
 ## Gate B — linguistic transparency
 
@@ -74,7 +74,7 @@ A clean checkout is release-ready when:
 4. schemas and documentation agree with the implementation;
 5. no empirical claim exceeds the evidence actually processed.
 
-The current CI run for commit 3e2617418e8b4423700866d4c675ec24f0fe5e27 completed successfully; the repository test suite reported 26 passing tests.
+A previous CI run completed successfully before the latest adversarial hardening. The current release must not claim that older run as validation of the newer commits.
 
 ## What would change the status
 
@@ -84,3 +84,12 @@ The next status transition is **empirically validated**, not merely “more comp
 ## Positional completion — 2026-10-01
 
 The release now includes an explicit word model with syllable index, total count, and standalone/initial/medial/final position metadata. Automatic Thai segmentation is intentionally not inferred without lexical or corpus evidence. Positional metadata is kept separate from phonological rules.
+
+
+## Adversarial audit — 2026-10-01
+
+The review found and repaired three material parser hazards: generic preposed-vowel rules could shadow longer glide/rime patterns; terminal glides could be counted again as codas after a contextual vowel match; and unsupported implicit vowels were previously defaulted to /a/. The current model instead withholds IPA for unresolved implicit-vowel cases. Invalid tone combinations are surfaced as structured invalid input rather than crashing the general analysis API.
+
+Regression probes now cover `กา`, `กาน`, `กรา`, `ก`, `คน`, `เกะ`, `เก`, `เกีย`, `เกา`, `เกียว`, `แล้ว`, `เร็ว`, `เลย`, `ขาย`, `หงา`, and invalid `ก๊`, plus correspondence-table coverage and word-position tests.
+
+Special orthography (`รร`, silent letters, `ฤ/ฦ` and related morphology-dependent cases), automatic lexical segmentation, connected speech, and empirical corpus accuracy remain explicitly unclaimed.
