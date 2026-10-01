@@ -15,7 +15,7 @@
   "scope_notes": {
     "lexical_attestation": "not measured: no Thai lexicon/corpus is bundled",
     "corpus_attestation": "not measured: no corpus is bundled",
-    "syllable_generation": "structural upper bounds only",
+    "syllable_generation": "not yet claimed as lexical evidence",
     "target_inventory": "external Ukrainian-Phonetic-Inventory; reproducible feature snapshot is stored locally"
   }
 }
