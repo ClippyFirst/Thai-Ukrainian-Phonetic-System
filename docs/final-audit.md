@@ -56,11 +56,11 @@ The generated structural syllable-space report currently gives:
 
 - initial grapheme options: 44;
 - vowel records: 26;
-- structural coda options: 44;
+- structural coda grapheme options: 38;
 - tone-mark states: 5;
-- open-syllable structural upper bound: 5,720;
-- closed-syllable structural upper bound: 251,680;
-- combined structural upper bound: 257,400.
+- open-syllable structural upper bound: 8,800;
+- closed-syllable structural upper bound: 334,400;
+- combined structural upper bound: 343,200.
 
 These are **combinatorial upper bounds over declared records**, not counts of valid Thai syllables, lexical forms or corpus-attested forms.
 
@@ -93,3 +93,10 @@ The review found and repaired three material parser hazards: generic preposed-vo
 Regression probes now cover `กา`, `กาน`, `กรา`, `ก`, `คน`, `เกะ`, `เก`, `เกีย`, `เกา`, `เกียว`, `แล้ว`, `เร็ว`, `เลย`, `ขาย`, `หงา`, and invalid `ข๊า`, plus correspondence-table coverage and word-position tests.
 
 Special orthography (`รร`, silent letters, `ฤ/ฦ` and related morphology-dependent cases), automatic lexical segmentation, connected speech, and empirical corpus accuracy remain explicitly unclaimed.
+
+
+## Adversarial audit extension — cluster tone and source-model consistency
+
+The second audit pass found and repaired two additional consistency hazards: the parser recognized 14 glide/rime IDs that were absent from `data/thai/vowels.csv`, and the first written onset class was being reused as the tone-bearing class for every multi-consonant onset. The source registry now declares all parser-recognized glide/rime IDs, and `SyllableAnalysis` carries a separate `tone_class`. For multi-consonant onsets, the current rule uses the first consonant when the second is sonorant and the second consonant when it is non-sonorant; leading-`ห` behaviour remains explicitly represented. This follows the documented Thai cluster-tone distinction in the reference literature. 
+
+The carrier `อ` is no longer licensed as a final coda in the core consonant inventory; its onset role remains the glottal-stop/carrier role. A regression test now prevents it from silently passing as a legal coda.
