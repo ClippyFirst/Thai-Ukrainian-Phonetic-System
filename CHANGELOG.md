@@ -12,6 +12,8 @@
 - Declared all parser-recognized glide/rime IDs in the machine-readable vowel registry.
 - Added a separate tone-bearing consonant class for cluster tone calculation.
 - Removed final-coda licensing from carrier `อ` and added a regression guard.
+- Restricted complex-onset parsing to structurally licensed Thai onset patterns; arbitrary adjacent consonants are now unresolved instead of being forced into a cluster.
+- Added adversarial coverage for a licensed cluster (`กล้า`) and a nonconforming sequence (`แสดง`).
 
 - Added explicit word analysis with syllable positions: standalone, initial, medial, final.
 - Added positional regression tests.
