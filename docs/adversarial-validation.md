@@ -18,7 +18,7 @@ This document records deliberately difficult Thai inputs used to test failure mo
 | `เลย` | /ɤːj/ is recognized and ย is not duplicated as a coda |
 | `ขาย` | /aːj/ nucleus; ย is not treated as coda |
 | `หงา` | ห นำ changes effective onset while retaining high-class tone environment |
-| `ก๊` | invalid tone-mark/class combination is represented as structured invalid input, not a crash |
+| `ข๊า` | invalid high-class + mai tri combination is represented as structured invalid input, not a crash |
 | `รร` forms | warning/unresolved pathway rather than silent universal guessing |
 | thanthakhat forms | warning/unresolved pathway rather than silent universal guessing |
 
