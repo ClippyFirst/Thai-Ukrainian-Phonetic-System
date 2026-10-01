@@ -19,6 +19,8 @@ This document records deliberately difficult Thai inputs used to test failure mo
 | `ขาย` | /aːj/ nucleus; ย is not treated as coda |
 | `หงา` | ห นำ changes effective onset while retaining high-class tone environment |
 | `ข๊า` | invalid high-class + mai tri combination is represented as structured invalid input, not a crash |
+| `แสดง` | multi-consonant onset keeps first written class separate from the tone-bearing class; second non-sonorant class is used for tone | 
+| `กาอ` | carrier `อ` is not silently accepted as a final coda |
 | `รร` forms | warning/unresolved pathway rather than silent universal guessing |
 | thanthakhat forms | warning/unresolved pathway rather than silent universal guessing |
 
@@ -30,5 +32,7 @@ This document records deliberately difficult Thai inputs used to test failure mo
 4. **Cluster/coda separation** — consonant sequences are not classified solely by their Unicode order.
 5. **Tone robustness** — invalid combinations must be surfaced as data errors without crashing the general analysis API.
 6. **Contextual orthography** — ห นำ is treated as an explicit transformation, not ordinary segment concatenation.
+7. **Tone-bearing class separation** — onset spelling class and tone-calculation class are distinct data fields.
+8. **Source-model consistency** — parser-recognized vowel/rime IDs must exist in the machine-readable vowel registry.
 
 These probes do not establish empirical accuracy. A corpus benchmark still requires an external, named and versioned gold resource.
