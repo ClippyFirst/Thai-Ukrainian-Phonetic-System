@@ -55,7 +55,7 @@ def _split_onset_coda(s,inv,vowel):
     return cs,None
 
 def parse_syllable(syllable:str)->SyllableAnalysis:
-    s=normalize_thai(s);inv=load_consonants();cs=_consonants(s,inv)
+    s=normalize_thai(syllable);inv=load_consonants();cs=_consonants(s,inv)
     allowed=set(inv)|TONE_CHARS|VOWEL_SIGN_CHARS|SUPPORTED_SPECIAL_CHARS
     unsupported=[c for c in s if c not in allowed]
     if unsupported:
