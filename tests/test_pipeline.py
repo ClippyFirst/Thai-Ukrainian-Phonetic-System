@@ -50,12 +50,18 @@ class PipelineTests(unittest.TestCase):
 
     def test_hnam(self):
         a=analyze_syllable("หงา"); self.assertEqual(a.tone.tone,"rising"); self.assertEqual(a.tone_class,"high"); self.assertEqual(a.phonemic_ipa,"ŋaː"); self.assertIn("ORTH-H-NAM",a.rules_applied)
-    def test_nonsonorant_cluster_uses_second_tone_class(self):
-        a=analyze_syllable("แสดง")
-        self.assertEqual(a.onset,["ส","ด"])
-        self.assertEqual(a.onset_class,"high")
+    def test_true_cluster_is_structurally_licensed(self):
+        a=analyze_syllable("กล้า")
+        self.assertEqual(a.onset,["ก","ล"])
+        self.assertEqual(a.onset_class,"mid")
         self.assertEqual(a.tone_class,"mid")
-        self.assertEqual(a.tone.tone,"mid")
+        self.assertEqual(a.tone.tone,"falling")
+
+    def test_nonconforming_consonant_sequence_is_not_forced_into_cluster(self):
+        a=analyze_syllable("แสดง")
+        self.assertEqual(a.status,"unresolved:nonconforming-consonant-sequence")
+        self.assertTrue(a.warnings)
+        self.assertIsNone(a.phonemic_ipa)
 
     def test_glide_inventory_is_machine_declared(self):
         self.assertIsNotNone(parse_syllable("เกียว").vowel_id)
