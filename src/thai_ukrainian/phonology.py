@@ -16,7 +16,12 @@ def effective_onset(a:SyllableAnalysis)->list[str]:
 
 def phonologize(a:SyllableAnalysis)->SyllableAnalysis:
     onset=effective_onset(a)
-    a.phonemic_ipa="".join(ONSET_IPA.get(c,"?") for c in onset)+(a.vowel or "")+(a.coda_ipa or "")
+    if a.vowel is None:
+        a.phonemic_ipa=None
+        a.warnings.append("Phonemic IPA withheld because the vowel is unresolved.")
+        a.rules_applied.append("PHON-SEGMENTAL-COMPOSITION-WITHHELD")
+        return a
+    a.phonemic_ipa="".join(ONSET_IPA.get(c,"?") for c in onset)+(a.vowel)+(a.coda_ipa or "")
     a.rules_applied.append("PHON-SEGMENTAL-COMPOSITION")
     return a
 
