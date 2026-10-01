@@ -1,0 +1,7 @@
+claim_id,domain,claim,status,evidence_ids
+CLM-CONSONANT-44,orthography,Thai traditional consonant-letter inventory contains 44 letters,core,SRC-ORST
+CLM-TONE-5,phonology,Standard Thai has five lexical tones,core,SRC-JIPA-1993
+CLM-FINAL-9,phonology,Core final consonant phonemes are represented by nine categories including glides and glottal stop,core,SRC-JIPA-1993
+CLM-ORTHO-PHONO,methodology,Thai orthographic order is not identical to phonological constituent order,core,SRC-ORST
+CLM-HNAM,orthography,ห นำ can change the effective consonant-class environment and requires lexical/contextual analysis,analysis-dependent,SRC-ORST
+CLM-CLUSTERS,phonotactics,Thai written consonant sequences may represent true clusters, leading consonants, or separate syllables,analysis-dependent,SRC-ORST
