@@ -1,5 +1,4 @@
 from __future__ import annotations
-import re
 from .models import SyllableAnalysis
 from .inventory import load_consonants
 from .orthography import normalize_thai,tone_mark,detect_vowel,decompose_thai,TONE_CHARS
