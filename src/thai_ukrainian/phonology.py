@@ -6,9 +6,17 @@ ONSET_IPA={
 "ฎ":"d","ฏ":"t","ฐ":"tʰ","ฑ":"tʰ","ฒ":"tʰ","ณ":"n","ด":"d","ต":"t","ถ":"tʰ","ท":"tʰ","ธ":"tʰ","น":"n",
 "บ":"b","ป":"p","ผ":"pʰ","ฝ":"f","พ":"pʰ","ฟ":"f","ภ":"pʰ","ม":"m","ย":"j","ร":"r","ล":"l","ว":"w","ศ":"s","ษ":"s","ส":"s","ห":"h","ฬ":"l","อ":"ʔ","ฮ":"h"}
 
+LOW_SINGLE={"ค","ฅ","ฆ","ง","ช","ซ","ฌ","ญ","ฑ","ฒ","ณ","ท","ธ","น","พ","ฟ","ภ","ม","ย","ร","ล","ว","ฬ","ฮ"}
+
+def effective_onset(a:SyllableAnalysis)->list[str]:
+    if len(a.onset)>=2 and a.onset[0]=="ห" and a.onset[1] in LOW_SINGLE:
+        a.rules_applied.append("ORTH-H-NAM")
+        return [a.onset[1]]
+    return a.onset
+
 def phonologize(a:SyllableAnalysis)->SyllableAnalysis:
-    onset="".join(ONSET_IPA.get(c,"?") for c in a.onset)
-    a.phonemic_ipa=onset+(a.vowel or "")+(a.coda_ipa or "")
+    onset=effective_onset(a)
+    a.phonemic_ipa="".join(ONSET_IPA.get(c,"?") for c in onset)+(a.vowel or "")+(a.coda_ipa or "")
     a.rules_applied.append("PHON-SEGMENTAL-COMPOSITION")
     return a
 
