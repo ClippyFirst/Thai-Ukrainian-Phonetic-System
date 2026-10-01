@@ -6,7 +6,7 @@ def rows(name):
     with (ROOT/"data"/"thai"/name).open(encoding="utf-8") as f:return list(csv.DictReader(f))
 cons=rows("consonants.csv"); vows=rows("vowels.csv")
 initials=[r for r in cons if r["onset_ipa"]]
-codas=[r for r in cons if r["coda_allowed"]]
+codas=[r for r in cons if r["coda_allowed"].strip().lower()=="true"]
 marks=[None,"mai_ek","mai_tho","mai_tri","mai_chattawa"]
 # This is a structural upper bound, not a lexicon.
 structural=len(initials)*len(vows)*len(codas)*len(marks)
