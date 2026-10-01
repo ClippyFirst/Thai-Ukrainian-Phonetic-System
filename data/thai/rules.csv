@@ -1,0 +1,16 @@
+rule_id,domain,input,output,status,source_ids
+T-MID-LIVE-NONE,tone,mid+live+none,mid,core,SRC-JIPA-1993
+T-MID-DEAD-NONE,tone,mid+dead+none,low,core,SRC-JIPA-1993
+T-HIGH-LIVE-NONE,tone,high+live+none,rising,core,SRC-JIPA-1993
+T-HIGH-DEAD-NONE,tone,high+dead+none,low,core,SRC-JIPA-1993
+T-LOW-LIVE-NONE,tone,low+live+none,mid,core,SRC-JIPA-1993
+T-LOW-DEAD-SHORT,tone,low+dead+short+none,high,core,SRC-JIPA-1993
+T-LOW-DEAD-LONG,tone,low+dead+long+none,falling,core,SRC-JIPA-1993
+T-MID-EK,tone,mid+any+mai_ek,low,core,SRC-JIPA-1993
+T-HIGH-EK,tone,high+any+mai_ek,low,core,SRC-JIPA-1993
+T-LOW-EK,tone,low+any+mai_ek,falling,core,SRC-JIPA-1993
+T-MID-THO,tone,mid+any+mai_tho,falling,core,SRC-JIPA-1993
+T-HIGH-THO,tone,high+any+mai_tho,falling,core,SRC-JIPA-1993
+T-LOW-THO,tone,low+any+mai_tho,high,core,SRC-JIPA-1993
+T-MID-TRI,tone,mid+any+mai_tri,high,core,SRC-JIPA-1993
+T-MID-CHATTAWA,tone,mid+any+mai_chattawa,rising,core,SRC-JIPA-1993
