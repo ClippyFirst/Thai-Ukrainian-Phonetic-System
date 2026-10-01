@@ -1,5 +1,7 @@
-source_id,citation,evidence_type,url
-SRC-JIPA-1993,"Tingsabadh, M.R.K. & Abramson, A.S. (1993). Thai. Journal of the International Phonetic Association 23(1), 24-28. DOI 10.1017/S0025100300004746",peer_reviewed,https://doi.org/10.1017/S0025100300004746
-SRC-THAI-TONE-CORPUS,"Munthuli et al. A Corpus-Based Study of Phoneme Distribution in Thai",corpus_based,https://www.researchgate.net/publication/280253745_A_Corpus-Based_Study_of_Phoneme_Distribution_in_Thai
-SRC-ROYAL-INSTITUTE,"Royal Institute of Thailand linguistic and orthographic rules",authoritative_institution,https://www.orst.go.th/royindev/iwfm_table.asp?a=36
-SRC-THAI-FINALS,"Standard Thai final consonant description",academic_reference,https://pmc.ncbi.nlm.nih.gov/articles/PMC8875410/
+source_id,title,year,type,url,notes
+SRC-ORST,Royal Institute of Thailand linguistic standards and publications,official,official,https://www.orst.go.th/royindev/iwfm_table.asp?a=36,Thai orthography and official romanisation resources
+SRC-JIPA-1993,Tingsabadh & Abramson: Thai,1993,peer-reviewed,https://doi.org/10.1017/S0025100300004746,Standard Thai phonetic description; consonants vowels and tones
+SRC-CORPUS,Munthuli et al.: A Corpus-Based Study of Phoneme Distribution in Thai,2015,corpus-study,https://www.researchgate.net/publication/280253745_A_Corpus-Based_Study_of_Phoneme_Distribution_in_Thai,phoneme distribution and syllable structure
+SRC-NRCT,Thai phonology and orthography research thesis,2010,thesis,https://doi.nrct.go.th/ListDoi/Download/251778?Resolve_DOI=10.14457%2FMU.the.2010.253,final consonants and cluster patterns
+SRC-CCOST,Pittayaporn et al.: Chulalongkorn Corpus of Spoken Thai,2026,phonetic-corpus,https://aclanthology.org/2026.lrec-1.247/,Standard Thai; orthographic syllable phone and toneme annotations
+SRC-G2P-WIKI,PyThaiNLP Thai Grapheme to Phoneme Wiktionary Corpus,2022,g2p-corpus,https://github.com/PyThaiNLP/thai-g2p-wiktionary-corpus,Thai word to IPA pairs; CC-BY-SA-3.0
