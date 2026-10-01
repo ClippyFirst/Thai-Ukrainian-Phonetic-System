@@ -27,6 +27,7 @@ The model distinguishes:
 
 - 44 Thai consonant graphemes with class and positional data.
 - Vowel-sign parsing including interleaved Thai spelling and a machine-declared glide/rime registry.
+- Conservative complex-onset licensing: arbitrary consonant adjacency is not promoted to a Thai cluster without structural evidence.
 - Live/dead syllable classification and explicit tone-bearing consonant-class selection for clusters.
 - Five-tone engine with explicit invalid combinations.
 - ห นำ handling as an explicit orthographic/phonological transformation.
@@ -38,6 +39,7 @@ The model distinguishes:
 - Deterministic JSONL evaluation API and CLI.
 - Explicit word model with standalone / initial / medial / final syllable positions.
 - Positional regression tests and a documented segmentation boundary.
+- Adversarial rejection of non-conforming consonant sequences such as แสดง when supplied as one syllable.
 - Regression, negative-input and generated-artifact tests.
 - GitHub Actions CI that regenerates derived artifacts and verifies a clean tree.
 - Citation metadata, license and research release protocol.
