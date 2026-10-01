@@ -8,7 +8,7 @@ from pathlib import Path
 from thai_ukrainian.evaluation import load_records, evaluate_records
 
 
-class EvaluationTestsclass EvaluationCliTests(unittest.TestCase):
+class EvaluationTests(unittest.TestCase):
     def test_loads_jsonl_records(self):
         with tempfile.TemporaryDirectory() as d:
             p = Path(d) / "gold.jsonl"
@@ -39,7 +39,7 @@ class EvaluationTestsclass EvaluationCliTests(unittest.TestCase):
         self.assertIsNone(r["tone_accuracy"])
 
 
-(unittest.TestCase):
+class EvaluationCliTests(unittest.TestCase):
     def test_cli_emits_machine_readable_metrics(self):
         with tempfile.TemporaryDirectory() as d:
             p = Path(d) / "gold.jsonl"
@@ -52,6 +52,7 @@ class EvaluationTestsclass EvaluationCliTests(unittest.TestCase):
             payload = json.loads(result.stdout)
             self.assertEqual(payload["ipa_exact_accuracy"], 1.0)
             self.assertEqual(payload["tone_accuracy"], 1.0)
+
 
 if __name__ == "__main__":
     unittest.main()
