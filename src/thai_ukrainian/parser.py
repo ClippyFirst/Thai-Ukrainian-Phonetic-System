@@ -5,39 +5,43 @@ from .orthography import normalize_thai,tone_mark,detect_vowel,decompose_thai
 
 SHORT_CODA={"p","t","k","ʔ"}
 SONORANT_CODA={"m","n","ŋ","j","w"}
+TRUE_CLUSTER_FIRST={"ก","ข","ค","ต","ป","ผ","พ"}
+TRUE_CLUSTER_SECOND={"ร","ล","ว"}
+LEADING_H_FIRST={"ห"}
+LEADING_H_SECOND={"ง","ญ","น","ม","ย","ร","ล","ว"}
 
 def _consonants(s,inv):return [c for c in s if c in inv]
+
+def _is_valid_complex_onset(onset):
+    if len(onset)!=2:return True
+    if onset[0] in TRUE_CLUSTER_FIRST and onset[1] in TRUE_CLUSTER_SECOND:return True
+    if onset[0] in LEADING_H_FIRST and onset[1] in LEADING_H_SECOND:return True
+    return False
 
 def _split_onset_coda(s,inv,vowel):
     cs=_consonants(s,inv)
     if not cs:return [],None
-    # With no explicit vowel sign, a single consonant is the onset of an
-    # implicit-vowel syllable. Treating it as a coda leaves no onset and
-    # previously caused an IndexError in parse_syllable().
-    if not vowel.get("explicit") and len(cs) == 1:
-        return cs, None
-    # Some Thai rimes consume more than one consonant grapheme, e.g. เกียว
-    # consumes ย+ว as part of /iaw/. Never let nucleus graphemes leak back
-    # into onset/coda classification.
-    consumed = {
-        "V-X-IAW":["ย","ว"], "V-X-UAJ":["ว","ย"],
-        "V-X-AJ":["ย"], "V-X-AW":["ว"], "V-X-IW":["ว"],
-        "V-X-UJ":["ย"], "V-X-EW":["ว"], "V-X-EW-L":["ว"],
-        "V-X-EAW":["ว"], "V-X-EY":["ย"], "V-X-OY":["ย"],
-        "V-X-OJ":["ย"], "V-X-AW-S":["ว"], "V-X-UEY":["ย"],
-    }.get(vowel.get("id"), [])
+    if not vowel.get("explicit") and len(cs) == 1:return cs,None
+    consumed={
+        "V-X-IAW":["ย","ว"],"V-X-UAJ":["ว","ย"],"V-X-AJ":["ย"],"V-X-AW":["ว"],
+        "V-X-IW":["ว"],"V-X-UJ":["ย"],"V-X-EW":["ว"],"V-X-EW-L":["ว"],
+        "V-X-EAW":["ว"],"V-X-EY":["ย"],"V-X-OY":["ย"],"V-X-OJ":["ย"],
+        "V-X-AW-S":["ว"],"V-X-UEY":["ย"],
+    }.get(vowel.get("id"),[])
     if consumed:
         tmp=list(cs)
         for ch in reversed(consumed):
-            if tmp and tmp[-1]==ch:
-                tmp.pop()
+            if tmp and tmp[-1]==ch:tmp.pop()
         cs=tmp
-    if vowel.get("terminal_glide") and cs and cs[-1] in {"ย","ว"}:
-        return cs[:-1],None
+    if vowel.get("terminal_glide") and cs and cs[-1] in {"ย","ว"}:return cs[:-1],None
     vowel_chars=set("ะาิีึืุูเแโใไำั็")
     last_v=max((i for i,c in enumerate(s) if c in vowel_chars),default=-1)
     last_c=max((i for i,c in enumerate(s) if c in inv),default=-1)
-    if len(cs)>1 and last_c>last_v:return cs[:-1],cs[-1]
+    if len(cs)>1 and last_c>last_v:
+        proposed=cs[:-1]
+        if not _is_valid_complex_onset(proposed):return [cs[0]],None
+        return proposed,cs[-1]
+    if len(cs)>1 and not _is_valid_complex_onset(cs):return [cs[0]],None
     return cs,None
 
 def parse_syllable(syllable:str)->SyllableAnalysis:
@@ -46,23 +50,18 @@ def parse_syllable(syllable:str)->SyllableAnalysis:
     v=detect_vowel(s);onset,coda=_split_onset_coda(s,inv,v)
     first=inv[onset[0]]
     coda_ipa=inv[coda].coda_ipa if coda else None
-    status=("unresolved:implicit-vowel" if not v["explicit"] else ("analyzed" if not coda or inv[coda].coda_allowed else "invalid:coda-not-licensed"))
-    if coda:
-        live_dead="dead" if coda_ipa in SHORT_CODA else ("live" if coda_ipa in SONORANT_CODA else None)
-    else:
-        # Without an explicit vowel, vowel quantity and therefore tone
-        # cannot be safely inferred at this layer.
-        live_dead=None if not v["explicit"] else (
-            "live" if v.get("terminal_glide") or v["ipa"].endswith(("m","j","w","ŋ"))
-            else ("dead" if v["length"]=="short" else "live")
-        )
     warnings=[]
-    # onset_class is the first written consonant; tone_class is the consonant class used by the tone rule.
-    if len(onset) >= 2:
-        second_ipa = inv[onset[1]].onset_ipa
-        tone_class = first.class_ if second_ipa in {"m","n","ŋ","j","w","r","l"} else inv[onset[1]].class_
-    else:
-        tone_class = first.class_
+    complex_invalid=(len(cs)>len(onset)+(1 if coda else 0) and len(cs)>=2 and v["explicit"])
+    if complex_invalid:warnings.append("Adjacent consonants are not licensed as a standard Thai complex onset; explicit syllable/lexical segmentation is required.")
+    status=("unresolved:nonconforming-consonant-sequence" if complex_invalid else
+            ("unresolved:implicit-vowel" if not v["explicit"] else
+             ("analyzed" if not coda or inv[coda].coda_allowed else "invalid:coda-not-licensed")))
+    if coda:live_dead="dead" if coda_ipa in SHORT_CODA else ("live" if coda_ipa in SONORANT_CODA else None)
+    else:live_dead=None if not v["explicit"] else ("live" if v.get("terminal_glide") or v["ipa"].endswith(("m","j","w","ŋ")) else ("dead" if v["length"]=="short" else "live"))
+    if len(onset)>=2:
+        second_ipa=inv[onset[1]].onset_ipa
+        tone_class=first.class_ if second_ipa in {"m","n","ŋ","j","w","r","l"} else inv[onset[1]].class_
+    else:tone_class=first.class_
     if not v["explicit"]:warnings.append("Implicit vowel detected but unresolved; lexical or morphological validation required.")
     if "์" in s:warnings.append("Thanthakhat/silent-mark construction detected; lexical parsing required.")
     if "ห" in s and len(cs)>1 and cs[0]=="ห":warnings.append("ห นำ construction detected; class-changing analysis required.")
