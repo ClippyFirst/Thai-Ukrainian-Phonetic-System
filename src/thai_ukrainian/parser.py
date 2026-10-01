@@ -44,7 +44,7 @@ def _split_onset_coda(s,inv,vowel):
         for ch in reversed(consumed):
             if tmp and tmp[-1]==ch:tmp.pop()
         cs=tmp
-    if vowel.get("terminal_glide") and cs and cs[-1] in {"ย","ว"}:return cs[:-1],None
+    if vowel.get("terminal_glide") and vowel.get("id") != "V-X-AI" and cs and cs[-1] in {"ย","ว"}:return cs[:-1],None
     cleaned="".join(c for c in s if c not in TONE_CHARS)
     if len(cs)>=2 and any(c in PREPOSED_VOWEL_CHARS for c in cleaned):
         if _is_valid_complex_onset(cs[:2]):
