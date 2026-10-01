@@ -107,5 +107,5 @@ def detect_vowel(text:str):
     for pattern in sorted(SIGNATURES,key=len,reverse=True):
         if pattern in s:
             ipa,length,vid,glide=SIGNATURES[pattern]
-            return {"pattern":pattern,"ipa":ipa,"length":length,"id":vid,"explicit":True,"terminal_glide":glide}
+            return {"pattern":pattern,"ipa":ipa,"length":length,"id":vid,"explicit":True,"terminal_glide":glide,"matched_text":pattern}
     return {"pattern":"∅","ipa":None,"length":None,"id":None,"explicit":False,"terminal_glide":None,"matched_text":""}
