@@ -40,6 +40,7 @@ The model distinguishes:
 - Explicit word model with standalone / initial / medial / final syllable positions.
 - Positional regression tests and a documented segmentation boundary.
 - Adversarial rejection of non-conforming consonant sequences such as แสดง when supplied as one syllable.
+- Adversarial rejection of multiple tone marks, unconsumed vowel signs and unsupported symbols instead of silently dropping them.
 - Regression, negative-input and generated-artifact tests.
 - GitHub Actions CI that regenerates derived artifacts and verifies a clean tree.
 - Citation metadata, license and research release protocol.
@@ -48,7 +49,7 @@ The model distinguishes:
 
 **v0.4.0 — research-ready positional model.**
 
-The repository is suitable as a transparent research foundation and reference implementation. The latest adversarial-hardening commits require a fresh GitHub Actions run before the current HEAD can be marked CI-verified.
+The repository is suitable as a transparent research foundation and reference implementation. The latest malformed-syllable adversarial hardening requires a fresh GitHub Actions run before the new HEAD can be marked CI-verified.
 
 It is **not** yet an empirically validated benchmark. No corpus accuracy percentage is claimed because a declared gold corpus has not been processed by CI.
 
