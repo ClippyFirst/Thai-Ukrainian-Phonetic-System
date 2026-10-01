@@ -7,8 +7,14 @@ from .word import analyze_word
 def analyze_syllable(syllable:str):
     a=parse_syllable(syllable)
     if a.onset_class and a.live_dead and a.vowel_length:
-        a.tone=determine_tone(a.onset_class,a.live_dead,a.vowel_length,a.tone_mark)
-        a.rules_applied.append(a.tone.rule_id)
+        try:
+            a.tone=determine_tone(a.onset_class,a.live_dead,a.vowel_length,a.tone_mark)
+            a.rules_applied.append(a.tone.rule_id)
+        except ValueError as exc:
+            # Invalid orthographic tone combinations are data-level findings,
+            # not parser crashes. Keep the segmental analysis available.
+            a.status="invalid:tone-combination"
+            a.warnings.append(str(exc))
     phonologize(a);surface_phoneticize(a)
     onset=effective_onset(a)
     if onset:
