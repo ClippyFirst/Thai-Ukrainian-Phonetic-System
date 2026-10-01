@@ -26,8 +26,8 @@ The model distinguishes:
 ## Implemented
 
 - 44 Thai consonant graphemes with class and positional data.
-- Vowel-sign parsing including interleaved Thai spelling and glide-bearing sequences.
-- Live/dead syllable classification.
+- Vowel-sign parsing including interleaved Thai spelling and a machine-declared glide/rime registry.
+- Live/dead syllable classification and explicit tone-bearing consonant-class selection for clusters.
 - Five-tone engine with explicit invalid combinations.
 - ห นำ handling as an explicit orthographic/phonological transformation.
 - Broad phonological and conservative surface-phonetic layers.
@@ -65,10 +65,10 @@ These are research extensions, not hidden assumptions.
 The generated syllable-space report gives a **structural upper bound**, not the number of Thai syllables:
 
 - initial grapheme options: 44;
-- declared vowel records: 26;
-- structural coda options used by the generator: 44;
+- declared vowel/rime records: 40;
+- structural coda grapheme options used by the generator: 38;
 - tone-mark states: 5;
-- combined structural upper bound: 257,400.
+- combined structural upper bound: 343,200.
 
 This must not be interpreted as a count of valid, lexical or corpus-attested Thai syllables.
 
