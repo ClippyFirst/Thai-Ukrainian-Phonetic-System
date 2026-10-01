@@ -50,6 +50,20 @@ class PipelineTests(unittest.TestCase):
 
     def test_hnam(self):
         a=analyze_syllable("หงา"); self.assertEqual(a.tone.tone,"rising"); self.assertEqual(a.tone_class,"high"); self.assertEqual(a.phonemic_ipa,"ŋaː"); self.assertIn("ORTH-H-NAM",a.rules_applied)
+
+    def test_preposed_vowel_hnam_cluster(self):
+        a=analyze_syllable("ไหม")
+        self.assertEqual(a.onset,["ห","ม"])
+        self.assertEqual(a.coda,None)
+        self.assertEqual(a.phonemic_ipa,"maj")
+        self.assertEqual(a.tone.tone,"rising")
+
+    def test_preposed_vowel_hnam_cluster_with_tone_mark(self):
+        a=analyze_syllable("ไหว้")
+        self.assertEqual(a.onset,["ห","ว"])
+        self.assertEqual(a.coda,None)
+        self.assertEqual(a.phonemic_ipa,"waj")
+        self.assertEqual(a.tone.tone,"falling")
     def test_true_cluster_is_structurally_licensed(self):
         a=analyze_syllable("กล้า")
         self.assertEqual(a.onset,["ก","ล"])
