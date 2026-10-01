@@ -2,43 +2,113 @@
 
 Research-oriented, machine-readable reference implementation for mapping contemporary Standard Thai orthography through graphemic structure, phonology and IPA into a Ukrainian phonetic/phonological target.
 
-## Pipeline
+## Research pipeline
 
-Thai orthography → graphemic analysis → syllable structure → phonology → lexical tone → contextual phonology → IPA → Ukrainian feature-space candidates → Ukrainian phonological target → Ukrainian orthography.
+Thai orthography → graphemic analysis → syllable structure → phonology → tone → contextual phonology → IPA → Ukrainian feature-space candidates → Ukrainian phonological target → Ukrainian orthography.
 
-This is not RTGS and not a Thai-character → Ukrainian-character substitution table.
+The layers are intentionally separated. This is **not RTGS** and not a Thai-character → Ukrainian-character substitution table.
 
 ## Scope
 
-Primary scope: contemporary Standard Thai with a Bangkok/central-standard reference where the evidence permits. The model separates graphemes, phonemes, positional realisations, tone marks, phonological tones, IPA and Ukrainian candidates.
+Primary scope: contemporary Standard Thai with a Bangkok/central-standard reference where the evidence permits.
 
-The traditional Thai consonant inventory has 44 consonant letters; the phonological inventory is substantially smaller. The system keeps this distinction explicit.
+The model distinguishes:
 
-## Evidence
+- grapheme vs phoneme;
+- consonant class vs phonetic realization;
+- vowel sign vs vowel nucleus;
+- tone mark vs phonological tone;
+- orthographic order vs phonological order;
+- structural combinations vs valid orthography vs phonotactic possibility vs attestation;
+- phonemic/broad IPA vs narrower surface phonetics;
+- Ukrainian candidate ranking vs a calibrated probability or a unique orthographic answer.
 
-Core implementation sources include Royal Institute publications and the JIPA description by Tingsabadh & Abramson (1993). The repository also records corpus resources for future validation, including CCOST and Thai G2P data.
+## Implemented
 
-## Ukrainian target
+- 44 Thai consonant graphemes with class and positional data.
+- Vowel-sign parsing including interleaved Thai spelling and glide-bearing sequences.
+- Live/dead syllable classification.
+- Five-tone engine with explicit invalid combinations.
+- ห นำ handling as an explicit orthographic/phonological transformation.
+- Broad phonological and conservative surface-phonetic layers.
+- Feature-distance Ukrainian candidate generation using the canonical Ukrainian target snapshot.
+- Evidence/provenance registry.
+- Structural combinatorial-space accounting.
+- Machine-readable analysis and corpus-record schemas.
+- Deterministic JSONL evaluation API and CLI.
+- Regression, negative-input and generated-artifact tests.
+- GitHub Actions CI that regenerates derived artifacts and verifies a clean tree.
+- Citation metadata, license and research release protocol.
 
-The canonical target is ClippyFirst/Ukrainian-Phonetic-Inventory. This repository uses a reproducible feature-vector adapter rather than duplicating the entire target inventory.
+## Current release status
 
-## Status
+**v0.3.0 — research-ready foundation.**
 
-This release is a substantially expanded research foundation. Implemented: 44-letter consonant inventory, vowel-sign parser, tone engine, live/dead logic, conservative broad IPA composition, feature-ranked Ukrainian candidate generation, evidence registry, combinatorial-space accounting, validation schemas, tests and CI.
+The software and reproducibility gates pass. This means the repository is suitable as a transparent research foundation and reference implementation.
 
-Not claimed complete: exhaustive lexical segmentation, complete special-spelling grammar, connected-speech phonetics, corpus-calibrated probabilities, or universally validated Ukrainian orthographic output.
+It is **not** yet an empirically validated benchmark. No corpus accuracy percentage is claimed because a declared gold corpus has not been processed by CI.
 
-## Research workspace
+### Explicitly outside the current completion claim
 
-- Notion research status: https://app.notion.com/p/3ec40df389698138be8beb43b78971a2?pvs=204
-- Lucid data model: https://lucid.app/lucidchart/bd12788f-bec1-4f10-a01d-0def1efea509/view
+- exhaustive lexical segmentation of arbitrary Thai text;
+- complete special orthography (รร, silent letters and all morphology-dependent cases);
+- connected-speech narrow phonetics;
+- corpus-calibrated probabilities;
+- universally validated Ukrainian orthographic output.
+
+These are research extensions, not hidden assumptions.
+
+## Quantitative accounting
+
+The generated syllable-space report gives a **structural upper bound**, not the number of Thai syllables:
+
+- initial grapheme options: 44;
+- declared vowel records: 26;
+- structural coda options used by the generator: 44;
+- tone-mark states: 5;
+- combined structural upper bound: 257,400.
+
+This must not be interpreted as a count of valid, lexical or corpus-attested Thai syllables.
+
+## Evidence and validation
+
+Core evidence includes Royal Institute of Thailand materials, Tingsabadh & Abramson (1993), corpus-based Thai phoneme-distribution work, CCOST and Thai G2P resources. Third-party corpora are not redistributed.
+
+See:
+
+- Research protocol: docs/research-protocol.md
+- Corpus validation: docs/corpus-validation.md
+- Evidence registry: docs/evidence.md
+- Final audit: docs/final-audit.md
 
 ## Reproducibility
 
-Run:
+From a clean Python environment:
 
+~~~bash
+pip install -e .
 python scripts/generate_derived.py
 python scripts/generate_syllable_space.py
 python -m unittest discover -s tests -v
+~~~
 
-Derived JSON files contain computed values only.
+For an external gold JSONL corpus:
+
+~~~bash
+python scripts/evaluate_corpus.py path/to/records.jsonl
+~~~
+
+The evaluator reports numerators and denominators explicitly and excludes missing gold fields from the relevant metric.
+
+## Research workspace
+
+- Notion: https://app.notion.com/p/3ec40df389698138be8beb43b78971a2?pvs=204
+- Lucid: https://lucid.app/lucidchart/bd12788f-bec1-4f10-a01d-0def1efea509/view
+
+## Citation
+
+Use the repository's CITATION.cff. The software is released under the MIT License.
+
+## Final principle
+
+A result is only called **empirical** when it has a named/versioned evidence source and an explicit evaluation denominator. Structural generation, heuristic candidate ranking and documented linguistic rules are valuable research components, but they are not substitutes for corpus validation.
