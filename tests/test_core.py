@@ -28,6 +28,17 @@ class CoreTests(unittest.TestCase):
         ]
         for args in cases:self.assertEqual(determine_tone(*args[:-1]).tone,args[-1],args)
 
+    def test_correspondence_inventory_matches_consonants(self):
+        import csv
+        from pathlib import Path
+        root=Path(__file__).resolve().parents[1]
+        with (root/"data"/"thai"/"consonants.csv").open(encoding="utf-8",newline="") as f:
+            consonants={r["grapheme"] for r in csv.DictReader(f)}
+        with (root/"data"/"thai"/"correspondences.csv").open(encoding="utf-8",newline="") as f:
+            rows=list(csv.DictReader(f))
+        self.assertEqual({r["thai_grapheme"] for r in rows},consonants)
+        self.assertEqual(len(rows),len(consonants))
+
     def test_open_long_is_live(self):
         self.assertEqual(parse_syllable("กา").live_dead,"live")
 
