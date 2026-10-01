@@ -48,4 +48,9 @@ class CoreTests(unittest.TestCase):
     def test_post_vowel_consonant_is_coda(self):
         self.assertEqual(parse_syllable("กาน").coda,"น")
 
+    def test_carrier_is_not_a_final_coda(self):
+        a=parse_syllable("กาอ")
+        self.assertEqual(a.coda,"อ")
+        self.assertEqual(a.status,"invalid:coda-not-licensed")
+
 if __name__=="__main__":unittest.main()
