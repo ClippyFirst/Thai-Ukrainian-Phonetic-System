@@ -1,6 +1,6 @@
 from .parser import parse_syllable
 from .tone import determine_tone
-from .phonology import phonologize,surface_phoneticize,ONSET_IPA
+from .phonology import phonologize,surface_phoneticize,ONSET_IPA,effective_onset
 from .correspondence import rank_ukrainian_candidates as _rank_candidates
 
 def analyze_syllable(syllable:str):
@@ -8,9 +8,10 @@ def analyze_syllable(syllable:str):
     if a.onset_class and a.live_dead and a.vowel_length:
         a.tone=determine_tone(a.onset_class,a.live_dead,a.vowel_length,a.tone_mark)
         a.rules_applied.append(a.tone.rule_id)
-    phonologize(a); surface_phoneticize(a)
-    if a.onset:
-        first=ONSET_IPA.get(a.onset[0])
+    phonologize(a);surface_phoneticize(a)
+    onset=effective_onset(a)
+    if onset:
+        first=ONSET_IPA.get(onset[0])
         if first:
             a.ukrainian_candidates=_rank_candidates(first)[:10]
             if a.ukrainian_candidates:a.selected_candidate=a.ukrainian_candidates[0].ipa
