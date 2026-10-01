@@ -21,6 +21,18 @@ class PipelineTests(unittest.TestCase):
         a=parse_syllable("เกีย"); self.assertEqual(a.vowel,"iaː"); self.assertIsNone(a.coda)
     def test_ai_glide_is_not_coda(self):
         a=parse_syllable("ขาย"); self.assertEqual(a.vowel,"aːj"); self.assertIsNone(a.coda); self.assertEqual(a.onset,["ข"])
+    def test_implicit_single_consonant_is_onset(self):
+        a=parse_syllable("ก"); self.assertEqual(a.onset,["ก"]); self.assertIsNone(a.coda); self.assertTrue(a.warnings)
+
+    def test_longest_match_ao_glide(self):
+        a=parse_syllable("เกา"); self.assertEqual(a.vowel,"aw"); self.assertEqual(a.vowel_id,"V-X-AW-S"); self.assertIsNone(a.coda)
+
+    def test_longest_match_iaw_glide(self):
+        a=parse_syllable("เกียว"); self.assertEqual(a.vowel,"iaw"); self.assertEqual(a.vowel_id,"V-X-IAW"); self.assertIsNone(a.coda)
+
+    def test_invalid_tone_is_structured(self):
+        a=analyze_syllable("ก๊"); self.assertEqual(a.status,"invalid:tone-combination"); self.assertIsNone(a.tone); self.assertTrue(a.warnings)
+
     def test_hnam(self):
         a=analyze_syllable("หงา"); self.assertEqual(a.tone.tone,"rising"); self.assertEqual(a.phonemic_ipa,"ŋaː"); self.assertIn("ORTH-H-NAM",a.rules_applied)
 if __name__=="__main__":unittest.main()
