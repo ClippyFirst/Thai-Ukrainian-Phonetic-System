@@ -36,13 +36,15 @@ The model distinguishes:
 - Structural combinatorial-space accounting.
 - Machine-readable analysis and corpus-record schemas.
 - Deterministic JSONL evaluation API and CLI.
+- Explicit word model with standalone / initial / medial / final syllable positions.
+- Positional regression tests and a documented segmentation boundary.
 - Regression, negative-input and generated-artifact tests.
 - GitHub Actions CI that regenerates derived artifacts and verifies a clean tree.
 - Citation metadata, license and research release protocol.
 
 ## Current release status
 
-**v0.3.0 — research-ready foundation.**
+**v0.4.0 — research-ready positional model.**
 
 The software and reproducibility gates pass. This means the repository is suitable as a transparent research foundation and reference implementation.
 
@@ -69,6 +71,10 @@ The generated syllable-space report gives a **structural upper bound**, not the 
 - combined structural upper bound: 257,400.
 
 This must not be interpreted as a count of valid, lexical or corpus-attested Thai syllables.
+
+## Word and positional model
+
+The reference implementation can analyze an explicitly segmented word with `analyze_word_syllables(["กา", "นา", "มา"])`. It preserves syllable index and position without pretending that Thai orthography alone provides universal word segmentation. See `docs/word-and-position-model.md`.
 
 ## Evidence and validation
 
