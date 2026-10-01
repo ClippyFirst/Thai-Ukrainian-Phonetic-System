@@ -84,11 +84,13 @@ def detect_vowel(text:str):
     ]
     for pattern,ipa,length,vid in sequence_patterns:
         if re.search(pattern, s):
-            return {"pattern":pattern,"ipa":ipa,"length":length,"id":vid,"explicit":True,"terminal_glide":("j" if vid in {"V-19","V-20","V-X-UEY","V-X-EY","V-X-OJ"} else ("w" if vid in {"V-X-AW-S","V-X-IAW","V-X-EW","V-X-EW-L","V-X-EAW"} else None))}
+            return {"pattern":pattern,"ipa":ipa,"length":length,"id":vid,"explicit":True,
+                    "terminal_glide":("j" if vid in {"V-19","V-20","V-X-UEY","V-X-EY","V-X-OJ"} else ("w" if vid in {"V-X-AW-S","V-X-IAW","V-X-EW","V-X-EW-L","V-X-EAW"} else None)),
+                    "matched_text":re.search(pattern,s).group(0)}
     for pattern in sorted(VOWEL_SIGNATURES,key=len,reverse=True):
         if pattern in s:
             ipa,length,vid=VOWEL_SIGNATURES[pattern]
-            return {"pattern":pattern,"ipa":ipa,"length":length,"id":vid,"explicit":True,"terminal_glide":None}
+            return {"pattern":pattern,"ipa":ipa,"length":length,"id":vid,"explicit":True,"terminal_glide":None,"matched_text":pattern}
     for pattern,ipa,length,vid,glide in sorted(GLIDE_PATTERNS,key=lambda x:len(x[0]),reverse=True):
         p=pattern.replace("-","")
         if p and p in s:
@@ -101,9 +103,9 @@ def detect_vowel(text:str):
             }.get(vid, [])
             return {"pattern":pattern,"ipa":ipa,"length":length,"id":vid,
                     "explicit":True,"terminal_glide":glide,
-                    "nucleus_consonants":nucleus_consonants}
+                    "nucleus_consonants":nucleus_consonants,"matched_text":p}
     for pattern in sorted(SIGNATURES,key=len,reverse=True):
         if pattern in s:
             ipa,length,vid,glide=SIGNATURES[pattern]
             return {"pattern":pattern,"ipa":ipa,"length":length,"id":vid,"explicit":True,"terminal_glide":glide}
-    return {"pattern":"∅","ipa":None,"length":None,"id":None,"explicit":False,"terminal_glide":None}
+    return {"pattern":"∅","ipa":None,"length":None,"id":None,"explicit":False,"terminal_glide":None,"matched_text":""}
