@@ -2,13 +2,13 @@
   "$schema":"https://json-schema.org/draft/2020-12/schema",
   "title":"ThaiUkrainianSyllableAnalysis",
   "type":"object",
-  "required":["input","normalized","status"],
+  "required":["input","normalized","grapheme_order","onset","onset_class","vowel","vowel_id","vowel_length","coda","coda_ipa","tone_mark","live_dead","tone","phonemic_ipa","phonetic_ipa","ukrainian_candidates","selected_candidate","rules_applied","warnings","status","sources"],
   "properties":{
     "input":{"type":"string"},
     "normalized":{"type":"string"},
     "grapheme_order":{"type":"array","items":{"type":"string"}},
     "onset":{"type":"array","items":{"type":"string"}},
-    "onset_class":{"type":["string","null"]},
+    "onset_class":{"type":["string","null"],"enum":["mid","high","low",null]},
     "vowel":{"type":["string","null"]},
     "vowel_id":{"type":["string","null"]},
     "vowel_length":{"type":["string","null"],"enum":["short","long",null]},
@@ -16,15 +16,40 @@
     "coda_ipa":{"type":["string","null"]},
     "tone_mark":{"type":["string","null"]},
     "live_dead":{"type":["string","null"],"enum":["live","dead",null]},
-    "tone":{"type":["object","null"]},
+    "tone":{
+      "type":["object","null"],
+      "required":["tone","contour_ipa","rule_id","evidence_status"],
+      "properties":{
+        "tone":{"type":"string","enum":["mid","low","falling","high","rising"]},
+        "contour_ipa":{"type":"string"},
+        "rule_id":{"type":"string"},
+        "evidence_status":{"type":"string"}
+      },
+      "additionalProperties":false
+    },
     "phonemic_ipa":{"type":["string","null"]},
     "phonetic_ipa":{"type":["string","null"]},
-    "ukrainian_candidates":{"type":"array"},
+    "ukrainian_candidates":{
+      "type":"array",
+      "items":{
+        "type":"object",
+        "required":["candidate_id","ipa","distance","status","mismatches","notes"],
+        "properties":{
+          "candidate_id":{"type":"string"},
+          "ipa":{"type":"string"},
+          "distance":{"type":"number"},
+          "status":{"type":"string"},
+          "mismatches":{"type":"array","items":{"type":"string"}},
+          "notes":{"type":"string"}
+        },
+        "additionalProperties":false
+      }
+    },
     "selected_candidate":{"type":["string","null"]},
     "rules_applied":{"type":"array","items":{"type":"string"}},
     "warnings":{"type":"array","items":{"type":"string"}},
-    "sources":{"type":"array","items":{"type":"string"}},
-    "status":{"type":"string"}
+    "status":{"type":"string"},
+    "sources":{"type":"array","items":{"type":"string"}}
   },
-  "additionalProperties":true
+  "additionalProperties":false
 }
