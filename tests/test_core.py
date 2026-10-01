@@ -71,4 +71,24 @@ class CoreTests(unittest.TestCase):
         self.assertEqual(a.coda,"อ")
         self.assertEqual(a.status,"invalid:coda-not-licensed")
 
+    def test_multiple_tone_marks_are_not_collapsed(self):
+        a=parse_syllable("ก่้")
+        self.assertEqual(a.status,"unresolved:multiple-tone-marks")
+        self.assertIsNone(a.tone)
+
+    def test_unconsumed_vowel_sign_is_not_ignored(self):
+        for text in ("กาา","กิี","กาเก","กากา"):
+            a=parse_syllable(text)
+            self.assertEqual(a.status,"unresolved:multiple-vowel-signs",text)
+            self.assertIsNone(a.phonemic_ipa,text)
+
+    def test_unsupported_symbol_is_not_silently_dropped(self):
+        a=parse_syllable("กา!")
+        self.assertEqual(a.status,"unresolved:unsupported-symbol")
+        self.assertIsNone(a.phonemic_ipa)
+
+    def test_supported_thai_punctuation_is_outside_syllable_scope(self):
+        a=parse_syllable("กาๆ")
+        self.assertEqual(a.status,"unresolved:unsupported-symbol")
+
 if __name__=="__main__":unittest.main()
