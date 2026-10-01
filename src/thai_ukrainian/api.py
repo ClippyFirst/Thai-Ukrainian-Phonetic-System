@@ -6,7 +6,7 @@ from .word import analyze_word
 
 def analyze_syllable(syllable:str):
     a=parse_syllable(syllable)
-    if a.tone_class and a.live_dead and a.vowel_length:
+    if a.status == "analyzed" and a.tone_class and a.live_dead and a.vowel_length:
         try:
             a.tone=determine_tone(a.tone_class,a.live_dead,a.vowel_length,a.tone_mark)
             a.rules_applied.append(a.tone.rule_id)
