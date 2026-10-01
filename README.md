@@ -28,6 +28,11 @@ This release is a substantially expanded research foundation. Implemented: 44-le
 
 Not claimed complete: exhaustive lexical segmentation, complete special-spelling grammar, connected-speech phonetics, corpus-calibrated probabilities, or universally validated Ukrainian orthographic output.
 
+## Research workspace
+
+- Notion research status: https://app.notion.com/p/3ec40df389698138be8beb43b78971a2?pvs=204
+- Lucid data model: https://lucid.app/lucidchart/bd12788f-bec1-4f10-a01d-0def1efea509/view
+
 ## Reproducibility
 
 Run:
