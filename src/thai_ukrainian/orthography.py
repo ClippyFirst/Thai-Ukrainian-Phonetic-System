@@ -64,14 +64,18 @@ def detect_vowel(text:str):
     # such as เ- to win before เ-ีย / เ-ือ / related sequences.
     consonants = "กขฃคฅฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮ"
     c = f"[{re.escape(consonants)}]"
+    # Longest/most specific surrounding-vowel patterns must precede
+    # generic preposed-vowel patterns. Otherwise เกา would be truncated to
+    # เ- and เกียว to เ-ีย before the final glide is considered.
     sequence_patterns=[
-        (rf"เ{c}ียะ","ia","short","V-19"), (rf"เ{c}ีย","iaː","long","V-20"),
-        (rf"เ{c}ือะ","ɯa","short","V-21"), (rf"เ{c}ือ","ɯaː","long","V-22"),
-        (rf"เ{c}อะ","ɤ","short","V-09"), (rf"เ{c}อ","ɤː","long","V-10"),
-        (rf"เ{c}าะ","ɔ","short","V-17"), (rf"เ{c}า","aw","short","V-X-AW-S"),
-        (rf"เ{c}ะ","e","short","V-03"), (rf"เ{c}","eː","long","V-04"),
+        (rf"เ{c}ียว","iaw","long","V-X-IAW"), (rf"เ{c}ียะ","ia","short","V-19"),
+        (rf"เ{c}ีย","iaː","long","V-20"), (rf"เ{c}ือะ","ɯa","short","V-21"),
+        (rf"เ{c}ือ","ɯaː","long","V-22"), (rf"เ{c}อะ","ɤ","short","V-09"),
+        (rf"เ{c}อ","ɤː","long","V-10"), (rf"เ{c}าะ","ɔ","short","V-17"),
+        (rf"เ{c}า","aw","short","V-X-AW-S"), (rf"เ{c}ะ","e","short","V-03"),
         (rf"แ{c}ะ","ɛ","short","V-05"), (rf"แ{c}","ɛː","long","V-06"),
         (rf"โ{c}ะ","o","short","V-15"), (rf"โ{c}","oː","long","V-16"),
+        (rf"เ{c}","eː","long","V-04"),
     ]
     for pattern,ipa,length,vid in sequence_patterns:
         if re.search(pattern, s):
