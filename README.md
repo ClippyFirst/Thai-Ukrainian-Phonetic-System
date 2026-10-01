@@ -46,7 +46,7 @@ The model distinguishes:
 
 **v0.4.0 — research-ready positional model.**
 
-The software and reproducibility gates pass. This means the repository is suitable as a transparent research foundation and reference implementation.
+The repository is suitable as a transparent research foundation and reference implementation. The latest adversarial-hardening commits require a fresh GitHub Actions run before the current HEAD can be marked CI-verified.
 
 It is **not** yet an empirically validated benchmark. No corpus accuracy percentage is claimed because a declared gold corpus has not been processed by CI.
 
