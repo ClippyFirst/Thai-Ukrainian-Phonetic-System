@@ -58,24 +58,13 @@ def _clean(text:str)->str:
 
 def detect_vowel(text:str):
     s=_clean(text)
-    for pattern in sorted(VOWEL_SIGNATURES,key=len,reverse=True):
-        if pattern in s:
+    # Resolve multi-sign vowel sequences before single-sign signatures.\n    # Thai preposed/surrounding spelling can otherwise cause a shorter vowel\n    # such as เ- to win before เ-ีย / เ-ือ / related sequences.\n    x="".join(c for c in s if not (0x0E01<=ord(c)<=0x0E2E))\n    sequence_patterns=[\n        ("เ"+"ี"+"ยะ","ia","short","V-19"),("เ"+"ี"+"ย","iaː","long","V-20"),\n        ("เ"+"ื"+"อะ","ɯa","short","V-21"),("เ"+"ื"+"อ","ɯaː","long","V-22"),\n        ("เ"+"อ"+"ะ","ɤ","short","V-09"),("เ"+"อ","ɤː","long","V-10"),\n        ("เ"+"าะ","ɔ","short","V-17"),("เ"+"า","aw","short","V-X-AW-S"),\n        ("เ"+"ะ","e","short","V-03"),("เ","eː","long","V-04"),\n        ("แ"+"ะ","ɛ","short","V-05"),("แ","ɛː","long","V-06"),("โ"+"ะ","o","short","V-15"),("โ","oː","long","V-16"),\n    ]\n    for pat,ipa,length,vid in sequence_patterns:\n        if pat in x:\n            return {"pattern":pat,"ipa":ipa,"length":length,"id":vid,"explicit":True,"terminal_glide":"w" if vid=="V-X-AW-S" else None}\n    for pattern in sorted(VOWEL_SIGNATURES,key=len,reverse=True):\n        if pattern in s:
             ipa,length,vid=VOWEL_SIGNATURES[pattern]
             return {"pattern":pattern,"ipa":ipa,"length":length,"id":vid,"explicit":True,"terminal_glide":None}
     for pattern,ipa,length,vid,glide in sorted(GLIDE_PATTERNS,key=lambda x:len(x[0]),reverse=True):
         p=pattern.replace("-","")
         if p and p in s:
             return {"pattern":pattern,"ipa":ipa,"length":length,"id":vid,"explicit":True,"terminal_glide":glide}
-    x="".join(c for c in s if not (0x0E01<=ord(c)<=0x0E2E))
-    sequence_patterns=[
-        ("เ"+"ี"+"ยะ","ia","short","V-19"),("เ"+"ี"+"ย","iaː","long","V-20"),
-        ("เ"+"ื"+"อะ","ɯa","short","V-21"),("เ"+"ื"+"อ","ɯaː","long","V-22"),
-        ("เ"+"ะ","e","short","V-03"),("เ","eː","long","V-04"),("แ"+"ะ","ɛ","short","V-05"),("แ","ɛː","long","V-06"),
-        ("เ"+"อ"+"ะ","ɤ","short","V-09"),("เ"+"อ","ɤː","long","V-10"),("โ"+"ะ","o","short","V-15"),("โ","oː","long","V-16"),
-        ("เ"+"าะ","ɔ","short","V-17"),("เ"+"า","aw","short","V-X-AW-S"),
-    ]
-    for pat,ipa,length,vid in sequence_patterns:
-        if pat in x:return {"pattern":pat,"ipa":ipa,"length":length,"id":vid,"explicit":True,"terminal_glide":"w" if vid=="V-X-AW-S" else None}
     for pattern in sorted(SIGNATURES,key=len,reverse=True):
         if pattern in s:
             ipa,length,vid,glide=SIGNATURES[pattern]
