@@ -42,3 +42,9 @@
 - Connected-speech narrow phonetics.
 - Corpus-derived accuracy or calibrated probabilities.
 - A single universally correct Ukrainian orthographic realization.
+
+
+### Post-audit CI repair
+
+- Fixed the preposed consonant-plus-glide matcher for forms such as `เลย`, which had been shadowed by the generic `เ{C}` vowel pattern.
+- GitHub Actions run 156 verifies the current HEAD with generated-artifact checks and 44 tests.
