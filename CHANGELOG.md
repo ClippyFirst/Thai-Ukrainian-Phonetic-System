@@ -9,6 +9,9 @@
 - Removed unsupported implicit-/a/ guessing; unresolved implicit vowels now withhold IPA until lexical/morphological evidence exists.
 - Corrected the negative tone regression to use the genuinely invalid high-class + mai tri combination `ข๊า`.
 - Made the syllable analysis JSON Schema strict and aligned with the runtime model.
+- Declared all parser-recognized glide/rime IDs in the machine-readable vowel registry.
+- Added a separate tone-bearing consonant class for cluster tone calculation.
+- Removed final-coda licensing from carrier `อ` and added a regression guard.
 
 - Added explicit word analysis with syllable positions: standalone, initial, medial, final.
 - Added positional regression tests.
