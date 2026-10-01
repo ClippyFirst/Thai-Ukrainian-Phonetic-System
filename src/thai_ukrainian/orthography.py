@@ -90,7 +90,16 @@ def detect_vowel(text:str):
     for pattern,ipa,length,vid,glide in sorted(GLIDE_PATTERNS,key=lambda x:len(x[0]),reverse=True):
         p=pattern.replace("-","")
         if p and p in s:
-            return {"pattern":pattern,"ipa":ipa,"length":length,"id":vid,"explicit":True,"terminal_glide":glide}
+            nucleus_consonants = {
+                "V-X-IAW":["ย","ว"], "V-X-UAJ":["ว","ย"],
+                "V-X-AJ":["ย"], "V-X-AW":["ว"], "V-X-IW":["ว"],
+                "V-X-UJ":["ย"], "V-X-EW":["ว"], "V-X-EW-L":["ว"],
+                "V-X-EAW":["ว"], "V-X-EY":["ย"], "V-X-OY":["ย"],
+                "V-X-OJ":["ย"], "V-X-AW-S":["ว"], "V-X-UEY":["ย"],
+            }.get(vid, [])
+            return {"pattern":pattern,"ipa":ipa,"length":length,"id":vid,
+                    "explicit":True,"terminal_glide":glide,
+                    "nucleus_consonants":nucleus_consonants}
     for pattern in sorted(SIGNATURES,key=len,reverse=True):
         if pattern in s:
             ipa,length,vid,glide=SIGNATURES[pattern]
