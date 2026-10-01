@@ -35,6 +35,7 @@ class SyllableAnalysis:
     grapheme_order: list[str] = field(default_factory=list)
     onset: list[str] = field(default_factory=list)
     onset_class: str | None = None
+    tone_class: str | None = None
     vowel: str | None = None
     vowel_id: str | None = None
     vowel_length: str | None = None
