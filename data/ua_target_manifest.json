@@ -1,0 +1,8 @@
+{
+  "language": "uk",
+  "target_repository": "ClippyFirst/Ukrainian-Phonetic-Inventory",
+  "integration_mode": "external",
+  "reference": "repository main audited 2026-10-01",
+  "local_override_env": "THAI_UA_INVENTORY_PATH",
+  "policy": "No duplicated Ukrainian inventory"
+}
