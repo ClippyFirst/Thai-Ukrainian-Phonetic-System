@@ -49,5 +49,16 @@ class PipelineTests(unittest.TestCase):
         a=analyze_syllable("ข๊า"); self.assertEqual(a.status,"invalid:tone-combination"); self.assertIsNone(a.tone); self.assertTrue(a.warnings)
 
     def test_hnam(self):
-        a=analyze_syllable("หงา"); self.assertEqual(a.tone.tone,"rising"); self.assertEqual(a.phonemic_ipa,"ŋaː"); self.assertIn("ORTH-H-NAM",a.rules_applied)
+        a=analyze_syllable("หงา"); self.assertEqual(a.tone.tone,"rising"); self.assertEqual(a.tone_class,"high"); self.assertEqual(a.phonemic_ipa,"ŋaː"); self.assertIn("ORTH-H-NAM",a.rules_applied)
 if __name__=="__main__":unittest.main()
+
+    def test_nonsonorant_cluster_uses_second_tone_class(self):
+        a=analyze_syllable("แสดง")
+        self.assertEqual(a.onset,["ส","ด"])
+        self.assertEqual(a.onset_class,"high")
+        self.assertEqual(a.tone_class,"mid")
+        self.assertEqual(a.tone.tone,"mid")
+
+    def test_glide_inventory_is_machine_declared(self):
+        self.assertIsNotNone(parse_syllable("เกียว").vowel_id)
+        self.assertIsNotNone(parse_syllable("เลย").vowel_id)
