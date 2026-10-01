@@ -9,6 +9,7 @@ TRUE_CLUSTER_FIRST={"ก","ข","ค","ต","ป","ผ","พ"}
 TRUE_CLUSTER_SECOND={"ร","ล","ว"}
 LEADING_H_FIRST={"ห"}
 LEADING_H_SECOND={"ง","ญ","น","ม","ย","ร","ล","ว"}
+PREPOSED_VOWEL_CHARS={"เ","แ","โ","ใ","ไ"}
 VOWEL_SIGN_CHARS=set("ะาิีึืุูเแโใไำั็")
 SUPPORTED_SPECIAL_CHARS={"์"}
 
@@ -33,7 +34,7 @@ def _split_onset_coda(s,inv,vowel):
     if not cs:return [],None
     if not vowel.get("explicit") and len(cs) == 1:return cs,None
     consumed={
-        "V-X-IAW":["ย","ว"],"V-X-UAJ":["ว","ย"],"V-X-AJ":["ย"],"V-X-AW":["ว"],
+        "V-X-IAW":["ย","ว"],"V-X-UAJ":["ว","ย"],"V-X-AJ":["ย"],"V-X-AW":["ว"],"V-X-AI":["ย"],
         "V-X-IW":["ว"],"V-X-UJ":["ย"],"V-X-EW":["ว"],"V-X-EW-L":["ว"],
         "V-X-EAW":["ว"],"V-X-EY":["ย"],"V-X-OY":["ย"],"V-X-OJ":["ย"],
         "V-X-AW-S":["ว"],"V-X-UEY":["ย"],
@@ -44,6 +45,12 @@ def _split_onset_coda(s,inv,vowel):
             if tmp and tmp[-1]==ch:tmp.pop()
         cs=tmp
     if vowel.get("terminal_glide") and cs and cs[-1] in {"ย","ว"}:return cs[:-1],None
+    cleaned="".join(c for c in s if c not in TONE_CHARS)
+    if len(cs)>=2 and any(c in PREPOSED_VOWEL_CHARS for c in cleaned):
+        if _is_valid_complex_onset(cs[:2]):
+            if len(cs)==2:return cs,None
+            if len(cs)==3:return cs[:2],cs[2]
+            return [cs[0]],None
     vowel_chars=set("ะาิีึืุูเแโใไำั็")
     last_v=max((i for i,c in enumerate(s) if c in vowel_chars),default=-1)
     last_c=max((i for i,c in enumerate(s) if c in inv),default=-1)
