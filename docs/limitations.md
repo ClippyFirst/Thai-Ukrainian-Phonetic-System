@@ -12,6 +12,8 @@ The repository is a research-grade foundation, but the following are deliberatel
 - calibrated probabilities;
 - a validated single Ukrainian spelling for every Thai input.
 
+The parser now explicitly rejects arbitrary adjacent consonants as complex onsets when the sequence is not structurally licensed. This reduces false-positive analyses but means that whitespace-free lexical/morphological inputs may remain unresolved until segmentation evidence is supplied.
+
 The deterministic feature ranker does not produce probabilities. A low distance means only lower cost under the declared feature metric.
 
 A future corpus must be used to estimate weights and ambiguity empirically.
