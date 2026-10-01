@@ -74,7 +74,7 @@ A clean checkout is release-ready when:
 4. schemas and documentation agree with the implementation;
 5. no empirical claim exceeds the evidence actually processed.
 
-A previous CI run completed successfully before the latest adversarial hardening. The previous audited HEAD was CI-verified by GitHub Actions run 158. The current HEAD adds malformed-syllable adversarial probes and therefore requires a fresh CI run before that new HEAD is called CI-verified.
+A previous CI run completed successfully before the latest adversarial hardening. The current HEAD is CI-verified by GitHub Actions run 170. The successful run regenerated derived artifacts cleanly and completed 50 tests, including the malformed-surface and preposed-vowel leading-cluster probes.
 
 ## What would change the status
 
