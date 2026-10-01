@@ -1,0 +1,21 @@
+{
+  "consonant_graphemes": 44,
+  "classes": {"mid": 9, "high": 11, "low": 24},
+  "csv_records": {
+    "consonants": 44,
+    "sources": 6,
+    "correspondences": 21,
+    "tone_marks": 5,
+    "phonotactics": 4,
+    "rules": 15,
+    "tones": 5,
+    "vowels": 26
+  },
+  "status": "structural-pass",
+  "scope_notes": {
+    "lexical_attestation": "not measured: no Thai lexicon/corpus is bundled",
+    "corpus_attestation": "not measured: no corpus is bundled",
+    "syllable_generation": "structural upper bounds only",
+    "target_inventory": "external Ukrainian-Phonetic-Inventory; reproducible feature snapshot is stored locally"
+  }
+}
