@@ -50,8 +50,6 @@ class PipelineTests(unittest.TestCase):
 
     def test_hnam(self):
         a=analyze_syllable("หงา"); self.assertEqual(a.tone.tone,"rising"); self.assertEqual(a.tone_class,"high"); self.assertEqual(a.phonemic_ipa,"ŋaː"); self.assertIn("ORTH-H-NAM",a.rules_applied)
-if __name__=="__main__":unittest.main()
-
     def test_nonsonorant_cluster_uses_second_tone_class(self):
         a=analyze_syllable("แสดง")
         self.assertEqual(a.onset,["ส","ด"])
@@ -62,3 +60,5 @@ if __name__=="__main__":unittest.main()
     def test_glide_inventory_is_machine_declared(self):
         self.assertIsNotNone(parse_syllable("เกียว").vowel_id)
         self.assertIsNotNone(parse_syllable("เลย").vowel_id)
+
+if __name__=="__main__":unittest.main()
