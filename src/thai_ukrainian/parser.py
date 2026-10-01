@@ -11,6 +11,11 @@ def _consonants(s,inv):return [c for c in s if c in inv]
 def _split_onset_coda(s,inv,vowel):
     cs=_consonants(s,inv)
     if not cs:return [],None
+    # With no explicit vowel sign, a single consonant is the onset of an
+    # implicit-vowel syllable. Treating it as a coda leaves no onset and
+    # previously caused an IndexError in parse_syllable().
+    if not vowel.get("explicit") and len(cs) == 1:
+        return cs, None
     if vowel.get("terminal_glide") and cs[-1] in {"ย","ว"}:
         # ย/ว is part of the vowel-glide nucleus in these patterns.
         return cs[:-1],None
