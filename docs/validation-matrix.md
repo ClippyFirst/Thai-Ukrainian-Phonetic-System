@@ -14,6 +14,7 @@
 | connected-speech phonetics | partial | intentionally conservative |
 | lexical segmentation | not claimed | requires corpus/lexicon |
 | corpus validation | not claimed | requires annotated corpus |
+| malformed syllable surface rejection | implemented | repeated tone/vowel signs, concatenated material and unsupported-symbol probes |
 | calibrated probability | not claimed | requires gold data |
 
 
