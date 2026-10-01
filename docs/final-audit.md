@@ -4,7 +4,7 @@
 
 **v0.4.0 — research-ready positional model.**
 
-The repository is designed as a coherent research software foundation: source tables are separated from derived artifacts, the transformation layers are explicit, and validation is deterministic. The previous HEAD has a successful GitHub Actions CI run; the current malformed-syllable hardening commit requires a fresh run.
+The repository is designed as a coherent research software foundation: source tables are separated from derived artifacts, the transformation layers are explicit, and validation is deterministic. The current HEAD has a successful GitHub Actions CI run.
 
 ## Gate A — structural reproducibility
 
@@ -16,7 +16,7 @@ The repository is designed as a coherent research software foundation: source ta
 - Live/dead classification is explicit.
 - Generated audit and syllable-space artifacts are checked by CI.
 - Unicode and malformed-input regression tests exist.
-- The repository has a regression suite including adversarial probes; the latest post-audit commits still require a fresh GitHub Actions run before CI-passed status can be asserted.
+- The repository has a regression suite including adversarial probes; the current HEAD is CI-verified.
 
 ## Gate B — linguistic transparency
 
@@ -109,10 +109,15 @@ A further parser audit identified a higher-risk false-positive class: treating e
 
 ## CI verification — current HEAD
 
-Current HEAD: `812334f23eae12150b3dd517b0f3110490722283`.
-GitHub Actions run **156** completed successfully. The workflow regenerated the derived artifacts without diff and completed the full test suite (**44 tests**).
+Current HEAD: `56e98433f16e5d267cd0e357f9d572b78256535f`.
+GitHub Actions run **170** completed successfully. The workflow regenerated the derived artifacts without diff and completed the full test suite (**50 tests**).
 
 
 ## Adversarial audit extension — malformed syllable surfaces
 
 The parser audit identified another false-positive class: a detector could select one vowel/rime pattern and silently ignore additional vowel signs, additional syllabic material, repeated tone marks, or unsupported symbols. The parser now requires the detected vowel/rime match to consume all vowel-sign material in the supplied syllable surface, rejects multiple tone marks, and rejects unsupported symbols instead of silently discarding them. Regression probes cover repeated vowel signs, concatenated syllable-like material such as `กาเก` and `กากา`, repeated tone marks, ASCII punctuation and Thai repetition mark `ๆ`. These cases are treated as unresolved input rather than assigned invented phonology.
+
+
+## Adversarial audit extension — preposed-vowel leading clusters
+
+The parser audit exposed a visual-order trap in syllables such as `ไหม` and `ไหว้`: the preposed vowel sign appears before the consonant sequence, so a simple character-index test can incorrectly demote the second onset consonant to coda. The parser now evaluates declared complex-onset licensing in preposed-vowel syllables before the generic coda fallback. The suite verifies `ไหม` as a ห นำ onset and `ไหว้` as a ห นำ onset with a tone mark. The model remains conservative for unsupported lexical leading constructions such as อ นำ.
