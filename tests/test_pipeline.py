@@ -28,13 +28,14 @@ class PipelineTests(unittest.TestCase):
         a=parse_syllable("เกา"); self.assertEqual(a.vowel,"aw"); self.assertEqual(a.vowel_id,"V-X-AW-S"); self.assertIsNone(a.coda)
 
     def test_longest_match_iaw_glide(self):
-        a=parse_syllable("เกียว"); self.assertEqual(a.vowel,"iaw"); self.assertEqual(a.vowel_id,"V-X-IAW"); self.assertIsNone(a.coda)
+        a=parse_syllable("เกียว"); self.assertEqual(a.vowel,"iaw"); self.assertEqual(a.vowel_id,"V-X-IAW"); self.assertEqual(a.onset,["ก"]); self.assertIsNone(a.coda)
 
     def test_preposed_glide_patterns(self):
         cases=[("แล้ว","ɛːw"),("เร็ว","ew"),("เลย","ɤːj")]
         for text,ipa in cases:
             a=parse_syllable(text)
             self.assertEqual(a.vowel,ipa,text)
+            self.assertEqual(len(a.onset),1,text)
             self.assertIsNone(a.coda,text)
 
     def test_implicit_vowel_is_not_guessed(self):
@@ -45,7 +46,7 @@ class PipelineTests(unittest.TestCase):
         self.assertEqual(a.coda,"น")
 
     def test_invalid_tone_is_structured(self):
-        a=analyze_syllable("ก๊"); self.assertEqual(a.status,"invalid:tone-combination"); self.assertIsNone(a.tone); self.assertTrue(a.warnings)
+        a=analyze_syllable("ข๊า"); self.assertEqual(a.status,"invalid:tone-combination"); self.assertIsNone(a.tone); self.assertTrue(a.warnings)
 
     def test_hnam(self):
         a=analyze_syllable("หงา"); self.assertEqual(a.tone.tone,"rising"); self.assertEqual(a.phonemic_ipa,"ŋaː"); self.assertIn("ORTH-H-NAM",a.rules_applied)
