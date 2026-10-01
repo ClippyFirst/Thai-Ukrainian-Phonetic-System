@@ -13,4 +13,14 @@ class PipelineTests(unittest.TestCase):
     def test_feature_candidates(self): self.assertTrue(analyze_syllable("กา").ukrainian_candidates)
     def test_implicit_vowel_flag(self): self.assertTrue(parse_syllable("ก").warnings)
     def test_special_construction_flag(self): self.assertTrue(parse_syllable("หง").warnings)
+    def test_short_preposed_e(self):
+        a=parse_syllable("เกะ"); self.assertEqual(a.vowel,"e"); self.assertEqual(a.vowel_length,"short")
+    def test_long_preposed_e(self):
+        a=parse_syllable("เก"); self.assertEqual(a.vowel,"eː"); self.assertEqual(a.vowel_length,"long")
+    def test_diphthong_ia(self):
+        a=parse_syllable("เกีย"); self.assertEqual(a.vowel,"iaː"); self.assertIsNone(a.coda)
+    def test_ai_glide_is_not_coda(self):
+        a=parse_syllable("ขาย"); self.assertEqual(a.vowel,"aːj"); self.assertIsNone(a.coda); self.assertEqual(a.onset,["ข"])
+    def test_hnam(self):
+        a=analyze_syllable("หงา"); self.assertEqual(a.tone.tone,"rising"); self.assertEqual(a.phonemic_ipa,"ŋaː"); self.assertIn("ORTH-H-NAM",a.rules_applied)
 if __name__=="__main__":unittest.main()
