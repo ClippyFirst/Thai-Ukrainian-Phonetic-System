@@ -6,12 +6,14 @@ from .orthography import normalize_thai,tone_mark,detect_vowel,decompose_thai
 SHORT_CODA={"p","t","k","ʔ"}
 SONORANT_CODA={"m","n","ŋ","j","w"}
 
-def _consonants(s,inv):
-    return [c for c in s if c in inv]
+def _consonants(s,inv):return [c for c in s if c in inv]
 
-def _split_onset_coda(s,inv):
+def _split_onset_coda(s,inv,vowel):
     cs=_consonants(s,inv)
     if not cs:return [],None
+    if vowel.get("terminal_glide") and cs[-1] in {"ย","ว"}:
+        # ย/ว is part of the vowel-glide nucleus in these patterns.
+        return cs,None
     vowel_chars=set("ะาิีึืุูเแโใไำั็")
     last_v=max((i for i,c in enumerate(s) if c in vowel_chars),default=-1)
     last_c=max((i for i,c in enumerate(s) if c in inv),default=-1)
@@ -19,22 +21,23 @@ def _split_onset_coda(s,inv):
     return cs,None
 
 def parse_syllable(syllable:str)->SyllableAnalysis:
-    s=normalize_thai(syllable); inv=load_consonants(); cs=_consonants(s,inv)
-    if not cs:
-        return SyllableAnalysis(syllable,s,status="unresolved:no-onset",
-                                warnings=["No Thai consonant grapheme detected."])
-    v=detect_vowel(s); onset,coda=_split_onset_coda(s,inv)
+    s=normalize_thai(syllable);inv=load_consonants();cs=_consonants(s,inv)
+    if not cs:return SyllableAnalysis(syllable,s,status="unresolved:no-onset",warnings=["No Thai consonant grapheme detected."])
+    v=detect_vowel(s);onset,coda=_split_onset_coda(s,inv,v)
     first=inv[onset[0]]
     coda_ipa=inv[coda].coda_ipa if coda else None
     status="analyzed" if not coda or inv[coda].coda_allowed else "invalid:coda-not-licensed"
-    live_dead=("dead" if coda_ipa in SHORT_CODA else "live") if coda else ("dead" if v["length"]=="short" else "live")
+    if coda:
+        live_dead="dead" if coda_ipa in SHORT_CODA else ("live" if coda_ipa in SONORANT_CODA else None)
+    else:
+        # A nucleus ending in a glide/nasal is live even when its first element
+        # is short. This matters for -ำ, ไ-, ใ-, เ-า and similar rimes.
+        live_dead="live" if v.get("terminal_glide") or v["ipa"].endswith(("m","j","w","ŋ")) else ("dead" if v["length"]=="short" else "live")
     warnings=[]
-    if not v["explicit"]: warnings.append("Implicit vowel inferred; lexical or morphological validation required.")
-    if "์" in s: warnings.append("Thanthakhat/silent-mark construction detected; lexical parsing required.")
-    if "ห" in s and len(cs)>1 and cs[0]=="ห": warnings.append("ห นำ construction detected; class-changing analysis required.")
-    if "รร" in s: warnings.append("รร construction detected; contextual interpretation required.")
-    return SyllableAnalysis(
-        input=syllable,normalized=s,grapheme_order=[x["char"] for x in decompose_thai(s)],
-        onset=onset,onset_class=first.class_,vowel=v["ipa"],vowel_id=v["id"],
-        vowel_length=v["length"],coda=coda,coda_ipa=coda_ipa,tone_mark=tone_mark(s),
-        live_dead=live_dead,warnings=warnings,status=status)
+    if not v["explicit"]:warnings.append("Implicit vowel inferred; lexical or morphological validation required.")
+    if "์" in s:warnings.append("Thanthakhat/silent-mark construction detected; lexical parsing required.")
+    if "ห" in s and len(cs)>1 and cs[0]=="ห":warnings.append("ห นำ construction detected; class-changing analysis required.")
+    if "รร" in s:warnings.append("รร construction detected; contextual interpretation required.")
+    return SyllableAnalysis(input=syllable,normalized=s,grapheme_order=[x["char"] for x in decompose_thai(s)],
+        onset=onset,onset_class=first.class_,vowel=v["ipa"],vowel_id=v["id"],vowel_length=v["length"],
+        coda=coda,coda_ipa=coda_ipa,tone_mark=tone_mark(s),live_dead=live_dead,warnings=warnings,status=status)
