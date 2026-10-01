@@ -2,6 +2,14 @@
 
 ## [0.4.0] - 2026-10-01
 
+### Adversarial hardening
+
+- Fixed longest-match shadowing for complex Thai vowel/glide rimes.
+- Prevented multi-grapheme rimes such as /iaw/ from leaking nucleus consonants into onset/coda analysis.
+- Removed unsupported implicit-/a/ guessing; unresolved implicit vowels now withhold IPA until lexical/morphological evidence exists.
+- Corrected the negative tone regression to use the genuinely invalid high-class + mai tri combination `ข๊า`.
+- Made the syllable analysis JSON Schema strict and aligned with the runtime model.
+
 - Added explicit word analysis with syllable positions: standalone, initial, medial, final.
 - Added positional regression tests.
 - Added a documented methodological boundary: automatic Thai word/syllable segmentation is not silently guessed.
