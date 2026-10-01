@@ -31,13 +31,16 @@ def parse_syllable(syllable:str)->SyllableAnalysis:
     v=detect_vowel(s);onset,coda=_split_onset_coda(s,inv,v)
     first=inv[onset[0]]
     coda_ipa=inv[coda].coda_ipa if coda else None
-    status="analyzed" if not coda or inv[coda].coda_allowed else "invalid:coda-not-licensed"
+    status=("unresolved:implicit-vowel" if not v["explicit"] else ("analyzed" if not coda or inv[coda].coda_allowed else "invalid:coda-not-licensed"))
     if coda:
         live_dead="dead" if coda_ipa in SHORT_CODA else ("live" if coda_ipa in SONORANT_CODA else None)
     else:
-        # A nucleus ending in a glide/nasal is live even when its first element
-        # is short. This matters for -ำ, ไ-, ใ-, เ-า and similar rimes.
-        live_dead="live" if v.get("terminal_glide") or v["ipa"].endswith(("m","j","w","ŋ")) else ("dead" if v["length"]=="short" else "live")
+        # Without an explicit vowel, vowel quantity and therefore tone
+        # cannot be safely inferred at this layer.
+        live_dead=None if not v["explicit"] else (
+            "live" if v.get("terminal_glide") or v["ipa"].endswith(("m","j","w","ŋ"))
+            else ("dead" if v["length"]=="short" else "live")
+        )
     warnings=[]
     if not v["explicit"]:warnings.append("Implicit vowel inferred; lexical or morphological validation required.")
     if "์" in s:warnings.append("Thanthakhat/silent-mark construction detected; lexical parsing required.")
