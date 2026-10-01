@@ -1,0 +1,19 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"ThaiUkrainianAnalysis",
+  "type":"object",
+  "required":["input","status"],
+  "properties":{
+    "input":{"type":"string"},
+    "orthography":{"type":"array"},
+    "syllable_analysis":{"type":"array"},
+    "phonology":{"type":"array"},
+    "tone":{"type":"array"},
+    "ipa":{"type":"array"},
+    "ukrainian_candidates":{"type":"array"},
+    "selected_candidate":{"type":["string","null"]},
+    "sources":{"type":"array"},
+    "status":{"type":"string"}
+  },
+  "additionalProperties":true
+}
