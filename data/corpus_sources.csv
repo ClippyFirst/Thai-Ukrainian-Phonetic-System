@@ -1,0 +1,5 @@
+source_id,title,type,scope,annotation,license_or_access,notes
+CORP-CCOST,Chulalongkorn Corpus of Spoken Thai,phonetic_corpus,Standard Thai,orthography|word|syllable|phone|toneme,public landing page; access terms apply,49 speakers; approx 7h spontaneous + 5h controlled; 206-item monosyllabic list
+CORP-G2P-WIKI,Thai Grapheme to Phoneme Wiktionary Corpus,g2p_corpus,Thai,grapheme|IPA,CC-BY-SA-3.0,versioned TSV snapshots
+CORP-TNCII,Thai National Corpus II,text_corpus,Thai,text|frequency|collocation,access via Chulalongkorn interface,frequency and distribution validation rather than direct phonetic gold labels
+CORP-TTC,Thai Textbook Corpus,frequency_lexicon,Thai,text|frequency|syllable|morphology,public list,19494 word forms from a 3-million-word corpus
