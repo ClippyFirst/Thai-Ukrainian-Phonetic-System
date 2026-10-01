@@ -16,8 +16,23 @@ def _split_onset_coda(s,inv,vowel):
     # previously caused an IndexError in parse_syllable().
     if not vowel.get("explicit") and len(cs) == 1:
         return cs, None
-    if vowel.get("terminal_glide") and cs[-1] in {"ย","ว"}:
-        # ย/ว is part of the vowel-glide nucleus in these patterns.
+    # Some Thai rimes consume more than one consonant grapheme, e.g. เกียว
+    # consumes ย+ว as part of /iaw/. Never let nucleus graphemes leak back
+    # into onset/coda classification.
+    consumed = {
+        "V-X-IAW":["ย","ว"], "V-X-UAJ":["ว","ย"],
+        "V-X-AJ":["ย"], "V-X-AW":["ว"], "V-X-IW":["ว"],
+        "V-X-UJ":["ย"], "V-X-EW":["ว"], "V-X-EW-L":["ว"],
+        "V-X-EAW":["ว"], "V-X-EY":["ย"], "V-X-OY":["ย"],
+        "V-X-OJ":["ย"], "V-X-AW-S":["ว"], "V-X-UEY":["ย"],
+    }.get(vowel.get("id"), [])
+    if consumed:
+        tmp=list(cs)
+        for ch in reversed(consumed):
+            if tmp and tmp[-1]==ch:
+                tmp.pop()
+        cs=tmp
+    if vowel.get("terminal_glide") and cs and cs[-1] in {"ย","ว"}:
         return cs[:-1],None
     vowel_chars=set("ะาิีึืุูเแโใไำั็")
     last_v=max((i for i,c in enumerate(s) if c in vowel_chars),default=-1)
