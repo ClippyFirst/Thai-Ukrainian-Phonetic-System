@@ -30,6 +30,13 @@ class PipelineTests(unittest.TestCase):
     def test_longest_match_iaw_glide(self):
         a=parse_syllable("เกียว"); self.assertEqual(a.vowel,"iaw"); self.assertEqual(a.vowel_id,"V-X-IAW"); self.assertIsNone(a.coda)
 
+    def test_preposed_glide_patterns(self):
+        cases=[("แล้ว","ɛːw"),("เร็ว","ew"),("เลย","ɤːj")]
+        for text,ipa in cases:
+            a=parse_syllable(text)
+            self.assertEqual(a.vowel,ipa,text)
+            self.assertIsNone(a.coda,text)
+
     def test_implicit_vowel_is_not_guessed(self):
         a=parse_syllable("คน")
         self.assertEqual(a.status,"unresolved:implicit-vowel")
