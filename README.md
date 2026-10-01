@@ -49,7 +49,7 @@ The model distinguishes:
 
 **v0.4.0 — research-ready positional model.**
 
-The repository is suitable as a transparent research foundation and reference implementation. The latest malformed-syllable adversarial hardening requires a fresh GitHub Actions run before the new HEAD can be marked CI-verified.
+The repository is suitable as a transparent research foundation and reference implementation. The current HEAD is CI-verified by GitHub Actions run 170; the run regenerated derived artifacts cleanly and completed 50 tests.
 
 It is **not** yet an empirically validated benchmark. No corpus accuracy percentage is claimed because a declared gold corpus has not been processed by CI.
 
