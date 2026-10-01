@@ -4,7 +4,7 @@
 
 **v0.4.0 — research-ready positional model.**
 
-The repository is designed as a coherent research software foundation: source tables are separated from derived artifacts, the transformation layers are explicit, and validation is deterministic. A fresh CI run is required for the latest HEAD.
+The repository is designed as a coherent research software foundation: source tables are separated from derived artifacts, the transformation layers are explicit, and validation is deterministic. The latest HEAD has a successful GitHub Actions CI run.
 
 ## Gate A — structural reproducibility
 
@@ -74,7 +74,7 @@ A clean checkout is release-ready when:
 4. schemas and documentation agree with the implementation;
 5. no empirical claim exceeds the evidence actually processed.
 
-A previous CI run completed successfully before the latest adversarial hardening. The current release must not claim that older run as validation of the newer commits.
+A previous CI run completed successfully before the latest adversarial hardening. The current HEAD is CI-verified by GitHub Actions run 156; the successful run covered regeneration checks and the full 44-test suite.
 
 ## What would change the status
 
@@ -105,3 +105,9 @@ The carrier `อ` is no longer licensed as a final coda in the core consonant in
 ## Adversarial audit extension — complex-onset licensing
 
 A further parser audit identified a higher-risk false-positive class: treating every adjacent consonant sequence before a vowel as a complex onset. Standard Thai descriptions restrict the second member of complex onsets; the implementation now licenses the declared core cluster structure and otherwise returns an unresolved segmentation status rather than inventing a cluster. The adversarial suite now includes `กล้า` as a licensed cluster and `แสดง` as a deliberately unresolved nonconforming sequence when supplied as a single syllable. This change is a precision/safety improvement, not an empirical accuracy claim.
+
+
+## CI verification — current HEAD
+
+Current HEAD: `812334f23eae12150b3dd517b0f3110490722283`.
+GitHub Actions run **156** completed successfully. The workflow regenerated the derived artifacts without diff and completed the full test suite (**44 tests**).
