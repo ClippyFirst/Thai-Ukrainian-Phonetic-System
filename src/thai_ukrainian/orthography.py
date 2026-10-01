@@ -39,8 +39,16 @@ def normalize_thai(text:str)->str:
 
 def decompose_thai(text:str)->list[dict]:
     s=normalize_thai(text)
-    return [{"char":c,"codepoint":f"U+{ord(c):04X}","name":unicodedata.name(c,"UNKNOWN"),
-             "category":unicodedata.category(c),"index":i} for i,c in enumerate(s)]
+    out=[]
+    for i,c in enumerate(s):
+        role="other"
+        if 0x0E01<=ord(c)<=0x0E2E: role="consonant"
+        elif c in TONE_CHARS: role="tone_mark"
+        elif c in "ะาิีึืุูเแโใไำั็": role="vowel_sign"
+        elif c=="์": role="silent_mark"
+        out.append({"char":c,"codepoint":f"U+{ord(c):04X}","name":unicodedata.name(c,"UNKNOWN"),
+                    "category":unicodedata.category(c),"index":i,"role":role})
+    return out
 
 def tone_mark(text:str)->str|None:
     return next((TONE_MARKS[c] for c in text if c in TONE_MARKS),None)
@@ -58,7 +66,7 @@ def detect_vowel(text:str):
         p=pattern.replace("-","")
         if p and p in s:
             return {"pattern":pattern,"ipa":ipa,"length":length,"id":vid,"explicit":True,"terminal_glide":glide}
-    x=s.replace("อ","")
+    x="".join(c for c in s if not (0x0E01<=ord(c)<=0x0E2E))
     sequence_patterns=[
         ("เ"+"ี"+"ยะ","ia","short","V-19"),("เ"+"ี"+"ย","iaː","long","V-20"),
         ("เ"+"ื"+"อะ","ɯa","short","V-21"),("เ"+"ื"+"อ","ɯaː","long","V-22"),
