@@ -41,5 +41,5 @@ TH-C-039,ษ,U+0E29,high,s,t,true,
 TH-C-040,ส,U+0E2A,high,s,t,true,
 TH-C-041,ห,U+0E2B,high,h,,false,
 TH-C-042,ฬ,U+0E2C,low,l,n,true,
-TH-C-043,อ,U+0E2D,mid,ʔ,,true,carrier/null onset
+TH-C-043,อ,U+0E2D,mid,ʔ,,true,carrier
 TH-C-044,ฮ,U+0E2E,low,h,,false,
