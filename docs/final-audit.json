@@ -5,11 +5,13 @@
   "tone_categories": 5,
   "formal_tone_rules": 15,
   "provenance_sources": 4,
-  "repository_files_audited": 47,
-  "generated_syllable_structures": "not yet generated",
-  "lexically_attested_forms": "not yet measured",
+  "phonotactic_records": 4,
+  "correspondence_records": 21,
   "validated_examples": 12,
   "test_files": 3,
+  "generated_syllable_structures": "not yet generated",
+  "lexically_attested_forms": "not yet measured",
+  "repository_tree_entries_at_audit": 50,
   "status": "research-foundation",
   "ci_status_at_audit": "queued; result not yet verified"
 }
