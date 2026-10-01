@@ -68,6 +68,8 @@ def detect_vowel(text:str):
     # generic preposed-vowel patterns. Otherwise เกา would be truncated to
     # เ- and เกียว to เ-ีย before the final glide is considered.
     sequence_patterns=[
+        (rf"เ{c}ย","ɤːj","long","V-X-EY"),
+        (rf"โ{c}ย","oːj","long","V-X-OJ"),
         (rf"เ{c}ือย","ɯaj","long","V-X-UEY"), (rf"เ{c}อย","ɤːj","long","V-X-EY"),
         (rf"โ{c}อย","oːj","long","V-X-OJ"), (rf"เ{c}ียว","iaw","long","V-X-IAW"),
         (rf"เ{c}็ว","ew","short","V-X-EW"), (rf"เ{c}ว","eːw","long","V-X-EW-L"),
