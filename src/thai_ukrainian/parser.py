@@ -57,10 +57,16 @@ def parse_syllable(syllable:str)->SyllableAnalysis:
             else ("dead" if v["length"]=="short" else "live")
         )
     warnings=[]
-    if not v["explicit"]:warnings.append("Implicit vowel inferred; lexical or morphological validation required.")
+    # onset_class is the first written consonant; tone_class is the consonant class used by the tone rule.
+    if len(onset) >= 2:
+        second_ipa = inv[onset[1]].onset_ipa
+        tone_class = first.class_ if second_ipa in {"m","n","ŋ","j","w","r","l"} else inv[onset[1]].class_
+    else:
+        tone_class = first.class_
+    if not v["explicit"]:warnings.append("Implicit vowel detected but unresolved; lexical or morphological validation required.")
     if "์" in s:warnings.append("Thanthakhat/silent-mark construction detected; lexical parsing required.")
     if "ห" in s and len(cs)>1 and cs[0]=="ห":warnings.append("ห นำ construction detected; class-changing analysis required.")
     if "รร" in s:warnings.append("รร construction detected; contextual interpretation required.")
     return SyllableAnalysis(input=syllable,normalized=s,grapheme_order=[x["char"] for x in decompose_thai(s)],
-        onset=onset,onset_class=first.class_,vowel=v["ipa"],vowel_id=v["id"],vowel_length=v["length"],
+        onset=onset,onset_class=first.class_,tone_class=tone_class,vowel=v["ipa"],vowel_id=v["id"],vowel_length=v["length"],
         coda=coda,coda_ipa=coda_ipa,tone_mark=tone_mark(s),live_dead=live_dead,warnings=warnings,status=status)
