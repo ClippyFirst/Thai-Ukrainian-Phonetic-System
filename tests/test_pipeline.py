@@ -30,6 +30,13 @@ class PipelineTests(unittest.TestCase):
     def test_longest_match_iaw_glide(self):
         a=parse_syllable("เกียว"); self.assertEqual(a.vowel,"iaw"); self.assertEqual(a.vowel_id,"V-X-IAW"); self.assertIsNone(a.coda)
 
+    def test_implicit_vowel_is_not_guessed(self):
+        a=parse_syllable("คน")
+        self.assertEqual(a.status,"unresolved:implicit-vowel")
+        self.assertIsNone(a.vowel)
+        self.assertIsNone(a.phonemic_ipa)
+        self.assertEqual(a.coda,"น")
+
     def test_invalid_tone_is_structured(self):
         a=analyze_syllable("ก๊"); self.assertEqual(a.status,"invalid:tone-combination"); self.assertIsNone(a.tone); self.assertTrue(a.warnings)
 
