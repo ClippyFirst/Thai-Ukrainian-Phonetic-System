@@ -1,6 +1,10 @@
 {
   "consonant_graphemes": 44,
-  "classes": {"mid": 9, "high": 11, "low": 24},
+  "classes": {
+    "mid": 9,
+    "high": 11,
+    "low": 24
+  },
   "csv_records": {
     "consonants": 44,
     "sources": 6,
