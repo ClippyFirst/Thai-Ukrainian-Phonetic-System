@@ -10,8 +10,10 @@ def main():
       "vowel_records":count("vowels.csv"),
       "tone_marks":count("tone_marks.csv"),
       "tone_categories":count("tones.csv"),
-      "rules":count("rules.csv"),
-      "sources":count("sources.csv"),
+      "formal_tone_rules":count("rules.csv"),
+      "provenance_sources":count("sources.csv"),
+      "phonotactic_records":count("phonotactics.csv"),
+      "correspondence_records":count("correspondences.csv"),
       "generated_syllable_structures":"not yet generated",
       "validated_examples":"core rule unit tests",
       "status":"research-foundation"
