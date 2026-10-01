@@ -28,6 +28,16 @@ class CoreTests(unittest.TestCase):
         ]
         for args in cases:self.assertEqual(determine_tone(*args[:-1]).tone,args[-1],args)
 
+    def test_parser_vowel_ids_are_declared(self):
+        import csv
+        from pathlib import Path
+        root=Path(__file__).resolve().parents[1]
+        with (root/"data"/"thai"/"vowels.csv").open(encoding="utf-8",newline="") as f:
+            ids={r["id"] for r in csv.DictReader(f)}
+        for text in ["เกีย","เกา","เกียว","แล้ว","เร็ว","เลย","ขาย","เอย","อุย"]:
+            parsed=parse_syllable(text)
+            self.assertIn(parsed.vowel_id,ids,text)
+
     def test_correspondence_inventory_matches_consonants(self):
         import csv
         from pathlib import Path
