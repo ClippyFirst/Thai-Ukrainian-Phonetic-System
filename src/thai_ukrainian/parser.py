@@ -13,7 +13,7 @@ def _split_onset_coda(s,inv,vowel):
     if not cs:return [],None
     if vowel.get("terminal_glide") and cs[-1] in {"ย","ว"}:
         # ย/ว is part of the vowel-glide nucleus in these patterns.
-        return cs,None
+        return cs[:-1],None
     vowel_chars=set("ะาิีึืุูเแโใไำั็")
     last_v=max((i for i,c in enumerate(s) if c in vowel_chars),default=-1)
     last_c=max((i for i,c in enumerate(s) if c in inv),default=-1)
