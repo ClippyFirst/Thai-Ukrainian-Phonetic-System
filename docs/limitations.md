@@ -1,20 +1,17 @@
-# Limitations and research backlog
+# Limitations
 
-This is the initial research foundation, not the final publication dataset.
+The repository is a research-grade foundation, but the following are deliberately not claimed complete:
 
-Outstanding work:
+- exhaustive Thai lexical segmentation;
+- exhaustive implicit-vowel grammar;
+- complete ห นำ and class-changing grammar;
+- complete รร analysis;
+- all silent-letter and thanthakhat constructions;
+- connected-speech phonetics;
+- corpus frequency and lexical coverage;
+- calibrated probabilities;
+- a validated single Ukrainian spelling for every Thai input.
 
-- full vowel grapheme parser;
-- implicit-vowel grammar;
-- leading-class constructions such as ห นำ;
-- รร and special orthographic patterns;
-- lexical and morphological segmentation;
-- complete surface IPA generation;
-- connected-speech rules;
-- direct feature-level adapter to Ukrainian-Phonetic-Inventory;
-- calibrated candidate ranking;
-- corpus-attested validation;
-- competing-analysis records with claim-level provenance;
-- expert Thai and Ukrainian linguistic review.
+The deterministic feature ranker does not produce probabilities. A low distance means only lower cost under the declared feature metric.
 
-The repository deliberately exposes these gaps instead of manufacturing precision.
+A future corpus must be used to estimate weights and ambiguity empirically.
