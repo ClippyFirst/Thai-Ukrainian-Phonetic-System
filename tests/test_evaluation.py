@@ -1,4 +1,6 @@
 import json
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -6,7 +8,7 @@ from pathlib import Path
 from thai_ukrainian.evaluation import load_records, evaluate_records
 
 
-class EvaluationTests(unittest.TestCase):
+class EvaluationTestsclass EvaluationCliTests(unittest.TestCase):
     def test_loads_jsonl_records(self):
         with tempfile.TemporaryDirectory() as d:
             p = Path(d) / "gold.jsonl"
