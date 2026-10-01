@@ -14,3 +14,4 @@ T-HIGH-THO,tone,high+any+mai_tho,falling,core,SRC-JIPA-1993
 T-LOW-THO,tone,low+any+mai_tho,high,core,SRC-JIPA-1993
 T-MID-TRI,tone,mid+any+mai_tri,high,core,SRC-JIPA-1993
 T-MID-CHATTAWA,tone,mid+any+mai_chattawa,rising,core,SRC-JIPA-1993
+ORTH-H-NAM,orthography,high ห + low-single onset,lower onset becomes effective onset while high-class environment remains for tone,implemented,SRC-ORST
