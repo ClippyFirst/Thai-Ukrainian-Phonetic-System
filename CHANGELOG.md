@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.0] - 2026-10-01
+
+- Added explicit word analysis with syllable positions: standalone, initial, medial, final.
+- Added positional regression tests.
+- Added a documented methodological boundary: automatic Thai word/syllable segmentation is not silently guessed.
+- Preserved the distinction between positional metadata and position-dependent phonological rules.
+
+
 ## 0.3.0 — 2026-10-01
 
 ### Added
