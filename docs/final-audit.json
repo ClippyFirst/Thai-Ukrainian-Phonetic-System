@@ -1,0 +1,15 @@
+{
+  "consonant_graphemes": 44,
+  "vowel_records": 24,
+  "tone_marks_including_null": 5,
+  "tone_categories": 5,
+  "formal_tone_rules": 15,
+  "provenance_sources": 4,
+  "repository_files_audited": 47,
+  "generated_syllable_structures": "not yet generated",
+  "lexically_attested_forms": "not yet measured",
+  "validated_examples": 12,
+  "test_files": 3,
+  "status": "research-foundation",
+  "ci_status_at_audit": "queued; result not yet verified"
+}
