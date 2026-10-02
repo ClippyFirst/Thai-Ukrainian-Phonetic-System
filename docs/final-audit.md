@@ -138,7 +138,7 @@ These are now explicit **evidence gates**, not missing software interfaces.
 
 ## CI verification — current HEAD
 
-Current main merge HEAD: `a84e135803fdead62334cfa5383a5210b1a818f0`.
+Current main HEAD: `8ead1ed3307b4d24ed198375483616360966f098`.
 The final completion content was verified by GitHub Actions run **213** on the clean completion branch immediately before merge; generated artifacts were synchronized and the full test suite completed with **57 tests**.
 
 
