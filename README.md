@@ -95,6 +95,20 @@ See:
 - Evidence registry: docs/evidence.md
 - Final audit: docs/final-audit.md
 
+## User interface
+
+The research core is also available as an installable `thai-ua` CLI with single-input analysis, TXT/CSV/TSV/XLSX batch processing and a local JSON API. Excel support is optional: `pip install -e ".[excel]"`.
+
+Examples:
+
+```powershell
+thai-ua analyze "กา"
+thai-ua batch words.csv -c thai -o results.xlsx
+thai-ua serve
+```
+
+See `docs/cli-batch-api.md` for the complete CLI and API reference.
+
 ## Reproducibility
 
 From a clean Python environment:
