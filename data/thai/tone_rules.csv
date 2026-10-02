@@ -1,0 +1,16 @@
+tone_mark,tone_class,live_dead,vowel_length,tone,contour_ipa,rule_id,evidence_status
+none,mid,live,*,mid,˧,T-MID-LIVE-NONE,core
+none,high,live,*,rising,˩˥,T-HIGH-LIVE-NONE,core
+none,low,live,*,mid,˧,T-LOW-LIVE-NONE,core
+none,mid,dead,*,low,˩,T-MID-DEAD-NONE,core
+none,high,dead,*,low,˩,T-HIGH-DEAD-NONE,core
+none,low,dead,short,high,˥,T-LOW-DEAD-SHORT,core
+none,low,dead,long,falling,˥˩,T-LOW-DEAD-LONG,core
+mai_ek,mid,*,*,low,˩,T-MID-EK,core
+mai_ek,high,*,*,low,˩,T-HIGH-EK,core
+mai_ek,low,*,*,falling,˥˩,T-LOW-EK,core
+mai_tho,mid,*,*,falling,˥˩,T-MID-THO,core
+mai_tho,high,*,*,falling,˥˩,T-HIGH-THO,core
+mai_tho,low,*,*,high,˥,T-LOW-THO,core
+mai_tri,mid,*,*,high,˥,T-MID-TRI,core
+mai_chattawa,mid,*,*,rising,˩˥,T-MID-CHATTAWA,core
