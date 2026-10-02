@@ -9,16 +9,7 @@ THAI = ROOT / "data" / "thai"
 OUT = ROOT / "data" / "derived"
 MARKS = {"": None, "่": "mai_ek", "้": "mai_tho", "๊": "mai_tri", "๋": "mai_chattawa"}
 
-UA_SEGMENTS = {
-    "tɕʰ": "ч", "tɕ": "ч", "pʰ": "п", "tʰ": "т", "kʰ": "к",
-    "p": "п", "b": "б", "m": "м", "f": "ф", "t": "т", "d": "д",
-    "n": "н", "s": "с", "r": "р", "l": "л", "k": "к", "ŋ": "н",
-    "h": "х", "w": "в", "j": "й", "ʔ": "",
-    "iː": "і", "i": "і", "eː": "е", "e": "е", "ɛː": "е", "ɛ": "е",
-    "aː": "а", "a": "а", "uː": "у", "u": "у", "oː": "о", "o": "о",
-    "ɔː": "о", "ɔ": "о", "ɯː": "и", "ɯ": "и", "ɤː": "и", "ɤ": "и",
-}
-
+from thai_ukrainian.ua_orthography import candidates_for_ipa
 def rows(name: str):
     with (THAI / name).open(encoding="utf-8", newline="") as f:
         return list(csv.DictReader(f))
@@ -62,17 +53,8 @@ def tone_for(rules, cls, ld, length, mark):
     return None
 
 def ua_from_ipa(ipa: str) -> str:
-    keys = sorted(UA_SEGMENTS, key=len, reverse=True)
-    out, i = [], 0
-    while i < len(ipa):
-        for k in keys:
-            if ipa.startswith(k, i):
-                out.append(UA_SEGMENTS[k])
-                i += len(k)
-                break
-        else:
-            return ""
-    return "".join(out)
+    candidates = candidates_for_ipa(ipa, limit=1)
+    return candidates[0] if candidates else ""
 
 def build():
     cons, vows, rules = rows("consonants.csv"), rows("vowels.csv"), rows("tone_rules.csv")
