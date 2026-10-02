@@ -14,4 +14,24 @@ jobs:
       - run: python scripts/generate_derived.py
       - run: python scripts/generate_syllable_space.py
       - run: git diff --exit-code -- docs/generated-audit.json docs/syllable-space.json docs/source-final-manifest.json
+      - run: python scripts/generate_master_table.py
       - run: python -m unittest discover -s tests -v
+  master-artifact:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - run: python scripts/generate_master_table.py
+      - run: python -c "import json; m=json.load(open('data/derived/thai_ukrainian_master.json',encoding='utf-8')); assert m['rows']==343200"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: thai-ukrainian-master-table
+          path: |
+            data/derived/thai_ukrainian_master.csv
+            data/derived/thai_ukrainian_master_2col.csv
+            data/derived/thai_ukrainian_master.json
+          if-no-files-found: error

@@ -140,3 +140,8 @@ Use the repository's CITATION.cff. The software is released under the MIT Licens
 ## Final principle
 
 A result is only called **empirical** when it has a named/versioned evidence source and an explicit evaluation denominator. Structural generation, heuristic candidate ranking and documented linguistic rules are valuable research components, but they are not substitutes for corpus validation.
+
+
+## Master correspondence table
+
+The repository can deterministically generate an exhaustive structural Thai → Ukrainian master table using the IPA-first pipeline. It contains 343,200 structural rows from 44 initial graphemes, 40 vowel/rime records, 38 coda options plus open syllables, and 5 tone-mark states. The downloadable generated artifacts are attached to the **master-artifact** CI job; see `docs/master-correspondence-table.md` for semantics and limitations.
