@@ -1,0 +1,9 @@
+rule_id,pattern,construction,analysis_status,candidate_ipa,notes,source_ids
+SP-RR-001,รร,รร construction,analysis-dependent,a|aː|an|am,Surface realization depends on lexical/morphological environment; do not force a single parse.,SRC-ORST
+SP-RUE-001,ฤ,ฤ vowel-letter,analysis-dependent,rɯ|ri|rɤ,Historical/learned vocabulary can have different realizations; lexical evidence required.,SRC-ORST
+SP-RUE-LONG-001,ฤๅ,ฤๅ vowel-letter,analysis-dependent,rɯː,Long counterpart; lexical evidence remains relevant.,SRC-ORST
+SP-LUE-001,ฦ,ฦ vowel-letter,analysis-dependent,lɯ,Very rare/learned spelling; retain as explicit special construction.,SRC-ORST
+SP-LUE-LONG-001,ฦๅ,ฦๅ vowel-letter,analysis-dependent,lɯː,Very rare/learned spelling; retain as explicit special construction.,SRC-ORST
+SP-KARAN-001,์,thanthakhat,analysis-dependent,∅,Silences preceding material but exact scope is lexical; never silently delete without evidence.,SRC-ORST
+SP-THR-001,ทร,ทร lexical pronunciation,analysis-dependent,s|tʰr,Some lexical items have /s/ rather than the compositional cluster; lexicon evidence required.,SRC-ORST
+SP-O-NAM-001,อย,อ นำ,analysis-dependent,j,Lexical leading อ construction; tone environment and effective onset must be distinguished.,SRC-ORST
