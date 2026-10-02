@@ -2,7 +2,7 @@
 
 ## Release
 
-**v0.4.0 — research-ready positional model.**
+**v0.4.0 — research-ready phonetic-grahemic model with completed software layers.**
 
 The repository is designed as a coherent research software foundation: source tables are separated from derived artifacts, the transformation layers are explicit, and validation is deterministic. The current HEAD has a successful GitHub Actions CI run.
 
@@ -74,7 +74,7 @@ A clean checkout is release-ready when:
 4. schemas and documentation agree with the implementation;
 5. no empirical claim exceeds the evidence actually processed.
 
-A previous CI run completed successfully before the latest adversarial hardening. The current HEAD is CI-verified by GitHub Actions run 170. The successful run regenerated derived artifacts cleanly and completed 50 tests, including the malformed-surface and preposed-vowel leading-cluster probes.
+The clean completion branch was verified by GitHub Actions run 213. The run regenerated derived artifacts cleanly, passed the source→parser→derived integrity gate, and completed **57 tests**, including the completion-layer special-orthography, lexicon-interface and Ukrainian-output probes. The documentation-only synchronization was separately verified by run 219 before the final merge into `main`. The resulting main merge HEAD is `075b009a07b129260f77d598503719bef0aee366`.
 
 ## What would change the status
 
