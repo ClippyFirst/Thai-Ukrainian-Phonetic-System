@@ -2,7 +2,7 @@
   "$schema":"https://json-schema.org/draft/2020-12/schema",
   "title":"ThaiUkrainianSyllableAnalysis",
   "type":"object",
-  "required":["input","normalized","grapheme_order","onset","onset_class","tone_class","vowel","vowel_id","vowel_length","coda","coda_ipa","tone_mark","live_dead","tone","phonemic_ipa","phonetic_ipa","ukrainian_candidates","selected_candidate","rules_applied","warnings","status","sources"],
+  "required":["input","normalized","grapheme_order","onset","onset_class","tone_class","vowel","vowel_id","vowel_length","coda","coda_ipa","tone_mark","live_dead","tone","phonemic_ipa","phonetic_ipa","ukrainian_candidates","selected_candidate","rules_applied","warnings","status","sources","special_analyses","ukrainian_orthography_candidates","selected_ukrainian_orthography"],
   "properties":{
     "input":{"type":"string"},
     "normalized":{"type":"string"},
@@ -50,7 +50,10 @@
     "rules_applied":{"type":"array","items":{"type":"string"}},
     "warnings":{"type":"array","items":{"type":"string"}},
     "status":{"type":"string"},
-    "sources":{"type":"array","items":{"type":"string"}}
+    "sources":{"type":"array","items":{"type":"string"}},
+    "special_analyses":{"type":"array","items":{"type":"object","required":["rule_id","construction","status","candidate_ipa","notes"],"properties":{"rule_id":{"type":"string"},"construction":{"type":"string"},"status":{"type":"string"},"candidate_ipa":{"type":"string"},"notes":{"type":"string"}},"additionalProperties":false}},
+    "ukrainian_orthography_candidates":{"type":"array","items":{"type":"string"}},
+    "selected_ukrainian_orthography":{"type":["string","null"]}
   },
   "additionalProperties":false
 }
