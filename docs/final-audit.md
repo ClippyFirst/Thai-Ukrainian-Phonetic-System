@@ -138,8 +138,8 @@ These are now explicit **evidence gates**, not missing software interfaces.
 
 ## CI verification — current HEAD
 
-Current HEAD: `56e98433f16e5d267cd0e357f9d572b78256535f`.
-GitHub Actions run **170** completed successfully. The workflow regenerated the derived artifacts without diff and completed the full test suite (**50 tests**).
+Current main merge HEAD: `a84e135803fdead62334cfa5383a5210b1a818f0`.
+The final completion content was verified by GitHub Actions run **213** on the clean completion branch immediately before merge; generated artifacts were synchronized and the full test suite completed with **57 tests**.
 
 
 ## Adversarial audit extension — malformed syllable surfaces

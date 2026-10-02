@@ -54,7 +54,7 @@ The model distinguishes:
 
 **v0.4.0 — research-ready phonetic-grahemic model with completed software layers.**
 
-The repository is suitable as a transparent research foundation and reference implementation. The completion branch adds machine-readable tone rules, special-orthography analysis, external lexical segmentation support, a Ukrainian orthographic candidate layer, and source→parser→derived consistency checks. Final release status is gated on a fresh CI run after merge.
+The repository is suitable as a transparent research foundation and reference implementation. The completion branch adds machine-readable tone rules, special-orthography analysis, external lexical segmentation support, a Ukrainian orthographic candidate layer, and source→parser→derived consistency checks. The merged completion content was verified by GitHub Actions run 213 on the clean release branch; the final audit records the resulting main merge HEAD.
 
 It is **not** yet an empirically validated benchmark. No corpus accuracy percentage is claimed because a declared gold corpus has not been processed by CI.
 
