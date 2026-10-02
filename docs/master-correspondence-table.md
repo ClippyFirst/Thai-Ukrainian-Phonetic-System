@@ -1,42 +1,65 @@
 # Thai → Ukrainian master correspondence table
 
-## Principle
+## Core principle: ІРА / IPA-first
 
-The table is **IPA-first**:
+The master table does **not** collapse Thai into a character-to-character substitution.
 
-Thai orthography → graphemic/phonological analysis → IPA → Ukrainian approximation.
+The mandatory representation chain is:
 
-The Ukrainian column is not character-for-character substitution and not semantic translation. It is a project-defined phonetic/phonological approximation derived from IPA. Thus Thai /ŋ/ may be rendered approximately as Ukrainian **н** in this layer without claiming that /ŋ/ and /n/ are identical.
+**Thai orthography → graphemic analysis → syllable structure → phonology → tone → surface phonetics → IPA → Ukrainian phonetic target → Ukrainian phonology → Ukrainian orthography.**
+
+Here **ІРА means IPA (International Phonetic Alphabet / МФА)** as the central phonetic intermediate representation. Tone remains a separate suprasegmental layer; it is not folded into segment identity.
+
+The Ukrainian column is therefore a **phonetic/phonological approximation**, not semantic translation and not an official Ukrainian transliteration standard. A Ukrainian rendering is only generated from the IPA layer, never directly from the Thai grapheme.
 
 ## Exhaustive scope
 
-The master artifact exhaustively enumerates the repository's declared structural combinatorial space:
+The generator enumerates the repository's declared structural space:
 
-44 initial graphemes × 40 vowel/rime records × (1 + 38 coda options) × 5 tone-mark states = **343,200 rows**.
+**44 initial graphemes × 40 vowel/rime records × (1 + 38 coda options) × 5 tone-mark states = 343,200 rows.**
 
-This is a structural enumeration, not a lexicon. A row can be structurally enumerable while still being orthographically constrained, phonotactically unavailable, non-lexical, or unresolved.
+This is exhaustive **within the declared structural model**. It is not a claim that 343,200 lexical Thai syllables exist.
 
-## Artifacts
+Each row is re-parsed by the same research pipeline. The table therefore retains disagreements rather than silently forcing a result.
 
-- `data/derived/thai_ukrainian_master.csv` — audit/research table with IPA, tone, Ukrainian approximation, status and provenance.
-- `data/derived/thai_ukrainian_master_2col.csv` — simple presentation view: `Thai | Ukrainian`.
-- `data/derived/thai_ukrainian_master.json` — generation manifest and status counts.
+## Files
 
-The two-column file is deliberately derived from the same generator as the rich artifact. The full CSV is emitted as a GitHub Actions artifact rather than committed to git, keeping the source repository reviewable while preserving a reproducible downloadable table.
+- `data/derived/thai_ukrainian_master.csv` — rich audit table.
+- `data/derived/thai_ukrainian_master_2col.csv` — exactly the requested presentation view: **Thai | Ukrainian**.
+- `data/derived/thai_ukrainian_master.json` — cardinality and status manifest.
 
-## Status
+The large CSVs are generated in CI and published as the `thai-ukrainian-master-table` artifact rather than hand-maintained in git.
 
-- `tone-resolvable-structural`: the declared tone-rule registry resolves the generated tone.
-- `structural-tone-unresolved`: no declared tone rule resolves the generated tone-mark/class/live-dead combination.
+## Rich-table semantics
 
-Neither status establishes lexical or corpus attestation.
+The rich table keeps:
+
+- Thai surface;
+- onset grapheme and vowel-record provenance;
+- coda grapheme;
+- tone mark and resolved phonological tone;
+- IPA;
+- Ukrainian approximation;
+- parser revalidation status;
+- explicit non-attestation status.
+
+This makes the two-column table convenient while preserving an inspectable research representation.
+
+## Status discipline
+
+A structural row can be:
+
+- successfully revalidated;
+- unresolved because the generated orthography does not license a deterministic analysis;
+- invalid because the generated combination violates a declared rule;
+- generation-mismatch when the generated surface does not round-trip to the intended IPA/tone.
+
+No row is called lexical or corpus-attested without an external evidence source and an explicit denominator.
 
 ## Reproducibility
-
-Run:
 
 ```bash
 python scripts/generate_master_table.py
 ```
 
-The generator reads the machine-readable consonant, vowel and tone-rule registries; there is no hand-maintained 343,200-row substitution list.
+The generator reads the machine-readable Thai registries and derives the table. There is no hand-written 343,200-row lookup list.
