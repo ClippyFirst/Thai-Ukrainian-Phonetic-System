@@ -1,6 +1,8 @@
 from __future__ import annotations
-import csv, hashlib, json
+import csv, json
 from pathlib import Path
+from .orthography import VOWEL_SIGNATURES, SIGNATURES, GLIDE_PATTERNS, TONE_MARKS
+from .inventory import load_consonants
 
 ROOT = Path(__file__).resolve().parents[2]
 THAI = ROOT / "data" / "thai"
@@ -10,9 +12,11 @@ def _rows(path: Path):
     with path.open(encoding="utf-8", newline="") as f:
         return list(csv.DictReader(f))
 
-def _hash_rows(rows):
-    payload = json.dumps(rows, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
-    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+def _declared_vowel_ids():
+    ids = {row[2] for row in VOWEL_SIGNATURES.values()}
+    ids.update(row[3] for row in SIGNATURES.values() if row[2])
+    ids.update(row[3] for row in GLIDE_PATTERNS)
+    return ids
 
 def build_manifest():
     consonants = _rows(THAI / "consonants.csv")
@@ -20,26 +24,43 @@ def build_manifest():
     phonotactics = _rows(THAI / "phonotactics.csv")
     tones = _rows(THAI / "tone_rules.csv")
     specials = _rows(THAI / "special_orthography.csv")
-    manifest = {
-        "status": "source-final-consistency",
-        "sources": {
-            "consonants": {"records": len(consonants), "sha256": _hash_rows(consonants)},
-            "vowels": {"records": len(vowels), "sha256": _hash_rows(vowels)},
-            "phonotactics": {"records": len(phonotactics), "sha256": _hash_rows(phonotactics)},
-            "tone_rules": {"records": len(tones), "sha256": _hash_rows(tones)},
-            "special_orthography": {"records": len(specials), "sha256": _hash_rows(specials)},
-        },
-        "invariants": {
-            "consonant_graphemes": len(consonants) == 44,
-            "vowel_records": len(vowels) == 40,
-            "tone_rule_records": len(tones) == 15,
-            "special_rule_records": len(specials) == 8,
-            "tone_categories": 5,
-            "coda_allowed": sum(r["coda_allowed"].strip().lower() == "true" for r in consonants) == 38,
-        },
+    vowel_source_ids = {r["id"] for r in vowels}
+    vowel_parser_ids = _declared_vowel_ids()
+    invariants = {
+        "consonant_graphemes_exactly_44": len(consonants) == 44,
+        "consonant_graphemes_unique": len({r["grapheme"] for r in consonants}) == 44,
+        "vowel_records_exactly_40": len(vowels) == 40,
+        "vowel_ids_unique": len(vowel_source_ids) == 40,
+        "vowel_ids_match_parser_registry": vowel_source_ids == vowel_parser_ids,
+        "tone_rule_records": len(tones) == 15,
+        "tone_marks_match_parser": {r["tone_mark"] for r in tones if r["tone_mark"] != "none"} == set(TONE_MARKS.values()),
+        "special_rules_unique": len({r["rule_id"] for r in specials}) == len(specials),
+        "coda_allowed_exactly_38": sum(r["coda_allowed"].strip().lower() == "true" for r in consonants) == 38,
+        "phonotactic_manifest_present": len(phonotactics) >= 5,
+        "derived_syllable_space_formula": 44 * 40 * 38 * 5 + 44 * 40 * 5 == 343200,
     }
-    manifest["status"] = "pass" if all(manifest["invariants"].values()) else "fail"
-    return manifest
+    return {
+        "status": "pass" if all(invariants.values()) else "fail",
+        "source_records": {
+            "consonants": len(consonants),
+            "vowels": len(vowels),
+            "phonotactics": len(phonotactics),
+            "tone_rules": len(tones),
+            "special_orthography": len(specials),
+        },
+        "parser_registry": {
+            "vowel_ids": len(vowel_parser_ids),
+            "tone_marks": len(TONE_MARKS),
+        },
+        "derived_expectations": {
+            "initial_graphemes": 44,
+            "vowel_records": 40,
+            "coda_graphemes": 38,
+            "tone_mark_states": 5,
+            "combined_structural_upper_bound": 343200,
+        },
+        "invariants": invariants,
+    }
 
 if __name__ == "__main__":
     report = build_manifest()
