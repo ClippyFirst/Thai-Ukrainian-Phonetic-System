@@ -1,3 +1,12 @@
+
+- Moved tone rules into a machine-readable registry consumed by the tone engine.
+- Added explicit analysis-dependent handling for special Thai orthography.
+- Added an external lexicon adapter for evidence-backed syllable segmentation.
+- Added a project-defined Ukrainian orthographic candidate layer with tone kept separate.
+- Added source → parser → derived consistency checks and CI enforcement.
+- Added completion-layer adversarial tests.
+- # Changelog
+
 ## 2026-10-02 — v0.4.0 completion pass
 
 - Moved tone rules into a machine-readable registry consumed by the tone engine.
@@ -7,8 +16,6 @@
 - Added source → parser → derived consistency checks and CI enforcement.
 - Added completion-layer adversarial tests.
 - Final clean CI gate: run 213, 57 tests, generated artifacts synchronized.
-
-# Changelog
 
 ## [0.4.0] - 2026-10-01
 
