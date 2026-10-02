@@ -1,6 +1,15 @@
+from __future__ import annotations
+import csv
+from pathlib import Path
 from .models import ToneResult
 
+ROOT = Path(__file__).resolve().parents[2]
+RULES_PATH = ROOT / "data" / "thai" / "tone_rules.csv"
 TONE_IPA = {"mid": "˧", "low": "˩", "falling": "˥˩", "high": "˥", "rising": "˩˥"}
+
+def _load_rules():
+    with RULES_PATH.open(encoding="utf-8", newline="") as f:
+        return list(csv.DictReader(f))
 
 def classify_live_dead(vowel_length, coda_ipa, open_syllable=True):
     if coda_ipa in {"p", "t", "k", "ʔ"}:
@@ -11,24 +20,17 @@ def classify_live_dead(vowel_length, coda_ipa, open_syllable=True):
 
 def determine_tone(consonant_class, live_dead, vowel_length, tone_mark=None):
     mark = tone_mark or "none"
-    if mark == "mai_tri":
-        if consonant_class != "mid":
-            raise ValueError("mai tri is restricted to mid-class spellings in the standard rule system")
-        tone, rule = "high", "T-MID-TRI"
-    elif mark == "mai_chattawa":
-        if consonant_class != "mid":
-            raise ValueError("mai chattawa is restricted to mid-class spellings in the standard rule system")
-        tone, rule = "rising", "T-MID-CHATTAWA"
-    elif mark == "mai_ek":
-        tone, rule = {"mid": "low", "high": "low", "low": "falling"}[consonant_class], f"T-{consonant_class.upper()}-EK"
-    elif mark == "mai_tho":
-        tone, rule = {"mid": "falling", "high": "falling", "low": "high"}[consonant_class], f"T-{consonant_class.upper()}-THO"
-    elif live_dead == "live":
-        tone, rule = {"mid": "mid", "high": "rising", "low": "mid"}[consonant_class], f"T-{consonant_class.upper()}-LIVE-NONE"
-    elif consonant_class in {"mid", "high"}:
-        tone, rule = "low", f"T-{consonant_class.upper()}-DEAD-NONE"
-    elif vowel_length == "short":
-        tone, rule = "high", "T-LOW-DEAD-SHORT"
-    else:
-        tone, rule = "falling", "T-LOW-DEAD-LONG"
-    return ToneResult(tone, TONE_IPA[tone], rule)
+    for row in _load_rules():
+        if row["tone_mark"] != mark or row["tone_class"] != consonant_class:
+            continue
+        if row["live_dead"] not in {"*", live_dead}:
+            continue
+        if row["vowel_length"] not in {"*", vowel_length}:
+            continue
+        return ToneResult(row["tone"], row["contour_ipa"], row["rule_id"], row["evidence_status"])
+    if mark in {"mai_tri", "mai_chattawa"}:
+        raise ValueError(f"{mark} is restricted to mid-class spellings in the standard rule system")
+    raise ValueError(
+        f"No declared tone rule for class={consonant_class}, live_dead={live_dead}, "
+        f"vowel_length={vowel_length}, tone_mark={mark}"
+    )
