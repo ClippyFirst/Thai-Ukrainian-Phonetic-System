@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-02 — master correspondence table
+
+- Added deterministic IPA-first generation of the full declared structural space (343,200 rows).
+- Added a rich research CSV and a derived two-column `Thai | Ukrainian` presentation CSV.
+- Added a generation manifest and CI artifact publication; generated tables remain reproducible rather than being maintained as a hand-written lookup list.
+
 ## 2026-10-02 — v0.4.0 completion pass
 
 - Moved tone rules into a machine-readable registry consumed by the tone engine.
