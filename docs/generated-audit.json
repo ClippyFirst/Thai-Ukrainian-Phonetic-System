@@ -13,7 +13,9 @@
     "phonotactics": 6,
     "rules": 16,
     "tones": 5,
-    "vowels": 40
+    "vowels": 40,
+    "tone_rules": 15,
+    "special_orthography": 8
   },
   "status": "structural-pass",
   "scope_notes": {
