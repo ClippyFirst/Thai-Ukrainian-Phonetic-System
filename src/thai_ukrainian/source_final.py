@@ -14,7 +14,7 @@ def _rows(path: Path):
 
 def _declared_vowel_ids():
     ids = {row[2] for row in VOWEL_SIGNATURES.values()}
-    ids.update(row[3] for row in SIGNATURES.values() if row[2])
+    ids.update(row[2] for row in SIGNATURES.values() if row[2])
     ids.update(row[3] for row in GLIDE_PATTERNS)
     return ids
 
