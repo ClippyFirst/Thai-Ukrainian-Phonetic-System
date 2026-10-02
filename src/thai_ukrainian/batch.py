@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 from typing import Any, Iterable
 
-from .api import analyze_syllable, parse_thai
+from .api import parse_thai
 
 
 def analyze_input(text: str) -> dict[str, Any]:
@@ -177,7 +177,7 @@ def write_batch(results: list[dict[str, Any]], path: str | Path) -> None:
         write_json(results, path)
     elif suffix == ".csv":
         write_csv(results, path)
-    elif suffix in {".xlsx", ".xlsm"}:
+    elif suffix == ".xlsx":
         write_xlsx(results, path)
     else:
         raise ValueError("Supported batch outputs: .json, .jsonl, .csv, .xlsx")
