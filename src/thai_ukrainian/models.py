@@ -52,6 +52,9 @@ class SyllableAnalysis:
     warnings: list[str] = field(default_factory=list)
     status: str = "analyzed"
     sources: list[str] = field(default_factory=list)
+    special_analyses: list[dict[str, str]] = field(default_factory=list)
+    ukrainian_orthography_candidates: list[str] = field(default_factory=list)
+    selected_ukrainian_orthography: str | None = None
 
     def as_dict(self) -> dict[str, Any]:
         d=self.__dict__.copy()

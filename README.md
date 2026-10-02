@@ -34,6 +34,11 @@ The model distinguishes:
 - Broad phonological and conservative surface-phonetic layers.
 - Feature-distance Ukrainian candidate generation using the canonical Ukrainian target snapshot.
 - Evidence/provenance registry.
+- Machine-readable tone-rule registry consumed by the tone engine.
+- Explicit special-orthography analysis layer for lexical/context-dependent constructions.
+- External lexicon adapter for evidence-backed syllable segmentation.
+- Project-defined Ukrainian orthographic candidate layer with tone kept separate.
+- Generated source→parser→derived consistency manifest enforced by CI.
 - Structural combinatorial-space accounting.
 - Machine-readable analysis and corpus-record schemas.
 - Deterministic JSONL evaluation API and CLI.
@@ -47,21 +52,21 @@ The model distinguishes:
 
 ## Current release status
 
-**v0.4.0 — research-ready positional model.**
+**v0.4.0 — research-ready phonetic-grahemic model with completed software layers.**
 
-The repository is suitable as a transparent research foundation and reference implementation. The current HEAD is CI-verified by GitHub Actions run 170; the run regenerated derived artifacts cleanly and completed 50 tests.
+The repository is suitable as a transparent research foundation and reference implementation. The completion branch adds machine-readable tone rules, special-orthography analysis, external lexical segmentation support, a Ukrainian orthographic candidate layer, and source→parser→derived consistency checks. Final release status is gated on a fresh CI run after merge.
 
 It is **not** yet an empirically validated benchmark. No corpus accuracy percentage is claimed because a declared gold corpus has not been processed by CI.
 
-### Explicitly outside the current completion claim
+### Evidence-gated limitations
 
-- exhaustive lexical segmentation of arbitrary Thai text;
-- complete special orthography (รร, silent letters and all morphology-dependent cases);
-- connected-speech narrow phonetics;
-- corpus-calibrated probabilities;
-- universally validated Ukrainian orthographic output.
+- arbitrary Thai text still requires an external lexical segmentation source; the software does not invent word boundaries;
+- special orthography is represented conservatively as explicit analysis-dependent alternatives where lexical evidence is required;
+- connected-speech narrow phonetics still requires acoustic/phonetic evidence;
+- corpus-calibrated probabilities still require a gold dataset;
+- Ukrainian orthographic candidates are project-specific and not an official normative standard.
 
-These are research extensions, not hidden assumptions.
+These are evidence gates, not hidden software gaps.
 
 ## Quantitative accounting
 

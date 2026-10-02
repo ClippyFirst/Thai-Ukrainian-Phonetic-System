@@ -107,6 +107,35 @@ The carrier `อ` is no longer licensed as a final coda in the core consonant in
 A further parser audit identified a higher-risk false-positive class: treating every adjacent consonant sequence before a vowel as a complex onset. Standard Thai descriptions restrict the second member of complex onsets; the implementation now licenses the declared core cluster structure and otherwise returns an unresolved segmentation status rather than inventing a cluster. The adversarial suite now includes `กล้า` as a licensed cluster and `แสดง` as a deliberately unresolved nonconforming sequence when supplied as a single syllable. This change is a precision/safety improvement, not an empirical accuracy claim.
 
 
+## Completion pass — 2026-10-02
+
+The completion pass closes the remaining **software architecture layers** without pretending that unavailable empirical evidence is already measured.
+
+### Closed in implementation
+
+- tone rules are now machine-readable in `data/thai/tone_rules.csv` and loaded by the tone engine rather than being the sole source of truth in Python;
+- special orthography has an explicit registry covering `รร`, `ฤ/ฤๅ`, `ฦ/ฦๅ`, thanthakhat `์`, lexical `ทร`, and `อ นำ`; these cases produce explicit analysis-dependent candidates rather than silent forced IPA;
+- lexical segmentation has an explicit external-lexicon adapter; the system still refuses to invent word boundaries when no lexical evidence is supplied;
+- the Ukrainian layer now reaches a project-defined orthographic candidate output, while keeping tone separate and marking the output as a research candidate rather than an official Ukrainian standard;
+- a generated source→parser→derived manifest checks the 44 consonants, 40 vowel/rime records, parser vowel IDs, four tone marks/five tone states, 38 licensed coda graphemes and the 343,200 structural upper bound;
+- CI now checks that the generated source-final manifest and existing derived artifacts remain synchronized.
+
+### Initial-set vs final-set audit
+
+The authoritative inputs remain the machine-readable Thai inventories. The final layer is now checked against those inputs rather than only documenting aggregate counts. In particular, the 40 source vowel IDs must equal the IDs declared by the parser registry; the 44 consonant graphemes and 38 coda-capable graphemes are counted directly from the source table; and the structural syllable-space formula is independently asserted.
+
+### What is still deliberately empirical, not merely architectural
+
+The following cannot honestly be marked as empirically closed without gold data:
+
+- corpus accuracy and lexical coverage;
+- calibration of Ukrainian candidate probabilities;
+- adjudicated Ukrainian orthographic preference;
+- exhaustive connected-speech phonetics;
+- universal lexical/morphological coverage of every Thai spelling.
+
+These are now explicit **evidence gates**, not missing software interfaces.
+
 ## CI verification — current HEAD
 
 Current HEAD: `56e98433f16e5d267cd0e357f9d572b78256535f`.

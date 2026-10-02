@@ -3,6 +3,7 @@ from .tone import determine_tone
 from .phonology import phonologize,surface_phoneticize,ONSET_IPA,effective_onset
 from .correspondence import rank_ukrainian_candidates as _rank_candidates
 from .word import analyze_word
+from .ua_orthography import candidates_for_ipa
 
 def analyze_syllable(syllable:str):
     a=parse_syllable(syllable)
@@ -16,6 +17,10 @@ def analyze_syllable(syllable:str):
             a.status="invalid:tone-combination"
             a.warnings.append(str(exc))
     phonologize(a);surface_phoneticize(a)
+    if a.phonemic_ipa:
+        a.ukrainian_orthography_candidates=candidates_for_ipa(a.phonemic_ipa)
+        if a.ukrainian_orthography_candidates:
+            a.selected_ukrainian_orthography=a.ukrainian_orthography_candidates[0]
     onset=effective_onset(a)
     if onset:
         first=ONSET_IPA.get(onset[0])

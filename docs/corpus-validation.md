@@ -47,3 +47,13 @@ The command prints deterministic JSON and returns a non-zero exit code for malfo
 ## Current empirical status
 
 No third-party corpus is bundled or processed by CI. Therefore **corpus accuracy, lexical coverage and candidate calibration remain unmeasured** in the repository release. The infrastructure is ready for a licensed local evaluation.
+
+
+## Current software status
+
+The repository now also exposes:
+- an external TSV lexicon adapter for evidence-backed syllable segmentation;
+- explicit special-orthography candidate records;
+- project-defined Ukrainian orthographic candidates downstream of broad IPA.
+
+None of these additions turns an external corpus into gold automatically. Gold status still depends on a named source, version/access date, license and adjudication protocol.
