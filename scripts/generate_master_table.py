@@ -24,30 +24,27 @@ def rows(name: str):
         return list(csv.DictReader(f))
 
 def surface_for(onset: str, vowel: dict[str, str], coda: str | None, mark: str) -> str:
-    p = vowel["orthographic_pattern"]
+    p, vid = vowel["orthographic_pattern"], vowel["id"]
     special = {
-        "ไ/ใ": "ไ" + onset, "ำ": onset + "ำ",
-        "อ-ย": onset + "าย", "อ-ว": onset + "าว",
-        "อิ-ว": onset + "ิว", "อุ-ย": onset + "ุย",
-        "เ-็ว": "เ" + onset + "็ว", "เอ-ว": "เ" + onset + "ว",
-        "แ-ว": "แ" + onset + "ว", "เ-ย": "เ" + onset + "ย",
-        "โ-ย": "โ" + onset + "ย", "เ-า": "เ" + onset + "า",
-        "เ-ียว": "เ" + onset + "ียว", "อัว-ย": onset + "ัวย",
-        "ือย": onset + "ือย",
+        "V-X-AI": "ไ" + onset, "V-X-AM": onset + "ำ",
+        "V-X-AJ": onset + "าย", "V-X-AW": onset + "าว",
+        "V-X-IW": onset + "ิว", "V-X-UJ": onset + "ุย",
+        "V-X-EW": "เ" + onset + "็ว", "V-X-EW-L": "เ" + onset + "ว",
+        "V-X-EAW": "แ" + onset + "ว", "V-X-EY": "เ" + onset + "ย",
+        "V-X-OY": onset + "อย", "V-X-OJ": "โ" + onset + "ย",
+        "V-X-AW-S": "เ" + onset + "า", "V-X-IAW": "เ" + onset + "ียว",
+        "V-X-UAJ": onset + "ัวย", "V-X-UEY": onset + "ือย",
     }
-    if p in special:
-        base = special[p]
+    if vid in special:
+        base = special[vid]
     elif "อ" in p:
         base = p.replace("อ", onset, 1).replace("-", "")
     else:
         base = onset + p.replace("-", "")
-    chars = list(base)
     insert_at = len(onset) + (1 if base.startswith(("เ", "แ", "โ", "ใ", "ไ")) else 0)
     if mark:
-        chars.insert(insert_at, mark)
-    if coda:
-        chars.append(coda)
-    return "".join(chars)
+        base = base[:insert_at] + mark + base[insert_at:]
+    return base + (coda["grapheme"] if coda else "")
 
 def live_dead(vowel, coda):
     if coda:
@@ -82,10 +79,9 @@ def build():
     initials = [r for r in cons if r["onset_ipa"]]
     codas = [r for r in cons if r["coda_allowed"].strip().lower() == "true"]
     OUT.mkdir(parents=True, exist_ok=True)
-    rich_path = OUT / "thai_ukrainian_master.csv"
-    simple_path = OUT / "thai_ukrainian_master_2col.csv"
+    rich_path, simple_path = OUT/"thai_ukrainian_master.csv", OUT/"thai_ukrainian_master_2col.csv"
     count, status_counts = 0, {}
-    with rich_path.open("w", encoding="utf-8", newline="") as f, simple_path.open("w", encoding="utf-8", newline="") as g:
+    with rich_path.open("w",encoding="utf-8",newline="") as f, simple_path.open("w",encoding="utf-8",newline="") as g:
         w, s = csv.writer(f), csv.writer(g)
         w.writerow(["thai","thai_type","ipa","tone","tone_ipa","tone_mark","ukrainian","status","source_basis"])
         s.writerow(["Thai","Ukrainian"])
@@ -93,19 +89,18 @@ def build():
             for v in vows:
                 for coda in [None] + codas:
                     for mark_char, mark_id in MARKS.items():
-                        ld = live_dead(v, coda)
-                        tone = tone_for(rules, c["class"], ld, v["length"], mark_id)
+                        ld = live_dead(v,coda)
+                        tone = tone_for(rules,c["class"],ld,v["length"],mark_id)
                         ipa = c["onset_ipa"] + v["ipa"] + (coda["coda_ipa"] if coda else "")
                         status = "tone-resolvable-structural" if tone else "structural-tone-unresolved"
-                        status_counts[status] = status_counts.get(status, 0) + 1
-                        thai = surface_for(c["grapheme"], v, coda["grapheme"] if coda else None, mark_char)
+                        status_counts[status] = status_counts.get(status,0)+1
+                        thai = surface_for(c["grapheme"],v,coda,mark_char)
                         ua = ua_from_ipa(ipa)
                         w.writerow([thai,"structural_syllable",ipa,tone["tone"] if tone else "",tone["contour_ipa"] if tone else "",mark_id or "",ua,status,"44×40×(1+38)×5 structural space; IPA-first"])
                         s.writerow([thai,ua])
                         count += 1
     manifest = {
-        "rows": count,
-        "expected_rows": len(initials)*len(vows)*(1+len(codas))*len(MARKS),
+        "rows": count, "expected_rows": len(initials)*len(vows)*(1+len(codas))*len(MARKS),
         "initial_graphemes": len(initials), "vowel_records": len(vows),
         "coda_graphemes": len(codas), "tone_mark_states": len(MARKS),
         "principle": "Thai orthography → phonology → IPA → Ukrainian approximation",
@@ -117,4 +112,4 @@ def build():
     return manifest
 
 if __name__ == "__main__":
-    print(json.dumps(build(), ensure_ascii=False, indent=2))
+    print(json.dumps(build(),ensure_ascii=False,indent=2))

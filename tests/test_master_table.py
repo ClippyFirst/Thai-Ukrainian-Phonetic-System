@@ -56,5 +56,15 @@ class MasterTableTests(unittest.TestCase):
             finally:
                 gm.OUT = old
 
+    def test_distinct_rime_records_do_not_collapse_to_same_surface(self):
+        gm = self._generator()
+        vowels = {v["id"]: v for v in gm.rows("vowels.csv")}
+        self.assertEqual(gm.surface_for("ก", vowels["V-X-AJ"], None, ""), "กาย")
+        self.assertEqual(gm.surface_for("ก", vowels["V-X-OY"], None, ""), "กอย")
+        self.assertNotEqual(
+            gm.surface_for("ก", vowels["V-X-AJ"], None, ""),
+            gm.surface_for("ก", vowels["V-X-OY"], None, ""),
+        )
+
 if __name__ == "__main__":
     unittest.main()
