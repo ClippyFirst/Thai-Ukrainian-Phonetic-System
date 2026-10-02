@@ -13,7 +13,6 @@ report["scope_notes"]={
 (ROOT/"docs"/"generated-audit.json").write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
 manifest=build_manifest()
 (ROOT/"docs"/"source-final-manifest.json").write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-print(json.dumps(manifest,ensure_ascii=False,indent=2))
 if manifest["status"] != "pass":
     raise SystemExit("source-final manifest failed")
 print(json.dumps(report,ensure_ascii=False,indent=2))
