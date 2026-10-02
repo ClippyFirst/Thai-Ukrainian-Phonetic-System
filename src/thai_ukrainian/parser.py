@@ -64,6 +64,13 @@ def _split_onset_coda(s,inv,vowel):
 
 def parse_syllable(syllable:str)->SyllableAnalysis:
     s=normalize_thai(syllable);inv=load_consonants();cs=_consonants(s,inv)
+    special_rules = detect_special_orthography(s)
+    if special_rules:
+        special = [{"rule_id": r["rule_id"], "construction": r["construction"], "status": r["analysis_status"], "candidate_ipa": r["candidate_ipa"], "notes": r["notes"]} for r in special_rules]
+        return SyllableAnalysis(syllable,s,grapheme_order=[x["char"] for x in decompose_thai(s)],
+            status="analysis-dependent:special-orthography",
+            warnings=["Special Thai orthography requires lexical/contextual adjudication; no single IPA was forced."],
+            special_analyses=special)
     allowed=set(inv)|TONE_CHARS|VOWEL_SIGN_CHARS|SUPPORTED_SPECIAL_CHARS
     unsupported=[c for c in s if c not in allowed]
     if unsupported:
@@ -74,13 +81,6 @@ def parse_syllable(syllable:str)->SyllableAnalysis:
         return SyllableAnalysis(syllable,s,grapheme_order=[x["char"] for x in decompose_thai(s)],
             status="unresolved:multiple-tone-marks",
             warnings=["More than one Thai tone mark occurs in a single supplied syllable; tone cannot be inferred deterministically."])
-    special_rules = detect_special_orthography(s)
-    if special_rules:
-        special = [{"rule_id": r["rule_id"], "construction": r["construction"], "status": r["analysis_status"], "candidate_ipa": r["candidate_ipa"], "notes": r["notes"]} for r in special_rules]
-        return SyllableAnalysis(syllable,s,grapheme_order=[x["char"] for x in decompose_thai(s)],
-            status="analysis-dependent:special-orthography",
-            warnings=["Special Thai orthography requires lexical/contextual adjudication; no single IPA was forced."],
-            special_analyses=special)
     if not cs:return SyllableAnalysis(syllable,s,status="unresolved:no-onset",warnings=["No Thai consonant grapheme detected."])
     v=detect_vowel(s)
     residual_vowels=_surface_residual_vowel_signs(s,v)
