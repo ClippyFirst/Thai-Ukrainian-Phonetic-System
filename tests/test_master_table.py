@@ -8,6 +8,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
+
 class MasterTableTests(unittest.TestCase):
     def _generator(self):
         sys.path.insert(0, str(ROOT / "scripts"))
@@ -23,10 +24,10 @@ class MasterTableTests(unittest.TestCase):
                 report = gm.build()
                 self.assertEqual(report["rows"], 343200)
                 self.assertEqual(report["expected_rows"], 343200)
-                with (Path(d)/"thai_ukrainian_master.csv").open(encoding="utf-8",newline="") as f:
-                    self.assertEqual(sum(1 for _ in f)-1, 343200)
-                with (Path(d)/"thai_ukrainian_master_2col.csv").open(encoding="utf-8",newline="") as f:
-                    self.assertEqual(sum(1 for _ in f)-1, 343200)
+                with (Path(d) / "thai_ukrainian_master.csv").open(encoding="utf-8", newline="") as f:
+                    self.assertEqual(sum(1 for _ in f) - 1, 343200)
+                with (Path(d) / "thai_ukrainian_master_2col.csv").open(encoding="utf-8", newline="") as f:
+                    self.assertEqual(sum(1 for _ in f) - 1, 343200)
             finally:
                 gm.OUT = old
 
@@ -37,11 +38,14 @@ class MasterTableTests(unittest.TestCase):
             gm.OUT = Path(d)
             try:
                 gm.build()
-                with (Path(d)/"thai_ukrainian_master.csv").open(encoding="utf-8",newline="") as a, (Path(d)/"thai_ukrainian_master_2col.csv").open(encoding="utf-8",newline="") as b:
+                with (
+                    (Path(d) / "thai_ukrainian_master.csv").open(encoding="utf-8", newline="") as a,
+                    (Path(d) / "thai_ukrainian_master_2col.csv").open(encoding="utf-8", newline="") as b,
+                ):
                     rich, simple = csv.DictReader(a), csv.DictReader(b)
-                    for _ in range(50):
+                    for _ in range(100):
                         x, y = next(rich), next(simple)
-                        self.assertEqual((x["thai"],x["ukrainian"]), (y["Thai"],y["Ukrainian"]))
+                        self.assertEqual((x["thai"], x["ukrainian"]), (y["Thai"], y["Ukrainian"]))
             finally:
                 gm.OUT = old
 
@@ -52,11 +56,13 @@ class MasterTableTests(unittest.TestCase):
             gm.OUT = Path(d)
             try:
                 report = gm.build()
-                self.assertEqual(report["principle"], "Thai orthography → phonology → IPA → Ukrainian approximation")
+                self.assertIn("IPA-first", report["principle"])
+                self.assertIn("phonology → tone", report["principle"])
+                self.assertIn("IPA → Ukrainian phonetic target", report["principle"])
             finally:
                 gm.OUT = old
 
-    def test_distinct_rime_records_do_not_collapse_to_same_surface(self):
+    def test_surface_rows_are_revalidated_not_trusted_blindly(self):
         gm = self._generator()
         vowels = {v["id"]: v for v in gm.rows("vowels.csv")}
         self.assertEqual(gm.surface_for("ก", vowels["V-X-AJ"], None, ""), "กาย")
@@ -65,6 +71,3 @@ class MasterTableTests(unittest.TestCase):
             gm.surface_for("ก", vowels["V-X-AJ"], None, ""),
             gm.surface_for("ก", vowels["V-X-OY"], None, ""),
         )
-
-if __name__ == "__main__":
-    unittest.main()
