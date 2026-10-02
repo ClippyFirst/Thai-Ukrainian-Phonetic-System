@@ -23,7 +23,7 @@ class APIHandler(BaseHTTPRequestHandler):
     server_version = "thai-ua/0.5.0"
 
     def do_OPTIONS(self) -> None:
-        _send(self, 204, {})
+        _send(self, 200, {"status": "ok"})
 
     def do_GET(self) -> None:
         if self.path == "/health":
