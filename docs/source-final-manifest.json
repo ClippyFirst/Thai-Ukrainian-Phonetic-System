@@ -1,0 +1,34 @@
+{
+  "status": "pass",
+  "source_records": {
+    "consonants": 44,
+    "vowels": 40,
+    "phonotactics": 6,
+    "tone_rules": 15,
+    "special_orthography": 8
+  },
+  "parser_registry": {
+    "vowel_ids": 40,
+    "tone_marks": 4
+  },
+  "derived_expectations": {
+    "initial_graphemes": 44,
+    "vowel_records": 40,
+    "coda_graphemes": 38,
+    "tone_mark_states": 5,
+    "combined_structural_upper_bound": 343200
+  },
+  "invariants": {
+    "consonant_graphemes_exactly_44": true,
+    "consonant_graphemes_unique": true,
+    "vowel_records_exactly_40": true,
+    "vowel_ids_unique": true,
+    "vowel_ids_match_parser_registry": true,
+    "tone_rule_records": true,
+    "tone_marks_match_parser": true,
+    "special_rules_unique": true,
+    "coda_allowed_exactly_38": true,
+    "phonotactic_manifest_present": true,
+    "derived_syllable_space_formula": true
+  }
+}
