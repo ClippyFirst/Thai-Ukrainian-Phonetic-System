@@ -17,13 +17,10 @@ VOWEL_SIGNATURES={
 SIGNATURES={
 "ะ":("a","short","V-11",None),"า":("aː","long","V-12",None),"ิ":("i","short","V-01",None),"ี":("iː","long","V-02",None),
 "ึ":("ɯ","short","V-07",None),"ื":("ɯː","long","V-08",None),"ุ":("u","short","V-13",None),"ู":("uː","long","V-14",None),
-"ไ":("aj","long","V-X-AI","j"),"ใ":("aj","long","V-X-AI","j"),"ำ":("am","short","V-X-AM",None),"ั":("a","short","V-11",None),
+"ไ":("aj","short","V-X-AI","j"),"ใ":("aj","short","V-X-AI","j"),"ำ":("am","short","V-X-AM",None),"ั":("a","short","V-11",None),
 "็":(None,None,None,None),
 }
 
-# Common Thai orthographic diphthong/glide patterns. These are kept separate
-# from the core JIPA vowel inventory because analyses vary in how they group
-# them phonologically.
 GLIDE_PATTERNS=[
 ("าย","aːj","long","V-X-AJ","j"),("าว","aːw","long","V-X-AW","w"),
 ("ัย","aj","short","V-X-AI","j"),("ัวะ","ua","short","V-23",None),("ัว","uaː","long","V-24",None),
@@ -34,6 +31,17 @@ GLIDE_PATTERNS=[
 ("เ-า","aw","short","V-X-AW-S","w"),
 ("เ-ียว","iaw","long","V-X-IAW","w"),("วย","uaj","long","V-X-UAJ","j"),("ือย","ɯaj","long","V-X-UEY","j"),
 ]
+
+# Registered vowel-component consonants. These are consumed structurally
+# before generic onset/coda assignment.
+NUCLEUS_CONSONANTS={
+    "V-X-IAW":["ย","ว"], "V-X-UAJ":["ว","ย"],
+    "V-X-AJ":["ย"], "V-X-AW":["ว"], "V-X-IW":["ว"],
+    "V-X-UJ":["ย"], "V-X-EW":["ว"], "V-X-EW-L":["ว"],
+    "V-X-EAW":["ว"], "V-X-EY":["ย"], "V-X-OY":["ย"],
+    "V-X-OJ":["ย"], "V-X-AW-S":["ว"], "V-X-UEY":["ย"],
+    "V-X-UA":["ว"],
+}
 
 def normalize_thai(text:str)->str:
     return unicodedata.normalize("NFC", text.strip())
@@ -59,14 +67,17 @@ def _clean(text:str)->str:
 
 def detect_vowel(text:str):
     s=_clean(text)
-    # Resolve multi-sign vowel sequences before single-sign signatures.
-    # Thai preposed/surrounding spelling can otherwise cause a shorter vowel
-    # such as เ- to win before เ-ีย / เ-ือ / related sequences.
     consonants = "กขฃคฅฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮ"
     c = f"[{re.escape(consonants)}]"
-    # Longest/most specific surrounding-vowel patterns must precede
-    # generic preposed-vowel patterns. Otherwise เกา would be truncated to
-    # เ- and เกียว to เ-ีย before the final glide is considered.
+
+    # Composite post-consonant constructions containing อ must be resolved
+    # before generic single-sign detection. In these forms อ is a vowel
+    # component/length carrier, not an independent /ʔ/.
+    composite_patterns=[
+        (rf"{c}ือ","ɯː","long","V-08",""),
+        (rf"{c}อ","ɔː","long","V-18",""),
+    ]
+
     sequence_patterns=[
         (rf"เ{c}ย","ɤːj","long","V-X-EY"),
         (rf"โ{c}ย","oːj","long","V-X-OJ"),
@@ -82,30 +93,64 @@ def detect_vowel(text:str):
         (rf"โ{c}ะ","o","short","V-15"), (rf"โ{c}","oː","long","V-16"),
         (rf"เ{c}","eː","long","V-04"),
     ]
+
+    # Standalone ไอ/ใอ uses อ as the carrier; it must not be reinterpreted
+    # as a final consonant.
+    if s in {"ไอ","ใอ"}:
+        return {"pattern":s,"ipa":"aj","length":"short","id":"V-X-AI","explicit":True,
+                "terminal_glide":"j","matched_text":s,"nucleus_consonants":["อ"]}
+
     for pattern,ipa,length,vid in sequence_patterns:
-        if re.search(pattern, s):
+        m=re.search(pattern,s)
+        if m:
             return {"pattern":pattern,"ipa":ipa,"length":length,"id":vid,"explicit":True,
                     "terminal_glide":("j" if vid in {"V-19","V-20","V-X-UEY","V-X-EY","V-X-OJ"} else ("w" if vid in {"V-X-AW-S","V-X-IAW","V-X-EW","V-X-EW-L","V-X-EAW"} else None)),
-                    "matched_text":re.search(pattern,s).group(0)}
+                    "matched_text":m.group(0)}
+
+    for pattern,ipa,length,vid,_ in composite_patterns:
+        m=re.search(pattern,s)
+        if m:
+            return {"pattern":pattern,"ipa":ipa,"length":length,"id":vid,
+                    "explicit":True,"terminal_glide":None,"matched_text":m.group(0),
+                    "nucleus_consonants":["อ"]}
+
     for pattern in sorted(VOWEL_SIGNATURES,key=len,reverse=True):
         if pattern in s:
             ipa,length,vid=VOWEL_SIGNATURES[pattern]
             return {"pattern":pattern,"ipa":ipa,"length":length,"id":vid,"explicit":True,"terminal_glide":None,"matched_text":pattern}
+
+    # Reduced อัว written as -ว-: the ว is a vowel component when it sits
+    # between the onset and a licensed coda in a syllable with no written
+    # vowel sign.
+    cs=[ch for ch in s if ch in consonants]
+    if len(cs)==3 and cs[1]=="ว":
+        return {"pattern":"-ว-","ipa":"uaː","length":"long","id":"V-X-UA",
+                "explicit":True,"terminal_glide":None,"matched_text":"",
+                "nucleus_consonants":["ว"]}
+
     for pattern,ipa,length,vid,glide in sorted(GLIDE_PATTERNS,key=lambda x:len(x[0]),reverse=True):
         p=pattern.replace("-","")
         if p and p in s:
-            nucleus_consonants = {
-                "V-X-IAW":["ย","ว"], "V-X-UAJ":["ว","ย"],
-                "V-X-AJ":["ย"], "V-X-AW":["ว"], "V-X-IW":["ว"],
-                "V-X-UJ":["ย"], "V-X-EW":["ว"], "V-X-EW-L":["ว"],
-                "V-X-EAW":["ว"], "V-X-EY":["ย"], "V-X-OY":["ย"],
-                "V-X-OJ":["ย"], "V-X-AW-S":["ว"], "V-X-UEY":["ย"],
-            }.get(vid, [])
             return {"pattern":pattern,"ipa":ipa,"length":length,"id":vid,
                     "explicit":True,"terminal_glide":glide,
-                    "nucleus_consonants":nucleus_consonants,"matched_text":p}
+                    "nucleus_consonants":NUCLEUS_CONSONANTS.get(vid,[]),"matched_text":p}
+
     for pattern in sorted(SIGNATURES,key=len,reverse=True):
         if pattern in s:
             ipa,length,vid,glide=SIGNATURES[pattern]
             return {"pattern":pattern,"ipa":ipa,"length":length,"id":vid,"explicit":True,"terminal_glide":glide,"matched_text":pattern}
-    return {"pattern":"∅","ipa":None,"length":None,"id":None,"explicit":False,"terminal_glide":None,"matched_text":""}
+
+    # Closed inherent /o/ is a structural syllable rule, not a written vowel
+    # form. Only resolve it when the supplied surface provides a defensible
+    # onset + final structure; do not invent an /a/ for arbitrary consonant
+    # strings or perform lexical segmentation.
+    if len(cs)==2:
+        return {"pattern":"∅-inherent-o","ipa":"o","length":"short","id":"IV-INHERENT-O",
+                "explicit":False,"resolved":True,"terminal_glide":None,"matched_text":"",
+                "implicit_reason":"two consonants; second may function as coda"}
+    if len(cs)==3 and cs[1] in {"ร","ล","ว"}:
+        return {"pattern":"∅-inherent-o","ipa":"o","length":"short","id":"IV-INHERENT-O",
+                "explicit":False,"resolved":True,"terminal_glide":None,"matched_text":"",
+                "implicit_reason":"complex onset plus final; inherent closed-syllable vowel"}
+
+    return {"pattern":"∅","ipa":None,"length":None,"id":None,"explicit":False,"resolved":False,"terminal_glide":None,"matched_text":""}
