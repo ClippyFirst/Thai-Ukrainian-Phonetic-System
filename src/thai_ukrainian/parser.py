@@ -35,7 +35,7 @@ def _split_onset_coda(s,inv,vowel):
     if not cs:return [],None
     if not vowel.get("explicit") and len(cs) == 1:return cs,None
     consumed={
-        "V-X-IAW":["ย","ว"],"V-X-UAJ":["ว","ย"],"V-X-AJ":["ย"],"V-X-AW":["ว"],"V-X-AI":["ย"],
+        "V-X-IAW":["ย","ว"],"V-X-UAJ":["ว","ย"],"V-X-AJ":["ย"],"V-X-AW":["ว"],
         "V-X-IW":["ว"],"V-X-UJ":["ย"],"V-X-EW":["ว"],"V-X-EW-L":["ว"],
         "V-X-EAW":["ว"],"V-X-EY":["ย"],"V-X-OY":["ย"],"V-X-OJ":["ย"],
         "V-X-AW-S":["ว"],"V-X-UEY":["ย"],
@@ -89,6 +89,18 @@ def parse_syllable(syllable:str)->SyllableAnalysis:
             onset=cs[:1],onset_class=inv[cs[0]].class_,status="unresolved:multiple-vowel-signs",
             warnings=[f"Unconsumed vowel sign(s) remain outside the detected vowel/rime pattern: {''.join(residual_vowels)}"])
     onset,coda=_split_onset_coda(s,inv,v)
+    if not onset:
+        return SyllableAnalysis(
+            input=syllable,
+            normalized=s,
+            grapheme_order=[x["char"] for x in decompose_thai(s)],
+            status="unresolved:empty-onset-after-vowel-analysis",
+            warnings=[
+                "Vowel/rime analysis consumed all consonant candidates; "
+                "the generated structural form cannot be assigned an onset "
+                "deterministically by the current orthographic parser."
+            ],
+        )
     first=inv[onset[0]]
     coda_ipa=inv[coda].coda_ipa if coda else None
     warnings=[]
