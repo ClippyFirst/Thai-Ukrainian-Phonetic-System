@@ -8,6 +8,7 @@ from thai_ukrainian.api import analyze_syllable
 from thai_ukrainian.contextual import surface_ipa_for_consonant, vowel_surface_context
 from thai_ukrainian.inventory import load_consonants
 from thai_ukrainian.ua_orthography import candidates_for_ipa
+from thai_ukrainian.orthographic_rules import load_orthographic_rules
 
 ROOT = Path(__file__).resolve().parents[1]
 THAI = ROOT / "data" / "thai"
@@ -108,6 +109,25 @@ def generate_grapheme_tables(cons):
                     str(c.coda_allowed).lower(), _csv_candidates(c.coda_ipa),
                     ua_from_ipa(c.coda_ipa), c.notes, "registry"
                 ])
+
+def generate_orthographic_table():
+    """Materialize the machine-readable orthographic rule registry for publication."""
+    rules = load_orthographic_rules()
+    path = OUT / "thai_orthographic_correspondence.csv"
+    with path.open("w", encoding="utf-8", newline="") as f:
+        w = csv.writer(f)
+        w.writerow([
+            "rule_id", "pattern", "grapheme", "role",
+            "structural_condition", "phonological_action",
+            "ukrainian_action", "priority", "evidence_status", "notes"
+        ])
+        for r in sorted(rules, key=lambda x: (x.priority, x.rule_id)):
+            w.writerow([
+                r.rule_id, r.pattern, r.grapheme, r.role.value,
+                r.structural_condition, r.phonological_action,
+                r.ukrainian_action, r.priority, r.evidence_status, r.notes
+            ])
+
 
 def generate_vowel_tables(vows):
     with (OUT / "thai_vowel_correspondence.csv").open("w", encoding="utf-8", newline="") as f:
@@ -214,6 +234,7 @@ def build():
 
     generate_grapheme_tables(cons)
     generate_vowel_tables(vows)
+    generate_orthographic_table()
 
     expected = len(initials) * len(vows) * (1 + len(codas)) * len(MARKS)
     manifest = {
@@ -224,7 +245,7 @@ def build():
         "coda_graphemes": len(codas),
         "tone_mark_states": len(MARKS),
         "structural_upper_bound": expected,
-        "principle": "IPA-first / ИРА: Thai orthography → graphemic analysis → phonology → tone → surface phonetics → IPA → Ukrainian phonetic target → Ukrainian phonology → Ukrainian orthography",
+        "principle": "Thai orthography → structural orthographic analysis → Thai phonology → Ukrainian adaptation; IPA is an independent audit/control layer",
         "status": "structural-combinatorial-space-with-parser-revalidation",
         "warning": "All rows are exhaustive within the declared structural registry, but are not thereby valid, lexical, corpus-attested or semantically translated Thai.",
         "attestation_status": "not_evaluated_lexically_or_corpus",
