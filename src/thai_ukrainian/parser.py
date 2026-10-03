@@ -39,7 +39,7 @@ def _split_onset_coda(s,inv,vowel):
         "V-X-IAW":["ย","ว"],"V-X-UAJ":["ว","ย"],"V-X-AJ":["ย"],"V-X-AW":["ว"],
         "V-X-IW":["ว"],"V-X-UJ":["ย"],"V-X-EW":["ว"],"V-X-EW-L":["ว"],
         "V-X-EAW":["ว"],"V-X-EY":["ย"],"V-X-OY":["ย"],"V-X-OJ":["ย"],
-        "V-X-AW-S":["ว"],"V-X-UEY":["ย"],
+        "V-X-AW-S":["ว"],"V-X-UEY":["ย"],"V-X-UA":["ว"],
     }.get(vowel.get("id"),[])
     if consumed:
         tmp=list(cs)
@@ -121,7 +121,11 @@ def parse_syllable(syllable:str)->SyllableAnalysis:
             warnings=[f"Unconsumed vowel sign(s) remain outside the detected vowel/rime pattern: {''.join(residual_vowels)}"],
             orthographic_interpretations=interpretations)
 
-    onset,coda=_split_onset_coda(s,inv,v)
+    # Standalone ไอ/ใอ uses อ only as a vowel carrier. It is not a coda.
+    if v.get("id") == "V-X-AI" and cs == ["อ"]:
+        onset, coda = ["อ"], None
+    else:
+        onset,coda=_split_onset_coda(s,inv,v)
     # Carrier forms have a structural carrier onset even though the grapheme is
     # not an independent Ukrainian segment.
     if o_rule and o_rule.role.value == "vowel_carrier" and not onset:
@@ -139,15 +143,19 @@ def parse_syllable(syllable:str)->SyllableAnalysis:
     complex_invalid=(len(cs)>len(onset)+(1 if coda else 0) and len(cs)>=2 and v["explicit"])
     if complex_invalid:warnings.append("Adjacent consonants are not licensed as a standard Thai complex onset; explicit syllable/lexical segmentation is required.")
     status=("unresolved:nonconforming-consonant-sequence" if complex_invalid else
-            ("unresolved:implicit-vowel" if not v["explicit"] else
-             ("analyzed" if not coda or inv[coda].coda_allowed else "invalid:coda-not-licensed")))
+            ("analyzed" if v.get("resolved", v["explicit"]) and (not coda or inv[coda].coda_allowed)
+             else ("unresolved:implicit-vowel" if not v.get("resolved", v["explicit"]) else
+                   ("invalid:coda-not-licensed" if coda else "unresolved:unresolved-vowel"))))
     if coda:live_dead="dead" if coda_ipa in SHORT_CODA else ("live" if coda_ipa in SONORANT_CODA else None)
     else:live_dead=None if not v["explicit"] else ("live" if v.get("terminal_glide") or v["ipa"].endswith(("m","j","w","ŋ")) else ("dead" if v["length"]=="short" else "live"))
     if len(onset)>=2:
         second_ipa=inv[onset[1]].onset_ipa
         tone_class=first.class_ if second_ipa in {"m","n","ŋ","j","w","r","l"} else inv[onset[1]].class_
     else:tone_class=first.class_
-    if not v["explicit"]:warnings.append("Implicit vowel detected but unresolved; lexical or morphological validation required.")
+    if not v["explicit"] and not v.get("resolved", False):
+        warnings.append("Implicit vowel could not be resolved without lexical or morphological evidence.")
+    elif not v["explicit"] and v.get("resolved"):
+        warnings.append("Closed-syllable inherent /o/ resolved structurally; this is not lexical word segmentation.")
     if "์" in s:warnings.append("Thanthakhat/silent-mark construction detected; lexical parsing required.")
     if "ห" in s and len(cs)>1 and cs[0]=="ห":warnings.append("ห นำ construction detected; class-changing analysis required.")
     if "รร" in s:warnings.append("รร construction detected; contextual interpretation required.")
