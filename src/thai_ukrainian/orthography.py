@@ -83,6 +83,9 @@ def detect_vowel(text:str):
         # เด็ก and เก็บ. The mark itself is not a vowel and is consumed as
         # part of the registered orthographic construction.
         (rf"เ{c}็","e","short","V-03"),
+        (rf"แ{c}็","ɛ","short","V-05"),
+        # Reduced เออ in closed syllables: เดิน, เงิน, เปิด, เกิด.
+        (rf"เ{c}ิ","ɤː","long","V-10"),
         (rf"เ{c}ย","ɤːj","long","V-X-EY"),
         (rf"โ{c}ย","oːj","long","V-X-OJ"),
         (rf"เ{c}ือย","ɯaj","long","V-X-UEY"), (rf"เ{c}อย","ɤːj","long","V-X-EY"),
