@@ -31,7 +31,7 @@ The model distinguishes:
 - Live/dead syllable classification and explicit tone-bearing consonant-class selection for clusters.
 - Five-tone engine with explicit invalid combinations.
 - ห นำ handling as an explicit orthographic/phonological transformation.
-- Broad phonological and conservative surface-phonetic layers.
+- Broad phonological and conservative surface-phonetic layers with explicit syllable-internal positional IPA.
 - Feature-distance Ukrainian candidate generation using the canonical Ukrainian target snapshot.
 - Evidence/provenance registry.
 - Machine-readable tone-rule registry consumed by the tone engine.
@@ -44,6 +44,7 @@ The model distinguishes:
 - Deterministic JSONL evaluation API and CLI.
 - Explicit word model with standalone / initial / medial / final syllable positions.
 - Positional regression tests and a documented segmentation boundary.
+- Separate generated Thai-consonant and Thai-vowel correspondence tables exposing phonemic IPA, conservative surface IPA, position/context, and Ukrainian candidates derived from IPA.
 - Adversarial rejection of non-conforming consonant sequences such as แสดง when supplied as one syllable.
 - Adversarial rejection of multiple tone marks, unconsumed vowel signs and unsupported symbols instead of silently dropping them.
 - Regression, negative-input and generated-artifact tests.
@@ -52,7 +53,7 @@ The model distinguishes:
 
 ## Current release status
 
-**v0.4.0 — research-ready phonetic-grahemic model with completed software layers.**
+**v0.5.0 — research-ready IPA-audit layer with conservative positional surface phonetics.**
 
 The repository is suitable as a transparent research foundation and reference implementation. The completion branch adds machine-readable tone rules, special-orthography analysis, external lexical segmentation support, a Ukrainian orthographic candidate layer, and source→parser→derived consistency checks. The merged completion content was verified by GitHub Actions run 213 on the clean release branch; the final audit records the resulting main merge HEAD.
 
