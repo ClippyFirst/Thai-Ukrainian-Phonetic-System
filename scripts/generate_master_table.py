@@ -9,6 +9,7 @@ from thai_ukrainian.contextual import surface_ipa_for_consonant, vowel_surface_c
 from thai_ukrainian.inventory import load_consonants
 from thai_ukrainian.ua_orthography import candidates_for_ipa
 from thai_ukrainian.orthographic_rules import load_orthographic_rules
+from thai_ukrainian.ukrainian_adaptation import adapt_syllable_to_ukrainian
 
 ROOT = Path(__file__).resolve().parents[1]
 THAI = ROOT / "data" / "thai"
@@ -203,7 +204,7 @@ def build():
 
                         analysis = analyze_syllable(thai)
                         status = classify_analysis(analysis, ipa, tone["tone"] if tone else None)
-                        ua = ua_from_ipa(analysis.phonemic_ipa) if analysis.phonemic_ipa else ""
+                        ua = adapt_syllable_to_ukrainian(analysis) or ""
                         onset_phonemic = c["onset_ipa"]
                         onset_surface = onset_phonemic
                         vowel_phonemic = v["ipa"]
