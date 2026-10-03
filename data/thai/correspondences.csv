@@ -5,7 +5,7 @@ thai_grapheme,thai_class,onset_ipa,coda_ipa,ua_approx_onset,ua_approx_coda,ua_ca
 ค,low,kʰ,k,к,к,к,к,grapheme_to_segment,heuristic,
 ฅ,low,kʰ,k,к,к,к,к,grapheme_to_segment,heuristic,obsolete Thai grapheme
 ฆ,low,kʰ,k,к,к,к,к,grapheme_to_segment,heuristic,
-ง,low,ŋ,ŋ,н,н,н,н,grapheme_to_segment,heuristic,Ukrainian н is an approximate orthographic/phonetic substitute; it is not identical to Thai ŋ
+ง,low,ŋ,ŋ,нг,нг,нг,нг,orthographic_sequence,heuristic,Ukrainian нг is an orthographic sequence used to adapt Thai /ŋ/; it is not a Ukrainian phoneme identical to Thai /ŋ/
 จ,mid,tɕ,t,ч,т,ч,т,grapheme_to_segment,heuristic,
 ฉ,high,tɕʰ,,ч,,ч,,grapheme_to_segment,heuristic,no productive final realization in the standard inventory
 ช,low,tɕʰ,t,ч,т,ч,т,grapheme_to_segment,heuristic,
