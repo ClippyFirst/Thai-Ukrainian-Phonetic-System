@@ -146,6 +146,7 @@ def classify_analysis(a, intended_ipa: str, intended_tone: str | None) -> str:
 
 def build():
     cons, vows, rules = rows("consonants.csv"), rows("vowels.csv"), rows("tone_rules.csv")
+    inv = load_consonants()
     initials = [r for r in cons if r["onset_ipa"]]
     codas = [r for r in cons if r["coda_allowed"].strip().lower() == "true"]
 
@@ -189,7 +190,7 @@ def build():
                         vowel_surface = vowel_surface_context(v["ipa"], "closed" if coda else "open")
                         coda_phonemic = coda["coda_ipa"] if coda else ""
                         coda_surface = (
-                            surface_ipa_for_consonant(load_consonants()[coda["grapheme"]], "coda")
+                            surface_ipa_for_consonant(inv[coda["grapheme"]], "coda")
                             if coda else ""
                         )
 
