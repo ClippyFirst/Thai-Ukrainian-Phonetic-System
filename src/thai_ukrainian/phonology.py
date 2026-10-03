@@ -1,5 +1,7 @@
 from __future__ import annotations
 from .models import SyllableAnalysis
+from .contextual import surface_ipa_for_consonant, vowel_surface_context
+from .inventory import load_consonants
 
 ONSET_IPA={
 "ก":"k","ข":"kʰ","ฃ":"kʰ","ค":"kʰ","ฅ":"kʰ","ฆ":"kʰ","ง":"ŋ","จ":"tɕ","ฉ":"tɕʰ","ช":"tɕʰ","ซ":"s","ฌ":"tɕʰ","ญ":"j",
@@ -27,6 +29,25 @@ def phonologize(a:SyllableAnalysis)->SyllableAnalysis:
     return a
 
 def surface_phoneticize(a:SyllableAnalysis)->SyllableAnalysis:
-    a.phonetic_ipa=a.phonemic_ipa
-    a.rules_applied.append("PHON-SURFACE-BROAD-IPA")
+    if not a.phonemic_ipa:
+        a.phonetic_ipa=None
+        a.rules_applied.append("PHON-SURFACE-WITHHELD")
+        return a
+
+    onset = effective_onset(a)
+    inv = load_consonants()
+    onset_surface = "".join(
+        surface_ipa_for_consonant(inv[c], "onset") for c in onset
+    )
+    vowel_context = "closed" if a.coda else "open"
+    vowel_surface = vowel_surface_context(a.vowel or "", vowel_context)
+
+    coda_surface = ""
+    if a.coda:
+        coda_surface = surface_ipa_for_consonant(inv[a.coda], "coda")
+        if coda_surface != (a.coda_ipa or ""):
+            a.rules_applied.append("PHON-SURFACE-FINAL-STOP-UNRELEASED")
+
+    a.phonetic_ipa = onset_surface + vowel_surface + coda_surface
+    a.rules_applied.append("PHON-SURFACE-POSITIONAL-IPA")
     return a
