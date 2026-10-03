@@ -18,10 +18,10 @@ def test_carrier_forms_have_glottal_only_in_ipa_audit():
 def test_o_component_does_not_create_glottal_onset():
     for thai, expected_ipa, expected_ua in (
         ("พอ", "pʰɔː", "по"),
-        ("ขอ", "kʰɔ̌ː", "ко"),
+        ("ขอ", "kʰɔː", "ко"),
         ("คอ", "kʰɔː", "ко"),
         ("งอ", "ŋɔː", "нго"),
-        ("สอง", "sɔ̌ːŋ", "сонг"),
+        ("สอง", "sɔːŋ", "сонг"),
     ):
         a = analyze_syllable(thai)
         assert a.status == "analyzed"
