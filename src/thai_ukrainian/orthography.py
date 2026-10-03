@@ -79,6 +79,10 @@ def detect_vowel(text:str):
     ]
 
     sequence_patterns=[
+        # Mai taikhu shortens the preposed เ vowel in forms such as เป็น,
+        # เด็ก and เก็บ. The mark itself is not a vowel and is consumed as
+        # part of the registered orthographic construction.
+        (rf"เ{c}็","e","short","V-03"),
         (rf"เ{c}ย","ɤːj","long","V-X-EY"),
         (rf"โ{c}ย","oːj","long","V-X-OJ"),
         (rf"เ{c}ือย","ɯaj","long","V-X-UEY"), (rf"เ{c}อย","ɤːj","long","V-X-EY"),
