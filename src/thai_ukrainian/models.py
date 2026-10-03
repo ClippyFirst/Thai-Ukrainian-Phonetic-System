@@ -55,6 +55,7 @@ class SyllableAnalysis:
     special_analyses: list[dict[str, str]] = field(default_factory=list)
     ukrainian_orthography_candidates: list[str] = field(default_factory=list)
     selected_ukrainian_orthography: str | None = None
+    ukrainian_transliteration: str | None = None
     orthographic_interpretations: list[dict[str, str]] = field(default_factory=list)
 
     def as_dict(self) -> dict[str, Any]:
