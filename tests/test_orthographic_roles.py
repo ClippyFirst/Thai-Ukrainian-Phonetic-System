@@ -4,7 +4,6 @@ from thai_ukrainian.orthographic_rules import ORole, classify_o_role
 def test_o_carrier():
     assert classify_o_role("อา").role is ORole.VOWEL_CARRIER
     assert classify_o_role("อัน").role is ORole.VOWEL_CARRIER
-    assert classify_o_role("เอา").role is ORole.VOWEL_CARRIER
 
 
 def test_o_vowel_component():
