@@ -3,6 +3,7 @@ from .models import SyllableAnalysis
 from .inventory import load_consonants
 from .orthography import normalize_thai,tone_mark,detect_vowel,decompose_thai,TONE_CHARS
 from .special import detect_special_orthography
+from .orthographic_rules import classify_o_role
 
 SHORT_CODA={"p","t","k","ʔ"}
 SONORANT_CODA={"m","n","ŋ","j","w"}
@@ -62,45 +63,74 @@ def _split_onset_coda(s,inv,vowel):
     if len(cs)>1 and not _is_valid_complex_onset(cs):return [cs[0]],None
     return cs,None
 
+def _o_interpretation(text: str) -> dict[str, str]:
+    rule=classify_o_role(text)
+    return {
+        "grapheme":"อ",
+        "rule_id":rule.rule_id,
+        "role":rule.role.value,
+        "priority":str(rule.priority),
+        "evidence_status":rule.evidence_status,
+        "ukrainian_action":rule.ukrainian_action,
+    }
+
 def parse_syllable(syllable:str)->SyllableAnalysis:
     s=normalize_thai(syllable);inv=load_consonants();cs=_consonants(s,inv)
+    o_rule=classify_o_role(s) if "อ" in s else None
+    interpretations=[_o_interpretation(s)] if o_rule and o_rule.role.value != "unknown" else []
+
     special_rules = detect_special_orthography(s)
     if special_rules:
         special = [{"rule_id": r["rule_id"], "construction": r["construction"], "status": r["analysis_status"], "candidate_ipa": r["candidate_ipa"], "notes": r["notes"]} for r in special_rules]
         return SyllableAnalysis(syllable,s,grapheme_order=[x["char"] for x in decompose_thai(s)],
             status="analysis-dependent:special-orthography",
             warnings=["Special Thai orthography requires lexical/contextual adjudication; no single IPA was forced."],
-            special_analyses=special)
+            special_analyses=special, orthographic_interpretations=interpretations)
+
     allowed=set(inv)|TONE_CHARS|VOWEL_SIGN_CHARS|SUPPORTED_SPECIAL_CHARS
     unsupported=[c for c in s if c not in allowed]
     if unsupported:
         return SyllableAnalysis(syllable,s,grapheme_order=[x["char"] for x in decompose_thai(s)],
             status="unresolved:unsupported-symbol",
-            warnings=[f"Unsupported symbol(s) in syllable: {''.join(dict.fromkeys(unsupported))}"])
+            warnings=[f"Unsupported symbol(s) in syllable: {''.join(dict.fromkeys(unsupported))}"],
+            orthographic_interpretations=interpretations)
     if len([c for c in s if c in TONE_CHARS])>1:
         return SyllableAnalysis(syllable,s,grapheme_order=[x["char"] for x in decompose_thai(s)],
             status="unresolved:multiple-tone-marks",
-            warnings=["More than one Thai tone mark occurs in a single supplied syllable; tone cannot be inferred deterministically."])
-    if not cs:return SyllableAnalysis(syllable,s,status="unresolved:no-onset",warnings=["No Thai consonant grapheme detected."])
+            warnings=["More than one Thai tone mark occurs in a single supplied syllable; tone cannot be inferred deterministically."],
+            orthographic_interpretations=interpretations)
+
+    # อ is an onset carrier only when the classifier says it is VOWEL_CARRIER.
+    # In that case it is retained as the structural onset for tone/IPA analysis.
+    # In VOWEL_COMPONENT/ORTHOGRAPHIC_COMPONENT configurations it remains part
+    # of the vowel spelling and is not promoted to an onset.
+    if o_rule and o_rule.role.value == "vowel_carrier" and not cs:
+        cs=["อ"]
+    if not cs:
+        return SyllableAnalysis(syllable,s,grapheme_order=[x["char"] for x in decompose_thai(s)],
+            status="unresolved:no-onset",warnings=["No Thai consonant grapheme detected."],
+            orthographic_interpretations=interpretations)
+
     v=detect_vowel(s)
     residual_vowels=_surface_residual_vowel_signs(s,v)
     if residual_vowels:
         return SyllableAnalysis(syllable,s,grapheme_order=[x["char"] for x in decompose_thai(s)],
             onset=cs[:1],onset_class=inv[cs[0]].class_,status="unresolved:multiple-vowel-signs",
-            warnings=[f"Unconsumed vowel sign(s) remain outside the detected vowel/rime pattern: {''.join(residual_vowels)}"])
+            warnings=[f"Unconsumed vowel sign(s) remain outside the detected vowel/rime pattern: {''.join(residual_vowels)}"],
+            orthographic_interpretations=interpretations)
+
     onset,coda=_split_onset_coda(s,inv,v)
+    # Carrier forms have a structural carrier onset even though the grapheme is
+    # not an independent Ukrainian segment.
+    if o_rule and o_rule.role.value == "vowel_carrier" and not onset:
+        onset=["อ"]
     if not onset:
         return SyllableAnalysis(
-            input=syllable,
-            normalized=s,
-            grapheme_order=[x["char"] for x in decompose_thai(s)],
+            input=syllable,normalized=s,grapheme_order=[x["char"] for x in decompose_thai(s)],
             status="unresolved:empty-onset-after-vowel-analysis",
-            warnings=[
-                "Vowel/rime analysis consumed all consonant candidates; "
-                "the generated structural form cannot be assigned an onset "
-                "deterministically by the current orthographic parser."
-            ],
-        )
+            warnings=["Vowel/rime analysis consumed all consonant candidates; the generated structural form cannot be assigned an onset deterministically."],
+            orthographic_interpretations=interpretations)
+
     first=inv[onset[0]]
     coda_ipa=inv[coda].coda_ipa if coda else None
     warnings=[]
@@ -121,4 +151,5 @@ def parse_syllable(syllable:str)->SyllableAnalysis:
     if "รร" in s:warnings.append("รร construction detected; contextual interpretation required.")
     return SyllableAnalysis(input=syllable,normalized=s,grapheme_order=[x["char"] for x in decompose_thai(s)],
         onset=onset,onset_class=first.class_,tone_class=tone_class,vowel=v["ipa"],vowel_id=v["id"],vowel_length=v["length"],
-        coda=coda,coda_ipa=coda_ipa,tone_mark=tone_mark(s),live_dead=live_dead,warnings=warnings,status=status)
+        coda=coda,coda_ipa=coda_ipa,tone_mark=tone_mark(s),live_dead=live_dead,warnings=warnings,status=status,
+        orthographic_interpretations=interpretations)
