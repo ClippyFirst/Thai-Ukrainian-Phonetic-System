@@ -41,6 +41,16 @@ def test_mai_taikhu_shortens_preposed_e():
         assert_analyzed(text, "V-03", "e", onset, coda)
 
 
+def test_reduced_vowel_spellings_are_not_left_as_residual_signs():
+    for text, vowel_id, vowel, onset, coda in [
+        ("เดิน", "V-10", "ɤː", ["ด"], "น"),
+        ("เงิน", "V-10", "ɤː", ["ง"], "น"),
+        ("แข็ง", "V-05", "ɛ", ["ข"], "ง"),
+        ("เปิด", "V-10", "ɤː", ["ป"], "ด"),
+    ]:
+        assert_analyzed(text, vowel_id, vowel, onset, coda)
+
+
 def test_reduced_ua_uses_w_as_vowel_component():
     for text, onset, coda in [
         ("สวน", ["ส"], "น"),
