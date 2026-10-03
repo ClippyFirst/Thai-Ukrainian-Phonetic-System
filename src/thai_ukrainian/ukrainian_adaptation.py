@@ -36,7 +36,7 @@ VOWEL_UA = {
     "V-X-AI": "ай", "V-X-AM": "ам", "V-X-AJ": "ай", "V-X-AW": "ау",
     "V-X-IW": "ів", "V-X-UJ": "уй", "V-X-EW": "ев", "V-X-EW-L": "ев",
     "V-X-EAW": "ев", "V-X-EY": "ей", "V-X-OY": "ой", "V-X-OJ": "ой",
-    "V-X-AW-S": "ау", "V-X-IAW": "іау", "V-X-UAJ": "уай", "V-X-UEY": "иай",
+    "V-X-AW-S": "ау", "V-X-IAW": "іау", "V-X-UAJ": "уай", "V-X-UEY": "иай", "V-X-UA": "уа", "IV-INHERENT-O": "о",
 }
 
 
