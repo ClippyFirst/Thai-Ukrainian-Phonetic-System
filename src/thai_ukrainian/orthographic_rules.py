@@ -84,6 +84,12 @@ def classify_o_role(text: str) -> OrthographicRule:
     if text.startswith("อย"):
         return rules["ORTH-O-003"]
 
+    # A syllable beginning with อ is a carrier construction unless a higher-
+    # priority special pattern has already matched.  Any following consonant
+    # can then be analyzed as a coda (e.g. อัน), not as an onset.
+    if text.startswith("อ"):
+        return rules["ORTH-O-001"]
+
     if _contains_vowel_pattern(text):
         # A real onset consonant before the vowel pattern makes อ a component
         # rather than a carrier.  This is the key distinction for forms such
