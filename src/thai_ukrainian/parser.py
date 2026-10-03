@@ -77,6 +77,8 @@ def _o_interpretation(text: str) -> dict[str, str]:
 def parse_syllable(syllable:str)->SyllableAnalysis:
     s=normalize_thai(syllable);inv=load_consonants();cs=_consonants(s,inv)
     o_rule=classify_o_role(s) if "อ" in s else None
+    if o_rule and o_rule.role.value in {"vowel_component", "orthographic_component"}:
+        cs=[c for c in cs if c != "อ"]
     interpretations=[_o_interpretation(s)] if o_rule and o_rule.role.value != "unknown" else []
 
     special_rules = detect_special_orthography(s)
