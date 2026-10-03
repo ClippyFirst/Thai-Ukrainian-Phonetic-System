@@ -21,6 +21,12 @@ class PositionalCorrespondenceTests(unittest.TestCase):
         self.assertEqual(surface_ipa_for_consonant(inv['บ'], 'coda'), 'p̚')
         self.assertEqual(surface_ipa_for_consonant(inv['ก'], 'coda'), 'k̚')
 
+    def test_preposed_ai_vowel_registry_uses_palatal_glide_ipa(self):
+        sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
+        import generate_master_table as gm
+        rows = {row["id"]: row for row in gm.rows("vowels.csv")}
+        self.assertEqual(rows["V-X-AI"]["ipa"], "aj")
+
     def test_vowel_surface_layer_does_not_invent_unattested_quality_change(self):
         self.assertEqual(vowel_surface_context('aː', 'open'), 'aː')
         self.assertEqual(vowel_surface_context('aː', 'closed'), 'aː')
