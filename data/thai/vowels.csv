@@ -23,7 +23,7 @@ V-21,เอือะ,ɯa,short,diphthong,analysis-dependent
 V-22,เอือ,ɯaː,long,diphthong,analysis-dependent
 V-23,อัวะ,ua,short,diphthong,analysis-dependent
 V-24,อัว,uaː,long,diphthong,analysis-dependent
-V-X-AI,ไ/ใ,ai,long,diphthong,context-dependent
+V-X-AI,ไ/ใ,aj,long,diphthong,context-dependent
 V-X-AM,ำ,am,short,complex,context-dependent
 V-X-AJ,อ-ย,aːj,long,glide_sequence,analysis-dependent
 V-X-AW,อ-ว,aːw,long,glide_sequence,analysis-dependent
