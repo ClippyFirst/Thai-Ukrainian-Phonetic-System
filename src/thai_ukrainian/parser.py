@@ -122,8 +122,15 @@ def parse_syllable(syllable:str)->SyllableAnalysis:
             orthographic_interpretations=interpretations)
 
     # Standalone ไอ/ใอ uses อ only as a vowel carrier. It is not a coda.
-    if v.get("id") == "V-X-AI" and cs == ["อ"]:
-        onset, coda = ["อ"], None
+    if v.get("id") == "V-X-AI":
+        if cs == ["อ"]:
+            onset, coda = ["อ"], None
+        elif len(cs) == 1:
+            onset, coda = cs, None
+        elif any(c in PREPOSED_VOWEL_CHARS for c in "".join(c for c in s if c not in TONE_CHARS)) and _is_valid_complex_onset(cs[:2]):
+            onset, coda = (cs, None) if len(cs) == 2 else (cs[:2], cs[2])
+        else:
+            onset, coda = cs[:-1], cs[-1]
     else:
         onset,coda=_split_onset_coda(s,inv,v)
     # Carrier forms have a structural carrier onset even though the grapheme is
