@@ -41,6 +41,7 @@ def surface_for(onset: str, vowel: dict[str, str], coda: str | None, mark: str) 
         "V-X-OY": onset+"อย", "V-X-OJ": "โ"+onset+"ย",
         "V-X-AW-S": "เ"+onset+"า", "V-X-IAW": "เ"+onset+"ียว",
         "V-X-UAJ": onset+"ัวย", "V-X-UEY": onset+"ือย",
+        "V-X-UA": onset+"ว",
     }
     if vid in special:
         base = special[vid]
@@ -60,6 +61,13 @@ def surface_for(onset: str, vowel: dict[str, str], coda: str | None, mark: str) 
 def live_dead(vowel, coda):
     if coda:
         return "dead" if coda["coda_ipa"] in {"p", "t", "k", "ʔ"} else "live"
+    # Thai ไ/ใ and other registered final-glide rimes are live for tone
+    # calculation even where the vowel nucleus itself is short.
+    if vowel["id"] in {"V-X-AI", "V-X-AJ", "V-X-AW", "V-X-IW", "V-X-UJ",
+                       "V-X-EW", "V-X-EW-L", "V-X-EAW", "V-X-EY",
+                       "V-X-OY", "V-X-OJ", "V-X-AW-S", "V-X-IAW",
+                       "V-X-UAJ", "V-X-UEY"}:
+        return "live"
     return "dead" if vowel["length"] == "short" else "live"
 
 
