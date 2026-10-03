@@ -1,0 +1,25 @@
+{
+  "rows": 343200,
+  "expected_rows": 343200,
+  "initial_graphemes": 44,
+  "vowel_records": 40,
+  "coda_graphemes": 38,
+  "tone_mark_states": 5,
+  "structural_upper_bound": 343200,
+  "principle": "IPA-first / ИРА: Thai orthography → graphemic analysis → phonology → tone → surface phonetics → IPA → Ukrainian phonetic target → Ukrainian phonology → Ukrainian orthography",
+  "status": "structural-combinatorial-space-with-parser-revalidation",
+  "warning": "All rows are exhaustive within the declared structural registry, but are not thereby valid, lexical, corpus-attested or semantically translated Thai.",
+  "attestation_status": "not_evaluated_lexically_or_corpus",
+  "status_counts": {
+    "analyzed": 97034,
+    "unresolved:nonconforming-consonant-sequence": 146885,
+    "generation-mismatch:ipa": 36236,
+    "invalid:coda-not-licensed": 665,
+    "unresolved:implicit-vowel": 8170,
+    "generation-mismatch:tone": 88,
+    "invalid:tone-combination": 53894,
+    "analysis-dependent:special-orthography": 8,
+    "unresolved:empty-onset-after-vowel-analysis": 210,
+    "unresolved:multiple-vowel-signs": 10
+  }
+}

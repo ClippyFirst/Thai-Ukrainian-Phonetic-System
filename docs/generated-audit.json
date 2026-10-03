@@ -7,14 +7,14 @@
   },
   "csv_records": {
     "consonants": 44,
-    "special_orthography": 8,
-    "sources": 6,
     "correspondences": 44,
-    "tone_marks": 5,
     "phonotactics": 6,
-    "tone_rules": 15,
     "rules": 16,
+    "sources": 6,
+    "special_orthography": 8,
     "tones": 5,
+    "tone_marks": 5,
+    "tone_rules": 15,
     "vowels": 40
   },
   "status": "structural-pass",

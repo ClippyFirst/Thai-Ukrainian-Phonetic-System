@@ -1,0 +1,2 @@
+[console_scripts]
+thai-ua = thai_ukrainian.cli:main
