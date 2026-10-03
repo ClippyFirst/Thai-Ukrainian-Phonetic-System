@@ -5,6 +5,8 @@ import json
 from pathlib import Path
 
 from thai_ukrainian.api import analyze_syllable
+from thai_ukrainian.contextual import surface_ipa_for_consonant, vowel_surface_context
+from thai_ukrainian.inventory import load_consonants
 from thai_ukrainian.ua_orthography import candidates_for_ipa
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -74,6 +76,56 @@ def ua_from_ipa(ipa: str) -> str:
     candidates = candidates_for_ipa(ipa, limit=1)
     return candidates[0] if candidates else ""
 
+def ua_candidates_from_ipa(ipa: str) -> list[str]:
+    return candidates_for_ipa(ipa, limit=8) if ipa else []
+
+def _csv_candidates(ipa: str) -> str:
+    return "|".join(ua_candidates_from_ipa(ipa))
+
+def generate_grapheme_tables(cons):
+    inv = load_consonants()
+    with (OUT / "thai_consonant_correspondence.csv").open("w", encoding="utf-8", newline="") as f:
+        w = csv.writer(f)
+        w.writerow([
+            "grapheme", "role", "syllable_position", "class",
+            "phonemic_ipa", "surface_ipa", "coda_allowed",
+            "ukrainian_candidates", "selected_ukrainian", "notes",
+            "evidence_status"
+        ])
+        for row in cons:
+            c = inv[row["grapheme"]]
+            if c.onset_ipa:
+                w.writerow([
+                    c.grapheme, "onset", "syllable-initial", c.class_,
+                    c.onset_ipa, surface_ipa_for_consonant(c, "onset"),
+                    str(c.coda_allowed).lower(), _csv_candidates(c.onset_ipa),
+                    ua_from_ipa(c.onset_ipa), c.notes, "registry"
+                ])
+            if c.coda_allowed and c.coda_ipa:
+                w.writerow([
+                    c.grapheme, "coda", "syllable-final", c.class_,
+                    c.coda_ipa, surface_ipa_for_consonant(c, "coda"),
+                    str(c.coda_allowed).lower(), _csv_candidates(c.coda_ipa),
+                    ua_from_ipa(c.coda_ipa), c.notes, "registry"
+                ])
+
+def generate_vowel_tables(vows):
+    with (OUT / "thai_vowel_correspondence.csv").open("w", encoding="utf-8", newline="") as f:
+        w = csv.writer(f)
+        w.writerow([
+            "vowel_id", "orthographic_pattern", "kind", "length",
+            "syllable_context", "phonemic_ipa", "surface_ipa",
+            "ukrainian_candidates", "selected_ukrainian", "status"
+        ])
+        for v in vows:
+            for context in ("open", "closed"):
+                ipa = v["ipa"]
+                w.writerow([
+                    v["id"], v["orthographic_pattern"], v["kind"], v["length"],
+                    context, ipa, vowel_surface_context(ipa, context),
+                    _csv_candidates(ipa), ua_from_ipa(ipa), v["status"]
+                ])
+
 
 def classify_analysis(a, intended_ipa: str, intended_tone: str | None) -> str:
     """Classify the generated row without hiding parser disagreement."""
@@ -107,8 +159,14 @@ def build():
     with rich_path.open("w", encoding="utf-8", newline="") as f, simple_path.open("w", encoding="utf-8", newline="") as g:
         w, s = csv.writer(f), csv.writer(g)
         w.writerow([
-            "thai", "thai_type", "onset_grapheme", "vowel_id", "coda_grapheme",
-            "tone_mark", "tone", "tone_ipa", "ipa", "ukrainian",
+            "thai", "thai_type", "onset_grapheme",
+            "onset_position", "onset_phonemic_ipa", "onset_surface_ipa",
+            "vowel_id", "vowel_position", "vowel_phonemic_ipa",
+            "vowel_surface_ipa", "coda_grapheme", "coda_position",
+            "coda_phonemic_ipa", "coda_surface_ipa",
+            "tone_mark", "tone", "tone_ipa",
+            "syllable_phonemic_ipa", "syllable_surface_ipa",
+            "ukrainian", "ukrainian_from_ipa",
             "analysis_status", "attestation_status", "source_basis"
         ])
         s.writerow(["Thai", "Ukrainian"])
@@ -125,18 +183,36 @@ def build():
                         analysis = analyze_syllable(thai)
                         status = classify_analysis(analysis, ipa, tone["tone"] if tone else None)
                         ua = ua_from_ipa(analysis.phonemic_ipa) if analysis.phonemic_ipa else ""
+                        onset_phonemic = c["onset_ipa"]
+                        onset_surface = onset_phonemic
+                        vowel_phonemic = v["ipa"]
+                        vowel_surface = vowel_surface_context(v["ipa"], "closed" if coda else "open")
+                        coda_phonemic = coda["coda_ipa"] if coda else ""
+                        coda_surface = (
+                            surface_ipa_for_consonant(load_consonants()[coda["grapheme"]], "coda")
+                            if coda else ""
+                        )
 
                         status_counts[status] = status_counts.get(status, 0) + 1
                         w.writerow([
-                            thai, "structural_syllable", c["grapheme"], v["id"],
-                            coda["grapheme"] if coda else "", mark_id or "",
-                            tone["tone"] if tone else "", tone["contour_ipa"] if tone else "",
-                            analysis.phonemic_ipa or ipa, ua, status,
+                            thai, "structural_syllable", c["grapheme"],
+                            "syllable-initial", onset_phonemic, onset_surface,
+                            v["id"], "syllable-nucleus", vowel_phonemic, vowel_surface,
+                            coda["grapheme"] if coda else "",
+                            "syllable-final" if coda else "none",
+                            coda_phonemic, coda_surface,
+                            mark_id or "", tone["tone"] if tone else "",
+                            tone["contour_ipa"] if tone else "",
+                            analysis.phonemic_ipa or ipa, analysis.phonetic_ipa or ipa,
+                            ua, ua, status,
                             "not_evaluated_lexically_or_corpus",
                             "machine-declared registry → structural constructor → parser/IPA revalidation"
                         ])
                         s.writerow([thai, ua])
                         count += 1
+
+    generate_grapheme_tables(cons)
+    generate_vowel_tables(vows)
 
     expected = len(initials) * len(vows) * (1 + len(codas)) * len(MARKS)
     manifest = {
