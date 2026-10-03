@@ -32,6 +32,15 @@ def test_post_consonant_ue_length_carrier():
     assert_analyzed("หนังสือ", "V-08", "ɯː", ["ส"], None)
 
 
+def test_mai_taikhu_shortens_preposed_e():
+    for text, onset, coda in [
+        ("เป็น", ["ป"], "น"),
+        ("เด็ก", ["ด"], "ก"),
+        ("เก็บ", ["ก"], "บ"),
+    ]:
+        assert_analyzed(text, "V-03", "e", onset, coda)
+
+
 def test_reduced_ua_uses_w_as_vowel_component():
     for text, onset, coda in [
         ("สวน", ["ส"], "น"),
