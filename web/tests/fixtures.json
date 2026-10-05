@@ -3,7 +3,7 @@
 {"input":"กาน","expected":{"input":"กาน","status":"analyzed","phonemicIpa":"kaːn","phoneticIpa":"kaːn","tone":"mid","toneIpa":"˧","ukrainian":"кан"}},
 {"input":"กรา","expected":{"input":"กรา","status":"analyzed","phonemicIpa":"kraː","phoneticIpa":"kraː","tone":"mid","toneIpa":"˧","ukrainian":"кра"}},
 {"input":"กล้า","expected":{"input":"กล้า","status":"analyzed","phonemicIpa":"klaː","phoneticIpa":"klaː","tone":"falling","toneIpa":"˥˩","ukrainian":"кла"}},
-{"input":"คน","expected":{"input":"คน","status":"analyzed","phonemicIpa":"kon","phoneticIpa":"kon","tone":"mid","toneIpa":"˧","ukrainian":"คน"}},
+{"input":"คน","expected":{"input":"คน","status":"analyzed","phonemicIpa":"kon","phoneticIpa":"kon","tone":"mid","toneIpa":"˧","ukrainian":"кон"}},
 {"input":"เกะ","expected":{"input":"เกะ","status":"analyzed","phonemicIpa":"ke","phoneticIpa":"ke","tone":"low","toneIpa":"˩","ukrainian":"ке"}},
 {"input":"เก","expected":{"input":"เก","status":"analyzed","phonemicIpa":"keː","phoneticIpa":"keː","tone":"mid","toneIpa":"˧","ukrainian":"ке"}},
 {"input":"เกีย","expected":{"input":"เกีย","status":"analyzed","phonemicIpa":"kiaːj","phoneticIpa":"kiaːj","tone":"mid","toneIpa":"˧","ukrainian":"кіа"}},
