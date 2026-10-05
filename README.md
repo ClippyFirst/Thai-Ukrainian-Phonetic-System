@@ -135,6 +135,19 @@ python scripts/evaluate_corpus.py path/to/records.jsonl
 
 The evaluator reports numerators and denominators explicitly and excludes missing gold fields from the relevant metric.
 
+
+## Web service
+
+The repository includes a static two-page web application under `web/`:
+
+- `web/index.html` — public Service interface for Thai analysis;
+- `web/system.html` — methodology and evidence page;
+- `web/src/engine.js` — browser-safe implementation of the declared analysis pipeline;
+- `web/tests/fixtures.json` — versioned parity probes;
+- `scripts/generate_web_fixtures.py` — generates the authoritative fixture values from the Python core.
+
+The web CI gate compares the browser engine against the Python reference on the same probes before the Pages artifact is eligible for deployment. GitHub Pages is a static presentation/deployment layer; it does not run the Python package server-side.
+
 ## Research workspace
 
 - Notion: https://app.notion.com/p/3ec40df389698138be8beb43b78971a2?pvs=204
