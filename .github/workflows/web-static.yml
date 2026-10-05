@@ -18,6 +18,8 @@ jobs:
           node-version: 22
       - name: Check browser JavaScript syntax
         run: node --check web/src/app.js
+          node --check web/src/engine.js
+          node web/tests/parity.test.mjs
       - name: Check required pages
         run: |
           test -s web/index.html
