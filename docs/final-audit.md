@@ -2,9 +2,9 @@
 
 ## Release
 
-**v0.4.0 — research-ready phonetic-grahemic model with completed software layers.**
+**v0.5.0 — research-ready phonetic-graphemic software foundation after repository finalization.**
 
-The repository is designed as a coherent research software foundation: source tables are separated from derived artifacts, the transformation layers are explicit, and validation is deterministic. The current HEAD has a successful GitHub Actions CI run.
+The repository is designed as a coherent research software foundation: source tables are separated from derived artifacts, the transformation layers are explicit, and validation is deterministic. The pre-finalization main branch had a CI failure caused by deterministic generated JSON key ordering; the cleanup synchronizes the generated artifact. The finalization branch must pass CI before this audit is treated as a release gate.
 
 ## Gate A — structural reproducibility
 
@@ -74,7 +74,7 @@ A clean checkout is release-ready when:
 4. schemas and documentation agree with the implementation;
 5. no empirical claim exceeds the evidence actually processed.
 
-The clean completion branch was verified by GitHub Actions run 213. The run regenerated derived artifacts cleanly, passed the source→parser→derived integrity gate, and completed **57 tests**, including the completion-layer special-orthography, lexicon-interface and Ukrainian-output probes. The documentation-only synchronization was separately verified by run 219 before the final merge into `main`. The resulting main merge HEAD is `075b009a07b129260f77d598503719bef0aee366`.
+The earlier completion branch was verified by GitHub Actions run 213 with **57 tests**. That historical verification is not treated as proof that the current post-audit branch passes CI. The current finalization branch must be re-verified independently.
 
 ## What would change the status
 
@@ -150,3 +150,12 @@ The parser audit identified another false-positive class: a detector could selec
 ## Adversarial audit extension — preposed-vowel leading clusters
 
 The parser audit exposed a visual-order trap in syllables such as `ไหม` and `ไหว้`: the preposed vowel sign appears before the consonant sequence, so a simple character-index test can incorrectly demote the second onset consonant to coda. The parser now evaluates declared complex-onset licensing in preposed-vowel syllables before the generic coda fallback. The suite verifies `ไหม` as a ห นำ onset and `ไหว้` as a ห นำ onset with a tone mark. The model remains conservative for unsupported lexical leading constructions such as อ นำ.
+
+
+## Repository-finalization gate — 2026-10-05
+
+The finalization pass removes committed Python bytecode/cache trees, packaging metadata, and oversized generated master CSVs; adds repository ignore rules; synchronizes citation/audit metadata to version 0.5.0; and records the repository reconstruction in docs/repository-audit-2026-10-05.md.
+
+The generated master CSVs remain reproducible and are generated/published by CI rather than maintained as authoritative source data.
+
+Publication-ready status remains gated on a successful CI run for the finalized branch, review of the two overlapping draft PRs, machine-readable practical Ukrainian rendering policy, and—if empirical claims are desired—a versioned gold corpus with adjudicated Ukrainian outputs.
