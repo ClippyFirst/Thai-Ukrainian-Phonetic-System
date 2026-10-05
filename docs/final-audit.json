@@ -1,8 +1,30 @@
 {
-  "release":"0.2.0",
-  "status":"research-foundation",
-  "implemented":["orthography","syllable_structure","tone","broad_ipa","ukrainian_feature_candidates","evidence_registry","combinatorial_accounting","validation_protocol"],
-  "not_claimed":["complete_lexical_segmentation","complete_special_orthography","connected_speech","corpus_accuracy","calibrated_probability","universal_ukrainian_orthography"],
-  "lexical_attestation":"not measured",
-  "corpus_attestation":"not measured"
+  "release": "0.5.0",
+  "status": "research-ready-software",
+  "implemented": [
+    "orthography",
+    "syllable_structure",
+    "tone",
+    "broad_ipa",
+    "conservative_surface_ipa",
+    "ukrainian_feature_candidates",
+    "ukrainian_project_orthography_candidates",
+    "evidence_registry",
+    "combinatorial_accounting",
+    "validation_protocol",
+    "deterministic_cli_api",
+    "generated_artifact_integrity"
+  ],
+  "not_claimed": [
+    "complete_lexical_segmentation",
+    "complete_special_orthography",
+    "connected_speech",
+    "corpus_accuracy",
+    "calibrated_probability",
+    "universal_ukrainian_orthography",
+    "official_ukrainian_transcription_standard"
+  ],
+  "lexical_attestation": "not measured",
+  "corpus_attestation": "not measured",
+  "empirical_status": "infrastructure ready; gold-corpus evaluation not yet processed by CI"
 }
