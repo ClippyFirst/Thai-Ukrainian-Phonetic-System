@@ -1,0 +1,29 @@
+name: Web static validation
+on:
+  push:
+    paths:
+      - "web/**"
+      - ".github/workflows/web-static.yml"
+  pull_request:
+    paths:
+      - "web/**"
+      - ".github/workflows/web-static.yml"
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check browser JavaScript syntax
+        run: node --check web/src/app.js
+      - name: Check required pages
+        run: |
+          test -s web/index.html
+          test -s web/system.html
+          test -s web/src/styles.css
+          test -s web/src/app.js
+      - name: Check no remote runtime dependency
+        run: |
+          ! grep -E '(<script[^>]+src="https?://|<link[^>]+href="https?://)' web/index.html web/system.html
