@@ -1,4 +1,40 @@
-# Final audit
+# Final audit — current branch status
+
+> **2026-10-03 branch override:** the historical release snapshots below describe earlier 40-rime / 343,200-row states. On `feat/full-orthographic-audit`, the declared rime registry is now **41 records** because reduced `-ว-` /uaː/ is modeled explicitly. The corresponding structural upper bound is **351,780 rows** (44 × 41 × (1 + 38 coda options) × 5 tone-mark states). A fresh exhaustive generation and CI verification are still pending. Do not treat any historical “PASS”, test count, SHA, or 343,200-row statement below as verification of this branch.
+
+## 2026-10-03 full orthographic audit
+
+### Closed by the same methodology used for `อ`
+
+- `-อ` after a real onset is modeled as the /ɔː/ vowel construction.
+- `-ือ` is modeled as the /ɯː/ construction with `อ` as a structural length carrier.
+- reduced `-ว-` /uaː/ is modeled as a vowel component rather than an ordinary `ว` consonant.
+- deterministic closed-syllable inherent /o/ is resolved when the supplied surface supports onset + coda analysis.
+- preposed `ไ/ใ` preserves valid onset/leading-consonant structure, including `ไหม`, `ไหว้`, and `ไกล`.
+- `ไ/ใ` is short in the vowel registry but live for tone calculation because it ends in /j/.
+- Ukrainian output for these constructions is generated from structured Thai analysis, not IPA.
+- `ง` is represented as Ukrainian orthographic sequence `нг` in the structured adaptation layer and correspondence table.
+
+### Still explicitly analysis-dependent
+
+- `รร`
+- `ฤ/ฤๅ`, `ฦ/ฦๅ`
+- lexical/morphological `ทร`
+- silent-letter constructions
+- automatic multi-syllable lexical segmentation
+- connected-speech phonetics
+- empirical Ukrainian orthographic preference
+
+### Verification gate
+
+This branch must not be called CI-green until:
+1. the complete test suite passes;
+2. the exhaustive generator completes;
+3. generated artifacts are synchronized;
+4. the source/parser/derived manifest is regenerated and passes;
+5. the 41-rime registry and 351,780-row structural bound are verified.
+
+---
 
 ## Release
 

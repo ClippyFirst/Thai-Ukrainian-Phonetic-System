@@ -4,6 +4,7 @@ from .phonology import phonologize,surface_phoneticize,ONSET_IPA,effective_onset
 from .correspondence import rank_ukrainian_candidates as _rank_candidates
 from .word import analyze_word
 from .ua_orthography import candidates_for_ipa
+from .ukrainian_adaptation import adapt_syllable_to_ukrainian
 
 def analyze_syllable(syllable:str):
     a=parse_syllable(syllable)
@@ -17,6 +18,7 @@ def analyze_syllable(syllable:str):
             a.status="invalid:tone-combination"
             a.warnings.append(str(exc))
     phonologize(a);surface_phoneticize(a)
+    a.ukrainian_transliteration = adapt_syllable_to_ukrainian(a)
     if a.phonemic_ipa:
         a.ukrainian_orthography_candidates=candidates_for_ipa(a.phonemic_ipa)
         if a.ukrainian_orthography_candidates:

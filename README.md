@@ -4,7 +4,11 @@ Research-oriented, machine-readable reference implementation for mapping contemp
 
 ## Research pipeline
 
-Thai orthography → graphemic analysis → syllable structure → phonology → tone → contextual phonology → IPA → Ukrainian feature-space candidates → Ukrainian phonological target → Ukrainian orthography.
+**Primary:** Thai orthography → structural orthographic analysis → syllable structure → Thai phonology → Ukrainian adaptation.
+
+**Independent audit:** Thai phonology → phonemic IPA → conservative surface IPA.
+
+IPA is not required as the intermediate string for Ukrainian output. Context-dependent graphemes are resolved by the machine-readable orthographic-rule registry before phonological and Ukrainian layers are applied.
 
 The layers are intentionally separated. This is **not RTGS** and not a Thai-character → Ukrainian-character substitution table.
 
@@ -36,6 +40,8 @@ The model distinguishes:
 - Evidence/provenance registry.
 - Machine-readable tone-rule registry consumed by the tone engine.
 - Explicit special-orthography analysis layer for lexical/context-dependent constructions.
+- Machine-readable context-dependent orthographic rule registry, including role classification for อ.
+- Publication-ready orthographic correspondence table generated from the same rule registry used by the parser.
 - External lexicon adapter for evidence-backed syllable segmentation.
 - Project-defined Ukrainian orthographic candidate layer with tone kept separate.
 - Generated source→parser→derived consistency manifest enforced by CI.

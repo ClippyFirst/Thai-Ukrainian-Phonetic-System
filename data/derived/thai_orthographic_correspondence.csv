@@ -1,0 +1,7 @@
+rule_id,pattern,grapheme,role,structural_condition,phonological_action,ukrainian_action,priority,evidence_status,notes
+ORTH-O-001,อV,อ,vowel_carrier,initial carrier before vowel construction,initial /ʔ/ is IPA-audit only; no independent Ukrainian onset,omit independent onset and render vowel,10,core,Carrier role
+ORTH-O-002,Cอ,อ,vowel_component,part of registered vowel spelling after onset,no /ʔ/ onset; contributes to nucleus,apply registered vowel adaptation,20,core,Examples พอ ขอ คอ งอ
+ORTH-O-003,อย,อ,special_y_pattern,part of special อย- construction,dedicated special-orthography analysis,dedicated context-specific adaptation,10,core,Examples อยู่ อย่า อยาก
+ORTH-O-004,อ-ว,อ,orthographic_component,part of registered vowel-plus-glide spelling,contributes to registered nucleus/glide,apply registered rime adaptation,40,core,No independent /ʔ/
+ORTH-O-005,อ-ย,อ,orthographic_component,part of registered vowel-plus-glide spelling,contributes to registered nucleus/glide,apply registered rime adaptation,40,core,No independent /ʔ/
+ORTH-O-999,*,อ,unknown,no registered construction matches,withhold forced interpretation,withhold Ukrainian output,999,unresolved,Explicit unresolved state
