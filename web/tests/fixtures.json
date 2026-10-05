@@ -6,7 +6,7 @@
 {"input":"คน","expected":{"input":"คน","status":"analyzed","phonemicIpa":"kon","phoneticIpa":"kon","tone":"mid","toneIpa":"˧","ukrainian":"คน"}},
 {"input":"เกะ","expected":{"input":"เกะ","status":"analyzed","phonemicIpa":"ke","phoneticIpa":"ke","tone":"low","toneIpa":"˩","ukrainian":"ке"}},
 {"input":"เก","expected":{"input":"เก","status":"analyzed","phonemicIpa":"keː","phoneticIpa":"keː","tone":"mid","toneIpa":"˧","ukrainian":"ке"}},
-{"input":"เกีย","expected":{"input":"เกีย","status":"analyzed","phonemicIpa":"kiaː","phoneticIpa":"kiaː","tone":"mid","toneIpa":"˧","ukrainian":"кіа"}},
+{"input":"เกีย","expected":{"input":"เกีย","status":"analyzed","phonemicIpa":"kiaːj","phoneticIpa":"kiaːj","tone":"mid","toneIpa":"˧","ukrainian":"кіа"}},
 {"input":"เกา","expected":{"input":"เกา","status":"analyzed","phonemicIpa":"kaw","phoneticIpa":"kaw","tone":"mid","toneIpa":"˧","ukrainian":"кау"}},
 {"input":"เกียว","expected":{"input":"เกียว","status":"analyzed","phonemicIpa":"kiaw","phoneticIpa":"kiaw","tone":"mid","toneIpa":"˧","ukrainian":"кіау"}},
 {"input":"แล้ว","expected":{"input":"แล้ว","status":"analyzed","phonemicIpa":"lɛːw","phoneticIpa":"lɛːw","tone":"high","toneIpa":"˥","ukrainian":"лев"}},
