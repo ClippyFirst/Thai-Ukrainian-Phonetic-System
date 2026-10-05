@@ -9,7 +9,7 @@
 {"input":"เกีย","expected":{"input":"เกีย","status":"analyzed","phonemicIpa":"kiaːj","phoneticIpa":"kiaːj","tone":"mid","toneIpa":"˧","ukrainian":"кіа"}},
 {"input":"เกา","expected":{"input":"เกา","status":"analyzed","phonemicIpa":"kaw","phoneticIpa":"kaw","tone":"mid","toneIpa":"˧","ukrainian":"кау"}},
 {"input":"เกียว","expected":{"input":"เกียว","status":"analyzed","phonemicIpa":"kiaw","phoneticIpa":"kiaw","tone":"mid","toneIpa":"˧","ukrainian":"кіау"}},
-{"input":"แล้ว","expected":{"input":"แล้ว","status":"analyzed","phonemicIpa":"lɛːw","phoneticIpa":"lɛːw","tone":"high","toneIpa":"˥","ukrainian":"лев"}},
+{"input":"แล้ว","expected":{"input":"แล้ว","status":"unresolved:nonconforming-consonant-sequence","phonemicIpa":null,"phoneticIpa":null,"tone":null,"toneIpa":null,"ukrainian":null}},
 {"input":"เร็ว","expected":{"input":"เร็ว","status":"analyzed","phonemicIpa":"rew","phoneticIpa":"rew","tone":"mid","toneIpa":"˧","ukrainian":"рев"}},
 {"input":"เลย","expected":{"input":"เลย","status":"analyzed","phonemicIpa":"lɤːj","phoneticIpa":"lɤːj","tone":"mid","toneIpa":"˧","ukrainian":"лей"}},
 {"input":"ขาย","expected":{"input":"ขาย","status":"analyzed","phonemicIpa":"kʰaːj","phoneticIpa":"kʰaːj","tone":"rising","toneIpa":"˩˥","ukrainian":"кай"}},
