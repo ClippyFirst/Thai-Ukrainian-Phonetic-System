@@ -22,12 +22,12 @@ class MasterTableTests(unittest.TestCase):
             gm.OUT = Path(d)
             try:
                 report = gm.build()
-                self.assertEqual(report["rows"], 343200)
-                self.assertEqual(report["expected_rows"], 343200)
+                self.assertEqual(report["rows"], 351780)
+                self.assertEqual(report["expected_rows"], 351780)
                 with (Path(d) / "thai_ukrainian_master.csv").open(encoding="utf-8", newline="") as f:
-                    self.assertEqual(sum(1 for _ in f) - 1, 343200)
+                    self.assertEqual(sum(1 for _ in f) - 1, 351780)
                 with (Path(d) / "thai_ukrainian_master_2col.csv").open(encoding="utf-8", newline="") as f:
-                    self.assertEqual(sum(1 for _ in f) - 1, 343200)
+                    self.assertEqual(sum(1 for _ in f) - 1, 351780)
             finally:
                 gm.OUT = old
 
