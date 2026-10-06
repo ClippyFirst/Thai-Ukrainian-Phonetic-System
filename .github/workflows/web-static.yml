@@ -26,7 +26,7 @@ jobs:
           node --check web/src/app.js
           node --check web/src/engine.js
           python scripts/generate_web_fixtures.py
-          diff -u web/tests/fixtures.json web/tests/fixtures.python.json
+          cmp web/tests/fixtures.json web/tests/fixtures.python.json
           node web/tests/parity.test.mjs
       - name: Check required pages
         run: |
