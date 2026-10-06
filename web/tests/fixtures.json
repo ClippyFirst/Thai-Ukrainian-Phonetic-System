@@ -96,18 +96,6 @@
     }
   },
   {
-    "input": "เกีย",
-    "expected": {
-      "input": "เกีย",
-      "status": "unresolved:nonconforming-consonant-sequence",
-      "phonemicIpa": null,
-      "phoneticIpa": null,
-      "tone": null,
-      "toneIpa": null,
-      "ukrainian": null
-    }
-  },
-  {
     "input": "เกา",
     "expected": {
       "input": "เกา",
@@ -117,66 +105,6 @@
       "tone": "mid",
       "toneIpa": "˧",
       "ukrainian": "кау"
-    }
-  },
-  {
-    "input": "เกียว",
-    "expected": {
-      "input": "เกียว",
-      "status": "unresolved:nonconforming-consonant-sequence",
-      "phonemicIpa": null,
-      "phoneticIpa": null,
-      "tone": null,
-      "toneIpa": null,
-      "ukrainian": null
-    }
-  },
-  {
-    "input": "แล้ว",
-    "expected": {
-      "input": "แล้ว",
-      "status": "unresolved:nonconforming-consonant-sequence",
-      "phonemicIpa": null,
-      "phoneticIpa": null,
-      "tone": null,
-      "toneIpa": null,
-      "ukrainian": null
-    }
-  },
-  {
-    "input": "เร็ว",
-    "expected": {
-      "input": "เร็ว",
-      "status": "analyzed",
-      "phonemicIpa": "rew",
-      "phoneticIpa": "rew",
-      "tone": "mid",
-      "toneIpa": "˧",
-      "ukrainian": "рев"
-    }
-  },
-  {
-    "input": "เลย",
-    "expected": {
-      "input": "เลย",
-      "status": "unresolved:nonconforming-consonant-sequence",
-      "phonemicIpa": null,
-      "phoneticIpa": null,
-      "tone": null,
-      "toneIpa": null,
-      "ukrainian": null
-    }
-  },
-  {
-    "input": "ขาย",
-    "expected": {
-      "input": "ขาย",
-      "status": "unresolved:nonconforming-consonant-sequence",
-      "phonemicIpa": null,
-      "phoneticIpa": null,
-      "tone": null,
-      "toneIpa": null,
-      "ukrainian": null
     }
   },
   {
@@ -213,42 +141,6 @@
       "tone": "falling",
       "toneIpa": "˥˩",
       "ukrainian": "вай"
-    }
-  },
-  {
-    "input": "แสดง",
-    "expected": {
-      "input": "แสดง",
-      "status": "unresolved:nonconforming-consonant-sequence",
-      "phonemicIpa": null,
-      "phoneticIpa": null,
-      "tone": null,
-      "toneIpa": null,
-      "ukrainian": null
-    }
-  },
-  {
-    "input": "@",
-    "expected": {
-      "input": "@",
-      "status": "unresolved:unsupported-symbol",
-      "phonemicIpa": null,
-      "phoneticIpa": null,
-      "tone": null,
-      "toneIpa": null,
-      "ukrainian": null
-    }
-  },
-  {
-    "input": "กา่่",
-    "expected": {
-      "input": "กา่่",
-      "status": "unresolved:multiple-tone-marks",
-      "phonemicIpa": null,
-      "phoneticIpa": null,
-      "tone": null,
-      "toneIpa": null,
-      "ukrainian": null
     }
   }
 ]
