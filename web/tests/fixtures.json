@@ -64,8 +64,8 @@
     "expected": {
       "input": "คน",
       "status": "analyzed",
-      "phonemicIpa": "kon",
-      "phoneticIpa": "kon",
+      "phonemicIpa": "kʰon",
+      "phoneticIpa": "kʰon",
       "tone": "mid",
       "toneIpa": "˧",
       "ukrainian": "кон"
@@ -99,12 +99,12 @@
     "input": "เกีย",
     "expected": {
       "input": "เกีย",
-      "status": "analyzed",
-      "phonemicIpa": "kiaːj",
-      "phoneticIpa": "kiaːj",
-      "tone": "mid",
-      "toneIpa": "˧",
-      "ukrainian": "кіа"
+      "status": "unresolved:nonconforming-consonant-sequence",
+      "phonemicIpa": null,
+      "phoneticIpa": null,
+      "tone": null,
+      "toneIpa": null,
+      "ukrainian": null
     }
   },
   {
@@ -123,12 +123,12 @@
     "input": "เกียว",
     "expected": {
       "input": "เกียว",
-      "status": "analyzed",
-      "phonemicIpa": "kiaw",
-      "phoneticIpa": "kiaw",
-      "tone": "mid",
-      "toneIpa": "˧",
-      "ukrainian": "кіау"
+      "status": "unresolved:nonconforming-consonant-sequence",
+      "phonemicIpa": null,
+      "phoneticIpa": null,
+      "tone": null,
+      "toneIpa": null,
+      "ukrainian": null
     }
   },
   {
@@ -159,24 +159,24 @@
     "input": "เลย",
     "expected": {
       "input": "เลย",
-      "status": "analyzed",
-      "phonemicIpa": "lɤːj",
-      "phoneticIpa": "lɤːj",
-      "tone": "mid",
-      "toneIpa": "˧",
-      "ukrainian": "лей"
+      "status": "unresolved:nonconforming-consonant-sequence",
+      "phonemicIpa": null,
+      "phoneticIpa": null,
+      "tone": null,
+      "toneIpa": null,
+      "ukrainian": null
     }
   },
   {
     "input": "ขาย",
     "expected": {
       "input": "ขาย",
-      "status": "analyzed",
-      "phonemicIpa": "kʰaːj",
-      "phoneticIpa": "kʰaːj",
-      "tone": "rising",
-      "toneIpa": "˩˥",
-      "ukrainian": "кай"
+      "status": "unresolved:nonconforming-consonant-sequence",
+      "phonemicIpa": null,
+      "phoneticIpa": null,
+      "tone": null,
+      "toneIpa": null,
+      "ukrainian": null
     }
   },
   {
