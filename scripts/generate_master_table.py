@@ -254,7 +254,7 @@ def build():
         "coda_graphemes": len(codas),
         "tone_mark_states": len(MARKS),
         "structural_upper_bound": expected,
-        "principle": "Thai orthography → structural orthographic analysis → Thai phonology → Ukrainian adaptation; IPA is an independent audit/control layer",
+        "principle": "IPA-first: Thai orthography → structural orthographic analysis → Thai phonology → tone → IPA → Ukrainian phonetic target; IPA is an independent audit/control layer",
         "status": "structural-combinatorial-space-with-parser-revalidation",
         "warning": "All rows are exhaustive within the declared structural registry, but are not thereby valid, lexical, corpus-attested or semantically translated Thai.",
         "attestation_status": "not_evaluated_lexically_or_corpus",
