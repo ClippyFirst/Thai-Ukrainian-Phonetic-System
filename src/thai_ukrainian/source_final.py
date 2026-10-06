@@ -1,7 +1,7 @@
 from __future__ import annotations
 import csv, json
 from pathlib import Path
-from .orthography import VOWEL_SIGNATURES, SIGNATURES, GLIDE_PATTERNS, TONE_MARKS
+from .orthography import VOWEL_SIGNATURES, SIGNATURES, GLIDE_PATTERNS, NUCLEUS_CONSONANTS, TONE_MARKS
 from .inventory import load_consonants
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -16,6 +16,7 @@ def _declared_vowel_ids():
     ids = {row[2] for row in VOWEL_SIGNATURES.values()}
     ids.update(row[2] for row in SIGNATURES.values() if row[2])
     ids.update(row[3] for row in GLIDE_PATTERNS)
+    ids.update(NUCLEUS_CONSONANTS)
     return ids
 
 def build_manifest():
