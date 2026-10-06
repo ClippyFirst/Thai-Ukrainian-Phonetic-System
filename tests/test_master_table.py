@@ -31,7 +31,12 @@ class MasterTableTests(unittest.TestCase):
         self.assertEqual(self.report["rows"], 351780)
         self.assertEqual(self.report["expected_rows"], 351780)
         with (self.out / "thai_ukrainian_master.csv").open(encoding="utf-8", newline="") as f:
-            self.assertEqual(sum(1 for _ in f) - 1, 351780)
+            reader = csv.reader(f)
+            header = next(reader)
+            self.assertIn("syllable_phonemic_ipa", header)
+            self.assertIn("syllable_surface_ipa", header)
+            self.assertIn("ukrainian_from_ipa", header)
+            self.assertEqual(sum(1 for _ in reader), 351780)
         with (self.out / "thai_ukrainian_master_2col.csv").open(encoding="utf-8", newline="") as f:
             self.assertEqual(sum(1 for _ in f) - 1, 351780)
 
