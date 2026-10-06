@@ -1,9 +1,10 @@
 from pathlib import Path
 import csv
-from .models import Consonant
+from functools import lru_cache
 
 ROOT = Path(__file__).resolve().parents[2]
 
+@lru_cache(maxsize=4)
 def load_consonants(path=None):
     path = Path(path or ROOT / "data" / "thai" / "consonants.csv")
     result = {}
