@@ -2,7 +2,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 from thai_ukrainian.api import analyze_syllable
-PROBES=["กา","กาน","กาล","กรา","กล้า","คน","เกะ","เก","เกา","หงา","ไหม","ไหว้"]
+PROBES=["กา","กาน","กาล","กรา","กล้า","คน","เกะ","เก","เกา","หงา","ไหม","ไหว้","อย่า","รร","กา!","ก่้","ค๊า"]
 def main():
     rows=[]
     for text in PROBES:
