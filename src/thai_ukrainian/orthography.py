@@ -107,7 +107,7 @@ def detect_vowel(text:str):
         return {"pattern":s,"ipa":"aj","length":"short","id":"V-X-AI","explicit":True,
                 "terminal_glide":"j","matched_text":s,"nucleus_consonants":["อ"]}
 
-    for pattern,ipa,length,vid in sequence_patterns:
+    for pattern,ipa,length,vid in sorted(sequence_patterns, key=lambda x: len(x[0]), reverse=True):
         m=re.search(pattern,s)
         if m:
             return {"pattern":pattern,"ipa":ipa,"length":length,"id":vid,"explicit":True,
