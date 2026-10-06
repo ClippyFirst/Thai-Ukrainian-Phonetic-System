@@ -63,7 +63,7 @@ class PositionalCorrespondenceTests(unittest.TestCase):
                 }
                 self.assertTrue(required.issubset(set(header)))
                 self.assertEqual(len(consonants), 82)
-                self.assertEqual(len(vowels), 80)
+                self.assertEqual(len(vowels), 82)
                 final_d = next(row for row in consonants if row['grapheme'] == 'ด' and row['role'] == 'coda')
                 self.assertEqual(final_d['phonemic_ipa'], 't')
                 self.assertEqual(final_d['surface_ipa'], 't̚')
