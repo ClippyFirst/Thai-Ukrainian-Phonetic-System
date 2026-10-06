@@ -18,7 +18,7 @@ def effective_onset(a:SyllableAnalysis)->list[str]:
 
 def phonologize(a:SyllableAnalysis)->SyllableAnalysis:
     onset=effective_onset(a)
-    if a.vowel is None or a.status.startswith("unresolved:"):
+    if a.vowel is None or a.status != "analyzed":
 
         a.phonemic_ipa=None
         a.warnings.append("Phonemic IPA withheld because the vowel is unresolved.")
