@@ -3,6 +3,7 @@ from __future__ import annotations
 import csv
 import json
 from pathlib import Path
+from functools import lru_cache
 
 from thai_ukrainian.api import analyze_syllable
 from thai_ukrainian.contextual import surface_ipa_for_consonant, vowel_surface_context
@@ -82,6 +83,7 @@ def tone_for(rules, cls, ld, length, mark):
     return None
 
 
+@lru_cache(maxsize=None)
 def ua_from_ipa(ipa: str) -> str:
     candidates = candidates_for_ipa(ipa, limit=1)
     return candidates[0] if candidates else ""
