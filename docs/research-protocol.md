@@ -39,6 +39,10 @@ The project now treats source tables as authoritative inputs and verifies that d
 
 If the written form permits multiple phonological analyses that cannot be resolved from the supplied syllable alone, the parser must expose an explicit **analysis-dependent** state and retain the candidate analyses. It must not select vowel length, tone, IPA, or Ukrainian output merely because one lexical item is common. The closed **เ-ิ-** pattern is a regression case: Royal Society evidence documents long **เกิน** versus short **เงิน** under the same structural spelling family. Lexical resolution belongs in a future evidence-bearing lexicon/corpus layer.
 
+## Coda-position validation policy
+
+Final consonant licensing is checked independently of onset inventory membership. If a grapheme is available as an onset but not as a Standard Thai coda, the parser must expose `invalid:coda-not-licensed`; it must not silently discard the grapheme or reinterpret it as an absent coda. This keeps graphemic possibility, positional legality and lexical attestation separate.
+
 ## Special orthography policy
 
 Special constructions are represented as explicit, evidence-bearing alternatives when lexical context is required. An implementation must not convert an analysis-dependent construction into a single IPA output merely because a generic parser can produce one.
