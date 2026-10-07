@@ -33,12 +33,30 @@ class MasterTableTests(unittest.TestCase):
         with (self.out / "thai_ukrainian_master.csv").open(encoding="utf-8", newline="") as f:
             reader = csv.reader(f)
             header = next(reader)
+            self.assertIn("constructed_syllable_ipa", header)
             self.assertIn("syllable_phonemic_ipa", header)
             self.assertIn("syllable_surface_ipa", header)
             self.assertIn("ukrainian_from_ipa", header)
             self.assertEqual(sum(1 for _ in reader), 351780)
         with (self.out / "thai_ukrainian_master_2col.csv").open(encoding="utf-8", newline="") as f:
             self.assertEqual(sum(1 for _ in f) - 1, 351780)
+
+    def test_parser_ipa_is_never_masked_by_constructed_target(self):
+        with (self.out / "thai_ukrainian_master.csv").open(encoding="utf-8", newline="") as f:
+            rows = csv.DictReader(f)
+            checked = 0
+            for row in rows:
+                if row["analysis_status"] == "analyzed":
+                    self.assertTrue(row["syllable_phonemic_ipa"])
+                    self.assertTrue(row["syllable_surface_ipa"])
+                else:
+                    self.assertEqual(row["syllable_phonemic_ipa"], "")
+                    self.assertEqual(row["syllable_surface_ipa"], "")
+                if row["ukrainian_from_ipa"]:
+                    self.assertEqual(row["ukrainian_from_ipa"], self.gm.ua_from_ipa(row["syllable_phonemic_ipa"]))
+                checked += 1
+                if checked >= 500:
+                    break
 
     def test_two_column_view_is_derived_from_rich_table(self):
         with (
