@@ -13,6 +13,10 @@
 
 - **SRC-ORST-VOWEL-LENGTH-2021** — International Journal of the Royal Society of Thailand (2021), *The Thai Writing System: Reasons behind Its System*, Table 14. The source explicitly documents shared written forms with final consonants and contrasts **เกิน** /ɤː/ with **เงิน** /ɤ/, demonstrating that the closed **เ-ิ-** spelling cannot by itself determine vowel length. This is treated as an orthographic/lexical ambiguity, not as a parser failure.
 
+## Coda-position evidence
+
+Standard Thai permits a restricted final inventory; consonant graphemes such as ฉ, ผ, ฝ, ห, อ and ฮ are not licensed as ordinary codas. The parser therefore treats an otherwise structurally detectable final occurrence of one of these graphemes as `invalid:coda-not-licensed` rather than silently dropping it. This is an orthographic/phonotactic validation rule, not a claim about lexical attestation. The JIPA Standard Thai description and independent descriptions of Thai final consonants support the restricted-coda analysis.
+
 ## Evidence policy
 
 A source can support a claim, but implementation status is tracked separately. The project distinguishes core evidence, analysis-dependent rules, and unresolved cases.
