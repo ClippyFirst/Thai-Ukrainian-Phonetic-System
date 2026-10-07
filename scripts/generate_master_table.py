@@ -195,6 +195,7 @@ def build():
             "vowel_surface_ipa", "coda_grapheme", "coda_position",
             "coda_phonemic_ipa", "coda_surface_ipa",
             "tone_mark", "tone", "tone_ipa",
+            "constructed_syllable_ipa",
             "syllable_phonemic_ipa", "syllable_surface_ipa",
             "ukrainian", "ukrainian_from_ipa",
             "analysis_status", "attestation_status", "source_basis"
@@ -223,6 +224,11 @@ def build():
                             if coda else ""
                         )
 
+                        actual_phonemic_ipa = analysis.phonemic_ipa or ""
+                        actual_surface_ipa = analysis.phonetic_ipa or ""
+                        structured_ua = ua
+                        ipa_derived_ua = ua_from_ipa(actual_phonemic_ipa)
+
                         status_counts[status] = status_counts.get(status, 0) + 1
                         w.writerow([
                             thai, "structural_syllable", c["grapheme"],
@@ -233,8 +239,9 @@ def build():
                             coda_phonemic, coda_surface,
                             mark_id or "", tone["tone"] if tone else "",
                             tone["contour_ipa"] if tone else "",
-                            analysis.phonemic_ipa or ipa, analysis.phonetic_ipa or ipa,
-                            ua, ua, status,
+                            ipa,
+                            actual_phonemic_ipa, actual_surface_ipa,
+                            structured_ua, ipa_derived_ua, status,
                             "not_evaluated_lexically_or_corpus",
                             "machine-declared registry → structural constructor → parser/IPA revalidation"
                         ])
