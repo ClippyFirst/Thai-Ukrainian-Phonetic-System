@@ -80,10 +80,10 @@ These are evidence gates, not hidden software gaps.
 The generated syllable-space report gives a **structural upper bound**, not the number of Thai syllables:
 
 - initial grapheme options: 44;
-- declared vowel/rime records: 40;
+- declared vowel/rime records: 41;
 - structural coda grapheme options used by the generator: 38;
 - tone-mark states: 5;
-- combined structural upper bound: 351,780.
+- combined structural upper bound: 351,780 (44 × 41 × (1 + 38 coda options) × 5 tone-mark states).
 
 This must not be interpreted as a count of valid, lexical or corpus-attested Thai syllables.
 
