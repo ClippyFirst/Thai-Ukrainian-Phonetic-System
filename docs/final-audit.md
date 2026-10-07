@@ -153,7 +153,7 @@ The completion pass closes the remaining **software architecture layers** withou
 - special orthography has an explicit registry covering `รร`, `ฤ/ฤๅ`, `ฦ/ฦๅ`, thanthakhat `์`, lexical `ทร`, and `อ นำ`; these cases produce explicit analysis-dependent candidates rather than silent forced IPA;
 - lexical segmentation has an explicit external-lexicon adapter; the system still refuses to invent word boundaries when no lexical evidence is supplied;
 - the Ukrainian layer now reaches a project-defined orthographic candidate output, while keeping tone separate and marking the output as a research candidate rather than an official Ukrainian standard;
-- a generated source→parser→derived manifest checks the 44 consonants, 41 vowel/rime records, parser vowel IDs, four tone marks/five tone states, 38 licensed coda graphemes and the 343,200 structural upper bound;
+- a generated source→parser→derived manifest checks the 44 consonants, 41 vowel/rime records, parser vowel IDs, four tone marks/five tone states, 38 licensed coda graphemes and the 351,780 structural upper bound;
 - CI now checks that the generated source-final manifest and existing derived artifacts remain synchronized.
 
 ### Initial-set vs final-set audit
