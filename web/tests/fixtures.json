@@ -214,5 +214,29 @@
       "toneIpa": null,
       "ukrainian": null
     }
+  },
+  {
+    "input": "กฉ",
+    "expected": {
+      "input": "กฉ",
+      "status": "invalid:coda-not-licensed",
+      "phonemicIpa": null,
+      "phoneticIpa": null,
+      "tone": null,
+      "toneIpa": null,
+      "ukrainian": null
+    }
+  },
+  {
+    "input": "กผ",
+    "expected": {
+      "input": "กผ",
+      "status": "invalid:coda-not-licensed",
+      "phonemicIpa": null,
+      "phoneticIpa": null,
+      "tone": null,
+      "toneIpa": null,
+      "ukrainian": null
+    }
   }
 ]
