@@ -114,6 +114,25 @@ def parse_syllable(syllable:str)->SyllableAnalysis:
             orthographic_interpretations=interpretations)
 
     v=detect_vowel(s)
+    if v.get("analysis_dependent"):
+        # The orthography does not determine vowel length here (e.g. เดิน vs เงิน).
+        # Preserve structural onset/coda information, but withhold tone/IPA until
+        # lexical evidence selects one of the declared vowel candidates.
+        onset, coda = _split_onset_coda(s, inv, v)
+        if not onset:
+            onset = cs[:1]
+        first = inv[onset[0]] if onset else None
+        return SyllableAnalysis(
+            input=syllable, normalized=s,
+            grapheme_order=[x["char"] for x in decompose_thai(s)],
+            onset=onset, onset_class=first.class_ if first else None,
+            tone_class=first.class_ if first else None,
+            coda=coda, coda_ipa=inv[coda].coda_ipa if coda else None,
+            tone_mark=tone_mark(s), status="analysis-dependent:vowel-length",
+            warnings=["The closed เ-ิ- spelling does not determine /ɤ/ vs /ɤː/ without lexical evidence; no IPA or tone was forced."],
+            orthographic_interpretations=interpretations,
+        )
+
     residual_vowels=_surface_residual_vowel_signs(s,v)
     if residual_vowels:
         return SyllableAnalysis(syllable,s,grapheme_order=[x["char"] for x in decompose_thai(s)],
