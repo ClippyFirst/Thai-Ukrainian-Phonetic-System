@@ -1,6 +1,7 @@
 import unittest
 from thai_ukrainian.api import analyze_syllable
 from thai_ukrainian.parser import parse_syllable
+from thai_ukrainian.orthography import detect_vowel
 
 class PipelineTests(unittest.TestCase):
     def test_long_open_live(self):
@@ -29,6 +30,18 @@ class PipelineTests(unittest.TestCase):
 
     def test_longest_match_iaw_glide(self):
         a=parse_syllable("เกียว"); self.assertEqual(a.vowel,"iaw"); self.assertEqual(a.vowel_id,"V-X-IAW"); self.assertEqual(a.onset,["ก"]); self.assertIsNone(a.coda)
+
+    def test_closed_eoi_vowel_length_requires_lexical_evidence(self):
+        for text in ("เงิน", "เดิน"):
+            v = detect_vowel(text)
+            self.assertTrue(v.get("analysis_dependent"), text)
+            self.assertEqual(v.get("id"), "V-AMB-EOI-CLOSED")
+            self.assertEqual({x["ipa"] for x in v["alternatives"]}, {"ɤ", "ɤː"})
+            a = analyze_syllable(text)
+            self.assertEqual(a.status, "analysis-dependent:vowel-length", text)
+            self.assertIsNone(a.phonemic_ipa, text)
+            self.assertIsNone(a.tone, text)
+            self.assertEqual(a.coda, "น", text)
 
     def test_preposed_glide_patterns(self):
         cases=[("แล้ว","ɛːw"),("เร็ว","ew"),("เลย","ɤːj")]
