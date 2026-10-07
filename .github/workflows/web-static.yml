@@ -34,6 +34,15 @@ jobs:
           test -s web/system.html
           test -s web/src/styles.css
           test -s web/src/app.js
+      - name: Check static accessibility contract
+        run: |
+          grep -q '<html lang="uk">' web/index.html
+          grep -q 'for="thai-input"' web/index.html
+          grep -q 'id="thai-input"' web/index.html
+          grep -q 'role="status"' web/index.html
+          grep -q 'focus-visible' web/src/styles.css
+          grep -q 'Content-Security-Policy' web/index.html
+          grep -q 'Content-Security-Policy' web/system.html
       - name: Check no remote runtime dependency
         run: |
           ! grep -E '(<script[^>]+src="https?://|<link[^>]+href="https?://)' web/index.html web/system.html
