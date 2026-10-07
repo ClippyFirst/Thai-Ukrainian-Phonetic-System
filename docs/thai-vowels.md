@@ -11,3 +11,6 @@ The machine-readable registry currently contains **41 rime records**:
 These 41 records are **not** a claim of 41 phonemic vowel qualities. Registry cardinality and phoneme-inventory cardinality are intentionally separate.
 
 Vowel quantity is retained explicitly because it can affect tone determination in low-class dead syllables. The IPA layer also keeps /j/ and /w/ glide components explicit where the evidence model treats them as part of the rime.
+## Orthographic ambiguity requiring lexical evidence
+
+The parser does not assume that every written rime uniquely determines vowel quantity. A particularly important case is the closed **เ-ิ-** spelling: Royal Society evidence documents long **เกิน** /ɤː/ and short **เงิน** /ɤ/ within this spelling family. Therefore the reference implementation exposes an **analysis-dependent:vowel-length** state and retains both candidates when the input supplies no lexical evidence. This is intentional and prevents a syllable-only parser from converting orthographic ambiguity into false IPA or tone output.
