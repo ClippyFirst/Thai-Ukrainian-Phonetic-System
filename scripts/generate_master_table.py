@@ -3,6 +3,7 @@ from __future__ import annotations
 import csv
 import json
 from pathlib import Path
+from functools import lru_cache
 
 from thai_ukrainian.api import analyze_syllable
 from thai_ukrainian.contextual import surface_ipa_for_consonant, vowel_surface_context
@@ -82,6 +83,7 @@ def tone_for(rules, cls, ld, length, mark):
     return None
 
 
+@lru_cache(maxsize=None)
 def ua_from_ipa(ipa: str) -> str:
     candidates = candidates_for_ipa(ipa, limit=1)
     return candidates[0] if candidates else ""
@@ -195,6 +197,7 @@ def build():
             "vowel_surface_ipa", "coda_grapheme", "coda_position",
             "coda_phonemic_ipa", "coda_surface_ipa",
             "tone_mark", "tone", "tone_ipa",
+            "constructed_syllable_ipa",
             "syllable_phonemic_ipa", "syllable_surface_ipa",
             "ukrainian", "ukrainian_from_ipa",
             "analysis_status", "attestation_status", "source_basis"
@@ -223,6 +226,11 @@ def build():
                             if coda else ""
                         )
 
+                        actual_phonemic_ipa = analysis.phonemic_ipa or ""
+                        actual_surface_ipa = analysis.phonetic_ipa or ""
+                        structured_ua = ua
+                        ipa_derived_ua = ua_from_ipa(actual_phonemic_ipa)
+
                         status_counts[status] = status_counts.get(status, 0) + 1
                         w.writerow([
                             thai, "structural_syllable", c["grapheme"],
@@ -233,8 +241,9 @@ def build():
                             coda_phonemic, coda_surface,
                             mark_id or "", tone["tone"] if tone else "",
                             tone["contour_ipa"] if tone else "",
-                            analysis.phonemic_ipa or ipa, analysis.phonetic_ipa or ipa,
-                            ua, ua, status,
+                            ipa,
+                            actual_phonemic_ipa, actual_surface_ipa,
+                            structured_ua, ipa_derived_ua, status,
                             "not_evaluated_lexically_or_corpus",
                             "machine-declared registry → structural constructor → parser/IPA revalidation"
                         ])
@@ -254,7 +263,7 @@ def build():
         "coda_graphemes": len(codas),
         "tone_mark_states": len(MARKS),
         "structural_upper_bound": expected,
-        "principle": "Thai orthography → structural orthographic analysis → Thai phonology → Ukrainian adaptation; IPA is an independent audit/control layer",
+        "principle": "IPA-first: Thai orthography → structural orthographic analysis → Thai phonology → tone → IPA → Ukrainian phonetic target; IPA is an independent audit/control layer",
         "status": "structural-combinatorial-space-with-parser-revalidation",
         "warning": "All rows are exhaustive within the declared structural registry, but are not thereby valid, lexical, corpus-attested or semantically translated Thai.",
         "attestation_status": "not_evaluated_lexically_or_corpus",

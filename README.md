@@ -61,7 +61,7 @@ The model distinguishes:
 
 **v0.5.0 — research-ready IPA-audit layer with conservative positional surface phonetics.**
 
-The repository is suitable as a transparent research foundation and reference implementation. The completion branch adds machine-readable tone rules, special-orthography analysis, external lexical segmentation support, a Ukrainian orthographic candidate layer, and source→parser→derived consistency checks. The merged completion content was verified by GitHub Actions run 213 on the clean release branch; the final audit records the resulting main merge HEAD.
+The repository is suitable as a transparent research foundation and reference implementation. The completion branch adds machine-readable tone rules, special-orthography analysis, external lexical segmentation support, a Ukrainian orthographic candidate layer, and source→parser→derived consistency checks. The current development branch is CI-verified; the pull request remains the review boundary until the branch is merged.
 
 It is **not** yet an empirically validated benchmark. No corpus accuracy percentage is claimed because a declared gold corpus has not been processed by CI.
 
@@ -80,10 +80,10 @@ These are evidence gates, not hidden software gaps.
 The generated syllable-space report gives a **structural upper bound**, not the number of Thai syllables:
 
 - initial grapheme options: 44;
-- declared vowel/rime records: 40;
+- declared vowel/rime records: 41;
 - structural coda grapheme options used by the generator: 38;
 - tone-mark states: 5;
-- combined structural upper bound: 343,200.
+- combined structural upper bound: 351,780 (44 × 41 × (1 + 38 coda options) × 5 tone-mark states).
 
 This must not be interpreted as a count of valid, lexical or corpus-attested Thai syllables.
 
@@ -135,6 +135,19 @@ python scripts/evaluate_corpus.py path/to/records.jsonl
 
 The evaluator reports numerators and denominators explicitly and excludes missing gold fields from the relevant metric.
 
+
+## Web service
+
+The repository includes a static two-page web application under `web/`:
+
+- `web/index.html` — public Service interface for Thai analysis;
+- `web/system.html` — methodology and evidence page;
+- `web/src/engine.js` — browser-safe implementation of the declared analysis pipeline;
+- `web/tests/fixtures.json` — versioned parity probes;
+- `scripts/generate_web_fixtures.py` — generates the authoritative fixture values from the Python core.
+
+The web CI gate compares the browser engine against the Python reference on the same probes before the Pages artifact is eligible for deployment. GitHub Pages is a static presentation/deployment layer; it does not run the Python package server-side.
+
 ## Research workspace
 
 - Notion: https://app.notion.com/p/3ec40df389698138be8beb43b78971a2?pvs=204
@@ -151,4 +164,4 @@ A result is only called **empirical** when it has a named/versioned evidence sou
 
 ## Master correspondence table
 
-The repository can deterministically generate an exhaustive structural Thai → Ukrainian master table using the IPA-first pipeline. It contains 343,200 structural rows from 44 initial graphemes, 40 vowel/rime records, 38 coda options plus open syllables, and 5 tone-mark states. The downloadable generated artifacts are attached to the **master-artifact** CI job; see `docs/master-correspondence-table.md` for semantics and limitations.
+The repository can deterministically generate an exhaustive structural Thai → Ukrainian master table using the IPA-first pipeline. It contains 351,780 structural rows from 44 initial graphemes, 41 vowel/rime records, 38 coda options plus open syllables, and 5 tone-mark states. The downloadable generated artifacts are attached to the **master-artifact** CI job; see `docs/master-correspondence-table.md` for semantics and limitations.

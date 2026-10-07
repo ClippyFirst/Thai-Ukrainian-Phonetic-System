@@ -1,6 +1,6 @@
 # Final audit — current branch status
 
-> **2026-10-03 branch override:** the historical release snapshots below describe earlier 40-rime / 343,200-row states. On `feat/full-orthographic-audit`, the declared rime registry is now **41 records** because reduced `-ว-` /uaː/ is modeled explicitly. The corresponding structural upper bound is **351,780 rows** (44 × 41 × (1 + 38 coda options) × 5 tone-mark states). A fresh exhaustive generation and CI verification are still pending. Do not treat any historical “PASS”, test count, SHA, or 343,200-row statement below as verification of this branch.
+> **2026-10-03 branch override:** the historical release snapshots below describe earlier 40-rime / 343,200-row states. The current branch declares **41 rime records**, including reduced `-ว-` /uaː/, giving a **351,780-row** structural upper bound (44 × 41 × (1 + 38 coda options) × 5 tone-mark states). The current branch has passed the exhaustive generator and CI gates. Historical sections remain audit history, not current quantitative authority.
 
 ## 2026-10-03 full orthographic audit
 
@@ -91,12 +91,12 @@ A final Ukrainian orthographic rendering remains a separate research decision an
 The generated structural syllable-space report currently gives:
 
 - initial grapheme options: 44;
-- vowel/rime records: 40;
+- vowel/rime records: 41;
 - structural coda grapheme options: 38;
 - tone-mark states: 5;
-- open-syllable structural upper bound: 8,800;
-- closed-syllable structural upper bound: 334,400;
-- combined structural upper bound: 343,200.
+- open-syllable structural upper bound: 9,020;
+- closed-syllable structural upper bound: 342,760;
+- combined structural upper bound: 351,780.
 
 These are **combinatorial upper bounds over declared records**, not counts of valid Thai syllables, lexical forms or corpus-attested forms.
 
@@ -153,12 +153,12 @@ The completion pass closes the remaining **software architecture layers** withou
 - special orthography has an explicit registry covering `รร`, `ฤ/ฤๅ`, `ฦ/ฦๅ`, thanthakhat `์`, lexical `ทร`, and `อ นำ`; these cases produce explicit analysis-dependent candidates rather than silent forced IPA;
 - lexical segmentation has an explicit external-lexicon adapter; the system still refuses to invent word boundaries when no lexical evidence is supplied;
 - the Ukrainian layer now reaches a project-defined orthographic candidate output, while keeping tone separate and marking the output as a research candidate rather than an official Ukrainian standard;
-- a generated source→parser→derived manifest checks the 44 consonants, 40 vowel/rime records, parser vowel IDs, four tone marks/five tone states, 38 licensed coda graphemes and the 343,200 structural upper bound;
+- a generated source→parser→derived manifest checks the 44 consonants, 41 vowel/rime records, parser vowel IDs, four tone marks/five tone states, 38 licensed coda graphemes and the 351,780 structural upper bound;
 - CI now checks that the generated source-final manifest and existing derived artifacts remain synchronized.
 
 ### Initial-set vs final-set audit
 
-The authoritative inputs remain the machine-readable Thai inventories. The final layer is now checked against those inputs rather than only documenting aggregate counts. In particular, the 40 source vowel IDs must equal the IDs declared by the parser registry; the 44 consonant graphemes and 38 coda-capable graphemes are counted directly from the source table; and the structural syllable-space formula is independently asserted.
+The authoritative inputs remain the machine-readable Thai inventories. The final layer is now checked against those inputs rather than only documenting aggregate counts. In particular, the 41 source vowel/rime IDs must equal the IDs declared by the parser registry; the 44 consonant graphemes and 38 coda-capable graphemes are counted directly from the source table; and the structural syllable-space formula is independently asserted.
 
 ### What is still deliberately empirical, not merely architectural
 

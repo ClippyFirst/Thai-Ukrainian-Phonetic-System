@@ -26,7 +26,7 @@ jobs:
           python-version: "3.12"
       - run: python -m pip install -e .
       - run: python scripts/generate_master_table.py
-      - run: python -c "import json; m=json.load(open('data/derived/thai_ukrainian_master.json',encoding='utf-8')); assert m['rows']==343200"
+      - run: python -c "import json; m=json.load(open('data/derived/thai_ukrainian_master.json',encoding='utf-8')); assert m['rows']==m['expected_rows']==351780; assert m['vowel_records']==41"
       - uses: actions/upload-artifact@v4
         with:
           name: thai-ukrainian-master-table

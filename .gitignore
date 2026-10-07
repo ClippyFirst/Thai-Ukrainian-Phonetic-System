@@ -31,3 +31,6 @@ Thumbs.db
 *.log
 data/derived/thai_ukrainian_master.csv
 data/derived/thai_ukrainian_master_2col.csv
+
+# Generated web parity fixture
+web/tests/fixtures.python.json

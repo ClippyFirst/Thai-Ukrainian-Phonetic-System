@@ -10,13 +10,13 @@ The mandatory representation chain is:
 
 Here **ІРА means IPA (International Phonetic Alphabet / МФА)** as the central phonetic intermediate representation. Tone remains a separate suprasegmental layer; it is not folded into segment identity.
 
-The Ukrainian column is therefore a **phonetic/phonological approximation**, not semantic translation and not an official Ukrainian transliteration standard. A Ukrainian rendering is only generated from the IPA layer, never directly from the Thai grapheme.
+The Ukrainian column contains the structured Thai-analysis candidate. A separate `ukrainian_from_ipa` field is derived independently from the parser's actual phonemic IPA. Neither is semantic translation or an official Ukrainian transliteration standard.
 
 ## Exhaustive scope
 
 The generator enumerates the repository's declared structural space:
 
-**44 initial graphemes × 40 vowel/rime records × (1 + 38 coda options) × 5 tone-mark states = 343,200 rows.**
+**44 initial graphemes × 41 vowel/rime records × (1 + 38 coda options) × 5 tone-mark states = 351,780 rows.**
 
 This is exhaustive **within the declared structural model**. It is not a claim that 343,200 lexical Thai syllables exist.
 
@@ -42,7 +42,7 @@ The large CSVs are generated in CI and published as the `thai-ukrainian-master-t
 
 ## Rich-table semantics
 
-The rich table now keeps separate phonemic and surface IPA for onset, vowel, coda and complete syllable. The Ukrainian field is generated from the phonemic IPA path, so the IPA layer is independently inspectable before Ukrainian rendering.
+The rich table keeps the structurally constructed target IPA separate from the parser's actual phonemic and surface IPA. This prevents unresolved or mismatched rows from being made to look successfully parsed. `ukrainian` is the structured-analysis candidate; `ukrainian_from_ipa` is the independent IPA-derived candidate.
 
 The rich table keeps:
 
@@ -74,4 +74,4 @@ No row is called lexical or corpus-attested without an external evidence source 
 python scripts/generate_master_table.py
 ```
 
-The generator reads the machine-readable Thai registries and derives the table. There is no hand-written 343,200-row lookup list.
+The generator reads the machine-readable Thai registries and derives the table. There is no hand-written 351,780-row lookup list.

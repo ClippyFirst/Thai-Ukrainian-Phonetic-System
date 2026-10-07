@@ -1,12 +1,13 @@
-from __future__ import annotations
 import csv
 from pathlib import Path
+from functools import lru_cache
 from .models import ToneResult
 
 ROOT = Path(__file__).resolve().parents[2]
 RULES_PATH = ROOT / "data" / "thai" / "tone_rules.csv"
 TONE_IPA = {"mid": "˧", "low": "˩", "falling": "˥˩", "high": "˥", "rising": "˩˥"}
 
+@lru_cache(maxsize=1)
 def _load_rules():
     with RULES_PATH.open(encoding="utf-8", newline="") as f:
         return list(csv.DictReader(f))

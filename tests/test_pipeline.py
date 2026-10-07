@@ -1,6 +1,7 @@
 import unittest
 from thai_ukrainian.api import analyze_syllable
 from thai_ukrainian.parser import parse_syllable
+from thai_ukrainian.orthography import detect_vowel
 
 class PipelineTests(unittest.TestCase):
     def test_long_open_live(self):
@@ -30,6 +31,18 @@ class PipelineTests(unittest.TestCase):
     def test_longest_match_iaw_glide(self):
         a=parse_syllable("เกียว"); self.assertEqual(a.vowel,"iaw"); self.assertEqual(a.vowel_id,"V-X-IAW"); self.assertEqual(a.onset,["ก"]); self.assertIsNone(a.coda)
 
+    def test_closed_eoi_vowel_length_requires_lexical_evidence(self):
+        for text in ("เงิน", "เดิน"):
+            v = detect_vowel(text)
+            self.assertTrue(v.get("analysis_dependent"), text)
+            self.assertEqual(v.get("id"), "V-AMB-EOI-CLOSED")
+            self.assertEqual({x["ipa"] for x in v["alternatives"]}, {"ɤ", "ɤː"})
+            a = analyze_syllable(text)
+            self.assertEqual(a.status, "analysis-dependent:vowel-length", text)
+            self.assertIsNone(a.phonemic_ipa, text)
+            self.assertIsNone(a.tone, text)
+            self.assertEqual(a.coda, "น", text)
+
     def test_preposed_glide_patterns(self):
         cases=[("แล้ว","ɛːw"),("เร็ว","ew"),("เลย","ɤːj")]
         for text,ipa in cases:
@@ -38,15 +51,23 @@ class PipelineTests(unittest.TestCase):
             self.assertEqual(len(a.onset),1,text)
             self.assertIsNone(a.coda,text)
 
-    def test_implicit_vowel_is_not_guessed(self):
-        a=parse_syllable("คน")
-        self.assertEqual(a.status,"unresolved:implicit-vowel")
-        self.assertIsNone(a.vowel)
-        self.assertIsNone(a.phonemic_ipa)
+    def test_closed_inherent_vowel_is_resolved_structurally(self):
+        a=analyze_syllable("คน")
+        self.assertEqual(a.status,"analyzed")
+        self.assertEqual(a.vowel,"o")
+        self.assertEqual(a.phonemic_ipa,"kʰon")
         self.assertEqual(a.coda,"น")
 
     def test_invalid_tone_is_structured(self):
         a=analyze_syllable("ข๊า"); self.assertEqual(a.status,"invalid:tone-combination"); self.assertIsNone(a.tone); self.assertTrue(a.warnings)
+
+    def test_unlicensed_coda_is_rejected(self):
+        for text in ("กฉ", "กผ"):
+            a=analyze_syllable(text)
+            self.assertEqual(a.status, "invalid:coda-not-licensed", text)
+            self.assertIsNone(a.phonemic_ipa, text)
+            self.assertIsNone(a.phonetic_ipa, text)
+            self.assertIsNone(a.tone, text)
 
     def test_hnam(self):
         a=analyze_syllable("หงา"); self.assertEqual(a.tone.tone,"rising"); self.assertEqual(a.tone_class,"high"); self.assertEqual(a.phonemic_ipa,"ŋaː"); self.assertIn("ORTH-H-NAM",a.rules_applied)

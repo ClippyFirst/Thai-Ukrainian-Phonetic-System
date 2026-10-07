@@ -1,9 +1,8 @@
-from __future__ import annotations
-
 import csv
 from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
+from functools import lru_cache
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -33,6 +32,7 @@ class OrthographicRule:
     notes: str
 
 
+@lru_cache(maxsize=1)
 def load_orthographic_rules() -> list[OrthographicRule]:
     with RULES_PATH.open(encoding="utf-8", newline="") as f:
         return [

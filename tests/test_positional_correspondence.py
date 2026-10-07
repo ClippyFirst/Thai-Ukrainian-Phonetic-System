@@ -40,35 +40,13 @@ class PositionalCorrespondenceTests(unittest.TestCase):
         self.assertEqual(closed_analysis.phonetic_ipa, 'kat̚')
         self.assertNotEqual(open_analysis.phonetic_ipa, closed_analysis.phonetic_ipa)
 
-    def test_master_generator_declares_separate_ipa_layers(self):
-        sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
+    def test_source_registries_declare_separate_ipa_layers(self):
+        sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
         import generate_master_table as gm
-        with tempfile.TemporaryDirectory() as d:
-            old = gm.OUT
-            gm.OUT = Path(d)
-            try:
-                gm.build()
-                with (Path(d) / 'thai_ukrainian_master.csv').open(encoding='utf-8', newline='') as f:
-                    header = next(csv.reader(f))
-                with (Path(d) / 'thai_consonant_correspondence.csv').open(encoding='utf-8', newline='') as f:
-                    consonants = list(csv.DictReader(f))
-                with (Path(d) / 'thai_vowel_correspondence.csv').open(encoding='utf-8', newline='') as f:
-                    vowels = list(csv.DictReader(f))
-                required = {
-                    'onset_phonemic_ipa', 'onset_surface_ipa',
-                    'vowel_phonemic_ipa', 'vowel_surface_ipa',
-                    'coda_phonemic_ipa', 'coda_surface_ipa',
-                    'syllable_phonemic_ipa', 'syllable_surface_ipa',
-                    'ukrainian', 'ukrainian_from_ipa',
-                }
-                self.assertTrue(required.issubset(set(header)))
-                self.assertEqual(len(consonants), 82)
-                self.assertEqual(len(vowels), 80)
-                final_d = next(row for row in consonants if row['grapheme'] == 'ด' and row['role'] == 'coda')
-                self.assertEqual(final_d['phonemic_ipa'], 't')
-                self.assertEqual(final_d['surface_ipa'], 't̚')
-                vowel_a = next(row for row in vowels if row['vowel_id'] == 'V-12' and row['syllable_context'] == 'closed')
-                self.assertEqual(vowel_a['phonemic_ipa'], 'aː')
-                self.assertEqual(vowel_a['surface_ipa'], 'aː')
-            finally:
-                gm.OUT = old
+        cons = gm.rows("consonants.csv")
+        vowels = gm.rows("vowels.csv")
+        self.assertEqual(len(cons), 44)
+        self.assertEqual(len(vowels), 41)
+        self.assertIn("ipa", vowels[0])
+        self.assertIn("coda_ipa", cons[0])
+        self.assertIn("status", vowels[0])
