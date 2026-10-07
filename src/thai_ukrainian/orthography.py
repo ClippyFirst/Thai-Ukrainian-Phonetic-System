@@ -78,6 +78,19 @@ def detect_vowel(text:str):
         (rf"{c}อ","ɔː","long","V-18",""),
     ]
 
+    # The spelling เ-ิ- before a final consonant is not sufficient to recover
+    # vowel length without lexical evidence. Royal Society documentation explicitly
+    # contrasts long เกิน /kɤːn/ with short เงิน /ŋɤn/ under this shared shape.
+    # Keep this as an analysis-dependent orthographic state rather than inventing
+    # a lexical vowel length from grapheme shape alone.
+    eoi = re.search(rf"เ{c}ิ{c}$", s)
+    if eoi:
+        return {"pattern":"เ-Cิ-C", "ipa":None, "length":None,
+                "id":"V-AMB-EOI-CLOSED", "explicit":False,
+                "resolved":False, "analysis_dependent":True,
+                "terminal_glide":None, "matched_text":eoi.group(0),
+                "alternatives":[{"ipa":"ɤː","length":"long"},{"ipa":"ɤ","length":"short"}]}
+
     sequence_patterns=[
         # Mai taikhu shortens the preposed เ vowel in forms such as เป็น,
         # เด็ก and เก็บ. The mark itself is not a vowel and is consumed as
