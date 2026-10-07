@@ -61,6 +61,14 @@ class PipelineTests(unittest.TestCase):
     def test_invalid_tone_is_structured(self):
         a=analyze_syllable("ข๊า"); self.assertEqual(a.status,"invalid:tone-combination"); self.assertIsNone(a.tone); self.assertTrue(a.warnings)
 
+    def test_unlicensed_coda_is_rejected(self):
+        for text in ("กฉ", "กผ"):
+            a=analyze_syllable(text)
+            self.assertEqual(a.status, "invalid:coda-not-licensed", text)
+            self.assertIsNone(a.phonemic_ipa, text)
+            self.assertIsNone(a.phonetic_ipa, text)
+            self.assertIsNone(a.tone, text)
+
     def test_hnam(self):
         a=analyze_syllable("หงา"); self.assertEqual(a.tone.tone,"rising"); self.assertEqual(a.tone_class,"high"); self.assertEqual(a.phonemic_ipa,"ŋaː"); self.assertIn("ORTH-H-NAM",a.rules_applied)
 
