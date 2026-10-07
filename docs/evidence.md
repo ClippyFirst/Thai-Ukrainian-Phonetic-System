@@ -16,3 +16,11 @@ A source can support a claim, but implementation status is tracked separately. T
 For publication, each important rule should eventually have a claim-level record containing source, page or section, exact claim, competing analysis, implementation consequence and confidence.
 
 The official Royal Institute material is particularly important for Thai orthographic phenomena such as leading consonants and consonant clusters. CCOST is reserved for empirical phonetic validation rather than for defining orthographic rules.
+
+
+## Claim-level anchors used in the current audit
+
+- **SRC-JIPA-1993:** Tingsabadh & Abramson, *Thai*, Journal of the International Phonetic Association 23(1), pp. 24–28. The description establishes the Standard Thai reference scope, nine vowel qualities with contrastive length, /w/ and /j/ as final components in phonetic diphthongs, five tones, and the restricted final-consonant inventory. DOI: https://doi.org/10.1017/S0025100300004746
+- **SRC-ORST-TH:** Royal Institute of Thailand publications are used for orthographic phenomena such as leading consonants and the interaction of written structure with pronunciation. These are orthographic evidence, not a substitute for corpus-based phonetic validation.
+
+The implementation deliberately uses a broader machine-readable rime registry than the nine-vowel-quality phonological inventory because several orthographic rimes and glide sequences are represented as separate structural parsing records. **Registry cardinality is not phoneme-inventory cardinality.**
