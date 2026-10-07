@@ -72,6 +72,18 @@
     }
   },
   {
+    "input": "เงิน",
+    "expected": {
+      "input": "เงิน",
+      "status": "analysis-dependent:vowel-length",
+      "phonemicIpa": null,
+      "phoneticIpa": null,
+      "tone": null,
+      "toneIpa": null,
+      "ukrainian": null
+    }
+  },
+  {
     "input": "เกะ",
     "expected": {
       "input": "เกะ",
