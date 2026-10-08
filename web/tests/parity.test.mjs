@@ -2,10 +2,11 @@ import fs from "node:fs";
 import {analyze} from "../src/engine.js";
 
 const fixture = JSON.parse(fs.readFileSync(new URL("./fixtures.json", import.meta.url), "utf8"));
-if (!Array.isArray(fixture) || fixture.length < 20) throw new Error("Parity fixture set is unexpectedly small");
+if (!Array.isArray(fixture) || fixture.length < 27) throw new Error("Parity fixture set is unexpectedly small");
 
 const seen = new Set();
-if (!fixture.some(x => x.input === "กฉ") || !fixture.some(x => x.input === "กผ")) throw new Error("coda-license regression probes are missing");
+const required = ["กฉ","กผ","จริง","สร้าง","เศร้า","ไซร้","ไกล","ใกล้","ไก่"];
+if (required.some(input => !fixture.some(x => x.input === input))) throw new Error("required linguistic regression probes are missing");
 const pick = a => ({
   input: a.input,
   status: a.status,
