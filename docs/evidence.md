@@ -32,3 +32,8 @@ The official Royal Institute material is particularly important for Thai orthogr
 - **SRC-ORST-TH:** Royal Institute of Thailand publications are used for orthographic phenomena such as leading consonants and the interaction of written structure with pronunciation. These are orthographic evidence, not a substitute for corpus-based phonetic validation.
 
 The implementation deliberately uses a broader machine-readable rime registry than the nine-vowel-quality phonological inventory because several orthographic rimes and glide sequences are represented as separate structural parsing records. **Registry cardinality is not phoneme-inventory cardinality.**
+
+
+## False-cluster evidence
+
+Standard Thai cluster descriptions distinguish true clusters from false clusters. In particular, **จร, สร, ศร, ซร** can contain a written ร that is not pronounced, while **ทร** has lexical readings that may diverge from a compositional /thr/ analysis. Examples documented in reference descriptions include **จริง** /tɕiŋ/, **สร้าง** /saːŋ/, **เศร้า** /saw/ and **ไซร้** /saj/. The implementation therefore treats these constructions as analysis-dependent until lexical evidence resolves the reading. citeturn5search1turn5search12
