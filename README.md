@@ -52,6 +52,8 @@ The model distinguishes:
 - Positional regression tests and a documented segmentation boundary.
 - Separate generated Thai-consonant and Thai-vowel correspondence tables exposing phonemic IPA, conservative surface IPA, position/context, and Ukrainian candidates derived from IPA.
 - Adversarial rejection of non-conforming consonant sequences such as แสดง when supplied as one syllable.
+- Evidence-gated handling of false clusters `จร`, `สร`, `ศร`, `ซร` and lexical `ทร` instead of forcing written ร into pronunciation.
+- Regression coverage for preposed-vowel true clusters such as `ไกล` /klaj/ and the tone pair `ไกล` vs `ใกล้`.
 - Adversarial rejection of multiple tone marks, unconsumed vowel signs and unsupported symbols instead of silently dropping them.
 - Regression, negative-input and generated-artifact tests.
 - GitHub Actions CI that regenerates derived artifacts and verifies a clean tree.
@@ -59,9 +61,9 @@ The model distinguishes:
 
 ## Current release status
 
-**v0.5.0 — research-ready IPA-audit layer with conservative positional surface phonetics.**
+**v0.5.1 — research-ready IPA-audit layer with false-cluster and preposed-cluster hardening.**
 
-The repository is suitable as a transparent research foundation and reference implementation. The completion branch adds machine-readable tone rules, special-orthography analysis, external lexical segmentation support, a Ukrainian orthographic candidate layer, and source→parser→derived consistency checks. The current development branch is CI-verified; the pull request remains the review boundary until the branch is merged.
+The repository is suitable as a transparent research foundation and reference implementation. The completion branch adds machine-readable tone rules, special-orthography analysis, external lexical segmentation support, a Ukrainian orthographic candidate layer, and source→parser→derived consistency checks. The current release branch is CI-verified; empirical corpus accuracy remains explicitly unclaimed.
 
 It is **not** yet an empirically validated benchmark. No corpus accuracy percentage is claimed because a declared gold corpus has not been processed by CI.
 
