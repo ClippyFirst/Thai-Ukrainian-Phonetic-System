@@ -1,3 +1,13 @@
+## 2026-10-08 transliteration hardening
+
+A second adversarial pass found a material false-cluster hazard that was not covered by the earlier generic cluster safeguards. Established Thai sequences **จร, สร, ศร, ซร** can contain a written ร that is not pronounced; lexical **ทร** is similarly reading-dependent. The parser now routes these constructions through the machine-readable special-orthography registry and returns **analysis-dependent:special-orthography** rather than fabricating an /r/ onset.
+
+The pass also corrected a documentation/test boundary around **ไกล**: the /l/ is the second member of the true initial cluster /kl/, so the syllable has no coda and is /klaj/, with **ใกล้** differing by tone rather than coda structure.
+
+Browser parity was strengthened with the same false-cluster and preposed-cluster probes, and browser tone-class selection now mirrors the Python reference for multi-consonant onsets.
+
+Scientific status remains evidence-gated: lexical special-orthography resolution and Ukrainian practical preference still require a versioned gold corpus/adjudication layer.
+
 # Final audit — current branch status
 
 > **2026-10-03 branch override:** the historical release snapshots below describe earlier 40-rime / 343,200-row states. The current branch declares **41 rime records**, including reduced `-ว-` /uaː/, giving a **351,780-row** structural upper bound (44 × 41 × (1 + 38 coda options) × 5 tone-mark states). The current branch has passed the exhaustive generator and CI gates. Historical sections remain audit history, not current quantitative authority.

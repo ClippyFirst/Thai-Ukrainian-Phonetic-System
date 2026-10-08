@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-10-08 — v0.5.1 transliteration hardening
+
+- Fixed a real false-positive class in the Thai parser: จร, สร, ศร and ซร are now evidence-gated special orthography rather than ordinary consonant clusters.
+- Added regression coverage for established forms such as จริง, สร้าง, เศร้า and ไซร้; IPA and Ukrainian output are withheld until lexical evidence resolves the reading.
+- Corrected the documented and tested analysis of ไกล /klaj/: ล is the second member of the true onset cluster /kl/, not a final coda.
+- Added ไกล, ใกล้ and ไก่ parity probes to protect preposed-vowel onset and tone behaviour.
+- Aligned the browser tone-bearing consonant selection with the Python cluster-tone rule.
+- Synchronized browser false-cluster rules with the machine-readable special-orthography registry.
+
 ## 2026-10-02 — master correspondence table
 
 - Added deterministic IPA-first generation of the full declared structural space (343,200 rows).

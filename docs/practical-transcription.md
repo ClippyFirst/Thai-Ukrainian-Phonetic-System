@@ -183,6 +183,12 @@ The practical system must return an explicit analysis-dependent status where lex
 
 It must never convert an unresolved lexical construction into a confident spelling merely because a generic rule happens to produce a string.
 
+## 12a. False consonant clusters
+
+Written sequences such as **จร, สร, ศร, ซร** and lexical **ทร** must not be treated as ordinary true clusters merely because two consonant graphemes occur before the vowel. Standard descriptions document established false-cluster behaviour, including **จริง** /tɕiŋ/, **สร้าง** /saːŋ/, **เศร้า** /saw/ and **ไซร้** /saj/. The exact lexical distribution is not universal enough for a syllable-only parser to force one pronunciation for every occurrence.
+
+Accordingly, the research core marks these constructions **analysis-dependent:special-orthography** and withholds IPA and Ukrainian output until lexical evidence is supplied. This is a deliberate precision safeguard.
+
 ## 13. Word and multi-syllable names
 
 Thai spaces cannot be treated as universal word boundaries.
@@ -241,7 +247,7 @@ These examples illustrate the architecture rather than claiming corpus-wide vali
 | พอ | /pʰɔː/ | по |
 | งอ | /ŋɔː/ | нго* |
 | ไก่ | onset + /aj/ + tone | кай* |
-| ไกล | onset + /aj/ + coda /l/ → /n/ | кан* |
+| ไกล | true onset cluster /kl/ + /aj/ | клай* |
 | กบ | /kop̚/ | коп |
 | คน | /kʰon/ | кон |
 | มือ | /mɯː/ | ми |
@@ -252,7 +258,7 @@ These examples illustrate the architecture rather than claiming corpus-wide vali
 
 ## 17. Relation to the master correspondence table
 
-The 343,200-row structural master table remains a research artifact. It is not itself a list of 343,200 recommended Ukrainian spellings.
+The 351,780-row structural master table remains a research artifact. It is not itself a list of 343,200 recommended Ukrainian spellings.
 
 The practical system should instead expose a compact graph-level correspondence table, a rule registry, a deterministic renderer, an audit-rich output, and a practical two-column export.
 
@@ -320,7 +326,7 @@ Any discrepancy between source registry, parser, generated table, practical rend
 
 The research repository already provides the necessary foundation: 44 Thai consonant graphemes; registered Thai vowel/rime inventory; positional onset/coda analysis; live/dead classification; five-tone rule engine; ห นำ; special-orthography layer; IPA audit layer; Ukrainian candidate generation; provenance; generated correspondence tables; CLI/batch/API interfaces; regression and negative-input testing.
 
-The remaining work for a fully operational practical transcription mode is to make the practical Ukrainian rendering policy an explicit, machine-readable layer, synchronize it with the canonical Ukrainian target adapter, add gold examples, and validate the resulting outputs.
+The practical rendering policy is now executable in the structured Ukrainian adaptation layer and is covered by regression/parity fixtures. What remains empirically open is calibration and adjudication against a versioned gold corpus, especially for lexical special orthography and preferred Ukrainian spellings.
 
 ## 23. Design principle
 

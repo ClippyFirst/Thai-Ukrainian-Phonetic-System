@@ -156,6 +156,90 @@
     }
   },
   {
+    "input": "ไกล",
+    "expected": {
+      "input": "ไกล",
+      "status": "analyzed",
+      "phonemicIpa": "klaj",
+      "phoneticIpa": "klaj",
+      "tone": "mid",
+      "toneIpa": "˧",
+      "ukrainian": "клай"
+    }
+  },
+  {
+    "input": "ใกล้",
+    "expected": {
+      "input": "ใกล้",
+      "status": "analyzed",
+      "phonemicIpa": "klaj",
+      "phoneticIpa": "klaj",
+      "tone": "falling",
+      "toneIpa": "˥˩",
+      "ukrainian": "клай"
+    }
+  },
+  {
+    "input": "ไก่",
+    "expected": {
+      "input": "ไก่",
+      "status": "analyzed",
+      "phonemicIpa": "kaj",
+      "phoneticIpa": "kaj",
+      "tone": "low",
+      "toneIpa": "˩",
+      "ukrainian": "кай"
+    }
+  },
+  {
+    "input": "จริง",
+    "expected": {
+      "input": "จริง",
+      "status": "analysis-dependent:special-orthography",
+      "phonemicIpa": null,
+      "phoneticIpa": null,
+      "tone": null,
+      "toneIpa": null,
+      "ukrainian": null
+    }
+  },
+  {
+    "input": "สร้าง",
+    "expected": {
+      "input": "สร้าง",
+      "status": "analysis-dependent:special-orthography",
+      "phonemicIpa": null,
+      "phoneticIpa": null,
+      "tone": null,
+      "toneIpa": null,
+      "ukrainian": null
+    }
+  },
+  {
+    "input": "เศร้า",
+    "expected": {
+      "input": "เศร้า",
+      "status": "analysis-dependent:special-orthography",
+      "phonemicIpa": null,
+      "phoneticIpa": null,
+      "tone": null,
+      "toneIpa": null,
+      "ukrainian": null
+    }
+  },
+  {
+    "input": "ไซร้",
+    "expected": {
+      "input": "ไซร้",
+      "status": "analysis-dependent:special-orthography",
+      "phonemicIpa": null,
+      "phoneticIpa": null,
+      "tone": null,
+      "toneIpa": null,
+      "ukrainian": null
+    }
+  },
+  {
     "input": "อย่า",
     "expected": {
       "input": "อย่า",
