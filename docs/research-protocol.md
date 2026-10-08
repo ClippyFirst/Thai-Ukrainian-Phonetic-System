@@ -50,3 +50,8 @@ Special constructions are represented as explicit, evidence-bearing alternatives
 ## Ukrainian target policy
 
 The Ukrainian orthographic layer is a project-specific phonetic target, not an official transliteration standard. Its candidates are deterministic model outputs and require adjudicated Ukrainian data before any probability, preferred form, or normative status is assigned.
+
+
+## False-cluster validation policy
+
+Sequences such as **จร, สร, ศร, ซร** and lexical **ทร** are not licensed as ordinary true clusters merely from adjacency. Standard Thai descriptions document false-cluster behaviour, including silent ร in established forms such as **จริง**, **สร้าง**, **เศร้า** and **ไซร้**. Because the same spelling patterns can have lexical exceptions or require lexical reading evidence, the syllable-only parser must return **analysis-dependent:special-orthography** and withhold IPA/Ukrainian output rather than force a compositional onset. The browser implementation must consume the same registry and parity fixtures.
