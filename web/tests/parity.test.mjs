@@ -45,3 +45,10 @@ if (!textRegression.some(x => x.kind === "latin" && x.input === "Bangkok")) thro
 if (!textRegression.some(x => x.kind === "number" && x.input === "123")) throw new Error("Number tokenization regression failed");
 if (!textRegression.some(x => x.kind === "thai_marker" && x.input === "ๆ")) throw new Error("Thai repetition-marker tokenization regression failed");
 console.log("Thai text tokenizer/segmentation regression passed");
+
+const lexicalRegression = ["จริง","สร้าง","เศร้า","จันทร์","ศุกร์","เสาร์","สัตว์","ฟิล์ม","ฤทธิ์","อย่า","อยู่","อยาก"];
+for (const input of lexicalRegression) {
+  const a = analyze(input);
+  if (a.status !== "analyzed" || !a.phonemicIpa) throw new Error("Lexical regression unresolved in browser engine: " + input);
+}
+console.log("Thai lexical regression passed");
