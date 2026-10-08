@@ -35,10 +35,11 @@ def load_text_lexicon() -> dict[str, tuple[str, ...]]:
 LEXICON = load_text_lexicon()
 
 def _kind(ch: str) -> str:
+    if ch.isspace(): return "space"
+    if ch in THAI_MARKS: return "thai_marker"
+    if DIGIT.fullmatch(ch): return "number"
     if THAI.fullmatch(ch): return "thai"
     if LATIN.fullmatch(ch): return "latin"
-    if DIGIT.fullmatch(ch): return "number"
-    if ch.isspace(): return "space"
     return "punctuation"
 
 def tokenize_text(text: str) -> list[TextToken]:
