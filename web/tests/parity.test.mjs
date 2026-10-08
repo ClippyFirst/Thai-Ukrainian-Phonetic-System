@@ -1,5 +1,5 @@
 import fs from "node:fs";
-import {analyze} from "../src/engine.js";
+import {analyze,analyzeText} from "../src/engine.js";
 
 const fixture = JSON.parse(fs.readFileSync(new URL("./fixtures.json", import.meta.url), "utf8"));
 if (!Array.isArray(fixture) || fixture.length < 27) throw new Error("Parity fixture set is unexpectedly small");
@@ -35,3 +35,13 @@ for (const row of fixture) {
 }
 if (failures) throw new Error(failures + " parity assertions failed");
 console.log("web/python parity: " + fixture.length + " fixtures passed");
+
+
+const textRegression = analyzeText("กากล้าขายแล้วไหว้แสดง, Bangkok 123 ๆ");
+const thaiToken = textRegression.find(x => x.kind === "thai");
+if (!thaiToken || thaiToken.segmentationStatus !== "lexicon") throw new Error("Thai text segmentation regression failed");
+if (thaiToken.syllables.map(x => x.input).join("|") !== "กา|กล้า|ขาย|แล้ว|ไหว้|แส|ดง") throw new Error("Unexpected Thai syllable segmentation");
+if (!textRegression.some(x => x.kind === "latin" && x.input === "Bangkok")) throw new Error("Latin tokenization regression failed");
+if (!textRegression.some(x => x.kind === "number" && x.input === "123")) throw new Error("Number tokenization regression failed");
+if (!textRegression.some(x => x.kind === "thai_marker" && x.input === "ๆ")) throw new Error("Thai repetition-marker tokenization regression failed");
+console.log("Thai text tokenizer/segmentation regression passed");
