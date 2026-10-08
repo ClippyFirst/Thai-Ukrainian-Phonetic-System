@@ -6,4 +6,8 @@ SP-LUE-001,ฦ,ฦ vowel-letter,analysis-dependent,lɯ,Very rare/learned spellin
 SP-LUE-LONG-001,ฦๅ,ฦๅ vowel-letter,analysis-dependent,lɯː,Very rare/learned spelling; retain as explicit special construction.,SRC-ORST
 SP-KARAN-001,์,thanthakhat,analysis-dependent,∅,Silences preceding material but exact scope is lexical; never silently delete without evidence.,SRC-ORST
 SP-THR-001,ทร,ทร lexical pronunciation,analysis-dependent,s|tʰr,Some lexical items have /s/ rather than the compositional cluster; lexicon evidence required.,SRC-ORST
+SP-JR-001,จร,จร false cluster,analysis-dependent,tɕ|tɕr,The written ร is silent in established standard forms such as จริง; lexical exceptions exist, so do not force /r/.,SRC-ORST
+SP-SR-001,สร,สร false cluster,analysis-dependent,s|sr,The written ร is silent in common standard forms such as สร้าง; lexical evidence is required for exceptional readings.,SRC-ORST
+SP-SR-HIGH-001,ศร,ศร false cluster,analysis-dependent,s|sr,The written ร is silent in established forms such as ศรี and เศร้า; lexical evidence is required for exceptional readings.,SRC-ORST
+SP-ZR-001,ซร,ซร false cluster,analysis-dependent,s|sr,The written ร is silent in established forms such as ไซร้; lexical evidence is required.,SRC-ORST
 SP-O-NAM-001,อย,อ นำ,analysis-dependent,j,Lexical leading อ construction; tone environment and effective onset must be distinguished.,SRC-ORST
