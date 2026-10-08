@@ -87,8 +87,8 @@ class PipelineTests(unittest.TestCase):
         self.assertEqual(a.tone.tone,"falling")
 
     def test_preposed_vowel_true_cluster_is_onset_not_coda(self):
-        cases=[("ไกล","klaj","mid","ค?")]
-        for text,ipa,tone,_ in cases:
+        cases=[("ไกล","klaj","mid")]
+        for text,ipa,tone in cases:
             a=analyze_syllable(text)
             self.assertEqual(a.status,"analyzed",text)
             self.assertEqual(a.onset,["ก","ล"],text)
