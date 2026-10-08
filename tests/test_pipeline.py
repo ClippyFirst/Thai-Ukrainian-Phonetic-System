@@ -85,6 +85,39 @@ class PipelineTests(unittest.TestCase):
         self.assertEqual(a.coda,None)
         self.assertEqual(a.phonemic_ipa,"waj")
         self.assertEqual(a.tone.tone,"falling")
+
+    def test_preposed_vowel_true_cluster_is_onset_not_coda(self):
+        cases=[("ไกล","klaj","mid","ค?")]
+        for text,ipa,tone,_ in cases:
+            a=analyze_syllable(text)
+            self.assertEqual(a.status,"analyzed",text)
+            self.assertEqual(a.onset,["ก","ล"],text)
+            self.assertIsNone(a.coda,text)
+            self.assertEqual(a.phonemic_ipa,ipa,text)
+            self.assertEqual(a.tone.tone,tone,text)
+        a=analyze_syllable("ใกล้")
+        self.assertEqual(a.onset,["ก","ล"])
+        self.assertIsNone(a.coda)
+        self.assertEqual(a.phonemic_ipa,"klaj")
+        self.assertEqual(a.tone.tone,"falling")
+        self.assertEqual(a.ukrainian_transliteration,"клай")
+
+    def test_preposed_ai_tone_pair(self):
+        a=analyze_syllable("ไก่")
+        self.assertEqual(a.onset,["ก"])
+        self.assertIsNone(a.coda)
+        self.assertEqual(a.phonemic_ipa,"kaj")
+        self.assertEqual(a.tone.tone,"low")
+        self.assertEqual(a.ukrainian_transliteration,"кай")
+
+    def test_false_clusters_are_not_forced_into_true_clusters(self):
+        for text in ("จริง","สร้าง","เศร้า","ไซร้"):
+            a=analyze_syllable(text)
+            self.assertEqual(a.status,"analysis-dependent:special-orthography",text)
+            self.assertIsNone(a.phonemic_ipa,text)
+            self.assertIsNone(a.tone,text)
+            self.assertIsNone(a.ukrainian_transliteration,text)
+
     def test_true_cluster_is_structurally_licensed(self):
         a=analyze_syllable("กล้า")
         self.assertEqual(a.onset,["ก","ล"])
