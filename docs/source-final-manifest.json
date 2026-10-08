@@ -5,7 +5,7 @@
     "vowels": 41,
     "phonotactics": 6,
     "tone_rules": 15,
-    "special_orthography": 8
+    "special_orthography": 12
   },
   "parser_registry": {
     "vowel_ids": 41,
