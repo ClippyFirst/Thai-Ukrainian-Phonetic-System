@@ -7,12 +7,40 @@ from .orthographic_rules import classify_o_role
 
 SHORT_CODA={"p","t","k","ʔ"}
 SONORANT_CODA={"m","n","ŋ","j","w"}
-TRUE_CLUSTER_FIRST={"ก","ข","ค","ต","ป","ผ","พ"}
+TRUE_CLUSTER_FIRST={"ก","ข","ค","ต","ป","ผ","พ","ท"}
 TRUE_CLUSTER_SECOND={"ร","ล","ว"}
 LEADING_H_FIRST={"ห"}
 LEADING_H_SECOND={"ง","ญ","น","ม","ย","ร","ล","ว"}
 PREPOSED_VOWEL_CHARS={"เ","แ","โ","ใ","ไ"}
 VOWEL_SIGN_CHARS=set("ะาิีึืุูเแโใไำั็")
+
+# High-confidence lexical readings for orthographic forms whose surface spelling
+# cannot be resolved by the productive grapheme rules alone. These are not a
+# general-purpose dictionary: each entry is an explicit evidence-gated reading
+# used to prevent the core parser from fabricating an IPA analysis.
+LEXICAL_READINGS={
+    "จริง":"จิง",
+    "สร้าง":"ส้าง",
+    "เศร้า":"เส้า",
+    "ไซร้":"ไซ้",
+    "จันทร์":"จัน",
+    "ศุกร์":"สุก",
+    "เสาร์":"เสา",
+    "สัตว์":"สัด",
+    "พันธุ์":"พัน",
+    "ฟิล์ม":"ฟิม",
+    "โทรศัพท์":"โท|ระ|สับ",
+    "อาทิตย์":"อา|ทิด",
+    "ฤดู":"รึ|ดู",
+    "ฤทธิ์":"ริด",
+    "ฤๅษี":"รือ|สี",
+    "ฤษี":"รึ|สี",
+    "ทฤษฎี":"ทริด|สะ|ดี",
+    "อย่า":"หย่า",
+    "อยู่":"หยู่",
+    "อย่าง":"หยา่ง",
+    "อยาก":"หยาก",
+}
 SUPPORTED_SPECIAL_CHARS={"์"}
 
 def _consonants(s,inv):return [c for c in s if c in inv]
