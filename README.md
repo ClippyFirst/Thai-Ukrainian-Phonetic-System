@@ -179,3 +179,8 @@ Version 0.6 adds a text-level preprocessing layer above the syllable analyzer:
 - Browser and Python implementations share the same regression probes for tokenization and segmentation.
 
 This layer deliberately does not claim general-purpose Thai word segmentation. Expanding the lexical corpus is a separate evidence-gated task.
+
+
+## 0.6.1 adversarial hardening
+
+The text pipeline now distinguishes productive orthographic parsing from evidence-gated lexical readings for high-frequency irregular spellings. Regression coverage includes silent-marker words (e.g. จันทร์, ศุกร์, เสาร์, สัตว์, ฟิล์ม), false-cluster readings (จริง, สร้าง, เศร้า, ไซร้), อ นำ forms (อย่า, อยู่, อย่าง, อยาก), and ฤ/ฤๅ readings (ฤดู, ฤทธิ์, ฤๅษี, ทฤษฎี). Lexical readings are explicit data, not a claim that arbitrary Thai text can be segmented or pronounced without lexical evidence.
