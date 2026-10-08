@@ -6,24 +6,24 @@ from pathlib import Path
 from typing import Any, Iterable
 
 from .api import parse_thai
+from .text import analyze_text
 
 
 def analyze_input(text: str) -> dict[str, Any]:
-    analyses = parse_thai(text)
+    tokens = analyze_text(text)
+    analyses = [a for token in tokens if token["kind"] == "thai" for a in token["syllables"]]
+    all_ok = bool(analyses) and all(a["status"] == "analyzed" for a in analyses)
     return {
         "input": text,
-        "status": "analyzed" if analyses and all(a.status == "analyzed" for a in analyses) else (
-            analyses[0].status if len(analyses) == 1 else "mixed"
-        ),
-        "analyses": [a.as_dict() for a in analyses],
-        "ipa": " ".join(a.phonemic_ipa or "?" for a in analyses),
-        "phonetic_ipa": " ".join(a.phonetic_ipa or "?" for a in analyses),
-        "tones": [a.tone.tone if a.tone else None for a in analyses],
-        "tone_ipa": [a.tone.contour_ipa if a.tone else None for a in analyses],
-        "ukrainian_orthography": [
-            a.selected_ukrainian_orthography for a in analyses
-        ],
-        "warnings": [w for a in analyses for w in a.warnings],
+        "status": "analyzed" if all_ok else ("mixed" if tokens else "empty"),
+        "tokens": tokens,
+        "analyses": analyses,
+        "ipa": " ".join(a["phonemic_ipa"] or "?" for a in analyses),
+        "phonetic_ipa": " ".join(a["phonetic_ipa"] or "?" for a in analyses),
+        "tones": [a["tone"]["tone"] if a["tone"] else None for a in analyses],
+        "tone_ipa": [a["tone"]["contour_ipa"] if a["tone"] else None for a in analyses],
+        "ukrainian_orthography": [a["selected_ukrainian_orthography"] for a in analyses],
+        "warnings": [w for token in tokens for w in token["warnings"]] + [w for a in analyses for w in a["warnings"]],
     }
 
 
