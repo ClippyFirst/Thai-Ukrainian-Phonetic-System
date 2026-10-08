@@ -1,29 +1,326 @@
 [
-  {"input":"กา","expected":{"input":"กา","status":"analyzed","phonemicIpa":"kaː","phoneticIpa":"kaː","tone":"mid","toneIpa":"˧","ukrainian":"ка"}},
-  {"input":"กาน","expected":{"input":"กาน","status":"analyzed","phonemicIpa":"kaːn","phoneticIpa":"kaːn","tone":"mid","toneIpa":"˧","ukrainian":"кан"}},
-  {"input":"กาล","expected":{"input":"กาล","status":"analyzed","phonemicIpa":"kaːn","phoneticIpa":"kaːn","tone":"mid","toneIpa":"˧","ukrainian":"кан"}},
-  {"input":"กรา","expected":{"input":"กรา","status":"analyzed","phonemicIpa":"kraː","phoneticIpa":"kraː","tone":"mid","toneIpa":"˧","ukrainian":"кра"}},
-  {"input":"กล้า","expected":{"input":"กล้า","status":"analyzed","phonemicIpa":"klaː","phoneticIpa":"klaː","tone":"falling","toneIpa":"˥˩","ukrainian":"кла"}},
-  {"input":"คน","expected":{"input":"คน","status":"analyzed","phonemicIpa":"kʰon","phoneticIpa":"kʰon","tone":"mid","toneIpa":"˧","ukrainian":"кон"}},
-  {"input":"เงิน","expected":{"input":"เงิน","status":"analysis-dependent:vowel-length","phonemicIpa":null,"phoneticIpa":null,"tone":null,"toneIpa":null,"ukrainian":null}},
-  {"input":"เกะ","expected":{"input":"เกะ","status":"analyzed","phonemicIpa":"ke","phoneticIpa":"ke","tone":"low","toneIpa":"˩","ukrainian":"ке"}},
-  {"input":"เก","expected":{"input":"เก","status":"analyzed","phonemicIpa":"keː","phoneticIpa":"keː","tone":"mid","toneIpa":"˧","ukrainian":"ке"}},
-  {"input":"เกา","expected":{"input":"เกา","status":"analyzed","phonemicIpa":"kaw","phoneticIpa":"kaw","tone":"mid","toneIpa":"˧","ukrainian":"кау"}},
-  {"input":"หงา","expected":{"input":"หงา","status":"analyzed","phonemicIpa":"ŋaː","phoneticIpa":"ŋaː","tone":"rising","toneIpa":"˩˥","ukrainian":"нга"}},
-  {"input":"ไหม","expected":{"input":"ไหม","status":"analyzed","phonemicIpa":"maj","phoneticIpa":"maj","tone":"rising","toneIpa":"˩˥","ukrainian":"май"}},
-  {"input":"ไหว้","expected":{"input":"ไหว้","status":"analyzed","phonemicIpa":"waj","phoneticIpa":"waj","tone":"falling","toneIpa":"˥˩","ukrainian":"вай"}},
-  {"input":"ไกล","expected":{"input":"ไกล","status":"analyzed","phonemicIpa":"klaj","phoneticIpa":"klaj","tone":"mid","toneIpa":"˧","ukrainian":"клай"}},
-  {"input":"ใกล้","expected":{"input":"ใกล้","status":"analyzed","phonemicIpa":"klaj","phoneticIpa":"klaj","tone":"falling","toneIpa":"˥˩","ukrainian":"клай"}},
-  {"input":"ไก่","expected":{"input":"ไก่","status":"analyzed","phonemicIpa":"kaj","phoneticIpa":"kaj","tone":"low","toneIpa":"˩","ukrainian":"кай"}},
-  {"input":"จริง","expected":{"input":"จริง","status":"analysis-dependent:special-orthography","phonemicIpa":null,"phoneticIpa":null,"tone":null,"toneIpa":null,"ukrainian":null}},
-  {"input":"สร้าง","expected":{"input":"สร้าง","status":"analysis-dependent:special-orthography","phonemicIpa":null,"phoneticIpa":null,"tone":null,"toneIpa":null,"ukrainian":null}},
-  {"input":"เศร้า","expected":{"input":"เศร้า","status":"analysis-dependent:special-orthography","phonemicIpa":null,"phoneticIpa":null,"tone":null,"toneIpa":null,"ukrainian":null}},
-  {"input":"ไซร้","expected":{"input":"ไซร้","status":"analysis-dependent:special-orthography","phonemicIpa":null,"phoneticIpa":null,"tone":null,"toneIpa":null,"ukrainian":null}},
-  {"input":"อย่า","expected":{"input":"อย่า","status":"analysis-dependent:special-orthography","phonemicIpa":null,"phoneticIpa":null,"tone":null,"toneIpa":null,"ukrainian":null}},
-  {"input":"รร","expected":{"input":"รร","status":"analysis-dependent:special-orthography","phonemicIpa":null,"phoneticIpa":null,"tone":null,"toneIpa":null,"ukrainian":null}},
-  {"input":"กา!","expected":{"input":"กา!","status":"unresolved:unsupported-symbol","phonemicIpa":null,"phoneticIpa":null,"tone":null,"toneIpa":null,"ukrainian":null}},
-  {"input":"ก่้","expected":{"input":"ก่้","status":"unresolved:multiple-tone-marks","phonemicIpa":null,"phoneticIpa":null,"tone":null,"toneIpa":null,"ukrainian":null}},
-  {"input":"ค๊า","expected":{"input":"ค๊า","status":"invalid:tone-combination","phonemicIpa":null,"phoneticIpa":null,"tone":null,"toneIpa":null,"ukrainian":null}},
-  {"input":"กฉ","expected":{"input":"กฉ","status":"invalid:coda-not-licensed","phonemicIpa":null,"phoneticIpa":null,"tone":null,"toneIpa":null,"ukrainian":null}},
-  {"input":"กผ","expected":{"input":"กผ","status":"invalid:coda-not-licensed","phonemicIpa":null,"phoneticIpa":null,"tone":null,"toneIpa":null,"ukrainian":null}}
+  {
+    "input": "กา",
+    "expected": {
+      "input": "กา",
+      "status": "analyzed",
+      "phonemicIpa": "kaː",
+      "phoneticIpa": "kaː",
+      "tone": "mid",
+      "toneIpa": "˧",
+      "ukrainian": "ка"
+    }
+  },
+  {
+    "input": "กาน",
+    "expected": {
+      "input": "กาน",
+      "status": "analyzed",
+      "phonemicIpa": "kaːn",
+      "phoneticIpa": "kaːn",
+      "tone": "mid",
+      "toneIpa": "˧",
+      "ukrainian": "кан"
+    }
+  },
+  {
+    "input": "กาล",
+    "expected": {
+      "input": "กาล",
+      "status": "analyzed",
+      "phonemicIpa": "kaːn",
+      "phoneticIpa": "kaːn",
+      "tone": "mid",
+      "toneIpa": "˧",
+      "ukrainian": "кан"
+    }
+  },
+  {
+    "input": "กรา",
+    "expected": {
+      "input": "กรา",
+      "status": "analyzed",
+      "phonemicIpa": "kraː",
+      "phoneticIpa": "kraː",
+      "tone": "mid",
+      "toneIpa": "˧",
+      "ukrainian": "кра"
+    }
+  },
+  {
+    "input": "กล้า",
+    "expected": {
+      "input": "กล้า",
+      "status": "analyzed",
+      "phonemicIpa": "klaː",
+      "phoneticIpa": "klaː",
+      "tone": "falling",
+      "toneIpa": "˥˩",
+      "ukrainian": "кла"
+    }
+  },
+  {
+    "input": "คน",
+    "expected": {
+      "input": "คน",
+      "status": "analyzed",
+      "phonemicIpa": "kʰon",
+      "phoneticIpa": "kʰon",
+      "tone": "mid",
+      "toneIpa": "˧",
+      "ukrainian": "кон"
+    }
+  },
+  {
+    "input": "เงิน",
+    "expected": {
+      "input": "เงิน",
+      "status": "analysis-dependent:vowel-length",
+      "phonemicIpa": null,
+      "phoneticIpa": null,
+      "tone": null,
+      "toneIpa": null,
+      "ukrainian": null
+    }
+  },
+  {
+    "input": "เกะ",
+    "expected": {
+      "input": "เกะ",
+      "status": "analyzed",
+      "phonemicIpa": "ke",
+      "phoneticIpa": "ke",
+      "tone": "low",
+      "toneIpa": "˩",
+      "ukrainian": "ке"
+    }
+  },
+  {
+    "input": "เก",
+    "expected": {
+      "input": "เก",
+      "status": "analyzed",
+      "phonemicIpa": "keː",
+      "phoneticIpa": "keː",
+      "tone": "mid",
+      "toneIpa": "˧",
+      "ukrainian": "ке"
+    }
+  },
+  {
+    "input": "เกา",
+    "expected": {
+      "input": "เกา",
+      "status": "analyzed",
+      "phonemicIpa": "kaw",
+      "phoneticIpa": "kaw",
+      "tone": "mid",
+      "toneIpa": "˧",
+      "ukrainian": "кау"
+    }
+  },
+  {
+    "input": "หงา",
+    "expected": {
+      "input": "หงา",
+      "status": "analyzed",
+      "phonemicIpa": "ŋaː",
+      "phoneticIpa": "ŋaː",
+      "tone": "rising",
+      "toneIpa": "˩˥",
+      "ukrainian": "нга"
+    }
+  },
+  {
+    "input": "ไหม",
+    "expected": {
+      "input": "ไหม",
+      "status": "analyzed",
+      "phonemicIpa": "maj",
+      "phoneticIpa": "maj",
+      "tone": "rising",
+      "toneIpa": "˩˥",
+      "ukrainian": "май"
+    }
+  },
+  {
+    "input": "ไหว้",
+    "expected": {
+      "input": "ไหว้",
+      "status": "analyzed",
+      "phonemicIpa": "waj",
+      "phoneticIpa": "waj",
+      "tone": "falling",
+      "toneIpa": "˥˩",
+      "ukrainian": "вай"
+    }
+  },
+  {
+    "input": "ไกล",
+    "expected": {
+      "input": "ไกล",
+      "status": "analyzed",
+      "phonemicIpa": "klaj",
+      "phoneticIpa": "klaj",
+      "tone": "mid",
+      "toneIpa": "˧",
+      "ukrainian": "клай"
+    }
+  },
+  {
+    "input": "ใกล้",
+    "expected": {
+      "input": "ใกล้",
+      "status": "analyzed",
+      "phonemicIpa": "klaj",
+      "phoneticIpa": "klaj",
+      "tone": "falling",
+      "toneIpa": "˥˩",
+      "ukrainian": "клай"
+    }
+  },
+  {
+    "input": "ไก่",
+    "expected": {
+      "input": "ไก่",
+      "status": "analyzed",
+      "phonemicIpa": "kaj",
+      "phoneticIpa": "kaj",
+      "tone": "low",
+      "toneIpa": "˩",
+      "ukrainian": "кай"
+    }
+  },
+  {
+    "input": "จริง",
+    "expected": {
+      "input": "จริง",
+      "status": "analysis-dependent:special-orthography",
+      "phonemicIpa": null,
+      "phoneticIpa": null,
+      "tone": null,
+      "toneIpa": null,
+      "ukrainian": null
+    }
+  },
+  {
+    "input": "สร้าง",
+    "expected": {
+      "input": "สร้าง",
+      "status": "analysis-dependent:special-orthography",
+      "phonemicIpa": null,
+      "phoneticIpa": null,
+      "tone": null,
+      "toneIpa": null,
+      "ukrainian": null
+    }
+  },
+  {
+    "input": "เศร้า",
+    "expected": {
+      "input": "เศร้า",
+      "status": "analysis-dependent:special-orthography",
+      "phonemicIpa": null,
+      "phoneticIpa": null,
+      "tone": null,
+      "toneIpa": null,
+      "ukrainian": null
+    }
+  },
+  {
+    "input": "ไซร้",
+    "expected": {
+      "input": "ไซร้",
+      "status": "analysis-dependent:special-orthography",
+      "phonemicIpa": null,
+      "phoneticIpa": null,
+      "tone": null,
+      "toneIpa": null,
+      "ukrainian": null
+    }
+  },
+  {
+    "input": "อย่า",
+    "expected": {
+      "input": "อย่า",
+      "status": "analysis-dependent:special-orthography",
+      "phonemicIpa": null,
+      "phoneticIpa": null,
+      "tone": null,
+      "toneIpa": null,
+      "ukrainian": null
+    }
+  },
+  {
+    "input": "รร",
+    "expected": {
+      "input": "รร",
+      "status": "analysis-dependent:special-orthography",
+      "phonemicIpa": null,
+      "phoneticIpa": null,
+      "tone": null,
+      "toneIpa": null,
+      "ukrainian": null
+    }
+  },
+  {
+    "input": "กา!",
+    "expected": {
+      "input": "กา!",
+      "status": "unresolved:unsupported-symbol",
+      "phonemicIpa": null,
+      "phoneticIpa": null,
+      "tone": null,
+      "toneIpa": null,
+      "ukrainian": null
+    }
+  },
+  {
+    "input": "ก่้",
+    "expected": {
+      "input": "ก่้",
+      "status": "unresolved:multiple-tone-marks",
+      "phonemicIpa": null,
+      "phoneticIpa": null,
+      "tone": null,
+      "toneIpa": null,
+      "ukrainian": null
+    }
+  },
+  {
+    "input": "ค๊า",
+    "expected": {
+      "input": "ค๊า",
+      "status": "invalid:tone-combination",
+      "phonemicIpa": null,
+      "phoneticIpa": null,
+      "tone": null,
+      "toneIpa": null,
+      "ukrainian": null
+    }
+  },
+  {
+    "input": "กฉ",
+    "expected": {
+      "input": "กฉ",
+      "status": "invalid:coda-not-licensed",
+      "phonemicIpa": null,
+      "phoneticIpa": null,
+      "tone": null,
+      "toneIpa": null,
+      "ukrainian": null
+    }
+  },
+  {
+    "input": "กผ",
+    "expected": {
+      "input": "กผ",
+      "status": "invalid:coda-not-licensed",
+      "phonemicIpa": null,
+      "phoneticIpa": null,
+      "tone": null,
+      "toneIpa": null,
+      "ukrainian": null
+    }
+  }
 ]
