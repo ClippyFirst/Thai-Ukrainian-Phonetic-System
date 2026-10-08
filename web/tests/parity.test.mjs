@@ -52,3 +52,15 @@ for (const input of lexicalRegression) {
   if (a.status !== "analyzed" || !a.phonemicIpa) throw new Error("Lexical regression unresolved in browser engine: " + input);
 }
 console.log("Thai lexical regression passed");
+
+const textLexiconRegression = new Map([
+  ["ทฤษฎี","ทริด|สะ|ดี"], ["คอมพิวเตอร์","คอม|พิว|เตอร์"], ["โทรศัพท์","โท|ระ|สับ"],
+  ["อยาก","หยาก"], ["ฤๅษี","รือ|สี"]
+]);
+for (const [input, expected] of textLexiconRegression) {
+  const token = analyzeText(input)[0];
+  if (!token || token.segmentationStatus !== "lexicon" || token.syllables.map(x => x.input).join("|") !== expected) {
+    throw new Error("Text lexicon regression failed: " + input);
+  }
+}
+console.log("Thai extended text lexicon regression passed");
