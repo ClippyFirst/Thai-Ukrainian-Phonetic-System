@@ -8,4 +8,4 @@ __all__=[
     "analyze_input","analyze_rows","load_batch","write_batch",
     "load_records","evaluate_records","evaluate_file",
 ]
-__version__="0.5.0"
+__version__="0.5.1"
