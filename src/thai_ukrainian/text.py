@@ -11,7 +11,7 @@ LEXICON_PATH = ROOT / "data" / "thai" / "text_lexicon.tsv"
 THAI = re.compile(r"[\u0E00-\u0E7F]")
 LATIN = re.compile(r"[A-Za-z]")
 DIGIT = re.compile(r"[0-9\u0E50-\u0E59]")
-THAI_MARKS = set("ฯๆ์")
+THAI_MARKS = set("ฯๆ")
 PUNCT = set(".,!?;:/\\|()[]{}<>"'“”‘’—–-…%$€£₴฿")
 
 @dataclass(frozen=True)
