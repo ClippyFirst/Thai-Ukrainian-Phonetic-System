@@ -1,1 +1,52 @@
-<!doctype html><html lang="uk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Дослідницький сервіс передавання тайської мови українською."><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'"><title>Thai → Ukrainian — Сервіс</title><link rel="stylesheet" href="src/styles.css"></head><body><header class="site-header"><a class="brand" href="./">THAI <span>→</span> UKRAINIAN</a><nav><a href="system.html">Система</a><a href="https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System" rel="noopener noreferrer">GitHub</a></nav></header><main class="container"><section class="hero"><p class="eyebrow">ФОНЕТИКО-ГРАФЕМНИЙ АНАЛІЗАТОР</p><h1>Тайське написання → українське передавання</h1><p class="lede">Введіть тайський склад або явно поділене на склади слово. Сервіс показує шлях від написання через фонологічний аналіз до українського практичного кандидата.</p></section><section class="workbench"><div class="section-head"><div><p class="eyebrow">01 / ВХІД</p><h2>Тайський текст</h2></div><button class="text-button" id="clear">Очистити</button></div><label class="sr-only" for="thai-input">Тайський склад або слово з пробілами між складами</label><textarea id="thai-input" lang="th" rows="3" spellcheck="false" placeholder="Напр. กล้า або กา กาน"></textarea><div class="examples" aria-label="Приклади"><button data-example="กา">กา</button><button data-example="กล้า">กล้า</button><button data-example="ขาย">ขาย</button><button data-example="แล้ว">แล้ว</button><button data-example="ไหว้">ไหว้</button><button data-example="แสดง">แสดง</button></div><button class="primary" id="analyze">Проаналізувати <span>↗</span></button></section><section id="status" class="status" role="status" aria-live="polite"></section><section id="results" class="results" hidden></section><section class="method-note"><p class="eyebrow">МЕТОД</p><p>IPA є проміжним контрольним представленням. Український кандидат формується зі структурованого тайського аналізу, а не механічною заміною символів IPA.</p><a href="system.html">Як працює система →</a></section></main><footer><span>Thai → Ukrainian Phonetic-Graphemic Correspondence System · v0.5.1</span><a href="https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System" rel="noopener noreferrer">Вихідний код</a></footer><script type="module" src="src/app.js"></script></body></html>
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Дослідницький сервіс передавання тайської мови українською.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'">
+<title>Thai → Ukrainian — Сервіс</title>
+<link rel="stylesheet" href="src/styles.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="./" aria-label="Thai → Ukrainian — сервіс">THAI <span>→</span> UKRAINIAN</a>
+  <nav aria-label="Основна навігація"><a class="active" href="./">Сервіс</a><a href="system.html">Система</a><a href="https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System" rel="noopener noreferrer">GitHub</a></nav>
+</header>
+<main class="container">
+<section class="hero">
+  <p class="eyebrow">ФОНЕТИКО-ГРАФЕМНИЙ АНАЛІЗАТОР · v0.5.1</p>
+  <h1>Тайське написання → українське передавання</h1>
+  <p class="lede">Введіть тайський склад або явно поділене на склади слово. Сервіс показує шлях від написання через фонологічний аналіз до українського практичного кандидата.</p>
+</section>
+<section class="workbench" aria-labelledby="input-heading">
+  <div class="section-head">
+    <div><p class="eyebrow">01 / ВХІД</p><h2 id="input-heading">Тайський текст</h2></div>
+    <button class="text-button" id="clear" type="button">Очистити</button>
+  </div>
+  <label class="input-label" for="thai-input">Тайський склад або слово</label>
+  <textarea id="thai-input" lang="th" rows="3" spellcheck="false" autocomplete="off" autocapitalize="off" placeholder="Напр. กล้า або กา กาน"></textarea>
+  <p class="input-hint">Для багатоскладових слів введіть склади через пробіл. <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>Enter</kbd> — проаналізувати.</p>
+  <div class="examples" aria-label="Швидкі приклади">
+    <span class="examples-label">Приклади:</span>
+    <button type="button" data-example="กา">กา</button>
+    <button type="button" data-example="กล้า">กล้า</button>
+    <button type="button" data-example="ไกล">ไกล</button>
+    <button type="button" data-example="ไหว้">ไหว้</button>
+    <button type="button" data-example="จริง">จริง</button>
+    <button type="button" data-example="แสดง">แสดง</button>
+  </div>
+  <button class="primary" id="analyze" type="button">Проаналізувати <span aria-hidden="true">↗</span></button>
+</section>
+<section id="status" class="status" role="status" aria-live="polite" aria-atomic="true"></section>
+<section id="results" class="results" aria-live="polite" aria-label="Результати аналізу" hidden></section>
+<section class="method-note">
+  <p class="eyebrow">МЕТОД</p>
+  <p>IPA є незалежним контрольним представленням. Український кандидат формується зі структурованого тайського аналізу, а не механічною заміною символів IPA.</p>
+  <div class="method-links"><a href="system.html">Як працює система →</a><a href="system.html#statuses">Статуси результату →</a></div>
+</section>
+</main>
+<footer><span>Thai → Ukrainian Phonetic-Graphemic Correspondence System · v0.5.1</span><a href="https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System" rel="noopener noreferrer">Вихідний код</a></footer>
+<script type="module" src="src/app.js"></script>
+</body>
+</html>
