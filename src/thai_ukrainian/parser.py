@@ -109,7 +109,7 @@ def parse_syllable(syllable:str)->SyllableAnalysis:
         cs=[c for c in cs if c != "อ"]
     interpretations=[_o_interpretation(s)] if o_rule and o_rule.role.value != "unknown" else []
 
-    special_rules = detect_special_orthography(s)
+    special_rules = [] if lexical else detect_special_orthography(s)
     if special_rules:
         special = [{"rule_id": r["rule_id"], "construction": r["construction"], "status": r["analysis_status"], "candidate_ipa": r["candidate_ipa"], "notes": r["notes"]} for r in special_rules]
         return SyllableAnalysis(syllable,s,grapheme_order=[x["char"] for x in decompose_thai(s)],
