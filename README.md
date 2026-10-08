@@ -167,3 +167,15 @@ A result is only called **empirical** when it has a named/versioned evidence sou
 ## Master correspondence table
 
 The repository can deterministically generate an exhaustive structural Thai → Ukrainian master table using the IPA-first pipeline. It contains 351,780 structural rows from 44 initial graphemes, 41 vowel/rime records, 38 coda options plus open syllables, and 5 tone-mark states. The downloadable generated artifacts are attached to the **master-artifact** CI job; see `docs/master-correspondence-table.md` for semantics and limitations.
+
+
+## Text analysis pipeline
+
+Version 0.6 adds a text-level preprocessing layer above the syllable analyzer:
+
+- Unicode-aware tokenization separates Thai text, punctuation, Latin text, numbers, and Thai repetition/orthographic markers.
+- A curated lexical segmentation layer can split known multisyllabic Thai words into explicit syllable units before phonological analysis.
+- Unknown Thai words are **not guessed**: they remain marked as segmentation-unresolved, preserving the research system's evidence-first policy.
+- Browser and Python implementations share the same regression probes for tokenization and segmentation.
+
+This layer deliberately does not claim general-purpose Thai word segmentation. Expanding the lexical corpus is a separate evidence-gated task.
