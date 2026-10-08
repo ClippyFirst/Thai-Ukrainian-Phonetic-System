@@ -30,7 +30,7 @@ const TEXT_LEXICON = new Map([
   ["แสดง", ["แส","ดง"]]
 ]);
 const thaiTextChar = ch => /[ก-๛]/u.test(ch);
-const thaiMarker = ch => ["ๆ","ฯ","์"].includes(ch);
+const thaiMarker = ch => ["ๆ","ฯ"].includes(ch);
 const digitChar = ch => /[0-9๐-๙]/u.test(ch);
 function tokenizeText(text) {
   const out=[]; let i=0;
