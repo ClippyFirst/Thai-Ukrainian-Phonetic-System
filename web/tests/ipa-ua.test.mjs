@@ -11,6 +11,7 @@ assert(canonical.rulesApplied.includes("UA-K-ASP"));
 
 for (const [ipa, expected] of [
   ["ka", "ка"], ["kʰa", "ка"], ["kaː", "ка"],
+  ["iw", "іу"], ["ew", "еу"], ["iaw", "іау"],
   ["pʰaː", "па"], ["tʰaː", "та"], ["tɕʰa", "ча"],
   ["ŋaː", "нга"], ["klaj", "клай"], ["kaw", "кау"]
 ]) {
