@@ -61,9 +61,9 @@ The model distinguishes:
 
 ## Current release status
 
-**v0.5.1 — research-ready IPA-audit layer with false-cluster and preposed-cluster hardening.**
+**v0.6.1 — research-oriented reference implementation with explicit lexical readings and text-pipeline safeguards.**
 
-The repository is suitable as a transparent research foundation and reference implementation. The completion branch adds machine-readable tone rules, special-orthography analysis, external lexical segmentation support, a Ukrainian orthographic candidate layer, and source→parser→derived consistency checks. The current release branch is CI-verified; empirical corpus accuracy remains explicitly unclaimed.
+The repository is suitable as a transparent research foundation and reference implementation. It includes machine-readable tone rules, special-orthography analysis, evidence-gated lexical readings, external lexical segmentation support, a Ukrainian orthographic candidate layer, and source→parser→derived consistency checks. CI workflows check structural reproducibility, Python regression tests, and browser parity; a commit should be called CI-verified only after its own relevant workflow runs succeed. Empirical corpus accuracy remains explicitly unclaimed.
 
 It is **not** yet an empirically validated benchmark. No corpus accuracy percentage is claimed because a declared gold corpus has not been processed by CI.
 
