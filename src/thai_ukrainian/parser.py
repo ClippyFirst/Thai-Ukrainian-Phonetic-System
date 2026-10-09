@@ -65,7 +65,12 @@ def _is_valid_complex_onset(onset):
     return False
 
 def _split_onset_coda(s,inv,vowel):
-    cs=_consonants(s,inv)
+    # Keep source positions for the remaining consonants. Vowel-rime glides
+    # such as final ว in หนาว are written as consonants but belong to the
+    # nucleus; after consuming them, they must not make an earlier onset
+    # consonant look like a coda merely because the written glide follows it.
+    positions=[(i,c) for i,c in enumerate(s) if c in inv]
+    cs=[c for _,c in positions]
     if not cs:return [],None
     if not vowel.get("explicit") and len(cs) == 1:return cs,None
     consumed={
@@ -74,12 +79,12 @@ def _split_onset_coda(s,inv,vowel):
         "V-X-EAW":["ว"],"V-X-EY":["ย"],"V-X-OY":["ย"],"V-X-OJ":["ย"],
         "V-X-AW-S":["ว"],"V-X-UEY":["ย"],"V-X-UA":["ว"],
     }.get(vowel.get("id"),[])
-    if consumed:
-        tmp=list(cs)
-        for ch in reversed(consumed):
-            if tmp and tmp[-1]==ch:tmp.pop()
-        cs=tmp
-    if vowel.get("terminal_glide") and vowel.get("id") != "V-X-AI" and cs and cs[-1] in {"ย","ว"}:return cs[:-1],None
+    for ch in reversed(consumed):
+        if positions and positions[-1][1] == ch:
+            positions.pop()
+    cs=[c for _,c in positions]
+    if vowel.get("terminal_glide") and vowel.get("id") != "V-X-AI" and cs and cs[-1] in {"ย","ว"}:
+        return cs[:-1],None
     cleaned="".join(c for c in s if c not in TONE_CHARS)
     if len(cs)>=2 and any(c in PREPOSED_VOWEL_CHARS for c in cleaned):
         if _is_valid_complex_onset(cs[:2]):
@@ -88,7 +93,7 @@ def _split_onset_coda(s,inv,vowel):
             return [cs[0]],None
     vowel_chars=set("ะาิีึืุูเแโใไำั็")
     last_v=max((i for i,c in enumerate(s) if c in vowel_chars),default=-1)
-    last_c=max((i for i,c in enumerate(s) if c in inv),default=-1)
+    last_c=positions[-1][0] if positions else -1
     if len(cs)>1 and last_c>last_v:
         proposed=cs[:-1]
         if not _is_valid_complex_onset(proposed):return [cs[0]],None
