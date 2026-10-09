@@ -33,7 +33,7 @@ class TextPipelineTests(unittest.TestCase):
         )
         self.assertEqual(result[0]["segmentation_status"], "lexicon")
         self.assertEqual(result[0]["syllables"][0]["input"], "ครอบ")
-        self.assertEqual(result[1]["segmentation_status"], "lexicon")
+        self.assertEqual(result[2]["segmentation_status"], "lexicon")
 
     def test_final_velar_stop_is_preserved_in_ukrainian_output(self):
         for word in ("พริก", "ตรอก"):
