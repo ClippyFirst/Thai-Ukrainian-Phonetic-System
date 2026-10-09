@@ -53,7 +53,7 @@ const cold = analyze("หนาว");
 if (cold.status !== "analyzed" || cold.onset.join("") !== "หน" || cold.coda !== null || cold.phonemicIpa !== "naːw" || cold.ukrainian !== "нау") throw new Error("Leading ห + vowel-glide regression failed");
 const star = analyze("ดาว");
 if (star.status !== "analyzed" || star.onset.join("") !== "ด" || star.coda !== null || star.phonemicIpa !== "daːw" || star.ukrainian !== "дау") throw new Error("Terminal ว nucleus regression failed");
-for (const text of ["แสดง", "แกรรก"]) {
+for (const text of ["แสดง", "กกรกา"]) {
   const a = analyze(text);
   if (a.status !== "unresolved:nonconforming-consonant-sequence" || a.phonemicIpa !== null) throw new Error("Illegal multi-consonant onset was accepted: " + text);
 }
