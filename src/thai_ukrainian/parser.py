@@ -59,9 +59,17 @@ def _surface_residual_vowel_signs(s, vowel):
     return [c for c in residual if c in VOWEL_SIGN_CHARS]
 
 def _is_valid_complex_onset(onset):
-    if len(onset)!=2:return True
-    if onset[0] in TRUE_CLUSTER_FIRST and onset[1] in TRUE_CLUSTER_SECOND:return True
-    if onset[0] in LEADING_H_FIRST and onset[1] in LEADING_H_SECOND:return True
+    # Thai permits a single onset consonant or a licensed two-consonant
+    # cluster/leading-H construction. Never treat three or more consonants
+    # as a valid onset merely because they are not length two.
+    if len(onset) == 1:
+        return True
+    if len(onset) != 2:
+        return False
+    if onset[0] in TRUE_CLUSTER_FIRST and onset[1] in TRUE_CLUSTER_SECOND:
+        return True
+    if onset[0] in LEADING_H_FIRST and onset[1] in LEADING_H_SECOND:
+        return True
     return False
 
 def _split_onset_coda(s,inv,vowel):
