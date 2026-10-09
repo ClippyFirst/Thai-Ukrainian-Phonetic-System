@@ -79,9 +79,14 @@ def _split_onset_coda(s,inv,vowel):
         "V-X-EAW":["ว"],"V-X-EY":["ย"],"V-X-OY":["ย"],"V-X-OJ":["ย"],
         "V-X-AW-S":["ว"],"V-X-UEY":["ย"],"V-X-UA":["ว"],
     }.get(vowel.get("id"),[])
-    for ch in reversed(consumed):
-        if positions and positions[-1][1] == ch:
-            positions.pop()
+    if vowel.get("id") == "V-X-UA" and len(positions) >= 3 and positions[1][1] == "ว":
+        # In inherent /uaː/ spellings such as กวน, ว is a medial vowel
+        # component, not a coda; the final consonant remains a real coda.
+        positions.pop(1)
+    else:
+        for ch in reversed(consumed):
+            if positions and positions[-1][1] == ch:
+                positions.pop()
     cs=[c for _,c in positions]
     if vowel.get("terminal_glide") and vowel.get("id") != "V-X-AI" and cs and cs[-1] in {"ย","ว"}:
         return cs[:-1],None
