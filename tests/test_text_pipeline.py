@@ -56,7 +56,12 @@ class TextPipelineTests(unittest.TestCase):
             with self.subTest(word=word):
                 result = analyze_syllable(word)
                 self.assertEqual(result.status, "analyzed")
+                self.assertIsNone(result.coda)
+                self.assertTrue(result.phonemic_ipa.endswith("w"), result.phonemic_ipa)
                 self.assertTrue(result.ukrainian_transliteration.endswith("в"), result.ukrainian_transliteration)
+        cold = analyze_syllable("หนาว")
+        self.assertEqual(cold.onset, ["ห", "น"])
+        self.assertEqual(cold.phonemic_ipa, "naːw")
 
     def test_lexical_readings_produce_structured_results(self):
         # These are parser smoke tests, not gold-IPA assertions. Gold readings
