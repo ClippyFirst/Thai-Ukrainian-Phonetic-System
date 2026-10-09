@@ -4,6 +4,11 @@ on:
     branches: [main]
     paths:
       - "web/**"
+      - "src/**"
+      - "data/**"
+      - "tests/**"
+      - "scripts/**"
+      - "pyproject.toml"
       - ".github/workflows/pages.yml"
   workflow_dispatch:
 
