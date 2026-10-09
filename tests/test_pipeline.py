@@ -127,10 +127,12 @@ class PipelineTests(unittest.TestCase):
         self.assertEqual(a.tone.tone,"falling")
 
     def test_nonconforming_consonant_sequence_is_not_forced_into_cluster(self):
-        a=analyze_syllable("แสดง")
-        self.assertEqual(a.status,"unresolved:nonconforming-consonant-sequence")
-        self.assertTrue(a.warnings)
-        self.assertIsNone(a.phonemic_ipa)
+        for text in ("แสดง", "แกรรก"):
+            with self.subTest(text=text):
+                a=analyze_syllable(text)
+                self.assertEqual(a.status,"unresolved:nonconforming-consonant-sequence")
+                self.assertTrue(a.warnings)
+                self.assertIsNone(a.phonemic_ipa)
 
     def test_glide_inventory_is_machine_declared(self):
         self.assertIsNotNone(parse_syllable("เกียว").vowel_id)
