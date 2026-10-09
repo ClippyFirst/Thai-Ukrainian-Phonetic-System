@@ -110,13 +110,14 @@ class PipelineTests(unittest.TestCase):
         self.assertEqual(a.tone.tone,"low")
         self.assertEqual(a.ukrainian_transliteration,"кай")
 
-    def test_false_clusters_are_not_forced_into_true_clusters(self):
+    def test_curated_false_cluster_lexical_readings_resolve_explicitly(self):
         for text in ("จริง","สร้าง","เศร้า","ไซร้"):
-            a=analyze_syllable(text)
-            self.assertEqual(a.status,"analysis-dependent:special-orthography",text)
-            self.assertIsNone(a.phonemic_ipa,text)
-            self.assertIsNone(a.tone,text)
-            self.assertIsNone(a.ukrainian_transliteration,text)
+            with self.subTest(text=text):
+                a=analyze_syllable(text)
+                self.assertEqual(a.status,"analyzed",text)
+                self.assertIsNotNone(a.phonemic_ipa,text)
+                self.assertIsNotNone(a.tone,text)
+                self.assertIsNotNone(a.ukrainian_transliteration,text)
 
     def test_true_cluster_is_structurally_licensed(self):
         a=analyze_syllable("กล้า")
