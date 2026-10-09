@@ -1,7 +1,7 @@
 from __future__ import annotations
 from .models import SyllableAnalysis
 from .inventory import load_consonants
-from .orthography import normalize_thai,tone_mark,detect_vowel,decompose_thai,TONE_CHARS
+from .orthography import normalize_thai,tone_mark,detect_vowel,decompose_thai,TONE_CHARS,NUCLEUS_CONSONANTS
 from .special import detect_special_orthography
 from .orthographic_rules import classify_o_role
 
@@ -73,12 +73,7 @@ def _split_onset_coda(s,inv,vowel):
     cs=[c for _,c in positions]
     if not cs:return [],None
     if not vowel.get("explicit") and len(cs) == 1:return cs,None
-    consumed={
-        "V-X-IAW":["ย","ว"],"V-X-UAJ":["ว","ย"],"V-X-AJ":["ย"],"V-X-AW":["ว"],
-        "V-X-IW":["ว"],"V-X-UJ":["ย"],"V-X-EW":["ว"],"V-X-EW-L":["ว"],
-        "V-X-EAW":["ว"],"V-X-EY":["ย"],"V-X-OY":["ย"],"V-X-OJ":["ย"],
-        "V-X-AW-S":["ว"],"V-X-UEY":["ย"],"V-X-UA":["ว"],
-    }.get(vowel.get("id"),[])
+    consumed=NUCLEUS_CONSONANTS.get(vowel.get("id"),[])
     if vowel.get("id") == "V-X-UA" and len(positions) >= 3 and positions[1][1] == "ว":
         # In inherent /uaː/ spellings such as กวน, ว is a medial vowel
         # component, not a coda; the final consonant remains a real coda.
@@ -214,7 +209,15 @@ def parse_syllable(syllable:str)->SyllableAnalysis:
     first=inv[onset[0]]
     coda_ipa=inv[coda].coda_ipa if coda else None
     warnings=[]
-    complex_invalid=(len(cs)>len(onset)+(1 if coda else 0) and len(cs)>=2 and v["explicit"])
+    structural_cs=list(cs)
+    if v.get("id") == "V-X-UA" and len(structural_cs) >= 3 and structural_cs[1] == "ว":
+        structural_cs.pop(1)
+    else:
+        consumed=NUCLEUS_CONSONANTS.get(v.get("id"),[])
+        for ch in reversed(consumed):
+            if structural_cs and structural_cs[-1] == ch:
+                structural_cs.pop()
+    complex_invalid=(len(structural_cs)>len(onset)+(1 if coda else 0) and len(structural_cs)>=2 and v["explicit"])
     if complex_invalid:warnings.append("Adjacent consonants are not licensed as a standard Thai complex onset; explicit syllable/lexical segmentation is required.")
     status=("unresolved:nonconforming-consonant-sequence" if complex_invalid else
             ("analyzed" if v.get("resolved", v["explicit"]) and (not coda or inv[coda].coda_allowed)
