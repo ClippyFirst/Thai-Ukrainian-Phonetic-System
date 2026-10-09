@@ -43,6 +43,14 @@ class TextPipelineTests(unittest.TestCase):
                 self.assertTrue(result.phonemic_ipa.endswith("k"), result.phonemic_ipa)
                 self.assertTrue(result.ukrainian_transliteration.endswith("к"), result.ukrainian_transliteration)
 
+    def test_medial_ua_glide_is_not_mistaken_for_a_coda(self):
+        result = analyze_syllable("กวน")
+        self.assertEqual(result.status, "analyzed")
+        self.assertEqual(result.onset, ["ก"])
+        self.assertEqual(result.coda, "น")
+        self.assertTrue(result.phonemic_ipa.endswith("n"), result.phonemic_ipa)
+        self.assertTrue(result.ukrainian_transliteration.endswith("н"), result.ukrainian_transliteration)
+
     def test_w_glides_are_rendered_consistently_as_v(self):
         for word in ("ดาว", "หนาว", "เศร้า"):
             with self.subTest(word=word):
