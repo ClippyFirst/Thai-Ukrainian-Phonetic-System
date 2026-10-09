@@ -37,19 +37,23 @@ if (failures) throw new Error(failures + " parity assertions failed");
 console.log("web/python parity: " + fixture.length + " fixtures passed");
 
 
-const textRegression = analyzeText("กากล้าขายแล้วไหว้แสดง, Bangkok 123 ๆ");
-const thaiToken = textRegression.find(x => x.kind === "thai");
-if (!thaiToken || thaiToken.segmentationStatus !== "lexicon") throw new Error("Thai text segmentation regression failed");
-if (thaiToken.syllables.map(x => x.input).join("|") !== "กา|กล้า|ขาย|แล้ว|ไหว้|แส|ดง") throw new Error("Unexpected Thai syllable segmentation");
+const textRegression = analyzeText("ครอบครัว, รถบัส Bangkok 123 ๆ");
+const thaiTokens = textRegression.filter(x => x.kind === "thai");
+if (thaiTokens.length !== 2 || thaiTokens.some(x => x.segmentationStatus !== "lexicon")) throw new Error("Thai text segmentation regression failed");
+if (thaiTokens[0].syllables.map(x => x.input).join("|") !== "ครอบ|ครัว") throw new Error("Unexpected ครอบครัว segmentation");
+if (thaiTokens[1].syllables.map(x => x.input).join("|") !== "รถ|บัส") throw new Error("Unexpected รถบัส segmentation");
+const unknown = analyzeText("กากล้าขายแล้วไหว้แสดง")[0];
+if (unknown.segmentationStatus !== "unresolved" || unknown.syllables.length !== 1) throw new Error("Unknown continuous Thai text was falsely segmented");
 if (!textRegression.some(x => x.kind === "latin" && x.input === "Bangkok")) throw new Error("Latin tokenization regression failed");
 if (!textRegression.some(x => x.kind === "number" && x.input === "123")) throw new Error("Number tokenization regression failed");
 if (!textRegression.some(x => x.kind === "thai_marker" && x.input === "ๆ")) throw new Error("Thai repetition-marker tokenization regression failed");
 console.log("Thai text tokenizer/segmentation regression passed");
 
-const lexicalRegression = ["จริง","สร้าง","เศร้า","จันทร์","ศุกร์","เสาร์","สัตว์","ฟิล์ม","ฤทธิ์","อย่า","อยู่","อยาก"];
+const lexicalRegression = ["จริง","สร้าง","เศร้า","จันทร์","ศุกร์","เสาร์","สัตว์","ฟิล์ม","ฤทธิ์","อย่า","อยู่","อย่าง","อยาก"];
 for (const input of lexicalRegression) {
   const a = analyze(input);
   if (a.status !== "analyzed" || !a.phonemicIpa) throw new Error("Lexical regression unresolved in browser engine: " + input);
+  if (input === "อย่าง" && a.normalized !== "หย่าง") throw new Error("Thai lexical normalization mismatch for อย่าง");
 }
 console.log("Thai lexical regression passed");
 
