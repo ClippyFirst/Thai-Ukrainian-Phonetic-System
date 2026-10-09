@@ -50,9 +50,9 @@ if (!textRegression.some(x => x.kind === "thai_marker" && x.input === "ๆ")) th
 const ua = analyze("กวน");
 if (ua.status !== "analyzed" || ua.onset.join("") !== "ก" || ua.coda !== "น" || !ua.phonemicIpa.endsWith("n") || !ua.ukrainian.endsWith("н")) throw new Error("Medial ua glide/coda regression failed");
 const cold = analyze("หนาว");
-if (cold.status !== "analyzed" || cold.onset.join("") !== "หน" || cold.coda !== null || cold.phonemicIpa !== "naːw" || cold.ukrainian !== "нав") throw new Error("Leading ห + vowel-glide regression failed");
+if (cold.status !== "analyzed" || cold.onset.join("") !== "หน" || cold.coda !== null || cold.phonemicIpa !== "naːw" || cold.ukrainian !== "нау") throw new Error("Leading ห + vowel-glide regression failed");
 const star = analyze("ดาว");
-if (star.status !== "analyzed" || star.onset.join("") !== "ด" || star.coda !== null || star.phonemicIpa !== "daːw" || star.ukrainian !== "дав") throw new Error("Terminal ว nucleus regression failed");
+if (star.status !== "analyzed" || star.onset.join("") !== "ด" || star.coda !== null || star.phonemicIpa !== "daːw" || star.ukrainian !== "дау") throw new Error("Terminal ว nucleus regression failed");
 const pepper = analyzeText("พริก")[0];
 if (!pepper || pepper.segmentationStatus !== "lexicon" || pepper.syllables[0].phonemicIpa?.slice(-1) !== "k" || pepper.syllables[0].ukrainian?.slice(-1) !== "к") throw new Error("Thai final /k/ regression failed for พริก");
 console.log("Thai text tokenizer/segmentation regression passed");
