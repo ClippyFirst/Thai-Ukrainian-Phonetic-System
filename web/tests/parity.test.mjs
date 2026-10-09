@@ -47,6 +47,8 @@ if (unknown.segmentationStatus !== "unresolved" || unknown.syllables.length !== 
 if (!textRegression.some(x => x.kind === "latin" && x.input === "Bangkok")) throw new Error("Latin tokenization regression failed");
 if (!textRegression.some(x => x.kind === "number" && x.input === "123")) throw new Error("Number tokenization regression failed");
 if (!textRegression.some(x => x.kind === "thai_marker" && x.input === "ๆ")) throw new Error("Thai repetition-marker tokenization regression failed");
+const ua = analyze("กวน");
+if (ua.status !== "analyzed" || ua.onset.join("") !== "ก" || ua.coda !== "น" || !ua.phonemicIpa.endsWith("n") || !ua.ukrainian.endsWith("н")) throw new Error("Medial ua glide/coda regression failed");
 const pepper = analyzeText("พริก")[0];
 if (!pepper || pepper.segmentationStatus !== "lexicon" || pepper.syllables[0].phonemicIpa?.slice(-1) !== "k" || pepper.syllables[0].ukrainian?.slice(-1) !== "к") throw new Error("Thai final /k/ regression failed for พริก");
 console.log("Thai text tokenizer/segmentation regression passed");
