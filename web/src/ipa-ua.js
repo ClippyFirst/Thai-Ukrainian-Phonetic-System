@@ -53,8 +53,14 @@ export function adaptIpaToUkrainian(sourceIpa) {
     tokens.push({text:key,...rule});
     i += key.length;
   }
+  for (let i=1;i<tokens.length;i++) {
+    if (tokens[i].text === "w" && tokens[i-1].text && /^(?:a|i|e|ɛ|ɯ|ɤ|u|o|ɔ|ː)$/u.test(tokens[i-1].text)) {
+      tokens[i] = {...tokens[i], out:"у", rule:"UA-W-VOCALIC", neutralized:[...(tokens[i].neutralized||[]),"glide-vowel sequence adapted as Ukrainian ау/еу/ів pattern"]};
+    }
+  }
   const preservedFeatures=[...new Set(tokens.flatMap(t=>t.preserved||[]))];
   const neutralizedFeatures=[...new Set(tokens.flatMap(t=>t.neutralized||[]))];
   const rulesApplied=[...new Set(tokens.map(t=>t.rule).filter(Boolean))];
-  return {status:"adapted", sourceIpa, normalizedIpa:ipa, output:tokens.map(t=>t.out).join(""), candidates:[tokens.map(t=>t.out).join("")], preservedFeatures, neutralizedFeatures, rulesApplied, warnings:[]};
+  const output=tokens.map(t=>t.out).join("");
+  return {status:"adapted", sourceIpa, normalizedIpa:ipa, output, candidates:[output], preservedFeatures, neutralizedFeatures, rulesApplied, warnings:[]};
 }

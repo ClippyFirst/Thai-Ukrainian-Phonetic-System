@@ -195,60 +195,60 @@
     "input": "จริง",
     "expected": {
       "input": "จริง",
-      "status": "analysis-dependent:special-orthography",
-      "phonemicIpa": null,
-      "phoneticIpa": null,
-      "tone": null,
-      "toneIpa": null,
-      "ukrainian": null
+      "status": "analyzed",
+      "phonemicIpa": "tɕiŋ",
+      "phoneticIpa": "tɕiŋ",
+      "tone": "mid",
+      "toneIpa": "˧",
+      "ukrainian": "чінг"
     }
   },
   {
     "input": "สร้าง",
     "expected": {
       "input": "สร้าง",
-      "status": "analysis-dependent:special-orthography",
-      "phonemicIpa": null,
-      "phoneticIpa": null,
-      "tone": null,
-      "toneIpa": null,
-      "ukrainian": null
+      "status": "analyzed",
+      "phonemicIpa": "saːŋ",
+      "phoneticIpa": "saːŋ",
+      "tone": "falling",
+      "toneIpa": "˥˩",
+      "ukrainian": "санг"
     }
   },
   {
     "input": "เศร้า",
     "expected": {
       "input": "เศร้า",
-      "status": "analysis-dependent:special-orthography",
-      "phonemicIpa": null,
-      "phoneticIpa": null,
-      "tone": null,
-      "toneIpa": null,
-      "ukrainian": null
+      "status": "analyzed",
+      "phonemicIpa": "saw",
+      "phoneticIpa": "saw",
+      "tone": "falling",
+      "toneIpa": "˥˩",
+      "ukrainian": "сау"
     }
   },
   {
     "input": "ไซร้",
     "expected": {
       "input": "ไซร้",
-      "status": "analysis-dependent:special-orthography",
-      "phonemicIpa": null,
-      "phoneticIpa": null,
-      "tone": null,
-      "toneIpa": null,
-      "ukrainian": null
+      "status": "analyzed",
+      "phonemicIpa": "saj",
+      "phoneticIpa": "saj",
+      "tone": "high",
+      "toneIpa": "˥",
+      "ukrainian": "сай"
     }
   },
   {
     "input": "อย่า",
     "expected": {
       "input": "อย่า",
-      "status": "analysis-dependent:special-orthography",
-      "phonemicIpa": null,
-      "phoneticIpa": null,
-      "tone": null,
-      "toneIpa": null,
-      "ukrainian": null
+      "status": "analyzed",
+      "phonemicIpa": "jaː",
+      "phoneticIpa": "jaː",
+      "tone": "low",
+      "toneIpa": "˩",
+      "ukrainian": "йа"
     }
   },
   {
