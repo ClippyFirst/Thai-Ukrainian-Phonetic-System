@@ -26,6 +26,11 @@ CODA_UA = {
     "ย": "й", "ว": "в",
 }
 
+CODA_IPA_UA = {
+    "p": "п", "t": "т", "k": "к", "ʔ": "",
+    "m": "м", "n": "н", "ŋ": "нг", "j": "й", "w": "в",
+}
+
 VOWEL_UA = {
     "V-01": "і", "V-02": "і", "V-03": "е", "V-04": "е",
     "V-05": "е", "V-06": "е", "V-07": "и", "V-08": "и",
@@ -51,5 +56,5 @@ def adapt_syllable_to_ukrainian(a: SyllableAnalysis) -> str | None:
     if vowel_text is None:
         return None
 
-    coda_text = CODA_UA.get(a.coda, "") if a.coda else ""
+    coda_text = CODA_IPA_UA.get(a.coda_ipa or "", "") if a.coda else ""
     return onset_text + vowel_text + coda_text
