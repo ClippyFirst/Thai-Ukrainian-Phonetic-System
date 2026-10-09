@@ -225,7 +225,7 @@ def parse_syllable(syllable:str)->SyllableAnalysis:
         for ch in reversed(consumed):
             if structural_cs and structural_cs[-1] == ch:
                 structural_cs.pop()
-    complex_invalid=(len(structural_cs)>len(onset)+(1 if coda else 0) and len(structural_cs)>=2 and v["explicit"])
+    complex_invalid=(len(structural_cs)>len(onset)+(1 if coda else 0) and len(structural_cs)>=2)
     if complex_invalid:warnings.append("Adjacent consonants are not licensed as a standard Thai complex onset; explicit syllable/lexical segmentation is required.")
     status=("unresolved:nonconforming-consonant-sequence" if complex_invalid else
             ("analyzed" if v.get("resolved", v["explicit"]) and (not coda or inv[coda].coda_allowed)
