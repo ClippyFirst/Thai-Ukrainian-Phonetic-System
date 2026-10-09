@@ -1,6 +1,5 @@
 # Curated regression lexicon for automatic Thai text segmentation.
 # Format: word<TAB>syllables separated by |
-กากล้าขายแล้วไหว้แสดง	กา|กล้า|ขาย|แล้ว|ไหว้|แส|ดง
 ครอบครัว	ครอบ|ครัว
 ปรากฏ	ปรา|กฏ
 ประกาศ	ประ|กาศ
@@ -91,6 +90,5 @@
 อย่าง	หย่าง
 อยาก	หยาก
 
-แสดง	แส|ดง
 
 # High-confidence lexical normalization is applied by the core parser for the entries above.
