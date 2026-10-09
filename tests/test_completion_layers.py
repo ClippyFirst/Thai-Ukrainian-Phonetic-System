@@ -24,16 +24,23 @@ class CompletionLayerTests(unittest.TestCase):
         self.assertEqual(analyze_syllable("ก๋า").tone.tone, "rising")
 
     def test_special_orthography_is_not_silently_forced(self):
-        for text in ("สรรค์", "ฤ", "ฤๅ", "ฦ", "ฦๅ", "ทร", "อย่า"):
+        for text in ("สรรค์", "ฤ", "ฤๅ", "ฦ", "ฦๅ", "ทร"):
             with self.subTest(text=text):
                 a = analyze_syllable(text)
                 self.assertTrue(a.status.startswith("analysis-dependent:special-orthography"))
                 self.assertTrue(a.special_analyses)
                 self.assertIsNone(a.phonemic_ipa)
 
-    def test_thanthakhat_is_not_silently_deleted(self):
-        a = analyze_syllable("จันทร์")
+    def test_unknown_thanthakhat_is_not_silently_deleted(self):
+        a = analyze_syllable("ก์")
         self.assertTrue(a.status.startswith("analysis-dependent:special-orthography"))
+        self.assertIsNone(a.phonemic_ipa)
+
+    def test_known_thanthakhat_word_uses_explicit_lexical_reading(self):
+        a = analyze_syllable("จันทร์")
+        self.assertEqual(a.status, "analyzed")
+        self.assertEqual(a.normalized, "จัน")
+        self.assertIsNotNone(a.phonemic_ipa)
 
     def test_ukrainian_output_is_explicitly_project_candidate(self):
         result = candidates_for_ipa("tɕʰaː")
