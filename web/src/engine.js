@@ -15,18 +15,20 @@ function split(s,q,v){
   const pre=chars(s).some(x=>PRE.has(x));
   if(q.length>=2&&pre){
     const ok=(FIRST.has(q[0])&&SECOND.has(q[1]))||(q[0]==="ห"&&LEAD.has(q[1]));
-    if(ok)return[q.length===3?q.slice(0,2):q,q.length===3?q[2]:null];
+    if(!ok)return[[q[0]],null];
+    if(q.length===2)return[q,null];
+    if(q.length===3)return[q.slice(0,2),q[2]];
     return[[q[0]],null];
   }
   const lv=Math.max(-1,...chars(s).map((x,i)=>VS.has(x)?i:-1));
   const lc=sourcePositions.at(-1)?.i??-1;
   if(q.length>1&&lc>lv){
     const o=q.slice(0,-1);
-    const ok=o.length!==2||(FIRST.has(o[0])&&SECOND.has(o[1]))||(o[0]==="ห"&&LEAD.has(o[1]));
+    const ok=o.length===1||(o.length===2&&((FIRST.has(o[0])&&SECOND.has(o[1]))||(o[0]==="ห"&&LEAD.has(o[1]))));
     return ok?[o,q.at(-1)]:[[q[0]],null];
   }
   if(q.length>1){
-    const ok=q.length!==2||(FIRST.has(q[0])&&SECOND.has(q[1]))||(q[0]==="ห"&&LEAD.has(q[1]));
+    const ok=q.length===1||(q.length===2&&((FIRST.has(q[0])&&SECOND.has(q[1]))||(q[0]==="ห"&&LEAD.has(q[1]))));
     if(!ok)return[[q[0]],null];
   }
   return[q,null];
