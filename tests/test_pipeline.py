@@ -127,7 +127,7 @@ class PipelineTests(unittest.TestCase):
         self.assertEqual(a.tone.tone,"falling")
 
     def test_nonconforming_consonant_sequence_is_not_forced_into_cluster(self):
-        for text in ("แสดง", "แกรรก"):
+        for text in ("แสดง", "กกรกา"):
             with self.subTest(text=text):
                 a=analyze_syllable(text)
                 self.assertEqual(a.status,"unresolved:nonconforming-consonant-sequence")
