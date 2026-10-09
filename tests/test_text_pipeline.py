@@ -47,13 +47,15 @@ class TextPipelineTests(unittest.TestCase):
         # These are parser smoke tests, not gold-IPA assertions. Gold readings
         # belong in the adjudicated fixture set with cited lexical evidence.
         for word in ("จริง", "สร้าง", "เศร้า", "ไซร้", "จันทร์", "ศุกร์", "เสาร์",
-                     "สัตว์", "พันธุ์", "ฟิล์ม", "ฤทธิ์", "อย่า", "อยู่", "อย่าง", "อยาก"):
+                     "สัตว์", "พันธุ์", "ฟิล์ม", "ฤทธิ์", "เตอร์", "อย่า", "อยู่", "อย่าง", "อยาก"):
             with self.subTest(word=word):
                 result = analyze_syllable(word)
                 self.assertIsNotNone(result.status)
                 self.assertEqual(result.input, word)
                 if word == "อย่าง":
                     self.assertEqual(result.normalized, "หย่าง")
+                if word == "เตอร์":
+                    self.assertEqual(result.normalized, "เตอ")
 
 
 if __name__ == "__main__":
