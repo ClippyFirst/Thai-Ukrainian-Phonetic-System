@@ -47,13 +47,16 @@ if (unknown.segmentationStatus !== "unresolved" || unknown.syllables.length !== 
 if (!textRegression.some(x => x.kind === "latin" && x.input === "Bangkok")) throw new Error("Latin tokenization regression failed");
 if (!textRegression.some(x => x.kind === "number" && x.input === "123")) throw new Error("Number tokenization regression failed");
 if (!textRegression.some(x => x.kind === "thai_marker" && x.input === "ๆ")) throw new Error("Thai repetition-marker tokenization regression failed");
+const pepper = analyzeText("พริก")[0];
+if (!pepper || pepper.segmentationStatus !== "lexicon" || pepper.syllables[0].phonemicIpa?.slice(-1) !== "k" || pepper.syllables[0].ukrainian?.slice(-1) !== "к") throw new Error("Thai final /k/ regression failed for พริก");
 console.log("Thai text tokenizer/segmentation regression passed");
 
-const lexicalRegression = ["จริง","สร้าง","เศร้า","จันทร์","ศุกร์","เสาร์","สัตว์","ฟิล์ม","ฤทธิ์","อย่า","อยู่","อย่าง","อยาก"];
+const lexicalRegression = ["จริง","สร้าง","เศร้า","จันทร์","ศุกร์","เสาร์","สัตว์","ฟิล์ม","ฤทธิ์","เตอร์","เทอร์","ยนต์","ไซต์","กอล์ฟ","อย่า","อยู่","อย่าง","อยาก"];
 for (const input of lexicalRegression) {
   const a = analyze(input);
   if (a.status !== "analyzed" || !a.phonemicIpa) throw new Error("Lexical regression unresolved in browser engine: " + input);
   if (input === "อย่าง" && a.normalized !== "หย่าง") throw new Error("Thai lexical normalization mismatch for อย่าง");
+  if (input === "เตอร์" && a.normalized !== "เตอ") throw new Error("Thai lexical normalization mismatch for เตอร์");
 }
 console.log("Thai lexical regression passed");
 
