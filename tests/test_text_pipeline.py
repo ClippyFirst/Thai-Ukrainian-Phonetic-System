@@ -35,6 +35,14 @@ class TextPipelineTests(unittest.TestCase):
         self.assertEqual(result[0]["syllables"][0]["input"], "ครอบ")
         self.assertEqual(result[1]["segmentation_status"], "lexicon")
 
+    def test_final_velar_stop_is_preserved_in_ukrainian_output(self):
+        for word in ("พริก", "ตรอก"):
+            with self.subTest(word=word):
+                result = analyze_syllable(word)
+                self.assertEqual(result.status, "analyzed")
+                self.assertTrue(result.phonemic_ipa.endswith("k"), result.phonemic_ipa)
+                self.assertTrue(result.ukrainian_transliteration.endswith("к"), result.ukrainian_transliteration)
+
     def test_lexical_readings_produce_structured_results(self):
         # These are parser smoke tests, not gold-IPA assertions. Gold readings
         # belong in the adjudicated fixture set with cited lexical evidence.
