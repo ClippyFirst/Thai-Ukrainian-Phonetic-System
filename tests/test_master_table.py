@@ -14,14 +14,29 @@ class MasterTableTests(unittest.TestCase):
     def setUpClass(cls):
         sys.path.insert(0, str(ROOT / "scripts"))
         cls.gm = __import__("generate_master_table")
-        cls.tmp = tempfile.TemporaryDirectory()
-        cls.out = Path(cls.tmp.name)
-        old = cls.gm.OUT
-        cls.gm.OUT = cls.out
-        try:
-            cls.report = cls.gm.build()
-        finally:
-            cls.gm.OUT = old
+        cls.tmp = None
+        # CI generates the exhaustive table once before running unit tests.
+        # Reuse it here instead of regenerating 351,780 rows a second time.
+        generated = ROOT / "data" / "derived"
+        required = [
+            generated / "thai_ukrainian_master.csv",
+            generated / "thai_ukrainian_master_2col.csv",
+            generated / "thai_ukrainian_master.json",
+        ]
+        if all(path.exists() for path in required):
+            cls.out = generated
+            cls.report = __import__("json").loads(required[2].read_text(encoding="utf-8"))
+        else:
+            # Keep standalone unittest invocation functional when generation
+            # has not been run. CI and Pages workflows should pre-generate.
+            cls.tmp = tempfile.TemporaryDirectory()
+            cls.out = Path(cls.tmp.name)
+            old = cls.gm.OUT
+            cls.gm.OUT = cls.out
+            try:
+                cls.report = cls.gm.build()
+            finally:
+                cls.gm.OUT = old
 
     @classmethod
     def tearDownClass(cls):
