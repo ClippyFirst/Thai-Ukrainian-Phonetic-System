@@ -4,13 +4,11 @@ Research-oriented, machine-readable reference implementation for mapping contemp
 
 ## Research pipeline
 
-**Primary:** Thai orthography → structural orthographic analysis → syllable structure → Thai phonology → Ukrainian adaptation.
+**Required path:** Thai orthography → structural orthographic analysis → syllable structure → Thai phonology → typed phonetic result (phonemic IPA + conservative broad surface IPA) → Ukrainian adaptation.
 
-**Independent audit:** Thai phonology → phonemic IPA → conservative surface IPA.
+The typed `PhoneticResult` is the adapter boundary. The Python Ukrainian adapter accepts that result and maps its phonemic IPA; it does not inspect Thai graphemes, vowel IDs, or Thai coda fields. Tone, length, syllable boundaries, provenance, and uncertainty remain explicit metadata. Unsupported or uncertain phonetic results withhold Ukrainian output instead of guessing.
 
-IPA is not required as the intermediate string for Ukrainian output. Context-dependent graphemes are resolved by the machine-readable orthographic-rule registry before phonological and Ukrainian layers are applied.
-
-The layers are intentionally separated. This is **not RTGS** and not a Thai-character → Ukrainian-character substitution table.
+The browser IPA adapter is maintained as a separately tested implementation. Cross-runtime parity tests remain required; passing a Python test alone does not establish browser parity. This is **not RTGS** and not a Thai-character → Ukrainian-character substitution table.
 
 ## Scope
 
