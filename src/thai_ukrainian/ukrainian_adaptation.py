@@ -1,60 +1,87 @@
 from __future__ import annotations
 
-from .models import SyllableAnalysis
-from .phonology import effective_onset
+from .phonetic_result import PhoneticResult
 
-
-# Thai grapheme → Ukrainian orthographic adaptation.
-# These are project rules, not an official Ukrainian transliteration standard.
-ONSET_UA = {
-    "ก": "к", "ข": "к", "ฃ": "к", "ค": "к", "ฅ": "к", "ฆ": "к",
-    "ง": "нг", "จ": "ч", "ฉ": "ч", "ช": "ч", "ซ": "с", "ฌ": "ч",
-    "ญ": "й", "ฎ": "д", "ฏ": "т", "ฐ": "т", "ฑ": "т", "ฒ": "т",
-    "ณ": "н", "ด": "д", "ต": "т", "ถ": "т", "ท": "т", "ธ": "т", "น": "н",
-    "บ": "б", "ป": "п", "ผ": "п", "ฝ": "ф", "พ": "п", "ฟ": "ф", "ภ": "п",
-    "ม": "м", "ย": "й", "ร": "р", "ล": "л", "ว": "в", "ศ": "с", "ษ": "с",
-    "ส": "с", "ห": "г", "ฬ": "л", "ฮ": "г", "อ": "",
+# IPA → Ukrainian practical adaptation. Thai graphemes and Thai vowel IDs are
+# deliberately absent: the typed phonetic result is the sole input boundary.
+# This is a project convention, not an official Ukrainian transliteration standard.
+IPA_TO_UA = {
+    "tɕʰ": ("ч", "UA-AFFRICATE-ASP"),
+    "tɕ": ("ч", "UA-AFFRICATE"),
+    "kʰ": ("к", "UA-K-ASP"),
+    "pʰ": ("п", "UA-P-ASP"),
+    "tʰ": ("т", "UA-T-ASP"),
+    "k": ("к", "UA-K"), "p": ("п", "UA-P"), "t": ("т", "UA-T"),
+    "d": ("д", "UA-D"), "b": ("б", "UA-B"),
+    "ŋ": ("нг", "UA-NG"), "n": ("н", "UA-N"), "m": ("м", "UA-M"),
+    "r": ("р", "UA-R"), "l": ("л", "UA-L"), "j": ("й", "UA-J"),
+    "w": ("в", "UA-W"), "s": ("с", "UA-S"), "f": ("ф", "UA-F"),
+    "h": ("х", "UA-H"), "ʔ": ("", "UA-GLOTTAL-STOP"),
+    "a": ("а", "UA-A"), "i": ("і", "UA-I"), "e": ("е", "UA-E"),
+    "ɛ": ("е", "UA-EPSILON"), "ɯ": ("и", "UA-BARRED-I"),
+    "ɤ": ("е", "UA-GAMMA"), "u": ("у", "UA-U"), "o": ("о", "UA-O"),
+    "ɔ": ("о", "UA-OPEN-O"),
 }
-
-CODA_UA = {
-    "ง": "нг",
-    "จ": "т", "ช": "т", "ซ": "т", "ฎ": "т", "ฏ": "т",
-    "ฐ": "т", "ฑ": "т", "ฒ": "т", "ถ": "т", "ท": "т", "ธ": "т",
-    "ด": "т", "ต": "т", "ศ": "т", "ษ": "т", "ส": "т",
-    "บ": "п", "ป": "п", "ผ": "п", "พ": "п", "ฟ": "п", "ภ": "п",
-    "ม": "м", "ณ": "н", "น": "н", "ญ": "н", "ร": "н", "ล": "н", "ฬ": "н",
-    "ย": "й", "ว": "в",
-}
-
-CODA_IPA_UA = {
-    "p": "п", "t": "т", "k": "к", "ʔ": "",
-    "m": "м", "n": "н", "ŋ": "нг", "j": "й", "w": "в",
-}
-
-VOWEL_UA = {
-    "V-01": "і", "V-02": "і", "V-03": "е", "V-04": "е",
-    "V-05": "е", "V-06": "е", "V-07": "и", "V-08": "и",
-    "V-09": "е", "V-10": "е", "V-11": "а", "V-12": "а",
-    "V-13": "у", "V-14": "у", "V-15": "о", "V-16": "о",
-    "V-17": "о", "V-18": "о", "V-19": "іа", "V-20": "іа",
-    "V-21": "иа", "V-22": "иа", "V-23": "уа", "V-24": "уа",
-    "V-X-AI": "ай", "V-X-AM": "ам", "V-X-AJ": "ай", "V-X-AW": "ау",
-    "V-X-IW": "іу", "V-X-UJ": "уй", "V-X-EW": "еу", "V-X-EW-L": "еу",
-    "V-X-EAW": "еу", "V-X-EY": "ей", "V-X-OY": "ой", "V-X-OJ": "ой",
-    "V-X-AW-S": "ау", "V-X-IAW": "іау", "V-X-UAJ": "уай", "V-X-UEY": "иай", "V-X-UA": "уа", "IV-INHERENT-O": "о",
-}
+ORDER = tuple(sorted(IPA_TO_UA, key=len, reverse=True))
+VOWELS = {"a", "i", "e", "ɛ", "ɯ", "ɤ", "u", "o", "ɔ"}
 
 
-def adapt_syllable_to_ukrainian(a: SyllableAnalysis) -> str | None:
-    """Render Ukrainian output from structured Thai analysis, not from IPA."""
-    if a.status != "analyzed" or not a.vowel_id:
-        return None
+def adapt_phonetic_result(result: PhoneticResult) -> dict:
+    """Adapt only the phonemic IPA in a typed result; fail closed on unknown IPA."""
+    ipa = result.phonemic_ipa
+    if result.status != "SUPPORTED" or not ipa:
+        return {
+            "status": "withheld", "source_ipa": ipa, "output": None,
+            "rules_applied": [], "warnings": ["Phonetic result is not supported; Ukrainian output withheld."],
+        }
 
-    onset = effective_onset(a)
-    onset_text = "".join(ONSET_UA.get(c, "") for c in onset)
-    vowel_text = VOWEL_UA.get(a.vowel_id)
-    if vowel_text is None:
-        return None
+    output: list[str] = []
+    rules: list[str] = []
+    neutralized: list[str] = []
+    i = 0
+    previous_base = ""
+    while i < len(ipa):
+        if ipa[i] in ". ":
+            output.append(ipa[i])
+            i += 1
+            previous_base = ""
+            continue
+        if ipa[i] == "ː":
+            neutralized.append("vowel length")
+            i += 1
+            continue
+        token = next((key for key in ORDER if ipa.startswith(key, i)), None)
+        if token is None:
+            return {
+                "status": "withheld", "source_ipa": ipa, "output": None,
+                "rules_applied": rules,
+                "warnings": [f"Unsupported IPA symbol {ipa[i]!r}; Ukrainian output withheld."],
+            }
+        rendered, rule = IPA_TO_UA[token]
+        # In licensed vowel+glide sequences, Thai /w/ is conventionally rendered
+        # as Ukrainian у to preserve the rime rather than introducing в.
+        if token == "w" and previous_base in VOWELS:
+            rendered, rule = "у", "UA-W-VOCALIC"
+            neutralized.append("glide-vowel sequence represented by Ukrainian vowel spelling")
+        output.append(rendered)
+        rules.append(rule)
+        if token in {"kʰ", "pʰ", "tʰ", "tɕʰ"}:
+            neutralized.append("aspiration")
+        if token in {"ɛ", "ɯ", "ɤ", "ɔ"}:
+            neutralized.append("vowel quality")
+        previous_base = token
+        i += len(token)
 
-    coda_text = CODA_IPA_UA.get(a.coda_ipa or "", "") if a.coda else ""
-    return onset_text + vowel_text + coda_text
+    return {
+        "status": "adapted", "source_ipa": ipa, "output": "".join(output),
+        "rules_applied": list(dict.fromkeys(rules)),
+        "neutralized_features": list(dict.fromkeys(neutralized)),
+        "tone_separate": True,
+        "warnings": ["Project-defined practical adaptation; not an official Ukrainian standard."],
+    }
+
+
+def adapt_syllable_to_ukrainian(result: PhoneticResult) -> str | None:
+    """Compatibility helper: returns output from IPA, never from Thai graphemes."""
+    adapted = adapt_phonetic_result(result)
+    return adapted["output"]
