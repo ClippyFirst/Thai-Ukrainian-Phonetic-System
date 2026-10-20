@@ -14,13 +14,13 @@ At the start of each continuation, read this file, `docs/final-audit.md`, `docs/
 
 - Public repository is accessible; default branch is `main`; current HEAD at audit start is `47ccd4d29c38a3032487c74075b569373c3d30bf` (commit dated 2026-10-09).
 - Workflows present: `.github/workflows/ci.yml`, `pages.yml`, `web-static.yml`.
-- Latest observed CI run for HEAD: [run 37929499793](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/37929499793), conclusion **failure**.
+- Latest observed CI run before the handoff commit: [run 37929499793](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/37929499793), conclusion **failure**. The handoff-only commit `c77c2017f68822c1139de09ad61eab63dd0e3af8` was then checked by [CI run 39482426090](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/39482426090) (run 738), which also **failed** at the same Python unittest step; derived artifacts, structural-space generation, clean-tree check, and master-table generation passed. The Node/browser parity checks were skipped again.
 - Latest observed Pages workflow for HEAD: [run 37929499737](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/37929499737), conclusion **failure**; deploy job was skipped because regression tests failed.
 - CI log: package install, derived artifact generation, structural-space generation, clean-tree check and master-table generation passed. Python unittest step ran 88 tests and failed one subtest; Node/browser checks were skipped due to fail-fast job sequencing.
 - Exact failing case: `tests/test_text_pipeline.py::TextPipelineTests.test_final_velar_stop_is_preserved_in_ukrainian_output`, subtest `word='ตรอก'`. Expected status `analyzed`, actual `unresolved:nonconforming-consonant-sequence`. This is a real release blocker; do not relabel as passed or weaken the test without independent linguistic justification.
 - The repository's README explicitly disclaims empirical corpus accuracy and says unknown segmentation and special orthography must remain evidence-gated. Preserve those limitations.
 - `CITATION.cff` already exists. Do not recreate it blindly; inspect its metadata before release work.
-- No code change has been made as part of this audit note. No tests were run locally in this session; the results above are from the GitHub Actions log.
+- No code change has been made to the parser as part of this audit. Run 738 confirms the failure persists unchanged after the documentation-only commit. Inspection shows `_split_onset_coda` should recognize `ตร` as a licensed onset and `ก` as the coda under its current rules, so the root cause is not yet established from source inspection alone; do not apply a speculative allow-list or weaken the test. No tests were run locally in this session; results above are from GitHub Actions logs.
 
 ## Execution backlog
 
@@ -44,6 +44,12 @@ Allowed statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE_VERIFIED`, `DEFERRED`,
 The existing docs explicitly mark these as analysis-dependent or not empirically closed: `รร`; `ฤ/ฤๅ` and `ฦ/ฦๅ`; lexical/morphological `ทร`; silent-letter constructions; automatic multi-syllable segmentation; connected-speech phonetics; and empirical Ukrainian orthographic preference. These must be reviewed, not assumed complete merely because a registry exists.
 
 The 351,780-row generated table is a structural combinatorial upper bound, not a count of valid or attested Thai syllables. The project currently has no published corpus accuracy or calibrated candidate probabilities.
+
+## Continuation update — 2026-10-20, after handoff commit
+
+- Latest CI run 738 (`39482426090`, SHA `c77c2017f68822c1139de09ad61eab63dd0e3af8`) failed in `python -m unittest discover -s tests -v`; the same `ตรอก` subtest is still failing. The master-artifact job was skipped because it depends on the test job.
+- Current parser source declares `ต` as a licensed complex-cluster first member and `ร` as a licensed second member. The `_split_onset_coda` branch appears intended to assign `ตร` as onset and `ก` as coda, but the actual returned state in CI is not fully explained by static inspection. Next step: add a temporary, narrowly scoped diagnostic test or reproduce in a local checkout to inspect `detect_vowel`, `_split_onset_coda`, final `onset`, `coda`, `structural_cs`, and `complex_invalid` for `ตรอก` and control `พริก`; remove diagnostic-only output before merge. Only then implement the smallest evidence-supported fix.
+- No parser code was changed in this continuation; do not mark THAI-001 done.
 
 ## Handoff for next chat
 
