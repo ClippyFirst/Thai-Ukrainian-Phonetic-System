@@ -72,12 +72,12 @@ def _is_valid_complex_onset(onset):
         return True
     return False
 
-def _split_onset_coda(s,inv,vowel):
+def _split_onset_coda(s,inv,vowel,ignored_consonants=()):
     # Keep source positions for the remaining consonants. Vowel-rime glides
     # such as final ว in หนาว are written as consonants but belong to the
     # nucleus; after consuming them, they must not make an earlier onset
     # consonant look like a coda merely because the written glide follows it.
-    positions=[(i,c) for i,c in enumerate(s) if c in inv]
+    positions=[(i,c) for i,c in enumerate(s) if c in inv and c not in ignored_consonants]
     cs=[c for _,c in positions]
     if not cs:return [],None
     if not vowel.get("explicit") and len(cs) == 1:return cs,None
@@ -169,7 +169,7 @@ def parse_syllable(syllable:str)->SyllableAnalysis:
         # The orthography does not determine vowel length here (e.g. เดิน vs เงิน).
         # Preserve structural onset/coda information, but withhold tone/IPA until
         # lexical evidence selects one of the declared vowel candidates.
-        onset, coda = _split_onset_coda(s, inv, v)
+        onset, coda = _split_onset_coda(s, inv, v, {"อ"} if o_rule and o_rule.role.value in {"vowel_component", "orthographic_component"} else set())
         if not onset:
             onset = cs[:1]
         first = inv[onset[0]] if onset else None
@@ -202,7 +202,7 @@ def parse_syllable(syllable:str)->SyllableAnalysis:
         else:
             onset, coda = cs[:-1], cs[-1]
     else:
-        onset,coda=_split_onset_coda(s,inv,v)
+        onset,coda=_split_onset_coda(s,inv,v,{"อ"} if o_rule and o_rule.role.value in {"vowel_component", "orthographic_component"} else set())
     # Carrier forms have a structural carrier onset even though the grapheme is
     # not an independent Ukrainian segment.
     if o_rule and o_rule.role.value == "vowel_carrier" and not onset:
