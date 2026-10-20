@@ -91,13 +91,25 @@ def classify_o_role(text: str) -> OrthographicRule:
         return rules["ORTH-O-001"]
 
     if _contains_vowel_pattern(text):
-        # A real onset consonant before the vowel pattern makes อ a component
-        # rather than a carrier.  This is the key distinction for forms such
-        # as พอ, ขอ, คอ, งอ and registered glide rimes.
+        from .orthography import detect_vowel
+        vowel = detect_vowel(text)
+        matched = vowel.get("matched_text", "")
+        # Only treat อ as a vowel component when the selected vowel/rime
+        # actually consumes it. Otherwise preserve it for ordinary structural
+        # validation (e.g. the deliberately malformed test form กาอ).
+        if "อ" not in matched:
+            return rules["ORTH-O-999"]
+
         consonants = set("กขฃคฅฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬฮ")
-        has_real_onset = any(c in consonants for c in text if c != "อ")
+        # For preposed-vowel spellings, the first grapheme after เ/แ/โ/ใ/ไ
+        # is the onset candidate. Do not mistake a carrier อ in เอย for a
+        # real onset just because the final ย belongs to the vowel glide.
+        if text and text[0] in {"เ", "แ", "โ", "ใ", "ไ"}:
+            has_real_onset = len(text) > 1 and text[1] in consonants and text[1] != "อ"
+        else:
+            has_real_onset = any(c in consonants for c in text if c != "อ")
         if has_real_onset:
-            if "ว" in text or "ย" in text:
+            if "ว" in matched or "ย" in matched:
                 return rules["ORTH-O-004"]
             return rules["ORTH-O-002"]
         return rules["ORTH-O-001"]
