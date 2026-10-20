@@ -80,6 +80,7 @@ class PhoneticResult:
             phonemic_ipa=ipa,
             broad_surface_ipa=analysis.phonetic_ipa,
             segments=tuple(segments),
+            syllable_boundaries=(0, len(segments)) if segments else (0,),
             vowel_length=analysis.vowel_length,
             tone_category=analysis.tone.tone if analysis.tone else None,
             tone_contour_ipa=analysis.tone.contour_ipa if analysis.tone else None,
