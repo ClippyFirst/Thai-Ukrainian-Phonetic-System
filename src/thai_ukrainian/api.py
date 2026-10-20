@@ -23,6 +23,7 @@ def analyze_syllable(syllable: str):
 
     # Mandatory boundary: every Ukrainian rendering consumes the typed IPA result.
     phonetic_result = PhoneticResult.from_syllable_analysis(a)
+    a.phonetic_result = phonetic_result.as_dict()
     a.ukrainian_transliteration = adapt_syllable_to_ukrainian(phonetic_result)
     a.orthographic_interpretations.append({
         "layer": "ipa_to_ukrainian",
