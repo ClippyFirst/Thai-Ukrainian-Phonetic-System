@@ -15,8 +15,6 @@ def analyze_syllable(syllable: str):
             a.tone = determine_tone(a.tone_class, a.live_dead, a.vowel_length, a.tone_mark)
             a.rules_applied.append(a.tone.rule_id)
         except ValueError as exc:
-            # Invalid orthographic tone combinations are data-level findings,
-            # not parser crashes. Do not emit a Ukrainian result from invalid input.
             a.status = "invalid:tone-combination"
             a.warnings.append(str(exc))
 
