@@ -19,7 +19,7 @@ class ExternalG2PBenchmarkHarnessTests(unittest.TestCase):
     def test_empty_challenge_corpus_is_rejected(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             empty = Path(temp_dir) / "empty.jsonl"
-            empty.write_text("\\n", encoding="utf-8")
+            empty.write_text("\n", encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "contains no records"):
                 load_rows(empty)
 
