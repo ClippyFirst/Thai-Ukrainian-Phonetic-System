@@ -40,7 +40,8 @@ class MasterTableTests(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        cls.tmp.cleanup()
+        if cls.tmp is not None:
+            cls.tmp.cleanup()
 
     def test_generator_produces_exact_structural_cardinality(self):
         self.assertEqual(self.report["rows"], 351780)
