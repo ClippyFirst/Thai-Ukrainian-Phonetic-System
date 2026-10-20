@@ -46,6 +46,7 @@ class SyllableAnalysis:
     tone: ToneResult | None = None
     phonemic_ipa: str | None = None
     phonetic_ipa: str | None = None
+    phonetic_result: dict[str, Any] | None = None
     ukrainian_candidates: list[Candidate] = field(default_factory=list)
     selected_candidate: str | None = None
     rules_applied: list[str] = field(default_factory=list)
