@@ -32,6 +32,8 @@ This document evaluates candidate external engines for use as *comparators*, not
 
 ## Corpus priorities
 
+A candidate-only seed list is committed at [`data/benchmark/thai_g2p_challenge.jsonl`](../data/benchmark/thai_g2p_challenge.jsonl). Its records deliberately have null gold fields and `not_adjudicated` statuses; they are coverage prompts, not labeled examples and must not be scored as gold. The file should be adjudicated and versioned before any accuracy run.
+
 The first frozen challenge set should include at least these strata:
 
 - **Core contrasts:** short/long vowels, aspiration, final-stop neutralization, all five tone categories, live/dead syllables and class/mark interactions.
