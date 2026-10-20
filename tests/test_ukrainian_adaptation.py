@@ -52,3 +52,5 @@ def test_tone_and_provenance_survive_in_typed_phonetic_result():
     assert result.provenance
     assert result.broad_surface_ipa
     assert result.segments
+    assert all(segment.surface_ipa for segment in result.segments)
+    assert result.syllable_boundaries == (0, len(result.segments))
