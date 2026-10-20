@@ -8,7 +8,7 @@ def inventory_report():
     return {"consonant_graphemes":len(inv),"classes":classes}
 def csv_counts():
     base=ROOT/"data"/"thai"; out={}
-    for p in base.glob("*.csv"):
+    for p in sorted(base.glob("*.csv")):
         with p.open(encoding="utf-8") as f:out[p.stem]=max(0,sum(1 for _ in f)-1)
     return out
 def validate_repository():
