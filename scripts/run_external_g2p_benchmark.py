@@ -38,6 +38,8 @@ def load_rows(path: Path) -> list[dict[str, Any]]:
         if not isinstance(row, dict) or not isinstance(row.get("input"), str):
             raise ValueError(f"{path}:{line_number}: expected object with string 'input'")
         rows.append(row)
+    if not rows:
+        raise ValueError(f"{path}: challenge corpus contains no records")
     return rows
 
 
@@ -145,7 +147,10 @@ def main() -> int:
         "interpretation": "Raw candidate outputs only. Raw-string equality is diagnostic, not a fair accuracy score: candidate IPA conventions and segmentation differ. Adjudicate gold, document engine-specific normalization, then score features separately.",
     }
     print(json.dumps(summary, ensure_ascii=False, indent=2))
-    return 0 if outputs else (2 if errors else 0)
+    successful_outputs = sum(item["error"] is None for item in outputs)
+    # A run where every engine failed to initialize or transcribe is not a
+    # successful smoke test, even if failure rows were written for inspection.
+    return 0 if successful_outputs else (2 if errors or outputs else 0)
 
 
 if __name__ == "__main__":
