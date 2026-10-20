@@ -71,3 +71,32 @@ An external engine may be integrated only if a pinned, reproducible run demonstr
 - FastThaiG2P repository and README: https://github.com/awslabs/FastThaiG2P
 - PyThaiNLP repository: https://github.com/PyThaiNLP/pythainlp
 - PyThaiNLP transliteration API documentation: https://pythainlp.org/dev-docs/api/transliterate.html
+
+
+## Running candidate engines reproducibly
+
+The optional runner [scripts/run_external_g2p_benchmark.py](../scripts/run_external_g2p_benchmark.py) is deliberately outside the production import path. It stores raw output, elapsed time, engine/version metadata and failures for every candidate/input pair. It does not install either engine and does not modify runtime dependencies.
+
+Create an isolated environment (Python 3.10+):
+
+```bash
+python -m venv .venv-g2p-benchmark
+# Linux/macOS:
+. .venv-g2p-benchmark/bin/activate
+# Windows PowerShell:
+# .\.venv-g2p-benchmark\Scripts\Activate.ps1
+
+python -m pip install --upgrade pip
+python -m pip install "thaiphon==0.7.0"
+python -m pip install "FastThaiG2P @ git+https://github.com/awslabs/FastThaiG2P.git@c4759eef7df03e11fcbb9aa83efe8cf21709fd2f"
+python scripts/run_external_g2p_benchmark.py --engine all
+```
+
+To isolate the effect of thaiphon's optional lexicon, run a separate environment with the companion package installed and preserve that output under a distinct filename. The lexicon is a separately licensed CC-BY-SA 4.0 data package; do not bundle it or imply the engine's Apache-2.0 license covers the lexicon. Check the companion package's current version and metadata before installation.
+
+```bash
+python scripts/run_external_g2p_benchmark.py --engine thaiphon --output data/benchmark/runs/thaiphon-base.jsonl
+python scripts/run_external_g2p_benchmark.py --engine fastthaig2p --output data/benchmark/runs/fastthaig2p.jsonl
+```
+
+The default output path is a local run artifact and is not committed automatically. Store outputs with environment metadata (Python version, OS, exact package versions, lexicon presence, commit and corpus SHA-256) when publishing a run. Because the challenge corpus currently has no adjudicated gold, this runner is a smoke-test and evidence-capture harness only. It intentionally labels raw-string equality as diagnostic, not accuracy: candidate engines have different tone notation, IPA conventions and segmentation behavior. Do not publish an accuracy ranking until independent gold labels and explicit per-engine normalization/scoring rules are frozen.
