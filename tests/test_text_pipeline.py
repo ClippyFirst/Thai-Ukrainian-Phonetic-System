@@ -42,6 +42,9 @@ class TextPipelineTests(unittest.TestCase):
                 self.assertEqual(result.status, "analyzed")
                 self.assertTrue(result.phonemic_ipa.endswith("k"), result.phonemic_ipa)
                 self.assertTrue(result.ukrainian_transliteration.endswith("к"), result.ukrainian_transliteration)
+                if word == "ตรอก":
+                    self.assertEqual(result.onset, ["ต", "ร"])
+                    self.assertEqual(result.coda, "ก")
 
     def test_medial_ua_glide_is_not_mistaken_for_a_coda(self):
         result = analyze_syllable("กวน")
