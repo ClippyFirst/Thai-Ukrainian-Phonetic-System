@@ -124,7 +124,7 @@ def main() -> int:
                 "elapsed_ms": elapsed_ms,
                 "error": error,
                 "gold_status": row.get("lexical_attestation_status", "not_adjudicated"),
-                "exact_phonemic_ipa_match": (candidate == gold) if gold is not None and candidate is not None else None,
+                "exact_raw_string_match_diagnostic_only": (candidate == gold) if gold is not None and candidate is not None else None,
             })
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
@@ -140,9 +140,9 @@ def main() -> int:
         "engines_run": sorted({item["engine"] for item in outputs}),
         "output_rows": len(outputs),
         "gold_labeled_rows": sum(row.get("gold_phonemic_ipa") is not None for row in rows),
-        "scored_rows": sum(item["exact_phonemic_ipa_match"] is not None for item in outputs),
+        "raw_string_diagnostic_rows": sum(item["exact_raw_string_match_diagnostic_only"] is not None for item in outputs),
         "errors": errors,
-        "interpretation": "Candidate outputs only; no accuracy claim is valid while the independent gold labels remain unadjudicated.",
+        "interpretation": "Raw candidate outputs only. Raw-string equality is diagnostic, not a fair accuracy score: candidate IPA conventions and segmentation differ. Adjudicate gold, document engine-specific normalization, then score features separately.",
     }
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return 0 if outputs else (2 if errors else 0)
