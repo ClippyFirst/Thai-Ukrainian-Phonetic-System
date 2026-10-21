@@ -22,7 +22,7 @@ Scientific status remains evidence-gated: lexical special-orthography resolution
 - deterministic closed-syllable inherent /o/ is resolved when the supplied surface supports onset + coda analysis.
 - preposed `ไ/ใ` preserves valid onset/leading-consonant structure, including `ไหม`, `ไหว้`, and `ไกล`.
 - `ไ/ใ` is short in the vowel registry but live for tone calculation because it ends in /j/.
-- Ukrainian output for these constructions is generated from structured Thai analysis, not IPA.
+- Historical implementation note — this statement describes the earlier implementation and is superseded by the current IPA-first adapter contract documented in README.md: Ukrainian adaptation consumes the typed phonetic result/IPA boundary rather than independently re-parsing Thai graphemes.
 - `ง` is represented as Ukrainian orthographic sequence `нг` in the structured adaptation layer and correspondence table.
 
 ### Still explicitly analysis-dependent
@@ -196,3 +196,39 @@ The parser audit identified another false-positive class: a detector could selec
 ## Adversarial audit extension — preposed-vowel leading clusters
 
 The parser audit exposed a visual-order trap in syllables such as `ไหม` and `ไหว้`: the preposed vowel sign appears before the consonant sequence, so a simple character-index test can incorrectly demote the second onset consonant to coda. The parser now evaluates declared complex-onset licensing in preposed-vowel syllables before the generic coda fallback. The suite verifies `ไหม` as a ห นำ onset and `ไหว้` as a ห นำ onset with a tone mark. The model remains conservative for unsupported lexical leading constructions such as อ นำ.
+
+
+## 2026-10-21 continuation — current-main reconciliation
+
+### Source-of-truth and pipeline status
+
+The current `main` snapshot inspected for this continuation is `d34fe54086d0295278b342d56804bcc5a409c37b` (2026-10-20). The current README defines the required pipeline as Thai orthography → structural analysis → syllable structure → Thai phonology → typed phonetic result (phonemic IPA + conservative broad surface IPA) → Ukrainian adaptation. It explicitly states that the Python Ukrainian adapter consumes the typed result and does not inspect Thai graphemes, vowel IDs, or Thai coda fields. The browser implementation imports its dedicated IPA-to-Ukrainian adapter. Accordingly, older audit wording that described direct structured-Thai-to-Ukrainian rendering is historical, not the current architecture.
+
+### Current verification evidence
+
+- The latest-main commit lookup returned no associated workflow runs and its combined-status endpoint returned no status checks. This is **not evidence of a passing CI run** for the inspected main HEAD.
+- PR #17 (`polish/v0.5.1-research-service`, head `80680c57418574566f1b651800ec618c4681212b`) has successful workflow runs 627 (CI) and 161 (web static validation). Its CI run completed Python package installation, derived-artifact generation/drift checks, master-table generation, Python unittest discovery, and the 351,780-row / 41-rime artifact assertions. Its web run completed JavaScript syntax, required-page, static accessibility-contract, and no-remote-runtime-dependency checks.
+- PR #17 is nevertheless divergent and 119 commits behind current `main`; its passing checks apply to its own old head only. Do not merge it wholesale. Reuse only changes proven absent from current `main`, after a fresh comparison and verification.
+- Recent main commits add a pinned external G2P candidate-runner procedure and harden its evaluation harness, including rejection of empty challenge corpora, all-candidates-failed smoke runs, and raw IPA equality being misreported as accuracy. These are benchmark-infrastructure safeguards, not evidence of empirical accuracy by themselves.
+
+### Acceptance ledger
+
+| Workstream | Status | Evidence / acceptance criterion |
+|---|---|---|
+| IPA-first adapter boundary | PARTIAL — implementation documented; current-main executable suite not independently rerun in this session | README contract and browser adapter import support the intended boundary. Accept only after current-main CI passes and Python/browser parity remains green. |
+| Structural generation and registry consistency | PARTIAL — prior branch verified, current HEAD not verified | PR #17 CI asserted 41 rime records and 351,780 structural rows; require a successful run on the current main commit or its exact successor. Structural rows are not a valid-syllable or lexical-coverage count. |
+| Web polish in PR #17 | PARTIAL — stale divergent branch | Compare its nine commits with current main; retain only changes not already present and re-run web checks. No merge performed. |
+| External G2P benchmark harness | PARTIAL — infrastructure present | Challenge input must be non-empty, package versions and raw outputs recorded, and scoring limited to independently adjudicated gold IPA. A successful smoke run is not corpus accuracy. |
+| Licensed/adjudicated Thai IPA gold corpus | BLOCKED — corpus/evidence not established in this session | Record source, version, access date, license/redistribution terms, preprocessing and independent adjudication; then run stratified segmentation, segment, vowel-length, tone and IPA evaluation. |
+| Empirical Ukrainian target preference/calibration | BLOCKED — no adjudicated target corpus | Build and license an adjudicated Ukrainian candidate/target set before reporting preference, calibration, or accuracy. |
+| Local clean-install/test reproduction | BLOCKED — checkout/network unavailable | Clone the exact main SHA in a network-enabled environment; run the workflow commands and generated-artifact drift checks, then attach exact logs/results. |
+
+### Commands and operations executed in this continuation
+
+- GitHub API: inspect current commit history, compare `main` with PR #17, inspect the PR patch and changed-file summary, fetch README / pyproject / audit / research-protocol / corpus-validation / browser parity test / benchmark runner, and inspect available workflow runs and combined status.
+- `git clone --depth 1 https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System.git /tmp/thai-ua-audit` — BLOCKED: DNS/network error (`Could not resolve host: github.com`); no local test, generator, build, or corpus evaluation was run.
+- No PR was merged, no external settings were changed, and no empirical accuracy claim was added.
+
+### Release assessment
+
+**Research infrastructure: substantial; release readiness: not independently verified for current main; empirical accuracy: unmeasured.** The next decisive acceptance gate is a successful workflow run on the exact current-main commit (or its exact successor), followed by independent gold-corpus evaluation.
