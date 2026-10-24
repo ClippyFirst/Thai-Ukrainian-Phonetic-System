@@ -96,3 +96,8 @@ The optional smoke report now compares engines per shared input and reports raw 
 - `exact_match_rate` is strict string equality after the declared Unicode normalization and is comparable only when the same IPA profile/conventions are used. Tone, length, stress, syllable boundaries, tie bars and other IPA distinctions are not silently removed.
 - `character_error_rate` is Levenshtein distance over Unicode code points, not a phoneme/segment error rate. IPA affricates, combining diacritics, length marks and tone symbols can occupy multiple code points; interpret this field as a string-distance diagnostic only.
 - A valid score still requires a non-empty independently adjudicated gold set with source locator and profile. Smoke output, engineering fixtures, source-attested but unadjudicated entries, and inter-engine agreement are not accuracy.
+
+
+## Goruut: pinned third-engine diagnostic
+
+The optional external-G2P workflow now builds Goruut from pinned upstream commit `b224bde02151f8f86d0fe260804e4ca743bda620` and queries the Thai endpoint alongside `thaiphon` and FastThaiG2P. The upstream README lists Thai support and an IPA phone set with tonal phones; this is an upstream claim until the smoke completes. The upstream repository reports MIT, but per-language dictionary/model data provenance and licenses are not independently audited. The workflow does not add Goruut to the product runtime. Preserve raw outputs; engine agreement is not accuracy, and tone-stripped agreement remains diagnostic only.
