@@ -56,3 +56,15 @@ These are research leads, not verified availability claims. Before executing a c
 - [FastThaiG2P](https://github.com/awslabs/FastThaiG2P) documents a 62,112-word IPA dictionary and rule-based OOV fallback; dictionary provenance includes manually curated, Wiktionary-derived and generated entries. Review per-source provenance and license before treating any material as gold.
 - [Goruut](https://github.com/neurlang/goruut) lists Thai support upstream; no pinned Goruut run is yet recorded.
 - Current acceptance: build a shared held-out gold set and map IPA conventions before comparing exact-match rates.
+
+
+## Upstream provenance, license boundaries and comparator triage (checked 2026-10-24)
+
+| Candidate | Verified upstream fact | Evidence boundary / next step |
+|---|---|---|
+| [thaiphon 0.7.0](https://pypi.org/project/thaiphon/0.7.0/) | PyPI declares Apache-2.0. Upstream reports 57% exact match for the base engine and about 75% with optional thaiphon-data-volubilis; the lexicon is a separate CC-BY-SA 4.0 package. These are upstream-reported figures, not this repository's measurements. | Our smoke intentionally ran the base engine without the optional lexicon. Do not compare its output directly to the upstream 57%/75% claims without reproducing the exact upstream corpus, lexicon, version and scoring convention. |
+| [FastThaiG2P](https://github.com/awslabs/FastThaiG2P) | Upstream describes a 62k-entry IPA dictionary and a rule-based fallback; its README attributes dictionary content to Wiktionary, manual overrides and generated entries, including model-generated data. | Our pinned smoke ran 36 inputs / 72 outputs, but independent gold count is zero. Its dictionary can overlap with Wiktionary-derived comparator labels, so concordance on the three selected Wiktionary spot checks is not independent accuracy. Audit the license of the code and each bundled dataset separately before redistribution. |
+| [Epitran](https://github.com/dmort27/epitran) | General IPA transliteration toolkit; only use a language-script pair if its current mapping inventory explicitly supports it. | Not part of the current Thai smoke evidence; verify the exact Thai pair before adding it as a comparator. |
+| [Goruut](https://github.com/neurlang/goruut) | Upstream advertises an IPA phone set and Thai support. | Support claim only; no successful Thai run recorded here. |
+
+The source-attested spot check in data/benchmark/runs/external-g2p-smoke-2026-10-24.json is selected to investigate disagreements, not sampled to estimate accuracy. Keep raw strings, tone marks, tie bars and segmentation intact until a declared normalization protocol is reviewed.
