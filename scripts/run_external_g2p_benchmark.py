@@ -12,6 +12,8 @@ import importlib.metadata
 import json
 import sys
 import time
+import urllib.error
+import urllib.request
 from pathlib import Path
 from typing import Any, Callable
 
@@ -77,6 +79,53 @@ CANDIDATES = {
     "fastthaig2p": candidate_fastthaig2p,
 }
 
+GORUUT_COMMIT = "b224bde02151f8f86d0fe260804e4ca743bda620"
+
+
+def parse_goruut_response(body: Any) -> str:
+    """Extract raw per-word phonetic strings without phone-symbol rewriting."""
+    words = body.get("Words") if isinstance(body, dict) else None
+    if not isinstance(words, list) or not words:
+        raise ValueError(f"Goruut returned no Words array: {body!r}")
+    phones = [word.get("Phonetic") for word in words if isinstance(word, dict)]
+    if len(phones) != len(words) or any(not isinstance(phone, str) for phone in phones):
+        raise ValueError(f"Goruut response has missing/non-string Phonetic fields: {body!r}")
+    return " ".join(phones)
+
+
+def candidate_goruut(url: str, language: str) -> tuple[Callable[[str], str], dict[str, Any]]:
+    """Query a separately built, pinned Goruut HTTP service; never a runtime dependency."""
+    if not url:
+        raise ValueError("Goruut requires --goruut-url pointing at a running pinned service")
+
+    def transcribe(text: str) -> str:
+        payload = json.dumps({"Language": language, "Sentence": text}).encode("utf-8")
+        request = urllib.request.Request(
+            url,
+            data=payload,
+            headers={"Content-Type": "application/json"},
+            method="POST",
+        )
+        try:
+            with urllib.request.urlopen(request, timeout=20) as response:
+                body = json.loads(response.read().decode("utf-8"))
+        except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:
+            raise RuntimeError(f"Goruut request failed: {type(exc).__name__}: {exc}") from exc
+        # Preserve each engine-produced word string; spaces mark response word boundaries.
+        return parse_goruut_response(body)
+
+    return transcribe, {
+        "package": "Goruut",
+        "version": GORUUT_COMMIT,
+        "source_commit": GORUUT_COMMIT,
+        "configuration": {
+            "api": "/tts/phonemize/sentence",
+            "language": language,
+            "raw_output_representation": "space-joined Word.Phonetic fields; individual phone strings unchanged",
+        },
+        "license_note": "Goruut repository reports MIT; per-language dictionary/model data provenance remains separately unreviewed.",
+    }
+
 
 def normalized_ipa(value: str | None) -> str | None:
     if value is None:
@@ -84,6 +133,13 @@ def normalized_ipa(value: str | None) -> str | None:
     # Conservative normalization only: trim outer whitespace. Do not strip
     # tone, length, syllable dots, or tie bars because those are scoreable data.
     return value.strip()
+
+
+def strip_ipa_delimiter_slashes_diagnostic(value: str | None) -> str | None:
+    """Remove IPA /.../ transcription delimiters only; never used for scoring."""
+    if value is None:
+        return None
+    return value.replace("/", "").strip()
 
 
 def strip_tone_symbols_diagnostic(value: str | None) -> str | None:
@@ -99,13 +155,15 @@ def build_inter_engine_diagnostic(outputs: list[dict[str, Any]]) -> dict[str, An
     for row in outputs:
         raw = row.get("raw_output")
         ident = row.get("record_id")
-        if ident is None or not isinstance(raw, str) or row.get("error") is not None:
+        if ident is None or not isinstance(raw, str) or not raw.strip() or row.get("error") is not None:
             continue
         grouped.setdefault(str(ident), []).append(raw.strip())
 
     comparable_inputs = 0
     pair_count = 0
     exact_pairs = 0
+    slash_stripped_pairs = 0
+    slash_only_pairs = 0
     tone_stripped_pairs = 0
     tone_only_pairs = 0
     non_tone_pairs = 0
@@ -117,39 +175,99 @@ def build_inter_engine_diagnostic(outputs: list[dict[str, Any]]) -> dict[str, An
             for j in range(i + 1, len(values)):
                 pair_count += 1
                 exact = values[i] == values[j]
-                tone_equal = strip_tone_symbols_diagnostic(values[i]) == strip_tone_symbols_diagnostic(values[j])
+                slash_equal = strip_ipa_delimiter_slashes_diagnostic(values[i]) == strip_ipa_delimiter_slashes_diagnostic(values[j])
+                tone_equal = strip_tone_symbols_diagnostic(strip_ipa_delimiter_slashes_diagnostic(values[i])) == strip_tone_symbols_diagnostic(strip_ipa_delimiter_slashes_diagnostic(values[j]))
                 exact_pairs += int(exact)
+                slash_stripped_pairs += int(slash_equal)
+                slash_only_pairs += int(not exact and slash_equal)
                 tone_stripped_pairs += int(tone_equal)
-                tone_only_pairs += int(not exact and tone_equal)
-                non_tone_pairs += int(not exact and not tone_equal)
+                tone_only_pairs += int(not slash_equal and tone_equal)
+                non_tone_pairs += int(not tone_equal)
     return {
         "comparable_inputs": comparable_inputs,
         "engine_pairs_compared": pair_count,
         "exact_agreement_pairs": exact_pairs,
-        "tone_stripped_agreement_pairs_diagnostic_only": tone_stripped_pairs,
-        "tone_only_disagreements_diagnostic_only": tone_only_pairs,
-        "non_tone_or_format_disagreements_requiring_review": non_tone_pairs,
+        "slash_delimiter_stripped_agreement_pairs_diagnostic_only": slash_stripped_pairs,
+        "slash_only_format_disagreements_diagnostic_only": slash_only_pairs,
+        "slash_and_tone_stripped_agreement_pairs_diagnostic_only": tone_stripped_pairs,
+        "tone_only_disagreements_after_slash_stripping_diagnostic_only": tone_only_pairs,
+        "remaining_mismatches_after_limited_diagnostics": non_tone_pairs,
         "exact_agreement_rate": exact_pairs / pair_count if pair_count else None,
-        "tone_stripped_agreement_rate_diagnostic_only": tone_stripped_pairs / pair_count if pair_count else None,
-        "interpretation": "Inter-engine agreement is not accuracy. Tone-stripped results are a diagnostic decomposition only; raw outputs and tone-sensitive exact-match rules are unchanged.",
+        "slash_delimiter_stripped_agreement_rate_diagnostic_only": slash_stripped_pairs / pair_count if pair_count else None,
+        "slash_and_tone_stripped_agreement_rate_diagnostic_only": tone_stripped_pairs / pair_count if pair_count else None,
+        "interpretation": "Inter-engine agreement is not accuracy. Slash-delimiter and tone-stripped results are separate diagnostics only; raw outputs and tone-sensitive exact-match rules are unchanged.",
     }
+
+
+def has_usable_output(item: dict[str, Any]) -> bool:
+    """Count only non-empty string outputs without a recorded per-input error."""
+    raw = item.get("raw_output")
+    return item.get("error") is None and isinstance(raw, str) and bool(raw.strip())
+
+
+def build_pairwise_engine_diagnostic(outputs: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Compare each engine pair on shared successful inputs; not an accuracy metric."""
+    grouped: dict[str, dict[str, str]] = {}
+    for row in outputs:
+        ident, engine, raw = row.get("record_id"), row.get("engine"), row.get("raw_output")
+        if ident is None or not isinstance(engine, str) or not isinstance(raw, str) or not raw.strip() or row.get("error") is not None:
+            continue
+        grouped.setdefault(str(ident), {})[engine] = raw.strip()
+    names = sorted({engine for group in grouped.values() for engine in group})
+    report = []
+    for i, engine_a in enumerate(names):
+        for engine_b in names[i + 1:]:
+            pairs = [(group[engine_a], group[engine_b]) for group in grouped.values() if engine_a in group and engine_b in group]
+            raw_matches = sum(a == b for a, b in pairs)
+            slash_matches = sum(strip_ipa_delimiter_slashes_diagnostic(a) == strip_ipa_delimiter_slashes_diagnostic(b) for a, b in pairs)
+            tone_matches = sum(strip_tone_symbols_diagnostic(strip_ipa_delimiter_slashes_diagnostic(a)) == strip_tone_symbols_diagnostic(strip_ipa_delimiter_slashes_diagnostic(b)) for a, b in pairs)
+            report.append({
+                "engine_a": engine_a, "engine_b": engine_b, "comparable_inputs": len(pairs),
+                "raw_exact_matches": raw_matches,
+                "slash_delimiter_stripped_matches_diagnostic_only": slash_matches,
+                "slash_and_tone_stripped_matches_diagnostic_only": tone_matches,
+                "remaining_mismatches_after_limited_diagnostics": len(pairs) - tone_matches,
+                "raw_exact_agreement_rate": raw_matches / len(pairs) if pairs else None,
+                "slash_and_tone_stripped_agreement_rate_diagnostic_only": tone_matches / len(pairs) if pairs else None,
+            })
+    return report
+
+def summarize_per_engine(outputs: list[dict[str, Any]], selected: list[str]) -> dict[str, Any]:
+    summary: dict[str, Any] = {}
+    for name in selected:
+        engine_rows = [item for item in outputs if item["engine"] == name]
+        failed = [item for item in engine_rows if item.get("error") is not None]
+        summary[name] = {
+            "output_rows": len(engine_rows),
+            "successful_outputs": sum(has_usable_output(item) for item in engine_rows),
+            "failed_outputs": len(failed),
+            "empty_outputs_without_error": sum(item.get("error") is None and (not isinstance(item.get("raw_output"), str) or not item["raw_output"].strip()) for item in engine_rows),
+            "failure_examples": [{"record_id": item.get("record_id"), "input": item.get("input"), "error": item.get("error")} for item in failed[:5]],
+        }
+    return summary
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input", type=Path, default=DEFAULT_INPUT)
     parser.add_argument("--output", type=Path, default=ROOT / "data" / "benchmark" / "runs" / "external-g2p-latest.jsonl")
-    parser.add_argument("--engine", choices=[*CANDIDATES, "all"], default="all")
+    parser.add_argument("--engine", choices=[*CANDIDATES, "goruut", "all"], default="all")
+    parser.add_argument("--goruut-url", default="", help="Optional URL of a running pinned Goruut service.")
+    parser.add_argument("--goruut-language", default="Thai", help="Goruut's upstream language label.")
     args = parser.parse_args()
 
+    if args.engine == "goruut" and not args.goruut_url:
+        parser.error("--engine goruut requires --goruut-url")
     rows = load_rows(args.input)
     selected = list(CANDIDATES) if args.engine == "all" else [args.engine]
+    if args.engine == "all" and args.goruut_url:
+        selected.append("goruut")
     outputs: list[dict[str, Any]] = []
     errors: list[str] = []
 
     for name in selected:
         try:
-            transcribe, metadata = CANDIDATES[name]()
+            transcribe, metadata = (candidate_goruut(args.goruut_url, args.goruut_language) if name == "goruut" else CANDIDATES[name]())
         except Exception as exc:  # optional dependencies are deliberately non-fatal
             errors.append(f"{name}: unavailable: {type(exc).__name__}: {exc}")
             continue
@@ -184,6 +302,12 @@ def main() -> int:
             stream.write(json.dumps(item, ensure_ascii=False, sort_keys=True) + "\n")
 
     inter_engine_diagnostic = build_inter_engine_diagnostic(outputs)
+    per_engine = summarize_per_engine(outputs, selected)
+    per_input_failure_summaries = [
+        f"{name}: {details['failed_outputs']} per-input failures"
+        for name, details in per_engine.items()
+        if details["failed_outputs"]
+    ]
     summary = {
         "input": str(args.input),
         "inter_engine_diagnostic": inter_engine_diagnostic,
@@ -192,13 +316,14 @@ def main() -> int:
         "engines_requested": selected,
         "engines_run": sorted({item["engine"] for item in outputs}),
         "output_rows": len(outputs),
+        "per_engine": per_engine,
         "gold_labeled_rows": sum(row.get("gold_phonemic_ipa") is not None for row in rows),
         "raw_string_diagnostic_rows": sum(item["exact_raw_string_match_diagnostic_only"] is not None for item in outputs),
-        "errors": errors,
-        "interpretation": "Raw candidate outputs only. Raw-string equality is diagnostic, not a fair accuracy score: candidate IPA conventions and segmentation differ. Adjudicate gold, document engine-specific normalization, then score features separately.",
+        "errors": errors + per_input_failure_summaries,
+        "interpretation": "Raw candidate outputs only. Per-engine failures and empty outputs are explicit. Raw-string equality and inter-engine agreement are diagnostic, not accuracy: candidate IPA conventions and segmentation differ. Adjudicate gold, document engine-specific normalization, then score features separately.",
     }
     print(json.dumps(summary, ensure_ascii=False, indent=2))
-    successful_outputs = sum(item["error"] is None for item in outputs)
+    successful_outputs = sum(has_usable_output(item) for item in outputs)
     # A run where every engine failed to initialize or transcribe is not a
     # successful smoke test, even if failure rows were written for inspection.
     return 0 if successful_outputs else (2 if errors or outputs else 0)

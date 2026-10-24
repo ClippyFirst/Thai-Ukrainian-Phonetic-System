@@ -130,5 +130,74 @@
     "exact_agreement_rate": 0.3611111111111111,
     "tone_stripped_agreement_rate_diagnostic_only": 0.3888888888888889,
     "interpretation": "Inter-engine agreement is not accuracy. Tone-stripped results are diagnostic only; raw outputs and tone-sensitive exact-match rules are unchanged."
+  },
+  "latest_three_engine_run": {
+    "run_id": 40128121032,
+    "run_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40128121032",
+    "artifact_id": 12574080008,
+    "artifact_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40128121032/artifacts/12574080008",
+    "artifact_zip_sha256": "83cde4269dad940ef3d2521b6aba0b8f22eda56f71ec3612bb7230f6274f5b6b",
+    "source_commit": "ba4a59afdb4b52b235c168965df89438cc15624d",
+    "goruut_upstream_commit": "b224bde02151f8f86d0fe260804e4ca743bda620",
+    "input_count": 36,
+    "output_rows": 108,
+    "per_engine": {
+      "thaiphon": {
+        "outputs": 36,
+        "successful_nonempty": 36,
+        "failed": 0
+      },
+      "fastthaig2p": {
+        "outputs": 36,
+        "successful_nonempty": 36,
+        "failed": 0
+      },
+      "goruut": {
+        "outputs": 36,
+        "successful_nonempty": 26,
+        "no_words": 10,
+        "request_errors": 0
+      }
+    },
+    "independent_gold_count": 0,
+    "accuracy": null,
+    "score_status": "NOT_SCORED_NO_INDEPENDENT_GOLD",
+    "inter_engine_diagnostic": {
+      "valid_engine_pairs": 88,
+      "raw_exact_matches": 13,
+      "slash_delimiter_stripped_matches_diagnostic_only": 21,
+      "slash_and_tone_stripped_matches_diagnostic_only": 24,
+      "slash_only_format_matches_additional": 8,
+      "tone_only_matches_additional_after_slash_removal": 3,
+      "remaining_mismatches_after_limited_diagnostics": 64,
+      "interpretation": "Agreement counts are pairwise inter-engine diagnostics, not accuracy. Ten Goruut no-Words outputs mean not all 108 possible pairs were comparable."
+    },
+    "pairwise_engine_diagnostic": [
+      {
+        "engines": "thaiphon vs FastThaiG2P",
+        "comparable_inputs": 36,
+        "raw_exact_matches": 13,
+        "slash_delimiter_stripped_matches": 13,
+        "slash_and_tone_stripped_matches": 14,
+        "remaining_mismatches": 22
+      },
+      {
+        "engines": "thaiphon vs Goruut",
+        "comparable_inputs": 26,
+        "raw_exact_matches": 0,
+        "slash_delimiter_stripped_matches": 2,
+        "slash_and_tone_stripped_matches": 3,
+        "remaining_mismatches": 23
+      },
+      {
+        "engines": "FastThaiG2P vs Goruut",
+        "comparable_inputs": 26,
+        "raw_exact_matches": 0,
+        "slash_delimiter_stripped_matches": 6,
+        "slash_and_tone_stripped_matches": 7,
+        "remaining_mismatches": 19
+      }
+    ],
+    "caveat": "The raw artifact predates the newer per-engine summary and repeatability probe; counts above were independently inspected from the downloaded JSONL artifact. A refreshed run is required to validate the latest diagnostic schema and repeatability."
   }
 }

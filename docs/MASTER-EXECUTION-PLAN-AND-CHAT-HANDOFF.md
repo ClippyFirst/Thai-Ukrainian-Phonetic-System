@@ -180,3 +180,62 @@ PR #30 was closed as superseded by PR #31, merged as `73617280e6fadab74885845b89
 - Latest pinned smoke [run 40123365441](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40122636062) passed: 36 inputs, 72 outputs across thaiphon and FastThaiG2P, 0 runtime errors. Exact inter-engine agreement is 13/36 (36.1%); removing only IPA tone letters in a diagnostic copy gives 14/36 (38.9%), resolving just one additional mismatch. The remaining 22 input pairs differ beyond tone-letter strings and need segmentation/segmental/format review.
 - These are inter-engine diagnostics, not accuracy: independent gold count is 0, accuracy is null, and neither engine is selected for production. The source-attested Wiktionary spot-check is pinned to revisions 5734858, 5688545 and 2441036, but is not independently adjudicated and may overlap with FastThaiG2P's sources.
 - Artifact ZIP SHA-256: `a4688f082f9a6307fded825b96d7cd025c39869383a4483311707b2d7c2c53ab`.
+
+
+## Per-engine output accounting
+
+The first pinned Goruut run completed the 36-input challenge and produced 108 rows, but the inter-engine diagnostic compared only 88 pairs. The updated harness therefore reports per-engine successful outputs, failed outputs, empty outputs without an exception, and representative failures. A complete three-engine smoke should have 108 pair comparisons if all three engines produce valid outputs for all 36 inputs. This is a coverage diagnostic, not an accuracy metric.
+
+
+## Goruut repeatability
+
+The endpoint readiness probe returned `kaː˧` for `กา`, while the first benchmark artifact recorded `ka` for the same form. Because these requests occurred in different contexts, this is a repeatability hypothesis rather than proof of stochastic output. The optional workflow now repeats each challenge form three times and preserves raw outputs plus Goruut's randomization counters. A stable output is not evidence of correctness; variability must be analyzed separately from accuracy.
+
+
+## Goruut benchmark evidence checkpoint — 2026-10-24 (continuation)
+
+- PR [#42](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/42) now includes the pinned Goruut comparator, per-engine accounting, fail-closed smoke-success accounting, and a repeatability probe. Production runtime remains unchanged.
+- Inspected run [40128121032](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40128121032), artifact ZIP SHA-256 `83cde4269dad940ef3d2521b6aba0b8f22eda56f71ec3612bb7230f6274f5b6b`: 36 inputs/108 rows; thaiphon 36/36 non-empty, FastThaiG2P 36/36, Goruut 26/36 non-empty and 10 per-input failures. Pairwise diagnostics: 88 comparisons, 13 exact agreements, 14 tone-stripped diagnostic agreements, 1 tone-only disagreement, 74 non-tone/format disagreements.
+- Raw-output caveat: `กา` was `/kaː˧/` in thaiphon/FastThaiG2P but `ka` in Goruut; several outputs lack separators and some requests return an empty `Words` array. These are format/coverage observations, not adjudicated pronunciation errors. Goruut remains optional, `verified_in_repo=false`, independent gold=0, accuracy=null.
+- A repeatability probe now repeats challenge forms three times and records raw output/randomization counters. The readiness probe and first benchmark differ for `กา` (`kaː˧` vs `ka`); this is a hypothesis requiring the repeated run, not yet evidence of stochasticity.
+- Current PR head: `7e235197b162a4f7a8af3f23205ee595b23c9054`. Current-head CI `40128778875` and optional smoke/repeatability workflow `40128778650` are queued. Do not mark the PR verified until those runs complete and their artifacts are inspected.
+- Remaining scientific blockers: representative independently adjudicated Thai gold; documented Goruut output convention/dialect/model-data provenance; feature-level evaluation separate from raw string agreement.
+
+The harness now emits `pairwise_engine_diagnostic` for each engine pair, including its own comparable-input denominator and raw/slash-stripped/slash+tone-stripped counts. This avoids mixing missing-output coverage across engine pairs.
+
+## Continuation checkpoint — 2026-10-24, after current-head smoke
+
+- Current reviewed PR #42 head at this checkpoint: `9ef3612dd54d30640f299cdb19bff0ab95fa7b29`. The optional three-engine smoke run [40129230641](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40129230641) completed successfully and produced artifact [12573981792](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40129230641/artifacts/12573981792), ZIP SHA-256 `192950f4bd426f3c274a78ab135072546225931003d59acd9ed7dd036dc4ef2a`.
+- Inspected artifact `summary.json`: 36 inputs × 3 engines = 108 rows; thaiphon 36/36 and FastThaiG2P 36/36 non-empty; Goruut 26/36 non-empty and 10 explicit `Words: []` failures. 88 engine pairs, 13 exact agreement pairs; slash-stripped and slash+tone-stripped matches are diagnostic-only (30 and 31 pairs). 57 pairs still differ after those limited diagnostics. Independent gold count 0, accuracy null.
+- Registry and benchmarking document refreshed to reference this current artifact. This is endpoint/coverage evidence only, not an accuracy result. Do not normalize away tone/length or treat cross-engine agreement as gold.
+- Full CI [40129230638](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40129230638) was still in progress when inspected: generated artifacts were clean and master-table generation was underway; Python and Node tests had not yet completed. Re-check this exact head before merge.
+- Remaining acceptance gates: inspect completion of full CI; obtain and inspect the separate repeatability-probe artifact before making claims about stochasticity; validate raw output conventions and per-language model/dictionary provenance; create an independently sourced/adjudicated Thai gold set before any accuracy score. No production runtime change is authorized by this research PR.
+
+## CI regression / corrective checkpoint — 2026-10-24
+
+- Inspected full CI run [40129230638](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40129230638) using its job log. Generated-data checks and master-table generation passed; Python suite ran 108 tests and failed exactly one registry test.
+- Failure: `tests/test_external_ipa_registry.py::ExternalIpaRegistryTests.test_candidates_have_unique_ids_and_valid_https_links` expected controlled status vocabulary `candidate | benchmark-resource | supporting-tool | display-only`, but Goruut had `status=SMOKE_VERIFIED_PARTIAL_COVERAGE_NOT_ACCURACY`.
+- Corrected registry to `status=candidate`; retained execution result separately as `execution_status=SMOKE_VERIFIED_PARTIAL_COVERAGE_NOT_ACCURACY`. This is an actual CI regression fix, not a linguistic change.
+- Acceptance: inspect CI on the exact corrected branch head; require Python, Node IPA→UA and parity checks all to pass. The previous run's Node checks were skipped after the Python failure.
+
+## Repeatability probe artifact/test correction — 2026-10-24
+
+- Found two observability gaps in the optional workflow: the upload step omitted `goruut-repeatability.json` and `repeatability-summary.json`; fixed the artifact path list.
+- Found that the CLI printed a human-readable path after its JSON summary to stdout, making the `tee` summary file invalid JSON. Moved that path notice to stderr and added a CLI regression test that parses stdout and the saved report as JSON.
+- Found the two repeatability checks were bare pytest-style functions, while CI invokes `python -m unittest discover -s tests -v`; unittest discovery would not execute those functions. Converted them to `unittest.TestCase` methods and added the CLI output-contract test.
+- Current source changes require fresh exact-head CI and smoke verification. Do not use earlier smoke artifacts to infer repeatability: they did not upload the repeated-call report.
+
+## Latest repeatability evidence and exact CI checkpoint — 2026-10-24
+
+- Current inspected optional smoke [40130130705](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40130130705), artifact [12575022202](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40130130705/artifacts/12575022202), ZIP SHA-256 `88693eb1e85b9957c86aa2e04993dd30d8749d58dd39d7074437c7d2bdc73d16`. All three JSON artifacts parsed: benchmark summary, full repeatability report and repeatability summary.
+- Three-engine benchmark: 36 inputs / 108 rows; thaiphon 36/36, FastThaiG2P 36/36, Goruut 26/36 non-empty with 10 no-`Words` responses; 88 comparable engine pairs, 13 exact agreements. Slash and tone removal are diagnostic-only; no gold rows exist.
+- Repeatability: 36 forms × 3 = 108 calls; 78 non-empty, 30 no-output, 0 runtime errors. Among 26 forms with at least two non-empty results, 15 varied and 11 were stable in this sample (observed repeatability 42.3%). All 15 variable forms reported `RandomizationWordsCount=1` and 2–4 `RandomizationWordsChoices`; ten forms had no non-empty output across all three calls.
+- Pinned upstream selector [source](https://github.com/neurlang/goruut/blob/b224bde02151f8f86d0fe260804e4ca743bda620/repo/services/parts_of_speech_selector_service.go) documents a random dictionary-pronunciation fallback when no preferred homograph is available. This is consistent with observed variation but does not adjudicate which pronunciation is correct. Keep Goruut optional/disabled and do not use as gold.
+- Fixed the registry controlled-status regression, repeatability artifact upload list, JSON-only stdout contract and test discovery by unittest. Current full CI run [40130130702](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40130130702) was still in progress before these latest evidence-documentation commits; exact final head needs a fresh CI run and all Python/Node/parity gates.
+
+## Replication and workflow-trigger cleanup — 2026-10-24
+
+- Second successful smoke run [40130492210](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40130492210), artifact [12574282871](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40130492210/artifacts/12574282871), ZIP SHA-256 `39b9075da2242e302ceddf62af1d75ef19bcb3cefabe98254371c954bc36cd2c`. All expected files present; all three JSON files parse. Benchmark: 36 inputs / 108 rows, Goruut 26/36 non-empty, 10 no-`Words` failures, 0 runtime exceptions; 13/88 raw pair agreements and diagnostic-only slash/tone counts 28/31.
+- Repeatability sample: 78/108 non-empty calls, 30 no-output, 0 runtime errors; 14/26 inputs with at least two non-empty outputs varied (46.15% repeatability), compared with 15/26 (42.31%) in prior run 40130130705. All variable cases in both runs reported one randomized dictionary selection and 2–4 choices. Preserve both run records and raw artifacts; do not infer accuracy.
+- Updated the structured registry to point to run 40130492210 while retaining the previous run's repeatability statistics. Evidence-only changes no longer trigger the optional smoke workflow: it now runs on pushes touching code/input/workflow paths or manual dispatch, not broad PR path matching. This prevents stochastic re-runs on documentation-only updates.
+- CI on prior code/evidence head [40130130702](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40130130702) completed its test job successfully: generated artifact drift check, master-table generator, 108 Python tests (including repeatability tests), Node IPA→UA test and Python/browser parity passed. The separate master-artifact job was still generating/verifying the 351,780-row artifact at last check; current evidence-only head needs its own CI completion before merge.
