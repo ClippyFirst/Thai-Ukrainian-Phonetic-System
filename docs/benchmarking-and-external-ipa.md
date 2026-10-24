@@ -127,3 +127,7 @@ Across the 88 valid engine pairs, raw exact agreement was 13/88 (14.8%). Removin
 The workflow now reports per-engine failures and repeats each input three times to investigate possible Goruut output variability. The readiness request returned `kaː˧` for `กา`, whereas the first benchmark row recorded `ka`; this cross-request difference is a repeatability hypothesis pending the repeated-call report.
 
 The harness now emits `pairwise_engine_diagnostic` for each engine pair, including its own comparable-input denominator and raw/slash-stripped/slash+tone-stripped counts. This avoids mixing missing-output coverage across engine pairs.
+
+## CI regression found and corrected — 2026-10-24
+
+Full CI run [40129230638](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40129230638) reached the Python suite and failed one of 108 tests: `test_candidates_have_unique_ids_and_valid_https_links` rejected Goruut's custom `status` value `SMOKE_VERIFIED_PARTIAL_COVERAGE_NOT_ACCURACY`. The repository schema deliberately restricts `status` to `candidate`, `benchmark-resource`, `supporting-tool`, or `display-only`. Corrected the registry to use `status: candidate` and moved the execution classification to `execution_status`; this preserves the evidence distinction while respecting the existing schema. The exact corrected head must pass CI before the PR can be merged. The failure was a registry-schema regression, not a pronunciation or engine runtime failure.
