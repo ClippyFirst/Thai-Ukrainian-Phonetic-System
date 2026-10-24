@@ -35,6 +35,14 @@ class TextPipelineTests(unittest.TestCase):
         self.assertEqual(result[0]["syllables"][0]["input"], "ครอบ")
         self.assertEqual(result[2]["segmentation_status"], "lexicon")
 
+    def test_unresolved_word_segmentation_withholds_phonetic_output(self):
+        for text in ("คำใหม่ที่ไม่อยู่ในพจนานุกรม", "กากล้าขายแล้วไหว้แสดง"):
+            with self.subTest(text=text):
+                token = analyze_text(text)[0]
+                self.assertEqual(token["segmentation_status"], "unresolved")
+                self.assertEqual(token["syllables"], [])
+                self.assertTrue(any("IPA and Ukrainian output are withheld" in w for w in token["warnings"]))
+
     def test_final_velar_stop_is_preserved_in_ukrainian_output(self):
         for word in ("พริก", "ตรอก"):
             with self.subTest(word=word):
