@@ -173,3 +173,11 @@ PR #30 was closed as superseded by PR #31, merged as `73617280e6fadab74885845b89
 - Preserve raw output and attribution/license notes. Wiktionary content is generally CC BY-SA 4.0; no bulk data was copied. Full caveats and URLs are in `docs/benchmarking-and-external-ipa.md` and the JSON report.
 - Overall readiness unchanged: reproducible smoke is verified; empirical Thai accuracy remains NOT_MEASURED until a representative, independently adjudicated held-out gold set exists.
 
+
+
+## Thai inter-engine tone diagnostic — 2026-10-24
+
+- Branch `research/thai-tone-diagnostics-rebased-20261024` adds a separate tone-stripped agreement decomposition to the optional external-G2P runner. It removes only IPA tone letters from derived copies, never from raw outputs or strict scoring.
+- The current 36-input smoke produced 72 raw outputs from thaiphon and FastThaiG2P, with 0 runtime errors and 0 independent gold labels. The new pairwise diagnostic must report inter-engine agreement separately from accuracy.
+- Any tone-stripped agreement is only a mismatch triage signal. Thai tone is contrastive, and dictionary overlap with Wiktionary is plausible; do not treat this as correctness or a production engine choice.
+
