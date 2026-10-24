@@ -184,6 +184,21 @@ def build_inter_engine_diagnostic(outputs: list[dict[str, Any]]) -> dict[str, An
     }
 
 
+def summarize_per_engine(outputs: list[dict[str, Any]], selected: list[str]) -> dict[str, Any]:
+    summary: dict[str, Any] = {}
+    for name in selected:
+        engine_rows = [item for item in outputs if item["engine"] == name]
+        failed = [item for item in engine_rows if item.get("error") is not None]
+        summary[name] = {
+            "output_rows": len(engine_rows),
+            "successful_outputs": sum(item.get("error") is None and isinstance(item.get("raw_output"), str) and bool(item["raw_output"].strip()) for item in engine_rows),
+            "failed_outputs": len(failed),
+            "empty_outputs_without_error": sum(item.get("error") is None and (not isinstance(item.get("raw_output"), str) or not item["raw_output"].strip()) for item in engine_rows),
+            "failure_examples": [{"record_id": item.get("record_id"), "input": item.get("input"), "error": item.get("error")} for item in failed[:5]],
+        }
+    return summary
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input", type=Path, default=DEFAULT_INPUT)
@@ -239,17 +254,7 @@ def main() -> int:
             stream.write(json.dumps(item, ensure_ascii=False, sort_keys=True) + "\n")
 
     inter_engine_diagnostic = build_inter_engine_diagnostic(outputs)
-    per_engine = {}
-    for name in selected:
-        engine_rows = [item for item in outputs if item["engine"] == name]
-        failed = [item for item in engine_rows if item.get("error") is not None]
-        per_engine[name] = {
-            "output_rows": len(engine_rows),
-            "successful_outputs": sum(item.get("error") is None and isinstance(item.get("raw_output"), str) and bool(item["raw_output"].strip()) for item in engine_rows),
-            "failed_outputs": len(failed),
-            "empty_outputs_without_error": sum(item.get("error") is None and (not isinstance(item.get("raw_output"), str) or not item["raw_output"].strip()) for item in engine_rows),
-            "failure_examples": [{"record_id": item.get("record_id"), "input": item.get("input"), "error": item.get("error")} for item in failed[:5]],
-        }
+    per_engine = summarize_per_engine(outputs, selected)
     summary = {
         "input": str(args.input),
         "inter_engine_diagnostic": inter_engine_diagnostic,
