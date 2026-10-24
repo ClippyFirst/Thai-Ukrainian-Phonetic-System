@@ -114,3 +114,8 @@ The branch adds `.github/workflows/optional-external-g2p.yml`, pinning `thaiphon
 - Coverage: 36 challenge prompts × 2 engines = 72 raw output rows; 0 initialization/transcription errors; 0 independently adjudicated gold labels; 0 scored comparisons. The harness correctly leaves the gold count and raw-string diagnostic count at zero.
 - Diagnostic examples: `ไกล` → thaiphon `/kaj˧/ /la˦˥/`, FastThaiG2P `/klaj˧/`; `จริง` → thaiphon fallback `/tɕa˨˩/ /ri˦˥/ /ŋa˦˥/`, FastThaiG2P `/t͡ɕiŋ˧/`. These examples identify a high-priority lexical/OOV/segmentation investigation, not a score: neither output is a gold label and the thaiphon run deliberately omitted its optional lexicon.
 - Task status: reproducible raw-output smoke **DONE_VERIFIED**; phonological accuracy and engine selection remain **BLOCKED** on independently adjudicated, provenance-audited gold data and convention-aware evaluation. No engine was added to production dependencies.
+
+
+## Merge status (2026-10-24)
+
+The pinned raw-output smoke workflow and documentation are merged to main at `bbe9298b2e643d78c0f9f27127482cfda0c62315`. CI run [40093256851](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40093256851) passed tests and the generated master artifact check; optional smoke [40093259692](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40093259692) passed. Accuracy remains unmeasured until the challenge corpus has independent source-located gold.
