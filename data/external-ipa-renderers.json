@@ -30,13 +30,27 @@
       "kind": "multilingual IPA phonemizer with lexicon/model fallback",
       "upstream_support_claim": "Upstream README lists Thai support and claims IPA output with tonal phones.",
       "upstream_commit": "b224bde02151f8f86d0fe260804e4ca743bda620",
-      "status": "UPSTREAM_SUPPORT_CLAIM_SMOKE_PENDING",
-      "execution_status": "PINNED_OPTIONAL_CI_SMOKE_ADDED",
-      "output": "IPA claimed upstream; compare tone, vowel length, word segmentation, and source conventions empirically.",
+      "status": "SMOKE_VERIFIED_DIAGNOSTIC_ONLY_NOT_STANDARDIZED_IPA",
+      "execution_status": "SMOKE_VERIFIED_NOT_ACCURACY",
+      "output": "Pinned upstream commit executed on 36 engineering inputs: 26 non-empty outputs and 10 per-input failures. Raw forms differ materially from other engines (e.g. กา -> ka versus /kaː˧/); multi-syllable boundaries/tonal and length conventions require adjudication. No independent gold.",
       "license": "Upstream repository reports MIT; per-language dictionary/model data provenance and licensing have not been independently audited.",
       "verified_in_repo": false,
       "enabled_by_default": false,
-      "integration_note": "Optional CI-only HTTP comparator; not a production dependency and not gold. Raw phonetic strings are space-joined from response Word.Phonetic fields."
+      "integration_note": "Optional CI-only HTTP comparator; not a production dependency and not gold. Raw Word.Phonetic strings are preserved. Smoke success verifies endpoint execution only; output convention, tone/length completeness, word/syllable boundaries and model/dictionary provenance remain unresolved.",
+      "latest_run_id": 40128121032,
+      "latest_run_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40128121032",
+      "latest_artifact_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40128121032/artifacts/12574080008",
+      "latest_artifact_zip_sha256": "83cde4269dad940ef3d2521b6aba0b8f22eda56f71ec3612bb7230f6274f5b6b",
+      "latest_smoke_summary": {
+        "input_count": 36,
+        "output_rows": 36,
+        "successful_outputs": 26,
+        "failed_outputs": 10,
+        "runtime_errors": 10,
+        "independent_gold_count": 0,
+        "accuracy": null,
+        "score_status": "NOT_SCORED_NO_INDEPENDENT_GOLD"
+      }
     },
     {
       "id": "fastthaig2p",
@@ -285,6 +299,30 @@
       },
       "source_status": "SMOKE_VERIFIED_NOT_ACCURACY",
       "notes": "Tone-stripped metric is diagnostic only. Exact inter-engine agreement is not correctness; Wiktionary source spot-check is selected and not independently adjudicated."
+    },
+    {
+      "engine": "Goruut",
+      "version": "b224bde02151f8f86d0fe260804e4ca743bda620",
+      "run_id": 40128121032,
+      "run_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40128121032",
+      "artifact_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40128121032/artifacts/12574080008",
+      "artifact_zip_sha256": "83cde4269dad940ef3d2521b6aba0b8f22eda56f71ec3612bb7230f6274f5b6b",
+      "input_count": 36,
+      "output_rows": 36,
+      "successful_outputs": 26,
+      "runtime_errors": 10,
+      "independent_gold_count": 0,
+      "accuracy": null,
+      "source_status": "SMOKE_VERIFIED_DIAGNOSTIC_NOT_ACCURACY",
+      "inter_engine_diagnostic": {
+        "comparable_inputs": 36,
+        "engine_pairs_compared": 88,
+        "exact_agreement_pairs": 13,
+        "tone_stripped_agreement_pairs_diagnostic_only": 14,
+        "tone_only_disagreements_diagnostic_only": 1,
+        "non_tone_or_format_disagreements_requiring_review": 74
+      },
+      "notes": "Inspected artifact. Goruut returned 26 non-empty strings and 10 per-input errors. Example กา: thaiphon/FastThaiG2P output /kaː˧/, Goruut output ka. Some outputs lack explicit tone/length notation or word/syllable separators. These are raw format/coverage observations, not adjudicated phonological errors; inter-engine agreement is not accuracy."
     }
   ],
   "upstream_evidence": [
