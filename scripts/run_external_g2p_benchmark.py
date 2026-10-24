@@ -205,6 +205,33 @@ def has_usable_output(item: dict[str, Any]) -> bool:
     return item.get("error") is None and isinstance(raw, str) and bool(raw.strip())
 
 
+def build_pairwise_engine_diagnostic(outputs: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Compare each engine pair on shared successful inputs; not an accuracy metric."""
+    grouped: dict[str, dict[str, str]] = {}
+    for row in outputs:
+        ident, engine, raw = row.get("record_id"), row.get("engine"), row.get("raw_output")
+        if ident is None or not isinstance(engine, str) or not isinstance(raw, str) or not raw.strip() or row.get("error") is not None:
+            continue
+        grouped.setdefault(str(ident), {})[engine] = raw.strip()
+    names = sorted({engine for group in grouped.values() for engine in group})
+    report = []
+    for i, engine_a in enumerate(names):
+        for engine_b in names[i + 1:]:
+            pairs = [(group[engine_a], group[engine_b]) for group in grouped.values() if engine_a in group and engine_b in group]
+            raw_matches = sum(a == b for a, b in pairs)
+            slash_matches = sum(strip_ipa_delimiter_slashes_diagnostic(a) == strip_ipa_delimiter_slashes_diagnostic(b) for a, b in pairs)
+            tone_matches = sum(strip_tone_symbols_diagnostic(strip_ipa_delimiter_slashes_diagnostic(a)) == strip_tone_symbols_diagnostic(strip_ipa_delimiter_slashes_diagnostic(b)) for a, b in pairs)
+            report.append({
+                "engine_a": engine_a, "engine_b": engine_b, "comparable_inputs": len(pairs),
+                "raw_exact_matches": raw_matches,
+                "slash_delimiter_stripped_matches_diagnostic_only": slash_matches,
+                "slash_and_tone_stripped_matches_diagnostic_only": tone_matches,
+                "remaining_mismatches_after_limited_diagnostics": len(pairs) - tone_matches,
+                "raw_exact_agreement_rate": raw_matches / len(pairs) if pairs else None,
+                "slash_and_tone_stripped_agreement_rate_diagnostic_only": tone_matches / len(pairs) if pairs else None,
+            })
+    return report
+
 def summarize_per_engine(outputs: list[dict[str, Any]], selected: list[str]) -> dict[str, Any]:
     summary: dict[str, Any] = {}
     for name in selected:
