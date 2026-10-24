@@ -66,3 +66,6 @@ A three-word targeted spot-check was added to `data/benchmark/runs/external-g2p-
 - [จริง](https://th.wiktionary.org/wiki/จริง): `/t͡ɕiŋ˧/`; FastThaiG2P matches; thaiphon outputs `/tɕa˨˩/ /ri˦˥/ /ŋa˦˥/`.
 
 Diagnostic string-concordance is 3/3 for FastThaiG2P and 1/3 for thaiphon on these selected cases. **Do not report this as accuracy**: this is a disagreement-selected sample, Wiktionary entries are source-attested but not independently expert-adjudicated here, and both upstream systems may overlap with Wiktionary-derived resources. It is useful for prioritizing segmentation/lexical review, not selecting a winner. Preserve the raw outputs and inspect tie-bar/segmentation conventions before normalization.
+
+
+Attribution/license: the spot-check records Wiktionary contributors and source URLs in the JSON report. Wiktionary content is generally available under CC BY-SA 4.0; recheck the page footer and applicable terms before redistributing any larger excerpt or dataset. No bulk Wiktionary data was copied into this repository.
