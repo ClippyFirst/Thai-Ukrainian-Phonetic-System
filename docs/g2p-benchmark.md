@@ -1,6 +1,6 @@
 # Independent Thai G2P benchmark: candidate screening and protocol
 
-Status: **candidate screening complete; pinned optional smoke workflow added; empirical run pending CI artifact review**  
+Status: **pinned raw-output smoke verified; independent accuracy remains unmeasured**  
 Last reviewed: 2026-10-20
 
 This document evaluates candidate external engines for use as *comparators*, not as a replacement for the repository's structural analysis. An upstream accuracy claim is not a score for this project. No candidate is integrated as a runtime dependency by this screening alone.
