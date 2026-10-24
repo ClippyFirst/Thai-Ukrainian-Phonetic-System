@@ -37,9 +37,9 @@ Current readiness status — 2026-10-24
 - Latest observed Pages deploy passed at 40091525305 for code-equivalent site sources; an exact current-HEAD redeploy has not been observed.
 
 
-## Additional fail-closed validation — 2026-10-24
+## Current validation status — 2026-10-24
 
-- Finding: both Python and browser text pipelines labeled unknown multi-grapheme words as `unresolved` while still returning a whole-word syllable analysis. This could expose IPA/Ukrainian output despite missing lexical segmentation.
-- Correction and regression tests are on PR [#27](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/27). Unknown multi-grapheme tokens now return no syllable analyses and explicitly withhold IPA/Ukrainian output; curated lexicon entries remain unchanged.
-- Status: **IN_PROGRESS / verification pending**. Browser static validation passed on the PR head; the full CI, Python tests, IPA→UA tests, parity tests and master-artifact workflow are still running. Do not mark the correction complete until all required jobs finish successfully.
-- Linguistic scope unchanged: independent gold IPA corpus remains absent, so empirical accuracy is not measured.
+- The fail-closed unknown-word correction merged in PR #27 as `975bd0504ad05392e277f00d85b746d21c5fe729`. Unknown multi-grapheme words no longer expose whole-word syllable/IPA/Ukrainian output without lexical segmentation; curated lexicon entries are unchanged.
+- Engineering validation is DONE_VERIFIED on the current code path: Python tests, Python/browser parity, build, master-artifact validation and deployment have passed on recent main-equivalent runs. This is separate from phonological accuracy.
+- Latest external smoke evidence is being reconciled in PR #41: 36 inputs, 72 outputs, 0 runtime errors; `thaiphon` and FastThaiG2P agree exactly on 13/36 inputs, and on 14/36 after a tone-only diagnostic. The diagnostic is not an accuracy metric; independent gold count remains zero.
+- Empirical accuracy, lexical coverage, calibrated confidence and broad connected-speech claims remain TODO/BLOCKED until a representative, independently adjudicated held-out corpus and explicit scope criteria exist.
