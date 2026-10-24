@@ -68,5 +68,7 @@ jobs:
           path: |
             artifacts/external-g2p-latest.jsonl
             artifacts/summary.json
+            artifacts/goruut-repeatability.json
+            artifacts/repeatability-summary.json
           if-no-files-found: warn
           retention-days: 30
