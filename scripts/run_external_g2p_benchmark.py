@@ -12,6 +12,8 @@ import importlib.metadata
 import json
 import sys
 import time
+import urllib.error
+import urllib.request
 from pathlib import Path
 from typing import Any, Callable
 
@@ -77,6 +79,48 @@ CANDIDATES = {
     "fastthaig2p": candidate_fastthaig2p,
 }
 
+GORUUT_COMMIT = "b224bde02151f8f86d0fe260804e4ca743bda620"
+
+
+def candidate_goruut(url: str, language: str) -> tuple[Callable[[str], str], dict[str, Any]]:
+    """Query a separately built, pinned Goruut HTTP service; never a runtime dependency."""
+    if not url:
+        raise ValueError("Goruut requires --goruut-url pointing at a running pinned service")
+
+    def transcribe(text: str) -> str:
+        payload = json.dumps({"Language": language, "Sentence": text}).encode("utf-8")
+        request = urllib.request.Request(
+            url,
+            data=payload,
+            headers={"Content-Type": "application/json"},
+            method="POST",
+        )
+        try:
+            with urllib.request.urlopen(request, timeout=20) as response:
+                body = json.loads(response.read().decode("utf-8"))
+        except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:
+            raise RuntimeError(f"Goruut request failed: {type(exc).__name__}: {exc}") from exc
+        words = body.get("Words") if isinstance(body, dict) else None
+        if not isinstance(words, list) or not words:
+            raise ValueError(f"Goruut returned no Words array: {body!r}")
+        phones = [word.get("Phonetic") for word in words if isinstance(word, dict)]
+        if len(phones) != len(words) or any(not isinstance(phone, str) for phone in phones):
+            raise ValueError(f"Goruut response has missing/non-string Phonetic fields: {body!r}")
+        # Preserve each engine-produced word string; spaces mark response word boundaries.
+        return " ".join(phones)
+
+    return transcribe, {
+        "package": "Goruut",
+        "version": GORUUT_COMMIT,
+        "source_commit": GORUUT_COMMIT,
+        "configuration": {
+            "api": "/tts/phonemize/sentence",
+            "language": language,
+            "raw_output_representation": "space-joined Word.Phonetic fields; individual phone strings unchanged",
+        },
+        "license_note": "Goruut repository reports MIT; per-language dictionary/model data provenance remains separately unreviewed.",
+    }
+
 
 def normalized_ipa(value: str | None) -> str | None:
     if value is None:
@@ -139,17 +183,23 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input", type=Path, default=DEFAULT_INPUT)
     parser.add_argument("--output", type=Path, default=ROOT / "data" / "benchmark" / "runs" / "external-g2p-latest.jsonl")
-    parser.add_argument("--engine", choices=[*CANDIDATES, "all"], default="all")
+    parser.add_argument("--engine", choices=[*CANDIDATES, "goruut", "all"], default="all")
+    parser.add_argument("--goruut-url", default="", help="Optional URL of a running pinned Goruut service.")
+    parser.add_argument("--goruut-language", default="Thai", help="Goruut's upstream language label.")
     args = parser.parse_args()
 
+    if args.engine == "goruut" and not args.goruut_url:
+        parser.error("--engine goruut requires --goruut-url")
     rows = load_rows(args.input)
     selected = list(CANDIDATES) if args.engine == "all" else [args.engine]
+    if args.engine == "all" and args.goruut_url:
+        selected.append("goruut")
     outputs: list[dict[str, Any]] = []
     errors: list[str] = []
 
     for name in selected:
         try:
-            transcribe, metadata = CANDIDATES[name]()
+            transcribe, metadata = (candidate_goruut(args.goruut_url, args.goruut_language) if name == "goruut" else CANDIDATES[name]())
         except Exception as exc:  # optional dependencies are deliberately non-fatal
             errors.append(f"{name}: unavailable: {type(exc).__name__}: {exc}")
             continue
