@@ -4,6 +4,7 @@ from pathlib import Path
 
 from scripts.run_external_g2p_benchmark import (
     build_inter_engine_diagnostic,
+    build_pairwise_engine_diagnostic,
     has_usable_output,
     load_rows,
     normalized_ipa,
@@ -88,6 +89,22 @@ class ExternalG2PBenchmarkHarnessTests(unittest.TestCase):
         self.assertEqual(report["goruut"]["failure_examples"][0]["record_id"], "failed")
         self.assertEqual(report["thaiphon"]["successful_outputs"], 1)
 
+    def test_pairwise_diagnostic_separates_format_and_tone_mismatches(self):
+        report = build_pairwise_engine_diagnostic([
+            {"record_id":"tone", "engine":"a", "raw_output":"/kaː˧/", "error":None},
+            {"record_id":"tone", "engine":"b", "raw_output":"/kaː˥/", "error":None},
+            {"record_id":"format", "engine":"a", "raw_output":"/kaː/", "error":None},
+            {"record_id":"format", "engine":"b", "raw_output":"kaː", "error":None},
+            {"record_id":"failed", "engine":"a", "raw_output":"x", "error":"failed"},
+            {"record_id":"failed", "engine":"b", "raw_output":"x", "error":None},
+        ])
+        assert len(report) == 1
+        pair = report[0]
+        assert pair["comparable_inputs"] == 2
+        assert pair["raw_exact_matches"] == 0
+        assert pair["slash_delimiter_stripped_matches_diagnostic_only"] == 1
+        assert pair["slash_and_tone_stripped_matches_diagnostic_only"] == 2
+        assert pair["remaining_mismatches_after_limited_diagnostics"] == 0
     def test_empty_challenge_corpus_is_rejected(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             empty = Path(temp_dir) / "empty.jsonl"
