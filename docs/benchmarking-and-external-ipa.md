@@ -56,3 +56,13 @@ These are research leads, not verified availability claims. Before executing a c
 - [FastThaiG2P](https://github.com/awslabs/FastThaiG2P) documents a 62,112-word IPA dictionary and rule-based OOV fallback; dictionary provenance includes manually curated, Wiktionary-derived and generated entries. Review per-source provenance and license before treating any material as gold.
 - [Goruut](https://github.com/neurlang/goruut) lists Thai support upstream; no pinned Goruut run is yet recorded.
 - Current acceptance: build a shared held-out gold set and map IPA conventions before comparing exact-match rates.
+
+## Source-attested Thai spot-check (not gold, 2026-10-24)
+
+A three-word targeted spot-check was added to `data/benchmark/runs/external-g2p-smoke-2026-10-24.json` using the standard-IPA fields in the Thai Wiktionary pronunciation sections:
+
+- [กา](https://th.wiktionary.org/wiki/กา): `/kaː˧/`; both engines' raw strings match.
+- [ไกล](https://th.wiktionary.org/wiki/ไกล): `/klaj˧/`; FastThaiG2P matches; thaiphon outputs `/kaj˧/ /la˦˥/`.
+- [จริง](https://th.wiktionary.org/wiki/จริง): `/t͡ɕiŋ˧/`; FastThaiG2P matches; thaiphon outputs `/tɕa˨˩/ /ri˦˥/ /ŋa˦˥/`.
+
+Diagnostic string-concordance is 3/3 for FastThaiG2P and 1/3 for thaiphon on these selected cases. **Do not report this as accuracy**: this is a disagreement-selected sample, Wiktionary entries are source-attested but not independently expert-adjudicated here, and both upstream systems may overlap with Wiktionary-derived resources. It is useful for prioritizing segmentation/lexical review, not selecting a winner. Preserve the raw outputs and inspect tie-bar/segmentation conventions before normalization.
