@@ -55,6 +55,9 @@ jobs:
         run: |
           mkdir -p artifacts
           python scripts/run_external_g2p_benchmark.py --goruut-url http://127.0.0.1:18080/tts/phonemize/sentence --goruut-language Thai --output artifacts/external-g2p-latest.jsonl | tee artifacts/summary.json
+      - name: Probe Goruut repeatability
+        run: |
+          python scripts/probe_goruut_repeatability.py --url http://127.0.0.1:18080/tts/phonemize/sentence --language Thai --repeats 3 --output artifacts/goruut-repeatability.json | tee artifacts/repeatability-summary.json
       - name: Upload raw outputs and run summary
         if: always()
         uses: actions/upload-artifact@v4
