@@ -122,7 +122,7 @@ function analyzeText(text){
   return tokenizeText(text).map(token=>{
     if(token.kind!=="thai") return {...token,segmentationStatus:"not_applicable",syllables:[],warnings:[]};
     const syllables=TEXT_LEXICON.get(token.input);
-    if(!syllables) return {...token,segmentationStatus:"unresolved",syllables:[],warnings:["No lexical segmentation is available for this Thai word; IPA and Ukrainian output are withheld. Add a lexicon entry or provide explicit syllable boundaries."]};
+    if(!syllables) return {...token,segmentationStatus:"unresolved",syllables:[],warnings:["This text endpoint does not yet implement automatic word segmentation; IPA and Ukrainian output are withheld. Add a reviewed lexicon entry or analyze individual syllables separately."]};
     return {...token,segmentationStatus:"lexicon",syllables:syllables.map(analyze),warnings:[]};
   });
 }
