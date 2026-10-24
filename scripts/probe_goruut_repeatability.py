@@ -78,7 +78,7 @@ def main() -> int:
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     print(json.dumps({k:report[k] for k in ("engine","upstream_commit","language","input_count","repeats_per_input","attempt_count","successful_nonempty_calls","no_output_calls","error_calls","inputs_with_at_least_two_nonempty_outputs","inputs_with_multiple_distinct_outputs","observed_repeatability_rate")},ensure_ascii=False,indent=2))
-    print(f"Repeatability report: {args.output}")
+    print(f"Repeatability report: {args.output}", file=sys.stderr)
     return 0 if report["successful_nonempty_calls"] else 2
 
 if __name__ == "__main__":
