@@ -19,6 +19,15 @@ def query(url: str, language: str, text: str) -> dict[str, Any]:
         raise ValueError(f"Expected JSON object, got {type(value).__name__}")
     return value
 
+def summarize_case(record_id: str, text: str, attempts: list[dict[str, Any]]) -> dict[str, Any]:
+    outputs = [a["phonetic_output"] for a in attempts if a.get("phonetic_output")]
+    variants = sorted(set(outputs))
+    return {"record_id": record_id, "input": text, "attempts": attempts,
+            "successful_nonempty_calls": len(outputs), "unique_nonempty_outputs": len(variants),
+            "varies_across_repetitions": len(variants)>1, "distinct_outputs": variants,
+            "status": "NO_NONEMPTY_OUTPUT" if not outputs else "VARIABLE_OUTPUT" if len(variants)>1 else "REPEATED_OUTPUT_STABLE_IN_THIS_SAMPLE"}
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--url", required=True)
@@ -53,12 +62,7 @@ def main() -> int:
                            "elapsed_ms": round((time.perf_counter()-started)*1000, 3),
                            "error": f"{type(exc).__name__}: {exc}"}
             attempts.append(attempt); all_attempts.append(attempt)
-        outputs = [a["phonetic_output"] for a in attempts if a.get("phonetic_output")]
-        variants = sorted(set(outputs))
-        cases.append({"record_id": row["id"], "input": row["input"], "attempts": attempts,
-                      "successful_nonempty_calls": len(outputs), "unique_nonempty_outputs": len(variants),
-                      "varies_across_repetitions": len(variants)>1, "distinct_outputs": variants,
-                      "status": "NO_NONEMPTY_OUTPUT" if not outputs else "VARIABLE_OUTPUT" if len(variants)>1 else "REPEATED_OUTPUT_STABLE_IN_THIS_SAMPLE"})
+        cases.append(summarize_case(row["id"], row["input"], attempts))
     comparable = [c for c in cases if c["successful_nonempty_calls"] >= 2]
     variable = [c for c in comparable if c["varies_across_repetitions"]]
     report = {"schema_version":"1.0","engine":"Goruut","upstream_commit":GORUUT_COMMIT,"language":args.language,
