@@ -78,18 +78,18 @@ def analyze_text(text: str):
     for token in tokens:
         if token.kind == "thai":
             syllables, segmentation = segment_thai_word(token.text)
-            analyses = [analyze_syllable(s) for s in syllables]
             if segmentation == "unresolved" and len(token.text) > 1:
-                # Never invent a segmentation from raw grapheme clusters.
-                # Preserve the current core behaviour while making the
-                # uncertainty explicit at text level.
+                # A word-level phonetic analysis is not safe without lexical
+                # segmentation: do not run the syllable engine on the whole
+                # word and accidentally expose a partial/false pronunciation.
                 result.append({
                     "input": token.text, "kind": "thai",
                     "segmentation_status": "unresolved",
-                    "syllables": [a.as_dict() for a in analyses],
-                    "warnings": ["No lexical segmentation is available for this Thai word; add a lexicon entry or provide explicit syllable boundaries."]
+                    "syllables": [],
+                    "warnings": ["No lexical segmentation is available for this Thai word; IPA and Ukrainian output are withheld. Add a lexicon entry or provide explicit syllable boundaries."]
                 })
             else:
+                analyses = [analyze_syllable(s) for s in syllables]
                 result.append({
                     "input": token.text, "kind": "thai",
                     "segmentation_status": segmentation,
