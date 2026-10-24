@@ -57,5 +57,53 @@
       "FastThaiG2P": "/t͡ɕiŋ˧/"
     }
   ],
-  "interpretation": "Raw output comparison only. The segmentation divergence on ไกล and จริง merits review, but with no independently adjudicated labels these results do not rank accuracy. Keep leading/trailing slashes and tone marks in raw output; convention normalization must be explicit."
+  "interpretation": "Raw output comparison only. The segmentation divergence on ไกล and จริง merits review, but with no independently adjudicated labels these results do not rank accuracy. Keep leading/trailing slashes and tone marks in raw output; convention normalization must be explicit.",
+  "source_attested_spot_check": {
+    "status": "SPOT_CHECK_NOT_ACCURACY",
+    "retrieved_on": "2026-10-24",
+    "reference_convention": "Wiktionary Thai entries' standard IPA (R) as displayed in the Pronunciation section; preserve tone marks and affricate tie bar.",
+    "cases": [
+      {
+        "input": "กา",
+        "source_ipa": "/kaː˧/",
+        "source_url": "https://th.wiktionary.org/wiki/กา",
+        "source_locator": "ภาษาไทย > การออกเสียง > สัทอักษรสากล (มาตรฐาน)",
+        "thaiphon_raw": "/kaː˧/",
+        "fastthaig2p_raw": "/kaː˧/",
+        "thaiphon_source_string_match": true,
+        "fastthaig2p_source_string_match": true
+      },
+      {
+        "input": "ไกล",
+        "source_ipa": "/klaj˧/",
+        "source_url": "https://th.wiktionary.org/wiki/ไกล",
+        "source_locator": "ภาษาไทย > การออกเสียง > สัทอักษรสากล (มาตรฐาน)",
+        "thaiphon_raw": "/kaj˧/ /la˦˥/",
+        "fastthaig2p_raw": "/klaj˧/",
+        "thaiphon_source_string_match": false,
+        "fastthaig2p_source_string_match": true
+      },
+      {
+        "input": "จริง",
+        "source_ipa": "/t͡ɕiŋ˧/",
+        "source_url": "https://th.wiktionary.org/wiki/จริง",
+        "source_locator": "ภาษาไทย > การออกเสียง > สัทอักษรสากล (มาตรฐาน)",
+        "thaiphon_raw": "/tɕa˨˩/ /ri˦˥/ /ŋa˦˥/",
+        "fastthaig2p_raw": "/t͡ɕiŋ˧/",
+        "thaiphon_source_string_match": false,
+        "fastthaig2p_source_string_match": true
+      }
+    ],
+    "diagnostic_counts": {
+      "thaiphon_exact_source_string_matches": 1,
+      "fastthaig2p_exact_source_string_matches": 3,
+      "cases": 3
+    },
+    "independence_and_selection_caveats": [
+      "This three-item check is selected to inspect known disagreements and is not a representative test set.",
+      "These Wiktionary entries are source-attested, not independently adjudicated by a language expert; do not promote them to gold labels automatically.",
+      "FastThaiG2P upstream describes Wiktionary-derived dictionary entries, and thaiphon reports a Wiktionary-derived etalon, so source overlap/circularity is plausible. The 3/3 concordance is therefore not an independent accuracy estimate.",
+      "String mismatch can reflect IPA convention, affricate tie-bar normalization or segmentation as well as phonological error; review raw output before any normalization."
+    ]
+  }
 }
