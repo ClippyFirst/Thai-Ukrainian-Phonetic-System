@@ -69,3 +69,8 @@ Diagnostic string-concordance is 3/3 for FastThaiG2P and 1/3 for thaiphon on the
 
 
 Attribution/license: the spot-check records Wiktionary contributors and source URLs in the JSON report. Wiktionary content is generally available under CC BY-SA 4.0; recheck the page footer and applicable terms before redistributing any larger excerpt or dataset. No bulk Wiktionary data was copied into this repository.
+
+
+## Diagnostic decomposition of inter-engine disagreement (2026-10-24)
+
+The optional smoke report now compares engines per shared input and reports raw exact agreement alongside a separate tone-letter-stripped diagnostic. The diagnostic removes only `˥ ˦ ˧ ˨ ˩`; it does not alter raw outputs, scoreable output strings, syllable separators, vowel length or tie bars. It classifies tone-only disagreement separately from segmental/format disagreement requiring review. These are **inter-engine diagnostics, not accuracy**: neither engine is gold and the 36-case challenge has no independently adjudicated gold labels.
