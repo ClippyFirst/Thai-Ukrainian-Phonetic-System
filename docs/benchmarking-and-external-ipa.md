@@ -101,3 +101,8 @@ The optional smoke report now compares engines per shared input and reports raw 
 ## Goruut: pinned third-engine diagnostic
 
 The optional external-G2P workflow now builds Goruut from pinned upstream commit `b224bde02151f8f86d0fe260804e4ca743bda620` and queries the Thai endpoint alongside `thaiphon` and FastThaiG2P. The upstream README lists Thai support and an IPA phone set with tonal phones; this is an upstream claim until the smoke completes. The upstream repository reports MIT, but per-language dictionary/model data provenance and licenses are not independently audited. The workflow does not add Goruut to the product runtime. Preserve raw outputs; engine agreement is not accuracy, and tone-stripped agreement remains diagnostic only.
+
+
+## Per-engine output accounting
+
+The first pinned Goruut run completed the 36-input challenge and produced 108 rows, but the inter-engine diagnostic compared only 88 pairs. The updated harness therefore reports per-engine successful outputs, failed outputs, empty outputs without an exception, and representative failures. A complete three-engine smoke should have 108 pair comparisons if all three engines produce valid outputs for all 36 inputs. This is a coverage diagnostic, not an accuracy metric.
