@@ -61,9 +61,9 @@ These are research leads, not verified availability claims. Before executing a c
 
 A three-word targeted spot-check was added to `data/benchmark/runs/external-g2p-smoke-2026-10-24.json` using the standard-IPA fields in the Thai Wiktionary pronunciation sections:
 
-- [กา](https://th.wiktionary.org/wiki/กา): `/kaː˧/`; both engines' raw strings match.
-- [ไกล](https://th.wiktionary.org/wiki/ไกล): `/klaj˧/`; FastThaiG2P matches; thaiphon outputs `/kaj˧/ /la˦˥/`.
-- [จริง](https://th.wiktionary.org/wiki/จริง): `/t͡ɕiŋ˧/`; FastThaiG2P matches; thaiphon outputs `/tɕa˨˩/ /ri˦˥/ /ŋa˦˥/`.
+- [กา](https://th.wiktionary.org/w/index.php?title=กา&oldid=5734858): `/kaː˧/`; both engines' raw strings match.
+- [ไกล](https://th.wiktionary.org/w/index.php?title=ไกล&oldid=5688545): `/klaj˧/`; FastThaiG2P matches; thaiphon outputs `/kaj˧/ /la˦˥/`.
+- [จริง](https://th.wiktionary.org/w/index.php?title=จริง&oldid=2441036): `/t͡ɕiŋ˧/`; FastThaiG2P matches; thaiphon outputs `/tɕa˨˩/ /ri˦˥/ /ŋa˦˥/`.
 
 Diagnostic string-concordance is 3/3 for FastThaiG2P and 1/3 for thaiphon on these selected cases. **Do not report this as accuracy**: this is a disagreement-selected sample, Wiktionary entries are source-attested but not independently expert-adjudicated here, and both upstream systems may overlap with Wiktionary-derived resources. It is useful for prioritizing segmentation/lexical review, not selecting a winner. Preserve the raw outputs and inspect tie-bar/segmentation conventions before normalization.
 
@@ -81,4 +81,11 @@ Attribution/license: the spot-check records Wiktionary contributors and source U
 | [Goruut](https://github.com/neurlang/goruut) | Upstream advertises an IPA phone set and Thai support. | Support claim only; no successful Thai run recorded here. |
 
 The source-attested spot check in data/benchmark/runs/external-g2p-smoke-2026-10-24.json is selected to investigate disagreements, not sampled to estimate accuracy. Keep raw strings, tone marks, tie bars and segmentation intact until a declared normalization protocol is reviewed.
+
+
+
+## Diagnostic decomposition of inter-engine disagreement (2026-10-24)
+
+The optional smoke report now compares engines per shared input and reports raw exact agreement alongside a separate tone-letter-stripped diagnostic. The diagnostic removes only `˥ ˦ ˧ ˨ ˩`; it does not alter raw outputs, scoreable output strings, syllable separators, vowel length or tie bars. It classifies tone-only disagreement separately from segmental/format disagreement requiring review. These are **inter-engine diagnostics, not accuracy**: neither engine is gold and the 36-case challenge has no independently adjudicated gold labels.
+
 
