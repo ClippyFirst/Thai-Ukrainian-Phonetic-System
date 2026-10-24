@@ -32,15 +32,15 @@
       "upstream_commit": "b224bde02151f8f86d0fe260804e4ca743bda620",
       "status": "candidate",
       "execution_status": "SMOKE_VERIFIED_PARTIAL_COVERAGE_AND_NONDETERMINISTIC_OUTPUT_NOT_ACCURACY",
-      "output": "Pinned upstream commit executed on 36 engineering inputs in run 40130130705: 26/36 non-empty outputs and 10/36 per-input no-Words failures. Three repeated calls per input yielded 78/108 non-empty calls; 15 of 26 inputs with at least two non-empty outputs varied. All variable inputs reported a randomization count of 1 and 2–4 dictionary choices. This demonstrates observed non-determinism in this sample, not pronunciation accuracy. Independent gold remains 0 and accuracy null; output convention, tone/length completeness, segmentation, and language-data provenance remain unresolved.",
+      "output": "Pinned upstream commit executed on 36 engineering inputs in run 40130492210: 26/36 non-empty outputs and 10/36 per-input no-Words failures. Across 36 inputs × 3 repeated calls, 78/108 calls were non-empty and 30 returned no output without a runtime error. In the latest sample 14/26 forms with at least two non-empty outputs varied; the prior run observed 15/26. Every variable form reported a randomization count of 1 and 2–4 dictionary choices. This demonstrates non-deterministic candidate output in repeated samples, not pronunciation accuracy. Independent gold remains 0 and accuracy null; output convention, tone/length completeness, segmentation, and language-data provenance remain unresolved.",
       "license": "Upstream repository reports MIT; per-language dictionary/model data provenance and licensing have not been independently audited.",
       "verified_in_repo": false,
       "enabled_by_default": false,
       "integration_note": "Optional CI-only HTTP comparator; not a production dependency and not gold. Raw Word.Phonetic strings are preserved. Smoke success verifies endpoint execution only; output convention, tone/length completeness, word/syllable boundaries and model/dictionary provenance remain unresolved.",
-      "latest_run_id": 40130130705,
-      "latest_run_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40130130705",
-      "latest_artifact_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40130130705/artifacts/12575022202",
-      "latest_artifact_zip_sha256": "88693eb1e85b9957c86aa2e04993dd30d8749d58dd39d7074437c7d2bdc73d16",
+      "latest_run_id": 40130492210,
+      "latest_run_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40130492210",
+      "latest_artifact_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40130492210/artifacts/12574282871",
+      "latest_artifact_zip_sha256": "39b9075da2242e302ceddf62af1d75ef19bcb3cefabe98254371c954bc36cd2c",
       "latest_smoke_summary": {
         "input_count": 36,
         "successful_outputs": 26,
@@ -58,10 +58,10 @@
         "remaining_mismatches_after_limited_diagnostics": 57
       },
       "latest_repeatability_evidence": {
-        "run_id": 40130130705,
-        "run_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40130130705",
-        "artifact_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40130130705/artifacts/12575022202",
-        "artifact_zip_sha256": "88693eb1e85b9957c86aa2e04993dd30d8749d58dd39d7074437c7d2bdc73d16",
+        "run_id": 40130492210,
+        "run_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40130492210",
+        "artifact_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40130492210/artifacts/12574282871",
+        "artifact_zip_sha256": "39b9075da2242e302ceddf62af1d75ef19bcb3cefabe98254371c954bc36cd2c",
         "input_count": 36,
         "repeats_per_input": 3,
         "attempt_count": 108,
@@ -69,12 +69,41 @@
         "no_output_calls": 30,
         "error_calls": 0,
         "inputs_with_at_least_two_nonempty_outputs": 26,
-        "inputs_with_multiple_distinct_outputs": 15,
-        "observed_repeatability_rate": 0.42307692307692313,
+        "inputs_with_multiple_distinct_outputs": 14,
+        "observed_repeatability_rate": 0.46153846153846156,
         "independent_gold_count": 0,
         "accuracy": null,
-        "interpretation": "Repeatability diagnostic only, not accuracy. 15 of 26 inputs with at least two non-empty results varied across three calls. All 15 variable inputs had RandomizationWordsCount=1 and RandomizationWordsChoices between 2 and 4. Ten inputs had no non-empty output in any of the three calls. The upstream selector implementation documents random dictionary-pronunciation fallback when no preferred homograph is available."
-      }
+        "interpretation": "Repeatability diagnostic only, not accuracy. 14 of 26 inputs with at least two non-empty results varied across three calls. All 14 variable inputs had RandomizationWordsCount=1 and RandomizationWordsChoices between 2 and 4. Ten inputs had no non-empty output in any of the three calls. The pinned upstream selector documents random dictionary-pronunciation fallback when no preferred homograph is available."
+      },
+      "repeatability_runs": [
+        {
+          "run_id": 40130130705,
+          "run_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40130130705",
+          "artifact_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40130130705/artifacts/12575022202",
+          "artifact_zip_sha256": "88693eb1e85b9957c86aa2e04993dd30d8749d58dd39d7074437c7d2bdc73d16",
+          "inputs_with_at_least_two_nonempty_outputs": 26,
+          "inputs_with_multiple_distinct_outputs": 15,
+          "observed_repeatability_rate": 0.42307692307692313
+        },
+        {
+          "run_id": 40130492210,
+          "run_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40130492210",
+          "artifact_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40130492210/artifacts/12574282871",
+          "artifact_zip_sha256": "39b9075da2242e302ceddf62af1d75ef19bcb3cefabe98254371c954bc36cd2c",
+          "input_count": 36,
+          "repeats_per_input": 3,
+          "attempt_count": 108,
+          "successful_nonempty_calls": 78,
+          "no_output_calls": 30,
+          "error_calls": 0,
+          "inputs_with_at_least_two_nonempty_outputs": 26,
+          "inputs_with_multiple_distinct_outputs": 14,
+          "observed_repeatability_rate": 0.46153846153846156,
+          "independent_gold_count": 0,
+          "accuracy": null,
+          "interpretation": "Repeatability diagnostic only, not accuracy. 14 of 26 inputs with at least two non-empty results varied across three calls. All 14 variable inputs had RandomizationWordsCount=1 and RandomizationWordsChoices between 2 and 4. Ten inputs had no non-empty output in any of the three calls. The pinned upstream selector documents random dictionary-pronunciation fallback when no preferred homograph is available."
+        }
+      ]
     },
     {
       "id": "fastthaig2p",
