@@ -42,6 +42,8 @@ class ExternalG2PBenchmarkHarnessTests(unittest.TestCase):
             {"record_id":"segment", "raw_output":"/kaː/", "error":None},
             {"record_id":"segment", "raw_output":"/kʰaː/", "error":None},
             {"record_id":"failed", "raw_output":None, "error":"failed"},
+            {"record_id":"empty", "raw_output":"", "error":None},
+            {"record_id":"empty", "raw_output":"kaː", "error":None},
         ])
         self.assertEqual(report["comparable_inputs"], 2)
         self.assertEqual(report["engine_pairs_compared"], 2)
