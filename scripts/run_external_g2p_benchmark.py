@@ -82,6 +82,17 @@ CANDIDATES = {
 GORUUT_COMMIT = "b224bde02151f8f86d0fe260804e4ca743bda620"
 
 
+def parse_goruut_response(body: Any) -> str:
+    """Extract raw per-word phonetic strings without phone-symbol rewriting."""
+    words = body.get("Words") if isinstance(body, dict) else None
+    if not isinstance(words, list) or not words:
+        raise ValueError(f"Goruut returned no Words array: {body!r}")
+    phones = [word.get("Phonetic") for word in words if isinstance(word, dict)]
+    if len(phones) != len(words) or any(not isinstance(phone, str) for phone in phones):
+        raise ValueError(f"Goruut response has missing/non-string Phonetic fields: {body!r}")
+    return " ".join(phones)
+
+
 def candidate_goruut(url: str, language: str) -> tuple[Callable[[str], str], dict[str, Any]]:
     """Query a separately built, pinned Goruut HTTP service; never a runtime dependency."""
     if not url:
@@ -100,14 +111,8 @@ def candidate_goruut(url: str, language: str) -> tuple[Callable[[str], str], dic
                 body = json.loads(response.read().decode("utf-8"))
         except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:
             raise RuntimeError(f"Goruut request failed: {type(exc).__name__}: {exc}") from exc
-        words = body.get("Words") if isinstance(body, dict) else None
-        if not isinstance(words, list) or not words:
-            raise ValueError(f"Goruut returned no Words array: {body!r}")
-        phones = [word.get("Phonetic") for word in words if isinstance(word, dict)]
-        if len(phones) != len(words) or any(not isinstance(phone, str) for phone in phones):
-            raise ValueError(f"Goruut response has missing/non-string Phonetic fields: {body!r}")
         # Preserve each engine-produced word string; spaces mark response word boundaries.
-        return " ".join(phones)
+        return parse_goruut_response(body)
 
     return transcribe, {
         "package": "Goruut",
