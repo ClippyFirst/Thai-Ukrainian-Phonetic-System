@@ -33,19 +33,17 @@
       "license": "Verify repository and dataset licenses before runtime integration",
       "verified_in_repo": false,
       "enabled_by_default": false,
-      "latest_run_id": 40119612565,
+      "latest_run_id": 40122636062,
       "execution_status": "SMOKE_VERIFIED_NOT_ACCURACY",
-      "smoke_evidence": {
-        "latest_run_id": 40121528216,
-        "latest_run_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40121528216",
-        "artifact_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40121528216/artifacts/12571038880",
-        "artifact_zip_sha256": "4e1dbb42cccc1f23609edf2a294eb71456e112a384145daa409e7f4282102a7c",
+      "latest_run_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40122636062",
+      "latest_artifact_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40122636062/artifacts/12572465284",
+      "latest_artifact_zip_sha256": "48993fc72eaae8f0e1640f4aba649ae642faa06ffa461af42353e4c4d0847ac6",
+      "latest_smoke_summary": {
         "input_count": 36,
-        "outputs_total": 72,
+        "outputs": 36,
         "runtime_errors": 0,
         "independent_gold_count": 0,
-        "accuracy": null,
-        "score_status": "NOT_SCORED_NO_INDEPENDENT_GOLD"
+        "accuracy": null
       }
     },
     {
@@ -58,19 +56,17 @@
       "license": "Verify current upstream license",
       "verified_in_repo": false,
       "enabled_by_default": false,
-      "latest_run_id": 40119612565,
+      "latest_run_id": 40122636062,
       "execution_status": "SMOKE_VERIFIED_NOT_ACCURACY",
-      "smoke_evidence": {
-        "latest_run_id": 40121528216,
-        "latest_run_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40121528216",
-        "artifact_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40121528216/artifacts/12571038880",
-        "artifact_zip_sha256": "4e1dbb42cccc1f23609edf2a294eb71456e112a384145daa409e7f4282102a7c",
+      "latest_run_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40122636062",
+      "latest_artifact_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40122636062/artifacts/12572465284",
+      "latest_artifact_zip_sha256": "48993fc72eaae8f0e1640f4aba649ae642faa06ffa461af42353e4c4d0847ac6",
+      "latest_smoke_summary": {
         "input_count": 36,
-        "outputs_total": 72,
+        "outputs": 36,
         "runtime_errors": 0,
         "independent_gold_count": 0,
-        "accuracy": null,
-        "score_status": "NOT_SCORED_NO_INDEPENDENT_GOLD"
+        "accuracy": null
       }
     },
     {
