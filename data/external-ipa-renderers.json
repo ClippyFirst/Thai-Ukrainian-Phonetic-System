@@ -182,5 +182,52 @@
     "external_engines_enabled_by_default": false,
     "notes": "Registry membership does not establish language support, IPA output semantics, reproducibility, accuracy, or license compatibility. Preserve raw output and record exact versions and model/data licenses."
   },
-  "last_reviewed": "2026-10-24"
+  "last_reviewed": "2026-10-24",
+  "observed_experiments": [
+    {
+      "engine": "thaiphon",
+      "version": "0.7.0",
+      "run_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40093730177",
+      "corpus": "36 engineering challenge inputs",
+      "runtime_errors": 0,
+      "independent_gold_count": 0,
+      "accuracy": null,
+      "status": "SMOKE_VERIFIED_NOT_ACCURACY",
+      "configuration": "base engine; optional thaiphon-data-volubilis lexicon not installed"
+    },
+    {
+      "engine": "FastThaiG2P",
+      "version": "0.1.0",
+      "source_commit": "c4759eef7df03e11fcbb9aa83efe8cf21709fd2f",
+      "run_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40093730177",
+      "corpus": "36 engineering challenge inputs",
+      "runtime_errors": 0,
+      "independent_gold_count": 0,
+      "accuracy": null,
+      "status": "SMOKE_VERIFIED_NOT_ACCURACY"
+    }
+  ],
+  "upstream_evidence": [
+    {
+      "engine": "thaiphon",
+      "url": "https://github.com/5w0rdf15h/thaiphon",
+      "fact": "Upstream reports ~57% exact match base engine and ~75% with optional thaiphon-data-volubilis on its own Wiktionary-derived corpus, and ~73% on a PyThaiNLP G2P cross-check.",
+      "status": "UPSTREAM_REPORTED_METRIC_NOT_REPRODUCED_HERE",
+      "caveat": "These denominators and conventions differ from ClippyFirst; do not compare directly to our unscored 36-item smoke run. The lexicon is separately CC-BY-SA 4.0; engine code is Apache-2.0."
+    },
+    {
+      "engine": "FastThaiG2P",
+      "url": "https://github.com/awslabs/FastThaiG2P",
+      "fact": "Upstream describes a 62,112-word IPA dictionary plus rule-based fallback and reports generated IPA entries among sources.",
+      "status": "UPSTREAM_DESCRIPTION_NOT_INDEPENDENTLY_AUDITED",
+      "caveat": "Review dictionary source overlap, generated-label provenance, and dataset licenses before treating as a gold resource."
+    },
+    {
+      "engine": "Goruut",
+      "url": "https://github.com/neurlang/goruut",
+      "fact": "README lists Thai among supported languages and labels output phone set IPA.",
+      "status": "UPSTREAM_CLAIM_ONLY_NOT_EXECUTED",
+      "caveat": "No pinned Thai output or gold evaluation in this repository."
+    }
+  ]
 }
