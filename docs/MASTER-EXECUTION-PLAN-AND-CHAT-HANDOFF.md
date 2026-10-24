@@ -181,3 +181,6 @@ PR #30 was closed as superseded by PR #31, merged as `73617280e6fadab74885845b89
 - The current 36-input smoke produced 72 raw outputs from thaiphon and FastThaiG2P, with 0 runtime errors and 0 independent gold labels. The new pairwise diagnostic must report inter-engine agreement separately from accuracy.
 - Any tone-stripped agreement is only a mismatch triage signal. Thai tone is contrastive, and dictionary overlap with Wiktionary is plausible; do not treat this as correctness or a production engine choice.
 
+
+
+- Latest pinned smoke [run 40122636062](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40122636062): 36 inputs, 72 outputs, 0 runtime errors; 13/36 exact inter-engine matches and 14/36 after tone-letter stripping (diagnostic only). Independent gold remains 0; accuracy is null. Artifact ZIP SHA-256: `48993fc72eaae8f0e1640f4aba649ae642faa06ffa461af42353e4c4d0847ac6`.
