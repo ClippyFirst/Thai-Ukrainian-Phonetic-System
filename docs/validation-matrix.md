@@ -26,3 +26,12 @@
 | special orthography registry | implemented conservatively | `รร`, `ฤ/ฦ`, `์`, `ทร`, `อ นำ` become explicit analysis-dependent cases |
 | source → parser → derived consistency | implemented | generated source-final manifest + CI diff check |
 | Ukrainian orthographic target | implemented as project candidate layer | deterministic candidate renderer; explicitly not an official standard |
+
+
+Current readiness status — 2026-10-24
+
+- Current main HEAD: 728fa7c539d74aa2b0495f163254a647b94bbbee; current-main CI 40094071217 passed generated-data checks, master-table generation, Python tests, Node IPA-to-UA tests, and Python/browser parity.
+- The final-velar-stop regression for ตรอก is present and passing; its test asserts onset ต ร, coda ก, and Ukrainian final к.
+- Optional external G2P smoke is reproducible: 40093730177, 72 raw outputs, zero runtime errors, zero independent gold rows. This is not an accuracy benchmark.
+- Engineering validation: DONE_VERIFIED. Empirical accuracy, lexical coverage, calibrated confidence, and broad connected-speech claims: TODO/BLOCKED until independently adjudicated data and explicit scope criteria exist.
+- Latest observed Pages deploy passed at 40091525305 for code-equivalent site sources; an exact current-HEAD redeploy has not been observed.
