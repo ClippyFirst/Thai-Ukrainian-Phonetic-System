@@ -104,6 +104,16 @@
       "These Wiktionary entries are source-attested, not independently adjudicated by a language expert; do not promote them to gold labels automatically.",
       "FastThaiG2P upstream describes Wiktionary-derived dictionary entries, and thaiphon reports a Wiktionary-derived etalon, so source overlap/circularity is plausible. The 3/3 concordance is therefore not an independent accuracy estimate.",
       "String mismatch can reflect IPA convention, affricate tie-bar normalization or segmentation as well as phonological error; review raw output before any normalization."
-    ]
+    ],
+    "attribution": {
+      "source": "Wiktionary contributors, Thai-language entries กา, ไกล and จริง, pronunciation section",
+      "source_license": "Wiktionary content is generally available under CC BY-SA 4.0; check the source page's current legal footer before redistribution",
+      "source_urls": [
+        "https://th.wiktionary.org/wiki/กา",
+        "https://th.wiktionary.org/wiki/ไกล",
+        "https://th.wiktionary.org/wiki/จริง"
+      ],
+      "use_note": "Only the IPA facts and URLs are reproduced here; attribution retained. This is a source-attested diagnostic, not an adjudicated corpus."
+    }
   }
 }
