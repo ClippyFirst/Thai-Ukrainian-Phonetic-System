@@ -8,6 +8,7 @@ from scripts.run_external_g2p_benchmark import (
     normalized_ipa,
     parse_goruut_response,
     strip_tone_symbols_diagnostic,
+    summarize_per_engine,
 )
 
 
@@ -57,6 +58,20 @@ class ExternalG2PBenchmarkHarnessTests(unittest.TestCase):
             parse_goruut_response({"Words": []})
         with self.assertRaisesRegex(ValueError, "missing/non-string"):
             parse_goruut_response({"Words": [{"CleanWord": "x"}]})
+
+    def test_per_engine_summary_exposes_failures_and_empty_outputs(self):
+        report = summarize_per_engine([
+            {"engine": "goruut", "record_id": "ok", "input": "กา", "raw_output": "kaː˧", "error": None},
+            {"engine": "goruut", "record_id": "empty", "input": "xyz", "raw_output": "", "error": None},
+            {"engine": "goruut", "record_id": "failed", "input": "abc", "raw_output": None, "error": "RuntimeError: failed"},
+            {"engine": "thaiphon", "record_id": "ok", "input": "กา", "raw_output": "kaː", "error": None},
+        ], ["goruut", "thaiphon"])
+        self.assertEqual(report["goruut"]["output_rows"], 3)
+        self.assertEqual(report["goruut"]["successful_outputs"], 1)
+        self.assertEqual(report["goruut"]["failed_outputs"], 1)
+        self.assertEqual(report["goruut"]["empty_outputs_without_error"], 1)
+        self.assertEqual(report["goruut"]["failure_examples"][0]["record_id"], "failed")
+        self.assertEqual(report["thaiphon"]["successful_outputs"], 1)
 
     def test_empty_challenge_corpus_is_rejected(self):
         with tempfile.TemporaryDirectory() as temp_dir:
