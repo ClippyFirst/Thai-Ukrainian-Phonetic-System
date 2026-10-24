@@ -1,6 +1,6 @@
 # Independent Thai G2P benchmark: candidate screening and protocol
 
-Status: **screening complete; empirical project benchmark not yet run**  
+Status: **pinned raw-output smoke verified; independent accuracy remains unmeasured**  
 Last reviewed: 2026-10-20
 
 This document evaluates candidate external engines for use as *comparators*, not as a replacement for the repository's structural analysis. An upstream accuracy claim is not a score for this project. No candidate is integrated as a runtime dependency by this screening alone.
@@ -100,3 +100,17 @@ python scripts/run_external_g2p_benchmark.py --engine fastthaig2p --output data/
 ```
 
 The default output path is a local run artifact and is not committed automatically. Store outputs with environment metadata (Python version, OS, exact package versions, lexicon presence, commit and corpus SHA-256) when publishing a run. Because the challenge corpus currently has no adjudicated gold, this runner is a smoke-test and evidence-capture harness only. It intentionally labels raw-string equality as diagnostic, not accuracy: candidate engines have different tone notation, IPA conventions and segmentation behavior. Do not publish an accuracy ranking until independent gold labels and explicit per-engine normalization/scoring rules are frozen.
+
+
+## Optional CI smoke workflow (2026-10-24)
+
+The branch adds `.github/workflows/optional-external-g2p.yml`, pinning `thaiphon==0.7.0`, `pythainlp==5.4.0`, and FastThaiG2P commit `c4759eef7df03e11fcbb9aa83efe8cf21709fd2f`. It stores raw candidate outputs plus a run summary as a CI artifact. The optional VOLUBILIS lexicon is intentionally not installed, so the thaiphon run is the base-engine configuration. This is a smoke/diagnostic run against a candidate-only corpus whose gold fields are null; it cannot yield accuracy. Acceptance is pending the workflow result and artifact inspection. No production dependency is added.
+
+
+## First pinned smoke run — 2026-10-24
+
+- Workflow: [40092505291](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40092505291); artifact `thai-external-g2p-smoke`, SHA-256 `9b2776de9be93f15d16c52b0c336fd196db7b41de6513394ac4a8f9b09218a78`.
+- Environment: Python 3.12.15; `thaiphon==0.7.0` without the optional VOLUBILIS lexicon; PyThaiNLP 5.4.0; FastThaiG2P 0.1.0 from upstream commit `c4759eef7df03e11fcbb9aa83efe8cf21709fd2f`.
+- Coverage: 36 challenge prompts × 2 engines = 72 raw output rows; 0 initialization/transcription errors; 0 independently adjudicated gold labels; 0 scored comparisons. The harness correctly leaves the gold count and raw-string diagnostic count at zero.
+- Diagnostic examples: `ไกล` → thaiphon `/kaj˧/ /la˦˥/`, FastThaiG2P `/klaj˧/`; `จริง` → thaiphon fallback `/tɕa˨˩/ /ri˦˥/ /ŋa˦˥/`, FastThaiG2P `/t͡ɕiŋ˧/`. These examples identify a high-priority lexical/OOV/segmentation investigation, not a score: neither output is a gold label and the thaiphon run deliberately omitted its optional lexicon.
+- Task status: reproducible raw-output smoke **DONE_VERIFIED**; phonological accuracy and engine selection remain **BLOCKED** on independently adjudicated, provenance-audited gold data and convention-aware evaluation. No engine was added to production dependencies.

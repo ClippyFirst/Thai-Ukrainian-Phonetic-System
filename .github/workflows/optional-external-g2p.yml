@@ -1,0 +1,46 @@
+name: Optional external Thai G2P smoke benchmark
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "scripts/run_external_g2p_benchmark.py"
+      - "data/benchmark/thai_g2p_challenge.jsonl"
+      - ".github/workflows/optional-external-g2p.yml"
+  pull_request:
+    paths:
+      - "scripts/run_external_g2p_benchmark.py"
+      - "data/benchmark/thai_g2p_challenge.jsonl"
+      - ".github/workflows/optional-external-g2p.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install pinned optional comparators
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install "pythainlp==5.4.0" "thaiphon==0.7.0" "git+https://github.com/awslabs/FastThaiG2P.git@c4759eef7df03e11fcbb9aa83efe8cf21709fd2f"
+      - name: Run raw-output benchmark
+        run: |
+          mkdir -p artifacts
+          python scripts/run_external_g2p_benchmark.py --output artifacts/external-g2p-latest.jsonl | tee artifacts/summary.json
+      - name: Upload raw outputs and run summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: thai-external-g2p-smoke
+          path: |
+            artifacts/external-g2p-latest.jsonl
+            artifacts/summary.json
+          if-no-files-found: warn
+          retention-days: 30
