@@ -173,3 +173,9 @@ PR #30 remains open pending master-artifact verification. Latest unit/web tests 
 - Preserve raw output and attribution/license notes. Wiktionary content is generally CC BY-SA 4.0; no bulk data was copied. Full caveats and URLs are in `docs/benchmarking-and-external-ipa.md` and the JSON report.
 - Overall readiness unchanged: reproducible smoke is verified; empirical Thai accuracy remains NOT_MEASURED until a representative, independently adjudicated held-out gold set exists.
 
+
+
+### External Thai G2P diagnostic — 2026-10-24
+
+- Latest pinned smoke [run 40122636062](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40122636062) passed: 36 inputs, 72 outputs across thaiphon and FastThaiG2P, 0 runtime errors. Exact inter-engine agreement: 13/36 (36.1%); tone-letter-stripped diagnostic: 14/36 (38.9%), resolving only one additional mismatch. The remaining 22/36 input pairs differ beyond tone-letter strings and require segmentation/segmental/format review. These are inter-engine diagnostics, not accuracy; independent gold count is 0 and accuracy is null.
+- Artifact ZIP SHA-256: `48993fc72eaae8f0e1640f4aba649ae642faa06ffa461af42353e4c4d0847ac6`. Source-attested Wiktionary spot-checks are pinned to exact revisions and remain unadjudicated; possible source overlap with FastThaiG2P prevents treating concordance as independent validation.
