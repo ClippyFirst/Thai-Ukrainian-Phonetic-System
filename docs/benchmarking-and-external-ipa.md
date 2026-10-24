@@ -82,3 +82,9 @@ Attribution/license: the spot-check records Wiktionary contributors and source U
 
 The source-attested spot check in data/benchmark/runs/external-g2p-smoke-2026-10-24.json is selected to investigate disagreements, not sampled to estimate accuracy. Keep raw strings, tone marks, tie bars and segmentation intact until a declared normalization protocol is reviewed.
 
+
+
+## Diagnostic decomposition of inter-engine disagreement (2026-10-24)
+
+The optional smoke report now compares engines per shared input and reports raw exact agreement alongside a separate tone-letter-stripped diagnostic. The diagnostic removes only `˥ ˦ ˧ ˨ ˩`; it does not alter raw outputs, scoreable output strings, syllable separators, vowel length or tie bars. It classifies tone-only disagreement separately from segmental/format disagreement requiring review. These are **inter-engine diagnostics, not accuracy**: neither engine is gold and the 36-case challenge has no independently adjudicated gold labels.
+
