@@ -205,6 +205,24 @@
       "independent_gold_count": 0,
       "accuracy": null,
       "status": "SMOKE_VERIFIED_NOT_ACCURACY"
+    },
+    {
+      "engine": "thaiphon + FastThaiG2P",
+      "versions": {
+        "thaiphon": "0.7.0",
+        "fastthaig2p": "0.1.0"
+      },
+      "fastthaig2p_commit": "c4759eef7df03e11fcbb9aa83efe8cf21709fd2f",
+      "run_id": 40119612565,
+      "artifact_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40119612565/artifacts/12569563771",
+      "artifact_zip_sha256": "b7232dbd508cd6244503005eb41974c090f8f5cc569fd2407f525dcda6216049",
+      "input_count": 36,
+      "raw_output_count": 72,
+      "runtime_errors": 0,
+      "independent_gold_count": 0,
+      "accuracy": null,
+      "source_status": "SMOKE_VERIFIED_NOT_ACCURACY",
+      "notes": "No gold labels. `ไกล`: thaiphon splits into /kaj˧/ /la˦˥/, FastThaiG2P returns /klaj˧/. `จริง`: thaiphon returns /tɕa˨˩/ /ri˦˥/ /ŋa˦˥/, FastThaiG2P returns /t͡ɕiŋ˧/. These are high-priority lexical/segmentation disagreements, not a winner determination."
     }
   ],
   "upstream_evidence": [
