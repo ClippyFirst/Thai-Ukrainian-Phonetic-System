@@ -175,12 +175,8 @@ PR #30 was closed as superseded by PR #31, merged as `73617280e6fadab74885845b89
 
 
 
-## Thai inter-engine tone diagnostic — 2026-10-24
+## Thai inter-engine tone diagnostic — verified 2026-10-24
 
-- Branch `research/thai-tone-diagnostics-rebased-20261024` adds a separate tone-stripped agreement decomposition to the optional external-G2P runner. It removes only IPA tone letters from derived copies, never from raw outputs or strict scoring.
-- The current 36-input smoke produced 72 raw outputs from thaiphon and FastThaiG2P, with 0 runtime errors and 0 independent gold labels. The new pairwise diagnostic must report inter-engine agreement separately from accuracy.
-- Any tone-stripped agreement is only a mismatch triage signal. Thai tone is contrastive, and dictionary overlap with Wiktionary is plausible; do not treat this as correctness or a production engine choice.
-
-
-
-- Latest pinned smoke [run 40122636062](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40122636062): 36 inputs, 72 outputs, 0 runtime errors; 13/36 exact inter-engine matches and 14/36 after tone-letter stripping (diagnostic only). Independent gold remains 0; accuracy is null. Artifact ZIP SHA-256: `48993fc72eaae8f0e1640f4aba649ae642faa06ffa461af42353e4c4d0847ac6`.
+- Latest pinned smoke [run 40122636062](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40122636062) passed: 36 inputs, 72 outputs across thaiphon and FastThaiG2P, 0 runtime errors. Exact inter-engine agreement is 13/36 (36.1%); removing only IPA tone letters in a diagnostic copy gives 14/36 (38.9%), resolving just one additional mismatch. The remaining 22 input pairs differ beyond tone-letter strings and need segmentation/segmental/format review.
+- These are inter-engine diagnostics, not accuracy: independent gold count is 0, accuracy is null, and neither engine is selected for production. The source-attested Wiktionary spot-check is pinned to revisions 5734858, 5688545 and 2441036, but is not independently adjudicated and may overlap with FastThaiG2P's sources.
+- Artifact ZIP SHA-256: `48993fc72eaae8f0e1640f4aba649ae642faa06ffa461af42353e4c4d0847ac6`.
