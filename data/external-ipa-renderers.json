@@ -24,6 +24,21 @@
   },
   "candidates": [
     {
+      "id": "goruut",
+      "name": "Goruut",
+      "url": "https://github.com/neurlang/goruut",
+      "kind": "multilingual IPA phonemizer with lexicon/model fallback",
+      "upstream_support_claim": "Upstream README lists Thai support and claims IPA output with tonal phones.",
+      "upstream_commit": "b224bde02151f8f86d0fe260804e4ca743bda620",
+      "status": "UPSTREAM_SUPPORT_CLAIM_SMOKE_PENDING",
+      "execution_status": "PINNED_OPTIONAL_CI_SMOKE_ADDED",
+      "output": "IPA claimed upstream; compare tone, vowel length, word segmentation, and source conventions empirically.",
+      "license": "Upstream repository reports MIT; per-language dictionary/model data provenance and licensing have not been independently audited.",
+      "verified_in_repo": false,
+      "enabled_by_default": false,
+      "integration_note": "Optional CI-only HTTP comparator; not a production dependency and not gold. Raw phonetic strings are space-joined from response Word.Phonetic fields."
+    },
+    {
       "id": "fastthaig2p",
       "name": "FastThaiG2P",
       "url": "https://github.com/awslabs/FastThaiG2P",
