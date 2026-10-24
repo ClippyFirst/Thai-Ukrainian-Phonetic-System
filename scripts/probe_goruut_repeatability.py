@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """Probe repeatability of pinned Goruut outputs; this is not an accuracy benchmark."""
 from __future__ import annotations
-import argparse, json, time, urllib.error, urllib.request
+import argparse, json, sys, time, urllib.error, urllib.request
 from pathlib import Path
 from typing import Any
-from scripts.run_external_g2p_benchmark import load_rows
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from scripts.run_external_g2p_benchmark import load_rows
 DEFAULT_INPUT = ROOT / "data" / "benchmark" / "thai_g2p_challenge.jsonl"
 GORUUT_COMMIT = "b224bde02151f8f86d0fe260804e4ca743bda620"
 
