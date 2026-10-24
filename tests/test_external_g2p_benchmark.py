@@ -9,6 +9,7 @@ from scripts.run_external_g2p_benchmark import (
     normalized_ipa,
     parse_goruut_response,
     strip_tone_symbols_diagnostic,
+    strip_ipa_delimiter_slashes_diagnostic,
     summarize_per_engine,
 )
 
@@ -41,17 +42,22 @@ class ExternalG2PBenchmarkHarnessTests(unittest.TestCase):
             {"record_id":"tone", "raw_output":"/kaː˥/", "error":None},
             {"record_id":"segment", "raw_output":"/kaː/", "error":None},
             {"record_id":"segment", "raw_output":"/kʰaː/", "error":None},
+            {"record_id":"format", "raw_output":"/kaː/", "error":None},
+            {"record_id":"format", "raw_output":"kaː", "error":None},
             {"record_id":"failed", "raw_output":None, "error":"failed"},
             {"record_id":"empty", "raw_output":"", "error":None},
             {"record_id":"empty", "raw_output":"kaː", "error":None},
         ])
-        self.assertEqual(report["comparable_inputs"], 2)
-        self.assertEqual(report["engine_pairs_compared"], 2)
+        self.assertEqual(report["comparable_inputs"], 3)
+        self.assertEqual(report["engine_pairs_compared"], 3)
         self.assertEqual(report["exact_agreement_pairs"], 0)
-        self.assertEqual(report["tone_stripped_agreement_pairs_diagnostic_only"], 1)
-        self.assertEqual(report["tone_only_disagreements_diagnostic_only"], 1)
-        self.assertEqual(report["non_tone_or_format_disagreements_requiring_review"], 1)
+        self.assertEqual(report["slash_delimiter_stripped_agreement_pairs_diagnostic_only"], 1)
+        self.assertEqual(report["slash_only_format_disagreements_diagnostic_only"], 1)
+        self.assertEqual(report["slash_and_tone_stripped_agreement_pairs_diagnostic_only"], 2)
+        self.assertEqual(report["tone_only_disagreements_after_slash_stripping_diagnostic_only"], 1)
+        self.assertEqual(report["remaining_mismatches_after_limited_diagnostics"], 1)
         self.assertIsNone(report.get("accuracy"))
+        self.assertEqual(strip_ipa_delimiter_slashes_diagnostic("/kaː/"), "kaː")
 
     def test_goruut_parser_preserves_raw_word_phone_strings(self):
         self.assertEqual(
