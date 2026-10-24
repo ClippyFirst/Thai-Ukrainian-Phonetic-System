@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0",
   "language": "Thai",
-  "run_id": 40119997011,
-  "artifact_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40119997011/artifacts/12570776008",
-  "artifact_zip_sha256": "c115fe053c570928abfa97c8e87432d7f7a8af65335980472a75b7eb6485d51e",
+  "run_id": 40122636062,
+  "artifact_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40122636062/artifacts/12572465284",
+  "artifact_zip_sha256": "48993fc72eaae8f0e1640f4aba649ae642faa06ffa461af42353e4c4d0847ac6",
   "input_count": 36,
   "outputs_total": 72,
   "runtime_errors": 0,
@@ -57,7 +57,7 @@
       "FastThaiG2P": "/t͡ɕiŋ˧/"
     }
   ],
-  "interpretation": "Raw output comparison only. The segmentation divergence on ไกล and จริง merits review, but with no independently adjudicated labels these results do not rank accuracy. Keep leading/trailing slashes and tone marks in raw output; convention normalization must be explicit.",
+  "interpretation": "Two external engines ran on the same 36 inputs (72 outputs, 0 runtime errors). They agree exactly on 13/36 inputs; a tone-letter-stripped diagnostic agrees on 14/36, resolving only one additional mismatch. This is not accuracy: independent gold count is zero.",
   "source_attested_spot_check": {
     "status": "SPOT_CHECK_NOT_ACCURACY",
     "retrieved_on": "2026-10-24",
@@ -118,5 +118,17 @@
       ],
       "use_note": "Only the IPA facts and URLs are reproduced here; attribution retained. This is a source-attested diagnostic, not an adjudicated corpus."
     }
+  },
+  "latest_run_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40122636062",
+  "inter_engine_diagnostic": {
+    "comparable_inputs": 36,
+    "engine_pairs_compared": 36,
+    "exact_agreement_pairs": 13,
+    "tone_stripped_agreement_pairs_diagnostic_only": 14,
+    "tone_only_disagreements_diagnostic_only": 1,
+    "non_tone_or_format_disagreements_requiring_review": 22,
+    "exact_agreement_rate": 0.3611111111111111,
+    "tone_stripped_agreement_rate_diagnostic_only": 0.3888888888888889,
+    "interpretation": "Inter-engine agreement is not accuracy. Only one of the 23 raw mismatches becomes equal after stripping tone letters; most disagreements remain segmental, segmentation, or format differences. Preserve raw outputs and review conventions before any normalization."
   }
 }
