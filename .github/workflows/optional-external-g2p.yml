@@ -7,11 +7,6 @@ on:
       - "scripts/run_external_g2p_benchmark.py"
       - "scripts/probe_goruut_repeatability.py"
       - "data/benchmark/thai_g2p_challenge.jsonl"
-  pull_request:
-    paths:
-      - "scripts/run_external_g2p_benchmark.py"
-      - "data/benchmark/thai_g2p_challenge.jsonl"
-      - "scripts/probe_goruut_repeatability.py"
       - ".github/workflows/optional-external-g2p.yml"
 
 permissions:
