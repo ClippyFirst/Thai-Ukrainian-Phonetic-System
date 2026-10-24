@@ -135,6 +135,13 @@ def normalized_ipa(value: str | None) -> str | None:
     return value.strip()
 
 
+def strip_ipa_delimiter_slashes_diagnostic(value: str | None) -> str | None:
+    """Remove IPA /.../ transcription delimiters only; never used for scoring."""
+    if value is None:
+        return None
+    return value.replace("/", "").strip()
+
+
 def strip_tone_symbols_diagnostic(value: str | None) -> str | None:
     """Remove only IPA tone letters for diagnostic decomposition, never for scoring."""
     if value is None:
@@ -155,6 +162,8 @@ def build_inter_engine_diagnostic(outputs: list[dict[str, Any]]) -> dict[str, An
     comparable_inputs = 0
     pair_count = 0
     exact_pairs = 0
+    slash_stripped_pairs = 0
+    slash_only_pairs = 0
     tone_stripped_pairs = 0
     tone_only_pairs = 0
     non_tone_pairs = 0
@@ -166,21 +175,27 @@ def build_inter_engine_diagnostic(outputs: list[dict[str, Any]]) -> dict[str, An
             for j in range(i + 1, len(values)):
                 pair_count += 1
                 exact = values[i] == values[j]
-                tone_equal = strip_tone_symbols_diagnostic(values[i]) == strip_tone_symbols_diagnostic(values[j])
+                slash_equal = strip_ipa_delimiter_slashes_diagnostic(values[i]) == strip_ipa_delimiter_slashes_diagnostic(values[j])
+                tone_equal = strip_tone_symbols_diagnostic(strip_ipa_delimiter_slashes_diagnostic(values[i])) == strip_tone_symbols_diagnostic(strip_ipa_delimiter_slashes_diagnostic(values[j]))
                 exact_pairs += int(exact)
+                slash_stripped_pairs += int(slash_equal)
+                slash_only_pairs += int(not exact and slash_equal)
                 tone_stripped_pairs += int(tone_equal)
-                tone_only_pairs += int(not exact and tone_equal)
-                non_tone_pairs += int(not exact and not tone_equal)
+                tone_only_pairs += int(not slash_equal and tone_equal)
+                non_tone_pairs += int(not tone_equal)
     return {
         "comparable_inputs": comparable_inputs,
         "engine_pairs_compared": pair_count,
         "exact_agreement_pairs": exact_pairs,
-        "tone_stripped_agreement_pairs_diagnostic_only": tone_stripped_pairs,
-        "tone_only_disagreements_diagnostic_only": tone_only_pairs,
-        "non_tone_or_format_disagreements_requiring_review": non_tone_pairs,
+        "slash_delimiter_stripped_agreement_pairs_diagnostic_only": slash_stripped_pairs,
+        "slash_only_format_disagreements_diagnostic_only": slash_only_pairs,
+        "slash_and_tone_stripped_agreement_pairs_diagnostic_only": tone_stripped_pairs,
+        "tone_only_disagreements_after_slash_stripping_diagnostic_only": tone_only_pairs,
+        "remaining_mismatches_after_limited_diagnostics": non_tone_pairs,
         "exact_agreement_rate": exact_pairs / pair_count if pair_count else None,
-        "tone_stripped_agreement_rate_diagnostic_only": tone_stripped_pairs / pair_count if pair_count else None,
-        "interpretation": "Inter-engine agreement is not accuracy. Tone-stripped results are a diagnostic decomposition only; raw outputs and tone-sensitive exact-match rules are unchanged.",
+        "slash_delimiter_stripped_agreement_rate_diagnostic_only": slash_stripped_pairs / pair_count if pair_count else None,
+        "slash_and_tone_stripped_agreement_rate_diagnostic_only": tone_stripped_pairs / pair_count if pair_count else None,
+        "interpretation": "Inter-engine agreement is not accuracy. Slash-delimiter and tone-stripped results are separate diagnostics only; raw outputs and tone-sensitive exact-match rules are unchanged.",
     }
 
 
