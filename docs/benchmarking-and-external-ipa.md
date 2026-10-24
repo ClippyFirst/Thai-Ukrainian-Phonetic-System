@@ -111,3 +111,8 @@ Pinned run [40128121032](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-
 Inspecting the raw output revealed convention/coverage concerns: for กา, thaiphon and FastThaiG2P emit `/kaː˧/`, while Goruut emits `ka`; several multi-syllable strings have no explicit separators, and some responses return an empty `Words` array. These are output-format and coverage observations, not adjudicated phonological errors. The output should not be assumed to be directly comparable standardized IPA without a documented convention adapter. The engine remains optional and disabled by default; `verified_in_repo` remains false, `independent_gold_count` remains 0, and `accuracy` remains null.
 
 The benchmark harness was also tightened so an empty string is not counted as a successful smoke output, per-input failures are included in the summary's error list, and a run exits non-zero if all recorded outputs are unusable. Current-head CI and smoke verification are pending for the latest code changes.
+
+
+## Goruut repeatability
+
+The endpoint readiness probe returned `kaː˧` for `กา`, while the first benchmark artifact recorded `ka` for the same form. Because these requests occurred in different contexts, this is a repeatability hypothesis rather than proof of stochastic output. The optional workflow now repeats each challenge form three times and preserves raw outputs plus Goruut's randomization counters. A stable output is not evidence of correctness; variability must be analyzed separately from accuracy.
