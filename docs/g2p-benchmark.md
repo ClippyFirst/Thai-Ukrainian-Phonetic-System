@@ -119,3 +119,8 @@ The branch adds `.github/workflows/optional-external-g2p.yml`, pinning `thaiphon
 ## Merge status (2026-10-24)
 
 The pinned raw-output smoke workflow and documentation are merged to main at `bbe9298b2e643d78c0f9f27127482cfda0c62315`. CI run [40093256851](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40093256851) passed tests and the generated master artifact check; optional smoke [40093259692](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40093259692) passed. Accuracy remains unmeasured until the challenge corpus has independent source-located gold.
+
+
+## Post-merge main run (2026-10-24)
+
+The main-branch smoke run [40093730177](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40093730177) passed. Inspected artifact SHA-256 `9044719e206505158c9fc1c5da36a9bc8c34d60b4a829b6e98e7623e63b6374a` contains 72 outputs, 0 runtime errors, 0 gold-labeled rows, and 0 scored raw-string comparisons. This is raw-output coverage only, not accuracy.
