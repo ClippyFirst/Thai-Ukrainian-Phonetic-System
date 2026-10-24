@@ -34,7 +34,23 @@
       "verified_in_repo": false,
       "enabled_by_default": false,
       "latest_run_id": 40119612565,
-      "execution_status": "SMOKE_VERIFIED_NOT_ACCURACY"
+      "execution_status": "SMOKE_VERIFIED_NOT_ACCURACY",
+      "smoke_evidence": {
+        "ids": [
+          "thaiphon",
+          "fastthaig2p"
+        ],
+        "latest_run_id": 40121528216,
+        "latest_run_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40121528216",
+        "artifact_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40121528216/artifacts/12571038880",
+        "artifact_zip_sha256": "4e1dbb42cccc1f23609edf2a294eb71456e112a384145daa409e7f4282102a7c",
+        "input_count": 36,
+        "outputs_total": 72,
+        "runtime_errors": 0,
+        "independent_gold_count": 0,
+        "accuracy": null,
+        "score_status": "NOT_SCORED_NO_INDEPENDENT_GOLD"
+      }
     },
     {
       "id": "thaiphon",
@@ -47,7 +63,23 @@
       "verified_in_repo": false,
       "enabled_by_default": false,
       "latest_run_id": 40119612565,
-      "execution_status": "SMOKE_VERIFIED_NOT_ACCURACY"
+      "execution_status": "SMOKE_VERIFIED_NOT_ACCURACY",
+      "smoke_evidence": {
+        "ids": [
+          "thaiphon",
+          "fastthaig2p"
+        ],
+        "latest_run_id": 40121528216,
+        "latest_run_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40121528216",
+        "artifact_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40121528216/artifacts/12571038880",
+        "artifact_zip_sha256": "4e1dbb42cccc1f23609edf2a294eb71456e112a384145daa409e7f4282102a7c",
+        "input_count": 36,
+        "outputs_total": 72,
+        "runtime_errors": 0,
+        "independent_gold_count": 0,
+        "accuracy": null,
+        "score_status": "NOT_SCORED_NO_INDEPENDENT_GOLD"
+      }
     },
     {
       "id": "tltk",
@@ -251,5 +283,10 @@
       "status": "UPSTREAM_CLAIM_ONLY_NOT_EXECUTED",
       "caveat": "No pinned Thai output or gold evaluation in this repository."
     }
-  ]
+  ],
+  "scope_note": "Historical filename: this registry catalogs both external G2P/IPA comparison systems and display fonts. Fonts are rendering assets, not pronunciation engines.",
+  "status_semantics": {
+    "verified_in_repo": "true means the candidate's pronunciation behavior has been validated against project-approved independent gold. A successful smoke or upstream language-support claim does not set this flag.",
+    "execution_status": "Records whether a candidate was run, blocked, or only reported upstream; it is independent of verified_in_repo."
+  }
 }
