@@ -61,9 +61,9 @@ These are research leads, not verified availability claims. Before executing a c
 
 A three-word targeted spot-check was added to `data/benchmark/runs/external-g2p-smoke-2026-10-24.json` using the standard-IPA fields in the Thai Wiktionary pronunciation sections:
 
-- [กา](https://th.wiktionary.org/wiki/กา): `/kaː˧/`; both engines' raw strings match.
-- [ไกล](https://th.wiktionary.org/wiki/ไกล): `/klaj˧/`; FastThaiG2P matches; thaiphon outputs `/kaj˧/ /la˦˥/`.
-- [จริง](https://th.wiktionary.org/wiki/จริง): `/t͡ɕiŋ˧/`; FastThaiG2P matches; thaiphon outputs `/tɕa˨˩/ /ri˦˥/ /ŋa˦˥/`.
+- [กา](https://th.wiktionary.org/w/index.php?title=กา&oldid=5734858): `/kaː˧/`; both engines' raw strings match.
+- [ไกล](https://th.wiktionary.org/w/index.php?title=ไกล&oldid=5688545): `/klaj˧/`; FastThaiG2P matches; thaiphon outputs `/kaj˧/ /la˦˥/`.
+- [จริง](https://th.wiktionary.org/w/index.php?title=จริง&oldid=2441036): `/t͡ɕiŋ˧/`; FastThaiG2P matches; thaiphon outputs `/tɕa˨˩/ /ri˦˥/ /ŋa˦˥/`.
 
 Diagnostic string-concordance is 3/3 for FastThaiG2P and 1/3 for thaiphon on these selected cases. **Do not report this as accuracy**: this is a disagreement-selected sample, Wiktionary entries are source-attested but not independently expert-adjudicated here, and both upstream systems may overlap with Wiktionary-derived resources. It is useful for prioritizing segmentation/lexical review, not selecting a winner. Preserve the raw outputs and inspect tie-bar/segmentation conventions before normalization.
 
@@ -82,3 +82,17 @@ Attribution/license: the spot-check records Wiktionary contributors and source U
 
 The source-attested spot check in data/benchmark/runs/external-g2p-smoke-2026-10-24.json is selected to investigate disagreements, not sampled to estimate accuracy. Keep raw strings, tone marks, tie bars and segmentation intact until a declared normalization protocol is reviewed.
 
+
+
+## Diagnostic decomposition of inter-engine disagreement (2026-10-24)
+
+The optional smoke report now compares engines per shared input and reports raw exact agreement alongside a separate tone-letter-stripped diagnostic. The diagnostic removes only `˥ ˦ ˧ ˨ ˩`; it does not alter raw outputs, scoreable output strings, syllable separators, vowel length or tie bars. It classifies tone-only disagreement separately from segmental/format disagreement requiring review. These are **inter-engine diagnostics, not accuracy**: neither engine is gold and the 36-case challenge has no independently adjudicated gold labels.
+
+
+
+
+## Benchmark metric semantics — 2026-10-24
+
+- `exact_match_rate` is strict string equality after the declared Unicode normalization and is comparable only when the same IPA profile/conventions are used. Tone, length, stress, syllable boundaries, tie bars and other IPA distinctions are not silently removed.
+- `character_error_rate` is Levenshtein distance over Unicode code points, not a phoneme/segment error rate. IPA affricates, combining diacritics, length marks and tone symbols can occupy multiple code points; interpret this field as a string-distance diagnostic only.
+- A valid score still requires a non-empty independently adjudicated gold set with source locator and profile. Smoke output, engineering fixtures, source-attested but unadjudicated entries, and inter-engine agreement are not accuracy.
