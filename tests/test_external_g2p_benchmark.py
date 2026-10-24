@@ -6,6 +6,7 @@ from scripts.run_external_g2p_benchmark import (
     build_inter_engine_diagnostic,
     load_rows,
     normalized_ipa,
+    parse_goruut_response,
     strip_tone_symbols_diagnostic,
 )
 
@@ -41,6 +42,21 @@ class ExternalG2PBenchmarkHarnessTests(unittest.TestCase):
         self.assertEqual(report["tone_only_disagreements_diagnostic_only"], 1)
         self.assertEqual(report["non_tone_or_format_disagreements_requiring_review"], 1)
         self.assertIsNone(report.get("accuracy"))
+
+    def test_goruut_parser_preserves_raw_word_phone_strings(self):
+        self.assertEqual(
+            parse_goruut_response({"Words": [
+                {"CleanWord": "สวัสดี", "Phonetic": "sà.wàt.dii"},
+                {"CleanWord": "ครับ", "Phonetic": "kʰráp"},
+            ]}),
+            "sà.wàt.dii kʰráp",
+        )
+
+    def test_goruut_parser_rejects_missing_or_malformed_word_output(self):
+        with self.assertRaisesRegex(ValueError, "no Words array"):
+            parse_goruut_response({"Words": []})
+        with self.assertRaisesRegex(ValueError, "missing/non-string"):
+            parse_goruut_response({"Words": [{"CleanWord": "x"}]})
 
     def test_empty_challenge_corpus_is_rejected(self):
         with tempfile.TemporaryDirectory() as temp_dir:
