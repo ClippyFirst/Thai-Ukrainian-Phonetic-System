@@ -86,7 +86,7 @@ def analyze_text(text: str):
                     "input": token.text, "kind": "thai",
                     "segmentation_status": "unresolved",
                     "syllables": [],
-                    "warnings": ["No lexical segmentation is available for this Thai word; IPA and Ukrainian output are withheld. Add a lexicon entry or provide explicit syllable boundaries."]
+                    "warnings": ["This text endpoint does not yet implement automatic word segmentation; IPA and Ukrainian output are withheld. Add a reviewed lexicon entry or analyze individual syllables separately."]
                 })
             else:
                 analyses = [analyze_syllable(s) for s in syllables]
