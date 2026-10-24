@@ -30,8 +30,8 @@
       "kind": "multilingual IPA phonemizer with lexicon/model fallback",
       "upstream_support_claim": "Upstream README lists Thai support and claims IPA output with tonal phones.",
       "upstream_commit": "b224bde02151f8f86d0fe260804e4ca743bda620",
-      "status": "SMOKE_VERIFIED_PARTIAL_COVERAGE_NOT_ACCURACY",
-      "execution_status": "PINNED_SMOKE_VERIFIED_WITH_10_NO_WORDS_RESPONSES",
+      "status": "candidate",
+      "execution_status": "SMOKE_VERIFIED_PARTIAL_COVERAGE_NOT_ACCURACY",
       "output": "Pinned upstream commit executed on 36 engineering inputs in run 40129230641: 26 non-empty outputs and 10 per-input failures. Artifact SHA-256 192950f4bd426f3c274a78ab135072546225931003d59acd9ed7dd036dc4ef2a. Inter-engine exact agreement is 13/88 pairs; delimiter/tone-stripped comparisons are diagnostics only. Raw forms differ materially (e.g. กา -> ka versus /kaː˧/); segmentation, tone/length conventions and model/dictionary provenance remain unresolved. Independent gold count is zero; accuracy is null.",
       "license": "Upstream repository reports MIT; per-language dictionary/model data provenance and licensing have not been independently audited.",
       "verified_in_repo": false,
@@ -56,7 +56,8 @@
         "slash_stripped_agreement_pairs_diagnostic_only": 30,
         "slash_and_tone_stripped_agreement_pairs_diagnostic_only": 31,
         "remaining_mismatches_after_limited_diagnostics": 57
-      }
+      },
+      "status_note": "Previous execution classification (SMOKE_VERIFIED_PARTIAL_COVERAGE_NOT_ACCURACY) is retained as execution_status; status uses the schema's controlled candidate vocabulary."
     },
     {
       "id": "fastthaig2p",
