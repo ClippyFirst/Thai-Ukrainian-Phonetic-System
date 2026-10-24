@@ -1,6 +1,6 @@
 # Independent Thai G2P benchmark: candidate screening and protocol
 
-Status: **screening complete; empirical project benchmark not yet run**  
+Status: **candidate screening complete; pinned optional smoke workflow added; empirical run pending CI artifact review**  
 Last reviewed: 2026-10-20
 
 This document evaluates candidate external engines for use as *comparators*, not as a replacement for the repository's structural analysis. An upstream accuracy claim is not a score for this project. No candidate is integrated as a runtime dependency by this screening alone.
@@ -100,3 +100,8 @@ python scripts/run_external_g2p_benchmark.py --engine fastthaig2p --output data/
 ```
 
 The default output path is a local run artifact and is not committed automatically. Store outputs with environment metadata (Python version, OS, exact package versions, lexicon presence, commit and corpus SHA-256) when publishing a run. Because the challenge corpus currently has no adjudicated gold, this runner is a smoke-test and evidence-capture harness only. It intentionally labels raw-string equality as diagnostic, not accuracy: candidate engines have different tone notation, IPA conventions and segmentation behavior. Do not publish an accuracy ranking until independent gold labels and explicit per-engine normalization/scoring rules are frozen.
+
+
+## Optional CI smoke workflow (2026-10-24)
+
+The branch adds `.github/workflows/optional-external-g2p.yml`, pinning `thaiphon==0.7.0`, `pythainlp==5.4.0`, and FastThaiG2P commit `c4759eef7df03e11fcbb9aa83efe8cf21709fd2f`. It stores raw candidate outputs plus a run summary as a CI artifact. The optional VOLUBILIS lexicon is intentionally not installed, so the thaiphon run is the base-engine configuration. This is a smoke/diagnostic run against a candidate-only corpus whose gold fields are null; it cannot yield accuracy. Acceptance is pending the workflow result and artifact inspection. No production dependency is added.
