@@ -184,6 +184,12 @@ def build_inter_engine_diagnostic(outputs: list[dict[str, Any]]) -> dict[str, An
     }
 
 
+def has_usable_output(item: dict[str, Any]) -> bool:
+    """Count only non-empty string outputs without a recorded per-input error."""
+    raw = item.get("raw_output")
+    return item.get("error") is None and isinstance(raw, str) and bool(raw.strip())
+
+
 def summarize_per_engine(outputs: list[dict[str, Any]], selected: list[str]) -> dict[str, Any]:
     summary: dict[str, Any] = {}
     for name in selected:
@@ -191,7 +197,7 @@ def summarize_per_engine(outputs: list[dict[str, Any]], selected: list[str]) -> 
         failed = [item for item in engine_rows if item.get("error") is not None]
         summary[name] = {
             "output_rows": len(engine_rows),
-            "successful_outputs": sum(item.get("error") is None and isinstance(item.get("raw_output"), str) and bool(item["raw_output"].strip()) for item in engine_rows),
+            "successful_outputs": sum(has_usable_output(item) for item in engine_rows),
             "failed_outputs": len(failed),
             "empty_outputs_without_error": sum(item.get("error") is None and (not isinstance(item.get("raw_output"), str) or not item["raw_output"].strip()) for item in engine_rows),
             "failure_examples": [{"record_id": item.get("record_id"), "input": item.get("input"), "error": item.get("error")} for item in failed[:5]],
@@ -255,6 +261,11 @@ def main() -> int:
 
     inter_engine_diagnostic = build_inter_engine_diagnostic(outputs)
     per_engine = summarize_per_engine(outputs, selected)
+    per_input_failure_summaries = [
+        f"{name}: {details['failed_outputs']} per-input failures"
+        for name, details in per_engine.items()
+        if details["failed_outputs"]
+    ]
     summary = {
         "input": str(args.input),
         "inter_engine_diagnostic": inter_engine_diagnostic,
@@ -266,11 +277,11 @@ def main() -> int:
         "per_engine": per_engine,
         "gold_labeled_rows": sum(row.get("gold_phonemic_ipa") is not None for row in rows),
         "raw_string_diagnostic_rows": sum(item["exact_raw_string_match_diagnostic_only"] is not None for item in outputs),
-        "errors": errors,
+        "errors": errors + per_input_failure_summaries,
         "interpretation": "Raw candidate outputs only. Per-engine failures and empty outputs are explicit. Raw-string equality and inter-engine agreement are diagnostic, not accuracy: candidate IPA conventions and segmentation differ. Adjudicate gold, document engine-specific normalization, then score features separately.",
     }
     print(json.dumps(summary, ensure_ascii=False, indent=2))
-    successful_outputs = sum(item["error"] is None for item in outputs)
+    successful_outputs = sum(has_usable_output(item) for item in outputs)
     # A run where every engine failed to initialize or transcribe is not a
     # successful smoke test, even if failure rows were written for inspection.
     return 0 if successful_outputs else (2 if errors or outputs else 0)
