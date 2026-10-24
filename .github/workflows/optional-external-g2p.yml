@@ -6,6 +6,8 @@ on:
     paths:
       - "scripts/run_external_g2p_benchmark.py"
       - "data/benchmark/thai_g2p_challenge.jsonl"
+      - "data/external-ipa-renderers.json"
+      - "docs/benchmarking-and-external-ipa.md"
       - ".github/workflows/optional-external-g2p.yml"
   pull_request:
     paths:
