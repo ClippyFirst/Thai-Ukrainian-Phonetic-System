@@ -223,7 +223,11 @@ The current `main` snapshot inspected for this continuation is `d34fe54086d02952
 | Empirical Ukrainian target preference/calibration | BLOCKED — no adjudicated target corpus | Build and license an adjudicated Ukrainian candidate/target set before reporting preference, calibration, or accuracy. |
 | Local clean-install/test reproduction | BLOCKED — checkout/network unavailable | Clone the exact main SHA in a network-enabled environment; run the workflow commands and generated-artifact drift checks, then attach exact logs/results. |
 
-### Commands and operations executed in this continuation
+### Historical audit snapshot — superseded by the 2026-10-24 continuation
+
+The following command log records an earlier continuation and should not be read as the current merge status.
+
+### Commands and operations executed in that earlier snapshot
 
 - GitHub API: inspect current commit history, compare `main` with PR #17, inspect the PR patch and changed-file summary, fetch README / pyproject / audit / research-protocol / corpus-validation / browser parity test / benchmark runner, and inspect available workflow runs and combined status.
 - `git clone --depth 1 https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System.git /tmp/thai-ua-audit` — BLOCKED: DNS/network error (`Could not resolve host: github.com`); no local test, generator, build, or corpus evaluation was run.
@@ -232,3 +236,11 @@ The current `main` snapshot inspected for this continuation is `d34fe54086d02952
 ### Release assessment
 
 **Research infrastructure: substantial; release readiness: not independently verified for current main; empirical accuracy: unmeasured.** The next decisive acceptance gate is a successful workflow run on the exact current-main commit (or its exact successor), followed by independent gold-corpus evaluation.
+
+### Current external IPA and benchmark audit — 2026-10-24
+
+- The fail-closed unknown-token fix is merged and has passed subsequent main-equivalent CI/master-artifact checks.
+- `thaiphon 0.7.0` and FastThaiG2P 0.1.0 have reproducible optional smoke evidence (36 inputs each; 72 raw outputs total; 0 runtime errors). Exact inter-engine agreement is 13/36; tone-letter-stripped diagnostic agreement is 14/36. Neither is accuracy.
+- The three source-attested Thai spot-checks are pinned to exact Wiktionary revisions, but are selected diagnostics, not independently expert-adjudicated gold. Upstream source overlap is plausible.
+- The durable report/registry and comparator provenance update is PR #41, which remains subject to current-head CI and smoke verification. Independent gold count is still 0; accuracy remains null.
+- Release status: research infrastructure verified; phonological accuracy and full release readiness remain unverified pending independent held-out gold and source-specific adjudication.
