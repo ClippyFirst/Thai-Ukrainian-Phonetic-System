@@ -239,6 +239,17 @@ def main() -> int:
             stream.write(json.dumps(item, ensure_ascii=False, sort_keys=True) + "\n")
 
     inter_engine_diagnostic = build_inter_engine_diagnostic(outputs)
+    per_engine = {}
+    for name in selected:
+        engine_rows = [item for item in outputs if item["engine"] == name]
+        failed = [item for item in engine_rows if item.get("error") is not None]
+        per_engine[name] = {
+            "output_rows": len(engine_rows),
+            "successful_outputs": sum(item.get("error") is None and isinstance(item.get("raw_output"), str) and bool(item["raw_output"].strip()) for item in engine_rows),
+            "failed_outputs": len(failed),
+            "empty_outputs_without_error": sum(item.get("error") is None and (not isinstance(item.get("raw_output"), str) or not item["raw_output"].strip()) for item in engine_rows),
+            "failure_examples": [{"record_id": item.get("record_id"), "input": item.get("input"), "error": item.get("error")} for item in failed[:5]],
+        }
     summary = {
         "input": str(args.input),
         "inter_engine_diagnostic": inter_engine_diagnostic,
@@ -247,10 +258,11 @@ def main() -> int:
         "engines_requested": selected,
         "engines_run": sorted({item["engine"] for item in outputs}),
         "output_rows": len(outputs),
+        "per_engine": per_engine,
         "gold_labeled_rows": sum(row.get("gold_phonemic_ipa") is not None for row in rows),
         "raw_string_diagnostic_rows": sum(item["exact_raw_string_match_diagnostic_only"] is not None for item in outputs),
         "errors": errors,
-        "interpretation": "Raw candidate outputs only. Raw-string equality is diagnostic, not a fair accuracy score: candidate IPA conventions and segmentation differ. Adjudicate gold, document engine-specific normalization, then score features separately.",
+        "interpretation": "Raw candidate outputs only. Per-engine failures and empty outputs are explicit. Raw-string equality and inter-engine agreement are diagnostic, not accuracy: candidate IPA conventions and segmentation differ. Adjudicate gold, document engine-specific normalization, then score features separately.",
     }
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     successful_outputs = sum(item["error"] is None for item in outputs)
