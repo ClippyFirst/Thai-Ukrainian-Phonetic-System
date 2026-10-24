@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0",
   "language": "Thai",
-  "run_id": 40122636062,
-  "artifact_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40122636062/artifacts/12572465284",
-  "artifact_zip_sha256": "48993fc72eaae8f0e1640f4aba649ae642faa06ffa461af42353e4c4d0847ac6",
+  "run_id": 40123365441,
+  "artifact_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40123365441/artifacts/12571583780",
+  "artifact_zip_sha256": "a4688f082f9a6307fded825b96d7cd025c39869383a4483311707b2d7c2c53ab",
   "input_count": 36,
   "outputs_total": 72,
   "runtime_errors": 0,
@@ -57,7 +57,7 @@
       "FastThaiG2P": "/t͡ɕiŋ˧/"
     }
   ],
-  "interpretation": "Two external engines ran on the same 36 inputs (72 outputs, 0 runtime errors). They agree exactly on 13/36 inputs; a tone-letter-stripped diagnostic agrees on 14/36, resolving only one additional mismatch. This is not accuracy: independent gold count is zero.",
+  "interpretation": "36 inputs were processed by thaiphon 0.7.0 and FastThaiG2P at pinned commit c4759eef7df03e11fcbb9aa83efe8cf21709fd2f, yielding 72 raw outputs and 0 runtime errors. Engines agree exactly on 13/36 inputs; agreement after removing tone letters in a diagnostic copy is 14/36. These are inter-engine consistency metrics, not accuracy. Independent gold count is zero. The selected Wiktionary spot-check is source-attested, not independently adjudicated, and may overlap with upstream resources.",
   "source_attested_spot_check": {
     "status": "SPOT_CHECK_NOT_ACCURACY",
     "retrieved_on": "2026-10-24",
@@ -129,6 +129,6 @@
     "non_tone_or_format_disagreements_requiring_review": 22,
     "exact_agreement_rate": 0.3611111111111111,
     "tone_stripped_agreement_rate_diagnostic_only": 0.3888888888888889,
-    "interpretation": "Inter-engine agreement is not accuracy. Only one of the 23 raw mismatches becomes equal after stripping tone letters; most disagreements remain segmental, segmentation, or format differences. Preserve raw outputs and review conventions before any normalization."
+    "interpretation": "Inter-engine agreement is not accuracy. Tone-stripped results are diagnostic only; raw outputs and tone-sensitive exact-match rules are unchanged."
   }
 }
