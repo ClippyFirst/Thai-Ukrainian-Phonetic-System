@@ -4,7 +4,7 @@
     "name": "Thai",
     "iso_639_3_or_639_1": "th"
   },
-  "purpose": "Research registry of external IPA/G2P candidates. Entries are not active runtime dependencies and are not accepted pronunciation gold data.",
+  "purpose": "Research registry of external G2P/IPA comparator systems and IPA/source-script display fonts. Entries are not active runtime dependencies; system smoke results are not pronunciation gold data.",
   "integration_contract": {
     "pipeline": "source orthography -> language-specific structural/phonological analysis -> typed IPA result -> ClippyFirst IPA-to-Ukrainian adapter -> practical Ukrainian orthography",
     "preserve": [
@@ -33,8 +33,18 @@
       "license": "Verify repository and dataset licenses before runtime integration",
       "verified_in_repo": false,
       "enabled_by_default": false,
-      "latest_run_id": 40119612565,
-      "execution_status": "SMOKE_VERIFIED_NOT_ACCURACY"
+      "latest_run_id": 40122636062,
+      "execution_status": "SMOKE_VERIFIED_NOT_ACCURACY",
+      "latest_run_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40122636062",
+      "latest_artifact_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40122636062/artifacts/12572465284",
+      "latest_artifact_zip_sha256": "48993fc72eaae8f0e1640f4aba649ae642faa06ffa461af42353e4c4d0847ac6",
+      "latest_smoke_summary": {
+        "input_count": 36,
+        "outputs": 36,
+        "runtime_errors": 0,
+        "independent_gold_count": 0,
+        "accuracy": null
+      }
     },
     {
       "id": "thaiphon",
@@ -46,8 +56,18 @@
       "license": "Verify current upstream license",
       "verified_in_repo": false,
       "enabled_by_default": false,
-      "latest_run_id": 40119612565,
-      "execution_status": "SMOKE_VERIFIED_NOT_ACCURACY"
+      "latest_run_id": 40122636062,
+      "execution_status": "SMOKE_VERIFIED_NOT_ACCURACY",
+      "latest_run_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40122636062",
+      "latest_artifact_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40122636062/artifacts/12572465284",
+      "latest_artifact_zip_sha256": "48993fc72eaae8f0e1640f4aba649ae642faa06ffa461af42353e4c4d0847ac6",
+      "latest_smoke_summary": {
+        "input_count": 36,
+        "outputs": 36,
+        "runtime_errors": 0,
+        "independent_gold_count": 0,
+        "accuracy": null
+      }
     },
     {
       "id": "tltk",
@@ -251,5 +271,10 @@
       "status": "UPSTREAM_CLAIM_ONLY_NOT_EXECUTED",
       "caveat": "No pinned Thai output or gold evaluation in this repository."
     }
-  ]
+  ],
+  "scope_note": "Historical filename: this registry catalogs both external G2P/IPA comparison systems and display fonts. Fonts are rendering assets, not pronunciation engines.",
+  "status_semantics": {
+    "verified_in_repo": "true means the candidate's pronunciation behavior has been validated against project-approved independent gold. A successful smoke or upstream language-support claim does not set this flag.",
+    "execution_status": "Records whether a candidate was run, blocked, or only reported upstream; it is independent of verified_in_repo."
+  }
 }
