@@ -148,7 +148,7 @@ def build_inter_engine_diagnostic(outputs: list[dict[str, Any]]) -> dict[str, An
     for row in outputs:
         raw = row.get("raw_output")
         ident = row.get("record_id")
-        if ident is None or not isinstance(raw, str) or row.get("error") is not None:
+        if ident is None or not isinstance(raw, str) or not raw.strip() or row.get("error") is not None:
             continue
         grouped.setdefault(str(ident), []).append(raw.strip())
 
