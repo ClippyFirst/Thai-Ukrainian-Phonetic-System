@@ -86,6 +86,55 @@ def normalized_ipa(value: str | None) -> str | None:
     return value.strip()
 
 
+def strip_tone_symbols_diagnostic(value: str | None) -> str | None:
+    """Remove only IPA tone letters for diagnostic decomposition, never for scoring."""
+    if value is None:
+        return None
+    return value.translate(str.maketrans("", "", "˥˦˧˨˩"))
+
+
+def build_inter_engine_diagnostic(outputs: list[dict[str, Any]]) -> dict[str, Any]:
+    """Compare engine outputs per input without treating agreement as accuracy."""
+    grouped: dict[str, list[str]] = {}
+    for row in outputs:
+        raw = row.get("raw_output")
+        ident = row.get("record_id")
+        if ident is None or not isinstance(raw, str) or row.get("error") is not None:
+            continue
+        grouped.setdefault(str(ident), []).append(raw.strip())
+
+    comparable_inputs = 0
+    pair_count = 0
+    exact_pairs = 0
+    tone_stripped_pairs = 0
+    tone_only_pairs = 0
+    non_tone_pairs = 0
+    for values in grouped.values():
+        if len(values) < 2:
+            continue
+        comparable_inputs += 1
+        for i in range(len(values)):
+            for j in range(i + 1, len(values)):
+                pair_count += 1
+                exact = values[i] == values[j]
+                tone_equal = strip_tone_symbols_diagnostic(values[i]) == strip_tone_symbols_diagnostic(values[j])
+                exact_pairs += int(exact)
+                tone_stripped_pairs += int(tone_equal)
+                tone_only_pairs += int(not exact and tone_equal)
+                non_tone_pairs += int(not exact and not tone_equal)
+    return {
+        "comparable_inputs": comparable_inputs,
+        "engine_pairs_compared": pair_count,
+        "exact_agreement_pairs": exact_pairs,
+        "tone_stripped_agreement_pairs_diagnostic_only": tone_stripped_pairs,
+        "tone_only_disagreements_diagnostic_only": tone_only_pairs,
+        "non_tone_or_format_disagreements_requiring_review": non_tone_pairs,
+        "exact_agreement_rate": exact_pairs / pair_count if pair_count else None,
+        "tone_stripped_agreement_rate_diagnostic_only": tone_stripped_pairs / pair_count if pair_count else None,
+        "interpretation": "Inter-engine agreement is not accuracy. Tone-stripped results are a diagnostic decomposition only; raw outputs and tone-sensitive exact-match rules are unchanged.",
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input", type=Path, default=DEFAULT_INPUT)
@@ -134,8 +183,10 @@ def main() -> int:
         for item in outputs:
             stream.write(json.dumps(item, ensure_ascii=False, sort_keys=True) + "\n")
 
+    inter_engine_diagnostic = build_inter_engine_diagnostic(outputs)
     summary = {
         "input": str(args.input),
+        "inter_engine_diagnostic": inter_engine_diagnostic,
         "output": str(args.output),
         "candidate_rows": len(rows),
         "engines_requested": selected,
