@@ -30,8 +30,16 @@
 
 Current readiness status — 2026-10-24
 
-- Current main HEAD: 728fa7c539d74aa2b0495f163254a647b94bbbee; current-main CI 40094071217 passed generated-data checks, master-table generation, Python tests, Node IPA-to-UA tests, and Python/browser parity.
+- Current main HEAD at this checkpoint: `822797042dd3f6980202c2f92e491f2a53df80b0`; current-main CI [40096100740](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40096100740) passed generated-data checks, master-table generation, Python tests, Node IPA-to-UA tests, and Python/browser parity. Master-table assertions passed for 351,780 rows and 41 vowel records.
 - The final-velar-stop regression for ตรอก is present and passing; its test asserts onset ต ร, coda ก, and Ukrainian final к.
 - Optional external G2P smoke is reproducible: 40093730177, 72 raw outputs, zero runtime errors, zero independent gold rows. This is not an accuracy benchmark.
 - Engineering validation: DONE_VERIFIED. Empirical accuracy, lexical coverage, calibrated confidence, and broad connected-speech claims: TODO/BLOCKED until independently adjudicated data and explicit scope criteria exist.
 - Latest observed Pages deploy passed at 40091525305 for code-equivalent site sources; an exact current-HEAD redeploy has not been observed.
+
+
+## Additional fail-closed validation — 2026-10-24
+
+- Finding: both Python and browser text pipelines labeled unknown multi-grapheme words as `unresolved` while still returning a whole-word syllable analysis. This could expose IPA/Ukrainian output despite missing lexical segmentation.
+- Correction and regression tests are on PR [#27](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/27). Unknown multi-grapheme tokens now return no syllable analyses and explicitly withhold IPA/Ukrainian output; curated lexicon entries remain unchanged.
+- Status: **IN_PROGRESS / verification pending**. Browser static validation passed on the PR head; the full CI, Python tests, IPA→UA tests, parity tests and master-artifact workflow are still running. Do not mark the correction complete until all required jobs finish successfully.
+- Linguistic scope unchanged: independent gold IPA corpus remains absent, so empirical accuracy is not measured.
