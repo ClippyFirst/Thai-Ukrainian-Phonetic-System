@@ -28,22 +28,24 @@
       "name": "FastThaiG2P",
       "url": "https://github.com/awslabs/FastThaiG2P",
       "kind": "dictionary+rules G2P",
-      "status": "candidate",
-      "output": "IPA claimed; validate conventions, tone/length and generated dictionary subset",
+      "status": "RAW_OUTPUT_SMOKE_VERIFIED; GOLD_ACCURACY_UNMEASURED",
+      "output": "IPA claimed; validate conventions, tone/length and generated dictionary subset Pinned smoke verified 36 outputs with no runtime errors; no gold labels.",
       "license": "Verify repository and dataset licenses before runtime integration",
-      "verified_in_repo": false,
-      "enabled_by_default": false
+      "verified_in_repo": true,
+      "enabled_by_default": false,
+      "latest_run_id": 40119612565
     },
     {
       "id": "thaiphon",
       "name": "thaiphon",
       "url": "https://github.com/5w0rdf15h/thaiphon",
       "kind": "rule-based phonology and IPA renderer",
-      "status": "candidate",
-      "output": "Structured onset/vowel/coda/tone analysis and IPA renderer; published accuracy figures are author-reported, not independently reproduced",
+      "status": "RAW_OUTPUT_SMOKE_VERIFIED; GOLD_ACCURACY_UNMEASURED",
+      "output": "Structured onset/vowel/coda/tone analysis and IPA renderer; published accuracy figures are author-reported, not independently reproduced Pinned smoke verified 36 outputs with no runtime errors; no gold labels.",
       "license": "Verify current upstream license",
-      "verified_in_repo": false,
-      "enabled_by_default": false
+      "verified_in_repo": true,
+      "enabled_by_default": false,
+      "latest_run_id": 40119612565
     },
     {
       "id": "tltk",
