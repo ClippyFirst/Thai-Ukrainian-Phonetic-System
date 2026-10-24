@@ -48,3 +48,11 @@ These are research leads, not verified availability claims. Before executing a c
 - Adjudicated language-specific gold rows: not yet established by this document.
 - Candidate engine availability, version, licenses, and language-specific output quality: unverified until recorded as run evidence.
 - Release status: research prototype; no accuracy claim is authorized by this registry.
+
+## Existing external run evidence (reconciled 2026-10-24)
+
+- [Smoke workflow 40093730177](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40093730177): `thaiphon==0.7.0` (base engine, optional VOLUBILIS lexicon absent) and FastThaiG2P 0.1.0 at commit `c4759eef7df03e11fcbb9aa83efe8cf21709fd2f`; 36 engineering inputs × 2 engines = 72 outputs, zero runtime errors, zero independently adjudicated gold labels. Example disagreements (`ไกล`, `จริง`) are triage leads, not evidence of which output is correct.
+- Upstream [thaiphon](https://github.com/5w0rdf15h/thaiphon) reports ~57% exact match for the base engine and ~75% with `thaiphon-data-volubilis` on its own Wiktionary-derived etalon; it reports ~73% on a PyThaiNLP G2P cross-check. These are upstream-reported figures, not reproduced here and not comparable to ClippyFirst's 36-item smoke. Engine code is Apache-2.0; the optional lexicon is separately CC-BY-SA 4.0.
+- [FastThaiG2P](https://github.com/awslabs/FastThaiG2P) documents a 62,112-word IPA dictionary and rule-based OOV fallback; dictionary provenance includes manually curated, Wiktionary-derived and generated entries. Review per-source provenance and license before treating any material as gold.
+- [Goruut](https://github.com/neurlang/goruut) lists Thai support upstream; no pinned Goruut run is yet recorded.
+- Current acceptance: build a shared held-out gold set and map IPA conventions before comparing exact-match rates.
