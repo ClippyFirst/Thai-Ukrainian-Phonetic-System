@@ -116,3 +116,12 @@ The benchmark harness was also tightened so an empty string is not counted as a 
 ## Goruut repeatability
 
 The endpoint readiness probe returned `kaː˧` for `กา`, while the first benchmark artifact recorded `ka` for the same form. Because these requests occurred in different contexts, this is a repeatability hypothesis rather than proof of stochastic output. The optional workflow now repeats each challenge form three times and preserves raw outputs plus Goruut's randomization counters. A stable output is not evidence of correctness; variability must be analyzed separately from accuracy.
+
+
+## First pinned three-engine run: coverage and disagreement decomposition
+
+The first pinned run [40128121032](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40128121032) processed 36 inputs across `thaiphon`, FastThaiG2P and Goruut. `thaiphon` and FastThaiG2P each returned 36/36 non-empty outputs; Goruut returned 26/36 and 10 responses with an empty `Words` array. This is partial coverage, not an accuracy score.
+
+Across the 88 valid engine pairs, raw exact agreement was 13/88 (14.8%). Removing only IPA `/` transcription delimiters raises diagnostic agreement to 21/88 (23.9%); removing those delimiters and IPA tone-letter symbols raises it to 24/88 (27.3%). The latter decomposes as 8 wrapper-format-only additional matches and 3 additional tone-only matches; 64 pairs still differ after these limited diagnostics. Pairwise: `thaiphon` vs FastThaiG2P 13/36 raw and 14/36 after tone-letter stripping; `thaiphon` vs Goruut 0/26 raw, 2/26 after delimiter removal, 3/26 after delimiter+tone removal; FastThaiG2P vs Goruut 0/26 raw, 6/26 after delimiter removal, 7/26 after delimiter+tone removal. These are convention/disagreement diagnostics only, never accuracy.
+
+The workflow now reports per-engine failures and repeats each input three times to investigate possible Goruut output variability. The readiness request returned `kaː˧` for `กา`, whereas the first benchmark row recorded `ka`; this cross-request difference is a repeatability hypothesis pending the repeated-call report.
