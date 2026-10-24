@@ -257,9 +257,9 @@ The harness now emits `pairwise_engine_diagnostic` for each engine pair, includi
 
 ## Authoritative current-head checkpoint — 2026-10-25
 
-This section supersedes earlier notes in this handoff that said post-merge main CI or Pages deployment were queued.
+This section supersedes earlier notes in this handoff that said post-merge main CI or Pages deployment were queued. The SHA below is the base-main commit immediately before this documentation-only checkpoint; the current PR head and its own checks are recorded in PR #44.
 
-- Current `main`: `26dfafcd4d0b06045505f5d13bfd454bb6d873e5`.
+- Base `main` before this documentation-only checkpoint: `26dfafcd4d0b06045505f5d13bfd454bb6d873e5`.
 - Post-merge CI [40131709016](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40131709016): `success`. Post-merge Pages deployment [40131709018](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40131709018): `success`.
 - Exact documentation/registry PR #43 head [40131388837](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40131388837): `success`.
 - Optional Goruut smoke [40131179238](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40131179238) and artifact [12575525598](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40131179238/artifacts/12575525598) were inspected. 36 inputs, 108 calls across engines; Goruut yielded 26/36 non-empty outputs and 10 no-`Words` results. On repeated calls 13/26 comparable forms varied; prior samples varied on 15/26 and 14/26. This is a repeatability/coverage diagnostic only. Independent Thai gold remains 0 and accuracy remains unmeasured.
