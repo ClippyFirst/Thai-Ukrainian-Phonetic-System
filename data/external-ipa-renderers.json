@@ -33,19 +33,17 @@
       "license": "Verify repository and dataset licenses before runtime integration",
       "verified_in_repo": false,
       "enabled_by_default": false,
-      "latest_run_id": 40119612565,
+      "latest_run_id": 40123365441,
       "execution_status": "SMOKE_VERIFIED_NOT_ACCURACY",
-      "smoke_evidence": {
-        "latest_run_id": 40121528216,
-        "latest_run_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40121528216",
-        "artifact_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40121528216/artifacts/12571038880",
-        "artifact_zip_sha256": "4e1dbb42cccc1f23609edf2a294eb71456e112a384145daa409e7f4282102a7c",
+      "latest_run_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40123365441",
+      "latest_artifact_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40123365441/artifacts/12571583780",
+      "latest_artifact_zip_sha256": "a4688f082f9a6307fded825b96d7cd025c39869383a4483311707b2d7c2c53ab",
+      "latest_smoke_summary": {
         "input_count": 36,
-        "outputs_total": 72,
+        "outputs": 36,
         "runtime_errors": 0,
         "independent_gold_count": 0,
-        "accuracy": null,
-        "score_status": "NOT_SCORED_NO_INDEPENDENT_GOLD"
+        "accuracy": null
       }
     },
     {
@@ -58,19 +56,17 @@
       "license": "Verify current upstream license",
       "verified_in_repo": false,
       "enabled_by_default": false,
-      "latest_run_id": 40119612565,
+      "latest_run_id": 40123365441,
       "execution_status": "SMOKE_VERIFIED_NOT_ACCURACY",
-      "smoke_evidence": {
-        "latest_run_id": 40121528216,
-        "latest_run_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40121528216",
-        "artifact_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40121528216/artifacts/12571038880",
-        "artifact_zip_sha256": "4e1dbb42cccc1f23609edf2a294eb71456e112a384145daa409e7f4282102a7c",
+      "latest_run_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40123365441",
+      "latest_artifact_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40123365441/artifacts/12571583780",
+      "latest_artifact_zip_sha256": "a4688f082f9a6307fded825b96d7cd025c39869383a4483311707b2d7c2c53ab",
+      "latest_smoke_summary": {
         "input_count": 36,
-        "outputs_total": 72,
+        "outputs": 36,
         "runtime_errors": 0,
         "independent_gold_count": 0,
-        "accuracy": null,
-        "score_status": "NOT_SCORED_NO_INDEPENDENT_GOLD"
+        "accuracy": null
       }
     },
     {
@@ -251,6 +247,29 @@
       "accuracy": null,
       "source_status": "SMOKE_VERIFIED_NOT_ACCURACY",
       "notes": "No gold labels. `ไกล`: thaiphon splits into /kaj˧/ /la˦˥/, FastThaiG2P returns /klaj˧/. `จริง`: thaiphon returns /tɕa˨˩/ /ri˦˥/ /ŋa˦˥/, FastThaiG2P returns /t͡ɕiŋ˧/. These are high-priority lexical/segmentation disagreements, not a winner determination."
+    },
+    {
+      "run_id": 40123365441,
+      "artifact_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40123365441/artifacts/12571583780",
+      "artifact_zip_sha256": "a4688f082f9a6307fded825b96d7cd025c39869383a4483311707b2d7c2c53ab",
+      "input_count": 36,
+      "output_rows": 72,
+      "engines_run": [
+        "thaiphon 0.7.0",
+        "FastThaiG2P@c4759eef7df03e11fcbb9aa83efe8cf21709fd2f"
+      ],
+      "runtime_errors": 0,
+      "independent_gold_count": 0,
+      "accuracy": null,
+      "inter_engine_diagnostic": {
+        "comparable_inputs": 36,
+        "exact_agreement_pairs": 13,
+        "tone_stripped_agreement_pairs_diagnostic_only": 14,
+        "tone_only_disagreements_diagnostic_only": 1,
+        "non_tone_or_format_disagreements_requiring_review": 22
+      },
+      "source_status": "SMOKE_VERIFIED_NOT_ACCURACY",
+      "notes": "Tone-stripped metric is diagnostic only. Exact inter-engine agreement is not correctness; Wiktionary source spot-check is selected and not independently adjudicated."
     }
   ],
   "upstream_evidence": [
