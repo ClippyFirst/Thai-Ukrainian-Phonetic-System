@@ -61,9 +61,9 @@ These are research leads, not verified availability claims. Before executing a c
 
 A three-word targeted spot-check was added to `data/benchmark/runs/external-g2p-smoke-2026-10-24.json` using the standard-IPA fields in the Thai Wiktionary pronunciation sections:
 
-- [กา](https://th.wiktionary.org/wiki/กา): `/kaː˧/`; both engines' raw strings match.
-- [ไกล](https://th.wiktionary.org/wiki/ไกล): `/klaj˧/`; FastThaiG2P matches; thaiphon outputs `/kaj˧/ /la˦˥/`.
-- [จริง](https://th.wiktionary.org/wiki/จริง): `/t͡ɕiŋ˧/`; FastThaiG2P matches; thaiphon outputs `/tɕa˨˩/ /ri˦˥/ /ŋa˦˥/`.
+- [กา](https://th.wiktionary.org/w/index.php?title=กา&oldid=5734858): `/kaː˧/`; both engines' raw strings match.
+- [ไกล](https://th.wiktionary.org/w/index.php?title=ไกล&oldid=5688545): `/klaj˧/`; FastThaiG2P matches; thaiphon outputs `/kaj˧/ /la˦˥/`.
+- [จริง](https://th.wiktionary.org/w/index.php?title=จริง&oldid=2441036): `/t͡ɕiŋ˧/`; FastThaiG2P matches; thaiphon outputs `/tɕa˨˩/ /ri˦˥/ /ŋa˦˥/`.
 
 Diagnostic string-concordance is 3/3 for FastThaiG2P and 1/3 for thaiphon on these selected cases. **Do not report this as accuracy**: this is a disagreement-selected sample, Wiktionary entries are source-attested but not independently expert-adjudicated here, and both upstream systems may overlap with Wiktionary-derived resources. It is useful for prioritizing segmentation/lexical review, not selecting a winner. Preserve the raw outputs and inspect tie-bar/segmentation conventions before normalization.
 
