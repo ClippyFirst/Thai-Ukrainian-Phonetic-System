@@ -4,6 +4,7 @@ from pathlib import Path
 
 from scripts.run_external_g2p_benchmark import (
     build_inter_engine_diagnostic,
+    has_usable_output,
     load_rows,
     normalized_ipa,
     parse_goruut_response,
@@ -22,6 +23,12 @@ class ExternalG2PBenchmarkHarnessTests(unittest.TestCase):
         self.assertEqual(len({row["id"] for row in rows}), len(rows))
         self.assertTrue(all(row.get("gold_phonemic_ipa") is None for row in rows))
         self.assertTrue(all(row.get("gold_broad_surface_ipa") is None for row in rows))
+
+    def test_empty_or_failed_result_is_not_a_successful_smoke_output(self):
+        self.assertTrue(has_usable_output({"raw_output": "kaː", "error": None}))
+        self.assertFalse(has_usable_output({"raw_output": "", "error": None}))
+        self.assertFalse(has_usable_output({"raw_output": None, "error": "empty"}))
+        self.assertFalse(has_usable_output({"raw_output": 12, "error": None}))
 
     def test_tone_stripping_is_diagnostic_only(self):
         self.assertEqual(strip_tone_symbols_diagnostic("/kaː˧/"), "/kaː/")
