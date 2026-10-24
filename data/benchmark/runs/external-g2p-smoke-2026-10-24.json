@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0",
+  "language": "Thai",
+  "run_id": 40119997011,
+  "artifact_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40119612565/artifacts/12569563771",
+  "artifact_zip_sha256": "b7232dbd508cd6244503005eb41974c090f8f5cc569fd2407f525dcda6216049",
+  "input_count": 36,
+  "outputs_total": 72,
+  "runtime_errors": 0,
+  "independent_gold_count": 0,
+  "accuracy": null,
+  "score_status": "NOT_SCORED_NO_INDEPENDENT_GOLD",
+  "engines": [
+    {
+      "name": "thaiphon",
+      "version": "0.7.0",
+      "configuration": "IPA scheme; optional thaiphon-data-volubilis lexicon absent",
+      "output_count": 36
+    },
+    {
+      "name": "FastThaiG2P",
+      "version": "0.1.0",
+      "source_commit": "c4759eef7df03e11fcbb9aa83efe8cf21709fd2f",
+      "configuration": "default dictionary + fallback",
+      "output_count": 36
+    }
+  ],
+  "representative_cases": [
+    {
+      "id": "TH-G2P-001",
+      "input": "กา",
+      "thaiphon": "/kaː˧/",
+      "FastThaiG2P": "/kaː˧/"
+    },
+    {
+      "id": "TH-G2P-002",
+      "input": "กะ",
+      "thaiphon": "/ka˨˩/",
+      "FastThaiG2P": "/kaʔ˨˩/"
+    },
+    {
+      "id": "TH-G2P-003",
+      "input": "ไกล",
+      "thaiphon": "/kaj˧/ /la˦˥/",
+      "FastThaiG2P": "/klaj˧/"
+    },
+    {
+      "id": "TH-G2P-004",
+      "input": "ใกล้",
+      "thaiphon": "/klaj˥˩/",
+      "FastThaiG2P": "/klaj˥˩/"
+    },
+    {
+      "id": "TH-G2P-006",
+      "input": "จริง",
+      "thaiphon": "/tɕa˨˩/ /ri˦˥/ /ŋa˦˥/",
+      "FastThaiG2P": "/t͡ɕiŋ˧/"
+    }
+  ],
+  "interpretation": "Raw output comparison only. The segmentation divergence on ไกล and จริง merits review, but with no independently adjudicated labels these results do not rank accuracy. Keep leading/trailing slashes and tone marks in raw output; convention normalization must be explicit."
+}
