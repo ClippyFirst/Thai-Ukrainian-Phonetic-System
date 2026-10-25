@@ -139,7 +139,7 @@ For a licensed, adjudicated word-segmentation TSV and matching prediction TSV:
 python scripts/evaluate_segmentation.py --gold data/benchmark/segmentation-gold.tsv --predictions data/benchmark/segmentation-predictions.tsv --output reports/segmentation-benchmark.json
 ~~~
 
-The segmentation benchmark manifests are intentionally header-only until a versioned, license-compatible gold set is independently reviewed. A no-gold run is `NOT_MEASURED`, not an accuracy score. See `docs/corpus-validation.md` for resource/license boundaries and the required evaluation protocol.
+The independent IPA-gold manifest remains empty until a versioned, license-compatible set is independently reviewed. The segmentation evaluator separately supports the pinned 993-row Wisesight source-annotated set, but it must not be described as independently adjudicated gold. A no-gold IPA run is `NOT_MEASURED`, not an accuracy score. See `docs/corpus-validation.md` for resource/license boundaries and the required evaluation protocol.
 
 The evaluator reports numerators and denominators explicitly and excludes missing gold fields from the relevant metric.
 
@@ -214,4 +214,4 @@ The report is written to `reports/challenge-runtime-diagnostics.json`. This is a
 - `scripts/run_wisesight_segmentation_diagnostic.py` evaluates the existing no-automatic-word-segmentation baseline and preserves the gold evidence grade in the JSON report. CI validates dataset integrity and uploads the report.
 - `data/benchmark/source-attested-ipa.tsv` contains six revision-pinned dictionary IPA/tone/vowel-length records, marked `SOURCE_ATTESTED_NOT_GOLD`. These are useful for review and error triage, not independent accuracy scoring.
 - Five source-attested lexicon entries are documented in `data/thai/text_lexicon_sources.csv`. Their CC BY-SA 4.0 data provenance is separate from the MIT software license; see `data/thai/TEXT-LEXICON-DATA-LICENSE.md`.
-- The word `เงิน` remains excluded from runtime lexicon resolution until a typed lexical-IPA override can preserve its source-attested short /ɤ/ reading through the IPA-first adapter. The project still needs independent expert/acoustic IPA gold, not just dictionary agreement.
+- The word `เงิน` now has a narrowly scoped typed lexical-IPA override (`data/thai/lexical_ipa_overrides.tsv`) preserving source-attested short /ɤ/, mid tone, source revision, and license through the same `PhoneticResult` → Ukrainian adapter boundary. This dictionary transcription is not independent expert/acoustic gold; no general lexical override behavior is inferred from this single entry.

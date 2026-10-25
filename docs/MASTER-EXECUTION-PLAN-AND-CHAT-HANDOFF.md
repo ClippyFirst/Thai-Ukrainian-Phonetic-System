@@ -1,16 +1,16 @@
 # Master execution plan and chat handoff — Thai → Ukrainian Phonetic System
 
-Last audited: 2026-10-20
+Last audited: 2026-10-25
 Repository: https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System
-Branch checked: `main`
-HEAD at audit start: `47ccd4d29c38a3032487c74075b569373c3d30bf`
+Branch checked: `research/thai-segmentation-gold-parity-verified-20261025`
+Starting checkpoint for current continuation: `cc7c0276c11df39c55edc4df8da4c82b988bd4ab`
 Release declared in README/pyproject: `0.6.1`
 
 ## Operating rule
 
 At the start of each continuation, read this file, `docs/final-audit.md`, `docs/evidence.md`, `docs/adversarial-validation.md`, `docs/corpus-validation.md`, and the current workflow definitions. Re-check HEAD and the newest CI/Pages runs before acting. Do not treat older audit prose as proof of current CI status. Keep linguistic correctness separate from parser consistency and empirical accuracy. Never convert a regression test copied from current behavior into linguistic gold evidence.
 
-## Current verified state (2026-10-20)
+## Historical verified state (2026-10-20; retained for audit trail)
 
 - Public repository is accessible; default branch is `main`; current HEAD at audit start is `47ccd4d29c38a3032487c74075b569373c3d30bf` (commit dated 2026-10-09).
 - Workflows present: `.github/workflows/ci.yml`, `pages.yml`, `web-static.yml`.

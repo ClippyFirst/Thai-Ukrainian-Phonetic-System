@@ -61,7 +61,7 @@ Run `python scripts/run_wisesight_segmentation_diagnostic.py --output /tmp/wises
 
 `data/benchmark/source-attested-ipa.tsv` records six revision-pinned Thai Wiktionary readings, including the contrast `เงิน /ŋɤn˧/` (short /ɤ/) vs `เดิน /dɤːn˧/` (long /ɤː/). These are CC BY-SA 4.0 source-attested dictionary records, explicitly labeled `SOURCE_ATTESTED_NOT_GOLD`. They support claim-level inspection and regression triage; they do not satisfy independent acoustic/expert adjudication and must not enter the gold scorer.
 
-The new curated lexicon additions have exact per-entry locators and data-license attribution in `data/thai/text_lexicon_sources.csv`; the derived subset's share-alike obligations are documented in `data/thai/TEXT-LEXICON-DATA-LICENSE.md`. The spelling `เงิน` is deliberately not enabled in the runtime text lexicon until a typed lexical-IPA override can preserve its short-vowel reading instead of routing it through a potentially ambiguous graphemic parser.
+The new curated lexicon additions have exact per-entry locators and data-license attribution in `data/thai/text_lexicon_sources.csv`; the derived subset's share-alike obligations are documented in `data/thai/TEXT-LEXICON-DATA-LICENSE.md`. The spelling `เงิน` is enabled only through the typed lexical-IPA override in `data/thai/lexical_ipa_overrides.tsv`, which preserves its source-attested short-vowel reading through the IPA-first adapter. It remains `SOURCE_ATTESTED_NOT_GOLD`, not independently adjudicated or acoustically verified.
 
 ## Remaining phonetic evidence gate
 
