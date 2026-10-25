@@ -446,3 +446,11 @@ This section supersedes earlier notes in this handoff that said post-merge main 
 
 - Repository-defined local commands remain: `python scripts/generate_derived.py`, `python scripts/generate_syllable_space.py`, `python -m unittest discover -s tests -v`, and `python scripts/evaluate_corpus.py path/to/records.jsonl`; browser parity/UI checks are wired into CI. The connector environment does not provide a local checkout or command runner, so these commands were **not executed in this session**. No test pass is claimed for this branch until its exact-head CI finishes.
 - No corpus data was downloaded or copied into the repository. No new linguistic labels or scores were fabricated. Next acceptance step: run CI on this branch, then build a non-commercial CCOST-based, independently reviewed subset and a separate license-compatible segmentation holdout; only then compute scores.
+
+
+## Segmentation evaluator implementation checkpoint — 2026-10-25
+
+- Added `scripts/evaluate_segmentation.py`, a standard-library-only evaluator that scores only adjudicated rows with source/license/split provenance, validates exact NFC token concatenation without dropping whitespace, and reports boundary precision/recall/F1, exact token-sequence rate and prediction coverage separately. Missing predictions remain in the gold denominator; an empty gold set reports `NOT_MEASURED`, not a fabricated score.
+- Added `tests/test_segmentation_benchmark.py` for exact segmentation, boundary-vs-sequence differences, missing predictions, no-gold status, provenance/concatenation rejection and Unicode normalization. The current fixtures are synthetic software tests only and are not Thai accuracy data.
+- Files were created on this dedicated branch; the repository's unittest discovery should pick up the new test file. **Tests were not executed locally** because this connector session has no repository checkout/command execution. Exact-head CI is the required verification gate; do not mark the implementation DONE_VERIFIED until that run passes.
+- The evaluator is a first practical deliverable for the segmentation benchmark, not an automatic Thai segmenter and not a substitute for a licensed held-out corpus. No external corpus was copied into the repository.
