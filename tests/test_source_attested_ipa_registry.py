@@ -34,7 +34,7 @@ class SourceAttestedIpaRegistryTests(unittest.TestCase):
     def test_lexical_ipa_override_is_pinned_and_kept_separate_from_source_gold(self):
         path = ROOT / "data" / "thai" / "lexical_ipa_overrides.tsv"
         with path.open("r", encoding="utf-8-sig", newline="") as stream:
-            overrides = list(csv.DictReader(stream, delimiter="\\t"))
+            overrides = list(csv.DictReader(stream, delimiter="\t"))
         self.assertEqual([row["word"] for row in overrides], ["เงิน"])
         row = overrides[0]
         self.assertEqual(row["segmental_ipa"], "ŋɤn")

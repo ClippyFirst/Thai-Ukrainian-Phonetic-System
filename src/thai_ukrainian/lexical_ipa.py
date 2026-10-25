@@ -29,7 +29,7 @@ def load_lexical_ipa_overrides() -> dict[str, dict[str, str]]:
     if not OVERRIDES_PATH.exists():
         return {}
     with OVERRIDES_PATH.open("r", encoding="utf-8-sig", newline="") as stream:
-        reader = csv.DictReader(stream, delimiter="\\t")
+        reader = csv.DictReader(stream, delimiter="\t")
         missing = set(FIELDS) - set(reader.fieldnames or ())
         if missing:
             raise ValueError(f"Lexical IPA override file missing fields: {sorted(missing)}")
