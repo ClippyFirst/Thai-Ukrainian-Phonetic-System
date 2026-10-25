@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "engineering-verified-on-code-bearing-commit; final-docs-head-CI-pending; independent-phonetic-validation-pending",
+  "status": "engineering-verified-on-code-bearing-commit; independent-phonetic-validation-pending",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -93,5 +93,11 @@
     "artifact_name": "thai-ukrainian-master-table",
     "rows": 351780,
     "vowel_rime_records": 41
+  },
+  "latest_documentation_checkpoint": {
+    "commit": "b3eaddde55de0474e47abe01ece7692467f1a229",
+    "ci_run": 40234324067,
+    "ci_status": "success",
+    "note": "This was the last fully CI-verified documentation head before the final audit-status wording normalization; no code changes were made after the verified code-bearing commit."
   }
 }
