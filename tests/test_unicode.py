@@ -1,6 +1,6 @@
 import unittest
 from thai_ukrainian.orthography import normalize_thai, decompose_thai
-from thai_ukrainian import analyze_syllable, tokenize_text
+from thai_ukrainian import analyze_syllable, tokenize_text, parse_thai
 
 
 class UnicodeTests(unittest.TestCase):
@@ -32,6 +32,16 @@ class UnicodeTests(unittest.TestCase):
         self.assertEqual([(token.text, token.kind) for token in tokens], [
             ("\u0085", "punctuation"), ("กา", "thai"), ("\u0085", "punctuation")
         ])
+
+    def test_syllable_api_does_not_split_on_non_ascii_whitespace_controls(self):
+        for source in ("\u0085กา", "กา\u0085", "กา\u0085กา"):
+            with self.subTest(source=source):
+                results = parse_thai(source)
+                self.assertTrue(results)
+                self.assertTrue(all(item.status == "unresolved:unsupported-symbol" for item in results))
+                self.assertTrue(all(item.phonemic_ipa is None for item in results))
+                self.assertTrue(all(item.phonetic_ipa is None for item in results))
+                self.assertTrue(all(item.ukrainian_transliteration is None for item in results))
 
     def test_controls_format_controls_and_zero_width_space_withhold_output(self):
         # These code points are not ordinary Thai orthographic material. They
