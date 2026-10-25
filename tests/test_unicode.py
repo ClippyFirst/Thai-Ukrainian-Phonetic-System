@@ -9,6 +9,12 @@ class UnicodeTests(unittest.TestCase):
         self.assertEqual(normalized, "ก่า")
         self.assertEqual(normalize_thai(normalized), normalized)
 
+    def test_only_ascii_layout_whitespace_is_trimmed(self):
+        self.assertEqual(normalize_thai("\tกา\r\n"), "กา")
+        # Python str.strip() treats U+0085 as whitespace, unlike the browser's
+        # ECMAScript trim set. Preserve it so the parser rejects it as input.
+        self.assertEqual(normalize_thai("\u0085กา\u0085"), "\u0085กา\u0085")
+
     def test_roles(self):
         roles = [x["role"] for x in decompose_thai("ก่า")]
         self.assertIn("consonant", roles)
