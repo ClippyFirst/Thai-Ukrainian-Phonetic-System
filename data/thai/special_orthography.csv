@@ -1,9 +1,9 @@
 rule_id,pattern,construction,analysis_status,candidate_ipa,notes,source_ids
 SP-RR-001,รร,รร construction,analysis-dependent,a|aː|an|am,Surface realization depends on lexical/morphological environment; do not force a single parse.,SRC-ORST;SRC-OBEC-RR-2022
-SP-RUE-001,ฤ,ฤ vowel-letter,analysis-dependent,rɯ|ri|rɤ,Historical/learned vocabulary can have different realizations; lexical evidence required.,SRC-ORST
-SP-RUE-LONG-001,ฤๅ,ฤๅ vowel-letter,analysis-dependent,rɯː,Long counterpart; lexical evidence remains relevant.,SRC-ORST
-SP-LUE-001,ฦ,ฦ vowel-letter,analysis-dependent,lɯ,Very rare/learned spelling; retain as explicit special construction.,SRC-ORST
-SP-LUE-LONG-001,ฦๅ,ฦๅ vowel-letter,analysis-dependent,lɯː,Very rare/learned spelling; retain as explicit special construction.,SRC-ORST
+SP-RUE-001,ฤ,ฤ vowel-letter,analysis-dependent,rɯ|ri|rɤ,OBEC teaching material describes these as syllabic units rather than free vowel signs; actual reading is lexical and must not be inferred from this broad description alone.,SRC-ORST;SRC-OBEC-SPECIAL-VOWELS-2022
+SP-RUE-LONG-001,ฤๅ,ฤๅ vowel-letter,analysis-dependent,rɯː,OBEC teaching material supports the syllabic/lexical status; a deterministic reading still requires word-level evidence.,SRC-ORST;SRC-OBEC-SPECIAL-VOWELS-2022
+SP-LUE-001,ฦ,ฦ vowel-letter,analysis-dependent,lɯ,OBEC teaching material supports the syllabic/lexical status; the spelling is rare and a deterministic reading requires word-level evidence.,SRC-ORST;SRC-OBEC-SPECIAL-VOWELS-2022
+SP-LUE-LONG-001,ฦๅ,ฦๅ vowel-letter,analysis-dependent,lɯː,OBEC teaching material supports the syllabic/lexical status; the spelling is rare and a deterministic reading requires word-level evidence.,SRC-ORST;SRC-OBEC-SPECIAL-VOWELS-2022
 SP-KARAN-001,์,thanthakhat,analysis-dependent,∅,Silences preceding material but exact scope is lexical; never silently delete without evidence.,SRC-ORST
 SP-THR-001,ทร,ทร lexical pronunciation,analysis-dependent,s|tʰr,Some lexical items have /s/ rather than the compositional cluster; lexicon evidence required.,SRC-ORST;SRC-ORST-CLUSTER-2011
 SP-JR-001,จร,จร false cluster,analysis-dependent,tɕ|tɕr,The written ร is silent in established standard forms such as จริง; lexical exceptions exist, so do not force /r/.,SRC-ORST
