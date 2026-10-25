@@ -45,5 +45,16 @@ class SourceAttestedIpaRegistryTests(unittest.TestCase):
         self.assertEqual(row["status"], "ACTIVE_SOURCE_ATTESTED_NOT_GOLD")
 
 
+    def test_money_override_and_lexicon_source_registry_share_exact_revision(self):
+        source_path = ROOT / "data" / "thai" / "text_lexicon_sources.csv"
+        with source_path.open("r", encoding="utf-8-sig", newline="") as stream:
+            source_rows = {row["word"]: row for row in csv.DictReader(stream)}
+        row = source_rows["เงิน"]
+        self.assertEqual(row["source_revision"], "5759179")
+        self.assertEqual(row["source_url"], "https://th.wiktionary.org/w/index.php?title=เงิน&oldid=5759179")
+        self.assertEqual(row["license"], "CC-BY-SA-4.0")
+        self.assertEqual(row["status"], "ACTIVE_IPA_OVERRIDE_SOURCE_ATTESTED_NOT_GOLD")
+        self.assertIn("not gold", row["claim_scope"])
+
 if __name__ == "__main__":
     unittest.main()

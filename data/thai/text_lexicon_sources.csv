@@ -4,4 +4,4 @@ word,syllables,source_id,source_url,source_revision,license,claim_scope,status
 เดิน,เดิน,SRC-WIKTIONARY-TH-เดิน,https://th.wiktionary.org/w/index.php?title=เดิน&oldid=1908803,1908803,CC-BY-SA-4.0,one-syllable segmentation and lexical attestation,SOURCE_ATTESTED
 กรรม,กำ,SRC-WIKTIONARY-TH-กรรม,https://th.wiktionary.org/w/index.php?title=กรรม&oldid=5769726,5769726,CC-BY-SA-4.0,lexicalized one-syllable pronunciation represented as normalized syllable spelling,SOURCE_ATTESTED
 บรรจุ,บัน|จุ,SRC-WIKTIONARY-TH-บรรจุ,https://th.wiktionary.org/w/index.php?title=บรรจุ&oldid=5686263,5686263,CC-BY-SA-4.0,lexical syllabification บัน–จุ,SOURCE_ATTESTED
-เงิน,,SRC-WIKTIONARY-TH-เงิน,https://th.wiktionary.org/wiki/เงิน,,CC-BY-SA-4.0,source gives short-vowel IPA /ŋɤn/; intentionally not added to runtime lexicon until the text adapter can carry a lexical phonological override,EXCLUDED_PENDING_ADAPTER
+เงิน,,SRC-WIKTIONARY-TH-เงิน,https://th.wiktionary.org/w/index.php?title=เงิน&oldid=5759179,5759179,CC-BY-SA-4.0,lexical IPA override /ŋɤn˧/; short /ɤ/; source-attested not gold,ACTIVE_IPA_OVERRIDE_SOURCE_ATTESTED_NOT_GOLD
