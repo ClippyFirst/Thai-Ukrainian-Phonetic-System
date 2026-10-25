@@ -87,3 +87,24 @@ for (const [input, expected] of textLexiconRegression) {
   }
 }
 console.log("Thai extended text lexicon regression passed");
+
+const unicodeHazards = [
+  ["กา\\u0001", "U+0001"],
+  ["กา\\u007f", "U+007F"],
+  ["กา\\u0085", "U+0085"],
+  ["กา\\u200b", "U+200B"],
+  ["กา\\u202e", "U+202E"],
+];
+for (const [input, codepoint] of unicodeHazards) {
+  const result = analyze(input);
+  if (result.status !== "unresolved:unsupported-symbol" ||
+      result.phonemicIpa != null || result.phoneticIpa != null ||
+      result.ukrainian != null) {
+    throw new Error("Unsupported Unicode control/format character leaked a Thai result (" + codepoint + "): " + JSON.stringify(result));
+  }
+}
+const normalizedThai = analyze("  ก่า  ");
+if (normalizedThai.normalized !== "ก่า" || normalizedThai.phonemicIpa == null) {
+  throw new Error("Thai NFC/trim normalization contract regressed");
+}
+console.log("Thai Unicode normalization and malformed-input contract passed");
