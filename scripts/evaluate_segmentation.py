@@ -4,8 +4,9 @@
 Gold TSV: id, text, gold_tokens_json, gold_status, source_id, license, split
 Prediction TSV: id, engine, predicted_tokens_json, status, version
 
-Only ADJUDICATED gold rows enter denominators. Token arrays must concatenate
-exactly to the NFC-normalized source text; whitespace is never silently dropped.
+Only ADJUDICATED or SOURCE_ANNOTATED rows enter denominators; evidence grades
+cannot be mixed in one report. Token arrays must concatenate exactly to the
+NFC-normalized source text; whitespace is never silently dropped.
 """
 from __future__ import annotations
 
