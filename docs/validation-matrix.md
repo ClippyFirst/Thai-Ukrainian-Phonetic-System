@@ -89,3 +89,17 @@ The latest code-bearing commit is engineering-verified by the above run. A docum
 - Documentation head `b3eaddde55de0474e47abe01ece7692467f1a229` passed both CI jobs in [run 40234324067](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40234324067).
 - This confirms the source-annotated benchmark, 150 Python tests, generated-data drift check, Python/browser parity, UI contract, 993-row baseline artifact and master-table artifact all remained green after the audit/matrix/handoff updates.
 - A final wording-only audit JSON reconciliation follows this checkpoint; no code/data changes are included. Its own CI is pending and will be checked before ending this run.
+
+
+## Text-evidence continuation — 2026-10-25
+
+| Workstream | Status | Evidence / acceptance |
+|---|---|---|
+| Text-attested IPA registry | PARTIAL | `data/benchmark/source-attested-ipa.tsv` pins six Thai Wiktionary revisions; status remains `SOURCE_ATTESTED_NOT_GOLD`. These records are dictionary evidence, not independent or acoustic gold. |
+| Runtime lexical IPA override | PARTIAL | `data/thai/lexical_ipa_overrides.tsv` enables the narrowly scoped source-attested short-vowel reading of `เงิน`; provenance and tone/length metadata are preserved through `PhoneticResult` and the IPA→Ukrainian adapter. Extend only with individually reviewed records and regression tests. |
+| Word-boundary corpus | PARTIAL | Pinned Wisesight 993-row CC0 source-annotated snapshot remains test-only. No use for training or dictionary construction; it is not independently re-adjudicated. |
+| Automatic word segmentation | TODO | No production segmenter is claimed. A valid implementation needs training data distinct from the pinned test snapshot and an untouched, source-annotated evaluation set. |
+| Orthographic exceptions | PARTIAL | `รร`, `ฤ/ฤๅ`, `ฦ/ฦๅ`, `ทร`, and silent letters remain lexical/context dependent; no universal rule inferred from a few examples. |
+| Connected speech / Ukrainian target preferences | BLOCKED for empirical claims | Textual transcription analysis and consistency checks are feasible; acoustic validation and independent Ukrainian target-form adjudication are not established by the current text-only evidence. |
+
+Current branch CI evidence: latest PR-head workflow run [40234747632](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40234747632) completed successfully on `cc7c0276c11df39c55edc4df8da4c82b988bd4ab`. This is engineering verification, not a phonetic-accuracy claim.

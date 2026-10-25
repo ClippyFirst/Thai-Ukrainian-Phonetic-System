@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "engineering-verified-on-code-bearing-commit; independent-phonetic-validation-pending",
+  "status": "engineering-verified-on-prior-head; lexical-IPA-override-batch-pending-CI",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -19,7 +19,10 @@
     "source_status_aware_segmentation_scoring",
     "lexicon_source_provenance",
     "source_attested_ipa_registry",
-    "wisesight_segmentation_diagnostic_ci_gate"
+    "wisesight_segmentation_diagnostic_ci_gate",
+    "typed_lexical_ipa_override_loader",
+    "source_pinned_short_vowel_override_for_เงิน",
+    "lexical_override_provenance_through_ipa_adapter"
   ],
   "not_claimed": [
     "complete_lexical_segmentation",
@@ -35,7 +38,8 @@
     "independent_expert_adjudicated_word_boundary_gold",
     "independent_expert_adjudicated_ipa_gold",
     "acoustic_tone_vowel_length_accuracy",
-    "automatic_word_segmentation"
+    "automatic_word_segmentation",
+    "independently_adjudicated_ukrainian_target_forms"
   ],
   "lexical_attestation": "five source-attested runtime lexicon entries added; challenge diagnostic resolves 28/36 forms, 8 unresolved; not representative coverage",
   "corpus_attestation": "993 source-annotated word-tokenization rows (CC0-1.0; not expert-adjudicated); zero independently adjudicated IPA/tone/vowel-length gold rows",
@@ -99,5 +103,14 @@
     "ci_run": 40234324067,
     "ci_status": "success",
     "note": "This was the last fully CI-verified documentation head before the final audit-status wording normalization; no code changes were made after the verified code-bearing commit."
+  },
+  "text_only_checkpoint": {
+    "branch": "research/thai-segmentation-gold-parity-verified-20261025",
+    "parent_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
+    "change": "typed source-attested lexical IPA override for เงิน; applied before PhoneticResult/IPA→Ukrainian adaptation",
+    "source": "Thai Wiktionary oldid 5759179; CC BY-SA 4.0",
+    "evidence_grade": "SOURCE_ATTESTED_NOT_GOLD",
+    "test_status": "PENDING_EXACT_HEAD_CI",
+    "remaining": "automatic segmentation needs a distinct training corpus; acoustic and independent expert claims remain unverified"
   }
 }

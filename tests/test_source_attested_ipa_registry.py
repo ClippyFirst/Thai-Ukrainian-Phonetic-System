@@ -31,6 +31,19 @@ class SourceAttestedIpaRegistryTests(unittest.TestCase):
         self.assertIn("/dɤːn˧/", rows["เดิน"]["phonemic_ipa"])
         self.assertIn("long /ɤː/", rows["เดิน"]["vowel_length_note"])
 
+    def test_lexical_ipa_override_is_pinned_and_kept_separate_from_source_gold(self):
+        path = ROOT / "data" / "thai" / "lexical_ipa_overrides.tsv"
+        with path.open("r", encoding="utf-8-sig", newline="") as stream:
+            overrides = list(csv.DictReader(stream, delimiter="\\t"))
+        self.assertEqual([row["word"] for row in overrides], ["เงิน"])
+        row = overrides[0]
+        self.assertEqual(row["segmental_ipa"], "ŋɤn")
+        self.assertEqual(row["tone_category"], "mid")
+        self.assertEqual(row["vowel_length"], "short")
+        self.assertEqual(row["source_revision"], "5759179")
+        self.assertEqual(row["license"], "CC-BY-SA-4.0")
+        self.assertEqual(row["status"], "ACTIVE_SOURCE_ATTESTED_NOT_GOLD")
+
 
 if __name__ == "__main__":
     unittest.main()

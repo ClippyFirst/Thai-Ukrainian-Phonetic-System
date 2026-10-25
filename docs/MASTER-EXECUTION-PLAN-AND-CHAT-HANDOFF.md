@@ -593,3 +593,14 @@ The audit/matrix/handoff edits after the code-bearing commit are documentation-o
 - Documentation head `b3eaddde55de0474e47abe01ece7692467f1a229` passed both jobs in [CI run 40234324067](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40234324067).
 - After that successful run, only the final audit JSON status wording and this matrix/handoff checkpoint were updated; no source code, test logic, or benchmark data changed. The latest docs-only head must still complete CI before this run is closed.
 - Keep the readiness split explicit: engineering gates pass; independent phonetic adjudication and a safe lexical IPA override for `เงิน` do not.
+
+
+## Text-only continuation checkpoint — 2026-10-25
+
+- Active work branch: `research/thai-segmentation-gold-parity-verified-20261025`; parent checkpoint before this batch: `cc7c0276c11df39c55edc4df8da4c82b988bd4ab`.
+- Latest previously verified PR-head CI at that checkpoint: [run 40234747632](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40234747632), successful on `cc7c0276c11df39c55edc4df8da4c82b988bd4ab`.
+- New implementation batch adds a typed, provenance-bearing lexical IPA override loader and activates only `เงิน` using the pinned Thai Wiktionary revision 5759179. The override is applied before `PhoneticResult` construction; Ukrainian adaptation still consumes typed IPA and does not bypass the IPA boundary.
+- The source-attested IPA registry remains explicitly `SOURCE_ATTESTED_NOT_GOLD`; its `เงิน` syllabification field is corrected to the actual one-syllable spelling rather than an editorial pseudo-form.
+- Wisesight remains evaluation-only and is not used to train a segmenter or derive a lexicon. Automatic segmentation remains TODO until there is a distinct training corpus, a documented model, and held-out evaluation.
+- Do not claim acoustic validation, independent phonetic adjudication, or independently adjudicated Ukrainian target preferences from textual dictionary records.
+- Verification for this new batch is pending the exact-head CI run; no local test execution is claimed.

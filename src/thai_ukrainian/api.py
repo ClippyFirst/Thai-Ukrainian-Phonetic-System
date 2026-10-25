@@ -8,6 +8,7 @@ from .word import analyze_word
 from .ua_orthography import candidates_for_ipa
 from .phonetic_result import PhoneticResult
 from .ukrainian_adaptation import adapt_syllable_to_ukrainian
+from .lexical_ipa import apply_lexical_ipa_override
 
 
 def analyze_syllable(syllable: str):
@@ -22,6 +23,9 @@ def analyze_syllable(syllable: str):
 
     phonologize(a)
     surface_phoneticize(a)
+    # Source-attested lexical IPA overrides are applied before the typed IPA→UA
+    # adapter boundary; they never bypass PhoneticResult.
+    apply_lexical_ipa_override(a)
 
     # Mandatory boundary: every Ukrainian rendering consumes the typed IPA result.
     phonetic_result = PhoneticResult.from_syllable_analysis(a)
