@@ -113,11 +113,11 @@ function tokenizeText(text) {
   const isLayoutWhitespace=ch=>ch===" "||ch.charCodeAt(0)===9||ch.charCodeAt(0)===10||ch.charCodeAt(0)===13;
   while(i<text.length){
     const ch=[...text.slice(i)][0];
-    const kind=ch===" "||/\s/u.test(ch)?"space":thaiMarker(ch)?"thai_marker":digitChar(ch)?"number":thaiTextChar(ch)?"thai":/[A-Za-z]/u.test(ch)?"latin":"punctuation";
+    const kind=isLayoutWhitespace(ch)?"space":thaiMarker(ch)?"thai_marker":digitChar(ch)?"number":thaiTextChar(ch)?"thai":/[A-Za-z]/u.test(ch)?"latin":"punctuation";
     let j=i+[...ch].length;
     while(j<text.length){
       const next=[...text.slice(j)][0];
-      const nk=next===" "||/\s/u.test(next)?"space":thaiMarker(next)?"thai_marker":digitChar(next)?"number":thaiTextChar(next)?"thai":/[A-Za-z]/u.test(next)?"latin":"punctuation";
+      const nk=isLayoutWhitespace(next)?"space":thaiMarker(next)?"thai_marker":digitChar(next)?"number":thaiTextChar(next)?"thai":/[A-Za-z]/u.test(next)?"latin":"punctuation";
       if(nk!==kind) break;
       j += [...next].length;
     }
