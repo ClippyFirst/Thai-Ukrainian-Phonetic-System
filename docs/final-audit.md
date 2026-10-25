@@ -280,7 +280,7 @@ The 36-form challenge diagnostic yields 23 lexicon lookups, 13 unresolved inputs
 
 - Both CI jobs passed: `test` and `master-artifact`.
 - 150 Python tests passed; generated data regeneration/drift check passed; master artifact guard passed for 351,780 structural rows and 41 vowel/rime records; Node IPA→UA, parity and UI contract tests passed.
-- Runtime challenge diagnostics: 36 forms; lexicon segmentation 28, unresolved 8; complete engine output 25, abstained/incomplete 11. Syllable analysis statuses: 35 analyzed, 3 special-orthography-dependent, 1 vowel-length-dependent (statuses overlap because they are per analyzed syllable, not per input). These are runtime diagnostics, not accuracy.
+- Runtime challenge diagnostics: 36 forms; lexicon segmentation 28, unresolved 8; complete engine output 25, abstained/incomplete 11. Syllable analysis statuses: 35 analyzed, 3 special-orthography-dependent, 1 vowel-length-dependent; these are syllable-level counts and therefore do not sum to the 36 input forms. These are runtime diagnostics, not accuracy.
 - Wisesight: 993/993 source-annotated records; 993 predictions; boundary precision 0.638319, recall 0.091858, F1 0.160604; exact sequence rate 0.031219. Gold status is `SOURCE_ANNOTATED`; zero rows are expert-adjudicated. Artifact [wisesight1000-segmentation-baseline](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40233825012) uploaded as artifact ID `12614106636`.
 - The initial CI run on the expanded lexicon exposed a stale test fixture that expected `ไกล` to remain unresolved. The fixture was corrected to use unsupported `กฉ`; the final code-bearing run above passed.
 
