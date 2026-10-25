@@ -1,4 +1,4 @@
-from .parser import parse_syllable
+import re\nfrom .orthography import normalize_thai\nfrom .parser import parse_syllable
 from .tone import determine_tone
 from .phonology import phonologize, surface_phoneticize, ONSET_IPA, effective_onset
 from .correspondence import rank_ukrainian_candidates as _rank_candidates
@@ -46,7 +46,7 @@ def analyze_syllable(syllable: str):
 
 
 def parse_thai(text: str):
-    return [analyze_syllable(x) for x in text.split() if x]
+    normalized = normalize_thai(text)\n    parts = (part for part in re.split(r"[ \t\r\n]+", normalized) if part)\n    return [analyze_syllable(part) for part in parts]
 
 
 def analyze_word_syllables(syllables: list[str] | tuple[str, ...]):
