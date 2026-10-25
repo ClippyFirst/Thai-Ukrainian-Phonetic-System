@@ -16,6 +16,8 @@ jobs:
       - run: git diff --exit-code -- docs/generated-audit.json docs/syllable-space.json docs/source-final-manifest.json
       - run: python scripts/generate_master_table.py
       - run: python -m unittest discover -s tests -v
+      - run: python scripts/run_challenge_diagnostics.py --output /tmp/challenge-runtime-diagnostics.json
+      - run: python -c "import json; r=json.load(open('/tmp/challenge-runtime-diagnostics.json',encoding='utf-8')); s=r['summary']; assert s['challenge_inputs']==36, s; assert s['inputs_with_engine_output']+s['inputs_abstained_or_without_complete_output']==36, s; assert r['evaluation_kind']=='runtime_diagnostic_not_accuracy_benchmark'; assert 'accuracy' not in s"
       - uses: actions/setup-node@v4
         with:
           node-version: 22
