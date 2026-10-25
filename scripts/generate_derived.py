@@ -5,8 +5,8 @@ from thai_ukrainian.source_final import build_manifest
 ROOT=Path(__file__).resolve().parents[1]
 report=validate_repository()
 report["scope_notes"]={
-"lexical_attestation":"not measured: no Thai lexicon/corpus is bundled",
-"corpus_attestation":"not measured: no corpus is bundled",
+"lexical_attestation":"not measured: the bundled text lexicon supports segmentation and selected spelling overrides, not an adjudicated pronunciation corpus",
+"corpus_attestation":"not measured: no independently adjudicated pronunciation corpus is bundled",
 "syllable_generation":"not yet claimed as lexical evidence",
 "target_inventory":"external Ukrainian-Phonetic-Inventory; reproducible feature snapshot is stored locally"
 }
