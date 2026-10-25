@@ -66,6 +66,7 @@ def test_unknown_onset_never_becomes_question_mark_ipa():
 
     result = phonologize(analysis)
 
+    assert result.status == "unresolved:unsupported-onset"
     assert result.phonemic_ipa is None
     assert result.phonetic_ipa is None
     assert any("unsupported onset" in warning.lower() for warning in result.warnings)
