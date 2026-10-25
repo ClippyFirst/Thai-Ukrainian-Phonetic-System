@@ -15,10 +15,13 @@ function split(s,q,v){
   const pre=chars(s).some(x=>PRE.has(x));
   if(q.length>=2&&pre){
     const ok=(FIRST.has(q[0])&&SECOND.has(q[1]))||(q[0]==="ห"&&LEAD.has(q[1]));
-    if(!ok)return[[q[0]],null];
-    if(q.length===2)return[q,null];
-    if(q.length===3)return[q.slice(0,2),q[2]];
-    return[[q[0]],null];
+    // If the first pair is not a licensed onset cluster, fall through to
+    // positional coda analysis (e.g. lexical แซก /sɛːk/), not onset-only.
+    if(ok){
+      if(q.length===2)return[q,null];
+      if(q.length===3)return[q.slice(0,2),q[2]];
+      return[[q[0]],null];
+    }
   }
   const lv=Math.max(-1,...chars(s).map((x,i)=>VS.has(x)?i:-1));
   const lc=sourcePositions.at(-1)?.i??-1;
