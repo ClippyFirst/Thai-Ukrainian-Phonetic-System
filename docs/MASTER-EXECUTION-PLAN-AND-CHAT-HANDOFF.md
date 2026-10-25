@@ -454,3 +454,27 @@ This section supersedes earlier notes in this handoff that said post-merge main 
 - Added `tests/test_segmentation_benchmark.py` for exact segmentation, boundary-vs-sequence differences, missing predictions, no-gold status, provenance/concatenation rejection and Unicode normalization. The current fixtures are synthetic software tests only and are not Thai accuracy data.
 - Files were created on this dedicated branch; the repository's unittest discovery should pick up the new test file. **Tests were not executed locally** because this connector session has no repository checkout/command execution. Exact-head CI is the required verification gate; do not mark the implementation DONE_VERIFIED until that run passes.
 - The evaluator is a first practical deliverable for the segmentation benchmark, not an automatic Thai segmenter and not a substitute for a licensed held-out corpus. No external corpus was copied into the repository.
+
+
+## Exact-head verification follow-up — 2026-10-25
+
+### Verified result
+
+- PR #71 head `13dbac32a9ce96f52c8bc6b20e113a6af046145b` was checked against GitHub Actions run [40227311442](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40227311442). Both jobs completed successfully: `test` and `master-artifact`.
+- The `test` job passed package installation, `scripts/generate_derived.py`, `scripts/generate_syllable_space.py`, generated-artifact drift check, `scripts/generate_master_table.py`, `python -m unittest discover -s tests -v`, `node web/tests/ipa-ua.test.mjs`, `node web/tests/parity.test.mjs`, and `node web/tests/ui-contract.test.mjs`.
+- The `master-artifact` job passed master-table generation and asserted `rows == expected_rows == 351780` and `vowel_records == 41`, then uploaded the artifact.
+- Therefore the software/evidence-gate changes in this PR are CI-verified on the exact PR head. This does **not** verify Thai lexical segmentation or phonetic accuracy. The 36-form challenge still has no adjudicated IPA/word-boundary gold; external G2P agreement is diagnostic only.
+- The static lexicon audit found 23/36 exact challenge-form matches (63.9%) and 13/36 misses. This is a lookup-coverage count on a hand-picked adversarial set, not engine accuracy, not population coverage, and not a release metric. Unresolved multi-grapheme text must continue to abstain rather than invent IPA/Ukrainian output.
+- Local execution remains unavailable in the current environment because resolving `github.com` from the container failed. The successful remote CI run is the test evidence; do not describe tests as locally executed.
+- PR #71 remains a draft intentionally: its software acceptance checks pass, but independent adjudication and license/source review of a representative gold set are still blockers for any accuracy claim. Do not merge it automatically or mark empirical accuracy complete.
+
+### Updated task ledger
+
+| Task | Status | Evidence / acceptance criterion |
+|---|---|---|
+| Segmentation scorer, provenance gates, malformed/duplicate-ID checks | DONE_VERIFIED | Exact-head CI run 40227311442 passed Python test discovery. |
+| Generated data and master artifact reproducibility | DONE_VERIFIED | Same run passed drift check and 351,780-row / 41-vowel assertions. |
+| Browser IPA→Ukrainian parity and UI contract | DONE_VERIFIED | Same run passed all three Node checks. |
+| Runtime diagnostics across all 36 challenge inputs | PARTIAL | External comparator smoke exists; ClippyFirst lexical lookup audit is static only. Add a reproducible engine-run report without treating it as gold accuracy. |
+| Representative Thai word-boundary and IPA gold | BLOCKED | Requires independently reviewed source attestations, scope/profile metadata, licensing review, and human adjudication; acceptance requires non-empty eligible records plus reproducible scoring. |
+| Full lexical segmentation and special-orthography coverage | TODO | Add only evidence-backed entries/rules with regression tests; unknown words must remain explicitly unresolved. |
