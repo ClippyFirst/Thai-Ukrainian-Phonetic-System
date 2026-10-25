@@ -54,6 +54,11 @@ class SegmentationBenchmarkTests(unittest.TestCase):
         row.update(overrides)
         return row
 
+    def test_duplicate_nonadjudicated_gold_ids_are_rejected(self):
+        first = self.gold(gold_status="SOURCE_ATTESTED")
+        second = self.gold(gold_status="ADJUDICATED")
+        self.assertIn("must be non-empty and unique", self.run_benchmark([first, second], [], expected=1))
+
     def test_exact_segmentation_scores_one(self):
         report = self.run_benchmark([self.gold()], [self.prediction()])
         metrics = report["engines"]["test-engine"]
