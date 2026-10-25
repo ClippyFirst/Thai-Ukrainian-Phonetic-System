@@ -478,3 +478,14 @@ This section supersedes earlier notes in this handoff that said post-merge main 
 | Runtime diagnostics across all 36 challenge inputs | PARTIAL | External comparator smoke exists; ClippyFirst lexical lookup audit is static only. Add a reproducible engine-run report without treating it as gold accuracy. |
 | Representative Thai word-boundary and IPA gold | BLOCKED | Requires independently reviewed source attestations, scope/profile metadata, licensing review, and human adjudication; acceptance requires non-empty eligible records plus reproducible scoring. |
 | Full lexical segmentation and special-orthography coverage | TODO | Add only evidence-backed entries/rules with regression tests; unknown words must remain explicitly unresolved. |
+
+
+## Runtime challenge diagnostic — exact-head CI verified (2026-10-25)
+
+- PR #71 branch `research/thai-segmentation-gold-parity-verified-20261025`, exact head `8a98c30cd47a7844696211550a9c2bc2b9e5931a`.
+- Full CI run [40227910891](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40227910891) completed successfully on that exact SHA. Both jobs passed: `test` and `master-artifact`.
+- Test job passed editable package install; `scripts/generate_derived.py`; `scripts/generate_syllable_space.py`; generated-artifact drift check; `scripts/generate_master_table.py`; `python -m unittest discover -s tests -v`; `scripts/run_challenge_diagnostics.py --output /tmp/challenge-runtime-diagnostics.json`; the guard asserting exactly 36 inputs are accounted for, diagnostic-only evaluation kind and absence of an accuracy field; and Node checks `web/tests/ipa-ua.test.mjs`, `web/tests/parity.test.mjs`, `web/tests/ui-contract.test.mjs`.
+- Master-artifact job passed generation, asserted `rows == expected_rows == 351780` and `vowel_records == 41`, and uploaded the generated artifact.
+- Duplicate workflow run [40227913467](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40227913467) was still in progress at the last poll; run 40227910891 is the completed successful evidence for the same exact head. Do not infer linguistic correctness from either CI run.
+- The runtime diagnostic is now executed in CI and regression-tested; it is still a runtime behavior report, not an accuracy benchmark. The 36-form static lexicon lookup count remains 23/36 (63.9%) on this deliberately selected challenge set and is not general coverage or accuracy.
+- Remaining gates: independently adjudicated Thai word boundaries and IPA/tone/vowel-length labels with exact source locators and license review; broaden lexicon/segmentation only with source-backed entries; separately resolve `รร`, `ฤ/ฤๅ`, `ฦ/ฦๅ`, `ทร`, silent-letter constructions and connected speech. PR #71 remains draft because these research gates are not satisfied.
