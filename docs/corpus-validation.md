@@ -83,3 +83,16 @@ This section records resource candidates and constraints; it does not claim that
 - Review the CCOST annotation manual and select a stratified, license-compliant sample; get independent Thai expert adjudication for orthography → segmentation → broad IPA → tone and document disagreements.
 - Select a CC0 or otherwise compatible word-segmentation holdout, pin exact revision/hash, and implement a deterministic boundary scorer with synthetic unit tests before running any score.
 - Run existing exact-head CI, generated-artifact drift checks and Python/browser parity; record the exact SHA and workflow result. Do not mark a task DONE_VERIFIED from the existence of a test file alone.
+
+
+## Segmentation evaluator
+
+A deterministic standard-library scorer is available at `scripts/evaluate_segmentation.py`:
+
+```bash
+python scripts/evaluate_segmentation.py --gold data/benchmark/segmentation-gold.tsv --predictions data/benchmark/segmentation-predictions.tsv --output reports/segmentation-benchmark.json
+```
+
+The input contract is tab-separated: gold columns `id, text, gold_tokens_json, gold_status, source_id, license, split`; predictions columns `id, engine, predicted_tokens_json, status, version`. Token arrays are JSON string arrays. Tokens must concatenate exactly to the NFC-normalized source text; the evaluator does not silently remove whitespace or rewrite text. It reports boundary precision/recall/F1, exact token-sequence rate and coverage separately. Only `ADJUDICATED` gold rows with source, license and split enter the denominator; absent predictions count as misses, and no adjudicated rows yields `NOT_MEASURED`. The added tests use synthetic fixtures only; no empirical score is implied.
+
+The input files are not yet populated with corpus records. Before running an empirical benchmark, acquire a license-compatible corpus, pin version/hash and split, verify the tokenization annotation convention, and record provenance per row. Keep CCOST audio/annotations outside the repository under its CC BY-NC-SA 4.0 terms; it is a research adjudication candidate, not a freely redistributable fixture.
