@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "research-foundation; source-annotated-segmentation-benchmark-added; CI-pending; independent-phonetic-validation-pending",
+  "status": "engineering-verified-on-code-bearing-commit; final-docs-head-CI-pending; independent-phonetic-validation-pending",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -37,7 +37,7 @@
     "acoustic_tone_vowel_length_accuracy",
     "automatic_word_segmentation"
   ],
-  "lexical_attestation": "five source-attested runtime lexicon entries added; 36-form challenge diagnostic pending exact-head CI; not representative coverage",
+  "lexical_attestation": "five source-attested runtime lexicon entries added; challenge diagnostic resolves 28/36 forms, 8 unresolved; not representative coverage",
   "corpus_attestation": "993 source-annotated word-tokenization rows (CC0-1.0; not expert-adjudicated); zero independently adjudicated IPA/tone/vowel-length gold rows",
   "word_boundary_benchmark": {
     "dataset": "PyThaiNLP/Wisesight word-tokenization labels",
@@ -47,12 +47,51 @@
     "upstream_blob_sha1": "279aeb2d4323fd8032306160144d33dcb5b2df84",
     "status": "SOURCE_ANNOTATED_NOT_EXPERT_ADJUDICATED",
     "project_split": "test",
-    "baseline": "pending exact-head CI"
+    "baseline": "pending exact-head CI",
+    "prediction_coverage": 1,
+    "boundary_precision": 0.6383191595797899,
+    "boundary_recall": 0.0918580375782881,
+    "boundary_f1": 0.1606041535556954,
+    "exact_sequence_rate": 0.03121852970795569,
+    "artifact_id": "12614106636",
+    "artifact_name": "wisesight1000-segmentation-baseline"
   },
   "source_attested_ipa_records": {
     "count": 6,
     "license": "CC-BY-SA-4.0",
     "status": "SOURCE_ATTESTED_NOT_GOLD",
     "includes_short_long_oe_contrast": true
+  },
+  "latest_verified_code_commit": "818a378d37b248d74628243b9a8d62fb82029815",
+  "starting_branch_commit": "7e39fd4bc108386148c1e9a79d257d75babcc9aa",
+  "ci": {
+    "run_id": 40233825012,
+    "url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40233825012",
+    "status": "success",
+    "jobs": {
+      "test": "success",
+      "master_artifact": "success"
+    },
+    "python_tests": 150,
+    "generated_data_drift": "pass",
+    "node_ipa_ua": "pass",
+    "python_browser_parity": "pass",
+    "ui_contract": "pass",
+    "master_rows": 351780,
+    "vowel_rime_records": 41
+  },
+  "challenge_runtime": {
+    "input_count": 36,
+    "lexicon_resolved": 28,
+    "unresolved": 8,
+    "complete_engine_outputs": 25,
+    "abstentions_or_incomplete": 11,
+    "evaluation_kind": "runtime_diagnostic_not_accuracy_benchmark"
+  },
+  "master_artifact": {
+    "artifact_id": "12613439376",
+    "artifact_name": "thai-ukrainian-master-table",
+    "rows": 351780,
+    "vowel_rime_records": 41
   }
 }
