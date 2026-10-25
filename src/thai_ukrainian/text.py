@@ -4,6 +4,7 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 from .word import analyze_word
+from .lexical_ipa import load_lexical_ipa_overrides
 
 ROOT = Path(__file__).resolve().parents[2]
 LEXICON_PATH = ROOT / "data" / "thai" / "text_lexicon.tsv"
@@ -66,6 +67,11 @@ def _segment_explicit(token: str) -> tuple[str, ...] | None:
 def segment_thai_word(word: str) -> tuple[tuple[str, ...], str]:
     if word in LEXICON:
         return LEXICON[word], "lexicon"
+    # A lexical IPA override is a source-backed one-syllable reading. Keep it
+    # separate from the graphemic syllable lexicon so its pronunciation is not
+    # reconstructed from ambiguous Thai spelling.
+    if word in load_lexical_ipa_overrides():
+        return (word,), "lexical_ipa_override"
     explicit = _segment_explicit(word)
     if explicit:
         return explicit, "explicit"

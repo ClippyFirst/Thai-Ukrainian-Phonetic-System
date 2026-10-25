@@ -43,6 +43,19 @@ class TextPipelineTests(unittest.TestCase):
                 self.assertEqual(token["syllables"], [])
                 self.assertTrue(any("IPA and Ukrainian output are withheld" in w for w in token["warnings"]))
 
+    def test_source_attested_lexical_ipa_override_flows_through_text_pipeline(self):
+        syllables, segmentation = segment_thai_word("เงิน")
+        self.assertEqual(syllables, ("เงิน",))
+        self.assertEqual(segmentation, "lexical_ipa_override")
+        result = analyze_text("เงิน")[0]
+        self.assertEqual(result["segmentation_status"], "lexical_ipa_override")
+        self.assertEqual(len(result["syllables"]), 1)
+        analysis = result["syllables"][0]
+        self.assertEqual(analysis["phonemic_ipa"], "ŋɤn")
+        self.assertEqual(analysis["vowel_length"], "short")
+        self.assertEqual(analysis["tone"]["tone"], "mid")
+        self.assertEqual(analysis["ukrainian_transliteration"], "нген")
+
     def test_final_velar_stop_is_preserved_in_ukrainian_output(self):
         for word in ("พริก", "ตรอก"):
             with self.subTest(word=word):
