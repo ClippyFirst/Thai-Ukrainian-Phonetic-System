@@ -29,7 +29,7 @@ function copyButton(label, value) {
 }
 
 function renderField(label, value, isIpa = false) {
-  const present = value !== null && value !== undefined && value !== '';
+  const present = value !== null && value !== undefined && value !== '' && value !== '—';
   const shown = present ? value : '—';
   return '<div class="data"><span class="label">' + esc(label) +
     '</span><div class="value' + (isIpa ? ' ipa-output' : '') + '"' +
@@ -123,16 +123,18 @@ function run() {
 
   const tokens = analyzeText(text);
   const thaiTokens = tokens.filter(token => token.kind === 'thai');
-  const unresolvedCount = thaiTokens.filter(token =>
+  const unresolvedCount = thaiTokens.length === 0 ? 1 : thaiTokens.filter(token =>
     token.segmentationStatus !== 'lexicon' ||
     (token.syllables || []).some(syllable => syllable.status !== 'analyzed')
   ).length;
   status.className = unresolvedCount ? 'status notice' : 'status';
-  status.textContent = unresolvedCount
-    ? 'Проаналізовано ' + tokens.length + ' токен(ів), тайських: ' + thaiTokens.length +
-      '; ' + unresolvedCount + ' тайських токен(ів) потребують додаткової перевірки або не мають детермінованого результату.'
-    : 'Проаналізовано ' + tokens.length + ' токен(ів), тайських: ' + thaiTokens.length +
-      '. Це аналіз написання, а не переклад.';
+  status.textContent = thaiTokens.length === 0
+    ? 'Тайських токенів не знайдено; нетайський текст збережено без фонетичної інтерпретації.'
+    : unresolvedCount
+      ? 'Проаналізовано ' + tokens.length + ' токен(ів), тайських: ' + thaiTokens.length +
+        '; ' + unresolvedCount + ' тайських токен(ів) потребують додаткової перевірки або не мають детермінованого результату.'
+      : 'Проаналізовано ' + tokens.length + ' токен(ів), тайських: ' + thaiTokens.length +
+        '. Це аналіз написання, а не переклад.';
   out.innerHTML = '<h2 class="results-heading">Результати аналізу</h2>' + tokens.map(card).join('');
   out.hidden = false;
   bindCopyButtons();
