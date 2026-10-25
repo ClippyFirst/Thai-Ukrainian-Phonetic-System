@@ -354,3 +354,10 @@ This section supersedes earlier notes in this handoff that said post-merge main 
 - The PR adds regression coverage for the source-attested lexical readings `ทราบ → ซาบ`, `ทรง → ซง`, `ทรัพย์ → ซับ`, and `แทรก → แซก`. These remain lexical overrides, not a productive rule for every spelling with `ทร`, and not independent IPA gold.
 - Exact-head CI run [40214453752](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40214453752) passed both jobs: the test job (Python unit tests, generated-audit/syllable-space/source-manifest drift check, IPA adapter tests, Python/browser parity and UI contract) and the master-artifact job (generated 351,780 rows, asserted expected row count and 41 vowel records, uploaded the artifact).
 - This confirms engineering regression/reproducibility for the added cases only. Independent gold-corpus accuracy remains unmeasured; the repository remains a research-oriented reference implementation, not an empirically validated release.
+
+
+## Reconciliation of stale Thai v0.5.1 UX/IPA overhaul PR — 2026-10-25
+
+- Open PR [#17](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/17) targets a v0.5.1 web implementation from 2026-10-08. Comparing the PR head with current `main` shows the browser app/engine/data files have materially diverged (current code has a newer text pipeline and different engine/data contracts); merging the PR's code wholesale would risk replacing current functionality with a stale implementation.
+- The audit `docs/repository-audit-2026-10-05.md` already exists on `main`. The two unique historical documents are being preserved under `docs/archive/` with explicit historical/superseded notices. The current source tree and tests remain authoritative.
+- After the archive-only PR merges, close PR #17 as superseded while leaving its branch untouched. Do not treat the historical UX audit as verification of the current UI, and do not treat the old design specification's checklist as completed work.
