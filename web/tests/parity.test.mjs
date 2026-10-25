@@ -113,3 +113,15 @@ const nelTokens = tokenizeText("\u0085กา\u0085");
 if (nelTokens.map(token => token.kind + ":" + token.input).join("|") !== "punctuation:\u0085|thai:กา|punctuation:\u0085") {
   throw new Error("Thai tokenizer silently treated U+0085 as layout whitespace: " + JSON.stringify(nelTokens));
 }
+
+const asciiBoundaryTokens = analyzeText(" \tกา\r\nขา ").filter(token => token.kind === "thai");
+if (asciiBoundaryTokens.map(token => token.input).join("|") !== "กา|ขา" ||
+    asciiBoundaryTokens.some(token => token.syllables.length !== 1 || token.syllables[0].status !== "analyzed")) {
+  throw new Error("Thai ASCII layout whitespace did not preserve two independently analyzed tokens");
+}
+for (const control of ["\u000b", "\u000c"]) {
+  const result = analyze("กา" + control + "ขา");
+  if (result.status !== "unresolved:unsupported-symbol" || result.phonemicIpa != null || result.phoneticIpa != null || result.ukrainian != null) {
+    throw new Error("Thai parser accepted unsupported layout control U+" + control.codePointAt(0).toString(16) + ": " + JSON.stringify(result));
+  }
+}
