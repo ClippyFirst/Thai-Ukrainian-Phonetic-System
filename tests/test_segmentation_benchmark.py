@@ -38,7 +38,7 @@ class SegmentationBenchmarkTests(unittest.TestCase):
     @staticmethod
     def gold(row_id="g1", text="ภาษาไทย", tokens=None, **overrides):
         row = {
-            "id": row_id, "text": text, "gold_tokens_json": json.dumps(tokens or ["ภาษา", "ไทย"], ensure_ascii=False),
+            "id": row_id, "text": text, "gold_tokens_json": json.dumps(tokens if tokens is not None else ["ภาษา", "ไทย"], ensure_ascii=False),
             "gold_status": "ADJUDICATED", "source_id": "fixture#1", "license": "CC0-1.0", "split": "test",
         }
         row.update(overrides)
