@@ -68,4 +68,10 @@ assert.equal(output.hidden, true);
 assert.equal(status.textContent, "");
 assert.equal(input.focused, true);
 
+input.value = "ABC 123";
+analyze.click();
+assert.equal(status.className, "status notice");
+assert.match(status.textContent, /Тайських токенів не знайдено/);
+assert.match(output.innerHTML, /ABC/);
+
 console.log("Thai current UI uncertainty/accessibility contract passed");
