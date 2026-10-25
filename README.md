@@ -133,6 +133,14 @@ For an external gold JSONL corpus:
 python scripts/evaluate_corpus.py path/to/records.jsonl
 ~~~
 
+For a licensed, adjudicated word-segmentation TSV and matching prediction TSV:
+
+~~~bash
+python scripts/evaluate_segmentation.py --gold data/benchmark/segmentation-gold.tsv --predictions data/benchmark/segmentation-predictions.tsv --output reports/segmentation-benchmark.json
+~~~
+
+The segmentation benchmark manifests are intentionally header-only until a versioned, license-compatible gold set is independently reviewed. A no-gold run is `NOT_MEASURED`, not an accuracy score. See `docs/corpus-validation.md` for resource/license boundaries and the required evaluation protocol.
+
 The evaluator reports numerators and denominators explicitly and excludes missing gold fields from the relevant metric.
 
 
