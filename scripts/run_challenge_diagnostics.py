@@ -101,7 +101,7 @@ def build_report(path: Path = DEFAULT_INPUT) -> dict[str, Any]:
         "schema_version": "1.0",
         "evaluation_kind": "runtime_diagnostic_not_accuracy_benchmark",
         "gold_status": "NOT_ADJUDICATED",
-        "input_path": path.as_posix(),
+        "input_file": path.name,
         "summary": {
             "challenge_inputs": len(challenge),
             "inputs_with_engine_output": output_count,
