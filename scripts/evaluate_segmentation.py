@@ -160,7 +160,11 @@ def main() -> int:
                 fn += len(reference["boundaries"])
         precision = tp / (tp + fp) if tp + fp else None
         recall = tp / (tp + fn) if tp + fn else None
-        f1 = (2 * precision * recall / (precision + recall)) if precision is not None and recall is not None and precision + recall else None
+        # F1 is defined as 0 when either side has boundaries but there are
+        # no true positives; it is undefined only when both gold and predicted
+        # boundary sets are empty (zero denominator).
+        f1_denominator = 2 * tp + fp + fn
+        f1 = (2 * tp / f1_denominator) if f1_denominator else None
         engines[engine] = {
             "status": "MEASURED" if gold else "NOT_MEASURED_NO_ADJUDICATED_GOLD",
             "n_adjudicated_gold_rows": len(gold),
