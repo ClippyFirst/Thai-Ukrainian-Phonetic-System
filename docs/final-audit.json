@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "engineering-verified-on-prior-head; lexical-IPA-override-batch-pending-CI",
+  "status": "engineering-verified research prototype; latest browser parity head CI pending",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -22,7 +22,13 @@
     "wisesight_segmentation_diagnostic_ci_gate",
     "typed_lexical_ipa_override_loader",
     "source_pinned_short_vowel_override_for_เงิน",
-    "lexical_override_provenance_through_ipa_adapter"
+    "lexical_override_provenance_through_ipa_adapter",
+    "typed_source_pinned_lexical_ipa_override_for_เงิน",
+    "lexical_override_routed_through_python_text_pipeline",
+    "browser_lexical_ipa_override_and_parity_fixture",
+    "source_attested_ipa_discrepancy_and_abstention_diagnostic",
+    "segmentation_corpus_license_gate_registry",
+    "ccost_textgrid_access_and_license_record"
   ],
   "not_claimed": [
     "complete_lexical_segmentation",
@@ -39,9 +45,12 @@
     "independent_expert_adjudicated_ipa_gold",
     "acoustic_tone_vowel_length_accuracy",
     "automatic_word_segmentation",
-    "independently_adjudicated_ukrainian_target_forms"
+    "independently_adjudicated_ukrainian_target_forms",
+    "acoustic_tone_or_vowel_length_accuracy",
+    "production_automatic_word_segmentation",
+    "connected_speech_acoustic_validation"
   ],
-  "lexical_attestation": "five source-attested runtime lexicon entries added; challenge diagnostic resolves 28/36 forms, 8 unresolved; not representative coverage",
+  "lexical_attestation": "Five source-attested runtime text lexicon entries plus one active typed IPA override for เงิน. The challenge diagnostic now reports 28 ordinary lexicon resolutions plus 1 lexical override, 7 unresolved inputs, 26 complete outputs and 10 abstentions/incomplete outputs; this is not representative accuracy.",
   "corpus_attestation": "993 source-annotated word-tokenization rows (CC0-1.0; not expert-adjudicated); zero independently adjudicated IPA/tone/vowel-length gold rows",
   "word_boundary_benchmark": {
     "dataset": "PyThaiNLP/Wisesight word-tokenization labels",
@@ -69,27 +78,32 @@
   "latest_verified_code_commit": "818a378d37b248d74628243b9a8d62fb82029815",
   "starting_branch_commit": "7e39fd4bc108386148c1e9a79d257d75babcc9aa",
   "ci": {
-    "run_id": 40233825012,
-    "url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40233825012",
-    "status": "success",
-    "jobs": {
-      "test": "success",
-      "master_artifact": "success"
-    },
-    "python_tests": 150,
-    "generated_data_drift": "pass",
-    "node_ipa_ua": "pass",
-    "python_browser_parity": "pass",
-    "ui_contract": "pass",
-    "master_rows": 351780,
-    "vowel_rime_records": 41
+    "latest_fully_successful_code_data_commit": "59890a0bfcf7b84d19408310f690d41244a482d1",
+    "latest_fully_successful_ci_run": 40237347247,
+    "python_tests": 158,
+    "generated_data_drift": "PASS",
+    "master_artifact": "PASS",
+    "node_ipa_ua_parity_ui_tests": "PASS on 59890a0; before the final browser lexical-override change",
+    "wisesight_baseline": "PASS",
+    "source_attested_ipa_diagnostic": "PASS",
+    "current_browser_parity_code_head": "43687b2753379b1d617b1c925f87358f8aad13bd",
+    "current_head_ci_runs": [
+      40238198251,
+      40238198267
+    ],
+    "current_head_web_validation_runs": [
+      40238198334,
+      40238202181
+    ],
+    "current_head_status_at_audit_refresh": "QUEUED; earlier failures on older heads were traced to stale fixture expectation/order and fixed in 43687b2; do not claim exact-head pass until these runs finish"
   },
   "challenge_runtime": {
-    "input_count": 36,
-    "lexicon_resolved": 28,
-    "unresolved": 8,
-    "complete_engine_outputs": 25,
-    "abstentions_or_incomplete": 11,
+    "challenge_inputs": 36,
+    "ordinary_lexicon_resolved": 28,
+    "lexical_ipa_override_resolved": 1,
+    "segmentation_unresolved": 7,
+    "complete_engine_outputs": 26,
+    "abstentions_or_incomplete": 10,
     "evaluation_kind": "runtime_diagnostic_not_accuracy_benchmark"
   },
   "master_artifact": {
@@ -112,5 +126,37 @@
     "evidence_grade": "SOURCE_ATTESTED_NOT_GOLD",
     "test_status": "PENDING_EXACT_HEAD_CI",
     "remaining": "automatic segmentation needs a distinct training corpus; acoustic and independent expert claims remain unverified"
-  }
+  },
+  "source_attested_ipa_diagnostic": {
+    "source_records": 6,
+    "complete_engine_outputs": 5,
+    "withheld_or_incomplete": 1,
+    "segmental_agreements": 4,
+    "tone_category_agreements": 5,
+    "discrepancy": "บรรจุ: source transcription includes final /ʔ/ while the current segmental engine output omits it; retained for review because transcription level/stress context must be resolved",
+    "evidence_grade": "SOURCE_ATTESTED_NOT_GOLD",
+    "accuracy_claimed": false
+  },
+  "word_boundary_baseline": {
+    "corpus": "Wisesight-1000",
+    "rows": 993,
+    "status": "SOURCE_ANNOTATED_NOT_EXPERT_ADJUDICATED",
+    "prediction_coverage": 1,
+    "boundary_precision": 0.638319,
+    "boundary_recall": 0.091858,
+    "boundary_f1": 0.160604,
+    "exact_sequence_rate": 0.031219,
+    "used_for_training": false
+  },
+  "corpus_source_registry": {
+    "active_test_source": "Wisesight-1000 (CC0-1.0; 993 rows; test-only)",
+    "candidate_sources": [
+      "LST20 (license/access review required; not bundled)",
+      "VISTEC-TP-TH-2021 (CC BY-SA 3.0 reported; upstream terms/attribution review required)"
+    ],
+    "ccost": "CC BY-NC-SA 4.0; TextGrid annotations inside 6.2 GB archive; not bundled"
+  },
+  "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
+  "latest_code_checkpoint": "43687b2753379b1d617b1c925f87358f8aad13bd",
+  "readiness": "research-ready engineering prototype; not release-ready for arbitrary Thai text; phonetic accuracy is not independently validated"
 }

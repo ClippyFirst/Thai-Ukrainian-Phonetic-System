@@ -68,3 +68,14 @@ Standard Thai cluster descriptions distinguish true clusters from false clusters
 - **SRC-THAI-SEGMENTATION-BENCHMARK-INDEX** — OpenCodePapers, Thai word tokenization on BEST-2010 benchmark index, https://opencodepapers-b7572d.gitlab.io/benchmarks/thai-word-tokenization-on-best-2010.html. Its listed F1 results are external, split-specific research reports, not reproduced ClippyFirst scores. Do not use them as a direct baseline until dataset version, split, metric and tokenization convention match.
 
 These sources identify candidate resources and external claims; they do not add adjudicated records to `data/benchmark/gold.tsv` and do not change the current independent-gold count of zero.
+
+
+## Text-attested IPA diagnostic findings — 2026-10-25
+
+The six entries in `data/benchmark/source-attested-ipa.tsv` remain `SOURCE_ATTESTED_NOT_GOLD`. The diagnostic run compares segmental IPA separately from tone categories and records vowel-length metadata. On the verified Python checkpoint, five records produced complete outputs; four matched source segmental IPA and five matched tone categories. One form was withheld because the engine still cannot resolve its vowel-length ambiguity. One discrepancy remains for `บรรจุ`: the dictionary transcription includes final `/ʔ/`, while the engine's segmental output omits it.
+
+This is not automatically classified as an engine error or patched into runtime output. Published descriptions of Thai report that final glottal realization can vary with stress and may be absent in unstressed syllables; compare transcription conventions and context before forcing a universal rule. See [Tingsabadh & Abramson, *Thai* (JIPA)](https://doi.org/10.1017/S0025100300004746) and the [Thai phonology reference](https://www.thai-language.com/resources/slayden-thai-phonology.pdf). These references justify review of the mismatch, not an acoustic claim about this particular token.
+
+## CCOST license and text-only availability
+
+The CCOST source record is pinned to [Zenodo DOI 10.5281/zenodo.17366698](https://doi.org/10.5281/zenodo.17366698). The source states CC BY-NC-SA 4.0; the TextGrid annotations are inside the 6.2 GB `C-COST.zip` archive alongside WAV files. TextGrid labels are textual and can be inspected without playback for a first-pass comparison, but no TextGrid files are currently present in this repository. Separate wordlist/sentence files do not substitute for the phone/toneme annotations. No CCOST-derived records or metrics are claimed.

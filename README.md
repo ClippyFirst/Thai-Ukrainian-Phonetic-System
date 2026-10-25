@@ -218,3 +218,6 @@ The report is written to `reports/challenge-runtime-diagnostics.json`. This is a
 
 
 Segmentation source decisions are tracked in [`data/corpus_sources.csv`](data/corpus_sources.csv). LST20 and VISTEC are candidate sources only and are not bundled; their license and annotation compatibility must be reviewed before use. The pinned Wisesight snapshot remains test-only and must not be used for training or lexicon construction.
+
+
+For a text-only discrepancy report over the six pinned dictionary IPA records, run `python scripts/run_source_attested_ipa_diagnostic.py --output /tmp/source-attested-ipa-diagnostic.json`. It compares segmental IPA, tone categories, and vowel-length metadata without claiming accuracy. The `เงิน` override is mirrored in the browser adapter and covered by a cross-runtime fixture; the latest browser parity head's CI status is recorded in the execution matrix and handoff.

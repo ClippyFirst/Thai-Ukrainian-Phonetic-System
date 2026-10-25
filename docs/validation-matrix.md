@@ -102,4 +102,16 @@ The latest code-bearing commit is engineering-verified by the above run. A docum
 | Orthographic exceptions | PARTIAL | `รร`, `ฤ/ฤๅ`, `ฦ/ฦๅ`, `ทร`, and silent letters remain lexical/context dependent; no universal rule inferred from a few examples. |
 | Connected speech / Ukrainian target preferences | BLOCKED for empirical claims | Textual transcription analysis and consistency checks are feasible; acoustic validation and independent Ukrainian target-form adjudication are not established by the current text-only evidence. |
 
-Current branch CI evidence: latest PR-head workflow run [40234747632](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40234747632) completed successfully on `cc7c0276c11df39c55edc4df8da4c82b988bd4ab`. This is engineering verification, not a phonetic-accuracy claim.
+Last fully successful code/data checkpoint: [run 40237347247](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40237347247) on `59890a0bfcf7b84d19408310f690d41244a482d1`. The newer browser parity head `43687b2753379b1d617b1c925f87358f8aad13bd` is awaiting exact-head CI and Web static validation (runs 40238198251 and 40238198334); older fixture-order/expectation failures are fixed in that head. This is engineering verification, not a phonetic-accuracy claim.
+
+
+## Latest text-only implementation checkpoint — 2026-10-25
+
+| Task | Status | Evidence / acceptance |
+|---|---|---|
+| Typed lexical IPA override for `เงิน` | PARTIAL | Source-pinned override is active in Python and browser, runs through the IPA→Ukrainian adapter, and carries `SOURCE_ATTESTED_NOT_GOLD` provenance. Exact-head browser CI is queued at this matrix refresh. |
+| Text pipeline routing and parity | PARTIAL | Python text pipeline recognizes the override; browser engine and text UI have matching fixture assertions. Await exact-head CI after the fixture expectation/order correction. |
+| Source-attested IPA discrepancy diagnostic | DONE_VERIFIED on prior code/data checkpoint | Six source rows; 5 complete outputs, 4 segmental agreements, 5 tone-category agreements, 1 withheld; `บรรจุ` final-`/ʔ/` difference is retained for review, not auto-corrected. |
+| Corpus license/access registry | DONE_VERIFIED on prior code/data checkpoint | Wisesight 993-row source-annotated test-only snapshot; LST20 and VISTEC candidate gates; CCOST CC BY-NC-SA 4.0 and 6.2 GB TextGrid archive recorded. |
+| Automatic word segmentation | TODO | No production segmenter or distinct license-cleared training corpus. Wisesight remains test-only. |
+| Independent IPA/tone/length gold and Ukrainian target gold | BLOCKED | Requires independent adjudication and, for acoustic claims, access to the matching audio. |

@@ -595,12 +595,15 @@ The audit/matrix/handoff edits after the code-bearing commit are documentation-o
 - Keep the readiness split explicit: engineering gates pass; independent phonetic adjudication and a safe lexical IPA override for `เงิน` do not.
 
 
-## Text-only continuation checkpoint — 2026-10-25
+## Current continuation checkpoint — 2026-10-25
 
-- Active work branch: `research/thai-segmentation-gold-parity-verified-20261025`; parent checkpoint before this batch: `cc7c0276c11df39c55edc4df8da4c82b988bd4ab`.
-- Latest previously verified PR-head CI at that checkpoint: [run 40234747632](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40234747632), successful on `cc7c0276c11df39c55edc4df8da4c82b988bd4ab`.
-- New implementation batch adds a typed, provenance-bearing lexical IPA override loader and activates only `เงิน` using the pinned Thai Wiktionary revision 5759179. The override is applied before `PhoneticResult` construction; Ukrainian adaptation still consumes typed IPA and does not bypass the IPA boundary.
-- The source-attested IPA registry remains explicitly `SOURCE_ATTESTED_NOT_GOLD`; its `เงิน` syllabification field is corrected to the actual one-syllable spelling rather than an editorial pseudo-form.
-- Wisesight remains evaluation-only and is not used to train a segmenter or derive a lexicon. Automatic segmentation remains TODO until there is a distinct training corpus, a documented model, and held-out evaluation.
-- Do not claim acoustic validation, independent phonetic adjudication, or independently adjudicated Ukrainian target preferences from textual dictionary records.
-- Verification for this new batch is pending the exact-head CI run; no local test execution is claimed.
+- Continuation started from branch checkpoint `cc7c0276c11df39c55edc4df8da4c82b988bd4ab`.
+- Current code/data/test head at this audit refresh: `43687b2753379b1d617b1c925f87358f8aad13bd`; branch: `research/thai-segmentation-gold-parity-verified-20261025`; PR #71 remains open and draft.
+- Latest fully successful code/data CI checkpoint: `59890a0bfcf7b84d19408310f690d41244a482d1`, run [40237347247](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40237347247): 158 Python tests passed; generated-data drift and master artifact guards passed; existing Node IPA/UA, parity and UI tests passed at that checkpoint; Wisesight and source-attested IPA diagnostics passed.
+- The current head adds the browser-side lexical IPA override and parity fixture for `เงิน`. Its exact-head CI run [40238198251](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40238198251) and Web static validation [40238198334](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40238198334) are queued at this audit refresh. Do not mark them passed until the workflow reports success.
+- Current challenge diagnostic on the verified Python checkpoint: 36 inputs; 28 ordinary lexicon-resolved + 1 lexical IPA override; 7 unresolved; 26 complete outputs; 10 abstentions/incomplete. Not an accuracy benchmark.
+- Text IPA diagnostic: 6 source-attested dictionary rows; 5 complete engine outputs; 4 segmental agreements; 5 tone-category agreements; 1 withheld. `บรรจุ` has a source/engine difference on final `/ʔ/`; preserve as a review item because stress/transcription level may explain it.
+- Wisesight remains 993-row `SOURCE_ANNOTATED`, test-only, not independent expert gold and not training data. Current baseline: boundary P .638319, R .091858, F1 .160604, exact sequence .031219.
+- Active lexical override: Thai Wiktionary revision 5759179 for `เงิน`, short `/ɤ/`, mid tone, CC BY-SA 4.0; result passes through `PhoneticResult` and the browser IPA→Ukrainian adapter.
+- Corpus register now records LST20 and VISTEC as candidates requiring license/annotation review. CCOST is CC BY-NC-SA 4.0; TextGrid annotations are in a 6.2 GB archive and are not bundled.
+- Remaining: production automatic segmentation; independent IPA/tone/length gold; acoustic/connected-speech validation; independent Ukrainian target-form adjudication. The repository remains a research-ready engineering prototype, not release-ready.

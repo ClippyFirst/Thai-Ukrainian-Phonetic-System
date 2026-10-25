@@ -285,3 +285,27 @@ The 36-form challenge diagnostic yields 23 lexicon lookups, 13 unresolved inputs
 - The initial CI run on the expanded lexicon exposed a stale test fixture that expected `ไกล` to remain unresolved. The fixture was corrected to use unsupported `กฉ`; the final code-bearing run above passed.
 
 **Readiness:** engineering-verified research prototype with a usable source-annotated segmentation benchmark; not release-ready for arbitrary Thai text and not empirically validated for phonetic accuracy. Independent IPA/tone/length adjudication, lexical override for `เงิน`, and context-dependent special orthography remain open.
+
+
+## Text-only continuation audit — 2026-10-25
+
+### Verified implementation state
+
+- Added a typed, pinned lexical IPA override for `เงิน` from Thai Wiktionary revision 5759179. It preserves segmental IPA `ŋɤn`, mid tone, short-vowel metadata, source ID, revision, URL, license, and an explicit `SOURCE_ATTESTED_NOT_GOLD` status.
+- Routed the override through the Python text pipeline and the browser text pipeline. Both adapters continue to produce Ukrainian output from typed IPA, not directly from Thai graphemes.
+- Added a six-record source-attested IPA discrepancy/abstention diagnostic, including segmental comparison, tone-category comparison, and engine vowel-length metadata. It does not claim accuracy.
+- Added a corpus-source register for Wisesight, LST20, VISTEC-TP-TH-2021, and CCOST, recording which sources are usable, candidates only, or blocked by license/access.
+- Updated source registry and license notes; Wisesight remains a held-out source-annotated baseline and is not used for training.
+
+### Evidence and limitations
+
+- On fully successful code/data checkpoint `59890a0bfcf7b84d19408310f690d41244a482d1`, GitHub Actions run [40237347247](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40237347247) passed 158 Python tests, generated-data drift checks, existing Node IPA/UA and UI/parity tests, the Wisesight diagnostic, and the six-record IPA diagnostic. The master artifact guard checks 351,780 structural rows and 41 vowel/rime records.
+- The challenge diagnostic on that checkpoint: 36 inputs; 28 ordinary lexicon resolutions + 1 lexical IPA override; 7 unresolved; 26 complete outputs; 10 abstentions/incomplete. This is not an accuracy benchmark.
+- The six-record IPA diagnostic: 5 complete engine outputs; 4 segmental agreements; 5 tone-category agreements; one withheld/incomplete output. The `บรรจุ` discrepancy (source includes final `/ʔ/`, engine segmental output omits it) is intentionally not auto-corrected: source transcription level and stress-conditioned realization need review.
+- The latest browser parity head at this audit refresh is `43687b2753379b1d617b1c925f87358f8aad13bd`. Its exact-head CI and Web static validation runs are queued: [CI 40238198251](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40238198251), [Web validation 40238198334](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40238198334). Older browser checks exposed stale fixture expectations/order; those were corrected in the current head. Do not treat the queued exact-head runs as passing.
+- Automatic word segmentation remains TODO. The 993-row Wisesight set is test-only; LST20 and VISTEC remain candidates pending license/annotation review. CCOST is CC BY-NC-SA 4.0 and its TextGrid annotations are in a 6.2 GB archive; it is not bundled.
+- Independent IPA/tone/length gold, acoustic validation, connected-speech validation, and independently adjudicated Ukrainian target forms remain blocked by evidence/permission/expert-review requirements.
+
+### Readiness
+
+**Research-ready engineering prototype; not release-ready.** Text-only improvements are implemented and regression-tested at the verified checkpoint, but the latest browser parity head must pass its queued CI, and the repository still lacks independent phonetic gold and a production automatic segmenter.

@@ -44,7 +44,9 @@ python scripts/evaluate_corpus.py path/to/records.jsonl
 
 The command prints deterministic JSON and returns a non-zero exit code for malformed input.
 
-## Current empirical status## Pinned source-annotated segmentation benchmark — 2026-10-25
+## Current empirical status
+
+## Pinned source-annotated segmentation benchmark — 2026-10-25
 
 A reproducible, permissively licensed segmentation dataset is now available at `data/benchmark/segmentation-gold.tsv`:
 
@@ -136,3 +138,8 @@ Do not mix these sources into one benchmark until annotation policies, normaliza
 Praat TextGrid annotations are textual records and can be analyzed without playing the corresponding audio for a first-pass comparison of source-attested orthography, word boundaries, syllable labels, phone labels, and toneme labels. However, the archive is 6.2 GB and the TextGrid files are inside `C-COST.zip`; only the separate wordlist/sentences and metadata are directly small enough for a selective workflow. Those separate files are not substitutes for phone/toneme annotation. No CCOST TextGrid files are currently bundled or available as repository inputs, so no CCOST-derived records or metrics are claimed in this checkpoint.
 
 The corpus license is CC BY-NC-SA 4.0. Do not copy its annotations or derived datasets into a distribution intended for commercial use without separately confirming permission. A future local importer should accept a user-downloaded TextGrid path, record the corpus revision and file checksum, map tier names from the manual explicitly, preserve speaker/session IDs, and emit only the text fields needed for evaluation. It must not silently convert forced-alignment labels into independent phonetic gold. Acoustic validation still requires access to the corresponding audio.
+
+
+## Source-attested IPA discrepancy diagnostic
+
+Run `python scripts/run_source_attested_ipa_diagnostic.py --output /tmp/source-attested-ipa-diagnostic.json` to compare the six pinned dictionary transcriptions with the current text pipeline. The report separates segmental IPA, tone categories, and vowel-length metadata; it records withheld outputs and mismatches without calling the source data gold. On the last successful Python checkpoint it produced five complete outputs, four segmental agreements, five tone-category agreements, and one withheld result. The `บรรจุ` final-`/ʔ/` discrepancy remains a review item.
