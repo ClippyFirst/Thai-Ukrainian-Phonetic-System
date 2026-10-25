@@ -13,3 +13,34 @@ button:focus-visible,a:focus-visible,textarea:focus-visible{outline:3px solid va
   unicode-bidi: isolate;
   overflow-wrap: anywhere;
 }
+
+
+/* Current v0.6.1 input/status/accessibility additions, ported without replacing the IPA-first engine. */
+.input-label{display:block;font-weight:800;margin:2px 0 8px}
+.input-hint{margin:9px 0 16px;color:var(--muted);font-size:14px}
+.examples-label{font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+.examples button{padding:5px 2px}
+.status.notice{color:#4e3035;background:var(--wash);padding:12px 14px;border-left:4px solid var(--red)}
+.status.error{color:var(--red);font-weight:700;border-left:4px solid var(--red);padding-left:14px}
+.results-heading{font-size:28px;margin:24px 0 0}
+.result-title{font-size:14px;line-height:1.35;margin:0 0 8px;font-weight:800;color:var(--muted)}
+.result-explanation{margin-top:18px;padding:16px 18px;background:var(--wash);border-left:4px solid var(--red)}
+.result-explanation strong{display:block;margin-bottom:6px}
+.syllable-result{padding:18px 0;border-top:1px solid var(--line)}
+.syllable-result h4{margin:0 0 8px}
+.adaptation-audit{margin-top:16px;padding:12px 14px;background:var(--wash);font-size:13px}
+.adaptation-audit p{margin:6px 0}
+.status-guide,.status-guide h2{max-width:900px}
+.status-guide{padding:48px 0;border-top:1px solid var(--line)}
+.status-guide h2{font-size:34px;margin:0 0 22px}
+.status-list{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.status-list>div{background:var(--paper);padding:22px 24px;display:grid;grid-template-columns:auto 1fr;column-gap:12px}
+.status-list p{grid-column:2;margin:4px 0 0;color:#414149}
+.status-dot{width:9px;height:9px;border-radius:50%;margin-top:7px;background:var(--muted)}
+.status-dot.ok{background:var(--blue)}
+.status-dot.warn{background:var(--red)}
+.method-links{display:flex;flex-wrap:wrap;gap:18px 28px;margin-top:18px}
+kbd{font-family:inherit;font-size:12px;font-weight:600;line-height:1.2;border:1px solid var(--line);padding:2px 5px;background:var(--wash)}
+.copy{margin-top:10px;border:1px solid var(--line);background:var(--paper);padding:6px 10px;cursor:pointer}
+.copy:hover{border-color:var(--blue);color:var(--blue)}
+@media(max-width:700px){.status-list{grid-template-columns:1fr}}

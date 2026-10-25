@@ -21,6 +21,7 @@ jobs:
           node-version: 22
       - run: node web/tests/ipa-ua.test.mjs
       - run: node web/tests/parity.test.mjs
+      - run: node web/tests/ui-contract.test.mjs
   master-artifact:
     needs: test
     runs-on: ubuntu-latest
