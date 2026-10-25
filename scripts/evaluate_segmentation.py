@@ -116,7 +116,6 @@ def main() -> int:
         }
 
     engine_names = sorted(predictions)
-    eligible_ids = set(gold)
     report: dict[str, object] = {
         "schema_version": "1.0",
         "method": {
