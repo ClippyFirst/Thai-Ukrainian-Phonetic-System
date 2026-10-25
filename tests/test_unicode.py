@@ -1,6 +1,6 @@
 import unittest
 from thai_ukrainian.orthography import normalize_thai, decompose_thai
-from thai_ukrainian import analyze_syllable
+from thai_ukrainian import analyze_syllable, tokenize_text
 
 
 class UnicodeTests(unittest.TestCase):
@@ -26,6 +26,12 @@ class UnicodeTests(unittest.TestCase):
         parts = decompose_thai(source)
         self.assertEqual("".join(item["char"] for item in parts), normalized)
         self.assertEqual([item["index"] for item in parts], list(range(len(normalized))))
+
+    def test_text_tokenizer_preserves_non_ascii_whitespace_controls(self):
+        tokens = tokenize_text("\u0085กา\u0085")
+        self.assertEqual([(token.text, token.kind) for token in tokens], [
+            ("\u0085", "punctuation"), ("กา", "thai"), ("\u0085", "punctuation")
+        ])
 
     def test_controls_format_controls_and_zero_width_space_withhold_output(self):
         # These code points are not ordinary Thai orthographic material. They
