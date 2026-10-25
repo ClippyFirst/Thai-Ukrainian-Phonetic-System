@@ -151,21 +151,35 @@ def dictionary_word_segmentation(text: str) -> WordSegmentationResult:
 
 
 def segment_text_preserving(text: str) -> tuple[str, ...]:
-    """Segment Thai spans while preserving non-Thai tokens and exact text.
+    """Segment Thai spans while preserving every character of mixed text.
 
-    Spaces, punctuation, Latin text, digits, and Thai repetition markers follow
-    the existing mixed-text tokenizer. Only ordinary Thai spans are passed to
-    dictionary maximum matching. The returned tokens concatenate exactly to
-    the original input.
+    Unlike the display-oriented text tokenizer, this scanner retains leading,
+    trailing, and internal whitespace as explicit tokens. Only ordinary Thai
+    spans are passed to dictionary maximum matching; all other runs are copied
+    verbatim. The returned tokens concatenate exactly to the original input.
     """
-    from .text import tokenize_text
+    if not text:
+        return ()
+    from .text import _kind
 
     output: list[str] = []
-    for token in tokenize_text(text):
-        if token.kind == "thai":
-            output.extend(dictionary_word_segmentation(token.text).tokens)
-        else:
-            output.append(token.text)
+    start = 0
+    previous_kind = _kind(text[0])
+    for index, char in enumerate(text[1:], 1):
+        kind = _kind(char)
+        if kind != previous_kind:
+            chunk = text[start:index]
+            if previous_kind == "thai":
+                output.extend(dictionary_word_segmentation(chunk).tokens)
+            else:
+                output.append(chunk)
+            start = index
+            previous_kind = kind
+    chunk = text[start:]
+    if previous_kind == "thai":
+        output.extend(dictionary_word_segmentation(chunk).tokens)
+    else:
+        output.append(chunk)
     if "".join(output) != text:
         raise AssertionError("Segmentation must preserve the input text exactly")
     return tuple(output)
