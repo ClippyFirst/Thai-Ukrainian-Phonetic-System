@@ -43,10 +43,10 @@ Current readiness status — 2026-10-24
 
 | Component | State | Evidence / acceptance boundary |
 |---|---|---|
-| Wisesight source-annotated word-boundary set | DONE_VERIFIED after CI | 993 rows, CC0-1.0, pinned upstream commit/blob SHA, exact reconstruction check, test-only split; status explicitly `SOURCE_ANNOTATED`, not expert-adjudicated |
-| Segmentation scorer source-status handling | DONE_VERIFIED after CI | Scores `ADJUDICATED` and `SOURCE_ANNOTATED` separately; rejects mixed-grade gold sets; whitespace-only boundaries excluded |
+| Wisesight source-annotated word-boundary set | PARTIAL (exact-head CI pending) | 993 rows, CC0-1.0, pinned upstream commit/blob SHA, exact reconstruction check, test-only split; status explicitly `SOURCE_ANNOTATED`, not expert-adjudicated |
+| Segmentation scorer source-status handling | PARTIAL (exact-head CI pending) | Scores `ADJUDICATED` and `SOURCE_ANNOTATED` separately; rejects mixed-grade gold sets; whitespace-only boundaries excluded |
 | ClippyFirst segmentation baseline | TODO until exact-head CI | CI runs `scripts/run_wisesight_segmentation_diagnostic.py` and uploads JSON; baseline is expected to expose the current no-auto-segmentation limitation, not prove a production score |
-| Source-attested IPA/tones/length contrasts | DONE_VERIFIED after CI | Six pinned Wiktionary entries; `SOURCE_ATTESTED_NOT_GOLD`; includes short /ɤ/ in เงิน vs long /ɤː/ in เดิน |
+| Source-attested IPA/tones/length contrasts | PARTIAL (exact-head CI pending) | Six pinned Wiktionary entries; `SOURCE_ATTESTED_NOT_GOLD`; includes short /ɤ/ in เงิน vs long /ɤː/ in เดิน |
 | Runtime lexical coverage | PARTIAL | Five source-backed challenge lexicon entries added; diagnostic must report new counts; not representative coverage |
 | Lexical IPA override for เงิน | TODO | Must preserve /ŋɤn˧/ short-vowel reading through typed IPA and UA adaptation, with Python/browser parity; current graphemic lexicon cannot safely encode this |
 | Independent expert/acoustic IPA gold | BLOCKED | CCOST license/annotation manual and local scope must be reviewed, then an independent Thai phonetician must adjudicate a pinned sample with disagreement log and speaker-aware split |
