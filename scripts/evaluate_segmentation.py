@@ -147,9 +147,9 @@ def main() -> int:
                 exact += int(prediction["tokens"] == reference["tokens"])
             else:
                 fn += len(reference["boundaries"])
-        precision = tp / (tp + fp) if tp + fp else (1.0 if tp + fn == 0 and gold else 0.0)
-        recall = tp / (tp + fn) if tp + fn else (1.0 if gold else None)
-        f1 = (2 * precision * recall / (precision + recall)) if precision + recall else 0.0
+        precision = tp / (tp + fp) if tp + fp else None
+        recall = tp / (tp + fn) if tp + fn else None
+        f1 = (2 * precision * recall / (precision + recall)) if precision is not None and recall is not None and precision + recall else None
         engines[engine] = {
             "status": "MEASURED" if gold else "NOT_MEASURED_NO_ADJUDICATED_GOLD",
             "n_adjudicated_gold_rows": len(gold),
@@ -159,7 +159,7 @@ def main() -> int:
             "exact_sequence_rate": exact / len(gold) if gold else None,
             "boundary_tp": tp, "boundary_fp": fp, "boundary_fn": fn,
             "boundary_precision": precision if gold else None,
-            "boundary_recall": recall,
+            "boundary_recall": recall if gold else None,
             "boundary_f1": f1 if gold else None,
         }
     report["engines"] = engines
