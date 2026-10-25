@@ -1,5 +1,5 @@
 import fs from "node:fs";
-import {analyze,analyzeText} from "../src/engine.js";
+import {analyze,analyzeText,tokenizeText} from "../src/engine.js";
 
 const fixture = JSON.parse(fs.readFileSync(new URL("./fixtures.json", import.meta.url), "utf8"));
 if (!Array.isArray(fixture) || fixture.length < 27) throw new Error("Parity fixture set is unexpectedly small");
@@ -87,3 +87,29 @@ for (const [input, expected] of textLexiconRegression) {
   }
 }
 console.log("Thai extended text lexicon regression passed");
+
+const unicodeHazards = [
+  ["กา\u0001", "U+0001"],
+  ["กา\u007f", "U+007F"],
+  ["กา\u0085", "U+0085"],
+  ["กา\u200b", "U+200B"],
+  ["กา\u202e", "U+202E"],
+];
+for (const [input, codepoint] of unicodeHazards) {
+  const result = analyze(input);
+  if (result.status !== "unresolved:unsupported-symbol" ||
+      result.phonemicIpa != null || result.phoneticIpa != null ||
+      result.ukrainian != null) {
+    throw new Error("Unsupported Unicode control/format character leaked a Thai result (" + codepoint + "): " + JSON.stringify(result));
+  }
+}
+const normalizedThai = analyze("  ก่า  ");
+if (normalizedThai.normalized !== "ก่า" || normalizedThai.phonemicIpa == null) {
+  throw new Error("Thai NFC/trim normalization contract regressed");
+}
+console.log("Thai Unicode normalization and malformed-input contract passed");
+
+const nelTokens = tokenizeText("\u0085กา\u0085");
+if (nelTokens.map(token => token.kind + ":" + token.input).join("|") !== "punctuation:\u0085|thai:กา|punctuation:\u0085") {
+  throw new Error("Thai tokenizer silently treated U+0085 as layout whitespace: " + JSON.stringify(nelTokens));
+}

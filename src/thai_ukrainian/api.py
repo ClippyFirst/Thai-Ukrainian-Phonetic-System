@@ -1,3 +1,5 @@
+import re
+from .orthography import normalize_thai
 from .parser import parse_syllable
 from .tone import determine_tone
 from .phonology import phonologize, surface_phoneticize, ONSET_IPA, effective_onset
@@ -46,7 +48,9 @@ def analyze_syllable(syllable: str):
 
 
 def parse_thai(text: str):
-    return [analyze_syllable(x) for x in text.split() if x]
+    normalized = normalize_thai(text)
+    parts = (part for part in re.split(r"[ \t\r\n]+", normalized) if part)
+    return [analyze_syllable(part) for part in parts]
 
 
 def analyze_word_syllables(syllables: list[str] | tuple[str, ...]):

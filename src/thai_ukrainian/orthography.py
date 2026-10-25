@@ -44,7 +44,7 @@ NUCLEUS_CONSONANTS={
 }
 
 def normalize_thai(text:str)->str:
-    return unicodedata.normalize("NFC", text.strip())
+    return unicodedata.normalize("NFC", text.strip(" \t\r\n"))
 
 def decompose_thai(text:str)->list[dict]:
     s=normalize_thai(text)

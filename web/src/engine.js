@@ -1,5 +1,5 @@
 import {C,M,UA,OU,CU,VS,PRE} from "./data.js"; import {detectVowel} from "./vowels.js"; import {adaptIpaToUkrainian} from "./ipa-ua.js";
-const normalize=s=>s.normalize("NFC").trim(), chars=s=>[...s], SHORT=new Set(["p","t","k","ʔ"]), LIVE=new Set(["m","n","ŋ","j","w"]), TONE_SONORANTS=new Set(["m","n","ŋ","j","w","r","l"]);
+const normalize=s=>s.normalize("NFC").replace(/^[ \t\r\n]+|[ \t\r\n]+$/g, ""), chars=s=>[...s], SHORT=new Set(["p","t","k","ʔ"]), LIVE=new Set(["m","n","ŋ","j","w"]), TONE_SONORANTS=new Set(["m","n","ŋ","j","w","r","l"]);
 const FIRST=new Set(["ก","ข","ค","ต","ป","ผ","พ","ท"]),SECOND=new Set(["ร","ล","ว"]),LEAD=new Set(["ง","ญ","น","ม","ย","ร","ล","ว"]),LOW=new Set(["ค","ฅ","ฆ","ง","ช","ซ","ฌ","ญ","ฑ","ฒ","ณ","ท","ธ","น","พ","ฟ","ภ","ม","ย","ร","ล","ว","ฬ","ฮ"]);
 function special(s){const x=[["รร","SP-RR-001"],["ฤ","SP-RUE-001"],["ฤๅ","SP-RUE-LONG-001"],["ฦ","SP-LUE-001"],["ฦๅ","SP-LUE-LONG-001"],["์","SP-KARAN-001"],["ทร","SP-THR-001"],["จร","SP-JR-001"],["สร","SP-SR-001"],["ศร","SP-SR-HIGH-001"],["ซร","SP-ZR-001"],["อย","SP-O-NAM-001"]];return x.filter(z=>z[0]==="อย"?s.startsWith(z[0]):s.includes(z[0])).map(z=>({rule_id:z[1],status:"analysis-dependent"}))}
 function split(s,q,v){
@@ -110,13 +110,14 @@ const thaiMarker = ch => ["ๆ","ฯ"].includes(ch);
 const digitChar = ch => /[0-9๐-๙]/u.test(ch);
 function tokenizeText(text) {
   const out=[]; let i=0;
+  const isLayoutWhitespace=ch=>ch===" "||ch.charCodeAt(0)===9||ch.charCodeAt(0)===10||ch.charCodeAt(0)===13;
   while(i<text.length){
     const ch=[...text.slice(i)][0];
-    const kind=ch===" "||/\s/u.test(ch)?"space":thaiMarker(ch)?"thai_marker":digitChar(ch)?"number":thaiTextChar(ch)?"thai":/[A-Za-z]/u.test(ch)?"latin":"punctuation";
+    const kind=isLayoutWhitespace(ch)?"space":thaiMarker(ch)?"thai_marker":digitChar(ch)?"number":thaiTextChar(ch)?"thai":/[A-Za-z]/u.test(ch)?"latin":"punctuation";
     let j=i+[...ch].length;
     while(j<text.length){
       const next=[...text.slice(j)][0];
-      const nk=next===" "||/\s/u.test(next)?"space":thaiMarker(next)?"thai_marker":digitChar(next)?"number":thaiTextChar(next)?"thai":/[A-Za-z]/u.test(next)?"latin":"punctuation";
+      const nk=isLayoutWhitespace(next)?"space":thaiMarker(next)?"thai_marker":digitChar(next)?"number":thaiTextChar(next)?"thai":/[A-Za-z]/u.test(next)?"latin":"punctuation";
       if(nk!==kind) break;
       j += [...next].length;
     }
