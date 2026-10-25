@@ -16,7 +16,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 GOLD = ROOT / "data" / "benchmark" / "segmentation-gold.tsv"
-SOURCE_ID = "WISIGHT1000-C1D063649ABC"
+SOURCE_ID = "WISESIGHT1000-C1D063649ABC"
 ENGINE_VERSION = "ClippyFirst-0.6.1-text-tokenizer-no-auto-word-segmentation"
 
 
