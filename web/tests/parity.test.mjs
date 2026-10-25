@@ -5,7 +5,7 @@ const fixture = JSON.parse(fs.readFileSync(new URL("./fixtures.json", import.met
 if (!Array.isArray(fixture) || fixture.length < 27) throw new Error("Parity fixture set is unexpectedly small");
 
 const seen = new Set();
-const required = ["กฉ","กผ","จริง","สร้าง","เศร้า","ไซร้","ไกล","ใกล้","ไก่"];
+const required = ["กฉ","กผ","จริง","สร้าง","เศร้า","ไซร้","ไกล","ใกล้","ไก่","เงิน"];
 if (required.some(input => !fixture.some(x => x.input === input))) throw new Error("required linguistic regression probes are missing");
 const pick = a => ({
   input: a.input,
@@ -56,6 +56,16 @@ if (star.status !== "analyzed" || star.onset.join("") !== "ด" || star.coda !==
 for (const text of ["แสดง", "กกรกา"]) {
   const a = analyze(text);
   if (a.status !== "unresolved:nonconforming-consonant-sequence" || a.phonemicIpa !== null) throw new Error("Illegal multi-consonant onset was accepted: " + text);
+}
+const money = analyze("เงิน");
+if (money.status !== "analyzed" || money.phonemicIpa !== "ŋɤn" || money.phoneticIpa !== null ||
+    money.tone !== "mid" || money.toneIpa !== "˧" || money.vowelLength !== "short" ||
+    money.ukrainian !== "нген" || money.evidenceStatus !== "SOURCE_ATTESTED_NOT_GOLD" ||
+    money.sourceRevision !== "5759179") throw new Error("Lexical IPA override parity contract failed for เงิน");
+const moneyText = analyzeText("เงิน")[0];
+if (moneyText.segmentationStatus !== "lexical_ipa_override" ||
+    moneyText.syllables.length !== 1 || moneyText.syllables[0].phonemicIpa !== "ŋɤn") {
+  throw new Error("Lexical IPA override was not used by the browser text pipeline");
 }
 const pepper = analyzeText("พริก")[0];
 if (!pepper || pepper.segmentationStatus !== "lexicon" || pepper.syllables[0].phonemicIpa?.slice(-1) !== "k" || pepper.syllables[0].ukrainian?.slice(-1) !== "к") throw new Error("Thai final /k/ regression failed for พริก");
