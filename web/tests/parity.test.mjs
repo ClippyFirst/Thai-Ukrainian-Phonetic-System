@@ -62,6 +62,11 @@ if (money.status !== "analyzed" || money.phonemicIpa !== "ŋɤn" || money.phonet
     money.tone !== "mid" || money.toneIpa !== "˧" || money.vowelLength !== "short" ||
     money.ukrainian !== "нген" || money.evidenceStatus !== "SOURCE_ATTESTED_NOT_GOLD" ||
     money.sourceRevision !== "5759179") throw new Error("Lexical IPA override parity contract failed for เงิน");
+const moneySpaced = analyze("  เงิน  ");
+if (moneySpaced.status !== "analyzed" || moneySpaced.normalized !== "เงิน" ||
+    moneySpaced.phonemicIpa !== "ŋɤn" || moneySpaced.ukrainian !== "нген") {
+  throw new Error("Normalized lexical IPA override parity failed for whitespace-padded เงิน");
+}
 const moneyText = analyzeText("เงิน")[0];
 if (moneyText.segmentationStatus !== "lexical_ipa_override" ||
     moneyText.syllables.length !== 1 || moneyText.syllables[0].phonemicIpa !== "ŋɤn") {
