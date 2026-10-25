@@ -65,13 +65,12 @@ def _segment_explicit(token: str) -> tuple[str, ...] | None:
     return parts if len(parts) > 1 else None
 
 def segment_thai_word(word: str) -> tuple[tuple[str, ...], str]:
-    if word in LEXICON:
-        return LEXICON[word], "lexicon"
-    # A lexical IPA override is a source-backed one-syllable reading. Keep it
-    # separate from the graphemic syllable lexicon so its pronunciation is not
-    # reconstructed from ambiguous Thai spelling.
+    # A typed IPA override has precedence over graphemic syllabification: do
+    # not let a generic lexicon entry mask a source-attested pronunciation.
     if word in load_lexical_ipa_overrides():
         return (word,), "lexical_ipa_override"
+    if word in LEXICON:
+        return LEXICON[word], "lexicon"
     explicit = _segment_explicit(word)
     if explicit:
         return explicit, "explicit"
