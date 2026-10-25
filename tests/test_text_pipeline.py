@@ -74,6 +74,15 @@ class TextPipelineTests(unittest.TestCase):
         self.assertEqual(cold.onset, ["ห", "น"])
         self.assertEqual(cold.phonemic_ipa, "naːw")
 
+    def test_attested_false_cluster_sri_uses_lexical_reading(self):
+        # The Royal Institute Dictionary entry (mirrored by Longdo) gives
+        # ศรี as สี. This tests a lexical orthography override, not IPA gold.
+        result = analyze_syllable("ศรี")
+        self.assertEqual(result.status, "analyzed")
+        self.assertEqual(result.normalized, "สี")
+        self.assertEqual(result.phonemic_ipa, "siː")
+        self.assertEqual(result.ukrainian_transliteration, "сі")
+
     def test_lexical_readings_produce_structured_results(self):
         # These are parser smoke tests, not gold-IPA assertions. Gold readings
         # belong in the adjudicated fixture set with cited lexical evidence.
