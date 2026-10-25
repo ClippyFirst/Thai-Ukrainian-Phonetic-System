@@ -152,5 +152,30 @@ class SegmentationBenchmarkTests(unittest.TestCase):
         self.assertEqual(report["engines"]["test-engine"]["exact_sequence_rate"], 1.0)
 
 
+
+    def test_source_annotated_rows_are_scored_with_explicit_nonexpert_status(self):
+        gold = self.gold(gold_status="SOURCE_ANNOTATED", source_id="wisesight1000#1", license="CC0-1.0")
+        report = self.run_benchmark([gold], [self.prediction()])
+        self.assertEqual(report["gold"]["rows_source_annotated"], 1)
+        self.assertEqual(report["gold"]["rows_adjudicated"], 0)
+        self.assertEqual(report["gold"]["status"], "MEASURED_ON_SOURCE_ANNOTATED_ROWS_NOT_EXPERT_ADJUDICATED")
+        metrics = report["engines"]["test-engine"]
+        self.assertEqual(metrics["gold_status"], "SOURCE_ANNOTATED")
+        self.assertEqual(metrics["exact_sequence_rate"], 1.0)
+
+    def test_whitespace_token_boundaries_are_not_counted_as_word_boundaries(self):
+        gold = self.gold(text="ภาษา ไทย", tokens=["ภาษา", " ", "ไทย"], gold_status="SOURCE_ANNOTATED")
+        pred = self.prediction(tokens=["ภาษา", " ", "ไทย"])
+        metrics = self.run_benchmark([gold], [pred])["engines"]["test-engine"]
+        self.assertEqual(metrics["boundary_tp"], 0)
+        self.assertEqual(metrics["boundary_fp"], 0)
+        self.assertEqual(metrics["boundary_fn"], 0)
+        self.assertIsNone(metrics["boundary_f1"])
+        self.assertEqual(metrics["exact_sequence_rate"], 1.0)
+
+    def test_source_annotation_and_expert_adjudication_cannot_be_mixed(self):
+        gold = [self.gold(row_id="g1"), self.gold(row_id="g2", gold_status="SOURCE_ANNOTATED")]
+        self.assertIn("do not mix ADJUDICATED and SOURCE_ANNOTATED", self.run_benchmark(gold, [], expected=1))
+
 if __name__ == "__main__":
     unittest.main()
