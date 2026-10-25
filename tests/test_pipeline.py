@@ -141,6 +141,14 @@ class PipelineTests(unittest.TestCase):
 if __name__=="__main__":unittest.main()
 
 
+    def test_preposed_vowel_lexical_false_cluster_retains_final_coda(self):
+        analysis = analyze_syllable("แทรก")
+        self.assertEqual(analysis.normalized, "แซก")
+        self.assertEqual(analysis.onset, ["ซ"])
+        self.assertEqual(analysis.coda, "ก")
+        self.assertEqual(analysis.phonemic_ipa, "sɛːk")
+        self.assertEqual(analysis.status, "analyzed")
+
     def test_tr_false_cluster_readings_are_source_registered(self):
         from pathlib import Path
         import csv
