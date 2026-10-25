@@ -97,12 +97,27 @@ class TextPipelineTests(unittest.TestCase):
     def test_lexical_readings_produce_structured_results(self):
         # These are parser smoke tests, not gold-IPA assertions. Gold readings
         # belong in the adjudicated fixture set with cited lexical evidence.
-        for word in ("จริง", "สร้าง", "เศร้า", "ไซร้", "จันทร์", "ศุกร์", "เสาร์",
-                     "สัตว์", "พันธุ์", "ฟิล์ม", "ฤทธิ์", "เตอร์", "อย่า", "อยู่", "อย่าง", "อยาก"):
+        # The Royal Institute article "เรื่องยุ่ง ๆ เกี่ยวกับอักษรควบ"
+        # (2011, vol. 36 no. 4, pp. 556-557) documents these lexical ทร readings.
+        # These assert the source-attested orthographic override, not IPA gold.
+        source_attested_thr = {
+            "ทราบ": "ซาบ",
+            "ทรง": "ซง",
+            "ทรัพย์": "ซับ",
+            "แทรก": "แซก",
+        }
+        words = (
+            "จริง", "สร้าง", "เศร้า", "ไซร้", "จันทร์", "ศุกร์", "เสาร์",
+            "สัตว์", "พันธุ์", "ฟิล์ม", "ฤทธิ์", "เตอร์", "อย่า", "อยู่",
+            "อย่าง", "อยาก", *source_attested_thr.keys(),
+        )
+        for word in words:
             with self.subTest(word=word):
                 result = analyze_syllable(word)
                 self.assertIsNotNone(result.status)
                 self.assertEqual(result.input, word)
+                if word in source_attested_thr:
+                    self.assertEqual(result.normalized, source_attested_thr[word])
                 if word == "อย่าง":
                     self.assertEqual(result.normalized, "หย่าง")
                 if word == "เตอร์":
