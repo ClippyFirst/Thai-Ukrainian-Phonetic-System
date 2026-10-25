@@ -40,7 +40,7 @@ button:focus-visible,a:focus-visible,textarea:focus-visible{outline:3px solid va
 .status-dot.ok{background:var(--blue)}
 .status-dot.warn{background:var(--red)}
 .method-links{display:flex;flex-wrap:wrap;gap:18px 28px;margin-top:18px}
-kbd{font:600 12px/1.2 inherit;border:1px solid var(--line);padding:2px 5px;background:var(--wash)}
+kbd{font-family:inherit;font-size:12px;font-weight:600;line-height:1.2;border:1px solid var(--line);padding:2px 5px;background:var(--wash)}
 .copy{margin-top:10px;border:1px solid var(--line);background:var(--paper);padding:6px 10px;cursor:pointer}
 .copy:hover{border-color:var(--blue);color:var(--blue)}
 @media(max-width:700px){.status-list{grid-template-columns:1fr}}
