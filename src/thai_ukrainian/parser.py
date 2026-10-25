@@ -101,6 +101,10 @@ def _split_onset_coda(s,inv,vowel,ignored_consonants=()):
         return cs[:-1],None
     cleaned="".join(c for c in s if c not in TONE_CHARS)
     if len(cs)>=2 and any(c in PREPOSED_VOWEL_CHARS for c in cleaned):
+        # A preposed vowel can precede either a licensed onset cluster or a
+        # single onset followed by a coda (e.g. lexical แซก /sɛːk/). If the
+        # first pair is not a licensed cluster, let the positional coda check
+        # below decide instead of dropping the final consonant.
         if _is_valid_complex_onset(cs[:2]):
             if len(cs)==2:return cs,None
             if len(cs)==3:return cs[:2],cs[2]
