@@ -60,18 +60,6 @@
     }
   },
   {
-    "input": "คน",
-    "expected": {
-      "input": "คน",
-      "status": "analyzed",
-      "phonemicIpa": "kʰon",
-      "phoneticIpa": "kʰon",
-      "tone": "mid",
-      "toneIpa": "˧",
-      "ukrainian": "кон"
-    }
-  },
-  {
     "input": "เงิน",
     "expected": {
       "input": "เงิน",
@@ -81,6 +69,18 @@
       "tone": null,
       "toneIpa": null,
       "ukrainian": null
+    }
+  },
+  {
+    "input": "คน",
+    "expected": {
+      "input": "คน",
+      "status": "analyzed",
+      "phonemicIpa": "kʰon",
+      "phoneticIpa": "kʰon",
+      "tone": "mid",
+      "toneIpa": "˧",
+      "ukrainian": "кон"
     }
   },
   {
