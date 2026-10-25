@@ -35,7 +35,7 @@ def main() -> int:
     from thai_ukrainian.text import analyze_text
 
     with SOURCE.open("r", encoding="utf-8-sig", newline="") as stream:
-        rows = list(csv.DictReader(stream, delimiter="\\t"))
+        rows = list(csv.DictReader(stream, delimiter="\t"))
     if not rows:
         raise ValueError("Source-attested IPA registry is empty")
 
@@ -105,7 +105,7 @@ def main() -> int:
         "records": results,
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True) + "\\n", encoding="utf-8")
+    args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True))
     return 0
 
