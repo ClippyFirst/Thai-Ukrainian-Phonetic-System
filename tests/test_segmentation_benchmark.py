@@ -48,7 +48,7 @@ class SegmentationBenchmarkTests(unittest.TestCase):
     def prediction(row_id="g1", tokens=None, **overrides):
         row = {
             "id": row_id, "engine": "test-engine",
-            "predicted_tokens_json": json.dumps(tokens or ["ภาษา", "ไทย"], ensure_ascii=False),
+            "predicted_tokens_json": json.dumps(tokens if tokens is not None else ["ภาษา", "ไทย"], ensure_ascii=False),
             "status": "ok", "version": "test",
         }
         row.update(overrides)
