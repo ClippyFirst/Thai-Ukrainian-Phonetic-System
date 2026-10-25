@@ -215,3 +215,6 @@ The report is written to `reports/challenge-runtime-diagnostics.json`. This is a
 - `data/benchmark/source-attested-ipa.tsv` contains six revision-pinned dictionary IPA/tone/vowel-length records, marked `SOURCE_ATTESTED_NOT_GOLD`. These are useful for review and error triage, not independent accuracy scoring.
 - Five source-attested lexicon entries are documented in `data/thai/text_lexicon_sources.csv`. Their CC BY-SA 4.0 data provenance is separate from the MIT software license; see `data/thai/TEXT-LEXICON-DATA-LICENSE.md`.
 - The word `เงิน` now has a narrowly scoped typed lexical-IPA override (`data/thai/lexical_ipa_overrides.tsv`) preserving source-attested short /ɤ/, mid tone, source revision, and license through the same `PhoneticResult` → Ukrainian adapter boundary. This dictionary transcription is not independent expert/acoustic gold; no general lexical override behavior is inferred from this single entry.
+
+
+Segmentation source decisions are tracked in [`data/corpus_sources.csv`](data/corpus_sources.csv). LST20 and VISTEC are candidate sources only and are not bundled; their license and annotation compatibility must be reviewed before use. The pinned Wisesight snapshot remains test-only and must not be used for training or lexicon construction.

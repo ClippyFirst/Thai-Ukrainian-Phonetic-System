@@ -118,3 +118,14 @@ python scripts/evaluate_segmentation.py --gold data/benchmark/segmentation-gold.
 The input contract is tab-separated: gold columns `id, text, gold_tokens_json, gold_status, source_id, license, split`; predictions columns `id, engine, predicted_tokens_json, status, version`. Token arrays are JSON string arrays. Tokens must concatenate exactly to the NFC-normalized source text; the evaluator does not silently remove whitespace or rewrite text. It reports boundary precision/recall/F1, exact token-sequence rate and coverage separately. Only `ADJUDICATED` gold rows with source, license and split enter the denominator; absent predictions count as misses, and no adjudicated rows yields `NOT_MEASURED`. Only prediction rows with `status=ok` are scoreable; all other statuses are treated as abstentions even if a stale or partial token array is present. Empty token arrays are also abstentions. Coverage counts only non-empty `ok` predictions. The added tests use synthetic fixtures only; no empirical score is implied.
 
 The input files are not yet populated with corpus records. Before running an empirical benchmark, acquire a license-compatible corpus, pin version/hash and split, verify the tokenization annotation convention, and record provenance per row. Keep CCOST audio/annotations outside the repository under its CC BY-NC-SA 4.0 terms; it is a research adjudication candidate, not a freely redistributable fixture.
+
+
+## Segmentation corpus source register — 2026-10-25
+
+Candidate and active sources are recorded in `data/corpus_sources.csv` so license state and intended use stay inspectable:
+
+- **Wisesight-1000 word-tokenization labels** — CC0-1.0; the exact 993-row snapshot in this repository is marked `SOURCE_ANNOTATED` and held out as test-only. It is not independent expert gold, and must not be used to train a model or construct the runtime lexicon.
+- **LST20** — candidate for news-domain segmentation. This repository does not bundle it; the source register explicitly requires review of the exact license and redistribution terms before use.
+- **VISTEC-TP-TH-2021** — candidate for social-media segmentation. The dataset card reports CC BY-SA 3.0; verify the upstream revision, attribution, and applicable terms before redistributing any derived data.
+
+Do not mix these sources into one benchmark until annotation policies, normalization, document-level split strategy, and license compatibility are documented. A candidate source's existence does not make its labels compatible with Wisesight or the project's test split.
