@@ -55,3 +55,8 @@ The Ukrainian orthographic layer is a project-specific phonetic target, not an o
 ## False-cluster validation policy
 
 Sequences such as **จร, สร, ศร, ซร** and lexical **ทร** are not licensed as ordinary true clusters merely from adjacency. Standard Thai descriptions document false-cluster behaviour, including silent ร in established forms such as **จริง**, **สร้าง**, **เศร้า** and **ไซร้**. Because the same spelling patterns can have lexical exceptions or require lexical reading evidence, the syllable-only parser must return **analysis-dependent:special-orthography** and withhold IPA/Ukrainian output rather than force a compositional onset. The browser implementation must consume the same registry and parity fixtures.
+
+
+## Unicode normalization and layout whitespace
+
+The Thai Python and browser engines normalize to NFC and trim only ASCII layout whitespace (space, tab, CR, LF) at the outer boundary. Other Unicode format/control characters—including U+0085 NEXT LINE, U+200B ZERO WIDTH SPACE and U+202E RIGHT-TO-LEFT OVERRIDE—must remain visible to validation and must not be silently stripped into a valid-looking partial pronunciation. Normalization is not a license to discard unsupported input.
