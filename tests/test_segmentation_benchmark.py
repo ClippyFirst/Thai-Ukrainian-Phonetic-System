@@ -63,7 +63,7 @@ class SegmentationBenchmarkTests(unittest.TestCase):
 
     def test_boundary_error_and_exact_sequence_are_separate(self):
         gold = self.gold(text="ภาษาไทย", tokens=["ภาษา", "ไทย"])
-        pred = self.prediction(text="unused", tokens=["ภา", "ษาไทย"])
+        pred = self.prediction(tokens=["ภา", "ษาไทย"])
         report = self.run_benchmark([gold], [pred])
         metrics = report["engines"]["test-engine"]
         self.assertEqual(metrics["exact_sequence_rate"], 0.0)
@@ -85,7 +85,7 @@ class SegmentationBenchmarkTests(unittest.TestCase):
 
     def test_single_token_without_boundaries_reports_undefined_boundary_metrics(self):
         gold = self.gold(text="ไทย", tokens=["ไทย"])
-        pred = self.prediction(text="ignored", tokens=["ไทย"])
+        pred = self.prediction(tokens=["ไทย"])
         metrics = self.run_benchmark([gold], [pred])["engines"]["test-engine"]
         self.assertEqual(metrics["exact_sequence_rate"], 1.0)
         self.assertIsNone(metrics["boundary_precision"])
