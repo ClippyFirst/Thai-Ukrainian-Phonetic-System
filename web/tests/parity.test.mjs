@@ -61,7 +61,7 @@ const pepper = analyzeText("พริก")[0];
 if (!pepper || pepper.segmentationStatus !== "lexicon" || pepper.syllables[0].phonemicIpa?.slice(-1) !== "k" || pepper.syllables[0].ukrainian?.slice(-1) !== "к") throw new Error("Thai final /k/ regression failed for พริก");
 console.log("Thai text tokenizer/segmentation regression passed");
 
-const lexicalRegression = ["จริง","สร้าง","ศรี","ทราบ","ทราย","ทรง","ทรัพย์","แทรก","เศร้า","จันทร์","ศุกร์","เสาร์","สัตว์","ฟิล์ม","ฤทธิ์","เตอร์","เทอร์","ยนต์","ไซต์","กอล์ฟ","อย่า","อยู่","อย่าง","อยาก"];
+const lexicalRegression = ["จริง","สร้าง","ศรี","ทราบ","ทรง","ทรัพย์","แทรก","เศร้า","จันทร์","ศุกร์","เสาร์","สัตว์","ฟิล์ม","ฤทธิ์","เตอร์","เทอร์","ยนต์","ไซต์","กอล์ฟ","อย่า","อยู่","อย่าง","อยาก"];
 for (const input of lexicalRegression) {
   const a = analyze(input);
   if (a.status !== "analyzed" || !a.phonemicIpa) throw new Error("Lexical regression unresolved in browser engine: " + input);
@@ -69,6 +69,10 @@ for (const input of lexicalRegression) {
   if (input === "แทรก" && (a.normalized !== "แซก" || a.phonemicIpa !== "sɛːk" || a.coda !== "ก")) throw new Error("Thai preposed-vowel false-cluster coda mismatch for แทรก");
   if (input === "อย่าง" && a.normalized !== "หย่าง") throw new Error("Thai lexical normalization mismatch for อย่าง");
   if (input === "เตอร์" && a.normalized !== "เตอ") throw new Error("Thai lexical normalization mismatch for เตอร์");
+}
+const ambiguousThray = analyze("ทราย");
+if (ambiguousThray.status !== "analysis-dependent:special-orthography" || ambiguousThray.phonemicIpa != null || ambiguousThray.ukrainian != null || !ambiguousThray.specialAnalyses?.some(x => x.rule_id === "SP-THR-001")) {
+  throw new Error("Sense-ambiguous ทราย must not receive an unconditional false-cluster reading: " + JSON.stringify(ambiguousThray));
 }
 console.log("Thai lexical regression passed");
 

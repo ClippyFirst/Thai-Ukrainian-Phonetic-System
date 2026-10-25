@@ -111,7 +111,7 @@ class PipelineTests(unittest.TestCase):
         self.assertEqual(a.ukrainian_transliteration,"кай")
 
     def test_curated_false_cluster_lexical_readings_resolve_explicitly(self):
-        for text in ("จริง","สร้าง","เศร้า","ไซร้","ทราบ","ทราย","ทรง","ทรัพย์","แทรก"):
+        for text in ("จริง","สร้าง","เศร้า","ไซร้","ทราบ","ทรง","ทรัพย์","แทรก"):
             with self.subTest(text=text):
                 a=analyze_syllable(text)
                 self.assertEqual(a.status,"analyzed",text)
@@ -155,17 +155,24 @@ class PipelineTests(unittest.TestCase):
         source = sources["SRC-ORST-CLUSTER-2011"]
         self.assertIn("orst.go.th/FILEROOM", source["url"])
         self.assertIn("lexical", source["notes"])
-        for word in ("ทราบ", "ทราย", "ทรง", "ทรัพย์", "แทรก"):
+        for word in ("ทราบ", "ทรง", "ทรัพย์", "แทรก"):
             with self.subTest(word=word):
                 analysis = analyze_syllable(word)
                 self.assertEqual(analysis.status, "analyzed")
                 self.assertIsNotNone(analysis.phonemic_ipa)
                 self.assertIsNotNone(analysis.ukrainian_transliteration)
+        # The same official source explicitly distinguishes the sand and deer
+        # senses of ทราย; spelling alone does not select the reading.
+        ambiguous_source = sources["SRC-ORST-CLUSTER-2011-THRAY-SENSE"]
+        self.assertIn("/html/48/", ambiguous_source["url"])
+        ambiguous = analyze_syllable("ทราย")
+        self.assertEqual(ambiguous.status, "analysis-dependent:special-orthography")
+        self.assertIsNone(ambiguous.phonemic_ipa)
 
 
     def test_source_attested_tr_readings_are_available_in_text_lexicon(self):
         from thai_ukrainian.text import segment_thai_word
-        for word in ("ทราบ", "ทราย", "ทรง", "ทรัพย์", "แทรก"):
+        for word in ("ทราบ", "ทรง", "ทรัพย์", "แทรก"):
             with self.subTest(word=word):
                 syllables, status = segment_thai_word(word)
                 self.assertEqual(status, "lexicon")
@@ -173,5 +180,11 @@ class PipelineTests(unittest.TestCase):
                 analysis = analyze_syllable(word)
                 self.assertEqual(analysis.status, "analyzed")
                 self.assertIsNotNone(analysis.phonemic_ipa)
+        syllables, status = segment_thai_word("ทราย")
+        self.assertEqual(status, "lexicon")
+        self.assertEqual(syllables, ("ทราย",))
+        ambiguous = analyze_syllable("ทราย")
+        self.assertEqual(ambiguous.status, "analysis-dependent:special-orthography")
+        self.assertIsNone(ambiguous.phonemic_ipa)
 
 if __name__=="__main__":unittest.main()

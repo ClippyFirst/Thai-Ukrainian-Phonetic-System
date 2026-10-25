@@ -43,3 +43,11 @@ Standard Thai cluster descriptions distinguish true clusters from false clusters
 
 - **SRC-RID-2011-SRI** — Royal Institute Dictionary (2011 edition), entry for **ศรี**, exposed through the Longdo dictionary interface: https://dict.longdo.com/search/ศรี . The entry explicitly supplies the reading `[สี]`. This supports a lexical orthographic override `ศรี → สี`; it is not an independently adjudicated IPA record and must not be counted as phonetic gold.
 - The Python and browser lexical-reading registries now include this exact override. Regression tests verify normalized spelling and the engine's derived IPA/Ukrainian output, while the evidence note keeps the source's actual claim limited to the lexical reading.
+
+
+## Sense-ambiguous ทราย reading — 2026-10-25
+
+- **SRC-ORST-CLUSTER-2011-THRAY-SENSE** — Royal Institute of Thailand Journal, “เรื่องยุ่ง ๆ เกี่ยวกับอักษรควบ”, vol. 36 no. 4 (Oct–Dec 2011), p. 556, official source: https://www.orst.go.th/FILEROOM/CABROYINWEB/DRAWER004/GENERAL/DATA0000/00000630.FLP/html/48/ .
+- The article explicitly distinguishes two senses of **ทราย**: the sand sense is analyzed as a false cluster with initial /s/, while the deer-name sense is analyzed as a true ทร cluster. This is evidence of sense-dependent orthographic reading, not a blanket rule for every token spelled ทราย.
+- The parser has no semantic sense input, so the bare homograph is now left at `analysis-dependent:special-orthography` with IPA and Ukrainian output withheld. Do not infer the intended sense from frequency or from the existing text-segmentation lexicon.
+- This source supports the ambiguity decision only. It does not provide independent acoustic IPA gold or authorize an accuracy score.

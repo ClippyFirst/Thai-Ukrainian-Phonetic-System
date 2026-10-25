@@ -74,6 +74,17 @@ class TextPipelineTests(unittest.TestCase):
         self.assertEqual(cold.onset, ["ห", "น"])
         self.assertEqual(cold.phonemic_ipa, "naːw")
 
+    def test_sense_ambiguous_thray_withholds_lexical_guess(self):
+        # The Royal Institute's 2011 article distinguishes ทราย meaning sand
+        # (false cluster, initial /s/) from ทราย meaning a deer (true cluster).
+        # The parser has no semantic context, so the bare homograph is unresolved.
+        result = analyze_syllable("ทราย")
+        self.assertEqual(result.status, "analysis-dependent:special-orthography")
+        self.assertIsNone(result.phonemic_ipa)
+        self.assertIsNone(result.phonetic_ipa)
+        self.assertIsNone(result.ukrainian_transliteration)
+        self.assertTrue(any(rule.get("rule_id") == "SP-THR-001" for rule in result.special_analyses))
+
     def test_attested_false_cluster_sri_uses_lexical_reading(self):
         # The Royal Institute Dictionary entry (mirrored by Longdo) gives
         # ศรี as สี. This tests a lexical orthography override, not IPA gold.
