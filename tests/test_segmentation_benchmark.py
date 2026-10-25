@@ -177,5 +177,23 @@ class SegmentationBenchmarkTests(unittest.TestCase):
         gold = [self.gold(row_id="g1"), self.gold(row_id="g2", gold_status="SOURCE_ANNOTATED")]
         self.assertIn("do not mix ADJUDICATED and SOURCE_ANNOTATED", self.run_benchmark(gold, [], expected=1))
 
+
+    def test_pinned_wisesight_source_annotation_snapshot_is_integral(self):
+        path = ROOT / "data" / "benchmark" / "segmentation-gold.tsv"
+        with path.open("r", encoding="utf-8-sig", newline="") as stream:
+            rows = list(csv.DictReader(stream, delimiter="\\t"))
+        self.assertEqual(len(rows), 993)
+        self.assertEqual(len({row["id"] for row in rows}), 993)
+        for row in rows:
+            with self.subTest(row_id=row["id"]):
+                self.assertEqual(row["gold_status"], "SOURCE_ANNOTATED")
+                self.assertEqual(row["source_id"], "WISESIGHT1000-C1D063649ABC")
+                self.assertEqual(row["license"], "CC0-1.0")
+                self.assertEqual(row["split"], "test")
+                tokens = json.loads(row["gold_tokens_json"])
+                self.assertTrue(tokens)
+                self.assertTrue(all(isinstance(token, str) and token for token in tokens))
+                self.assertEqual("".join(tokens), row["text"])
+
 if __name__ == "__main__":
     unittest.main()
