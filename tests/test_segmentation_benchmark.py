@@ -95,6 +95,17 @@ class SegmentationBenchmarkTests(unittest.TestCase):
         self.assertEqual(metrics["nonempty_predictions"], 1)
         self.assertEqual(metrics["exact_sequence_rate"], 0.5)
 
+    def test_non_success_status_cannot_score_stale_prediction_tokens(self):
+        # Even an exact-looking token array is not a prediction when the engine
+        # reported an error/abstention; stale or partial data must not score.
+        failed = self.prediction(status="error", tokens=["ภาษา", "ไทย"])
+        metrics = self.run_benchmark([self.gold()], [failed])["engines"]["test-engine"]
+        self.assertEqual(metrics["coverage"], 0.0)
+        self.assertEqual(metrics["exact_sequence_rate"], 0.0)
+        self.assertEqual(metrics["boundary_tp"], 0)
+        self.assertEqual(metrics["boundary_fn"], 1)
+        self.assertEqual(metrics["non_success_status_rows"], 1)
+
     def test_empty_prediction_array_is_counted_as_abstention(self):
         report = self.run_benchmark([self.gold()], [self.prediction(tokens=[])])
         metrics = report["engines"]["test-engine"]
