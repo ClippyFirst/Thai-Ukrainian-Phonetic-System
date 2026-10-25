@@ -156,3 +156,15 @@ if __name__=="__main__":unittest.main()
                 self.assertEqual(analysis.status, "analyzed")
                 self.assertIsNotNone(analysis.phonemic_ipa)
                 self.assertIsNotNone(analysis.ukrainian_transliteration)
+
+
+    def test_source_attested_tr_readings_are_available_in_text_lexicon(self):
+        from thai_ukrainian.text import segment_thai_word
+        for word in ("ทราบ", "ทราย", "ทรง", "ทรัพย์", "แทรก"):
+            with self.subTest(word=word):
+                syllables, status = segment_thai_word(word)
+                self.assertEqual(status, "lexicon")
+                self.assertEqual(syllables, (word,))
+                analysis = analyze_syllable(word)
+                self.assertEqual(analysis.status, "analyzed")
+                self.assertIsNotNone(analysis.phonemic_ipa)
