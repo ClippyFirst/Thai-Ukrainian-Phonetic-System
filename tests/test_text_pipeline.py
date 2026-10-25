@@ -99,7 +99,6 @@ class TextPipelineTests(unittest.TestCase):
         # belong in the adjudicated fixture set with cited lexical evidence.
         # The Royal Institute article "เรื่องยุ่ง ๆ เกี่ยวกับอักษรควบ"
         # (2011, vol. 36 no. 4, pp. 556-557) documents these lexical ทร readings.
-        # These assert the source-attested orthographic override, not IPA gold.
         source_attested_thr = {
             "ทราบ": "ซาบ",
             "ทรง": "ซง",
@@ -122,6 +121,25 @@ class TextPipelineTests(unittest.TestCase):
                     self.assertEqual(result.normalized, "หย่าง")
                 if word == "เตอร์":
                     self.assertEqual(result.normalized, "เตอ")
+
+    def test_source_attested_rr_words_are_segmented_conservatively(self):
+        # The Office of the Basic Education Commission gives:
+        # สรรพคุณ = สับ-พะ-คุน; สรรพสินค้า = สับ-พะ-สิน-ค้า;
+        # สรรพนาม = สับ-พะ-นาม. These are source-backed syllabification
+        # entries, not independently adjudicated IPA gold labels.
+        expected = {
+            "สรรพคุณ": ("สับ", "พะ", "คุน"),
+            "สรรพสินค้า": ("สับ", "พะ", "สิน", "ค้า"),
+            "สรรพนาม": ("สับ", "พะ", "นาม"),
+        }
+        for word, syllables in expected.items():
+            with self.subTest(word=word):
+                self.assertEqual(segment_thai_word(word), (syllables, "lexicon"))
+                token = analyze_text(word)[0]
+                self.assertEqual(token["segmentation_status"], "lexicon")
+                self.assertEqual(tuple(item["input"] for item in token["syllables"]), syllables)
+                self.assertTrue(all(item["phonemic_ipa"] for item in token["syllables"]))
+                self.assertTrue(all(item["ukrainian_transliteration"] for item in token["syllables"]))
 
 
 if __name__ == "__main__":
