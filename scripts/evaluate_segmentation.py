@@ -18,6 +18,9 @@ from pathlib import Path
 
 GOLD_FIELDS = ["id", "text", "gold_tokens_json", "gold_status", "source_id", "license", "split"]
 PRED_FIELDS = ["id", "engine", "predicted_tokens_json", "status", "version"]
+# Only a fully emitted prediction is scoreable. Error/abstention/partial rows
+# remain in the input audit trail but cannot receive credit for stale tokens.
+SCOREABLE_PREDICTION_STATUSES = {"ok"}
 
 
 def read_tsv(path: Path, required: list[str]) -> list[dict[str, str]]:
@@ -107,7 +110,7 @@ def main() -> int:
         predicted_boundaries: set[int] = set()
         if row["predicted_tokens_json"].strip():
             tokens = parse_tokens(row["predicted_tokens_json"], row_id=row_id, field="predicted_tokens_json")
-            if tokens:
+            if tokens and row["status"].strip().lower() in SCOREABLE_PREDICTION_STATUSES:
                 predicted_boundaries = boundaries(
                     next(r["text"] for r in gold_rows if r["id"] == row_id),
                     tokens, row_id=row_id, field="predicted_tokens_json",
@@ -115,7 +118,7 @@ def main() -> int:
         predictions[engine][row_id] = {
             "tokens": tokens,
             "boundaries": predicted_boundaries,
-            "status": row["status"],
+            "status": row["status"].strip().lower(),
             "version": row["version"],
         }
 
@@ -127,6 +130,8 @@ def main() -> int:
             "normalization": "Unicode NFC only; token concatenation must equal normalized source text exactly",
             "boundary_units": "Python Unicode code-point offsets, excluding the final text boundary",
             "missing_predictions": "eligible gold rows remain in denominator; missing/empty tokenization contributes no predicted boundaries",
+            "scoreable_prediction_statuses": sorted(SCOREABLE_PREDICTION_STATUSES),
+            "non_success_statuses": "Any status other than 'ok' is treated as abstention even if a token array is present; stale/partial output cannot score.",
             "exact_sequence": "all token strings and boundaries must match the adjudicated sequence",
             "accuracy_claim": "descriptive only for the supplied adjudicated rows",
         },
@@ -143,7 +148,7 @@ def main() -> int:
         tp = fp = fn = exact = covered = 0
         for row_id, reference in gold.items():
             prediction = by_id.get(row_id)
-            if prediction and prediction["tokens"]:
+            if prediction and prediction["tokens"] and prediction["status"] in SCOREABLE_PREDICTION_STATUSES:
                 covered += 1
                 predicted_set = prediction["boundaries"]
                 gold_set = reference["boundaries"]
@@ -160,6 +165,10 @@ def main() -> int:
             "status": "MEASURED" if gold else "NOT_MEASURED_NO_ADJUDICATED_GOLD",
             "n_adjudicated_gold_rows": len(gold),
             "nonempty_predictions": covered,
+            "non_success_status_rows": sum(
+                1 for row_id in by_id
+                if by_id[row_id]["status"] not in SCOREABLE_PREDICTION_STATUSES
+            ),
             "coverage": covered / len(gold) if gold else None,
             "exact_sequence_matches": exact,
             "exact_sequence_rate": exact / len(gold) if gold else None,
