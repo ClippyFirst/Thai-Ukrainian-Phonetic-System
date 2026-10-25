@@ -138,9 +138,6 @@ class PipelineTests(unittest.TestCase):
         self.assertIsNotNone(parse_syllable("เกียว").vowel_id)
         self.assertIsNotNone(parse_syllable("เลย").vowel_id)
 
-if __name__=="__main__":unittest.main()
-
-
     def test_preposed_vowel_lexical_false_cluster_retains_final_coda(self):
         analysis = analyze_syllable("แทรก")
         self.assertEqual(analysis.normalized, "แซก")
@@ -176,3 +173,5 @@ if __name__=="__main__":unittest.main()
                 analysis = analyze_syllable(word)
                 self.assertEqual(analysis.status, "analyzed")
                 self.assertIsNotNone(analysis.phonemic_ipa)
+
+if __name__=="__main__":unittest.main()
