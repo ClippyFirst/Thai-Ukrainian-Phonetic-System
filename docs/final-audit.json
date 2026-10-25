@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "research-foundation; engineering-verified; empirical-validation-pending",
+  "status": "research-foundation; source-annotated-segmentation-benchmark-added; CI-pending; independent-phonetic-validation-pending",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -14,7 +14,12 @@
     "segmentation_benchmark_infrastructure",
     "fail_closed_prediction_scoring",
     "generated_artifact_ci_gate",
-    "python_browser_parity_gate"
+    "python_browser_parity_gate",
+    "pinned_source_annotated_word_boundaries",
+    "source_status_aware_segmentation_scoring",
+    "lexicon_source_provenance",
+    "source_attested_ipa_registry",
+    "wisesight_segmentation_diagnostic_ci_gate"
   ],
   "not_claimed": [
     "complete_lexical_segmentation",
@@ -26,8 +31,28 @@
     "independently_adjudicated_ipa_gold",
     "independently_adjudicated_word_boundary_gold",
     "empirical_segmentation_accuracy",
-    "representative_lexical_coverage"
+    "representative_lexical_coverage",
+    "independent_expert_adjudicated_word_boundary_gold",
+    "independent_expert_adjudicated_ipa_gold",
+    "acoustic_tone_vowel_length_accuracy",
+    "automatic_word_segmentation"
   ],
-  "lexical_attestation": "partial; 23/36 exact lookups on a hand-picked challenge set; not representative coverage",
-  "corpus_attestation": "not measured; zero independently adjudicated IPA or word-boundary gold rows"
+  "lexical_attestation": "five source-attested runtime lexicon entries added; 36-form challenge diagnostic pending exact-head CI; not representative coverage",
+  "corpus_attestation": "993 source-annotated word-tokenization rows (CC0-1.0; not expert-adjudicated); zero independently adjudicated IPA/tone/vowel-length gold rows",
+  "word_boundary_benchmark": {
+    "dataset": "PyThaiNLP/Wisesight word-tokenization labels",
+    "rows": 993,
+    "license": "CC0-1.0",
+    "upstream_commit": "c1d063649abc3a6870b5fd1aae26cd1c64bdde7b",
+    "upstream_blob_sha1": "279aeb2d4323fd8032306160144d33dcb5b2df84",
+    "status": "SOURCE_ANNOTATED_NOT_EXPERT_ADJUDICATED",
+    "project_split": "test",
+    "baseline": "pending exact-head CI"
+  },
+  "source_attested_ipa_records": {
+    "count": 6,
+    "license": "CC-BY-SA-4.0",
+    "status": "SOURCE_ATTESTED_NOT_GOLD",
+    "includes_short_long_oe_contrast": true
+  }
 }
