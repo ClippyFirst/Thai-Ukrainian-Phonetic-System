@@ -51,3 +51,10 @@ Standard Thai cluster descriptions distinguish true clusters from false clusters
 - The article explicitly distinguishes two senses of **ทราย**: the sand sense is analyzed as a false cluster with initial /s/, while the deer-name sense is analyzed as a true ทร cluster. This is evidence of sense-dependent orthographic reading, not a blanket rule for every token spelled ทราย.
 - The parser has no semantic sense input, so the bare homograph is now left at `analysis-dependent:special-orthography` with IPA and Ukrainian output withheld. Do not infer the intended sense from frequency or from the existing text-segmentation lexicon.
 - This source supports the ambiguity decision only. It does not provide independent acoustic IPA gold or authorize an accuracy score.
+
+
+## Special vowel-letter evidence — 2026-10-25
+
+- **SRC-OBEC-SPECIAL-VOWELS-2022** — Office of the Basic Education Commission / IPST teacher guide, *ชุดการจัดกิจกรรมการเรียนรู้ ภาษาไทย ชั้นมัธยมศึกษาปีที่ 1 ภาคเรียนที่ 1*, p. 5: https://academic.obec.go.th/images/document/1649040986_d_1.pdf .
+- The guide describes ฤ ฤๅ ฦ ฦๅ as syllabic units broadly comparable to ริ/รึ/รือ/ลึ/ลือ, rather than as freely occurring vowel sounds.
+- This supports a conservative orthographic/lexical classification only. It does not establish one IPA value for every word or authorize output for an isolated letter without lexical context. Existing word-level overrides must retain their own lexical evidence, and unsupported forms remain analysis-dependent.
