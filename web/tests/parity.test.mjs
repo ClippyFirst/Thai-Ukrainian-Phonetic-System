@@ -66,6 +66,7 @@ for (const input of lexicalRegression) {
   const a = analyze(input);
   if (a.status !== "analyzed" || !a.phonemicIpa) throw new Error("Lexical regression unresolved in browser engine: " + input);
   if (input === "ศรี" && (a.normalized !== "สี" || a.phonemicIpa !== "siː" || a.ukrainian !== "сі")) throw new Error("Thai false-cluster lexical reading mismatch for ศรี");
+  if (input === "แทรก" && (a.normalized !== "แซก" || a.phonemicIpa !== "sɛːk" || a.coda !== "ก")) throw new Error("Thai preposed-vowel false-cluster coda mismatch for แทรก");
   if (input === "อย่าง" && a.normalized !== "หย่าง") throw new Error("Thai lexical normalization mismatch for อย่าง");
   if (input === "เตอร์" && a.normalized !== "เตอ") throw new Error("Thai lexical normalization mismatch for เตอร์");
 }
