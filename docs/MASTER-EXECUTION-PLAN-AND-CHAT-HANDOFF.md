@@ -570,3 +570,19 @@ This section supersedes earlier notes in this handoff that said post-merge main 
 - [ ] Recompute the 36-form challenge runtime diagnostic; expected static lexicon lookup count is 28/36 after five source-backed additions, but the CI report—not this expectation—defines the verified outcome.
 
 Do not merge PR #71 or call the repository empirically validated solely because these gates pass. The source-annotated boundary benchmark is a real improvement over empty TSVs, while expert IPA/tone/length gold and the lexical IPA override for `เงิน` remain separate gates.
+
+
+## Final verification checkpoint — 2026-10-25
+
+- **Starting branch head for this follow-up:** `7e39fd4bc108386148c1e9a79d257d75babcc9aa`.
+- **Code-bearing acceptance commit:** `818a378d37b248d74628243b9a8d62fb82029815`.
+- **CI:** [run 40233825012](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40233825012) passed both jobs, `test` and `master-artifact`.
+- **Commands verified in CI:** `python scripts/generate_derived.py`; `python scripts/generate_syllable_space.py`; generated-artifact drift check; `python scripts/generate_master_table.py`; `python -m unittest discover -s tests -v` (150 passed); `python scripts/run_challenge_diagnostics.py --output /tmp/challenge-runtime-diagnostics.json`; Node `web/tests/ipa-ua.test.mjs`, `web/tests/parity.test.mjs`, `web/tests/ui-contract.test.mjs`; `python scripts/run_wisesight_segmentation_diagnostic.py --output /tmp/wisesight1000-segmentation-baseline.json`; 993-row/status/coverage assertions; master artifact assertions for 351,780 rows and 41 vowel/rime records.
+- **Challenge diagnostic:** 36 forms; 28 lexicon-resolved, 8 unresolved; 25 complete engine outputs and 11 abstentions/incomplete outputs. This is not accuracy.
+- **Wisesight baseline:** 993 source-annotated rows, full prediction coverage; boundary precision 0.638319, recall 0.091858, F1 0.160604, exact sequence rate 0.031219. The source labels are not expert-adjudicated. Uploaded artifact ID `12614106636`.
+- **Generated master artifact:** job passed the 351,780-row and 41 vowel/rime assertions; uploaded artifact ID `12613439376`.
+- **Initial failure and repair:** run `40233445474` found a generated-audit artifact drift after adding `text_lexicon_sources.csv`; the generated JSON was regenerated into exact expected key order. Run `40233522119` then exposed a stale test fixture expecting `ไกล` to remain unresolved after it had been added to the lexicon. The fixture was corrected to use unsupported `กฉ`; final run `40233825012` passed.
+- **PR #71:** remains open and draft; no merge or release was performed. PR #68 remains untouched because it is a separate conflicting branch and has its own official-source scope.
+- **Final readiness:** engineering-verified research prototype with source-annotated segmentation baseline. Not release-ready for arbitrary Thai text; no independent expert/acoustic IPA, tone, or vowel-length gold exists. `เงิน` remains excluded from the runtime lexicon pending a typed lexical-IPA override. `รร`, `ฤ/ฤๅ`, `ฦ/ฦๅ`, `ทร`, silent-letter contexts, connected speech and Ukrainian preference remain evidence-gated.
+
+The audit/matrix/handoff edits after the code-bearing commit are documentation-only. Verify the latest branch head's CI before treating the final branch state as fully green.
