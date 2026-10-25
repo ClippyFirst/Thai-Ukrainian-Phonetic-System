@@ -18,6 +18,14 @@ def effective_onset(a:SyllableAnalysis)->list[str]:
 
 def phonologize(a:SyllableAnalysis)->SyllableAnalysis:
     onset=effective_onset(a)
+    # A parser/status inconsistency or future inventory expansion must not
+    # turn an unmapped consonant into a question mark inside apparently valid IPA.
+    if any(c not in ONSET_IPA for c in onset):
+        a.phonemic_ipa=None
+        a.phonetic_ipa=None
+        a.warnings.append("Phonemic IPA withheld because of an unsupported onset consonant.")
+        a.rules_applied.append("PHON-UNSUPPORTED-ONSET-WITHHELD")
+        return a
     if a.vowel is None or a.status != "analyzed":
 
         a.phonemic_ipa=None
