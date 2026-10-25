@@ -37,3 +37,9 @@ The implementation deliberately uses a broader machine-readable rime registry th
 ## False-cluster evidence
 
 Standard Thai cluster descriptions distinguish true clusters from false clusters. In particular, **จร, สร, ศร, ซร** can contain a written ร that is not pronounced, while **ทร** has lexical readings that may diverge from a compositional /thr/ analysis. Examples documented in reference descriptions include **จริง** /tɕiŋ/, **สร้าง** /saːŋ/, **เศร้า** /saw/ and **ไซร้** /saj/. The implementation therefore treats these constructions as analysis-dependent until lexical evidence resolves the reading. Sources: SRC-ORST; the independent cluster reference used in the audit.
+
+
+## Source-attested lexical false-cluster reading
+
+- **SRC-RID-2011-SRI** — Royal Institute Dictionary (2011 edition), entry for **ศรี**, exposed through the Longdo dictionary interface: https://dict.longdo.com/search/ศรี . The entry explicitly supplies the reading `[สี]`. This supports a lexical orthographic override `ศรี → สี`; it is not an independently adjudicated IPA record and must not be counted as phonetic gold.
+- The Python and browser lexical-reading registries now include this exact override. Regression tests verify normalized spelling and the engine's derived IPA/Ukrainian output, while the evidence note keeps the source's actual claim limited to the lexical reading.
