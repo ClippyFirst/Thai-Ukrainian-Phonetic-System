@@ -101,10 +101,11 @@ def main() -> int:
         predicted_boundaries: set[int] = set()
         if row["predicted_tokens_json"].strip():
             tokens = parse_tokens(row["predicted_tokens_json"], row_id=row_id, field="predicted_tokens_json")
-            predicted_boundaries = boundaries(
-                next(r["text"] for r in gold_rows if r["id"] == row_id),
-                tokens, row_id=row_id, field="predicted_tokens_json",
-            )
+            if tokens:
+                predicted_boundaries = boundaries(
+                    next(r["text"] for r in gold_rows if r["id"] == row_id),
+                    tokens, row_id=row_id, field="predicted_tokens_json",
+                )
         predictions[engine][row_id] = {
             "tokens": tokens,
             "boundaries": predicted_boundaries,
