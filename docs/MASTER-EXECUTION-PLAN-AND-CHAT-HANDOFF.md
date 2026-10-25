@@ -532,3 +532,29 @@ This section supersedes earlier notes in this handoff that said post-merge main 
 - CCOST v1.0 (DOI `10.5281/zenodo.17366698`) remains a candidate for non-commercial phonetic adjudication under CC BY-NC-SA 4.0; its corpus was not downloaded, mirrored, or bundled. The Wiktionary-derived G2P corpus remains source-attested regression material, not independent gold against systems with overlapping provenance.
 - The segmentation-corpus index is discovery metadata only. Exact upstream version, license, annotation convention, split and hash must be verified before populating gold TSVs. Synthetic test fixtures must never be represented as Thai accuracy evidence.
 - Readiness: **research software prototype with verified engineering infrastructure; not empirically validated and not release-ready for arbitrary Thai text**. The remaining blockers are evidence/adjudication and representative lexical coverage, not missing benchmark plumbing.
+
+
+
+## 2026-10-25 follow-up — permissive segmentation evidence and source-attested IPA
+
+### Changes prepared on `research/thai-evidence-gated-coverage-20261025`
+
+- Five source-attested entries were added to `data/thai/text_lexicon.tsv`: `ไกล`, `ใกล้`, `เดิน`, `กรรม`, `บรรจุ`. Exact Thai Wiktionary revision URLs, source claim scopes, and CC BY-SA 4.0 attribution are recorded in `data/thai/text_lexicon_sources.csv`; the share-alike scope is explained in `data/thai/TEXT-LEXICON-DATA-LICENSE.md`.
+- `เงิน` was deliberately **not** added as a normal runtime lexicon entry. Its source gives /ŋɤn˧/ with short /ɤ/, while the existing graphemic parser has a known lexical-length ambiguity. The text lexicon cannot encode a typed IPA override, so enabling it as ordinary graphemes risks wrong output.
+- Added `data/benchmark/segmentation-gold.tsv` with 993 source-annotated human word-tokenization rows from Wisesight. Exact upstream commit `c1d063649abc3a6870b5fd1aae26cd1c64bdde7b`, source blob SHA-1 `279aeb2d4323fd8032306160144d33dcb5b2df84`, license CC0-1.0. All rows are test-only in this repo and status `SOURCE_ANNOTATED`; no claim of expert adjudication or inter-annotator agreement.
+- Added source provenance/conversion contract at `data/benchmark/wisesight1000-source.json`; added six revision-pinned dictionary IPA records in `data/benchmark/source-attested-ipa.tsv`, all labeled `SOURCE_ATTESTED_NOT_GOLD`.
+- Updated `scripts/evaluate_segmentation.py` so source-annotated and expert-adjudicated labels cannot be mixed in a single score, and whitespace-only boundaries do not inflate lexical boundary metrics. Added `scripts/run_wisesight_segmentation_diagnostic.py` and CI assertions/artifact upload.
+- Tests added for source annotation grade, whitespace boundary semantics, exact 993-row data reconstruction, five lexical entries, and the source-attested IPA registry.
+
+### Verification ledger for this batch
+
+- **PARTIAL — CI pending at the time of this handoff.** No local tests were run; the available session has GitHub file/branch APIs but no local checkout/command runner. Wait for exact-head CI on this branch before marking new code/data gates DONE_VERIFIED.
+- Expected evidence: full Python suite; generated-data drift check; master-table generation and 351,780-row/41-vowel assertion; Node IPA→UA, browser parity and UI contract; new Wisesight 993-row diagnostic artifact.
+- New boundary benchmark outcome must be reported as `SOURCE_ANNOTATED`, not independent expert gold. Its baseline is a no-automatic-segmentation diagnostic; do not advertise it as a production segmenter score.
+
+### Remaining genuine blockers
+
+1. **BLOCKED — independent IPA/tone/vowel-length gold:** requires CCOST annotation-manual/license review, a pinned speaker-aware sample, and independent Thai phonetic adjudication with disagreements logged.
+2. **TODO — typed lexical IPA override:** preserve `เงิน /ŋɤn˧/` through the typed IPA result and Ukrainian adapter with provenance and Python/browser parity; do not use a source grapheme workaround.
+3. **PARTIAL — special orthography:** `รร`, `ฤ/ฤๅ`, `ฦ/ฦๅ`, `ทร` and silent-letter readings remain lexical/context-dependent.
+4. **BLOCKED — connected speech and Ukrainian preferences:** requires acoustic labels and a separate Ukrainian target-preference set.
