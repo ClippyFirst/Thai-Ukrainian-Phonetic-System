@@ -89,8 +89,14 @@ class PhoneticResult:
                 )
                 for phonemic, surface in zip(segments, surface_segments)
             ]
-        status = "SUPPORTED" if analysis.status == "analyzed" and analysis.phonemic_ipa and all(
-            segment.certainty == "SUPPORTED" for segment in segments
+        surface_supported = analysis.phonetic_ipa is None or all(
+            segment.certainty == "SUPPORTED" for segment in surface_segments
+        )
+        status = "SUPPORTED" if (
+            analysis.status == "analyzed"
+            and analysis.phonemic_ipa
+            and all(segment.certainty == "SUPPORTED" for segment in segments)
+            and surface_supported
         ) else ("UNCERTAIN" if analysis.status.startswith("analysis-dependent") else "UNSUPPORTED")
         return cls(
             phonemic_ipa=analysis.phonemic_ipa,
