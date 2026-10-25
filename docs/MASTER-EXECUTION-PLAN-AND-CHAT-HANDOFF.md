@@ -34,7 +34,7 @@ At the start of each continuation, read this file, `docs/final-audit.md`, `docs/
 | THAI-006 | P1 | TODO | Audit Unicode normalization, tokenization, explicit syllable boundaries, unknown input and malformed input in Python and browser implementations. | Existing Unicode, text and parity tests. |
 | THAI-007 | P1 | TODO | Verify claim-level citations for tone, vowel length, consonant classes, codas, clusters and IPA; record exact page/section where available. | `docs/evidence.md`; source files and cited references. |
 | THAI-008 | P1 | TODO | Build an independent, versioned gold evaluation protocol and report actual metrics only after processing a licensed/adjudicated corpus. Include stratified errors and explicit denominators. | External corpus access/licensing; `docs/corpus-validation.md`. |
-| THAI-009 | P2 | TODO | Audit mobile usability, accessibility, deployment metadata and documentation consistency after functional CI is green. | THAI-002, THAI-003. |
+| THAI-009 | P2 | IN_PROGRESS | Selectively port current-main-safe UX improvements from stale PR #17 without replacing the v0.6.1 text/IPA engine: visible input guidance, Ctrl/⌘+Enter, immediate examples, active navigation, result headings, copy controls, status guide, and a truthful warning when tokenization/analysis is unresolved or no Thai token exists. Added a Node DOM-contract test wired into CI. | Exact-head CI must pass Python, IPA→Ukrainian, Python/browser parity and the new UI contract test. No screenshot/device audit is claimed; mobile and real assistive-technology checks remain open. |
 | THAI-010 | P2 | TODO | Inspect `CITATION.cff`, release protocol and licensing/provenance; then prepare versioned release, Zenodo archive and methodology paper without unsupported accuracy claims. | THAI-004–THAI-009. |
 | THAI-011 | P1 | DONE_VERIFIED | Merged PR #46 as `fcfe7c95858efceaa73417deaf762908529a8514`: unsupported onset segments now withhold both IPA layers, downgrade status to `unresolved:unsupported-onset`, and emit a diagnostic. Regression is a discovered `unittest.TestCase` method. Exact-head CI [40196572177](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40196572177) passed both jobs. | This closes only the unsupported-onset contract; broader unknown-input, cluster, special-orthography and independent-gold tasks remain open. |
 
@@ -322,3 +322,11 @@ This section supersedes earlier notes in this handoff that said post-merge main 
 - The parser regression found by `แทรก → แซก` was also fixed: a non-cluster pair after a preposed vowel now falls through to positional coda analysis, retaining coda `ก` and yielding the implementation's `sɛːk`.
 - Exact-head CI [40209338369](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40209338369) passed the Python test suite, browser/Python parity, generated-data checks and master-artifact checks.
 - These are source-attested lexical overrides, not an independent IPA gold corpus. The implementation must not generalize them into a productive rule that every `ทร` is /s/.
+
+
+## Current-main Thai UX/accessibility port — 2026-10-25
+
+- Revisited open PR #17 after comparing its old branch against current `main`. The old branch's engine/data files are stale and unsafe to merge; only still-missing presentation improvements are being ported into a fresh branch.
+- Preserved the current v0.6.1 `analyzeText` pipeline and IPA → Ukrainian adapter boundary. Updated the current UI to expose input/segmentation guidance, keyboard shortcut, quick examples, status definitions, accessible result headings, copy actions and accurate unresolved/no-Thai-token notices.
+- Added `web/tests/ui-contract.test.mjs` and wired it into `.github/workflows/ci.yml` so keyboard interaction, examples, empty/unsupported status and result messaging are tested rather than inferred from static markup.
+- This is a code-level accessibility/integrity pass. No screenshot-based, mobile-device, screen-reader or live Pages audit is claimed. PR #17 remains open until this selective port is verified; do not merge its stale engine/runtime.
