@@ -111,7 +111,7 @@ class PipelineTests(unittest.TestCase):
         self.assertEqual(a.ukrainian_transliteration,"кай")
 
     def test_curated_false_cluster_lexical_readings_resolve_explicitly(self):
-        for text in ("จริง","สร้าง","เศร้า","ไซร้"):
+        for text in ("จริง","สร้าง","เศร้า","ไซร้","ทราบ","ทราย","ทรง","ทรัพย์","แทรก"):
             with self.subTest(text=text):
                 a=analyze_syllable(text)
                 self.assertEqual(a.status,"analyzed",text)
@@ -139,3 +139,20 @@ class PipelineTests(unittest.TestCase):
         self.assertIsNotNone(parse_syllable("เลย").vowel_id)
 
 if __name__=="__main__":unittest.main()
+
+
+    def test_tr_false_cluster_readings_are_source_registered(self):
+        from pathlib import Path
+        import csv
+        root = Path(__file__).resolve().parents[1]
+        with (root / "data/thai/sources.csv").open(encoding="utf-8", newline="") as f:
+            sources = {row["source_id"]: row for row in csv.DictReader(f)}
+        source = sources["SRC-ORST-CLUSTER-2011"]
+        self.assertIn("orst.go.th/FILEROOM", source["url"])
+        self.assertIn("lexical", source["notes"])
+        for word in ("ทราบ", "ทราย", "ทรง", "ทรัพย์", "แทรก"):
+            with self.subTest(word=word):
+                analysis = analyze_syllable(word)
+                self.assertEqual(analysis.status, "analyzed")
+                self.assertIsNotNone(analysis.phonemic_ipa)
+                self.assertIsNotNone(analysis.ukrainian_transliteration)
