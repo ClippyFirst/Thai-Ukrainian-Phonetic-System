@@ -354,3 +354,10 @@ This section supersedes earlier notes in this handoff that said post-merge main 
 - The PR adds regression coverage for the source-attested lexical readings `ทราบ → ซาบ`, `ทรง → ซง`, `ทรัพย์ → ซับ`, and `แทรก → แซก`. These remain lexical overrides, not a productive rule for every spelling with `ทร`, and not independent IPA gold.
 - Exact-head CI run [40214453752](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40214453752) passed both jobs: the test job (Python unit tests, generated-audit/syllable-space/source-manifest drift check, IPA adapter tests, Python/browser parity and UI contract) and the master-artifact job (generated 351,780 rows, asserted expected row count and 41 vowel records, uploaded the artifact).
 - This confirms engineering regression/reproducibility for the added cases only. Independent gold-corpus accuracy remains unmeasured; the repository remains a research-oriented reference implementation, not an empirically validated release.
+
+
+## Typed Thai IPA surface-layer validation — 2026-10-25
+
+- Adversarial inspection found that `PhoneticResult.from_syllable_analysis` validated phonemic IPA segments for `SUPPORTED` status but did not include unsupported symbols in the broad surface IPA in that decision. A malformed surface string could therefore remain visible while the typed result was marked supported and passed the Ukrainian adapter gate.
+- The typed-result builder now checks surface-IPA segment certainty as well as phonemic segments. Added a regression injecting an unsupported snowman symbol into surface IPA; the typed result must be `UNSUPPORTED` and the Ukrainian adapter must withhold output.
+- This is an adapter-boundary integrity fix, not evidence of improved Thai phonetic accuracy. Exact-head CI is required before merge; independent gold-corpus accuracy remains unmeasured.
