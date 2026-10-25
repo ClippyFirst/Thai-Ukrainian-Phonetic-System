@@ -83,6 +83,13 @@ class SegmentationBenchmarkTests(unittest.TestCase):
         self.assertEqual(metrics["nonempty_predictions"], 1)
         self.assertEqual(metrics["exact_sequence_rate"], 0.5)
 
+    def test_empty_prediction_array_is_counted_as_abstention(self):
+        report = self.run_benchmark([self.gold()], [self.prediction(tokens=[])])
+        metrics = report["engines"]["test-engine"]
+        self.assertEqual(metrics["coverage"], 0.0)
+        self.assertEqual(metrics["exact_sequence_rate"], 0.0)
+        self.assertEqual(metrics["boundary_fn"], 1)
+
     def test_single_token_without_boundaries_reports_undefined_boundary_metrics(self):
         gold = self.gold(text="ไทย", tokens=["ไทย"])
         pred = self.prediction(tokens=["ไทย"])
