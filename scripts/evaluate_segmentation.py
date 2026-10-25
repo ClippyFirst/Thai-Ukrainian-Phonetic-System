@@ -40,7 +40,7 @@ def parse_tokens(raw: str, *, row_id: str, field: str) -> list[str]:
     except json.JSONDecodeError as exc:
         raise ValueError(f"{field} for row {row_id!r} must be a JSON array") from exc
     if not isinstance(value, list) or any(not isinstance(item, str) or not item for item in value):
-        raise ValueError(f"{field} for row {row_id!r} must be a non-empty-string JSON array")
+        raise ValueError(f"{field} for row {row_id!r} must be a JSON array of non-empty strings")
     return value
 
 
@@ -77,6 +77,8 @@ def main() -> int:
             raise ValueError(f"gold IDs must be non-empty and unique: {row_id!r}")
         seen_gold_ids.add(row_id)
         if row["gold_status"] == "ADJUDICATED":
+            if not normalize(row["text"]):
+                raise ValueError(f"ADJUDICATED gold row {row_id!r} requires non-empty text")
             for field in ("source_id", "license", "split"):
                 if not row[field].strip():
                     raise ValueError(f"ADJUDICATED gold row {row_id!r} requires {field}")
@@ -94,6 +96,8 @@ def main() -> int:
     for row in prediction_rows:
         if not row["id"].strip() or not row["engine"].strip():
             raise ValueError("prediction id and engine must be non-empty")
+        if not row["status"].strip() or not row["version"].strip():
+            raise ValueError("prediction status and version must be non-empty")
         engine, row_id = row["engine"].strip(), row["id"].strip()
         if row_id in predictions[engine]:
             raise ValueError(f"prediction (engine,id) must be unique: {(engine, row_id)!r}")
