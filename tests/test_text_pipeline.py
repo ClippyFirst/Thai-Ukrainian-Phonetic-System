@@ -122,6 +122,21 @@ class TextPipelineTests(unittest.TestCase):
                 if word == "เตอร์":
                     self.assertEqual(result.normalized, "เตอ")
 
+    def test_unlisted_rr_form_remains_unresolved(self):
+        # The OBEC source gives lexical readings for specific words, but also
+        # documents several readings and syllabifications for different words.
+        # A source-backed lexicon must not become a productive universal rule.
+        syllable = analyze_syllable("สรร")
+        self.assertEqual(syllable.status, "analysis-dependent:special-orthography")
+        self.assertIsNone(syllable.phonemic_ipa)
+        self.assertIsNone(syllable.phonetic_ipa)
+        self.assertIsNone(syllable.ukrainian_transliteration)
+
+        token = analyze_text("สรร")[0]
+        self.assertEqual(token["segmentation_status"], "unresolved")
+        self.assertEqual(token["syllables"], [])
+        self.assertTrue(any("IPA and Ukrainian output are withheld" in w for w in token["warnings"]))
+
     def test_source_attested_rr_words_are_segmented_conservatively(self):
         # The Office of the Basic Education Commission gives:
         # สรรพคุณ = สับ-พะ-คุน; สรรพสินค้า = สับ-พะ-สิน-ค้า;
