@@ -33,6 +33,21 @@ class UnicodeTests(unittest.TestCase):
             ("\u0085", "punctuation"), ("กา", "thai"), ("\u0085", "punctuation")
         ])
 
+    def test_parse_thai_splits_only_ascii_layout_boundaries(self):
+        results = parse_thai(" \tกา\r\nขา ")
+        self.assertEqual([item.input for item in results], ["กา", "ขา"])
+        self.assertTrue(all(item.phonemic_ipa for item in results))
+        self.assertTrue(all(item.ukrainian_transliteration for item in results))
+
+    def test_vertical_tab_and_form_feed_are_not_syllable_separators(self):
+        for control in ("\x0b", "\x0c"):
+            with self.subTest(codepoint=f"U+{ord(control):04X}"):
+                results = parse_thai("กา" + control + "ขา")
+                self.assertEqual(len(results), 1)
+                self.assertEqual(results[0].status, "unresolved:unsupported-symbol")
+                self.assertIsNone(results[0].phonemic_ipa)
+                self.assertIsNone(results[0].ukrainian_transliteration)
+
     def test_syllable_api_does_not_split_on_non_ascii_whitespace_controls(self):
         for source in ("\u0085กา", "กา\u0085", "กา\u0085กา"):
             with self.subTest(source=source):
