@@ -6,6 +6,16 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class CorpusSourceRegistryTests(unittest.TestCase):
+    def test_ccost_license_and_textgrid_access_are_explicit(self):
+        path = ROOT / "data" / "corpus_sources.csv"
+        with path.open("r", encoding="utf-8-sig", newline="") as stream:
+            rows = {row["source_id"]: row for row in csv.DictReader(stream)}
+        row = rows["CORP-CCOST"]
+        self.assertEqual(row["license_or_access"], "CC BY-NC-SA 4.0; non-commercial use only")
+        self.assertIn("6.2 GB", row["notes"])
+        self.assertIn("TextGrid", row["notes"])
+        self.assertIn("not bundled", row["notes"])
+
     def test_segmentation_sources_preserve_license_and_usage_gates(self):
         path = ROOT / "data" / "corpus_sources.csv"
         with path.open("r", encoding="utf-8-sig", newline="") as stream:

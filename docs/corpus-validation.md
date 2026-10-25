@@ -6,7 +6,7 @@ This repository contains validation infrastructure, not a redistributed copy of 
 
 ## Registered resources
 
-- **CCOST** — phonetically annotated Standard Thai resource suitable for orthography, syllable, phone and toneme validation.
+- **CCOST** — phonetically annotated Standard Thai resource suitable for orthography, word, syllable, phone and toneme analysis. The primary source states CC BY-NC-SA 4.0; the 6.2 GB `C-COST.zip` contains WAV audio and TextGrid annotations, while the manual, metadata, wordlist, and sentences are separate files. This repository does not redistribute the archive.
 - **Thai Grapheme to Phoneme Wiktionary Corpus** — Thai forms paired with IPA, suitable for broad G2P regression.
 - **Thai National Corpus II / Thai Textbook Corpus** — useful for lexical frequency and distribution checks, not substitutes for phonetic gold labels.
 
@@ -129,3 +129,10 @@ Candidate and active sources are recorded in `data/corpus_sources.csv` so licens
 - **VISTEC-TP-TH-2021** — candidate for social-media segmentation. The dataset card reports CC BY-SA 3.0; verify the upstream revision, attribution, and applicable terms before redistributing any derived data.
 
 Do not mix these sources into one benchmark until annotation policies, normalization, document-level split strategy, and license compatibility are documented. A candidate source's existence does not make its labels compatible with Wisesight or the project's test split.
+
+
+### CCOST text-annotation feasibility and boundary
+
+Praat TextGrid annotations are textual records and can be analyzed without playing the corresponding audio for a first-pass comparison of source-attested orthography, word boundaries, syllable labels, phone labels, and toneme labels. However, the archive is 6.2 GB and the TextGrid files are inside `C-COST.zip`; only the separate wordlist/sentences and metadata are directly small enough for a selective workflow. Those separate files are not substitutes for phone/toneme annotation. No CCOST TextGrid files are currently bundled or available as repository inputs, so no CCOST-derived records or metrics are claimed in this checkpoint.
+
+The corpus license is CC BY-NC-SA 4.0. Do not copy its annotations or derived datasets into a distribution intended for commercial use without separately confirming permission. A future local importer should accept a user-downloaded TextGrid path, record the corpus revision and file checksum, map tier names from the manual explicitly, preserve speaker/session IDs, and emit only the text fields needed for evaluation. It must not silently convert forced-alignment labels into independent phonetic gold. Acoustic validation still requires access to the corresponding audio.
