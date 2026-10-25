@@ -255,3 +255,20 @@ The segmentation evaluator now refuses to score prediction rows unless `status=o
 The 36-form challenge diagnostic yields 23 lexicon lookups, 13 unresolved inputs, 21 complete engine outputs and 15 abstentions/incomplete outputs. Independent adjudicated IPA and word-boundary gold remain absent; no empirical accuracy is published. Unknown words and analysis-dependent special orthography remain fail-closed.
 
 **Readiness:** research infrastructure is CI-verified; linguistic accuracy, representative lexical coverage, connected speech and Ukrainian target preference remain unvalidated. This supersedes earlier historical release snapshots in this audit file.
+
+
+## 2026-10-25 — source-backed evidence and segmentation baseline
+
+- Added five challenge lexicon entries (`ไกล`, `ใกล้`, `เดิน`, `กรรม`, `บรรจุ`) with per-entry revision-pinned Thai Wiktionary locators and explicit CC BY-SA 4.0 attribution/share-alike notes. This is source-attested coverage, not a representative vocabulary claim.
+- Added the 993-record Wisesight word-tokenization annotation file from upstream commit `c1d063649abc3a6870b5fd1aae26cd1c64bdde7b`, blob SHA-1 `279aeb2d4323fd8032306160144d33dcb5b2df84`, CC0-1.0. Converted records preserve exact text reconstruction and are labeled `SOURCE_ANNOTATED`, not expert-adjudicated.
+- Hardened the segmentation evaluator to distinguish `ADJUDICATED` from `SOURCE_ANNOTATED`, reject mixed evidence grades in one report, preserve all gold rows in denominators, and exclude boundaries touching whitespace-only tokens from lexical boundary metrics.
+- Added six pinned dictionary IPA/tone/vowel-length records, including the source-attested short-vowel `เงิน /ŋɤn˧/` vs long-vowel `เดิน /dɤːn˧/` contrast. They are explicitly not gold and are not scored as accuracy.
+- Added CI tests for source-file reconstruction, evidence-grade isolation, whitespace semantics, lexicon source records, and the Wisesight baseline report.
+- Acceptance remains pending until exact-head GitHub Actions confirms the new Python tests, dataset checks, diagnostic, and generated-artifact gates. Do not mark these tasks DONE_VERIFIED before that run succeeds.
+
+### Still open after this batch
+
+- Independent expert/acoustic IPA and tone/length gold: CCOST v1.0 remains a candidate; license/manual review and independent Thai phonetic adjudication are still required.
+- Typed lexical pronunciation override for `เงิน`: source evidence exists, but the runtime adapter cannot yet safely pass this lexical short-vowel reading as a provenance-bearing typed IPA result.
+- Automatic segmentation: this batch establishes a source-annotated held-out baseline, but it does not implement an automatic segmenter. The baseline report must make that limitation visible.
+- Context-dependent `รร`, `ฤ/ฤๅ`, `ฦ/ฦๅ`, `ทร`, silent letters, connected speech and Ukrainian preference remain evidence-gated.
