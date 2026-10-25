@@ -54,6 +54,13 @@ class SegmentationBenchmarkTests(unittest.TestCase):
         row.update(overrides)
         return row
 
+    def test_adjudicated_gold_requires_nonempty_text(self):
+        self.assertIn("requires non-empty text", self.run_benchmark([self.gold(text="")], [], expected=1))
+
+    def test_prediction_requires_status_and_version(self):
+        bad = self.prediction(version="")
+        self.assertIn("status and version must be non-empty", self.run_benchmark([self.gold()], [bad], expected=1))
+
     def test_duplicate_nonadjudicated_gold_ids_are_rejected(self):
         first = self.gold(gold_status="SOURCE_ATTESTED")
         second = self.gold(gold_status="ADJUDICATED")
