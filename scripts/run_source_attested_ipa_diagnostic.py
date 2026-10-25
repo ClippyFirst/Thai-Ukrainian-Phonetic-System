@@ -78,6 +78,7 @@ def main() -> int:
             "engine_status": [syllable.get("status") for syllable in syllables],
             "engine_segmental_ipa": engine_segmental,
             "engine_tone_sequence": engine_tones,
+            "engine_vowel_length_sequence": [syllable.get("vowel_length") for syllable in syllables],
             "segmental_match": segmental_match,
             "tone_match": tone_match,
             "diagnostic_status": status,
