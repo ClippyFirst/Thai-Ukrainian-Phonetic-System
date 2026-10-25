@@ -35,7 +35,7 @@ def load_text_lexicon() -> dict[str, tuple[str, ...]]:
 LEXICON = load_text_lexicon()
 
 def _kind(ch: str) -> str:
-    if ch.isspace(): return "space"
+    if ch in " \t\r\n": return "space"
     if ch in THAI_MARKS: return "thai_marker"
     if DIGIT.fullmatch(ch): return "number"
     if THAI.fullmatch(ch): return "thai"
@@ -43,7 +43,7 @@ def _kind(ch: str) -> str:
     return "punctuation"
 
 def tokenize_text(text: str) -> list[TextToken]:
-    text = text.strip()
+    text = text.strip(" \t\r\n")
     if not text:
         return []
     out: list[TextToken] = []
