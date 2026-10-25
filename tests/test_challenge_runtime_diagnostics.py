@@ -39,6 +39,13 @@ class ChallengeRuntimeDiagnosticsTests(unittest.TestCase):
         self.assertFalse(records["unknown"]["engine_output_emitted"])
         self.assertTrue(records["unknown"]["warnings"])
 
+    def test_empty_challenge_fails_closed(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "empty.jsonl"
+            path.write_text("", encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "challenge set is empty"):
+                load_challenge(path)
+
     def test_duplicate_ids_fail_closed(self):
         with tempfile.TemporaryDirectory() as directory:
             path = self.write_jsonl(directory, [
