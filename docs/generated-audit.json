@@ -16,7 +16,8 @@
     "tone_marks": 5,
     "tone_rules": 15,
     "tones": 5,
-    "vowels": 41
+    "vowels": 41,
+    "text_lexicon_sources": 6
   },
   "status": "structural-pass",
   "scope_notes": {
