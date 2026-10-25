@@ -113,6 +113,17 @@ class SegmentationBenchmarkTests(unittest.TestCase):
         self.assertEqual(metrics["exact_sequence_rate"], 0.0)
         self.assertEqual(metrics["boundary_fn"], 1)
 
+    def test_zero_predicted_boundaries_with_gold_boundaries_has_zero_f1(self):
+        gold = self.gold(text="ภาษาไทย", tokens=["ภาษา", "ไทย"])
+        pred = self.prediction(tokens=["ภาษาไทย"])
+        metrics = self.run_benchmark([gold], [pred])["engines"]["test-engine"]
+        self.assertEqual(metrics["boundary_tp"], 0)
+        self.assertEqual(metrics["boundary_fp"], 0)
+        self.assertEqual(metrics["boundary_fn"], 1)
+        self.assertIsNone(metrics["boundary_precision"])
+        self.assertEqual(metrics["boundary_recall"], 0.0)
+        self.assertEqual(metrics["boundary_f1"], 0.0)
+
     def test_single_token_without_boundaries_reports_undefined_boundary_metrics(self):
         gold = self.gold(text="ไทย", tokens=["ไทย"])
         pred = self.prediction(tokens=["ไทย"])
