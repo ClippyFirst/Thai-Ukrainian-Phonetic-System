@@ -206,3 +206,12 @@ python scripts/run_challenge_diagnostics.py
 ```
 
 The report is written to `reports/challenge-runtime-diagnostics.json`. This is a runtime and abstention diagnostic, **not** an accuracy benchmark: the challenge set does not yet contain independently adjudicated Thai IPA and word-boundary gold. Unknown multi-grapheme words remain unresolved rather than receiving guessed output. Use `--input` and `--output` to select alternate paths.
+
+
+## Pinned evaluation resources (2026-10-25)
+
+- `data/benchmark/segmentation-gold.tsv` contains 993 human source-annotated word-tokenization records from PyThaiNLP/Wisesight, pinned to upstream commit `c1d063649abc3a6870b5fd1aae26cd1c64bdde7b` and licensed CC0-1.0. They are marked `SOURCE_ANNOTATED`, held out as test-only, and are **not represented as independently expert-adjudicated labels**. Provenance and conversion rules are in `data/benchmark/wisesight1000-source.json`.
+- `scripts/run_wisesight_segmentation_diagnostic.py` evaluates the existing no-automatic-word-segmentation baseline and preserves the gold evidence grade in the JSON report. CI validates dataset integrity and uploads the report.
+- `data/benchmark/source-attested-ipa.tsv` contains six revision-pinned dictionary IPA/tone/vowel-length records, marked `SOURCE_ATTESTED_NOT_GOLD`. These are useful for review and error triage, not independent accuracy scoring.
+- Five source-attested lexicon entries are documented in `data/thai/text_lexicon_sources.csv`. Their CC BY-SA 4.0 data provenance is separate from the MIT software license; see `data/thai/TEXT-LEXICON-DATA-LICENSE.md`.
+- The word `เงิน` remains excluded from runtime lexicon resolution until a typed lexical-IPA override can preserve its source-attested short /ɤ/ reading through the IPA-first adapter. The project still needs independent expert/acoustic IPA gold, not just dictionary agreement.
