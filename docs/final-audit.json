@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "engineering-verified research prototype; latest browser parity head CI pending",
+  "status": "engineering-verified research prototype; latest code and final documentation head CI passed",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -75,11 +75,11 @@
     "status": "SOURCE_ATTESTED_NOT_GOLD",
     "includes_short_long_oe_contrast": true
   },
-  "latest_verified_code_commit": "818a378d37b248d74628243b9a8d62fb82029815",
+  "latest_verified_code_commit": "43687b2753379b1d617b1c925f87358f8aad13bd",
   "starting_branch_commit": "7e39fd4bc108386148c1e9a79d257d75babcc9aa",
   "ci": {
-    "latest_fully_successful_code_data_commit": "59890a0bfcf7b84d19408310f690d41244a482d1",
-    "latest_fully_successful_ci_run": 40237347247,
+    "latest_fully_successful_code_data_commit": "43687b2753379b1d617b1c925f87358f8aad13bd",
+    "latest_fully_successful_ci_run": 40238202167,
     "python_tests": 158,
     "generated_data_drift": "PASS",
     "master_artifact": "PASS",
@@ -95,7 +95,10 @@
       40238198334,
       40238202181
     ],
-    "current_head_status_at_audit_refresh": "QUEUED; earlier failures on older heads were traced to stale fixture expectation/order and fixed in 43687b2; do not claim exact-head pass until these runs finish"
+    "current_head_status_at_audit_refresh": "PASS: code/data/test head 43687b2 CI run 40238202167 and Web static validation 40238202181 passed; final docs-only head 6a153e2 CI run 40238672074 and Web static validation 40238671983 passed",
+    "latest_full_repository_head": "6a153e26e17c4929fdc166b3dbeb73444668f2b1",
+    "latest_full_repository_head_ci_run": 40238672074,
+    "latest_full_repository_head_web_validation_run": 40238671983
   },
   "challenge_runtime": {
     "challenge_inputs": 36,
@@ -158,5 +161,6 @@
   },
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
   "latest_code_checkpoint": "43687b2753379b1d617b1c925f87358f8aad13bd",
-  "readiness": "research-ready engineering prototype; not release-ready for arbitrary Thai text; phonetic accuracy is not independently validated"
+  "readiness": "research-ready engineering prototype; not release-ready for arbitrary Thai text; phonetic accuracy is not independently validated",
+  "latest_verified_repository_head": "6a153e26e17c4929fdc166b3dbeb73444668f2b1"
 }
