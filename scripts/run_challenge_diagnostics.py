@@ -39,6 +39,8 @@ def load_challenge(path: Path) -> list[dict[str, Any]]:
                 raise ValueError(f"{path}:{line_no}: each record needs a non-empty string input")
             seen.add(row["id"])
             rows.append(row)
+    if not rows:
+        raise ValueError(f"{path}: challenge set is empty; refusing to emit a vacuous diagnostic")
     return rows
 
 
