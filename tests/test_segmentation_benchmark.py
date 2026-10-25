@@ -181,7 +181,7 @@ class SegmentationBenchmarkTests(unittest.TestCase):
     def test_pinned_wisesight_source_annotation_snapshot_is_integral(self):
         path = ROOT / "data" / "benchmark" / "segmentation-gold.tsv"
         with path.open("r", encoding="utf-8-sig", newline="") as stream:
-            rows = list(csv.DictReader(stream, delimiter="\\t"))
+            rows = list(csv.DictReader(stream, delimiter="\t"))
         self.assertEqual(len(rows), 993)
         self.assertEqual(len({row["id"] for row in rows}), 993)
         for row in rows:
