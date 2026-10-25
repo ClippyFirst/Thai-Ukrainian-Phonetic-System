@@ -21,7 +21,7 @@ class ChallengeRuntimeDiagnosticsTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             path = self.write_jsonl(directory, [
                 {"id": "known", "input": "กา", "stratum": "test"},
-                {"id": "unknown", "input": "ไกล", "stratum": "test"},
+                {"id": "unknown", "input": "กฉ", "stratum": "test"},
             ])
             report = build_report(path)
 
