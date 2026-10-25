@@ -70,7 +70,6 @@ def apply_lexical_ipa_override(analysis: SyllableAnalysis) -> bool:
     # surface-phonetic transcription; do not fabricate one.
     analysis.phonetic_ipa = None
     analysis.vowel_length = record["vowel_length"]
-    analysis.vowel = "ɤ" if record["word"] == "เงิน" else analysis.vowel
     analysis.tone = ToneResult(
         tone=record["tone_category"],
         contour_ipa=record["tone_contour_ipa"],
