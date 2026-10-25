@@ -21,6 +21,7 @@ PRED_FIELDS = ["id", "engine", "predicted_tokens_json", "status", "version"]
 # Only a fully emitted prediction is scoreable. Error/abstention/partial rows
 # remain in the input audit trail but cannot receive credit for stale tokens.
 SCOREABLE_PREDICTION_STATUSES = {"ok"}
+SCOREABLE_GOLD_STATUSES = {"ADJUDICATED", "SOURCE_ANNOTATED"}
 
 
 def read_tsv(path: Path, required: list[str]) -> list[dict[str, str]]:
@@ -57,9 +58,13 @@ def boundaries(text: str, tokens: list[str], *, row_id: str, field: str) -> set[
         )
     offsets: set[int] = set()
     cursor = 0
-    for token in tokens[:-1]:
+    for index, token in enumerate(tokens[:-1]):
         cursor += len(normalize(token))
-        offsets.add(cursor)
+        next_token = tokens[index + 1]
+        # Explicit whitespace tokens reconstruct source text but are not lexical
+        # word boundaries and must not affect segmentation precision/recall.
+        if not normalize(token).isspace() and not normalize(next_token).isspace():
+            offsets.add(cursor)
     return offsets
 
 
@@ -79,7 +84,7 @@ def main() -> int:
         if not row_id or row_id in seen_gold_ids:
             raise ValueError(f"gold IDs must be non-empty and unique: {row_id!r}")
         seen_gold_ids.add(row_id)
-        if row["gold_status"] == "ADJUDICATED":
+        if row["gold_status"] in SCOREABLE_GOLD_STATUSES:
             if not normalize(row["text"]):
                 raise ValueError(f"ADJUDICATED gold row {row_id!r} requires non-empty text")
             for field in ("source_id", "license", "split"):
@@ -93,7 +98,16 @@ def main() -> int:
                 "source_id": row["source_id"].strip(),
                 "license": row["license"].strip(),
                 "split": row["split"].strip(),
+                "gold_status": row["gold_status"].strip(),
             }
+
+    gold_statuses = {str(row["gold_status"]) for row in gold.values()}
+    if len(gold_statuses) > 1:
+        raise ValueError(
+            "do not mix ADJUDICATED and SOURCE_ANNOTATED rows in one report; "
+            "run separate reports so evidence grades remain visible"
+        )
+    scored_gold_status = next(iter(gold_statuses), None)
 
     predictions: dict[str, dict[str, dict[str, object]]] = defaultdict(dict)
     for row in prediction_rows:
@@ -126,19 +140,32 @@ def main() -> int:
     report: dict[str, object] = {
         "schema_version": "1.0",
         "method": {
-            "gold_gate": "gold_status == ADJUDICATED with source_id, license, split and valid tokenization",
+            "gold_gate": "gold_status is ADJUDICATED or SOURCE_ANNOTATED, with source_id, license, split and valid tokenization; evidence grades are never mixed",
+            "gold_status": scored_gold_status or "NONE",
             "normalization": "Unicode NFC only; token concatenation must equal normalized source text exactly",
             "boundary_units": "Python Unicode code-point offsets, excluding the final text boundary",
             "missing_predictions": "eligible gold rows remain in denominator; missing/empty tokenization contributes no predicted boundaries",
             "scoreable_prediction_statuses": sorted(SCOREABLE_PREDICTION_STATUSES),
             "non_success_statuses": "Any status other than 'ok' is treated as abstention even if a token array is present; stale/partial output cannot score.",
             "exact_sequence": "all token strings and boundaries must match the adjudicated sequence",
-            "accuracy_claim": "descriptive only for the supplied adjudicated rows",
+            "accuracy_claim": (
+                "descriptive only for independently adjudicated rows"
+                if scored_gold_status == "ADJUDICATED"
+                else "descriptive only for the supplied source-annotated labels; not expert-adjudicated"
+                if scored_gold_status == "SOURCE_ANNOTATED"
+                else "not measured; no scoreable gold rows"
+            ),
         },
         "gold": {
             "rows_total": len(gold_rows),
-            "rows_adjudicated": len(gold),
-            "status": "MEASURED_ON_ADJUDICATED_ROWS" if gold else "NOT_MEASURED",
+            "rows_adjudicated": sum(1 for row in gold.values() if row["gold_status"] == "ADJUDICATED"),
+            "rows_source_annotated": sum(1 for row in gold.values() if row["gold_status"] == "SOURCE_ANNOTATED"),
+            "status": (
+                "MEASURED_ON_ADJUDICATED_ROWS" if scored_gold_status == "ADJUDICATED"
+                else "MEASURED_ON_SOURCE_ANNOTATED_ROWS_NOT_EXPERT_ADJUDICATED"
+                if scored_gold_status == "SOURCE_ANNOTATED"
+                else "NOT_MEASURED"
+            ),
         },
         "engines": {},
     }
@@ -166,8 +193,16 @@ def main() -> int:
         f1_denominator = 2 * tp + fp + fn
         f1 = (2 * tp / f1_denominator) if f1_denominator else None
         engines[engine] = {
-            "status": "MEASURED" if gold else "NOT_MEASURED_NO_ADJUDICATED_GOLD",
-            "n_adjudicated_gold_rows": len(gold),
+            "status": (
+                "MEASURED_ON_ADJUDICATED_ROWS" if scored_gold_status == "ADJUDICATED"
+                else "MEASURED_ON_SOURCE_ANNOTATED_ROWS_NOT_EXPERT_ADJUDICATED"
+                if scored_gold_status == "SOURCE_ANNOTATED"
+                else "NOT_MEASURED_NO_SCOREABLE_GOLD"
+            ),
+            "gold_status": scored_gold_status or "NONE",
+            "n_gold_rows": len(gold),
+            "n_adjudicated_gold_rows": sum(1 for row in gold.values() if row["gold_status"] == "ADJUDICATED"),
+            "n_source_annotated_gold_rows": sum(1 for row in gold.values() if row["gold_status"] == "SOURCE_ANNOTATED"),
             "nonempty_predictions": covered,
             "non_success_status_rows": sum(
                 1 for row_id in by_id
