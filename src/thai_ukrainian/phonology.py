@@ -23,6 +23,7 @@ def phonologize(a:SyllableAnalysis)->SyllableAnalysis:
     if any(c not in ONSET_IPA for c in onset):
         a.phonemic_ipa=None
         a.phonetic_ipa=None
+        a.status="unresolved:unsupported-onset"
         a.warnings.append("Phonemic IPA withheld because of an unsupported onset consonant.")
         a.rules_applied.append("PHON-UNSUPPORTED-ONSET-WITHHELD")
         return a
