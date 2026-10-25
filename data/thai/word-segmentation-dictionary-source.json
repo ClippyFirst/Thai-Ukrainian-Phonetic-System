@@ -11,7 +11,7 @@
   "retained_unique_entries": 60963,
   "generated_file": "data/thai/words_th_cc0.txt",
   "generated_git_blob_sha1": "13406d0cc6967b77ef143089a7a772b8b534284d",
-  "transformation": "Read the pinned UTF-8 source file in source order; trim trailing whitespace; keep nonempty lines whose every Unicode code point is in U+0E00–U+0E7F; de-duplicate exact strings while retaining the first occurrence; emit one entry per LF-terminated line. This filters mixed-script phrases and avoids using any Wisesight sample as dictionary evidence.",
+  "transformation": "Read the pinned UTF-8 source file in source order; trim trailing whitespace; keep nonempty lines whose every Unicode code point is in U+0E00–U+0E7F; de-duplicate exact strings while retaining the first occurrence; emit one entry per LF-terminated line. No Wisesight samples are used in dictionary construction. This filters mixed-script phrases and keeps dictionary evidence independent of the held-out Wisesight evaluation set.",
   "limitations": [
     "A lexical dictionary is not a word-boundary gold set.",
     "Maximum matching can over-segment or under-segment context-dependent forms.",

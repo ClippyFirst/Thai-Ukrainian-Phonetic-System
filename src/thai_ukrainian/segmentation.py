@@ -118,6 +118,7 @@ def dictionary_word_segmentation(text: str) -> WordSegmentationResult:
 
     spans = _grapheme_spans(text)
     boundaries = {0, *(end for _, end in spans)}
+    span_end_by_start = {start: end for start, end in spans}
     trie = _dictionary_trie()
     tokens: list[str] = []
     unknown: list[str] = []
@@ -137,7 +138,7 @@ def dictionary_word_segmentation(text: str) -> WordSegmentationResult:
             position = best_end
             continue
 
-        next_end = next(end for start, end in spans if start == position)
+        next_end = span_end_by_start[position]
         cluster = text[position:next_end]
         tokens.append(cluster)
         unknown.append(cluster)
