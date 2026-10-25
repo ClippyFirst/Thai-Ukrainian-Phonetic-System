@@ -75,12 +75,12 @@
     "input": "เงิน",
     "expected": {
       "input": "เงิน",
-      "status": "analysis-dependent:vowel-length",
-      "phonemicIpa": null,
+      "status": "analyzed",
+      "phonemicIpa": "ŋɤn",
       "phoneticIpa": null,
-      "tone": null,
-      "toneIpa": null,
-      "ukrainian": null
+      "tone": "mid",
+      "toneIpa": "˧",
+      "ukrainian": "нген"
     }
   },
   {
