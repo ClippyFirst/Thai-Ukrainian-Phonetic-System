@@ -157,5 +157,18 @@ class TextPipelineTests(unittest.TestCase):
                 self.assertTrue(all(item["ukrainian_transliteration"] for item in token["syllables"]))
 
 
+
+    def test_source_attested_challenge_lexicon_entries(self):
+        expected = {
+            "ไกล": (("ไกล",), "lexicon"),
+            "ใกล้": (("ใกล้",), "lexicon"),
+            "เดิน": (("เดิน",), "lexicon"),
+            "กรรม": (("กำ",), "lexicon"),
+            "บรรจุ": (("บัน", "จุ"), "lexicon"),
+        }
+        for word, segmentation in expected.items():
+            with self.subTest(word=word):
+                self.assertEqual(segment_thai_word(word), segmentation)
+
 if __name__ == "__main__":
     unittest.main()
