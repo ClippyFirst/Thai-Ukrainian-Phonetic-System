@@ -310,3 +310,6 @@ This section supersedes earlier notes in this handoff that said post-merge main 
 
 
 - Runtime integration follow-up: the Python text lexicon reads `data/thai/text_lexicon.tsv`, while the browser has its own explicit `TEXT_LEXICON` map. The five source-attested words are now added to both segmentation paths and the browser parity regression checks whole-word segmentation plus lexical IPA resolution.
+
+
+- CI revealed that the lexical override `แทรก → แซก` exposed a deeper parser issue: the preposed-vowel branch treated any non-cluster consonant pair as onset-only and skipped coda analysis. Python and browser now fall through to positional coda assignment when the first pair is not a licensed cluster. Regression asserts `แซก` parses as onset `ซ`, coda `ก`, phonemic IPA `sɛːk`; the existing illegal multi-consonant sequence guard remains in place.
