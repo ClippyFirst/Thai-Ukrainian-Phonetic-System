@@ -1,14 +1,11 @@
-# Thai word-segmentation dictionary: provenance and license
+# Thai word-segmentation dictionary data
 
-The word-segmentation dictionary in `words_th_cc0.txt` is derived from the PyThaiNLP project word list.
+The file `words_th_cc0.txt` is a mechanically filtered and de-duplicated derivative of PyThaiNLP's `pythainlp/corpus/words_th.txt`, pinned at commit `8b2b9a6d0f69846364f37e8c16ffc31177f6151c`.
 
-- Source repository: https://github.com/PyThaiNLP/pythainlp
-- Source file: `pythainlp/corpus/words_th.txt`
-- Pinned source commit: `8b2b9a6d0f69846364f37e8c16ffc31177f6151c`
-- Pinned source blob SHA-1: `093dda8a35646281e71a8a434137cb5fac57882e`
-- Source license: CC0-1.0, as explicitly listed for `words_th.txt` in the pinned `pythainlp/corpus/corpus_license.md`.
-- Machine-readable manifest: `data/thai/word-segmentation-dictionary-source.json`.
+- Upstream: https://github.com/PyThaiNLP/pythainlp
+- Source blob SHA-1: `093dda8a35646281e71a8a434137cb5fac57882e`
+- Declared data license: CC0-1.0
+- Transformation and exact retained-entry count: `word-segmentation-dictionary-source.json`
+- The dictionary is a segmentation resource, not a pronunciation lexicon or gold boundary corpus.
 
-The repository copy is a deterministic transformation: retain only non-empty lines consisting exclusively of Unicode Thai-block code points U+0E00–U+0E7F, preserve source order, and remove exact duplicates. The file is a lexical candidate list, not a pronunciation lexicon, gold segmentation corpus, or claim that every entry is a single orthographic word.
-
-The project segmentation implementation is independently authored; the external data are kept separate from the repository's MIT code license. CC0 permits reuse without attribution requirements, but this notice is retained for provenance and reproducibility.
+The PyThaiNLP source code and this repository's own code may have separate licenses. This notice concerns only the derived word-list data. The upstream revision is pinned so the derivation can be reproduced and audited.
