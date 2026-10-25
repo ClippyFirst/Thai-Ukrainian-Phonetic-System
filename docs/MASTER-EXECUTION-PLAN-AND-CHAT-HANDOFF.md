@@ -367,7 +367,7 @@ This section supersedes earlier notes in this handoff that said post-merge main 
 
 - Open PR [#17](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/17) targets the v0.5.1 browser implementation from 2026-10-08. Its web app, engine and data files materially diverge from current `main`, which now has a newer text pipeline, IPA boundary and generated-data contracts. Do not merge its code wholesale.
 - The historical audit `docs/repository-audit-2026-10-05.md` is already on `main`. The unique design specification and static UX audit are being preserved under `docs/archive/` with explicit historical notices. They do not verify the current UI or imply that their historical checklists remain complete.
-- PR #58 conflicted after PR #57 updated this same handoff. This rebased archive-only PR supersedes #58. Once it merges, close PR #17 as superseded and leave its branch untouched.
+- PR #58 conflicted after PR #57 updated this same handoff and was closed as superseded; its branch remains untouched. The rebased archive-only PR #59 then merged as `eed20b0903b67940d82f2e60ef49aadf12528378`, and PR #17 was closed as superseded. Its original branch remains untouched.
 
 
 ## Post-merge typed IPA boundary checkpoint — 2026-10-25
@@ -375,3 +375,10 @@ This section supersedes earlier notes in this handoff that said post-merge main 
 - Thai surface-IPA validation fix merged as `433a76d3ee6c916a8e831529ae9489191ae961cf` via [PR #57](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/57).
 - Exact-head CI [40216847288](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40216847288) passed both the test job (Python suite, generated-data drift, browser IPA/UA, parity and UI contract tests) and the master-artifact job (351,780-row generated artifact validation).
 - The typed result now fails closed if broad surface IPA contains unsupported symbols or is an empty string while phonemic IPA exists; Ukrainian adaptation is withheld because the typed status is unsupported. This is adapter-boundary integrity, not corpus accuracy evidence.
+
+
+## Final PR reconciliation checkpoint — 2026-10-25
+
+- Current `main` after the typed IPA-boundary fix and historical-document archive is `eed20b0903b67940d82f2e60ef49aadf12528378`.
+- Code PR #57 exact-head CI passed in [run 40216847288](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40216847288), including Python tests, generated-data drift, browser IPA/UA and parity/UI contracts, plus the 351,780-row master artifact job. Archive-only PR #59 merged; PR #17 was closed as superseded after preserving its unique historical documents. No branches were deleted.
+- Post-merge `main` CI/Pages runs for the archive commit were queued/in progress at the last check; do not claim those post-merge runs have completed until verified. The code-bearing PR head itself is CI-verified.
