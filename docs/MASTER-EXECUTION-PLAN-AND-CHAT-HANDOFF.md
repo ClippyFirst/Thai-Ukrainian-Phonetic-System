@@ -307,3 +307,6 @@ This section supersedes earlier notes in this handoff that said post-merge main 
 - Added explicit lexical overrides for ทราบ → ซาบ, ทราย → ซาย, ทรง → ซง, ทรัพย์ → ซับ, and แทรก → แซก in Python and browser runtimes, with regression tests and text-segmentation entries.
 - These are lexical spelling-to-reading overrides grounded in the cited source's example list; they are not independent IPA gold labels and do not justify a productive rule mapping every ทร sequence to /s/.
 - Exact-head CI must pass Python tests, generated-data drift checks, IPA→Ukrainian tests, browser/Python parity, and master-artifact generation.
+
+
+- Runtime integration follow-up: the Python text lexicon reads `data/thai/text_lexicon.tsv`, while the browser has its own explicit `TEXT_LEXICON` map. The five source-attested words are now added to both segmentation paths and the browser parity regression checks whole-word segmentation plus lexical IPA resolution.
