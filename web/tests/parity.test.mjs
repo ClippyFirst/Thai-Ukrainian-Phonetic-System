@@ -71,8 +71,8 @@ for (const input of lexicalRegression) {
   if (input === "เตอร์" && a.normalized !== "เตอ") throw new Error("Thai lexical normalization mismatch for เตอร์");
 }
 const ambiguousThray = analyze("ทราย");
-if (ambiguousThray.status !== "analysis-dependent:special-orthography" || ambiguousThray.phonemicIpa !== null || !ambiguousThray.specialAnalyses?.some(x => x.rule_id === "SP-THR-001")) {
-  throw new Error("Sense-ambiguous ทราย must not receive an unconditional false-cluster reading");
+if (ambiguousThray.status !== "analysis-dependent:special-orthography" || ambiguousThray.phonemicIpa != null || ambiguousThray.ukrainian != null || !ambiguousThray.specialAnalyses?.some(x => x.rule_id === "SP-THR-001")) {
+  throw new Error("Sense-ambiguous ทราย must not receive an unconditional false-cluster reading: " + JSON.stringify(ambiguousThray));
 }
 console.log("Thai lexical regression passed");
 
