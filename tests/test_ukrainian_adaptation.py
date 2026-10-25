@@ -45,6 +45,30 @@ def test_unsupported_ipa_is_withheld_instead_of_guessed():
     assert adapted["output"] is None
 
 
+def test_unsupported_surface_ipa_invalidates_typed_result_and_withholds_target():
+    analysis = replace(analyze_syllable("กา"), phonetic_ipa="k☃a")
+    result = PhoneticResult.from_syllable_analysis(analysis)
+
+    assert result.phonemic_ipa == "kaː"
+    assert result.broad_surface_ipa == "k☃a"
+    assert result.status == "UNSUPPORTED"
+    adapted = adapt_phonetic_result(result)
+    assert adapted["status"] == "withheld"
+    assert adapted["output"] is None
+
+
+def test_empty_surface_ipa_invalidates_typed_result_and_withholds_target():
+    analysis = replace(analyze_syllable("กา"), phonetic_ipa="")
+    result = PhoneticResult.from_syllable_analysis(analysis)
+
+    assert result.phonemic_ipa == "kaː"
+    assert result.broad_surface_ipa == ""
+    assert result.status == "UNSUPPORTED"
+    adapted = adapt_phonetic_result(result)
+    assert adapted["status"] == "withheld"
+    assert adapted["output"] is None
+
+
 def test_tone_and_provenance_survive_in_typed_phonetic_result():
     result = PhoneticResult.from_syllable_analysis(analyze_syllable("ไกล"))
     assert result.tone_category == "mid"
