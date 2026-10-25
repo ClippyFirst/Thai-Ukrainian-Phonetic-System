@@ -89,11 +89,11 @@ for (const [input, expected] of textLexiconRegression) {
 console.log("Thai extended text lexicon regression passed");
 
 const unicodeHazards = [
-  ["กา\\u0001", "U+0001"],
-  ["กา\\u007f", "U+007F"],
+  ["กา\u0001", "U+0001"],
+  ["กา\u007f", "U+007F"],
   ["กา\u0085", "U+0085"],
-  ["กา\\u200b", "U+200B"],
-  ["กา\\u202e", "U+202E"],
+  ["กา\u200b", "U+200B"],
+  ["กา\u202e", "U+202E"],
 ];
 for (const [input, codepoint] of unicodeHazards) {
   const result = analyze(input);
