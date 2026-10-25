@@ -52,21 +52,21 @@ class PositionalCorrespondenceTests(unittest.TestCase):
         self.assertIn("status", vowels[0])
 
 
-def test_unknown_onset_never_becomes_question_mark_ipa():
-    from thai_ukrainian.models import SyllableAnalysis
-    from thai_ukrainian.phonology import phonologize
+    def test_unknown_onset_never_becomes_question_mark_ipa(self):
+        from thai_ukrainian.models import SyllableAnalysis
+        from thai_ukrainian.phonology import phonologize
 
-    analysis = SyllableAnalysis(
-        input="☃า",
-        normalized="☃า",
-        onset=["☃"],
-        vowel="aː",
-        status="analyzed",
-    )
+        analysis = SyllableAnalysis(
+            input="☃า",
+            normalized="☃า",
+            onset=["☃"],
+            vowel="aː",
+            status="analyzed",
+        )
 
-    result = phonologize(analysis)
+        result = phonologize(analysis)
 
-    assert result.status == "unresolved:unsupported-onset"
-    assert result.phonemic_ipa is None
-    assert result.phonetic_ipa is None
-    assert any("unsupported onset" in warning.lower() for warning in result.warnings)
+        self.assertEqual(result.status, "unresolved:unsupported-onset")
+        self.assertIsNone(result.phonemic_ipa)
+        self.assertIsNone(result.phonetic_ipa)
+        self.assertTrue(any("unsupported onset" in warning.lower() for warning in result.warnings))
