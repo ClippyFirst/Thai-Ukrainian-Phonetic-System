@@ -346,3 +346,11 @@ This section supersedes earlier notes in this handoff that said post-merge main 
 - The official Royal Institute article, “เรื่องยุ่ง ๆ เกี่ยวกับอักษรควบ”, vol. 36 no. 4 (Oct–Dec 2011), p. 556, distinguishes the sand sense of `ทราย` (initial /s/) from the deer-name sense (true `ทร` cluster): https://www.orst.go.th/FILEROOM/CABROYINWEB/DRAWER004/GENERAL/DATA0000/00000630.FLP/html/48/ .
 - Exact-head workflow [40212243319](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40212243319) passed both `test` and `master-artifact`; the master artifact asserted 351,780 rows and 41 vowel records.
 - The API now withholds a deterministic reading when only the ambiguous spelling is supplied. This remains a narrow evidence-gated fix; independent IPA gold and general `ทร` context rules remain open.
+
+
+## Exact-head checkpoint — 2026-10-25
+
+- PR [#55](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/55) merged as `30eae38360367923025851654d2a01745c8fd136`.
+- The PR adds regression coverage for the source-attested lexical readings `ทราบ → ซาบ`, `ทรง → ซง`, `ทรัพย์ → ซับ`, and `แทรก → แซก`. These remain lexical overrides, not a productive rule for every spelling with `ทร`, and not independent IPA gold.
+- Exact-head CI run [40214453752](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40214453752) passed both jobs: the test job (Python unit tests, generated-audit/syllable-space/source-manifest drift check, IPA adapter tests, Python/browser parity and UI contract) and the master-artifact job (generated 351,780 rows, asserted expected row count and 41 vowel records, uploaded the artifact).
+- This confirms engineering regression/reproducibility for the added cases only. Independent gold-corpus accuracy remains unmeasured; the repository remains a research-oriented reference implementation, not an empirically validated release.
