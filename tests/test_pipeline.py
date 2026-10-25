@@ -32,16 +32,29 @@ class PipelineTests(unittest.TestCase):
         a=parse_syllable("เกียว"); self.assertEqual(a.vowel,"iaw"); self.assertEqual(a.vowel_id,"V-X-IAW"); self.assertEqual(a.onset,["ก"]); self.assertIsNone(a.coda)
 
     def test_closed_eoi_vowel_length_requires_lexical_evidence(self):
+        # Structural parsing remains ambiguous for both forms; only เงิน has a
+        # source-attested lexical override, applied later at the IPA boundary.
         for text in ("เงิน", "เดิน"):
             v = detect_vowel(text)
             self.assertTrue(v.get("analysis_dependent"), text)
             self.assertEqual(v.get("id"), "V-AMB-EOI-CLOSED")
             self.assertEqual({x["ipa"] for x in v["alternatives"]}, {"ɤ", "ɤː"})
-            a = analyze_syllable(text)
-            self.assertEqual(a.status, "analysis-dependent:vowel-length", text)
-            self.assertIsNone(a.phonemic_ipa, text)
-            self.assertIsNone(a.tone, text)
-            self.assertEqual(a.coda, "น", text)
+            parsed = parse_syllable(text)
+            self.assertEqual(parsed.status, "analysis-dependent:vowel-length", text)
+            self.assertIsNone(parsed.phonemic_ipa, text)
+            self.assertIsNone(parsed.tone, text)
+            self.assertEqual(parsed.coda, "น", text)
+
+        money = analyze_syllable("เงิน")
+        self.assertEqual(money.status, "analyzed")
+        self.assertEqual(money.phonemic_ipa, "ŋɤn")
+        self.assertEqual(money.vowel_length, "short")
+        self.assertEqual(money.tone.tone, "mid")
+        self.assertIn("SRC-WIKTIONARY-TH-เงิน", money.sources)
+
+        walking = analyze_syllable("เดิน")
+        self.assertEqual(walking.status, "analysis-dependent:vowel-length")
+        self.assertIsNone(walking.phonemic_ipa)
 
     def test_preposed_glide_patterns(self):
         cases=[("แล้ว","ɛːw"),("เร็ว","ew"),("เลย","ɤːj")]
