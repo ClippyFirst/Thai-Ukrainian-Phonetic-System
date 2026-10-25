@@ -61,7 +61,7 @@ const pepper = analyzeText("พริก")[0];
 if (!pepper || pepper.segmentationStatus !== "lexicon" || pepper.syllables[0].phonemicIpa?.slice(-1) !== "k" || pepper.syllables[0].ukrainian?.slice(-1) !== "к") throw new Error("Thai final /k/ regression failed for พริก");
 console.log("Thai text tokenizer/segmentation regression passed");
 
-const lexicalRegression = ["จริง","สร้าง","ศรี","เศร้า","จันทร์","ศุกร์","เสาร์","สัตว์","ฟิล์ม","ฤทธิ์","เตอร์","เทอร์","ยนต์","ไซต์","กอล์ฟ","อย่า","อยู่","อย่าง","อยาก"];
+const lexicalRegression = ["จริง","สร้าง","ศรี","ทราบ","ทราย","ทรง","ทรัพย์","แทรก","เศร้า","จันทร์","ศุกร์","เสาร์","สัตว์","ฟิล์ม","ฤทธิ์","เตอร์","เทอร์","ยนต์","ไซต์","กอล์ฟ","อย่า","อยู่","อย่าง","อยาก"];
 for (const input of lexicalRegression) {
   const a = analyze(input);
   if (a.status !== "analyzed" || !a.phonemicIpa) throw new Error("Lexical regression unresolved in browser engine: " + input);
@@ -73,7 +73,7 @@ console.log("Thai lexical regression passed");
 
 const textLexiconRegression = new Map([
   ["ทฤษฎี","ทริด|สะ|ดี"], ["คอมพิวเตอร์","คอม|พิว|เตอร์"], ["โทรศัพท์","โท|ระ|สับ"],
-  ["อยาก","หยาก"], ["ฤๅษี","รือ|สี"]
+  ["อยาก","หยาก"], ["ฤๅษี","รือ|สี"], ["ทราบ","ทราบ"], ["ทราย","ทราย"], ["ทรง","ทรง"], ["ทรัพย์","ทรัพย์"], ["แทรก","แทรก"]
 ]);
 for (const [input, expected] of textLexiconRegression) {
   const token = analyzeText(input)[0];
