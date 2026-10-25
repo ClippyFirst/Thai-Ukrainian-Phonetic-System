@@ -1,5 +1,5 @@
 import fs from "node:fs";
-import {analyze,analyzeText} from "../src/engine.js";
+import {analyze,analyzeText,tokenizeText} from "../src/engine.js";
 
 const fixture = JSON.parse(fs.readFileSync(new URL("./fixtures.json", import.meta.url), "utf8"));
 if (!Array.isArray(fixture) || fixture.length < 27) throw new Error("Parity fixture set is unexpectedly small");
@@ -108,3 +108,8 @@ if (normalizedThai.normalized !== "ก่า" || normalizedThai.phonemicIpa == n
   throw new Error("Thai NFC/trim normalization contract regressed");
 }
 console.log("Thai Unicode normalization and malformed-input contract passed");
+
+const nelTokens = tokenizeText("\\u0085กา\\u0085");
+if (nelTokens.map(token => token.kind + ":" + token.input).join("|") !== "punctuation:\\u0085|thai:กา|punctuation:\\u0085") {
+  throw new Error("Thai tokenizer silently treated U+0085 as layout whitespace: " + JSON.stringify(nelTokens));
+}
