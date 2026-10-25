@@ -91,7 +91,7 @@ def analyze_text(text: str):
                     "input": token.text, "kind": "thai",
                     "segmentation_status": "unresolved",
                     "syllables": [],
-                    "warnings": ["This text endpoint does not yet implement automatic word segmentation; IPA and Ukrainian output are withheld. Add a reviewed lexicon entry or analyze individual syllables separately."]
+                    "warnings": ["The conservative text endpoint does not apply automatic word segmentation; use analyze_text_with_word_segmentation for dictionary-based word boundaries. IPA and Ukrainian output are withheld until syllable segmentation and pronunciation are supported."]
                 })
             else:
                 analyses = [analyze_syllable(s) for s in syllables]
@@ -103,4 +103,76 @@ def analyze_text(text: str):
                 })
         else:
             result.append({"input": token.text, "kind": token.kind, "segmentation_status": "not_applicable", "syllables": [], "warnings": []})
+    return result
+
+
+def analyze_text_with_word_segmentation(text: str):
+    """Return lossless mixed-text tokens with explicit dictionary word boundaries.
+
+    This opt-in path is separate from the conservative legacy endpoint. It
+    records source character spans and unknown-cluster fallbacks; it does not
+    treat a dictionary word boundary as evidence that the word's syllables or
+    pronunciation are known.
+    """
+    from .segmentation import dictionary_word_segmentation
+
+    if not text:
+        return []
+    result = []
+    start = 0
+    previous_kind = _kind(text[0])
+
+    def emit(chunk: str, kind: str, offset: int) -> None:
+        if kind != "thai":
+            result.append({
+                "input": chunk,
+                "kind": kind,
+                "segmentation_status": "not_applicable",
+                "syllables": [],
+                "warnings": [],
+                "source_span": [offset, offset + len(chunk)],
+                "word_segmentation_status": "not_applicable",
+                "word_segmentation_method": None,
+                "word_segmentation_complete": None,
+                "word_segmentation_evidence_grade": None,
+            })
+            return
+
+        segmented = dictionary_word_segmentation(chunk)
+        local_offset = 0
+        for word, word_status in zip(segmented.tokens, segmented.token_statuses):
+            if word_status == "unknown_cluster_fallback":
+                item = {
+                    "input": word,
+                    "kind": "thai",
+                    "segmentation_status": "unresolved",
+                    "syllables": [],
+                    "warnings": ["Unknown grapheme cluster in dictionary segmentation; IPA and Ukrainian output are withheld."],
+                }
+            else:
+                analysis = analyze_text(word)
+                if len(analysis) != 1:
+                    raise AssertionError("A single dictionary token must produce one conservative analysis")
+                item = analysis[0].copy()
+            item["source_span"] = [offset + local_offset, offset + local_offset + len(word)]
+            item["source_run"] = chunk
+            item["word_segmentation_status"] = word_status
+            item["word_segmentation_method"] = segmented.method
+            item["word_segmentation_complete"] = segmented.complete
+            item["word_segmentation_evidence_grade"] = segmented.evidence_grade
+            result.append(item)
+            local_offset += len(word)
+        if local_offset != len(chunk):
+            raise AssertionError("Word tokens did not cover the Thai source run")
+
+    for index, char in enumerate(text[1:], 1):
+        kind = _kind(char)
+        if kind != previous_kind:
+            emit(text[start:index], previous_kind, start)
+            start = index
+            previous_kind = kind
+    emit(text[start:], previous_kind, start)
+
+    if "".join(item["input"] for item in result) != text:
+        raise AssertionError("Word-segmented text analysis must preserve every input character")
     return result

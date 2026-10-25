@@ -38,6 +38,7 @@ class WordSegmentationResult:
     complete: bool
     method: str = "clippyfirst-dictionary-max-match-v1"
     evidence_grade: str = "DICTIONARY_SEGMENTATION_NOT_PRONUNCIATION_GOLD"
+    token_statuses: tuple[str, ...] = ()
 
 
 def _is_thai_block_only(value: str) -> bool:
@@ -114,7 +115,7 @@ def dictionary_word_segmentation(text: str) -> WordSegmentationResult:
     if not isinstance(text, str):
         raise TypeError("text must be a string")
     if not text:
-        return WordSegmentationResult(tokens=(), unknown_clusters=(), complete=True)
+        return WordSegmentationResult(tokens=(), unknown_clusters=(), complete=True, token_statuses=())
 
     spans = _grapheme_spans(text)
     boundaries = {0, *(end for _, end in spans)}
@@ -122,6 +123,7 @@ def dictionary_word_segmentation(text: str) -> WordSegmentationResult:
     trie = _dictionary_trie()
     tokens: list[str] = []
     unknown: list[str] = []
+    token_statuses: list[str] = []
     position = 0
 
     while position < len(text):
@@ -135,6 +137,7 @@ def dictionary_word_segmentation(text: str) -> WordSegmentationResult:
                 best_end = cursor
         if best_end is not None:
             tokens.append(text[position:best_end])
+            token_statuses.append("dictionary_match")
             position = best_end
             continue
 
@@ -142,12 +145,14 @@ def dictionary_word_segmentation(text: str) -> WordSegmentationResult:
         cluster = text[position:next_end]
         tokens.append(cluster)
         unknown.append(cluster)
+        token_statuses.append("unknown_cluster_fallback")
         position = next_end
 
     return WordSegmentationResult(
         tokens=tuple(tokens),
         unknown_clusters=tuple(unknown),
         complete=not unknown,
+        token_statuses=tuple(token_statuses),
     )
 
 
