@@ -114,13 +114,14 @@ if (nelTokens.map(token => token.kind + ":" + token.input).join("|") !== "punctu
   throw new Error("Thai tokenizer silently treated U+0085 as layout whitespace: " + JSON.stringify(nelTokens));
 }
 
-const asciiBoundaryResult = analyze(" \tกา\r\nขา ");
-if (asciiBoundaryResult.syllables.map(item => item.surface).join("|") !== "กา|ขา") {
-  throw new Error("Thai ASCII whitespace boundaries did not preserve the two supplied syllables");
+const asciiBoundaryTokens = analyzeText(" \tกา\r\nขา ").filter(token => token.kind === "thai");
+if (asciiBoundaryTokens.map(token => token.input).join("|") !== "กา|ขา" ||
+    asciiBoundaryTokens.some(token => token.syllables.length !== 1 || token.syllables[0].status !== "analyzed")) {
+  throw new Error("Thai ASCII layout whitespace did not preserve two independently analyzed tokens");
 }
 for (const control of ["\u000b", "\u000c"]) {
   const result = analyze("กา" + control + "ขา");
-  if (result.status !== "INVALID" || result.syllables.length !== 0 || result.output !== "") {
-    throw new Error("Thai parser accepted unsupported layout control U+" + control.codePointAt(0).toString(16));
+  if (result.status !== "unresolved:unsupported-symbol" || result.phonemicIpa != null || result.phoneticIpa != null || result.ukrainian != null) {
+    throw new Error("Thai parser accepted unsupported layout control U+" + control.codePointAt(0).toString(16) + ": " + JSON.stringify(result));
   }
 }
