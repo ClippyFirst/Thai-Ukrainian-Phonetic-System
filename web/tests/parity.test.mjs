@@ -113,3 +113,14 @@ const nelTokens = tokenizeText("\u0085กา\u0085");
 if (nelTokens.map(token => token.kind + ":" + token.input).join("|") !== "punctuation:\u0085|thai:กา|punctuation:\u0085") {
   throw new Error("Thai tokenizer silently treated U+0085 as layout whitespace: " + JSON.stringify(nelTokens));
 }
+
+const asciiBoundaryResult = analyze(" \tกา\r\nขา ");
+if (asciiBoundaryResult.syllables.map(item => item.surface).join("|") !== "กา|ขา") {
+  throw new Error("Thai ASCII whitespace boundaries did not preserve the two supplied syllables");
+}
+for (const control of ["\u000b", "\u000c"]) {
+  const result = analyze("กา" + control + "ขา");
+  if (result.status !== "INVALID" || result.syllables.length !== 0 || result.output !== "") {
+    throw new Error("Thai parser accepted unsupported layout control U+" + control.codePointAt(0).toString(16));
+  }
+}
