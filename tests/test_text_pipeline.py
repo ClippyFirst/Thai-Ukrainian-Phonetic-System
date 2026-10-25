@@ -137,6 +137,16 @@ class TextPipelineTests(unittest.TestCase):
         self.assertEqual(token["syllables"], [])
         self.assertTrue(any("IPA and Ukrainian output are withheld" in w for w in token["warnings"]))
 
+    def test_special_vowel_letters_remain_lexically_unresolved_without_word_evidence(self):
+        for spelling in ("ฤ", "ฤๅ", "ฦ", "ฦๅ"):
+            with self.subTest(spelling=spelling):
+                result = analyze_syllable(spelling)
+                self.assertEqual(result.status, "analysis-dependent:special-orthography")
+                self.assertIsNone(result.phonemic_ipa)
+                self.assertIsNone(result.phonetic_ipa)
+                self.assertIsNone(result.ukrainian_transliteration)
+                self.assertTrue(result.special_analyses)
+
     def test_source_attested_rr_words_are_segmented_conservatively(self):
         # The Office of the Basic Education Commission gives:
         # สรรพคุณ = สับ-พะ-คุน; สรรพสินค้า = สับ-พะ-สิน-ค้า;
