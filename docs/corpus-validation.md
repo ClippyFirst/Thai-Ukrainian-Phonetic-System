@@ -44,7 +44,29 @@ python scripts/evaluate_corpus.py path/to/records.jsonl
 
 The command prints deterministic JSON and returns a non-zero exit code for malformed input.
 
-## Current empirical status
+## Current empirical status## Pinned source-annotated segmentation benchmark — 2026-10-25
+
+A reproducible, permissively licensed segmentation dataset is now available at `data/benchmark/segmentation-gold.tsv`:
+
+- Upstream: [PyThaiNLP/Wisesight Sentiment Corpus with Word Tokenization Label](https://github.com/PyThaiNLP/wisesight-sentiment/tree/c1d063649abc3a6870b5fd1aae26cd1c64bdde7b/word-tokenization), exact source file `word-tokenization/wisesight-1000-samples-tokenised.label`.
+- Immutable source commit: `c1d063649abc3a6870b5fd1aae26cd1c64bdde7b`; upstream Git blob SHA-1: `279aeb2d4323fd8032306160144d33dcb5b2df84`.
+- License: CC0-1.0. The source annotation file has 993 records; the published task notes seven spam messages were removed from the nominal 1,000-sample set.
+- Annotation: human word tokenization following the Aroonmanakun (2007) segmentation standard, as described in the dataset/paper. This is **SOURCE_ANNOTATED**, not an assertion of independent expert adjudication or inter-annotator agreement.
+- Split: all 993 pinned records are designated `test` for this project; do not use them for training or for constructing the runtime lexicon.
+- Conversion: pipe-delimited tokens were converted to a TSV with JSON token arrays. Empty zero-width delimiter fields are dropped because they contribute no characters; each row is required to reconstruct its text exactly. The scorer excludes boundaries touching explicit whitespace tokens from lexical word-boundary metrics.
+
+Run `python scripts/run_wisesight_segmentation_diagnostic.py --output /tmp/wisesight1000-segmentation-baseline.json`. The diagnostic preserves source annotation grade and evaluates the current text-tokenizer/no-automatic-segmentation baseline. It does not measure pronunciation or prove representative coverage of Standard Thai.
+
+## Source-attested IPA contrast records — not gold
+
+`data/benchmark/source-attested-ipa.tsv` records six revision-pinned Thai Wiktionary readings, including the contrast `เงิน /ŋɤn˧/` (short /ɤ/) vs `เดิน /dɤːn˧/` (long /ɤː/). These are CC BY-SA 4.0 source-attested dictionary records, explicitly labeled `SOURCE_ATTESTED_NOT_GOLD`. They support claim-level inspection and regression triage; they do not satisfy independent acoustic/expert adjudication and must not enter the gold scorer.
+
+The new curated lexicon additions have exact per-entry locators and data-license attribution in `data/thai/text_lexicon_sources.csv`; the derived subset's share-alike obligations are documented in `data/thai/TEXT-LEXICON-DATA-LICENSE.md`. The spelling `เงิน` is deliberately not enabled in the runtime text lexicon until a typed lexical-IPA override can preserve its short-vowel reading instead of routing it through a potentially ambiguous graphemic parser.
+
+## Remaining phonetic evidence gate
+
+CCOST v1.0 remains the strongest candidate for acoustic/phone/toneme review, but the repository does not claim it was downloaded, reviewed locally, or adjudicated. Its CC BY-NC-SA 4.0 license permits only non-commercial sharing/adaptation under share-alike terms. A trained Thai phonetician must independently review a pinned, speaker-aware sample against the annotation manual before any CCOST-derived labels can be called expert-adjudicated gold. No gold IPA, tone, or vowel-length score is emitted by this commit.
+
 
 No third-party corpus is bundled or processed by CI. Therefore **corpus accuracy, lexical coverage and candidate calibration remain unmeasured** in the repository release. The infrastructure is ready for a licensed local evaluation.
 
