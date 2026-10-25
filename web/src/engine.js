@@ -110,6 +110,7 @@ const thaiMarker = ch => ["ๆ","ฯ"].includes(ch);
 const digitChar = ch => /[0-9๐-๙]/u.test(ch);
 function tokenizeText(text) {
   const out=[]; let i=0;
+  const isLayoutWhitespace=ch=>ch===" "||ch.charCodeAt(0)===9||ch.charCodeAt(0)===10||ch.charCodeAt(0)===13;
   while(i<text.length){
     const ch=[...text.slice(i)][0];
     const kind=ch===" "||/\s/u.test(ch)?"space":thaiMarker(ch)?"thai_marker":digitChar(ch)?"number":thaiTextChar(ch)?"thai":/[A-Za-z]/u.test(ch)?"latin":"punctuation";
