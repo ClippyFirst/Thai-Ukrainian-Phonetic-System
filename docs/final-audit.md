@@ -264,7 +264,7 @@ The 36-form challenge diagnostic yields 23 lexicon lookups, 13 unresolved inputs
 - Hardened the segmentation evaluator to distinguish `ADJUDICATED` from `SOURCE_ANNOTATED`, reject mixed evidence grades in one report, preserve all gold rows in denominators, and exclude boundaries touching whitespace-only tokens from lexical boundary metrics.
 - Added six pinned dictionary IPA/tone/vowel-length records, including the source-attested short-vowel `เงิน /ŋɤn˧/` vs long-vowel `เดิน /dɤːn˧/` contrast. They are explicitly not gold and are not scored as accuracy.
 - Added CI tests for source-file reconstruction, evidence-grade isolation, whitespace semantics, lexicon source records, and the Wisesight baseline report.
-- Acceptance remains pending until exact-head GitHub Actions confirms the new Python tests, dataset checks, diagnostic, and generated-artifact gates. Do not mark these tasks DONE_VERIFIED before that run succeeds.
+- At code-bearing commit `818a378d37b248d74628243b9a8d62fb82029815`, exact-head GitHub Actions run [40233825012](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40233825012) passed the new Python tests, dataset checks, diagnostics, generated-data drift check, browser parity and master-artifact gates. The documentation-only reconciliation commit is being prepared separately and still requires its own CI confirmation.
 
 ### Still open after this batch
 
@@ -272,3 +272,16 @@ The 36-form challenge diagnostic yields 23 lexicon lookups, 13 unresolved inputs
 - Typed lexical pronunciation override for `เงิน`: source evidence exists, but the runtime adapter cannot yet safely pass this lexical short-vowel reading as a provenance-bearing typed IPA result.
 - Automatic segmentation: this batch establishes a source-annotated held-out baseline, but it does not implement an automatic segmenter. The baseline report must make that limitation visible.
 - Context-dependent `รร`, `ฤ/ฤๅ`, `ฦ/ฦๅ`, `ทร`, silent letters, connected speech and Ukrainian preference remain evidence-gated.
+
+
+## Verified outcome — run 40233825012
+
+**Code-bearing commit:** `818a378d37b248d74628243b9a8d62fb82029815` on `research/thai-segmentation-gold-parity-verified-20261025`.
+
+- Both CI jobs passed: `test` and `master-artifact`.
+- 150 Python tests passed; generated data regeneration/drift check passed; master artifact guard passed for 351,780 structural rows and 41 vowel/rime records; Node IPA→UA, parity and UI contract tests passed.
+- Runtime challenge diagnostics: 36 forms; lexicon segmentation 28, unresolved 8; complete engine output 25, abstained/incomplete 11. Syllable analysis statuses: 35 analyzed, 3 special-orthography-dependent, 1 vowel-length-dependent (statuses overlap because they are per analyzed syllable, not per input). These are runtime diagnostics, not accuracy.
+- Wisesight: 993/993 source-annotated records; 993 predictions; boundary precision 0.638319, recall 0.091858, F1 0.160604; exact sequence rate 0.031219. Gold status is `SOURCE_ANNOTATED`; zero rows are expert-adjudicated. Artifact [wisesight1000-segmentation-baseline](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40233825012) uploaded as artifact ID `12614106636`.
+- The initial CI run on the expanded lexicon exposed a stale test fixture that expected `ไกล` to remain unresolved. The fixture was corrected to use unsupported `กฉ`; the final code-bearing run above passed.
+
+**Readiness:** engineering-verified research prototype with a usable source-annotated segmentation benchmark; not release-ready for arbitrary Thai text and not empirically validated for phonetic accuracy. Independent IPA/tone/length adjudication, lexical override for `เงิน`, and context-dependent special orthography remain open.
