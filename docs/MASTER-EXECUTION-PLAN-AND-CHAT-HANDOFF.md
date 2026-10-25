@@ -299,3 +299,11 @@ This section supersedes earlier notes in this handoff that said post-merge main 
 - The cited Royal Institute Dictionary 2011 entry, via Longdo's dictionary interface, supplies the reading `[สี]`; this supports the lexical normalization only, not an independently adjudicated IPA gold label. See https://dict.longdo.com/search/ศรี .
 - Exact-head CI [40197477915](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40197477915) passed both `test` and `master-artifact` jobs; the Python suite ran 113 tests.
 - THAI-004 is now IN_PROGRESS rather than TODO because one documented false-cluster case was added, but cluster generalization and independent gold remain open.
+
+
+## Source-attested Thai ทร false-cluster coverage — 2026-10-25
+
+- Added the Royal Institute of Thailand Journal article “เรื่องยุ่ง ๆ เกี่ยวกับอักษรควบ” (vol. 36 no. 4, Oct–Dec 2011) as a specific source record. The article lists selected lexical forms in which ทร is read with ซ, and distinguishes these from Sanskrit/Pali or loanword forms where /tr/ is retained.
+- Added explicit lexical overrides for ทราบ → ซาบ, ทราย → ซาย, ทรง → ซง, ทรัพย์ → ซับ, and แทรก → แซก in Python and browser runtimes, with regression tests and text-segmentation entries.
+- These are lexical spelling-to-reading overrides grounded in the cited source's example list; they are not independent IPA gold labels and do not justify a productive rule mapping every ทร sequence to /s/.
+- Exact-head CI must pass Python tests, generated-data drift checks, IPA→Ukrainian tests, browser/Python parity, and master-artifact generation.
