@@ -91,7 +91,7 @@ console.log("Thai extended text lexicon regression passed");
 const unicodeHazards = [
   ["กา\\u0001", "U+0001"],
   ["กา\\u007f", "U+007F"],
-  ["กา\\u0085", "U+0085"],
+  ["กา\u0085", "U+0085"],
   ["กา\\u200b", "U+200B"],
   ["กา\\u202e", "U+202E"],
 ];
@@ -109,7 +109,7 @@ if (normalizedThai.normalized !== "ก่า" || normalizedThai.phonemicIpa == n
 }
 console.log("Thai Unicode normalization and malformed-input contract passed");
 
-const nelTokens = tokenizeText("\\u0085กา\\u0085");
-if (nelTokens.map(token => token.kind + ":" + token.input).join("|") !== "punctuation:\\u0085|thai:กา|punctuation:\\u0085") {
+const nelTokens = tokenizeText("\u0085กา\u0085");
+if (nelTokens.map(token => token.kind + ":" + token.input).join("|") !== "punctuation:\u0085|thai:กา|punctuation:\u0085") {
   throw new Error("Thai tokenizer silently treated U+0085 as layout whitespace: " + JSON.stringify(nelTokens));
 }
