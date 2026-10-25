@@ -60,18 +60,6 @@
     }
   },
   {
-    "input": "เงิน",
-    "expected": {
-      "input": "เงิน",
-      "status": "analysis-dependent:vowel-length",
-      "phonemicIpa": null,
-      "phoneticIpa": null,
-      "tone": null,
-      "toneIpa": null,
-      "ukrainian": null
-    }
-  },
-  {
     "input": "คน",
     "expected": {
       "input": "คน",
@@ -81,6 +69,18 @@
       "tone": "mid",
       "toneIpa": "˧",
       "ukrainian": "кон"
+    }
+  },
+  {
+    "input": "เงิน",
+    "expected": {
+      "input": "เงิน",
+      "status": "analysis-dependent:vowel-length",
+      "phonemicIpa": null,
+      "phoneticIpa": null,
+      "tone": null,
+      "toneIpa": null,
+      "ukrainian": null
     }
   },
   {
