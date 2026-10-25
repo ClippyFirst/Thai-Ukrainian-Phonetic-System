@@ -70,10 +70,12 @@ def main() -> int:
     gold_rows = read_tsv(args.gold, GOLD_FIELDS)
     prediction_rows = read_tsv(args.predictions, PRED_FIELDS)
     gold: dict[str, dict[str, object]] = {}
+    seen_gold_ids: set[str] = set()
     for row in gold_rows:
         row_id = row["id"]
-        if not row_id or row_id in gold:
+        if not row_id or row_id in seen_gold_ids:
             raise ValueError(f"gold IDs must be non-empty and unique: {row_id!r}")
+        seen_gold_ids.add(row_id)
         if row["gold_status"] == "ADJUDICATED":
             for field in ("source_id", "license", "split"):
                 if not row[field].strip():
