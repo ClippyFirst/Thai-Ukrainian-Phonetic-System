@@ -1,6 +1,6 @@
 rule_id,pattern,construction,analysis_status,candidate_ipa,notes,source_ids
 SP-RR-001,รร,รร construction,analysis-dependent,a|aː|an|am,Surface realization depends on lexical/morphological environment; do not force a single parse.,SRC-ORST;SRC-OBEC-RR-2022
-SP-RUE-001,ฤ,ฤ vowel-letter,analysis-dependent,rɯ|ri|rɤ,OBEC teaching material describes these as syllabic units rather than free vowel signs; actual reading is lexical and must not be inferred from this broad description alone.,SRC-ORST;SRC-OBEC-SPECIAL-VOWELS-2022
+SP-RUE-001,ฤ,ฤ vowel-letter,analysis-dependent,rɯ|ri|rɤ,OBEC teaching material describes these as syllabic units rather than free vowel signs; deterministic reading still requires word-level evidence and must not be inferred from this broad description alone.,SRC-ORST;SRC-OBEC-SPECIAL-VOWELS-2022
 SP-RUE-LONG-001,ฤๅ,ฤๅ vowel-letter,analysis-dependent,rɯː,OBEC teaching material supports the syllabic/lexical status; a deterministic reading still requires word-level evidence.,SRC-ORST;SRC-OBEC-SPECIAL-VOWELS-2022
 SP-LUE-001,ฦ,ฦ vowel-letter,analysis-dependent,lɯ,OBEC teaching material supports the syllabic/lexical status; the spelling is rare and a deterministic reading requires word-level evidence.,SRC-ORST;SRC-OBEC-SPECIAL-VOWELS-2022
 SP-LUE-LONG-001,ฦๅ,ฦๅ vowel-letter,analysis-dependent,lɯː,OBEC teaching material supports the syllabic/lexical status; the spelling is rare and a deterministic reading requires word-level evidence.,SRC-ORST;SRC-OBEC-SPECIAL-VOWELS-2022
