@@ -558,3 +558,15 @@ This section supersedes earlier notes in this handoff that said post-merge main 
 2. **TODO — typed lexical IPA override:** preserve `เงิน /ŋɤn˧/` through the typed IPA result and Ukrainian adapter with provenance and Python/browser parity; do not use a source grapheme workaround.
 3. **PARTIAL — special orthography:** `รร`, `ฤ/ฤๅ`, `ฦ/ฦๅ`, `ทร` and silent-letter readings remain lexical/context-dependent.
 4. **BLOCKED — connected speech and Ukrainian preferences:** requires acoustic labels and a separate Ukrainian target-preference set.
+
+
+### Exact-head acceptance checklist for the new corpus batch
+
+- [ ] `python -m unittest discover -s tests -v` passes, including the new Wisesight integrity and source-attested IPA registry tests.
+- [ ] `python scripts/run_wisesight_segmentation_diagnostic.py --output /tmp/wisesight1000-segmentation-baseline.json` succeeds and reports exactly 993 `SOURCE_ANNOTATED` rows, zero `ADJUDICATED` rows, and no expert-gold claim.
+- [ ] Generated-data drift check remains clean; the structural master generator still validates 351,780 rows and 41 rime records.
+- [ ] Node IPA→UA, browser parity, and UI contract tests pass.
+- [ ] The CI artifact `wisesight1000-segmentation-baseline` is uploaded and inspected before the task is marked DONE_VERIFIED.
+- [ ] Recompute the 36-form challenge runtime diagnostic; expected static lexicon lookup count is 28/36 after five source-backed additions, but the CI report—not this expectation—defines the verified outcome.
+
+Do not merge PR #71 or call the repository empirically validated solely because these gates pass. The source-annotated boundary benchmark is a real improvement over empty TSVs, while expert IPA/tone/length gold and the lexical IPA override for `เงิน` remain separate gates.
