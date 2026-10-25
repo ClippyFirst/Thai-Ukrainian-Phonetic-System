@@ -15,10 +15,13 @@ function split(s,q,v){
   const pre=chars(s).some(x=>PRE.has(x));
   if(q.length>=2&&pre){
     const ok=(FIRST.has(q[0])&&SECOND.has(q[1]))||(q[0]==="ห"&&LEAD.has(q[1]));
-    if(!ok)return[[q[0]],null];
-    if(q.length===2)return[q,null];
-    if(q.length===3)return[q.slice(0,2),q[2]];
-    return[[q[0]],null];
+    // If the first pair is not a licensed onset cluster, fall through to
+    // positional coda analysis (e.g. lexical แซก /sɛːk/), not onset-only.
+    if(ok){
+      if(q.length===2)return[q,null];
+      if(q.length===3)return[q.slice(0,2),q[2]];
+      return[[q[0]],null];
+    }
   }
   const lv=Math.max(-1,...chars(s).map((x,i)=>VS.has(x)?i:-1));
   const lc=sourcePositions.at(-1)?.i??-1;
@@ -37,7 +40,9 @@ function tone(cls,ld,len,m){const r=[["none","mid","live","*","mid","˧"],["none
 function toneClassFor(onset){if(onset.length<2)return C[onset[0]]?.[0]||null;if(onset[0]==="ห"&&LOW.has(onset[1]))return C[onset[0]]?.[0]||null;return TONE_SONORANTS.has(C[onset[1]]?.[1])?C[onset[0]]?.[0]||null:C[onset[1]]?.[0]||null}
 const LEXICAL_READINGS=new Map([
   ["เตอร์","เตอ"],["เทอร์","เทอ"],["ไซต์","ไซ"],["ยนต์","ยน"],["กอล์ฟ","กอฟ"],
-  ["จริง","จิง"],["สร้าง","ส้าง"],["ศรี","สี"],["เศร้า","เส้า"],["ไซร้","ไซ้"],
+  ["จริง","จิง"],["สร้าง","ส้าง"],["ศรี","สี"],
+  ["ทราบ","ซาบ"],["ทราย","ซาย"],["ทรง","ซง"],["ทรัพย์","ซับ"],["แทรก","แซก"],
+  ["เศร้า","เส้า"],["ไซร้","ไซ้"],
   ["จันทร์","จัน"],["ศุกร์","สุก"],["เสาร์","เสา"],["สัตว์","สัด"],["พันธุ์","พัน"],["ฟิล์ม","ฟิม"],
   ["อย่า","หย่า"],["อยู่","หยู่"],["อย่าง","หย่าง"],["อยาก","หยาก"],
   ["ฤทธิ์","ริด"]
@@ -58,6 +63,8 @@ const TEXT_LEXICON = new Map([
   ["ทฤษฎี", ["ทริด","สะ","ดี"]],
   ["จริง", ["จิง"]],
   ["สร้าง", ["ส้าง"]],
+  ["ทราบ", ["ทราบ"]], ["ทราย", ["ทราย"]], ["ทรง", ["ทรง"]],
+  ["ทรัพย์", ["ทรัพย์"]], ["แทรก", ["แทรก"]],
   ["เศร้า", ["เส้า"]],
   ["ไซร้", ["ไซ้"]],
   ["จันทร์", ["จัน"]],
