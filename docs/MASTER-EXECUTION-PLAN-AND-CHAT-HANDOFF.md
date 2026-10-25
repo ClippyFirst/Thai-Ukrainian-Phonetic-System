@@ -489,3 +489,46 @@ This section supersedes earlier notes in this handoff that said post-merge main 
 - Duplicate workflow run [40227913467](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40227913467) was still in progress at the last poll; run 40227910891 is the completed successful evidence for the same exact head. Do not infer linguistic correctness from either CI run.
 - The runtime diagnostic is now executed in CI and regression-tested; it is still a runtime behavior report, not an accuracy benchmark. The 36-form static lexicon lookup count remains 23/36 (63.9%) on this deliberately selected challenge set and is not general coverage or accuracy.
 - Remaining gates: independently adjudicated Thai word boundaries and IPA/tone/vowel-length labels with exact source locators and license review; broaden lexicon/segmentation only with source-backed entries; separately resolve `รร`, `ฤ/ฤๅ`, `ฦ/ฦๅ`, `ทร`, silent-letter constructions and connected speech. PR #71 remains draft because these research gates are not satisfied.
+
+
+## One-pass segmentation benchmark hardening — 2026-10-25
+
+### Branch, exact-head verification and implementation result
+
+- Dedicated branch: `research/thai-segmentation-gold-parity-verified-20261025`, based on current `main` `0be5fd841070e337cb5c805ef92954938abe61bb`. Code-bearing commit: `b1f67a881d17a356f73712877dd71f4287b5bba3`.
+- GitHub Actions run [40229701920](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40229701920): the exact-head `test` job passed. It ran generated-data regeneration and drift checks, master-table generation, **143 Python tests**, the 36-record ClippyFirst runtime diagnostic plus guards against reporting accuracy, and Node checks `web/tests/ipa-ua.test.mjs`, `web/tests/parity.test.mjs`, and `web/tests/ui-contract.test.mjs`. Python/browser parity reports 27 fixtures passed. At the time this checkpoint was written, the separate `master-artifact` job for this SHA was still running its artifact generation/upload step; do not claim that job completed until the workflow reports success. The equivalent artifact job on predecessor SHA `693caa3ca1a7ae04b0fb7259aa40e63fd3fa5e23` passed in run [40229604077](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40229604077), asserting 351,780 structural rows and 41 vowel/rime records and uploading the artifact.
+- Local test execution remains unavailable: the container could not resolve `github.com` and this connector session has no local checkout/command runner. The evidence is remote GitHub Actions, not a claimed local run.
+
+### Concrete evaluator fixes
+
+- Segmentation predictions are scoreable only when `status=ok`. Error, abstention, partial, or other statuses cannot receive credit even if a stale token array is present; the report counts non-success status rows explicitly. This closes a real scoring-integrity defect.
+- Boundary F1 now uses `2TP / (2TP + FP + FN)`: it is 0 when one side has boundaries but there are no true positives, and undefined only when both boundary sets are empty. Added a regression test for the zero-predicted-boundary case.
+- The ClippyFirst challenge diagnostic now fails closed on an empty JSONL input instead of emitting a vacuous success report.
+- The current 36-form runtime diagnostic reports 23 lexicon-resolved forms and 13 unresolved forms; 21 inputs emitted complete engine output and 15 abstained or lacked complete output. It counted 30 syllable analyses as `analyzed` and 3 as `analysis-dependent:special-orthography`. These are diagnostics on a hand-picked adversarial set, **not** accuracy or representative corpus coverage.
+
+### Reconciled task ledger
+
+| Task | Status | Evidence / remaining acceptance criterion |
+|---|---|---|
+| Segmentation scorer: provenance, NFC concatenation, unique IDs, missing-prediction denominator | DONE_VERIFIED | Synthetic regression tests pass in exact-head CI; no empirical corpus score is claimed. |
+| Failed/partial prediction status gating and zero-boundary F1 edge case | DONE_VERIFIED | Exact-head CI run 40229701920 passed the new regression tests. |
+| Empty challenge input rejection and 36-input runtime diagnostic | DONE_VERIFIED | Exact-head CI passed the diagnostic and guards; report explicitly omits accuracy. |
+| Generated data, master-table generation, Python/browser IPA→Ukrainian parity and UI contract | DONE_VERIFIED for the passing `test` job | 143 Python tests; 27 parity fixtures; all three Node checks passed. The separate artifact-upload job for this exact SHA must be confirmed before claiming exact-head artifact publication. |
+| Challenge lexicon lookup | PARTIAL | 23/36 on this hand-selected challenge set; 13/36 remain unresolved. This is neither population coverage nor pronunciation accuracy. Expand only with source-backed entries and tests. |
+| Independent Thai IPA, tone, vowel-length and word-boundary gold | BLOCKED BY ADJUDICATION | No independently adjudicated rows exist. Requires a licensed, version-pinned source, exact locators, a declared Standard Thai profile/split, and independent expert review of competing analyses before scoring. |
+| General Thai word segmentation | PARTIAL / EVIDENCE-LIMITED | Unknown multi-grapheme input abstains safely. The segmentation scorer is ready, but gold manifests are header-only and a versioned, license-compatible holdout has not been processed. |
+| Special orthography (`รร`, `ฤ/ฤๅ`, `ฦ/ฦๅ`, `ทร`, silent letters) | PARTIAL | Existing rules/lexical exceptions remain conservative and word-/sense-dependent. PR #68 adds official OBEC scope evidence and has successful CI on its own head, but is a separate, non-mergeable branch and was not merged or ported blindly. It does not supply universal IPA gold. |
+| Connected speech and empirical Ukrainian orthographic preference | BLOCKED BY EVIDENCE | Requires acoustic/phonetic material and separately adjudicated Ukrainian target preferences; no scores or calibrated probabilities may be inferred from current output. |
+| Repository-local skills inventory | DONE_VERIFIED — none found | Recursive Git tree inspection of the 172-entry branch tree found no `skills/`, `AGENTS.md`, `SKILL.md`, or `.github/instructions` paths. Project matrices/plans and existing tests were used; do not claim repo-local skills were applied. |
+
+### PR and branch reconciliation
+
+- PR #71 remains open and draft; no merge was performed. Its benchmark infrastructure is software-verified, while empirical pronunciation/segmentation accuracy remains unmeasured.
+- PR #68 (`research/thai-special-vowel-source-contract-20261025`, head `4e03079d48a4b05470bfbb498c22e0b39de50185`) is independently scoped to official-source evidence for special vowel letters and lexical `อ นำ`. Its exact-head CI runs [40225937524](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40225937524), [40225937608](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40225937608), and [40225932880](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40225932880) succeeded. GitHub reports it 14 commits ahead and 1 behind current `main`, with `mergeable=false`; leave it untouched until its mergeability/conflicts are explicitly reconciled.
+- PRs #69 and #70 are closed, unmerged duplicate/superseded segmentation-benchmark attempts. Their branches were not deleted. No other PR was merged or altered.
+
+### External evidence and stop condition
+
+- CCOST v1.0 (DOI `10.5281/zenodo.17366698`) remains a candidate for non-commercial phonetic adjudication under CC BY-NC-SA 4.0; its corpus was not downloaded, mirrored, or bundled. The Wiktionary-derived G2P corpus remains source-attested regression material, not independent gold against systems with overlapping provenance.
+- The segmentation-corpus index is discovery metadata only. Exact upstream version, license, annotation convention, split and hash must be verified before populating gold TSVs. Synthetic test fixtures must never be represented as Thai accuracy evidence.
+- Readiness: **research software prototype with verified engineering infrastructure; not empirically validated and not release-ready for arbitrary Thai text**. The remaining blockers are evidence/adjudication and representative lexical coverage, not missing benchmark plumbing.

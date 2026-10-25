@@ -244,3 +244,14 @@ The following command log records an earlier continuation and should not be read
 - The three source-attested Thai spot-checks are pinned to exact Wiktionary revisions, but are selected diagnostics, not independently expert-adjudicated gold. Upstream source overlap is plausible.
 - The durable report/registry and comparator provenance update is PR #41, which remains subject to current-head CI and smoke verification. Independent gold count is still 0; accuracy remains null.
 - Release status: research infrastructure verified; phonological accuracy and full release readiness remain unverified pending independent held-out gold and source-specific adjudication.
+
+
+## Current acceptance snapshot — 2026-10-25
+
+The latest code-bearing checkpoint is `b1f67a881d17a356f73712877dd71f4287b5bba3`; exact-head CI run [40229701920](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40229701920) passed the test job: generated-data drift, master-table generation, 143 Python tests, the 36-input runtime diagnostic, 27 Python/browser parity fixtures, and all three Node adapter/parity/UI checks. The separate artifact-publication job was still running at the time of the handoff; an equivalent predecessor run [40229604077](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40229604077) successfully asserted 351,780 structural rows / 41 vowel-rime records and uploaded the artifact.
+
+The segmentation evaluator now refuses to score prediction rows unless `status=ok`, treats error/abstention/partial outputs as abstentions, and correctly reports zero F1 when reference boundaries exist but no true positives do. The runtime diagnostic refuses an empty challenge set. These are software-quality fixes, not Thai accuracy evidence.
+
+The 36-form challenge diagnostic yields 23 lexicon lookups, 13 unresolved inputs, 21 complete engine outputs and 15 abstentions/incomplete outputs. Independent adjudicated IPA and word-boundary gold remain absent; no empirical accuracy is published. Unknown words and analysis-dependent special orthography remain fail-closed.
+
+**Readiness:** research infrastructure is CI-verified; linguistic accuracy, representative lexical coverage, connected speech and Ukrainian target preference remain unvalidated. This supersedes earlier historical release snapshots in this audit file.

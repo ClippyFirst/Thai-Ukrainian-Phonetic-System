@@ -1,8 +1,33 @@
 {
-  "release":"0.2.0",
-  "status":"research-foundation",
-  "implemented":["orthography","syllable_structure","tone","broad_ipa","ukrainian_feature_candidates","evidence_registry","combinatorial_accounting","validation_protocol"],
-  "not_claimed":["complete_lexical_segmentation","complete_special_orthography","connected_speech","corpus_accuracy","calibrated_probability","universal_ukrainian_orthography"],
-  "lexical_attestation":"not measured",
-  "corpus_attestation":"not measured"
+  "release": "0.6.1",
+  "status": "research-foundation; engineering-verified; empirical-validation-pending",
+  "implemented": [
+    "orthography",
+    "syllable_structure",
+    "tone",
+    "broad_ipa",
+    "ukrainian_feature_candidates",
+    "evidence_registry",
+    "combinatorial_accounting",
+    "validation_protocol",
+    "runtime_challenge_diagnostics",
+    "segmentation_benchmark_infrastructure",
+    "fail_closed_prediction_scoring",
+    "generated_artifact_ci_gate",
+    "python_browser_parity_gate"
+  ],
+  "not_claimed": [
+    "complete_lexical_segmentation",
+    "complete_special_orthography",
+    "connected_speech",
+    "corpus_accuracy",
+    "calibrated_probability",
+    "universal_ukrainian_orthography",
+    "independently_adjudicated_ipa_gold",
+    "independently_adjudicated_word_boundary_gold",
+    "empirical_segmentation_accuracy",
+    "representative_lexical_coverage"
+  ],
+  "lexical_attestation": "partial; 23/36 exact lookups on a hand-picked challenge set; not representative coverage",
+  "corpus_attestation": "not measured; zero independently adjudicated IPA or word-boundary gold rows"
 }
