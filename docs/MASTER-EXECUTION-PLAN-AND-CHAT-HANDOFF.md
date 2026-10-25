@@ -330,3 +330,11 @@ This section supersedes earlier notes in this handoff that said post-merge main 
 - Preserved the current v0.6.1 `analyzeText` pipeline and IPA → Ukrainian adapter boundary. Updated the current UI to expose input/segmentation guidance, keyboard shortcut, quick examples, status definitions, accessible result headings, copy actions and accurate unresolved/no-Thai-token notices.
 - Added `web/tests/ui-contract.test.mjs` and wired it into `.github/workflows/ci.yml` so keyboard interaction, examples, empty/unsupported status and result messaging are tested rather than inferred from static markup.
 - This is a code-level accessibility/integrity pass. No screenshot-based, mobile-device, screen-reader or live Pages audit is claimed. PR #17 remains open until this selective port is verified; do not merge its stale engine/runtime.
+
+
+## Sense-sensitive ทร reading guard — 2026-10-25
+
+- Found a false-confidence bug in the unconditional lexical override `ทราย → ซาย`. The official Royal Institute 2011 article (vol. 36 no. 4, p. 556) distinguishes the sand sense (false cluster, /s/) from the deer-name sense (true ทร cluster).
+- Because the API receives spelling without lexical sense, the unconditional override is removed from both Python and browser runtimes. The existing `SP-THR-001` path now withholds IPA and Ukrainian output for the bare homograph.
+- Added Python and Node/browser-engine regressions. This is an ambiguity/safety fix, not a new phonological rule or IPA gold label.
+- Exact-head CI must pass Python tests, generated-data checks, IPA→Ukrainian tests, Python/browser parity, UI contract and master-artifact assertions before merge.
