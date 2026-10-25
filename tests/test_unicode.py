@@ -25,11 +25,11 @@ class UnicodeTests(unittest.TestCase):
         # These code points are not ordinary Thai orthographic material. They
         # must not disappear during normalization or permit a partial reading.
         for character, codepoint in (
-            ("\\x01", "U+0001"),
-            ("\\x7f", "U+007F"),
-            ("\\x85", "U+0085"),
-            ("\\u200b", "U+200B"),
-            ("\\u202e", "U+202E"),
+            ("\x01", "U+0001"),
+            ("\x7f", "U+007F"),
+            ("\x85", "U+0085"),
+            ("\u200b", "U+200B"),
+            ("\u202e", "U+202E"),
         ):
             with self.subTest(codepoint=codepoint):
                 result = analyze_syllable("กา" + character)
