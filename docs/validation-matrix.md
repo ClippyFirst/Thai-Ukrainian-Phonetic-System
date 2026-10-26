@@ -165,3 +165,17 @@ Verified code/data head: [CI 40238202167](https://github.com/ClippyFirst/Thai-Uk
 - The official OBEC/IPST guide registered as `SRC-OBEC-SPECIAL-VOWELS-2022` (p. 5 for special vowel letters; printed p. 275 in separate source `SRC-OBEC-O-NAM-2022` for อ นำ ย) supports classifying `ฤ`, `ฤๅ`, `ฦ`, and `ฦๅ` as syllabic/lexical constructions and documents the lexical `อ นำ ย` family `อย่า`, `อยู่`, `อย่าง`, `อยาก`.
 - The parser deliberately continues to return `analysis-dependent:special-orthography` with no IPA or Ukrainian output for isolated special vowel letters. The source is a scope constraint, not a universal word-reading or pronunciation gold set.
 - Added regression tests in Python and browser parity; exact-head CI must pass before this row is considered verified.
+
+
+## Mandatory pipeline architecture gate — 2026-10-26
+
+| Gate | Required contract | Status |
+|---|---|---|
+| Thai → IPA → Ukrainian serial flow | Thai structural/phonological analysis produces the typed IPA intermediate; Ukrainian output is generated from that IPA, not via a parallel grapheme-to-Ukrainian path | ARCHITECTURE REQUIREMENT; inspectable typed boundary exists, but every final-head gate must pass |
+| IPA adapter input contract | Ukrainian adapter consumes typed IPA and documented metadata; it does not independently read Thai graphemes, vowel IDs or coda fields | Existing design contract; maintain as a regression invariant |
+| Fail-closed uncertainty | Unsupported/ambiguous Thai analysis cannot yield an unjustified IPA or confident Ukrainian result | Required; special orthography must preserve uncertainty unless a lexical reading is evidenced |
+| End-to-end data-flow coverage | Tests establish Thai input → exposed IPA → Ukrainian output and that withholding/changing the IPA intermediate changes/withholds dependent target output | REQUIRED acceptance test; do not infer it solely from unit tests for each layer |
+| Feature preservation | Phonemic/surface distinction, tone, vowel length, syllable/segment boundaries, provenance and uncertainty survive to the IPA boundary | Required and must be checked at adapter boundary |
+| Python/browser parity | Both runtimes implement the same boundary and derive Ukrainian output from equivalent IPA results | Exact-head CI required; do not use older green runs as evidence for a newer head |
+
+**Current exact-head warning (2026-10-26):** CI run [40305933260](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40305933260) failed in `unittest` with 12 failures after generation and the 351,780-row master-table step succeeded. Failures concern the newly added special-vowel assertions: isolated `ฤ`, `ฤๅ`, `ฦ`, `ฦๅ` currently return `unresolved:unsupported-symbol` rather than the test's expected `analysis-dependent:special-orthography`, and four registry assertions incorrectly expect the literal `analysis_status` field to equal that status even though it contains IPA candidates. Do not label this head CI-verified. Correct the contract/tests based on the actual schema and intended fail-closed behavior, then rerun all tests and browser parity on the resulting exact head. This is a software/test mismatch, not evidence that the letters have one universal IPA reading.
