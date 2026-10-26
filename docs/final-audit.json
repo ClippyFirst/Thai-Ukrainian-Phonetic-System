@@ -322,7 +322,10 @@
     "output_artifact": "thai-segmentation-error-review",
     "purpose": "deterministic false-split/false-merge triage examples and boundary metrics",
     "acceptance_boundary": "diagnostic only; does not mark every disagreement as an engine error and does not qualify as independent gold",
-    "implementation_commit": "e80606e641d631966b566999027ee9d2b4d00bb",
-    "exact_head_ci_status": "PENDING"
+    "implementation_commit": "bec1b7027f34a4f70f0b6f9fdc415ef43343eab9",
+    "exact_head_ci_status": "PENDING",
+    "test_commit": "aba6832eb97cb4b84f2e62fa058fa963cfb34803",
+    "ci_workflow_commit": "c189cdb9209d85780c3baeb1df23800101840b16",
+    "exact_sequence_contract": "192/993 full token-array matches on the pinned Wisesight/dictionary baseline; token iterable is normalized to a list so the metric matches the benchmark scorer"
   }
 }
