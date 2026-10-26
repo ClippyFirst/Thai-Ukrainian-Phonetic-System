@@ -32,7 +32,7 @@ class CorpusSourceRegistryTests(unittest.TestCase):
         self.assertIn("license", lst20["notes"])
 
         vistec = rows["CORP-VISTEC-TP-TH-2021"]
-        self.assertIn("CC BY-SA 3.0 reported", vistec["license_or_access"])
+        self.assertIn("CC-BY-SA-3.0 declared in pinned upstream dataset README", vistec["license_or_access"])
         self.assertIn("verify upstream terms", vistec["license_or_access"])
         self.assertIn("not bundled", vistec["notes"])
 
