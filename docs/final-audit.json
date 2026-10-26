@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "engineering-verified research prototype; stratified human-review sampler and pinned VISTEC external-domain evaluation implemented; exact-head CI/workflow verification pending; independent linguistic adjudication incomplete; not release-ready",
+  "status": "engineering-verified research prototype; latest code-bearing CI failed on stale VISTEC license assertion; VISTEC workflow exposed README-vs-CSV row-count mismatch; fixes committed; exact-head revalidation pending; independent linguistic adjudication incomplete; not release-ready",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -527,16 +527,17 @@
       "source_commit": "215a7dc3d384f20eb56af1cbc41fb32b7f8df57c",
       "source_csv_git_blob_sha1": "edfcb85907a604c5e30643065ac4975862a0fe90",
       "source_license": "CC-BY-SA-3.0",
-      "source_rows_expected": 49997,
+      "source_rows_expected": 50000,
       "source_field": "submissionText",
       "report_grade": "SOURCE_ANNOTATED_NOT_EXPERT_ADJUDICATED",
       "workflow": ".github/workflows/vistec-segmentation-evaluation.yml",
       "adapter": "scripts/evaluate_vistec_segmentation.py",
       "test": "tests/test_vistec_segmentation_adapter.py",
       "evaluator_optimized_for_linear_lookup": true,
-      "status": "PARTIAL_EXACT_HEAD_WORKFLOW_QUEUED",
+      "status": "FIXED_PENDING_EXACT_HEAD_REVALIDATION",
       "metric_claimed": false,
-      "evaluator_hash_gate": "The adapter independently computes the Git blob SHA-1 and rejects a non-pinned CSV; regression test added."
+      "evaluator_hash_gate": "The adapter independently computes the Git blob SHA-1 and rejects a non-pinned CSV; regression test added.",
+      "row_count_note": "Pinned CSV blob SHA-1 matches, and the evaluator processed 50,000 data rows; upstream README describes 49,997 samples. Preserve both facts and treat the immutable CSV row count as evaluator contract unless upstream maintainers clarify discrepancy."
     },
     "latest_implementation_commit": "43fb1416e6d103de4999a84a1dbaefd663507cb6",
     "pre_handoff_audit_commit": "c6dac498ec8c7939c6f2bfbcea04c8d1fdeab96a"
@@ -552,31 +553,33 @@
       "all-empty input"
     ],
     "local_tests": "NOT_RUN",
-    "workflow_status": "QUEUED_FOR_CODE_BEARING_COMMIT; FOLLOWING_COMMITS_ARE_DOCUMENTATION_ONLY",
+    "workflow_status": "FAILED_ON_CODE_HEAD; ROOT CAUSES IDENTIFIED AND FIXED; REVALIDATION PENDING",
     "metric_claimed": false,
-    "acceptance": "Exact-head CI and VISTEC workflow pass; inspect report artifact and confirm pinned 49,997-row source is accepted.",
+    "acceptance": "Exact-head CI and Web static validation pass; VISTEC evaluation accepts all 50,000 data rows in the pinned CSV; inspect report artifact; do not claim independent gold or tune on this set.",
     "workflow_runs": [
       {
         "name": "CI",
         "run_id": 40346688497,
-        "status": "queued",
-        "conclusion": null
+        "status": "completed",
+        "conclusion": "failure",
+        "failure": "one stale test expected old license wording"
       },
       {
         "name": "Web static validation",
         "run_id": 40346688520,
-        "status": "queued",
-        "conclusion": null
+        "status": "completed",
+        "conclusion": "success"
       },
       {
         "name": "External VISTEC segmentation evaluation",
         "run_id": 40346688621,
-        "status": "queued",
-        "conclusion": null
+        "status": "completed",
+        "conclusion": "failure",
+        "failure": "pinned CSV has 50,000 data rows; previous expected count was 49,997"
       }
     ],
     "last_status_checked": "2026-10-26",
-    "code_bearing_commit": "550f26fdbf6fd66a0d1c2cb1caa9bd6bd10de196",
+    "code_bearing_commit": "e05d5644f94b5d9c8707c3da981182822d272fa0",
     "final_documentation_head_before_this_update": "aeb46e0d31d69e3ebcc8afe6abd7a9a75b4908da"
   }
 }
