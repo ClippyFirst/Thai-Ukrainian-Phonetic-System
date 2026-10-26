@@ -123,3 +123,16 @@ Verified code/data head: [CI 40238202167](https://github.com/ClippyFirst/Thai-Uk
 | Independent IPA/acoustic gold | BLOCKED | Requires independent Thai phonetician adjudication, agreed broad-vs-surface transcription protocol, and authorized CCOST recording/TextGrid access |
 | Final glottal stop in บรรจุ | PARTIAL / EVIDENCE-LIMITED | Dictionary IPA and engine disagree; no global phonological rule is added. Need agreement on transcription level, stress/context, and independent adjudication |
 | Ukrainian target-form preferences | BLOCKED | Existing adapter and generated candidates establish reproducibility only; require independently adjudicated Ukrainian candidate choices and written criteria |
+
+
+## Continuation status — 2026-10-26
+
+| Component | State | Evidence / next acceptance criterion |
+|---|---|---|
+| Dictionary max-match segmentation | PARTIAL | Opt-in baseline and pinned dictionary exist; Wisesight source-annotated metrics are diagnostic only. Keep distinct from adjudicated gold. |
+| TUD unigram-Viterbi research segmenter | PARTIAL | Pinned CC BY-SA 4.0 source snapshots and source-document-disjoint train/dev/test are implemented; exact-head training/evaluation job must pass and report held-out metrics before claims. |
+| `เดิน` lexical IPA | PARTIAL | Typed source-pinned override `/dɤːn˧/` is separate from parser-only vowel-length ambiguity and routed through IPA→Ukrainian adapter; regression expectations fixed, exact-head CI pending. Not independent gold. |
+| `บรรจุ` final `/ʔ/` | BLOCKED | Source/transcription-level discrepancy remains unresolved; requires qualified Thai phonology/phonetics review with exact transcription conventions, not a global rule patch. |
+| Independent IPA/acoustic gold | BLOCKED | No independently adjudicated IPA/audio labels currently available. CCOST is a candidate only; access, annotation, and NC-SA conditions must be satisfied before a gold claim. |
+| Independent Ukrainian target forms | BLOCKED | Template/protocol exists; independent Ukrainian-language review and source-scoped decisions are still needed. |
+| Exact-head CI for latest branch | TODO | Latest observed failed run `40286374324` had 4 stale tests; fixes are committed through `4656a557a74405f64455219e1a6fece6be575915`. Acceptance: full CI, browser parity, diagnostics, TUD training, artifact generation, and static validation pass on that exact head. |
