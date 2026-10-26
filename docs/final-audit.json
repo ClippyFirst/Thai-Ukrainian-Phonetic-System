@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "engineering-verified research prototype; exact-head CI and Web static validation pass on 4b1592cd72298d1ca92e0b99ab330975764a078a; not release-ready for arbitrary Thai text or empirically validated IPA/Ukrainian output",
+  "status": "engineering-verified research prototype; comparative segmentation error-review implementation added on branch; exact-head verification pending; not release-ready for arbitrary Thai text or empirically validated IPA/Ukrainian output",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -38,7 +38,10 @@
     "typed_ipa_adapter_mutation_and_fail_closed_regressions",
     "browser_end_to_end_ipa_mutation_test",
     "ipa_tone_length_boundary_provenance_uncertainty_preservation_tests",
-    "deterministic_segmentation_false_split_false_merge_review"
+    "deterministic_segmentation_false_split_false_merge_review",
+    "same-row-dictionary-vs-TUD-segmentation-error-review",
+    "mixed-text-preserving-segmentation-comparison",
+    "boundary-context-review-examples"
   ],
   "not_claimed": [
     "complete_lexical_segmentation",
@@ -120,7 +123,21 @@
     "latest_documentation_head_web_validation_run": 40320450587,
     "latest_implementation_ci_run": 40320450844,
     "latest_implementation_web_validation_run": 40320450587,
-    "latest_implementation_commit_ci_verified": "4b1592cd72298d1ca92e0b99ab330975764a078a"
+    "latest_implementation_commit_ci_verified": "4b1592cd72298d1ca92e0b99ab330975764a078a",
+    "latest_fully_successful_web_static_validation_run": 40320450587,
+    "comparative_error_review_status": "IMPLEMENTED_PENDING_EXACT_HEAD_CI",
+    "comparative_error_review_script": "scripts/compare_segmentation_error_review.py",
+    "comparative_error_review_test": "tests/test_comparative_segmentation_error_review.py",
+    "comparative_error_review_artifact": "thai-segmentation-comparative-error-review",
+    "comparative_error_review_same_rows": 993,
+    "comparative_error_review_source_annotated_rows": 993,
+    "comparative_error_review_expert_adjudicated_rows": 0,
+    "comparative_error_review_code_commits": [
+      "7590a32ed652eb7fc2eb5b5897fc6a8591a31c09",
+      "c2d946e11690a517fb958b768733da4c864a49c1",
+      "54e1db86cf3882f025f00ede86d86e7efb3909e2",
+      "b6dbec7928b106f0ab52e06af33a26635df75412"
+    ]
   },
   "challenge_runtime": {
     "challenge_inputs": 36,
@@ -190,7 +207,7 @@
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
   "latest_code_checkpoint": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
   "readiness": "engineering-verified research prototype; not release-ready for arbitrary Thai text or empirically validated IPA/Ukrainian output",
-  "latest_verified_repository_head": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
+  "latest_verified_repository_head": "4b1592cd72298d1ca92e0b99ab330975764a078a",
   "task_ledger": [
     {
       "id": "SEG-TRAIN-001",
@@ -236,11 +253,18 @@
       "status": "DONE_VERIFIED",
       "implementation": "Added Python typed-IPA mutation/fail-closed and metadata preservation tests plus browser end-to-end IPA mutation test. Commits 5720ef2a23f49bb85286bfa0d6366d88473c3031, 85448d632aa503b537803993fbe3d8335cc9f150, cb775d6156f62392fa2d0f4bcf8d1aa30d219530.",
       "acceptance": "Exact-head CI 40315032771 passed; Web static validation 40315032788 passed. Verified software data flow does not establish linguistic accuracy."
+    },
+    {
+      "id": "SEG-COMPARE-001",
+      "status": "PARTIAL",
+      "implementation": "Added same-row dictionary-vs-TUD error-review script, context snippets around false-split/false-merge offsets, regression tests and CI artifact wiring.",
+      "blocker": "Exact-head CI and Web static validation for the current branch head must pass; the resulting artifact must be reviewed before any production decision.",
+      "acceptance": "Both engines are evaluated on the same pinned 993 source-annotated Wisesight rows; zero expert-adjudicated rows are stated; mixed-text reconstruction, error categories, artifact generation and evidence caveats pass CI; human review and independent-domain evaluation remain separate gates."
     }
   ],
   "latest_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
-  "latest_implementation_commit_pending_ci": null,
-  "current_head_status_at_audit_refresh": "PASS: code-bearing head 4b1592cd72298d1ca92e0b99ab330975764a078a passed CI run 40320450844 (test and master-artifact) and Web static validation run 40320450587. CI includes 182 Python tests, generated-data drift, 351,780-row master artifact, Node IPA→Ukrainian, 28 parity fixtures, UI contract, Wisesight diagnostics, deterministic false-split/false-merge error review, source-attested IPA diagnostics, candidate registry check, and TUD research evaluation. This is engineering verification, not independent linguistic gold.",
+  "latest_implementation_commit_pending_ci": "b6dbec7928b106f0ab52e06af33a26635df75412",
+  "current_head_status_at_audit_refresh": "Comparative segmentation error-review code, tests and CI wiring were added after the prior fully verified checkpoint. Exact-head CI and Web static validation for the current branch head must pass before the comparative report is considered DONE_VERIFIED. Prior verified dictionary-only report remains source-annotated diagnostic evidence, not expert gold.",
   "current_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
   "current_implementation_commit_before_audit_update": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
   "latest_documentation_checkpoint_before_audit": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
@@ -326,7 +350,7 @@
     "purpose": "deterministic false-split/false-merge triage examples and boundary metrics",
     "acceptance_boundary": "diagnostic only; does not mark every disagreement as an engine error and does not qualify as independent gold",
     "implementation_commit": "bec1b7027f34a4f70f0b6f9fdc415ef43343eab9",
-    "exact_head_ci_status": "PASS",
+    "exact_head_ci_status": "PASS for dictionary-only triage report on prior verified code checkpoint; comparative report pending",
     "test_commit": "aba6832eb97cb4b84f2e62fa058fa963cfb34803",
     "ci_workflow_commit": "c189cdb9209d85780c3baeb1df23800101840b16",
     "exact_sequence_contract": "192/993 full token-array matches on the pinned Wisesight/dictionary baseline; token iterable is normalized to a list so the metric matches the benchmark scorer",
@@ -347,6 +371,11 @@
       "boundary_f1": 0.8394713656387666,
       "exact_sequence_matches": 192,
       "exact_sequence_rate": 0.1933534743202417
-    }
+    },
+    "comparative_report_status": "IMPLEMENTED_PENDING_EXACT_HEAD_CI",
+    "comparative_script": "scripts/compare_segmentation_error_review.py",
+    "comparative_test": "tests/test_comparative_segmentation_error_review.py",
+    "comparative_artifact_name": "thai-segmentation-comparative-error-review",
+    "comparison_policy": "Both dictionary max-match and TUD Viterbi evaluated on identical 993 pinned Wisesight source-annotated rows; non-Thai runs copied unchanged; report is triage, not adjudication."
   }
 }
