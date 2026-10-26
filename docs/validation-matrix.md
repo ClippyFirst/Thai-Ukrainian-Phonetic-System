@@ -217,8 +217,22 @@ The code-bearing report was added in `e80606e641d631966b566999027ee9d2b4d00bb`; 
 | Task | State | Evidence / acceptance boundary |
 |---|---|---|
 | Dictionary false-split/false-merge triage | DONE_VERIFIED — report software | Exact-head CI [40320450844](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40320450844) verified the 993-row source-annotated report, including 2,574 false splits, 1,981 false merges and 192 exact sequences. This does not independently adjudicate each difference. |
-| Same-row dictionary vs TUD error comparison | PARTIAL — implementation added, exact-head CI pending | New `scripts/compare_segmentation_error_review.py` evaluates both engines on the same 993 source-annotated rows, preserves mixed-script text, reports boundary context at error offsets, and keeps the TUD model marked research-only. Regression tests cover source-grade gates, same-row comparison and lossless mixed-text handling. |
+| Same-row dictionary vs TUD error comparison | DONE_VERIFIED — report software and same-row metrics | Exact-head CI [40323209539](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40323209539) passed both jobs; Web static validation [40323209471](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40323209471) passed. Artifact from code checkpoint [40322960615](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40322960615): same 993 rows; dictionary F1 0.839471 / exact 192 (19.34%); TUD F1 0.748623 / exact 119 (11.98%). TUD false splits 8,722 vs dictionary 2,574; all labels are source-annotated, not expert gold. |
 | Preliminary error-pattern notes | PARTIAL — non-expert triage only | Existing report samples visibly include numeric/punctuation and URL/Latin fragmentation, brand/name handling, and inconsistent token granularity for longer Thai sequences. These are candidate review strata, not expert-linguistic error labels; the source annotation itself may reflect its own conventions. |
 | Production segmentation | PARTIAL — not accepted for production | Require a representative manually reviewed sample, predeclared acceptance thresholds, an independent licensed untouched domain, and explicit integration decision. Wisesight is source-annotated and test-only, not independent expert gold. |
 
 The comparative report is deliberately scheduled **after** the pinned TUD training step so it consumes the exact generated model from that run. CI asserts both engines have false-split and false-merge examples and that the shared evaluation set still has zero expert-adjudicated rows. No comparative metrics are claimed until the new exact-head workflow passes.
+
+
+### Verified same-row comparative result — 2026-10-26
+
+| Engine | Boundary precision | Boundary recall | Boundary F1 | False splits | False merges | Exact token sequences |
+|---|---:|---:|---:|---:|---:|---:|
+| Dictionary max-match | 0.822287 | 0.857390 | 0.839471 | 2,574 | 1,981 | 192/993 (19.34%) |
+| TUD unigram-Viterbi | 0.608000 | 0.973868 | 0.748623 | 8,722 | 363 | 119/993 (11.98%) |
+
+Both engines were evaluated against the same 993 pinned Wisesight rows using the same full-text boundary policy, with non-Thai runs preserved. This is more comparable than the earlier TUD-only metrics on filtered Thai-only runs; those filtered metrics must not be directly compared with the full-text row above. The TUD system is strongly recall-heavy and over-splits on this full-text evaluation, while the dictionary baseline has better boundary F1 and exact-sequence rate. These source-annotation metrics support **not integrating TUD as production default**, but they do not establish linguistic gold accuracy.
+
+- Code checkpoint CI [40322960615](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40322960615): both comparative-report and evidence-grade steps passed; artifact `thai-segmentation-comparative-error-review`, ID `12649094231`, SHA-256 `8005cc91939ea06b852c1717fee9fb72d370709e74267b8f99636a6476d30775`.
+- Final documentation HEAD `e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff): full CI [40323209539](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40323209539) passed `test` and `master-artifact`; Web static validation [40323209471](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40323209471) passed.
+- Evidence grade remains `SOURCE_ANNOTATED`; expert-adjudicated rows = 0. Human review and independent-domain evaluation remain separate production acceptance gates.
