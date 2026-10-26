@@ -5,7 +5,7 @@ const fixture = JSON.parse(fs.readFileSync(new URL("./fixtures.json", import.met
 if (!Array.isArray(fixture) || fixture.length < 27) throw new Error("Parity fixture set is unexpectedly small");
 
 const seen = new Set();
-const required = ["กฉ","กผ","จริง","สร้าง","เศร้า","ไซร้","ไกล","ใกล้","ไก่","เงิน"];
+const required = ["กฉ","กผ","จริง","สร้าง","เศร้า","ไซร้","ไกล","ใกล้","ไก่","เงิน","เดิน"];
 if (required.some(input => !fixture.some(x => x.input === input))) throw new Error("required linguistic regression probes are missing");
 const pick = a => ({
   input: a.input,
@@ -62,6 +62,16 @@ if (money.status !== "analyzed" || money.phonemicIpa !== "ŋɤn" || money.phonet
     money.tone !== "mid" || money.toneIpa !== "˧" || money.vowelLength !== "short" ||
     money.ukrainian !== "нген" || money.evidenceStatus !== "SOURCE_ATTESTED_NOT_GOLD" ||
     money.sourceRevision !== "5759179") throw new Error("Lexical IPA override parity contract failed for เงิน");
+const walk = analyze("เดิน");
+if (walk.status !== "analyzed" || walk.phonemicIpa !== "dɤːn" || walk.phoneticIpa !== null ||
+    walk.tone !== "mid" || walk.toneIpa !== "˧" || walk.vowelLength !== "long" ||
+    walk.ukrainian !== "ден" || walk.evidenceStatus !== "SOURCE_ATTESTED_NOT_GOLD" ||
+    walk.sourceRevision !== "1908803") throw new Error("Lexical IPA override parity contract failed for เดิน");
+const walkText = analyzeText("เดิน")[0];
+if (walkText.segmentationStatus !== "lexical_ipa_override" ||
+    walkText.syllables.length !== 1 || walkText.syllables[0].phonemicIpa !== "dɤːn") {
+  throw new Error("Lexical IPA override was not used by the browser text pipeline for เดิน");
+}
 const moneySpaced = analyze("  เงิน  ");
 if (moneySpaced.status !== "analyzed" || moneySpaced.normalized !== "เงิน" ||
     moneySpaced.phonemicIpa !== "ŋɤn" || moneySpaced.ukrainian !== "нген") {
