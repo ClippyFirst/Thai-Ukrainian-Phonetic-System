@@ -793,3 +793,37 @@ Web static validation [40305933181](https://github.com/ClippyFirst/Thai-Ukrainia
 - Exact metrics from the artifact: dictionary P=0.822287, R=0.857390, F1=0.839471, 2,574 false splits, 1,981 false merges, 192/993 exact sequences; TUD P=0.608000, R=0.973868, F1=0.748623, 8,722 false splits, 363 false merges, 119/993 exact sequences. TUD remains research-only; these source-annotation comparisons are not expert gold.
 - Latest pre-review-sampler exact-head CI for `4115326490bc8189660838f51bfe47a382ada203`: run `40324015433` passed both `test` and `master-artifact`; Web static validation `40324015445` passed. The review-sampler code/workflow changes are newer and require their own exact-head CI and static validation before being marked verified.
 - External gates remain: independent Thai IPA/acoustic gold, two independent Ukrainian target-form reviewers, context-specific `บรรจุ` final /ʔ/ adjudication, another licensed evaluation domain, and full official OBEC PDF review (direct PDF access previously returned HTTP 403; only scoped claims from accessible evidence are made). No release-readiness claim is made.
+
+
+## One-pass continuation — stratified review sampling and external-source audit (2026-10-26)
+
+### Task ledger at this checkpoint
+
+| Task | Status | Outcome / acceptance criterion |
+|---|---|---|
+| IPA-first adapter, fail-closed behavior, Python/browser parity | DONE_VERIFIED on prior exact-head CI | Preserve the existing implementation. Do not treat older passing CI as proof for newer commits. |
+| Dictionary/TUD segmentation comparison | DONE_VERIFIED as a diagnostic artifact | Same 993 Wisesight rows; dictionary F1 0.839471 and 192 exact token sequences; TUD F1 0.748623 and 119 exact sequences. Labels are source-annotated, not independent gold. TUD stays research-only. |
+| Stratified human-review sample | PARTIAL; exact-head verification pending | Replaced top-error-only sampling with deterministic heuristic strata plus a uniform control sample; computes both predictions across all source rows; verifies exact reconstruction; keeps all human decision fields blank. CI must pass on final HEAD and artifact must be inspected. |
+| Independent Thai IPA/acoustic gold | BLOCKED by external specialist and authorized audio | CCOST v1.0 is listed publicly under CC BY-NC-SA 4.0 (https://zenodo.org/records/17366698; DOI 10.5281/zenodo.17366698). Archive/manual not downloaded and inspected in this session; no expert annotations were fabricated. |
+| Independent Ukrainian target forms | BLOCKED by two independent reviewers | Existing TSV and protocol are ready for annotation; no judgments are invented. |
+| บรรจุ final /ʔ/ | PARTIAL / context-limited | Pinned Wiktionary revision records /ban˧.t͡ɕuʔ˨˩/. This is source attestation, not independent gold. No lossy one-syllable override added for a multisyllabic word. |
+| Independent segmentation domain | BLOCKED by licensed data/access and protocol | Need a second lawful corpus, immutable snapshot/hash, predeclared split, and untouched evaluation. Wisesight must remain test-only. |
+| Full official OBEC PDF review | BLOCKED — HTTP 403 | The exact cited URL still returns 403. Do not claim full inspection or broaden claims beyond already scoped accessible evidence. |
+| Exact-head CI + Web static validation | PARTIAL / pending | Current batch has new workflow runs; only a successful run tied to the final commit can close this task. |
+| Release readiness | BLOCKED | Keep repository classified as an engineering-oriented research prototype until both engineering and external evidence gates close. |
+
+### Changes in this batch
+
+- scripts/build_segmentation_manual_review.py: deterministic stratified sampling plus uniform controls across the pinned source set; full dictionary/TUD predictions are recomputed; provenance, model license and lossless reconstruction are enforced.
+- tests/test_segmentation_manual_review.py: deterministic output, control sample, blank adjudication fields, wrong model provenance and reconstruction failures are tested.
+- .github/workflows/ci.yml: pass the current CI-generated TUD model into the sampler and assert control rows, exact reconstruction and no automatic adjudication.
+- docs/independent-adjudication-protocol.md: sampling protocol and restrictions on population-level claims are documented.
+- docs/evidence.md: public CCOST metadata/license and official OBEC 403 blocker recorded.
+- docs/validation-matrix.md, docs/final-audit.md, and docs/final-audit.json: status and evidence gates synchronized.
+
+### Verification status and next blocker
+
+- No local Python tests are claimed as run: local clone/test execution remains unavailable because the container could not resolve github.com.
+- Prior exact-head CI for comparative segmentation analysis passed at b6dbec7928b106f0ab52e06af33a26635df75412; it does not verify this newer sampler.
+- Latest pre-handoff documentation/audit commit: 175658510101082ccc91e3179f71e47f4945d648. The handoff update itself creates the next commit; inspect the branch head after this write and wait for both CI and Web static validation to finish for that exact SHA.
+- No PR was merged and no release was published. PR #71 remains Draft; PR #68 remains closed unmerged and its branch is preserved.
