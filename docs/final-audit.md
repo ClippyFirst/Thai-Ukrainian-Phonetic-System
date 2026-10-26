@@ -331,3 +331,12 @@ The 36-form challenge diagnostic yields 23 lexicon lookups, 13 unresolved inputs
 
 No release or merge is performed by this continuation. The project remains an engineering-verified research prototype, not release-ready for arbitrary Thai text. The exact-head workflow is the authority for the current branch; prior CI success does not imply these new changes passed.
 
+
+
+## Exact-head continuation update — 2026-10-26
+
+- PR #71 latest observed CI run `40286374324` failed in `python -m unittest discover -s tests -v` (174 tests ran; 4 failures). Generated-data drift and master-table generation passed before the test step; downstream browser, segmentation diagnostics, TUD training and artifact jobs were skipped by fail-fast sequencing. Web static validation run `40286374333` passed for the then-current PR head, but does not substitute for the Python/segmentation workflow.
+- Root cause: a source-pinned lexical IPA override for `เดิน` had been activated, but four older tests still asserted the pre-override state (only `เงิน` active; `เดิน` unresolved in the public analyzer; and `เดิน` classified as ordinary lexicon segmentation). The parser-only structural ambiguity assertions remain valid and must remain separate from the lexical override path.
+- Updated tests on the continuation branch to assert both source-pinned overrides, verify `เดิน` metadata (`/dɤːn˧/`, long vowel, mid tone, Wiktionary oldid `1908803`, CC BY-SA 4.0, not gold), preserve parser-layer ambiguity, and expect the text pipeline status `lexical_ipa_override` for `เดิน`. Commits: `8369edd141ad83c451b0395a57ba25f7a1c57006`, `2337dcf69ff6d59cde1862d486f50031fe9a815e`, `4964d3970c6f14cedd07f04138b99b95c57ef506`, `4656a557a74405f64455219e1a6fece6be575915`.
+- Latest code commit is `4656a557a74405f64455219e1a6fece6be575915`. Exact-head CI is not yet observed; do not mark this correction as verified until the new workflow run finishes. No local execution is claimed through the GitHub connector.
+- Remaining blockers: independent IPA/acoustic adjudication, independent Ukrainian target-form adjudication, and review of `บรรจุ` final `/ʔ/`; TUD-trained segmenter evaluation and all post-failure CI gates must run on the latest head. Wisesight remains source-annotated test-only and is not training/tuning data.
