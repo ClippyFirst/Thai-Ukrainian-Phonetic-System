@@ -102,10 +102,12 @@
       40238198334,
       40238202181
     ],
-    "current_head_status_at_audit_refresh": "PENDING: latest code-bearing commit 9167bbbf0d194486961d0886d67ffca72bcfd909; current pre-audit documentation checkpoint faabfb66b710a926d2236ea49f0f69264c176326 had CI run 40286714183 and Web static validation 40286714103 queued. New implementation has not been verified by exact-head CI yet.",
-    "latest_full_repository_head": "faabfb66b710a926d2236ea49f0f69264c176326",
-    "latest_full_repository_head_ci_run": 40286714183,
-    "latest_full_repository_head_web_validation_run": 40286714103
+    "current_head_status_at_audit_refresh": "PENDING: code-bearing commit 088b4e6649fde09f2c9d1232091e2e3c8091d9bd has CI run 40286919016 queued; browser static validation passed on the JS code checkpoint 1ed4c7aa30759fd8d31136e46d7490bf9b2c5e8b (run 40286893366). Pre-audit documentation checkpoint bdb15e1c2715623f571f3ca3cb2d115245c6a84c has CI run 40286947303 and Web static validation run 40286947306 queued. Exact latest audit commit must be checked separately.",
+    "latest_full_repository_head": "bdb15e1c2715623f571f3ca3cb2d115245c6a84c",
+    "latest_full_repository_head_ci_run": 40286947303,
+    "latest_full_repository_head_web_validation_run": 40286947306,
+    "latest_web_static_verified_code_commit": "1ed4c7aa30759fd8d31136e46d7490bf9b2c5e8b",
+    "latest_web_static_verified_code_run": 40286893366
   },
   "challenge_runtime": {
     "challenge_inputs": 36,
@@ -210,10 +212,10 @@
     }
   ],
   "latest_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
-  "latest_implementation_commit_pending_ci": "9167bbbf0d194486961d0886d67ffca72bcfd909",
-  "current_head_status_at_audit_refresh": "PENDING: latest code-bearing commit 9167bbbf0d194486961d0886d67ffca72bcfd909; current pre-audit documentation checkpoint faabfb66b710a926d2236ea49f0f69264c176326 had CI run 40286714183 and Web static validation 40286714103 queued. New implementation has not been verified by exact-head CI yet.",
+  "latest_implementation_commit_pending_ci": "088b4e6649fde09f2c9d1232091e2e3c8091d9bd",
+  "current_head_status_at_audit_refresh": "PENDING: code-bearing commit 088b4e6649fde09f2c9d1232091e2e3c8091d9bd has CI run 40286919016 queued; browser static validation passed on the JS code checkpoint 1ed4c7aa30759fd8d31136e46d7490bf9b2c5e8b (run 40286893366). Pre-audit documentation checkpoint bdb15e1c2715623f571f3ca3cb2d115245c6a84c has CI run 40286947303 and Web static validation run 40286947306 queued. Exact latest audit commit must be checked separately.",
   "current_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
   "current_implementation_commit_before_audit_update": "77a175d4c5dd765750110509b49affc67f05f15a",
-  "latest_documentation_checkpoint_before_audit": "faabfb66b710a926d2236ea49f0f69264c176326",
-  "audit_note": "The audit file is itself committed after the checkpoint named above; inspect its exact-head CI separately. The code-bearing commit remains 9167bbbf0d194486961d0886d67ffca72bcfd909."
+  "latest_documentation_checkpoint_before_audit": "bdb15e1c2715623f571f3ca3cb2d115245c6a84c",
+  "audit_note": "This audit commit follows the pre-audit documentation checkpoint above. Its exact-head CI status is pending and must be checked after the commit is created. Do not infer success from an earlier run."
 }
