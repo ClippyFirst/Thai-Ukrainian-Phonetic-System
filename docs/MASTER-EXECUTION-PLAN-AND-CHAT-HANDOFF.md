@@ -654,3 +654,9 @@ Current continuation branch: `research/thai-segmentation-gold-parity-verified-20
 ### Next action
 
 Poll the latest commit's CI and Web static validation. If CI fails, inspect exact failed tests/logs and repair only evidence-backed mismatches; rerun on the new exact head. After all available engineering gates pass, keep the repository classified as a research prototype until independent linguistic/phonetic and Ukrainian target adjudication criteria are met.
+
+
+### Final audit-register synchronization — 2026-10-26
+
+- The machine-readable audit was subsequently corrected in commit `c498cd8e9d56146f7dcafd2884bf860ae80af866`; this is the latest documentation head, superseding the `96b474bd15c139f70bfc432de848c7ca2d614537` checkpoint above.
+- Exact-head CI run `40292666463` is still in progress at `scripts/generate_master_table.py`; Web static validation `40292666543` passed. The generator has not yet completed, so later tests, Wisesight diagnostics, TUD model training, and artifact upload have not yet reported results on this head.
