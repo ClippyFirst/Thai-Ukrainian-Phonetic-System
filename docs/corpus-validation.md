@@ -166,3 +166,12 @@ python scripts/train_tud_word_segmenter.py --model /tmp/thai-tud-word-model.json
 
 This is a research segmentation model, not the production default. It learns a unigram word-frequency Viterbi model; its evaluation is restricted to contiguous Thai-only runs with at least two gold tokens. These metrics must not be conflated with the full-text Wisesight dictionary-max-match baseline. A stronger sequence model and independent cross-domain adjudication remain future acceptance criteria. The source license is compatible with a research artifact only if attribution and share-alike obligations are preserved; redistribution and deployment terms should be re-reviewed before release.
 
+
+
+## Independent external segmentation domain candidate — VISTEC-TP-TH-2021 (2026-10-26)
+
+A reproducible external evaluation path has been added for VISTEC-TP-TH-2021, a separate Thai social-media corpus whose upstream README describes 49,997 samples and word segmentation manually annotated by linguists. The dataset-specific README declares CC-BY-SA 3.0. The pinned source is commit 215a7dc3d384f20eb56af1cbc41fb32b7f8df57c; the CSV Git blob SHA-1 is edfcb85907a604c5e30643065ac4975862a0fe90. Upstream: https://github.com/mrpeerat/OSKut/tree/215a7dc3d384f20eb56af1cbc41fb32b7f8df57c/VISTEC-TP-TH-2021.
+
+The adapter reads the annotated submissionText field, splits pipe-delimited tokens, strips only the documented <ne> and <msp...> annotation tags, and requires exact reconstruction. It intentionally evaluates the annotation's text, not the distinct raw questionText field. The report records the source commit/blob, license, row count, and evidence grade. The external workflow checks out the exact source snapshot, verifies the Git blob SHA and declared license, trains the research-only TUD model from its separate pinned training corpus, evaluates both segmenters, and uploads a report without bundling the third-party dataset.
+
+**Status: IMPLEMENTED; exact workflow run pending.** Until the workflow succeeds, no VISTEC metric is claimed. Even after success, these are metrics against the source's annotations, not independent expert re-adjudication by this project. Keep Wisesight and VISTEC reports separate because annotation conventions and domains differ; neither set may be used to tune the TUD model or production dictionary.
