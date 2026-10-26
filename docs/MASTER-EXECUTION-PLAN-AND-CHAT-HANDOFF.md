@@ -607,3 +607,32 @@ The audit/matrix/handoff edits after the code-bearing commit are documentation-o
 - Active lexical override: Thai Wiktionary revision 5759179 for `เงิน`, short `/ɤ/`, mid tone, CC BY-SA 4.0; result passes through `PhoneticResult` and the browser IPA→Ukrainian adapter.
 - Corpus register now records LST20 and VISTEC as candidates requiring license/annotation review. CCOST is CC BY-NC-SA 4.0; TextGrid annotations are in a 6.2 GB archive and are not bundled.
 - Remaining: production automatic segmentation; independent IPA/tone/length gold; acoustic/connected-speech validation; independent Ukrainian target-form adjudication. The repository remains a research-ready engineering prototype, not release-ready.
+
+## Continuation handoff — 2026-10-26 (current work; exact-head CI pending)
+
+Working branch: `research/thai-segmentation-gold-parity-verified-20261025` (existing draft PR #71). The current implementation batch has been ported onto the latest PR branch head `b2611172117c79c5e7e79044a59927b02e606a24`, preserving the intervening seven commits that added the pinned CC0 dictionary segmenter and Ukrainian target-candidate registry. Do not replace those changes with the earlier `cfd6c56` checkpoint.
+
+### New implementation
+
+- `scripts/train_tud_word_segmenter.py`: downloads pinned TUD files at commit `67413969add552b7030184f16f24fa9f630913bc`, validates each Git blob SHA-1, pools snapshots and derives source-document-disjoint 80/10/10 splits by normalized filename. A unigram-frequency Viterbi model is trained on the derived train split, token penalty is selected on dev, and test/Wisesight metrics are reported separately. The model/report are CI artifacts; this is a research model, not yet the public API default.
+- TUD license is CC BY-SA 4.0; model metadata carries attribution/share-alike context. Wisesight remains 993-row CC0-1.0 test-only and is never used for fitting/tuning.
+- `เดิน` now has a pinned source-attested lexical IPA override from Thai Wiktionary oldid 1908803 (/dɤːn˧/, long /ɤː/), routed through the same typed IPA→Ukrainian adapter in Python and browser code. The structural parser's grapheme-only ambiguity contract remains intact. The IPA diagnostic marks this source-derived output as circular and excludes it from source agreement counts.
+- Added `data/benchmark/ipa-adjudication-template.tsv`, `data/benchmark/ukrainian-target-adjudication.tsv`, and `docs/independent-adjudication-protocol.md`. These are blank evidence-collection templates, not completed gold labels.
+- Existing `բรรจุ`/final /ʔ/ discrepancy remains evidence-limited; do not introduce a universal rule without agreeing on broad phonemic vs surface transcription and context/stress.
+
+### Exact-head verification required
+
+CI was updated to run the TUD trainer, verify source-split reports and circular-override accounting, and upload the model/report artifacts. **Do not report these new checks as passed until the workflow for the current branch head completes successfully.** The GitHub Actions workflow must download the pinned TUD files; if network access fails, record it as a blocker rather than skipping or fabricating metrics.
+
+### Remaining ledger
+
+| ID | Status | Acceptance / blocker |
+|---|---|---|
+| SEG-TRAIN-001 | PARTIAL | Review exact-head TUD dev/test and Wisesight metrics; production integration is contingent on acceptable held-out results and explicit CC BY-SA 4.0 attribution/share-alike compliance |
+| IPA-GOLD-001 | BLOCKED | Independent Thai phonetician plus authorized CCOST audio/TextGrid access; agree transcription layer; collect dual labels and disagreement log |
+| WALK-LEX-001 | PARTIAL | Exact lexical override implemented; exact-head Python/browser CI pending; still not independent IPA gold |
+| BANCHU-IPA-001 | PARTIAL / EVIDENCE-LIMITED | Resolve /ʔ/ transcription level and stress/context independently; no global rule |
+| UA-TARGET-001 | BLOCKED | Two independent Ukrainian-native reviewers, predefined criteria, blinded preferences and adjudication log |
+
+The repository remains a research prototype, not release-ready. Do not merge PR #71 or publish a release as part of this handoff.
+
