@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Train and evaluate a reproducible Thai word-frequency Viterbi segmenter.
 
-Training data is downloaded from the pinned UD Thai TUD train split only.
-TUD dev selects the token penalty; TUD test and Wisesight are evaluation-only.
+All three pinned UD Thai TUD snapshots are pooled and re-split by source document.
+The derived dev split selects the token penalty; derived test and Wisesight are evaluation-only.
 Wisesight is never used to fit or tune the model.
 """
 from __future__ import annotations
