@@ -551,3 +551,12 @@ Documentation PR #75 was merged into `main` at `581231596a0df6b3ab58964dacedeec7
 This is an engineering verification result, **not** evidence that every arbitrary Thai text receives complete IPA. Whole-text input is implemented; greedy matching over known entries is partial. Ambiguous or unknown spans remain unresolved, and greedy matching can mistake a known substring inside a larger unknown word. The live Pages state for the new UI remains unverified: acceptance requires a successful post-change Pages build/deploy and inspection of the served HTML.
 
 The repository remains a **partial research prototype, not release-ready for arbitrary Thai text**. Independent word-boundary adjudication, Thai IPA/acoustic gold, two Ukrainian target-form reviews, contextual review of `บรรจุ` final /ʔ/, lawful full OBEC PDF access, and per-resource license/attribution review remain open.
+
+
+## Browser CC0 segmentation and deployment gate — 2026-10-27
+
+PR #77 merged at `96c2af3c2a24d0ea95455b5d6af4c079e5609d29`. The browser now uses the existing pinned 60,963-entry CC0 Thai word list as boundary evidence, generated reproducibly by `scripts/generate_web_word_dictionary.py`. The generated JS index is 1,615,714 bytes and is created before browser tests and Pages packaging rather than committed as a large generated file.
+
+The longer-match regression for `กาแฟ` prevents the known substring `กา` from producing a false partial pronunciation. The existing `เงินเดิน` UI regression exposed a cluster-boundary bug in the first implementation; it was corrected by excluding preposed vowels from the combining-mark set. Web static validation passed on head `7b2c9572feb542fb3ee81558b9758bb4fa5f2bef` ([run 40411659863](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40411659863)); the full CI test job passed on runtime code head `3eb1155631da158b7e04436f608711680750e475` ([run 40411558761](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40411558761)). Exact-head CI and the master-artifact job were not confirmed green; those runs remained queued.
+
+The Pages workflow now includes a post-deployment HTTP contract check for the whole-text hint, examples, and beta notice. Its post-merge run `40412224812` was queued at the last check. Until it completes successfully, live deployment remains unverified. Dictionary boundaries still do not imply pronunciation: non-curated words remain unresolved. This is a partial research prototype, not release-ready for arbitrary Thai text.
