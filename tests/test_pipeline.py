@@ -53,8 +53,12 @@ class PipelineTests(unittest.TestCase):
         self.assertIn("SRC-WIKTIONARY-TH-เงิน", money.sources)
 
         walking = analyze_syllable("เดิน")
-        self.assertEqual(walking.status, "analysis-dependent:vowel-length")
-        self.assertIsNone(walking.phonemic_ipa)
+        self.assertEqual(walking.status, "analyzed")
+        self.assertEqual(walking.phonemic_ipa, "dɤːn")
+        self.assertEqual(walking.vowel_length, "long")
+        self.assertEqual(walking.tone.tone, "mid")
+        self.assertIn("SRC-WIKTIONARY-TH-เดิน", walking.sources)
+        self.assertTrue(any("not independently adjudicated" in warning for warning in walking.warnings))
 
     def test_preposed_glide_patterns(self):
         cases=[("แล้ว","ɛːw"),("เร็ว","ew"),("เลย","ɤːj")]
