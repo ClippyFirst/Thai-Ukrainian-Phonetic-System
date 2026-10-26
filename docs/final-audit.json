@@ -912,6 +912,18 @@
         "reason": "Pinned sources and license metadata are recorded, but each reuse still requires per-resource attribution/share-alike compliance review",
         "acceptance": "Auditable provenance, license compatibility and required attribution for every bundled/generated dataset or model."
       }
-    ]
+    ],
+    "vistec_evaluation": {
+      "run_id": 40377560151,
+      "status": "success",
+      "tested_commit": "274371594cc8a0b65677bb126242d90acc17caf5",
+      "job": "vistec-evaluation",
+      "artifact_id": 12676540165,
+      "artifact_name": "vistec-external-segmentation-evaluation",
+      "artifact_sha256": "582a28766f29f11ac54bac7764a52ddfdfd3e78ad26f4acc311fac3f82f6c6a3",
+      "rows": 50000,
+      "adjudicated_rows": 0,
+      "interpretation": "Source-annotated segmentation agreement diagnostic, not independently adjudicated accuracy. Upstream README states 49,997 samples; pinned CSV has 50,000 parseable rows."
+    }
   }
 }
