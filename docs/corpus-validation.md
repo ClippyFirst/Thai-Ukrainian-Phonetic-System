@@ -143,3 +143,26 @@ The corpus license is CC BY-NC-SA 4.0. Do not copy its annotations or derived da
 ## Source-attested IPA discrepancy diagnostic
 
 Run `python scripts/run_source_attested_ipa_diagnostic.py --output /tmp/source-attested-ipa-diagnostic.json` to compare the six pinned dictionary transcriptions with the current text pipeline. The report separates segmental IPA, tone categories, and vowel-length metadata; it records withheld outputs and mismatches without calling the source data gold. On the last successful Python checkpoint it produced five complete outputs, four segmental agreements, five tone-category agreements, and one withheld result. The `บรรจุ` final-`/ʔ/` discrepancy remains a review item.
+
+## License-cleared segmentation training experiment — 2026-10-26
+
+The repository now has a reproducible, standard-library-only training experiment in `scripts/train_tud_word_segmenter.py` using **UD Thai TUD**, pinned to upstream commit `67413969add552b7030184f16f24fa9f630913bc`. The upstream treebank declares **CC BY-SA 4.0**, describes 3,627 retained dependency trees from Thai National Corpus and Wikipedia, and documents that tokenization was initially performed with PyThaiNLP `newmm` and then reviewed by annotators. The upstream train/dev/test files are individually pinned by Git blob SHA in the script. The project pools only those pinned snapshots and deterministically re-splits by normalized source filename (80/10/10), so sentences from one source document cannot cross train/dev/test. See the [upstream treebank README](https://github.com/UniversalDependencies/UD_Thai-TUD/blob/67413969add552b7030184f16f24fa9f630913bc/README.md), [license](https://github.com/UniversalDependencies/UD_Thai-TUD/blob/67413969add552b7030184f16f24fa9f630913bc/LICENSE.txt), and [TACL paper](https://doi.org/10.1162/tacl_a_00745).
+
+Protocol:
+1. Pool the three pinned TUD source snapshots and group by source filename (strip a trailing `-PART<number>` component).
+2. Assign source groups deterministically to train/dev/test at 80/10/10 by SHA-256 of the normalized filename; assert source-disjointness.
+3. Fit word-frequency counts on the derived **train** split only.
+4. Select the Viterbi token penalty on the derived **dev** split only using a fixed grid.
+5. Report the source-disjoint derived **test** split separately.
+4. Report Wisesight's 993 source-annotated rows as a separate external test-only set. Wisesight never contributes to training or hyperparameter selection.
+5. Verify the downloaded source bytes against the pinned Git blob SHA-1 before parsing.
+6. Keep the trained model/report as CI artifacts with CC BY-SA 4.0 attribution/share-alike metadata; do not silently treat derived weights as public-domain or change the repository's code license.
+
+Run:
+```bash
+python scripts/train_tud_word_segmenter.py --model /tmp/thai-tud-word-model.json --report /tmp/thai-tud-word-segmentation-report.json
+python scripts/train_tud_word_segmenter.py --model /tmp/thai-tud-word-model.json --text "ภาษาไทย"
+```
+
+This is a research segmentation model, not the production default. It learns a unigram word-frequency Viterbi model; its evaluation is restricted to contiguous Thai-only runs with at least two gold tokens. These metrics must not be conflated with the full-text Wisesight dictionary-max-match baseline. A stronger sequence model and independent cross-domain adjudication remain future acceptance criteria. The source license is compatible with a research artifact only if attribution and share-alike obligations are preserved; redistribution and deployment terms should be re-reviewed before release.
+
