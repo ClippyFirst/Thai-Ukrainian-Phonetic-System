@@ -905,3 +905,10 @@ Web static validation [40305933181](https://github.com/ClippyFirst/Thai-Ukrainia
 - Corrected the stale license assertion, changed evaluator/workflow expected rows to 50,000, and clarified the corpus registry that upstream README describes 49,997 samples while the pinned CSV actually has 50,000 data rows. The CSV hash remains the immutable snapshot identity; the discrepancy is explicitly documented, not hidden.
 - Fix commits: 357d83c10ee2647b0debe5c7efe52b489c37f4bd, ea27324a044e7d9c3298285e09bc7959b15681f5, 55306fda1af8c9652854e6d504ff56ff0358fdeb, 906e1293203635dcf481dbc164712403d088231c, e05d5644f94b5d9c8707c3da981182822d272fa0.
 - Acceptance remains pending: exact-head CI must pass; corrected VISTEC run must process all 50,000 rows and produce an inspected artifact; no independent-gold accuracy claim is justified.
+
+
+### Corrected-head CI handoff — 2026-10-26
+
+- Corrected the stale corpus license assertion and aligned the evaluator plus all three workflow row-count checks to the 50,000 data rows actually present in the pinned CSV blob. The upstream README's separate 49,997-sample statement remains documented as a metadata discrepancy.
+- Current code-bearing workflow commit: `ccee129d509c95f95c2f455fd769bcbcd9ae71e0`. Latest runs: CI 40353097806, Web static validation 40353097480, external VISTEC evaluation 40353097539. All were queued at the last poll; no tests or metrics are marked passed on this head.
+- Do not merge or release until exact-head CI/static validation pass, VISTEC processes all 50,000 rows and its report artifact is inspected. Independent linguistic adjudication and official OBEC PDF access remain genuine evidence blockers.
