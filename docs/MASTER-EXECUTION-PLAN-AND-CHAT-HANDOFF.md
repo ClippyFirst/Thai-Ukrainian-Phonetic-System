@@ -929,3 +929,9 @@ Web static validation [40305933181](https://github.com/ClippyFirst/Thai-Ukrainia
 - On all 50,000 source-annotated rows (zero expert-adjudicated rows), dictionary maximum matching: boundary precision 0.76880, recall 0.89788, F1 0.82834, exact token sequences 76/50,000 (0.152%). Research-only TUD unigram Viterbi: precision 0.60640, recall 0.99316, F1 0.75302, exact token sequences 16/50,000 (0.032%). Both report 100% output coverage; this does not mean accurate segmentation.
 - These are descriptive agreement metrics against upstream source annotations, not expert accuracy. The extremely low exact-sequence rates and differing precision/recall profiles make clear that neither model is production-ready. Do not tune on this external evaluation set or present these metrics as independently adjudicated gold.
 - The fresh checks triggered by the test assertion fix and subsequent audit updates are queued: CI [40360861858], Web static validation [40360861799], VISTEC [40360861912]. No result is claimed for those runs.
+
+
+### Artifact archive inspected — 2026-10-26
+
+- Downloaded and opened artifact ZIP 12667445022 from successful VISTEC run 40354836797. Archive contains only `vistec-segmentation-report.json` (3,803 bytes). Parsed the JSON and independently confirmed schema 1.0, 50,000 source-annotated rows, 0 adjudicated rows, and metrics recorded above; report status remains `MEASURED_ON_SOURCE_ANNOTATED_ROWS_NOT_EXPERT_ADJUDICATED`. ZIP digest matches GitHub artifact metadata: `a02e3c8fe769a9b0998fdf2e66a49d6d0bec1c0b7191e08854d2dd81cc50132c`.
+- Artifact acceptance is now DONE_VERIFIED for reproducible source-annotation diagnostic output. This does not satisfy independent linguistic adjudication or release gates. Fresh exact-head CI/Web/VISTEC runs remain queued at the latest poll.
