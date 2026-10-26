@@ -192,7 +192,7 @@ class TextPipelineTests(unittest.TestCase):
         expected = {
             "ไกล": (("ไกล",), "lexicon"),
             "ใกล้": (("ใกล้",), "lexicon"),
-            "เดิน": (("เดิน",), "lexicon"),
+            "เดิน": (("เดิน",), "lexical_ipa_override"),
             "กรรม": (("กำ",), "lexicon"),
             "บรรจุ": (("บัน", "จุ"), "lexicon"),
         }
