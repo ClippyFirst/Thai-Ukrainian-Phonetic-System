@@ -56,9 +56,17 @@ def main() -> int:
         source_tones = [item.strip() for item in row["tone_sequence"].split(",") if item.strip()]
         source_segmental = segmental_only(row["phonemic_ipa"])
         engine_segmental = segmental_only(engine_ipa) if engine_ipa else None
-        segmental_match = (engine_segmental == source_segmental) if complete else None
-        tone_match = (engine_tones == source_tones) if complete and all(engine_tones) else None
-        if not complete:
+        circular_override = any(
+            any(str(rule).startswith("LEXICAL-IPA-OVERRIDE:") for rule in syllable.get("rules_applied", []))
+            for syllable in syllables
+        )
+        # A reading injected from this same dictionary source cannot count as
+        # an independent agreement with that source.
+        segmental_match = (engine_segmental == source_segmental) if complete and not circular_override else None
+        tone_match = (engine_tones == source_tones) if complete and all(engine_tones) and not circular_override else None
+        if circular_override:
+            status = "SOURCE_OVERRIDE_CIRCULAR_NOT_COMPARABLE"
+        elif not complete:
             status = "WITHHELD_OR_INCOMPLETE"
         elif segmental_match and tone_match:
             status = "SOURCE_AGREEMENT_SEGMENTAL_AND_TONE"
@@ -82,6 +90,7 @@ def main() -> int:
             "segmental_match": segmental_match,
             "tone_match": tone_match,
             "diagnostic_status": status,
+            "circular_source_override": circular_override,
         })
 
     summary = {
@@ -90,6 +99,8 @@ def main() -> int:
         "withheld_or_incomplete": sum(record["engine_segmental_ipa"] is None for record in results),
         "segmental_agreements": sum(record["segmental_match"] is True for record in results),
         "tone_agreements": sum(record["tone_match"] is True for record in results),
+        "source_override_circular_count": sum(record["circular_source_override"] for record in results),
+        "independently_comparable_records": sum(not record["circular_source_override"] and record["engine_segmental_ipa"] is not None for record in results),
         "accuracy_claimed": False,
     }
     report = {
