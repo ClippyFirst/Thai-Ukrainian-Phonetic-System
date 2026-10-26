@@ -287,3 +287,13 @@ Both engines were evaluated against the same 993 pinned Wisesight rows using the
 | Large-corpus scorer complexity | IMPLEMENTED; tests pending exact-head CI | Evaluator now indexes gold rows once, avoiding repeated full-list scans for every prediction; needed for ~50k-row external evaluation. |
 
 No VISTEC metric is claimed before the external workflow finishes on this branch. Even a passing run establishes reproducible cross-domain source-annotation diagnostics, not independent expert accuracy.
+
+
+## VISTEC annotation parser hardening — 2026-10-26
+
+| Task | Status | Acceptance / evidence |
+|---|---|---|
+| Reject malformed empty annotation fields | IMPLEMENTED; exact-head CI pending | `parse_submission_text` now rejects any empty token after documented markup removal instead of silently filtering it. Regression cases cover repeated separators, markup-only empty tokens, leading separators and all-empty input. Code head: `1cbf97036ec931266f4a6ed5eb747a00e5b7ad29`. |
+| Verify compatibility with pinned VISTEC source | BLOCKED_PENDING_WORKFLOW | The 49,997-row source adapter must run against the immutable CSV snapshot. No metric is claimed until the external workflow succeeds and its artifact is inspected. |
+| Exact-head CI and Web validation | PENDING / not yet surfaced | GitHub connector returned no workflow runs or combined statuses for the new head at the last check. This is not a pass; refresh workflow state before merge. |
+
