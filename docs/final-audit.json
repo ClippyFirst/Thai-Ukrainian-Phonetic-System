@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "engineering-verified research prototype; comparative segmentation error-review implementation added on branch; exact-head verification pending; not release-ready for arbitrary Thai text or empirically validated IPA/Ukrainian output",
+  "status": "engineering-verified research prototype; same-row dictionary-vs-TUD segmentation error comparison implemented and verified on code checkpoint; latest audit/handoff synchronization requires exact-head CI; not release-ready for arbitrary Thai text or empirically validated IPA/Ukrainian output",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -90,11 +90,11 @@
     "status": "SOURCE_ATTESTED_NOT_GOLD",
     "includes_short_long_oe_contrast": true
   },
-  "latest_verified_code_commit": "4b1592cd72298d1ca92e0b99ab330975764a078a",
+  "latest_verified_code_commit": "b6dbec7928b106f0ab52e06af33a26635df75412",
   "starting_branch_commit": "7e39fd4bc108386148c1e9a79d257d75babcc9aa",
   "ci": {
-    "latest_fully_successful_code_data_commit": "4b1592cd72298d1ca92e0b99ab330975764a078a",
-    "latest_fully_successful_ci_run": 40320450844,
+    "latest_fully_successful_code_data_commit": "b6dbec7928b106f0ab52e06af33a26635df75412",
+    "latest_fully_successful_ci_run": 40322960615,
     "python_tests": 182,
     "generated_data_drift": "PASS",
     "master_artifact": "PASS — 351,780 rows; 41 vowel/rime records; artifact uploaded",
@@ -116,19 +116,24 @@
     "latest_web_static_verified_code_run": 40286893366,
     "latest_verified_commit_note": "43687b2753379b1d617b1c925f87358f8aad13bd is the historical last fully verified code commit before the current TUD trainer and เดิน override changes; it is not the current branch head.",
     "latest_verified_code_commit_note": "Exact-head engineering checks pass on cb775d6156f62392fa2d0f4bcf8d1aa30d219530; independent Thai IPA/acoustic gold, Ukrainian target-form adjudication, and production segmentation quality remain unverified.",
-    "latest_fully_successful_documentation_commit": "4c61866d98312e8cf08f78bc8ab0f213bc8dc8c0",
-    "latest_fully_successful_documentation_ci_run": 40316202183,
-    "latest_fully_successful_documentation_web_validation_run": 40316202145,
+    "latest_fully_successful_documentation_commit": "e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff",
+    "latest_fully_successful_documentation_ci_run": 40323209539,
+    "latest_fully_successful_documentation_web_validation_run": 40323209471,
     "latest_documentation_head_ci_run": 40320450844,
     "latest_documentation_head_web_validation_run": 40320450587,
     "latest_implementation_ci_run": 40320450844,
     "latest_implementation_web_validation_run": 40320450587,
     "latest_implementation_commit_ci_verified": "4b1592cd72298d1ca92e0b99ab330975764a078a",
-    "latest_fully_successful_web_static_validation_run": 40320450587,
-    "comparative_error_review_status": "IMPLEMENTED_PENDING_EXACT_HEAD_CI",
+    "latest_fully_successful_web_static_validation_run": 40322959844,
+    "comparative_error_review_status": "DONE_VERIFIED — report, tests and CI artifact passed on code checkpoint b6dbec7928b106f0ab52e06af33a26635df75412",
     "comparative_error_review_script": "scripts/compare_segmentation_error_review.py",
     "comparative_error_review_test": "tests/test_comparative_segmentation_error_review.py",
-    "comparative_error_review_artifact": "thai-segmentation-comparative-error-review",
+    "comparative_error_review_artifact": {
+      "id": "12649094231",
+      "name": "thai-segmentation-comparative-error-review",
+      "sha256": "8005cc91939ea06b852c1717fee9fb72d370709e74267b8f99636a6476d30775",
+      "workflow_run": 40322960615
+    },
     "comparative_error_review_same_rows": 993,
     "comparative_error_review_source_annotated_rows": 993,
     "comparative_error_review_expert_adjudicated_rows": 0,
@@ -137,7 +142,47 @@
       "c2d946e11690a517fb958b768733da4c864a49c1",
       "54e1db86cf3882f025f00ede86d86e7efb3909e2",
       "b6dbec7928b106f0ab52e06af33a26635df75412"
-    ]
+    ],
+    "current_audit_head_ci_status": "PENDING_AFTER_AUDIT_UPDATE",
+    "comparative_error_review_metrics": {
+      "rows": 993,
+      "source_annotated_rows": 993,
+      "expert_adjudicated_rows": 0,
+      "license": "CC0-1.0",
+      "split": "test",
+      "same_rows_for_both_engines": true,
+      "dictionary_max_match": {
+        "boundary_precision": 0.8222866611433306,
+        "boundary_recall": 0.8573896767691311,
+        "boundary_f1": 0.8394713656387666,
+        "false_splits": 2574,
+        "false_merges": 1981,
+        "exact_sequences": 192,
+        "exact_sequence_rate": 0.1933534743202417
+      },
+      "tud_unigram_viterbi": {
+        "boundary_precision": 0.608,
+        "boundary_recall": 0.9738679720682456,
+        "boundary_f1": 0.7486234470545917,
+        "false_splits": 8722,
+        "false_merges": 363,
+        "exact_sequences": 119,
+        "exact_sequence_rate": 0.11983887210473314
+      },
+      "caveat": "Full-text same-row metrics; not directly comparable to earlier filtered Thai-only TUD metrics; source annotation, not independent expert gold."
+    },
+    "pr_reconciliation": {
+      "pr68": {
+        "state": "closed",
+        "reason": "superseded by PR #71 after all eight changed paths and substantive OBEC evidence/tests were reconciled",
+        "branch_preserved": true
+      },
+      "pr71": {
+        "state": "open",
+        "draft": true,
+        "mergeable": true
+      }
+    }
   },
   "challenge_runtime": {
     "challenge_inputs": 36,
@@ -207,13 +252,13 @@
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
   "latest_code_checkpoint": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
   "readiness": "engineering-verified research prototype; not release-ready for arbitrary Thai text or empirically validated IPA/Ukrainian output",
-  "latest_verified_repository_head": "4b1592cd72298d1ca92e0b99ab330975764a078a",
+  "latest_verified_repository_head": "e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff",
   "task_ledger": [
     {
       "id": "SEG-TRAIN-001",
       "status": "PARTIAL",
       "implementation": "TUD frequency-Viterbi research trainer, source-blob verification, source-document-disjoint split, dev-only penalty selection, held-out TUD test and Wisesight-only report; CI/artifacts configured",
-      "acceptance": "Exact-head CI passes and metrics have been reviewed; current decision is DO NOT integrate as production default. Reconsider only after independent segmentation-quality review, error analysis on representative held-out domains, an explicit acceptance threshold, and preserving CC BY-SA 4.0 attribution/share-alike."
+      "acceptance": "Same-row full-text Wisesight comparison verified: TUD precision 0.6080, recall 0.9739, F1 0.7486, exact sequence 0.1198, 8,722 false splits; dictionary baseline F1 0.8395, exact sequence 0.1934. Do NOT integrate TUD as production default. Human error review, predeclared acceptance thresholds and independent licensed-domain evaluation remain required."
     },
     {
       "id": "IPA-GOLD-001",
@@ -256,15 +301,15 @@
     },
     {
       "id": "SEG-COMPARE-001",
-      "status": "PARTIAL",
-      "implementation": "Added same-row dictionary-vs-TUD error-review script, context snippets around false-split/false-merge offsets, regression tests and CI artifact wiring.",
-      "blocker": "Exact-head CI and Web static validation for the current branch head must pass; the resulting artifact must be reviewed before any production decision.",
-      "acceptance": "Both engines are evaluated on the same pinned 993 source-annotated Wisesight rows; zero expert-adjudicated rows are stated; mixed-text reconstruction, error categories, artifact generation and evidence caveats pass CI; human review and independent-domain evaluation remain separate gates."
+      "status": "DONE_VERIFIED — software/report contract",
+      "implementation": "Same-row dictionary-vs-TUD report, mixed-text preservation, code-point boundary contexts, evidence-grade gates and CI artifact verified on b6dbec7928b106f0ab52e06af33a26635df75412 in run 40322960615; full docs checkpoint e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff passed run 40323209539.",
+      "blocker": "Human linguistic adjudication is still separate; source annotations are not independent expert gold.",
+      "acceptance": "DONE for reproducible software comparison and evidence metadata; production segmentation remains PARTIAL until representative human review, predeclared thresholds and an independent licensed domain."
     }
   ],
   "latest_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
-  "latest_implementation_commit_pending_ci": "b6dbec7928b106f0ab52e06af33a26635df75412",
-  "current_head_status_at_audit_refresh": "Comparative segmentation error-review code, tests and CI wiring were added after the prior fully verified checkpoint. Exact-head CI and Web static validation for the current branch head must pass before the comparative report is considered DONE_VERIFIED. Prior verified dictionary-only report remains source-annotated diagnostic evidence, not expert gold.",
+  "latest_implementation_commit_pending_ci": null,
+  "current_head_status_at_audit_refresh": "Code/workflow checkpoint b6dbec7928b106f0ab52e06af33a26635df75412 passed CI 40322960615 and Web static validation 40322959844. Documentation checkpoint e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff passed full CI 40323209539 and Web static validation 40323209471. This audit-register update creates a newer documentation HEAD and requires exact-head CI/static validation before the current branch HEAD is marked green.",
   "current_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
   "current_implementation_commit_before_audit_update": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
   "latest_documentation_checkpoint_before_audit": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
@@ -372,10 +417,41 @@
       "exact_sequence_matches": 192,
       "exact_sequence_rate": 0.1933534743202417
     },
-    "comparative_report_status": "IMPLEMENTED_PENDING_EXACT_HEAD_CI",
+    "comparative_report_status": "DONE_VERIFIED — exact-head CI report/evidence assertions and artifact upload passed on code checkpoint b6dbec7928b106f0ab52e06af33a26635df75412",
     "comparative_script": "scripts/compare_segmentation_error_review.py",
     "comparative_test": "tests/test_comparative_segmentation_error_review.py",
     "comparative_artifact_name": "thai-segmentation-comparative-error-review",
-    "comparison_policy": "Both dictionary max-match and TUD Viterbi evaluated on identical 993 pinned Wisesight source-annotated rows; non-Thai runs copied unchanged; report is triage, not adjudication."
+    "comparison_policy": "Both dictionary max-match and TUD Viterbi evaluated on identical 993 pinned Wisesight source-annotated rows; non-Thai runs copied unchanged; report is triage, not adjudication.",
+    "comparative_artifact_id": "12649094231",
+    "comparative_artifact_sha256": "8005cc91939ea06b852c1717fee9fb72d370709e74267b8f99636a6476d30775",
+    "comparative_metrics": {
+      "rows": 993,
+      "source_annotated_rows": 993,
+      "expert_adjudicated_rows": 0,
+      "license": "CC0-1.0",
+      "split": "test",
+      "same_rows_for_both_engines": true,
+      "dictionary_max_match": {
+        "boundary_precision": 0.8222866611433306,
+        "boundary_recall": 0.8573896767691311,
+        "boundary_f1": 0.8394713656387666,
+        "false_splits": 2574,
+        "false_merges": 1981,
+        "exact_sequences": 192,
+        "exact_sequence_rate": 0.1933534743202417
+      },
+      "tud_unigram_viterbi": {
+        "boundary_precision": 0.608,
+        "boundary_recall": 0.9738679720682456,
+        "boundary_f1": 0.7486234470545917,
+        "false_splits": 8722,
+        "false_merges": 363,
+        "exact_sequences": 119,
+        "exact_sequence_rate": 0.11983887210473314
+      },
+      "caveat": "Full-text same-row metrics; not directly comparable to earlier filtered Thai-only TUD metrics; source annotation, not independent expert gold."
+    },
+    "production_decision": "DO_NOT_INTEGRATE_TUD_AS_PRODUCTION_DEFAULT",
+    "production_decision_basis": "On identical full-text Wisesight rows, TUD has lower boundary F1 (0.748623 vs 0.839471), lower exact-sequence rate (11.98% vs 19.34%) and 8,722 false splits vs 2,574 for dictionary max-match. Labels are source-annotated; human review and independent-domain evaluation remain required."
   }
 }
