@@ -312,7 +312,11 @@
     }
   ],
   "latest_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
-  "latest_implementation_commit_pending_ci": null,
+  "latest_implementation_commit_pending_ci": {
+    "commit": "1cbf97036ec931266f4a6ed5eb747a00e5b7ad29",
+    "status": "PENDING_EXACT_HEAD_CI",
+    "notes": "VISTEC parser now rejects empty annotation fields; tests added but not yet verified."
+  },
   "current_head_status_at_audit_refresh": "Code/workflow checkpoint b6dbec7928b106f0ab52e06af33a26635df75412 passed CI 40322960615 and Web static validation 40322959844. Documentation checkpoint e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff passed full CI 40323209539 and Web static validation 40323209471. This audit-register update creates a newer documentation HEAD and requires exact-head CI/static validation before the current branch HEAD is marked green.",
   "current_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
   "current_implementation_commit_before_audit_update": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
@@ -536,5 +540,20 @@
     },
     "latest_implementation_commit": "43fb1416e6d103de4999a84a1dbaefd663507cb6",
     "pre_handoff_audit_commit": "c6dac498ec8c7939c6f2bfbcea04c8d1fdeab96a"
+  },
+  "vistec_parser_hardening": {
+    "code_commit": "1cbf97036ec931266f4a6ed5eb747a00e5b7ad29",
+    "status": "IMPLEMENTED_PENDING_EXACT_HEAD_CI",
+    "change": "Reject empty pipe-delimited annotation tokens after documented markup stripping; never silently discard malformed fields.",
+    "regression_cases": [
+      "repeated separator",
+      "markup-only empty token",
+      "leading separator",
+      "all-empty input"
+    ],
+    "local_tests": "NOT_RUN",
+    "workflow_status": "NO_RUN_OR_COMBINED_STATUS_SURFACED_AT_LAST_CHECK",
+    "metric_claimed": false,
+    "acceptance": "Exact-head CI and VISTEC workflow pass; inspect report artifact and confirm pinned 49,997-row source is accepted."
   }
 }
