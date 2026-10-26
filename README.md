@@ -103,6 +103,7 @@ See:
 - Corpus validation: docs/corpus-validation.md
 - Evidence registry: docs/evidence.md
 - Final audit: docs/final-audit.md
+- Independent IPA and Ukrainian target-form adjudication protocol: docs/independent-adjudication-protocol.md
 
 ## User interface
 
