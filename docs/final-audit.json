@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "engineering-verified research prototype; same-row dictionary-vs-TUD segmentation error comparison implemented and verified on code checkpoint; latest audit/handoff synchronization requires exact-head CI; not release-ready for arbitrary Thai text or empirically validated IPA/Ukrainian output",
+  "status": "engineering-verified research prototype; comparative artifact verified; human-review sample generation added pending exact-head CI; not release-ready for arbitrary Thai text or empirically validated IPA/Ukrainian output",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -453,5 +453,44 @@
     },
     "production_decision": "DO_NOT_INTEGRATE_TUD_AS_PRODUCTION_DEFAULT",
     "production_decision_basis": "On identical full-text Wisesight rows, TUD has lower boundary F1 (0.748623 vs 0.839471), lower exact-sequence rate (11.98% vs 19.34%) and 8,722 false splits vs 2,574 for dictionary max-match. Labels are source-annotated; human review and independent-domain evaluation remain required."
+  },
+  "current_checkpoint": {
+    "date": "2026-10-26",
+    "branch": "research/thai-segmentation-gold-parity-verified-20261025",
+    "prior_verified_head": "4115326490bc8189660838f51bfe47a382ada203",
+    "prior_ci_run": 40324015433,
+    "prior_ci_conclusion": "success",
+    "prior_web_static_validation_run": 40324015445,
+    "prior_web_static_validation_conclusion": "success",
+    "comparative_artifact": {
+      "id": 12649094231,
+      "workflow_run_id": 40322960615,
+      "source_head": "b6dbec7928b106f0ab52e06af33a26635df75412",
+      "sha256": "8005cc91939ea06b852c1717fee9fb72d370709e74267b8f99636a6476d30775",
+      "rows": 993,
+      "source_annotated_rows": 993,
+      "independently_adjudicated_rows": 0,
+      "dictionary_boundary_f1": 0.8394713656387666,
+      "dictionary_exact_sequences": 192,
+      "tud_boundary_f1": 0.7486234470545917,
+      "tud_exact_sequences": 119,
+      "status": "SOURCE_ANNOTATED_DIAGNOSTIC_NOT_GOLD"
+    },
+    "new_work": {
+      "files": [
+        "scripts/build_segmentation_manual_review.py",
+        "tests/test_segmentation_manual_review.py",
+        ".github/workflows/ci.yml"
+      ],
+      "purpose": "Generate lossless, full-text human-review TSV with both system predictions where available; all decisions blank and adjudicated=NO",
+      "status": "PENDING_EXACT_HEAD_CI"
+    },
+    "remaining_evidence_gates": [
+      "Independent Thai IPA/acoustic gold",
+      "Two independent Ukrainian target-form reviewers",
+      "Context-specific final /ʔ/ review for บรรจุ",
+      "Independent licensed segmentation domain",
+      "Full official OBEC PDF inspection"
+    ]
   }
 }
