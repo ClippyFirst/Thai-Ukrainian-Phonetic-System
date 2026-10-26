@@ -517,3 +517,10 @@ This section supersedes the earlier queued-deployment status above.
 - Latest separately checked main CI run [40381878163](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40381878163) also passed for docs commit `7bcc7e21c98bde8f55a7c56a1c1a97fe3486b72e`. Audit JSON synchronized in commit `6466573838c4aa18a405c510a9b5e56f0ea453b3`.
 
 **Status:** research beta deployment is operational according to GitHub Pages workflow; not a release-ready general-purpose Thai transcription system. The independent Thai IPA/acoustic gold, human segmentation adjudication, two independent Ukrainian target-form reviews, contextual review of บรรจุ final /ʔ/, and lawful full official OBEC PDF access remain research evidence blockers. Source-annotated VISTEC/Wisesight diagnostics are not expert-adjudicated gold.
+
+
+## Whole-text input follow-up — 2026-10-26
+
+The browser engine's prior whole-run lookup failed closed whenever an uninterrupted Thai-script span was not an exact lexicon key. This prevented IPA for known words adjacent to unknown text and did not meet the expected whole-text workflow. A conservative dictionary-max-match implementation and UI regression cases have now been added on branch `fix/examples-ipa-coverage-20261026`.
+
+This is **PARTIAL**, not a claim of full Thai text recognition: known lexicon entries may produce IPA, unknown spans remain explicitly unresolved, and greedy matches can be wrong in ambiguous contexts. CI/static validation for the latest branch head is required before this change is DONE_VERIFIED. Independent word-boundary adjudication and IPA/UA evaluation remain outstanding.
