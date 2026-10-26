@@ -109,6 +109,9 @@ const homeHtml = await readFile(new URL("../index.html", import.meta.url), "utf8
 const systemHtml = await readFile(new URL("../system.html", import.meta.url), "utf8");
 const styles = await readFile(new URL("../src/styles.css", import.meta.url), "utf8");
 assert.match(homeHtml, /БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ/);
+assert.match(homeHtml, /Вводьте цілий тайський текст/);
+assert.match(homeHtml, /пробіли між словами не обов’язкові/);
+for (const example of examples) assert.ok(homeHtml.includes(`data-example="${example.dataset.example}"`), `homepage must expose ${example.dataset.example}`);
 assert.match(homeHtml, /system\.html#beta-evidence/);
 assert.match(systemHtml, /id="beta-evidence"/);
 assert.match(systemHtml, /незалежно перевірених рядків — 0/);
