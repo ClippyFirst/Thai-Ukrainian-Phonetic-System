@@ -15,11 +15,11 @@ function element(id) {
   }
   return elements.get(id);
 }
-const examples = [{
-  dataset: { example: "พริก" }, listeners: {},
+const examples = ["กา", "พริก", "มา", "ไฟ", "หมา", "ใหม่", "จริง"].map(example => ({
+  dataset: { example }, listeners: {},
   addEventListener(type, callback) { this.listeners[type] = callback; },
   click() { this.listeners.click?.({}); }
-}];
+}));
 
 globalThis.document = {
   getElementById: element,
@@ -43,7 +43,7 @@ assert.match(output.innerHTML, /aria-labelledby=/);
 assert.equal(status.className, "status");
 assert.match(status.textContent, /Проаналізовано 1 токен/);
 
-input.value = "แสดง";
+input.value = "ทดสอบ";
 analyze.click();
 assert.equal(status.className, "status notice");
 assert.match(status.textContent, /потребують додаткової перевірки/);
@@ -59,9 +59,13 @@ input.listeners.keydown({
 assert.equal(prevented, true);
 assert.equal(status.className, "status");
 
-examples[0].click();
-assert.equal(input.value, "พริก");
-assert.equal(output.hidden, false);
+for (const example of examples) {
+  example.click();
+  assert.equal(input.value, example.dataset.example);
+  assert.equal(output.hidden, false);
+  assert.match(output.innerHTML, /ФОНОЛОГІЧНА IPA/, `example ${example.dataset.example} should expose IPA`);
+  assert.doesNotMatch(output.innerHTML, /segmentationStatus|unresolved:unsupported-symbol/);
+}
 
 clear.click();
 assert.equal(input.value, "");
