@@ -181,3 +181,21 @@ Verified code/data head: [CI 40238202167](https://github.com/ClippyFirst/Thai-Uk
 **Resolved exact-head regression — 2026-10-26:** The 12 failures in CI [40313439910](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40313439910) came from four special-letter rows missing their `pattern` column in `data/thai/special_orthography.csv`. The resulting positional shift made `analysis_status` contain IPA candidates and prevented the parser from recognizing the special letters. The data rows were repaired in commit `a0bd6f598c5117154db1c78f02ae25b6d6fbf1bc`; tests now assert each row's pattern, status, candidates, and source provenance.
 
 Exact-head CI [40315032771](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40315032771) passed both jobs: 180 Python tests, generated-data drift, 351,780-row master artifact with 41 rime records, Node IPA→Ukrainian, 28 Python/browser parity fixtures, UI contract, challenge/Wisesight/source-attested IPA diagnostics, candidate registry check, TUD research training/evaluation and artifact uploads. Web static validation [40315032788](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40315032788) passed. The IPA-first boundary now has mutation and fail-closed regression tests in both runtimes. These checks verify software behavior only; they do not supply independent Thai IPA gold or Ukrainian target-form adjudication.
+
+
+## Exact-head verification refresh — 2026-10-26
+
+| Gate | Latest verified evidence | State |
+|---|---|---|
+| Python and repository CI | [Run 40316202183](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40316202183), documentation checkpoint `4c61866d98312e8cf08f78bc8ab0f213bc8dc8c0`; 180 Python tests and both CI jobs passed | DONE_VERIFIED for that checkpoint |
+| Generated master artifact | Same run; 351,780 rows, 41 vowel/rime records; artifact uploaded | DONE_VERIFIED for that checkpoint |
+| Python/browser IPA→Ukrainian and parity | Same run; Node adapter, 28 parity fixtures and UI contract passed | DONE_VERIFIED for tested contract; not phonetic accuracy |
+| Web static validation | [Run 40316202145](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40316202145) passed | DONE_VERIFIED for that checkpoint |
+| TUD research segmenter | TUD held-out boundary F1 0.872932 / exact-group rate 0.432; Wisesight source-annotated test-only boundary F1 0.792101 / exact-group rate 0.385 | PARTIAL; research-only, not production default |
+| Independent Thai IPA/acoustic gold | No independent adjudicated rows; CCOST audio/TextGrid access and annotation protocol not yet completed | BLOCKED — qualified Thai phonetician, lawful pinned assets, independent labels and disagreement log required |
+| Ukrainian target-form preference | No independent adjudication set | BLOCKED — two independent Ukrainian-native reviewers, frozen criteria and adjudication log required |
+| `บรรจุ` final `/ʔ/` | Source-attested discrepancy retained; no global rule | PARTIAL — transcription layer, stress/context and lexical evidence must be adjudicated |
+| Segmentation production readiness | No representative manual false-split/false-merge review or independent untouched-domain evaluation | PARTIAL — publish error analysis, predefine deployment thresholds and evaluate independent licensed data |
+| Release readiness | No independent IPA/UA gold; segmentation remains research-only; special orthography remains evidence-gated | NOT RELEASE-READY |
+
+The latest verified checkpoint above is not automatically evidence for later documentation commits. The audit/handoff synchronization that follows must itself pass exact-head CI and Web static validation. Engineering tests must not be reported as linguistic accuracy.
