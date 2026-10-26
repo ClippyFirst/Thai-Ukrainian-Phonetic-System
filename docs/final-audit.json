@@ -846,10 +846,10 @@
     },
     "open_docs_pr": {
       "number": 75,
-      "head_commit": "4b02eb693e1e300a9082ff58a189bf621228a602",
       "status": "open",
       "purpose": "Consolidate whole-text evidence and add authoritative current status to validation matrix",
-      "checks": "No PR-triggered workflow runs were returned for this head at audit refresh; do not claim its checks passed."
+      "checks": "No PR-triggered workflow runs were returned for this head at audit refresh; do not claim its checks passed.",
+      "head_reference": "See PR #75 for the live head; this audit snapshot intentionally avoids pinning a self-invalidating branch SHA."
     },
     "pages": {
       "status": "UNVERIFIED",
