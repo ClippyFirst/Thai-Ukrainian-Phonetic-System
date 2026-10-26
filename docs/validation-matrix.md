@@ -397,3 +397,14 @@ This update supersedes the prior row stating that the Pages deployment was block
 | Main CI, including generated master artifact | DONE_VERIFIED | Run [40378981710](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40378981710): test job PASS; master-artifact job PASS. |
 | Web static validation | DONE_VERIFIED | Run [40378982254](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40378982254): PASS. |
 | Release readiness / linguistic evidence | BLOCKED / research-only | Deployment success does not close evidence gates: independent Thai IPA/acoustic gold, human segmentation adjudication, two independent Ukrainian target-form reviews, contextual review of บรรจุ final /ʔ/, and lawful full official OBEC PDF access remain outstanding. The source-annotated segmentation scores are diagnostic only, not expert gold. |
+
+
+## Whole-text web input segmentation — 2026-10-26
+
+| Task | Status | Evidence / acceptance boundary |
+|---|---|---|
+| Web UI accepts whole text | IMPLEMENTED; CI pending | The UI already accepts a complete input; punctuation, whitespace, Latin text, and numbers remain separate tokens. |
+| Segment adjacent unspaced Thai text into known lexicon entries | PARTIAL | Browser engine now applies longest known lexicon match within a continuous Thai run, retaining unmatched spans as explicit `unresolved` results instead of suppressing IPA for neighboring known entries. Regression coverage includes `กาไฟมา`, mixed known/unknown `ทดสอบกาไฟ`, and `กาไฟ มา!`. |
+| General Thai word segmentation | TODO / evidence-limited | Dictionary max-match is a baseline, not a linguistically complete or context-aware segmenter. Ambiguous boundaries, unknown vocabulary, repetition markers, compounds, and context-sensitive readings require evaluated coverage and adjudicated boundary data. Do not claim arbitrary Thai text is fully recognized. |
+| IPA for every arbitrary text span | BLOCKED by linguistic evidence and coverage | IPA is shown only for deterministic, reviewed lexicon entries or typed source-attested overrides. Unknown spans are preserved and withheld from guessed IPA/Ukrainian output. |
+| Example-button IPA contract | IMPLEMENTED; CI pending | Homepage examples were restricted to supported lexicon entries; UI tests now require each example to show phonological IPA. |
