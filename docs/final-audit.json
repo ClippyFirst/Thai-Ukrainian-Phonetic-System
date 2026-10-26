@@ -102,12 +102,13 @@
       40238198334,
       40238202181
     ],
-    "current_head_status_at_audit_refresh": "PENDING: code-bearing commit 088b4e6649fde09f2c9d1232091e2e3c8091d9bd has CI run 40286919016 queued; browser static validation passed on the JS code checkpoint 1ed4c7aa30759fd8d31136e46d7490bf9b2c5e8b (run 40286893366). Pre-audit documentation checkpoint bdb15e1c2715623f571f3ca3cb2d115245c6a84c has CI run 40286947303 and Web static validation run 40286947306 queued. Exact latest audit commit must be checked separately.",
+    "current_head_status_at_audit_refresh": "Latest observed failure: CI run 40286374324 on prior PR head failed 4 unit tests due to stale expectations after activating the source-pinned เดิน override; browser/segmentation/TUD steps were skipped. Regression expectations were updated in commits 8369edd141ad83c451b0395a57ba25f7a1c57006, 2337dcf69ff6d59cde1862d486f50031fe9a815e, 4964d3970c6f14cedd07f04138b99b95c57ef506, 4656a557a74405f64455219e1a6fece6be575915. New exact-head CI run 40292517796 is in progress on commit 96b474bd15c139f70bfc432de848c7ca2d614537; Web static validation run 40292517870 passed. Do not claim overall pass until run 40292517796 completes.",
     "latest_full_repository_head": "bdb15e1c2715623f571f3ca3cb2d115245c6a84c",
     "latest_full_repository_head_ci_run": 40286947303,
     "latest_full_repository_head_web_validation_run": 40286947306,
     "latest_web_static_verified_code_commit": "1ed4c7aa30759fd8d31136e46d7490bf9b2c5e8b",
-    "latest_web_static_verified_code_run": 40286893366
+    "latest_web_static_verified_code_run": 40286893366,
+    "latest_verified_commit_note": "43687b2753379b1d617b1c925f87358f8aad13bd is the historical last fully verified code commit before the current TUD trainer and เดิน override changes; it is not the current branch head."
   },
   "challenge_runtime": {
     "challenge_inputs": 36,
