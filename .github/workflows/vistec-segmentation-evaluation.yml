@@ -47,7 +47,7 @@ jobs:
       - name: Evaluate dictionary and TUD models on external VISTEC source annotations
         run: |
           python scripts/evaluate_vistec_segmentation.py --csv external/OSKut/VISTEC-TP-TH-2021/VISTEC-TP-TH-2021.csv --tud-model /tmp/thai-tud-word-model.json --output /tmp/vistec-segmentation-report.json
-          python -c "import json; r=json.load(open('/tmp/vistec-segmentation-report.json',encoding='utf-8')); assert r['external_corpus']['rows']==49997; assert r['external_corpus']['source_git_blob_sha1']=='edfcb85907a604c5e30643065ac4975862a0fe90'; assert r['external_corpus']['license']=='CC-BY-SA-3.0'; assert r['external_corpus']['training_or_tuning_use'] is False; assert r['gold']['rows_source_annotated']==49997 and r['gold']['rows_adjudicated']==0; assert set(r['engines'])=={'dictionary_max_match','tud_unigram_viterbi'}; assert all(e['n_gold_rows']==49997 and e['coverage']==1.0 for e in r['engines'].values())"
+          python -c "import json; r=json.load(open('/tmp/vistec-segmentation-report.json',encoding='utf-8')); assert r['external_corpus']['rows']==50000; assert r['external_corpus']['source_git_blob_sha1']=='edfcb85907a604c5e30643065ac4975862a0fe90'; assert r['external_corpus']['license']=='CC-BY-SA-3.0'; assert r['external_corpus']['training_or_tuning_use'] is False; assert r['gold']['rows_source_annotated']==49997 and r['gold']['rows_adjudicated']==0; assert set(r['engines'])=={'dictionary_max_match','tud_unigram_viterbi'}; assert all(e['n_gold_rows']==49997 and e['coverage']==1.0 for e in r['engines'].values())"
       - uses: actions/upload-artifact@v4
         with:
           name: vistec-external-segmentation-evaluation
