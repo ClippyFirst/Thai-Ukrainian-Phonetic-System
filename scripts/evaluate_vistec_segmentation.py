@@ -46,7 +46,7 @@ def git_blob_sha1(path: Path) -> str:
     """Compute Git's SHA-1 blob object ID without requiring a local Git checkout."""
     size = path.stat().st_size
     digest = hashlib.sha1()
-    digest.update(f"blob {size}\\0".encode("ascii"))
+    digest.update(f"blob {size}\0".encode("ascii"))
     with path.open("rb") as stream:
         for chunk in iter(lambda: stream.read(1024 * 1024), b""):
             digest.update(chunk)
