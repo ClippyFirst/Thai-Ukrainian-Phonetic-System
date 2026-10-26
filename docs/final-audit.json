@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "engineering-verified research prototype; latest code-bearing CI failed on stale VISTEC license assertion; VISTEC workflow exposed README-vs-CSV row-count mismatch; fixes committed; exact-head revalidation pending; independent linguistic adjudication incomplete; not release-ready",
+  "status": "Merged whole-text Thai input improvement; code-bearing checkpoint 3ccf84f564add02c189524c3b9ca794154d35c8b passed CI test + master-artifact and web static validation; current UI Pages deployment not independently verified; independent linguistic adjudication incomplete; not release-ready.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -819,5 +819,221 @@
       "current_main_commit_when_checked": "7bcc7e21c98bde8f55a7c56a1c1a97fe3486b72e"
     },
     "current_main_commit_after_audit_docs": "33bc06af283dddc72b7bab23b9767ad7ff9abf18"
+  },
+  "whole_text_ui_followup_2026_10_26": {
+    "checked_at": "2026-10-26T23:41:00+02:00",
+    "current_main_head": "605d849c2148b7242fac56e581b6319bb17fd4f4",
+    "merged_code_pr": {
+      "number": 73,
+      "merge_commit": "e49b5f2b54d42e577f732b4308080e11e410d557",
+      "code_checkpoint": "3ccf84f564add02c189524c3b9ca794154d35c8b",
+      "ci_run": 40402504410,
+      "ci_jobs": {
+        "test": "success",
+        "master_artifact": "success"
+      },
+      "web_static_validation_run": 40402504394,
+      "web_static_validation": "success"
+    },
+    "merged_docs_pr": {
+      "number": 74,
+      "merge_commit": "605d849c2148b7242fac56e581b6319bb17fd4f4",
+      "ci_run": 40404124198,
+      "ci_jobs": {
+        "test": "success",
+        "master_artifact": "success"
+      }
+    },
+    "open_docs_pr": {
+      "number": 75,
+      "status": "open",
+      "purpose": "Consolidate whole-text evidence and add authoritative current status to validation matrix",
+      "checks": "No PR-triggered workflow runs were returned for this head at audit refresh; do not claim its checks passed.",
+      "head_reference": "See PR #75 for the live head; this audit snapshot intentionally avoids pinning a self-invalidating branch SHA."
+    },
+    "pages": {
+      "status": "UNVERIFIED",
+      "workflow_configured_for_main_push": true,
+      "reason": "Available GitHub connector only returns pull-request-triggered workflow runs; direct fetch of served HTML was unavailable. Need successful post-merge Pages build/deploy run and inspection of served HTML."
+    },
+    "implementation": {
+      "status": "PARTIAL",
+      "description": "Whole-text UI uses greedy longest-known-entry matching and preserves unmatched spans without guessed IPA/Ukrainian output.",
+      "known_risk": "Greedy matching can identify a known substring inside an unknown word; regression tests establish behavior only for listed cases, not general Thai segmentation accuracy."
+    },
+    "readiness": "PARTIAL_RESEARCH_PROTOTYPE_NOT_RELEASE_READY",
+    "blockers": [
+      {
+        "id": "SEG-HUMAN-001",
+        "status": "BLOCKED",
+        "acceptance": "Qualified Thai reviewers adjudicate a prespecified sample, define tokenization conventions, and publish a disagreement log."
+      },
+      {
+        "id": "IPA-GOLD-001",
+        "status": "BLOCKED",
+        "acceptance": "Authorized audio/TextGrid access and independent Thai phonetic annotation with transcription-level protocol."
+      },
+      {
+        "id": "UA-TARGET-001",
+        "status": "BLOCKED",
+        "acceptance": "Two independent Ukrainian-native reviewers, blinded target-form judgments, and adjudication log."
+      },
+      {
+        "id": "BANCHU-IPA-001",
+        "status": "PARTIAL_EVIDENCE_LIMITED",
+        "acceptance": "Context-specific independent review of the final /ʔ/ in บรรจุ; no global rule before adjudication."
+      },
+      {
+        "id": "OBEC-PDF-001",
+        "status": "BLOCKED",
+        "acceptance": "Lawful access to the complete official PDF and page/section-scoped evidence."
+      },
+      {
+        "id": "LICENSE-REGISTRY-001",
+        "status": "PARTIAL",
+        "acceptance": "Final per-resource license compatibility and attribution review for redistributed/generated artifacts."
+      }
+    ]
+  },
+  "post_merge_verification_refresh": {
+    "checked_at": "2026-10-26T22:18:00+02:00",
+    "current_main_head": "314d2fd2efab107dfa509c23d1f9b9dad2ed42f0",
+    "current_main_head_commit_message": "docs: finalize beta deployment handoff",
+    "pr71": {
+      "state": "closed",
+      "merged": true,
+      "merge_commit": "b4ae9e9f88a79d6f55cb1207363ac6877df080ba",
+      "url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/71"
+    },
+    "pages": {
+      "run_id": 40378981918,
+      "status": "success",
+      "build_job_id": 121769734639,
+      "build": "success",
+      "deploy_job_id": 121775188761,
+      "deploy": "success",
+      "deployed_source_commit": "b4ae9e9f88a79d6f55cb1207363ac6877df080ba",
+      "url": "https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/"
+    },
+    "main_ci": {
+      "run_id": 40378981710,
+      "status": "success",
+      "jobs": {
+        "test": "success",
+        "master_artifact": "success"
+      },
+      "tested_commit": "b4ae9e9f88a79d6f55cb1207363ac6877df080ba"
+    },
+    "latest_separately_inspected_main_ci": {
+      "run_id": 40381878163,
+      "status": "success",
+      "jobs": {
+        "test": "success",
+        "master_artifact": "success"
+      },
+      "tested_commit": "7bcc7e21c98bde8f55a7c56a1c1a97fe3486b72e"
+    },
+    "web_static_validation": {
+      "run_id": 40378982254,
+      "status": "success",
+      "tested_commit": "b4ae9e9f88a79d6f55cb1207363ac6877df080ba"
+    },
+    "live_page_inspection": {
+      "status": "BLOCKED",
+      "reason": "Web fetch reports GitHub Pages URL inaccessible; container HTTP probe failed because DNS resolution is unavailable. Deployment workflow success is verified, served HTML and responsive behavior are not independently browser-verified."
+    },
+    "segmentation_evidence": {
+      "wisesight_rows": 993,
+      "vistec_rows": 50000,
+      "adjudicated_rows": 0,
+      "interpretation": "Source-annotated agreement diagnostics only; not independent gold and not accuracy claims."
+    },
+    "open_pull_requests_checked": 1,
+    "readiness": "deployed research beta; not release-ready for arbitrary Thai text",
+    "blockers": [
+      {
+        "id": "IPA-GOLD-001",
+        "status": "BLOCKED",
+        "reason": "Independent Thai phonetician and lawful audio/TextGrid access required",
+        "acceptance": "Versioned dual IPA labels and acoustic evidence where claimed, with disagreement adjudication."
+      },
+      {
+        "id": "UA-TARGET-001",
+        "status": "BLOCKED",
+        "reason": "Two independent Ukrainian-native reviewers unavailable",
+        "acceptance": "Blinded target-form judgments, criteria version and disagreement log."
+      },
+      {
+        "id": "SEG-HUMAN-001",
+        "status": "BLOCKED",
+        "reason": "Wisesight/VISTEC labels are source annotations and zero rows independently adjudicated",
+        "acceptance": "Human-adjudicated segmentation sample including uniform controls and documented disagreements."
+      },
+      {
+        "id": "BANCHU-IPA-001",
+        "status": "PARTIAL",
+        "reason": "Source-attested transcription includes final /ʔ/ in บรรจุ but current output omits it; no universal rule added",
+        "acceptance": "Context-specific decision backed by independent phonetic adjudication."
+      },
+      {
+        "id": "OBEC-PDF-001",
+        "status": "BLOCKED",
+        "reason": "Full official PDF previously returned HTTP 403; this session did not obtain lawful full text",
+        "acceptance": "Official full document or lawful authorized copy, with exact applicable clauses and version."
+      },
+      {
+        "id": "LICENSE-REGISTRY-001",
+        "status": "PARTIAL",
+        "reason": "Pinned sources and license metadata are recorded, but each reuse still requires per-resource attribution/share-alike compliance review",
+        "acceptance": "Auditable provenance, license compatibility and required attribution for every bundled/generated dataset or model."
+      }
+    ],
+    "vistec_evaluation": {
+      "run_id": 40377560151,
+      "status": "success",
+      "tested_commit": "274371594cc8a0b65677bb126242d90acc17caf5",
+      "job": "vistec-evaluation",
+      "artifact_id": 12676540165,
+      "artifact_name": "vistec-external-segmentation-evaluation",
+      "artifact_sha256": "582a28766f29f11ac54bac7764a52ddfdfd3e78ad26f4acc311fac3f82f6c6a3",
+      "rows": 50000,
+      "adjudicated_rows": 0,
+      "interpretation": "Source-annotated segmentation agreement diagnostic, not independently adjudicated accuracy. Upstream README states 49,997 samples; pinned CSV has 50,000 parseable rows.",
+      "artifact_inspection": {
+        "status": "DONE_VERIFIED",
+        "archive_member": "vistec-segmentation-report.json",
+        "archive_bytes": 1659,
+        "report_schema_version": "1.0",
+        "zip_sha256": "582a28766f29f11ac54bac7764a52ddfdfd3e78ad26f4acc311fac3f82f6c6a3",
+        "dictionary_max_match": {
+          "boundary_precision": 0.7687958171077649,
+          "boundary_recall": 0.8978784545804036,
+          "boundary_f1": 0.8283384604640367,
+          "exact_sequence_matches": 76,
+          "exact_sequence_rate": 0.00152,
+          "coverage": 1
+        },
+        "tud_unigram_viterbi": {
+          "boundary_precision": 0.6064011335968544,
+          "boundary_recall": 0.9931576338081688,
+          "boundary_f1": 0.7530225550370759,
+          "exact_sequence_matches": 16,
+          "exact_sequence_rate": 0.00032,
+          "coverage": 1
+        },
+        "interpretation": "50000 source-annotated rows, 0 adjudicated rows. Dictionary has higher F1/exact sequences than TUD; TUD recall is very high but precision is lower. These are agreement diagnostics only, not expert-gold accuracy."
+      }
+    },
+    "refresh_documentation_pr": {
+      "number": 72,
+      "url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/72",
+      "state": "open",
+      "merged": false,
+      "branch": "audit/post-beta-live-verification-20261026",
+      "head_commit": "c8f281df220ce9a7f7749601e36fe9fbe745c0cf",
+      "scope": "documentation-only verification reconciliation",
+      "note": "No engine code or hosting settings changed; exact-head CI for this documentation branch was not independently confirmed."
+    },
+    "note": "Historical checkpoint from 2026-10-26 22:18 EET, retained for provenance; current UI/code state is recorded in whole_text_ui_followup_2026_10_26 below."
   }
 }
