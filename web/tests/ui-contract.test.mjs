@@ -67,6 +67,32 @@ for (const example of examples) {
   assert.doesNotMatch(output.innerHTML, /segmentationStatus|unresolved:unsupported-symbol/);
 }
 
+// Whole unspaced Thai runs must split into known lexicon entries, not be
+// treated as one dictionary key. Unknown spans must not suppress adjacent IPA.
+input.value = "กาไฟมา";
+analyze.click();
+assert.match(output.innerHTML, /Результат 1: กา/);
+assert.match(output.innerHTML, /Результат 2: ไฟ/);
+assert.match(output.innerHTML, /Результат 3: มา/);
+assert.equal((output.innerHTML.match(/ФОНОЛОГІЧНА IPA/g) || []).length, 3);
+assert.equal(status.className, "status");
+
+input.value = "ทดสอบกาไฟ";
+analyze.click();
+assert.match(output.innerHTML, /Результат 1: ทดสอบ/);
+assert.match(output.innerHTML, /unresolved/);
+assert.match(output.innerHTML, /Результат 2: กา/);
+assert.match(output.innerHTML, /Результат 3: ไฟ/);
+assert.equal((output.innerHTML.match(/ФОНОЛОГІЧНА IPA/g) || []).length, 2);
+assert.equal(status.className, "status notice");
+
+input.value = "กาไฟ มา!";
+analyze.click();
+assert.match(output.innerHTML, /Результат 1: กา/);
+assert.match(output.innerHTML, /Результат 2: ไฟ/);
+assert.match(output.innerHTML, /Результат 3: มา/);
+assert.match(output.innerHTML, /!/);
+
 clear.click();
 assert.equal(input.value, "");
 assert.equal(output.hidden, true);
