@@ -873,3 +873,12 @@ Web static validation [40305933181](https://github.com/ClippyFirst/Thai-Ukrainia
 - Machine-readable audit synchronization checkpoint: c6dac498ec8c7939c6f2bfbcea04c8d1fdeab96a.
 - The branch head immediately before this final handoff update was c6dac498ec8c7939c6f2bfbcea04c8d1fdeab96a. This handoff update creates the final commit; inspect the branch ref for its resulting SHA.
 - Exact-head CI, Web static validation and External VISTEC segmentation evaluation remain queued in the latest observed workflow state. No current-batch tests are claimed as passed and no VISTEC metric is claimed. The next genuine blocker is execution of these queued workflows, followed by actual human/specialist adjudication and the OBEC access issue.
+
+
+### Source-integrity hardening and final status — 2026-10-26
+
+- The VISTEC adapter now independently computes the Git blob SHA-1 of the supplied CSV and rejects any file that does not match the pinned upstream blob. The external workflow also checks out the exact upstream commit and checks the Git blob/license before evaluation. Regression coverage was added for an unpinned CSV.
+- Latest implementation/test checkpoint: 43fb1416e6d103de4999a84a1dbaefd663507cb6. Latest machine-audit checkpoint before this handoff update: bc16f7b70481bb88cd30bb4d9589203da819f4f1.
+- The branch head immediately before this handoff update is bc16f7b70481bb88cd30bb4d9589203da819f4f1. This update creates the next commit; read the branch ref for the final SHA.
+- Latest exact-head CI, Web static validation and VISTEC evaluation were still queued at the last status read. No new tests are marked PASS, and no VISTEC metrics are reported. If the queue remains blocked, record that as a CI service/runner blocker rather than treating tests as successful.
+- External evidence gates remain: actual independent Thai phonetic/acoustic review, two Ukrainian-native target-form reviews, human segmentation adjudication, contextual decision for บรรจุ final /ʔ/, and full official OBEC PDF inspection (HTTP 403). These require human/specialist or lawful-source access and cannot be honestly synthesized by code.
