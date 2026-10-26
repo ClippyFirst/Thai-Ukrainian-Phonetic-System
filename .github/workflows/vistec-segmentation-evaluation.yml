@@ -26,6 +26,7 @@ jobs:
           repository: mrpeerat/OSKut
           ref: 215a7dc3d384f20eb56af1cbc41fb32b7f8df57c
           path: external/OSKut
+          sparse-checkout-cone-mode: false
           sparse-checkout: |
             VISTEC-TP-TH-2021/VISTEC-TP-TH-2021.csv
             VISTEC-TP-TH-2021/LICENSE.md
