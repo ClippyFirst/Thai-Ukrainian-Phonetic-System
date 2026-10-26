@@ -74,7 +74,7 @@ analyze.click();
 assert.match(output.innerHTML, /Результат 1: กา/);
 assert.match(output.innerHTML, /Результат 2: ไฟ/);
 assert.match(output.innerHTML, /Результат 3: มา/);
-assert.equal((output.innerHTML.match(/ФОНОЛОГІЧНА IPA/g) || []).length, 3);
+assert.equal((output.innerHTML.match(/class="label">ФОНОЛОГІЧНА IPA<\/span>/g) || []).length, 3);
 assert.equal(status.className, "status");
 
 input.value = "ทดสอบกาไฟ";
@@ -83,7 +83,7 @@ assert.match(output.innerHTML, /Результат 1: ทดสอบ/);
 assert.match(output.innerHTML, /unresolved/);
 assert.match(output.innerHTML, /Результат 2: กา/);
 assert.match(output.innerHTML, /Результат 3: ไฟ/);
-assert.equal((output.innerHTML.match(/ФОНОЛОГІЧНА IPA/g) || []).length, 2);
+assert.equal((output.innerHTML.match(/class="label">ФОНОЛОГІЧНА IPA<\/span>/g) || []).length, 2);
 assert.equal(status.className, "status notice");
 
 
@@ -92,7 +92,7 @@ assert.equal(status.className, "status notice");
 input.value = "กินข้าวกับไข่และผลไม้";
 analyze.click();
 assert.match(output.innerHTML, /Результат 1: กินข้าวกับไข่และผลไม้/);
-assert.equal((output.innerHTML.match(/ФОНОЛОГІЧНА IPA/g) || []).length, 7);
+assert.equal((output.innerHTML.match(/class="label">ФОНОЛОГІЧНА IPA<\/span>/g) || []).length, 7);
 assert.equal(status.className, "status");
 
 // Punctuation must delimit text runs without preventing following known words
@@ -106,7 +106,7 @@ assert.match(output.innerHTML, /Токен 4: punctuation/);
 assert.match(output.innerHTML, /Результат 5: มา/);
 assert.match(output.innerHTML, /<div class="thai">,<\/div>/);
 assert.match(output.innerHTML, /<div class="thai">!<\/div>/);
-assert.equal((output.innerHTML.match(/ФОНОЛОГІЧНА IPA/g) || []).length, 3);
+assert.equal((output.innerHTML.match(/class="label">ФОНОЛОГІЧНА IPA<\/span>/g) || []).length, 3);
 
 input.value = "กาไฟ มา!";
 analyze.click();
