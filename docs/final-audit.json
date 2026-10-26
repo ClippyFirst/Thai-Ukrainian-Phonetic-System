@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "engineering-verified research prototype; stratified segmentation-review packet implemented; exact-head CI pending; independent linguistic adjudication not complete; not release-ready",
+  "status": "engineering-verified research prototype; stratified human-review sampler and pinned VISTEC external-domain evaluation implemented; exact-head CI/workflow verification pending; independent linguistic adjudication incomplete; not release-ready",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -41,7 +41,11 @@
     "deterministic_segmentation_false_split_false_merge_review",
     "same-row-dictionary-vs-TUD-segmentation-error-review",
     "mixed-text-preserving-segmentation-comparison",
-    "boundary-context-review-examples"
+    "boundary-context-review-examples",
+    "deterministic_stratified_segmentation_review_with_uniform_controls",
+    "pinned_vistec_tp_th_2021_external_segmentation_evaluator",
+    "vistec_annotation_markup_and_pipe_token_adapter",
+    "linear_time_segmentation_evaluator_for_large_corpora"
   ],
   "not_claimed": [
     "complete_lexical_segmentation",
@@ -467,15 +471,23 @@
       "files": [
         "scripts/build_segmentation_manual_review.py",
         "tests/test_segmentation_manual_review.py",
+        "scripts/evaluate_vistec_segmentation.py",
+        "tests/test_vistec_segmentation_adapter.py",
+        "scripts/evaluate_segmentation.py",
         ".github/workflows/ci.yml",
+        ".github/workflows/vistec-segmentation-evaluation.yml",
+        "data/corpus_sources.csv",
+        "README.md",
         "docs/independent-adjudication-protocol.md",
         "docs/evidence.md",
+        "docs/corpus-validation.md",
         "docs/validation-matrix.md",
-        "docs/final-audit.md"
+        "docs/final-audit.md",
+        "docs/final-audit.json"
       ],
-      "purpose": "Deterministic stratified segmentation-review sample plus uniform controls, recomputing both model predictions over all pinned source rows, enforcing lossless reconstruction and blank human decision fields; document external evidence limits.",
+      "purpose": "Deterministic stratified segmentation-review sample with uniform controls; pinned VISTEC external-domain source-annotation evaluation; scalable scorer; source/protocol/audit synchronization.",
       "status": "PARTIAL",
-      "verification": "Not yet passed. Exact-head CI and Web static validation are required after all commits in this batch.",
+      "verification": "Exact-head CI, Web static validation, and external VISTEC workflow have not yet completed; do not claim new tests or VISTEC metrics as passed.",
       "external_evidence": {
         "ccost_zenodo": "https://zenodo.org/records/17366698",
         "ccost_doi": "10.5281/zenodo.17366698",
@@ -497,14 +509,29 @@
       "decision": "DO_NOT_INTEGRATE_TUD_AS_PRODUCTION_DEFAULT"
     },
     "remaining_evidence_gates": [
+      "Exact-head CI and Web static validation success",
+      "Successful VISTEC workflow and inspection of the 49,997-row report artifact",
       "Independent Thai IPA/acoustic gold with authorized recordings and transcription-level protocol",
       "Two independent Ukrainian-native target-form judgments and adjudication log",
-      "Human review of stratified segmentation sample; thresholds must be declared before acceptance",
-      "Independent licensed segmentation domain with untouched split",
+      "Human review of stratified segmentation sample; thresholds declared before acceptance",
       "Context/transcription-level review of บรรจุ final /ʔ/",
-      "Full official OBEC PDF inspection through lawful authoritative access",
-      "Successful exact-head CI and Web static validation"
+      "Full official OBEC PDF inspection through lawful authoritative access"
     ],
-    "readiness": "RESEARCH_PROTOTYPE_NOT_RELEASE_READY"
+    "readiness": "RESEARCH_PROTOTYPE_NOT_RELEASE_READY",
+    "vistec_external_evaluation": {
+      "source_repository": "mrpeerat/OSKut",
+      "source_commit": "215a7dc3d384f20eb56af1cbc41fb32b7f8df57c",
+      "source_csv_git_blob_sha1": "edfcb85907a604c5e30643065ac4975862a0fe90",
+      "source_license": "CC-BY-SA-3.0",
+      "source_rows_expected": 49997,
+      "source_field": "submissionText",
+      "report_grade": "SOURCE_ANNOTATED_NOT_EXPERT_ADJUDICATED",
+      "workflow": ".github/workflows/vistec-segmentation-evaluation.yml",
+      "adapter": "scripts/evaluate_vistec_segmentation.py",
+      "test": "tests/test_vistec_segmentation_adapter.py",
+      "evaluator_optimized_for_linear_lookup": true,
+      "status": "PARTIAL_EXACT_HEAD_WORKFLOW_PENDING",
+      "metric_claimed": false
+    }
   }
 }
