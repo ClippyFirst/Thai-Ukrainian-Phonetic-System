@@ -81,7 +81,7 @@ const styles = await readFile(new URL("../src/styles.css", import.meta.url), "ut
 assert.match(homeHtml, /БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ/);
 assert.match(homeHtml, /system\.html#beta-evidence/);
 assert.match(systemHtml, /id="beta-evidence"/);
-assert.match(systemHtml, /незалежно перевірених рядків — <strong>0<\/strong>/);
+assert.match(systemHtml, /незалежно перевірених рядків — 0/);
 assert.match(systemHtml, /76\/50 000/);
 assert.match(systemHtml, /16\/50 000/);
 assert.match(systemHtml, /192\/993/);
