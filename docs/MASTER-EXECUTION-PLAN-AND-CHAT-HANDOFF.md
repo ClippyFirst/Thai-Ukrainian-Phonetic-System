@@ -636,3 +636,4 @@ CI was updated to run the TUD trainer, verify source-split reports and circular-
 
 The repository remains a research prototype, not release-ready. Do not merge PR #71 or publish a release as part of this handoff.
 
+Latest code-bearing commit after adding a deterministic source-disjoint split regression: `9167bbbf0d194486961d0886d67ffca72bcfd909`. Exact-head CI remains pending; the audit JSON will be refreshed last after this handoff update. Do not claim the trainer or new IPA override tests passed until a matching run completes.
