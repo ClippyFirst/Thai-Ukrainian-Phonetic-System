@@ -84,6 +84,18 @@
     }
   },
   {
+    "input": "เดิน",
+    "expected": {
+      "input": "เดิน",
+      "status": "analyzed",
+      "phonemicIpa": "dɤːn",
+      "phoneticIpa": null,
+      "tone": "mid",
+      "toneIpa": "˧",
+      "ukrainian": "ден"
+    }
+  },
+  {
     "input": "เกะ",
     "expected": {
       "input": "เกะ",
