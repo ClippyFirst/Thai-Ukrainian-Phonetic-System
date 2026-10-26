@@ -1,7 +1,7 @@
 name: Deploy web to GitHub Pages
 on:
   push:
-    branches: [main]
+    branches: [main, research/thai-segmentation-gold-parity-verified-20261025]
     paths:
       - "web/**"
       - "src/**"
@@ -44,6 +44,8 @@ jobs:
           node-version: 22
       - name: Run browser parity test
         run: node web/tests/parity.test.mjs
+      - name: Run UI contract and beta disclosure checks
+        run: node web/tests/ui-contract.test.mjs
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
       - name: Upload Pages artifact
