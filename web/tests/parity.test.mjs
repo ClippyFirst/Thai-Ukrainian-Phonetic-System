@@ -150,3 +150,14 @@ for (const control of ["\u000b", "\u000c"]) {
     throw new Error("Thai parser accepted unsupported layout control U+" + control.codePointAt(0).toString(16) + ": " + JSON.stringify(result));
   }
 }
+
+
+for (const spelling of ["ฤ", "ฤๅ", "ฦ", "ฦๅ"]) {
+  const result = analyze(spelling);
+  if (result.status !== "analysis-dependent:special-orthography" ||
+      result.phonemicIpa != null || result.phoneticIpa != null || result.ukrainian != null ||
+      !result.specialAnalyses?.length) {
+    throw new Error("Thai special vowel letter was assigned a lexical reading without word evidence: " + spelling + ": " + JSON.stringify(result));
+  }
+}
+console.log("Thai special vowel-letter uncertainty contract passed");
