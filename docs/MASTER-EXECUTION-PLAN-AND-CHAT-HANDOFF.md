@@ -1042,3 +1042,15 @@ The latest code-bearing head is `3ccf84f564add02c189524c3b9ca794154d35c8b`. A fi
 - Pages acceptance criterion: confirm a successful Pages build/deploy run after the relevant main change and inspect served HTML. Previous known deployment run [40378981918](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40378981918) predates the whole-text UI change.
 - Research blockers remain: human-adjudicated Thai boundaries, independent Thai IPA/acoustic gold, two Ukrainian target-form reviews, contextual `บรรจุ` final /ʔ/ review, lawful full official OBEC PDF, and per-resource license/attribution audit.
 - Readiness: partial research prototype, not release-ready for arbitrary Thai text.
+
+
+## Continuation checkpoint — CC0 browser segmentation fallback — 2026-10-27
+
+- Main merge commit: `96c2af3c2a24d0ea95455b5d6af4c079e5609d29` (PR #77).
+- Added `scripts/generate_web_word_dictionary.py`, which validates the pinned CC0 word-list Git blob SHA, license declaration, 60,963 unique Thai-block entries, and required regression word `กาแฟ`; it generates ignored `web/src/word-dictionary.generated.js` (1,615,714 bytes, 51 initial-character buckets).
+- Browser segmentation now considers both the curated pronunciation lexicon and the CC0 word dictionary, prefers the longer match, and prefers curated entries on ties. A longer dictionary match prevents partial IPA for a known substring. Dictionary segmentation remains boundary evidence only; non-curated words remain unresolved with no guessed IPA/UA.
+- Regression `กาแฟ` prevents partial output for `กา`; regression `เงินเดิน` exposed a preposed-vowel boundary bug, fixed by excluding preposed vowels from the combining-mark set.
+- Web static validation passed on pre-merge head `7b2c9572feb542fb3ee81558b9758bb4fa5f2bef` ([40411659863](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40411659863)). Full CI test job passed on code head `3eb1155631da158b7e04436f608711680750e475` ([40411558761](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40411558761)); exact-head full CI and master-artifact remained queued, so they are not marked passed.
+- Post-merge Pages run `40412224812`, main CI `40412224673`, and web-static push run `40412224629` were queued at last inspection. The Pages workflow now retries until it verifies the served homepage contract. Check these runs before claiming deployment verified.
+- Next: confirm post-merge Pages check; inspect whether the 60k dictionary bucket scan has acceptable browser latency on representative 100–500-character text; then improve coverage only with source-attested syllabification/pronunciation. General Thai segmentation, independent IPA gold, UA target review, `บรรจุ` contextual adjudication, OBEC PDF access, and per-resource license audit remain open.
+- Readiness: partial research prototype, not release-ready for arbitrary Thai text.
