@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "engineering-verified research prototype; latest code-bearing CI failed on stale VISTEC license assertion; VISTEC workflow exposed README-vs-CSV row-count mismatch; fixes committed; exact-head revalidation pending; independent linguistic adjudication incomplete; not release-ready",
+  "status": "Deployed research beta; merged beta code and Pages deployment verified at workflow level; latest main head is documentation-only commit 314d2fd2efab107dfa509c23d1f9b9dad2ed42f0; latest directly verified main CI run is 40381878163 on 7bcc7e21c98bde8f55a7c56a1c1a97fe3486b72e; live HTML fetch unavailable in this environment; independent linguistic adjudication incomplete; not release-ready",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -819,5 +819,99 @@
       "current_main_commit_when_checked": "7bcc7e21c98bde8f55a7c56a1c1a97fe3486b72e"
     },
     "current_main_commit_after_audit_docs": "33bc06af283dddc72b7bab23b9767ad7ff9abf18"
+  },
+  "post_merge_verification_refresh": {
+    "checked_at": "2026-10-26T22:18:00+02:00",
+    "current_main_head": "314d2fd2efab107dfa509c23d1f9b9dad2ed42f0",
+    "current_main_head_commit_message": "docs: finalize beta deployment handoff",
+    "pr71": {
+      "state": "closed",
+      "merged": true,
+      "merge_commit": "b4ae9e9f88a79d6f55cb1207363ac6877df080ba",
+      "url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/71"
+    },
+    "pages": {
+      "run_id": 40378981918,
+      "status": "success",
+      "build_job_id": 121769734639,
+      "build": "success",
+      "deploy_job_id": 121775188761,
+      "deploy": "success",
+      "deployed_source_commit": "b4ae9e9f88a79d6f55cb1207363ac6877df080ba",
+      "url": "https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/"
+    },
+    "main_ci": {
+      "run_id": 40378981710,
+      "status": "success",
+      "jobs": {
+        "test": "success",
+        "master_artifact": "success"
+      },
+      "tested_commit": "b4ae9e9f88a79d6f55cb1207363ac6877df080ba"
+    },
+    "latest_separately_inspected_main_ci": {
+      "run_id": 40381878163,
+      "status": "success",
+      "jobs": {
+        "test": "success",
+        "master_artifact": "success"
+      },
+      "tested_commit": "7bcc7e21c98bde8f55a7c56a1c1a97fe3486b72e"
+    },
+    "web_static_validation": {
+      "run_id": 40378982254,
+      "status": "success",
+      "tested_commit": "b4ae9e9f88a79d6f55cb1207363ac6877df080ba"
+    },
+    "live_page_inspection": {
+      "status": "BLOCKED",
+      "reason": "Web fetch reports GitHub Pages URL inaccessible; container HTTP probe failed because DNS resolution is unavailable. Deployment workflow success is verified, served HTML and responsive behavior are not independently browser-verified."
+    },
+    "segmentation_evidence": {
+      "wisesight_rows": 993,
+      "vistec_rows": 50000,
+      "adjudicated_rows": 0,
+      "interpretation": "Source-annotated agreement diagnostics only; not independent gold and not accuracy claims."
+    },
+    "open_pull_requests_checked": 0,
+    "readiness": "deployed research beta; not release-ready for arbitrary Thai text",
+    "blockers": [
+      {
+        "id": "IPA-GOLD-001",
+        "status": "BLOCKED",
+        "reason": "Independent Thai phonetician and lawful audio/TextGrid access required",
+        "acceptance": "Versioned dual IPA labels and acoustic evidence where claimed, with disagreement adjudication."
+      },
+      {
+        "id": "UA-TARGET-001",
+        "status": "BLOCKED",
+        "reason": "Two independent Ukrainian-native reviewers unavailable",
+        "acceptance": "Blinded target-form judgments, criteria version and disagreement log."
+      },
+      {
+        "id": "SEG-HUMAN-001",
+        "status": "BLOCKED",
+        "reason": "Wisesight/VISTEC labels are source annotations and zero rows independently adjudicated",
+        "acceptance": "Human-adjudicated segmentation sample including uniform controls and documented disagreements."
+      },
+      {
+        "id": "BANCHU-IPA-001",
+        "status": "PARTIAL",
+        "reason": "Source-attested transcription includes final /ʔ/ in บรรจุ but current output omits it; no universal rule added",
+        "acceptance": "Context-specific decision backed by independent phonetic adjudication."
+      },
+      {
+        "id": "OBEC-PDF-001",
+        "status": "BLOCKED",
+        "reason": "Full official PDF previously returned HTTP 403; this session did not obtain lawful full text",
+        "acceptance": "Official full document or lawful authorized copy, with exact applicable clauses and version."
+      },
+      {
+        "id": "LICENSE-REGISTRY-001",
+        "status": "PARTIAL",
+        "reason": "Pinned sources and license metadata are recorded, but each reuse still requires per-resource attribution/share-alike compliance review",
+        "acceptance": "Auditable provenance, license compatibility and required attribution for every bundled/generated dataset or model."
+      }
+    ]
   }
 }
