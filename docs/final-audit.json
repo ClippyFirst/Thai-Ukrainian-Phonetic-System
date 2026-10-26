@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "engineering-verified research prototype; exact-head CI pending after regression expectation fixes for the source-pinned เดิน override",
+  "status": "engineering-verified research prototype; exact-head CI and web static validation pass on 4c3d01d9b726b410c98048878441082d8d5c8299; not release-ready for arbitrary Thai text or empirically validated IPA/Ukrainian output",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -82,41 +82,40 @@
     "status": "SOURCE_ATTESTED_NOT_GOLD",
     "includes_short_long_oe_contrast": true
   },
-  "latest_verified_code_commit": "43687b2753379b1d617b1c925f87358f8aad13bd",
+  "latest_verified_code_commit": "4c3d01d9b726b410c98048878441082d8d5c8299",
   "starting_branch_commit": "7e39fd4bc108386148c1e9a79d257d75babcc9aa",
   "ci": {
-    "latest_fully_successful_code_data_commit": "43687b2753379b1d617b1c925f87358f8aad13bd",
-    "latest_fully_successful_ci_run": 40238202167,
-    "python_tests": 158,
+    "latest_fully_successful_code_data_commit": "4c3d01d9b726b410c98048878441082d8d5c8299",
+    "latest_fully_successful_ci_run": 40296520186,
+    "python_tests": 176,
     "generated_data_drift": "PASS",
-    "master_artifact": "PASS",
-    "node_ipa_ua_parity_ui_tests": "PASS on 59890a0; before the final browser lexical-override change",
+    "master_artifact": "PASS — 351,780 rows; 41 vowel/rime records; artifact uploaded",
+    "node_ipa_ua_parity_ui_tests": "PASS on exact head 4c3d01d9b726b410c98048878441082d8d5c8299",
     "wisesight_baseline": "PASS",
     "source_attested_ipa_diagnostic": "PASS",
     "current_browser_parity_code_head": "43687b2753379b1d617b1c925f87358f8aad13bd",
     "current_head_ci_runs": [
-      40238198251,
-      40238202167
+      40296520186
     ],
     "current_head_web_validation_runs": [
-      40238198334,
-      40238202181
+      40296520175
     ],
-    "current_head_status_at_audit_refresh": "Latest observed failure: CI run 40286374324 on prior PR head failed 4 unit tests due to stale expectations after activating the source-pinned เดิน override; browser/segmentation/TUD steps were skipped. Regression expectations were updated in commits 8369edd141ad83c451b0395a57ba25f7a1c57006, 2337dcf69ff6d59cde1862d486f50031fe9a815e, 4964d3970c6f14cedd07f04138b99b95c57ef506, 4656a557a74405f64455219e1a6fece6be575915. New exact-head CI run 40292517796 is in progress on commit 96b474bd15c139f70bfc432de848c7ca2d614537; Web static validation run 40292517870 passed. Do not claim overall pass until run 40292517796 completes.",
-    "latest_full_repository_head": "bdb15e1c2715623f571f3ca3cb2d115245c6a84c",
-    "latest_full_repository_head_ci_run": 40286947303,
-    "latest_full_repository_head_web_validation_run": 40286947306,
+    "current_head_status_at_audit_refresh": "PASS: exact code/data head 4c3d01d9b726b410c98048878441082d8d5c8299; CI run 40296520186 and Web static validation run 40296520175 completed successfully. All 176 Python tests, generated-artifact checks, 36-input runtime diagnostic, Node IPA→UA/parity/UI tests, Wisesight diagnostics, target-candidate artifact check, source-attested IPA diagnostic, TUD research training/evaluation and all artifact uploads passed. Documentation follow-up commits remain to be checked on their own final head.",
+    "latest_full_repository_head": "4c3d01d9b726b410c98048878441082d8d5c8299",
+    "latest_full_repository_head_ci_run": 40296520186,
+    "latest_full_repository_head_web_validation_run": 40296520175,
     "latest_web_static_verified_code_commit": "1ed4c7aa30759fd8d31136e46d7490bf9b2c5e8b",
     "latest_web_static_verified_code_run": 40286893366,
-    "latest_verified_commit_note": "43687b2753379b1d617b1c925f87358f8aad13bd is the historical last fully verified code commit before the current TUD trainer and เดิน override changes; it is not the current branch head."
+    "latest_verified_commit_note": "43687b2753379b1d617b1c925f87358f8aad13bd is the historical last fully verified code commit before the current TUD trainer and เดิน override changes; it is not the current branch head.",
+    "latest_verified_code_commit_note": "Exact-head engineering checks pass; this is still a research prototype. CI success does not establish independent phonetic gold, target orthography quality, or production segmentation accuracy."
   },
   "challenge_runtime": {
     "challenge_inputs": 36,
-    "ordinary_lexicon_resolved": 28,
-    "lexical_ipa_override_resolved": 1,
+    "ordinary_lexicon_resolved": 27,
+    "lexical_ipa_override_resolved": 2,
     "segmentation_unresolved": 7,
-    "complete_engine_outputs": 26,
-    "abstentions_or_incomplete": 10,
+    "complete_engine_outputs": 27,
+    "abstentions_or_incomplete": 9,
     "evaluation_kind": "runtime_diagnostic_not_accuracy_benchmark"
   },
   "master_artifact": {
@@ -144,24 +143,24 @@
     "source_records": 6,
     "complete_engine_outputs": 6,
     "withheld_or_incomplete": 0,
-    "segmental_agreements": 4,
-    "tone_agreements": 5,
-    "source_override_circular_count": 1,
-    "independently_comparable_records": 5,
+    "segmental_agreements": 3,
+    "tone_agreements": 4,
+    "source_override_circular_count": 2,
+    "independently_comparable_records": 4,
     "discrepancy": "บรรจุ: source transcription includes final /ʔ/ while current engine segmental output omits it; no universal rule added pending transcription-level/context adjudication",
     "evidence_grade": "SOURCE_ATTESTED_NOT_GOLD",
     "accuracy_claimed": false,
-    "verification_status": "EXPECTED_FROM_CURRENT_CODE; exact-head CI still pending"
+    "verification_status": "PASS on exact-head CI run 40296520186; source-attested dictionary evidence only, not independent gold"
   },
   "word_boundary_baseline": {
     "corpus": "Wisesight-1000",
     "rows": 993,
     "status": "SOURCE_ANNOTATED_NOT_EXPERT_ADJUDICATED",
     "prediction_coverage": 1,
-    "boundary_precision": 0.638319,
-    "boundary_recall": 0.091858,
-    "boundary_f1": 0.160604,
-    "exact_sequence_rate": 0.031219,
+    "boundary_precision": 0.6383191595797899,
+    "boundary_recall": 0.0918580375782881,
+    "boundary_f1": 0.1606041535556954,
+    "exact_sequence_rate": 0.03121852970795569,
     "used_for_training": false
   },
   "corpus_source_registry": {
@@ -176,7 +175,7 @@
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
   "latest_code_checkpoint": "43687b2753379b1d617b1c925f87358f8aad13bd",
   "readiness": "engineering-verified research prototype; not release-ready for arbitrary Thai text or empirically validated IPA/Ukrainian output",
-  "latest_verified_repository_head": "6a153e26e17c4929fdc166b3dbeb73444668f2b1",
+  "latest_verified_repository_head": "4c3d01d9b726b410c98048878441082d8d5c8299",
   "task_ledger": [
     {
       "id": "SEG-TRAIN-001",
@@ -213,10 +212,58 @@
     }
   ],
   "latest_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
-  "latest_implementation_commit_pending_ci": "088b4e6649fde09f2c9d1232091e2e3c8091d9bd",
-  "current_head_status_at_audit_refresh": "PENDING: code-bearing commit 088b4e6649fde09f2c9d1232091e2e3c8091d9bd has CI run 40286919016 queued; browser static validation passed on the JS code checkpoint 1ed4c7aa30759fd8d31136e46d7490bf9b2c5e8b (run 40286893366). Pre-audit documentation checkpoint bdb15e1c2715623f571f3ca3cb2d115245c6a84c has CI run 40286947303 and Web static validation run 40286947306 queued. Exact latest audit commit must be checked separately.",
+  "latest_implementation_commit_pending_ci": null,
+  "current_head_status_at_audit_refresh": "PASS: code/data commit 4c3d01d9b726b410c98048878441082d8d5c8299 has successful CI run 40296520186 and Web static validation run 40296520175. Update this field after the documentation-only audit commits are pushed and their final-head workflow status is known.",
   "current_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
-  "current_implementation_commit_before_audit_update": "77a175d4c5dd765750110509b49affc67f05f15a",
-  "latest_documentation_checkpoint_before_audit": "bdb15e1c2715623f571f3ca3cb2d115245c6a84c",
-  "audit_note": "This audit commit follows the pre-audit documentation checkpoint above. Its exact-head CI status is pending and must be checked after the commit is created. Do not infer success from an earlier run."
+  "current_implementation_commit_before_audit_update": "4c3d01d9b726b410c98048878441082d8d5c8299",
+  "latest_documentation_checkpoint_before_audit": "4c3d01d9b726b410c98048878441082d8d5c8299",
+  "audit_note": "Audit synchronized after exact-head CI and Web static validation passed on code/data commit 4c3d01d9b726b410c98048878441082d8d5c8299. Documentation-only updates record 176 passing Python tests, passing Node/parity/UI checks, passing candidate-registry reproducibility, source-attested IPA diagnostic counts, Wisesight descriptive baselines, TUD research metrics, and remaining evidence-gated blockers. Do not treat source-annotated corpus metrics or dictionary-attested IPA as independent gold.",
+  "dictionary_max_match_baseline": {
+    "corpus": "Wisesight-1000",
+    "rows": 993,
+    "status": "SOURCE_ANNOTATED_NOT_EXPERT_ADJUDICATED",
+    "prediction_coverage": 1,
+    "boundary_precision": 0.8222866611433306,
+    "boundary_recall": 0.8573896767691311,
+    "boundary_f1": 0.8394713656387666,
+    "exact_sequence_rate": 0.1933534743202417,
+    "used_for_training": false,
+    "role": "opt-in diagnostic baseline; not production-quality evidence"
+  },
+  "tud_research_segmenter": {
+    "model_id": "clippyfirst-tud-unigram-viterbi-v1",
+    "source_commit": "67413969add552b7030184f16f24fa9f630913bc",
+    "source_license": "CC-BY-SA-4.0",
+    "training_sentences": 3041,
+    "training_vocabulary": 5319,
+    "wisesight_used_for_training_or_tuning": false,
+    "development": {
+      "groups": 1142,
+      "boundary_precision": 0.8046520079956387,
+      "boundary_recall": 0.9931591342379724,
+      "boundary_f1": 0.8890227375395272,
+      "exact_group_rate": 0.3274956217162872
+    },
+    "test": {
+      "groups": 375,
+      "boundary_precision": 0.788597842835131,
+      "boundary_recall": 0.9774637127578304,
+      "boundary_f1": 0.8729319461026778,
+      "exact_group_rate": 0.432
+    },
+    "wisesight_test_only": {
+      "groups": 2848,
+      "boundary_precision": 0.6592214086287731,
+      "boundary_recall": 0.9920723006183606,
+      "boundary_f1": 0.79210051587176,
+      "exact_group_rate": 0.3851825842696629
+    },
+    "status": "RESEARCH_SEGMENTER_DIAGNOSTIC_NOT_RELEASE_VALIDATION",
+    "caveats": [
+      "TUD annotations are not independent expert re-adjudication.",
+      "Metrics cover contiguous Thai-only runs with at least two tokens, not full-text performance.",
+      "The model is not the production default; preserve CC BY-SA 4.0 attribution/share-alike."
+    ]
+  },
+  "latest_implementation_commit_ci_verified": "4c3d01d9b726b410c98048878441082d8d5c8299"
 }
