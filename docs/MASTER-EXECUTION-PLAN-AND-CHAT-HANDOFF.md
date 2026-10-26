@@ -865,3 +865,11 @@ Web static validation [40305933181](https://github.com/ClippyFirst/Thai-Ukrainia
 - New CI, Web static validation and VISTEC workflow runs were queued when last checked. No result from those runs is claimed as passed.
 - Local tests remain unexecuted because the environment previously could not resolve github.com. GitHub Actions is the available verification path.
 - PR #71 remains open Draft. PR #68 remains closed unmerged as superseded; its branch is preserved. No PR was merged and no release was published.
+
+
+### Final handoff synchronization — 2026-10-26
+
+- The VISTEC workflow sparse-checkout configuration was corrected to non-cone mode so the pinned nested CSV/license/README file paths are selected explicitly. Code/workflow checkpoint: a56fc37b11e74a1a52b8b80736eeb4724746ba2b.
+- Machine-readable audit synchronization checkpoint: c6dac498ec8c7939c6f2bfbcea04c8d1fdeab96a.
+- The branch head immediately before this final handoff update was c6dac498ec8c7939c6f2bfbcea04c8d1fdeab96a. This handoff update creates the final commit; inspect the branch ref for its resulting SHA.
+- Exact-head CI, Web static validation and External VISTEC segmentation evaluation remain queued in the latest observed workflow state. No current-batch tests are claimed as passed and no VISTEC metric is claimed. The next genuine blocker is execution of these queued workflows, followed by actual human/specialist adjudication and the OBEC access issue.
