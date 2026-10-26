@@ -158,3 +158,10 @@ Verified code/data head: [CI 40238202167](https://github.com/ClippyFirst/Thai-Uk
 | Ukrainian target forms | BLOCKED | Needs independent Ukrainian-native reviewers, blinded criteria-based judgments, and a disagreement log. |
 | `บรรจุ` final `/ʔ/` | PARTIAL / EVIDENCE-LIMITED | Keep discrepancy open until context/transcription-level expert adjudication; do not add a global rule. |
 | Release readiness | NOT READY | Engineering checks pass, but empirical pronunciation/target-form gold and production segmentation quality are not established. |
+
+
+## Special-letter source contract — 2026-10-26
+
+- The official OBEC/IPST guide registered as `SRC-OBEC-SPECIAL-VOWELS-2022` (pp. 5 and 7) supports classifying `ฤ`, `ฤๅ`, `ฦ`, and `ฦๅ` as syllabic/lexical constructions and documents the lexical `อ นำ ย` family `อย่า`, `อยู่`, `อย่าง`, `อยาก`.
+- The parser deliberately continues to return `analysis-dependent:special-orthography` with no IPA or Ukrainian output for isolated special vowel letters. The source is a scope constraint, not a universal word-reading or pronunciation gold set.
+- Added regression tests in Python and browser parity; exact-head CI must pass before this row is considered verified.
