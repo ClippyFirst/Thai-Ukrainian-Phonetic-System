@@ -923,7 +923,31 @@
       "artifact_sha256": "582a28766f29f11ac54bac7764a52ddfdfd3e78ad26f4acc311fac3f82f6c6a3",
       "rows": 50000,
       "adjudicated_rows": 0,
-      "interpretation": "Source-annotated segmentation agreement diagnostic, not independently adjudicated accuracy. Upstream README states 49,997 samples; pinned CSV has 50,000 parseable rows."
+      "interpretation": "Source-annotated segmentation agreement diagnostic, not independently adjudicated accuracy. Upstream README states 49,997 samples; pinned CSV has 50,000 parseable rows.",
+      "artifact_inspection": {
+        "status": "DONE_VERIFIED",
+        "archive_member": "vistec-segmentation-report.json",
+        "archive_bytes": 1659,
+        "report_schema_version": "1.0",
+        "zip_sha256": "582a28766f29f11ac54bac7764a52ddfdfd3e78ad26f4acc311fac3f82f6c6a3",
+        "dictionary_max_match": {
+          "boundary_precision": 0.7687958171077649,
+          "boundary_recall": 0.8978784545804036,
+          "boundary_f1": 0.8283384604640367,
+          "exact_sequence_matches": 76,
+          "exact_sequence_rate": 0.00152,
+          "coverage": 1
+        },
+        "tud_unigram_viterbi": {
+          "boundary_precision": 0.6064011335968544,
+          "boundary_recall": 0.9931576338081688,
+          "boundary_f1": 0.7530225550370759,
+          "exact_sequence_matches": 16,
+          "exact_sequence_rate": 0.00032,
+          "coverage": 1
+        },
+        "interpretation": "50000 source-annotated rows, 0 adjudicated rows. Dictionary has higher F1/exact sequences than TUD; TUD recall is very high but precision is lower. These are agreement diagnostics only, not expert-gold accuracy."
+      }
     },
     "refresh_documentation_pr": {
       "number": 72,
