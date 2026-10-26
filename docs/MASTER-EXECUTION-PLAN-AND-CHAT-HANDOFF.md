@@ -1046,3 +1046,8 @@ The public Pages URL is https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-Sy
 ### VISTEC evaluation check
 
 The latest inspected successful VISTEC run is [40377560151](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40377560151), job `vistec-evaluation`, testing code checkpoint `274371594cc8a0b65677bb126242d90acc17caf5`. Artifact `12676540165` (`vistec-external-segmentation-evaluation`) has reported SHA-256 `582a28766f29f11ac54bac7764a52ddfdfd3e78ad26f4acc311fac3f82f6c6a3`. It covers the 50,000 rows in the pinned CSV; upstream README metadata says 49,997. Keep both facts visible. The 50,000 labels are source-annotated, not expert-adjudicated gold, and this run is a segmentation agreement diagnostic rather than an accuracy claim.
+
+
+### Documentation reconciliation PR
+
+PR [#72](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/72) is open from `audit/post-beta-live-verification-20261026` to `main`. It updates only the canonical audit, validation matrix, and handoff records; it does not change engine behavior, datasets, or hosting configuration. Head at this note: `9e29dddd98c260c53f0730709f5da667e3843213`. Exact-head CI for this documentation branch was not available for confirmation in this session. Do not merge it on the assumption that checks passed; inspect PR checks and review the four-file diff first.
