@@ -21,6 +21,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Generate pinned CC0 browser word dictionary
+        run: python scripts/generate_web_word_dictionary.py
       - name: Check browser JavaScript syntax
         run: |
           node --check web/src/app.js

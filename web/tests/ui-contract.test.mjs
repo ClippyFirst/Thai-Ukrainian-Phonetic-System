@@ -77,6 +77,16 @@ assert.match(output.innerHTML, /Результат 2: เดิน/);
 assert.equal((output.innerHTML.match(/class="label">ФОНОЛОГІЧНА IPA<\/span>/g) || []).length, 2);
 assert.equal(status.className, "status");
 
+// A longer CC0 dictionary word must win over a supported substring.
+// กาแฟ contains กา, but the engine must not claim IPA for only that substring.
+input.value = "กาแฟ";
+analyze.click();
+assert.match(output.innerHTML, /Результат 1: กาแฟ/);
+assert.doesNotMatch(output.innerHTML, /Результат 2:/);
+assert.doesNotMatch(output.innerHTML, /ФОНОЛОГІЧНА IPA/);
+assert.match(output.innerHTML, /unresolved/);
+assert.equal(status.className, "status notice");
+
 // Whole unspaced Thai runs must split into known lexicon entries, not be
 // treated as one dictionary key. Unknown spans must not suppress adjacent IPA.
 input.value = "กาไฟมา";

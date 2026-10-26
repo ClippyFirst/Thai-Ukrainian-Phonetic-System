@@ -34,3 +34,6 @@ data/derived/thai_ukrainian_master_2col.csv
 
 # Generated web parity fixture
 web/tests/fixtures.python.json
+
+# Generated browser word index from pinned CC0 Thai dictionary
+web/src/word-dictionary.generated.js

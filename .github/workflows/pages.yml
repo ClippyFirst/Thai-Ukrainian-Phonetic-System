@@ -42,6 +42,8 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 22
+      - name: Generate pinned CC0 browser word dictionary
+        run: python scripts/generate_web_word_dictionary.py
       - name: Run browser parity test
         run: node web/tests/parity.test.mjs
       - name: Run UI contract and beta disclosure checks
@@ -63,3 +65,23 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Verify published whole-text UI contract
+        env:
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          set -eu
+          for attempt in $(seq 1 12); do
+            if curl --fail --silent --show-error "$PAGE_URL" -o /tmp/deployed-index.html \
+              && grep -Fq 'Вводьте цілий тайський текст' /tmp/deployed-index.html \
+              && grep -Fq 'data-example="กา"' /tmp/deployed-index.html \
+              && grep -Fq 'data-example="จริง"' /tmp/deployed-index.html \
+              && grep -Fq 'БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ' /tmp/deployed-index.html; then
+              echo "Published homepage contract verified at $PAGE_URL"
+              exit 0
+            fi
+            if [ "$attempt" -eq 12 ]; then
+              echo "Published homepage did not expose the expected whole-text UI contract after 12 attempts" >&2
+              exit 1
+            fi
+            sleep 5
+          done
