@@ -102,10 +102,10 @@
       40238198334,
       40238202181
     ],
-    "current_head_status_at_audit_refresh": "PASS: code/data/test head 43687b2 CI run 40238202167 and Web static validation 40238202181 passed; final docs-only head 6a153e2 CI run 40238672074 and Web static validation 40238671983 passed",
-    "latest_full_repository_head": "6a153e26e17c4929fdc166b3dbeb73444668f2b1",
-    "latest_full_repository_head_ci_run": 40238672074,
-    "latest_full_repository_head_web_validation_run": 40238671983
+    "current_head_status_at_audit_refresh": "PENDING: implementation head 77a175d4c5dd765750110509b49affc67f05f15a; CI run 40286374324 and Web static validation 40286374333 queued at audit refresh. Earlier verified checkpoints are historical only.",
+    "latest_full_repository_head": "77a175d4c5dd765750110509b49affc67f05f15a",
+    "latest_full_repository_head_ci_run": 40286374324,
+    "latest_full_repository_head_web_validation_run": 40286374333
   },
   "challenge_runtime": {
     "challenge_inputs": 36,
@@ -139,15 +139,16 @@
   },
   "source_attested_ipa_diagnostic": {
     "source_records": 6,
-    "complete_engine_outputs": "pending exact-head CI",
-    "withheld_or_incomplete": "pending exact-head CI",
-    "segmental_agreements": "same-source override excluded; exact-head CI pending",
-    "tone_agreements": "same-source override excluded; exact-head CI pending",
+    "complete_engine_outputs": 6,
+    "withheld_or_incomplete": 0,
+    "segmental_agreements": 4,
+    "tone_agreements": 5,
     "source_override_circular_count": 1,
     "independently_comparable_records": 5,
     "discrepancy": "บรรจุ: source transcription includes final /ʔ/ while current engine segmental output omits it; no universal rule added pending transcription-level/context adjudication",
     "evidence_grade": "SOURCE_ATTESTED_NOT_GOLD",
-    "accuracy_claimed": false
+    "accuracy_claimed": false,
+    "verification_status": "EXPECTED_FROM_CURRENT_CODE; exact-head CI still pending"
   },
   "word_boundary_baseline": {
     "corpus": "Wisesight-1000",
@@ -209,6 +210,8 @@
     }
   ],
   "latest_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
-  "latest_implementation_commit_pending_ci": "bd9b8ab2a081c74791b1343902f5992a80007c11",
-  "current_head_status_at_audit_refresh": "Pending: new lexical override, circularity guard, TUD training experiment, and adjudication templates have not yet passed exact-head CI. Prior verified checkpoints remain historical only."
+  "latest_implementation_commit_pending_ci": "77a175d4c5dd765750110509b49affc67f05f15a",
+  "current_head_status_at_audit_refresh": "PENDING: implementation head 77a175d4c5dd765750110509b49affc67f05f15a; CI run 40286374324 and Web static validation 40286374333 queued at audit refresh. Earlier verified checkpoints are historical only.",
+  "current_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
+  "current_implementation_commit_before_audit_update": "77a175d4c5dd765750110509b49affc67f05f15a"
 }
