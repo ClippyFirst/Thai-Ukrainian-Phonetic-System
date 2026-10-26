@@ -552,8 +552,29 @@
       "all-empty input"
     ],
     "local_tests": "NOT_RUN",
-    "workflow_status": "NO_RUN_OR_COMBINED_STATUS_SURFACED_AT_LAST_CHECK",
+    "workflow_status": "QUEUED_AT_EXACT_BRANCH_HEAD",
     "metric_claimed": false,
-    "acceptance": "Exact-head CI and VISTEC workflow pass; inspect report artifact and confirm pinned 49,997-row source is accepted."
+    "acceptance": "Exact-head CI and VISTEC workflow pass; inspect report artifact and confirm pinned 49,997-row source is accepted.",
+    "workflow_runs": [
+      {
+        "name": "CI",
+        "run_id": 40346688497,
+        "status": "queued",
+        "conclusion": null
+      },
+      {
+        "name": "Web static validation",
+        "run_id": 40346688520,
+        "status": "queued",
+        "conclusion": null
+      },
+      {
+        "name": "External VISTEC segmentation evaluation",
+        "run_id": 40346688621,
+        "status": "queued",
+        "conclusion": null
+      }
+    ],
+    "last_status_checked": "2026-10-26"
   }
 }
