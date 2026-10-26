@@ -35,7 +35,7 @@ class SourceAttestedIpaRegistryTests(unittest.TestCase):
         path = ROOT / "data" / "thai" / "lexical_ipa_overrides.tsv"
         with path.open("r", encoding="utf-8-sig", newline="") as stream:
             overrides = list(csv.DictReader(stream, delimiter="\t"))
-        self.assertEqual([row["word"] for row in overrides], ["เงิน"])
+        self.assertEqual([row["word"] for row in overrides], ["เงิน", "เดิน"])
         row = overrides[0]
         self.assertEqual(row["segmental_ipa"], "ŋɤn")
         self.assertEqual(row["tone_category"], "mid")
@@ -43,6 +43,13 @@ class SourceAttestedIpaRegistryTests(unittest.TestCase):
         self.assertEqual(row["source_revision"], "5759179")
         self.assertEqual(row["license"], "CC-BY-SA-4.0")
         self.assertEqual(row["status"], "ACTIVE_SOURCE_ATTESTED_NOT_GOLD")
+        walk = overrides[1]
+        self.assertEqual(walk["segmental_ipa"], "dɤːn")
+        self.assertEqual(walk["tone_category"], "mid")
+        self.assertEqual(walk["vowel_length"], "long")
+        self.assertEqual(walk["source_revision"], "1908803")
+        self.assertEqual(walk["license"], "CC-BY-SA-4.0")
+        self.assertEqual(walk["status"], "ACTIVE_SOURCE_ATTESTED_NOT_GOLD")
 
 
     def test_money_override_and_lexicon_source_registry_share_exact_revision(self):
