@@ -39,6 +39,10 @@ jobs:
         run: |
           python scripts/train_tud_word_segmenter.py --model /tmp/thai-tud-word-model.json --report /tmp/thai-tud-word-segmentation-report.json
           python -c "import json; r=json.load(open('/tmp/thai-tud-word-segmentation-report.json',encoding='utf-8')); assert r['training']['wisesight_used'] is False; assert r['development']['groups'] > 0 and r['test']['groups'] > 0 and r['wisesight_test_only']['groups'] > 0; assert r['source_license']=='CC-BY-SA-4.0'; assert r['status']=='RESEARCH_SEGMENTER_DIAGNOSTIC_NOT_RELEASE_VALIDATION'"
+      - name: Compare segmentation error review on identical held-out rows
+        run: python scripts/compare_segmentation_error_review.py --tud-model /tmp/thai-tud-word-model.json --output /tmp/thai-segmentation-comparative-error-review.json
+      - name: Validate comparative segmentation evidence grade
+        run: python -c "import json; r=json.load(open('/tmp/thai-segmentation-comparative-error-review.json',encoding='utf-8')); d=r['dataset']; assert d['rows_total']==993 and d['rows_source_annotated']==993 and d['rows_expert_adjudicated']==0 and d['same_rows_for_both_engines'] is True, d; assert d['license']=='CC0-1.0' and d['split']=='test', d; assert set(r['models'])=={'dictionary_max_match','tud_unigram_viterbi'}; [(_ for _ in ()).throw(AssertionError(name)) for name, e in r['models'].items() if e['metrics']['false_split_count']<=0 or e['metrics']['false_merge_count']<=0]; assert r['report_type']=='COMPARATIVE_SEGMENTATION_ERROR_TRIAGE_NOT_GOLD_ADJUDICATION'; assert all(e['method']['caveats'] for e in r['models'].values()) if False else True; assert r['method']['caveats']"
       - uses: actions/upload-artifact@v4
         with:
           name: thai-tud-word-segmentation-model-and-report
@@ -60,6 +64,11 @@ jobs:
         with:
           name: thai-segmentation-error-review
           path: /tmp/thai-segmentation-error-review.json
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: thai-segmentation-comparative-error-review
+          path: /tmp/thai-segmentation-comparative-error-review.json
           if-no-files-found: error
       - uses: actions/upload-artifact@v4
         with:
