@@ -412,3 +412,6 @@ This update supersedes the prior row stating that the Pages deployment was block
 | Linguistic release gates | BLOCKED / PARTIAL | 993 Wisesight and 50,000 VISTEC rows remain source-annotated, with zero independently adjudicated rows. Independent Thai IPA/acoustic review, two Ukrainian-native target reviews, human segmentation adjudication, context-level review of บรรจุ final /ʔ/, lawful full official OBEC PDF access, and per-dataset license/attribution review remain open. Coverage is not accuracy. |
 
 Current main head at this refresh: `314d2fd2efab107dfa509c23d1f9b9dad2ed42f0`. This is a documentation handoff commit. The latest directly inspected main CI run remains `40381878163` on `7bcc7e21c98bde8f55a7c56a1c1a97fe3486b72e`; exact-head CI for the current docs commit was not independently confirmed here.
+
+
+| External VISTEC evaluation | DONE_VERIFIED for source-annotation diagnostic | Latest inspected successful run [40377560151](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40377560151), job `vistec-evaluation`, on code checkpoint `274371594cc8a0b65677bb126242d90acc17caf5`; artifact ID `12676540165`, SHA-256 `582a28766f29f11ac54bac7764a52ddfdfd3e78ad26f4acc311fac3f82f6c6a3`. The run processes 50,000 pinned CSV rows, all source-annotated and zero adjudicated. This is not independent-gold accuracy. |
