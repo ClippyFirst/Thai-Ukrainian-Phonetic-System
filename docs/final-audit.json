@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "engineering-verified research prototype; latest code-bearing CI failed on stale VISTEC license assertion; VISTEC workflow exposed README-vs-CSV row-count mismatch; fixes committed; exact-head revalidation pending; independent linguistic adjudication incomplete; not release-ready",
+  "status": "Merged whole-text Thai input improvement; code-bearing checkpoint 3ccf84f564add02c189524c3b9ca794154d35c8b passed CI test + master-artifact and web static validation; current UI Pages deployment not independently verified; independent linguistic adjudication incomplete; not release-ready.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -819,5 +819,80 @@
       "current_main_commit_when_checked": "7bcc7e21c98bde8f55a7c56a1c1a97fe3486b72e"
     },
     "current_main_commit_after_audit_docs": "33bc06af283dddc72b7bab23b9767ad7ff9abf18"
+  },
+  "whole_text_ui_followup_2026_10_26": {
+    "checked_at": "2026-10-26T23:41:00+02:00",
+    "current_main_head": "605d849c2148b7242fac56e581b6319bb17fd4f4",
+    "merged_code_pr": {
+      "number": 73,
+      "merge_commit": "e49b5f2b54d42e577f732b4308080e11e410d557",
+      "code_checkpoint": "3ccf84f564add02c189524c3b9ca794154d35c8b",
+      "ci_run": 40402504410,
+      "ci_jobs": {
+        "test": "success",
+        "master_artifact": "success"
+      },
+      "web_static_validation_run": 40402504394,
+      "web_static_validation": "success"
+    },
+    "merged_docs_pr": {
+      "number": 74,
+      "merge_commit": "605d849c2148b7242fac56e581b6319bb17fd4f4",
+      "ci_run": 40404124198,
+      "ci_jobs": {
+        "test": "success",
+        "master_artifact": "success"
+      }
+    },
+    "open_docs_pr": {
+      "number": 75,
+      "head_commit": "4b02eb693e1e300a9082ff58a189bf621228a602",
+      "status": "open",
+      "purpose": "Consolidate whole-text evidence and add authoritative current status to validation matrix",
+      "checks": "No PR-triggered workflow runs were returned for this head at audit refresh; do not claim its checks passed."
+    },
+    "pages": {
+      "status": "UNVERIFIED",
+      "workflow_configured_for_main_push": true,
+      "reason": "Available GitHub connector only returns pull-request-triggered workflow runs; direct fetch of served HTML was unavailable. Need successful post-merge Pages build/deploy run and inspection of served HTML."
+    },
+    "implementation": {
+      "status": "PARTIAL",
+      "description": "Whole-text UI uses greedy longest-known-entry matching and preserves unmatched spans without guessed IPA/Ukrainian output.",
+      "known_risk": "Greedy matching can identify a known substring inside an unknown word; regression tests establish behavior only for listed cases, not general Thai segmentation accuracy."
+    },
+    "readiness": "PARTIAL_RESEARCH_PROTOTYPE_NOT_RELEASE_READY",
+    "blockers": [
+      {
+        "id": "SEG-HUMAN-001",
+        "status": "BLOCKED",
+        "acceptance": "Qualified Thai reviewers adjudicate a prespecified sample, define tokenization conventions, and publish a disagreement log."
+      },
+      {
+        "id": "IPA-GOLD-001",
+        "status": "BLOCKED",
+        "acceptance": "Authorized audio/TextGrid access and independent Thai phonetic annotation with transcription-level protocol."
+      },
+      {
+        "id": "UA-TARGET-001",
+        "status": "BLOCKED",
+        "acceptance": "Two independent Ukrainian-native reviewers, blinded target-form judgments, and adjudication log."
+      },
+      {
+        "id": "BANCHU-IPA-001",
+        "status": "PARTIAL_EVIDENCE_LIMITED",
+        "acceptance": "Context-specific independent review of the final /ʔ/ in บรรจุ; no global rule before adjudication."
+      },
+      {
+        "id": "OBEC-PDF-001",
+        "status": "BLOCKED",
+        "acceptance": "Lawful access to the complete official PDF and page/section-scoped evidence."
+      },
+      {
+        "id": "LICENSE-REGISTRY-001",
+        "status": "PARTIAL",
+        "acceptance": "Final per-resource license compatibility and attribution review for redistributed/generated artifacts."
+      }
+    ]
   }
 }
