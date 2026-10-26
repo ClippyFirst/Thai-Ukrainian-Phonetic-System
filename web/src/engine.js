@@ -1,4 +1,4 @@
-import {C,M,UA,OU,CU,VS,PRE} from "./data.js"; import {detectVowel} from "./vowels.js"; import {adaptIpaToUkrainian} from "./ipa-ua.js";
+import {C,M,UA,OU,CU,VS,PRE} from "./data.js"; import {detectVowel} from "./vowels.js"; import {adaptIpaToUkrainian} from "./ipa-ua.js"; import {WORDS_BY_FIRST} from "./word-dictionary.generated.js";
 const normalize=s=>s.normalize("NFC").replace(/^[ \t\r\n]+|[ \t\r\n]+$/g, ""), chars=s=>[...s], SHORT=new Set(["p","t","k","ʔ"]), LIVE=new Set(["m","n","ŋ","j","w"]), TONE_SONORANTS=new Set(["m","n","ŋ","j","w","r","l"]);
 const FIRST=new Set(["ก","ข","ค","ต","ป","ผ","พ","ท"]),SECOND=new Set(["ร","ล","ว"]),LEAD=new Set(["ง","ญ","น","ม","ย","ร","ล","ว"]),LOW=new Set(["ค","ฅ","ฆ","ง","ช","ซ","ฌ","ญ","ฑ","ฒ","ณ","ท","ธ","น","พ","ฟ","ภ","ม","ย","ร","ล","ว","ฬ","ฮ"]);
 function special(s){const x=[["รร","SP-RR-001"],["ฤ","SP-RUE-001"],["ฤๅ","SP-RUE-LONG-001"],["ฦ","SP-LUE-001"],["ฦๅ","SP-LUE-LONG-001"],["์","SP-KARAN-001"],["ทร","SP-THR-001"],["จร","SP-JR-001"],["สร","SP-SR-001"],["ศร","SP-SR-HIGH-001"],["ซร","SP-ZR-001"],["อย","SP-O-NAM-001"]];return x.filter(z=>z[0]==="อย"?s.startsWith(z[0]):s.includes(z[0])).map(z=>({rule_id:z[1],status:"analysis-dependent"}))}
@@ -142,30 +142,75 @@ function tokenizeText(text) {
 }
 const TEXT_WORDS = [...new Set([...TEXT_LEXICON.keys(), ...LEXICAL_IPA_OVERRIDES.keys()])]
   .sort((a,b)=>[...b].length-[...a].length || a.localeCompare(b,"th"));
+const PREPOSED = new Set(["เ","แ","โ","ใ","ไ"]);
+const COMBINING = new Set([...VS, ...Object.keys(M), "์"]);
 
-function matchTextWord(chars, offset){
+function nextThaiClusterEnd(chars, start){
+  let i=start;
+  if(PREPOSED.has(chars[i]) && i+1<chars.length && C[chars[i+1]]) i+=2;
+  else i++;
+  while(i<chars.length && COMBINING.has(chars[i])) i++;
+  return i;
+}
+
+function clusterBoundaries(chars){
+  const ends=new Set([0]), endByStart=new Map();
+  let i=0;
+  while(i<chars.length){
+    const end=nextThaiClusterEnd(chars,i);
+    endByStart.set(i,end);
+    ends.add(end);
+    i=end;
+  }
+  return {ends,endByStart};
+}
+
+function matchTextWord(chars, offset, boundaries){
   for(const word of TEXT_WORDS){
-    const letters=[...word];
-    if(letters.every((char,index)=>chars[offset+index]===char)) return word;
+    const letters=[...word], end=offset+letters.length;
+    if(boundaries.has(end) && letters.every((char,index)=>chars[offset+index]===char)) return word;
   }
   return null;
 }
 
-// Conservative dictionary max-match: known lexicon entries can be analyzed,
-// while contiguous unknown material remains visible as an unresolved span.
-// This is not claimed to be a complete Thai word segmenter.
+function matchDictionaryWord(chars, offset, boundaries){
+  const candidates=WORDS_BY_FIRST.get(chars[offset]) || [];
+  for(const word of candidates){
+    const length=[...word].length, end=offset+length;
+    if(end>chars.length || !boundaries.has(end)) continue;
+    let matches=true;
+    for(let j=0;j<length;j++) if(chars[offset+j]!==word[j]) { matches=false; break; }
+    if(matches) return word;
+  }
+  return null;
+}
+
+// Prefer the longest match from the pinned CC0 word dictionary or the curated
+// pronunciation lexicon. Curated entries win ties; a longer dictionary word
+// prevents the engine from emitting IPA for a known substring inside that word.
+// Dictionary boundaries alone never authorize IPA: words without reviewed
+// syllabification/pronunciation remain unresolved. This is still max-match,
+// not a context-aware or expert-validated Thai segmenter.
 function segmentThaiRun(input){
   const chars=[...input], segments=[];
+  const {ends,endByStart}=clusterBoundaries(chars);
   let i=0;
+  const matchAt=offset=>{
+    const lexical=matchTextWord(chars,offset,ends);
+    const dictionary=matchDictionaryWord(chars,offset,ends);
+    if(lexical && (!dictionary || [...lexical].length >= [...dictionary].length)) return lexical;
+    return dictionary;
+  };
   while(i<chars.length){
-    const match=matchTextWord(chars,i);
+    const match=matchAt(i);
     if(match){
-      segments.push({input:match,kind:"thai",known:true});
+      segments.push({input:match,kind:"thai",known:TEXT_LEXICON.has(match)||LEXICAL_IPA_OVERRIDES.has(match)});
       i += [...match].length;
       continue;
     }
-    const start=i++;
-    while(i<chars.length && !matchTextWord(chars,i)) i++;
+    const start=i;
+    i=endByStart.get(i) ?? i+1;
+    while(i<chars.length && !matchAt(i)) i=endByStart.get(i) ?? i+1;
     segments.push({input:chars.slice(start,i).join(""),kind:"thai",known:false});
   }
   return segments;
