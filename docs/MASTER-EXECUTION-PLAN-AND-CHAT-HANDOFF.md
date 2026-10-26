@@ -9,7 +9,7 @@ Release declared in README/pyproject: `0.6.1`
 ## Latest verified checkpoint — 2026-10-26
 
 - Current code/data commit: `4c3d01d9b726b410c98048878441082d8d5c8299` on `research/thai-segmentation-gold-parity-verified-20261025`.
-- Exact-head CI [40296520186](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40296520186) and Web static validation [40296520175](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40296520175) both PASS. Python unit tests: 176 passed. Generated-data drift, master table (351,780 rows / 41 vowel-rime records), Node IPA→UA, parity/UI, 36-input runtime diagnostic, Wisesight diagnostics, target-candidate TSV check, source-attested IPA gate, TUD training/evaluation, and artifact uploads passed.
+- Exact code/data-head CI [40296520186](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40296520186) and Web static validation [40296520175](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40296520175) both PASS. Python unit tests: 176 passed. Final documentation head `cb8832ca99e4ccce53b6fb2b6988b5945acaad71` then passed CI [40297155713](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40297155713) and Web static validation [40297155831](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40297155831). Generated-data drift, master table (351,780 rows / 41 vowel-rime records), Node IPA→UA, parity/UI, 36-input runtime diagnostic, Wisesight diagnostics, target-candidate TSV check, source-attested IPA gate, TUD training/evaluation, and artifact uploads passed.
 - The target-candidate registry mismatch was TSV quoting of JSON values; the generator now prints a unified diff on mismatch and the generated artifact is byte-identical. The source-attested IPA CI assertion was stale after the second lexical override; it now expects 2 circular override rows and 4 independently comparable rows and checks that summary counts agree with the report records.
 - Runtime challenge: 36 inputs; 27 complete outputs; 9 abstentions/incomplete; 2 lexical IPA overrides; 7 unresolved segmentation cases. This is not an accuracy benchmark.
 - Wisesight-1000 (993 source-annotated rows, zero expert-adjudicated): text-tokenizer baseline F1 0.160604 / exact-sequence rate 0.031219; dictionary max-match F1 0.839471 / exact-sequence rate 0.193353. Descriptive only; not independent gold and not used to train/tune TUD.
@@ -671,3 +671,27 @@ Poll the latest commit's CI and Web static validation. If CI fails, inspect exac
 
 - The machine-readable audit was subsequently corrected in commit `c498cd8e9d56146f7dcafd2884bf860ae80af866`; this is the latest documentation head, superseding the `96b474bd15c139f70bfc432de848c7ca2d614537` checkpoint above.
 - Exact-head CI run `40292666463` is still in progress at `scripts/generate_master_table.py`; Web static validation `40292666543` passed. The generator has not yet completed, so later tests, Wisesight diagnostics, TUD model training, and artifact upload have not yet reported results on this head.
+
+
+## Continuation quality review — 2026-10-26
+
+### Final documentation-head checks
+
+- Exact docs head `cb8832ca99e4ccce53b6fb2b6988b5945acaad71`: CI [40297155713](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40297155713) completed successfully for both `test` and `master-artifact`; Web static validation [40297155831](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40297155831) passed.
+- Code/data head `4c3d01d9b726b410c98048878441082d8d5c8299`: full CI [40296520186](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40296520186) passed 176 Python tests and all configured parity, data, diagnostic, TUD-training and artifact checks.
+
+### TUD unigram-Viterbi quality review and integration decision
+
+**Decision: keep research-only; do not integrate as the production default.**
+
+- Held-out TUD: precision 0.788598, recall 0.977464, F1 0.872932, exact-group rate 0.432 (375 filtered Thai-only multi-token groups).
+- Wisesight test-only: precision 0.659221, recall 0.992072, F1 0.792101, exact-group rate 0.385 (2,848 filtered groups).
+- Cross-domain boundary F1 drop: 0.080831. The much higher recall than precision and modest exact-group rates indicate that boundary metrics alone overstate practical segmentation usefulness; Wisesight precision is materially weaker. These are not full-text metrics, and neither source is independent expert adjudication.
+- Acceptance before reconsideration: (1) manually inspect a stratified sample of false splits/merges; (2) set explicit minimum precision/F1/exact-sequence and coverage thresholds before tuning; (3) evaluate on an independently sourced, untouched domain with provenance/license and split integrity documented; (4) confirm runtime/abstention behavior and preserve CC BY-SA 4.0 attribution/share-alike; (5) record an explicit integration decision. Do not tune against Wisesight, which remains test-only.
+
+### Remaining genuine blockers
+
+- **IPA/acoustic gold — BLOCKED:** qualified independent Thai phonetician, agreed broad-vs-surface transcription protocol, and authorized recording/TextGrid access. Acceptance: independent labels, speaker-aware sample, disagreement log, and acoustic evidence for any acoustic claim.
+- **Ukrainian target forms — BLOCKED:** independent Ukrainian-native reviewers, blinded judgments and agreed criteria. Acceptance: versioned criteria, judgments, disagreement log, adjudicated target set.
+- **`บรรจุ` final /ʔ/ — PARTIAL / evidence-limited:** require context/transcription-level expert review; do not apply a global rule.
+- **Release readiness:** not release-ready. Engineering CI is green, but independent pronunciation gold, Ukrainian target adjudication, and production segmentation quality remain unestablished.

@@ -69,7 +69,7 @@ It is **not** yet an empirically validated benchmark. No corpus accuracy percent
 
 ### Evidence-gated limitations
 
-- the default public text endpoint remains conservative and withholds phonetic output for unknown unsegmented Thai spans; an opt-in dictionary segmenter exists, and a separately trained TUD unigram-Viterbi experiment is research-only until its exact-head CI metrics and broader cross-domain validation are reviewed;
+- the default public text endpoint remains conservative and withholds phonetic output for unknown unsegmented Thai spans; an opt-in dictionary segmenter exists, and a separately trained TUD unigram-Viterbi experiment remains research-only: exact-head CI and initial cross-domain metrics are recorded in `docs/validation-matrix.md`, but the recall-heavy profile, limited exact-group rates and lower Wisesight precision do not justify production-default integration pending independent error review and a separately defined acceptance gate;
 - special orthography is represented conservatively as explicit analysis-dependent alternatives where lexical evidence is required;
 - connected-speech narrow phonetics still requires acoustic/phonetic evidence;
 - corpus-calibrated probabilities still require a gold dataset;

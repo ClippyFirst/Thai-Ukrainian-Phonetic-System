@@ -56,7 +56,7 @@
     "production_quality_automatic_word_segmentation",
     "independent_acoustic_ipa_gold"
   ],
-  "lexical_attestation": "Five source-backed runtime text lexicon entries plus two active typed IPA overrides (เงิน and เดิน). The เดิน override uses Thai Wiktionary oldid 1908803 /dɤːn˧/ and is explicitly SOURCE_ATTESTED_NOT_GOLD; the parser-only graphemic ambiguity contract remains intact. Exact-head CI and updated challenge counts are pending.",
+  "lexical_attestation": "Five source-backed runtime text lexicon entries plus two active typed IPA overrides (เงิน and เดิน). The เดิน override uses Thai Wiktionary oldid 1908803 /dɤːn˧/ and is explicitly SOURCE_ATTESTED_NOT_GOLD; the parser-only graphemic ambiguity contract remains intact. Exact-head CI and updated challenge counts passed on code/data head 4c3d01d9b726b410c98048878441082d8d5c8299.",
   "corpus_attestation": "993 source-annotated Wisesight word-tokenization rows (CC0-1.0; test-only, never training/tuning); pinned UD Thai TUD source snapshots under CC BY-SA 4.0 for a research-only frequency-Viterbi experiment; zero independently adjudicated IPA/tone/vowel-length gold rows.",
   "word_boundary_benchmark": {
     "dataset": "PyThaiNLP/Wisesight word-tokenization labels",
@@ -95,15 +95,15 @@
     "source_attested_ipa_diagnostic": "PASS",
     "current_browser_parity_code_head": "43687b2753379b1d617b1c925f87358f8aad13bd",
     "current_head_ci_runs": [
-      40296520186
+      40297155713
     ],
     "current_head_web_validation_runs": [
-      40296520175
+      40297155831
     ],
-    "current_head_status_at_audit_refresh": "PASS: exact code/data head 4c3d01d9b726b410c98048878441082d8d5c8299; CI run 40296520186 and Web static validation run 40296520175 completed successfully. All 176 Python tests, generated-artifact checks, 36-input runtime diagnostic, Node IPA→UA/parity/UI tests, Wisesight diagnostics, target-candidate artifact check, source-attested IPA diagnostic, TUD research training/evaluation and all artifact uploads passed. Documentation follow-up commits remain to be checked on their own final head.",
-    "latest_full_repository_head": "4c3d01d9b726b410c98048878441082d8d5c8299",
-    "latest_full_repository_head_ci_run": 40296520186,
-    "latest_full_repository_head_web_validation_run": 40296520175,
+    "current_head_status_at_audit_refresh": "PASS: final documentation HEAD cb8832ca99e4ccce53b6fb2b6988b5945acaad71; CI run 40297155713 passed both test and master-artifact jobs, and Web static validation run 40297155831 passed. The underlying code/data head 4c3d01d9b726b410c98048878441082d8d5c8299 passed 176 Python tests, generated-artifact checks, Node IPA→UA/parity/UI checks, runtime and corpus diagnostics, source-attested IPA checks, TUD training/evaluation and artifact uploads. No phonetic accuracy claim follows from CI.",
+    "latest_full_repository_head": "cb8832ca99e4ccce53b6fb2b6988b5945acaad71",
+    "latest_full_repository_head_ci_run": 40297155713,
+    "latest_full_repository_head_web_validation_run": 40297155831,
     "latest_web_static_verified_code_commit": "1ed4c7aa30759fd8d31136e46d7490bf9b2c5e8b",
     "latest_web_static_verified_code_run": 40286893366,
     "latest_verified_commit_note": "43687b2753379b1d617b1c925f87358f8aad13bd is the historical last fully verified code commit before the current TUD trainer and เดิน override changes; it is not the current branch head.",
@@ -125,10 +125,11 @@
     "vowel_rime_records": 41
   },
   "latest_documentation_checkpoint": {
-    "commit": "b3eaddde55de0474e47abe01ece7692467f1a229",
-    "ci_run": 40234324067,
+    "commit": "cb8832ca99e4ccce53b6fb2b6988b5945acaad71",
+    "ci_run": 40297155713,
+    "web_static_validation_run": 40297155831,
     "ci_status": "success",
-    "note": "This was the last fully CI-verified documentation head before the final audit-status wording normalization; no code changes were made after the verified code-bearing commit."
+    "note": "Exact final documentation head verified: CI test and master-artifact jobs passed; Web static validation passed. This is documentation-only on top of the previously verified code/data head 4c3d01d9b726b410c98048878441082d8d5c8299."
   },
   "text_only_checkpoint": {
     "branch": "research/thai-segmentation-gold-parity-verified-20261025",
@@ -175,13 +176,13 @@
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
   "latest_code_checkpoint": "43687b2753379b1d617b1c925f87358f8aad13bd",
   "readiness": "engineering-verified research prototype; not release-ready for arbitrary Thai text or empirically validated IPA/Ukrainian output",
-  "latest_verified_repository_head": "4c3d01d9b726b410c98048878441082d8d5c8299",
+  "latest_verified_repository_head": "cb8832ca99e4ccce53b6fb2b6988b5945acaad71",
   "task_ledger": [
     {
       "id": "SEG-TRAIN-001",
       "status": "PARTIAL",
       "implementation": "TUD frequency-Viterbi research trainer, source-blob verification, source-document-disjoint split, dev-only penalty selection, held-out TUD test and Wisesight-only report; CI/artifacts configured",
-      "acceptance": "Exact-head CI passes; inspect TUD/Wisesight metrics; model is usable/integrated only after quality review; preserve CC BY-SA 4.0 attribution/share-alike"
+      "acceptance": "Exact-head CI passes and metrics have been reviewed; current decision is DO NOT integrate as production default. Reconsider only after independent segmentation-quality review, error analysis on representative held-out domains, an explicit acceptance threshold, and preserving CC BY-SA 4.0 attribution/share-alike."
     },
     {
       "id": "IPA-GOLD-001",
@@ -213,11 +214,11 @@
   ],
   "latest_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
   "latest_implementation_commit_pending_ci": null,
-  "current_head_status_at_audit_refresh": "PASS: code/data commit 4c3d01d9b726b410c98048878441082d8d5c8299 has successful CI run 40296520186 and Web static validation run 40296520175. Update this field after the documentation-only audit commits are pushed and their final-head workflow status is known.",
+  "current_head_status_at_audit_refresh": "PASS: final documentation HEAD cb8832ca99e4ccce53b6fb2b6988b5945acaad71; CI run 40297155713 and Web static validation run 40297155831 both passed. Code/data verification remains on 4c3d01d9b726b410c98048878441082d8d5c8299.",
   "current_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
   "current_implementation_commit_before_audit_update": "4c3d01d9b726b410c98048878441082d8d5c8299",
   "latest_documentation_checkpoint_before_audit": "4c3d01d9b726b410c98048878441082d8d5c8299",
-  "audit_note": "Audit synchronized after exact-head CI and Web static validation passed on code/data commit 4c3d01d9b726b410c98048878441082d8d5c8299. Documentation-only updates record 176 passing Python tests, passing Node/parity/UI checks, passing candidate-registry reproducibility, source-attested IPA diagnostic counts, Wisesight descriptive baselines, TUD research metrics, and remaining evidence-gated blockers. Do not treat source-annotated corpus metrics or dictionary-attested IPA as independent gold.",
+  "audit_note": "Audit synchronized after final documentation HEAD cb8832ca99e4ccce53b6fb2b6988b5945acaad71 passed CI run 40297155713 and Web static validation run 40297155831. The code/data head 4c3d01d9b726b410c98048878441082d8d5c8299 passed 176 Python tests and all configured engineering/data gates. TUD quality review recommends keeping the unigram-Viterbi model research-only: recall is high, but exact-group rates remain limited and Wisesight precision is lower; neither dataset is independent expert gold.",
   "dictionary_max_match_baseline": {
     "corpus": "Wisesight-1000",
     "rows": 993,
@@ -263,7 +264,26 @@
       "TUD annotations are not independent expert re-adjudication.",
       "Metrics cover contiguous Thai-only runs with at least two tokens, not full-text performance.",
       "The model is not the production default; preserve CC BY-SA 4.0 attribution/share-alike."
-    ]
+    ],
+    "quality_review": {
+      "decision": "DO_NOT_INTEGRATE_AS_PRODUCTION_DEFAULT",
+      "basis": "TUD held-out boundary recall (0.9775) substantially exceeds precision (0.7886), while exact-group rate is 0.432; on source-annotated Wisesight test-only groups, recall is 0.9921, precision is 0.6592 and exact-group rate is 0.3852. This is consistent with a recall-heavy boundary predictor with substantial sequence-level errors and weaker cross-domain precision.",
+      "cross_domain_boundary_f1_absolute_drop": 0.080831,
+      "limits": [
+        "Metrics cover filtered Thai-only groups with at least two tokens, not end-to-end text segmentation.",
+        "TUD annotations inherit source tokenization; Wisesight is source-annotated, not independently expert-adjudicated.",
+        "No per-error manual audit or independent gold adjudication has been performed in this continuation."
+      ],
+      "next_acceptance": [
+        "Publish representative false-split/false-merge error analysis.",
+        "Define acceptance thresholds for boundary precision, recall, exact-sequence rate, abstention and out-of-domain coverage before deployment.",
+        "Validate on an independent, untouched domain with documented licensing and source splits.",
+        "Obtain an explicit integration decision after review; keep research-only until then."
+      ]
+    }
   },
-  "latest_implementation_commit_ci_verified": "4c3d01d9b726b410c98048878441082d8d5c8299"
+  "latest_implementation_commit_ci_verified": "4c3d01d9b726b410c98048878441082d8d5c8299",
+  "latest_documentation_head_ci_verified": "cb8832ca99e4ccce53b6fb2b6988b5945acaad71",
+  "latest_documentation_head_ci_run": 40297155713,
+  "latest_documentation_head_web_validation_run": 40297155831
 }

@@ -352,3 +352,17 @@ No release or merge is performed by this continuation. The project remains an en
 - **Source-attested IPA (six rows, not gold):** 3 segmental agreements, 4 tone agreements, 2 circular override rows excluded, 4 independently comparable rows; no accuracy claim. The `บรรจุ` final `/ʔ/` discrepancy remains unresolved; no global rule was introduced.
 - **Still BLOCKED / PARTIAL:** independent IPA/acoustic gold needs qualified Thai phonetic adjudication and authorized audio/TextGrid access; Ukrainian target forms need independent Ukrainian-native adjudication; `บรรจุ` needs agreed transcription-level/context review. TUD segmenter remains PARTIAL pending independent quality review and a decision about integration. Repository remains a research prototype, not release-ready.
 - Documentation follow-up commits will trigger their own workflows; verify the final documentation head before calling the whole continuation complete.
+
+
+## TUD segmenter quality decision — 2026-10-26
+
+**Decision: do not integrate the TUD unigram-Viterbi segmenter as the production default.** The model remains a reproducible research experiment. On filtered held-out TUD groups, boundary recall is 0.9775 but precision is 0.7886 and exact-group rate is 0.432. On filtered source-annotated Wisesight test-only groups, recall is 0.9921 but precision is 0.6592 and exact-group rate is 0.3852. Boundary F1 drops by 0.080831 between these evaluations. This pattern is consistent with a recall-heavy predictor that still makes many boundary/sequence errors and has weaker cross-domain precision; it does not establish independent accuracy because TUD inherits source tokenization and Wisesight is not expert-adjudicated.
+
+The next acceptance gate is a documented false-split/false-merge review, explicit deployment thresholds, and an independent untouched-domain evaluation. Keep CC BY-SA 4.0 attribution/share-alike obligations. Do not change the production default on the strength of these metrics alone.
+
+## Exact final documentation-head verification — 2026-10-26
+
+- Branch: `research/thai-segmentation-gold-parity-verified-20261025`; final documentation head before this follow-up: `cb8832ca99e4ccce53b6fb2b6988b5945acaad71`.
+- CI [40297155713](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40297155713) passed both `test` and `master-artifact` jobs. Web static validation [40297155831](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40297155831) passed.
+- The code/data head `4c3d01d9b726b410c98048878441082d8d5c8299` remains the exact head with the 176-Python-test full engineering run [40296520186](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40296520186); the docs-only head check independently verifies generated master artifact and repository test workflow after documentation synchronization.
+- Remaining evidence gates: independent IPA/acoustic gold with authorized recordings/TextGrid, independently adjudicated Ukrainian target forms, and context/transcription-level adjudication of `บรรจุ` final `/ʔ/`. Research prototype; not release-ready.

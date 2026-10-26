@@ -146,3 +146,15 @@ Verified code/data head: [CI 40238202167](https://github.com/ClippyFirst/Thai-Uk
 - Wisesight-1000: 993 source-annotated rows, 0 adjudicated. Text tokenizer F1 0.160604; dictionary max-match F1 0.839471; exact sequence rates 0.031219 and 0.193353 respectively. Diagnostic only, not expert gold.
 - TUD research segmenter: dev F1 0.889023; held-out TUD test F1 0.872932 (375 groups); Wisesight test-only F1 0.792101 (2,848 filtered groups). TUD labels inherit source tokenization; no production integration decision or independent accuracy claim.
 - Readiness remains **research prototype / not release-ready**. Independent phonetic/acoustic gold, Ukrainian target-form adjudication, and context-specific resolution of `บรรจุ` remain evidence-limited.
+
+
+## Final continuation review — 2026-10-26
+
+| Workstream | State | Verified result / next acceptance |
+|---|---|---|
+| Final documentation HEAD | DONE_VERIFIED | CI [40297155713](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40297155713) passed test + master-artifact jobs; Web static validation [40297155831](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40297155831) passed on `cb8832ca99e4ccce53b6fb2b6988b5945acaad71`. |
+| TUD unigram-Viterbi segmenter quality review | PARTIAL — production integration declined for now | Held-out TUD: boundary P/R/F1 0.7886/0.9775/0.8729; exact-group rate 0.432. Wisesight test-only: P/R/F1 0.6592/0.9921/0.7921; exact-group rate 0.3852. F1 falls by 0.080831 cross-domain; recall-heavy profile and low exact sequence rates do not justify production-default integration. These are filtered groups, not full-text scores or independent expert gold. Next: manual error analysis, deployment thresholds, and independent untouched-domain review. |
+| Independent IPA/acoustic gold | BLOCKED | Needs qualified independent Thai phonetician, agreed transcription-level protocol, and authorized audio/TextGrid access; acceptance requires independent labels and a disagreement log. |
+| Ukrainian target forms | BLOCKED | Needs independent Ukrainian-native reviewers, blinded criteria-based judgments, and a disagreement log. |
+| `บรรจุ` final `/ʔ/` | PARTIAL / EVIDENCE-LIMITED | Keep discrepancy open until context/transcription-level expert adjudication; do not add a global rule. |
+| Release readiness | NOT READY | Engineering checks pass, but empirical pronunciation/target-form gold and production segmentation quality are not established. |
