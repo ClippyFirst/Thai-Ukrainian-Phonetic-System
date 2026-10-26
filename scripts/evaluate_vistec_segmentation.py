@@ -31,7 +31,8 @@ def parse_submission_text(value: str, *, row_id: str = "fixture") -> tuple[str, 
     if not isinstance(value, str) or not value:
         raise ValueError(f"empty submissionText for {row_id}")
     tokens = [TAG_RE.sub("", part) for part in value.split("|")]
-    tokens = [token for token in tokens if token != ""]
+    if any(token == "" for token in tokens):
+        raise ValueError(f"empty annotated token in submissionText for {row_id}")
     text = "".join(tokens)
     if not text:
         raise ValueError(f"submissionText contains no text for {row_id}")
