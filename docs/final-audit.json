@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Whole-text Thai input and greedy known-entry segmentation baseline merged to main; code checkpoint 3ccf84f564add02c189524c3b9ca794154d35c8b passed CI test + master-artifact and web static validation; documentation reconciliation PR #75 merged at 581231596a0df6b3ab58964dacedeec7a8fd8908 with CI success; current live Pages state remains unverified; arbitrary-text IPA completeness and independent linguistic adjudication remain incomplete; not release-ready.",
+  "status": "Browser now uses pinned CC0 dictionary for whole-text word-boundary fallback; PR #77 merged at 96c2af3c2a24d0ea95455b5d6af4c079e5609d29. Web static validation passed on latest pre-merge code head 7b2c9572feb542fb3ee81558b9758bb4fa5f2bef; full test job passed on runtime code head 3eb1155631da158b7e04436f608711680750e475, but exact-head CI and master-artifact remain unverified due queued/stale Actions runs. Post-merge Pages deployment and live-markup verification are pending. Still not release-ready for arbitrary Thai text.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -1091,6 +1091,40 @@
       "Lawful access to the full official OBEC PDF",
       "Per-resource license and attribution compliance review"
     ],
-    "readiness": "PARTIAL RESEARCH PROTOTYPE; NOT RELEASE-READY FOR ARBITRARY THAI TEXT"
+    "readiness": "PARTIAL RESEARCH PROTOTYPE; NOT RELEASE-READY FOR ARBITRARY THAI TEXT",
+    "browser_cc0_segmentation": {
+      "status": "MERGED_PARTIAL",
+      "pr": 77,
+      "url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/77",
+      "merge_commit": "96c2af3c2a24d0ea95455b5d6af4c079e5609d29",
+      "source_dictionary": {
+        "entries": 60963,
+        "license": "CC0-1.0",
+        "upstream_commit": "8b2b9a6d0f69846364f37e8c16ffc31177f6151c",
+        "generated_browser_index_bytes": 1615714,
+        "initial_character_buckets": 51,
+        "generated_artifact": "web/src/word-dictionary.generated.js (ignored build artifact; generated before web tests and Pages packaging)"
+      },
+      "behavior": "Browser uses pinned dictionary maximum matching alongside curated pronunciation entries; longer dictionary words prevent partial IPA for known substrings; curated entries win ties.",
+      "safety_boundary": "Dictionary segmentation alone does not authorize IPA or Ukrainian output. Words without curated syllabification or typed source-attested IPA remain unresolved.",
+      "regression": "กาแฟ must remain one unresolved word rather than emitting partial IPA for กา; เงินเดิน test exposed and fixed a grapheme-boundary bug caused by treating a following preposed vowel as a combining mark.",
+      "evidence": {
+        "web_static_latest_head_run": 40411659863,
+        "web_static_status": "success",
+        "web_static_tested_head": "7b2c9572feb542fb3ee81558b9758bb4fa5f2bef",
+        "ci_test_job_run": 40411558761,
+        "ci_test_job_status": "success",
+        "ci_test_job_head": "3eb1155631da158b7e04436f608711680750e475",
+        "ci_master_artifact_job_status": "BLOCKED_QUEUED",
+        "exact_latest_head_ci_status": "QUEUED",
+        "note": "The successful test job is on the code-bearing checkpoint before the final pages.yml deployment-verification-only commit. Do not claim exact-head CI or master-artifact success."
+      }
+    },
+    "post_merge_pages_verification": {
+      "run_id": 40412224812,
+      "status": "QUEUED",
+      "commit": "96c2af3c2a24d0ea95455b5d6af4c079e5609d29",
+      "acceptance": "Pages build/deploy succeeds and the post-deploy curl check confirms the served homepage contains the whole-text hint, examples, and beta notice."
+    }
   }
 }
