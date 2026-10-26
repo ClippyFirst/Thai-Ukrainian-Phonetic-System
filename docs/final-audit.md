@@ -432,3 +432,8 @@ The next acceptance gate is a documented false-split/false-merge review, explici
 A review of the pinned VISTEC adapter found that empty pipe-delimited fields were silently removed after markup stripping. The adapter now raises an error for any empty token field, with regressions for repeated separators, empty markup-only tokens and a leading separator. This preserves the source-evidence gate rather than hiding malformed annotation rows. Code head: `1cbf97036ec931266f4a6ed5eb747a00e5b7ad29`.
 
 **Verification is pending:** repository tests could not be run locally, and no workflow run/combined status was surfaced for this exact head at the last check. Do not claim the new tests or the 49,997-row VISTEC evaluation passed until exact-head CI completes and the report artifact is inspected.
+
+
+## Exact-head validation refresh — 2026-10-26
+
+A fresh GitHub Actions check now exposes three runs for branch head `550f26fdbf6fd66a0d1c2cb1caa9bd6bd10de196`: CI [40346688497](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40346688497), Web static validation [40346688520](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40346688520), and external VISTEC evaluation [40346688621](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40346688621). All three are **queued**, not passed or failed. The previous paragraph's “no workflow run surfaced” wording is historical and superseded by this refresh. Local tests remain `NOT_RUN`; no VISTEC metric is claimed. Acceptance still requires exact-head CI and static validation to pass, the VISTEC workflow to pass, and inspection of its report artifact.
