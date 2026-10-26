@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Merged whole-text Thai input improvement; code-bearing checkpoint 3ccf84f564add02c189524c3b9ca794154d35c8b passed CI test + master-artifact and web static validation; current UI Pages deployment not independently verified; independent linguistic adjudication incomplete; not release-ready.",
+  "status": "Whole-text Thai input and greedy known-entry segmentation baseline merged to main; code checkpoint 3ccf84f564add02c189524c3b9ca794154d35c8b passed CI test + master-artifact and web static validation; documentation reconciliation PR #75 merged at 581231596a0df6b3ab58964dacedeec7a8fd8908 with CI success; current live Pages state remains unverified; arbitrary-text IPA completeness and independent linguistic adjudication remain incomplete; not release-ready.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -1035,5 +1035,62 @@
       "note": "No engine code or hosting settings changed; exact-head CI for this documentation branch was not independently confirmed."
     },
     "note": "Historical checkpoint from 2026-10-26 22:18 EET, retained for provenance; current UI/code state is recorded in whole_text_ui_followup_2026_10_26 below."
+  },
+  "whole_text_ui_followup_2026_10_27": {
+    "checked_at": "2026-10-27",
+    "current_main_merge_commit": "581231596a0df6b3ab58964dacedeec7a8fd8908",
+    "documentation_pr": {
+      "number": 75,
+      "url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/75",
+      "state": "closed",
+      "merged": true,
+      "merge_commit": "581231596a0df6b3ab58964dacedeec7a8fd8908",
+      "head_commit": "795c15c896c1b3d1c1ff2624caa40fe8a30828c9",
+      "ci_run": 40406992550,
+      "ci_status": "success",
+      "jobs": {
+        "test": "success",
+        "master_artifact": "success"
+      },
+      "checks_included": [
+        "Python unittest suite",
+        "generated-artifact drift checks",
+        "master table 351780 rows and 41 vowel records",
+        "Node IPA-to-Ukrainian tests",
+        "Python/browser parity",
+        "UI contract and whole-text segmentation tests",
+        "source-annotated Wisesight segmentation diagnostics",
+        "dictionary segmentation diagnostics",
+        "source-attested IPA diagnostics"
+      ],
+      "note": "Green engineering checks do not establish linguistic accuracy or complete arbitrary-text IPA."
+    },
+    "implementation_status": {
+      "whole_text_input": "DONE_VERIFIED",
+      "known_entry_greedy_segmentation": "PARTIAL",
+      "arbitrary_thai_word_segmentation": "TODO_EVIDENCE_LIMITED",
+      "ipa_for_every_arbitrary_text_span": "BLOCKED_BY_COVERAGE_AND_LINGUISTIC_EVIDENCE",
+      "live_pages_served_markup": "BLOCKED_UNVERIFIED"
+    },
+    "pages": {
+      "status": "UNVERIFIED",
+      "reason": "Available connected tooling did not provide the push-triggered Pages workflow run or a successful direct fetch of served HTML for the current whole-text change.",
+      "acceptance": "Verify a successful Pages build/deploy run after the relevant main commit and inspect the served homepage hint/examples against web/index.html."
+    },
+    "limitations": [
+      "Greedy longest-known-entry matching can incorrectly match a known substring inside an unknown word.",
+      "Unknown spans correctly remain unresolved rather than receiving fabricated IPA or Ukrainian output.",
+      "The seven examples/whole-sentence fixture prove test-contract behavior for those inputs, not complete coverage of arbitrary Thai text.",
+      "Source-annotated Wisesight/VISTEC segmentation scores are diagnostics, not expert-adjudicated accuracy."
+    ],
+    "outstanding_research_blockers": [
+      "Independent Thai word-boundary adjudication",
+      "Independent Thai IPA/acoustic gold and lawful audio/TextGrid access",
+      "Two independent Ukrainian target-form reviews",
+      "Contextual review of บรรจุ final /ʔ/",
+      "Lawful access to the full official OBEC PDF",
+      "Per-resource license and attribution compliance review"
+    ],
+    "readiness": "PARTIAL RESEARCH PROTOTYPE; NOT RELEASE-READY FOR ARBITRARY THAI TEXT"
   }
 }

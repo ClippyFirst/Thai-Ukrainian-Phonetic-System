@@ -542,3 +542,12 @@ A final UI review found and fixed a summary-status bug: entries with `segmentati
 ### Post-merge deployment status — 2026-10-26
 
 PR #73 is merged at `e49b5f2b54d42e577f732b4308080e11e410d557`. The merged `main` branch contains the new whole-text hint, corrected label, and lexical override status handling. The code-bearing checkpoint `3ccf84f564add02c189524c3b9ca794154d35c8b` passed CI test + master-artifact and web static validation. The Pages workflow is configured to run on relevant pushes to `main`; however, live-site verification remains **BLOCKED by available tooling**: the GitHub connector exposes PR-triggered runs but not push-triggered Pages runs, direct web fetching was disabled, the container fetch failed, and the connected Firecrawl account reported insufficient credits. Do not claim the live deployment is confirmed until the Pages workflow is checked and the served HTML is inspected.
+
+
+## Authoritative status refresh — 2026-10-27
+
+Documentation PR #75 was merged into `main` at `581231596a0df6b3ab58964dacedeec7a8fd8908`. Its CI run [40406992550](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40406992550) completed successfully: `test` and `master-artifact` both passed. The checks include Python tests, generated-artifact drift, the 351,780-row / 41-vowel master artifact, IPA→Ukrainian, Python/browser parity, UI contract, and segmentation/IPA diagnostics.
+
+This is an engineering verification result, **not** evidence that every arbitrary Thai text receives complete IPA. Whole-text input is implemented; greedy matching over known entries is partial. Ambiguous or unknown spans remain unresolved, and greedy matching can mistake a known substring inside a larger unknown word. The live Pages state for the new UI remains unverified: acceptance requires a successful post-change Pages build/deploy and inspection of the served HTML.
+
+The repository remains a **partial research prototype, not release-ready for arbitrary Thai text**. Independent word-boundary adjudication, Thai IPA/acoustic gold, two Ukrainian target-form reviews, contextual review of `บรรจุ` final /ʔ/, lawful full OBEC PDF access, and per-resource license/attribution review remain open.
