@@ -634,7 +634,12 @@
         "id": 12667445022,
         "sha256": "a02e3c8fe769a9b0998fdf2e66a49d6d0bec1c0b7191e08854d2dd81cc50132c",
         "uploaded": true,
-        "zip_opened_in_session": false
+        "zip_opened_in_session": true,
+        "contents_verified": true,
+        "report_file": "vistec-segmentation-report.json",
+        "report_schema_version": "1.0",
+        "report_size_bytes": 3803,
+        "sha256_verified_against_github_metadata": true
       },
       "interpretation": "descriptive source-annotation agreement only; low exact-sequence rates do not support production readiness"
     },
