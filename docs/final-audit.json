@@ -606,6 +606,54 @@
       "contextual review of บรรจุ final /ʔ/",
       "lawful full official OBEC PDF inspection; prior URL returned HTTP 403"
     ],
-    "readiness": "research prototype; not release-ready"
+    "readiness": "research prototype; not release-ready",
+    "vistec_report": {
+      "run_id": 40354836797,
+      "status": "success",
+      "rows_total": 50000,
+      "rows_source_annotated": 50000,
+      "rows_expert_adjudicated": 0,
+      "dictionary_max_match": {
+        "boundary_precision": 0.7687958171077649,
+        "boundary_recall": 0.8978784545804036,
+        "boundary_f1": 0.8283384604640367,
+        "exact_sequences": 76,
+        "exact_sequence_rate": 0.00152,
+        "coverage": 1
+      },
+      "tud_unigram_viterbi": {
+        "boundary_precision": 0.6064011335968544,
+        "boundary_recall": 0.9931576338081688,
+        "boundary_f1": 0.7530225550370759,
+        "exact_sequences": 16,
+        "exact_sequence_rate": 0.00032,
+        "coverage": 1
+      },
+      "evidence_grade": "SOURCE_ANNOTATED_NOT_EXPERT_ADJUDICATED",
+      "artifact": {
+        "id": 12667445022,
+        "sha256": "a02e3c8fe769a9b0998fdf2e66a49d6d0bec1c0b7191e08854d2dd81cc50132c",
+        "uploaded": true,
+        "zip_opened_in_session": false
+      },
+      "interpretation": "descriptive source-annotation agreement only; low exact-sequence rates do not support production readiness"
+    },
+    "latest_head_checks": [
+      {
+        "run_id": 40360861858,
+        "name": "CI",
+        "status": "queued"
+      },
+      {
+        "run_id": 40360861799,
+        "name": "Web static validation",
+        "status": "queued"
+      },
+      {
+        "run_id": 40360861912,
+        "name": "External VISTEC segmentation evaluation",
+        "status": "queued"
+      }
+    ]
   }
 }
