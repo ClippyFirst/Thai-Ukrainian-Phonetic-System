@@ -1051,3 +1051,15 @@ The latest inspected successful VISTEC run is [40377560151](https://github.com/C
 ### Documentation reconciliation PR
 
 PR [#72](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/72) is open from `audit/post-beta-live-verification-20261026` to `main`. It updates only the canonical audit, validation matrix, and handoff records; it does not change engine behavior, datasets, or hosting configuration. Head at this note: `9e29dddd98c260c53f0730709f5da667e3843213`. Exact-head CI for this documentation branch was not available for confirmation in this session. Do not merge it on the assumption that checks passed; inspect PR checks and review the four-file diff first.
+
+
+### VISTEC report artifact inspected
+
+The archive for run 40377560151 was downloaded and inspected; it contains `vistec-segmentation-report.json` (3,803 bytes). SHA-256 of the ZIP matches GitHub artifact metadata: `582a28766f29f11ac54bac7764a52ddfdfd3e78ad26f4acc311fac3f82f6c6a3`.
+
+| Engine | Boundary P / R / F1 | Exact sequence rate | Coverage |
+|---|---|---:|---:|
+| Dictionary maximum match | 0.76880 / 0.89788 / 0.82834 | 76 / 50,000 (0.152%) | 100% |
+| TUD unigram Viterbi | 0.60640 / 0.99316 / 0.75302 | 16 / 50,000 (0.032%) | 100% |
+
+The 50,000 records are source-annotated and zero are independently adjudicated. The dictionary baseline is stronger on F1 and exact sequence agreement; TUD trades precision for very high recall. Neither is production-validated. Coverage 100% is output availability, not accuracy.
