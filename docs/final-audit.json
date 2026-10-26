@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "engineering-verified research prototype; exact-head CI and Web static validation pass on documentation head 4c61866d98312e8cf08f78bc8ab0f213bc8dc8c0; not release-ready for arbitrary Thai text or empirically validated IPA/Ukrainian output",
+  "status": "engineering-verified research prototype; exact-head CI and Web static validation pass on 4b1592cd72298d1ca92e0b99ab330975764a078a; not release-ready for arbitrary Thai text or empirically validated IPA/Ukrainian output",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -77,7 +77,7 @@
     "boundary_recall": 0.0918580375782881,
     "boundary_f1": 0.1606041535556954,
     "exact_sequence_rate": 0.03121852970795569,
-    "artifact_id": "12614106636",
+    "artifact_id": "12649380124",
     "artifact_name": "wisesight1000-segmentation-baseline",
     "used_for_training": false
   },
@@ -87,15 +87,15 @@
     "status": "SOURCE_ATTESTED_NOT_GOLD",
     "includes_short_long_oe_contrast": true
   },
-  "latest_verified_code_commit": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
+  "latest_verified_code_commit": "4b1592cd72298d1ca92e0b99ab330975764a078a",
   "starting_branch_commit": "7e39fd4bc108386148c1e9a79d257d75babcc9aa",
   "ci": {
-    "latest_fully_successful_code_data_commit": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
-    "latest_fully_successful_ci_run": 40315032771,
-    "python_tests": 180,
+    "latest_fully_successful_code_data_commit": "4b1592cd72298d1ca92e0b99ab330975764a078a",
+    "latest_fully_successful_ci_run": 40320450844,
+    "python_tests": 182,
     "generated_data_drift": "PASS",
     "master_artifact": "PASS — 351,780 rows; 41 vowel/rime records; artifact uploaded",
-    "node_ipa_ua_parity_ui_tests": "PASS on exact head cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
+    "node_ipa_ua_parity_ui_tests": "PASS on exact head 4b1592cd72298d1ca92e0b99ab330975764a078a",
     "wisesight_baseline": "PASS",
     "source_attested_ipa_diagnostic": "PASS",
     "current_browser_parity_code_head": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
@@ -105,10 +105,10 @@
     "current_head_web_validation_runs": [
       40315032788
     ],
-    "current_head_status_at_audit_refresh": "PASS: documentation head 4c61866d98312e8cf08f78bc8ab0f213bc8dc8c0 passed CI run 40316202183 (test and master-artifact) and Web static validation run 40316202145. CI ran 180 Python tests, generated-data drift, master artifact, Node IPA→Ukrainian, 28 parity fixtures, UI contract, challenge/Wisesight/source-attested IPA diagnostics, candidate registry check, TUD research training/evaluation, and artifact uploads. These are engineering checks, not linguistic accuracy.",
-    "latest_full_repository_head": "4c61866d98312e8cf08f78bc8ab0f213bc8dc8c0",
-    "latest_full_repository_head_ci_run": 40316202183,
-    "latest_full_repository_head_web_validation_run": 40316202145,
+    "current_head_status_at_audit_refresh": "PASS: code-bearing head 4b1592cd72298d1ca92e0b99ab330975764a078a passed CI run 40320450844 (test and master-artifact) and Web static validation run 40320450587. CI includes 182 Python tests, generated-data drift, 351,780-row master artifact, Node IPA→Ukrainian, 28 parity fixtures, UI contract, Wisesight diagnostics, deterministic false-split/false-merge error review, source-attested IPA diagnostics, candidate registry check, and TUD research evaluation. This is engineering verification, not independent linguistic gold.",
+    "latest_full_repository_head": "4b1592cd72298d1ca92e0b99ab330975764a078a",
+    "latest_full_repository_head_ci_run": 40320450844,
+    "latest_full_repository_head_web_validation_run": 40320450587,
     "latest_web_static_verified_code_commit": "1ed4c7aa30759fd8d31136e46d7490bf9b2c5e8b",
     "latest_web_static_verified_code_run": 40286893366,
     "latest_verified_commit_note": "43687b2753379b1d617b1c925f87358f8aad13bd is the historical last fully verified code commit before the current TUD trainer and เดิน override changes; it is not the current branch head.",
@@ -116,10 +116,11 @@
     "latest_fully_successful_documentation_commit": "4c61866d98312e8cf08f78bc8ab0f213bc8dc8c0",
     "latest_fully_successful_documentation_ci_run": 40316202183,
     "latest_fully_successful_documentation_web_validation_run": 40316202145,
-    "latest_documentation_head_ci_run": 40316202183,
-    "latest_documentation_head_web_validation_run": 40316202145,
-    "latest_implementation_ci_run": 40315032771,
-    "latest_implementation_web_validation_run": 40315032788
+    "latest_documentation_head_ci_run": 40320450844,
+    "latest_documentation_head_web_validation_run": 40320450587,
+    "latest_implementation_ci_run": 40320450844,
+    "latest_implementation_web_validation_run": 40320450587,
+    "latest_implementation_commit_ci_verified": "4b1592cd72298d1ca92e0b99ab330975764a078a"
   },
   "challenge_runtime": {
     "challenge_inputs": 36,
@@ -131,17 +132,17 @@
     "evaluation_kind": "runtime_diagnostic_not_accuracy_benchmark"
   },
   "master_artifact": {
-    "artifact_id": "12613439376",
+    "artifact_id": "12649525592",
     "artifact_name": "thai-ukrainian-master-table",
     "rows": 351780,
     "vowel_rime_records": 41
   },
   "latest_documentation_checkpoint": {
-    "commit": "4c61866d98312e8cf08f78bc8ab0f213bc8dc8c0",
-    "ci_run": 40316202183,
-    "web_static_validation_run": 40316202145,
+    "commit": "4b1592cd72298d1ca92e0b99ab330975764a078a",
+    "ci_run": 40320450844,
+    "web_static_validation_run": 40320450587,
     "ci_status": "success",
-    "note": "Exact documentation head verified after 180 Python tests, generated-data drift, 351,780-row master artifact, IPA→Ukrainian tests, 28 Python/browser parity fixtures, UI contract, source-attested IPA diagnostics, Wisesight diagnostics, target-candidate registry check, TUD research training/evaluation and artifact uploads. This is engineering verification, not independent phonetic gold."
+    "note": "Exact-head CI test and master-artifact jobs passed; Web static validation passed. The run includes 182 Python tests, deterministic segmentation false-split/false-merge review, 351,780-row master artifact, 28 Python/browser parity fixtures and existing diagnostics. Engineering verification is not linguistic accuracy."
   },
   "text_only_checkpoint": {
     "branch": "research/thai-segmentation-gold-parity-verified-20261025",
@@ -163,7 +164,8 @@
     "discrepancy": "บรรจุ: source transcription includes final /ʔ/ while current engine segmental output omits it; no universal rule added pending transcription-level/context adjudication",
     "evidence_grade": "SOURCE_ATTESTED_NOT_GOLD",
     "accuracy_claimed": false,
-    "verification_status": "PASS on exact-head CI run 40296520186; source-attested dictionary evidence only, not independent gold"
+    "verification_status": "PASS on exact-head CI run 40296520186; source-attested dictionary evidence only, not independent gold",
+    "artifact_id": "12648883086"
   },
   "word_boundary_baseline": {
     "corpus": "Wisesight-1000",
@@ -238,7 +240,7 @@
   ],
   "latest_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
   "latest_implementation_commit_pending_ci": null,
-  "current_head_status_at_audit_refresh": "PASS: documentation head 4c61866d98312e8cf08f78bc8ab0f213bc8dc8c0 passed CI run 40316202183 (test and master-artifact) and Web static validation run 40316202145. CI ran 180 Python tests, generated-data drift, master artifact, Node IPA→Ukrainian, 28 parity fixtures, UI contract, challenge/Wisesight/source-attested IPA diagnostics, candidate registry check, TUD research training/evaluation, and artifact uploads. These are engineering checks, not linguistic accuracy.",
+  "current_head_status_at_audit_refresh": "PASS: code-bearing head 4b1592cd72298d1ca92e0b99ab330975764a078a passed CI run 40320450844 (test and master-artifact) and Web static validation run 40320450587. CI includes 182 Python tests, generated-data drift, 351,780-row master artifact, Node IPA→Ukrainian, 28 parity fixtures, UI contract, Wisesight diagnostics, deterministic false-split/false-merge error review, source-attested IPA diagnostics, candidate registry check, and TUD research evaluation. This is engineering verification, not independent linguistic gold.",
   "current_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
   "current_implementation_commit_before_audit_update": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
   "latest_documentation_checkpoint_before_audit": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
@@ -253,7 +255,8 @@
     "boundary_f1": 0.8394713656387666,
     "exact_sequence_rate": 0.1933534743202417,
     "used_for_training": false,
-    "role": "opt-in diagnostic baseline; not production-quality evidence"
+    "role": "opt-in diagnostic baseline; not production-quality evidence",
+    "artifact_id": "12648264783"
   },
   "tud_research_segmenter": {
     "model_id": "clippyfirst-tud-unigram-viterbi-v1",
@@ -306,12 +309,12 @@
       ]
     }
   },
-  "latest_implementation_commit_ci_verified": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
-  "latest_documentation_head_ci_verified": "4c61866d98312e8cf08f78bc8ab0f213bc8dc8c0",
-  "latest_documentation_head_ci_run": 40316202183,
-  "latest_documentation_head_web_validation_run": 40316202145,
-  "latest_implementation_ci_run": 40315032771,
-  "latest_implementation_web_validation_run": 40315032788,
+  "latest_implementation_commit_ci_verified": "4b1592cd72298d1ca92e0b99ab330975764a078a",
+  "latest_documentation_head_ci_verified": "4b1592cd72298d1ca92e0b99ab330975764a078a",
+  "latest_documentation_head_ci_run": 40320450844,
+  "latest_documentation_head_web_validation_run": 40320450587,
+  "latest_implementation_ci_run": 40320450844,
+  "latest_implementation_web_validation_run": 40320450587,
   "segmentation_error_review": {
     "script": "scripts/analyze_segmentation_errors.py",
     "test": "tests/test_segmentation_error_analysis.py",
@@ -323,9 +326,27 @@
     "purpose": "deterministic false-split/false-merge triage examples and boundary metrics",
     "acceptance_boundary": "diagnostic only; does not mark every disagreement as an engine error and does not qualify as independent gold",
     "implementation_commit": "bec1b7027f34a4f70f0b6f9fdc415ef43343eab9",
-    "exact_head_ci_status": "PENDING",
+    "exact_head_ci_status": "PASS",
     "test_commit": "aba6832eb97cb4b84f2e62fa058fa963cfb34803",
     "ci_workflow_commit": "c189cdb9209d85780c3baeb1df23800101840b16",
-    "exact_sequence_contract": "192/993 full token-array matches on the pinned Wisesight/dictionary baseline; token iterable is normalized to a list so the metric matches the benchmark scorer"
+    "exact_sequence_contract": "192/993 full token-array matches on the pinned Wisesight/dictionary baseline; token iterable is normalized to a list so the metric matches the benchmark scorer",
+    "verified_ci_run": 40320450844,
+    "web_static_validation_run": 40320450587,
+    "artifact_id": "12648833301",
+    "artifact_sha256": "005c18ba366fc692193db7f6557b052ff7f940dea3274ec168f6a93f0df7e66b",
+    "metrics": {
+      "rows": 993,
+      "expert_adjudicated_rows": 0,
+      "gold_boundaries": 13891,
+      "predicted_boundaries": 14484,
+      "true_positive_boundaries": 11910,
+      "false_splits": 2574,
+      "false_merges": 1981,
+      "boundary_precision": 0.8222866611433306,
+      "boundary_recall": 0.8573896767691311,
+      "boundary_f1": 0.8394713656387666,
+      "exact_sequence_matches": 192,
+      "exact_sequence_rate": 0.1933534743202417
+    }
   }
 }
