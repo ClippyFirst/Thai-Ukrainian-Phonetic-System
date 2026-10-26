@@ -162,6 +162,6 @@ Verified code/data head: [CI 40238202167](https://github.com/ClippyFirst/Thai-Uk
 
 ## Special-letter source contract — 2026-10-26
 
-- The official OBEC/IPST guide registered as `SRC-OBEC-SPECIAL-VOWELS-2022` (pp. 5 and 7) supports classifying `ฤ`, `ฤๅ`, `ฦ`, and `ฦๅ` as syllabic/lexical constructions and documents the lexical `อ นำ ย` family `อย่า`, `อยู่`, `อย่าง`, `อยาก`.
+- The official OBEC/IPST guide registered as `SRC-OBEC-SPECIAL-VOWELS-2022` (p. 5 for special vowel letters; printed p. 275 in separate source `SRC-OBEC-O-NAM-2022` for อ นำ ย) supports classifying `ฤ`, `ฤๅ`, `ฦ`, and `ฦๅ` as syllabic/lexical constructions and documents the lexical `อ นำ ย` family `อย่า`, `อยู่`, `อย่าง`, `อยาก`.
 - The parser deliberately continues to return `analysis-dependent:special-orthography` with no IPA or Ukrainian output for isolated special vowel letters. The source is a scope constraint, not a universal word-reading or pronunciation gold set.
 - Added regression tests in Python and browser parity; exact-head CI must pass before this row is considered verified.
