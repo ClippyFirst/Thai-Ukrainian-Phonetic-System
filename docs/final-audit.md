@@ -479,3 +479,15 @@ A UI-contract regression now checks the beta notice, evidence anchor, reported d
 The Pages workflow is configured to deploy on pushes to `main`; PR #71 is still draft. I did not merge the 304-commit research PR or deploy its branch over the existing public Pages site. Public deployment remains BLOCKED until the changes are reviewed and merged, or a separate preview host is deliberately configured.
 
 Research readiness remains partial: independent Thai IPA/acoustic adjudication, two independent Ukrainian target-form reviews, human segmentation adjudication, contextual review of บรรจุ final /ʔ/, and lawful full official OBEC PDF access remain open.
+
+## Beta publication attempt and actual deployment status — 2026-10-26
+
+The beta UI implementation is present on the research branch. Pages build run [40377552366](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40377552366) completed its build job successfully: Python regression suite, browser parity and the UI-contract/beta-disclosure checks all passed, and the Pages artifact was uploaded. Static validation [40377552367](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40377552367) and external VISTEC evaluation [40377560151](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40377560151) also passed for the beta UI code checkpoint.
+
+The Pages `deploy` job in run 40377552366 failed immediately before executing any steps; GitHub exposed no job steps/logs and no pending deployment approval details. The exact cause is not observable from the available run data. A successful Pages deployment on main, run [40225366216](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40225366216), published commit `18ab41db87192dc7be69683ef85e53cb04db5517` at https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/. The new research-branch content must not be described as live.
+
+The temporary branch-specific Pages trigger was removed. `.github/workflows/pages.yml` again deploys only on pushes to `main`, while retaining the UI-contract check in the build. This avoids repeatedly attempting a deployment from the draft research branch. No environment settings were changed, no PR was merged, and no release was published.
+
+The beta UI commit `274371594cc8a0b65677bb126242d90acc17caf5` passed the Pages build, static validation, and VISTEC evaluation. Latest branch head after restoring the main-only deployment trigger is `048b89d9234ac91e3d592c0bca7d816f4a5ae5b5`; its push/PR CI runs were still in progress at the time of this update. The main research PR #71 remains draft and has 304 commits / 68 changed files; it must not be merged blindly merely to bypass the Pages deployment gate.
+
+Remaining publication choices: review and merge PR #71 to main after accepting the documented evidence gates, or explicitly authorize a separate preview host. Independent Thai IPA/acoustic gold, two independent Ukrainian target-form reviews, human segmentation adjudication, contextual review of บรรจุ final /ʔ/, and lawful full official OBEC PDF access remain unresolved.
