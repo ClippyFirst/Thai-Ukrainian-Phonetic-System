@@ -41,6 +41,8 @@ The model distinguishes:
 - Machine-readable context-dependent orthographic rule registry, including role classification for อ.
 - Publication-ready orthographic correspondence table generated from the same rule registry used by the parser.
 - External lexicon adapter for evidence-backed syllable segmentation.
+- Conservative dictionary maximum-matching segmenter backed by a pinned CC0 word list, evaluated separately from the held-out Wisesight source-annotated benchmark.
+- Reproducible research-only unigram Viterbi segmentation training experiment on pinned UD Thai TUD train/dev/test splits; Wisesight is never used for training or tuning, and the CC BY-SA 4.0 model artifact preserves attribution/share-alike metadata.
 - Project-defined Ukrainian orthographic candidate layer with tone kept separate.
 - Generated source→parser→derived consistency manifest enforced by CI.
 - Structural combinatorial-space accounting.
@@ -67,7 +69,7 @@ It is **not** yet an empirically validated benchmark. No corpus accuracy percent
 
 ### Evidence-gated limitations
 
-- arbitrary Thai text still requires an external lexical segmentation source; the software does not invent word boundaries;
+- the default public text endpoint remains conservative and withholds phonetic output for unknown unsegmented Thai spans; an opt-in dictionary segmenter exists, and a separately trained TUD unigram-Viterbi experiment is research-only until its exact-head CI metrics and broader cross-domain validation are reviewed;
 - special orthography is represented conservatively as explicit analysis-dependent alternatives where lexical evidence is required;
 - connected-speech narrow phonetics still requires acoustic/phonetic evidence;
 - corpus-calibrated probabilities still require a gold dataset;
