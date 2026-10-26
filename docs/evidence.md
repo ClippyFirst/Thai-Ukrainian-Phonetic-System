@@ -83,3 +83,11 @@ The CCOST source record is pinned to [Zenodo DOI 10.5281/zenodo.17366698](https:
 ## Segmentation training provenance
 
 - **CORP-TUD-TH** — Universal Dependencies Thai TUD, upstream commit `67413969add552b7030184f16f24fa9f630913bc`, license CC BY-SA 4.0. The treebank README describes 3,627 retained trees sourced from Thai National Corpus and Wikipedia; initial tokenization used PyThaiNLP `newmm` and was subsequently reviewed by trained annotators. The research trainer pins each source file by Git blob SHA and derives source-document-disjoint train/dev/test partitions to reduce leakage. This is segmentation evidence, not pronunciation gold. Preserve attribution and share-alike obligations for derived model artifacts. Sources: [upstream README](https://github.com/UniversalDependencies/UD_Thai-TUD/blob/67413969add552b7030184f16f24fa9f630913bc/README.md), [license](https://github.com/UniversalDependencies/UD_Thai-TUD/blob/67413969add552b7030184f16f24fa9f630913bc/LICENSE.txt), [TACL paper](https://doi.org/10.1162/tacl_a_00745).
+
+
+## Special vowel-letter evidence — 2026-10-26
+
+- **SRC-OBEC-SPECIAL-VOWELS-2022** — Office of the Basic Education Commission / IPST teacher guide, *ชุดการจัดกิจกรรมการเรียนรู้ ภาษาไทย ชั้นมัธยมศึกษาปีที่ 1 ภาคเรียนที่ 1*, p. 5: https://academic.obec.go.th/images/document/1649040986_d_1.pdf .
+- The guide describes ฤ ฤๅ ฦ ฦๅ as syllabic units broadly comparable to ริ/รึ/รือ/ลึ/ลือ, rather than as freely occurring vowel sounds.
+- This supports a conservative orthographic/lexical classification only. It does not establish one IPA value for every word or authorize output for an isolated letter without lexical context. Existing word-level overrides must retain their own lexical evidence, and unsupported forms remain analysis-dependent.
+- The same guide's p. 7 section on leading letters explicitly identifies อ นำ ย and lists อย่า, อยู่, อย่าง and อยาก. This supports the scope of the existing lexical family, not a productive rule for arbitrary spellings beginning with อ.
