@@ -386,3 +386,14 @@ This section supersedes the earlier pre-merge publication statements above.
 | Publish beta artifact to public GitHub Pages | BLOCKED by deployment queue | At 2026-10-26 20:51 EET, run 40378981918 remained `queued` despite build success; deploy job 121775188761 had no runner assigned and no steps. Pending deployment approval endpoint returned an empty list. The exact infrastructure cause is not observable from available data. Do not state that the new beta is live. Last successful deployment remains run [40225366216](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40225366216), main commit `18ab41db87192dc7be69683ef85e53cb04db5517`. |
 | Pages workflow scope | DONE_VERIFIED | `.github/workflows/pages.yml` deploys only from `main`; no environment protections or external settings were changed. |
 | Linguistic validation / release readiness | BLOCKED / research-only | Independent Thai IPA/acoustic gold, human segmentation adjudication, independent Ukrainian target-form reviews, contextual review of บรรจุ final /ʔ/, and lawful access to the full official OBEC PDF remain unresolved. VISTEC/Wisesight source-annotated metrics are diagnostics, not expert gold. |
+
+## Final deployment status correction — 2026-10-26 22:08 EET
+
+This update supersedes the prior row stating that the Pages deployment was blocked by a queue.
+
+| Task | Status | Evidence / acceptance |
+|---|---|---|
+| GitHub Pages deployment of research beta | DONE_VERIFIED at workflow level | Run [40378981918](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40378981918) completed successfully: build job 121769734639 PASS and deploy job 121775188761 PASS. Public URL: https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/. Direct live HTML inspection was unavailable, so the workflow deployment is verified but served-markup details are not independently confirmed. |
+| Main CI, including generated master artifact | DONE_VERIFIED | Run [40378981710](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40378981710): test job PASS; master-artifact job PASS. |
+| Web static validation | DONE_VERIFIED | Run [40378982254](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40378982254): PASS. |
+| Release readiness / linguistic evidence | BLOCKED / research-only | Deployment success does not close evidence gates: independent Thai IPA/acoustic gold, human segmentation adjudication, two independent Ukrainian target-form reviews, contextual review of บรรจุ final /ʔ/, and lawful full official OBEC PDF access remain outstanding. The source-annotated segmentation scores are diagnostic only, not expert gold. |
