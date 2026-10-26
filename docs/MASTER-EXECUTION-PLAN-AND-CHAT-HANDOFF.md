@@ -1002,3 +1002,42 @@ This section supersedes the earlier queue-blocker status in this handoff.
 - Canonical records updated in `docs/final-audit.json`, `docs/final-audit.md`, and `docs/validation-matrix.md`. Latest main CI checked before this doc update: [40381878163](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40381878163), PASS.
 
 **Readiness:** deployed research beta, not release-ready for arbitrary Thai text. Still unresolved: independent Thai IPA/acoustic gold, human segmentation adjudication, two independent Ukrainian target-form reviews, context review of บรรจุ final /ʔ/, and lawful full official OBEC PDF access. Keep all beta and evidence caveats visible; do not claim expert-validated accuracy.
+
+
+## Follow-up verification refresh — 2026-10-26 22:18 EET
+
+This section supersedes earlier statements above about PR #71 remaining open or Pages deployment being queued.
+
+### Current repository and checks
+
+- Current main head observed: `314d2fd2efab107dfa509c23d1f9b9dad2ed42f0`, message `docs: finalize beta deployment handoff`.
+- PR [#71](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/71) is closed/merged at `b4ae9e9f88a79d6f55cb1207363ac6877df080ba`.
+- Pages [run 40378981918](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40378981918): build `121769734639` PASS; deploy `121775188761` PASS.
+- Main CI [run 40378981710](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40378981710): `test` PASS; `master-artifact` PASS.
+- Web static validation [run 40378982254](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40378982254): `validate` PASS.
+- Latest separately inspected main CI [run 40381878163](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40381878163): both jobs PASS on `7bcc7e21c98bde8f55a7c56a1c1a97fe3486b72e`. This does not prove the later documentation-only head `314d2fd2efab107dfa509c23d1f9b9dad2ed42f0` passed exact-head CI.
+
+### Deployment verification boundary
+
+The public Pages URL is https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/. The GitHub Pages workflow reports successful deployment of the merged beta. A live HTML/browser check could not be completed: the web fetch endpoint could not access the URL, and a local HTTP probe failed because DNS resolution was unavailable. Therefore, do not claim that the visible served markup or responsive behavior was browser-verified. Next acceptance is a real-browser check of index/system pages, links, mobile layout, visible beta notice and evidence panel, and input edge cases (empty, whitespace, punctuation, unknown Thai, long/mixed text).
+
+### Task ledger
+
+| ID | Status | Acceptance criterion / blocker |
+|---|---|---|
+| BETA-PUBLISH-001 | DONE_VERIFIED (workflow) | Pages run 40378981918 build and deploy jobs succeeded; served markup still needs browser verification. |
+| CI-MAIN-001 | DONE_VERIFIED (tested commit) | Runs 40378981710 and 40381878163 passed their listed jobs; latest current-main docs SHA is not asserted as exact-head tested. |
+| UI-LIVE-001 | BLOCKED | Browser/network unavailable here. Acceptance: confirm served index/system HTML, CSS/JS loads, responsive layout and edge-case behavior in a functioning browser. |
+| SEG-GOLD-001 | BLOCKED | Human adjudication absent. Acceptance: independently reviewed segmentation sample with disagreement records and declared thresholds. |
+| IPA-GOLD-001 | BLOCKED | Independent Thai phonetician and authorized audio/TextGrid access required. Acceptance: dual-reviewed IPA with acoustic evidence where claimed. |
+| UA-TARGET-001 | BLOCKED | Two independent Ukrainian-native reviewers required. Acceptance: blinded target judgments and disagreement log. |
+| BANCHU-IPA-001 | PARTIAL | Final /ʔ/ in `บรรจุ` remains source-attested discrepancy. Acceptance: context-specific independent phonetic adjudication; no universal rule before that. |
+| OBEC-PDF-001 | BLOCKED | Full official PDF unavailable in prior request (HTTP 403). Acceptance: lawful full-text access and exact relevant clauses/version. |
+| LICENSE-001 | PARTIAL | Pinned source records exist; per-resource attribution and license compatibility still need final review. Acceptance: documented compatible terms and attribution for every redistributed/generated artifact. |
+
+### Research integrity constraints
+
+- Wisesight has 993 source-annotated rows; VISTEC pinned CSV has 50,000 parseable rows although upstream README says 49,997. Keep this discrepancy visible and do not tune on VISTEC.
+- Neither dataset is independent expert gold. Coverage is not accuracy.
+- The TUD unigram-Viterbi model remains research-only; do not make it the public default without human error adjudication, predeclared acceptance thresholds, and independent licensed-domain evaluation.
+- No new release was published, no deployment protections were changed, and no PR was merged as part of this refresh.
