@@ -71,16 +71,17 @@ jobs:
         run: |
           set -eu
           for attempt in $(seq 1 12); do
-            if curl --fail --silent --show-error "$PAGE_URL" -o /tmp/deployed-index.html; then
-              break
+            if curl --fail --silent --show-error "$PAGE_URL" -o /tmp/deployed-index.html \
+              && grep -Fq 'Вводьте цілий тайський текст' /tmp/deployed-index.html \
+              && grep -Fq 'data-example="กา"' /tmp/deployed-index.html \
+              && grep -Fq 'data-example="จริง"' /tmp/deployed-index.html \
+              && grep -Fq 'БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ' /tmp/deployed-index.html; then
+              echo "Published homepage contract verified at $PAGE_URL"
+              exit 0
             fi
             if [ "$attempt" -eq 12 ]; then
-              echo "GitHub Pages homepage was not reachable after 12 attempts" >&2
+              echo "Published homepage did not expose the expected whole-text UI contract after 12 attempts" >&2
               exit 1
             fi
             sleep 5
           done
-          grep -Fq 'Вводьте цілий тайський текст' /tmp/deployed-index.html
-          grep -Fq 'data-example="กา"' /tmp/deployed-index.html
-          grep -Fq 'data-example="จริง"' /tmp/deployed-index.html
-          grep -Fq 'БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ' /tmp/deployed-index.html
