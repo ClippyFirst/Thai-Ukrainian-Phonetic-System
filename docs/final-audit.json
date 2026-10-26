@@ -766,7 +766,7 @@
       }
     },
     "merged_publication_followup": {
-      "checked_at": "2026-10-26T20:51:00+02:00",
+      "checked_at": "2026-10-26T22:08:00+02:00",
       "pr": {
         "number": 71,
         "state": "closed",
@@ -777,13 +777,13 @@
       "merged_pages_run": {
         "id": 40378981918,
         "url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40378981918",
+        "status": "completed",
+        "conclusion": "success",
         "build_job_id": 121769734639,
         "build_job": "success",
         "deploy_job_id": 121775188761,
-        "deploy_job": "queued",
-        "run_status": "queued",
-        "pending_deployment_approvals": [],
-        "runner_assigned": false
+        "deploy_job": "success",
+        "deploy_step": "success"
       },
       "web_static_validation": {
         "id": 40378982254,
@@ -793,21 +793,30 @@
       "ci": {
         "id": 40378981710,
         "test_job": "success",
-        "master_artifact_job": "queued",
+        "master_artifact_job": "success",
+        "status": "success",
         "url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40378981710"
       },
       "public_deployment": {
-        "status": "not_yet_verified",
-        "last_known_successful_run": 40225366216,
-        "last_known_successful_commit": "18ab41db87192dc7be69683ef85e53cb04db5517",
+        "status": "deployment_succeeded",
+        "deployment_run": 40378981918,
         "url": "https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/",
-        "beta_banner_live": false
+        "deployed_source_commit": "b4ae9e9f88a79d6f55cb1207363ac6877df080ba",
+        "live_html_direct_fetch": "not_independently_verified; web fetch tool could not access GitHub Pages URL",
+        "beta_banner_deployment": "expected from successful Pages artifact; direct live-page assertion remains unverified"
       },
-      "queue_blocker": "Pages deploy job remained queued without a runner or steps for more than two hours; pending deployment approvals were empty. Exact cause not observable through the available connector.",
-      "live_fetch": "not_verified; direct page fetch via web tool inaccessible and connected Firecrawl account reported insufficient credits",
+      "queue_blocker": null,
+      "live_fetch": "not_verified; direct page fetch via web tool inaccessible and connected Firecrawl account previously reported insufficient credits",
       "hosting_decisions": "No alternate host created; no environment protection or repository settings changed; no release published.",
-      "next_acceptance": "Wait for/inspect GitHub Actions queue and verify the deployed HTML at the public Pages URL after the deploy job completes.",
-      "readiness": "merged research beta candidate; public deployment not yet verified; not release-ready for arbitrary Thai text"
+      "next_acceptance": "Optionally verify served index and system page in a normal browser; all available CI and Pages deployment jobs are successful.",
+      "readiness": "research beta deployed by GitHub Pages workflow; not release-ready for arbitrary Thai text",
+      "recent_main_ci": {
+        "id": 40381878163,
+        "status": "success",
+        "commit": "7bcc7e21c98bde8f55a7c56a1c1a97fe3486b72e",
+        "url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40381878163"
+      },
+      "current_main_commit_when_checked": "7bcc7e21c98bde8f55a7c56a1c1a97fe3486b72e"
     },
     "current_main_commit_after_audit_docs": "33bc06af283dddc72b7bab23b9767ad7ff9abf18"
   }
