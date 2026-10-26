@@ -86,6 +86,26 @@ assert.match(output.innerHTML, /Результат 3: ไฟ/);
 assert.equal((output.innerHTML.match(/ФОНОЛОГІЧНА IPA/g) || []).length, 2);
 assert.equal(status.className, "status notice");
 
+
+// A reviewed full-sentence lexicon entry must preserve its reviewed syllable
+// decomposition and provide IPA for each syllable without requiring spaces.
+input.value = "กินข้าวกับไข่และผลไม้";
+analyze.click();
+assert.match(output.innerHTML, /Результат 1: กินข้าวกับไข่และผลไม้/);
+assert.equal((output.innerHTML.match(/ФОНОЛОГІЧНА IPA/g) || []).length, 7);
+assert.equal(status.className, "status");
+
+// Punctuation must delimit text runs without preventing following known words
+// from being analyzed.
+input.value = "กา,ไฟ!มา";
+analyze.click();
+assert.match(output.innerHTML, /Результат 1: กา/);
+assert.match(output.innerHTML, /Результат 2: ,/);
+assert.match(output.innerHTML, /Результат 3: ไฟ/);
+assert.match(output.innerHTML, /Результат 4: !/);
+assert.match(output.innerHTML, /Результат 5: มา/);
+assert.equal((output.innerHTML.match(/ФОНОЛОГІЧНА IPA/g) || []).length, 3);
+
 input.value = "กาไฟ มา!";
 analyze.click();
 assert.match(output.innerHTML, /Результат 1: กา/);
