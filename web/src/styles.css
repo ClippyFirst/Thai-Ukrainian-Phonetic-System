@@ -44,3 +44,7 @@ kbd{font-family:inherit;font-size:12px;font-weight:600;line-height:1.2;border:1p
 .copy{margin-top:10px;border:1px solid var(--line);background:var(--paper);padding:6px 10px;cursor:pointer}
 .copy:hover{border-color:var(--blue);color:var(--blue)}
 @media(max-width:700px){.status-list{grid-template-columns:1fr}}
+
+
+/* Research beta notice visible before user input. */
+.beta-notice{border-bottom:1px solid var(--line);border-left:5px solid var(--red);background:var(--wash);padding:14px max(24px,calc((100vw - var(--max))/2));display:grid;grid-template-columns:minmax(170px,230px) 1fr;gap:12px 24px;align-items:start;font-size:14px}.beta-notice strong{font-size:12px;letter-spacing:.12em;color:var(--red)}.beta-notice p{margin:0;max-width:900px;color:#414149}.beta-notice a{color:var(--blue);font-weight:800}@media(max-width:700px){.beta-notice{grid-template-columns:1fr;padding:14px 20px;gap:6px}}
