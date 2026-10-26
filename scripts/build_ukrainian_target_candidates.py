@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import difflib
 import json
 import re
 import sys
@@ -105,8 +106,16 @@ def main() -> int:
             OUTPUT.write_text(generated, encoding="utf-8", newline="\n")
             print(f"Wrote {OUTPUT}")
             return 0
-        if not OUTPUT.is_file() or OUTPUT.read_text(encoding="utf-8") != generated:
+        existing = OUTPUT.read_text(encoding="utf-8") if OUTPUT.is_file() else ""
+        if existing != generated:
             print(f"ERROR: generated target candidates drifted; run {Path(__file__).name} --write", file=sys.stderr)
+            diff = difflib.unified_diff(
+                existing.splitlines(keepends=True),
+                generated.splitlines(keepends=True),
+                fromfile=str(OUTPUT.relative_to(ROOT)) + " (committed)",
+                tofile=str(OUTPUT.relative_to(ROOT)) + " (generated)",
+            )
+            sys.stderr.writelines(diff)
             return 1
         print(f"PASS: {len(rows)} engine-generated target candidates match the committed registry")
         return 0
