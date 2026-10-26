@@ -321,3 +321,8 @@ The earlier “not yet surfaced” state is superseded by this timestamped refre
 | Web static validation | DONE_VERIFIED_FOR_PRIOR_CODE_HEAD | Run 40346688520 passed; final code-bearing head must be checked if workflows trigger. |
 
 No VISTEC metric is claimed until the corrected workflow completes and its report artifact is inspected. Source labels remain unadjudicated.
+
+
+## Corrected exact-head verification — 2026-10-26
+
+The stale unit-test assertion and the VISTEC 50,000-row count contract are fixed in code. Latest observed runs for the corrected workflow head: CI [40353097806](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40353097806), Web static validation [40353097480](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40353097480), VISTEC [40353097539](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40353097539). All were queued at the last poll. Acceptance remains pending successful exact-head CI, successful full 50,000-row evaluation, and report-artifact inspection.
