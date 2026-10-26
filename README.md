@@ -4,9 +4,15 @@ Research-oriented, machine-readable reference implementation for mapping contemp
 
 ## Research pipeline
 
-**Required path:** Thai orthography → structural orthographic analysis → syllable structure → Thai phonology → typed phonetic result (phonemic IPA + conservative broad surface IPA) → Ukrainian adaptation.
+**Non-negotiable architecture invariant:**
 
-The typed `PhoneticResult` is the adapter boundary. The Python Ukrainian adapter accepts that result and maps its phonemic IPA; it does not inspect Thai graphemes, vowel IDs, or Thai coda fields. Tone, length, syllable boundaries, provenance, and uncertainty remain explicit metadata. Unsupported or uncertain phonetic results withhold Ukrainian output instead of guessing.
+`Thai orthography → structural analysis → Thai phonology → typed, inspectable IPA → Ukrainian adaptation from IPA → Ukrainian practical orthography`.
+
+The Thai → IPA stage must resolve the source-language analysis as far as the available evidence permits. The IPA result is a real intermediate representation and the **only** input contract for Ukrainian adaptation—not an audit-only side output. No parallel Thai-grapheme → Ukrainian path, direct vowel-ID mapping, or direct Thai-coda-to-Ukrainian mapping may independently generate the final Ukrainian result.
+
+The typed `PhoneticResult` is that adapter boundary. It carries phonemic IPA and conservative broad surface IPA separately, alongside segment and syllable boundaries, vowel length, tone, provenance, and uncertainty. The Ukrainian adapter consumes the typed IPA result and its declared metadata; it must not inspect Thai graphemes, vowel IDs, or Thai coda fields to decide Ukrainian output. Ukrainian practical orthography is produced only after this IPA-to-Ukrainian adaptation. If the Thai reading or required IPA features cannot be supported, the system must withhold or explicitly qualify downstream output instead of silently guessing.
+
+**Acceptance rule:** test the whole chain `Thai input → IPA intermediate → Ukrainian output`, including tests proving that changing/withholding the IPA result changes/withholds the Ukrainian result accordingly. Python and browser implementations must obey the same boundary and pass cross-runtime parity checks.
 
 The browser IPA adapter is maintained as a separately tested implementation. Cross-runtime parity tests remain required; passing a Python test alone does not establish browser parity. This is **not RTGS** and not a Thai-character → Ukrainian-character substitution table.
 
