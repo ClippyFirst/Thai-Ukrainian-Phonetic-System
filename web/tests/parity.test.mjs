@@ -66,7 +66,7 @@ const walk = analyze("เดิน");
 if (walk.status !== "analyzed" || walk.phonemicIpa !== "dɤːn" || walk.phoneticIpa !== null ||
     walk.tone !== "mid" || walk.toneIpa !== "˧" || walk.vowelLength !== "long" ||
     walk.ukrainian !== "ден" || walk.evidenceStatus !== "SOURCE_ATTESTED_NOT_GOLD" ||
-    walk.sourceRevision !== "1908803") throw new Error("Lexical IPA override parity contract failed for เดิน");
+    walk.sourceRevision !== "1908803" || walk.onset.join("") !== "ด" || walk.coda !== "น" || walk.toneClass !== "mid") throw new Error("Lexical IPA override parity contract failed for เดิน");
 const walkText = analyzeText("เดิน")[0];
 if (walkText.segmentationStatus !== "lexical_ipa_override" ||
     walkText.syllables.length !== 1 || walkText.syllables[0].phonemicIpa !== "dɤːn") {
