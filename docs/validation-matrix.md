@@ -12,7 +12,7 @@
 | feature-ranked Ukrainian candidates | implemented | deterministic adapter |
 | broad IPA composition | implemented | pipeline tests |
 | connected-speech phonetics | partial | intentionally conservative |
-| lexical segmentation | infrastructure implemented | explicit lexicon adapter; no bundled lexicon asserted as gold |
+| lexical segmentation | PARTIAL | pinned CC0 dictionary max-match and separate 60,963-entry lexicon; evaluated on held-out Wisesight but current baseline is weak; no claim of production-quality segmentation |
 | corpus validation | infrastructure implemented | external licensed JSONL; no CI gold corpus claimed |
 | malformed syllable surface rejection | implemented | repeated tone/vowel signs, concatenated material and unsupported-symbol probes |
 | calibrated probability | not claimed | calibration dataset still required |
@@ -48,7 +48,7 @@ Current readiness status — 2026-10-24
 | ClippyFirst segmentation baseline | DONE_VERIFIED (baseline only) | CI runs `scripts/run_wisesight_segmentation_diagnostic.py` and uploads JSON; baseline is expected to expose the current no-auto-segmentation limitation, not prove a production score |
 | Source-attested IPA/tones/length contrasts | DONE_VERIFIED (source-attested only) | Six pinned Wiktionary entries; `SOURCE_ATTESTED_NOT_GOLD`; includes short /ɤ/ in เงิน vs long /ɤː/ in เดิน |
 | Runtime lexical coverage | PARTIAL | Five source-backed challenge lexicon entries added; diagnostic must report new counts; not representative coverage |
-| Lexical IPA override for เงิน | TODO | Must preserve /ŋɤn˧/ short-vowel reading through typed IPA and UA adaptation, with Python/browser parity; current graphemic lexicon cannot safely encode this |
+| Typed source-attested lexical IPA overrides (เงิน, เดิน) | IMPLEMENTED; exact-head CI pending | Pinned Thai Wiktionary revisions; typed IPA→UA adapter path; grapheme-only ambiguity remains separate; source agreement from an injected override is excluded from independent-comparison metrics |
 | Independent expert/acoustic IPA gold | BLOCKED | CCOST license/annotation manual and local scope must be reviewed, then an independent Thai phonetician must adjudicate a pinned sample with disagreement log and speaker-aware split |
 | Context-dependent `รร`, `ฤ/ฤๅ`, `ฦ/ฦๅ`, `ทร`, silent letters | PARTIAL | Keep lexical/context-dependent abstention until source-located readings and independent review exist |
 | Connected speech and Ukrainian target preference | BLOCKED | Requires acoustic evidence and a separately adjudicated Ukrainian target preference set |
@@ -115,3 +115,11 @@ Verified code/data head: [CI 40238202167](https://github.com/ClippyFirst/Thai-Uk
 | Corpus license/access registry | DONE_VERIFIED on prior code/data checkpoint | Wisesight 993-row source-annotated test-only snapshot; LST20 and VISTEC candidate gates; CCOST CC BY-NC-SA 4.0 and 6.2 GB TextGrid archive recorded. |
 | Automatic word segmentation | TODO | No production segmenter or distinct license-cleared training corpus. Wisesight remains test-only. |
 | Independent IPA/tone/length gold and Ukrainian target gold | BLOCKED | Requires independent adjudication and, for acoustic claims, access to the matching audio. |
+
+## Follow-up implementation batch — 2026-10-26
+
+
+| TUD statistical segmentation experiment | IMPLEMENTED; exact-head CI pending | Pinned UD Thai TUD commit 67413969add552b7030184f16f24fa9f630913bc; train-only token counts, dev-only penalty selection, separate TUD test and Wisesight test-only report; CC BY-SA 4.0 obligations recorded |
+| Independent IPA/acoustic gold | BLOCKED | Requires independent Thai phonetician adjudication, agreed broad-vs-surface transcription protocol, and authorized CCOST recording/TextGrid access |
+| Final glottal stop in บรรจุ | PARTIAL / EVIDENCE-LIMITED | Dictionary IPA and engine disagree; no global phonological rule is added. Need agreement on transcription level, stress/context, and independent adjudication |
+| Ukrainian target-form preferences | BLOCKED | Existing adapter and generated candidates establish reproducibility only; require independently adjudicated Ukrainian candidate choices and written criteria |
