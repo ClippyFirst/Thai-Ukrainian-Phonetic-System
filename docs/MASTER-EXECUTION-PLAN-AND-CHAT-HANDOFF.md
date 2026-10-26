@@ -741,3 +741,11 @@ Web static validation [40305933181](https://github.com/ClippyFirst/Thai-Ukrainia
 - Wired the report into `.github/workflows/ci.yml` with assertions that all 993 rows remain source-annotated (zero expert-adjudicated rows), the test-only split and CC0-1.0 provenance are intact, both false-split and false-merge examples exist, and the report cannot be mistaken for adjudicated gold. CI uploads artifact `thai-segmentation-error-review`.
 - Implementation commit: `e80606e641d631966b566999027ee9d2b4d00bb`; audit-register update: `6e34f66498b5bf474fe59af054940b93f5380e9a`. Exact-head CI and Web static validation for the resulting documentation head must pass before this batch is marked `DONE_VERIFIED`; do not claim the report ran locally.
 - This batch advances the segmentation error-analysis acceptance criterion but does not complete expert review. Source-annotated differences are triage candidates, not proof that each prediction is linguistically wrong. Production segmentation remains blocked pending human review, predefined thresholds and independent-domain evaluation.
+
+
+### Error-review metric parity correction — 2026-10-26
+
+- The first generated report correctly matched boundary precision/recall/F1 against the existing dictionary diagnostic, but reported zero exact sequences because `segment_text_preserving` returns a tuple while JSON gold tokenization is a list. The comparison was therefore always false despite equivalent token sequences.
+- Corrected the diagnostic to normalize predicted tokens to a list before equality checks. Added a pinned regression expecting 192 exact token-array matches out of 993, and CI now asserts this count alongside both error classes and the source-grade gate.
+- Fix commit: `bec1b7027f34a4f70f0b6f9fdc415ef43343eab9`; test commit: `aba6832eb97cb4b84f2e62fa058fa963cfb34803`; CI assertion commit: `c189cdb9209d85780c3baeb1df23800101840b16`. Audit JSON was synchronized in `0b39f427da68be645d3479b0aa05ef0d7de76193`.
+- The earlier artifact from CI run [40319308274](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40319308274) is superseded for exact-sequence counts; its boundary metrics and false-split/false-merge samples remain useful, but do not cite its zero exact-sequence count. The corrected final-head run must pass before this metric repair is verified.
