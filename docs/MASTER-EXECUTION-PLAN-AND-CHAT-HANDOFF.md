@@ -849,7 +849,7 @@ Web static validation [40305933181](https://github.com/ClippyFirst/Thai-Ukrainia
 | Wisesight comparative metrics | DONE_VERIFIED as source-annotation diagnostic | Same 993 rows; dictionary F1 0.839471 / 192 exact sequences; TUD F1 0.748623 / 119 exact sequences. No independent expert labels. |
 | Stratified human-review packet | PARTIAL | Exact-head CI must pass; inspect artifact; human reviewers must fill it under the protocol before claiming adjudicated boundaries. |
 | VISTEC independent-domain source metadata | DONE_VERIFIED (metadata) | Pinned upstream commit/blob and dataset-specific CC-BY-SA 3.0 declaration recorded. |
-| VISTEC evaluation adapter/workflow | PARTIAL | New workflow and tests are queued; require a successful run, 49,997 rows, 100% prediction coverage, exact reconstruction and artifact inspection. |
+| VISTEC evaluation adapter/workflow | PARTIAL | New workflow and tests are queued; require a successful run, 50,000 CSV rows, 100% prediction coverage, exact reconstruction and artifact inspection. |
 | Independent Thai IPA/acoustic gold | BLOCKED | CCOST v1.0 is public under CC BY-NC-SA 4.0, but the archive/manual must be reviewed and qualified Thai phonetic reviewers must annotate a speaker-aware sample. |
 | Independent Ukrainian target forms | BLOCKED | Two Ukrainian-native reviewers must independently annotate the existing template and record criteria, agreement and adjudication. |
 | บรรจุ final /ʔ/ | PARTIAL / context-limited | Pinned dictionary IPA records /ban˧.t͡ɕuʔ˨˩/; do not turn one lexical citation into a universal rule. Define transcription level and context. |
@@ -897,3 +897,11 @@ Web static validation [40305933181](https://github.com/ClippyFirst/Thai-Ukrainia
 
 - Latest code-bearing commit for the VISTEC parser guard is `550f26fdbf6fd66a0d1c2cb1caa9bd6bd10de196`. Three workflow runs are now visible for that code-bearing head: CI [40346688497](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40346688497), Web static validation [40346688520](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40346688520), and external VISTEC evaluation [40346688621](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40346688621). The latest poll shows all three `queued`; no result or metric is claimed.
 - Follow-on commits `920bdc8b1e9aec80e49d3df866fa26e2dc1aca46`, `7521fd76242a93eb2db8a7bd64771f164f38eee9`, and `835139e4003cdf3df2452cf9e729d2cdb0c55234` update only audit JSON, audit markdown, and the validation matrix to reflect this newly visible queue state. They do not change executable code. Refresh the PR head and CI before merge; if GitHub does not run docs-only commits, retain the distinction between the code-bearing tested SHA and the final documentation SHA.
+
+
+### Failed workflow diagnosis and fixes — 2026-10-26
+
+- Freshly inspected run logs: CI 40346688497 failed exactly one test due to stale expected license wording; Web static validation 40346688520 passed; external VISTEC run 40346688621 failed after immutable source commit/blob verification and model training because the pinned CSV contains 50,000 data rows while the prior expected count was 49,997.
+- Corrected the stale license assertion, changed evaluator/workflow expected rows to 50,000, and clarified the corpus registry that upstream README describes 49,997 samples while the pinned CSV actually has 50,000 data rows. The CSV hash remains the immutable snapshot identity; the discrepancy is explicitly documented, not hidden.
+- Fix commits: 357d83c10ee2647b0debe5c7efe52b489c37f4bd, ea27324a044e7d9c3298285e09bc7959b15681f5, 55306fda1af8c9652854e6d504ff56ff0358fdeb, 906e1293203635dcf481dbc164712403d088231c, e05d5644f94b5d9c8707c3da981182822d272fa0.
+- Acceptance remains pending: exact-head CI must pass; corrected VISTEC run must process all 50,000 rows and produce an inspected artifact; no independent-gold accuracy claim is justified.
