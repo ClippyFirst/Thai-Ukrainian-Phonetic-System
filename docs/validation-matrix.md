@@ -280,7 +280,7 @@ Both engines were evaluated against the same 993 pinned Wisesight rows using the
 
 | Task | Status | Evidence / acceptance |
 |---|---|---|
-| VISTEC dataset provenance and license | DONE_VERIFIED (metadata) | Dataset-specific upstream README at pinned commit 215a7dc3d384f20eb56af1cbc41fb32b7f8df57c declares CC-BY-SA 3.0; CSV Git blob SHA-1 edfcb85907a604c5e30643065ac4975862a0fe90; 49,997 annotated samples described upstream. |
+| VISTEC dataset provenance and license | DONE_VERIFIED (metadata) | Dataset-specific upstream README at pinned commit 215a7dc3d384f20eb56af1cbc41fb32b7f8df57c declares CC-BY-SA 3.0; CSV Git blob SHA-1 edfcb85907a604c5e30643065ac4975862a0fe90; 49,997 samples described upstream; pinned CSV contains 50,000 data rows. |
 | VISTEC annotation adapter | IMPLEMENTED; tests pending exact-head CI | Reads submissionText, splits pipe-delimited annotations, strips only documented <ne>/<msp> tags, preserves annotated text and verifies exact reconstruction. It does not use raw questionText. |
 | VISTEC external evaluation workflow | IMPLEMENTED; workflow run pending | Pinned external checkout, source blob/license checks, current research-only TUD model, both segmenters, common scorer and report artifact. Acceptance requires workflow success and artifact inspection. |
 | Independent segmentation-domain evidence | PARTIAL | VISTEC is a separate source/domain, but labels are still SOURCE_ANNOTATED rather than independently re-adjudicated. Report separately from Wisesight and do not tune on either test set. |
@@ -294,7 +294,7 @@ No VISTEC metric is claimed before the external workflow finishes on this branch
 | Task | Status | Acceptance / evidence |
 |---|---|---|
 | Reject malformed empty annotation fields | IMPLEMENTED; exact-head CI pending | `parse_submission_text` now rejects any empty token after documented markup removal instead of silently filtering it. Regression cases cover repeated separators, markup-only empty tokens, leading separators and all-empty input. Code head: `1cbf97036ec931266f4a6ed5eb747a00e5b7ad29`. |
-| Verify compatibility with pinned VISTEC source | BLOCKED_PENDING_WORKFLOW | The 49,997-row source adapter must run against the immutable CSV snapshot. No metric is claimed until the external workflow succeeds and its artifact is inspected. |
+| Verify compatibility with pinned VISTEC source | BLOCKED_PENDING_WORKFLOW | The 50,000-row CSV (upstream README describes 49,997 samples) adapter must run against the immutable CSV snapshot. No metric is claimed until the external workflow succeeds and its artifact is inspected. |
 | Exact-head CI and Web validation | PENDING / not yet surfaced | GitHub connector returned no workflow runs or combined statuses for the new head at the last check. This is not a pass; refresh workflow state before merge. |
 
 
@@ -307,6 +307,17 @@ The GitHub connector now reports the following runs for branch head `550f26fdbf6
 |---|---|---|---|
 | CI | [40346688497](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40346688497) | QUEUED | All repository test and generated-artifact gates pass on this exact head |
 | Web static validation | [40346688520](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40346688520) | QUEUED | Static validation passes on this exact head |
-| External VISTEC evaluation | [40346688621](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40346688621) | QUEUED | Pinned 49,997-row source is accepted; report artifact inspected; no claim of independent gold |
+| External VISTEC evaluation | [40346688621](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40346688621) | QUEUED | Pinned 50,000-row CSV (upstream README describes 49,997 samples) is accepted; report artifact inspected; no claim of independent gold |
 
 The earlier “not yet surfaced” state is superseded by this timestamped refresh. Queueing is not a successful validation result.
+
+
+## Follow-up after failed validation — 2026-10-26
+
+| Task | Status | Evidence / acceptance |
+|---|---|---|
+| Stale corpus-license unit assertion | FIXED_PENDING_EXACT_HEAD_CI | CI run 40346688497 failed because the test expected old wording; updated to assert the registry's pinned-source declaration. |
+| VISTEC row-count contract | FIXED_PENDING_EXTERNAL_RERUN | Run 40346688621 verified the pinned commit/blob but evaluator rejected 50,000 actual CSV data rows against stale expected count 49,997. Evaluator/workflow now assert 50,000; corpus registry explicitly records upstream README's 49,997 claim separately from CSV count. |
+| Web static validation | DONE_VERIFIED_FOR_PRIOR_CODE_HEAD | Run 40346688520 passed; final code-bearing head must be checked if workflows trigger. |
+
+No VISTEC metric is claimed until the corrected workflow completes and its report artifact is inspected. Source labels remain unadjudicated.
