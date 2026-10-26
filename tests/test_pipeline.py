@@ -228,7 +228,17 @@ class PipelineTests(unittest.TestCase):
         self.assertTrue(adapted["tone_separate"])
         self.assertEqual(typed_ipa.tone_category, "mid")
         self.assertEqual(typed_ipa.vowel_length, "long")
+        self.assertEqual(typed_ipa.tone_contour_ipa, "˧")
+        self.assertEqual(typed_ipa.syllable_boundaries, (0, len(typed_ipa.segments)))
         self.assertTrue(typed_ipa.provenance)
+
+        # Source-derived ambiguity remains explicit in the typed IPA object
+        # and can never leak a confident downstream Ukrainian spelling.
+        ambiguous = PhoneticResult.from_syllable_analysis(analyze_syllable("ฤ"))
+        self.assertEqual(ambiguous.status, "UNCERTAIN")
+        self.assertIsNone(ambiguous.phonemic_ipa)
+        self.assertTrue(ambiguous.uncertainty)
+        self.assertIsNone(adapt_syllable_to_ukrainian(ambiguous))
 
 
 if __name__=="__main__":unittest.main()
