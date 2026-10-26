@@ -517,3 +517,23 @@ This section supersedes the earlier queued-deployment status above.
 - Latest separately checked main CI run [40381878163](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40381878163) also passed for docs commit `7bcc7e21c98bde8f55a7c56a1c1a97fe3486b72e`. Audit JSON synchronized in commit `6466573838c4aa18a405c510a9b5e56f0ea453b3`.
 
 **Status:** research beta deployment is operational according to GitHub Pages workflow; not a release-ready general-purpose Thai transcription system. The independent Thai IPA/acoustic gold, human segmentation adjudication, two independent Ukrainian target-form reviews, contextual review of บรรจุ final /ʔ/, and lawful full official OBEC PDF access remain research evidence blockers. Source-annotated VISTEC/Wisesight diagnostics are not expert-adjudicated gold.
+
+
+## Whole-text input follow-up — 2026-10-26
+
+The browser engine's prior whole-run lookup failed closed whenever an uninterrupted Thai-script span was not an exact lexicon key. This prevented IPA for known words adjacent to unknown text and did not meet the expected whole-text workflow. A conservative dictionary-max-match implementation and UI regression cases have now been added on branch `fix/examples-ipa-coverage-20261026`.
+
+This is **PARTIAL**, not a claim of full Thai text recognition: known lexicon entries may produce IPA, unknown spans remain explicitly unresolved, and greedy matches can be wrong in ambiguous contexts. CI/static validation for the latest branch head is required before this change is DONE_VERIFIED. Independent word-boundary adjudication and IPA/UA evaluation remain outstanding.
+
+
+## Whole-text Thai input — verification update — 2026-10-26
+
+- Code-bearing head `1b1553876ef24bf18f692d7aa512634bdceeee70` passed the CI `test` job and `master-artifact` job in [run 40400809948](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40400809948); the generated master table assertion passed. Web static validation passed in [run 40400809797](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40400809797).
+- The first test runs exposed two test-contract defects, not a hidden pass: a parity probe treated a string containing known lexicon substrings as wholly unknown, and UI assertions counted copy-button accessible labels as additional IPA field labels. The parity probe now uses the genuinely unknown span `ทดสอบ`; the UI test counts visible IPA field labels and matches the actual punctuation-token markup. The final CI run passed the corrected parity and UI-contract tests.
+- Whole-text browser segmentation remains **PARTIAL**, because greedy dictionary max-match is not a complete or context-aware Thai segmenter. Unknown spans abstain from guessed IPA/Ukrainian output. The current PR remains open; these changes are not yet merged or deployed to Pages.
+- Independent word-boundary adjudication, independent Thai IPA/acoustic gold, and independent Ukrainian target-form review remain outstanding. Source-annotated Wisesight diagnostics are not expert-adjudicated gold and must not be presented as accuracy proof.
+
+
+### Lexical IPA override status correction — 2026-10-26
+
+A final UI review found and fixed a summary-status bug: entries with `segmentationStatus: lexical_ipa_override` already rendered source-attested IPA but were counted as unresolved because the summary accepted only `lexicon`. The summary now accepts both known statuses; the UI-contract test verifies `เงินเดิน` produces two IPA field labels without an unresolved notice. Code checkpoint `3ccf84f564add02c189524c3b9ca794154d35c8b` passed CI's `test` job and web static validation (runs [40402504410](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40402504410) and [40402504394](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40402504394)); the duplicate `master-artifact` generation job remained in progress at last poll. This does not change the research-readiness conclusion: dictionary max-match remains partial and linguistic gold/adjudication blockers remain open.

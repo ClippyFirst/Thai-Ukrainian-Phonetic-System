@@ -140,13 +140,50 @@ function tokenizeText(text) {
   }
   return out;
 }
+const TEXT_WORDS = [...new Set([...TEXT_LEXICON.keys(), ...LEXICAL_IPA_OVERRIDES.keys()])]
+  .sort((a,b)=>[...b].length-[...a].length || a.localeCompare(b,"th"));
+
+function matchTextWord(chars, offset){
+  for(const word of TEXT_WORDS){
+    const letters=[...word];
+    if(letters.every((char,index)=>chars[offset+index]===char)) return word;
+  }
+  return null;
+}
+
+// Conservative dictionary max-match: known lexicon entries can be analyzed,
+// while contiguous unknown material remains visible as an unresolved span.
+// This is not claimed to be a complete Thai word segmenter.
+function segmentThaiRun(input){
+  const chars=[...input], segments=[];
+  let i=0;
+  while(i<chars.length){
+    const match=matchTextWord(chars,i);
+    if(match){
+      segments.push({input:match,kind:"thai",known:true});
+      i += [...match].length;
+      continue;
+    }
+    const start=i++;
+    while(i<chars.length && !matchTextWord(chars,i)) i++;
+    segments.push({input:chars.slice(start,i).join(""),kind:"thai",known:false});
+  }
+  return segments;
+}
+
+function analyzeThaiSegment(token){
+  const lexicalOverride=LEXICAL_IPA_OVERRIDES.has(token.input);
+  const syllables=lexicalOverride?[token.input]:TEXT_LEXICON.get(token.input);
+  if(!syllables) return {...token,segmentationStatus:"unresolved",syllables:[],warnings:["No reviewed dictionary segmentation or deterministic pronunciation is available for this span. IPA and Ukrainian output are withheld; the span is preserved without a guessed pronunciation."]};
+  return {...token,segmentationStatus:lexicalOverride?"lexical_ipa_override":"lexicon",syllables:syllables.map(analyze),warnings:[]};
+}
+
 function analyzeText(text){
-  return tokenizeText(text).map(token=>{
-    if(token.kind!=="thai") return {...token,segmentationStatus:"not_applicable",syllables:[],warnings:[]};
-    const lexicalOverride=LEXICAL_IPA_OVERRIDES.has(token.input);
-    const syllables=lexicalOverride?[token.input]:TEXT_LEXICON.get(token.input);
-    if(!syllables) return {...token,segmentationStatus:"unresolved",syllables:[],warnings:["This text endpoint does not yet implement automatic word segmentation; IPA and Ukrainian output are withheld. Add a reviewed lexicon entry or analyze individual syllables separately."]};
-    return {...token,segmentationStatus:lexicalOverride?"lexical_ipa_override":"lexicon",syllables:syllables.map(analyze),warnings:[]};
+  return tokenizeText(text).flatMap(token=>{
+    if(token.kind!=="thai") return [{...token,segmentationStatus:"not_applicable",syllables:[],warnings:[]}];
+    // Preserve a complete dictionary phrase as one match when it is known;
+    // otherwise segment the unspaced run into known entries and unresolved spans.
+    return segmentThaiRun(token.input).map(analyzeThaiSegment);
   });
 }
 export {analyzeText,tokenizeText};

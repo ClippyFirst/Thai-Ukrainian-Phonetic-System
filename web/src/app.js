@@ -124,7 +124,7 @@ function run() {
   const tokens = analyzeText(text);
   const thaiTokens = tokens.filter(token => token.kind === 'thai');
   const unresolvedCount = thaiTokens.length === 0 ? 1 : thaiTokens.filter(token =>
-    token.segmentationStatus !== 'lexicon' ||
+    !['lexicon', 'lexical_ipa_override'].includes(token.segmentationStatus) ||
     (token.syllables || []).some(syllable => syllable.status !== 'analyzed')
   ).length;
   status.className = unresolvedCount ? 'status notice' : 'status';

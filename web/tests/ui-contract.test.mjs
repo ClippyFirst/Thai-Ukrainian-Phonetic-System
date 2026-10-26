@@ -15,11 +15,11 @@ function element(id) {
   }
   return elements.get(id);
 }
-const examples = [{
-  dataset: { example: "พริก" }, listeners: {},
+const examples = ["กา", "พริก", "มา", "ไฟ", "หมา", "ใหม่", "จริง"].map(example => ({
+  dataset: { example }, listeners: {},
   addEventListener(type, callback) { this.listeners[type] = callback; },
   click() { this.listeners.click?.({}); }
-}];
+}));
 
 globalThis.document = {
   getElementById: element,
@@ -43,7 +43,7 @@ assert.match(output.innerHTML, /aria-labelledby=/);
 assert.equal(status.className, "status");
 assert.match(status.textContent, /Проаналізовано 1 токен/);
 
-input.value = "แสดง";
+input.value = "ทดสอบ";
 analyze.click();
 assert.equal(status.className, "status notice");
 assert.match(status.textContent, /потребують додаткової перевірки/);
@@ -59,9 +59,71 @@ input.listeners.keydown({
 assert.equal(prevented, true);
 assert.equal(status.className, "status");
 
-examples[0].click();
-assert.equal(input.value, "พริก");
-assert.equal(output.hidden, false);
+for (const example of examples) {
+  example.click();
+  assert.equal(input.value, example.dataset.example);
+  assert.equal(output.hidden, false);
+  assert.match(output.innerHTML, /ФОНОЛОГІЧНА IPA/, `example ${example.dataset.example} should expose IPA`);
+  assert.doesNotMatch(output.innerHTML, /segmentationStatus|unresolved:unsupported-symbol/);
+}
+
+// Source-attested lexical IPA overrides are resolved outputs too; they must
+// not trigger the unresolved-token notice merely because their provenance is
+// represented by a distinct segmentation status.
+input.value = "เงินเดิน";
+analyze.click();
+assert.match(output.innerHTML, /Результат 1: เงิน/);
+assert.match(output.innerHTML, /Результат 2: เดิน/);
+assert.equal((output.innerHTML.match(/class="label">ФОНОЛОГІЧНА IPA<\/span>/g) || []).length, 2);
+assert.equal(status.className, "status");
+
+// Whole unspaced Thai runs must split into known lexicon entries, not be
+// treated as one dictionary key. Unknown spans must not suppress adjacent IPA.
+input.value = "กาไฟมา";
+analyze.click();
+assert.match(output.innerHTML, /Результат 1: กา/);
+assert.match(output.innerHTML, /Результат 2: ไฟ/);
+assert.match(output.innerHTML, /Результат 3: มา/);
+assert.equal((output.innerHTML.match(/class="label">ФОНОЛОГІЧНА IPA<\/span>/g) || []).length, 3);
+assert.equal(status.className, "status");
+
+input.value = "ทดสอบกาไฟ";
+analyze.click();
+assert.match(output.innerHTML, /Результат 1: ทดสอบ/);
+assert.match(output.innerHTML, /unresolved/);
+assert.match(output.innerHTML, /Результат 2: กา/);
+assert.match(output.innerHTML, /Результат 3: ไฟ/);
+assert.equal((output.innerHTML.match(/class="label">ФОНОЛОГІЧНА IPA<\/span>/g) || []).length, 2);
+assert.equal(status.className, "status notice");
+
+
+// A reviewed full-sentence lexicon entry must preserve its reviewed syllable
+// decomposition and provide IPA for each syllable without requiring spaces.
+input.value = "กินข้าวกับไข่และผลไม้";
+analyze.click();
+assert.match(output.innerHTML, /Результат 1: กินข้าวกับไข่และผลไม้/);
+assert.equal((output.innerHTML.match(/class="label">ФОНОЛОГІЧНА IPA<\/span>/g) || []).length, 7);
+assert.equal(status.className, "status");
+
+// Punctuation must delimit text runs without preventing following known words
+// from being analyzed.
+input.value = "กา,ไฟ!มา";
+analyze.click();
+assert.match(output.innerHTML, /Результат 1: กา/);
+assert.match(output.innerHTML, /Токен 2: punctuation/);
+assert.match(output.innerHTML, /Результат 3: ไฟ/);
+assert.match(output.innerHTML, /Токен 4: punctuation/);
+assert.match(output.innerHTML, /Результат 5: มา/);
+assert.match(output.innerHTML, /<div class="thai">,<\/div>/);
+assert.match(output.innerHTML, /<div class="thai">!<\/div>/);
+assert.equal((output.innerHTML.match(/class="label">ФОНОЛОГІЧНА IPA<\/span>/g) || []).length, 3);
+
+input.value = "กาไฟ มา!";
+analyze.click();
+assert.match(output.innerHTML, /Результат 1: กา/);
+assert.match(output.innerHTML, /Результат 2: ไฟ/);
+assert.match(output.innerHTML, /Результат 3: มา/);
+assert.match(output.innerHTML, /!/);
 
 clear.click();
 assert.equal(input.value, "");
@@ -79,6 +141,10 @@ const homeHtml = await readFile(new URL("../index.html", import.meta.url), "utf8
 const systemHtml = await readFile(new URL("../system.html", import.meta.url), "utf8");
 const styles = await readFile(new URL("../src/styles.css", import.meta.url), "utf8");
 assert.match(homeHtml, /БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ/);
+assert.match(homeHtml, /Вводьте цілий тайський текст/);
+assert.match(homeHtml, /<label class="input-label" for="thai-input">Тайський текст<\/label>/);
+assert.match(homeHtml, /пробіли між словами не обов’язкові/);
+for (const example of examples) assert.ok(homeHtml.includes(`data-example="${example.dataset.example}"`), `homepage must expose ${example.dataset.example}`);
 assert.match(homeHtml, /system\.html#beta-evidence/);
 assert.match(systemHtml, /id="beta-evidence"/);
 assert.match(systemHtml, /незалежно перевірених рядків — 0/);
