@@ -102,10 +102,10 @@
       40238198334,
       40238202181
     ],
-    "current_head_status_at_audit_refresh": "PENDING: implementation head 77a175d4c5dd765750110509b49affc67f05f15a; CI run 40286374324 and Web static validation 40286374333 queued at audit refresh. Earlier verified checkpoints are historical only.",
-    "latest_full_repository_head": "77a175d4c5dd765750110509b49affc67f05f15a",
-    "latest_full_repository_head_ci_run": 40286374324,
-    "latest_full_repository_head_web_validation_run": 40286374333
+    "current_head_status_at_audit_refresh": "PENDING: latest code-bearing commit 9167bbbf0d194486961d0886d67ffca72bcfd909; current pre-audit documentation checkpoint faabfb66b710a926d2236ea49f0f69264c176326 had CI run 40286714183 and Web static validation 40286714103 queued. New implementation has not been verified by exact-head CI yet.",
+    "latest_full_repository_head": "faabfb66b710a926d2236ea49f0f69264c176326",
+    "latest_full_repository_head_ci_run": 40286714183,
+    "latest_full_repository_head_web_validation_run": 40286714103
   },
   "challenge_runtime": {
     "challenge_inputs": 36,
@@ -210,8 +210,10 @@
     }
   ],
   "latest_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
-  "latest_implementation_commit_pending_ci": "77a175d4c5dd765750110509b49affc67f05f15a",
-  "current_head_status_at_audit_refresh": "PENDING: implementation head 77a175d4c5dd765750110509b49affc67f05f15a; CI run 40286374324 and Web static validation 40286374333 queued at audit refresh. Earlier verified checkpoints are historical only.",
+  "latest_implementation_commit_pending_ci": "9167bbbf0d194486961d0886d67ffca72bcfd909",
+  "current_head_status_at_audit_refresh": "PENDING: latest code-bearing commit 9167bbbf0d194486961d0886d67ffca72bcfd909; current pre-audit documentation checkpoint faabfb66b710a926d2236ea49f0f69264c176326 had CI run 40286714183 and Web static validation 40286714103 queued. New implementation has not been verified by exact-head CI yet.",
   "current_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
-  "current_implementation_commit_before_audit_update": "77a175d4c5dd765750110509b49affc67f05f15a"
+  "current_implementation_commit_before_audit_update": "77a175d4c5dd765750110509b49affc67f05f15a",
+  "latest_documentation_checkpoint_before_audit": "faabfb66b710a926d2236ea49f0f69264c176326",
+  "audit_note": "The audit file is itself committed after the checkpoint named above; inspect its exact-head CI separately. The code-bearing commit remains 9167bbbf0d194486961d0886d67ffca72bcfd909."
 }
