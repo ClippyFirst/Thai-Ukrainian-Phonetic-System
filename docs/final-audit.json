@@ -552,7 +552,7 @@
       "all-empty input"
     ],
     "local_tests": "NOT_RUN",
-    "workflow_status": "QUEUED_AT_EXACT_BRANCH_HEAD",
+    "workflow_status": "QUEUED_FOR_CODE_BEARING_COMMIT; FOLLOWING_COMMITS_ARE_DOCUMENTATION_ONLY",
     "metric_claimed": false,
     "acceptance": "Exact-head CI and VISTEC workflow pass; inspect report artifact and confirm pinned 49,997-row source is accepted.",
     "workflow_runs": [
@@ -575,6 +575,8 @@
         "conclusion": null
       }
     ],
-    "last_status_checked": "2026-10-26"
+    "last_status_checked": "2026-10-26",
+    "code_bearing_commit": "550f26fdbf6fd66a0d1c2cb1caa9bd6bd10de196",
+    "final_documentation_head_before_this_update": "aeb46e0d31d69e3ebcc8afe6abd7a9a75b4908da"
   }
 }
