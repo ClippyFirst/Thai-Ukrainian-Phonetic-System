@@ -23,17 +23,17 @@ REQUIRED_MODELS = {"dictionary_max_match", "tud_unigram_viterbi"}
 
 def strata(text: str, dictionary: list[str], tud: list[str]) -> list[str]:
     tags: list[str] = []
-    if re.search(r"\\d", text):
+    if re.search(r"\d", text):
         tags.append("NUMERIC_OR_DATE_CANDIDATE")
-    if re.search(r"https?://|www\\.|[\\w.+-]+@[\\w.-]+\\.[A-Za-z]{2,}", text, re.I):
+    if re.search(r"https?://|www\.|[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}", text, re.I):
         tags.append("URL_OR_EMAIL_CANDIDATE")
-    if re.search(r"[A-Za-z]", text) and re.search(r"[\\u0E00-\\u0E7F]", text):
+    if re.search(r"[A-Za-z]", text) and re.search(r"[\u0E00-\u0E7F]", text):
         tags.append("MIXED_LATIN_THAI_CANDIDATE")
     elif re.search(r"[A-Za-z]", text):
         tags.append("LATIN_OR_BRAND_CANDIDATE")
-    if re.search(r"[!?,.:;()\\[\\]{}‘’“”\\\"'…]", text):
+    if re.search(r"[!?,.:;()\[\]{}‘’“”\\"'…]", text):
         tags.append("PUNCTUATION_OR_QUOTING_CANDIDATE")
-    if len(re.findall(r"[\\u0E00-\\u0E7F]", text)) >= 80:
+    if len(re.findall(r"[\u0E00-\u0E7F]", text)) >= 80:
         tags.append("LONG_THAI_SEQUENCE_CANDIDATE")
     if dictionary != tud:
         tags.append("ENGINE_DISAGREEMENT")
@@ -86,7 +86,7 @@ def build(
         tud_segmenter = lambda text: list(segment_tud_preserving(text, counts, float(penalty)))
 
     with gold_path.open(encoding="utf-8-sig", newline="") as f:
-        source_rows = list(csv.DictReader(f, delimiter="\\t"))
+        source_rows = list(csv.DictReader(f, delimiter="\t"))
     if len(source_rows) != expected_rows:
         raise ValueError(f"source row count mismatch: expected {expected_rows}, got {len(source_rows)}")
 
@@ -164,7 +164,7 @@ def main() -> int:
                  control_sample=a.control_sample, seed=a.seed)
     a.output.parent.mkdir(parents=True, exist_ok=True)
     with a.output.open("w", encoding="utf-8", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=list(rows[0]), delimiter="\\t", lineterminator="\\n")
+        writer = csv.DictWriter(f, fieldnames=list(rows[0]), delimiter="\t", lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
     print(json.dumps({"output": str(a.output), "review_rows": len(rows),
