@@ -695,3 +695,28 @@ Poll the latest commit's CI and Web static validation. If CI fails, inspect exac
 - **Ukrainian target forms — BLOCKED:** independent Ukrainian-native reviewers, blinded judgments and agreed criteria. Acceptance: versioned criteria, judgments, disagreement log, adjudicated target set.
 - **`บรรจุ` final /ʔ/ — PARTIAL / evidence-limited:** require context/transcription-level expert review; do not apply a global rule.
 - **Release readiness:** not release-ready. Engineering CI is green, but independent pronunciation gold, Ukrainian target adjudication, and production segmentation quality remain unestablished.
+
+
+## Mandatory architecture clarification and exact-head CI review — 2026-10-26
+
+The owner has explicitly reaffirmed that the system's purpose is Thai-to-Ukrainian transcription **through an actual IPA intermediate**. Treat this as a non-negotiable architecture invariant:
+
+`Thai orthography → structural analysis → Thai phonology → typed/inspectable IPA → Ukrainian adaptation from IPA → Ukrainian practical orthography`.
+
+IPA must be the actual data-flow boundary, not a parallel audit display. No independent Thai-grapheme → Ukrainian output path is acceptable. The Ukrainian adapter must consume the typed IPA result and documented metadata only; source graphemes, vowel IDs, or Thai coda fields must not independently determine the final target string. Preserve phonemic/broad surface IPA, tone, length, segment/syllable boundaries, provenance and uncertainty. If IPA is unsupported or unresolved, withhold the dependent Ukrainian result rather than guessing.
+
+### Acceptance and verification
+
+- Review/update architecture and research docs against this invariant; README and `docs/research-protocol.md` now state it explicitly.
+- Verify the adapter boundary and end-to-end data flow in both Python and browser implementations; tests must establish that Ukrainian output is derived from the IPA result actually exposed by the source stage.
+- Run the complete test suite, generated-artifact checks, browser IPA→UA/parity/UI tests and available diagnostics on the exact resulting branch head. Prior passing runs do not validate newer commits.
+- Continue to distinguish software conformance from linguistic accuracy. Independent Thai IPA/acoustic adjudication and independent Ukrainian-native target-form adjudication remain separate evidence gates.
+
+### Latest exact-head failure — do not mark CI green
+
+CI run [40305933260](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40305933260) on the current PR head completed with failure: generated-data drift checks and master-table generation (351,780 rows) passed, but Python unit tests ran 179 tests and reported 12 failures. The failures are in three assertions groups:
+1. `tests/test_completion_layers.py`: isolated `ฤ`, `ฤๅ`, `ฦ`, `ฦๅ` return `unresolved:unsupported-symbol`, not the expected analysis-dependent status;
+2. `tests/test_text_pipeline.py`: the same four isolated spellings return `unresolved:unsupported-symbol`;
+3. `tests/test_special_orthography_evidence.py`: four registry assertions compare `analysis_status` to `analysis-dependent`, but the current field contains IPA candidate strings (`rɯ|ri|rɤ`, `rɯː`, `lɯ`, `lɯː`). Inspect the schema and intended uncertainty contract before changing either implementation or assertions. Do not coerce uncertain standalone letters to one IPA value to satisfy a test.
+
+Web static validation [40305933181](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40305933181) passed for this head, but that does not override the failed Python suite. The current branch is **not exact-head CI-verified**. Next acceptance step: repair the schema/test mismatch without introducing unsupported IPA, then rerun full CI and web static validation on the new exact head.
