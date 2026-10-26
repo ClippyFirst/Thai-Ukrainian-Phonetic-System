@@ -483,7 +483,8 @@
         ".github/workflows/ci.yml"
       ],
       "purpose": "Generate lossless, full-text human-review TSV with both system predictions where available; all decisions blank and adjudicated=NO",
-      "status": "PENDING_EXACT_HEAD_CI"
+      "status": "PARTIAL",
+      "verification_blocker": "No workflow runs or commit status checks were returned for the new head by the connected GitHub workflow tools; local git clone/test execution is blocked by DNS resolution failure for github.com. Do not treat the new tests or generated TSV as verified until exact-head CI and Web static validation run."
     },
     "remaining_evidence_gates": [
       "Independent Thai IPA/acoustic gold",
@@ -491,6 +492,9 @@
       "Context-specific final /ʔ/ review for บรรจุ",
       "Independent licensed segmentation domain",
       "Full official OBEC PDF inspection"
-    ]
+    ],
+    "final_observed_head_before_this_audit_update": "d51f4acad9311b34f14bff17b9abd983d0bf14b9",
+    "pr_71_state": "OPEN_DRAFT",
+    "pr_68_state": "CLOSED_UNMERGED_SUPERSEDED"
   }
 }
