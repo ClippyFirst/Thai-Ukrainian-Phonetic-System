@@ -337,3 +337,15 @@ The stale unit-test assertion and the VISTEC 50,000-row count contract are fixed
 | VISTEC source registry license test | FIXED_PENDING_EXACT_HEAD_CI | CI [40354836807](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40354836807) exposed one stale assertion among 194 tests: expected `verify upstream terms` despite the pinned source README declaring CC-BY-SA-3.0. Updated the test to assert `attribution/share-alike required` at commit `0e60b2d277facee573839335b7e1681d5520a224`. Acceptance: exact-head CI passes all tests. |
 | Overall engineering validation | PARTIAL | VISTEC and static validation passed on the preceding head; Python CI failed one outdated assertion and must be rerun after the repair. |
 | Research / release readiness | BLOCKED / research prototype | Expert linguistic/target adjudication and lawful official OBEC PDF review remain outstanding. |
+
+
+## VISTEC report result (source-annotated diagnostic only) — 2026-10-26
+
+The successful external run [40354836797](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40354836797) evaluated 50,000 source-annotated rows (0 expert-adjudicated). The JSON printed in the workflow log reports:
+
+| Segmenter | Boundary precision | Boundary recall | Boundary F1 | Exact sequences |
+|---|---:|---:|---:|---:|
+| Dictionary maximum matching | 0.76880 | 0.89788 | 0.82834 | 76/50,000 (0.152%) |
+| Research-only TUD unigram Viterbi | 0.60640 | 0.99316 | 0.75302 | 16/50,000 (0.032%) |
+
+Both had 100% output coverage, which is not accuracy. These scores measure agreement with source-provided annotations, not expert-adjudicated segmentation. The low exact-sequence rates mean neither system is production-ready. Artifact ZIP ID 12667445022 exists and its digest is recorded in the handoff; the archive itself still needs inspection. Exact-head checks after the latest test-only repair remain queued.
