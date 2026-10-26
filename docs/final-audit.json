@@ -667,20 +667,71 @@
   "beta_site_update": {
     "date": "2026-10-26",
     "branch": "research/thai-segmentation-gold-parity-verified-20261025",
-    "starting_verified_commit": "17eac785a00ce1e8a95ac904db348ddf8c286040",
-    "implementation_checkpoint": "2d2cf2ce7169da257c84f6b5395d75ee4f425a05",
+    "latest_branch_head_before_this_json_update": "048b89d9234ac91e3d592c0bca7d816f4a5ae5b5",
+    "ui_code_checkpoint": "274371594cc8a0b65677bb126242d90acc17caf5",
     "changes": [
-      "Visible Ukrainian research-beta notice added to web/index.html and web/system.html",
-      "System page publishes VISTEC and Wisesight source-annotation segmentation diagnostics and states that zero rows are independently expert-reviewed",
-      "Responsive beta-notice styling added",
-      "UI contract regression assertions added for beta copy, evidence metrics, and mobile styling",
-      "Validation matrix and audit/handoff updated in place"
+      "Visible Ukrainian research-beta notice on web/index.html and web/system.html",
+      "Evidence/limitations anchor and VISTEC/Wisesight source-annotation metrics on the system page",
+      "Responsive beta notice styles in web/src/styles.css",
+      "UI-contract assertions for the beta label, metric denominators, evidence anchor, and responsive CSS",
+      "Pages build workflow includes UI-contract validation",
+      "Validation matrix, final audit, and handoff updated in place"
     ],
     "metrics_evidence_grade": "SOURCE_ANNOTATED_NOT_EXPERT_ADJUDICATED",
     "independently_expert_reviewed_rows": 0,
-    "exact_head_checks_for_ui_changes": "PENDING",
-    "public_pages_deployment": "BLOCKED_UNTIL_REVIEWED_MERGE_OR_SEPARATE_PREVIEW_HOST",
-    "reason": "pages.yml deploys on main pushes; PR #71 remains draft. Do not overwrite the existing public site with a draft research branch.",
-    "readiness": "research beta candidate; not release-ready for arbitrary Thai text"
+    "verification": {
+      "pages_build_run": {
+        "id": 40377552366,
+        "status": "failure_overall",
+        "build_job": "success",
+        "deploy_job": "failure"
+      },
+      "pages_build_job_acceptance": [
+        "Python regression tests passed",
+        "Python/browser parity passed",
+        "UI contract and beta disclosure checks passed",
+        "Pages artifact uploaded"
+      ],
+      "web_static_validation": {
+        "id": 40377552367,
+        "status": "success"
+      },
+      "vistec_evaluation": {
+        "id": 40377560151,
+        "status": "success",
+        "qualification": "source-annotation diagnostic only; not expert-adjudicated accuracy"
+      }
+    },
+    "deployment": {
+      "status": "BLOCKED",
+      "last_successful_public_deployment": {
+        "run_id": 40225366216,
+        "commit": "18ab41db87192dc7be69683ef85e53cb04db5517",
+        "url": "https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/"
+      },
+      "attempted_beta_deployment": {
+        "run_id": 40377552366,
+        "commit": "274371594cc8a0b65677bb126242d90acc17caf5",
+        "build": "success",
+        "deploy": "failed_before_steps",
+        "logs_available": false,
+        "pending_approval_details": []
+      },
+      "exact_failure_reason": "Not observable from the available workflow run; deploy job failed before any steps and exposed no logs.",
+      "mitigation": "Restored .github/workflows/pages.yml to main-only deployment while retaining the UI-contract build check.",
+      "next_acceptance": "Review/merge PR #71 to main after accepting its documented evidence gates, or authorize a separate preview host.",
+      "current_public_site_updated_with_beta": false
+    },
+    "latest_exact_head_ci": {
+      "head": "048b89d9234ac91e3d592c0bca7d816f4a5ae5b5",
+      "ci_push_run": 40378276967,
+      "ci_pull_request_run": 40378286378,
+      "status": "in_progress_at_last_check",
+      "web_static_validation_run": 40378286491,
+      "web_static_validation_status": "success",
+      "vistec_run": 40378286495,
+      "vistec_status": "queued_at_last_check"
+    },
+    "readiness": "research beta candidate; not release-ready for arbitrary Thai text; public beta changes are not live"
   }
 }
