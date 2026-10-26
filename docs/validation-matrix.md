@@ -210,3 +210,15 @@ The latest verified checkpoint above is not automatically evidence for later doc
 | Human error review / production decision | PARTIAL | The generated artifact is a deterministic triage aid, not human adjudication. Inspect representative false splits and false merges, document error categories, set acceptance thresholds in advance, and evaluate an independent untouched domain. Until then, keep both dictionary and TUD segmenters out of production-default selection. |
 
 The code-bearing report was added in `e80606e641d631966b566999027ee9d2b4d00bb`; exact-sequence tuple/list parity was corrected in `bec1b7027f34a4f70f0b6f9fdc415ef43343eab9`, with regression `aba6832eb97cb4b84f2e62fa058fa963cfb34803` and CI assertion `c189cdb9209d85780c3baeb1df23800101840b16`. The first artifact's zero exact-sequence count was a type-comparison bug and is superseded. Exact-head CI and Web static validation for the final branch head are required before this is marked DONE_VERIFIED.
+
+
+## Comparative segmentation error review — 2026-10-26
+
+| Task | State | Evidence / acceptance boundary |
+|---|---|---|
+| Dictionary false-split/false-merge triage | DONE_VERIFIED — report software | Exact-head CI [40320450844](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40320450844) verified the 993-row source-annotated report, including 2,574 false splits, 1,981 false merges and 192 exact sequences. This does not independently adjudicate each difference. |
+| Same-row dictionary vs TUD error comparison | PARTIAL — implementation added, exact-head CI pending | New `scripts/compare_segmentation_error_review.py` evaluates both engines on the same 993 source-annotated rows, preserves mixed-script text, reports boundary context at error offsets, and keeps the TUD model marked research-only. Regression tests cover source-grade gates, same-row comparison and lossless mixed-text handling. |
+| Preliminary error-pattern notes | PARTIAL — non-expert triage only | Existing report samples visibly include numeric/punctuation and URL/Latin fragmentation, brand/name handling, and inconsistent token granularity for longer Thai sequences. These are candidate review strata, not expert-linguistic error labels; the source annotation itself may reflect its own conventions. |
+| Production segmentation | PARTIAL — not accepted for production | Require a representative manually reviewed sample, predeclared acceptance thresholds, an independent licensed untouched domain, and explicit integration decision. Wisesight is source-annotated and test-only, not independent expert gold. |
+
+The comparative report is deliberately scheduled **after** the pinned TUD training step so it consumes the exact generated model from that run. CI asserts both engines have false-split and false-merge examples and that the shared evaluation set still has zero expert-adjudicated rows. No comparative metrics are claimed until the new exact-head workflow passes.
