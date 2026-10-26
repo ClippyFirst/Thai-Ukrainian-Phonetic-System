@@ -31,7 +31,7 @@ def strata(text: str, dictionary: list[str], tud: list[str]) -> list[str]:
         tags.append("MIXED_LATIN_THAI_CANDIDATE")
     elif re.search(r"[A-Za-z]", text):
         tags.append("LATIN_OR_BRAND_CANDIDATE")
-    if re.search(r"[!?,.:;()\[\]{}‘’“”\\"'…]", text):
+    if re.search(r"""[!?,.:;()\[\]{}‘’“”"'…]""", text):
         tags.append("PUNCTUATION_OR_QUOTING_CANDIDATE")
     if len(re.findall(r"[\u0E00-\u0E7F]", text)) >= 80:
         tags.append("LONG_THAI_SEQUENCE_CANDIDATE")
