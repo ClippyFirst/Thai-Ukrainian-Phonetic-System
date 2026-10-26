@@ -199,3 +199,14 @@ Exact-head CI [40315032771](https://github.com/ClippyFirst/Thai-Ukrainian-Phonet
 | Release readiness | No independent IPA/UA gold; segmentation remains research-only; special orthography remains evidence-gated | NOT RELEASE-READY |
 
 The latest verified checkpoint above is not automatically evidence for later documentation commits. The audit/handoff synchronization that follows must itself pass exact-head CI and Web static validation. Engineering tests must not be reported as linguistic accuracy.
+
+
+## Segmentation error review — implementation added 2026-10-26
+
+| Task | State | Evidence / acceptance boundary |
+|---|---|---|
+| Deterministic false-split/false-merge report | PARTIAL — exact-head CI pending | `scripts/analyze_segmentation_errors.py` generates per-row review examples and aggregate boundary metrics for all 993 pinned Wisesight rows; `tests/test_segmentation_error_analysis.py` covers the report contract; CI validates provenance/evidence grade and uploads `thai-segmentation-error-review`. |
+| Evidence-grade separation | Required gate | The 993 rows are `SOURCE_ANNOTATED`, CC0-1.0, test-only, with zero independent expert-adjudicated rows. The report is triage, not independent gold. |
+| Human error review / production decision | PARTIAL | After artifact generation, inspect representative false splits and false merges, document error categories, set acceptance thresholds in advance, and evaluate an independent untouched domain. Until then, keep both dictionary and TUD segmenters out of production-default selection. |
+
+The code-bearing change is `e80606e641d631966b566999027ee9d2b4d00bb`; audit/handoff/matrix documentation has changed after it, so only exact-head CI and Web static validation of the final branch head can verify the integrated state.
