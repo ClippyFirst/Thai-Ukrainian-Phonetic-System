@@ -465,3 +465,17 @@ Successful external run [40354836797](https://github.com/ClippyFirst/Thai-Ukrain
 
 
 Artifact ZIP 12667445022 was downloaded and inspected. It contains only `vistec-segmentation-report.json` (3,803 bytes); the parsed JSON schema is 1.0 and its row counts, evidence grade, and engine metrics match the successful workflow log. The SHA-256 digest matches the workflow artifact metadata. This closes the artifact-inspection acceptance criterion for the source-annotation diagnostic, but does not create expert-adjudicated gold or change the research-prototype readiness classification.
+
+## Beta-site disclosure update — 2026-10-26
+
+The service page now visibly labels the tool as a research beta and directs users to the evidence/limitations page. The system page presents the latest source-annotated segmentation diagnostics:
+
+- VISTEC, 50,000 rows: dictionary boundary F1 0.82834, 76/50,000 exact sequences (0.152%); research-only TUD Viterbi F1 0.75302, 16/50,000 exact sequences (0.032%).
+- Wisesight, 993 rows: dictionary boundary F1 0.83947, 192/993 exact sequences (19.34%); research-only TUD Viterbi F1 0.74862, 119/993 exact sequences (11.98%).
+- Both datasets are source-annotated; zero rows have independent expert adjudication. These are agreement diagnostics, not an accuracy claim. Neither segmenter is presented as production-ready.
+
+A UI-contract regression now checks the beta notice, evidence anchor, reported denominators, and responsive CSS. These changes are newer than the latest successful CI/static/VISTEC checkpoint and remain pending exact-head reruns.
+
+The Pages workflow is configured to deploy on pushes to `main`; PR #71 is still draft. I did not merge the 304-commit research PR or deploy its branch over the existing public Pages site. Public deployment remains BLOCKED until the changes are reviewed and merged, or a separate preview host is deliberately configured.
+
+Research readiness remains partial: independent Thai IPA/acoustic adjudication, two independent Ukrainian target-form reviews, human segmentation adjudication, contextual review of บรรจุ final /ʔ/, and lawful full official OBEC PDF access remain open.
