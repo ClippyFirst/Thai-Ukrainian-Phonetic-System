@@ -100,10 +100,12 @@ assert.equal(status.className, "status");
 input.value = "กา,ไฟ!มา";
 analyze.click();
 assert.match(output.innerHTML, /Результат 1: กา/);
-assert.match(output.innerHTML, /Результат 2: ,/);
+assert.match(output.innerHTML, /Токен 2: punctuation/);
 assert.match(output.innerHTML, /Результат 3: ไฟ/);
-assert.match(output.innerHTML, /Результат 4: !/);
+assert.match(output.innerHTML, /Токен 4: punctuation/);
 assert.match(output.innerHTML, /Результат 5: มา/);
+assert.match(output.innerHTML, /<div class="thai">,<\/div>/);
+assert.match(output.innerHTML, /<div class="thai">!<\/div>/);
 assert.equal((output.innerHTML.match(/ФОНОЛОГІЧНА IPA/g) || []).length, 3);
 
 input.value = "กาไฟ มา!";
