@@ -230,3 +230,12 @@ Segmentation source decisions are tracked in [`data/corpus_sources.csv`](data/co
 
 
 For a text-only discrepancy report over the six pinned dictionary IPA records, run `python scripts/run_source_attested_ipa_diagnostic.py --output /tmp/source-attested-ipa-diagnostic.json`. It compares segmental IPA, tone categories, and vowel-length metadata without claiming accuracy. The `เงิน` override is mirrored in the browser adapter and covered by a cross-runtime fixture; the latest browser parity head's CI status is recorded in the execution matrix and handoff.
+
+
+## Segmentation evaluation and evidence grades
+
+The pinned Wisesight source-annotated benchmark remains test-only. The TUD unigram-Viterbi segmenter is research-only and must not replace the dictionary baseline on the strength of source-label metrics alone.
+
+An additional opt-in GitHub Actions workflow evaluates both systems on the separately sourced VISTEC-TP-TH-2021 social-media corpus. It checks out the exact upstream commit and CSV blob, converts pipe-delimited annotated tokens from the upstream submissionText field, verifies lossless reconstruction, and uploads a JSON report. The source dataset is not bundled. Its dataset README declares CC-BY-SA 3.0; attribution and share-alike obligations apply.
+
+Run the external workflow from the Actions tab or by changing the relevant adapter/scorer/workflow files in a pull request. Report metrics remain explicitly SOURCE_ANNOTATED, not independently re-adjudicated gold. The workflow does not use VISTEC to train or tune either system. See docs/corpus-validation.md and docs/independent-adjudication-protocol.md for provenance and limitations.
