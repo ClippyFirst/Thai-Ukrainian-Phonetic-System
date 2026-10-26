@@ -349,3 +349,6 @@ The successful external run [40354836797](https://github.com/ClippyFirst/Thai-Uk
 | Research-only TUD unigram Viterbi | 0.60640 | 0.99316 | 0.75302 | 16/50,000 (0.032%) |
 
 Both had 100% output coverage, which is not accuracy. These scores measure agreement with source-provided annotations, not expert-adjudicated segmentation. The low exact-sequence rates mean neither system is production-ready. Artifact ZIP ID 12667445022 exists and its digest is recorded in the handoff; the archive itself still needs inspection. Exact-head checks after the latest test-only repair remain queued.
+
+
+Artifact verification: downloaded and inspected VISTEC artifact ZIP 12667445022; it contains one JSON report (3,803 bytes), schema 1.0. Parsed report matches the metrics above and explicitly records 50,000 SOURCE_ANNOTATED rows and 0 adjudicated rows. Artifact integrity/contents: DONE_VERIFIED; linguistic gold quality remains BLOCKED pending human adjudication.
