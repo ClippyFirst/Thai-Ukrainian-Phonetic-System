@@ -93,10 +93,6 @@ def main() -> int:
         if false_merges:
             merge_examples.append({**base, "error_count": len(false_merges)})
 
-    precision_denominator = false_split_total + (gold_boundary_total - false_merge_total)
-    recall_denominator = gold_boundary_total
-    precision = (false_split_total + gold_boundary_total - false_merge_total) / precision_denominator if precision_denominator else None
-    recall = (gold_boundary_total - false_merge_total) / recall_denominator if recall_denominator else None
     # Standard boundary counts: TP = predicted boundaries not false splits.
     true_positive = predicted_boundary_total - false_split_total
     precision = true_positive / predicted_boundary_total if predicted_boundary_total else None
