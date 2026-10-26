@@ -487,7 +487,7 @@
       ],
       "purpose": "Deterministic stratified segmentation-review sample with uniform controls; pinned VISTEC external-domain source-annotation evaluation; scalable scorer; source/protocol/audit synchronization.",
       "status": "PARTIAL",
-      "verification": "Pending: exact-head CI, Web static validation and External VISTEC evaluation are queued. The workflow sparse-checkout mode was corrected in a56fc37b11e74a1a52b8b80736eeb4724746ba2b; no new test result or VISTEC metric is claimed.",
+      "verification": "Exact-head CI, Web static validation and External VISTEC evaluation remain queued. Added a fail-closed in-script Git blob hash gate and regression test. No current-batch test result or VISTEC metric is claimed.",
       "external_evidence": {
         "ccost_zenodo": "https://zenodo.org/records/17366698",
         "ccost_doi": "10.5281/zenodo.17366698",
@@ -531,9 +531,10 @@
       "test": "tests/test_vistec_segmentation_adapter.py",
       "evaluator_optimized_for_linear_lookup": true,
       "status": "PARTIAL_EXACT_HEAD_WORKFLOW_QUEUED",
-      "metric_claimed": false
+      "metric_claimed": false,
+      "evaluator_hash_gate": "The adapter independently computes the Git blob SHA-1 and rejects a non-pinned CSV; regression test added."
     },
-    "latest_implementation_commit": "a56fc37b11e74a1a52b8b80736eeb4724746ba2b",
-    "pre_handoff_audit_commit": "8123ca324622b5c34a7715964346cfc176cc3bcf"
+    "latest_implementation_commit": "43fb1416e6d103de4999a84a1dbaefd663507cb6",
+    "pre_handoff_audit_commit": "c6dac498ec8c7939c6f2bfbcea04c8d1fdeab96a"
   }
 }
