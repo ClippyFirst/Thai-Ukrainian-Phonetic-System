@@ -540,7 +540,7 @@
       "row_count_note": "Pinned CSV blob SHA-1 matches, and the evaluator processed 50,000 data rows; upstream README describes 49,997 samples. Preserve both facts and treat the immutable CSV row count as evaluator contract unless upstream maintainers clarify discrepancy."
     },
     "latest_implementation_commit": "43fb1416e6d103de4999a84a1dbaefd663507cb6",
-    "pre_handoff_audit_commit": "c6dac498ec8c7939c6f2bfbcea04c8d1fdeab96a"
+    "pre_handoff_audit_commit": "ccee129d509c95f95c2f455fd769bcbcd9ae71e0"
   },
   "vistec_parser_hardening": {
     "code_commit": "1cbf97036ec931266f4a6ed5eb747a00e5b7ad29",
@@ -552,34 +552,32 @@
       "leading separator",
       "all-empty input"
     ],
-    "local_tests": "NOT_RUN",
-    "workflow_status": "FAILED_ON_CODE_HEAD; ROOT CAUSES IDENTIFIED AND FIXED; REVALIDATION PENDING",
+    "local_tests": "NOT_RUN_IN_THIS_SESSION",
+    "workflow_status": "CORRECTED CODE COMMITTED; EXACT-HEAD REVALIDATION QUEUED",
     "metric_claimed": false,
-    "acceptance": "Exact-head CI and Web static validation pass; VISTEC evaluation accepts all 50,000 data rows in the pinned CSV; inspect report artifact; do not claim independent gold or tune on this set.",
+    "acceptance": "Exact-head CI and Web static validation pass; VISTEC evaluation accepts all 50,000 rows and its report artifact is inspected. No independent-gold accuracy claim.",
     "workflow_runs": [
       {
         "name": "CI",
-        "run_id": 40346688497,
-        "status": "completed",
-        "conclusion": "failure",
-        "failure": "one stale test expected old license wording"
+        "run_id": 40353097806,
+        "status": "queued",
+        "conclusion": null
       },
       {
         "name": "Web static validation",
-        "run_id": 40346688520,
-        "status": "completed",
-        "conclusion": "success"
+        "run_id": 40353097480,
+        "status": "queued",
+        "conclusion": null
       },
       {
         "name": "External VISTEC segmentation evaluation",
-        "run_id": 40346688621,
-        "status": "completed",
-        "conclusion": "failure",
-        "failure": "pinned CSV has 50,000 data rows; previous expected count was 49,997"
+        "run_id": 40353097539,
+        "status": "queued",
+        "conclusion": null
       }
     ],
     "last_status_checked": "2026-10-26",
-    "code_bearing_commit": "e05d5644f94b5d9c8707c3da981182822d272fa0",
+    "code_bearing_commit": "ccee129d509c95f95c2f455fd769bcbcd9ae71e0",
     "final_documentation_head_before_this_update": "aeb46e0d31d69e3ebcc8afe6abd7a9a75b4908da"
   }
 }
