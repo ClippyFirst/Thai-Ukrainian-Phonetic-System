@@ -551,3 +551,13 @@ The latest inspected successful VISTEC workflow is [run 40377560151](https://git
 ### Audit-document synchronization PR
 
 A documentation-only reconciliation is proposed in [PR #72](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/72), branch `audit/post-beta-live-verification-20261026`. It records the verified merged Pages workflow and current evidence blockers, while explicitly marking live HTML inspection as blocked. The PR remains open; its exact-head CI status was not independently confirmed in this session. No engine code or deployment settings were changed.
+
+
+The VISTEC artifact from run 40377560151 was downloaded and parsed. It contains `vistec-segmentation-report.json` (3,803 bytes); the downloaded ZIP SHA-256 matches GitHub's artifact digest `582a28766f29f11ac54bac7764a52ddfdfd3e78ad26f4acc311fac3f82f6c6a3`.
+
+| Engine | Boundary precision | Boundary recall | Boundary F1 | Exact sequences | Coverage |
+|---|---:|---:|---:|---:|---:|
+| Dictionary maximum match | 0.76880 | 0.89788 | 0.82834 | 76 / 50,000 (0.152%) | 100% |
+| TUD unigram Viterbi | 0.60640 | 0.99316 | 0.75302 | 16 / 50,000 (0.032%) | 100% |
+
+These are metrics against 50,000 source-annotated rows, with zero independently adjudicated rows. The dictionary baseline has higher F1 and exact-sequence agreement; TUD has very high recall but lower precision and fewer exact sequences. Neither should be described as expert-gold accuracy. The 100% coverage means the engines emitted outputs for all evaluated rows, not that the outputs are correct.
