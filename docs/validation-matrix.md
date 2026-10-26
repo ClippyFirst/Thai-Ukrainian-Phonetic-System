@@ -236,3 +236,18 @@ Both engines were evaluated against the same 993 pinned Wisesight rows using the
 - Code checkpoint CI [40322960615](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40322960615): both comparative-report and evidence-grade steps passed; artifact `thai-segmentation-comparative-error-review`, ID `12649094231`, SHA-256 `8005cc91939ea06b852c1717fee9fb72d370709e74267b8f99636a6476d30775`.
 - Final documentation HEAD `e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff): full CI [40323209539](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40323209539) passed `test` and `master-artifact`; Web static validation [40323209471](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40323209471) passed.
 - Evidence grade remains `SOURCE_ANNOTATED`; expert-adjudicated rows = 0. Human review and independent-domain evaluation remain separate production acceptance gates.
+
+
+## Comparative segmentation review handoff — 2026-10-26
+
+| Task | Status | Evidence / acceptance criterion |
+|---|---|---|
+| Comparative JSON artifact inspection | DONE_VERIFIED | Run 40322960615, artifact 12649094231, digest `8005cc91939ea06b852c1717fee9fb72d370709e74267b8f99636a6476d30775`; artifact JSON independently parsed and metrics/provenance checked |
+| Same-row dictionary vs TUD comparison | DONE_VERIFIED (source-annotated diagnostic only) | 993 rows; dictionary F1 0.839471 / exact 192; TUD F1 0.748623 / exact 119; 0 independently adjudicated rows; TUD remains research-only |
+| Human-review TSV generator | PARTIAL pending exact-head CI | Script joins complete pinned source text and both available predictions, checks lossless reconstruction, adds heuristic strata and blank adjudication fields; acceptance: tests + CI artifact validation + exact-head Web static validation |
+| Independent segmentation adjudication | BLOCKED | Qualified Thai reviewers must adjudicate a prespecified sample, document tokenization convention and disagreements, and produce stable IDs and decision rationale; do not tune on the test set |
+| Independent Thai IPA/acoustic gold | BLOCKED | Thai phonetician/acoustic evidence and pinned lawful corpus with adjudication log |
+| Independent Ukrainian target forms | BLOCKED | Two independent Ukrainian-language reviewers, blinded candidate review and documented resolution |
+| `บรรจุ` final /ʔ/ | BLOCKED | Context and transcription convention must be specified, then source/audio evidence independently reviewed |
+| Cross-domain segmentation evaluation | TODO | Identify license-compatible independent domain, freeze split and acceptance thresholds before any tuning |
+| Full OBEC official PDF | BLOCKED | Obtain accessible official full PDF or verified local official copy; inspect full relevant pages before broadening claims |
