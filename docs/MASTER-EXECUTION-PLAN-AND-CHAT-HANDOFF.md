@@ -827,3 +827,41 @@ Web static validation [40305933181](https://github.com/ClippyFirst/Thai-Ukrainia
 - Prior exact-head CI for comparative segmentation analysis passed at b6dbec7928b106f0ab52e06af33a26635df75412; it does not verify this newer sampler.
 - Latest pre-handoff documentation/audit commit: 175658510101082ccc91e3179f71e47f4945d648. The handoff update itself creates the next commit; inspect the branch head after this write and wait for both CI and Web static validation to finish for that exact SHA.
 - No PR was merged and no release was published. PR #71 remains Draft; PR #68 remains closed unmerged and its branch is preserved.
+
+
+## External-domain evaluation and scalable review — continuation checkpoint 2026-10-26
+
+### Work completed in this batch
+
+- Replaced top-error-only manual segmentation review with deterministic sampling across all source rows: up to 8 per heuristic stratum plus 12 uniform controls. The packet recomputes both model predictions for every row, enforces lossless reconstruction, records sampling reasons, and leaves human decisions blank.
+- Added tests for stable sampling, control inclusion, provenance, wrong model license, source reconstruction and blank adjudication fields.
+- Verified VISTEC-TP-TH-2021's dataset-specific upstream README at commit 215a7dc3d384f20eb56af1cbc41fb32b7f8df57c. It declares CC-BY-SA 3.0, describes 49,997 manually annotated samples and uses pipe-delimited word tokenization in submissionText. Pinned CSV Git blob SHA-1: edfcb85907a604c5e30643065ac4975862a0fe90.
+- Added a VISTEC adapter and tests. It strips only documented NER/misspelling tags, builds the existing benchmark format, and requires exact reconstruction. It explicitly uses annotated submissionText rather than the separate raw questionText field.
+- Added an opt-in GitHub Actions workflow that checks out the exact external commit, validates the CSV blob hash and license declaration, evaluates dictionary and TUD systems, and uploads only the report. VISTEC is never used for training/tuning and its metrics will remain source-annotation diagnostics, not expert gold.
+- Optimized scripts/evaluate_segmentation.py to index gold rows once. This removes quadratic repeated row scans when scoring ~50k rows against two models.
+- Updated the existing README, corpus/evidence registry, adjudication protocol, validation matrix, final audit, machine-readable audit and this handoff in place. No duplicate master plan was created.
+
+### Current ledger
+
+| Task | Status | Exact acceptance criterion |
+|---|---|---|
+| IPA-first architecture, adapter boundary and parity | DONE_VERIFIED on prior exact-head CI | Keep the typed IPA contract and fail-closed uncertainty; do not equate earlier CI with validation of new changes. |
+| Wisesight comparative metrics | DONE_VERIFIED as source-annotation diagnostic | Same 993 rows; dictionary F1 0.839471 / 192 exact sequences; TUD F1 0.748623 / 119 exact sequences. No independent expert labels. |
+| Stratified human-review packet | PARTIAL | Exact-head CI must pass; inspect artifact; human reviewers must fill it under the protocol before claiming adjudicated boundaries. |
+| VISTEC independent-domain source metadata | DONE_VERIFIED (metadata) | Pinned upstream commit/blob and dataset-specific CC-BY-SA 3.0 declaration recorded. |
+| VISTEC evaluation adapter/workflow | PARTIAL | New workflow and tests are queued; require a successful run, 49,997 rows, 100% prediction coverage, exact reconstruction and artifact inspection. |
+| Independent Thai IPA/acoustic gold | BLOCKED | CCOST v1.0 is public under CC BY-NC-SA 4.0, but the archive/manual must be reviewed and qualified Thai phonetic reviewers must annotate a speaker-aware sample. |
+| Independent Ukrainian target forms | BLOCKED | Two Ukrainian-native reviewers must independently annotate the existing template and record criteria, agreement and adjudication. |
+| บรรจุ final /ʔ/ | PARTIAL / context-limited | Pinned dictionary IPA records /ban˧.t͡ɕuʔ˨˩/; do not turn one lexical citation into a universal rule. Define transcription level and context. |
+| Full official OBEC PDF | BLOCKED — HTTP 403 | Requires lawful authoritative access; no full-document review is claimed. |
+| Exact-head CI and Web static validation | PARTIAL / queued | Current final branch head must pass both workflows; new test files are not called passed until their run succeeds. |
+| Release readiness | BLOCKED | External linguistic evidence and engineering checks remain incomplete; keep research-prototype status. |
+
+### Verification checkpoint
+
+- Starting main SHA: 0be5fd841070e337cb5c805ef92954938abe61bb.
+- Branch: research/thai-segmentation-gold-parity-verified-20261025.
+- Latest pre-handoff audit commit: 8123ca324622b5c34a7715964346cfc176cc3bcf. The handoff update itself creates the next commit; check the branch ref and exact-head workflows after this write.
+- New CI, Web static validation and VISTEC workflow runs were queued when last checked. No result from those runs is claimed as passed.
+- Local tests remain unexecuted because the environment previously could not resolve github.com. GitHub Actions is the available verification path.
+- PR #71 remains open Draft. PR #68 remains closed unmerged as superseded; its branch is preserved. No PR was merged and no release was published.
