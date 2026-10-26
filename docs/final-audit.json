@@ -37,7 +37,8 @@
     "special_orthography_csv_schema_integrity_gate",
     "typed_ipa_adapter_mutation_and_fail_closed_regressions",
     "browser_end_to_end_ipa_mutation_test",
-    "ipa_tone_length_boundary_provenance_uncertainty_preservation_tests"
+    "ipa_tone_length_boundary_provenance_uncertainty_preservation_tests",
+    "deterministic_segmentation_false_split_false_merge_review"
   ],
   "not_claimed": [
     "complete_lexical_segmentation",
@@ -298,7 +299,7 @@
         "No per-error manual audit or independent gold adjudication has been performed in this continuation."
       ],
       "next_acceptance": [
-        "Publish representative false-split/false-merge error analysis.",
+        "Review the generated false-split/false-merge examples and document representative error patterns without treating source annotations as expert gold.",
         "Define acceptance thresholds for boundary precision, recall, exact-sequence rate, abstention and out-of-domain coverage before deployment.",
         "Validate on an independent, untouched domain with documented licensing and source splits.",
         "Obtain an explicit integration decision after review; keep research-only until then."
@@ -310,5 +311,18 @@
   "latest_documentation_head_ci_run": 40316202183,
   "latest_documentation_head_web_validation_run": 40316202145,
   "latest_implementation_ci_run": 40315032771,
-  "latest_implementation_web_validation_run": 40315032788
+  "latest_implementation_web_validation_run": 40315032788,
+  "segmentation_error_review": {
+    "script": "scripts/analyze_segmentation_errors.py",
+    "test": "tests/test_segmentation_error_analysis.py",
+    "dataset": "PyThaiNLP Wisesight word-tokenization labels",
+    "rows": 993,
+    "evidence_grade": "SOURCE_ANNOTATED_NOT_EXPERT_ADJUDICATED",
+    "license": "CC0-1.0",
+    "output_artifact": "thai-segmentation-error-review",
+    "purpose": "deterministic false-split/false-merge triage examples and boundary metrics",
+    "acceptance_boundary": "diagnostic only; does not mark every disagreement as an engine error and does not qualify as independent gold",
+    "implementation_commit": "e80606e641d631966b566999027ee9d2b4d00bb",
+    "exact_head_ci_status": "PENDING"
+  }
 }
