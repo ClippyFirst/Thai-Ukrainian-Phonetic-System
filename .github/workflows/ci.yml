@@ -57,11 +57,11 @@ jobs:
           path: /tmp/wisesight1000-dictionary-segmentation.json
           if-no-files-found: error
       - uses: actions/upload-artifact@v4
-      - uses: actions/upload-artifact@v4
         with:
           name: thai-segmentation-error-review
           path: /tmp/thai-segmentation-error-review.json
           if-no-files-found: error
+      - uses: actions/upload-artifact@v4
         with:
           name: source-attested-ipa-diagnostic
           path: /tmp/source-attested-ipa-diagnostic.json
