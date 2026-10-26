@@ -67,6 +67,16 @@ for (const example of examples) {
   assert.doesNotMatch(output.innerHTML, /segmentationStatus|unresolved:unsupported-symbol/);
 }
 
+// Source-attested lexical IPA overrides are resolved outputs too; they must
+// not trigger the unresolved-token notice merely because their provenance is
+// represented by a distinct segmentation status.
+input.value = "เงินเดิน";
+analyze.click();
+assert.match(output.innerHTML, /Результат 1: เงิน/);
+assert.match(output.innerHTML, /Результат 2: เดิน/);
+assert.equal((output.innerHTML.match(/class="label">ФОНОЛОГІЧНА IPA<\/span>/g) || []).length, 2);
+assert.equal(status.className, "status");
+
 // Whole unspaced Thai runs must split into known lexicon entries, not be
 // treated as one dictionary key. Unknown spans must not suppress adjacent IPA.
 input.value = "กาไฟมา";
