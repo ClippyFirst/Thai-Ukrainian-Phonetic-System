@@ -1,5 +1,8 @@
 import unittest
+from dataclasses import replace
 from thai_ukrainian.api import analyze_syllable
+from thai_ukrainian.phonetic_result import PhoneticResult
+from thai_ukrainian.ukrainian_adaptation import adapt_phonetic_result, adapt_syllable_to_ukrainian
 from thai_ukrainian.parser import parse_syllable
 from thai_ukrainian.orthography import detect_vowel
 
@@ -203,5 +206,29 @@ class PipelineTests(unittest.TestCase):
         ambiguous = analyze_syllable("ทราย")
         self.assertEqual(ambiguous.status, "analysis-dependent:special-orthography")
         self.assertIsNone(ambiguous.phonemic_ipa)
+
+    def test_ukrainian_adapter_consumes_typed_ipa_and_fails_closed(self):
+        analysis = analyze_syllable("กา")
+        typed_ipa = PhoneticResult.from_syllable_analysis(analysis)
+        self.assertIsInstance(typed_ipa, PhoneticResult)
+        self.assertEqual(analysis.ukrainian_transliteration, adapt_syllable_to_ukrainian(typed_ipa))
+
+        # Mutation at the adapter boundary must affect the result: downstream
+        # Ukrainian output follows IPA, not the original Thai onset.
+        mutated = replace(typed_ipa, phonemic_ipa="ma")
+        self.assertEqual(adapt_syllable_to_ukrainian(mutated), "ма")
+        self.assertNotEqual(adapt_syllable_to_ukrainian(mutated), analysis.ukrainian_transliteration)
+
+        self.assertIsNone(adapt_syllable_to_ukrainian(replace(typed_ipa, status="UNCERTAIN")))
+        self.assertIsNone(adapt_syllable_to_ukrainian(replace(typed_ipa, phonemic_ipa=None)))
+        self.assertIsNone(adapt_syllable_to_ukrainian(replace(typed_ipa, phonemic_ipa="k☃a")))
+
+        adapted = adapt_phonetic_result(typed_ipa)
+        self.assertEqual(adapted["source_ipa"], typed_ipa.phonemic_ipa)
+        self.assertTrue(adapted["tone_separate"])
+        self.assertEqual(typed_ipa.tone_category, "mid")
+        self.assertEqual(typed_ipa.vowel_length, "long")
+        self.assertTrue(typed_ipa.provenance)
+
 
 if __name__=="__main__":unittest.main()
