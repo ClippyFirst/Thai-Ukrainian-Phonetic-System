@@ -645,20 +645,42 @@
     },
     "latest_head_checks": [
       {
-        "run_id": 40360861858,
+        "run_id": 40372261539,
         "name": "CI",
-        "status": "queued"
+        "status": "success",
+        "verified_commit": "17eac785a00ce1e8a95ac904db348ddf8c286040"
       },
       {
-        "run_id": 40360861799,
+        "run_id": 40372261553,
         "name": "Web static validation",
-        "status": "queued"
+        "status": "success",
+        "verified_commit": "17eac785a00ce1e8a95ac904db348ddf8c286040"
       },
       {
-        "run_id": 40360861912,
+        "run_id": 40372261718,
         "name": "External VISTEC segmentation evaluation",
-        "status": "queued"
+        "status": "success",
+        "verified_commit": "17eac785a00ce1e8a95ac904db348ddf8c286040"
       }
     ]
+  },
+  "beta_site_update": {
+    "date": "2026-10-26",
+    "branch": "research/thai-segmentation-gold-parity-verified-20261025",
+    "starting_verified_commit": "17eac785a00ce1e8a95ac904db348ddf8c286040",
+    "implementation_checkpoint": "2d2cf2ce7169da257c84f6b5395d75ee4f425a05",
+    "changes": [
+      "Visible Ukrainian research-beta notice added to web/index.html and web/system.html",
+      "System page publishes VISTEC and Wisesight source-annotation segmentation diagnostics and states that zero rows are independently expert-reviewed",
+      "Responsive beta-notice styling added",
+      "UI contract regression assertions added for beta copy, evidence metrics, and mobile styling",
+      "Validation matrix and audit/handoff updated in place"
+    ],
+    "metrics_evidence_grade": "SOURCE_ANNOTATED_NOT_EXPERT_ADJUDICATED",
+    "independently_expert_reviewed_rows": 0,
+    "exact_head_checks_for_ui_changes": "PENDING",
+    "public_pages_deployment": "BLOCKED_UNTIL_REVIEWED_MERGE_OR_SEPARATE_PREVIEW_HOST",
+    "reason": "pages.yml deploys on main pushes; PR #71 remains draft. Do not overwrite the existing public site with a draft research branch.",
+    "readiness": "research beta candidate; not release-ready for arbitrary Thai text"
   }
 }
