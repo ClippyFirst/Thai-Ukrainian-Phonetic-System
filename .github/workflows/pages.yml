@@ -65,3 +65,22 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Verify published whole-text UI contract
+        env:
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          set -eu
+          for attempt in $(seq 1 12); do
+            if curl --fail --silent --show-error "$PAGE_URL" -o /tmp/deployed-index.html; then
+              break
+            fi
+            if [ "$attempt" -eq 12 ]; then
+              echo "GitHub Pages homepage was not reachable after 12 attempts" >&2
+              exit 1
+            fi
+            sleep 5
+          done
+          grep -Fq 'Вводьте цілий тайський текст' /tmp/deployed-index.html
+          grep -Fq 'data-example="กา"' /tmp/deployed-index.html
+          grep -Fq 'data-example="จริง"' /tmp/deployed-index.html
+          grep -Fq 'БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ' /tmp/deployed-index.html
