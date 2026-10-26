@@ -524,3 +524,11 @@ This section supersedes the earlier queued-deployment status above.
 The browser engine's prior whole-run lookup failed closed whenever an uninterrupted Thai-script span was not an exact lexicon key. This prevented IPA for known words adjacent to unknown text and did not meet the expected whole-text workflow. A conservative dictionary-max-match implementation and UI regression cases have now been added on branch `fix/examples-ipa-coverage-20261026`.
 
 This is **PARTIAL**, not a claim of full Thai text recognition: known lexicon entries may produce IPA, unknown spans remain explicitly unresolved, and greedy matches can be wrong in ambiguous contexts. CI/static validation for the latest branch head is required before this change is DONE_VERIFIED. Independent word-boundary adjudication and IPA/UA evaluation remain outstanding.
+
+
+## Whole-text Thai input — verification update — 2026-10-26
+
+- Code-bearing head `1b1553876ef24bf18f692d7aa512634bdceeee70` passed the CI `test` job and `master-artifact` job in [run 40400809948](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40400809948); the generated master table assertion passed. Web static validation passed in [run 40400809797](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40400809797).
+- The first test runs exposed two test-contract defects, not a hidden pass: a parity probe treated a string containing known lexicon substrings as wholly unknown, and UI assertions counted copy-button accessible labels as additional IPA field labels. The parity probe now uses the genuinely unknown span `ทดสอบ`; the UI test counts visible IPA field labels and matches the actual punctuation-token markup. The final CI run passed the corrected parity and UI-contract tests.
+- Whole-text browser segmentation remains **PARTIAL**, because greedy dictionary max-match is not a complete or context-aware Thai segmenter. Unknown spans abstain from guessed IPA/Ukrainian output. The current PR remains open; these changes are not yet merged or deployed to Pages.
+- Independent word-boundary adjudication, independent Thai IPA/acoustic gold, and independent Ukrainian target-form review remain outstanding. Source-annotated Wisesight diagnostics are not expert-adjudicated gold and must not be presented as accuracy proof.
