@@ -53,6 +53,12 @@ class VistecSegmentationAdapterTests(unittest.TestCase):
             self.assertTrue(all("".join(json.loads(r["predicted_tokens_json"])) in {"สวัสดี โลก", "hello world"} for r in pred_rows))
 
 
+    def test_rejects_empty_annotated_token(self):
+        for value in ("hello||world", "<ne></ne>|hello", "|hello"):
+            with self.subTest(value=value):
+                with self.assertRaisesRegex(ValueError, "empty annotated token"):
+                    parse_submission_text(value, row_id="malformed")
+
     def test_rejects_unpinned_csv_blob(self):
         with tempfile.TemporaryDirectory() as d:
             source = Path(d) / "source.csv"
