@@ -541,3 +541,8 @@ Segmentation metrics on Wisesight (993 rows) and VISTEC (50,000 rows) remain agr
 Outstanding gates remain: independent Thai IPA/acoustic review; two independent Ukrainian-native target-form reviews; human segmentation adjudication; contextual adjudication of the final /ʔ/ discrepancy in `บรรจุ`; lawful access to the full official OBEC PDF; and documented license/attribution compliance for each dataset/model. The TUD Viterbi segmenter remains research-only; low exact-sequence agreement and its false-split/false-merge profile do not justify production-default integration.
 
 **Readiness:** deployed research beta at workflow level; not release-ready for arbitrary Thai text. Coverage 100% is not accuracy, and successful CI is software verification rather than linguistic validation.
+
+
+### External VISTEC evaluation refresh
+
+The latest inspected successful VISTEC workflow is [run 40377560151](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40377560151), job `vistec-evaluation`, on checkpoint `274371594cc8a0b65677bb126242d90acc17caf5`. It uploaded artifact ID `12676540165` (`vistec-external-segmentation-evaluation`), SHA-256 `582a28766f29f11ac54bac7764a52ddfdfd3e78ad26f4acc311fac3f82f6c6a3`. The evaluator covers the pinned 50,000-row CSV. These remain source-annotated labels with zero expert-adjudicated rows. The upstream README's 49,997-sample statement and the CSV's 50,000 parseable rows remain a documented metadata discrepancy; neither count should silently replace the other.
