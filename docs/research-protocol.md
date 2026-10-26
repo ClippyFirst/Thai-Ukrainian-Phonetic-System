@@ -60,3 +60,26 @@ Sequences such as **จร, สร, ศร, ซร** and lexical **ทร** are 
 ## Unicode normalization and layout whitespace
 
 The Thai Python and browser engines normalize to NFC and trim only ASCII layout whitespace (space, tab, CR, LF) at the outer boundary. Other Unicode format/control characters—including U+0085 NEXT LINE, U+200B ZERO WIDTH SPACE and U+202E RIGHT-TO-LEFT OVERRIDE—must remain visible to validation and must not be silently stripped into a valid-looking partial pronunciation. The text tokenizer and `parse_thai` syllable-list API use the same explicit ASCII whitespace set; U+0085 is preserved as unsupported token material, not treated as a layout delimiter. Normalization is not a license to discard unsupported input.
+
+
+## Mandatory Thai → IPA → Ukrainian architecture invariant
+
+The production contract is a serial pipeline, not two parallel outputs:
+
+`Thai orthography → structural analysis → Thai phonology → typed/inspectable IPA → Ukrainian adaptation from IPA → Ukrainian practical orthography`.
+
+1. The Thai analysis stage determines a source-language reading only to the extent supported by the declared rules and lexical evidence. Its typed phonetic result must expose the IPA representation actually used downstream.
+2. IPA is the semantic boundary between the source-language engine and the Ukrainian adapter. It is not merely a debug/audit field. The Ukrainian adapter must not independently reinterpret Thai graphemes, Thai vowel/rime IDs, or Thai coda fields to produce Ukrainian output.
+3. The IPA result must preserve the distinctions required by downstream rules, including phonemic versus broad surface IPA, syllable/segment boundaries, vowel length, tone, provenance, and uncertainty. Do not erase a feature before its adaptation policy has been explicitly defined.
+4. Ukrainian adaptation must consume the typed IPA result plus only explicitly documented metadata required by the target policy. Any exception must be justified, typed, tested, and must not create a hidden Thai-to-Ukrainian bypass.
+5. If source analysis is unsupported or ambiguous and the available evidence cannot choose an IPA reading, withhold the dependent Ukrainian output or return a clearly typed uncertainty. Never fill the gap with an unverified default.
+
+### Required architectural tests
+
+- **Boundary test:** the Ukrainian adapter's public input is the typed IPA result, not Thai orthographic structure.
+- **Data-flow test:** for a fixed Thai input, the emitted Ukrainian result is derived from the IPA result that is exposed for that analysis; no second source-grapheme path independently creates it.
+- **Fail-closed test:** absent/unsupported/uncertain IPA does not produce a confident Ukrainian transcription.
+- **Feature-preservation tests:** tone, vowel length, syllable boundaries, provenance, and uncertainty survive to the boundary and are handled according to explicit Ukrainian adaptation policy.
+- **Cross-runtime parity:** Python and browser implementations agree on the same typed IPA result and derived Ukrainian output for shared fixtures.
+
+A passing structural/unit suite verifies software behavior, not the linguistic truth of every IPA result. Keep source-backed lexical evidence, independently adjudicated pronunciation gold, and Ukrainian-native target-form adjudication as separate evidence gates.
