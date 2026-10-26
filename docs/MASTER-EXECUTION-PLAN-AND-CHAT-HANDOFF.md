@@ -637,3 +637,20 @@ CI was updated to run the TUD trainer, verify source-split reports and circular-
 The repository remains a research prototype, not release-ready. Do not merge PR #71 or publish a release as part of this handoff.
 
 Latest code-bearing commit after adding a deterministic source-disjoint split regression: `088b4e6649fde09f2c9d1232091e2e3c8091d9bd`. Exact-head CI remains pending; the audit JSON will be refreshed last after this handoff update. Do not claim the trainer or new IPA override tests passed until a matching run completes.
+
+
+## Continuation checkpoint — 2026-10-26 (after CI failure review)
+
+Current continuation branch: `research/thai-segmentation-gold-parity-verified-20261025`. Latest code/test correction commit: `4656a557a74405f64455219e1a6fece6be575915`.
+
+### Current evidence and task ledger
+
+- **DONE_VERIFIED (earlier checkpoints only):** generated-data drift and master-table generation passed in CI run `40286374324` before unit tests; Web static validation passed in `40286374333` for the then-current PR head. These results do not validate the newer correction commit.
+- **PARTIAL:** opt-in dictionary maximum-match segmenter, pinned dictionary provenance, Wisesight source-annotated test-only benchmark, typed IPA override loader, Python/browser IPA→Ukrainian path, TUD source-document-disjoint research trainer, independent adjudication templates.
+- **PARTIAL / CI pending:** updated four regression expectations for the newly activated `เดิน` override. They now expect the two source-pinned overrides (`เงิน`, `เดิน`), retain grapheme-only parser ambiguity, and assert `เดิน` goes through the typed IPA result and IPA→Ukrainian adapter. Changes are in `8369edd141ad83c451b0395a57ba25f7a1c57006`, `2337dcf69ff6d59cde1862d486f50031fe9a815e`, `4964d3970c6f14cedd07f04138b99b95c57ef506`, `4656a557a74405f64455219e1a6fece6be575915`.
+- **BLOCKED:** no independent expert-adjudicated IPA/acoustic gold, no independent Ukrainian target-form adjudication, and no final resolution of `บรรจุ` final `/ʔ/` across transcription levels.
+- **TODO:** observe full CI for the exact latest head. Previous CI `40286374324` failed 4 unit tests after the `เดิน` override; later steps were skipped, so no segmentation/TUD/Node/parity result is available for that run. Do not infer new-head success from earlier green jobs.
+
+### Next action
+
+Poll the latest commit's CI and Web static validation. If CI fails, inspect exact failed tests/logs and repair only evidence-backed mismatches; rerun on the new exact head. After all available engineering gates pass, keep the repository classified as a research prototype until independent linguistic/phonetic and Ukrainian target adjudication criteria are met.
