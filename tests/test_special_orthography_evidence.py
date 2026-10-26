@@ -36,6 +36,23 @@ class SpecialOrthographyEvidenceTests(unittest.TestCase):
                 self.assertEqual(rule["analysis_status"], "analysis-dependent")
                 self.assertIn(source_id, rule["source_ids"].split(";"))
                 self.assertIn("word-level evidence", rule["notes"])
+                # Guard the positional CSV schema as well as provenance: a
+                # shifted row can silently turn candidate IPA into a status.
+                expected_patterns = {
+                    "SP-RUE-001": "ฤ",
+                    "SP-RUE-LONG-001": "ฤๅ",
+                    "SP-LUE-001": "ฦ",
+                    "SP-LUE-LONG-001": "ฦๅ",
+                }
+                expected_candidates = {
+                    "SP-RUE-001": "rɯ|ri|rɤ",
+                    "SP-RUE-LONG-001": "rɯː",
+                    "SP-LUE-001": "lɯ",
+                    "SP-LUE-LONG-001": "lɯː",
+                }
+                self.assertEqual(rule["pattern"], expected_patterns[rule_id])
+                self.assertEqual(rule["analysis_status"], "analysis-dependent")
+                self.assertEqual(rule["candidate_ipa"], expected_candidates[rule_id])
 
     def test_leading_o_claim_is_scoped_to_the_attested_lexical_family(self):
         sources = {row["source_id"]: row for row in _rows(ROOT / "data/thai/sources.csv")}
