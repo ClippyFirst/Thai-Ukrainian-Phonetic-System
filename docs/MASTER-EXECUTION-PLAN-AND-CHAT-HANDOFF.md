@@ -1041,3 +1041,8 @@ The public Pages URL is https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-Sy
 - Neither dataset is independent expert gold. Coverage is not accuracy.
 - The TUD unigram-Viterbi model remains research-only; do not make it the public default without human error adjudication, predeclared acceptance thresholds, and independent licensed-domain evaluation.
 - No new release was published, no deployment protections were changed, and no PR was merged as part of this refresh.
+
+
+### VISTEC evaluation check
+
+The latest inspected successful VISTEC run is [40377560151](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40377560151), job `vistec-evaluation`, testing code checkpoint `274371594cc8a0b65677bb126242d90acc17caf5`. Artifact `12676540165` (`vistec-external-segmentation-evaluation`) has reported SHA-256 `582a28766f29f11ac54bac7764a52ddfdfd3e78ad26f4acc311fac3f82f6c6a3`. It covers the 50,000 rows in the pinned CSV; upstream README metadata says 49,997. Keep both facts visible. The 50,000 labels are source-annotated, not expert-adjudicated gold, and this run is a segmentation agreement diagnostic rather than an accuracy claim.
