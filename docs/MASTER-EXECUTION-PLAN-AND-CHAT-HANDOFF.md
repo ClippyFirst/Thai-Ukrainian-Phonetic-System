@@ -1,10 +1,21 @@
 # Master execution plan and chat handoff — Thai → Ukrainian Phonetic System
 
-Last audited: 2026-10-25
+Last audited: 2026-10-26
 Repository: https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System
 Branch checked: `research/thai-segmentation-gold-parity-verified-20261025`
-Starting checkpoint for current continuation: `cc7c0276c11df39c55edc4df8da4c82b988bd4ab`
+Starting checkpoint for current continuation: `17a78977210b06259d231a43d0b8a9003d7a01eb`
 Release declared in README/pyproject: `0.6.1`
+
+## Latest verified checkpoint — 2026-10-26
+
+- Current code/data commit: `4c3d01d9b726b410c98048878441082d8d5c8299` on `research/thai-segmentation-gold-parity-verified-20261025`.
+- Exact-head CI [40296520186](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40296520186) and Web static validation [40296520175](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40296520175) both PASS. Python unit tests: 176 passed. Generated-data drift, master table (351,780 rows / 41 vowel-rime records), Node IPA→UA, parity/UI, 36-input runtime diagnostic, Wisesight diagnostics, target-candidate TSV check, source-attested IPA gate, TUD training/evaluation, and artifact uploads passed.
+- The target-candidate registry mismatch was TSV quoting of JSON values; the generator now prints a unified diff on mismatch and the generated artifact is byte-identical. The source-attested IPA CI assertion was stale after the second lexical override; it now expects 2 circular override rows and 4 independently comparable rows and checks that summary counts agree with the report records.
+- Runtime challenge: 36 inputs; 27 complete outputs; 9 abstentions/incomplete; 2 lexical IPA overrides; 7 unresolved segmentation cases. This is not an accuracy benchmark.
+- Wisesight-1000 (993 source-annotated rows, zero expert-adjudicated): text-tokenizer baseline F1 0.160604 / exact-sequence rate 0.031219; dictionary max-match F1 0.839471 / exact-sequence rate 0.193353. Descriptive only; not independent gold and not used to train/tune TUD.
+- TUD unigram-Viterbi research model (pinned source commit `67413969add552b7030184f16f24fa9f630913bc`, CC BY-SA 4.0): dev F1 0.889023 (1,142 groups); held-out TUD test F1 0.872932 (375 groups, exact-group rate 0.432); Wisesight test-only F1 0.792101 (2,848 filtered groups). These are filtered Thai-only multi-token groups, not full-text scores. Model remains research-only and is not the production default.
+- Source-attested IPA: 6 records, 3 segmental agreements, 4 tone agreements, 2 circular source-override records excluded, 4 independently comparable rows. Evidence grade remains `SOURCE_ATTESTED_NOT_GOLD`; no accuracy claim. `บรรจุ` final `/ʔ/` discrepancy remains unresolved.
+- **Readiness: engineering checks verified, still not release-ready.** Blockers: independent Thai phonetic/acoustic adjudication with authorized audio/TextGrid access; independent Ukrainian-native target-form adjudication; evidence-backed context/transcription-level review of `บรรจุ`; independent quality review before any TUD segmenter integration. Do not merge PR #71, close PR #68, publish a release, or claim production quality as part of this continuation.
 
 ## Operating rule
 
