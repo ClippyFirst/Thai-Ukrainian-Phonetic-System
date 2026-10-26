@@ -297,3 +297,16 @@ No VISTEC metric is claimed before the external workflow finishes on this branch
 | Verify compatibility with pinned VISTEC source | BLOCKED_PENDING_WORKFLOW | The 49,997-row source adapter must run against the immutable CSV snapshot. No metric is claimed until the external workflow succeeds and its artifact is inspected. |
 | Exact-head CI and Web validation | PENDING / not yet surfaced | GitHub connector returned no workflow runs or combined statuses for the new head at the last check. This is not a pass; refresh workflow state before merge. |
 
+
+
+## Exact-head run status refresh — 2026-10-26
+
+The GitHub connector now reports the following runs for branch head `550f26fdbf6fd66a0d1c2cb1caa9bd6bd10de196`; each remains queued, with no conclusion yet:
+
+| Check | Run | Current state | Acceptance |
+|---|---|---|---|
+| CI | [40346688497](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40346688497) | QUEUED | All repository test and generated-artifact gates pass on this exact head |
+| Web static validation | [40346688520](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40346688520) | QUEUED | Static validation passes on this exact head |
+| External VISTEC evaluation | [40346688621](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40346688621) | QUEUED | Pinned 49,997-row source is accepted; report artifact inspected; no claim of independent gold |
+
+The earlier “not yet surfaced” state is superseded by this timestamped refresh. Queueing is not a successful validation result.
