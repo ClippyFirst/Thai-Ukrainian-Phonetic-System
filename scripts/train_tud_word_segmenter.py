@@ -104,7 +104,7 @@ def segment(text: str, counts: dict[str, int], penalty: float) -> list[str]:
     best = [float("-inf")] * (n + 1)
     next_pos = [0] * (n + 1)
     best[n] = 0.0
-    max_len = min(max((len(word) for word in counts), default=1), 24)
+    max_len = 24  # Fixed cap avoids rescanning the full training vocabulary per span
     for start in range(n - 1, -1, -1):
         best_score = -25.0 + best[start + 1]
         best_end = start + 1
