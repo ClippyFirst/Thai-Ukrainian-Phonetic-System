@@ -42,15 +42,17 @@ class SpecialOrthographyEvidenceTests(unittest.TestCase):
         claims = {row["claim_id"]: row for row in _rows(ROOT / "data/claims.csv")}
         rules = {row["rule_id"]: row for row in _rows(ROOT / "data/thai/special_orthography.csv")}
 
-        source_id = "SRC-OBEC-SPECIAL-VOWELS-2022"
+        source_id = "SRC-OBEC-O-NAM-2022"
         claim = claims["CLM-O-NAM-LEXICAL"]
         rule = rules["SP-O-NAM-001"]
         self.assertIn(source_id, sources)
         self.assertEqual(claim["status"], "analysis-dependent")
         self.assertIn(source_id, claim["evidence_ids"].split(";"))
         self.assertIn(source_id, rule["source_ids"].split(";"))
-        self.assertIn("p. 7", rule["notes"])
+        self.assertIn("p. 275", rule["notes"])
         self.assertIn("do not generalize", rule["notes"])
+        self.assertEqual(sources[source_id]["url"], "https://academic.obec.go.th/web/images/document/1650944942_d_1.pdf")
+        self.assertIn("printed p. 275", sources[source_id]["notes"])
 
 
 if __name__ == "__main__":
