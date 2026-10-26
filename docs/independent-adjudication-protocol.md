@@ -29,3 +29,18 @@ Template: `data/benchmark/ukrainian-target-adjudication.tsv`.
 - IPA: BLOCKED until a qualified independent Thai phonetician completes the rows with an agreed transcription-level protocol and authorized acoustic assets for acoustic claims.
 - Ukrainian adaptation: BLOCKED until two independent Ukrainian-native judgments and an adjudication log exist for the declared sample.
 - `บรรจุ` final /ʔ/: remain a review case until broad-vs-surface transcription and stress/context are explicit. No global rule should be inferred from one dictionary form.
+
+
+## Reproducible segmentation-review sampling — 2026-10-26
+
+The CI artifact built by `scripts/build_segmentation_manual_review.py` is a **review packet, not an adjudicated corpus**. It now samples from all pinned source rows rather than only the highest-ranked error examples:
+
+- deterministic selection of up to 8 rows per heuristic stratum (numbers/dates, URLs/emails, mixed Latin–Thai, Latin/brands, punctuation/quoting, long Thai, engine disagreement, or general review);
+- an additional deterministic uniform control sample of 12 rows from the full 993-row source set;
+- both dictionary and TUD predictions are recomputed for every source row and must reconstruct the original text exactly;
+- every output row retains `gold_status=SOURCE_ANNOTATED`, `adjudicated=NO`, and blank human decision, reviewer and rationale fields;
+- sampling strata are heuristics only. A model/source disagreement is not automatically an error, and the TUD model remains research-only.
+
+Reviewers should independently record whether the upstream tokenization is linguistically defensible under a pre-agreed word-boundary convention, classify the reason for any proposed correction, and preserve the original source label. Freeze the annotation guide before review; do not use reviewed Wisesight rows to train/tune the segmenter or claim independent-domain generalization. Report sample inclusion probabilities or clearly label the packet as a targeted diagnostic sample; do not calculate population accuracy from this stratified sample without appropriate sampling weights.
+
+The external acceptance dependency remains: qualified human reviewers must actually fill and sign off the packet. CI can verify sampling reproducibility, provenance, and lossless text reconstruction only; it cannot perform linguistic adjudication.
