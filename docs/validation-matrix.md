@@ -251,3 +251,26 @@ Both engines were evaluated against the same 993 pinned Wisesight rows using the
 | `บรรจุ` final /ʔ/ | BLOCKED | Context and transcription convention must be specified, then source/audio evidence independently reviewed |
 | Cross-domain segmentation evaluation | TODO | Identify license-compatible independent domain, freeze split and acceptance thresholds before any tuning |
 | Full OBEC official PDF | BLOCKED | Obtain accessible official full PDF or verified local official copy; inspect full relevant pages before broadening claims |
+
+
+## One-pass execution ledger — 2026-10-26 (current continuation)
+
+| Task | Status | Evidence / acceptance criterion |
+|---|---|---|
+| IPA-first pipeline and Python/browser adapter boundary | DONE_VERIFIED on prior exact-head CI | Typed IPA carries tone/length/boundary/provenance/uncertainty; mutation and fail-closed tests exist. Latest-head CI is tracked separately below. |
+| Dictionary vs TUD segmentation comparison | DONE_VERIFIED on comparative artifact head | Same 993 pinned CC0 Wisesight source-annotated rows; dictionary F1 0.839471 / 192 exact sequences, TUD F1 0.748623 / 119 exact sequences. These are source-label diagnostics, not independent accuracy. Keep TUD research-only. |
+| Human segmentation-review sample design | PARTIAL; new implementation awaiting exact-head CI | Deterministic stratified sample plus uniform controls, full predictions for all source rows, exact reconstruction and blank adjudication fields. Acceptance: CI pass, artifact inspection, then human review. |
+| Independent Thai IPA/acoustic gold | BLOCKED — external specialist + authorized audio required | CCOST is a public candidate under CC BY-NC-SA 4.0, but its manual/archive/hash and use scope still need review; qualified Thai phoneticians must independently annotate and reconcile a speaker-aware sample. |
+| Independent Ukrainian target-form judgments | BLOCKED — two Ukrainian-native reviewers required | Complete existing TSV with independent blind preferences, criteria version, rationale, agreement and adjudication log. Do not infer target preference from IPA or engine output. |
+| บรรจุ final /ʔ/ | PARTIAL / evidence-limited | Thai Wiktionary revision 5686263 explicitly records /ban˧.t͡ɕuʔ˨˩/. This is source-attested lexical evidence only. Decide broad phonemic vs surface transcription and contextual treatment; do not generalize a single dictionary form. |
+| Independent segmentation domain | BLOCKED — licensed corpus/annotation convention not yet cleared | Choose a second corpus with verified license and immutable source snapshot; define split before evaluation; keep it untouched by training/tuning; report same-boundary-policy metrics and human error analysis. |
+| Full official OBEC PDF inspection | BLOCKED — official URL returned HTTP 403 | No claim of full-PDF review. Acceptance requires lawful official access and page/section-scoped source notes; existing accessible page-scoped claims remain narrowly scoped. |
+| Latest branch CI + web static validation | PARTIAL / pending | New review-sampling commits trigger fresh runs. Do not mark DONE_VERIFIED until both workflows finish successfully on the final exact HEAD. |
+| Release readiness | BLOCKED | No release until engineering gates pass on final HEAD and empirical gates/declared scope are accepted. Research prototype remains the accurate classification. |
+
+### New review-sampling implementation
+
+- Updated `scripts/build_segmentation_manual_review.py` to compute both system predictions over the full pinned source set and select deterministic rows by heuristic strata plus uniform controls, instead of restricting the packet to top-ranked error examples.
+- Updated `tests/test_segmentation_manual_review.py` to cover deterministic sampling, controls, provenance, lossless reconstruction, and fail-closed behavior.
+- Updated CI to pass the generated TUD model to the sampler and verify that every selected row reconstructs exactly and all human adjudication fields remain blank.
+- The packet remains `SOURCE_ANNOTATED`; the script does not promote source labels to expert gold. Exact-head workflow status must be checked after the latest commit.
