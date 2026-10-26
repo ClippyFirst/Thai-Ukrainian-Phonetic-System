@@ -4,6 +4,7 @@ from scripts.train_tud_word_segmenter import (
     evaluation_groups,
     parse_conllu_sentences,
     segment,
+    source_disjoint_split,
     training_counts,
 )
 
@@ -28,6 +29,30 @@ class TUDSegmenterTests(unittest.TestCase):
         groups = evaluation_groups(sentences)
         self.assertEqual(groups, [["ฉัน", "รัก", "เธอ"]])
         self.assertEqual(training_counts(sentences)["ฉัน"], 1)
+
+    def test_source_document_split_is_deterministic_and_disjoint(self):
+        sentence = [("ไทย", True), ("ภาษา", False)]
+        rows = [
+            ("tnc_DOC-PART001", sentence),
+            ("tnc_DOC-PART002", sentence),
+            ("wiki_123", sentence),
+            ("wiki_456", sentence),
+        ]
+        first = source_disjoint_split(rows)
+        second = source_disjoint_split(rows)
+        self.assertEqual(first, second)
+        normalized = [
+            {name.rsplit("-PART", 1)[0] for name, _ in split}
+            for split in first
+        ]
+        self.assertFalse(normalized[0] & normalized[1])
+        self.assertFalse(normalized[0] & normalized[2])
+        self.assertFalse(normalized[1] & normalized[2])
+        part_assignments = [
+            index for index, split in enumerate(first)
+            if any(name.startswith("tnc_DOC") for name, _ in split)
+        ]
+        self.assertEqual(len(part_assignments), 1)
 
     def test_split_by_space_does_not_create_false_thai_group(self):
         sample = """# text = ฉัน รัก
