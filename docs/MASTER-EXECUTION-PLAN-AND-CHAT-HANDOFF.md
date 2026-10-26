@@ -1002,3 +1002,14 @@ This section supersedes the earlier queue-blocker status in this handoff.
 - Canonical records updated in `docs/final-audit.json`, `docs/final-audit.md`, and `docs/validation-matrix.md`. Latest main CI checked before this doc update: [40381878163](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40381878163), PASS.
 
 **Readiness:** deployed research beta, not release-ready for arbitrary Thai text. Still unresolved: independent Thai IPA/acoustic gold, human segmentation adjudication, two independent Ukrainian target-form reviews, context review of บรรจุ final /ʔ/, and lawful full official OBEC PDF access. Keep all beta and evidence caveats visible; do not claim expert-validated accuracy.
+
+
+## Continuation update — whole-text web input — 2026-10-26
+
+The web endpoint previously treated each uninterrupted Thai-script run as one dictionary key. Any absent full-run key became unresolved, so adjacent known words could not emit IPA. This was a real execution gap, not merely a homepage-example problem.
+
+On branch `fix/examples-ipa-coverage-20261026`, the web engine now applies conservative longest-match segmentation against its reviewed text lexicon and source-attested IPA override keys. It emits known entries separately and retains contiguous unmatched material as unresolved spans, allowing known neighboring words to produce IPA without inventing pronunciation for unknown material. UI-contract tests cover adjacent known entries (`กาไฟมา`), an unknown span followed by known entries (`ทดสอบกาไฟ`), and punctuation/whitespace (`กาไฟ มา!`). The quick examples were aligned to entries that currently produce phonological IPA.
+
+**Scope warning:** this is a deterministic dictionary-max-match baseline, not a complete Thai word segmenter. It can make wrong boundary choices when a known entry occurs inside an unknown word or when multiple analyses are possible. Do not advertise arbitrary Thai text as fully recognized. Existing source-annotated segmentation scores are diagnostics, not independent expert gold.
+
+**Verification state at handoff:** commits on the branch include `bfe693b66ef5fa0fdbce13e2699d3bf1d6c71248` (engine) and `333eed020fae3a3713a9c6588debd11bdbd100ca` (UI tests); documentation update follows. GitHub CI and web static validation for the updated head must complete successfully before considering this change verified. If tests fail, fix and rerun. Next real work after CI: evaluate the browser segmenter on pinned, held-out Thai boundary data; add adversarial ambiguity and unknown-word fixtures; compare precision/recall with the existing Python segmentation baseline; improve segmentation only where evidence supports it. Keep independent IPA/UA review and all other research blockers open.
