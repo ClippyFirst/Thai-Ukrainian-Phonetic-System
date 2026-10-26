@@ -397,3 +397,18 @@ This update supersedes the prior row stating that the Pages deployment was block
 | Main CI, including generated master artifact | DONE_VERIFIED | Run [40378981710](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40378981710): test job PASS; master-artifact job PASS. |
 | Web static validation | DONE_VERIFIED | Run [40378982254](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40378982254): PASS. |
 | Release readiness / linguistic evidence | BLOCKED / research-only | Deployment success does not close evidence gates: independent Thai IPA/acoustic gold, human segmentation adjudication, two independent Ukrainian target-form reviews, contextual review of บรรจุ final /ʔ/, and lawful full official OBEC PDF access remain outstanding. The source-annotated segmentation scores are diagnostic only, not expert gold. |
+
+
+## Post-merge revalidation refresh — 2026-10-26 22:18 EET
+
+| Task | Status | Evidence / acceptance |
+|---|---|---|
+| PR #71 merge state | DONE_VERIFIED | PR is closed and merged at `b4ae9e9f88a79d6f55cb1207363ac6877df080ba`. |
+| GitHub Pages deployment workflow | DONE_VERIFIED at workflow level | Run [40378981918](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40378981918): build job 121769734639 and deploy job 121775188761 both completed successfully. The workflow associates the published artifact with the merged beta source commit. |
+| Main CI and generated master artifact | DONE_VERIFIED for merged source | Run [40378981710](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40378981710): `test` and `master-artifact` both succeeded. |
+| Web static validation | DONE_VERIFIED for merged source | Run [40378982254](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40378982254): `validate` succeeded. |
+| Most recent independently inspected main CI | DONE_VERIFIED for commit tested | Run [40381878163](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40381878163): `test` and `master-artifact` succeeded on commit `7bcc7e21c98bde8f55a7c56a1c1a97fe3486b72e`. Current main has advanced to documentation commit `314d2fd2efab107dfa509c23d1f9b9dad2ed42f0`; do not describe that later SHA as exact-head CI-tested. |
+| Live-page HTML and responsive browser check | BLOCKED | The available web fetch cannot access the Pages URL and the local HTTP probe cannot resolve DNS. Deployment workflow success is verified, but served markup, mobile layout, and interactive behavior were not independently inspected in a browser during this run. Acceptance: inspect index and system pages at https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/ in a functioning browser and exercise input edge cases. |
+| Linguistic release gates | BLOCKED / PARTIAL | 993 Wisesight and 50,000 VISTEC rows remain source-annotated, with zero independently adjudicated rows. Independent Thai IPA/acoustic review, two Ukrainian-native target reviews, human segmentation adjudication, context-level review of บรรจุ final /ʔ/, lawful full official OBEC PDF access, and per-dataset license/attribution review remain open. Coverage is not accuracy. |
+
+Current main head at this refresh: `314d2fd2efab107dfa509c23d1f9b9dad2ed42f0`. This is a documentation handoff commit. The latest directly inspected main CI run remains `40381878163` on `7bcc7e21c98bde8f55a7c56a1c1a97fe3486b72e`; exact-head CI for the current docs commit was not independently confirmed here.
