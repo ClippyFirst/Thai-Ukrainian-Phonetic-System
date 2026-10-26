@@ -77,7 +77,7 @@ function card(token, index) {
       '</div><div class="subline">Збережено без фонетичної інтерпретації</div></div></div></article>';
   }
 
-  const unresolved = token.segmentationStatus !== 'lexicon' ||
+  const unresolved = !['lexicon', 'lexical_ipa_override'].includes(token.segmentationStatus) ||
     (token.syllables || []).some(syllable => syllable.status !== 'analyzed');
   const syllables = (token.syllables || []).map((analysis, syllableIndex) =>
     renderSyllable(analysis, index, syllableIndex)

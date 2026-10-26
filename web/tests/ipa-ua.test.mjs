@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import { adaptIpaToUkrainian } from "../src/ipa-ua.js";
+import { analyze } from "../src/engine.js";
 
 const canonical = adaptIpaToUkrainian("kʰaː");
 assert.equal(canonical.status, "adapted");
@@ -22,6 +23,14 @@ assert.equal(adaptIpaToUkrainian("").status, "withheld");
 assert.equal(adaptIpaToUkrainian("k☃a").status, "withheld");
 assert.equal(adaptIpaToUkrainian("k☃a").output, null);
 assert.equal(adaptIpaToUkrainian("kʰaː").sourceIpa, "kʰaː");
+
+// End-to-end boundary proof: the browser's final Ukrainian result is the
+// adaptation of the actual IPA intermediate, and a changed IPA changes output.
+const endToEnd = analyze("กา");
+assert.equal(endToEnd.status, "analyzed");
+assert.equal(endToEnd.ukrainian, adaptIpaToUkrainian(endToEnd.phonemicIpa).output);
+assert.notEqual(adaptIpaToUkrainian("ma").output, endToEnd.ukrainian);
+assert.equal(adaptIpaToUkrainian("ma").output, "ма");
 console.log("IPA → Ukrainian adaptation: canonical, feature-audit, inventory, and rejection tests passed");
 
 // The public UI must describe the same IPA-first adapter contract as the engine.

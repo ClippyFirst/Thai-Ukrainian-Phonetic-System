@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 
 const elements = new Map();
 function element(id) {
@@ -73,5 +74,19 @@ analyze.click();
 assert.equal(status.className, "status notice");
 assert.match(status.textContent, /Тайських токенів не знайдено/);
 assert.match(output.innerHTML, /ABC/);
+
+const homeHtml = await readFile(new URL("../index.html", import.meta.url), "utf8");
+const systemHtml = await readFile(new URL("../system.html", import.meta.url), "utf8");
+const styles = await readFile(new URL("../src/styles.css", import.meta.url), "utf8");
+assert.match(homeHtml, /БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ/);
+assert.match(homeHtml, /system\.html#beta-evidence/);
+assert.match(systemHtml, /id="beta-evidence"/);
+assert.match(systemHtml, /незалежно перевірених рядків — 0/);
+assert.match(systemHtml, /76 із 50 000/);
+assert.match(systemHtml, /16 із 50 000/);
+assert.match(systemHtml, /192 із 993/);
+assert.match(systemHtml, /119 із 993/);
+assert.match(styles, /\.beta-notice/);
+assert.match(styles, /@media\(max-width:700px\)\{\.beta-notice/);
 
 console.log("Thai current UI uncertainty/accessibility contract passed");

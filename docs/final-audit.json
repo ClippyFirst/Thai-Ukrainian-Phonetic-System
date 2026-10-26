@@ -1,8 +1,769 @@
 {
-  "release":"0.2.0",
-  "status":"research-foundation",
-  "implemented":["orthography","syllable_structure","tone","broad_ipa","ukrainian_feature_candidates","evidence_registry","combinatorial_accounting","validation_protocol"],
-  "not_claimed":["complete_lexical_segmentation","complete_special_orthography","connected_speech","corpus_accuracy","calibrated_probability","universal_ukrainian_orthography"],
-  "lexical_attestation":"not measured",
-  "corpus_attestation":"not measured"
+  "release": "0.6.1",
+  "status": "engineering-verified research prototype; latest code-bearing CI failed on stale VISTEC license assertion; VISTEC workflow exposed README-vs-CSV row-count mismatch; fixes committed; exact-head revalidation pending; independent linguistic adjudication incomplete; not release-ready",
+  "implemented": [
+    "orthography",
+    "syllable_structure",
+    "tone",
+    "broad_ipa",
+    "ukrainian_feature_candidates",
+    "evidence_registry",
+    "combinatorial_accounting",
+    "validation_protocol",
+    "runtime_challenge_diagnostics",
+    "segmentation_benchmark_infrastructure",
+    "fail_closed_prediction_scoring",
+    "generated_artifact_ci_gate",
+    "python_browser_parity_gate",
+    "pinned_source_annotated_word_boundaries",
+    "source_status_aware_segmentation_scoring",
+    "lexicon_source_provenance",
+    "source_attested_ipa_registry",
+    "wisesight_segmentation_diagnostic_ci_gate",
+    "typed_lexical_ipa_override_loader",
+    "source_pinned_short_vowel_override_for_เงิน",
+    "lexical_override_provenance_through_ipa_adapter",
+    "typed_source_pinned_lexical_ipa_override_for_เงิน",
+    "lexical_override_routed_through_python_text_pipeline",
+    "browser_lexical_ipa_override_and_parity_fixture",
+    "source_attested_ipa_discrepancy_and_abstention_diagnostic",
+    "segmentation_corpus_license_gate_registry",
+    "ccost_textgrid_access_and_license_record",
+    "pinned_tud_cc_by_sa_segmentation_training_source",
+    "source_document_disjoint_tud_frequency_viterbi_research_segmenter",
+    "walk_source_pinned_lexical_ipa_override",
+    "same_source_override_excluded_from_ipa_agreement_metrics",
+    "independent_ipa_and_ukrainian_target_adjudication_templates",
+    "special_orthography_csv_schema_integrity_gate",
+    "typed_ipa_adapter_mutation_and_fail_closed_regressions",
+    "browser_end_to_end_ipa_mutation_test",
+    "ipa_tone_length_boundary_provenance_uncertainty_preservation_tests",
+    "deterministic_segmentation_false_split_false_merge_review",
+    "same-row-dictionary-vs-TUD-segmentation-error-review",
+    "mixed-text-preserving-segmentation-comparison",
+    "boundary-context-review-examples",
+    "deterministic_stratified_segmentation_review_with_uniform_controls",
+    "pinned_vistec_tp_th_2021_external_segmentation_evaluator",
+    "vistec_annotation_markup_and_pipe_token_adapter",
+    "linear_time_segmentation_evaluator_for_large_corpora"
+  ],
+  "not_claimed": [
+    "complete_lexical_segmentation",
+    "complete_special_orthography",
+    "connected_speech",
+    "corpus_accuracy",
+    "calibrated_probability",
+    "universal_ukrainian_orthography",
+    "independently_adjudicated_ipa_gold",
+    "independently_adjudicated_word_boundary_gold",
+    "empirical_segmentation_accuracy",
+    "representative_lexical_coverage",
+    "independent_expert_adjudicated_word_boundary_gold",
+    "independent_expert_adjudicated_ipa_gold",
+    "acoustic_tone_vowel_length_accuracy",
+    "independently_adjudicated_ukrainian_target_forms",
+    "acoustic_tone_or_vowel_length_accuracy",
+    "production_automatic_word_segmentation",
+    "connected_speech_acoustic_validation",
+    "production_quality_automatic_word_segmentation",
+    "independent_acoustic_ipa_gold"
+  ],
+  "lexical_attestation": "Five source-backed runtime text lexicon entries plus two active typed IPA overrides (เงิน and เดิน). The เดิน override uses Thai Wiktionary oldid 1908803 /dɤːn˧/ and is explicitly SOURCE_ATTESTED_NOT_GOLD; the parser-only graphemic ambiguity contract remains intact. Exact-head CI and updated challenge counts passed on code/data head 4c3d01d9b726b410c98048878441082d8d5c8299.",
+  "corpus_attestation": "993 source-annotated Wisesight word-tokenization rows (CC0-1.0; test-only, never training/tuning); pinned UD Thai TUD source snapshots under CC BY-SA 4.0 for a research-only frequency-Viterbi experiment; zero independently adjudicated IPA/tone/vowel-length gold rows.",
+  "word_boundary_benchmark": {
+    "dataset": "PyThaiNLP/Wisesight word-tokenization labels",
+    "rows": 993,
+    "license": "CC0-1.0",
+    "upstream_commit": "c1d063649abc3a6870b5fd1aae26cd1c64bdde7b",
+    "upstream_blob_sha1": "279aeb2d4323fd8032306160144d33dcb5b2df84",
+    "status": "SOURCE_ANNOTATED_NOT_EXPERT_ADJUDICATED",
+    "project_split": "test",
+    "baseline": "existing dictionary-max-match baseline remains separately reported; TUD-trained frequency-Viterbi metrics pending exact-head CI",
+    "prediction_coverage": 1,
+    "boundary_precision": 0.6383191595797899,
+    "boundary_recall": 0.0918580375782881,
+    "boundary_f1": 0.1606041535556954,
+    "exact_sequence_rate": 0.03121852970795569,
+    "artifact_id": "12649380124",
+    "artifact_name": "wisesight1000-segmentation-baseline",
+    "used_for_training": false
+  },
+  "source_attested_ipa_records": {
+    "count": 6,
+    "license": "CC-BY-SA-4.0",
+    "status": "SOURCE_ATTESTED_NOT_GOLD",
+    "includes_short_long_oe_contrast": true
+  },
+  "latest_verified_code_commit": "b6dbec7928b106f0ab52e06af33a26635df75412",
+  "starting_branch_commit": "7e39fd4bc108386148c1e9a79d257d75babcc9aa",
+  "ci": {
+    "latest_fully_successful_code_data_commit": "b6dbec7928b106f0ab52e06af33a26635df75412",
+    "latest_fully_successful_ci_run": 40322960615,
+    "python_tests": 182,
+    "generated_data_drift": "PASS",
+    "master_artifact": "PASS — 351,780 rows; 41 vowel/rime records; artifact uploaded",
+    "node_ipa_ua_parity_ui_tests": "PASS on exact head 4b1592cd72298d1ca92e0b99ab330975764a078a",
+    "wisesight_baseline": "PASS",
+    "source_attested_ipa_diagnostic": "PASS",
+    "current_browser_parity_code_head": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
+    "current_head_ci_runs": [
+      40315032771
+    ],
+    "current_head_web_validation_runs": [
+      40315032788
+    ],
+    "current_head_status_at_audit_refresh": "PASS: code-bearing head 4b1592cd72298d1ca92e0b99ab330975764a078a passed CI run 40320450844 (test and master-artifact) and Web static validation run 40320450587. CI includes 182 Python tests, generated-data drift, 351,780-row master artifact, Node IPA→Ukrainian, 28 parity fixtures, UI contract, Wisesight diagnostics, deterministic false-split/false-merge error review, source-attested IPA diagnostics, candidate registry check, and TUD research evaluation. This is engineering verification, not independent linguistic gold.",
+    "latest_full_repository_head": "4b1592cd72298d1ca92e0b99ab330975764a078a",
+    "latest_full_repository_head_ci_run": 40320450844,
+    "latest_full_repository_head_web_validation_run": 40320450587,
+    "latest_web_static_verified_code_commit": "1ed4c7aa30759fd8d31136e46d7490bf9b2c5e8b",
+    "latest_web_static_verified_code_run": 40286893366,
+    "latest_verified_commit_note": "43687b2753379b1d617b1c925f87358f8aad13bd is the historical last fully verified code commit before the current TUD trainer and เดิน override changes; it is not the current branch head.",
+    "latest_verified_code_commit_note": "Exact-head engineering checks pass on cb775d6156f62392fa2d0f4bcf8d1aa30d219530; independent Thai IPA/acoustic gold, Ukrainian target-form adjudication, and production segmentation quality remain unverified.",
+    "latest_fully_successful_documentation_commit": "e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff",
+    "latest_fully_successful_documentation_ci_run": 40323209539,
+    "latest_fully_successful_documentation_web_validation_run": 40323209471,
+    "latest_documentation_head_ci_run": 40320450844,
+    "latest_documentation_head_web_validation_run": 40320450587,
+    "latest_implementation_ci_run": 40320450844,
+    "latest_implementation_web_validation_run": 40320450587,
+    "latest_implementation_commit_ci_verified": "4b1592cd72298d1ca92e0b99ab330975764a078a",
+    "latest_fully_successful_web_static_validation_run": 40322959844,
+    "comparative_error_review_status": "DONE_VERIFIED — report, tests and CI artifact passed on code checkpoint b6dbec7928b106f0ab52e06af33a26635df75412",
+    "comparative_error_review_script": "scripts/compare_segmentation_error_review.py",
+    "comparative_error_review_test": "tests/test_comparative_segmentation_error_review.py",
+    "comparative_error_review_artifact": {
+      "id": "12649094231",
+      "name": "thai-segmentation-comparative-error-review",
+      "sha256": "8005cc91939ea06b852c1717fee9fb72d370709e74267b8f99636a6476d30775",
+      "workflow_run": 40322960615
+    },
+    "comparative_error_review_same_rows": 993,
+    "comparative_error_review_source_annotated_rows": 993,
+    "comparative_error_review_expert_adjudicated_rows": 0,
+    "comparative_error_review_code_commits": [
+      "7590a32ed652eb7fc2eb5b5897fc6a8591a31c09",
+      "c2d946e11690a517fb958b768733da4c864a49c1",
+      "54e1db86cf3882f025f00ede86d86e7efb3909e2",
+      "b6dbec7928b106f0ab52e06af33a26635df75412"
+    ],
+    "current_audit_head_ci_status": "PENDING_AFTER_AUDIT_UPDATE",
+    "comparative_error_review_metrics": {
+      "rows": 993,
+      "source_annotated_rows": 993,
+      "expert_adjudicated_rows": 0,
+      "license": "CC0-1.0",
+      "split": "test",
+      "same_rows_for_both_engines": true,
+      "dictionary_max_match": {
+        "boundary_precision": 0.8222866611433306,
+        "boundary_recall": 0.8573896767691311,
+        "boundary_f1": 0.8394713656387666,
+        "false_splits": 2574,
+        "false_merges": 1981,
+        "exact_sequences": 192,
+        "exact_sequence_rate": 0.1933534743202417
+      },
+      "tud_unigram_viterbi": {
+        "boundary_precision": 0.608,
+        "boundary_recall": 0.9738679720682456,
+        "boundary_f1": 0.7486234470545917,
+        "false_splits": 8722,
+        "false_merges": 363,
+        "exact_sequences": 119,
+        "exact_sequence_rate": 0.11983887210473314
+      },
+      "caveat": "Full-text same-row metrics; not directly comparable to earlier filtered Thai-only TUD metrics; source annotation, not independent expert gold."
+    },
+    "pr_reconciliation": {
+      "pr68": {
+        "state": "closed",
+        "reason": "superseded by PR #71 after all eight changed paths and substantive OBEC evidence/tests were reconciled",
+        "branch_preserved": true
+      },
+      "pr71": {
+        "state": "open",
+        "draft": true,
+        "mergeable": true
+      }
+    }
+  },
+  "challenge_runtime": {
+    "challenge_inputs": 36,
+    "ordinary_lexicon_resolved": 27,
+    "lexical_ipa_override_resolved": 2,
+    "segmentation_unresolved": 7,
+    "complete_engine_outputs": 27,
+    "abstentions_or_incomplete": 9,
+    "evaluation_kind": "runtime_diagnostic_not_accuracy_benchmark"
+  },
+  "master_artifact": {
+    "artifact_id": "12649525592",
+    "artifact_name": "thai-ukrainian-master-table",
+    "rows": 351780,
+    "vowel_rime_records": 41
+  },
+  "latest_documentation_checkpoint": {
+    "commit": "4b1592cd72298d1ca92e0b99ab330975764a078a",
+    "ci_run": 40320450844,
+    "web_static_validation_run": 40320450587,
+    "ci_status": "success",
+    "note": "Exact-head CI test and master-artifact jobs passed; Web static validation passed. The run includes 182 Python tests, deterministic segmentation false-split/false-merge review, 351,780-row master artifact, 28 Python/browser parity fixtures and existing diagnostics. Engineering verification is not linguistic accuracy."
+  },
+  "text_only_checkpoint": {
+    "branch": "research/thai-segmentation-gold-parity-verified-20261025",
+    "parent_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
+    "change": "typed source-attested lexical IPA override for เงิน; applied before PhoneticResult/IPA→Ukrainian adaptation",
+    "source": "Thai Wiktionary oldid 5759179; CC BY-SA 4.0",
+    "evidence_grade": "SOURCE_ATTESTED_NOT_GOLD",
+    "test_status": "PENDING_EXACT_HEAD_CI",
+    "remaining": "automatic segmentation needs a distinct training corpus; acoustic and independent expert claims remain unverified"
+  },
+  "source_attested_ipa_diagnostic": {
+    "source_records": 6,
+    "complete_engine_outputs": 6,
+    "withheld_or_incomplete": 0,
+    "segmental_agreements": 3,
+    "tone_agreements": 4,
+    "source_override_circular_count": 2,
+    "independently_comparable_records": 4,
+    "discrepancy": "บรรจุ: source transcription includes final /ʔ/ while current engine segmental output omits it; no universal rule added pending transcription-level/context adjudication",
+    "evidence_grade": "SOURCE_ATTESTED_NOT_GOLD",
+    "accuracy_claimed": false,
+    "verification_status": "PASS on exact-head CI run 40296520186; source-attested dictionary evidence only, not independent gold",
+    "artifact_id": "12648883086"
+  },
+  "word_boundary_baseline": {
+    "corpus": "Wisesight-1000",
+    "rows": 993,
+    "status": "SOURCE_ANNOTATED_NOT_EXPERT_ADJUDICATED",
+    "prediction_coverage": 1,
+    "boundary_precision": 0.6383191595797899,
+    "boundary_recall": 0.0918580375782881,
+    "boundary_f1": 0.1606041535556954,
+    "exact_sequence_rate": 0.03121852970795569,
+    "used_for_training": false
+  },
+  "corpus_source_registry": {
+    "active_test_source": "Wisesight-1000 (CC0-1.0; 993 rows; test-only; not used for training or tuning)",
+    "candidate_sources": [
+      "LST20 (license/access review required; not bundled)",
+      "VISTEC-TP-TH-2021 (CC BY-SA 3.0 reported; upstream terms/attribution review required)"
+    ],
+    "ccost": "CC BY-NC-SA 4.0; TextGrid annotations inside 6.2 GB archive; not bundled or accessed in this run",
+    "training_source": "UD Thai TUD at 67413969add552b7030184f16f24fa9f630913bc, CC BY-SA 4.0; source-document-disjoint 80/10/10 project split; model artifact attribution/share-alike obligations recorded"
+  },
+  "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
+  "latest_code_checkpoint": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
+  "readiness": "engineering-verified research prototype; not release-ready for arbitrary Thai text or empirically validated IPA/Ukrainian output",
+  "latest_verified_repository_head": "e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff",
+  "task_ledger": [
+    {
+      "id": "SEG-TRAIN-001",
+      "status": "PARTIAL",
+      "implementation": "TUD frequency-Viterbi research trainer, source-blob verification, source-document-disjoint split, dev-only penalty selection, held-out TUD test and Wisesight-only report; CI/artifacts configured",
+      "acceptance": "Same-row full-text Wisesight comparison verified: TUD precision 0.6080, recall 0.9739, F1 0.7486, exact sequence 0.1198, 8,722 false splits; dictionary baseline F1 0.8395, exact sequence 0.1934. Do NOT integrate TUD as production default. Human error review, predeclared acceptance thresholds and independent licensed-domain evaluation remain required."
+    },
+    {
+      "id": "IPA-GOLD-001",
+      "status": "BLOCKED",
+      "implementation": "Independent adjudication template and transcription-level protocol prepared; no CCOST recordings/TextGrid accessed",
+      "blocker": "Qualified independent Thai phonetician and authorized audio/TextGrid access required",
+      "acceptance": "Independent dual labels, agreed broad/surface protocol, acoustic references where claimed, disagreement log"
+    },
+    {
+      "id": "WALK-LEX-001",
+      "status": "PARTIAL",
+      "implementation": "Exact-form /dɤːn˧/ source-pinned override routed through typed IPA→Ukrainian adapter in Python/browser; parser-only ambiguity retained; circular source agreement excluded",
+      "acceptance": "Exact-head Python/browser/diagnostic CI passes; still not independent IPA gold"
+    },
+    {
+      "id": "BANCHU-IPA-001",
+      "status": "PARTIAL_EVIDENCE_LIMITED",
+      "implementation": "Final /ʔ/ discrepancy remains explicit; no universal rule added",
+      "blocker": "Need agreed transcription level and stress/context adjudication; source-attested dictionary IPA is not independent gold",
+      "acceptance": "Documented context-specific decision backed by independent phonetic adjudication"
+    },
+    {
+      "id": "UA-TARGET-001",
+      "status": "BLOCKED",
+      "implementation": "Six-row adjudication template and independent review protocol prepared; engine candidates remain non-gold",
+      "blocker": "Two independent Ukrainian-native reviewers and agreed target-form criteria unavailable in this run",
+      "acceptance": "Blinded candidate judgments, criteria version, disagreement log, final adjudicated set"
+    },
+    {
+      "id": "SPECIAL-ORTHO-SCHEMA-001",
+      "status": "DONE_VERIFIED",
+      "implementation": "Corrected four special-vowel rows missing pattern values in data/thai/special_orthography.csv; added exact pattern/status/candidate/provenance assertions. Commits a0bd6f598c5117154db1c78f02ae25b6d6fbf1bc and 1282dad1d8703cc4cb0d321206a1d3406a4f2533.",
+      "acceptance": "Exact-head CI 40315032771 passed 180 Python tests and browser parity; isolated letters remain analysis-dependent without IPA/UA output."
+    },
+    {
+      "id": "IPA-ADAPTER-BOUNDARY-001",
+      "status": "DONE_VERIFIED",
+      "implementation": "Added Python typed-IPA mutation/fail-closed and metadata preservation tests plus browser end-to-end IPA mutation test. Commits 5720ef2a23f49bb85286bfa0d6366d88473c3031, 85448d632aa503b537803993fbe3d8335cc9f150, cb775d6156f62392fa2d0f4bcf8d1aa30d219530.",
+      "acceptance": "Exact-head CI 40315032771 passed; Web static validation 40315032788 passed. Verified software data flow does not establish linguistic accuracy."
+    },
+    {
+      "id": "SEG-COMPARE-001",
+      "status": "DONE_VERIFIED — software/report contract",
+      "implementation": "Same-row dictionary-vs-TUD report, mixed-text preservation, code-point boundary contexts, evidence-grade gates and CI artifact verified on b6dbec7928b106f0ab52e06af33a26635df75412 in run 40322960615; full docs checkpoint e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff passed run 40323209539.",
+      "blocker": "Human linguistic adjudication is still separate; source annotations are not independent expert gold.",
+      "acceptance": "DONE for reproducible software comparison and evidence metadata; production segmentation remains PARTIAL until representative human review, predeclared thresholds and an independent licensed domain."
+    }
+  ],
+  "latest_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
+  "latest_implementation_commit_pending_ci": {
+    "commit": "1cbf97036ec931266f4a6ed5eb747a00e5b7ad29",
+    "status": "PENDING_EXACT_HEAD_CI",
+    "notes": "VISTEC parser now rejects empty annotation fields; tests added but not yet verified."
+  },
+  "current_head_status_at_audit_refresh": "Code/workflow checkpoint b6dbec7928b106f0ab52e06af33a26635df75412 passed CI 40322960615 and Web static validation 40322959844. Documentation checkpoint e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff passed full CI 40323209539 and Web static validation 40323209471. This audit-register update creates a newer documentation HEAD and requires exact-head CI/static validation before the current branch HEAD is marked green.",
+  "current_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
+  "current_implementation_commit_before_audit_update": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
+  "latest_documentation_checkpoint_before_audit": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
+  "audit_note": "Exact-head special-orthography schema and IPA-boundary repair verified on cb775d6156f62392fa2d0f4bcf8d1aa30d219530. CI 40315032771 passed 180 Python tests, generated-data drift, master artifact (351,780 rows / 41 rime records), Node IPA→UA, 28 browser parity fixtures, UI contract, challenge/Wisesight/source-attested IPA diagnostics, candidate-registry check, TUD training/evaluation and artifact uploads. Web static validation 40315032788 passed. This is software/reproducibility evidence, not independent pronunciation gold.",
+  "dictionary_max_match_baseline": {
+    "corpus": "Wisesight-1000",
+    "rows": 993,
+    "status": "SOURCE_ANNOTATED_NOT_EXPERT_ADJUDICATED",
+    "prediction_coverage": 1,
+    "boundary_precision": 0.8222866611433306,
+    "boundary_recall": 0.8573896767691311,
+    "boundary_f1": 0.8394713656387666,
+    "exact_sequence_rate": 0.1933534743202417,
+    "used_for_training": false,
+    "role": "opt-in diagnostic baseline; not production-quality evidence",
+    "artifact_id": "12648264783"
+  },
+  "tud_research_segmenter": {
+    "model_id": "clippyfirst-tud-unigram-viterbi-v1",
+    "source_commit": "67413969add552b7030184f16f24fa9f630913bc",
+    "source_license": "CC-BY-SA-4.0",
+    "training_sentences": 3041,
+    "training_vocabulary": 5319,
+    "wisesight_used_for_training_or_tuning": false,
+    "development": {
+      "groups": 1142,
+      "boundary_precision": 0.8046520079956387,
+      "boundary_recall": 0.9931591342379724,
+      "boundary_f1": 0.8890227375395272,
+      "exact_group_rate": 0.3274956217162872
+    },
+    "test": {
+      "groups": 375,
+      "boundary_precision": 0.788597842835131,
+      "boundary_recall": 0.9774637127578304,
+      "boundary_f1": 0.8729319461026778,
+      "exact_group_rate": 0.432
+    },
+    "wisesight_test_only": {
+      "groups": 2848,
+      "boundary_precision": 0.6592214086287731,
+      "boundary_recall": 0.9920723006183606,
+      "boundary_f1": 0.79210051587176,
+      "exact_group_rate": 0.3851825842696629
+    },
+    "status": "RESEARCH_SEGMENTER_DIAGNOSTIC_NOT_RELEASE_VALIDATION",
+    "caveats": [
+      "TUD annotations are not independent expert re-adjudication.",
+      "Metrics cover contiguous Thai-only runs with at least two tokens, not full-text performance.",
+      "The model is not the production default; preserve CC BY-SA 4.0 attribution/share-alike."
+    ],
+    "quality_review": {
+      "decision": "DO_NOT_INTEGRATE_AS_PRODUCTION_DEFAULT",
+      "basis": "TUD held-out boundary recall (0.9775) substantially exceeds precision (0.7886), while exact-group rate is 0.432; on source-annotated Wisesight test-only groups, recall is 0.9921, precision is 0.6592 and exact-group rate is 0.3852. This is consistent with a recall-heavy boundary predictor with substantial sequence-level errors and weaker cross-domain precision.",
+      "cross_domain_boundary_f1_absolute_drop": 0.080831,
+      "limits": [
+        "Metrics cover filtered Thai-only groups with at least two tokens, not end-to-end text segmentation.",
+        "TUD annotations inherit source tokenization; Wisesight is source-annotated, not independently expert-adjudicated.",
+        "No per-error manual audit or independent gold adjudication has been performed in this continuation."
+      ],
+      "next_acceptance": [
+        "Review the generated false-split/false-merge examples and document representative error patterns without treating source annotations as expert gold.",
+        "Define acceptance thresholds for boundary precision, recall, exact-sequence rate, abstention and out-of-domain coverage before deployment.",
+        "Validate on an independent, untouched domain with documented licensing and source splits.",
+        "Obtain an explicit integration decision after review; keep research-only until then."
+      ]
+    }
+  },
+  "latest_implementation_commit_ci_verified": "4b1592cd72298d1ca92e0b99ab330975764a078a",
+  "latest_documentation_head_ci_verified": "4b1592cd72298d1ca92e0b99ab330975764a078a",
+  "latest_documentation_head_ci_run": 40320450844,
+  "latest_documentation_head_web_validation_run": 40320450587,
+  "latest_implementation_ci_run": 40320450844,
+  "latest_implementation_web_validation_run": 40320450587,
+  "segmentation_error_review": {
+    "script": "scripts/analyze_segmentation_errors.py",
+    "test": "tests/test_segmentation_error_analysis.py",
+    "dataset": "PyThaiNLP Wisesight word-tokenization labels",
+    "rows": 993,
+    "evidence_grade": "SOURCE_ANNOTATED_NOT_EXPERT_ADJUDICATED",
+    "license": "CC0-1.0",
+    "output_artifact": "thai-segmentation-error-review",
+    "purpose": "deterministic false-split/false-merge triage examples and boundary metrics",
+    "acceptance_boundary": "diagnostic only; does not mark every disagreement as an engine error and does not qualify as independent gold",
+    "implementation_commit": "bec1b7027f34a4f70f0b6f9fdc415ef43343eab9",
+    "exact_head_ci_status": "PASS for dictionary-only triage report on prior verified code checkpoint; comparative report pending",
+    "test_commit": "aba6832eb97cb4b84f2e62fa058fa963cfb34803",
+    "ci_workflow_commit": "c189cdb9209d85780c3baeb1df23800101840b16",
+    "exact_sequence_contract": "192/993 full token-array matches on the pinned Wisesight/dictionary baseline; token iterable is normalized to a list so the metric matches the benchmark scorer",
+    "verified_ci_run": 40320450844,
+    "web_static_validation_run": 40320450587,
+    "artifact_id": "12648833301",
+    "artifact_sha256": "005c18ba366fc692193db7f6557b052ff7f940dea3274ec168f6a93f0df7e66b",
+    "metrics": {
+      "rows": 993,
+      "expert_adjudicated_rows": 0,
+      "gold_boundaries": 13891,
+      "predicted_boundaries": 14484,
+      "true_positive_boundaries": 11910,
+      "false_splits": 2574,
+      "false_merges": 1981,
+      "boundary_precision": 0.8222866611433306,
+      "boundary_recall": 0.8573896767691311,
+      "boundary_f1": 0.8394713656387666,
+      "exact_sequence_matches": 192,
+      "exact_sequence_rate": 0.1933534743202417
+    },
+    "comparative_report_status": "DONE_VERIFIED — exact-head CI report/evidence assertions and artifact upload passed on code checkpoint b6dbec7928b106f0ab52e06af33a26635df75412",
+    "comparative_script": "scripts/compare_segmentation_error_review.py",
+    "comparative_test": "tests/test_comparative_segmentation_error_review.py",
+    "comparative_artifact_name": "thai-segmentation-comparative-error-review",
+    "comparison_policy": "Both dictionary max-match and TUD Viterbi evaluated on identical 993 pinned Wisesight source-annotated rows; non-Thai runs copied unchanged; report is triage, not adjudication.",
+    "comparative_artifact_id": "12649094231",
+    "comparative_artifact_sha256": "8005cc91939ea06b852c1717fee9fb72d370709e74267b8f99636a6476d30775",
+    "comparative_metrics": {
+      "rows": 993,
+      "source_annotated_rows": 993,
+      "expert_adjudicated_rows": 0,
+      "license": "CC0-1.0",
+      "split": "test",
+      "same_rows_for_both_engines": true,
+      "dictionary_max_match": {
+        "boundary_precision": 0.8222866611433306,
+        "boundary_recall": 0.8573896767691311,
+        "boundary_f1": 0.8394713656387666,
+        "false_splits": 2574,
+        "false_merges": 1981,
+        "exact_sequences": 192,
+        "exact_sequence_rate": 0.1933534743202417
+      },
+      "tud_unigram_viterbi": {
+        "boundary_precision": 0.608,
+        "boundary_recall": 0.9738679720682456,
+        "boundary_f1": 0.7486234470545917,
+        "false_splits": 8722,
+        "false_merges": 363,
+        "exact_sequences": 119,
+        "exact_sequence_rate": 0.11983887210473314
+      },
+      "caveat": "Full-text same-row metrics; not directly comparable to earlier filtered Thai-only TUD metrics; source annotation, not independent expert gold."
+    },
+    "production_decision": "DO_NOT_INTEGRATE_TUD_AS_PRODUCTION_DEFAULT",
+    "production_decision_basis": "On identical full-text Wisesight rows, TUD has lower boundary F1 (0.748623 vs 0.839471), lower exact-sequence rate (11.98% vs 19.34%) and 8,722 false splits vs 2,574 for dictionary max-match. Labels are source-annotated; human review and independent-domain evaluation remain required."
+  },
+  "current_checkpoint": {
+    "date": "2026-10-26",
+    "branch": "research/thai-segmentation-gold-parity-verified-20261025",
+    "default_branch": "main",
+    "starting_main_sha": "0be5fd841070e337cb5c805ef92954938abe61bb",
+    "pre_audit_commit": "30199bdbac49bf1cefc08d071f8063fa092da008",
+    "pr_71_state": "OPEN_DRAFT",
+    "pr_71_head": "63f158cac99eb7501d8d01b6aac9c665a4416cc8",
+    "pr_68_state": "CLOSED_UNMERGED_SUPERSEDED",
+    "new_work": {
+      "files": [
+        "scripts/build_segmentation_manual_review.py",
+        "tests/test_segmentation_manual_review.py",
+        "scripts/evaluate_vistec_segmentation.py",
+        "tests/test_vistec_segmentation_adapter.py",
+        "scripts/evaluate_segmentation.py",
+        ".github/workflows/ci.yml",
+        ".github/workflows/vistec-segmentation-evaluation.yml",
+        "data/corpus_sources.csv",
+        "README.md",
+        "docs/independent-adjudication-protocol.md",
+        "docs/evidence.md",
+        "docs/corpus-validation.md",
+        "docs/validation-matrix.md",
+        "docs/final-audit.md",
+        "docs/final-audit.json"
+      ],
+      "purpose": "Deterministic stratified segmentation-review sample with uniform controls; pinned VISTEC external-domain source-annotation evaluation; scalable scorer; source/protocol/audit synchronization.",
+      "status": "PARTIAL",
+      "verification": "Exact-head CI, Web static validation and External VISTEC evaluation remain queued. Added a fail-closed in-script Git blob hash gate and regression test. No current-batch test result or VISTEC metric is claimed.",
+      "external_evidence": {
+        "ccost_zenodo": "https://zenodo.org/records/17366698",
+        "ccost_doi": "10.5281/zenodo.17366698",
+        "ccost_license": "CC-BY-NC-SA-4.0",
+        "ccost_manual_and_audio_listed": true,
+        "archive_and_manual_reviewed_locally": false,
+        "independently_adjudicated_rows": 0,
+        "royal_institute_dictionary": "https://dictionary.orst.go.th/",
+        "obec_pdf_http_status": 403
+      }
+    },
+    "segmentation_comparison": {
+      "rows": 993,
+      "evidence_grade": "SOURCE_ANNOTATED_NOT_EXPERT_ADJUDICATED",
+      "dictionary_boundary_f1": 0.8394713656387666,
+      "dictionary_exact_sequences": 192,
+      "tud_boundary_f1": 0.7486234470545917,
+      "tud_exact_sequences": 119,
+      "decision": "DO_NOT_INTEGRATE_TUD_AS_PRODUCTION_DEFAULT"
+    },
+    "remaining_evidence_gates": [
+      "Exact-head CI and Web static validation success",
+      "Successful VISTEC workflow and inspection of the 50,000-row report artifact; explicitly record the upstream README's 49,997-sample discrepancy",
+      "Independent Thai IPA/acoustic gold with authorized recordings and transcription-level protocol",
+      "Two independent Ukrainian-native target-form judgments and adjudication log",
+      "Human review of stratified segmentation sample; thresholds declared before acceptance",
+      "Context/transcription-level review of บรรจุ final /ʔ/",
+      "Full official OBEC PDF inspection through lawful authoritative access"
+    ],
+    "readiness": "RESEARCH_PROTOTYPE_NOT_RELEASE_READY",
+    "vistec_external_evaluation": {
+      "source_repository": "mrpeerat/OSKut",
+      "source_commit": "215a7dc3d384f20eb56af1cbc41fb32b7f8df57c",
+      "source_csv_git_blob_sha1": "edfcb85907a604c5e30643065ac4975862a0fe90",
+      "source_license": "CC-BY-SA-3.0",
+      "source_rows_expected": 50000,
+      "source_field": "submissionText",
+      "report_grade": "SOURCE_ANNOTATED_NOT_EXPERT_ADJUDICATED",
+      "workflow": ".github/workflows/vistec-segmentation-evaluation.yml",
+      "adapter": "scripts/evaluate_vistec_segmentation.py",
+      "test": "tests/test_vistec_segmentation_adapter.py",
+      "evaluator_optimized_for_linear_lookup": true,
+      "status": "FIXED_PENDING_EXACT_HEAD_REVALIDATION",
+      "metric_claimed": false,
+      "evaluator_hash_gate": "The adapter independently computes the Git blob SHA-1 and rejects a non-pinned CSV; regression test added.",
+      "row_count_note": "Pinned CSV blob SHA-1 matches, and the evaluator processed 50,000 data rows; upstream README describes 49,997 samples. Preserve both facts and treat the immutable CSV row count as evaluator contract unless upstream maintainers clarify discrepancy."
+    },
+    "latest_implementation_commit": "43fb1416e6d103de4999a84a1dbaefd663507cb6",
+    "pre_handoff_audit_commit": "ccee129d509c95f95c2f455fd769bcbcd9ae71e0"
+  },
+  "vistec_parser_hardening": {
+    "code_commit": "1cbf97036ec931266f4a6ed5eb747a00e5b7ad29",
+    "status": "IMPLEMENTED_PENDING_EXACT_HEAD_CI",
+    "change": "Reject empty pipe-delimited annotation tokens after documented markup stripping; never silently discard malformed fields.",
+    "regression_cases": [
+      "repeated separator",
+      "markup-only empty token",
+      "leading separator",
+      "all-empty input"
+    ],
+    "local_tests": "NOT_RUN_IN_THIS_SESSION",
+    "workflow_status": "CORRECTED CODE COMMITTED; EXACT-HEAD REVALIDATION QUEUED",
+    "metric_claimed": false,
+    "acceptance": "Exact-head CI and Web static validation pass; VISTEC evaluation accepts all 50,000 rows and its report artifact is inspected. No independent-gold accuracy claim.",
+    "workflow_runs": [
+      {
+        "name": "CI",
+        "run_id": 40353097806,
+        "status": "queued",
+        "conclusion": null
+      },
+      {
+        "name": "Web static validation",
+        "run_id": 40353097480,
+        "status": "queued",
+        "conclusion": null
+      },
+      {
+        "name": "External VISTEC segmentation evaluation",
+        "run_id": 40353097539,
+        "status": "queued",
+        "conclusion": null
+      }
+    ],
+    "last_status_checked": "2026-10-26",
+    "code_bearing_commit": "ccee129d509c95f95c2f455fd769bcbcd9ae71e0",
+    "final_documentation_head_before_this_update": "aeb46e0d31d69e3ebcc8afe6abd7a9a75b4908da"
+  },
+  "latest_validation_refresh_2026_10_26": {
+    "tested_merge_ref_head": "1c966f6794fd906d1af4ee20f8c0d078abf2dbef",
+    "source_branch_commit_with_test_fix": "0e60b2d277facee573839335b7e1681d5520a224",
+    "ci": {
+      "run_id": 40354836807,
+      "status": "failure",
+      "result": "194 Python tests run; one failed due to stale expected VISTEC license wording; assertion updated; exact-head rerun pending"
+    },
+    "web_static_validation": {
+      "run_id": 40354836884,
+      "status": "success",
+      "qualification": "prior tested merge ref, before test-only assertion fix"
+    },
+    "vistec_evaluation": {
+      "run_id": 40354836797,
+      "status": "success",
+      "qualification": "pinned 50,000-row source-annotation diagnostic; not expert-adjudicated accuracy; artifact inspection required before reporting metrics"
+    },
+    "latest_test_fix": "0e60b2d277facee573839335b7e1681d5520a224",
+    "remaining_evidence_gates": [
+      "independent Thai IPA/acoustic adjudication",
+      "two independent Ukrainian-native target-form reviews",
+      "human segmentation adjudication",
+      "contextual review of บรรจุ final /ʔ/",
+      "lawful full official OBEC PDF inspection; prior URL returned HTTP 403"
+    ],
+    "readiness": "research prototype; not release-ready",
+    "vistec_report": {
+      "run_id": 40354836797,
+      "status": "success",
+      "rows_total": 50000,
+      "rows_source_annotated": 50000,
+      "rows_expert_adjudicated": 0,
+      "dictionary_max_match": {
+        "boundary_precision": 0.7687958171077649,
+        "boundary_recall": 0.8978784545804036,
+        "boundary_f1": 0.8283384604640367,
+        "exact_sequences": 76,
+        "exact_sequence_rate": 0.00152,
+        "coverage": 1
+      },
+      "tud_unigram_viterbi": {
+        "boundary_precision": 0.6064011335968544,
+        "boundary_recall": 0.9931576338081688,
+        "boundary_f1": 0.7530225550370759,
+        "exact_sequences": 16,
+        "exact_sequence_rate": 0.00032,
+        "coverage": 1
+      },
+      "evidence_grade": "SOURCE_ANNOTATED_NOT_EXPERT_ADJUDICATED",
+      "artifact": {
+        "id": 12667445022,
+        "sha256": "a02e3c8fe769a9b0998fdf2e66a49d6d0bec1c0b7191e08854d2dd81cc50132c",
+        "uploaded": true,
+        "zip_opened_in_session": true,
+        "contents_verified": true,
+        "report_file": "vistec-segmentation-report.json",
+        "report_schema_version": "1.0",
+        "report_size_bytes": 3803,
+        "sha256_verified_against_github_metadata": true
+      },
+      "interpretation": "descriptive source-annotation agreement only; low exact-sequence rates do not support production readiness"
+    },
+    "latest_head_checks": [
+      {
+        "run_id": 40372261539,
+        "name": "CI",
+        "status": "success",
+        "verified_commit": "17eac785a00ce1e8a95ac904db348ddf8c286040"
+      },
+      {
+        "run_id": 40372261553,
+        "name": "Web static validation",
+        "status": "success",
+        "verified_commit": "17eac785a00ce1e8a95ac904db348ddf8c286040"
+      },
+      {
+        "run_id": 40372261718,
+        "name": "External VISTEC segmentation evaluation",
+        "status": "success",
+        "verified_commit": "17eac785a00ce1e8a95ac904db348ddf8c286040"
+      }
+    ]
+  },
+  "beta_site_update": {
+    "date": "2026-10-26",
+    "branch": "research/thai-segmentation-gold-parity-verified-20261025",
+    "latest_branch_head_before_this_json_update": "5eb4eb28a7df4331142b2848d1f72c1f3ee747ff",
+    "ui_code_checkpoint": "274371594cc8a0b65677bb126242d90acc17caf5",
+    "changes": [
+      "Visible Ukrainian research-beta notice on web/index.html and web/system.html",
+      "Evidence/limitations anchor and VISTEC/Wisesight source-annotation metrics on the system page",
+      "Responsive beta notice styles in web/src/styles.css",
+      "UI-contract assertions for the beta label, metric denominators, evidence anchor, and responsive CSS",
+      "Pages build workflow includes UI-contract validation",
+      "Validation matrix, final audit, and handoff updated in place"
+    ],
+    "metrics_evidence_grade": "SOURCE_ANNOTATED_NOT_EXPERT_ADJUDICATED",
+    "independently_expert_reviewed_rows": 0,
+    "verification": {
+      "pages_build_run": {
+        "id": 40377552366,
+        "status": "failure_overall",
+        "build_job": "success",
+        "deploy_job": "failure"
+      },
+      "pages_build_job_acceptance": [
+        "Python regression tests passed",
+        "Python/browser parity passed",
+        "UI contract and beta disclosure checks passed",
+        "Pages artifact uploaded"
+      ],
+      "web_static_validation": {
+        "id": 40377552367,
+        "status": "success"
+      },
+      "vistec_evaluation": {
+        "id": 40377560151,
+        "status": "success",
+        "qualification": "source-annotation diagnostic only; not expert-adjudicated accuracy"
+      }
+    },
+    "deployment": {
+      "status": "BLOCKED",
+      "last_successful_public_deployment": {
+        "run_id": 40225366216,
+        "commit": "18ab41db87192dc7be69683ef85e53cb04db5517",
+        "url": "https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/"
+      },
+      "attempted_beta_deployment": {
+        "run_id": 40377552366,
+        "commit": "274371594cc8a0b65677bb126242d90acc17caf5",
+        "build": "success",
+        "deploy": "failed_before_steps",
+        "logs_available": false,
+        "pending_approval_details": []
+      },
+      "exact_failure_reason": "Not observable from the available workflow run; deploy job failed before any steps and exposed no logs.",
+      "mitigation": "Restored .github/workflows/pages.yml to main-only deployment while retaining the UI-contract build check.",
+      "next_acceptance": "Review/merge PR #71 to main after accepting its documented evidence gates, or authorize a separate preview host.",
+      "current_public_site_updated_with_beta": false
+    },
+    "latest_exact_head_ci": {
+      "code_checkpoint": "274371594cc8a0b65677bb126242d90acc17caf5",
+      "code_checkpoint_ci": "success",
+      "code_checkpoint_web_static": "success",
+      "code_checkpoint_vistec": "success",
+      "docs_only_commits_after_code_checkpoint": [
+        "048b89d9234ac91e3d592c0bca7d816f4a5ae5b5",
+        "46ad25d8643e38fdd8de0150133991d410e42bf0",
+        "971a68b0c7c9595d30a6c8ef20a41ada697887af",
+        "5eb4eb28a7df4331142b2848d1f72c1f3ee747ff"
+      ],
+      "final_json_commit_ci": "new docs-only commit; status must be read from Actions after update"
+    },
+    "readiness": "research beta candidate; not release-ready for arbitrary Thai text; public beta changes are not live",
+    "verified_code_checkpoint": {
+      "commit": "274371594cc8a0b65677bb126242d90acc17caf5",
+      "ci_pull_request_run": {
+        "id": 40377560164,
+        "status": "success",
+        "jobs": {
+          "test": "success",
+          "master_artifact": "success"
+        }
+      },
+      "ci_push_run": {
+        "id": 40377552343,
+        "status": "in_progress_at_last_check",
+        "qualification": "duplicate push-triggered run; PR-triggered CI for same code checkpoint passed"
+      },
+      "web_static_validation": {
+        "id": 40377560210,
+        "status": "success"
+      },
+      "vistec_evaluation": {
+        "id": 40377560151,
+        "status": "success"
+      },
+      "pages_build": {
+        "id": 40377552366,
+        "build_job": "success",
+        "deploy_job": "failure_before_steps"
+      }
+    }
+  }
 }

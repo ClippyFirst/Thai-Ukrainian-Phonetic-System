@@ -1,5 +1,8 @@
 import unittest
+from dataclasses import replace
 from thai_ukrainian.api import analyze_syllable
+from thai_ukrainian.phonetic_result import PhoneticResult
+from thai_ukrainian.ukrainian_adaptation import adapt_phonetic_result, adapt_syllable_to_ukrainian
 from thai_ukrainian.parser import parse_syllable
 from thai_ukrainian.orthography import detect_vowel
 
@@ -32,16 +35,33 @@ class PipelineTests(unittest.TestCase):
         a=parse_syllable("เกียว"); self.assertEqual(a.vowel,"iaw"); self.assertEqual(a.vowel_id,"V-X-IAW"); self.assertEqual(a.onset,["ก"]); self.assertIsNone(a.coda)
 
     def test_closed_eoi_vowel_length_requires_lexical_evidence(self):
+        # Structural parsing remains ambiguous for both forms; only เงิน has a
+        # source-attested lexical override, applied later at the IPA boundary.
         for text in ("เงิน", "เดิน"):
             v = detect_vowel(text)
             self.assertTrue(v.get("analysis_dependent"), text)
             self.assertEqual(v.get("id"), "V-AMB-EOI-CLOSED")
             self.assertEqual({x["ipa"] for x in v["alternatives"]}, {"ɤ", "ɤː"})
-            a = analyze_syllable(text)
-            self.assertEqual(a.status, "analysis-dependent:vowel-length", text)
-            self.assertIsNone(a.phonemic_ipa, text)
-            self.assertIsNone(a.tone, text)
-            self.assertEqual(a.coda, "น", text)
+            parsed = parse_syllable(text)
+            self.assertEqual(parsed.status, "analysis-dependent:vowel-length", text)
+            self.assertIsNone(parsed.phonemic_ipa, text)
+            self.assertIsNone(parsed.tone, text)
+            self.assertEqual(parsed.coda, "น", text)
+
+        money = analyze_syllable("เงิน")
+        self.assertEqual(money.status, "analyzed")
+        self.assertEqual(money.phonemic_ipa, "ŋɤn")
+        self.assertEqual(money.vowel_length, "short")
+        self.assertEqual(money.tone.tone, "mid")
+        self.assertIn("SRC-WIKTIONARY-TH-เงิน", money.sources)
+
+        walking = analyze_syllable("เดิน")
+        self.assertEqual(walking.status, "analyzed")
+        self.assertEqual(walking.phonemic_ipa, "dɤːn")
+        self.assertEqual(walking.vowel_length, "long")
+        self.assertEqual(walking.tone.tone, "mid")
+        self.assertIn("SRC-WIKTIONARY-TH-เดิน", walking.sources)
+        self.assertTrue(any("not independently adjudicated" in warning for warning in walking.warnings))
 
     def test_preposed_glide_patterns(self):
         cases=[("แล้ว","ɛːw"),("เร็ว","ew"),("เลย","ɤːj")]
@@ -186,5 +206,39 @@ class PipelineTests(unittest.TestCase):
         ambiguous = analyze_syllable("ทราย")
         self.assertEqual(ambiguous.status, "analysis-dependent:special-orthography")
         self.assertIsNone(ambiguous.phonemic_ipa)
+
+    def test_ukrainian_adapter_consumes_typed_ipa_and_fails_closed(self):
+        analysis = analyze_syllable("กา")
+        typed_ipa = PhoneticResult.from_syllable_analysis(analysis)
+        self.assertIsInstance(typed_ipa, PhoneticResult)
+        self.assertEqual(analysis.ukrainian_transliteration, adapt_syllable_to_ukrainian(typed_ipa))
+
+        # Mutation at the adapter boundary must affect the result: downstream
+        # Ukrainian output follows IPA, not the original Thai onset.
+        mutated = replace(typed_ipa, phonemic_ipa="ma")
+        self.assertEqual(adapt_syllable_to_ukrainian(mutated), "ма")
+        self.assertNotEqual(adapt_syllable_to_ukrainian(mutated), analysis.ukrainian_transliteration)
+
+        self.assertIsNone(adapt_syllable_to_ukrainian(replace(typed_ipa, status="UNCERTAIN")))
+        self.assertIsNone(adapt_syllable_to_ukrainian(replace(typed_ipa, phonemic_ipa=None)))
+        self.assertIsNone(adapt_syllable_to_ukrainian(replace(typed_ipa, phonemic_ipa="k☃a")))
+
+        adapted = adapt_phonetic_result(typed_ipa)
+        self.assertEqual(adapted["source_ipa"], typed_ipa.phonemic_ipa)
+        self.assertTrue(adapted["tone_separate"])
+        self.assertEqual(typed_ipa.tone_category, "mid")
+        self.assertEqual(typed_ipa.vowel_length, "long")
+        self.assertEqual(typed_ipa.tone_contour_ipa, "˧")
+        self.assertEqual(typed_ipa.syllable_boundaries, (0, len(typed_ipa.segments)))
+        self.assertTrue(typed_ipa.provenance)
+
+        # Source-derived ambiguity remains explicit in the typed IPA object
+        # and can never leak a confident downstream Ukrainian spelling.
+        ambiguous = PhoneticResult.from_syllable_analysis(analyze_syllable("ฤ"))
+        self.assertEqual(ambiguous.status, "UNCERTAIN")
+        self.assertIsNone(ambiguous.phonemic_ipa)
+        self.assertTrue(ambiguous.uncertainty)
+        self.assertIsNone(adapt_syllable_to_ukrainian(ambiguous))
+
 
 if __name__=="__main__":unittest.main()

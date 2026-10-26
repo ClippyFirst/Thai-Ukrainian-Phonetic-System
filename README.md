@@ -4,9 +4,15 @@ Research-oriented, machine-readable reference implementation for mapping contemp
 
 ## Research pipeline
 
-**Required path:** Thai orthography → structural orthographic analysis → syllable structure → Thai phonology → typed phonetic result (phonemic IPA + conservative broad surface IPA) → Ukrainian adaptation.
+**Non-negotiable architecture invariant:**
 
-The typed `PhoneticResult` is the adapter boundary. The Python Ukrainian adapter accepts that result and maps its phonemic IPA; it does not inspect Thai graphemes, vowel IDs, or Thai coda fields. Tone, length, syllable boundaries, provenance, and uncertainty remain explicit metadata. Unsupported or uncertain phonetic results withhold Ukrainian output instead of guessing.
+`Thai orthography → structural analysis → Thai phonology → typed, inspectable IPA → Ukrainian adaptation from IPA → Ukrainian practical orthography`.
+
+The Thai → IPA stage must resolve the source-language analysis as far as the available evidence permits. The IPA result is a real intermediate representation and the **only** input contract for Ukrainian adaptation—not an audit-only side output. No parallel Thai-grapheme → Ukrainian path, direct vowel-ID mapping, or direct Thai-coda-to-Ukrainian mapping may independently generate the final Ukrainian result.
+
+The typed `PhoneticResult` is that adapter boundary. It carries phonemic IPA and conservative broad surface IPA separately, alongside segment and syllable boundaries, vowel length, tone, provenance, and uncertainty. The Ukrainian adapter consumes the typed IPA result and its declared metadata; it must not inspect Thai graphemes, vowel IDs, or Thai coda fields to decide Ukrainian output. Ukrainian practical orthography is produced only after this IPA-to-Ukrainian adaptation. If the Thai reading or required IPA features cannot be supported, the system must withhold or explicitly qualify downstream output instead of silently guessing.
+
+**Acceptance rule:** test the whole chain `Thai input → IPA intermediate → Ukrainian output`, including tests proving that changing/withholding the IPA result changes/withholds the Ukrainian result accordingly. Python and browser implementations must obey the same boundary and pass cross-runtime parity checks.
 
 The browser IPA adapter is maintained as a separately tested implementation. Cross-runtime parity tests remain required; passing a Python test alone does not establish browser parity. This is **not RTGS** and not a Thai-character → Ukrainian-character substitution table.
 
@@ -41,6 +47,8 @@ The model distinguishes:
 - Machine-readable context-dependent orthographic rule registry, including role classification for อ.
 - Publication-ready orthographic correspondence table generated from the same rule registry used by the parser.
 - External lexicon adapter for evidence-backed syllable segmentation.
+- Conservative dictionary maximum-matching segmenter backed by a pinned CC0 word list, evaluated separately from the held-out Wisesight source-annotated benchmark.
+- Reproducible research-only unigram Viterbi segmentation training experiment on pinned UD Thai TUD train/dev/test splits; Wisesight is never used for training or tuning, and the CC BY-SA 4.0 model artifact preserves attribution/share-alike metadata.
 - Project-defined Ukrainian orthographic candidate layer with tone kept separate.
 - Generated source→parser→derived consistency manifest enforced by CI.
 - Structural combinatorial-space accounting.
@@ -67,7 +75,7 @@ It is **not** yet an empirically validated benchmark. No corpus accuracy percent
 
 ### Evidence-gated limitations
 
-- arbitrary Thai text still requires an external lexical segmentation source; the software does not invent word boundaries;
+- the default public text endpoint remains conservative and withholds phonetic output for unknown unsegmented Thai spans; an opt-in dictionary segmenter exists, and a separately trained TUD unigram-Viterbi experiment remains research-only: exact-head CI and initial cross-domain metrics are recorded in `docs/validation-matrix.md`, but the recall-heavy profile, limited exact-group rates and lower Wisesight precision do not justify production-default integration pending independent error review and a separately defined acceptance gate;
 - special orthography is represented conservatively as explicit analysis-dependent alternatives where lexical evidence is required;
 - connected-speech narrow phonetics still requires acoustic/phonetic evidence;
 - corpus-calibrated probabilities still require a gold dataset;
@@ -101,6 +109,7 @@ See:
 - Corpus validation: docs/corpus-validation.md
 - Evidence registry: docs/evidence.md
 - Final audit: docs/final-audit.md
+- Independent IPA and Ukrainian target-form adjudication protocol: docs/independent-adjudication-protocol.md
 
 ## User interface
 
@@ -132,6 +141,14 @@ For an external gold JSONL corpus:
 ~~~bash
 python scripts/evaluate_corpus.py path/to/records.jsonl
 ~~~
+
+For a licensed, adjudicated word-segmentation TSV and matching prediction TSV:
+
+~~~bash
+python scripts/evaluate_segmentation.py --gold data/benchmark/segmentation-gold.tsv --predictions data/benchmark/segmentation-predictions.tsv --output reports/segmentation-benchmark.json
+~~~
+
+The independent IPA-gold manifest remains empty until a versioned, license-compatible set is independently reviewed. The segmentation evaluator separately supports the pinned 993-row Wisesight source-annotated set, but it must not be described as independently adjudicated gold. A no-gold IPA run is `NOT_MEASURED`, not an accuracy score. See `docs/corpus-validation.md` for resource/license boundaries and the required evaluation protocol.
 
 The evaluator reports numerators and denominators explicitly and excludes missing gold fields from the relevant metric.
 
@@ -187,3 +204,38 @@ The text pipeline now distinguishes productive orthographic parsing from evidenc
 ## External IPA renderers and G2P candidates
 
 The research registry records external pronunciation engines, IPA dictionaries, and Unicode IPA display fonts without treating unvalidated output as ground truth. See [`docs/external-ipa-renderers.md`](docs/external-ipa-renderers.md) and the machine-readable [`data/external-ipa-renderers.json`](data/external-ipa-renderers.json). These are candidate inventories only; no third-party engine is enabled by default, and the ClippyFirst IPA → Ukrainian adapter remains the sole target adaptation boundary.
+
+
+### Run the ClippyFirst challenge set (runtime diagnostics)
+
+To inspect how the current engine handles each challenge input—including segmentation status, phonemic/surface IPA, tone, vowel length, Ukrainian output, and abstention—run:
+
+```bash
+python scripts/run_challenge_diagnostics.py
+```
+
+The report is written to `reports/challenge-runtime-diagnostics.json`. This is a runtime and abstention diagnostic, **not** an accuracy benchmark: the challenge set does not yet contain independently adjudicated Thai IPA and word-boundary gold. Unknown multi-grapheme words remain unresolved rather than receiving guessed output. Use `--input` and `--output` to select alternate paths.
+
+
+## Pinned evaluation resources (2026-10-25)
+
+- `data/benchmark/segmentation-gold.tsv` contains 993 human source-annotated word-tokenization records from PyThaiNLP/Wisesight, pinned to upstream commit `c1d063649abc3a6870b5fd1aae26cd1c64bdde7b` and licensed CC0-1.0. They are marked `SOURCE_ANNOTATED`, held out as test-only, and are **not represented as independently expert-adjudicated labels**. Provenance and conversion rules are in `data/benchmark/wisesight1000-source.json`.
+- `scripts/run_wisesight_segmentation_diagnostic.py` evaluates the existing no-automatic-word-segmentation baseline and preserves the gold evidence grade in the JSON report. CI validates dataset integrity and uploads the report.
+- `data/benchmark/source-attested-ipa.tsv` contains six revision-pinned dictionary IPA/tone/vowel-length records, marked `SOURCE_ATTESTED_NOT_GOLD`. These are useful for review and error triage, not independent accuracy scoring.
+- Five source-attested lexicon entries are documented in `data/thai/text_lexicon_sources.csv`. Their CC BY-SA 4.0 data provenance is separate from the MIT software license; see `data/thai/TEXT-LEXICON-DATA-LICENSE.md`.
+- The word `เงิน` now has a narrowly scoped typed lexical-IPA override (`data/thai/lexical_ipa_overrides.tsv`) preserving source-attested short /ɤ/, mid tone, source revision, and license through the same `PhoneticResult` → Ukrainian adapter boundary. This dictionary transcription is not independent expert/acoustic gold; no general lexical override behavior is inferred from this single entry.
+
+
+Segmentation source decisions are tracked in [`data/corpus_sources.csv`](data/corpus_sources.csv). LST20 and VISTEC are candidate sources only and are not bundled; their license and annotation compatibility must be reviewed before use. The pinned Wisesight snapshot remains test-only and must not be used for training or lexicon construction.
+
+
+For a text-only discrepancy report over the six pinned dictionary IPA records, run `python scripts/run_source_attested_ipa_diagnostic.py --output /tmp/source-attested-ipa-diagnostic.json`. It compares segmental IPA, tone categories, and vowel-length metadata without claiming accuracy. The `เงิน` override is mirrored in the browser adapter and covered by a cross-runtime fixture; the latest browser parity head's CI status is recorded in the execution matrix and handoff.
+
+
+## Segmentation evaluation and evidence grades
+
+The pinned Wisesight source-annotated benchmark remains test-only. The TUD unigram-Viterbi segmenter is research-only and must not replace the dictionary baseline on the strength of source-label metrics alone.
+
+An additional opt-in GitHub Actions workflow evaluates both systems on the separately sourced VISTEC-TP-TH-2021 social-media corpus. It checks out the exact upstream commit and CSV blob, converts pipe-delimited annotated tokens from the upstream submissionText field, verifies lossless reconstruction, and uploads a JSON report. The source dataset is not bundled. Its dataset README declares CC-BY-SA 3.0; attribution and share-alike obligations apply.
+
+Run the external workflow from the Actions tab or by changing the relevant adapter/scorer/workflow files in a pull request. Report metrics remain explicitly SOURCE_ANNOTATED, not independently re-adjudicated gold. The workflow does not use VISTEC to train or tune either system. See docs/corpus-validation.md and docs/independent-adjudication-protocol.md for provenance and limitations.

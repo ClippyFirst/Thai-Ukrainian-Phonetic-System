@@ -5,7 +5,7 @@ const fixture = JSON.parse(fs.readFileSync(new URL("./fixtures.json", import.met
 if (!Array.isArray(fixture) || fixture.length < 27) throw new Error("Parity fixture set is unexpectedly small");
 
 const seen = new Set();
-const required = ["กฉ","กผ","จริง","สร้าง","เศร้า","ไซร้","ไกล","ใกล้","ไก่"];
+const required = ["กฉ","กผ","จริง","สร้าง","เศร้า","ไซร้","ไกล","ใกล้","ไก่","เงิน","เดิน"];
 if (required.some(input => !fixture.some(x => x.input === input))) throw new Error("required linguistic regression probes are missing");
 const pick = a => ({
   input: a.input,
@@ -56,6 +56,31 @@ if (star.status !== "analyzed" || star.onset.join("") !== "ด" || star.coda !==
 for (const text of ["แสดง", "กกรกา"]) {
   const a = analyze(text);
   if (a.status !== "unresolved:nonconforming-consonant-sequence" || a.phonemicIpa !== null) throw new Error("Illegal multi-consonant onset was accepted: " + text);
+}
+const money = analyze("เงิน");
+if (money.status !== "analyzed" || money.phonemicIpa !== "ŋɤn" || money.phoneticIpa !== null ||
+    money.tone !== "mid" || money.toneIpa !== "˧" || money.vowelLength !== "short" ||
+    money.ukrainian !== "нген" || money.evidenceStatus !== "SOURCE_ATTESTED_NOT_GOLD" ||
+    money.sourceRevision !== "5759179") throw new Error("Lexical IPA override parity contract failed for เงิน");
+const walk = analyze("เดิน");
+if (walk.status !== "analyzed" || walk.phonemicIpa !== "dɤːn" || walk.phoneticIpa !== null ||
+    walk.tone !== "mid" || walk.toneIpa !== "˧" || walk.vowelLength !== "long" ||
+    walk.ukrainian !== "ден" || walk.evidenceStatus !== "SOURCE_ATTESTED_NOT_GOLD" ||
+    walk.sourceRevision !== "1908803" || walk.onset.join("") !== "ด" || walk.coda !== "น" || walk.toneClass !== "mid") throw new Error("Lexical IPA override parity contract failed for เดิน");
+const walkText = analyzeText("เดิน")[0];
+if (walkText.segmentationStatus !== "lexical_ipa_override" ||
+    walkText.syllables.length !== 1 || walkText.syllables[0].phonemicIpa !== "dɤːn") {
+  throw new Error("Lexical IPA override was not used by the browser text pipeline for เดิน");
+}
+const moneySpaced = analyze("  เงิน  ");
+if (moneySpaced.status !== "analyzed" || moneySpaced.normalized !== "เงิน" ||
+    moneySpaced.phonemicIpa !== "ŋɤn" || moneySpaced.ukrainian !== "нген") {
+  throw new Error("Normalized lexical IPA override parity failed for whitespace-padded เงิน");
+}
+const moneyText = analyzeText("เงิน")[0];
+if (moneyText.segmentationStatus !== "lexical_ipa_override" ||
+    moneyText.syllables.length !== 1 || moneyText.syllables[0].phonemicIpa !== "ŋɤn") {
+  throw new Error("Lexical IPA override was not used by the browser text pipeline");
 }
 const pepper = analyzeText("พริก")[0];
 if (!pepper || pepper.segmentationStatus !== "lexicon" || pepper.syllables[0].phonemicIpa?.slice(-1) !== "k" || pepper.syllables[0].ukrainian?.slice(-1) !== "к") throw new Error("Thai final /k/ regression failed for พริก");
@@ -125,3 +150,14 @@ for (const control of ["\u000b", "\u000c"]) {
     throw new Error("Thai parser accepted unsupported layout control U+" + control.codePointAt(0).toString(16) + ": " + JSON.stringify(result));
   }
 }
+
+
+for (const spelling of ["ฤ", "ฤๅ", "ฦ", "ฦๅ"]) {
+  const result = analyze(spelling);
+  if (result.status !== "analysis-dependent:special-orthography" ||
+      result.phonemicIpa != null || result.phoneticIpa != null || result.ukrainian != null ||
+      !result.specialAnalyses?.length) {
+    throw new Error("Thai special vowel letter was assigned a lexical reading without word evidence: " + spelling + ": " + JSON.stringify(result));
+  }
+}
+console.log("Thai special vowel-letter uncertainty contract passed");

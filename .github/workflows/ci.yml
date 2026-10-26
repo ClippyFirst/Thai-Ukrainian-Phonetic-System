@@ -16,12 +16,71 @@ jobs:
       - run: git diff --exit-code -- docs/generated-audit.json docs/syllable-space.json docs/source-final-manifest.json
       - run: python scripts/generate_master_table.py
       - run: python -m unittest discover -s tests -v
+      - run: python scripts/run_challenge_diagnostics.py --output /tmp/challenge-runtime-diagnostics.json
+      - run: python -c "import json; r=json.load(open('/tmp/challenge-runtime-diagnostics.json',encoding='utf-8')); s=r['summary']; assert s['challenge_inputs']==36, s; assert s['inputs_with_engine_output']+s['inputs_abstained_or_without_complete_output']==36, s; assert r['evaluation_kind']=='runtime_diagnostic_not_accuracy_benchmark'; assert 'accuracy' not in s"
       - uses: actions/setup-node@v4
         with:
           node-version: 22
       - run: node web/tests/ipa-ua.test.mjs
       - run: node web/tests/parity.test.mjs
       - run: node web/tests/ui-contract.test.mjs
+      - run: python scripts/run_wisesight_segmentation_diagnostic.py --output /tmp/wisesight1000-segmentation-baseline.json
+      - run: python -c "import json; r=json.load(open('/tmp/wisesight1000-segmentation-baseline.json',encoding='utf-8')); g=r['gold']; e=r['engines']['clippyfirst-text-tokenizer-baseline']; assert g['rows_total']==993 and g['rows_source_annotated']==993 and g['rows_adjudicated']==0, g; assert g['status']=='MEASURED_ON_SOURCE_ANNOTATED_ROWS_NOT_EXPERT_ADJUDICATED', g; assert e['n_gold_rows']==993 and e['coverage']==1.0, e; assert 'not expert-adjudicated' in r['method']['accuracy_claim']"
+      - run: python scripts/run_dictionary_segmentation_diagnostic.py --output /tmp/wisesight1000-dictionary-segmentation.json
+      - run: python scripts/build_ukrainian_target_candidates.py --check
+      - run: python -c "import json; r=json.load(open('/tmp/wisesight1000-dictionary-segmentation.json',encoding='utf-8')); g=r['gold']; e=r['engines']['clippyfirst-dictionary-max-match']; assert g['rows_total']==993 and g['rows_source_annotated']==993 and g['rows_adjudicated']==0, g; assert g['status']=='MEASURED_ON_SOURCE_ANNOTATED_ROWS_NOT_EXPERT_ADJUDICATED', g; assert e['n_gold_rows']==993 and e['coverage']==1.0, e; assert 'not expert-adjudicated' in r['method']['accuracy_claim']"
+      - name: Analyze representative segmentation boundary errors
+        run: python scripts/analyze_segmentation_errors.py --output /tmp/thai-segmentation-error-review.json
+      - name: Validate evidence grade and error review coverage
+        run: python -c "import json; r=json.load(open('/tmp/thai-segmentation-error-review.json',encoding='utf-8')); d=r['dataset']; m=r['metrics']; assert d['rows_total']==993 and d['rows_source_annotated']==993 and d['rows_expert_adjudicated']==0, d; assert d['license']=='CC0-1.0' and d['split']=='test', d; assert m['false_split_count']>0 and m['false_merge_count']>0, m; assert m['exact_sequence_count']==192, m; assert r['report_type']=='SEGMENTATION_ERROR_TRIAGE_NOT_GOLD_ADJUDICATION'; assert r['method']['caveats']"
+      - run: python scripts/run_source_attested_ipa_diagnostic.py --output /tmp/source-attested-ipa-diagnostic.json
+      - run: python -c "import json; r=json.load(open('/tmp/source-attested-ipa-diagnostic.json',encoding='utf-8')); s=r['summary']; records=r['records']; assert r['source_evidence_grade']=='SOURCE_ATTESTED_NOT_GOLD'; assert s['source_records']==6 and len(records)==6; assert s['accuracy_claimed'] is False; assert s['source_override_circular_count']==2, s; assert s['independently_comparable_records']==4, s; assert s['source_override_circular_count']==sum(bool(x['circular_source_override']) for x in records), s; assert s['independently_comparable_records']==sum(not bool(x['circular_source_override']) for x in records), s"
+      - name: Train pinned TUD segmentation model and evaluate held-out splits
+        run: |
+          python scripts/train_tud_word_segmenter.py --model /tmp/thai-tud-word-model.json --report /tmp/thai-tud-word-segmentation-report.json
+          python -c "import json; r=json.load(open('/tmp/thai-tud-word-segmentation-report.json',encoding='utf-8')); assert r['training']['wisesight_used'] is False; assert r['development']['groups'] > 0 and r['test']['groups'] > 0 and r['wisesight_test_only']['groups'] > 0; assert r['source_license']=='CC-BY-SA-4.0'; assert r['status']=='RESEARCH_SEGMENTER_DIAGNOSTIC_NOT_RELEASE_VALIDATION'"
+      - name: Compare segmentation error review on identical held-out rows
+        run: python scripts/compare_segmentation_error_review.py --tud-model /tmp/thai-tud-word-model.json --output /tmp/thai-segmentation-comparative-error-review.json
+      - name: Validate comparative segmentation evidence grade
+        run: python -c "import json; r=json.load(open('/tmp/thai-segmentation-comparative-error-review.json',encoding='utf-8')); d=r['dataset']; assert d['rows_total']==993 and d['rows_source_annotated']==993 and d['rows_expert_adjudicated']==0 and d['same_rows_for_both_engines'] is True, d; assert d['license']=='CC0-1.0' and d['split']=='test', d; assert set(r['models'])=={'dictionary_max_match','tud_unigram_viterbi'}; [(_ for _ in ()).throw(AssertionError(name)) for name, e in r['models'].items() if e['metrics']['false_split_count']<=0 or e['metrics']['false_merge_count']<=0]; assert r['report_type']=='COMPARATIVE_SEGMENTATION_ERROR_TRIAGE_NOT_GOLD_ADJUDICATION'; assert r['method']['caveats']; assert all(e['false_split_examples'] and e['false_merge_examples'] for e in r['models'].values())"
+      - name: Build unadjudicated manual segmentation review sample
+        run: python scripts/build_segmentation_manual_review.py --report /tmp/thai-segmentation-comparative-error-review.json --tud-model /tmp/thai-tud-word-model.json --output /tmp/thai-segmentation-manual-review.tsv --sample-per-stratum 8 --control-sample 12 --seed thai-segmentation-review-v1
+      - name: Validate manual review sample remains unadjudicated
+        run: python -c "import csv,json; rows=list(csv.DictReader(open('/tmp/thai-segmentation-manual-review.tsv',encoding='utf-8'),delimiter='\\t')); assert rows; assert any('UNIFORM_CONTROL' in r['sampled_for'].split(';') for r in rows); assert all(r['gold_status']=='SOURCE_ANNOTATED' and r['adjudicated']=='NO' and not r['human_decision'] and not r['reviewer_id'] and not r['decision_rationale'] for r in rows); assert all(''.join(json.loads(r[k]))==r['text'] for r in rows for k in ('gold_tokens_json','dictionary_tokens_json','tud_tokens_json'))"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: thai-tud-word-segmentation-model-and-report
+          path: |
+            /tmp/thai-tud-word-model.json
+            /tmp/thai-tud-word-segmentation-report.json
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wisesight1000-segmentation-baseline
+          path: /tmp/wisesight1000-segmentation-baseline.json
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wisesight1000-dictionary-segmentation
+          path: /tmp/wisesight1000-dictionary-segmentation.json
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: thai-segmentation-error-review
+          path: /tmp/thai-segmentation-error-review.json
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: thai-segmentation-comparative-error-review
+          path: |
+            /tmp/thai-segmentation-comparative-error-review.json
+            /tmp/thai-segmentation-manual-review.tsv
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: source-attested-ipa-diagnostic
+          path: /tmp/source-attested-ipa-diagnostic.json
+          if-no-files-found: error
   master-artifact:
     needs: test
     runs-on: ubuntu-latest

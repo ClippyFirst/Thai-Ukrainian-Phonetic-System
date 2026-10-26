@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "dataset_id": "pythainlp-words-th-cc0-thai-script-only",
+  "purpose": "Dictionary resource for conservative Thai word maximum matching; not pronunciation gold and not an expert-adjudicated segmentation corpus.",
+  "source_repository": "https://github.com/PyThaiNLP/pythainlp",
+  "source_commit": "8b2b9a6d0f69846364f37e8c16ffc31177f6151c",
+  "source_file": "pythainlp/corpus/words_th.txt",
+  "source_blob_sha1": "093dda8a35646281e71a8a434137cb5fac57882e",
+  "license": "CC0-1.0",
+  "source_license_evidence": "PyThaiNLP documents the Thai word-list resource as CC0; retain source attribution and re-check upstream license if replacing the pinned snapshot.",
+  "retained_unique_entries": 60963,
+  "generated_file": "data/thai/words_th_cc0.txt",
+  "generated_git_blob_sha1": "13406d0cc6967b77ef143089a7a772b8b534284d",
+  "transformation": "Read the pinned UTF-8 source file in source order; trim trailing whitespace; keep nonempty lines whose every Unicode code point is in U+0E00–U+0E7F; de-duplicate exact strings while retaining the first occurrence; emit one entry per LF-terminated line. no Wisesight samples are used in dictionary construction. This filters mixed-script phrases and keeps dictionary evidence independent of the held-out Wisesight evaluation set.",
+  "limitations": [
+    "A lexical dictionary is not a word-boundary gold set.",
+    "Maximum matching can over-segment or under-segment context-dependent forms.",
+    "Unknown graphemes are preserved and surfaced rather than silently discarded.",
+    "The dictionary contains orthographic entries, not pronunciations."
+  ]
+}

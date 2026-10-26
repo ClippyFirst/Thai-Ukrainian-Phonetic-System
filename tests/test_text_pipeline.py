@@ -43,6 +43,36 @@ class TextPipelineTests(unittest.TestCase):
                 self.assertEqual(token["syllables"], [])
                 self.assertTrue(any("IPA and Ukrainian output are withheld" in w for w in token["warnings"]))
 
+    def test_source_attested_lexical_ipa_override_flows_through_text_pipeline(self):
+        syllables, segmentation = segment_thai_word("เงิน")
+        self.assertEqual(syllables, ("เงิน",))
+        self.assertEqual(segmentation, "lexical_ipa_override")
+        result = analyze_text("เงิน")[0]
+        self.assertEqual(result["segmentation_status"], "lexical_ipa_override")
+        self.assertEqual(len(result["syllables"]), 1)
+        analysis = result["syllables"][0]
+        self.assertEqual(analysis["phonemic_ipa"], "ŋɤn")
+        self.assertEqual(analysis["vowel_length"], "short")
+        self.assertEqual(analysis["tone"]["tone"], "mid")
+        self.assertEqual(analysis["ukrainian_transliteration"], "нген")
+
+    def test_source_attested_long_vowel_override_resolves_walk_word(self):
+        # The grapheme-only parser remains conservative. This exact lexical
+        # reading is separately sourced and is not independent IPA gold.
+        from thai_ukrainian.lexical_ipa import load_lexical_ipa_overrides
+        self.assertEqual(load_lexical_ipa_overrides()["เดิน"]["segmental_ipa"], "dɤːn")
+        self.assertEqual(load_lexical_ipa_overrides()["เดิน"]["vowel_length"], "long")
+        token = analyze_text("เดิน")[0]
+        self.assertEqual(token["segmentation_status"], "lexical_ipa_override")
+        analysis = token["syllables"][0]
+        self.assertEqual(analysis["phonemic_ipa"], "dɤːn")
+        self.assertEqual(analysis["vowel_length"], "long")
+        self.assertEqual(analysis["tone"]["tone"], "mid")
+        self.assertEqual(analysis["ukrainian_transliteration"], "ден")
+        self.assertEqual(analysis["onset"], ["ด"])
+        self.assertEqual(analysis["coda"], "น")
+        self.assertTrue(any("not independently adjudicated" in w for w in analysis["warnings"]))
+
     def test_final_velar_stop_is_preserved_in_ukrainian_output(self):
         for word in ("พริก", "ตรอก"):
             with self.subTest(word=word):
@@ -155,6 +185,31 @@ class TextPipelineTests(unittest.TestCase):
                 self.assertEqual(tuple(item["input"] for item in token["syllables"]), syllables)
                 self.assertTrue(all(item["phonemic_ipa"] for item in token["syllables"]))
                 self.assertTrue(all(item["ukrainian_transliteration"] for item in token["syllables"]))
+
+
+
+    def test_source_attested_challenge_lexicon_entries(self):
+        expected = {
+            "ไกล": (("ไกล",), "lexicon"),
+            "ใกล้": (("ใกล้",), "lexicon"),
+            "เดิน": (("เดิน",), "lexical_ipa_override"),
+            "กรรม": (("กำ",), "lexicon"),
+            "บรรจุ": (("บัน", "จุ"), "lexicon"),
+        }
+        for word, segmentation in expected.items():
+            with self.subTest(word=word):
+                self.assertEqual(segment_thai_word(word), segmentation)
+
+
+    def test_special_vowel_letters_remain_lexically_unresolved_without_word_evidence(self):
+        for spelling in ("ฤ", "ฤๅ", "ฦ", "ฦๅ"):
+            with self.subTest(spelling=spelling):
+                result = analyze_syllable(spelling)
+                self.assertEqual(result.status, "analysis-dependent:special-orthography")
+                self.assertIsNone(result.phonemic_ipa)
+                self.assertIsNone(result.phonetic_ipa)
+                self.assertIsNone(result.ukrainian_transliteration)
+                self.assertTrue(result.special_analyses)
 
 
 if __name__ == "__main__":

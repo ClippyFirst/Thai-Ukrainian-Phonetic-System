@@ -44,6 +44,8 @@ jobs:
           node-version: 22
       - name: Run browser parity test
         run: node web/tests/parity.test.mjs
+      - name: Run UI contract and beta disclosure checks
+        run: node web/tests/ui-contract.test.mjs
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
       - name: Upload Pages artifact
