@@ -42,6 +42,8 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 22
+      - name: Generate pinned CC0 browser word dictionary
+        run: python scripts/generate_web_word_dictionary.py
       - name: Run browser parity test
         run: node web/tests/parity.test.mjs
       - name: Run UI contract and beta disclosure checks
