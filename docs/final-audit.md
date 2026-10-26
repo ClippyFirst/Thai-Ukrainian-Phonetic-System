@@ -425,3 +425,10 @@ The next acceptance gate is a documented false-split/false-merge review, explici
 - Added .github/workflows/vistec-segmentation-evaluation.yml. It checks out the pinned external commit, verifies the CSV Git blob hash and license declaration, trains the pinned TUD research model, evaluates both systems, and uploads only the report artifact.
 - **Verification state:** implementation and tests are authored; no VISTEC metric is claimed until the external workflow succeeds and the artifact is inspected. This is a separate source-annotation domain, not independent expert re-adjudication.
 - Source metadata is recorded in data/corpus_sources.csv, docs/evidence.md, docs/corpus-validation.md and README.md. Release readiness remains blocked by exact-head CI, independent Thai IPA/acoustic adjudication, independent Ukrainian target judgments, human segmentation review, and the still-unavailable full OBEC PDF.
+
+
+## VISTEC annotation parser fail-closed repair — 2026-10-26
+
+A review of the pinned VISTEC adapter found that empty pipe-delimited fields were silently removed after markup stripping. The adapter now raises an error for any empty token field, with regressions for repeated separators, empty markup-only tokens and a leading separator. This preserves the source-evidence gate rather than hiding malformed annotation rows. Code head: `1cbf97036ec931266f4a6ed5eb747a00e5b7ad29`.
+
+**Verification is pending:** repository tests could not be run locally, and no workflow run/combined status was surfaced for this exact head at the last check. Do not claim the new tests or the 49,997-row VISTEC evaluation passed until exact-head CI completes and the report artifact is inspected.
