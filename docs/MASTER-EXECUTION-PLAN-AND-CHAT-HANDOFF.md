@@ -955,3 +955,23 @@ Web static validation [40305933181](https://github.com/ClippyFirst/Thai-Ukrainia
 - The beta UI and new UI assertions were committed after that verified checkpoint. Exact-head CI/static checks for the new UI are pending; do not mark them PASS until the actual runs succeed.
 - Pages workflow deploys only on pushes to `main` (or manual dispatch). PR #71 is still draft. The 304-commit research PR was not merged, and its branch was not deployed over the existing public site. Public publication is therefore not yet verified; next acceptance criterion is successful exact-head CI/static checks, review of the PR diff, then deliberate merge/deploy or a separate preview host.
 - Current research prototype remains not release-ready for arbitrary Thai text. Remaining external blockers: independent Thai IPA/acoustic review; two independent Ukrainian target-form reviews; human segmentation adjudication; context-level review of บรรจุ final /ʔ/; and lawful access to the full official OBEC PDF (prior URL returned HTTP 403).
+
+## Final beta-site handoff — 2026-10-26
+
+### Implementation and verification
+- Research-beta banner added to `web/index.html` and `web/system.html`; evidence/limitations anchor and source-annotation segmentation metrics are visible on the system page.
+- Responsive styles added in `web/src/styles.css`.
+- `web/tests/ui-contract.test.mjs` now checks beta disclosure, evidence anchor, full metric denominators, and responsive styling.
+- `.github/workflows/pages.yml` includes the UI-contract test in the Pages build. A temporary branch deployment trigger was tested, then removed; the workflow again deploys only on `main`.
+
+### Actual results
+- Pages build run [40377552366](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40377552366): build job PASS — Python regression tests, browser parity, UI contract and Pages artifact upload all succeeded. Deploy job FAILED immediately before executing steps; no logs or pending approval details were exposed.
+- Web static validation [40377552367](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40377552367): PASS.
+- VISTEC evaluation [40377560151](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40377560151): PASS; source-annotation diagnostic only, not independent gold.
+- The latest successful public Pages deployment remains main commit `18ab41db87192dc7be69683ef85e53cb04db5517`, run [40225366216](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40225366216). Public URL: https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/. The beta changes are **not live yet**.
+- Exact cause of the branch deployment failure is unknown because the deploy job had no steps/logs; no external settings were changed. Pages is restored to main-only deployment to prevent repeated attempts from the draft branch.
+
+### Current branch and next genuine blocker
+- Latest branch head before this handoff synchronization: `048b89d9234ac91e3d592c0bca7d816f4a5ae5b5`; PR #71 remains open Draft, 304 commits / 68 changed files. Latest push/PR CI runs were still in progress when checked; do not mark exact-head CI fully green until the master-artifact job completes.
+- Do not merge the large draft PR blindly. To publish this exact engine, the owner must either review and merge PR #71 to `main` while accepting the documented evidence limitations, or authorize a separate preview host. No PR was merged and no release was published.
+- Independent Thai IPA/acoustic gold, two independent Ukrainian target-form reviews, human segmentation adjudication, context-level review of บรรจุ final /ʔ/, and lawful full official OBEC PDF access remain evidence blockers. The site must continue to call itself a research beta and must not claim empirical pronunciation accuracy.
