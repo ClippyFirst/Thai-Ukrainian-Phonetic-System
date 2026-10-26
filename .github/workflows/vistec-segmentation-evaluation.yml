@@ -1,0 +1,54 @@
+name: External VISTEC segmentation evaluation
+
+on:
+  pull_request:
+    paths:
+      - "scripts/evaluate_vistec_segmentation.py"
+      - "scripts/evaluate_segmentation.py"
+      - "scripts/train_tud_word_segmenter.py"
+      - "scripts/compare_segmentation_error_review.py"
+      - "src/thai_ukrainian/segmentation.py"
+      - "tests/test_vistec_segmentation_adapter.py"
+      - ".github/workflows/vistec-segmentation-evaluation.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  vistec-evaluation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: mrpeerat/OSKut
+          ref: 215a7dc3d384f20eb56af1cbc41fb32b7f8df57c
+          path: external/OSKut
+          sparse-checkout: |
+            VISTEC-TP-TH-2021/VISTEC-TP-TH-2021.csv
+            VISTEC-TP-TH-2021/LICENSE.md
+            VISTEC-TP-TH-2021/README.md
+      - name: Verify immutable external source snapshot
+        run: |
+          test "$(git -C external/OSKut rev-parse HEAD)" = "215a7dc3d384f20eb56af1cbc41fb32b7f8df57c"
+          test "$(git -C external/OSKut hash-object VISTEC-TP-TH-2021/VISTEC-TP-TH-2021.csv)" = "edfcb85907a604c5e30643065ac4975862a0fe90"
+          grep -q "CC-BY-SA 3.0" external/OSKut/VISTEC-TP-TH-2021/README.md
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - name: Train research-only TUD model from pinned sources
+        run: |
+          python scripts/train_tud_word_segmenter.py --model /tmp/thai-tud-word-model.json --report /tmp/thai-tud-word-segmentation-report.json
+          python -c "import json; r=json.load(open('/tmp/thai-tud-word-segmentation-report.json',encoding='utf-8')); assert r['wisesight_test_only']['groups'] > 0; assert r['source_license']=='CC-BY-SA-4.0'"
+      - name: Evaluate dictionary and TUD models on external VISTEC source annotations
+        run: |
+          python scripts/evaluate_vistec_segmentation.py --csv external/OSKut/VISTEC-TP-TH-2021/VISTEC-TP-TH-2021.csv --tud-model /tmp/thai-tud-word-model.json --output /tmp/vistec-segmentation-report.json
+          python -c "import json; r=json.load(open('/tmp/vistec-segmentation-report.json',encoding='utf-8')); assert r['external_corpus']['rows']==49997; assert r['external_corpus']['source_git_blob_sha1']=='edfcb85907a604c5e30643065ac4975862a0fe90'; assert r['external_corpus']['license']=='CC-BY-SA-3.0'; assert r['external_corpus']['training_or_tuning_use'] is False; assert r['gold']['rows_source_annotated']==49997 and r['gold']['rows_adjudicated']==0; assert set(r['engines'])=={'dictionary_max_match','tud_unigram_viterbi'}; assert all(e['n_gold_rows']==49997 and e['coverage']==1.0 for e in r['engines'].values())"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vistec-external-segmentation-evaluation
+          path: /tmp/vistec-segmentation-report.json
+          if-no-files-found: error
