@@ -667,7 +667,7 @@
   "beta_site_update": {
     "date": "2026-10-26",
     "branch": "research/thai-segmentation-gold-parity-verified-20261025",
-    "latest_branch_head_before_this_json_update": "048b89d9234ac91e3d592c0bca7d816f4a5ae5b5",
+    "latest_branch_head_before_this_json_update": "5eb4eb28a7df4331142b2848d1f72c1f3ee747ff",
     "ui_code_checkpoint": "274371594cc8a0b65677bb126242d90acc17caf5",
     "changes": [
       "Visible Ukrainian research-beta notice on web/index.html and web/system.html",
@@ -723,15 +723,47 @@
       "current_public_site_updated_with_beta": false
     },
     "latest_exact_head_ci": {
-      "head": "048b89d9234ac91e3d592c0bca7d816f4a5ae5b5",
-      "ci_push_run": 40378276967,
-      "ci_pull_request_run": 40378286378,
-      "status": "in_progress_at_last_check",
-      "web_static_validation_run": 40378286491,
-      "web_static_validation_status": "success",
-      "vistec_run": 40378286495,
-      "vistec_status": "queued_at_last_check"
+      "code_checkpoint": "274371594cc8a0b65677bb126242d90acc17caf5",
+      "code_checkpoint_ci": "success",
+      "code_checkpoint_web_static": "success",
+      "code_checkpoint_vistec": "success",
+      "docs_only_commits_after_code_checkpoint": [
+        "048b89d9234ac91e3d592c0bca7d816f4a5ae5b5",
+        "46ad25d8643e38fdd8de0150133991d410e42bf0",
+        "971a68b0c7c9595d30a6c8ef20a41ada697887af",
+        "5eb4eb28a7df4331142b2848d1f72c1f3ee747ff"
+      ],
+      "final_json_commit_ci": "new docs-only commit; status must be read from Actions after update"
     },
-    "readiness": "research beta candidate; not release-ready for arbitrary Thai text; public beta changes are not live"
+    "readiness": "research beta candidate; not release-ready for arbitrary Thai text; public beta changes are not live",
+    "verified_code_checkpoint": {
+      "commit": "274371594cc8a0b65677bb126242d90acc17caf5",
+      "ci_pull_request_run": {
+        "id": 40377560164,
+        "status": "success",
+        "jobs": {
+          "test": "success",
+          "master_artifact": "success"
+        }
+      },
+      "ci_push_run": {
+        "id": 40377552343,
+        "status": "in_progress_at_last_check",
+        "qualification": "duplicate push-triggered run; PR-triggered CI for same code checkpoint passed"
+      },
+      "web_static_validation": {
+        "id": 40377560210,
+        "status": "success"
+      },
+      "vistec_evaluation": {
+        "id": 40377560151,
+        "status": "success"
+      },
+      "pages_build": {
+        "id": 40377552366,
+        "build_job": "success",
+        "deploy_job": "failure_before_steps"
+      }
+    }
   }
 }
