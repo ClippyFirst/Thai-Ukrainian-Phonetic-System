@@ -415,3 +415,6 @@ Current main head at this refresh: `314d2fd2efab107dfa509c23d1f9b9dad2ed42f0`. T
 
 
 | External VISTEC evaluation | DONE_VERIFIED for source-annotation diagnostic | Latest inspected successful run [40377560151](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40377560151), job `vistec-evaluation`, on code checkpoint `274371594cc8a0b65677bb126242d90acc17caf5`; artifact ID `12676540165`, SHA-256 `582a28766f29f11ac54bac7764a52ddfdfd3e78ad26f4acc311fac3f82f6c6a3`. The run processes 50,000 pinned CSV rows, all source-annotated and zero adjudicated. This is not independent-gold accuracy. |
+
+
+The VISTEC artifact was downloaded and inspected in this refresh. The archive contains `vistec-segmentation-report.json` (3,803 bytes); archive SHA-256 matches GitHub metadata: `582a28766f29f11ac54bac7764a52ddfdfd3e78ad26f4acc311fac3f82f6c6a3`. On the 50,000 source-annotated rows: dictionary maximum match precision 0.76880, recall 0.89788, F1 0.82834, 76 exact sequences (0.152%); TUD unigram Viterbi precision 0.60640, recall 0.99316, F1 0.75302, 16 exact sequences (0.032%). Both have 100% output coverage, but **zero adjudicated rows**. These are source-annotation agreement diagnostics only; they do not establish independent accuracy.
