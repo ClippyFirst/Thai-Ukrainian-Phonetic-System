@@ -24,7 +24,7 @@ class TUDSegmenterTests(unittest.TestCase):
 """
         sentences = parse_conllu_sentences(sample)
         self.assertEqual(len(sentences), 1)
-        self.assertEqual([word for word, _ in sentences[0]], ["ฉัน", "รัก", "เธอ"])
+        self.assertEqual([word for word, _ in sentences[0][1]], ["ฉัน", "รัก", "เธอ"])
         groups = evaluation_groups(sentences)
         self.assertEqual(groups, [["ฉัน", "รัก", "เธอ"]])
         self.assertEqual(training_counts(sentences)["ฉัน"], 1)
