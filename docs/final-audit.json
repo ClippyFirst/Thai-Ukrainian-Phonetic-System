@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "engineering-verified research prototype; latest code and final documentation head CI passed",
+  "status": "engineering-verified research prototype; TUD-trained segmentation experiment and source-pinned lexical override additions pending exact-head CI",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -28,7 +28,12 @@
     "browser_lexical_ipa_override_and_parity_fixture",
     "source_attested_ipa_discrepancy_and_abstention_diagnostic",
     "segmentation_corpus_license_gate_registry",
-    "ccost_textgrid_access_and_license_record"
+    "ccost_textgrid_access_and_license_record",
+    "pinned_tud_cc_by_sa_segmentation_training_source",
+    "source_document_disjoint_tud_frequency_viterbi_research_segmenter",
+    "walk_source_pinned_lexical_ipa_override",
+    "same_source_override_excluded_from_ipa_agreement_metrics",
+    "independent_ipa_and_ukrainian_target_adjudication_templates"
   ],
   "not_claimed": [
     "complete_lexical_segmentation",
@@ -44,14 +49,15 @@
     "independent_expert_adjudicated_word_boundary_gold",
     "independent_expert_adjudicated_ipa_gold",
     "acoustic_tone_vowel_length_accuracy",
-    "automatic_word_segmentation",
     "independently_adjudicated_ukrainian_target_forms",
     "acoustic_tone_or_vowel_length_accuracy",
     "production_automatic_word_segmentation",
-    "connected_speech_acoustic_validation"
+    "connected_speech_acoustic_validation",
+    "production_quality_automatic_word_segmentation",
+    "independent_acoustic_ipa_gold"
   ],
-  "lexical_attestation": "Five source-attested runtime text lexicon entries plus one active typed IPA override for เงิน. The challenge diagnostic now reports 28 ordinary lexicon resolutions plus 1 lexical override, 7 unresolved inputs, 26 complete outputs and 10 abstentions/incomplete outputs; this is not representative accuracy.",
-  "corpus_attestation": "993 source-annotated word-tokenization rows (CC0-1.0; not expert-adjudicated); zero independently adjudicated IPA/tone/vowel-length gold rows",
+  "lexical_attestation": "Five source-backed runtime text lexicon entries plus two active typed IPA overrides (เงิน and เดิน). The เดิน override uses Thai Wiktionary oldid 1908803 /dɤːn˧/ and is explicitly SOURCE_ATTESTED_NOT_GOLD; the parser-only graphemic ambiguity contract remains intact. Exact-head CI and updated challenge counts are pending.",
+  "corpus_attestation": "993 source-annotated Wisesight word-tokenization rows (CC0-1.0; test-only, never training/tuning); pinned UD Thai TUD source snapshots under CC BY-SA 4.0 for a research-only frequency-Viterbi experiment; zero independently adjudicated IPA/tone/vowel-length gold rows.",
   "word_boundary_benchmark": {
     "dataset": "PyThaiNLP/Wisesight word-tokenization labels",
     "rows": 993,
@@ -60,14 +66,15 @@
     "upstream_blob_sha1": "279aeb2d4323fd8032306160144d33dcb5b2df84",
     "status": "SOURCE_ANNOTATED_NOT_EXPERT_ADJUDICATED",
     "project_split": "test",
-    "baseline": "pending exact-head CI",
+    "baseline": "existing dictionary-max-match baseline remains separately reported; TUD-trained frequency-Viterbi metrics pending exact-head CI",
     "prediction_coverage": 1,
     "boundary_precision": 0.6383191595797899,
     "boundary_recall": 0.0918580375782881,
     "boundary_f1": 0.1606041535556954,
     "exact_sequence_rate": 0.03121852970795569,
     "artifact_id": "12614106636",
-    "artifact_name": "wisesight1000-segmentation-baseline"
+    "artifact_name": "wisesight1000-segmentation-baseline",
+    "used_for_training": false
   },
   "source_attested_ipa_records": {
     "count": 6,
@@ -132,11 +139,13 @@
   },
   "source_attested_ipa_diagnostic": {
     "source_records": 6,
-    "complete_engine_outputs": 5,
-    "withheld_or_incomplete": 1,
-    "segmental_agreements": 4,
-    "tone_category_agreements": 5,
-    "discrepancy": "บรรจุ: source transcription includes final /ʔ/ while the current segmental engine output omits it; retained for review because transcription level/stress context must be resolved",
+    "complete_engine_outputs": "pending exact-head CI",
+    "withheld_or_incomplete": "pending exact-head CI",
+    "segmental_agreements": "same-source override excluded; exact-head CI pending",
+    "tone_agreements": "same-source override excluded; exact-head CI pending",
+    "source_override_circular_count": 1,
+    "independently_comparable_records": 5,
+    "discrepancy": "บรรจุ: source transcription includes final /ʔ/ while current engine segmental output omits it; no universal rule added pending transcription-level/context adjudication",
     "evidence_grade": "SOURCE_ATTESTED_NOT_GOLD",
     "accuracy_claimed": false
   },
@@ -152,15 +161,54 @@
     "used_for_training": false
   },
   "corpus_source_registry": {
-    "active_test_source": "Wisesight-1000 (CC0-1.0; 993 rows; test-only)",
+    "active_test_source": "Wisesight-1000 (CC0-1.0; 993 rows; test-only; not used for training or tuning)",
     "candidate_sources": [
       "LST20 (license/access review required; not bundled)",
       "VISTEC-TP-TH-2021 (CC BY-SA 3.0 reported; upstream terms/attribution review required)"
     ],
-    "ccost": "CC BY-NC-SA 4.0; TextGrid annotations inside 6.2 GB archive; not bundled"
+    "ccost": "CC BY-NC-SA 4.0; TextGrid annotations inside 6.2 GB archive; not bundled or accessed in this run",
+    "training_source": "UD Thai TUD at 67413969add552b7030184f16f24fa9f630913bc, CC BY-SA 4.0; source-document-disjoint 80/10/10 project split; model artifact attribution/share-alike obligations recorded"
   },
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
   "latest_code_checkpoint": "43687b2753379b1d617b1c925f87358f8aad13bd",
-  "readiness": "research-ready engineering prototype; not release-ready for arbitrary Thai text; phonetic accuracy is not independently validated",
-  "latest_verified_repository_head": "6a153e26e17c4929fdc166b3dbeb73444668f2b1"
+  "readiness": "engineering-verified research prototype; not release-ready for arbitrary Thai text or empirically validated IPA/Ukrainian output",
+  "latest_verified_repository_head": "6a153e26e17c4929fdc166b3dbeb73444668f2b1",
+  "task_ledger": [
+    {
+      "id": "SEG-TRAIN-001",
+      "status": "PARTIAL",
+      "implementation": "TUD frequency-Viterbi research trainer, source-blob verification, source-document-disjoint split, dev-only penalty selection, held-out TUD test and Wisesight-only report; CI/artifacts configured",
+      "acceptance": "Exact-head CI passes; inspect TUD/Wisesight metrics; model is usable/integrated only after quality review; preserve CC BY-SA 4.0 attribution/share-alike"
+    },
+    {
+      "id": "IPA-GOLD-001",
+      "status": "BLOCKED",
+      "implementation": "Independent adjudication template and transcription-level protocol prepared; no CCOST recordings/TextGrid accessed",
+      "blocker": "Qualified independent Thai phonetician and authorized audio/TextGrid access required",
+      "acceptance": "Independent dual labels, agreed broad/surface protocol, acoustic references where claimed, disagreement log"
+    },
+    {
+      "id": "WALK-LEX-001",
+      "status": "PARTIAL",
+      "implementation": "Exact-form /dɤːn˧/ source-pinned override routed through typed IPA→Ukrainian adapter in Python/browser; parser-only ambiguity retained; circular source agreement excluded",
+      "acceptance": "Exact-head Python/browser/diagnostic CI passes; still not independent IPA gold"
+    },
+    {
+      "id": "BANCHU-IPA-001",
+      "status": "PARTIAL_EVIDENCE_LIMITED",
+      "implementation": "Final /ʔ/ discrepancy remains explicit; no universal rule added",
+      "blocker": "Need agreed transcription level and stress/context adjudication; source-attested dictionary IPA is not independent gold",
+      "acceptance": "Documented context-specific decision backed by independent phonetic adjudication"
+    },
+    {
+      "id": "UA-TARGET-001",
+      "status": "BLOCKED",
+      "implementation": "Six-row adjudication template and independent review protocol prepared; engine candidates remain non-gold",
+      "blocker": "Two independent Ukrainian-native reviewers and agreed target-form criteria unavailable in this run",
+      "acceptance": "Blinded candidate judgments, criteria version, disagreement log, final adjudicated set"
+    }
+  ],
+  "latest_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
+  "latest_implementation_commit_pending_ci": "bd9b8ab2a081c74791b1343902f5992a80007c11",
+  "current_head_status_at_audit_refresh": "Pending: new lexical override, circularity guard, TUD training experiment, and adjudication templates have not yet passed exact-head CI. Prior verified checkpoints remain historical only."
 }
