@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "engineering-verified research prototype; comparative artifact verified; human-review sample generation added pending exact-head CI; not release-ready for arbitrary Thai text or empirically validated IPA/Ukrainian output",
+  "status": "engineering-verified research prototype; stratified segmentation-review packet implemented; exact-head CI pending; independent linguistic adjudication not complete; not release-ready",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -457,44 +457,54 @@
   "current_checkpoint": {
     "date": "2026-10-26",
     "branch": "research/thai-segmentation-gold-parity-verified-20261025",
-    "prior_verified_head": "4115326490bc8189660838f51bfe47a382ada203",
-    "prior_ci_run": 40324015433,
-    "prior_ci_conclusion": "success",
-    "prior_web_static_validation_run": 40324015445,
-    "prior_web_static_validation_conclusion": "success",
-    "comparative_artifact": {
-      "id": 12649094231,
-      "workflow_run_id": 40322960615,
-      "source_head": "b6dbec7928b106f0ab52e06af33a26635df75412",
-      "sha256": "8005cc91939ea06b852c1717fee9fb72d370709e74267b8f99636a6476d30775",
-      "rows": 993,
-      "source_annotated_rows": 993,
-      "independently_adjudicated_rows": 0,
-      "dictionary_boundary_f1": 0.8394713656387666,
-      "dictionary_exact_sequences": 192,
-      "tud_boundary_f1": 0.7486234470545917,
-      "tud_exact_sequences": 119,
-      "status": "SOURCE_ANNOTATED_DIAGNOSTIC_NOT_GOLD"
-    },
+    "default_branch": "main",
+    "starting_main_sha": "0be5fd841070e337cb5c805ef92954938abe61bb",
+    "pre_audit_commit": "30199bdbac49bf1cefc08d071f8063fa092da008",
+    "pr_71_state": "OPEN_DRAFT",
+    "pr_71_head": "63f158cac99eb7501d8d01b6aac9c665a4416cc8",
+    "pr_68_state": "CLOSED_UNMERGED_SUPERSEDED",
     "new_work": {
       "files": [
         "scripts/build_segmentation_manual_review.py",
         "tests/test_segmentation_manual_review.py",
-        ".github/workflows/ci.yml"
+        ".github/workflows/ci.yml",
+        "docs/independent-adjudication-protocol.md",
+        "docs/evidence.md",
+        "docs/validation-matrix.md",
+        "docs/final-audit.md"
       ],
-      "purpose": "Generate lossless, full-text human-review TSV with both system predictions where available; all decisions blank and adjudicated=NO",
+      "purpose": "Deterministic stratified segmentation-review sample plus uniform controls, recomputing both model predictions over all pinned source rows, enforcing lossless reconstruction and blank human decision fields; document external evidence limits.",
       "status": "PARTIAL",
-      "verification_blocker": "No workflow runs or commit status checks were returned for the new head by the connected GitHub workflow tools; local git clone/test execution is blocked by DNS resolution failure for github.com. Do not treat the new tests or generated TSV as verified until exact-head CI and Web static validation run."
+      "verification": "Not yet passed. Exact-head CI and Web static validation are required after all commits in this batch.",
+      "external_evidence": {
+        "ccost_zenodo": "https://zenodo.org/records/17366698",
+        "ccost_doi": "10.5281/zenodo.17366698",
+        "ccost_license": "CC-BY-NC-SA-4.0",
+        "ccost_manual_and_audio_listed": true,
+        "archive_and_manual_reviewed_locally": false,
+        "independently_adjudicated_rows": 0,
+        "royal_institute_dictionary": "https://dictionary.orst.go.th/",
+        "obec_pdf_http_status": 403
+      }
+    },
+    "segmentation_comparison": {
+      "rows": 993,
+      "evidence_grade": "SOURCE_ANNOTATED_NOT_EXPERT_ADJUDICATED",
+      "dictionary_boundary_f1": 0.8394713656387666,
+      "dictionary_exact_sequences": 192,
+      "tud_boundary_f1": 0.7486234470545917,
+      "tud_exact_sequences": 119,
+      "decision": "DO_NOT_INTEGRATE_TUD_AS_PRODUCTION_DEFAULT"
     },
     "remaining_evidence_gates": [
-      "Independent Thai IPA/acoustic gold",
-      "Two independent Ukrainian target-form reviewers",
-      "Context-specific final /ʔ/ review for บรรจุ",
-      "Independent licensed segmentation domain",
-      "Full official OBEC PDF inspection"
+      "Independent Thai IPA/acoustic gold with authorized recordings and transcription-level protocol",
+      "Two independent Ukrainian-native target-form judgments and adjudication log",
+      "Human review of stratified segmentation sample; thresholds must be declared before acceptance",
+      "Independent licensed segmentation domain with untouched split",
+      "Context/transcription-level review of บรรจุ final /ʔ/",
+      "Full official OBEC PDF inspection through lawful authoritative access",
+      "Successful exact-head CI and Web static validation"
     ],
-    "final_observed_head_before_this_audit_update": "d51f4acad9311b34f14bff17b9abd983d0bf14b9",
-    "pr_71_state": "OPEN_DRAFT",
-    "pr_68_state": "CLOSED_UNMERGED_SUPERSEDED"
+    "readiness": "RESEARCH_PROTOTYPE_NOT_RELEASE_READY"
   }
 }
