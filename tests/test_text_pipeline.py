@@ -56,6 +56,21 @@ class TextPipelineTests(unittest.TestCase):
         self.assertEqual(analysis["tone"]["tone"], "mid")
         self.assertEqual(analysis["ukrainian_transliteration"], "нген")
 
+    def test_source_attested_long_vowel_override_resolves_walk_word(self):
+        # The grapheme-only parser remains conservative. This exact lexical
+        # reading is separately sourced and is not independent IPA gold.
+        from thai_ukrainian.lexical_ipa import load_lexical_ipa_overrides
+        self.assertEqual(load_lexical_ipa_overrides()["เดิน"]["segmental_ipa"], "dɤːn")
+        self.assertEqual(load_lexical_ipa_overrides()["เดิน"]["vowel_length"], "long")
+        token = analyze_text("เดิน")[0]
+        self.assertEqual(token["segmentation_status"], "lexical_ipa_override")
+        analysis = token["syllables"][0]
+        self.assertEqual(analysis["phonemic_ipa"], "dɤːn")
+        self.assertEqual(analysis["vowel_length"], "long")
+        self.assertEqual(analysis["tone"]["tone"], "mid")
+        self.assertEqual(analysis["ukrainian_transliteration"], "ден")
+        self.assertTrue(any("not independently adjudicated" in w for w in analysis["warnings"]))
+
     def test_final_velar_stop_is_preserved_in_ukrainian_output(self):
         for word in ("พริก", "ตรอก"):
             with self.subTest(word=word):
