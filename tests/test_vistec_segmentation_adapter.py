@@ -23,7 +23,7 @@ class VistecSegmentationAdapterTests(unittest.TestCase):
     def test_empty_and_unannotated_inputs_fail_closed(self):
         with self.assertRaisesRegex(ValueError, "empty submissionText"):
             parse_submission_text("")
-        with self.assertRaisesRegex(ValueError, "no text"):
+        with self.assertRaisesRegex(ValueError, "empty annotated token"):
             parse_submission_text("||")
 
     def test_small_csv_conversion_preserves_source_and_provenance(self):
