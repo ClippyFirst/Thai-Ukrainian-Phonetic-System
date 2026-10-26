@@ -514,7 +514,7 @@
     },
     "remaining_evidence_gates": [
       "Exact-head CI and Web static validation success",
-      "Successful VISTEC workflow and inspection of the 49,997-row report artifact",
+      "Successful VISTEC workflow and inspection of the 50,000-row report artifact; explicitly record the upstream README's 49,997-sample discrepancy",
       "Independent Thai IPA/acoustic gold with authorized recordings and transcription-level protocol",
       "Two independent Ukrainian-native target-form judgments and adjudication log",
       "Human review of stratified segmentation sample; thresholds declared before acceptance",
