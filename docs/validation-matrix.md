@@ -364,3 +364,13 @@ Artifact verification: downloaded and inspected VISTEC artifact ZIP 12667445022;
 | Empirical linguistic validation | BLOCKED | No independent Thai IPA/acoustic gold, independent Ukrainian target-form judgments, or expert-adjudicated segmentation rows. |
 
 Latest successful pre-UI-update verification is on `17eac785a00ce1e8a95ac904db348ddf8c286040`: CI run 40372261539, Web static validation 40372261553, VISTEC evaluation 40372261718 all succeeded. The beta UI/test edits are newer and must pass their own exact-head checks before they are considered verified.
+
+## Beta-site publication attempt — 2026-10-26
+
+| Task | Status | Evidence / blocker |
+|---|---|---|
+| Beta notice, evidence panel, responsive CSS and UI regression | DONE_VERIFIED on code checkpoint `274371594cc8a0b65677bb126242d90acc17caf5` | Pages build [40377552366](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40377552366) passed Python regression tests, Python/browser parity and the new UI-contract test. Static validation [40377552367](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40377552367) and VISTEC diagnostic [40377560151](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40377560151) passed. |
+| Publish branch build to GitHub Pages | BLOCKED | The same Pages run's `deploy` job failed immediately with no steps/logs; the build job succeeded. The latest successful public deployment is still main commit `18ab41db87192dc7be69683ef85e53cb04db5517` from run [40225366216](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40225366216). The known deployment path is main-only; the research PR remains draft. |
+| Avoid unintended repeated deployment attempts | DONE_VERIFIED | Restored `.github/workflows/pages.yml` to trigger Pages deployment only on `main`; retained the UI-contract check in the Pages build. |
+| Latest exact-head overall CI | PARTIAL / running | Latest branch head is `048b89d9234ac91e3d592c0bca7d816f4a5ae5b5`; CI runs 40378276967 and 40378286378 were still in progress at audit refresh. Do not mark the latest exact head fully green until the master-artifact job completes. |
+| Public beta URL | BLOCKED for the new branch build | The existing site remains at [GitHub Pages](https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/) on the last successful main deployment. Do not claim the newly edited pages are live. To publish this exact engine, the owner must either merge the reviewed research PR to `main` after accepting the documented evidence gates, or authorize a separate preview host. No environment protections were changed and no PR was merged.
