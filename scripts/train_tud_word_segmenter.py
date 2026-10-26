@@ -37,7 +37,7 @@ def pinned_download(filename: str, expected_blob: str) -> str:
     request = urllib.request.Request(url, headers={"User-Agent": "ClippyFirst-Thai-Segmenter/1.0"})
     with urllib.request.urlopen(request, timeout=60) as response:
         raw = response.read()
-    git_blob = hashlib.sha1(b"blob " + str(len(raw)).encode("ascii") + b"\\0" + raw).hexdigest()
+    git_blob = hashlib.sha1(b"blob " + str(len(raw)).encode("ascii") + b"\0" + raw).hexdigest()
     if git_blob != expected_blob:
         raise ValueError(f"Pinned TUD blob mismatch for {filename}: {git_blob} != {expected_blob}")
     return raw.decode("utf-8")
