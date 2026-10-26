@@ -309,3 +309,25 @@ The 36-form challenge diagnostic yields 23 lexicon lookups, 13 unresolved inputs
 ### Readiness
 
 **Research-ready engineering prototype; not release-ready.** The browser parity head and final documentation head have passed CI and Web static validation. The repository still lacks independent phonetic gold, a production automatic segmenter, acoustic validation, and independently adjudicated Ukrainian target forms.
+
+## 2026-10-26 continuation — segmentation training and adjudication gates
+
+### Implemented in this batch; exact-head CI pending
+
+- Added a research-only unigram-frequency Viterbi segmenter trainer in `scripts/train_tud_word_segmenter.py`. It downloads three source-pinned UD Thai TUD files from upstream commit `67413969add552b7030184f16f24fa9f630913bc`, verifies Git blob SHA-1, pools the snapshots, and creates deterministic source-document-disjoint 80/10/10 train/dev/test splits. The token penalty is selected on dev only; the test split is never used for tuning.
+- Wisesight's 993 CC0-1.0 rows remain external test-only data and are not used in training or tuning. The CI uploads the trained model and report as artifacts. This model is a research experiment, not the production default; exact-head CI and the actual held-out metrics must be reviewed before claims of quality.
+- Activated a source-pinned exact lexical IPA override for `เดิน` (/dɤːn˧/, Thai Wiktionary oldid 1908803) through the typed IPA→Ukrainian adapter in both Python and browser code. The grapheme-only parser's ambiguity remains unchanged. Because this override uses the same source being compared, the source-attested IPA diagnostic now excludes this row from agreement counts as circular rather than claiming independent agreement.
+- Added independent IPA and Ukrainian target-form adjudication templates plus a protocol. All expert-label fields are blank; no human adjudication or audio access is claimed.
+
+### Task ledger
+
+| ID | Status | Current result | Acceptance criterion / blocker |
+|---|---|---|---|
+| SEG-TRAIN-001 | PARTIAL | TUD-trained frequency-Viterbi experiment; source-pinned, source-document-disjoint split; held-out TUD and Wisesight diagnostics configured in CI | Exact-head CI must pass and metrics must be reviewed; production integration requires acceptable held-out results and share-alike attribution |
+| IPA-GOLD-001 | BLOCKED | Adjudication template and protocol prepared; CCOST audio/TextGrid not accessed | Independent Thai phonetician, authorized recording/annotation access, agreed broad-vs-surface target, dual labels and disagreement log |
+| WALK-LEX-001 | PARTIAL | `เดิน` resolves through exact source-attested lexical IPA; source override excluded from independent agreement scoring | Exact-head Python/browser CI; remains source-attested, not IPA gold |
+| BANCHU-IPA-001 | PARTIAL / EVIDENCE-LIMITED | `บรรจุ` final /ʔ/ mismatch retained; no universal rule added | Agree on transcription level, stress/context, and independent phonetic adjudication |
+| UA-TARGET-001 | BLOCKED | Six-row Ukrainian target-form template and blinded-review protocol prepared | Two independent Ukrainian-native reviews, predefined criteria, retained disagreements and adjudicated forms |
+
+No release or merge is performed by this continuation. The project remains an engineering-verified research prototype, not release-ready for arbitrary Thai text. The exact-head workflow is the authority for the current branch; prior CI success does not imply these new changes passed.
+
