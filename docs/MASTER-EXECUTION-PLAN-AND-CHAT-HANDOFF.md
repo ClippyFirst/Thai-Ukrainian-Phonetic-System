@@ -882,3 +882,12 @@ Web static validation [40305933181](https://github.com/ClippyFirst/Thai-Ukrainia
 - The branch head immediately before this handoff update is bc16f7b70481bb88cd30bb4d9589203da819f4f1. This update creates the next commit; read the branch ref for the final SHA.
 - Latest exact-head CI, Web static validation and VISTEC evaluation were still queued at the last status read. No new tests are marked PASS, and no VISTEC metrics are reported. If the queue remains blocked, record that as a CI service/runner blocker rather than treating tests as successful.
 - External evidence gates remain: actual independent Thai phonetic/acoustic review, two Ukrainian-native target-form reviews, human segmentation adjudication, contextual decision for บรรจุ final /ʔ/, and full official OBEC PDF inspection (HTTP 403). These require human/specialist or lawful-source access and cannot be honestly synthesized by code.
+
+
+## VISTEC annotation parser hardening — 2026-10-26
+
+- Reviewed the external VISTEC adapter and found that empty pipe-delimited token fields were silently discarded after annotation-tag removal. This could conceal malformed source annotations even when the remaining tokens reconstructed some text.
+- Changed `scripts/evaluate_vistec_segmentation.py` to fail closed if any token field becomes empty after documented `<ne>`/`<msp>` markup removal. Added regressions for repeated separators, an empty markup-only token, a leading separator, and the existing all-empty input case.
+- Code commits: `a02e3c6ed57fc927e880863c49563d69032f62df`, `fd37959129c74285148f07fff5844a7593d5d037`, and `1cbf97036ec931266f4a6ed5eb747a00e5b7ad29` (the last aligns the prior empty-input test with the stricter contract).
+- Verification status: source and test edits were re-fetched from GitHub and inspected; local repository execution is unavailable in this session. No CI/workflow run or combined status was yet returned for the new head `1cbf97036ec931266f4a6ed5eb747a00e5b7ad29`; do not mark the regression tests as passed until exact-head CI completes.
+- Acceptance: exact-head Python CI and VISTEC evaluation workflow pass; inspect the generated 49,997-row report and confirm the stricter parser accepts the pinned upstream snapshot without unexpected empty fields. If it rejects the pinned source, inspect the precise offending row before relaxing the gate; do not restore silent token dropping.
