@@ -352,3 +352,15 @@ Both had 100% output coverage, which is not accuracy. These scores measure agree
 
 
 Artifact verification: downloaded and inspected VISTEC artifact ZIP 12667445022; it contains one JSON report (3,803 bytes), schema 1.0. Parsed report matches the metrics above and explicitly records 50,000 SOURCE_ANNOTATED rows and 0 adjudicated rows. Artifact integrity/contents: DONE_VERIFIED; linguistic gold quality remains BLOCKED pending human adjudication.
+
+## Public beta site update — 2026-10-26
+
+| Task | Status | Acceptance / evidence |
+|---|---|---|
+| Visible beta disclosure on service page | IMPLEMENTED; exact-head checks pending | Homepage now identifies the tool as a research beta and links to evidence/limitations. |
+| Evidence disclosure on system page | IMPLEMENTED; exact-head checks pending | Shows VISTEC and Wisesight source-annotation diagnostics with explicit zero independently expert-reviewed rows; labels segmentation as not production-ready. |
+| Responsive styling for beta notice | IMPLEMENTED; exact-head checks pending | Added mobile layout rules; automated UI contract assertions added. |
+| Publish updated branch to public GitHub Pages | BLOCKED by release path | Pages workflow deploys on pushes to `main`; PR #71 is still draft. Do not deploy the draft branch over the current public site or merge its 304-commit diff blindly. Publish after the reviewed PR is merged, or create a separate preview host. |
+| Empirical linguistic validation | BLOCKED | No independent Thai IPA/acoustic gold, independent Ukrainian target-form judgments, or expert-adjudicated segmentation rows. |
+
+Latest successful pre-UI-update verification is on `17eac785a00ce1e8a95ac904db348ddf8c286040`: CI run 40372261539, Web static validation 40372261553, VISTEC evaluation 40372261718 all succeeded. The beta UI/test edits are newer and must pass their own exact-head checks before they are considered verified.
