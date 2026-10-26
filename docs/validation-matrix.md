@@ -130,9 +130,19 @@ Verified code/data head: [CI 40238202167](https://github.com/ClippyFirst/Thai-Uk
 | Component | State | Evidence / next acceptance criterion |
 |---|---|---|
 | Dictionary max-match segmentation | PARTIAL | Opt-in baseline and pinned dictionary exist; Wisesight source-annotated metrics are diagnostic only. Keep distinct from adjudicated gold. |
-| TUD unigram-Viterbi research segmenter | PARTIAL | Pinned CC BY-SA 4.0 source snapshots and source-document-disjoint train/dev/test are implemented; exact-head training/evaluation job must pass and report held-out metrics before claims. |
+| TUD unigram-Viterbi research segmenter | PARTIAL — research metrics measured | Exact-head CI passed: held-out TUD test boundary F1 0.872932 (375 groups), exact-group rate 0.432; Wisesight test-only F1 0.792101 (2,848 filtered groups). Not independent expert gold, not full-text metrics, not production default; preserve CC BY-SA 4.0. |
 | `เดิน` lexical IPA | PARTIAL | Typed source-pinned override `/dɤːn˧/` is separate from parser-only vowel-length ambiguity and routed through IPA→Ukrainian adapter; regression expectations fixed, exact-head CI pending. Not independent gold. |
 | `บรรจุ` final `/ʔ/` | BLOCKED | Source/transcription-level discrepancy remains unresolved; requires qualified Thai phonology/phonetics review with exact transcription conventions, not a global rule patch. |
 | Independent IPA/acoustic gold | BLOCKED | No independently adjudicated IPA/audio labels currently available. CCOST is a candidate only; access, annotation, and NC-SA conditions must be satisfied before a gold claim. |
 | Independent Ukrainian target forms | BLOCKED | Template/protocol exists; independent Ukrainian-language review and source-scoped decisions are still needed. |
-| Exact-head CI for latest branch | TODO | Latest observed failed run `40286374324` had 4 stale tests; fixes are committed through `4656a557a74405f64455219e1a6fece6be575915`. Acceptance: full CI, browser parity, diagnostics, TUD training, artifact generation, and static validation pass on that exact head. |
+| Exact-head CI for code/data head `4c3d01d9b726b410c98048878441082d8d5c8299` | DONE_VERIFIED | CI run `40296520186` and Web static validation run `40296520175` passed; 176 Python tests, Node IPA→UA/parity/UI, generated-artifact checks, diagnostics, TUD training and artifact uploads passed. Recheck final documentation-only head separately. |
+
+
+## Verified checkpoint — 2026-10-26
+
+- Exact code/data head: `4c3d01d9b726b410c98048878441082d8d5c8299`; CI [40296520186](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40296520186) PASS; Web static validation [40296520175](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40296520175) PASS.
+- Candidate TSV regeneration check now passes byte-for-byte; malformed quoting of JSON fields was the prior failure and is fixed.
+- Source-attested IPA diagnostic: 6 records, 2 circular source overrides excluded, 4 comparable records, 3 segmental agreements, 4 tone agreements; `SOURCE_ATTESTED_NOT_GOLD`, no accuracy claim.
+- Wisesight-1000: 993 source-annotated rows, 0 adjudicated. Text tokenizer F1 0.160604; dictionary max-match F1 0.839471; exact sequence rates 0.031219 and 0.193353 respectively. Diagnostic only, not expert gold.
+- TUD research segmenter: dev F1 0.889023; held-out TUD test F1 0.872932 (375 groups); Wisesight test-only F1 0.792101 (2,848 filtered groups). TUD labels inherit source tokenization; no production integration decision or independent accuracy claim.
+- Readiness remains **research prototype / not release-ready**. Independent phonetic/acoustic gold, Ukrainian target-form adjudication, and context-specific resolution of `บรรจุ` remain evidence-limited.
