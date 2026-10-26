@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import re
 import subprocess
@@ -41,14 +42,29 @@ def parse_submission_text(value: str, *, row_id: str = "fixture") -> tuple[str, 
     return text, tokens
 
 
+def git_blob_sha1(path: Path) -> str:
+    """Compute Git's SHA-1 blob object ID without requiring a local Git checkout."""
+    size = path.stat().st_size
+    digest = hashlib.sha1()
+    digest.update(f"blob {size}\\0".encode("ascii"))
+    with path.open("rb") as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
 def write_benchmark_files(source_csv: Path, gold_path: Path, predictions_path: Path,
-                          tud_model: dict, *, expected_rows: int = EXPECTED_ROWS) -> int:
+                          tud_model: dict, *, expected_rows: int = EXPECTED_ROWS,
+                          expected_blob_sha1: str | None = SOURCE_BLOB_SHA1) -> int:
     if (tud_model.get("model_id") != "clippyfirst-tud-unigram-viterbi-v1"
             or tud_model.get("source_license") != "CC-BY-SA-4.0"):
         raise ValueError("unexpected TUD model identity or license")
     counts, penalty = tud_model.get("word_counts"), tud_model.get("token_penalty")
     if not isinstance(counts, dict) or not counts or not isinstance(penalty, (int, float)):
         raise ValueError("invalid TUD model counts or token penalty")
+
+    if expected_blob_sha1 is not None and git_blob_sha1(source_csv) != expected_blob_sha1:
+        raise ValueError("VISTEC CSV Git blob SHA-1 does not match the pinned source snapshot")
 
     from thai_ukrainian.segmentation import segment_text_preserving
     from compare_segmentation_error_review import segment_tud_preserving
