@@ -110,6 +110,10 @@ def main() -> int:
         )
     scored_gold_status = next(iter(gold_statuses), None)
 
+    # Index once: VISTEC has ~50k rows and two predictions per row. Re-scanning
+    # the entire gold list for every prediction made the evaluator quadratic.
+    gold_rows_by_id = {row["id"]: row for row in gold_rows}
+    gold_ids = set(gold_rows_by_id)
     predictions: dict[str, dict[str, dict[str, object]]] = defaultdict(dict)
     for row in prediction_rows:
         if not row["id"].strip() or not row["engine"].strip():
@@ -119,7 +123,7 @@ def main() -> int:
         engine, row_id = row["engine"].strip(), row["id"].strip()
         if row_id in predictions[engine]:
             raise ValueError(f"prediction (engine,id) must be unique: {(engine, row_id)!r}")
-        if row_id not in {r["id"] for r in gold_rows}:
+        if row_id not in gold_ids:
             raise ValueError(f"prediction references unknown gold id: {row_id!r}")
         tokens: list[str] = []
         predicted_boundaries: set[int] = set()
@@ -127,7 +131,7 @@ def main() -> int:
             tokens = parse_tokens(row["predicted_tokens_json"], row_id=row_id, field="predicted_tokens_json")
             if tokens and row["status"].strip().lower() in SCOREABLE_PREDICTION_STATUSES:
                 predicted_boundaries = boundaries(
-                    next(r["text"] for r in gold_rows if r["id"] == row_id),
+                    gold_rows_by_id[row_id]["text"],
                     tokens, row_id=row_id, field="predicted_tokens_json",
                 )
         predictions[engine][row_id] = {
