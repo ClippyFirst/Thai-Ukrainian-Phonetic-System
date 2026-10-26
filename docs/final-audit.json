@@ -579,5 +579,33 @@
     "last_status_checked": "2026-10-26",
     "code_bearing_commit": "ccee129d509c95f95c2f455fd769bcbcd9ae71e0",
     "final_documentation_head_before_this_update": "aeb46e0d31d69e3ebcc8afe6abd7a9a75b4908da"
+  },
+  "latest_validation_refresh_2026_10_26": {
+    "tested_merge_ref_head": "1c966f6794fd906d1af4ee20f8c0d078abf2dbef",
+    "source_branch_commit_with_test_fix": "0e60b2d277facee573839335b7e1681d5520a224",
+    "ci": {
+      "run_id": 40354836807,
+      "status": "failure",
+      "result": "194 Python tests run; one failed due to stale expected VISTEC license wording; assertion updated; exact-head rerun pending"
+    },
+    "web_static_validation": {
+      "run_id": 40354836884,
+      "status": "success",
+      "qualification": "prior tested merge ref, before test-only assertion fix"
+    },
+    "vistec_evaluation": {
+      "run_id": 40354836797,
+      "status": "success",
+      "qualification": "pinned 50,000-row source-annotation diagnostic; not expert-adjudicated accuracy; artifact inspection required before reporting metrics"
+    },
+    "latest_test_fix": "0e60b2d277facee573839335b7e1681d5520a224",
+    "remaining_evidence_gates": [
+      "independent Thai IPA/acoustic adjudication",
+      "two independent Ukrainian-native target-form reviews",
+      "human segmentation adjudication",
+      "contextual review of บรรจุ final /ʔ/",
+      "lawful full official OBEC PDF inspection; prior URL returned HTTP 403"
+    ],
+    "readiness": "research prototype; not release-ready"
   }
 }
