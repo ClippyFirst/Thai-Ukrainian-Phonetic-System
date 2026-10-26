@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "engineering-verified research prototype; TUD-trained segmentation experiment and source-pinned lexical override additions pending exact-head CI",
+  "status": "engineering-verified research prototype; exact-head CI pending after regression expectation fixes for the source-pinned เดิน override",
   "implemented": [
     "orthography",
     "syllable_structure",
