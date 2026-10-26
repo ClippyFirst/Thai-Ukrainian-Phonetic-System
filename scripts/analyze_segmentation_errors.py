@@ -64,7 +64,7 @@ def main() -> int:
             raise ValueError(f"invalid gold token array for {row_id!r}")
         if "".join(gold_tokens) != text:
             raise ValueError(f"gold tokens do not reconstruct source text for {row_id!r}")
-        predicted_tokens = segment_text_preserving(text)
+        # Normalize iterable type: the engine may return a tuple, while JSON gold is a list.\n        predicted_tokens = list(segment_text_preserving(text))
         if not predicted_tokens or "".join(predicted_tokens) != text:
             raise ValueError(f"prediction does not reconstruct source text for {row_id!r}")
 
