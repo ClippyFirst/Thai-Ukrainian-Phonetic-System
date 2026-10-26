@@ -505,3 +505,15 @@ Web static validation [40378982254](https://github.com/ClippyFirst/Thai-Ukrainia
 No environment protection or repository deployment settings were changed, no alternate hosting project was created, and no release was published. If the deploy job remains queued, the next action is to inspect GitHub Actions runner/service availability or have the repository owner retry/inspect the queued deploy job through GitHub. Do not weaken the workflow's environment or branch restrictions to bypass the queue.
 
 Remaining linguistic evidence gates are unchanged: independently adjudicated Thai IPA/acoustic gold, human segmentation adjudication, two independent Ukrainian target-form reviews, contextual review of บรรจุ final /ʔ/, and lawful full official OBEC PDF access. Status remains **research beta candidate, not release-ready for arbitrary Thai text**.
+
+## Verification update — Pages deployment completed — 2026-10-26 22:08 EET
+
+This section supersedes the earlier queued-deployment status above.
+
+- GitHub Pages workflow [40378981918](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40378981918) is now **completed / success**. Build job [121769734639] passed all Python regression tests, generated-fixture checks, browser parity, UI-contract/beta-disclosure checks, and artifact upload. Deploy job [121775188761] also completed successfully.
+- Main CI [40378981710](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40378981710) is **success**, including both the test job and master-artifact job.
+- Web static validation [40378982254](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40378982254) is **success**.
+- Public site URL: https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/. The deployment workflow is green and the beta source was merged in commit `b4ae9e9f88a79d6f55cb1207363ac6877df080ba`. A direct fetch of the live HTML was unavailable in the connected web tool, so the precise served markup has not been independently inspected; do not confuse that limitation with a failed deployment.
+- Latest separately checked main CI run [40381878163](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40381878163) also passed for docs commit `7bcc7e21c98bde8f55a7c56a1c1a97fe3486b72e`. Audit JSON synchronized in commit `6466573838c4aa18a405c510a9b5e56f0ea453b3`.
+
+**Status:** research beta deployment is operational according to GitHub Pages workflow; not a release-ready general-purpose Thai transcription system. The independent Thai IPA/acoustic gold, human segmentation adjudication, two independent Ukrainian target-form reviews, contextual review of บรรจุ final /ʔ/, and lawful full official OBEC PDF access remain research evidence blockers. Source-annotated VISTEC/Wisesight diagnostics are not expert-adjudicated gold.
