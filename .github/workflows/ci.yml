@@ -21,6 +21,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - run: python scripts/generate_web_word_dictionary.py
       - run: node web/tests/ipa-ua.test.mjs
       - run: node web/tests/parity.test.mjs
       - run: node web/tests/ui-contract.test.mjs
