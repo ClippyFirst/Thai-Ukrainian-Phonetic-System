@@ -174,7 +174,7 @@ function segmentThaiRun(input){
 function analyzeThaiSegment(token){
   const lexicalOverride=LEXICAL_IPA_OVERRIDES.has(token.input);
   const syllables=lexicalOverride?[token.input]:TEXT_LEXICON.get(token.input);
-  if(!syllables) return {...token,segmentationStatus:"unresolved",syllables:[],warnings:["No reviewed dictionary segmentation or deterministic pronunciation is available for this span. It is preserved without guessed IPA or Ukrainian output."]};
+  if(!syllables) return {...token,segmentationStatus:"unresolved",syllables:[],warnings:["No reviewed dictionary segmentation or deterministic pronunciation is available for this span. IPA and Ukrainian output are withheld; the span is preserved without a guessed pronunciation."]};
   return {...token,segmentationStatus:lexicalOverride?"lexical_ipa_override":"lexicon",syllables:syllables.map(analyze),warnings:[]};
 }
 
