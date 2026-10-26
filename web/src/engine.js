@@ -143,7 +143,7 @@ function tokenizeText(text) {
 const TEXT_WORDS = [...new Set([...TEXT_LEXICON.keys(), ...LEXICAL_IPA_OVERRIDES.keys()])]
   .sort((a,b)=>[...b].length-[...a].length || a.localeCompare(b,"th"));
 const PREPOSED = new Set(["เ","แ","โ","ใ","ไ"]);
-const COMBINING = new Set([...VS, ...Object.keys(M), "์"]);
+const COMBINING = new Set([...VS].filter(char=>!PREPOSED.has(char)).concat([...Object.keys(M), "์"]));
 
 function nextThaiClusterEnd(chars, start){
   let i=start;
