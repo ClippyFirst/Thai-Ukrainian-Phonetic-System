@@ -200,5 +200,17 @@ class TextPipelineTests(unittest.TestCase):
             with self.subTest(word=word):
                 self.assertEqual(segment_thai_word(word), segmentation)
 
+
+    def test_special_vowel_letters_remain_lexically_unresolved_without_word_evidence(self):
+        for spelling in ("ฤ", "ฤๅ", "ฦ", "ฦๅ"):
+            with self.subTest(spelling=spelling):
+                result = analyze_syllable(spelling)
+                self.assertEqual(result.status, "analysis-dependent:special-orthography")
+                self.assertIsNone(result.phonemic_ipa)
+                self.assertIsNone(result.phonetic_ipa)
+                self.assertIsNone(result.ukrainian_transliteration)
+                self.assertTrue(result.special_analyses)
+
+
 if __name__ == "__main__":
     unittest.main()
