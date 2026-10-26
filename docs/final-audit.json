@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "engineering-verified research prototype; exact-head CI and Web static validation pass on cb775d6156f62392fa2d0f4bcf8d1aa30d219530; not release-ready for arbitrary Thai text or empirically validated IPA/Ukrainian output",
+  "status": "engineering-verified research prototype; exact-head CI and Web static validation pass on documentation head 4c61866d98312e8cf08f78bc8ab0f213bc8dc8c0; not release-ready for arbitrary Thai text or empirically validated IPA/Ukrainian output",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -86,7 +86,7 @@
     "status": "SOURCE_ATTESTED_NOT_GOLD",
     "includes_short_long_oe_contrast": true
   },
-  "latest_verified_code_commit": "4c3d01d9b726b410c98048878441082d8d5c8299",
+  "latest_verified_code_commit": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
   "starting_branch_commit": "7e39fd4bc108386148c1e9a79d257d75babcc9aa",
   "ci": {
     "latest_fully_successful_code_data_commit": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
@@ -104,14 +104,21 @@
     "current_head_web_validation_runs": [
       40315032788
     ],
-    "current_head_status_at_audit_refresh": "PASS: code/data head cb775d6156f62392fa2d0f4bcf8d1aa30d219530 passed exact-head CI run 40315032771 (test and master-artifact) and Web static validation run 40315032788. Documentation is synchronized to this verified state; a new exact-head workflow will run for the documentation commit.",
-    "latest_full_repository_head": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
-    "latest_full_repository_head_ci_run": 40315032771,
-    "latest_full_repository_head_web_validation_run": 40315032788,
+    "current_head_status_at_audit_refresh": "PASS: documentation head 4c61866d98312e8cf08f78bc8ab0f213bc8dc8c0 passed CI run 40316202183 (test and master-artifact) and Web static validation run 40316202145. CI ran 180 Python tests, generated-data drift, master artifact, Node IPA→Ukrainian, 28 parity fixtures, UI contract, challenge/Wisesight/source-attested IPA diagnostics, candidate registry check, TUD research training/evaluation, and artifact uploads. These are engineering checks, not linguistic accuracy.",
+    "latest_full_repository_head": "4c61866d98312e8cf08f78bc8ab0f213bc8dc8c0",
+    "latest_full_repository_head_ci_run": 40316202183,
+    "latest_full_repository_head_web_validation_run": 40316202145,
     "latest_web_static_verified_code_commit": "1ed4c7aa30759fd8d31136e46d7490bf9b2c5e8b",
     "latest_web_static_verified_code_run": 40286893366,
     "latest_verified_commit_note": "43687b2753379b1d617b1c925f87358f8aad13bd is the historical last fully verified code commit before the current TUD trainer and เดิน override changes; it is not the current branch head.",
-    "latest_verified_code_commit_note": "Exact-head engineering checks pass on cb775d6156f62392fa2d0f4bcf8d1aa30d219530; independent Thai IPA/acoustic gold, Ukrainian target-form adjudication, and production segmentation quality remain unverified."
+    "latest_verified_code_commit_note": "Exact-head engineering checks pass on cb775d6156f62392fa2d0f4bcf8d1aa30d219530; independent Thai IPA/acoustic gold, Ukrainian target-form adjudication, and production segmentation quality remain unverified.",
+    "latest_fully_successful_documentation_commit": "4c61866d98312e8cf08f78bc8ab0f213bc8dc8c0",
+    "latest_fully_successful_documentation_ci_run": 40316202183,
+    "latest_fully_successful_documentation_web_validation_run": 40316202145,
+    "latest_documentation_head_ci_run": 40316202183,
+    "latest_documentation_head_web_validation_run": 40316202145,
+    "latest_implementation_ci_run": 40315032771,
+    "latest_implementation_web_validation_run": 40315032788
   },
   "challenge_runtime": {
     "challenge_inputs": 36,
@@ -129,11 +136,11 @@
     "vowel_rime_records": 41
   },
   "latest_documentation_checkpoint": {
-    "commit": "cb8832ca99e4ccce53b6fb2b6988b5945acaad71",
-    "ci_run": 40297155713,
-    "web_static_validation_run": 40297155831,
+    "commit": "4c61866d98312e8cf08f78bc8ab0f213bc8dc8c0",
+    "ci_run": 40316202183,
+    "web_static_validation_run": 40316202145,
     "ci_status": "success",
-    "note": "Exact final documentation head verified: CI test and master-artifact jobs passed; Web static validation passed. This is documentation-only on top of the previously verified code/data head 4c3d01d9b726b410c98048878441082d8d5c8299."
+    "note": "Exact documentation head verified after 180 Python tests, generated-data drift, 351,780-row master artifact, IPA→Ukrainian tests, 28 Python/browser parity fixtures, UI contract, source-attested IPA diagnostics, Wisesight diagnostics, target-candidate registry check, TUD research training/evaluation and artifact uploads. This is engineering verification, not independent phonetic gold."
   },
   "text_only_checkpoint": {
     "branch": "research/thai-segmentation-gold-parity-verified-20261025",
@@ -230,7 +237,7 @@
   ],
   "latest_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
   "latest_implementation_commit_pending_ci": null,
-  "current_head_status_at_audit_refresh": "PASS: code/data head cb775d6156f62392fa2d0f4bcf8d1aa30d219530 passed exact-head CI run 40315032771 (test and master-artifact) and Web static validation run 40315032788. Documentation is synchronized to this verified state; a new exact-head workflow will run for the documentation commit.",
+  "current_head_status_at_audit_refresh": "PASS: documentation head 4c61866d98312e8cf08f78bc8ab0f213bc8dc8c0 passed CI run 40316202183 (test and master-artifact) and Web static validation run 40316202145. CI ran 180 Python tests, generated-data drift, master artifact, Node IPA→Ukrainian, 28 parity fixtures, UI contract, challenge/Wisesight/source-attested IPA diagnostics, candidate registry check, TUD research training/evaluation, and artifact uploads. These are engineering checks, not linguistic accuracy.",
   "current_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
   "current_implementation_commit_before_audit_update": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
   "latest_documentation_checkpoint_before_audit": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
@@ -299,9 +306,9 @@
     }
   },
   "latest_implementation_commit_ci_verified": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
-  "latest_documentation_head_ci_verified": "cb8832ca99e4ccce53b6fb2b6988b5945acaad71",
-  "latest_documentation_head_ci_run": 40297155713,
-  "latest_documentation_head_web_validation_run": 40297155831,
+  "latest_documentation_head_ci_verified": "4c61866d98312e8cf08f78bc8ab0f213bc8dc8c0",
+  "latest_documentation_head_ci_run": 40316202183,
+  "latest_documentation_head_web_validation_run": 40316202145,
   "latest_implementation_ci_run": 40315032771,
   "latest_implementation_web_validation_run": 40315032788
 }
