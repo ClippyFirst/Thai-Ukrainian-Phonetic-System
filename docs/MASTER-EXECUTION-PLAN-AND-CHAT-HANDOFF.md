@@ -935,3 +935,23 @@ Web static validation [40305933181](https://github.com/ClippyFirst/Thai-Ukrainia
 
 - Downloaded and opened artifact ZIP 12667445022 from successful VISTEC run 40354836797. Archive contains only `vistec-segmentation-report.json` (3,803 bytes). Parsed the JSON and independently confirmed schema 1.0, 50,000 source-annotated rows, 0 adjudicated rows, and metrics recorded above; report status remains `MEASURED_ON_SOURCE_ANNOTATED_ROWS_NOT_EXPERT_ADJUDICATED`. ZIP digest matches GitHub artifact metadata: `a02e3c8fe769a9b0998fdf2e66a49d6d0bec1c0b7191e08854d2dd81cc50132c`.
 - Artifact acceptance is now DONE_VERIFIED for reproducible source-annotation diagnostic output. This does not satisfy independent linguistic adjudication or release gates. Fresh exact-head CI/Web/VISTEC runs remain queued at the latest poll.
+
+## Public beta-site continuation — 2026-10-26
+
+### UI changes in this batch
+- `web/index.html`: added a visible Ukrainian research-beta notice before the input area, explicitly warning that outputs are candidates rather than an official norm or guaranteed pronunciation; links to the evidence/limitations section.
+- `web/system.html`: added the same beta notice and a public evidence section reporting the pinned VISTEC/Wisesight segmentation diagnostics and zero independently expert-reviewed rows.
+- `web/src/styles.css`: added responsive styling for the beta notice.
+- `web/tests/ui-contract.test.mjs`: added regression assertions for the beta label, evidence anchor, metric denominators, and mobile styling.
+- `docs/validation-matrix.md` and `docs/final-audit.md`: updated in place with beta status, deployment boundary, and outstanding external evidence gates.
+
+### Evidence published to the site
+- VISTEC (50,000 source-annotated rows): dictionary F1 0.82834 / 76 exact sequences (0.152%); TUD Viterbi F1 0.75302 / 16 exact sequences (0.032%).
+- Wisesight (993 source-annotated rows): dictionary F1 0.83947 / 192 exact sequences (19.34%); TUD Viterbi F1 0.74862 / 119 exact sequences (11.98%).
+- Neither set is independent expert gold. Zero rows have independent expert adjudication. These metrics are agreement diagnostics only and do not establish Thai pronunciation accuracy. Neither segmenter is production-ready.
+
+### Verification and deployment boundary
+- Latest successful verification before the beta UI edits: commit `17eac785a00ce1e8a95ac904db348ddf8c286040`; CI 40372261539, Web static validation 40372261553, and external VISTEC evaluation 40372261718 all succeeded.
+- The beta UI and new UI assertions were committed after that verified checkpoint. Exact-head CI/static checks for the new UI are pending; do not mark them PASS until the actual runs succeed.
+- Pages workflow deploys only on pushes to `main` (or manual dispatch). PR #71 is still draft. The 304-commit research PR was not merged, and its branch was not deployed over the existing public site. Public publication is therefore not yet verified; next acceptance criterion is successful exact-head CI/static checks, review of the PR diff, then deliberate merge/deploy or a separate preview host.
+- Current research prototype remains not release-ready for arbitrary Thai text. Remaining external blockers: independent Thai IPA/acoustic review; two independent Ukrainian target-form reviews; human segmentation adjudication; context-level review of บรรจุ final /ʔ/; and lawful access to the full official OBEC PDF (prior URL returned HTTP 403).
