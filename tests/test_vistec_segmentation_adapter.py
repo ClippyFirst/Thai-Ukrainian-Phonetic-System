@@ -36,7 +36,7 @@ class VistecSegmentationAdapterTests(unittest.TestCase):
                 writer.writeheader()
                 writer.writerow({"questionText": "different raw text", "submissionText": "<ne>สวัสดี</ne>| |โลก"})
                 writer.writerow({"questionText": "hello world", "submissionText": "hello| |world"})
-            count = write_benchmark_files(source, gold, predictions, MODEL, expected_rows=2)
+            count = write_benchmark_files(source, gold, predictions, MODEL, expected_rows=2, expected_blob_sha1=None)
             self.assertEqual(count, 2)
             with gold.open(encoding="utf-8", newline="") as f:
                 rows = list(csv.DictReader(f, delimiter="\t"))
@@ -51,6 +51,15 @@ class VistecSegmentationAdapterTests(unittest.TestCase):
             self.assertEqual({r["engine"] for r in pred_rows}, {"dictionary_max_match", "tud_unigram_viterbi"})
             self.assertTrue(all(r["status"] == "ok" for r in pred_rows))
             self.assertTrue(all("".join(json.loads(r["predicted_tokens_json"])) in {"สวัสดี โลก", "hello world"} for r in pred_rows))
+
+
+    def test_rejects_unpinned_csv_blob(self):
+        with tempfile.TemporaryDirectory() as d:
+            source = Path(d) / "source.csv"
+            source.write_text("submissionText\\nhello\\n", encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "Git blob SHA-1"):
+                write_benchmark_files(source, Path(d)/"g.tsv", Path(d)/"p.tsv",
+                                      MODEL, expected_rows=1, expected_blob_sha1="not-the-pinned-hash")
 
     def test_rejects_wrong_tud_model_license(self):
         with tempfile.TemporaryDirectory() as d:
