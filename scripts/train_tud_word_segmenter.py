@@ -11,6 +11,7 @@ import argparse
 import hashlib
 import json
 import math
+import re
 import urllib.request
 from collections import Counter
 from pathlib import Path
@@ -43,29 +44,54 @@ def pinned_download(filename: str, expected_blob: str) -> str:
     return raw.decode("utf-8")
 
 
-def parse_conllu_sentences(content: str) -> list[list[tuple[str, bool]]]:
-    """Return integer-ID tokens as (form, no_space_after) pairs."""
-    sentences: list[list[tuple[str, bool]]] = []
+def parse_conllu_sentences(content: str) -> list[tuple[str, list[tuple[str, bool]]]]:
+    """Return (source filename, tokens) while preserving no-space annotations."""
+    sentences: list[tuple[str, list[tuple[str, bool]]]] = []
     current: list[tuple[str, bool]] = []
+    filename = "UNKNOWN_SOURCE"
+    sentence_filename = filename
     for line in content.splitlines() + [""]:
         if not line.strip():
             if current:
-                sentences.append(current)
+                sentences.append((sentence_filename, current))
                 current = []
+            continue
+        if line.startswith("# filename = "):
+            filename = line.split("=", 1)[1].strip()
+            sentence_filename = filename
             continue
         if line.startswith("#"):
             continue
         fields = line.split("\t")
         if len(fields) != 10 or not fields[0].isdigit():
             continue
+        if not current:
+            sentence_filename = filename
         form, misc = fields[1], fields[9]
         current.append((form, "SpaceAfter=No" in misc.split("|")))
     return sentences
 
 
+def source_disjoint_split(sentences: list[tuple[str, list[tuple[str, bool]]]]) -> tuple[list, list, list]:
+    """Split by source document, not sentence, to prevent source leakage."""
+    partitions: dict[str, list] = {"train": [], "dev": [], "test": []}
+    for filename, sentence in sentences:
+        source_key = re.sub(r"-PART\d+$", "", filename, flags=re.IGNORECASE)
+        bucket = int(hashlib.sha256(source_key.encode("utf-8")).hexdigest()[:8], 16) % 10
+        split = "train" if bucket < 8 else "dev" if bucket == 8 else "test"
+        partitions[split].append((filename, sentence))
+    keys = {
+        name: {re.sub(r"-PART\d+$", "", filename, flags=re.IGNORECASE) for filename, _ in rows}
+        for name, rows in partitions.items()
+    }
+    if keys["train"] & keys["dev"] or keys["train"] & keys["test"] or keys["dev"] & keys["test"]:
+        raise AssertionError("TUD source-document leakage across derived splits")
+    return partitions["train"], partitions["dev"], partitions["test"]
+
+
 def training_counts(sentences: Iterable[list[tuple[str, bool]]]) -> Counter[str]:
     counts: Counter[str] = Counter()
-    for sentence in sentences:
+    for _, sentence in sentences:
         for form, _ in sentence:
             if is_thai_word(form):
                 counts[form] += 1
@@ -76,7 +102,7 @@ def training_counts(sentences: Iterable[list[tuple[str, bool]]]) -> Counter[str]
 
 def evaluation_groups(sentences: Iterable[list[tuple[str, bool]]]) -> list[list[str]]:
     groups: list[list[str]] = []
-    for sentence in sentences:
+    for _, sentence in sentences:
         group: list[str] = []
         previous_no_space = False
         for form, no_space_after in sentence:
@@ -195,9 +221,12 @@ def main() -> int:
         return 0
 
     source = {name: pinned_download(filename, blob) for name, (filename, blob) in SOURCE_FILES.items()}
-    train_sentences = parse_conllu_sentences(source["train"])
-    dev_sentences = parse_conllu_sentences(source["dev"])
-    test_sentences = parse_conllu_sentences(source["test"])
+    all_sentences = [
+        sentence
+        for split_text in source.values()
+        for sentence in parse_conllu_sentences(split_text)
+    ]
+    train_sentences, dev_sentences, test_sentences = source_disjoint_split(all_sentences)
     counts = training_counts(train_sentences)
     dev_groups = evaluation_groups(dev_sentences)
     test_groups = evaluation_groups(test_sentences)
@@ -214,9 +243,9 @@ def main() -> int:
         "source_repository": SOURCE_REPO,
         "source_commit": SOURCE_COMMIT,
         "source_license": SOURCE_LICENSE,
-        "training_split": "TUD train only",
-        "development_split": "TUD dev; token penalty selected from fixed grid",
-        "test_split": "TUD test; never used for tuning",
+        "training_split": "source-disjoint 80% split from pinned TUD train/dev/test snapshots",
+        "development_split": "source-disjoint 10% split; token penalty selected from fixed grid",
+        "test_split": "source-disjoint 10% split; never used for tuning",
         "external_test": "Wisesight 993 source-annotated rows; never used for training or tuning",
         "algorithm": "unigram token-frequency Viterbi over Thai code points; unknown-character fallback is explicit",
         "token_penalty": best_penalty,
