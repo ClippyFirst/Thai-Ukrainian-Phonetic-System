@@ -69,6 +69,8 @@ class TextPipelineTests(unittest.TestCase):
         self.assertEqual(analysis["vowel_length"], "long")
         self.assertEqual(analysis["tone"]["tone"], "mid")
         self.assertEqual(analysis["ukrainian_transliteration"], "ден")
+        self.assertEqual(analysis["onset"], ["ด"])
+        self.assertEqual(analysis["coda"], "น")
         self.assertTrue(any("not independently adjudicated" in w for w in analysis["warnings"]))
 
     def test_final_velar_stop_is_preserved_in_ukrainian_output(self):
