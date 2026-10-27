@@ -184,12 +184,12 @@ function run() {
     !['lexicon', 'lexical_ipa_override', ...(mode === 'soft' ? ['soft-orthographic-clusters'] : []), ...(mode === 'super-soft' ? ['soft-orthographic-clusters', 'super-soft-approximate'] : [])].includes(token.segmentationStatus) ||
     (token.syllables || []).some(syllable => syllable.status !== 'analyzed')
   ).length;
-  status.className = unresolvedCount || mode === 'soft' ? 'status notice' : 'status';
+  status.className = unresolvedCount || mode === 'soft' || mode === 'super-soft' ? 'status notice' : 'status';
   status.textContent = thaiTokens.length === 0
     ? 'Тайських токенів не знайдено; нетайський текст збережено без фонетичної інтерпретації.'
     : unresolvedCount
       ? 'Режим «' + (mode === 'super-soft' ? 'Суперм’який' : mode === 'soft' ? 'М’який' : 'Строгий') + '». Проаналізовано ' + tokens.length + ' токен(ів), тайських: ' + thaiTokens.length +
-        '; ' + unresolvedCount + ' фрагмент(ів) потребують перевірки або залишилися невизначеними.'
+        '; ' + unresolvedCount + (mode === 'super-soft' ? ' фрагмент(ів) мають приблизне читання або потребують перевірки.' : ' фрагмент(ів) потребують перевірки або залишилися невизначеними.')
       : 'Режим «' + (mode === 'super-soft' ? 'Суперм’який' : mode === 'soft' ? 'М’який' : 'Строгий') + '». Проаналізовано ' + tokens.length + ' токен(ів), тайських: ' + thaiTokens.length +
         '. Це фонетичний кандидат, а не переклад.';
   const uaOutput = assembleOutput(analysisText, tokens, 'ua');
