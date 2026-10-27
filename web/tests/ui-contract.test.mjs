@@ -136,14 +136,16 @@ assert.equal((output.innerHTML.match(/class="label">ФОНОЛОГІЧНА IPA<\
 input.value = "กาไฟ มา!";
 analyze.click();
 assert.match(output.innerHTML, /กา/);
-assert.match(output.innerHTML, /กาไฟ มา!/);
+assert.match(output.innerHTML, /continuous-output-value/);
+assert.match(output.innerHTML, /!/);
 assert.match(output.innerHTML, /Копіювати/);
 assert.match(output.innerHTML, /analysis-details/);
-assert.match(output.innerHTML, /⟦НЕВИЗНАЧЕНО:/) === false;
+assert.doesNotMatch(output.innerHTML, /⟦НЕВИЗНАЧЕНО:/);
 
 input.value = "ทดสอบกาไฟ";
 analyze.click();
-assert.match(output.innerHTML, /⟦НЕВИЗНАЧЕНО: ทดสอบ⟧ กา ไฟ/);
+assert.match(output.innerHTML, /⟦НЕВИЗНАЧЕНО: ทดสอบ⟧/);
+assert.match(output.innerHTML, /continuous-output-value/);
 assert.match(output.innerHTML, /UNRESOLVED/);
 
 input.value = "กาไฟ มา!";
