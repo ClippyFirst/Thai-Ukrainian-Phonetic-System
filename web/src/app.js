@@ -1,4 +1,5 @@
 import { analyzeText } from './engine.js';
+import { adaptIpaToUkrainian } from './ipa-ua.js';
 import { preprocessArticleText } from './article-cleanup.js';
 
 const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({
@@ -235,5 +236,43 @@ input.addEventListener('keydown', event => {
   if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
     event.preventDefault();
     run();
+  }
+});
+
+
+// A separate, explicit IPA-input path for users who already have a source-backed
+// transcription. It uses the same adapter as the Thai→IPA pipeline.
+const ipaInput = document.getElementById('ipa-input');
+const ipaAdaptButton = document.getElementById('ipa-adapt');
+const ipaAdapterResult = document.getElementById('ipa-adapter-result');
+
+function renderIpaAdaptation() {
+  const source = ipaInput.value;
+  const result = adaptIpaToUkrainian(source);
+  if (result.status !== 'adapted') {
+    ipaAdapterResult.innerHTML = '<div class="ipa-adapter-state withheld"><strong>Український результат утримано</strong>' +
+      '<p>' + esc((result.warnings || ['IPA не вдалося розібрати.']).join(' ')) + '</p></div>';
+    ipaAdapterResult.hidden = false;
+    return;
+  }
+  const row = (label, value) => '<div class="ipa-adapter-row"><span class="label">' + esc(label) +
+    '</span><div class="value">' + esc(value || '—') + '</div></div>';
+  const notes = [...(result.inputNotes || []), ...(result.neutralizedFeatures || [])];
+  ipaAdapterResult.innerHTML = '<div class="ipa-adapter-state adapted"><strong>Адаптацію виконано · дослідницький кандидат</strong>' +
+    '<p>' + esc((result.warnings || []).join(' ')) + '</p></div>' +
+    '<div class="ipa-adapter-grid">' +
+    row('Нормалізована сегментальна IPA', result.normalizedIpa) +
+    row('Український практичний кандидат', result.output) +
+    row('Застосовані правила', (result.rulesApplied || []).join(', ')) +
+    row('Розпізнані та нейтралізовані ознаки', notes.join('; ')) +
+    '</div>';
+  ipaAdapterResult.hidden = false;
+}
+
+ipaAdaptButton.addEventListener('click', renderIpaAdaptation);
+ipaInput.addEventListener('keydown', event => {
+  if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
+    event.preventDefault();
+    renderIpaAdaptation();
   }
 });
