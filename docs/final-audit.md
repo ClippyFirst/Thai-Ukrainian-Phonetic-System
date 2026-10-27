@@ -576,3 +576,12 @@ The Pages workflow now includes a post-deployment HTTP contract check for the wh
 - Generator output: 60,963 entries, 1,085 two-code-point prefix buckets, largest bucket 1,521, generated JavaScript 1,629,301 bytes (13,587 bytes / ~0.84% larger than the previous index). This is not a measured runtime speedup.
 - PR #80 merged the matrix/handoff evidence at `dd2260356f7de17d56d25b06c7c6b2c5999c0709`. The exact documentation-head CI run [40467565451](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40467565451) was still in progress at this audit refresh; the runtime code is unchanged from the verified code-bearing commit.
 - The product remains a partial research prototype. Independent Thai segmentation adjudication, Thai IPA/acoustic gold, two independent Ukrainian target-form reviews, contextual review of `บรรจุ` final /ʔ/, lawful official OBEC PDF access, and per-resource licensing/attribution remain blockers.
+
+## 2026-10-27 conservative morphology-candidate layer
+
+- Added `src/thai_ukrainian/morphology.py` and opt-in `analyze_text_morphology(text)` diagnostics over the existing dictionary-segmented token sequence.
+- Added a mirrored browser implementation and a visible “Морфологічні підказки” panel. Rule IDs are stable; the layer is marked research-only, displays evidence/uncertainty, and does not modify IPA or Ukrainian output.
+- Covered candidate cues: negation, prospective modality, progressive construction, completive/aspect, experiential marker, polar question, politeness, coordination, genitive/possessive relation, nominalization, passive/affected construction, and ambiguous `อยู่`.
+- Added Python unit tests, browser rule-contract checks, and a UI contract assertion. The relevant exact-head CI and Web static validation are the acceptance gates; no local checkout was available, so local tests were not run.
+- Evidence sources recorded in `docs/morphology-layer.md`: Iwasaki & Ingkaphirom (2005), Smyth *Thai: An Essential Grammar*, Li (2024; DOI 10.1515/flin-2024-2006), and Dékány (2026; DOI 10.1017/S0022226726101169). These support category selection, not per-token gold labels.
+- **Status remains PARTIAL / research-only.** This does not establish correct morphology for arbitrary Thai text. Upstream token boundaries are inherited from the known partial max-match segmenter; there is no independently adjudicated morphology corpus, POS/discourse parser, or morphology accuracy score. Full release gates are documented in `docs/morphology-layer.md`.
