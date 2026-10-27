@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PR #98 is merged. PR #101 (research-only morphology diagnostics) and PR #102 (direct IPA input and normalization) remain open pending their own exact-head verification/review. This is a partial research prototype, not release-ready for arbitrary Thai text or independently verified Ukrainian target forms.",
+  "status": "PR #98 is merged. PR #102 direct IPA input/normalization passed exact-head CI and Web static validation at ba3771e29b7554325c4b63cb3c39e2356e414066; it remains open pending integration. PR #101 morphology diagnostics also passed CI/static validation at a3b6a4292837a2c1dda77df568a780497d5fc31e and remains open. This is a partial research prototype, not release-ready for arbitrary Thai text or independently verified Ukrainian target forms.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -1180,14 +1180,26 @@
   "current_ipa_adapter_work": {
     "branch": "feat/ipa-input-adapter-robustness-20261027",
     "pull_request": 102,
-    "head_commit": "c29bb5a30d8bb115c4c8ad481ad7545055729010",
-    "status": "PENDING_EXACT_HEAD_CI_AND_WEB_STATIC_VALIDATION",
+    "head_commit": "ba3771e29b7554325c4b63cb3c39e2356e414066",
+    "status": "DONE_VERIFIED_PENDING_MERGE",
+    "verification": {
+      "ci": "PASS",
+      "ci_run": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40559473200",
+      "web_static_validation": "PASS",
+      "web_static_run": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40559473259",
+      "jobs": [
+        "test: success",
+        "master-artifact: success"
+      ]
+    },
     "acceptance": [
-      "Python adaptation regression tests pass",
-      "browser IPA adaptation regression tests pass",
-      "browser/Python parity and UI contract tests pass",
-      "generated artifacts remain unchanged",
-      "Web static validation passes"
-    ]
+      "Python adaptation regression tests pass in CI",
+      "browser IPA adaptation regression tests pass in CI",
+      "browser UI contract tests pass in CI",
+      "generated master artifact job passes",
+      "Web static validation passes",
+      "unknown IPA symbols and tone-only input are withheld"
+    ],
+    "evidence_limit": "Passing tests verifies software contracts, not lexical correctness of arbitrary IPA or expert validation of Ukrainian practical forms."
   }
 }
