@@ -68,7 +68,7 @@ function replaceMarkdownLinks(source) {
  */
 function preprocessArticleText(input) {
   const original = String(input ?? "");
-  const looksMarkedUp = /<ref\b|<[^>]+>|\[[^\]]+\]\([^)]*\)|\[\[|&(?:#(?:x[0-9a-f]+|[0-9]+)|[a-z][a-z0-9]+);|'{2,5}/i.test(original);
+  const looksMarkedUp = /<ref\b|<[^>]+>|\[[^\]]+\]\([^)]*\)|\[\[|&(?:#(?:x[0-9a-f]+|[0-9]+)|[a-z][a-z0-9]+);|'{2,5}|\*{1,3}[^*]+\*{1,3}/i.test(original);
   if (!looksMarkedUp) return { text: original, changed: false };
 
   let text = original
