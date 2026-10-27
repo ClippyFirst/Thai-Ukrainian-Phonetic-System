@@ -1092,3 +1092,8 @@ Branch `perf/browser-segmentation-latency-benchmark-20261027` adds a non-gating,
 - Latency diagnostic on Node v22.23.3 (five warmups, 30 samples): 100 code points median/p95 1.895/3.857 ms; 250: 3.895/5.398 ms; 500: 7.256/10.068 ms. Artifact name `thai-browser-segmentation-latency-diagnostic`, ID 12718541707. No comparable pre-index baseline exists, so do not claim measured speedup.
 - Preserve the IPA-first adapter boundary and abstention guarantees. Dictionary matches are boundary evidence only; unknown spans remain unresolved. The system is not release-ready for arbitrary Thai text.
 - Next genuine work: (1) establish a same-runner pre-index baseline only if a defensible comparison is worth the extra maintenance; (2) obtain independent Thai segmentation adjudication and IPA/acoustic gold; (3) obtain two independent Ukrainian target-form reviews; (4) resolve contextual `บรรจุ` final /ʔ/, lawful full OBEC PDF access, and per-resource license/attribution review. Do not fabricate evidence to close these gates.
+
+
+## Benchmark diagnostic caveat — 2026-10-27
+
+- **Benchmark input-quality caveat (newly identified):** the first latency script sliced the repeated seed at an arbitrary code-point count and could cut inside a Thai orthographic/lexical unit. Treat the recorded timings as preliminary smoke diagnostics only, not representative corpus latency. PR #85 proposes cluster/lexical-unit-safe input construction and reports actual lengths; wait for its exact-head CI artifact before replacing these numbers or claiming representativeness.
