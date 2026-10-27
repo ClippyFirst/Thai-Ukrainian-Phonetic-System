@@ -220,3 +220,11 @@ if (ignoredMorphology.inputTokenCount!==2 ||
   throw new Error("Morphology layer lost token typing or its explicit limitation contract");
 }
 console.log("Conservative Thai morphology candidate contract passed");
+
+const phoneticsBeforeMorphology = JSON.stringify(analyzeText("ยูเครน"));
+analyzeMorphology(analyzeText("ยูเครน"));
+const phoneticsAfterMorphology = JSON.stringify(analyzeText("ยูเครน"));
+if (phoneticsBeforeMorphology!==phoneticsAfterMorphology) {
+  throw new Error("Morphology diagnostics must never mutate the phonetic pipeline output");
+}
+console.log("Morphology / IPA non-interference contract passed");
