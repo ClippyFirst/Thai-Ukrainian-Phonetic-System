@@ -60,6 +60,18 @@ const LEXICAL_IPA_OVERRIDES = new Map([
     sourceUrl: "https://th.wiktionary.org/w/index.php?title=เดิน&oldid=1908803",
     license: "CC-BY-SA-4.0", evidenceStatus: "SOURCE_ATTESTED_NOT_GOLD"
   }],
+  ["ไกล", {
+    segmentalIpa: "klaj", tone: "mid", toneIpa: "˧", vowelLength: "diphthong", onset: ["ก", "ล"], onsetClass: "mid", vowel: "aj", coda: null, codaIpa: null,
+    sourceId: "SRC-WIKTIONARY-TH-ไกล", sourceRevision: "5688545",
+    sourceUrl: "https://th.wiktionary.org/w/index.php?title=ไกล&oldid=5688545",
+    license: "CC-BY-SA-4.0", evidenceStatus: "SOURCE_ATTESTED_NOT_GOLD"
+  }],
+  ["ใกล้", {
+    segmentalIpa: "klaj", tone: "falling", toneIpa: "˥˩", vowelLength: "diphthong", onset: ["ก", "ล"], onsetClass: "mid", vowel: "aj", coda: null, codaIpa: null,
+    sourceId: "SRC-WIKTIONARY-TH-ใกล้", sourceRevision: "5721860",
+    sourceUrl: "https://th.wiktionary.org/w/index.php?title=ใกล้&oldid=5721860",
+    license: "CC-BY-SA-4.0", evidenceStatus: "SOURCE_ATTESTED_NOT_GOLD"
+  }],
   ["ออก", {
     segmentalIpa: "ʔɔːk", tone: "low", toneIpa: "˩", vowelLength: "long", onset: ["อ"], onsetClass: "mid", vowel: "ɔ", coda: "ก", codaIpa: "k",
     sourceId: "SRC-WIKTIONARY-EN-TH-ตะวันออก-ออก", sourceRevision: "86398986",
