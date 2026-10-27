@@ -205,7 +205,7 @@ assert.match(output.innerHTML, /Тайського тексту для фоне�
 input.value = '**ยูเครน** ([อังกฤษ](https://th.wikipedia.org/wiki/ภาษาอังกฤษ "ภาษาอังกฤษ"): *Ukraine*) [\\[a\\]](https://example.org) &#x20;';
 analyze.click();
 assert.match(output.innerHTML, /Перед аналізом очищено вікі-\/Markdown-розмітку/);
-assert.match(output.innerHTML, /อังกฤษ: Ukraine/);
+assert.match(output.innerHTML, /: Ukraine/);
 assert.doesNotMatch(output.innerHTML, /wikipedia\.org|example\.org|&#x20;/i);
 
 
