@@ -1227,5 +1227,35 @@
     "workflow_commit": "3a69b65de3a42f8573e6106061702230638c52cf",
     "status": "PENDING_LIVE_PAGES_WORKFLOW_RESULT",
     "acceptance": "GitHub Pages deployment workflow must pass its published homepage, app.js, engine.js and ipa-ua.js checks including direct IPA input form markers."
+  },
+  "thai_ukrainian_methodology_matrix_2026_10_27": {
+    "status": "PARTIAL",
+    "document": "docs/ukrainian-transcription-methodology.md",
+    "branch": "docs/thai-ukrainian-method-table-20261027",
+    "base_commit": "c7e686d4665c978577f771e62947545ddbc67cfe",
+    "scope": [
+      "onset consonants",
+      "coda neutralization",
+      "vowel/rime orientations",
+      "IPA-to-Ukrainian candidate conventions",
+      "tone and length preservation",
+      "context and special orthography",
+      "evidence-gated statuses"
+    ],
+    "reference_policy": "Thai–Russian practical transcription is comparison material, not Ukrainian normative authority; the exact primary 2025 edition was not independently inspected.",
+    "implementation": "documentation only; no runtime rules changed",
+    "validation": "Fetched branch document, README, and validation matrix; checked document sections and source anchors. Exact-head CI run 40582576927 was queued at last inspection.",
+    "not_claimed": [
+      "independent IPA gold",
+      "independent Ukrainian target-form adjudication",
+      "held-out accuracy",
+      "official Ukrainian transcription standard"
+    ],
+    "acceptance": [
+      "independent expert IPA adjudication",
+      "independent Ukrainian target-form review",
+      "review primary references and exact locators",
+      "only then encode approved rules in a versioned machine-readable registry and add regression cases"
+    ]
   }
 }
