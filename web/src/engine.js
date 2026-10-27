@@ -263,21 +263,72 @@ function softSyllabify(input){
   return result;
 }
 
+// The super-soft fallback still respects the IPA adapter boundary: it creates a
+// visibly provisional segmental IPA string, then derives Ukrainian only by
+// calling adaptIpaToUkrainian. It is a completeness fallback, never lexical evidence.
+const FALLBACK_VOWELS = new Map([
+  ["เ","e"],["แ","ɛ"],["โ","o"],["ใ","aj"],["ไ","aj"],["ำ","am"],
+  ["ะ","a"],["ั","a"],["า","a"],["ิ","i"],["ี","i"],["ึ","ɯ"],["ื","ɯ"],
+  ["ุ","u"],["ู","u"],["อ","ɔ"],["็","a"]
+]);
+function approximateFallbackIPA(fragment){
+  const graphemes=[...fragment];
+  const consonants=graphemes.filter(ch=>C[ch]);
+  const vowel=detectVowel(fragment);
+  let nucleus=vowel?.ipa || "";
+  if(!nucleus){
+    const preposed=graphemes.find(ch=>PREPOSED.has(ch));
+    const sign=[...graphemes].reverse().find(ch=>FALLBACK_VOWELS.has(ch));
+    nucleus=FALLBACK_VOWELS.get(preposed) || FALLBACK_VOWELS.get(sign) || "a";
+  }
+  // Preserve a conservative onset/coda shape where possible. If there is no
+  // consonant, the vowel alone still passes through the IPA adapter.
+  let onset="", coda="";
+  if(consonants.length===1) onset=C[consonants[0]][1];
+  else if(consonants.length>1){
+    onset=consonants.slice(0,-1).map(ch=>C[ch][1]).join("");
+    coda=C[consonants.at(-1)][2] || C[consonants.at(-1)][1];
+  }
+  const candidate=(onset+nucleus+coda).replace(/[^a-zɐ-ʔːˑɛɤɯɔŋɕʰ͡]/gu,"");
+  return candidate || "a";
+}
+function approximateSyllable(fragment){
+  const phonemicIpa=approximateFallbackIPA(fragment);
+  const adaptation=adaptIpaToUkrainian(phonemicIpa);
+  // Every fallback must be representable by the adapter. Keep a final, explicit
+  // IPA-level schwa-like placeholder if the best-effort sequence is unsupported.
+  const safeIpa=adaptation?.status==="adapted"?phonemicIpa:"a";
+  const safeAdaptation=adaptation?.status==="adapted"?adaptation:adaptIpaToUkrainian(safeIpa);
+  return {...analyze(fragment),input:fragment,status:"approximate:orthographic-fallback",
+    phonemicIpa:safeIpa,phoneticIpa:null,tone:null,toneIpa:null,
+    ukrainian:safeAdaptation?.status==="adapted"?safeAdaptation.output:"а",
+    ukrainianAdaptation:safeAdaptation,
+    evidenceStatus:"UNVERIFIED_ORTHOGRAPHIC_FALLBACK",
+    warnings:["Суперм’який резервний результат: приблизну IPA сформовано зі структури написання й передано через IPA → українська. Це не підтверджена вимова; тон і лексичне читання можуть бути неправильними."]};
+}
 function analyzeThaiSegment(token, mode="strict"){
   const lexicalOverride=LEXICAL_IPA_OVERRIDES.has(token.input);
   const syllables=lexicalOverride?[token.input]:TEXT_LEXICON.get(token.input);
   if(!syllables){
-    if(mode==="soft"){
-      return {...token,segmentationStatus:"soft-orthographic-clusters",syllables:softSyllabify(token.input),
-        warnings:["М’який режим: використано жадібний структурний розбір складів без підтвердження меж слів. IPA та українські форми є попередніми; перевірте їх вручну."]};
+    if(mode==="soft" || mode==="super-soft"){
+      const provisional=softSyllabify(token.input);
+      return {...token,segmentationStatus:mode==="super-soft"?"super-soft-approximate":"soft-orthographic-clusters",
+        syllables:mode==="super-soft"?provisional.map(s=>s.status==="analyzed"?s:approximateSyllable(s.input)):provisional,
+        warnings:[mode==="super-soft"
+          ?"Суперм’який режим: кожен нерозв’язаний тайський фрагмент отримує приблизний IPA-кандидат і український вихід. Повнота не означає точність."
+          :"М’який режим: використано жадібний структурний розбір складів без підтвердження меж слів. IPA та українські форми є попередніми; перевірте їх вручну."]};
     }
     return {...token,segmentationStatus:"unresolved",syllables:[],warnings:["No reviewed dictionary segmentation or deterministic pronunciation is available for this span. IPA and Ukrainian output are withheld; the span is preserved without a guessed pronunciation."]};
   }
-  return {...token,segmentationStatus:lexicalOverride?"lexical_ipa_override":"lexicon",syllables:syllables.map(analyze),warnings:[]};
+  const parsed=syllables.map(analyze);
+  return {...token,segmentationStatus:lexicalOverride?"lexical_ipa_override":"lexicon",
+    syllables:mode==="super-soft"?parsed.map(s=>s.status==="analyzed"&&s.ukrainian?s:approximateSyllable(s.input)):parsed,
+    warnings:mode==="super-soft"&&parsed.some(s=>s.status!=="analyzed")
+      ?["Суперм’який режим: непідтверджений склад замінено приблизним IPA-кандидатом через IPA → українська."]:[]};
 }
 
 function analyzeText(text, options={}){
-  const mode=options.mode==="soft"?"soft":"strict";
+  const mode=options.mode==="super-soft"?"super-soft":options.mode==="soft"?"soft":"strict";
   return tokenizeText(text).flatMap(token=>{
     if(token.kind!=="thai") return [{...token,segmentationStatus:"not_applicable",syllables:[],warnings:[]}];
     // Preserve reviewed entries in both modes. Soft mode only broadens the
