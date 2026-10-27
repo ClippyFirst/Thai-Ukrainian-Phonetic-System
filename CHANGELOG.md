@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-27 — strict and soft whole-text analysis modes
+
+- Added an accessible mode selector to the whole-text browser interface. Strict remains the default and keeps the fail-closed behavior for unknown Thai spans.
+- Added an opt-in soft structural fallback that attempts to recover analyzable syllables from unknown spans while preserving the IPA → Ukrainian adapter boundary.
+- Soft-mode outputs are explicitly provisional; unresolved fragments remain marked rather than receiving invented IPA. Added UI contract tests and a published-Pages marker check.
+- The feature is CI-verified in the repository; live Pages contract verification remains open in the execution handoff.
+
 ## 2026-10-08 — v0.5.1 transliteration hardening
 
 - Fixed a real false-positive class in the Thai parser: จร, สร, ศร and ซร are now evidence-gated special orthography rather than ordinary consonant clusters.

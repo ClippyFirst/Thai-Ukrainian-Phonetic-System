@@ -16,7 +16,7 @@
 | corpus validation | infrastructure implemented | external licensed JSONL; no CI gold corpus claimed |
 | malformed syllable surface rejection | implemented | repeated tone/vowel signs, concatenated material and unsupported-symbol probes |
 | calibrated probability | not claimed | calibration dataset still required |
-| strict/soft browser modes | PARTIAL — implementation on feature branch; exact-head CI pending | strict remains fail-closed; soft mode greedily searches structurally analyzable syllables for unknown spans, adapts resolved IPA through the same IPA→UA boundary, and marks remaining uncertainty. Not a lexical segmentation or accuracy claim. |
+| strict/soft browser modes | PARTIAL — code merged and CI-verified; live Pages contract unresolved | PR #87 merged as `3074bb7`; exact-head CI [40485018684](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40485018684), post-merge CI [40485685242](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40485685242), and static validation passed. Pages deploy [40485685042](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40485685042) reported deploy success but failed the live contract after 12 attempts; diagnostic follow-up PR #88 merged, rerun queued. Do not mark DONE_VERIFIED until live selector/app markers pass. |
 
 
 | tone-bearing class in consonant clusters | implemented for declared cluster rule | separate `tone_class` field + adversarial cluster fixture |
