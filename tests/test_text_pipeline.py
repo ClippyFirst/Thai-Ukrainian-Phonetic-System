@@ -27,7 +27,8 @@ class TextPipelineTests(unittest.TestCase):
         self.assertEqual([s["input"] for s in token["syllables"]], ["ยู", "เครน"])
         self.assertEqual([s["phonemic_ipa"] for s in token["syllables"]], ["juː", "kʰreːn"])
         self.assertEqual([s["tone"]["tone"] for s in token["syllables"]], ["mid", "mid"])
-        self.assertTrue(all(s["ukrainian_transliteration"] for s in token["syllables"]))
+        self.assertEqual([s["ukrainian_transliteration"] for s in token["syllables"]], ["йу", "крен"])
+        self.assertEqual("".join(s["ukrainian_transliteration"] for s in token["syllables"]), "йукрен")
 
     def test_unknown_text_is_not_falsely_segmented(self):
         for text in ("คำใหม่ที่ไม่อยู่ในพจนานุกรม", "กากล้าขายแล้วไหว้แสดง"):
