@@ -57,6 +57,24 @@ class SourceAttestedIpaRegistryTests(unittest.TestCase):
         self.assertEqual(row["status"], "SOURCE_ATTESTED")
         self.assertIn("not independently adjudicated gold", row["claim_scope"])
 
+    def test_europe_lexical_sources_are_pinned_and_not_gold(self):
+        path = ROOT / "data" / "thai" / "text_lexicon_sources.csv"
+        with path.open("r", encoding="utf-8-sig", newline="") as stream:
+            rows = {row["word"]: row for row in csv.DictReader(stream)}
+        expected = {
+            "ยุโรป": ("ยุ|โรป", "91325849", "https://en.wiktionary.org/w/index.php?title=ยุโรป&oldid=91325849"),
+            "ยุโรปตะวันออก": ("ยุ|โรป|ตะ|วัน|ออก", "87721830", "https://en.wiktionary.org/w/index.php?title=ยุโรปตะวันออก&oldid=87721830"),
+        }
+        for word, (syllables, revision, url) in expected.items():
+            with self.subTest(word=word):
+                row = rows[word]
+                self.assertEqual(row["syllables"], syllables)
+                self.assertEqual(row["source_revision"], revision)
+                self.assertEqual(row["source_url"], url)
+                self.assertEqual(row["license"], "CC-BY-SA-4.0")
+                self.assertEqual(row["status"], "SOURCE_ATTESTED")
+                self.assertIn("not independent expert/acoustic gold", row["claim_scope"])
+
     def test_lexical_ipa_override_is_pinned_and_kept_separate_from_source_gold(self):
         path = ROOT / "data" / "thai" / "lexical_ipa_overrides.tsv"
         with path.open("r", encoding="utf-8-sig", newline="") as stream:

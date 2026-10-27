@@ -1,11 +1,11 @@
 # Master execution plan and chat handoff — Thai → Ukrainian Phonetic System
 
-## Latest continuation — source-attested Eastern-direction word and parser gap (2026-10-27)
+## Latest continuation — source-attested Ukraine/Eastern Europe article forms and parser gap (2026-10-27)
 
-- Dedicated PR [#98](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/98), branch `feat/source-attested-east-thai-lexicon-20261027`, adds `ตะวันออก` → `ตะ|วัน|ออก` using pinned en.wiktionary revision 86398986 (CC BY-SA 4.0), which records `/ta˨˩.wan˧.ʔɔːk̚˨˩/`.
-- Exact-head CI exposed a real engine defect: the Python text test received `None` rather than IPA for the final syllable `ออก`. The PR was not merged. The follow-up adds a source-pinned `ออก` lexical IPA override (`ʔɔːk`, long vowel, low tone), Python/browser parity fixture and explicit typed IPA → Ukrainian assertions (`ок`); the full word remains `таванок`. The source is a dictionary transcription, not independent expert/acoustic gold.
-- `docs/generated-audit.json` and the validation matrix were updated to reflect the ninth source-registry row and the actual CI failure/fix. The follow-up commit's exact-head CI and Web static validation must both pass before merge; do not mark DONE_VERIFIED or merge while checks are pending or failing.
-- Next article-specific candidate `ยุโรป` is attested in en.wiktionary revision 91325849 as `/ju˦˥.roːp̚˨˩/`. Add it only after testing both syllables against the parser and the IPA adapter; preserve source attribution and explicitly avoid treating the dictionary entry as independent gold.
+- Dedicated PR [#98](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/98), branch `feat/source-attested-east-thai-lexicon-20261027`, now includes `ตะวันออก` → `ตะ|วัน|ออก`, `ยุโรป` → `ยุ|โรป`, and `ยุโรปตะวันออก` → `ยุ|โรป|ตะ|วัน|ออก`. Sources are pinned to en.wiktionary revisions 86398986, 91325849 and 87721830 (CC BY-SA 4.0).
+- Exact-head CI first exposed a real engine defect: the Python text test received `None` rather than IPA for the final syllable `ออก`. The PR was not merged. A follow-up adds a source-pinned `ออก` lexical IPA override (`ʔɔːk`, long vowel, low tone), Python/browser parity fixture and typed IPA → Ukrainian assertions (`ок`); the full phrase `ตะวันออก` yields `таванок`.
+- Additional regression tests assert `ยุโรป` source IPA `/ju˦˥.roːp̚˨˩/` and the five-syllable phrase `ยุโรปตะวันออก` `/ju˦˥.roːp̚˨˩.ta˨˩.wan˧.ʔɔːk̚˨˩/`, with expected project candidates `йуроп` and `йуроптаванок`. These are source-attested dictionary readings, not independent expert/acoustic gold.
+- `docs/generated-audit.json` now records 11 source-registry rows. The exact-head CI and Web static validation for the latest commit must both pass before merge; do not mark DONE_VERIFIED while checks are pending or failing.
 - Readiness remains a partial research prototype. The missing independent adjudicated Thai segmentation/IPA set and Ukrainian target-form review remain genuine blockers.
 
 ---
