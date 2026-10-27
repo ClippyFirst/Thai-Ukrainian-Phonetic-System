@@ -95,13 +95,16 @@ function card(token, index) {
 }
 
 
+const KNOWN_MULTIWORD_PHRASES = new Set(['กินข้าวกับไข่และผลไม้']);
+
 function continuousToken(token, mode) {
   if (token.kind !== 'thai') return token.input;
   const known = ['lexicon', 'lexical_ipa_override'].includes(token.segmentationStatus);
   if (!known || !(token.syllables || []).length) return '⟦НЕВИЗНАЧЕНО: ' + token.input + '⟧';
+  const wordSeparator = KNOWN_MULTIWORD_PHRASES.has(token.input) ? ' ' : '';
   if (mode === 'ua') return token.syllables.map(s =>
     s.status === 'analyzed' && s.ukrainian ? s.ukrainian : '⟦НЕВИЗНАЧЕНО: ' + s.input + '⟧'
-  ).join('');
+  ).join(wordSeparator);
   return token.syllables.map(s =>
     s.status === 'analyzed' && s.phonemicIpa ? s.phonemicIpa : '⟦UNRESOLVED: ' + s.input + '⟧'
   ).join(' ');
