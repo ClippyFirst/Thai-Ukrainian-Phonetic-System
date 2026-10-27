@@ -69,6 +69,10 @@ The model distinguishes:
 
 The browser interface provides two explicit modes. **Strict** (default) preserves the fail-closed contract and withholds IPA/Ukrainian output for unreviewed spans. **Soft** opt-in mode attempts a greedy structural syllable parse for otherwise unknown spans and routes any resolved candidate through the same IPA → Ukrainian adapter; it clearly labels those results as provisional and preserves markers for spans that remain unresolved. Soft segmentation is not a lexical word-boundary claim or a validated pronunciation. The browser interface presents a single copyable Ukrainian phonetic candidate for the full input, alongside a single IPA intermediate output. Source whitespace and punctuation are preserved; syllables within a known word are joined in the Ukrainian candidate, and adjacent recognized Thai segments are separated for Ukrainian readability. Detailed per-segment and per-syllable diagnostics remain available in a collapsible section. Unsupported or unresolved Thai spans are explicitly marked in the continuous output rather than silently omitted or guessed. The mode selector lets users trade strict abstention for a more recall-oriented provisional candidate without changing the default behavior. This improves usability, but does not imply that arbitrary long Thai prose has been linguistically validated or that every word is recognized.
 
+### Pasted article preprocessing
+
+The browser input now has a conservative preprocessing step for recognizable Wikipedia/Markdown/HTML markup: it removes link destinations and common reference markup while retaining visible link labels, decodes common and numeric HTML entities, and shows a notice when the input was changed. Plain unmarked text is passed through unchanged. This is input hygiene, **not** Thai word segmentation or pronunciation inference; it does not make long article text linguistically validated, and it must not be used as evidence that a candidate pronunciation is correct.
+
 ## Current release status
 
 **v0.6.1 — research-oriented reference implementation with explicit lexical readings and text-pipeline safeguards.**
