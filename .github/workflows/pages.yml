@@ -88,6 +88,16 @@ jobs:
             fi
             if [ "$attempt" -eq 12 ]; then
               echo "Published homepage did not expose the expected whole-text UI contract after 12 attempts" >&2
+              for marker in 'Вставте цілий текст або статтю' 'data-example="กา"' 'data-example="จริง"' 'id="engine-mode"' 'value="soft"' 'БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ'; do
+                grep -Fq "$marker" /tmp/deployed-index.html || echo "Missing homepage marker: $marker" >&2
+              done
+              if [ -f /tmp/deployed-app.js ]; then
+                for marker in 'Цілісний результат' 'continuous-output-value' 'softSyllabify' 'М’який режим — попередній результат'; do
+                  grep -Fq "$marker" /tmp/deployed-app.js || echo "Missing app marker: $marker" >&2
+                done
+              else
+                echo "Missing deployed app.js file" >&2
+              fi
               exit 1
             fi
             sleep 5
