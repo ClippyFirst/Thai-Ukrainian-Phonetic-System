@@ -1,7 +1,16 @@
+## 2026-10-27 — direct IPA input and notation normalization
+
+- Added a separate website IPA → Ukrainian panel for externally sourced Thai IPA. It calls the same `adaptIpaToUkrainian` adapter used by the Thai→IPA pipeline; no direct Thai-grapheme-to-Ukrainian path was added.
+- Python and browser adapters normalize common presentation conventions: outer brackets/slashes, Thai tone letters, selected combining tone marks, stress, length, selected phonetic modifiers, and tied notation for the Thai alveolo-palatal affricate. Unknown segments and tone-only input are withheld.
+- Regression coverage includes notation variants, direct UI adaptation, visible fail-closed behavior, and ambiguous combining breve U+0306 (which can mark extra-shortness and therefore must not be silently deleted).
+- **DONE_VERIFIED at `ba3771e29b7554325c4b63cb3c39e2356e414066`:** CI [40559473200](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40559473200) and Web static validation [40559473259](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40559473259) passed. The newer conservative breve fix is **PENDING exact-head verification** at `ff27ebdcfb3c0d45bfc82943fbfd93b4f055708b` because the current GitHub Actions runs remain queued.
+- **Not claimed:** successful parsing does not certify lexical IPA correctness or an official Ukrainian spelling. Independent IPA and Ukrainian-form adjudication remain open.
+
 # Validation matrix
 
 | Component | State | Validation |
 |---|---|---|
+| IPA adapter delimiter validation | PARTIAL — fail-closed checks added for unmatched/mixed outer delimiters on `fix/ipa-normalization-audit-20261027`; exact-head CI/static validation pending | Python/browser regression cases cover `[.../`, `/...]`, unclosed `[` and stray `]`. These tests validate parser contract only, not IPA transcription correctness. Current verification commit: `db6316125ca19a036740ecc55bcad720afbd0c9d`; branch CI must pass before DONE_VERIFIED. |
 | Pasted Wikipedia/Markdown/HTML input cleanup | DONE_VERIFIED — code fix and published-page contract passed | PR #91 fixed nested IPA-link cleanup; PR #93 corrected the live contract to check `softSyllabify` in `engine.js`. Post-merge Pages run [40509900075](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40509900075) succeeded, including the published whole-text UI contract; static validation [40508000658](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40508000658) and main CI [40509900074](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40509900074) passed.
 | External G2P license/provenance gate | PARTIAL — TLTK license scope is contradictory in current repository artifacts; FastThaiG2P bundled dictionary/fallback provenance not cleared | TLTK README.rst/setup.py say BSD-3-Clause while root LICENSE contains LGPL v3 and LICENSE.txt contains BSD-style terms. No external code/data imported. Acceptance: authoritative clarification of applicable TLTK license by file/version, and resource-level license/provenance audit for any selected model or dictionary. |
 | 44 consonant graphemes | implemented | inventory tests |

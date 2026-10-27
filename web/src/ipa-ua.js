@@ -2,6 +2,10 @@
  * IPA → Ukrainian practical adaptation.
  * Thai orthography is deliberately absent from this module.
  * IPA remains the source of truth; source contrasts may be neutralized only here.
+ *
+ * Accepts common IPA presentation conventions (phonemic /slashes/, phonetic
+ * [brackets], Thai tone letters, stress marks and tied affricate notation).
+ * It never guesses an unknown segment: unrecognized symbols withhold output.
  */
 const SEGMENTS = new Map([
   ["tɕʰ", {out:"ч", rule:"UA-AFFRICATE-ASP", neutralized:["aspiration"]}],
@@ -36,31 +40,111 @@ const SEGMENTS = new Map([
   ["ɔ", {out:"о", rule:"UA-OPEN-O", neutralized:["openness","length"]}]
 ]);
 const ORDER = [...SEGMENTS.keys()].sort((a,b)=>b.length-a.length);
+const TONE_DIACRITICS = new Set(["\u0300","\u0301","\u0302","\u0304","\u030c","\u030b","\u030f"]); // U+0306 breve can mark extra-shortness; preserve/fail closed.
+const IPA_MODIFIERS = new Set(["\u031a","\u032f","\u0329","\u02d0","\u02d1"]);
+
+function normalizeIpaInput(sourceIpa) {
+  let ipa = sourceIpa.trim();
+  let wrapped = false;
+  if ((ipa.startsWith("[") && ipa.endsWith("]")) ||
+      (ipa.startsWith("/") && ipa.endsWith("/") && ipa.length > 1)) {
+    ipa = ipa.slice(1, -1).trim();
+    wrapped = true;
+  }
+  // IPA ties are typography, not additional segments. Canonicalize the Thai
+  // alveolo-palatal affricate before tokenization.
+  ipa = ipa.replace(/t[\u0361\u035c]ɕ/g, "tɕ");
+  ipa = ipa.normalize("NFD");
+  let toneNotationSeen = false;
+  let stressNotationSeen = false;
+  let lengthNotationSeen = false;
+  let modifierNotationSeen = false;
+  let normalized = "";
+  for (const char of ipa) {
+    if ("˥˦˧˨˩".includes(char)) {
+      toneNotationSeen = true;
+      continue;
+    }
+    if (char === "ˈ" || char === "ˌ") {
+      stressNotationSeen = true;
+      continue;
+    }
+    if (TONE_DIACRITICS.has(char)) {
+      toneNotationSeen = true;
+      continue;
+    }
+    if (char === "ː" || char === "ˑ") {
+      lengthNotationSeen = true;
+      normalized += char;
+      continue;
+    }
+    if (IPA_MODIFIERS.has(char)) {
+      modifierNotationSeen = true;
+      normalized += char;
+      continue;
+    }
+    normalized += char;
+  }
+  return {
+    ipa: normalized.normalize("NFC"),
+    notes: {
+      wrapped,
+      toneNotationSeen,
+      stressNotationSeen,
+      lengthNotationSeen,
+      modifierNotationSeen
+    }
+  };
+}
+
 export function adaptIpaToUkrainian(sourceIpa) {
   if (typeof sourceIpa !== "string" || !sourceIpa.trim()) {
-    return {status:"withheld", sourceIpa:sourceIpa ?? null, output:null, candidates:[], preservedFeatures:[], neutralizedFeatures:[], rulesApplied:[], warnings:["IPA input is empty."]};
+    return {status:"withheld", sourceIpa:sourceIpa ?? null, normalizedIpa:null, output:null, candidates:[], preservedFeatures:[], neutralizedFeatures:[], rulesApplied:[], inputNotes:[], warnings:["IPA input is empty."]};
   }
-  const ipa = sourceIpa.normalize("NFC");
+  const trimmedSource = sourceIpa.trim();
+  // Mismatched outer delimiters are malformed notation, not an IPA variant.
+  if ((trimmedSource.startsWith("[") !== trimmedSource.endsWith("]")) ||
+      (trimmedSource.startsWith("/") !== trimmedSource.endsWith("/")) ||
+      (trimmedSource.startsWith("[") && trimmedSource.endsWith("/")) ||
+      (trimmedSource.startsWith("/") && trimmedSource.endsWith("]"))) {
+    return {status:"withheld", sourceIpa, normalizedIpa:null, output:null, candidates:[], preservedFeatures:[], neutralizedFeatures:[], rulesApplied:[], inputNotes:[], warnings:["IPA delimiters are mismatched; Ukrainian output withheld."]};
+  }
+  const normalized = normalizeIpaInput(sourceIpa);
+  const ipa = normalized.ipa;
+  const inputNotes = [];
+  if (normalized.notes.wrapped) inputNotes.push("IPA delimiters normalized");
+  if (normalized.notes.toneNotationSeen) inputNotes.push("tone notation recognized and kept outside segmental Ukrainian spelling");
+  if (normalized.notes.stressNotationSeen) inputNotes.push("stress notation recognized and not represented in practical Ukrainian spelling");
+  if (normalized.notes.lengthNotationSeen) inputNotes.push("vowel length notation recognized");
+  if (normalized.notes.modifierNotationSeen) inputNotes.push("phonetic modifiers recognized");
+  if (!ipa.trim()) {
+    return {status:"withheld", sourceIpa, normalizedIpa:ipa, output:null, candidates:[], preservedFeatures:[], neutralizedFeatures:[], rulesApplied:[], inputNotes, warnings:["IPA input contains no supported segmental symbols after normalization."]};
+  }
+
   const tokens = [];
   for (let i=0;i<ipa.length;) {
     if (/[.\s]/u.test(ipa[i])) { tokens.push({text:ipa[i], out:ipa[i], rule:null}); i++; continue; }
-    if (ipa[i] === "ː" || ipa[i] === "̯" || ipa[i] === "̩" || ipa[i] === "̚") {
-      tokens.push({text:ipa[i], out:"", rule:"UA-DIACRITIC-NEUTRALIZATION", neutralized:["phonetic detail not represented in Ukrainian practical spelling"]}); i++; continue;
+    if (ipa[i] === "ː" || ipa[i] === "ˑ" || ipa[i] === "\u032f" || ipa[i] === "\u0329" || ipa[i] === "\u031a") {
+      tokens.push({text:ipa[i], out:"", rule:"UA-DIACRITIC-NEUTRALIZATION", neutralized:[ipa[i] === "ː" || ipa[i] === "ˑ" ? "vowel length" : "phonetic detail not represented in Ukrainian practical spelling"]});
+      i++; continue;
     }
     const key = ORDER.find(k => ipa.startsWith(k,i));
-    if (!key) return {status:"withheld", sourceIpa, normalizedIpa:ipa, output:null, candidates:[], preservedFeatures:[], neutralizedFeatures:[], rulesApplied:[], warnings:["Невідомий або непідтримуваний IPA-символ: "+[...ipa.slice(i)][0]+". Український результат не вгадується."]};
+    if (!key) return {status:"withheld", sourceIpa, normalizedIpa:ipa, output:null, candidates:[], preservedFeatures:[], neutralizedFeatures:[], rulesApplied:[], inputNotes, warnings:["Невідомий або непідтримуваний IPA-символ: "+[...ipa.slice(i)][0]+". Український результат не вгадується."]};
     const rule=SEGMENTS.get(key);
     tokens.push({text:key,...rule});
     i += key.length;
   }
   for (let i=1;i<tokens.length;i++) {
-    if (tokens[i].text === "w" && tokens[i-1].text && /^(?:a|i|e|ɛ|ɯ|ɤ|u|o|ɔ|ː)$/u.test(tokens[i-1].text)) {
-      tokens[i] = {...tokens[i], out:"у", rule:"UA-W-VOCALIC", neutralized:[...(tokens[i].neutralized||[]),"glide-vowel sequence adapted as Ukrainian ау/еу/ів pattern"]};
+    if (tokens[i].text === "w" && tokens[i-1].text && /^(?:a|i|e|ɛ|ɯ|ɤ|u|o|ɔ|ː|ˑ)$/u.test(tokens[i-1].text)) {
+      tokens[i] = {...tokens[i], out:"у", rule:"UA-W-VOCALIC", neutralized:[...(tokens[i].neutralized||[]),"glide-vowel sequence adapted as Ukrainian vowel spelling"]};
     }
   }
   const preservedFeatures=[...new Set(tokens.flatMap(t=>t.preserved||[]))];
   const neutralizedFeatures=[...new Set(tokens.flatMap(t=>t.neutralized||[]))];
+  if (normalized.notes.toneNotationSeen) neutralizedFeatures.push("lexical tone is not encoded in Ukrainian practical spelling");
+  if (normalized.notes.stressNotationSeen) neutralizedFeatures.push("stress is not encoded by this project adaptation");
+  if (normalized.notes.lengthNotationSeen) neutralizedFeatures.push("vowel length");
   const rulesApplied=[...new Set(tokens.map(t=>t.rule).filter(Boolean))];
   const output=tokens.map(t=>t.out).join("");
-  return {status:"adapted", sourceIpa, normalizedIpa:ipa, output, candidates:[output], preservedFeatures, neutralizedFeatures, rulesApplied, warnings:[]};
+  return {status:"adapted", sourceIpa, normalizedIpa:ipa, output, candidates:[output], preservedFeatures, neutralizedFeatures:[...new Set(neutralizedFeatures)], rulesApplied, inputNotes, warnings:["Project-defined practical adaptation; not an official Ukrainian standard. Verify lexical reading and target-language convention independently."]};
 }

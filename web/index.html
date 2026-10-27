@@ -52,6 +52,16 @@
 </section>
 <section id="status" class="status" role="status" aria-live="polite" aria-atomic="true"></section>
 <section id="results" class="results" aria-live="polite" aria-label="Результати аналізу" hidden></section>
+ <section class="workbench ipa-adapter" aria-labelledby="ipa-adapter-heading">
+  <div class="section-head">
+    <div><p class="eyebrow">02 / IPA → УКРАЇНСЬКА</p><h2 id="ipa-adapter-heading">Маєте транскрипцію IPA?</h2></div>
+  </div>
+  <label class="input-label" for="ipa-input">Тайська IPA-транскрипція</label>
+  <textarea id="ipa-input" class="ipa-adapter-input" lang="und-fonipa" rows="2" spellcheck="false" autocomplete="off" autocapitalize="off" aria-describedby="ipa-input-hint" placeholder="[kʰaː˩˩˦] або /t͡ɕʰaː/"></textarea>
+  <p class="input-hint" id="ipa-input-hint">Вставте IPA з дужками або скісними рисками. Адаптер розпізнає поширені позначення тону, наголосу, довготи, нерелізованого вибуху й африкат із tie bar. Невідомий сегмент блокує результат, а не вгадується. Тон, довгота й наголос показуються як нейтралізовані ознаки, а не губляться непомітно.</p>
+  <button class="primary" id="ipa-adapt" type="button">Адаптувати IPA → українська <span aria-hidden="true">↗</span></button>
+  <section id="ipa-adapter-result" class="ipa-adapter-result" role="status" aria-live="polite" aria-atomic="true" hidden></section>
+</section>
 <section class="method-note">
   <p class="eyebrow">МЕТОД</p>
   <p>IPA є проміжним контрольним представленням і обов’язковою межею адаптера. Український кандидат формується з типізованого фонетичного результату через IPA; тайська орфографія не передається до адаптера IPA → українська.</p>

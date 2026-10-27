@@ -254,3 +254,23 @@ assert.match(styles, /\.beta-notice/);
 assert.match(styles, /@media\(max-width:700px\)\{\.beta-notice/);
 
 console.log("Thai current UI uncertainty/accessibility contract passed");
+
+
+// The standalone IPA form must execute the real adapter and show its audit.
+// Unsupported input must fail closed in the visible UI.
+const ipaInput = element("ipa-input");
+const ipaAdapt = element("ipa-adapt");
+const ipaResult = element("ipa-adapter-result");
+ipaInput.value = "[kʰaː˩˩˦]";
+ipaAdapt.click();
+assert.equal(ipaResult.hidden, false);
+assert.match(ipaResult.innerHTML, /Український практичний кандидат/);
+assert.match(ipaResult.innerHTML, /ка/);
+assert.match(ipaResult.innerHTML, /kʰaː/);
+assert.match(ipaResult.innerHTML, /tone notation recognized/);
+
+ipaInput.value = "k☃a";
+ipaAdapt.click();
+assert.match(ipaResult.innerHTML, /Український результат утримано/);
+assert.match(ipaResult.innerHTML, /Невідомий або непідтримуваний IPA-символ/);
+console.log("Direct IPA input UI: adaptation, audit, and fail-closed behavior passed");

@@ -1,3 +1,11 @@
+## 2026-10-27 — direct IPA input and notation normalization
+
+- Added a separate website IPA → Ukrainian panel for externally sourced Thai IPA. It calls the same `adaptIpaToUkrainian` adapter used by the Thai→IPA pipeline; no direct Thai-grapheme-to-Ukrainian path was added.
+- Python and browser adapters normalize common presentation conventions: outer brackets/slashes, Thai tone letters, selected combining tone marks, stress, length, selected phonetic modifiers, and tied notation for the Thai alveolo-palatal affricate. Unknown segments and tone-only input are withheld.
+- Regression coverage includes notation variants, direct UI adaptation, visible fail-closed behavior, and ambiguous combining breve U+0306 (which can mark extra-shortness and therefore must not be silently deleted).
+- **DONE_VERIFIED at `ba3771e29b7554325c4b63cb3c39e2356e414066`:** CI [40559473200](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40559473200) and Web static validation [40559473259](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40559473259) passed. The newer conservative breve fix is **PENDING exact-head verification** at `ff27ebdcfb3c0d45bfc82943fbfd93b4f055708b` because the current GitHub Actions runs remain queued.
+- **Not claimed:** successful parsing does not certify lexical IPA correctness or an official Ukrainian spelling. Independent IPA and Ukrainian-form adjudication remain open.
+
 ## 2026-10-27 source-attested lexical coverage continuation
 
 - Added the source-attested three-syllable entry `ตะวันออก` → `ตะ|วัน|ออก`, pinned to en.wiktionary revision 86398986, which records standard IPA `/ta˨˩.wan˧.ʔɔːk̚˨˩/`. The implementation uses the existing Thai structural/phonological parser and IPA → Ukrainian adapter; it does not import external G2P output.

@@ -24,6 +24,26 @@ assert.equal(adaptIpaToUkrainian("k☃a").status, "withheld");
 assert.equal(adaptIpaToUkrainian("k☃a").output, null);
 assert.equal(adaptIpaToUkrainian("kʰaː").sourceIpa, "kʰaː");
 
+// External Thai IPA commonly adds delimiters, tone letters/diacritics, stress,
+// and a tie bar. These are parsed as notation, not mistaken for unknown phones.
+for (const [ipa, expected] of [
+  ["[kʰaː˩˩˦]", "ка"],
+  ["/kʰaː/", "ка"],
+  ["kʰàː", "ка"],
+  ["ˈkʰaː", "ка"],
+  ["t͡ɕʰa˥", "ча"],
+  ["t͜ɕʰa˦˥", "ча"],
+  ["ŋɤːn˧", "нген"],
+  ["k̚aː˧", "ка"]
+]) {
+  const adapted = adaptIpaToUkrainian(ipa);
+  assert.equal(adapted.status, "adapted", ipa);
+  assert.equal(adapted.output, expected, ipa);
+  assert(adapted.inputNotes.length > 0, "notation should be audited: " + ipa);
+}
+assert.equal(adaptIpaToUkrainian("˥˩").status, "withheld");
+assert.equal(adaptIpaToUkrainian("[kʰaː☃]").status, "withheld");
+
 // End-to-end boundary proof: the browser's final Ukrainian result is the
 // adaptation of the actual IPA intermediate, and a changed IPA changes output.
 const endToEnd = analyze("กา");
@@ -41,3 +61,19 @@ assert(serviceHtml.includes("Український кандидат форму�
 assert(!serviceHtml.includes("а не механічною заміною символів IPA"));
 assert(systemHtml.includes("Український результат формується окремим шаром з IPA"));
 console.log("Public UI: IPA-first adapter contract matches the implementation");
+
+
+// Website contract: IPA can be supplied directly, independently of Thai input.
+const ipaPanelHtml = fs.readFileSync(new URL("../index.html", import.meta.url), "utf8");
+const ipaAppSource = fs.readFileSync(new URL("../src/app.js", import.meta.url), "utf8");
+assert(ipaPanelHtml.includes('id="ipa-input"'));
+assert(ipaPanelHtml.includes('id="ipa-adapt"'));
+assert(ipaPanelHtml.includes('id="ipa-adapter-result"'));
+assert(ipaAppSource.includes("adaptIpaToUkrainian(source)"));
+console.log("Direct IPA input UI is wired to the same IPA → Ukrainian adapter");
+
+
+// U+0306 breve can mark extra-shortness; do not silently normalize it away.
+assert.equal(adaptIpaToUkrainian("kʰă").status, "withheld");
+assert.equal(adaptIpaToUkrainian("kʰă").output, null);
+console.log("Ambiguous breve diacritic is preserved and fails closed");
