@@ -1,5 +1,5 @@
 import fs from "node:fs";
-import {analyze,analyzeText,tokenizeText} from "../src/engine.js";
+import {analyze,analyzeText,tokenizeText,analyzeMorphology} from "../src/engine.js";
 import {WORDS_BY_PREFIX} from "../src/word-dictionary.generated.js";
 
 
@@ -187,3 +187,36 @@ for (const spelling of ["ฤ", "ฤๅ", "ฦ", "ฦๅ"]) {
   }
 }
 console.log("Thai special vowel-letter uncertainty contract passed");
+
+
+const morphologyProbe = analyzeMorphology([
+  {input:"ฉัน",kind:"thai"},
+  {input:"ไม่",kind:"thai"},
+  {input:"จะ",kind:"thai"},
+  {input:"ไป",kind:"thai"},
+  {input:"ไหม",kind:"thai"},
+  {input:"ครับ",kind:"thai"}
+]);
+const morphologyByToken = new Map(morphologyProbe.candidates.map(item=>[item.token,item]));
+if (morphologyProbe.status!=="research-only" ||
+    morphologyByToken.get("ไม่")?.ruleId!=="TH-MORPH-NEG-001" ||
+    morphologyByToken.get("จะ")?.ruleId!=="TH-MORPH-MOD-001" ||
+    morphologyByToken.get("ไหม")?.ruleId!=="TH-MORPH-Q-001" ||
+    morphologyByToken.get("ครับ")?.ruleId!=="TH-MORPH-POL-001") {
+  throw new Error("Conservative morphology marker rules or status contract regressed: "+JSON.stringify(morphologyProbe));
+}
+const progressiveProbe = analyzeMorphology([
+  {input:"กำลัง",kind:"thai"},{input:"วิ่ง",kind:"thai"},{input:"อยู่",kind:"thai"}
+]);
+if (!progressiveProbe.candidates.some(item=>item.ruleId==="TH-MORPH-ASP-001") ||
+    !progressiveProbe.candidates.some(item=>item.ruleId==="TH-MORPH-ASP-002")) {
+  throw new Error("Progressive marker construction was not kept as contextual candidates");
+}
+const ignoredMorphology = analyzeMorphology([
+  {input:"ไม่",kind:"thai"},{input:"go",kind:"latin"},{input:"ไป",kind:"thai"}
+]);
+if (ignoredMorphology.inputTokenCount!==2 ||
+    !ignoredMorphology.limitations.some(item=>item.includes("not a complete Thai morphological analyzer"))) {
+  throw new Error("Morphology layer lost token typing or its explicit limitation contract");
+}
+console.log("Conservative Thai morphology candidate contract passed");
