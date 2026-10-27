@@ -1,8 +1,9 @@
 # Validation matrix
 
 | Component | State | Validation |
-| Pasted Wikipedia/Markdown/HTML input cleanup | DONE_VERIFIED — code fix and published-page contract passed | PR #91 fixed nested IPA-link cleanup; PR #93 corrected the live contract to check `softSyllabify` in `engine.js`. Post-merge Pages run [40509900075](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40509900075) succeeded, including the published whole-text UI contract; static validation [40508000658](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40508000658) and main CI [40509900074](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40509900074) passed.
 |---|---|---|
+| Pasted Wikipedia/Markdown/HTML input cleanup | DONE_VERIFIED — code fix and published-page contract passed | PR #91 fixed nested IPA-link cleanup; PR #93 corrected the live contract to check `softSyllabify` in `engine.js`. Post-merge Pages run [40509900075](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40509900075) succeeded, including the published whole-text UI contract; static validation [40508000658](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40508000658) and main CI [40509900074](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40509900074) passed.
+| External G2P license/provenance gate | PARTIAL — TLTK license scope is contradictory in current repository artifacts; FastThaiG2P bundled dictionary/fallback provenance not cleared | TLTK README.rst/setup.py say BSD-3-Clause while root LICENSE contains LGPL v3 and LICENSE.txt contains BSD-style terms. No external code/data imported. Acceptance: authoritative clarification of applicable TLTK license by file/version, and resource-level license/provenance audit for any selected model or dictionary. |
 | 44 consonant graphemes | implemented | inventory tests |
 | 5 lexical tone categories | implemented | tone engine |
 | tone mark vs tone | implemented | separate model fields |
