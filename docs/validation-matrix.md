@@ -529,3 +529,8 @@ This section is the current decision record for the whole-text Thai input work. 
 - Придих /kʰ pʰ tʰ tɕʰ/ не отримує додаткової української літери: практичні відповідники **к/п/т/ч**; придих зберігається в типізованому IPA.
 - Стандартні тайські /tɕ/ і /tɕʰ/ — глухі альвеоло-палатальні африкати, що розрізняються придихом. Обидві передаємо «ч» у практичному шарі; **«дж» /d͡ʒ/ не доречне**, бо є дзвінким відповідником і додає відсутню дзвінкість. «Ч» — наближення, не точна тотожність.
 - **Статус PARTIAL:** документаційна політика зафіксована; runtime-код та регресійні fixtures ще не змінено. Приймання потребує окремих тестів IPA→UA, тестів для ห/ฮ, จ/ฉ/ช/ฌ та перевірки усталених українських назв. Немає заяви про приріст точності рушія.
+
+
+### Follow-up update — runtime implementation added after the initial note
+
+The Python and browser IPA adapters now map Thai /h/ to Ukrainian «г», and regression cases cover /h/, /kʰ pʰ tʰ/, /tɕ/ and /tɕʰ/. The generated consonant correspondence table was aligned. This supersedes the earlier statement that no runtime code had changed. Status remains PARTIAL until exact-head CI and generated-artifact checks pass; no linguistic-accuracy improvement is claimed.
