@@ -554,3 +554,11 @@ The Python and browser IPA adapters now map Thai /h/ to Ukrainian «г», and re
 | Exact-form lexical IPA coverage for `ไกล` and `ใกล้` | PARTIAL — awaiting exact-head CI | Added pinned Wiktionary revisions 5688545 and 5721860, source-attributed records explicitly marked `ACTIVE_SOURCE_ATTESTED_NOT_GOLD`, and tests for segmental IPA, tone, diphthong, and IPA→Ukrainian adapter output. |
 | Independent IPA accuracy benchmark | BLOCKED | `data/benchmark/gold.tsv` remains header-only. Acceptance: independently adjudicated, source-cited gold rows with clear transcription level/profile; reproducible predictions from the tested commit; held-out metrics. |
 | Claims of overall engine improvement | BLOCKED / NOT MEASURED | These lexical overrides improve known-form coverage only; no global accuracy claim is justified without an adjudicated evaluation set. |
+
+
+## Latest source-attested lexical coverage continuation — 2026-10-27
+
+- Added pinned source-attested IPA overrides for `ไกล` and `ใกล้`; both remain `SOURCE_ATTESTED_NOT_GOLD` and pass through the typed IPA→Ukrainian adapter.
+- The runtime diagnostic still has 6 source records. Because the new overrides are sourced from the same entries being compared, the measured diagnostic now marks 4 records circular and leaves 2 independently comparable records; segmental agreements = 1 and tone agreements = 2. These are source-comparison counts, not accuracy.
+- Exact-head CI run [40591565959](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40591565959) exposed a stale workflow assertion that still expected 2 circular / 4 comparable records. The workflow expectation and current audit counts have been corrected; follow-up CI is pending.
+- Independent adjudicated IPA gold remains absent; no overall G2P accuracy or before/after score is available. Release readiness remains blocked by independent IPA and Ukrainian target-form adjudication.
