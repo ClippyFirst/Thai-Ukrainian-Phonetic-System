@@ -568,3 +568,14 @@ The Pages workflow now includes a post-deployment HTTP contract check for the wh
 - Generator output: 60,963 entries, 1,085 two-code-point prefix buckets, largest bucket 1,521, generated JavaScript 1,629,301 bytes (13,587 bytes / ~0.84% larger than the previous index). This is not a measured runtime speedup.
 - PR #80 merged the matrix/handoff evidence at `dd2260356f7de17d56d25b06c7c6b2c5999c0709`. The exact documentation-head CI run [40467565451](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40467565451) was still in progress at this audit refresh; the runtime code is unchanged from the verified code-bearing commit.
 - The product remains a partial research prototype. Independent Thai segmentation adjudication, Thai IPA/acoustic gold, two independent Ukrainian target-form reviews, contextual review of `บรรจุ` final /ʔ/, lawful official OBEC PDF access, and per-resource licensing/attribution remain blockers.
+
+## Current-main prefix-index and latency verification — 2026-10-27
+
+Current main HEAD `9049032d0724a99d80cd68b03f01978d3943735f` was checked against the actual generator, browser engine, CI job logs and Pages job steps. The prefix index is already integrated; the later duplicate PR #83 is closed unmerged and should not be reused as a new change.
+
+- CI [40470304452](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40470304452): **success**, both `test` and `master-artifact`; generator reported 60,963 entries, 1,085 two-code-point buckets, largest bucket 1,521, output 1,629,301 bytes. IPA→UA, 28 parity fixtures, text segmentation/lexical/Unicode regressions, UI contract, diagnostics and master artifact passed.
+- Pages [40470304397](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40470304397): **success**, build + deploy + live served-HTML contract check on the same SHA.
+- CI latency log / uploaded artifact [12718541707](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40470304452): Node v22.23.3; five warmups and 30 measured runs; median/p95: 100 code points 1.895/3.857 ms, 250 code points 3.895/5.398 ms, 500 code points 7.256/10.068 ms. This is diagnostic timing only; no same-runner pre-index baseline exists, so no quantitative speedup is claimed.
+- Code review confirms the lookup is still fail-closed: full candidate equality and cluster-boundary checks remain; preposed vowels are not treated as combining marks; one-character entries use the fallback bucket; curated entries retain tie precedence; unknown words do not gain IPA or Ukrainian output from dictionary membership.
+
+**Readiness remains unchanged:** software/reproducibility gates are green, but empirical segmentation accuracy, independent Thai IPA/acoustic gold, and independent Ukrainian target-form review remain evidence-limited. Partial research prototype; not release-ready for arbitrary Thai text.
