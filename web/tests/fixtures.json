@@ -173,7 +173,7 @@
       "input": "ไกล",
       "status": "analyzed",
       "phonemicIpa": "klaj",
-      "phoneticIpa": "klaj",
+      "phoneticIpa": null,
       "tone": "mid",
       "toneIpa": "˧",
       "ukrainian": "клай"
@@ -185,7 +185,7 @@
       "input": "ใกล้",
       "status": "analyzed",
       "phonemicIpa": "klaj",
-      "phoneticIpa": "klaj",
+      "phoneticIpa": null,
       "tone": "falling",
       "toneIpa": "˥˩",
       "ukrainian": "клай"
