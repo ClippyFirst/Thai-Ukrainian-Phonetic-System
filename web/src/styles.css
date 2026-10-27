@@ -65,3 +65,17 @@ kbd{font-family:inherit;font-size:12px;font-weight:600;line-height:1.2;border:1p
 @media(max-width:700px){.continuous-output{padding:14px}.continuous-output-head{display:block}.continuous-output-head .copy{margin-top:12px}.continuous-output-value{font-size:16px}}
 
 #engine-mode{display:block;width:100%;max-width:100%;border:2px solid var(--ink);border-radius:0;padding:12px;background:var(--paper);color:var(--ink);font:inherit;margin:0 0 12px}#engine-mode:focus-visible{outline:3px solid var(--red);outline-offset:3px}
+
+
+/* Explicit IPA → Ukrainian adapter input and inspectable result. */
+.ipa-adapter{border-top:4px solid var(--blue);margin-top:36px}
+.ipa-adapter-input{font-family:"Charis SIL","Doulos SIL","DejaVu Sans","Noto Sans",sans-serif;font-size:24px}
+.ipa-adapter-result{margin-top:22px;border-top:1px solid var(--line);padding-top:18px}
+.ipa-adapter-state{padding:14px 16px;background:var(--wash);border-left:4px solid var(--blue)}
+.ipa-adapter-state.withheld{border-left-color:var(--red)}
+.ipa-adapter-state strong{display:block;margin-bottom:6px}
+.ipa-adapter-state p{margin:0;color:#414149}
+.ipa-adapter-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:12px}
+.ipa-adapter-row{padding:16px;background:var(--paper);min-width:0}
+.ipa-adapter-row .value{overflow-wrap:anywhere}
+@media(max-width:700px){.ipa-adapter-input{font-size:20px}.ipa-adapter-grid{grid-template-columns:1fr}}
