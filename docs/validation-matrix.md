@@ -513,3 +513,11 @@ This section is the current decision record for the whole-text Thai input work. 
 
 - Follow-up completeness correction: methodology doc now explicitly inventories all 44 traditional consonants (including obsolete ฃ/ฅ), the conventional 32 vowel forms, four tone marks, relevant diacritics/special symbols, Thai digits and mixed-text handling; cites NECTEC, W3C Thai Layout Requirements and Thai Orthography Notes. This is inventory-level documentation, **not yet a verified character-by-character runtime coverage result**.
 - Status remains **PARTIAL** until an executable inventory test confirms the implementation’s actual behavior for each category and phonetic exceptions have evidence-backed tests.
+
+
+## 2026-10-27 — українсько-російські відмінності в тайській транскрипції
+
+- Додано [матрицю українських особливостей](ukrainian-vs-russian-thai-transcription.md): /ɯ/, /h/, придих /kʰ pʰ tʰ/, /j/ перед голосними, /w/, /ɛ/~/e/, українські г/ґ, йотовані літери та межі застосування дж/дз.
+- Основні дослідницькі джерела: офіційне видання «Українського правопису» 2026 року, стаття Уляни Головач (2022), порівняльна тайсько-російська таблиця та JIPA-опис тайської.
+- **PARTIAL / EVIDENCE-LIMITED:** це джерельно орієнтована матриця кандидатів, а не затверджена транскрипційна норма. Поточне /h/ → «х» позначено як проєктну конвенцію; альтернативу «г» треба перевірити на україномовних тайських назвах. /ɯ/ → «и» — наближення, не точна IPA-тотожність. Runtime не змінювався.
+- Acceptance: зібрати джерельно підтверджений набір українських тайських назв; провести незалежне IPA та українське редакторське оцінювання; лише після ад’юдикації затвердити machine-readable правила й тести. Не заявляти нормативність чи точність до виконання цих кроків.
