@@ -94,6 +94,56 @@ function card(token, index) {
     '</span></div>' + syllables + warnings + '</article>';
 }
 
+
+// Explicit project-defined word grouping for the curated phrase; other entries
+// retain their source lexicon contract and are never split by guessed boundaries.
+const REVIEWED_WORD_GROUPS = new Map([['กินข้าวกับไข่และผลไม้', [1, 1, 1, 1, 1, 2]]]);
+
+function continuousToken(token, mode) {
+  if (token.kind !== 'thai') return token.input;
+  const known = ['lexicon', 'lexical_ipa_override'].includes(token.segmentationStatus);
+  if (!known || !(token.syllables || []).length) return mode === 'ua'
+    ? '⟦НЕВИЗНАЧЕНО: ' + token.input + '⟧'
+    : '⟦UNRESOLVED: ' + token.input + '⟧';
+  if (mode === 'ua') {
+    const renderSyllable = s => s.status === 'analyzed' && s.ukrainian
+      ? s.ukrainian : '⟦НЕВИЗНАЧЕНО: ' + s.input + '⟧';
+    const groups = REVIEWED_WORD_GROUPS.get(token.input);
+    if (!groups) return token.syllables.map(renderSyllable).join('');
+    let offset = 0;
+    const words = groups.map(size => {
+      const word = token.syllables.slice(offset, offset + size).map(renderSyllable).join('');
+      offset += size;
+      return word;
+    });
+    return offset === token.syllables.length ? words.join(' ') : token.syllables.map(renderSyllable).join('');
+  }
+  return token.syllables.map(s =>
+    s.status === 'analyzed' && s.phonemicIpa ? s.phonemicIpa + (s.toneIpa || '') : '⟦UNRESOLVED: ' + s.input + '⟧'
+  ).join(' ');
+}
+
+function assembleOutput(source, tokens, mode) {
+  let cursor = 0, result = '', previous = null;
+  for (const token of tokens) {
+    const start = source.indexOf(token.input, cursor);
+    if (start < 0) { result += continuousToken(token, mode); continue; }
+    const gap = source.slice(cursor, start);
+    result += gap;
+    if (!gap && previous && previous.kind === 'thai' && token.kind === 'thai') result += ' ';
+    result += continuousToken(token, mode);
+    cursor = start + token.input.length;
+    previous = token;
+  }
+  return result + source.slice(cursor);
+}
+
+function continuousPanel(title, value, hint, extraClass = '') {
+  return '<section class="continuous-output ' + extraClass + '"><div class="continuous-output-head"><div><h3>' +
+    esc(title) + '</h3><p>' + esc(hint) + '</p></div>' + copyButton(title, value) +
+    '</div><pre class="continuous-output-value">' + esc(value) + '</pre></section>';
+}
+
 function bindCopyButtons() {
   out.querySelectorAll('[data-copy]').forEach(button => button.addEventListener('click', async () => {
     try {
@@ -112,8 +162,8 @@ function bindCopyButtons() {
 }
 
 function run() {
-  const text = input.value.trim();
-  if (!text) {
+  const text = input.value;
+  if (!text.trim()) {
     status.className = 'status error';
     status.textContent = 'Введіть тайський текст.';
     out.hidden = true;
@@ -135,7 +185,22 @@ function run() {
         '; ' + unresolvedCount + ' тайських токен(ів) потребують додаткової перевірки або не мають детермінованого результату.'
       : 'Проаналізовано ' + tokens.length + ' токен(ів), тайських: ' + thaiTokens.length +
         '. Це аналіз написання, а не переклад.';
-  out.innerHTML = '<h2 class="results-heading">Результати аналізу</h2>' + tokens.map(card).join('');
+  const uaOutput = assembleOutput(text, tokens, 'ua');
+  const ipaOutput = assembleOutput(text, tokens, 'ipa');
+  const unresolved = (uaOutput.match(/⟦НЕВИЗНАЧЕНО:/g) || []).length;
+  const notice = thaiTokens.length === 0
+    ? '<p class="continuous-output-notice" role="note">Тайського тексту для фонетичного перетворення не знайдено; нетайські фрагменти збережено без інтерпретації.</p>'
+    : unresolved
+      ? '<p class="continuous-output-notice" role="note">Є ' + unresolved +
+        ' невизначених фрагментів. Їх навмисно позначено замість вигадування вимови.</p>'
+      : '<p class="continuous-output-notice">Цілісний дослідницький кандидат. Перед використанням перевірте правильність вимови.</p>';
+  out.innerHTML = '<h2 class="results-heading">Цілісний результат</h2>' + notice +
+    continuousPanel('Український фонетичний кандидат', uaOutput,
+      'Один суцільний текст для читання та копіювання. Внутрішні склади з’єднано; межі слів відокремлено.', 'ua-continuous') +
+    continuousPanel('IPA — проміжне представлення', ipaOutput,
+      'Контрольний IPA-вихід для перевірки фонетичної основи українського кандидата.', 'ipa-continuous') +
+    '<details class="analysis-details"><summary>Детальний аналіз сегментів і складів</summary>' +
+    tokens.map(card).join('') + '</details>';
   out.hidden = false;
   bindCopyButtons();
 }

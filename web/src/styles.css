@@ -48,3 +48,18 @@ kbd{font-family:inherit;font-size:12px;font-weight:600;line-height:1.2;border:1p
 
 /* Research beta notice visible before user input. */
 .beta-notice{border-bottom:1px solid var(--line);border-left:5px solid var(--red);background:var(--wash);padding:14px max(24px,calc((100vw - var(--max))/2));display:grid;grid-template-columns:minmax(170px,230px) 1fr;gap:12px 24px;align-items:start;font-size:14px}.beta-notice strong{font-size:12px;letter-spacing:.12em;color:var(--red)}.beta-notice p{margin:0;max-width:900px;color:#414149}.beta-notice a{color:var(--blue);font-weight:800}@media(max-width:700px){.beta-notice{grid-template-columns:1fr;padding:14px 20px;gap:6px}}
+
+
+/* Continuous, copyable whole-text output with optional detailed audit. */
+.continuous-output{border:1px solid var(--line);margin:18px 0;background:var(--paper);padding:20px}
+.continuous-output-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px}
+.continuous-output-head h3{font-size:20px;line-height:1.2;margin:0 0 6px}
+.continuous-output-head p{font-size:13px;color:var(--muted);margin:0}
+.continuous-output-head .copy{margin:0;flex-shrink:0}
+.continuous-output-value{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;line-height:1.8;margin:18px 0 0;padding:16px;background:var(--wash);border-left:3px solid var(--blue);user-select:text}
+.ipa-continuous .continuous-output-value{font-family:"Charis SIL","Doulos SIL","DejaVu Sans","Noto Sans",sans-serif}
+.continuous-output-notice{padding:12px 14px;background:var(--wash);border-left:4px solid var(--red);font-size:14px}
+.analysis-details{margin-top:28px;border-top:1px solid var(--line);padding-top:18px}
+.analysis-details summary{cursor:pointer;font-weight:800;padding:8px 0}
+.analysis-details[open] .result-card{margin-top:16px}
+@media(max-width:700px){.continuous-output{padding:14px}.continuous-output-head{display:block}.continuous-output-head .copy{margin-top:12px}.continuous-output-value{font-size:16px}}

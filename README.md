@@ -65,6 +65,10 @@ The model distinguishes:
 - GitHub Actions CI that regenerates derived artifacts and verifies a clean tree.
 - Citation metadata, license and research release protocol.
 
+## Whole-text browser output
+
+The browser interface presents a single copyable Ukrainian phonetic candidate for the full input, alongside a single IPA intermediate output. Source whitespace and punctuation are preserved; syllables within a known word are joined in the Ukrainian candidate, and adjacent recognized Thai segments are separated for Ukrainian readability. Detailed per-segment and per-syllable diagnostics remain available in a collapsible section. Unsupported or unresolved Thai spans are explicitly marked in the continuous output rather than silently omitted or guessed. This improves usability, but does not imply that arbitrary long Thai prose has been linguistically validated or that every word is recognized.
+
 ## Current release status
 
 **v0.6.1 — research-oriented reference implementation with explicit lexical readings and text-pipeline safeguards.**

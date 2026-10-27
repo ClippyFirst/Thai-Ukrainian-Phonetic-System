@@ -37,7 +37,10 @@ const clear = element("clear");
 input.value = "พริก";
 analyze.click();
 assert.equal(output.hidden, false);
-assert.match(output.innerHTML, /Результати аналізу/);
+assert.match(output.innerHTML, /Цілісний результат/);
+assert.match(output.innerHTML, /Український фонетичний кандидат/);
+assert.match(output.innerHTML, /IPA — проміжне представлення/);
+assert.match(output.innerHTML, /<details class="analysis-details">/);
 assert.match(output.innerHTML, /ФОНОЛОГІЧНА IPA/);
 assert.match(output.innerHTML, /aria-labelledby=/);
 assert.equal(status.className, "status");
@@ -107,11 +110,14 @@ assert.equal((output.innerHTML.match(/class="label">ФОНОЛОГІЧНА IPA<\
 assert.equal(status.className, "status notice");
 
 
-// A reviewed full-sentence lexicon entry must preserve its reviewed syllable
+// A curated full-sentence lexicon entry must preserve its reviewed syllable
 // decomposition and provide IPA for each syllable without requiring spaces.
 input.value = "กินข้าวกับไข่และผลไม้";
 analyze.click();
 assert.match(output.innerHTML, /Результат 1: กินข้าวกับไข่และผลไม้/);
+const phraseUa = output.innerHTML.match(/class="continuous-output ua-continuous"[\s\S]*?<pre class="continuous-output-value">([^<]*)<\/pre>/);
+assert.ok(phraseUa, "continuous Ukrainian output should exist for the curated phrase");
+assert.equal((phraseUa[1].match(/ /g) || []).length, 5, "curated phrase should preserve its six word groups, not insert spaces between all seven syllables");
 assert.equal((output.innerHTML.match(/class="label">ФОНОЛОГІЧНА IPA<\/span>/g) || []).length, 7);
 assert.equal(status.className, "status");
 
@@ -127,6 +133,35 @@ assert.match(output.innerHTML, /Результат 5: มา/);
 assert.match(output.innerHTML, /<div class="thai">,<\/div>/);
 assert.match(output.innerHTML, /<div class="thai">!<\/div>/);
 assert.equal((output.innerHTML.match(/class="label">ФОНОЛОГІЧНА IPA<\/span>/g) || []).length, 3);
+
+// Continuous output joins known syllables into words, separates adjacent
+// lexical segments, preserves source punctuation/whitespace, and marks unknowns.
+input.value = "กาไฟ มา!";
+analyze.click();
+assert.match(output.innerHTML, /กา/);
+assert.match(output.innerHTML, /continuous-output-value/);
+assert.match(output.innerHTML, /!/);
+assert.match(output.innerHTML, /Копіювати/);
+assert.match(output.innerHTML, /analysis-details/);
+assert.doesNotMatch(output.innerHTML, /⟦НЕВИЗНАЧЕНО:/);
+
+// Leading/trailing whitespace and internal spacing survive whole-text assembly.
+input.value = "  กา  ไฟ!\n";
+analyze.click();
+assert.match(output.innerHTML, /<pre class="continuous-output-value">  ка  фай!\n<\/pre>/);
+
+// The continuous IPA intermediate includes tone, not only segmental phonemes.
+input.value = "กา";
+analyze.click();
+const ipaPanel = output.innerHTML.match(/class="continuous-output ipa-continuous"[\s\S]*?<pre class="continuous-output-value">([\s\S]*?)<\/pre>/);
+assert.ok(ipaPanel, "continuous IPA panel should exist");
+assert.match(ipaPanel[1], /˧/, "continuous IPA should preserve the syllable tone");
+
+input.value = "ทดสอบกาไฟ";
+analyze.click();
+assert.match(output.innerHTML, /⟦НЕВИЗНАЧЕНО: ทดสอบ⟧/);
+assert.match(output.innerHTML, /continuous-output-value/);
+assert.match(output.innerHTML, /UNRESOLVED/);
 
 input.value = "กาไฟ มา!";
 analyze.click();
@@ -146,14 +181,15 @@ analyze.click();
 assert.equal(status.className, "status notice");
 assert.match(status.textContent, /Тайських токенів не знайдено/);
 assert.match(output.innerHTML, /ABC/);
+assert.match(output.innerHTML, /Тайського тексту для фонетичного перетворення не знайдено/);
 
 const homeHtml = await readFile(new URL("../index.html", import.meta.url), "utf8");
 const systemHtml = await readFile(new URL("../system.html", import.meta.url), "utf8");
 const styles = await readFile(new URL("../src/styles.css", import.meta.url), "utf8");
 assert.match(homeHtml, /БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ/);
-assert.match(homeHtml, /Вводьте цілий тайський текст/);
+assert.match(homeHtml, /Вставте цілий текст або статтю/);
 assert.match(homeHtml, /<label class="input-label" for="thai-input">Тайський текст<\/label>/);
-assert.match(homeHtml, /пробіли між словами не обов’язкові/);
+assert.match(homeHtml, /один суцільний український кандидат/);
 for (const example of examples) assert.ok(homeHtml.includes(`data-example="${example.dataset.example}"`), `homepage must expose ${example.dataset.example}`);
 assert.match(homeHtml, /system\.html#beta-evidence/);
 assert.match(systemHtml, /id="beta-evidence"/);
