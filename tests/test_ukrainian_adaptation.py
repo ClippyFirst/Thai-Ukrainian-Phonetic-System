@@ -78,3 +78,33 @@ def test_tone_and_provenance_survive_in_typed_phonetic_result():
     assert result.segments
     assert all(segment.surface_ipa for segment in result.segments)
     assert result.syllable_boundaries == (0, len(result.segments))
+
+
+
+def test_common_external_thai_ipa_notation_is_normalized_before_adaptation():
+    base = PhoneticResult.from_syllable_analysis(analyze_syllable("กา"))
+    cases = [
+        ("[kʰaː˩˩˦]", "ка"),
+        ("/kʰaː/", "ка"),
+        ("kʰàː", "ка"),
+        ("ˈkʰaː", "ка"),
+        ("t͡ɕʰa˥", "ча"),
+        ("t͜ɕʰa˦˥", "ча"),
+        ("ŋɤːn˧", "нген"),
+        ("k̚aː˧", "ка"),
+    ]
+    for ipa, expected in cases:
+        adapted = adapt_phonetic_result(replace(base, phonemic_ipa=ipa))
+        assert adapted["status"] == "adapted", ipa
+        assert adapted["output"] == expected, ipa
+        assert adapted["input_notes"], ipa
+
+
+def test_tone_only_ipa_and_unknown_symbols_are_not_guessed():
+    base = PhoneticResult.from_syllable_analysis(analyze_syllable("กา"))
+    tone_only = adapt_phonetic_result(replace(base, phonemic_ipa="˥˩"))
+    assert tone_only["status"] == "withheld"
+    assert tone_only["output"] is None
+    unknown = adapt_phonetic_result(replace(base, phonemic_ipa="[kʰaː☃]"))
+    assert unknown["status"] == "withheld"
+    assert unknown["output"] is None
