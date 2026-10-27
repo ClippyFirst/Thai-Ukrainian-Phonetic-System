@@ -13,7 +13,7 @@ for (const [prefix, words] of WORDS_BY_PREFIX) {
     if ([...word].slice(0, 2).join("") !== prefix) throw new Error("Dictionary word is in the wrong prefix bucket: " + word);
     indexedWords++;
   }
-  const expectedOrder = [...words].sort((a, b) => [...b].length - [...a].length || a.localeCompare(b, "th"));
+  const expectedOrder = [...words].sort((a, b) => [...b].length - [...a].length || (a < b ? -1 : a > b ? 1 : 0));
   if (words.some((word, index) => word !== expectedOrder[index])) throw new Error("Dictionary bucket is not longest-first: " + prefix);
 }
 if (indexedWords !== 60963) throw new Error("Generated dictionary index must preserve all 60,963 pinned entries; got " + indexedWords);
