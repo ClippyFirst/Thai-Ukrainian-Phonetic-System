@@ -163,6 +163,24 @@ assert.match(output.innerHTML, /⟦НЕВИЗНАЧЕНО: ทดสอบ⟧/);
 assert.match(output.innerHTML, /continuous-output-value/);
 assert.match(output.innerHTML, /UNRESOLVED/);
 
+// Soft mode is opt-in: it broadens unknown spans into structural syllable
+// candidates, while preserving explicit uncertainty and the IPA→Ukrainian path.
+const mode = element("engine-mode");
+mode.value = "soft";
+input.value = "ทดสอบกาไฟ";
+analyze.click();
+assert.match(status.textContent, /М’який/);
+assert.match(output.innerHTML, /soft-orthographic-clusters/);
+assert.match(output.innerHTML, /М’який режим — попередній результат/);
+assert.match(output.innerHTML, /IPA — проміжне представлення/);
+assert.match(output.innerHTML, /НЕВИЗНАЧЕНО|ка|фай/);
+mode.value = "strict";
+input.value = "ทดสอบกาไฟ";
+analyze.click();
+assert.match(status.textContent, /Строгий/);
+assert.match(output.innerHTML, /⟦НЕВИЗНАЧЕНО: ทดสอบ⟧/);
+assert.doesNotMatch(output.innerHTML, /soft-orthographic-clusters/);
+
 input.value = "กาไฟ มา!";
 analyze.click();
 assert.match(output.innerHTML, /Результат 1: กา/);
