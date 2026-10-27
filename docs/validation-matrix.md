@@ -510,3 +510,6 @@ This section is the current decision record for the whole-text Thai input work. 
 - Added comparison references for the published Thai–Russian practical transcription and a Thai dictionary transcription resource. Russian mappings are explicitly comparison material, not copied as Ukrainian normative rules.
 - README links to the method document. The table is a specification for review, not a runtime truth source and not a claim of accuracy.
 - **PARTIAL:** documentation commit only; no engine rules changed and no new phonetic accuracy was measured. IPA/adaptation adjudication and held-out evaluation remain required. Any questionable or lexical-dependent reading must remain gated rather than be guessed.
+
+- Follow-up completeness correction: methodology doc now explicitly inventories all 44 traditional consonants (including obsolete ฃ/ฅ), the conventional 32 vowel forms, four tone marks, relevant diacritics/special symbols, Thai digits and mixed-text handling; cites NECTEC, W3C Thai Layout Requirements and Thai Orthography Notes. This is inventory-level documentation, **not yet a verified character-by-character runtime coverage result**.
+- Status remains **PARTIAL** until an executable inventory test confirms the implementation’s actual behavior for each category and phonetic exceptions have evidence-backed tests.
