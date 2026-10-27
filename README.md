@@ -162,7 +162,7 @@ The repository includes a static two-page web application under `web/`:
 - `web/src/engine.js` — browser-safe implementation of the declared analysis pipeline;
 - `web/tests/fixtures.json` — versioned parity probes;
 - `scripts/generate_web_fixtures.py` — generates the authoritative fixture values from the Python core.
-- `scripts/generate_web_word_dictionary.py` — validates the pinned CC0 word-list snapshot and creates an ignored, reproducible browser index before browser tests and Pages packaging.
+- `scripts/generate_web_word_dictionary.py` — validates the pinned CC0 word-list snapshot and creates an ignored, reproducible browser index before browser tests and Pages packaging. The index uses two-code-point prefix buckets (with a one-code-point fallback for single-character entries) to reduce candidate scans; it carries boundary evidence only, not pronunciation data.
 
 The browser uses the CC0 list for **word-boundary evidence only**. A dictionary match does not imply a known pronunciation: IPA and Ukrainian output are still withheld unless the word has curated syllabification or a typed source-attested IPA override. To run browser tests locally, first run `python scripts/generate_web_word_dictionary.py`; the generated `web/src/word-dictionary.generated.js` is a build artifact and is not committed.
 

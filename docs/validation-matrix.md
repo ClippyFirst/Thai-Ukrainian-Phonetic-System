@@ -443,3 +443,18 @@ This section is the current decision record for the whole-text Thai input work. 
 - **Remaining status:** whole-text input = DONE_VERIFIED; browser dictionary-backed max-match = PARTIAL; context-aware arbitrary Thai segmentation = TODO/evidence-limited; complete IPA for arbitrary text = BLOCKED by lexical coverage and independent linguistic evidence; live deployment = BLOCKED/queued pending the Pages workflow.
 - **Research blockers remain:** independent Thai boundary adjudication, independent Thai IPA/acoustic gold, two Ukrainian target-form reviews, contextual review of `บรรจุ` final /ʔ/, lawful access to the full official OBEC PDF, and per-resource licensing/attribution review.
 - **Readiness:** partial research prototype, not release-ready for arbitrary Thai text.
+
+
+## Browser dictionary lookup optimization — 2026-10-27
+
+- **PARTIAL / awaiting exact-head CI:** the browser's pinned CC0 Thai word dictionary is now indexed by the first two Unicode code points instead of the first code point alone. Candidate matching semantics remain longest match with curated lexical entries winning ties; dictionary-only matches still authorize boundaries only, never IPA or Ukrainian output.
+- The generator validates each bucket key against each word and reports the largest bucket so CI logs provide a deterministic candidate-scan bound for the pinned snapshot.
+- Existing UI contract tests continue to guard `กาแฟ` (no false partial IPA for `กา`), adjacent known entries, unresolved spans, lexical IPA overrides, punctuation, and whole-sentence input.
+- Acceptance: exact-head CI `test` + `master-artifact`, web static validation, and Pages build/deploy must pass. This optimization is not evidence of linguistic accuracy; independent segmentation adjudication and IPA/UA review remain blocked by missing human evidence.
+
+## Browser prefix-index performance change — 2026-10-27
+
+- **TODO / exact-head verification pending:** branch `perf/browser-dictionary-prefix-index-20261027` changes the generated CC0 dictionary index from one-code-point to two-code-point prefixes. Lookup checks the longer-prefix bucket first and falls back to the one-code-point bucket for single-character dictionary entries, preserving longest-match behavior.
+- **Tests added:** generated index must contain all 60,963 pinned unique entries, every word must be in the correct prefix bucket, and every bucket must be sorted longest-first with deterministic code-point ordering. Existing Python/browser parity and UI regressions cover user-visible segmentation behavior, including `กาแฟ` and unresolved unknown spans.
+- **Acceptance:** exact branch-head CI `test` + `master-artifact`, web static validation, and Pages workflow where applicable. No measured speedup is claimed until a reproducible benchmark is run; this is an algorithmic candidate-scan reduction, not a linguistic accuracy improvement.
+- **Unchanged blocker:** independent expert segmentation/IPA gold and independent Ukrainian target-form adjudication remain unavailable; arbitrary-text IPA coverage remains partial.
