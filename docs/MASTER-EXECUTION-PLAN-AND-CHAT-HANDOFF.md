@@ -1125,3 +1125,39 @@ Remaining genuine blockers: independently adjudicated Thai segmentation boundari
 ## Continuation — browser segmentation latency measurement (2026-10-27)
 
 Branch `perf/browser-segmentation-latency-benchmark-20261027` adds a non-gating, reproducible Node diagnostic at `scripts/benchmark_web_segmentation.mjs`. CI runs five warmups and 30 measurements for 100-, 250- and 500-code-point Thai inputs, reports median/p95/min/max plus output counts, and uploads `thai-browser-segmentation-latency-diagnostic`. This is deliberately not an accuracy score or latency-threshold gate. Do not claim a quantitative speedup without a comparable baseline on the same runner and runtime. Verify exact-head CI and inspect the artifact before treating the measurement task as done. Linguistic evidence blockers and the partial-research-prototype readiness classification are unchanged.
+
+
+## Continuation — Thai G2P evidence and PR verification (2026-10-27)
+
+### Current base and merge state
+
+- Latest verified `main` at this inspection: `d11b814b6a0879512f189600a2374e726227c015`. Main CI run [40515053289](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40515053289) completed successfully. Pages deployment [40513842696](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40513842696) completed successfully on `2d0616cf8b1837749724caa05e858764cec583dc`; this predates the currently open PRs.
+- PR #90 is merged; the pasted-article cleanup and live UI contract are already part of the repository. Do not treat cleanup as phonology or IPA accuracy evidence.
+- PR #98 (`feat/source-attested-east-thai-lexicon-20261027`) remains open. Its exact head is `e9fa25c0075b06ae2db462f3197c64aae65a4847`. It adds source-attested `ออก`, `ยุโรป`, `ตะวันออก` and `ยุโรปตะวันออก`; the PR explicitly treats dictionary readings as source-attested lexical evidence, not independently adjudicated IPA gold.
+- A cross-runtime fixture parity failure was traced to `scripts/generate_web_fixtures.py` omitting `ออก` from its shared probe list. The probe was added to the PR #98 branch. Exact-head CI runs [40521291699](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40521291699) and [40521282321](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40521282321), plus web static validation [40521292201](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40521292201), were still queued at last inspection. The fixture correction is therefore implemented but **not yet DONE_VERIFIED**.
+- PR #99 (`research/correct-tltk-license-audit-20261027`) remains open at `6a4ae491d7083b929b0e0ef64d87a8bd8faad590`. It corrects the external-comparison register and validation matrix. CI [40521484789](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40521484789) was queued at last inspection; do not merge until it completes successfully.
+
+### External system and licensing evidence
+
+- FastThaiG2P is an optional benchmark candidate only. Its repository metadata says Apache-2.0; README describes PyThaiNLP newmm tokenization, an approximately 62k IPA dictionary and a TLTK-derived fallback. The provenance/license of every distributed dictionary entry and fallback-derived source has not been cleared, so do not vendor code/data.
+- TLTK's `README.rst` and `setup.py` state New BSD/BSD-3-Clause, while the same inspected `master` tree has a root `LICENSE` with GNU LGPL v3 text and a separate `LICENSE.txt` with a BSD-style 3-clause notice. This is a real unresolved scope conflict. TLTK code reuse is **BLOCKED** pending maintainer/authoritative release clarification of license applicability by version/file.
+- PyThaiNLP remains a segmentation baseline, not an IPA oracle. Check individual data/model licenses before distributing resources.
+- No third-party code, model, or pronunciation dictionary was imported as part of this work.
+
+### Task ledger update
+
+| Task | Status | Acceptance criterion / blocker |
+|---|---|---|
+| Main CI and existing Pages deployment | DONE_VERIFIED for the cited commits only | Do not extend that claim to later PR heads. |
+| PR #98 shared Python/browser probe list | PARTIAL | Exact-head CI and web static validation must pass after adding `ออก`. |
+| PR #99 TLTK license correction | PARTIAL | CI must pass; license reuse remains blocked until authoritative scope clarification. |
+| FastThaiG2P dictionary/fallback reuse | BLOCKED | File/resource-level provenance and applicable licenses must be established. Benchmark-only use can proceed without importing assets if runtime access is available. |
+| Independent Thai IPA gold and acoustic validation | EVIDENCE_LIMITED | Versioned corpus with source/context/convention and independent expert adjudication; never derive gold from this engine or a comparator. |
+| Independent Ukrainian IPA adaptation review | EVIDENCE_LIMITED | Two independent reviews on a defined sample and documented adjudication of disagreements. |
+| Arbitrary-text release readiness | PARTIAL PROTOTYPE | Requires the independent evaluation gates above plus passing exact-head CI, browser parity and verified deployment. |
+
+### Commands / verification actually performed in this continuation
+
+- GitHub connector: inspected current main commit, PRs #94–#99, changed code/docs, external upstream source files and Actions run/job metadata.
+- No local checkout/test command was run: the prior attempt to clone through the available environment was blocked by DNS/network access. GitHub Actions for the current PR heads were queued rather than completed at last inspection, so no pass is claimed for them.
+- Current readiness remains **PARTIAL PROTOTYPE**, not `RESEARCH_READY` for independently validated phonetic accuracy and not `RELEASE_READY` for arbitrary Thai text.
