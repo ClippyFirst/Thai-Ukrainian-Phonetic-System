@@ -1267,7 +1267,7 @@
       "Thai /ɯ/ and Ukrainian и approximation",
       "Thai /h/ г-versus-х decision",
       "aspiration /kʰ pʰ tʰ",
-      "/j/ and Ukrainian йotated vowels",
+      "/j/ and Ukrainian йотовані vowels",
       "/w/ adaptation",
       "/ɛ/~/e/ neutralization",
       "Ukrainian г/ґ and дж/дз boundaries",
@@ -1298,6 +1298,24 @@
       "independent Thai pronunciation/IPA validation",
       "blind Ukrainian editorial adjudication of candidate forms",
       "encode only adjudicated rules in a versioned registry and regression tests"
-    ]
+    ],
+    "attested_examples": {
+      "status": "SOURCE_ATTESTED_NOT_GOLD",
+      "examples": [
+        {
+          "form": "Таїланд; Бангкок",
+          "source": "https://suspilne.media/amp/culture/1431571-ukrainska-dizajnerka-predstavila-suknu-na-vistavci-u-tailandi-vona-poednala-ukrainskij-lon-i-tajskij-sovk/"
+        },
+        {
+          "form": "Пхукет",
+          "source": "https://suspilne.media/116948-tailand-dostrokovo-vidkrie-phuket-dla-vakcinovanih-turistiv/"
+        },
+        {
+          "form": "Ліса",
+          "source": "https://suspilne.media/culture/786987-najpopularnisa-k-pop-spivacka-ak-lisa-z-tailandu-zavouvala-serca-usogo-svitu-ta-za-so-ii-kritikuut/"
+        }
+      ],
+      "caveat": "Editorial Ukrainian usage only; no independent Thai IPA, etymological pathway, or target-form adjudication established."
+    }
   }
 }
