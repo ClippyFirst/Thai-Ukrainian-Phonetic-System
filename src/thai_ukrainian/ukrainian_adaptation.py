@@ -26,7 +26,7 @@ IPA_TO_UA = {
 }
 ORDER = tuple(sorted(IPA_TO_UA, key=len, reverse=True))
 VOWELS = {"a", "i", "e", "ɛ", "ɯ", "ɤ", "u", "o", "ɔ"}
-TONE_DIACRITICS = {"\u0300", "\u0301", "\u0302", "\u0304", "\u0306", "\u030c", "\u030b", "\u030f"}
+TONE_DIACRITICS = {"\u0300", "\u0301", "\u0302", "\u0304", "\u030c", "\u030b", "\u030f"}  # U+0306 breve can mark extra-shortness; preserve/fail closed.
 IPA_MODIFIERS = {"\u031a", "\u032f", "\u0329"}
 
 
