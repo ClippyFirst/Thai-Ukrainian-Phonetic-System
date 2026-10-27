@@ -177,10 +177,12 @@ function run() {
   const uaOutput = assembleOutput(text, tokens, 'ua');
   const ipaOutput = assembleOutput(text, tokens, 'ipa');
   const unresolved = (uaOutput.match(/⟦НЕВИЗНАЧЕНО:/g) || []).length;
-  const notice = unresolved
-    ? '<p class="continuous-output-notice" role="note">Є ' + unresolved +
-      ' невизначених фрагментів. Їх навмисно позначено замість вигадування вимови.</p>'
-    : '<p class="continuous-output-notice">Цілісний дослідницький кандидат. Перед використанням перевірте правильність вимови.</p>';
+  const notice = thaiTokens.length === 0
+    ? '<p class="continuous-output-notice" role="note">Тайського тексту для фонетичного перетворення не знайдено; нетайські фрагменти збережено без інтерпретації.</p>'
+    : unresolved
+      ? '<p class="continuous-output-notice" role="note">Є ' + unresolved +
+        ' невизначених фрагментів. Їх навмисно позначено замість вигадування вимови.</p>'
+      : '<p class="continuous-output-notice">Цілісний дослідницький кандидат. Перед використанням перевірте правильність вимови.</p>';
   out.innerHTML = '<h2 class="results-heading">Цілісний результат</h2>' + notice +
     continuousPanel('Український фонетичний кандидат', uaOutput,
       'Один суцільний текст для читання та копіювання. Внутрішні склади з’єднано; межі слів відокремлено.', 'ua-continuous') +
