@@ -176,3 +176,26 @@ def analyze_text_with_word_segmentation(text: str):
     if "".join(item["input"] for item in result) != text:
         raise AssertionError("Word-segmented text analysis must preserve every input character")
     return result
+
+
+
+def analyze_text_morphology(text: str) -> dict:
+    """Return opt-in morphology candidates over dictionary-segmented text.
+
+    This diagnostic deliberately reuses the existing word segmenter and keeps
+    its uncertainty metadata. It does not change the default text endpoint or
+    treat dictionary boundaries as proof of morphology.
+    """
+    from .morphology import analyze_morphology
+
+    tokens = analyze_text_with_word_segmentation(text)
+    morphology = analyze_morphology(tokens)
+    return {
+        "input": text,
+        "segmentation_method": "clippyfirst-dictionary-max-match-v1",
+        "word_segmentation_complete": all(
+            token.get("word_segmentation_complete") is not False for token in tokens
+        ),
+        "tokens": tokens,
+        "morphology": morphology,
+    }
