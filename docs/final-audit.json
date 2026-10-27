@@ -1166,6 +1166,59 @@
       "Lawful access to the full official OBEC PDF.",
       "Per-resource license and attribution audit."
     ],
-    "readiness": "PARTIAL RESEARCH PROTOTYPE; NOT RELEASE-READY FOR ARBITRARY THAI TEXT"
+    "readiness": "PARTIAL RESEARCH PROTOTYPE; NOT RELEASE-READY FOR ARBITRARY THAI TEXT",
+    "latest_main_verification": {
+      "main_head": "9049032d0724a99d80cd68b03f01978d3943735f",
+      "ci_run": 40470304452,
+      "ci_status": "SUCCESS",
+      "ci_jobs": {
+        "test": "SUCCESS",
+        "master_artifact": "SUCCESS"
+      },
+      "pages_run": 40470304397,
+      "pages_status": "SUCCESS_BUILD_DEPLOY_AND_SERVED_HTML_CONTRACT",
+      "dictionary_entries": 60963,
+      "prefix_bucket_count": 1085,
+      "largest_bucket_entries": 1521,
+      "generated_javascript_bytes": 1629301,
+      "latency_diagnostic": {
+        "artifact_id": "12718541707",
+        "artifact_name": "thai-browser-segmentation-latency-diagnostic",
+        "runtime": "Node v22.23.3",
+        "warmup_iterations": 5,
+        "measured_iterations": 30,
+        "cases": [
+          {
+            "input_code_points": 100,
+            "median_ms": 1.895,
+            "p95_ms": 3.857,
+            "min_ms": 1.722,
+            "max_ms": 4.349
+          },
+          {
+            "input_code_points": 250,
+            "median_ms": 3.895,
+            "p95_ms": 5.398,
+            "min_ms": 3.197,
+            "max_ms": 7.088
+          },
+          {
+            "input_code_points": 500,
+            "median_ms": 7.256,
+            "p95_ms": 10.068
+          }
+        ],
+        "measured_speedup_claimed": false,
+        "reason": "No comparable pre-index baseline from the same runner/runtime; timings are diagnostic, not accuracy or release evidence."
+      },
+      "later_duplicate_pr": {
+        "number": 83,
+        "state": "closed",
+        "merged": false,
+        "head": "a1870b798bd62b92ea26f9396c202012a1eef602",
+        "decision": "Do not reopen or duplicate; prefix index is already in main via PR #79."
+      },
+      "readiness": "PARTIAL RESEARCH PROTOTYPE; NOT RELEASE-READY FOR ARBITRARY THAI TEXT"
+    }
   }
 }
