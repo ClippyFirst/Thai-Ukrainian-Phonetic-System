@@ -1054,3 +1054,12 @@ The latest code-bearing head is `3ccf84f564add02c189524c3b9ca794154d35c8b`. A fi
 - Post-merge Pages run `40412224812`, main CI `40412224673`, and web-static push run `40412224629` were queued at last inspection. The Pages workflow now retries until it verifies the served homepage contract. Check these runs before claiming deployment verified.
 - Next: confirm post-merge Pages check; inspect whether the 60k dictionary bucket scan has acceptable browser latency on representative 100–500-character text; then improve coverage only with source-attested syllabification/pronunciation. General Thai segmentation, independent IPA gold, UA target review, `บรรจุ` contextual adjudication, OBEC PDF access, and per-resource license audit remain open.
 - Readiness: partial research prototype, not release-ready for arbitrary Thai text.
+
+
+## Continuation update — browser dictionary lookup cost — 2026-10-27
+
+The post-merge CI and Pages workflow were rechecked: main CI run [40412393544](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40412393544) passed both `test` and `master-artifact`; Pages run [40412224812](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40412224812) passed build, deploy, and the post-deployment HTML contract check. The deployed site therefore includes the whole-text UI contract on the deployment associated with the merged browser-dictionary change.
+
+A follow-up performance audit found that dictionary lookup selected candidates by first Thai code point, potentially scanning a large candidate bucket at every unmatched position. Branch `perf/browser-dictionary-prefix-index-20261027` changes the generated index to two-code-point prefixes, validates that every word is stored under the correct key, and reports the largest bucket in generator output. The matching policy is unchanged: longest match, curated lexicon wins ties, and dictionary-only matches never authorize IPA/UA.
+
+Do not call this optimization complete until the branch's exact-head CI and web validation pass. The remaining major blocker is still evidence, not code structure: no independently adjudicated Thai boundary/IPA gold or two independent Ukrainian target-form reviews are available. The engine remains a partial research prototype for arbitrary Thai text.
