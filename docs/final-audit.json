@@ -1246,5 +1246,20 @@
       "live GitHub Pages contract",
       "independent annotated morphology evaluation"
     ]
+  },
+  "tltk_license_evidence_2026_10_27": {
+    "status": "PARTIALLY_CLARIFIED; NO_IMPORT_AUTHORIZED",
+    "package_release": "PyPI tltk 1.11 page states BSD-3-Clause; upstream README and setup.py for repository master 1.9.1 also state BSD-3-Clause",
+    "conflicting_repository_artifacts": [
+      "upstream LICENSE file is LGPL-3.0",
+      "upstream LICENSE.txt contains BSD-3-Clause-style terms",
+      "upstream PKG-INFO describes historical version 1.1.7 and says GPLv3"
+    ],
+    "interpretation": "License claim must be scoped to exact release/distribution and file/resource. This does not establish permission to copy historical repository files or bundled dictionaries/models.",
+    "sources": [
+      "https://pypi.org/project/tltk/",
+      "https://github.com/attapol/tltk"
+    ],
+    "decision": "No TLTK code, model, dictionary, or bundled data imported into ClippyFirst; FastThaiG2P remains benchmark-only pending resource-level provenance."
   }
 }
