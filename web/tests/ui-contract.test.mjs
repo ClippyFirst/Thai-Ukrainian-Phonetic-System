@@ -173,7 +173,7 @@ assert.match(status.textContent, /М’який/);
 assert.match(output.innerHTML, /soft-orthographic-clusters/);
 assert.match(output.innerHTML, /М’який режим — попередній результат/);
 assert.match(output.innerHTML, /IPA — проміжне представлення/);
-assert.match(output.innerHTML, /НЕВИЗНАЧЕНО|ка|фай/);
+assert.match(output.innerHTML, /<pre class="continuous-output-value">[^<]*(?:ка|фай)/, "soft mode should emit a recoverable Ukrainian candidate for recognized/structurally parsed spans");
 mode.value = "strict";
 input.value = "ทดสอบกาไฟ";
 analyze.click();
