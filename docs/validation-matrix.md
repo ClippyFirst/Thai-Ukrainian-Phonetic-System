@@ -502,3 +502,11 @@ This section is the current decision record for the whole-text Thai input work. 
 - **Measurement contract:** this is a wall-clock diagnostic, not a fixed-threshold performance gate. CI-runner timing is environment-specific; compare only like-for-like runs. It measures neither segmentation accuracy nor IPA/Ukrainian correctness.
 - **Acceptance:** exact-head CI must pass and the artifact must be inspectable before reporting measured timings. Do not claim a speedup without a comparable pre-index baseline on the same runner/runtime. Unknown text must continue to abstain from IPA/Ukrainian output.
 - **Unchanged evidence blockers:** independent Thai word-boundary adjudication, independent Thai IPA/acoustic gold, independent Ukrainian target-form reviews, contextual review of `บรรจุ` final /ʔ/, lawful access to the complete official OBEC PDF, and per-resource license/attribution review.
+
+
+## 2026-10-27 — Thai → Ukrainian context-sensitive methodology matrix
+
+- Added [docs/ukrainian-transcription-methodology.md](ukrainian-transcription-methodology.md), a human-readable first-pass method table covering onset consonants, coda neutralization, vowel/rime mapping, tone separation, context-sensitive glide handling, special orthography, statuses and evidence gates.
+- Added comparison references for the published Thai–Russian practical transcription and a Thai dictionary transcription resource. Russian mappings are explicitly comparison material, not copied as Ukrainian normative rules.
+- README links to the method document. The table is a specification for review, not a runtime truth source and not a claim of accuracy.
+- **PARTIAL:** documentation commit only; no engine rules changed and no new phonetic accuracy was measured. IPA/adaptation adjudication and held-out evaluation remain required. Any questionable or lexical-dependent reading must remain gated rather than be guessed.
