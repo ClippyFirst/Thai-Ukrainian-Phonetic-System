@@ -7,6 +7,7 @@ const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({
 const input = document.getElementById('thai-input');
 const out = document.getElementById('results');
 const status = document.getElementById('status');
+const modeInput = document.getElementById('engine-mode');
 
 const statusLabel = {
   analyzed: 'Проаналізовано',
@@ -77,7 +78,7 @@ function card(token, index) {
       '</div><div class="subline">Збережено без фонетичної інтерпретації</div></div></div></article>';
   }
 
-  const unresolved = !['lexicon', 'lexical_ipa_override'].includes(token.segmentationStatus) ||
+  const unresolved = !['lexicon', 'lexical_ipa_override', 'soft-orthographic-clusters'].includes(token.segmentationStatus) ||
     (token.syllables || []).some(syllable => syllable.status !== 'analyzed');
   const syllables = (token.syllables || []).map((analysis, syllableIndex) =>
     renderSyllable(analysis, index, syllableIndex)
@@ -101,7 +102,7 @@ const REVIEWED_WORD_GROUPS = new Map([['กินข้าวกับไข่�
 
 function continuousToken(token, mode) {
   if (token.kind !== 'thai') return token.input;
-  const known = ['lexicon', 'lexical_ipa_override'].includes(token.segmentationStatus);
+  const known = ['lexicon', 'lexical_ipa_override', 'soft-orthographic-clusters'].includes(token.segmentationStatus);
   if (!known || !(token.syllables || []).length) return mode === 'ua'
     ? '⟦НЕВИЗНАЧЕНО: ' + token.input + '⟧'
     : '⟦UNRESOLVED: ' + token.input + '⟧';
@@ -171,34 +172,37 @@ function run() {
     return;
   }
 
-  const tokens = analyzeText(text);
+  const mode = modeInput?.value === 'soft' ? 'soft' : 'strict';
+  const tokens = analyzeText(text, { mode });
   const thaiTokens = tokens.filter(token => token.kind === 'thai');
   const unresolvedCount = thaiTokens.length === 0 ? 1 : thaiTokens.filter(token =>
-    !['lexicon', 'lexical_ipa_override'].includes(token.segmentationStatus) ||
+    !['lexicon', 'lexical_ipa_override', ...(mode === 'soft' ? ['soft-orthographic-clusters'] : [])].includes(token.segmentationStatus) ||
     (token.syllables || []).some(syllable => syllable.status !== 'analyzed')
   ).length;
   status.className = unresolvedCount ? 'status notice' : 'status';
   status.textContent = thaiTokens.length === 0
     ? 'Тайських токенів не знайдено; нетайський текст збережено без фонетичної інтерпретації.'
     : unresolvedCount
-      ? 'Проаналізовано ' + tokens.length + ' токен(ів), тайських: ' + thaiTokens.length +
-        '; ' + unresolvedCount + ' тайських токен(ів) потребують додаткової перевірки або не мають детермінованого результату.'
-      : 'Проаналізовано ' + tokens.length + ' токен(ів), тайських: ' + thaiTokens.length +
-        '. Це аналіз написання, а не переклад.';
+      ? 'Режим «' + (mode === 'soft' ? 'М’який' : 'Строгий') + '». Проаналізовано ' + tokens.length + ' токен(ів), тайських: ' + thaiTokens.length +
+        '; ' + unresolvedCount + ' фрагмент(ів) потребують перевірки або залишилися невизначеними.'
+      : 'Режим «' + (mode === 'soft' ? 'М’який' : 'Строгий') + '». Проаналізовано ' + tokens.length + ' токен(ів), тайських: ' + thaiTokens.length +
+        '. Це фонетичний кандидат, а не переклад.';
   const uaOutput = assembleOutput(text, tokens, 'ua');
   const ipaOutput = assembleOutput(text, tokens, 'ipa');
   const unresolved = (uaOutput.match(/⟦НЕВИЗНАЧЕНО:/g) || []).length;
   const notice = thaiTokens.length === 0
     ? '<p class="continuous-output-notice" role="note">Тайського тексту для фонетичного перетворення не знайдено; нетайські фрагменти збережено без інтерпретації.</p>'
-    : unresolved
-      ? '<p class="continuous-output-notice" role="note">Є ' + unresolved +
-        ' невизначених фрагментів. Їх навмисно позначено замість вигадування вимови.</p>'
-      : '<p class="continuous-output-notice">Цілісний дослідницький кандидат. Перед використанням перевірте правильність вимови.</p>';
+    : mode === 'soft'
+      ? '<p class="continuous-output-notice" role="note"><strong>М’який режим — попередній результат.</strong> Невідомі фрагменти додатково розкладаються на структурно можливі склади. Межі слів і такі читання не підтверджені лексикографічно; невирішені фрагменти позначаються, а не вгадуються.</p>'
+      : unresolved
+        ? '<p class="continuous-output-notice" role="note">Строгий режим: є ' + unresolved +
+          ' невизначених фрагментів. Їх навмисно позначено замість вигадування вимови.</p>'
+        : '<p class="continuous-output-notice">Строгий режим: цілісний дослідницький кандидат. Перед використанням перевірте правильність вимови.</p>';
   out.innerHTML = '<h2 class="results-heading">Цілісний результат</h2>' + notice +
     continuousPanel('Український фонетичний кандидат', uaOutput,
-      'Один суцільний текст для читання та копіювання. Внутрішні склади з’єднано; межі слів відокремлено.', 'ua-continuous') +
+      mode === 'soft' ? 'Попередній український кандидат; неперевірені структурні сегменти можуть бути неточними.' : 'Один суцільний текст для читання та копіювання. Внутрішні склади з’єднано; межі слів відокремлено.', 'ua-continuous') +
     continuousPanel('IPA — проміжне представлення', ipaOutput,
-      'Контрольний IPA-вихід для перевірки фонетичної основи українського кандидата.', 'ipa-continuous') +
+      mode === 'soft' ? 'Попередній IPA-проміжний результат; перевірте сегментацію та читання.' : 'Контрольний IPA-вихід для перевірки фонетичної основи українського кандидата.', 'ipa-continuous') +
     '<details class="analysis-details"><summary>Детальний аналіз сегментів і складів</summary>' +
     tokens.map(card).join('') + '</details>';
   out.hidden = false;
