@@ -71,12 +71,18 @@ function preprocessArticleText(input) {
   const looksMarkedUp = /<ref\b|<[^>]+>|\[[^\]]+\]\([^)]*\)|\[\[|&(?:#(?:x[0-9a-f]+|[0-9]+)|[a-z][a-z0-9]+);|'{2,5}|\*{1,3}[^*]+\*{1,3}/i.test(original);
   if (!looksMarkedUp) return { text: original, changed: false };
 
+  // Process Markdown links before bare wiki links: Wikipedia sometimes wraps
+  // an IPA label like [[...]] in an external Markdown-style link. Removing the
+  // inner wiki brackets first would leave the destination and title as debris.
   let text = original
     .replace(/<ref\b[^>]*>[\s\S]*?<\/ref\s*>/gi, " ")
     .replace(/<ref\b[^>]*\/>/gi, " ")
-    .replace(/<[^>]*>/g, " ")
+    .replace(/<[^>]*>/g, " ");
+  text = replaceMarkdownLinks(text);
+  text = text
     .replace(/\[\[([^\]|]+)\|([^\]]+)\]\]/g, "$2")
     .replace(/\[\[([^\]]+)\]\]/g, "$1");
+  // A second pass handles links exposed by unwrapping wiki markup.
   text = replaceMarkdownLinks(text);
   text = text
     .replace(/\\([\[\]{}|])/g, "$1")
