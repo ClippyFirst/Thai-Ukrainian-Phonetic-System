@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PR #98 now includes source-attested Thai readings for ตะวันออก, ยุโรป and ยุโรปตะวันออก, with a source-pinned IPA override for ออก after exact-head CI exposed a parser gap. Latest-head CI and static validation are pending; this remains a partial research prototype, not release-ready for arbitrary Thai text.",
+  "status": "PR #98 is merged. PR #101 (research-only morphology diagnostics) and PR #102 (direct IPA input and normalization) remain open pending their own exact-head verification/review. This is a partial research prototype, not release-ready for arbitrary Thai text or independently verified Ukrainian target forms.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -45,7 +45,14 @@
     "deterministic_stratified_segmentation_review_with_uniform_controls",
     "pinned_vistec_tp_th_2021_external_segmentation_evaluator",
     "vistec_annotation_markup_and_pipe_token_adapter",
-    "linear_time_segmentation_evaluator_for_large_corpora"
+    "linear_time_segmentation_evaluator_for_large_corpora",
+    "direct_ipa_input_ui",
+    "common_ipa_delimiter_normalization",
+    "thai_tone_letter_and_combining_mark_normalization",
+    "ipa_stress_length_and_phonetic_modifier_normalization",
+    "tied_affricate_notation_normalization",
+    "python_browser_ipa_adapter_normalization_parity",
+    "direct_ipa_adapter_ui_contract_tests"
   ],
   "not_claimed": [
     "complete_lexical_segmentation",
@@ -66,7 +73,9 @@
     "production_automatic_word_segmentation",
     "connected_speech_acoustic_validation",
     "production_quality_automatic_word_segmentation",
-    "independent_acoustic_ipa_gold"
+    "independent_acoustic_ipa_gold",
+    "independently_validated_external_ipa_input_accuracy",
+    "independently_adjudicated_ukrainian_ipa_adapter_forms"
   ],
   "lexical_attestation": "Nine source-backed runtime text lexicon entries now include ยูเครน (en.wiktionary oldid 88025965), ตะวันออก (oldid 86398986), ยุโรป (oldid 91325849) and ยุโรปตะวันออก (oldid 87721830), plus three active typed IPA overrides (เงิน, เดิน and ออก). All are source-attested dictionary evidence, not independent expert/acoustic gold.",
   "corpus_attestation": "993 source-annotated Wisesight word-tokenization rows (CC0-1.0; test-only, never training/tuning); pinned UD Thai TUD source snapshots under CC BY-SA 4.0 for a research-only frequency-Viterbi experiment; zero independently adjudicated IPA/tone/vowel-length gold rows.",
@@ -1167,5 +1176,18 @@
       "Per-resource license and attribution audit."
     ],
     "readiness": "PARTIAL RESEARCH PROTOTYPE; NOT RELEASE-READY FOR ARBITRARY THAI TEXT"
+  },
+  "current_ipa_adapter_work": {
+    "branch": "feat/ipa-input-adapter-robustness-20261027",
+    "pull_request": 102,
+    "head_commit": "c29bb5a30d8bb115c4c8ad481ad7545055729010",
+    "status": "PENDING_EXACT_HEAD_CI_AND_WEB_STATIC_VALIDATION",
+    "acceptance": [
+      "Python adaptation regression tests pass",
+      "browser IPA adaptation regression tests pass",
+      "browser/Python parity and UI contract tests pass",
+      "generated artifacts remain unchanged",
+      "Web static validation passes"
+    ]
   }
 }
