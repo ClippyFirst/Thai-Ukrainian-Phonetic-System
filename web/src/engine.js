@@ -189,7 +189,6 @@ function matchDictionaryWord(chars, offset, boundaries){
   if(match) return match;
   // One-code-point dictionary entries are stored under a one-character key.
   // Fall back only after checking longer two-code-point-prefix candidates.
-  if(chars[offset+1] !== undefined) return matchesAtPrefix(WORDS_BY_PREFIX.get(chars[offset]) || []);
   return matchesAtPrefix(WORDS_BY_PREFIX.get(chars[offset]) || []);
 }
 
