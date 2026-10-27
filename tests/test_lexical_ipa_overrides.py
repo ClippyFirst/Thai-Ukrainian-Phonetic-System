@@ -7,7 +7,7 @@ from thai_ukrainian.lexical_ipa import load_lexical_ipa_overrides
 class LexicalIpaOverrideTests(unittest.TestCase):
     def test_active_override_is_source_pinned_and_not_gold(self):
         records = load_lexical_ipa_overrides()
-        self.assertEqual(set(records), {"เงิน", "เดิน"})
+        self.assertEqual(set(records), {"เงิน", "เดิน", "ออก"})
         row = records["เงิน"]
         self.assertEqual(row["segmental_ipa"], "ŋɤn")
         self.assertEqual(row["tone_category"], "mid")
@@ -47,6 +47,26 @@ class LexicalIpaOverrideTests(unittest.TestCase):
         self.assertEqual(result.phonetic_result["tone_category"], "mid")
         self.assertEqual(result.phonetic_result["vowel_length"], "short")
         self.assertEqual(result.ukrainian_transliteration, "нген")
+        self.assertTrue(any("not independently adjudicated" in warning for warning in result.warnings))
+
+    def test_source_attested_final_coda_override_closes_eastern_direction_pipeline_gap(self):
+        row = load_lexical_ipa_overrides()["ออก"]
+        self.assertEqual(row["segmental_ipa"], "ʔɔːk")
+        self.assertEqual(row["tone_category"], "low")
+        self.assertEqual(row["tone_contour_ipa"], "˩")
+        self.assertEqual(row["vowel_length"], "long")
+        self.assertEqual(row["source_revision"], "86398986")
+        self.assertEqual(row["source_url"], "https://en.wiktionary.org/w/index.php?title=ตะวันออก&oldid=86398986")
+        self.assertEqual(row["license"], "CC-BY-SA-4.0")
+        self.assertEqual(row["status"], "ACTIVE_SOURCE_ATTESTED_NOT_GOLD")
+        result = analyze_syllable("ออก")
+        self.assertEqual(result.status, "analyzed")
+        self.assertEqual(result.phonemic_ipa, "ʔɔːk")
+        self.assertEqual(result.vowel_length, "long")
+        self.assertEqual(result.tone.tone, "low")
+        self.assertEqual(result.tone.contour_ipa, "˩")
+        self.assertIn("SRC-WIKTIONARY-EN-TH-ตะวันออก-ออก", result.sources)
+        self.assertEqual(result.ukrainian_transliteration, "ок")
         self.assertTrue(any("not independently adjudicated" in warning for warning in result.warnings))
 
     def test_unlisted_forms_do_not_receive_a_lexical_override(self):

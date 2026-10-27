@@ -1,11 +1,11 @@
 # Master execution plan and chat handoff — Thai → Ukrainian Phonetic System
 
-## Latest continuation — source-attested Eastern-direction word (2026-10-27)
+## Latest continuation — source-attested Eastern-direction word and parser gap (2026-10-27)
 
-- Dedicated branch: `feat/source-attested-east-thai-lexicon-20261027`. It adds `ตะวันออก` → `ตะ|วัน|ออก` to the curated Python and browser text lexicons, with source-registry provenance pinned to en.wiktionary revision 86398986 (CC BY-SA 4.0), which records `/ta˨˩.wan˧.ʔɔːk̚˨˩/`.
-- The regression tests assert all three syllable boundaries, segmental IPA `ta`, `wan`, `ʔɔːk`, tones low/mid/low, and the exact IPA-adapter candidate `таванок` in both Python and browser. This verifies the current declared rules on one source-attested word; it is not independent expert/acoustic gold and not a general accuracy result.
-- Updated `docs/generated-audit.json` for the source-registry count (8 rows) and reconciled the lexical-attestation summary in `docs/final-audit.json`. The validation matrix now records the feature as `PARTIAL` until exact-head CI passes. The latest branch head is `5fce924e64ffbed4e4b2cbab81c9a08a2a1d7cc4`; CI and Web static validation for this latest head were queued at handoff time. Do not merge or mark DONE_VERIFIED until those checks complete and any failures are fixed.
-- This change deliberately does not add a generic rule or infer a pronunciation for unknown words. Next article-specific candidate `ยุโรป` requires careful handling of its lexicalized second syllable and tone; do not add it as a simple grapheme-only segmentation if the source reading and typed IPA disagree. A contextual multi-syllable lexical IPA representation may be required.
+- Dedicated PR [#98](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/98), branch `feat/source-attested-east-thai-lexicon-20261027`, adds `ตะวันออก` → `ตะ|วัน|ออก` using pinned en.wiktionary revision 86398986 (CC BY-SA 4.0), which records `/ta˨˩.wan˧.ʔɔːk̚˨˩/`.
+- Exact-head CI exposed a real engine defect: the Python text test received `None` rather than IPA for the final syllable `ออก`. The PR was not merged. The follow-up adds a source-pinned `ออก` lexical IPA override (`ʔɔːk`, long vowel, low tone), Python/browser parity fixture and explicit typed IPA → Ukrainian assertions (`ок`); the full word remains `таванок`. The source is a dictionary transcription, not independent expert/acoustic gold.
+- `docs/generated-audit.json` and the validation matrix were updated to reflect the ninth source-registry row and the actual CI failure/fix. The follow-up commit's exact-head CI and Web static validation must both pass before merge; do not mark DONE_VERIFIED or merge while checks are pending or failing.
+- Next article-specific candidate `ยุโรป` is attested in en.wiktionary revision 91325849 as `/ju˦˥.roːp̚˨˩/`. Add it only after testing both syllables against the parser and the IPA adapter; preserve source attribution and explicitly avoid treating the dictionary entry as independent gold.
 - Readiness remains a partial research prototype. The missing independent adjudicated Thai segmentation/IPA set and Ukrainian target-form review remain genuine blockers.
 
 ---

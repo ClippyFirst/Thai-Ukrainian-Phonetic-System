@@ -61,7 +61,7 @@ class SourceAttestedIpaRegistryTests(unittest.TestCase):
         path = ROOT / "data" / "thai" / "lexical_ipa_overrides.tsv"
         with path.open("r", encoding="utf-8-sig", newline="") as stream:
             overrides = list(csv.DictReader(stream, delimiter="\t"))
-        self.assertEqual([row["word"] for row in overrides], ["เงิน", "เดิน"])
+        self.assertEqual([row["word"] for row in overrides], ["เงิน", "เดิน", "ออก"])
         row = overrides[0]
         self.assertEqual(row["segmental_ipa"], "ŋɤn")
         self.assertEqual(row["tone_category"], "mid")
@@ -76,6 +76,15 @@ class SourceAttestedIpaRegistryTests(unittest.TestCase):
         self.assertEqual(walk["source_revision"], "1908803")
         self.assertEqual(walk["license"], "CC-BY-SA-4.0")
         self.assertEqual(walk["status"], "ACTIVE_SOURCE_ATTESTED_NOT_GOLD")
+        final_coda = overrides[2]
+        self.assertEqual(final_coda["segmental_ipa"], "ʔɔːk")
+        self.assertEqual(final_coda["tone_category"], "low")
+        self.assertEqual(final_coda["tone_contour_ipa"], "˩")
+        self.assertEqual(final_coda["vowel_length"], "long")
+        self.assertEqual(final_coda["source_revision"], "86398986")
+        self.assertEqual(final_coda["source_url"], "https://en.wiktionary.org/w/index.php?title=ตะวันออก&oldid=86398986")
+        self.assertEqual(final_coda["license"], "CC-BY-SA-4.0")
+        self.assertEqual(final_coda["status"], "ACTIVE_SOURCE_ATTESTED_NOT_GOLD")
 
 
     def test_money_override_and_lexicon_source_registry_share_exact_revision(self):

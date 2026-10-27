@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Browser dictionary lookup optimization merged (PR #79, c799dbed4247ac9743845acc0fd4131922cfbb74); code-bearing CI and Web static validation passed, and post-merge Pages deployment plus live homepage contract passed. Prefix index has 60,963 entries across 1,085 two-code-point buckets; largest bucket 1,521; generated JS 1,629,301 bytes. This is not a measured runtime speedup or linguistic-accuracy claim. Latest documentation head dd2260356f7de17d56d25b06c7c6b2c5999c0709 has a fresh CI run in progress. Still not release-ready for arbitrary Thai text.",
+  "status": "PR #98 source-attested lexical case is under correction after exact-head CI found missing IPA for the final syllable ออก. A pinned lexical IPA override and Python/browser regression tests have been added; exact-head CI and static validation must pass before merge. Still not release-ready for arbitrary Thai text.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -68,7 +68,7 @@
     "production_quality_automatic_word_segmentation",
     "independent_acoustic_ipa_gold"
   ],
-  "lexical_attestation": "Seven source-backed runtime text lexicon entries now include ยูเครน (en.wiktionary oldid 88025965) and ตะวันออก (en.wiktionary oldid 86398986), plus two active typed IPA overrides (เงิน and เดิน). These source attestations document lexical segmentation and selected readings; none is independent expert/acoustic gold. The เดิน override uses Thai Wiktionary oldid 1908803 /dɤːn˧/ and remains SOURCE_ATTESTED_NOT_GOLD; the parser-only graphemic ambiguity contract remains intact.",
+  "lexical_attestation": "Seven source-backed runtime text lexicon entries include ยูเครน (en.wiktionary oldid 88025965) and ตะวันออก (en.wiktionary oldid 86398986), plus three active typed IPA overrides (เงิน, เดิน and ออก). The ออก override is sourced from the compound entry and remains SOURCE_ATTESTED_NOT_GOLD; none of these source attestations is independent expert/acoustic gold.",
   "corpus_attestation": "993 source-annotated Wisesight word-tokenization rows (CC0-1.0; test-only, never training/tuning); pinned UD Thai TUD source snapshots under CC BY-SA 4.0 for a research-only frequency-Viterbi experiment; zero independently adjudicated IPA/tone/vowel-length gold rows.",
   "word_boundary_benchmark": {
     "dataset": "PyThaiNLP/Wisesight word-tokenization labels",
