@@ -85,6 +85,12 @@ def test_common_external_thai_ipa_notation_is_normalized_before_adaptation():
     base = PhoneticResult.from_syllable_analysis(analyze_syllable("กา"))
     cases = [
         ("[kʰaː˩˩˦]", "ка"),
+        ("haː", "га"),
+        ("kʰaː", "ка"),
+        ("pʰaː", "па"),
+        ("tʰaː", "та"),
+        ("tɕa", "ча"),
+        ("tɕʰa", "ча"),
         ("/kʰaː/", "ка"),
         ("kʰàː", "ка"),
         ("ˈkʰaː", "ка"),
