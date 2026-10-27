@@ -174,6 +174,7 @@ analyze.click();
 assert.equal(status.className, "status notice");
 assert.match(status.textContent, /Тайських токенів не знайдено/);
 assert.match(output.innerHTML, /ABC/);
+assert.match(output.innerHTML, /Тайського тексту для фонетичного перетворення не знайдено/);
 
 const homeHtml = await readFile(new URL("../index.html", import.meta.url), "utf8");
 const systemHtml = await readFile(new URL("../system.html", import.meta.url), "utf8");
