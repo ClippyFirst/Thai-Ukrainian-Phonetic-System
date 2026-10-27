@@ -12,13 +12,23 @@ const OUTPUT = process.env.THAI_SEGMENTATION_BENCHMARK_OUTPUT || "/tmp/thai-brow
 const WARMUP = 5;
 const ITERATIONS = 30;
 const SIZES = [100, 250, 500];
-const SEED = "กินข้าวกับไข่และผลไม้ข่าวข้าวเข้เข่าเขาเงินเดินกาแฟทดสอบเชียงใหม่ประเทศไทย";
-const points = [...SEED];
+// Append complete lexical units only. Cutting an arbitrary code-point count can
+// leave a Thai preposed vowel, tone mark or vowel sign detached from its cluster,
+// making a nominally representative benchmark accidentally malformed.
+const UNITS = [
+  "กินข้าวกับไข่และผลไม้", "ข่าวข้าวเข้เข่าเขา", "เงินเดิน", "กาแฟ",
+  "ทดสอบ", "เชียงใหม่", "ประเทศไทย",
+];
 
 function inputOfLength(target) {
-  const chars = [];
-  while (chars.length < target) chars.push(...points);
-  return chars.slice(0, target).join("");
+  const units = [];
+  let codePoints = 0;
+  while (codePoints < target) {
+    const unit = UNITS[units.length % UNITS.length];
+    units.push(unit);
+    codePoints += [...unit].length;
+  }
+  return units.join("");
 }
 function percentile(values, p) {
   const sorted = [...values].sort((a, b) => a - b);
@@ -50,6 +60,7 @@ for (const size of SIZES) {
     };
   }
   cases.push({
+    targetCodePoints: size,
     inputCodePoints: [...input].length,
     warmupIterations: WARMUP,
     measuredIterations: ITERATIONS,
