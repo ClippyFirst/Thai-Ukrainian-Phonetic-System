@@ -1257,5 +1257,47 @@
       "review primary references and exact locators",
       "only then encode approved rules in a versioned machine-readable registry and add regression cases"
     ]
+  },
+  "ukrainian_vs_russian_thai_transcription_2026_10_27": {
+    "status": "PARTIAL",
+    "document": "docs/ukrainian-vs-russian-thai-transcription.md",
+    "branch": "docs/thai-ukrainian-method-table-20261027",
+    "commit": "88445a9af2902dd284d34b3c00c670520fcd535d",
+    "scope": [
+      "Thai /ɯ/ and Ukrainian и approximation",
+      "Thai /h/ г-versus-х decision",
+      "aspiration /kʰ pʰ tʰ}",
+      "/j/ and Ukrainian йotated vowels",
+      "/w/ adaptation",
+      "/ɛ/~/e/ neutralization",
+      "Ukrainian г/ґ and дж/дз boundaries",
+      "tone and vowel-length preservation in IPA"
+    ],
+    "sources": [
+      "official Ukrainian orthography standard 2026",
+      "Holovach 2022 DOI 10.18523/lcmp2522-9281.2022.8.187-212",
+      "Thai–Russian practical transcription comparison",
+      "Tingsabadh & Abramson 1993 DOI 10.1017/S0025100300004746"
+    ],
+    "implementation": "documentation only; runtime rules unchanged",
+    "findings": [
+      "Russian practical transcription must not be an intermediate for Ukrainian output",
+      "Thai /ɯ/ → Ukrainian и is a practical approximation, not identity",
+      "current /h/ → х mapping is project-specific and needs comparison with г",
+      "aspiration remains explicit in IPA; no automatic х insertion in Ukrainian practical output",
+      "дж/дз are not automatic mappings for Thai จ/ฉ/ช"
+    ],
+    "not_claimed": [
+      "official Ukrainian Thai transcription standard",
+      "independent adjudication of Ukrainian forms",
+      "corpus-validated preferred mapping",
+      "runtime coverage or accuracy improvement"
+    ],
+    "acceptance": [
+      "collect source-attested Ukrainian Thai names",
+      "independent Thai pronunciation/IPA validation",
+      "blind Ukrainian editorial adjudication of candidate forms",
+      "encode only adjudicated rules in a versioned registry and regression tests"
+    ]
   }
 }
