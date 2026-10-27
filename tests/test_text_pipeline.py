@@ -235,8 +235,8 @@ class TextPipelineTests(unittest.TestCase):
 
     def test_source_attested_challenge_lexicon_entries(self):
         expected = {
-            "ไกล": (("ไกล",), "lexicon"),
-            "ใกล้": (("ใกล้",), "lexicon"),
+            "ไกล": (("ไกล",), "lexical_ipa_override"),
+            "ใกล้": (("ใกล้",), "lexical_ipa_override"),
             "เดิน": (("เดิน",), "lexical_ipa_override"),
             "กรรม": (("กำ",), "lexicon"),
             "บรรจุ": (("บัน", "จุ"), "lexicon"),
