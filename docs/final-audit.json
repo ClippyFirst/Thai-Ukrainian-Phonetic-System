@@ -241,7 +241,7 @@
     "discrepancy": "บรรจุ: source transcription includes final /ʔ/ while current engine segmental output omits it; no universal rule added pending transcription-level/context adjudication",
     "evidence_grade": "SOURCE_ATTESTED_NOT_GOLD",
     "accuracy_claimed": false,
-    "verification_status": "Current branch diagnostic observed 4 circular source overrides and 2 independently comparable records; exact-head CI follow-up pending; source-attested dictionary evidence only, not independent gold",
+    "verification_status": "PASS on exact-head CI run 40592380586; source-attested dictionary evidence only, not independent gold",
     "artifact_id": "12648883086"
   },
   "word_boundary_baseline": {
@@ -1348,7 +1348,12 @@
     "date": "2026-10-27",
     "branch": "feat/source-attested-lexical-ipa-coverage-20261027",
     "base_main": "8c082ea530ef0c4c8e67b25837b05273316c0b84",
-    "status": "PARTIAL_PENDING_EXACT_HEAD_CI",
+    "merged_main_commit": "c6ba73b77766b0169d70619383b6efe27564d774",
+    "exact_head_ci_run": "40592380586: PASS (test and master-artifact)",
+    "web_static_validation_run": "40592380619: PASS",
+    "pages_deployment_run": "40592864388: PASS; live homepage contract verified",
+    "published_url": "https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/",
+    "status": "DONE_VERIFIED_ENGINEERING_CI_AND_PAGES",
     "change": "Added exact-form lexical IPA overrides for ไกล and ใกล้ with pinned Wiktionary revisions, preserving source-attested status and sending IPA through the existing Ukrainian adapter.",
     "tests_added": [
       "source revision and license assertions",
