@@ -66,6 +66,8 @@ export {analyze,normalize};
 
 const TEXT_LEXICON = new Map([
   ["ครอบครัว", ["ครอบ","ครัว"]],
+  // Source-attested two-syllable proper name; see text_lexicon_sources.csv.
+  ["ยูเครน", ["ยู","เครน"]],
   ["ปรากฏ", ["ปรา","กฏ"]],
   ["ประกาศ", ["ประ","กาศ"]],
   ["รถบัส", ["รถ","บัส"]],

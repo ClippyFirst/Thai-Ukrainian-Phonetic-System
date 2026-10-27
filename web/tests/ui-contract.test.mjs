@@ -80,6 +80,17 @@ assert.match(output.innerHTML, /Результат 2: เดิน/);
 assert.equal((output.innerHTML.match(/class="label">ФОНОЛОГІЧНА IPA<\/span>/g) || []).length, 2);
 assert.equal(status.className, "status");
 
+// The source-attested Thai name ยูเครน is split at its documented syllable
+// boundary. Both IPA syllables must be exposed; the whole proper name must not
+// fall through to the unresolved OOV path.
+input.value = "ยูเครน";
+analyze.click();
+assert.match(output.innerHTML, /Результат 1: ยูเครน/);
+assert.match(output.innerHTML, /juː/);
+assert.match(output.innerHTML, /kʰreːn/);
+assert.equal((output.innerHTML.match(/class="label">ФОНОЛОГІЧНА IPA<\/span>/g) || []).length, 2);
+assert.equal(status.className, "status");
+
 // A longer CC0 dictionary word must win over a supported substring.
 // กาแฟ contains กา, but the engine must not claim IPA for only that substring.
 input.value = "กาแฟ";
