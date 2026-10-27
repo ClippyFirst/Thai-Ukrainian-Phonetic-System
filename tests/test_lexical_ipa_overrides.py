@@ -7,7 +7,7 @@ from thai_ukrainian.lexical_ipa import load_lexical_ipa_overrides
 class LexicalIpaOverrideTests(unittest.TestCase):
     def test_active_override_is_source_pinned_and_not_gold(self):
         records = load_lexical_ipa_overrides()
-        self.assertEqual(set(records), {"เงิน", "เดิน", "ออก"})
+        self.assertEqual(set(records), {"เงิน", "เดิน", "ออก", "ไกล", "ใกล้"})
         row = records["เงิน"]
         self.assertEqual(row["segmental_ipa"], "ŋɤn")
         self.assertEqual(row["tone_category"], "mid")
@@ -68,6 +68,30 @@ class LexicalIpaOverrideTests(unittest.TestCase):
         self.assertIn("SRC-WIKTIONARY-EN-TH-ตะวันออก-ออก", result.sources)
         self.assertEqual(result.ukrainian_transliteration, "ок")
         self.assertTrue(any("not independently adjudicated" in warning for warning in result.warnings))
+
+
+    def test_pinned_near_far_pair_preserves_source_attested_tone_and_diphthong(self):
+        records = load_lexical_ipa_overrides()
+        expected = {
+            "ไกล": ("klaj", "mid", "˧", "5688545", "клай"),
+            "ใกล้": ("klaj", "falling", "˥˩", "5721860", "клай"),
+        }
+        for word, (ipa, tone, contour, revision, ua) in expected.items():
+            with self.subTest(word=word):
+                row = records[word]
+                self.assertEqual(row["segmental_ipa"], ipa)
+                self.assertEqual(row["tone_category"], tone)
+                self.assertEqual(row["tone_contour_ipa"], contour)
+                self.assertEqual(row["vowel_length"], "diphthong")
+                self.assertEqual(row["source_revision"], revision)
+                self.assertEqual(row["license"], "CC-BY-SA-4.0")
+                self.assertEqual(row["status"], "ACTIVE_SOURCE_ATTESTED_NOT_GOLD")
+                result = analyze_syllable(word)
+                self.assertEqual(result.status, "analyzed")
+                self.assertEqual(result.phonemic_ipa, ipa)
+                self.assertEqual(result.tone.tone, tone)
+                self.assertEqual(result.ukrainian_transliteration, ua)
+                self.assertTrue(any("not independently adjudicated" in warning for warning in result.warnings))
 
     def test_unlisted_forms_do_not_receive_a_lexical_override(self):
         result = analyze_syllable("เดิน")

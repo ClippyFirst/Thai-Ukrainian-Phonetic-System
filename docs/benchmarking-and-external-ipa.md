@@ -167,3 +167,7 @@ Main-branch optional smoke [40131179238](https://github.com/ClippyFirst/Thai-Ukr
 The upstream software `LICENSE` at pinned commit `b224bde02151f8f86d0fe260804e4ca743bda620` is MIT. This is not a blanket license finding for the bundled language-specific lexicon/model: its provenance and any separate data rights remain unaudited. Registry wording now distinguishes software licensing from unresolved data provenance.
 
 Post-merge CI [40131179279](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40131179279) and Pages deployment [40131179264](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40131179264) were still pending when this update was prepared. Inspect before release-readiness claims.
+
+## 2026-10-27 lexical source pair follow-up
+
+Two source-pinned lexical overrides were added for `ไกล` and `ใกล้` using the exact revisions already recorded in `data/benchmark/source-attested-ipa.tsv`. The records preserve their shared segmental sequence `klaj` and distinct source-attested tone contours. They are explicitly `ACTIVE_SOURCE_ATTESTED_NOT_GOLD`; because the runtime uses these same entries, the source-attested diagnostic must treat them as circular and exclude them from independent agreement counts. This is a targeted coverage fix, not benchmark gold and not evidence of overall accuracy. Exact-head CI is pending for the branch carrying this change.

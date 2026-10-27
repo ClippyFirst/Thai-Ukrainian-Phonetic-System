@@ -79,7 +79,7 @@ class SourceAttestedIpaRegistryTests(unittest.TestCase):
         path = ROOT / "data" / "thai" / "lexical_ipa_overrides.tsv"
         with path.open("r", encoding="utf-8-sig", newline="") as stream:
             overrides = list(csv.DictReader(stream, delimiter="\t"))
-        self.assertEqual([row["word"] for row in overrides], ["เงิน", "เดิน", "ออก"])
+        self.assertEqual([row["word"] for row in overrides], ["เงิน", "เดิน", "ออก", "ไกล", "ใกล้"])
         row = overrides[0]
         self.assertEqual(row["segmental_ipa"], "ŋɤn")
         self.assertEqual(row["tone_category"], "mid")
@@ -103,6 +103,26 @@ class SourceAttestedIpaRegistryTests(unittest.TestCase):
         self.assertEqual(final_coda["source_url"], "https://en.wiktionary.org/w/index.php?title=ตะวันออก&oldid=86398986")
         self.assertEqual(final_coda["license"], "CC-BY-SA-4.0")
         self.assertEqual(final_coda["status"], "ACTIVE_SOURCE_ATTESTED_NOT_GOLD")
+
+        near = overrides[3]
+        self.assertEqual(near["segmental_ipa"], "klaj")
+        self.assertEqual(near["tone_category"], "mid")
+        self.assertEqual(near["tone_contour_ipa"], "˧")
+        self.assertEqual(near["vowel_length"], "diphthong")
+        self.assertEqual(near["source_revision"], "5688545")
+        self.assertEqual(near["source_url"], "https://th.wiktionary.org/w/index.php?title=ไกล&oldid=5688545")
+        self.assertEqual(near["license"], "CC-BY-SA-4.0")
+        self.assertEqual(near["status"], "ACTIVE_SOURCE_ATTESTED_NOT_GOLD")
+        near_tone = overrides[4]
+        self.assertEqual(near_tone["segmental_ipa"], "klaj")
+        self.assertEqual(near_tone["tone_category"], "falling")
+        self.assertEqual(near_tone["tone_contour_ipa"], "˥˩")
+        self.assertEqual(near_tone["vowel_length"], "diphthong")
+        self.assertEqual(near_tone["source_revision"], "5721860")
+        self.assertEqual(near_tone["source_url"], "https://th.wiktionary.org/w/index.php?title=ใกล้&oldid=5721860")
+        self.assertEqual(near_tone["license"], "CC-BY-SA-4.0")
+        self.assertEqual(near_tone["status"], "ACTIVE_SOURCE_ATTESTED_NOT_GOLD")
+
 
 
     def test_money_override_and_lexicon_source_registry_share_exact_revision(self):
