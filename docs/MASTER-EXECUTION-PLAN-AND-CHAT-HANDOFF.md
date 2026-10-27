@@ -1201,3 +1201,11 @@ Branch `perf/browser-segmentation-latency-benchmark-20261027` adds a non-gating,
 
 - Follow-up after the completeness question: added section 11 to the method document enumerating the 44-consonant inventory, conventional 32-vowel-form set, tone marks, diacritics, special signs, digits, and mixed-script policy. Added NECTEC/W3C/Thai Orthography Notes references. This closes a documentation inventory gap, not the engine-coverage gate.
 - Still required: automated inventory/Unicode tests against actual runtime, exact per-character/context rule registry, independent IPA and Ukrainian target review. Do not describe all-letter support as verified until those checks run.
+
+
+## 2026-10-27 — українські особливості тайської практичної транскрипції
+
+- Branch: `docs/thai-ukrainian-method-table-20261027`; new research document: `docs/ukrainian-vs-russian-thai-transcription.md`.
+- Compared the Thai–Russian practical table against the official Ukrainian orthography standard and Ukrainian scholarship on practical transcription of foreign proper names.
+- Candidate issues recorded: Thai /ɯ/ → Ukrainian «и» as an approximation; /h/ → «г» versus current project «х»; preserving aspiration in IPA without automatically writing «кх/пх/тх»; contextual /j/ and Ukrainian йотated letters; /w/; /ɛ/~/e/ neutralization; avoid applying «дж/дз» merely because they exist in Ukrainian.
+- **PARTIAL / EVIDENCE-LIMITED.** No runtime rules changed. The current /h/ → «х» mapping is explicitly provisional rather than presented as Ukrainian norm. The Russian table is comparative only; the 2025 primary edition has not been independently inspected. Need a source-backed corpus of Ukrainian Thai names and independent adjudication before changing the adapter.
