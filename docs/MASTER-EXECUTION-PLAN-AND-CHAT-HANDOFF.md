@@ -1081,3 +1081,14 @@ Remaining genuine blockers: independently adjudicated Thai segmentation boundari
 ## Continuation — browser segmentation latency measurement (2026-10-27)
 
 Branch `perf/browser-segmentation-latency-benchmark-20261027` adds a non-gating, reproducible Node diagnostic at `scripts/benchmark_web_segmentation.mjs`. CI runs five warmups and 30 measurements for 100-, 250- and 500-code-point Thai inputs, reports median/p95/min/max plus output counts, and uploads `thai-browser-segmentation-latency-diagnostic`. This is deliberately not an accuracy score or latency-threshold gate. Do not claim a quantitative speedup without a comparable baseline on the same runner and runtime. Verify exact-head CI and inspect the artifact before treating the measurement task as done. Linguistic evidence blockers and the partial-research-prototype readiness classification are unchanged.
+
+
+## Handoff — verified current-main dictionary index and latency diagnostic (2026-10-27)
+
+- Starting point verified: `main` `9049032d0724a99d80cd68b03f01978d3943735f`; the two-code-point prefix index is already present. Do not port the older optimization branch again.
+- The old branch `perf/browser-dictionary-prefix-index-20261027` currently points at `a1870b798bd62b92ea26f9396c202012a1eef602`; PR #83 is closed unmerged. It is redundant because PR #79 already merged the prefix index. Leave the old branch/PR history untouched.
+- Exact-main CI [40470304452](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40470304452) passed test + master-artifact. Current Pages [40470304397](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40470304397) passed build, deploy and served-HTML contract.
+- Latest generator metrics: 60,963 entries; 1,085 two-code-point buckets; maximum bucket 1,521; generated JS 1,629,301 bytes. The prefix index's one-character entries are stored under their one-character key; runtime checks the prefix bucket before fallback.
+- Latency diagnostic on Node v22.23.3 (five warmups, 30 samples): 100 code points median/p95 1.895/3.857 ms; 250: 3.895/5.398 ms; 500: 7.256/10.068 ms. Artifact name `thai-browser-segmentation-latency-diagnostic`, ID 12718541707. No comparable pre-index baseline exists, so do not claim measured speedup.
+- Preserve the IPA-first adapter boundary and abstention guarantees. Dictionary matches are boundary evidence only; unknown spans remain unresolved. The system is not release-ready for arbitrary Thai text.
+- Next genuine work: (1) establish a same-runner pre-index baseline only if a defensible comparison is worth the extra maintenance; (2) obtain independent Thai segmentation adjudication and IPA/acoustic gold; (3) obtain two independent Ukrainian target-form reviews; (4) resolve contextual `บรรจุ` final /ʔ/, lawful full OBEC PDF access, and per-resource license/attribution review. Do not fabricate evidence to close these gates.
