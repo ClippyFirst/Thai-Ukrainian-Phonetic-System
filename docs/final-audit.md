@@ -593,3 +593,8 @@ The Pages workflow now includes a post-deployment HTTP contract check for the wh
 
 - Completeness follow-up: added explicit Thai script inventory checklist (44 consonants incl. obsolete ฃ/ฅ, conventional 32 vowel forms, four tone marks, diacritics/special signs, ten Thai digits, mixed text) and primary technical references (NECTEC, W3C, Thai Orthography Notes). This corrects the earlier implication that the initial correspondence tables themselves covered the full inventory.
 - Audit status remains PARTIAL: documentation enumerates the inventory, but no executable proof of actual runtime handling for every symbol or context has been produced in this update.
+
+
+### Thai → Ukrainian adaptation follow-up — 2026-10-27
+
+The current PR branch now implements the selected IPA-adapter policy: Thai /h/ → Ukrainian «г»; /kʰ pʰ tʰ/ → «к/п/т»; /tɕ/ and /tɕʰ/ → «ч». The latter pair is voiceless and differs by aspiration, whereas Ukrainian «дж» /d͡ʒ/ is voiced and would add a non-source feature. Python/browser regression cases and the derived consonant table were updated. Exact-head CI and generated-artifact verification are still queued; no accuracy improvement or official standard is claimed. This note supersedes older provisional /h/ → «х» statements for this branch's selected policy. The repository remains a partial research prototype pending linguistic adjudication.
