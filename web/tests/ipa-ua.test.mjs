@@ -24,6 +24,26 @@ assert.equal(adaptIpaToUkrainian("k☃a").status, "withheld");
 assert.equal(adaptIpaToUkrainian("k☃a").output, null);
 assert.equal(adaptIpaToUkrainian("kʰaː").sourceIpa, "kʰaː");
 
+// External Thai IPA commonly adds delimiters, tone letters/diacritics, stress,
+// and a tie bar. These are parsed as notation, not mistaken for unknown phones.
+for (const [ipa, expected] of [
+  ["[kʰaː˩˩˦]", "ка"],
+  ["/kʰaː/", "ка"],
+  ["kʰàː", "ка"],
+  ["ˈkʰaː", "ка"],
+  ["t͡ɕʰa˥", "ча"],
+  ["t͜ɕʰa˦˥", "ча"],
+  ["ŋɤːn˧", "нген"],
+  ["k̚aː˧", "ка"]
+]) {
+  const adapted = adaptIpaToUkrainian(ipa);
+  assert.equal(adapted.status, "adapted", ipa);
+  assert.equal(adapted.output, expected, ipa);
+  assert(adapted.inputNotes.length > 0, "notation should be audited: " + ipa);
+}
+assert.equal(adaptIpaToUkrainian("˥˩").status, "withheld");
+assert.equal(adaptIpaToUkrainian("[kʰaː☃]").status, "withheld");
+
 // End-to-end boundary proof: the browser's final Ukrainian result is the
 // adaptation of the actual IPA intermediate, and a changed IPA changes output.
 const endToEnd = analyze("กา");
