@@ -1,6 +1,7 @@
 # Validation matrix
 
 | Component | State | Validation |
+| Pasted Wikipedia/Markdown/HTML input cleanup | PARTIAL — implementation and focused contract tests committed on PR #90; not yet merged/deployed | Exact code commit `8d3e2c44b14b3dadb28921420adf5c6c42bd28e9` passed full CI [40500955397](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40500955397) and static validation [40500955376](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40500955376). README and external-comparator register added on `ea67dee8c1f4e7346e7094679694f3d5b88e25bd`; latest static validation [40503405907](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40503405907) passed, but latest full CI [40503405909](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40503405909) remained in progress at `generate_master_table.py` when checked. Cleanup prevents markup contamination; it does **not** resolve Thai segmentation/pronunciation errors. Acceptance: current-head CI completes, PR merges, and published Pages contract confirms the deployed cleanup module/UI. |
 |---|---|---|
 | 44 consonant graphemes | implemented | inventory tests |
 | 5 lexical tone categories | implemented | tone engine |
