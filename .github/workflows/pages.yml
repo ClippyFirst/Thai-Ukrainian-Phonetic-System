@@ -79,6 +79,8 @@ jobs:
               && grep -Fq 'data-example="จริง"' /tmp/deployed-index.html \
               && grep -Fq 'id="engine-mode"' /tmp/deployed-index.html \
               && grep -Fq 'value="soft"' /tmp/deployed-index.html \
+              && grep -Fq 'value="super-soft"' /tmp/deployed-index.html \
+              && grep -Fq 'Суперм’який — повне покриття, приблизні звуки' /tmp/deployed-index.html \
               && grep -Fq 'БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ' /tmp/deployed-index.html \
               && grep -Fq 'id="ipa-input"' /tmp/deployed-index.html \
               && grep -Fq 'id="ipa-adapt"' /tmp/deployed-index.html \
@@ -91,17 +93,20 @@ jobs:
               && grep -Fq 'adaptIpaToUkrainian(source)' /tmp/deployed-app.js \
               && grep -Fq 'IPA delimiters are mismatched' /tmp/deployed-ipa-ua.js \
               && grep -Fq 'softSyllabify' /tmp/deployed-engine.js \
-              && grep -Fq 'М’який режим — попередній результат' /tmp/deployed-app.js; then
+              && grep -Fq 'М’який режим — попередній результат' /tmp/deployed-app.js \
+              && grep -Fq 'Суперм’який' /tmp/deployed-app.js \
+              && grep -Fq 'super-soft-approximate' /tmp/deployed-engine.js \
+              && grep -Fq 'UNVERIFIED_ORTHOGRAPHIC_FALLBACK' /tmp/deployed-engine.js; then
               echo "Published homepage contract verified at $PAGE_URL"
               exit 0
             fi
             if [ "$attempt" -eq 12 ]; then
               echo "Published homepage did not expose the expected whole-text UI contract after 12 attempts" >&2
-              for marker in 'Вставте цілий текст або статтю' 'data-example="กา"' 'data-example="จริง"' 'id="engine-mode"' 'value="soft"' 'БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ' 'id="ipa-input"' 'id="ipa-adapt"' 'id="ipa-adapter-result"'; do
+              for marker in 'Вставте цілий текст або статтю' 'data-example="กา"' 'data-example="จริง"' 'id="engine-mode"' 'value="soft"' 'value="super-soft"' 'Суперм’який — повне покриття, приблизні звуки' 'БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ' 'id="ipa-input"' 'id="ipa-adapt"' 'id="ipa-adapter-result"'; do
                 grep -Fq "$marker" /tmp/deployed-index.html || echo "Missing homepage marker: $marker" >&2
               done
               if [ -f /tmp/deployed-app.js ]; then
-                for marker in 'Цілісний результат' 'continuous-output-value' 'М’який режим — попередній результат' 'adaptIpaToUkrainian(source)'; do
+                for marker in 'Цілісний результат' 'continuous-output-value' 'М’який режим — попередній результат' 'Суперм’який' 'adaptIpaToUkrainian(source)'; do
                   grep -Fq "$marker" /tmp/deployed-app.js || echo "Missing app marker: $marker" >&2
                 done
               else
@@ -109,6 +114,8 @@ jobs:
               fi
               if [ -f /tmp/deployed-engine.js ]; then
                 grep -Fq 'softSyllabify' /tmp/deployed-engine.js || echo "Missing engine marker: softSyllabify" >&2
+                grep -Fq 'super-soft-approximate' /tmp/deployed-engine.js || echo "Missing engine marker: super-soft-approximate" >&2
+                grep -Fq 'UNVERIFIED_ORTHOGRAPHIC_FALLBACK' /tmp/deployed-engine.js || echo "Missing engine marker: UNVERIFIED_ORTHOGRAPHIC_FALLBACK" >&2
               else
                 echo "Missing deployed engine.js file" >&2
               fi
