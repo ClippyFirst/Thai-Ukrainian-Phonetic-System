@@ -95,7 +95,9 @@ function card(token, index) {
 }
 
 
-const KNOWN_MULTIWORD_PHRASES = new Set(['กินข้าวกับไข่และผลไม้']);
+// Explicit reviewed word grouping for the curated phrase; other entries retain
+// their source lexicon contract and are never split by guessed word boundaries.
+const REVIEWED_WORD_GROUPS = new Map([['กินข้าวกับไข่และผลไม้', [1, 1, 1, 1, 1, 2]]]);
 
 function continuousToken(token, mode) {
   if (token.kind !== 'thai') return token.input;
@@ -103,10 +105,19 @@ function continuousToken(token, mode) {
   if (!known || !(token.syllables || []).length) return mode === 'ua'
     ? '⟦НЕВИЗНАЧЕНО: ' + token.input + '⟧'
     : '⟦UNRESOLVED: ' + token.input + '⟧';
-  const wordSeparator = KNOWN_MULTIWORD_PHRASES.has(token.input) ? ' ' : '';
-  if (mode === 'ua') return token.syllables.map(s =>
-    s.status === 'analyzed' && s.ukrainian ? s.ukrainian : '⟦НЕВИЗНАЧЕНО: ' + s.input + '⟧'
-  ).join(wordSeparator);
+  if (mode === 'ua') {
+    const renderSyllable = s => s.status === 'analyzed' && s.ukrainian
+      ? s.ukrainian : '⟦НЕВИЗНАЧЕНО: ' + s.input + '⟧';
+    const groups = REVIEWED_WORD_GROUPS.get(token.input);
+    if (!groups) return token.syllables.map(renderSyllable).join('');
+    let offset = 0;
+    const words = groups.map(size => {
+      const word = token.syllables.slice(offset, offset + size).map(renderSyllable).join('');
+      offset += size;
+      return word;
+    });
+    return offset === token.syllables.length ? words.join(' ') : token.syllables.map(renderSyllable).join('');
+  }
   return token.syllables.map(s =>
     s.status === 'analyzed' && s.phonemicIpa ? s.phonemicIpa + (s.toneIpa || '') : '⟦UNRESOLVED: ' + s.input + '⟧'
   ).join(' ');
