@@ -49,7 +49,7 @@ assert.match(status.textContent, /Проаналізовано 1 токен/);
 input.value = "ทดสอบ";
 analyze.click();
 assert.equal(status.className, "status notice");
-assert.match(status.textContent, /потребують додаткової перевірки/);
+assert.match(status.textContent, /потребують перевірки або залишилися невизначеними/);
 assert.doesNotMatch(output.innerHTML, /ФОНОЛОГІЧНА IPA/);
 assert.match(output.innerHTML, /unresolved/);
 
