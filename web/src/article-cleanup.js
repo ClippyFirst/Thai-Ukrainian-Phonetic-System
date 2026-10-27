@@ -55,7 +55,8 @@ function replaceMarkdownLinks(source) {
       cursor = close;
       continue;
     }
-    output += source.slice(open + 1, labelEnd).replace(/\\([\\[\]])/g, "$1");
+    const label = source.slice(open + 1, labelEnd).replace(/\\([\\[\]])/g, "$1");
+    output += /^[ⓘ🔗]$/.test(label) ? " " : label;
     cursor = end;
   }
   return output;
@@ -84,6 +85,7 @@ function preprocessArticleText(input) {
     .replace(/&(?:#(?:x[0-9a-f]+|[0-9]+)|[a-z][a-z0-9]+);/gi, decodeEntity)
     .replace(/(?:https?:\/\/|www\.)[^\s<>]+/gi, " ")
     .replace(/'{2,5}/g, "")
+    .replace(/\*{1,3}([^*\n]+)\*{1,3}/g, "$1")
     .replace(/_{2,}/g, "")
     .replace(/[ \t]+([,.;:!?])/g, "$1")
     .replace(/[ \t]{2,}/g, " ")
