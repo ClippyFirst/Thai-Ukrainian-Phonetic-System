@@ -45,10 +45,13 @@ def main() -> None:
 
     buckets: dict[str, list[str]] = {}
     for word in words:
-        key = "".join(list(word)[:2])
+        letters = list(word)
+        # One-code-point entries use a dedicated short-word key; they must not
+        # disappear when the runtime probes a two-code-point prefix.
+        key = "".join(letters[:2]) if len(letters) >= 2 else word
         buckets.setdefault(key, []).append(word)
     for key, candidates in buckets.items():
-        if any("".join(list(word)[:2]) != key for word in candidates):
+        if any((lambda letters: "".join(letters[:2]) if len(letters) >= 2 else word)(list(word)) != key for word in candidates):
             raise SystemExit(f"Thai dictionary prefix-index mismatch for key {key!r}")
         candidates.sort(key=lambda word: (-len(word), word))
 
@@ -64,7 +67,8 @@ def main() -> None:
     OUTPUT.write_text(output, encoding="utf-8", newline="\n")
     print(
         f"Generated browser Thai word index: {len(words)} words, "
-        f"{len(buckets)} two-character-prefix buckets, "
+        f"{len(buckets)} prefix/short-word buckets, "
+        f"{sum(len(list(word)) == 1 for word in words)} one-code-point entries, "
         f"largest bucket {max(map(len, buckets.values()))}, "
         f"{len(output.encode('utf-8'))} bytes"
     )
