@@ -63,3 +63,5 @@ kbd{font-family:inherit;font-size:12px;font-weight:600;line-height:1.2;border:1p
 .analysis-details summary{cursor:pointer;font-weight:800;padding:8px 0}
 .analysis-details[open] .result-card{margin-top:16px}
 @media(max-width:700px){.continuous-output{padding:14px}.continuous-output-head{display:block}.continuous-output-head .copy{margin-top:12px}.continuous-output-value{font-size:16px}}
+
+#engine-mode{display:block;width:100%;max-width:100%;border:2px solid var(--ink);border-radius:0;padding:12px;background:var(--paper);color:var(--ink);font:inherit;margin:0 0 12px}#engine-mode:focus-visible{outline:3px solid var(--red);outline-offset:3px}

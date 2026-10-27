@@ -1,6 +1,19 @@
 # Master execution plan and chat handoff — Thai → Ukrainian Phonetic System
 
-Last audited: 2026-10-26
+
+## Continuation — strict and soft engine modes (2026-10-27)
+
+- Starting default-branch commit: `b66d83c7f2d58ca979201aefff88a357ed71b0be` (merged whole-text UI, PR #86). Dedicated branch: `feat/strict-soft-engine-modes-20261027`.
+- User request: expose two selectable modes. **Strict** remains the default and preserves the current fail-closed contract. **Soft** is opt-in and greedily tries structurally analyzable syllable spans in otherwise unknown Thai tokens; every resolved Ukrainian candidate still comes from the same IPA → Ukrainian adapter. Unresolved subspans remain explicitly marked, not guessed.
+- Current implementation commit sequence on the feature branch: `0daf02aa131e1fdaa96fae829dfd056eaedff08e` (soft structural fallback), `37bf3e601bca82fdf1cc1fdf1b168ab913918a07` (UI mode selector and copyable outputs), `59a0adc748d296179bd6e6d650bb3e925f63b6da` (selector UI), `c502c408eabae570bdd5863fd54c88149f7626cf` (UI contract test), `842b2db1fd2f75f749d6bb292b664539a023ba64` (README). CSS and this handoff/matrix update are in progress at this checkpoint.
+- Task ledger:
+  - `DONE_VERIFIED`: strict mode behavior preserved in code path; IPA remains the only source of Ukrainian adaptation; strict is the default in the new selector.
+  - `PARTIAL`: soft fallback, accessible selector, UI contract test and documentation implemented; exact-head CI and deployed Pages verification not yet observed.
+  - `TODO`: run full Python/Node/browser parity and UI contract CI; inspect exact-head results; confirm Pages deployment and test representative long Thai text in both modes.
+  - `BLOCKED / evidence-limited`: a soft structural syllable parse does not establish lexical word boundaries or true pronunciation. Independent Thai phonetic review and a licensed/adjudicated gold corpus remain necessary before claiming accuracy. Any fragment that cannot be parsed still displays an explicit unresolved marker.
+- Acceptance criteria: strict-mode regression remains unchanged; soft mode recovers structurally analyzable subspans from unknown words, marks unresolvable subspans, keeps punctuation/whitespace, routes all generated UA through IPA, and reports provisional status; Python tests, browser parity and UI contract pass on this exact head; published Pages contract succeeds.
+
+Last audited: 2026-10-27
 Repository: https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System
 Branch checked: `research/thai-segmentation-gold-parity-verified-20261025`
 Starting checkpoint for this continuation: `0be5fd841070e337cb5c805ef92954938abe61bb`

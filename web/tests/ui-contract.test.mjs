@@ -49,7 +49,7 @@ assert.match(status.textContent, /Проаналізовано 1 токен/);
 input.value = "ทดสอบ";
 analyze.click();
 assert.equal(status.className, "status notice");
-assert.match(status.textContent, /потребують додаткової перевірки/);
+assert.match(status.textContent, /потребують перевірки або залишилися невизначеними/);
 assert.doesNotMatch(output.innerHTML, /ФОНОЛОГІЧНА IPA/);
 assert.match(output.innerHTML, /unresolved/);
 
@@ -163,6 +163,25 @@ assert.match(output.innerHTML, /⟦НЕВИЗНАЧЕНО: ทดสอบ⟧/);
 assert.match(output.innerHTML, /continuous-output-value/);
 assert.match(output.innerHTML, /UNRESOLVED/);
 
+// Soft mode is opt-in: it broadens unknown spans into structural syllable
+// candidates, while preserving explicit uncertainty and the IPA→Ukrainian path.
+const mode = element("engine-mode");
+mode.value = "soft";
+input.value = "ทดสอบกาไฟ";
+analyze.click();
+assert.match(status.textContent, /М’який/);
+assert.equal(status.className, "status notice", "soft mode must visibly remain provisional even when every parsed syllable has a candidate");
+assert.match(output.innerHTML, /soft-orthographic-clusters/);
+assert.match(output.innerHTML, /М’який режим — попередній результат/);
+assert.match(output.innerHTML, /IPA — проміжне представлення/);
+assert.match(output.innerHTML, /<pre class="continuous-output-value">[^<]*(?:ка|фай)/, "soft mode should emit a recoverable Ukrainian candidate for recognized/structurally parsed spans");
+mode.value = "strict";
+input.value = "ทดสอบกาไฟ";
+analyze.click();
+assert.match(status.textContent, /Строгий/);
+assert.match(output.innerHTML, /⟦НЕВИЗНАЧЕНО: ทดสอบ⟧/);
+assert.doesNotMatch(output.innerHTML, /soft-orthographic-clusters/);
+
 input.value = "กาไฟ มา!";
 analyze.click();
 assert.match(output.innerHTML, /Результат 1: กา/);
@@ -190,6 +209,9 @@ assert.match(homeHtml, /БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ/);
 assert.match(homeHtml, /Вставте цілий текст або статтю/);
 assert.match(homeHtml, /<label class="input-label" for="thai-input">Тайський текст<\/label>/);
 assert.match(homeHtml, /один суцільний український кандидат/);
+assert.match(homeHtml, /<select id="engine-mode"/);
+assert.match(homeHtml, /value="strict" selected/);
+assert.match(homeHtml, /value="soft"/);
 for (const example of examples) assert.ok(homeHtml.includes(`data-example="${example.dataset.example}"`), `homepage must expose ${example.dataset.example}`);
 assert.match(homeHtml, /system\.html#beta-evidence/);
 assert.match(systemHtml, /id="beta-evidence"/);
