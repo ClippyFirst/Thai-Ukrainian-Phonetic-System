@@ -1,3 +1,11 @@
+## 2026-10-27 — direct IPA input and notation normalization
+
+- Added a separate website IPA → Ukrainian panel for externally sourced Thai IPA. It invokes the same `adaptIpaToUkrainian` function used by the Thai→IPA pipeline; it does not create a parallel Thai-grapheme-to-Ukrainian path.
+- Python and browser adapters now normalize common presentation conventions: outer phonetic brackets or phonemic slashes, Thai tone letters, common combining tone marks, stress marks, length notation, selected phonetic modifiers, and tied notation for the Thai alveolo-palatal affricate.
+- The adapter reports recognized notation and neutralized features. Unknown segment symbols still withhold the Ukrainian result; tone-only input also withholds rather than producing an empty “success”.
+- Added cross-runtime regressions for bracketed/slashed IPA, combining tone marks, tone letters, stress, tied affricates, velar nasals, unreleased-stop diacritics, and rejection of unsupported symbols.
+- This improves IPA-input robustness and inspectability; it does not certify that a supplied IPA transcription is lexically correct or that a Ukrainian practical spelling is an official standard. Independent IPA and Ukrainian-form adjudication remain open.
+
 ## 2026-10-27 source-attested lexical coverage continuation
 
 - Added the source-attested three-syllable entry `ตะวันออก` → `ตะ|วัน|ออก`, pinned to en.wiktionary revision 86398986, which records standard IPA `/ta˨˩.wan˧.ʔɔːk̚˨˩/`. The implementation uses the existing Thai structural/phonological parser and IPA → Ukrainian adapter; it does not import external G2P output.
