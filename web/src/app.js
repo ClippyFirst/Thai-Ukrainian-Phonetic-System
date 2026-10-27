@@ -179,7 +179,7 @@ function run() {
     !['lexicon', 'lexical_ipa_override', ...(mode === 'soft' ? ['soft-orthographic-clusters'] : [])].includes(token.segmentationStatus) ||
     (token.syllables || []).some(syllable => syllable.status !== 'analyzed')
   ).length;
-  status.className = unresolvedCount ? 'status notice' : 'status';
+  status.className = unresolvedCount || mode === 'soft' ? 'status notice' : 'status';
   status.textContent = thaiTokens.length === 0
     ? 'Тайських токенів не знайдено; нетайський текст збережено без фонетичної інтерпретації.'
     : unresolvedCount
