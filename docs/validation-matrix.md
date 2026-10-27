@@ -1,7 +1,7 @@
 # Validation matrix
 
 | Component | State | Validation |
-| Pasted Wikipedia/Markdown/HTML input cleanup | PARTIAL — merged to main as `ebaa7ec2c27698005dadf33f464cf37ae433e7a4`; post-merge Pages gate caught nested IPA link debris in the contract test | Pre-merge CI passed, but post-merge Pages run [40505659010](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40505659010) failed at `web/tests/article-cleanup.test.mjs`: nested `[[IPA]](URL \"title\")` lost the brackets but left the URL title. Fix is on branch `fix/article-cleanup-nested-wikilink-20261027`; focused regression now asserts the IPA label survives and no `Help:IPA/Ukrainian` title leaks into cleaned text. Acceptance: exact-head CI passes, PR merges, Pages deploy plus live contract passes.
+| Pasted Wikipedia/Markdown/HTML input cleanup | PARTIAL — fix PR [#91](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/91) merged as `463e81b5ec5b90dedb84eaeb2ec5f27330be3ec2`; post-merge Pages live contract pending | The previous post-merge run [40505659010](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40505659010) caught nested IPA-link debris; #91 fixed cleanup ordering and added a regression asserting visible `[ʊkrɐˈjinɐ]` survives without `Help:IPA/Ukrainian` leakage. Exact-head test and static validation passed. Current post-merge Pages run [40508000707](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40508000707) must finish with deployment and live contract success before DONE_VERIFIED.
 |---|---|---|
 | 44 consonant graphemes | implemented | inventory tests |
 | 5 lexical tone categories | implemented | tone engine |
@@ -35,7 +35,7 @@ Current readiness status — 2026-10-24
 
 - Current main HEAD at this checkpoint: `822797042dd3f6980202c2f92e491f2a53df80b0`; current-main CI [40096100740](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40096100740) passed generated-data checks, master-table generation, Python tests, Node IPA-to-UA tests, and Python/browser parity. Master-table assertions passed for 351,780 rows and 41 vowel records.
 - The final-velar-stop regression for ตรอก is present and passing; its test asserts onset ต ร, coda ก, and Ukrainian final к.
-- Optional external G2P smoke is reproducible: 40093730177, 72 raw outputs, zero runtime errors, zero independent gold rows. This is not an accuracy benchmark.
+- Optional external G2P smoke: run [40507249579](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40507249579), 42 inputs / 126 raw outputs, zero independently gold-labeled rows. thaiphon 0.7.0 and FastThaiG2P 0.1.0 emitted output for all 42; pinned Goruut returned no words on 16/42. Six article-style cases are preserved in `data/benchmark/runs/article-style-external-g2p-2026-10-27.json`. This is a raw-output diagnostic, not an accuracy benchmark.
 - Engineering validation: DONE_VERIFIED. Empirical accuracy, lexical coverage, calibrated confidence, and broad connected-speech claims: TODO/BLOCKED until independently adjudicated data and explicit scope criteria exist.
 - Latest observed Pages deploy passed at 40091525305 for code-equivalent site sources; an exact current-HEAD redeploy has not been observed.
 
@@ -69,7 +69,7 @@ The Wisesight rows establish a usable source-annotated segmentation benchmark; t
 
 - **DONE_VERIFIED — software gates:** exact-head CI test job [40229701920](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40229701920) passed generated-data drift checks, master-table generation, 143 Python tests, runtime diagnostic guards, IPA→Ukrainian adapter tests, Python/browser parity (27 fixtures) and UI contract checks.
 - **DONE_VERIFIED — evaluator integrity:** only prediction rows with `status=ok` score; non-success rows abstain; boundary F1 handles zero predicted boundaries correctly; empty runtime challenge inputs fail closed.
-- **PARTIAL — challenge runtime:** 23/36 forms resolve via the curated lexicon, 13 remain unresolved; 21/36 complete outputs and 15/36 abstentions/incomplete outputs. Hand-picked runtime counts are not accuracy or general coverage.
+- **PARTIAL — challenge runtime:** challenge set expanded from 36 to 42 with six article-style Thai probes. The current external run is source-pinned and repeatable, but all gold IPA/boundary fields remain null; no pronunciation accuracy or lexical-coverage claim is supported by this run.
 - **PARTIAL — special orthography:** source-backed lexical cases and conservative analysis-dependent statuses exist. PR #68 is a separate green but currently non-mergeable branch; no automatic merge was performed.
 - **BLOCKED — empirical validation:** zero independently adjudicated Thai IPA/word-boundary gold rows; CCOST requires license-compliant local handling and independent adjudication; a segmentation holdout still needs exact version, license, annotation convention, split and hash.
 - **BLOCKED — broader claims:** connected-speech phonetics, calibrated probability and Ukrainian orthographic preference require separate evidence sets.
