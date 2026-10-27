@@ -44,6 +44,19 @@ class SourceAttestedIpaRegistryTests(unittest.TestCase):
         self.assertEqual(row["status"], "SOURCE_ATTESTED")
         self.assertIn("not independently adjudicated gold", row["claim_scope"])
 
+    def test_eastern_direction_lexical_source_is_pinned_and_not_gold(self):
+        path = ROOT / "data" / "thai" / "text_lexicon_sources.csv"
+        with path.open("r", encoding="utf-8-sig", newline="") as stream:
+            rows = {row["word"]: row for row in csv.DictReader(stream)}
+        row = rows["ตะวันออก"]
+        self.assertEqual(row["syllables"], "ตะ|วัน|ออก")
+        self.assertEqual(row["source_id"], "SRC-WIKTIONARY-EN-TH-ตะวันออก")
+        self.assertEqual(row["source_url"], "https://en.wiktionary.org/w/index.php?title=ตะวันออก&oldid=86398986")
+        self.assertEqual(row["source_revision"], "86398986")
+        self.assertEqual(row["license"], "CC-BY-SA-4.0")
+        self.assertEqual(row["status"], "SOURCE_ATTESTED")
+        self.assertIn("not independently adjudicated gold", row["claim_scope"])
+
     def test_lexical_ipa_override_is_pinned_and_kept_separate_from_source_gold(self):
         path = ROOT / "data" / "thai" / "lexical_ipa_overrides.tsv"
         with path.open("r", encoding="utf-8-sig", newline="") as stream:
