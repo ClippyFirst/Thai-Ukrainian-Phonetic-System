@@ -61,3 +61,13 @@ assert(serviceHtml.includes("Український кандидат форму�
 assert(!serviceHtml.includes("а не механічною заміною символів IPA"));
 assert(systemHtml.includes("Український результат формується окремим шаром з IPA"));
 console.log("Public UI: IPA-first adapter contract matches the implementation");
+
+
+// Website contract: IPA can be supplied directly, independently of Thai input.
+const serviceHtml = fs.readFileSync(new URL("../index.html", import.meta.url), "utf8");
+const appSource = fs.readFileSync(new URL("../src/app.js", import.meta.url), "utf8");
+assert(serviceHtml.includes('id="ipa-input"'));
+assert(serviceHtml.includes('id="ipa-adapt"'));
+assert(serviceHtml.includes('id="ipa-adapter-result"'));
+assert(appSource.includes("adaptIpaToUkrainian(source)"));
+console.log("Direct IPA input UI is wired to the same IPA → Ukrainian adapter");
