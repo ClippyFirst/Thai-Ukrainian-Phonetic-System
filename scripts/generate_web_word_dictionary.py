@@ -47,7 +47,9 @@ def main() -> None:
     for word in words:
         key = "".join(list(word)[:2])
         buckets.setdefault(key, []).append(word)
-    for candidates in buckets.values():
+    for key, candidates in buckets.items():
+        if any("".join(list(word)[:2]) != key for word in candidates):
+            raise SystemExit(f"Thai dictionary prefix-index mismatch for key {key!r}")
         candidates.sort(key=lambda word: (-len(word), word))
 
     serialized = json.dumps(
@@ -62,7 +64,9 @@ def main() -> None:
     OUTPUT.write_text(output, encoding="utf-8", newline="\n")
     print(
         f"Generated browser Thai word index: {len(words)} words, "
-        f"{len(buckets)} two-character-prefix buckets, {len(output.encode('utf-8'))} bytes"
+        f"{len(buckets)} two-character-prefix buckets, "
+        f"largest bucket {max(map(len, buckets.values()))}, "
+        f"{len(output.encode('utf-8'))} bytes"
     )
 
 
