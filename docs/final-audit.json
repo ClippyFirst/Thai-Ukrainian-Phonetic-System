@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PR #102 direct IPA input/normalization has code changes under exact-head verification after a conservative fix to preserve ambiguous U+0306 breve. Earlier code head ba3771e29b7554325c4b63cb3c39e2356e414066 passed CI and Web static validation; current head ff27ebdcfb3c0d45bfc82943fbfd93b4f055708b is awaiting queued exact-head checks. PR #101 morphology diagnostics separately passed CI/static validation at a3b6a4292837a2c1dda77df568a780497d5fc31e. Partial research prototype; not release-ready for arbitrary Thai text or independently verified Ukrainian target forms. Additional parser hardening branch fix/ipa-normalization-audit-20261027 rejects malformed IPA outer delimiters; exact-head CI/static validation pending.",
+  "status": "Direct IPA input/normalization and malformed-delimiter rejection are merged to main at 070687575026ebc6d5d5dabdd0bb7bf647656bfc. Exact-head CI and generated master-artifact job passed at e9295d26f41f278848396913b19b3877c2935c01 (run 40569408788); Web static validation passed at that head (run 40569408783). Pages workflow commit 3a69b65de3a42f8573e6106061702230638c52cf adds a live published-site contract for the IPA panel; public deployment is not yet independently confirmed. Research prototype, not release-ready for arbitrary Thai text or independently validated Ukrainian target forms.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -1178,24 +1178,26 @@
     "readiness": "PARTIAL RESEARCH PROTOTYPE; NOT RELEASE-READY FOR ARBITRARY THAI TEXT"
   },
   "current_ipa_adapter_work": {
-    "branch": "feat/ipa-input-adapter-robustness-20261027",
+    "branch": "main",
     "pull_request": 102,
-    "head_commit": "ff27ebdcfb3c0d45bfc82943fbfd93b4f055708b",
-    "status": "PENDING_EXACT_HEAD_CI_AND_WEB_STATIC_VALIDATION",
-    "last_verified_code_commit": "ba3771e29b7554325c4b63cb3c39e2356e414066",
+    "head_commit": "070687575026ebc6d5d5dabdd0bb7bf647656bfc",
+    "status": "DONE_VERIFIED_MERGED; PUBLIC_PAGES_VERIFICATION_PENDING",
+    "last_verified_code_commit": "e9295d26f41f278848396913b19b3877c2935c01",
     "last_verified": {
       "ci": "PASS",
-      "ci_run": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40559473200",
+      "ci_run": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40569408788",
       "web_static_validation": "PASS",
-      "web_static_run": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40559473259"
+      "web_static_run": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40569408783"
     },
-    "latest_change": "Preserve combining breve U+0306 rather than automatically discarding it as tone, because it can mark extra-shortness; regression tests require fail-closed behavior.",
+    "latest_change": "Merged direct IPA → Ukrainian panel and fail-closed malformed delimiter checks; the follow-up Pages workflow verifies that the panel and browser adapter are actually served.",
     "acceptance": [
       "Python adaptation tests pass at final head",
       "browser IPA adapter tests pass at final head",
       "direct IPA UI contract tests pass at final head",
       "generated master artifact job passes at final head",
-      "Web static validation passes at final head"
+      "Exact-head CI and generated master artifact pass (verified)",
+      "Web static validation passes on exact code head (verified)",
+      "Published Pages contract confirms IPA panel and src/ipa-ua.js are live (pending deployment run)"
     ],
     "evidence_limit": "Software tests do not establish lexical correctness of arbitrary input IPA or expert validation of Ukrainian practical forms."
   },
@@ -1210,8 +1212,20 @@
       "bfe33ba25fecb0db10ca351f8d28605449c47a93",
       "db6316125ca19a036740ecc55bcad720afbd0c9d"
     ],
-    "status": "PARTIAL_PENDING_EXACT_HEAD_CI",
+    "status": "DONE_VERIFIED_MERGED",
     "change": "Python and browser IPA adapters reject mismatched/unmatched outer slash and square-bracket delimiters before normalization; matching regression cases added.",
-    "evidence_boundary": "Parser-contract hardening only. No local tests were run; exact-head CI/static validation required. Does not validate IPA transcription or Ukrainian forms."
+    "evidence_boundary": "Parser-contract hardening only. CI and static validation passed. Does not validate lexical IPA transcription or Ukrainian practical forms.",
+    "verification": {
+      "ci": "PASS",
+      "ci_run": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40569408788",
+      "web_static_validation": "PASS",
+      "web_static_run": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40569408783",
+      "merge_commit": "070687575026ebc6d5d5dabdd0bb7bf647656bfc"
+    }
+  },
+  "website_deployment_verification": {
+    "workflow_commit": "3a69b65de3a42f8573e6106061702230638c52cf",
+    "status": "PENDING_LIVE_PAGES_WORKFLOW_RESULT",
+    "acceptance": "GitHub Pages deployment workflow must pass its published homepage, app.js, engine.js and ipa-ua.js checks including direct IPA input form markers."
   }
 }
