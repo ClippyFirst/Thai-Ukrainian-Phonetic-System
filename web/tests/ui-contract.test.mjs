@@ -115,7 +115,7 @@ assert.equal(status.className, "status notice");
 input.value = "กินข้าวกับไข่และผลไม้";
 analyze.click();
 assert.match(output.innerHTML, /Результат 1: กินข้าวกับไข่และผลไม้/);
-assert.match(output.innerHTML, /class="continuous-output ua-continuous"[\\s\\S]*?<pre class="continuous-output-value">[^<]* [^<]*<\\/pre>/);
+assert.match(output.innerHTML, /class="continuous-output ua-continuous"[\s\S]*?<pre class="continuous-output-value">[^<]* [^<]*<\/pre>/);
 assert.equal((output.innerHTML.match(/class="label">ФОНОЛОГІЧНА IPA<\/span>/g) || []).length, 7);
 assert.equal(status.className, "status");
 
