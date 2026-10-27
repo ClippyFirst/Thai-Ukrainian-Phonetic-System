@@ -207,6 +207,9 @@ IPA вказано для типового читання стандартної
 
 ## Джерела та межі
 
+- Theppitak Karoonboonyanan, [*Standardization and Implementations of Thai Language* (NECTEC)](https://www.nectec.or.th/it-standards/thaistd.pdf) — inventory overview for consonants, vowel forms, tone marks, diacritics, digits and typographical signs.
+- W3C, [*Thai Layout Requirements*](https://www.w3.org/TR/thai-lreq/) — script structure, tone computation factors, pre-base vowels, multipart vowels, Thai digits and text segmentation constraints.
+- Richard Ishida, [*Thai Orthography Notes*](https://r12a.github.io/scripts/thai/) — detailed orthography and reading notes, including obsolete consonants and contextual spellings.
 - Tingsabadh & Abramson, “Thai”, *Journal of the International Phonetic Association* 23(1), 1993, pp. 24–28. [DOI: 10.1017/S0025100300004746](https://doi.org/10.1017/S0025100300004746).
 - Iwasaki & Ingkaphirom, *A Reference Grammar of Thai*.
 - Royal Institute of Thailand — джерело для тайської орфографії та особливих написань; див. [реєстр доказів](evidence.md).
