@@ -1,4 +1,5 @@
 import { analyzeText } from './engine.js';
+import { preprocessArticleText } from './article-cleanup.js';
 
 const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
@@ -173,7 +174,9 @@ function run() {
   }
 
   const mode = modeInput?.value === 'soft' ? 'soft' : 'strict';
-  const tokens = analyzeText(text, { mode });
+  const prepared = preprocessArticleText(text);
+  const analysisText = prepared.text;
+  const tokens = analyzeText(analysisText, { mode });
   const thaiTokens = tokens.filter(token => token.kind === 'thai');
   const unresolvedCount = thaiTokens.length === 0 ? 1 : thaiTokens.filter(token =>
     !['lexicon', 'lexical_ipa_override', ...(mode === 'soft' ? ['soft-orthographic-clusters'] : [])].includes(token.segmentationStatus) ||
@@ -187,8 +190,8 @@ function run() {
         '; ' + unresolvedCount + ' фрагмент(ів) потребують перевірки або залишилися невизначеними.'
       : 'Режим «' + (mode === 'soft' ? 'М’який' : 'Строгий') + '». Проаналізовано ' + tokens.length + ' токен(ів), тайських: ' + thaiTokens.length +
         '. Це фонетичний кандидат, а не переклад.';
-  const uaOutput = assembleOutput(text, tokens, 'ua');
-  const ipaOutput = assembleOutput(text, tokens, 'ipa');
+  const uaOutput = assembleOutput(analysisText, tokens, 'ua');
+  const ipaOutput = assembleOutput(analysisText, tokens, 'ipa');
   const unresolved = (uaOutput.match(/⟦НЕВИЗНАЧЕНО:/g) || []).length;
   const notice = thaiTokens.length === 0
     ? '<p class="continuous-output-notice" role="note">Тайського тексту для фонетичного перетворення не знайдено; нетайські фрагменти збережено без інтерпретації.</p>'
@@ -198,7 +201,10 @@ function run() {
         ? '<p class="continuous-output-notice" role="note">Строгий режим: є ' + unresolved +
           ' невизначених фрагментів. Їх навмисно позначено замість вигадування вимови.</p>'
         : '<p class="continuous-output-notice">Строгий режим: цілісний дослідницький кандидат. Перед використанням перевірте правильність вимови.</p>';
-  out.innerHTML = '<h2 class="results-heading">Цілісний результат</h2>' + notice +
+  const cleanupNotice = prepared.changed
+    ? '<p class="continuous-output-notice" role="note">Перед аналізом очищено вікі-/Markdown-розмітку: адреси посилань, HTML-теги та службові виноски прибрано; видимі підписи посилань збережено. Аналізується очищений текст, а не початкова розмітка.</p>'
+    : '';
+  out.innerHTML = '<h2 class="results-heading">Цілісний результат</h2>' + cleanupNotice + notice +
     continuousPanel('Український фонетичний кандидат', uaOutput,
       mode === 'soft' ? 'Попередній український кандидат; неперевірені структурні сегменти можуть бути неточними.' : 'Один суцільний текст для читання та копіювання. Внутрішні склади з’єднано; межі слів відокремлено.', 'ua-continuous') +
     continuousPanel('IPA — проміжне представлення', ipaOutput,
