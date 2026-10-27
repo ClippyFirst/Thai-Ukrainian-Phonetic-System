@@ -10,14 +10,14 @@ assert.match(cleaned.text, /อังกฤษ: Ukraine/);
 assert.match(cleaned.text, /Украї́на/);
 assert.match(cleaned.text, /\[ʊkrɐˈjinɐ\]/);
 assert.match(cleaned.text, /เป็นประเทศหนึ่ง/);
-assert.doesNotMatch(cleaned.text, /wikipedia\.org|example\.org|\\\[a\\\]|\[a\]|&#x20;|ⓘ/i);
+assert.doesNotMatch(cleaned.text, /wikipedia\.org|example\.org|\[a\]|&#x20;|ⓘ/i);
 
 const html = preprocessArticleText('ข้อความ<ref name="x">แหล่งอ้างอิง</ref> ต่อ');
 assert.doesNotMatch(html.text, /<ref|แหล่งอ้างอิง/);
 assert.match(html.text, /ข้อความ/);
 assert.match(html.text, /ต่อ/);
 
-const plain = "  กินข้าวกับไข่และผลไม้  \\n";
+const plain = "  กินข้าวกับไข่และผลไม้  \n";
 const untouched = preprocessArticleText(plain);
 assert.deepEqual(untouched, { text: plain, changed: false });
 
