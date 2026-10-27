@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PR #102 direct IPA input/normalization has code changes under exact-head verification after a conservative fix to preserve ambiguous U+0306 breve. Earlier code head ba3771e29b7554325c4b63cb3c39e2356e414066 passed CI and Web static validation; current head ff27ebdcfb3c0d45bfc82943fbfd93b4f055708b is awaiting queued exact-head checks. PR #101 morphology diagnostics separately passed CI/static validation at a3b6a4292837a2c1dda77df568a780497d5fc31e. Partial research prototype; not release-ready for arbitrary Thai text or independently verified Ukrainian target forms.",
+  "status": "PR #102 direct IPA input/normalization has code changes under exact-head verification after a conservative fix to preserve ambiguous U+0306 breve. Earlier code head ba3771e29b7554325c4b63cb3c39e2356e414066 passed CI and Web static validation; current head ff27ebdcfb3c0d45bfc82943fbfd93b4f055708b is awaiting queued exact-head checks. PR #101 morphology diagnostics separately passed CI/static validation at a3b6a4292837a2c1dda77df568a780497d5fc31e. Partial research prototype; not release-ready for arbitrary Thai text or independently verified Ukrainian target forms. Additional parser hardening branch fix/ipa-normalization-audit-20261027 rejects malformed IPA outer delimiters; exact-head CI/static validation pending.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -1198,5 +1198,20 @@
       "Web static validation passes at final head"
     ],
     "evidence_limit": "Software tests do not establish lexical correctness of arbitrary input IPA or expert validation of Ukrainian practical forms."
+  },
+  "ipa_normalization_hardening_2026_10_27": {
+    "branch": "fix/ipa-normalization-audit-20261027",
+    "base_commit": "a85452f9623b87f1d3270df9eb8f29efb0542fbd",
+    "implementation_commits": [
+      "e70ddd43946cd9fe25d886da3f697a5389c8ae8e",
+      "b3d11e927a36f87646e24863fb5f65e14b9f0acc"
+    ],
+    "test_commits": [
+      "bfe33ba25fecb0db10ca351f8d28605449c47a93",
+      "db6316125ca19a036740ecc55bcad720afbd0c9d"
+    ],
+    "status": "PARTIAL_PENDING_EXACT_HEAD_CI",
+    "change": "Python and browser IPA adapters reject mismatched/unmatched outer slash and square-bracket delimiters before normalization; matching regression cases added.",
+    "evidence_boundary": "Parser-contract hardening only. No local tests were run; exact-head CI/static validation required. Does not validate IPA transcription or Ukrainian forms."
   }
 }

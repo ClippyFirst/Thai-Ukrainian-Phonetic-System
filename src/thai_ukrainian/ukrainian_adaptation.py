@@ -81,6 +81,18 @@ def adapt_phonetic_result(result: PhoneticResult) -> dict:
             "warnings": ["Phonetic result is not supported; Ukrainian output withheld."],
         }
 
+    trimmed_source = source_ipa.strip()
+    # A single unmatched/mixed outer delimiter is malformed notation, not IPA.
+    if ((trimmed_source.startswith("[") != trimmed_source.endswith("]"))
+            or (trimmed_source.startswith("/") != trimmed_source.endswith("/"))
+            or (trimmed_source.startswith("[") and trimmed_source.endswith("/"))
+            or (trimmed_source.startswith("/") and trimmed_source.endswith("]"))):
+        return {
+            "status": "withheld", "source_ipa": source_ipa, "output": None,
+            "rules_applied": [], "input_notes": [],
+            "warnings": ["Mismatched IPA delimiters; Ukrainian output withheld."],
+        }
+
     ipa, input_notes, notation = _normalize_ipa_input(source_ipa)
     if not ipa.strip():
         return {
