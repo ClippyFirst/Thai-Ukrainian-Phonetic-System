@@ -81,9 +81,10 @@ jobs:
               && grep -Fq 'value="soft"' /tmp/deployed-index.html \
               && grep -Fq 'БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ' /tmp/deployed-index.html \
               && curl --fail --silent --show-error "$PAGE_URL/src/app.js" -o /tmp/deployed-app.js \
+              && curl --fail --silent --show-error "$PAGE_URL/src/engine.js" -o /tmp/deployed-engine.js \
               && grep -Fq 'Цілісний результат' /tmp/deployed-app.js \
               && grep -Fq 'continuous-output-value' /tmp/deployed-app.js \
-              && grep -Fq 'softSyllabify' /tmp/deployed-app.js \
+              && grep -Fq 'softSyllabify' /tmp/deployed-engine.js \
               && grep -Fq 'М’який режим — попередній результат' /tmp/deployed-app.js; then
               echo "Published homepage contract verified at $PAGE_URL"
               exit 0
@@ -94,11 +95,16 @@ jobs:
                 grep -Fq "$marker" /tmp/deployed-index.html || echo "Missing homepage marker: $marker" >&2
               done
               if [ -f /tmp/deployed-app.js ]; then
-                for marker in 'Цілісний результат' 'continuous-output-value' 'softSyllabify' 'М’який режим — попередній результат'; do
+                for marker in 'Цілісний результат' 'continuous-output-value' 'М’який режим — попередній результат'; do
                   grep -Fq "$marker" /tmp/deployed-app.js || echo "Missing app marker: $marker" >&2
                 done
               else
                 echo "Missing deployed app.js file" >&2
+              fi
+              if [ -f /tmp/deployed-engine.js ]; then
+                grep -Fq 'softSyllabify' /tmp/deployed-engine.js || echo "Missing engine marker: softSyllabify" >&2
+              else
+                echo "Missing deployed engine.js file" >&2
               fi
               exit 1
             fi
