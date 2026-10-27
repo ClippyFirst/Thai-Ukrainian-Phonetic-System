@@ -88,6 +88,7 @@ analyze.click();
 assert.match(output.innerHTML, /Результат 1: ยูเครน/);
 assert.match(output.innerHTML, /juː/);
 assert.match(output.innerHTML, /kʰreːn/);
+assert.match(output.innerHTML, /continuous-output-value[^>]*>йукрен<\/pre>/);
 assert.equal((output.innerHTML.match(/class="label">ФОНОЛОГІЧНА IPA<\/span>/g) || []).length, 2);
 assert.equal(status.className, "status");
 
