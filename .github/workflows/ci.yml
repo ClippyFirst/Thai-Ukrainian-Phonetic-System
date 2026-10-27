@@ -25,6 +25,13 @@ jobs:
       - run: node web/tests/ipa-ua.test.mjs
       - run: node web/tests/parity.test.mjs
       - run: node web/tests/ui-contract.test.mjs
+      - name: Benchmark browser Thai text segmentation latency
+        run: node scripts/benchmark_web_segmentation.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: thai-browser-segmentation-latency-diagnostic
+          path: /tmp/thai-browser-segmentation-benchmark.json
+          if-no-files-found: error
       - run: python scripts/run_wisesight_segmentation_diagnostic.py --output /tmp/wisesight1000-segmentation-baseline.json
       - run: python -c "import json; r=json.load(open('/tmp/wisesight1000-segmentation-baseline.json',encoding='utf-8')); g=r['gold']; e=r['engines']['clippyfirst-text-tokenizer-baseline']; assert g['rows_total']==993 and g['rows_source_annotated']==993 and g['rows_adjudicated']==0, g; assert g['status']=='MEASURED_ON_SOURCE_ANNOTATED_ROWS_NOT_EXPERT_ADJUDICATED', g; assert e['n_gold_rows']==993 and e['coverage']==1.0, e; assert 'not expert-adjudicated' in r['method']['accuracy_claim']"
       - run: python scripts/run_dictionary_segmentation_diagnostic.py --output /tmp/wisesight1000-dictionary-segmentation.json
