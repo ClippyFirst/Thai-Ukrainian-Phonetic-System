@@ -105,6 +105,10 @@ def test_tone_only_ipa_and_unknown_symbols_are_not_guessed():
     tone_only = adapt_phonetic_result(replace(base, phonemic_ipa="˥˩"))
     assert tone_only["status"] == "withheld"
     assert tone_only["output"] is None
+    for malformed in ("[kʰaː/", "/kʰaː]", "[kʰaː", "kʰaː]"):
+        result = adapt_phonetic_result(replace(base, phonemic_ipa=malformed))
+        assert result["status"] == "withheld", malformed
+        assert result["output"] is None, malformed
     unknown = adapt_phonetic_result(replace(base, phonemic_ipa="[kʰaː☃]"))
     assert unknown["status"] == "withheld"
     assert unknown["output"] is None
