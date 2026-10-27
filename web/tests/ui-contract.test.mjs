@@ -143,6 +143,11 @@ assert.match(output.innerHTML, /Копіювати/);
 assert.match(output.innerHTML, /analysis-details/);
 assert.doesNotMatch(output.innerHTML, /⟦НЕВИЗНАЧЕНО:/);
 
+// Leading/trailing whitespace and internal spacing survive whole-text assembly.
+input.value = "  กา  ไฟ!\\n";
+analyze.click();
+assert.match(output.innerHTML, /<pre class="continuous-output-value">  กา  ไฟ!\\n<\\/pre>/);
+
 // The continuous IPA intermediate includes tone, not only segmental phonemes.
 input.value = "กา";
 analyze.click();
