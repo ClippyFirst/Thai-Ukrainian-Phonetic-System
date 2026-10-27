@@ -31,7 +31,13 @@
   </div>
   <label class="input-label" for="thai-input">Тайський текст</label>
   <textarea id="thai-input" lang="th" rows="3" spellcheck="false" autocomplete="off" autocapitalize="off" aria-describedby="input-hint" placeholder="Напр. กาไฟมา або กินข้าวกับไข่และผลไม้"></textarea>
-  <p class="input-hint" id="input-hint">Вставте цілий текст або статтю. Після аналізу сервіс покаже один суцільний український кандидат і окремий IPA-вихід; деталі по сегментах можна розгорнути нижче. Нерозпізнані фрагменти будуть явно позначені, а не вгадані. <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>Enter</kbd> — проаналізувати.</p>
+  <p class="input-hint" id="input-hint">Вставте цілий текст або статтю. Після аналізу сервіс покаже один суцільний український кандидат і окремий IPA-вихід; деталі по сегментах можна розгорнути нижче. <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>Enter</kbd> — проаналізувати.</p>
+  <label class="input-label" for="engine-mode">Режим рушія</label>
+  <select id="engine-mode" aria-describedby="mode-hint">
+    <option value="strict" selected>Строгий — лише підтверджений детермінований розбір</option>
+    <option value="soft">М’який — попередній структурний результат</option>
+  </select>
+  <p class="input-hint" id="mode-hint">Строгий режим утримується від непідтвердженої вимови. М’який додатково шукає структурно можливі склади в невідомих фрагментах і позначає результат як попередній; він не вигадує IPA для фрагментів, які не вдалося розібрати.</p>
   <div class="examples" aria-label="Швидкі приклади">
     <span class="examples-label">Приклади:</span>
     <button type="button" data-example="กา">กา</button>
