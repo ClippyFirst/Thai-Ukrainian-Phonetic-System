@@ -175,14 +175,22 @@ function matchTextWord(chars, offset, boundaries){
 
 function matchDictionaryWord(chars, offset, boundaries){
   const candidates=WORDS_BY_PREFIX.get(chars.slice(offset, offset + 2).join("")) || [];
-  for(const word of candidates){
-    const length=[...word].length, end=offset+length;
-    if(end>chars.length || !boundaries.has(end)) continue;
-    let matches=true;
-    for(let j=0;j<length;j++) if(chars[offset+j]!==word[j]) { matches=false; break; }
-    if(matches) return word;
-  }
-  return null;
+  const matchesAtPrefix = words => {
+    for(const word of words){
+      const length=[...word].length, end=offset+length;
+      if(end>chars.length || !boundaries.has(end)) continue;
+      let matches=true;
+      for(let j=0;j<length;j++) if(chars[offset+j]!==word[j]) { matches=false; break; }
+      if(matches) return word;
+    }
+    return null;
+  };
+  const match = matchesAtPrefix(candidates);
+  if(match) return match;
+  // One-code-point dictionary entries are stored under a one-character key.
+  // Fall back only after checking longer two-code-point-prefix candidates.
+  if(chars[offset+1] !== undefined) return matchesAtPrefix(WORDS_BY_PREFIX.get(chars[offset]) || []);
+  return matchesAtPrefix(WORDS_BY_PREFIX.get(chars[offset]) || []);
 }
 
 // Prefer the longest match from the pinned CC0 word dictionary or the curated
