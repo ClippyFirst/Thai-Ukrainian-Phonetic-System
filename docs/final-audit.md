@@ -618,3 +618,11 @@ The current PR branch now implements the selected IPA-adapter policy: Thai /h/ �
 - Added regression assertions for provenance, IPA, tone, diphthong, adapter output, and the non-gold warning. Updated the existing source registry test.
 - **Status: PARTIAL pending exact-head CI and web static validation.** No local tests are claimed. The change is an evidence-backed exact-form coverage improvement only; it does not establish overall engine accuracy.
 - **Unresolved acceptance gate:** independently adjudicated IPA gold remains absent, so overall G2P/IPA/end-to-end accuracy is NOT_MEASURED. The new source-attested overrides must be treated as circular evidence in any diagnostic that compares the runtime against the same source records.
+
+
+## Source-attested tone-pair continuation — 2026-10-27
+
+- Added exact-form, revision-pinned IPA overrides for `ไกล` (/klaj/, mid tone) and `ใกล้` (/klaj/, falling tone), with CC-BY-SA-4.0 provenance. Both are `ACTIVE_SOURCE_ATTESTED_NOT_GOLD` and feed the typed IPA→Ukrainian adapter.
+- Exact-head CI run [40591565959](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40591565959) passed master-table generation and all 203 Python tests, then exposed a stale source-attested diagnostic assertion. Actual diagnostic: 6 source records, 4 circular overrides, 2 independently comparable records, 1 segmental agreement and 2 tone agreements; no accuracy claim.
+- Corrected the CI assertion and current audit counts. Follow-up exact-head CI remains pending; this continuation is not yet DONE_VERIFIED and must not be merged until the rerun passes.
+- Independent adjudicated IPA gold remains absent; the repository is still a research prototype, not release-ready.
