@@ -14,7 +14,7 @@ assert(canonical.rulesApplied.includes("UA-K-ASP"));
 for (const [ipa, expected] of [
   ["ka", "ка"], ["kʰa", "ка"], ["kaː", "ка"],
   ["iw", "іу"], ["ew", "еу"], ["iaw", "іау"],
-  ["pʰaː", "па"], ["tʰaː", "та"], ["tɕʰa", "ча"],
+  ["pʰaː", "па"], ["tʰaː", "та"], ["tɕa", "ча"], ["tɕʰa", "ча"], ["haː", "га"],
   ["ŋaː", "нга"], ["klaj", "клай"], ["kaw", "кау"]
 ]) {
   assert.equal(adaptIpaToUkrainian(ipa).output, expected, ipa);
@@ -23,6 +23,14 @@ assert.equal(adaptIpaToUkrainian("").status, "withheld");
 assert.equal(adaptIpaToUkrainian("k☃a").status, "withheld");
 assert.equal(adaptIpaToUkrainian("k☃a").output, null);
 assert.equal(adaptIpaToUkrainian("kʰaː").sourceIpa, "kʰaː");
+const thaiH = adaptIpaToUkrainian("haː");
+assert.equal(thaiH.output, "га");
+assert(thaiH.rulesApplied.includes("UA-H"));
+for (const ipa of ["tɕa", "tɕʰa"]) {
+  const affricate = adaptIpaToUkrainian(ipa);
+  assert.equal(affricate.output, "ча", ipa);
+  assert(!affricate.output.includes("дж"), ipa);
+}
 
 // External Thai IPA commonly adds delimiters, tone letters/diacritics, stress,
 // and a tie bar. These are parsed as notation, not mistaken for unknown phones.
