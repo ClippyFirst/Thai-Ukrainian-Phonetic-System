@@ -1,7 +1,7 @@
 # Validation matrix
 
 | Component | State | Validation |
-| Pasted Wikipedia/Markdown/HTML input cleanup | PARTIAL — cleanup fix merged in `463e81b5ec5b90dedb84eaeb2ec5f27330be3ec2`; deployment succeeded but the live contract gate failed on a stale marker location | Post-merge Pages run [40508000707](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40508000707) deployed the site, but its contract looked for `softSyllabify` in `/src/app.js`; the function actually lives in `/src/engine.js`. The IPA-link cleanup regression itself is fixed and branch-tested. PR [#93](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/93) corrects the live checker to fetch/check `engine.js`; acceptance is the next post-merge Pages run passing the served-page contract.
+| Pasted Wikipedia/Markdown/HTML input cleanup | DONE_VERIFIED — code fix and published-page contract passed | PR #91 fixed nested IPA-link cleanup; PR #93 corrected the live contract to check `softSyllabify` in `engine.js`. Post-merge Pages run [40509900075](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40509900075) succeeded, including the published whole-text UI contract; static validation [40508000658](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40508000658) and main CI [40509900074](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40509900074) passed.
 |---|---|---|
 | 44 consonant graphemes | implemented | inventory tests |
 | 5 lexical tone categories | implemented | tone engine |
@@ -15,10 +15,11 @@
 | connected-speech phonetics | partial | intentionally conservative |
 | lexical segmentation | PARTIAL | pinned CC0 dictionary max-match and separate 60,963-entry lexicon; evaluated on held-out Wisesight but current baseline is weak; no claim of production-quality segmentation |
 | TUD Viterbi word-segmentation model | PARTIAL — reproducible research model exists but is not used by the production browser engine | Pinned UD Thai TUD source commit `67413969add552b7030184f16f24fa9f630913bc`, CC BY-SA 4.0; 5,319-word unigram model. Held-out TUD test boundary F1 `0.872932`; Wisesight source-annotated test-only F1 `0.792101`, precision `0.6592`, recall `0.9921`, 0 expert-adjudicated rows. Model artifact `thai-tud-word-segmentation-model-and-report` (run `40503671201`, artifact `12734023167`). Candidate only for opt-in provisional segmentation; production integration requires browser/Python parity, license attribution/share-alike handling, and representative expert-reviewed error analysis.
+| Article-style G2P challenge probes | PARTIAL — six target-relevant probes added; external raw outputs preserved; no gold labels | Inputs cover `ยูเครน`, country-name compounds, continuous Thai prose and Eastern Europe. Run [40507249579](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40507249579) preserves 126 outputs across three engines. Source review found a pinned Thai IPA entry for `ยูเครน` (en.wiktionary oldid 88025965); engine integration is tracked separately in PR #94 and remains pending. |
 | corpus validation | infrastructure implemented | external licensed JSONL; no CI gold corpus claimed |
 | malformed syllable surface rejection | implemented | repeated tone/vowel signs, concatenated material and unsupported-symbol probes |
 | calibrated probability | not claimed | calibration dataset still required |
-| strict/soft browser modes | PARTIAL — code and UI tests pass; deployed-page gate is being corrected | PR #87 implementation and PR #88 diagnostics remain merged. Pages run [40508000707](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40508000707) deployed successfully but failed because the contract searched for `softSyllabify` in `app.js` rather than `engine.js`. PR #93 fixes the checker; do not mark live deployment DONE_VERIFIED until the corrected check passes.
+| strict/soft browser modes | DONE_VERIFIED — published UI contract passed; empirical phonological quality remains PARTIAL | Main Pages run [40509900075](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40509900075) confirms the deployed whole-text UI, selector and served engine markers. This verifies deployment wiring, not pronunciation accuracy; soft mode remains provisional and strict mode abstains on unsupported spans.
 
 
 | tone-bearing class in consonant clusters | implemented for declared cluster rule | separate `tone_class` field + adversarial cluster fixture |
@@ -35,7 +36,7 @@ Current readiness status — 2026-10-24
 
 - Current main HEAD at this checkpoint: `822797042dd3f6980202c2f92e491f2a53df80b0`; current-main CI [40096100740](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40096100740) passed generated-data checks, master-table generation, Python tests, Node IPA-to-UA tests, and Python/browser parity. Master-table assertions passed for 351,780 rows and 41 vowel records.
 - The final-velar-stop regression for ตรอก is present and passing; its test asserts onset ต ร, coda ก, and Ukrainian final к.
-- Optional external G2P smoke is reproducible: 40093730177, 72 raw outputs, zero runtime errors, zero independent gold rows. This is not an accuracy benchmark.
+- Optional external G2P smoke: run [40507249579](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40507249579), 42 inputs / 126 raw outputs, zero independently gold-labeled rows. thaiphon 0.7.0 and FastThaiG2P 0.1.0 emitted output for all 42; pinned Goruut returned no words on 16/42. Six article-style cases are preserved in `data/benchmark/runs/article-style-external-g2p-2026-10-27.json`. This is a raw-output diagnostic, not an accuracy benchmark.
 - Engineering validation: DONE_VERIFIED. Empirical accuracy, lexical coverage, calibrated confidence, and broad connected-speech claims: TODO/BLOCKED until independently adjudicated data and explicit scope criteria exist.
 - Latest observed Pages deploy passed at 40091525305 for code-equivalent site sources; an exact current-HEAD redeploy has not been observed.
 
@@ -69,7 +70,7 @@ The Wisesight rows establish a usable source-annotated segmentation benchmark; t
 
 - **DONE_VERIFIED — software gates:** exact-head CI test job [40229701920](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40229701920) passed generated-data drift checks, master-table generation, 143 Python tests, runtime diagnostic guards, IPA→Ukrainian adapter tests, Python/browser parity (27 fixtures) and UI contract checks.
 - **DONE_VERIFIED — evaluator integrity:** only prediction rows with `status=ok` score; non-success rows abstain; boundary F1 handles zero predicted boundaries correctly; empty runtime challenge inputs fail closed.
-- **PARTIAL — challenge runtime:** 23/36 forms resolve via the curated lexicon, 13 remain unresolved; 21/36 complete outputs and 15/36 abstentions/incomplete outputs. Hand-picked runtime counts are not accuracy or general coverage.
+- **PARTIAL — challenge runtime:** challenge set expanded from 36 to 42 with six article-style Thai probes. The external run is reproducible, but all gold IPA/boundary fields remain null; no pronunciation accuracy or lexical-coverage claim is supported.
 - **PARTIAL — special orthography:** source-backed lexical cases and conservative analysis-dependent statuses exist. PR #68 is a separate green but currently non-mergeable branch; no automatic merge was performed.
 - **BLOCKED — empirical validation:** zero independently adjudicated Thai IPA/word-boundary gold rows; CCOST requires license-compliant local handling and independent adjudication; a segmentation holdout still needs exact version, license, annotation convention, split and hash.
 - **BLOCKED — broader claims:** connected-speech phonetics, calibrated probability and Ukrainian orthographic preference require separate evidence sets.
