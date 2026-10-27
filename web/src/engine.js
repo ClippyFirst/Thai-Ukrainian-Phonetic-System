@@ -276,6 +276,91 @@ function analyzeThaiSegment(token, mode="strict"){
   return {...token,segmentationStatus:lexicalOverride?"lexical_ipa_override":"lexicon",syllables:syllables.map(analyze),warnings:[]};
 }
 
+
+const POLITENESS_MARKERS = new Set(["ครับ","ค่ะ","คะ","จ้ะ","จ๊ะ"]);
+function analyzeMorphology(tokens){
+  const thai = [];
+  tokens.forEach((token,index)=>{
+    if(token.kind==="thai" && token.input) thai.push({token:token.input,index});
+  });
+  const candidates=[];
+  thai.forEach((item,position)=>{
+    const previous=position>0?thai[position-1].token:null;
+    const following=position+1<thai.length?thai[position+1].token:null;
+    const isFinal=following===null;
+    const add=(ruleId,category,label,status,scope,evidence)=>candidates.push({
+      tokenIndex:item.index,token:item.token,ruleId,category,label,status,scope,evidence
+    });
+    if(item.token==="ไม่" && following){
+      add("TH-MORPH-NEG-001","polarity","negation marker candidate","contextual-candidate",
+        "likely scopes over following predicate; predicate boundary/POS not established",
+        "Thai negation commonly precedes the expression it negates; surface order alone does not establish scope.");
+    }else if(item.token==="จะ" && following){
+      add("TH-MORPH-MOD-001","modality/aspect","prospective/modal marker candidate","contextual-candidate",
+        "following predicate candidate",
+        "จะ commonly precedes a predicate in prospective or modal constructions; it is not a verb inflection.");
+    }else if(item.token==="กำลัง" && following){
+      add("TH-MORPH-ASP-001","aspect","progressive marker candidate","contextual-candidate",
+        "following predicate; paired อยู่ is recorded when present",
+        "กำลัง is used in progressive constructions; tokenization and syntactic scope remain unverified.");
+    }else if(item.token==="อยู่"){
+      const hasKamlang=thai.slice(0,position).some(x=>x.token==="กำลัง");
+      if(hasKamlang && previous){
+        add("TH-MORPH-ASP-002","aspect","progressive construction candidate","contextual-candidate",
+          "construction may span กำลัง … อยู่",
+          "อยู่ can participate in a progressive construction but also has lexical/location uses.");
+      }else if(previous){
+        add("TH-MORPH-AMB-001","ambiguous-function","aspectual or lexical use","analysis-dependent",
+          "requires predicate and discourse context",
+          "อยู่ is polyfunctional; the sequence alone is insufficient to force a grammatical-marker analysis.");
+      }
+    }else if(item.token==="แล้ว" && previous){
+      add("TH-MORPH-ASP-003","aspect","completive/change-of-state marker candidate","analysis-dependent",
+        "relation to preceding predicate is unverified",
+        "แล้ว can mark completion/change of state but also has other discourse and lexical uses.");
+    }else if(item.token==="ไหม" && (isFinal || POLITENESS_MARKERS.has(following))){
+      add("TH-MORPH-Q-001","question","yes/no question particle candidate","contextual-candidate",
+        "clause-final or before a polite closer; clause boundary is assumed from input end",
+        "Final ไหม commonly marks a polar question; punctuation and discourse context may change the analysis.");
+    }else if(POLITENESS_MARKERS.has(item.token) && isFinal){
+      add("TH-MORPH-POL-001","discourse/politeness","politeness particle candidate","contextual-candidate",
+        "final token in supplied span",
+        "These forms can function as politeness/register particles; speaker, interaction and lexical use are not inferred.");
+    }else if(item.token==="และ" && previous && following){
+      add("TH-MORPH-COORD-001","coordination","coordinator candidate","contextual-candidate",
+        "links adjacent token candidates",
+        "และ commonly coordinates constituents; constituent types and phrase boundaries are not established.");
+    }else if(item.token==="ของ" && previous && following){
+      add("TH-MORPH-GEN-001","nominal-relation","possessive/genitive linker candidate","analysis-dependent",
+        "relation between neighboring constituents is unverified",
+        "ของ may introduce a possessive/genitive relation but also has lexical uses.");
+    }else if(["การ","ความ"].includes(item.token) && following){
+      add("TH-MORPH-NOM-001","derivation/nominalization","nominalizer candidate","analysis-dependent",
+        "possible derivation of following predicate/adjective",
+        "การ and ความ can participate in nominalization; the lexical base and construction must be checked.");
+    }else if(["ถูก","โดน"].includes(item.token) && following){
+      add("TH-MORPH-VOICE-001","voice/construction","passive-affectee construction candidate","analysis-dependent",
+        "following predicate candidate",
+        "ถูก and โดน can mark passive/affected constructions but also occur as lexical verbs.");
+    }else if(item.token==="เคย" && following){
+      add("TH-MORPH-ASP-004","aspect/experience","experiential marker candidate","contextual-candidate",
+        "following predicate candidate",
+        "เคย commonly marks prior experience; clause structure and scope remain unverified.");
+    }
+  });
+  return {
+    schemaVersion:"1.0",mode:"conservative-function-marker-candidates",status:"research-only",
+    inputTokenCount:thai.length,candidateCount:candidates.length,candidates,
+    limitations:[
+      "This is not a complete Thai morphological analyzer or POS tagger.",
+      "Word boundaries are inherited from the supplied token sequence and are not validated here.",
+      "Candidate labels are contextual cues, not certainty scores or adjudicated analyses.",
+      "No candidate changes the phonological IPA or IPA-to-Ukrainian pipeline.",
+      "Compounding, derivation, reduplication, classifiers, names, scope and discourse require broader evidence and review."
+    ]
+  };
+}
+
 function analyzeText(text, options={}){
   const mode=options.mode==="soft"?"soft":"strict";
   return tokenizeText(text).flatMap(token=>{
@@ -285,4 +370,4 @@ function analyzeText(text, options={}){
     return segmentThaiRun(token.input).map(part=>analyzeThaiSegment(part,mode));
   });
 }
-export {analyzeText,tokenizeText};
+export {analyzeText,tokenizeText,analyzeMorphology};
