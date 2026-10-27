@@ -1146,3 +1146,17 @@ Branch `perf/browser-segmentation-latency-benchmark-20261027` adds a non-gating,
 - FastThaiG2P remains benchmark-only: repo-level Apache-2.0 metadata does not by itself clear its bundled IPA dictionary, TLTK-derived fallback, or all resource-level provenance. No third-party code, model, or dictionary has been imported.
 - Task ledger: PR #98 lexical fixture regression = DONE_VERIFIED for exact-head CI/static checks, post-merge main CI and Pages = PARTIAL pending current main workflows; TLTK license correction = PARTIAL pending reconciled docs PR and authoritative scope clarification; FastThaiG2P asset reuse = BLOCKED pending resource-level provenance; independent expert/acoustic IPA gold and Ukrainian adaptation review = EVIDENCE_LIMITED; arbitrary-text readiness = PARTIAL PROTOTYPE.
 - Verification source: GitHub Actions API job/run records and repository file inspection. No local checkout or local test run was performed in this continuation.
+
+
+## Continuation — conservative Thai morphology candidates (2026-10-27)
+
+Implementation branch: `feat/conservative-thai-morphology-layer-20261027-v2`, based on main merge commit `8649193f84808d5f5fb46189e33753816f0edcea`.
+
+- Added a conservative morphology-candidate layer to the browser UI and opt-in Python text API. It annotates a small set of context-dependent grammatical-marker candidates; it is not a full morphological analyzer or POS/syntactic parser.
+- The browser panel labels the result as provisional, displays rule IDs and limitations, and explicitly states that morphology annotations do not alter IPA or Ukrainian output.
+- Stable rule IDs cover candidate negation, prospective modality, progressive/completive/experiential aspect, polar questions, politeness, coordination, genitive/possessive relations, nominalization, passive/affected constructions, and ambiguous `อยู่`.
+- Tests added: `tests/test_morphology.py`, browser candidate-rule contract in `web/tests/parity.test.mjs`, and UI visibility/uncertainty assertions in `web/tests/ui-contract.test.mjs`. Exact-head CI and Web static validation must pass before the implementation is considered engineering-verified.
+- Source discussion is in `docs/morphology-layer.md`; relevant grammar/research references include Iwasaki & Ingkaphirom (2005), Smyth (*Thai: An Essential Grammar*), Li (2024; DOI 10.1515/flin-2024-2006), and Dékány (2026; DOI 10.1017/S0022226726101169). These sources motivate categories, not per-token adjudication.
+- **Task ledger:** conservative marker overlay = PARTIAL until exact-head CI and UI checks pass; complete morphology = TODO / evidence-limited; independent morphology gold set = BLOCKED on annotation corpus and expert adjudication; arbitrary-text correctness = not established.
+- Local checkout/network access was unavailable in this session; no local test command is claimed as run. GitHub Actions is the authoritative test execution evidence for this branch.
+- Acceptance criteria for a real morphology release: rights-cleared corpus, explicit boundary/category/scope schema, two annotators plus adjudication, held-out evaluation by phenomenon, ambiguity/abstention tests, Python/browser parity, and proof that morphology cannot change the IPA → Ukrainian path. See `docs/morphology-layer.md`.
