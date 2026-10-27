@@ -103,6 +103,10 @@ The generated syllable-space report gives a **structural upper bound**, not the 
 
 This must not be interpreted as a count of valid, lexical or corpus-attested Thai syllables.
 
+## Morphology diagnostics (research-only)
+
+The browser now shows a separate **Morphological hints** panel for a limited set of contextual grammatical-marker candidates. It is deliberately not presented as a complete Thai morphology engine or POS tagger. The optional Python entry point is `thai_ukrainian.text.analyze_text_morphology(text)`. Candidate annotations inherit the existing segmenter's uncertain word boundaries and never change the IPA → Ukrainian pipeline. No morphology accuracy is claimed; see [the morphology-layer specification](docs/morphology-layer.md) for sources, limitations and release gates.
+
 ## Word and positional model
 
 The reference implementation can analyze an explicitly segmented word with `analyze_word_syllables(["กา", "นา", "มา"])`. It preserves syllable index and position without pretending that Thai orthography alone provides universal word segmentation. See `docs/word-and-position-model.md`.
