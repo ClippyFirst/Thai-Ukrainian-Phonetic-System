@@ -1209,7 +1209,15 @@
           }
         ],
         "measured_speedup_claimed": false,
-        "reason": "No comparable pre-index baseline from the same runner/runtime; timings are diagnostic, not accuracy or release evidence."
+        "reason": "No comparable pre-index baseline from the same runner/runtime; timings are diagnostic, not accuracy or release evidence.",
+        "input_quality": "PRELIMINARY_SMOKE_ONLY",
+        "input_quality_caveat": "The original benchmark sliced repeated seed code points at exact target lengths and could truncate Thai lexical/orthographic units. Do not treat timings as representative until PR #85's whole-unit input construction passes exact-head CI and a new artifact is inspected.",
+        "followup_pr": {
+          "number": 85,
+          "url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/85",
+          "status": "OPEN_CI_PENDING",
+          "purpose": "Append complete Thai lexical units until target size is reached or exceeded; report requested and actual code-point lengths."
+        }
       },
       "later_duplicate_pr": {
         "number": 83,
