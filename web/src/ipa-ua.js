@@ -27,7 +27,7 @@ const SEGMENTS = new Map([
   ["w", {out:"в", rule:"UA-W", preserved:["glide"], neutralized:["labio-velar glide approximated as Ukrainian в"]}],
   ["s", {out:"с", rule:"UA-S", preserved:["frication"]}],
   ["f", {out:"ф", rule:"UA-F", preserved:["frication","labiodental place"]}],
-  ["h", {out:"х", rule:"UA-H", preserved:["frication"], neutralized:["glottal place"]}],
+  ["h", {out:"г", rule:"UA-H", preserved:["frication"], neutralized:["glottal place and voicing"]}],
   ["ʔ", {out:"", rule:"UA-GLOTTAL-STOP", neutralized:["glottal stop"]}],
   ["a", {out:"а", rule:"UA-A", preserved:["vowel quality"], neutralized:["length"]}],
   ["i", {out:"і", rule:"UA-I", preserved:["vowel quality"], neutralized:["length"]}],
