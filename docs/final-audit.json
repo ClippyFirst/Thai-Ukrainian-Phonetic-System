@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PR #98 is merged. PR #102 direct IPA input/normalization passed exact-head CI and Web static validation at ba3771e29b7554325c4b63cb3c39e2356e414066; it remains open pending integration. PR #101 morphology diagnostics also passed CI/static validation at a3b6a4292837a2c1dda77df568a780497d5fc31e and remains open. This is a partial research prototype, not release-ready for arbitrary Thai text or independently verified Ukrainian target forms.",
+  "status": "PR #102 direct IPA input/normalization has code changes under exact-head verification after a conservative fix to preserve ambiguous U+0306 breve. Earlier code head ba3771e29b7554325c4b63cb3c39e2356e414066 passed CI and Web static validation; current head ff27ebdcfb3c0d45bfc82943fbfd93b4f055708b is awaiting queued exact-head checks. PR #101 morphology diagnostics separately passed CI/static validation at a3b6a4292837a2c1dda77df568a780497d5fc31e. Partial research prototype; not release-ready for arbitrary Thai text or independently verified Ukrainian target forms.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -1180,26 +1180,23 @@
   "current_ipa_adapter_work": {
     "branch": "feat/ipa-input-adapter-robustness-20261027",
     "pull_request": 102,
-    "head_commit": "ba3771e29b7554325c4b63cb3c39e2356e414066",
-    "status": "DONE_VERIFIED_PENDING_MERGE",
-    "verification": {
+    "head_commit": "ff27ebdcfb3c0d45bfc82943fbfd93b4f055708b",
+    "status": "PENDING_EXACT_HEAD_CI_AND_WEB_STATIC_VALIDATION",
+    "last_verified_code_commit": "ba3771e29b7554325c4b63cb3c39e2356e414066",
+    "last_verified": {
       "ci": "PASS",
       "ci_run": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40559473200",
       "web_static_validation": "PASS",
-      "web_static_run": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40559473259",
-      "jobs": [
-        "test: success",
-        "master-artifact: success"
-      ]
+      "web_static_run": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40559473259"
     },
+    "latest_change": "Preserve combining breve U+0306 rather than automatically discarding it as tone, because it can mark extra-shortness; regression tests require fail-closed behavior.",
     "acceptance": [
-      "Python adaptation regression tests pass in CI",
-      "browser IPA adaptation regression tests pass in CI",
-      "browser UI contract tests pass in CI",
-      "generated master artifact job passes",
-      "Web static validation passes",
-      "unknown IPA symbols and tone-only input are withheld"
+      "Python adaptation tests pass at final head",
+      "browser IPA adapter tests pass at final head",
+      "direct IPA UI contract tests pass at final head",
+      "generated master artifact job passes at final head",
+      "Web static validation passes at final head"
     ],
-    "evidence_limit": "Passing tests verifies software contracts, not lexical correctness of arbitrary IPA or expert validation of Ukrainian practical forms."
+    "evidence_limit": "Software tests do not establish lexical correctness of arbitrary input IPA or expert validation of Ukrainian practical forms."
   }
 }

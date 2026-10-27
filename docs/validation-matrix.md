@@ -1,10 +1,10 @@
 ## 2026-10-27 — direct IPA input and notation normalization
 
 - Added a separate website IPA → Ukrainian panel for externally sourced Thai IPA. It calls the same `adaptIpaToUkrainian` adapter used by the Thai→IPA pipeline; no direct Thai-grapheme-to-Ukrainian path was added.
-- Python and browser adapters normalize common presentation conventions: outer phonetic brackets or phonemic slashes, Thai tone letters, common combining tone marks, stress marks, length notation, selected phonetic modifiers, and tied notation for the Thai alveolo-palatal affricate. Unknown segments and tone-only input are withheld.
-- Regression tests cover bracketed/slashed IPA, combining tone marks, tone letters, stress, tied affricates, velar nasals, unreleased-stop diacritics, unknown symbols, direct UI adaptation, and visible fail-closed behavior.
-- **DONE_VERIFIED for code at `ba3771e29b7554325c4b63cb3c39e2356e414066`:** CI [40559473200](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40559473200) passed (`test` and `master-artifact` jobs); Web static validation [40559473259](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40559473259) passed. The following documentation-only commits must be verified at their final head before merge.
-- **Not claimed:** this does not certify the lexical correctness of arbitrary source IPA or an official Ukrainian spelling. Independent IPA and Ukrainian-form adjudication remain open.
+- Python and browser adapters normalize common presentation conventions: outer brackets/slashes, Thai tone letters, selected combining tone marks, stress, length, selected phonetic modifiers, and tied notation for the Thai alveolo-palatal affricate. Unknown segments and tone-only input are withheld.
+- Regression coverage includes notation variants, direct UI adaptation, visible fail-closed behavior, and ambiguous combining breve U+0306 (which can mark extra-shortness and therefore must not be silently deleted).
+- **DONE_VERIFIED at `ba3771e29b7554325c4b63cb3c39e2356e414066`:** CI [40559473200](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40559473200) and Web static validation [40559473259](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40559473259) passed. The newer conservative breve fix is **PENDING exact-head verification** at `ff27ebdcfb3c0d45bfc82943fbfd93b4f055708b` because the current GitHub Actions runs remain queued.
+- **Not claimed:** successful parsing does not certify lexical IPA correctness or an official Ukrainian spelling. Independent IPA and Ukrainian-form adjudication remain open.
 
 # Validation matrix
 

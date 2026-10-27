@@ -1,11 +1,12 @@
 # Latest continuation — direct IPA recognition and Ukrainian adapter hardening (2026-10-27)
 
-- Dedicated branch `feat/ipa-input-adapter-robustness-20261027` started from `8649193f84808d5f5fb46189e33753816f0edcea`; PR [#102](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/102) remains open, and PR #101 morphology work remains separate.
-- A website panel accepts externally sourced IPA and displays the normalized segmental sequence, Ukrainian practical candidate, applied rules, and recognized/neutralized features. It calls the same browser IPA → Ukrainian adapter as the main Thai→IPA path.
-- Python and browser adapters normalize common IPA wrappers, Thai tone letters and common combining tone marks, stress, length, selected phonetic modifiers, and tied `t͡ɕ` notation. Unsupported symbols and tone-only input are withheld, not guessed.
-- **Exact-head verification passed** at `ba3771e29b7554325c4b63cb3c39e2356e414066`: CI [40559473200](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40559473200) (test and master-artifact jobs PASS) and Web static validation [40559473259](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40559473259) PASS. Documentation was then updated; the new documentation commit requires its own CI before merge.
-- Remote-only workflow: local test execution was unavailable because DNS could not resolve `github.com`; do not describe this as a local pass.
-- Evidence boundary: passing software tests confirms adapter contracts, not lexical correctness of arbitrary input IPA or expert-adjudicated Ukrainian target spellings. The repository remains a partial research prototype.
+- Dedicated branch `feat/ipa-input-adapter-robustness-20261027`; PR [#102](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/102) remains open pending exact-head verification and integration. PR #101 morphology work remains separate.
+- Added a website panel for externally sourced IPA. It calls the same IPA → Ukrainian adapter as the main Thai→IPA path and displays normalized segmental IPA, the Ukrainian practical candidate, applied rules, and recognized/neutralized features.
+- Both Python and browser adapters support common wrappers, Thai tone letters and selected combining tone marks, stress, length, selected phonetic modifiers, and tied `t͡ɕ` notation. Unknown segments and tone-only input are withheld.
+- Quality hardening: removed U+0306 combining breve from the automatic tone-mark deletion set. A breve can mark extra-shortness, so the adapter now preserves it as an unsupported distinction and withholds the output. Python/browser regression tests cover this fail-closed case.
+- Previous code head `ba3771e29b7554325c4b63cb3c39e2356e414066` passed CI [40559473200](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40559473200) and Web static validation [40559473259](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40559473259). Current code head `ff27ebdcfb3c0d45bfc82943fbfd93b4f055708b` is pending because GitHub Actions runs are queued; do not claim its tests passed until those exact-head runs finish.
+- Local execution is unavailable in this session because the environment could not resolve `github.com`; CI is the available verification route.
+- Evidence boundary: parser support does not certify the lexical correctness of arbitrary IPA or independently adjudicated Ukrainian spelling. Project remains a partial research prototype.
 
 ---
 
