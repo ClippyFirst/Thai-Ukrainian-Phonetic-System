@@ -71,3 +71,9 @@ assert(ipaPanelHtml.includes('id="ipa-adapt"'));
 assert(ipaPanelHtml.includes('id="ipa-adapter-result"'));
 assert(ipaAppSource.includes("adaptIpaToUkrainian(source)"));
 console.log("Direct IPA input UI is wired to the same IPA → Ukrainian adapter");
+
+
+// U+0306 breve can mark extra-shortness; do not silently normalize it away.
+assert.equal(adaptIpaToUkrainian("kʰă").status, "withheld");
+assert.equal(adaptIpaToUkrainian("kʰă").output, null);
+console.log("Ambiguous breve diacritic is preserved and fails closed");
