@@ -13,6 +13,7 @@ const modeInput = document.getElementById('engine-mode');
 
 const statusLabel = {
   analyzed: 'Проаналізовано',
+  'approximate:orthographic-fallback': 'Приблизний резервний результат',
   'analysis-dependent:special-orthography': 'Потрібна лексична перевірка',
   'analysis-dependent:vowel-length': 'Потрібна лексична перевірка',
   'unresolved:unsupported-symbol': 'Невизначений вхід',
@@ -41,7 +42,7 @@ function renderField(label, value, isIpa = false) {
 }
 
 function renderSyllable(analysis, tokenIndex, syllableIndex) {
-  const ok = analysis.status === 'analyzed';
+  const ok = analysis.status === 'analyzed' || analysis.status === 'approximate:orthographic-fallback';
   const headingId = 'syllable-' + tokenIndex + '-' + syllableIndex;
   const warnings = (analysis.warnings || []).map(warning =>
     '<div class="warning">' + esc(warning) + '</div>'
@@ -104,13 +105,13 @@ const REVIEWED_WORD_GROUPS = new Map([['กินข้าวกับไข่�
 
 function continuousToken(token, mode) {
   if (token.kind !== 'thai') return token.input;
-  const known = ['lexicon', 'lexical_ipa_override', 'soft-orthographic-clusters'].includes(token.segmentationStatus);
+  const known = ['lexicon', 'lexical_ipa_override', 'soft-orthographic-clusters', 'super-soft-approximate'].includes(token.segmentationStatus);
   if (!known || !(token.syllables || []).length) return mode === 'ua'
     ? '⟦НЕВИЗНАЧЕНО: ' + token.input + '⟧'
     : '⟦UNRESOLVED: ' + token.input + '⟧';
   if (mode === 'ua') {
-    const renderSyllable = s => s.status === 'analyzed' && s.ukrainian
-      ? s.ukrainian : '⟦НЕВИЗНАЧЕНО: ' + s.input + '⟧';
+    const renderSyllable = s => ['analyzed', 'approximate:orthographic-fallback'].includes(s.status) && s.ukrainian
+      ? s.ukrainian : (token.segmentationStatus === 'super-soft-approximate' ? 'а' : '⟦НЕВИЗНАЧЕНО: ' + s.input + '⟧');
     const groups = REVIEWED_WORD_GROUPS.get(token.input);
     if (!groups) return token.syllables.map(renderSyllable).join('');
     let offset = 0;
@@ -122,7 +123,7 @@ function continuousToken(token, mode) {
     return offset === token.syllables.length ? words.join(' ') : token.syllables.map(renderSyllable).join('');
   }
   return token.syllables.map(s =>
-    s.status === 'analyzed' && s.phonemicIpa ? s.phonemicIpa + (s.toneIpa || '') : '⟦UNRESOLVED: ' + s.input + '⟧'
+    ['analyzed', 'approximate:orthographic-fallback'].includes(s.status) && s.phonemicIpa ? s.phonemicIpa + (s.toneIpa || '') : (token.segmentationStatus === 'super-soft-approximate' ? 'a' : '⟦UNRESOLVED: ' + s.input + '⟧')
   ).join(' ');
 }
 
@@ -174,29 +175,31 @@ function run() {
     return;
   }
 
-  const mode = modeInput?.value === 'soft' ? 'soft' : 'strict';
+  const mode = ['soft', 'super-soft'].includes(modeInput?.value) ? modeInput.value : 'strict';
   const prepared = preprocessArticleText(text);
   const analysisText = prepared.text;
   const tokens = analyzeText(analysisText, { mode });
   const thaiTokens = tokens.filter(token => token.kind === 'thai');
   const unresolvedCount = thaiTokens.length === 0 ? 1 : thaiTokens.filter(token =>
-    !['lexicon', 'lexical_ipa_override', ...(mode === 'soft' ? ['soft-orthographic-clusters'] : [])].includes(token.segmentationStatus) ||
+    !['lexicon', 'lexical_ipa_override', ...(mode === 'soft' ? ['soft-orthographic-clusters'] : []), ...(mode === 'super-soft' ? ['soft-orthographic-clusters', 'super-soft-approximate'] : [])].includes(token.segmentationStatus) ||
     (token.syllables || []).some(syllable => syllable.status !== 'analyzed')
   ).length;
-  status.className = unresolvedCount || mode === 'soft' ? 'status notice' : 'status';
+  status.className = unresolvedCount || mode === 'soft' || mode === 'super-soft' ? 'status notice' : 'status';
   status.textContent = thaiTokens.length === 0
     ? 'Тайських токенів не знайдено; нетайський текст збережено без фонетичної інтерпретації.'
     : unresolvedCount
-      ? 'Режим «' + (mode === 'soft' ? 'М’який' : 'Строгий') + '». Проаналізовано ' + tokens.length + ' токен(ів), тайських: ' + thaiTokens.length +
-        '; ' + unresolvedCount + ' фрагмент(ів) потребують перевірки або залишилися невизначеними.'
-      : 'Режим «' + (mode === 'soft' ? 'М’який' : 'Строгий') + '». Проаналізовано ' + tokens.length + ' токен(ів), тайських: ' + thaiTokens.length +
+      ? 'Режим «' + (mode === 'super-soft' ? 'Суперм’який' : mode === 'soft' ? 'М’який' : 'Строгий') + '». Проаналізовано ' + tokens.length + ' токен(ів), тайських: ' + thaiTokens.length +
+        '; ' + unresolvedCount + (mode === 'super-soft' ? ' фрагмент(ів) мають приблизне читання або потребують перевірки.' : ' фрагмент(ів) потребують перевірки або залишилися невизначеними.')
+      : 'Режим «' + (mode === 'super-soft' ? 'Суперм’який' : mode === 'soft' ? 'М’який' : 'Строгий') + '». Проаналізовано ' + tokens.length + ' токен(ів), тайських: ' + thaiTokens.length +
         '. Це фонетичний кандидат, а не переклад.';
   const uaOutput = assembleOutput(analysisText, tokens, 'ua');
   const ipaOutput = assembleOutput(analysisText, tokens, 'ipa');
   const unresolved = (uaOutput.match(/⟦НЕВИЗНАЧЕНО:/g) || []).length;
   const notice = thaiTokens.length === 0
     ? '<p class="continuous-output-notice" role="note">Тайського тексту для фонетичного перетворення не знайдено; нетайські фрагменти збережено без інтерпретації.</p>'
-    : mode === 'soft'
+    : mode === 'super-soft'
+      ? '<p class="continuous-output-notice" role="note"><strong>Суперм’який режим — повне покриття, приблизна вимова.</strong> Український вихід формується для кожного тайського фрагмента. Непідтверджені місця отримують резервну IPA-оцінку, яку обробляє IPA → українська; вона може бути помилковою, а тон і межі слів не гарантовані.</p>'
+      : mode === 'soft'
       ? '<p class="continuous-output-notice" role="note"><strong>М’який режим — попередній результат.</strong> Невідомі фрагменти додатково розкладаються на структурно можливі склади. Межі слів і такі читання не підтверджені лексикографічно; невирішені фрагменти позначаються, а не вгадуються.</p>'
       : unresolved
         ? '<p class="continuous-output-notice" role="note">Строгий режим: є ' + unresolved +
@@ -207,9 +210,9 @@ function run() {
     : '';
   out.innerHTML = '<h2 class="results-heading">Цілісний результат</h2>' + cleanupNotice + notice +
     continuousPanel('Український фонетичний кандидат', uaOutput,
-      mode === 'soft' ? 'Попередній український кандидат; неперевірені структурні сегменти можуть бути неточними.' : 'Один суцільний текст для читання та копіювання. Внутрішні склади з’єднано; межі слів відокремлено.', 'ua-continuous') +
+      mode === 'super-soft' ? 'Повний приблизний український кандидат; неперевірені звукові відповідності можуть бути неточними.' : mode === 'soft' ? 'Попередній український кандидат; неперевірені структурні сегменти можуть бути неточними.' : 'Один суцільний текст для читання та копіювання. Внутрішні склади з’єднано; межі слів відокремлено.', 'ua-continuous') +
     continuousPanel('IPA — проміжне представлення', ipaOutput,
-      mode === 'soft' ? 'Попередній IPA-проміжний результат; перевірте сегментацію та читання.' : 'Контрольний IPA-вихід для перевірки фонетичної основи українського кандидата.', 'ipa-continuous') +
+      mode === 'super-soft' ? 'Приблизний IPA для повного покриття; резервні читання не підтверджені.' : mode === 'soft' ? 'Попередній IPA-проміжний результат; перевірте сегментацію та читання.' : 'Контрольний IPA-вихід для перевірки фонетичної основи українського кандидата.', 'ipa-continuous') +
     '<details class="analysis-details"><summary>Детальний аналіз сегментів і складів</summary>' +
     tokens.map(card).join('') + '</details>';
   out.hidden = false;

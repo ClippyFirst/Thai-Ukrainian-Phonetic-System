@@ -1,3 +1,12 @@
+## 2026-10-27 — super-soft full-coverage mode (verification checkpoint)
+
+- Branch: feat/supersoft-full-coverage-20261027. Code commit verified: 6f53ca955a2702db8e070a04c181dbb68d6d6900, based on main 9c527e46b3fa012e277c8914683ae70834165a22. Follow-up documentation-only checkpoint: 502940ea61005b8b3494d074688301d23a1aeb29.
+- Draft PR #105: https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/105. Not merged or deployed.
+- Added opt-in super-soft mode with approximate segmental IPA for unreviewed Thai fragments and Ukrainian output derived only through the existing IPA adapter. Continuous Thai output has regression coverage for no unresolved placeholders; non-Thai spans, punctuation, spacing and numbers remain intact.
+- **DONE_VERIFIED for code commit 6f53ca955a2702db8e070a04c181dbb68d6d6900:** Web static validation run 40577745185 passed. Full CI run 40577745331 completed successfully, including the master-artifact job. The CI test job passed Python unittest discovery, IPA adapter tests, browser parity, UI contract, challenge and segmentation diagnostics, source-attested IPA diagnostics, and browser latency benchmark. The later commit 502940ea61005b8b3494d074688301d23a1aeb29 changed documentation only; its CI run 40578911871 was still in progress at its latest check.
+- PR #104 (research-only morphology) remains open and overlaps web/src/app.js, web/src/engine.js, web/tests/parity.test.mjs, web/tests/ui-contract.test.mjs, README and audit/handoff documents. Keep #105 draft and do not merge blindly; reconcile/rebase after #104's disposition. PR #101 is the earlier competing morphology branch and remains untouched.
+- Evidence boundary: full output coverage is an engineering contract, not evidence of correct Thai word boundaries, lexical pronunciation, tone, proper names or Ukrainian target spelling. Research status remains a partial prototype, not release-ready.
+
 ## 2026-10-27 — direct IPA adapter merged; published-site verification in progress
 
 - **Merged to `main`:** PR [#103](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/103) added fail-closed malformed delimiter handling to PR [#102](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/102)'s branch; PR #102 was then merged to main. Main merge commit: `070687575026ebc6d5d5dabdd0bb7bf647656bfc`.
