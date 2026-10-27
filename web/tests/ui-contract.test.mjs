@@ -146,7 +146,7 @@ assert.doesNotMatch(output.innerHTML, /⟦НЕВИЗНАЧЕНО:/);
 // The continuous IPA intermediate includes tone, not only segmental phonemes.
 input.value = "กา";
 analyze.click();
-const ipaPanel = output.innerHTML.match(/class="continuous-output ipa-continuous"[\\s\\S]*?<pre class="continuous-output-value">([\\s\\S]*?)<\\/pre>/);
+const ipaPanel = output.innerHTML.match(/class="continuous-output ipa-continuous"[\s\S]*?<pre class="continuous-output-value">([\s\S]*?)<\/pre>/);
 assert.ok(ipaPanel, "continuous IPA panel should exist");
 assert.match(ipaPanel[1], /˧/, "continuous IPA should preserve the syllable tone");
 
