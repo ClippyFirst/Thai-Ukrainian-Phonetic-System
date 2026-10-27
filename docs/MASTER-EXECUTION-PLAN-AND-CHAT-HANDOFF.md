@@ -1,10 +1,11 @@
 # Latest continuation — direct IPA recognition and Ukrainian adapter hardening (2026-10-27)
 
-- Dedicated branch `feat/ipa-input-adapter-robustness-20261027` is based on `8649193f84808d5f5fb46189e33753816f0edcea`; PR #101 morphology work remains separate and untouched.
-- A new site panel accepts source-backed IPA directly and displays normalized segmental IPA, the Ukrainian practical candidate, applied rules, and recognized/neutralized features.
-- Python and browser adapters normalize common IPA wrappers, tone letters/combining tone marks, stress, length, selected phonetic modifiers, and tied `t͡ɕ` notation. Unknown segments and tone-only strings are withheld, not guessed.
-- Added regression coverage in `tests/test_ukrainian_adaptation.py` and `web/tests/ipa-ua.test.mjs`. Exact-head CI and web static validation are still required; no local test execution is claimed in this remote-only workflow.
-- Remaining evidence boundary: successful parsing means only that the symbol sequence is supported by the project adapter. It does not prove lexical Thai IPA or independently validated Ukrainian orthography.
+- Dedicated branch `feat/ipa-input-adapter-robustness-20261027` started from `8649193f84808d5f5fb46189e33753816f0edcea`; PR [#102](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/102) remains open, and PR #101 morphology work remains separate.
+- A website panel accepts externally sourced IPA and displays the normalized segmental sequence, Ukrainian practical candidate, applied rules, and recognized/neutralized features. It calls the same browser IPA → Ukrainian adapter as the main Thai→IPA path.
+- Python and browser adapters normalize common IPA wrappers, Thai tone letters and common combining tone marks, stress, length, selected phonetic modifiers, and tied `t͡ɕ` notation. Unsupported symbols and tone-only input are withheld, not guessed.
+- **Exact-head verification passed** at `ba3771e29b7554325c4b63cb3c39e2356e414066`: CI [40559473200](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40559473200) (test and master-artifact jobs PASS) and Web static validation [40559473259](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40559473259) PASS. Documentation was then updated; the new documentation commit requires its own CI before merge.
+- Remote-only workflow: local test execution was unavailable because DNS could not resolve `github.com`; do not describe this as a local pass.
+- Evidence boundary: passing software tests confirms adapter contracts, not lexical correctness of arbitrary input IPA or expert-adjudicated Ukrainian target spellings. The repository remains a partial research prototype.
 
 ---
 
