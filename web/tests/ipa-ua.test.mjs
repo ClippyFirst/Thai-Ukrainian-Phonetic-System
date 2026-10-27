@@ -64,10 +64,10 @@ console.log("Public UI: IPA-first adapter contract matches the implementation");
 
 
 // Website contract: IPA can be supplied directly, independently of Thai input.
-const serviceHtml = fs.readFileSync(new URL("../index.html", import.meta.url), "utf8");
-const appSource = fs.readFileSync(new URL("../src/app.js", import.meta.url), "utf8");
-assert(serviceHtml.includes('id="ipa-input"'));
-assert(serviceHtml.includes('id="ipa-adapt"'));
-assert(serviceHtml.includes('id="ipa-adapter-result"'));
-assert(appSource.includes("adaptIpaToUkrainian(source)"));
+const ipaPanelHtml = fs.readFileSync(new URL("../index.html", import.meta.url), "utf8");
+const ipaAppSource = fs.readFileSync(new URL("../src/app.js", import.meta.url), "utf8");
+assert(ipaPanelHtml.includes('id="ipa-input"'));
+assert(ipaPanelHtml.includes('id="ipa-adapt"'));
+assert(ipaPanelHtml.includes('id="ipa-adapter-result"'));
+assert(ipaAppSource.includes("adaptIpaToUkrainian(source)"));
 console.log("Direct IPA input UI is wired to the same IPA → Ukrainian adapter");
