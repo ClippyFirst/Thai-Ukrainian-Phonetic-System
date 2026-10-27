@@ -136,6 +136,8 @@ def adapt_phonetic_result(result: PhoneticResult) -> dict:
         rules.append(rule)
         if token in {"kʰ", "pʰ", "tʰ", "tɕʰ"}:
             neutralized.append("aspiration")
+        if token == "h":
+            neutralized.append("glottal place and voicing")
         if token in {"ɛ", "ɯ", "ɤ", "ɔ"}:
             neutralized.append("vowel quality")
         previous_base = token
