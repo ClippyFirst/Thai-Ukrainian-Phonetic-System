@@ -108,3 +108,11 @@ def test_tone_only_ipa_and_unknown_symbols_are_not_guessed():
     unknown = adapt_phonetic_result(replace(base, phonemic_ipa="[kʰaː☃]"))
     assert unknown["status"] == "withheld"
     assert unknown["output"] is None
+
+
+def test_ambiguous_breve_is_not_silently_discarded_as_tone():
+    base = PhoneticResult.from_syllable_analysis(analyze_syllable("กา"))
+    # U+0306 can mark extra-shortness; it is not safe to assume it is tone.
+    adapted = adapt_phonetic_result(replace(base, phonemic_ipa="kʰă"))
+    assert adapted["status"] == "withheld"
+    assert adapted["output"] is None
