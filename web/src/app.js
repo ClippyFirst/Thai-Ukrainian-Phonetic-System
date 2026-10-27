@@ -149,8 +149,8 @@ function bindCopyButtons() {
 }
 
 function run() {
-  const text = input.value.trim();
-  if (!text) {
+  const text = input.value;
+  if (!text.trim()) {
     status.className = 'status error';
     status.textContent = 'Введіть тайський текст.';
     out.hidden = true;
