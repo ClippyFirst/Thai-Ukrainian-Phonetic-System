@@ -40,7 +40,7 @@ const SEGMENTS = new Map([
   ["ɔ", {out:"о", rule:"UA-OPEN-O", neutralized:["openness","length"]}]
 ]);
 const ORDER = [...SEGMENTS.keys()].sort((a,b)=>b.length-a.length);
-const TONE_DIACRITICS = new Set(["\u0300","\u0301","\u0302","\u0304","\u0306","\u030c","\u030b","\u030f"]);
+const TONE_DIACRITICS = new Set(["\u0300","\u0301","\u0302","\u0304","\u030c","\u030b","\u030f"]); // U+0306 breve can mark extra-shortness; preserve/fail closed.
 const IPA_MODIFIERS = new Set(["\u031a","\u032f","\u0329","\u02d0","\u02d1"]);
 
 function normalizeIpaInput(sourceIpa) {
