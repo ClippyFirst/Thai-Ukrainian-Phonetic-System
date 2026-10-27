@@ -110,14 +110,14 @@ assert.equal((output.innerHTML.match(/class="label">ФОНОЛОГІЧНА IPA<\
 assert.equal(status.className, "status notice");
 
 
-// A reviewed full-sentence lexicon entry must preserve its reviewed syllable
+// A curated full-sentence lexicon entry must preserve its reviewed syllable
 // decomposition and provide IPA for each syllable without requiring spaces.
 input.value = "กินข้าวกับไข่และผลไม้";
 analyze.click();
 assert.match(output.innerHTML, /Результат 1: กินข้าวกับไข่และผลไม้/);
 const phraseUa = output.innerHTML.match(/class="continuous-output ua-continuous"[\s\S]*?<pre class="continuous-output-value">([^<]*)<\/pre>/);
-assert.ok(phraseUa, "continuous Ukrainian output should exist for the reviewed phrase");
-assert.equal((phraseUa[1].match(/ /g) || []).length, 5, "reviewed phrase should preserve its six word groups, not insert spaces between all seven syllables");
+assert.ok(phraseUa, "continuous Ukrainian output should exist for the curated phrase");
+assert.equal((phraseUa[1].match(/ /g) || []).length, 5, "curated phrase should preserve its six word groups, not insert spaces between all seven syllables");
 assert.equal((output.innerHTML.match(/class="label">ФОНОЛОГІЧНА IPA<\/span>/g) || []).length, 7);
 assert.equal(status.className, "status");
 
