@@ -584,3 +584,9 @@ The Pages workflow now includes a post-deployment HTTP contract check for the wh
 - Generator output: 60,963 entries, 1,085 two-code-point prefix buckets, largest bucket 1,521, generated JavaScript 1,629,301 bytes (13,587 bytes / ~0.84% larger than the previous index). This is not a measured runtime speedup.
 - PR #80 merged the matrix/handoff evidence at `dd2260356f7de17d56d25b06c7c6b2c5999c0709`. The exact documentation-head CI run [40467565451](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40467565451) was still in progress at this audit refresh; the runtime code is unchanged from the verified code-bearing commit.
 - The product remains a partial research prototype. Independent Thai segmentation adjudication, Thai IPA/acoustic gold, two independent Ukrainian target-form reviews, contextual review of `บรรจุ` final /ʔ/, lawful official OBEC PDF access, and per-resource licensing/attribution remain blockers.
+
+## 2026-10-27 — conservative morphology diagnostics port
+
+- Ported the research-only morphology candidate layer from PR #101 onto current main because its original branch conflicted with newer IPA adapter changes. The source PR's exact-head CI and Web static validation passed; the port is not yet verified.
+- The Python API and browser overlay annotate a limited set of contextual function-marker candidates. They explicitly inherit uncertain segmentation, make no accuracy claims, and are not allowed to alter IPA, tone, or Ukrainian output.
+- Port acceptance: exact-head CI including Python tests and generated master artifact; browser parity and UI contract; published Pages contract. Independent morphology gold and expert review remain unfulfilled.
