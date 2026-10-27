@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PR #98 now includes source-attested Thai readings for ตะวันออก, ยุโรป and ยุโรปตะวันออก, with a source-pinned IPA override for ออก after exact-head CI exposed a parser gap. Latest-head CI and static validation are pending; this remains a partial research prototype, not release-ready for arbitrary Thai text.",
+  "status": "PR #98 is merged as c944a2b07c7d0af9aa1adb16e27bd77d4fdae32e; PR #100 is merged as 8649193f84808d5f5fb46189e33753816f0edcea. PR #101 adds a conservative, research-only Thai morphology-candidate overlay; latest exact-head CI and Web static validation are still pending. This remains a partial research prototype, not a complete or accuracy-validated morphology engine.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -311,16 +311,16 @@
       "acceptance": "DONE for reproducible software comparison and evidence metadata; production segmentation remains PARTIAL until representative human review, predeclared thresholds and an independent licensed domain."
     }
   ],
-  "latest_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
+  "latest_implementation_branch": "feat/conservative-thai-morphology-layer-20261027-v2",
   "latest_implementation_commit_pending_ci": {
-    "commit": "dd2260356f7de17d56d25b06c7c6b2c5999c0709",
-    "status": "DOCUMENTATION_ONLY_HEAD_CI_PENDING",
-    "notes": "Runtime code unchanged from the fully verified PR #79 code-bearing head. The latest main CI run is 40467565451; its exact-head completion must be checked after this documentation update."
+    "commit": "95be9441200864680b0a6bbac5c435b99cd0accb",
+    "status": "EXACT_HEAD_CI_PENDING",
+    "notes": "PR #101 morphology overlay; push CI 40557093861 queued at last inspection, push Web static validation 40557094204 in progress, PR CI 40557101848 queued, PR Web static validation 40557101975 queued. Earlier push Web static validation 40556979887 passed for code-bearing head 0b6a8edcf3066bd625f6a225f873e3c9dd071d46. Recheck latest head before changing status."
   },
   "current_head_status_at_audit_refresh": "Code/workflow checkpoint b6dbec7928b106f0ab52e06af33a26635df75412 passed CI 40322960615 and Web static validation 40322959844. Documentation checkpoint e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff passed full CI 40323209539 and Web static validation 40323209471. This audit-register update creates a newer documentation HEAD and requires exact-head CI/static validation before the current branch HEAD is marked green.",
-  "current_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
-  "current_implementation_commit_before_audit_update": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
-  "latest_documentation_checkpoint_before_audit": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
+  "current_implementation_branch": "feat/conservative-thai-morphology-layer-20261027-v2",
+  "current_implementation_commit_before_audit_update": "95be9441200864680b0a6bbac5c435b99cd0accb",
+  "latest_documentation_checkpoint_before_audit": "95be9441200864680b0a6bbac5c435b99cd0accb",
   "audit_note": "Exact-head special-orthography schema and IPA-boundary repair verified on cb775d6156f62392fa2d0f4bcf8d1aa30d219530. CI 40315032771 passed 180 Python tests, generated-data drift, master artifact (351,780 rows / 41 rime records), Node IPA→UA, 28 browser parity fixtures, UI contract, challenge/Wisesight/source-attested IPA diagnostics, candidate-registry check, TUD training/evaluation and artifact uploads. Web static validation 40315032788 passed. This is software/reproducibility evidence, not independent pronunciation gold.",
   "dictionary_max_match_baseline": {
     "corpus": "Wisesight-1000",
@@ -1167,5 +1167,38 @@
       "Per-resource license and attribution audit."
     ],
     "readiness": "PARTIAL RESEARCH PROTOTYPE; NOT RELEASE-READY FOR ARBITRARY THAI TEXT"
+  },
+  "morphology_overlay_2026_10_27": {
+    "pull_request": 101,
+    "branch": "feat/conservative-thai-morphology-layer-20261027-v2",
+    "code_bearing_head": "e0a521ba73ab19e3a257f307d74df8f10a664793",
+    "latest_head_before_audit_update": "95be9441200864680b0a6bbac5c435b99cd0accb",
+    "status": "PARTIAL_RESEARCH_ONLY_PENDING_EXACT_HEAD_CI",
+    "implementation": [
+      "Python opt-in analyze_text_morphology API over existing dictionary-segmented tokens",
+      "Browser morphology-candidate overlay with stable rule IDs and visible uncertainty",
+      "Candidate cues for negation, modality, selected aspect, question/politeness particles, coordination, genitive, nominalization and passive/affected constructions",
+      "Separate morphology diagnostics do not modify IPA, tone or IPA-to-Ukrainian adaptation",
+      "Python tests, browser rule-contract tests, UI tests, methodology docs, validation matrix, final audit, README, system page and handoff updated"
+    ],
+    "evidence_sources": [
+      "Iwasaki & Ingkaphirom 2005, A Reference Grammar of Thai",
+      "David Smyth, Thai: An Essential Grammar, 3rd edition",
+      "Li 2024, DOI 10.1515/flin-2024-2006",
+      "Dékány 2026, DOI 10.1017/S0022226726101169"
+    ],
+    "acceptance_gates": [
+      "Exact-head CI and Web static validation pass",
+      "Independent morphology corpus with versioned boundaries/categories/scope",
+      "Two annotators plus adjudication and held-out evaluation",
+      "Python/browser rule parity and proof morphology cannot change IPA-to-Ukrainian output",
+      "Correctly label the current feature as candidate overlay, not complete morphology"
+    ],
+    "remaining_limitations": [
+      "Existing dictionary maximum-match segmentation is partial and can supply incorrect boundaries",
+      "No full POS/dependency parser or complete morpheme segmentation",
+      "No independently adjudicated morphology gold corpus or accuracy score",
+      "Polyfunctional markers and discourse scope remain context-dependent"
+    ]
   }
 }
