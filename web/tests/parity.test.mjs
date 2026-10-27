@@ -94,6 +94,25 @@ if (walk.status !== "analyzed" || walk.phonemicIpa !== "dɤːn" || walk.phonetic
     walk.tone !== "mid" || walk.toneIpa !== "˧" || walk.vowelLength !== "long" ||
     walk.ukrainian !== "ден" || walk.evidenceStatus !== "SOURCE_ATTESTED_NOT_GOLD" ||
     walk.sourceRevision !== "1908803" || walk.onset.join("") !== "ด" || walk.coda !== "น" || walk.toneClass !== "mid") throw new Error("Lexical IPA override parity contract failed for เดิน");
+for (const [word, tone, toneIpa, revision] of [
+  ["ไกล", "mid", "˧", "5688545"],
+  ["ใกล้", "falling", "˥˩", "5721860"]
+]) {
+  const result = analyze(word);
+  if (result.status !== "analyzed" || result.phonemicIpa !== "klaj" ||
+      result.phoneticIpa !== null || result.tone !== tone || result.toneIpa !== toneIpa ||
+      result.vowelLength !== "diphthong" || result.ukrainian !== "клай" ||
+      result.evidenceStatus !== "SOURCE_ATTESTED_NOT_GOLD" || result.sourceRevision !== revision ||
+      result.onset.join("") !== "กล" || result.coda !== null) {
+    throw new Error("Source-pinned Thai tone-pair IPA override contract failed for " + word);
+  }
+  const textResult = analyzeText(word)[0];
+  if (textResult.segmentationStatus !== "lexical_ipa_override" ||
+      textResult.syllables.length !== 1 || textResult.syllables[0].phonemicIpa !== "klaj" ||
+      textResult.syllables[0].ukrainian !== "клай") {
+    throw new Error("Source-pinned Thai tone-pair did not flow through browser text pipeline for " + word);
+  }
+}
 const walkText = analyzeText("เดิน")[0];
 if (walkText.segmentationStatus !== "lexical_ipa_override" ||
     walkText.syllables.length !== 1 || walkText.syllables[0].phonemicIpa !== "dɤːn") {
