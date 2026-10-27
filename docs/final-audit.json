@@ -52,7 +52,9 @@
     "ipa_stress_length_and_phonetic_modifier_normalization",
     "tied_affricate_notation_normalization",
     "python_browser_ipa_adapter_normalization_parity",
-    "direct_ipa_adapter_ui_contract_tests"
+    "direct_ipa_adapter_ui_contract_tests",
+    "source-pinned-lexical-ipa-tone-pair-for-ไกล-and-ใกล้",
+    "tone-pair-ipa-to-ukrainian-adapter-regression-tests"
   ],
   "not_claimed": [
     "complete_lexical_segmentation",
@@ -1341,5 +1343,21 @@
     },
     "acceptance": "Do not claim accuracy improvement until independent IPA gold and target adjudication exist and reproducible predictions are scored; populate segmentation predictions from a pinned engine commit before evaluating segmentation.",
     "handoff_branch": "audit/thai-ipa-benchmark-gates-20261027"
+  },
+  "recent_change": {
+    "date": "2026-10-27",
+    "branch": "feat/source-attested-lexical-ipa-coverage-20261027",
+    "base_main": "8c082ea530ef0c4c8e67b25837b05273316c0b84",
+    "status": "PARTIAL_PENDING_EXACT_HEAD_CI",
+    "change": "Added exact-form lexical IPA overrides for ไกล and ใกล้ with pinned Wiktionary revisions, preserving source-attested status and sending IPA through the existing Ukrainian adapter.",
+    "tests_added": [
+      "source revision and license assertions",
+      "segmental IPA and tone contour assertions",
+      "diphthong classification",
+      "Ukrainian adapter output",
+      "non-gold warning"
+    ],
+    "claim_boundary": "Targeted source-attested lexical coverage only; not independently adjudicated gold and not evidence of overall G2P accuracy.",
+    "benchmark_blocker": "data/benchmark/gold.tsv remains header-only; overall IPA/end-to-end accuracy remains NOT_MEASURED."
   }
 }
