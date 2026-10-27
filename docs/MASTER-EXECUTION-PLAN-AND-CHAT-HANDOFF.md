@@ -1190,3 +1190,11 @@ Branch `perf/browser-segmentation-latency-benchmark-20261027` adds a non-gating,
 - FastThaiG2P remains benchmark-only: repo-level Apache-2.0 metadata does not by itself clear its bundled IPA dictionary, TLTK-derived fallback, or all resource-level provenance. No third-party code, model, or dictionary has been imported.
 - Task ledger: PR #98 lexical fixture regression = DONE_VERIFIED for exact-head CI/static checks, post-merge main CI and Pages = PARTIAL pending current main workflows; TLTK license correction = PARTIAL pending reconciled docs PR and authoritative scope clarification; FastThaiG2P asset reuse = BLOCKED pending resource-level provenance; independent expert/acoustic IPA gold and Ukrainian adaptation review = EVIDENCE_LIMITED; arbitrary-text readiness = PARTIAL PROTOTYPE.
 - Verification source: GitHub Actions API job/run records and repository file inspection. No local checkout or local test run was performed in this continuation.
+
+
+## 2026-10-27 — Thai → Ukrainian methodology table
+
+- Branch: `docs/thai-ukrainian-method-table-20261027`, based on main at `c7e686d4665c978577f771e62947545ddbc67cfe`.
+- Added `docs/ukrainian-transcription-methodology.md`: context-aware initial/coda consonant table, vowel/rime orientations, Ukrainian IPA adapter conventions, tone/length preservation, contextual rules, evidence statuses, and comparison references to Thai–Russian practical transcription.
+- README and validation matrix updated. No engine behavior changed. Method document is PARTIAL, not a verified standard; examples are illustrative and not independent phonetic gold.
+- Remaining acceptance criteria: review the exact primary 2025 Russian reference edition if using its rules comparatively; independently adjudicate Thai IPA and Ukrainian target forms; encode approved rules in a versioned machine-readable registry only after evidence review; add regression tests and held-out evaluation. Keep lexical ambiguity fail-closed.
