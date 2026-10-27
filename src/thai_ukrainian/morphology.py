@@ -90,7 +90,7 @@ def analyze_morphology(tokens: Iterable[Mapping[str, Any] | str]) -> dict[str, A
             add("TH-MORPH-ASP-003", "aspect", "completive/change-of-state marker candidate",
                 "analysis-dependent", "relation to preceding predicate is unverified",
                 "แล้ว can mark completion/change of state but also has other discourse and lexical uses.")
-        elif token == "ไหม" and is_final:
+        elif token == "ไหม" and (is_final or following in {"ครับ", "ค่ะ", "คะ", "จ้ะ", "จ๊ะ"}):
             add("TH-MORPH-Q-001", "question", "yes/no question particle candidate",
                 "contextual-candidate", "clause-final; clause boundary is assumed from end of supplied input",
                 "Final ไหม commonly marks a polar question; punctuation and discourse context may change the analysis.")
