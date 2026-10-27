@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Browser now uses pinned CC0 dictionary for whole-text word-boundary fallback; PR #77 merged at 96c2af3c2a24d0ea95455b5d6af4c079e5609d29. Web static validation passed on latest pre-merge code head 7b2c9572feb542fb3ee81558b9758bb4fa5f2bef; full test job passed on runtime code head 3eb1155631da158b7e04436f608711680750e475, but exact-head CI and master-artifact remain unverified due queued/stale Actions runs. Post-merge Pages deployment and live-markup verification are pending. Still not release-ready for arbitrary Thai text.",
+  "status": "Browser dictionary lookup optimization merged (PR #79, c799dbed4247ac9743845acc0fd4131922cfbb74); code-bearing CI and Web static validation passed, and post-merge Pages deployment plus live homepage contract passed. Prefix index has 60,963 entries across 1,085 two-code-point buckets; largest bucket 1,521; generated JS 1,629,301 bytes. This is not a measured runtime speedup or linguistic-accuracy claim. Latest documentation head dd2260356f7de17d56d25b06c7c6b2c5999c0709 has a fresh CI run in progress. Still not release-ready for arbitrary Thai text.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -204,11 +204,11 @@
     "vowel_rime_records": 41
   },
   "latest_documentation_checkpoint": {
-    "commit": "4b1592cd72298d1ca92e0b99ab330975764a078a",
-    "ci_run": 40320450844,
-    "web_static_validation_run": 40320450587,
-    "ci_status": "success",
-    "note": "Exact-head CI test and master-artifact jobs passed; Web static validation passed. The run includes 182 Python tests, deterministic segmentation false-split/false-merge review, 351,780-row master artifact, 28 Python/browser parity fixtures and existing diagnostics. Engineering verification is not linguistic accuracy."
+    "commit": "dd2260356f7de17d56d25b06c7c6b2c5999c0709",
+    "ci_run": 40467565451,
+    "web_static_validation_run": 40466830820,
+    "ci_status": "IN_PROGRESS_AT_AUDIT_UPDATE",
+    "note": "Documentation-only PR #80 reconciles the matrix/handoff after PR #79. The code-bearing prefix-index commit already passed CI test + master-artifact and Web static validation; post-merge Pages deployment and live homepage contract passed. This new audit-register commit will itself require exact-head CI."
   },
   "text_only_checkpoint": {
     "branch": "research/thai-segmentation-gold-parity-verified-20261025",
@@ -256,7 +256,7 @@
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
   "latest_code_checkpoint": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
   "readiness": "engineering-verified research prototype; not release-ready for arbitrary Thai text or empirically validated IPA/Ukrainian output",
-  "latest_verified_repository_head": "e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff",
+  "latest_verified_repository_head": "c799dbed4247ac9743845acc0fd4131922cfbb74",
   "task_ledger": [
     {
       "id": "SEG-TRAIN-001",
@@ -313,9 +313,9 @@
   ],
   "latest_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
   "latest_implementation_commit_pending_ci": {
-    "commit": "1cbf97036ec931266f4a6ed5eb747a00e5b7ad29",
-    "status": "PENDING_EXACT_HEAD_CI",
-    "notes": "VISTEC parser now rejects empty annotation fields; tests added but not yet verified."
+    "commit": "dd2260356f7de17d56d25b06c7c6b2c5999c0709",
+    "status": "DOCUMENTATION_ONLY_HEAD_CI_PENDING",
+    "notes": "Runtime code unchanged from the fully verified PR #79 code-bearing head. The latest main CI run is 40467565451; its exact-head completion must be checked after this documentation update."
   },
   "current_head_status_at_audit_refresh": "Code/workflow checkpoint b6dbec7928b106f0ab52e06af33a26635df75412 passed CI 40322960615 and Web static validation 40322959844. Documentation checkpoint e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff passed full CI 40323209539 and Web static validation 40323209471. This audit-register update creates a newer documentation HEAD and requires exact-head CI/static validation before the current branch HEAD is marked green.",
   "current_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
@@ -1126,5 +1126,46 @@
       "commit": "96c2af3c2a24d0ea95455b5d6af4c079e5609d29",
       "acceptance": "Pages build/deploy succeeds and the post-deploy curl check confirms the served homepage contains the whole-text hint, examples, and beta notice."
     }
+  },
+  "browser_prefix_index_2026_10_27": {
+    "implementation_pr": 79,
+    "implementation_merge_commit": "c799dbed4247ac9743845acc0fd4131922cfbb74",
+    "docs_pr": 80,
+    "docs_merge_commit": "dd2260356f7de17d56d25b06c7c6b2c5999c0709",
+    "code_bearing_verified_commit": "e17a7f96fef9989f6375d36331f30ce0246e378a",
+    "ci_run": 40466046264,
+    "ci_status": "SUCCESS",
+    "web_static_run": 40466046237,
+    "web_static_status": "SUCCESS",
+    "post_merge_pages_run": 40466830868,
+    "post_merge_pages_status": "SUCCESS_BUILD_DEPLOY_AND_SERVED_HTML_CONTRACT",
+    "main_web_static_run": 40466830820,
+    "main_web_static_status": "SUCCESS",
+    "post_merge_main_ci_run": 40466830808,
+    "post_merge_main_ci_status": "SUCCESS",
+    "dictionary_entries": 60963,
+    "prefix_bucket_count": 1085,
+    "largest_bucket_entries": 1521,
+    "generated_javascript_bytes": 1629301,
+    "previous_generated_javascript_bytes": 1615714,
+    "generated_javascript_size_delta_bytes": 13587,
+    "generated_javascript_size_delta_fraction": 0.008405,
+    "measured_runtime_speedup": false,
+    "linguistic_accuracy_claimed": false,
+    "preserved_invariants": [
+      "Dictionary match is boundary evidence only; it never authorizes IPA or Ukrainian output.",
+      "Curated lexical entries win equal-length ties.",
+      "Unknown spans remain unresolved rather than receiving guessed IPA or Ukrainian output.",
+      "The IPA-first Thai-to-Ukrainian adapter boundary remains unchanged."
+    ],
+    "remaining_blockers": [
+      "Independent expert Thai word-boundary adjudication.",
+      "Independent Thai IPA/acoustic gold with a qualified phonetician and authorized recordings/annotations.",
+      "Two independent Ukrainian-native target-form reviews and adjudication log.",
+      "Contextual/transcription-level review of บรรจุ final /ʔ/.",
+      "Lawful access to the full official OBEC PDF.",
+      "Per-resource license and attribution audit."
+    ],
+    "readiness": "PARTIAL RESEARCH PROTOTYPE; NOT RELEASE-READY FOR ARBITRARY THAI TEXT"
   }
 }
