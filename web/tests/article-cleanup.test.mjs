@@ -9,8 +9,9 @@ assert.match(cleaned.text, /ยูเครน/);
 assert.match(cleaned.text, /อังกฤษ: Ukraine/);
 assert.match(cleaned.text, /Украї́на/);
 assert.match(cleaned.text, /\[ʊkrɐˈjinɐ\]/);
+assert.doesNotMatch(cleaned.text, /Help:IPA\/Ukrainian|en:Help:IPA\/Ukrainian/);
 assert.match(cleaned.text, /เป็นประเทศหนึ่ง/);
-assert.doesNotMatch(cleaned.text, /wikipedia\.org|example\.org|\[a\]|&#x20;|ⓘ/i);
+assert.doesNotMatch(cleaned.text, /wikipedia\.org|example\.org|\[a\]|&#x20;|ⓘ|\(\s*\)/i);
 
 const html = preprocessArticleText('ข้อความ<ref name="x">แหล่งอ้างอิง</ref> ต่อ');
 assert.doesNotMatch(html.text, /<ref|แหล่งอ้างอิง/);
