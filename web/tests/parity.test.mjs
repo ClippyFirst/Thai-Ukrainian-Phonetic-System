@@ -1,5 +1,22 @@
 import fs from "node:fs";
 import {analyze,analyzeText,tokenizeText} from "../src/engine.js";
+import {WORDS_BY_PREFIX} from "../src/word-dictionary.generated.js";
+
+
+// The generated dictionary index is grouped by the first two Unicode code
+// points. One-code-point entries use a one-character key and need a fallback
+// lookup when they occur inside a longer Thai run.
+let indexedWords = 0;
+for (const [prefix, words] of WORDS_BY_PREFIX) {
+  if (!prefix || !Array.isArray(words)) throw new Error("Malformed generated dictionary prefix bucket");
+  for (const word of words) {
+    if ([...word].slice(0, 2).join("") !== prefix) throw new Error("Dictionary word is in the wrong prefix bucket: " + word);
+    indexedWords++;
+  }
+  const expectedOrder = [...words].sort((a, b) => [...b].length - [...a].length || a.localeCompare(b, "th"));
+  if (words.some((word, index) => word !== expectedOrder[index])) throw new Error("Dictionary bucket is not longest-first: " + prefix);
+}
+if (indexedWords !== 60963) throw new Error("Generated dictionary index must preserve all 60,963 pinned entries; got " + indexedWords);
 
 const fixture = JSON.parse(fs.readFileSync(new URL("./fixtures.json", import.meta.url), "utf8"));
 if (!Array.isArray(fixture) || fixture.length < 27) throw new Error("Parity fixture set is unexpectedly small");
