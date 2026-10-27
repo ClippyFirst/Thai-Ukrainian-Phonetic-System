@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Direct IPA input/normalization and malformed-delimiter rejection are merged to main at 070687575026ebc6d5d5dabdd0bb7bf647656bfc. Exact-head CI and generated master-artifact job passed at e9295d26f41f278848396913b19b3877c2935c01 (run 40569408788); Web static validation passed at that head (run 40569408783). Pages workflow commit 3a69b65de3a42f8573e6106061702230638c52cf adds a live published-site contract for the IPA panel; public deployment is not yet independently confirmed. Research prototype, not release-ready for arbitrary Thai text or independently validated Ukrainian target forms.",
+  "status": "Direct IPA adapter is merged and verified by the user-reported successful workflows. A separate conservative Thai morphology-candidate overlay is being ported onto current main after PR #101 conflicted with newer IPA-adapter changes; exact-head verification for the port is pending. Product remains a partial research prototype, not release-ready for arbitrary Thai text or independently validated target forms.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -52,7 +52,8 @@
     "ipa_stress_length_and_phonetic_modifier_normalization",
     "tied_affricate_notation_normalization",
     "python_browser_ipa_adapter_normalization_parity",
-    "direct_ipa_adapter_ui_contract_tests"
+    "direct_ipa_adapter_ui_contract_tests",
+    "research_only_thai_morphology_candidate_overlay"
   ],
   "not_claimed": [
     "complete_lexical_segmentation",
@@ -1227,5 +1228,19 @@
     "workflow_commit": "3a69b65de3a42f8573e6106061702230638c52cf",
     "status": "PENDING_LIVE_PAGES_WORKFLOW_RESULT",
     "acceptance": "GitHub Pages deployment workflow must pass its published homepage, app.js, engine.js and ipa-ua.js checks including direct IPA input form markers."
+  },
+  "morphology_overlay_2026_10_27_port": {
+    "pull_request_source": 101,
+    "source_head": "a3b6a4292837a2c1dda77df568a780497d5fc31e",
+    "port_branch": "feat/port-research-morphology-after-ipa-adapter-20261027",
+    "status": "IMPLEMENTED_ON_PORT_BRANCH; EXACT_HEAD_CI_PENDING",
+    "scope": "research-only contextual marker candidates; not a complete morphological analyzer",
+    "non_interference": "Python/browser morphology diagnostics are separate from the Thai IPA → Ukrainian output pipeline",
+    "remaining_acceptance": [
+      "exact-head CI including Python tests and generated artifacts",
+      "browser parity and UI contract",
+      "live GitHub Pages contract",
+      "independent annotated morphology evaluation"
+    ]
   }
 }
