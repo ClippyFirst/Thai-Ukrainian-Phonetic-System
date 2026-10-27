@@ -579,3 +579,8 @@ Current main HEAD `9049032d0724a99d80cd68b03f01978d3943735f` was checked against
 - Code review confirms the lookup is still fail-closed: full candidate equality and cluster-boundary checks remain; preposed vowels are not treated as combining marks; one-character entries use the fallback bucket; curated entries retain tie precedence; unknown words do not gain IPA or Ukrainian output from dictionary membership.
 
 **Readiness remains unchanged:** software/reproducibility gates are green, but empirical segmentation accuracy, independent Thai IPA/acoustic gold, and independent Ukrainian target-form review remain evidence-limited. Partial research prototype; not release-ready for arbitrary Thai text.
+
+
+## Benchmark methodology correction — 2026-10-27
+
+- **Benchmark input-quality caveat (newly identified):** the first latency script sliced the repeated seed at an arbitrary code-point count and could cut inside a Thai orthographic/lexical unit. Treat the recorded timings as preliminary smoke diagnostics only, not representative corpus latency. PR #85 proposes cluster/lexical-unit-safe input construction and reports actual lengths; wait for its exact-head CI artifact before replacing these numbers or claiming representativeness.
