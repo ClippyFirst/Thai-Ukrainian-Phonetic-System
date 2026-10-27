@@ -108,7 +108,7 @@ function continuousToken(token, mode) {
     s.status === 'analyzed' && s.ukrainian ? s.ukrainian : '⟦НЕВИЗНАЧЕНО: ' + s.input + '⟧'
   ).join(wordSeparator);
   return token.syllables.map(s =>
-    s.status === 'analyzed' && s.phonemicIpa ? s.phonemicIpa : '⟦UNRESOLVED: ' + s.input + '⟧'
+    s.status === 'analyzed' && s.phonemicIpa ? s.phonemicIpa + (s.toneIpa || '') : '⟦UNRESOLVED: ' + s.input + '⟧'
   ).join(' ');
 }
 
