@@ -65,3 +65,21 @@ kbd{font-family:inherit;font-size:12px;font-weight:600;line-height:1.2;border:1p
 @media(max-width:700px){.continuous-output{padding:14px}.continuous-output-head{display:block}.continuous-output-head .copy{margin-top:12px}.continuous-output-value{font-size:16px}}
 
 #engine-mode{display:block;width:100%;max-width:100%;border:2px solid var(--ink);border-radius:0;padding:12px;background:var(--paper);color:var(--ink);font:inherit;margin:0 0 12px}#engine-mode:focus-visible{outline:3px solid var(--red);outline-offset:3px}
+
+
+/* Conservative morphology diagnostics: visibly provisional and separate from IPA. */
+.morphology-panel{margin:24px 0;padding:20px;border:1px solid var(--line);background:var(--wash)}
+.morphology-panel h3{margin:0;font-size:20px}
+.morphology-panel>p{max-width:900px;font-size:14px;line-height:1.65}
+.morphology-panel .section-head{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.morphology-candidates{list-style:none;padding:0;margin:18px 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.morphology-candidates li{min-width:0;border:1px solid var(--line);padding:14px;background:var(--paper)}
+.morphology-candidate-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px}
+.morphology-candidate-head strong{font-size:21px}
+.morphology-candidates p{font-size:13px;line-height:1.55;overflow-wrap:anywhere;margin:8px 0 0}
+.morphology-candidates code,.morphology-panel code{font-size:12px}
+.morphology-evidence{color:var(--muted)}
+.morphology-panel details{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+.morphology-panel summary{cursor:pointer;font-weight:700}
+.morphology-panel details li{margin:6px 0;font-size:13px}
+@media(max-width:700px){.morphology-panel{padding:14px}.morphology-panel .section-head{align-items:flex-start;flex-direction:column}.morphology-candidates{grid-template-columns:1fr}}
