@@ -1235,3 +1235,11 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - This is a narrow, evidence-backed coverage improvement for a lexical tone pair, not a general G2P accuracy claim. Source-attested dictionary entries can be wrong or reflect a particular transcription convention; independent review remains required.
 - **Verification status:** code/data/tests committed to the branch; exact-head CI and web static validation must pass before DONE_VERIFIED. No local tests are claimed because local GitHub DNS access was previously unavailable.
 - **Remaining benchmark blocker:** `data/benchmark/gold.tsv` still has zero independently adjudicated rows; no overall accuracy or before/after score can be reported. Do not copy these two source records into gold as if independently adjudicated.
+
+
+## 2026-10-27 — source-attested diagnostic assertion reconciliation
+
+- Exact-head CI run [40591565959](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40591565959) passed master-table generation and all 203 Python tests. It then failed at the source-attested IPA diagnostic guard because the workflow still expected the old split (2 circular / 4 independently comparable) after the `ไกล` and `ใกล้` overrides were added.
+- Actual diagnostic output is still 6 source records and 6 complete outputs, but now 4 records are circular and 2 remain independently comparable; segmental agreements = 1 and tone agreements = 2. No accuracy is claimed.
+- Updated the workflow guard and current audit summary to match the observed diagnostic, preserving circularity checks against the actual records. A new exact-head CI run must pass before merge; do not mark DONE_VERIFIED yet.
+- The independent IPA gold fixture remains empty, so end-to-end pronunciation accuracy is still BLOCKED by independent adjudication rather than by missing implementation alone.
