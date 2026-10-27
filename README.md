@@ -122,6 +122,7 @@ Core evidence includes Royal Institute of Thailand materials, Tingsabadh & Abram
 See:
 
 - Research protocol: docs/research-protocol.md
+- Ukrainian-specific Thai transcription and comparison with Russian: [docs/ukrainian-vs-russian-thai-transcription.md](docs/ukrainian-vs-russian-thai-transcription.md)
 - Corpus validation: docs/corpus-validation.md
 - Evidence registry: docs/evidence.md
 - Final audit: docs/final-audit.md
