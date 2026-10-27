@@ -75,10 +75,14 @@ jobs:
               && grep -Fq 'Вставте цілий текст або статтю' /tmp/deployed-index.html \
               && grep -Fq 'data-example="กา"' /tmp/deployed-index.html \
               && grep -Fq 'data-example="จริง"' /tmp/deployed-index.html \
+              && grep -Fq 'id="engine-mode"' /tmp/deployed-index.html \
+              && grep -Fq 'value="soft"' /tmp/deployed-index.html \
               && grep -Fq 'БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ' /tmp/deployed-index.html \
               && curl --fail --silent --show-error "$PAGE_URL/src/app.js" -o /tmp/deployed-app.js \
               && grep -Fq 'Цілісний результат' /tmp/deployed-app.js \
-              && grep -Fq 'continuous-output-value' /tmp/deployed-app.js; then
+              && grep -Fq 'continuous-output-value' /tmp/deployed-app.js \
+              && grep -Fq 'softSyllabify' /tmp/deployed-app.js \
+              && grep -Fq 'М’який режим — попередній результат' /tmp/deployed-app.js; then
               echo "Published homepage contract verified at $PAGE_URL"
               exit 0
             fi
