@@ -1,7 +1,7 @@
 import unittest
 
 from thai_ukrainian.morphology import analyze_morphology
-from thai_ukrainian.text import analyze_text_morphology
+from thai_ukrainian.text import analyze_text_morphology, analyze_text
 
 
 class ConservativeMorphologyTests(unittest.TestCase):
@@ -49,6 +49,18 @@ class ConservativeMorphologyTests(unittest.TestCase):
         self.assertEqual(result["morphology"]["status"], "research-only")
         self.assertIn("word_segmentation_complete", result)
         self.assertEqual(result["input"], text)
+
+    def test_morphology_diagnostics_do_not_mutate_phonetic_results(self):
+        text = "ยูเครน"
+        before = analyze_text(text)
+        analyze_text_morphology(text)
+        after = analyze_text(text)
+        self.assertEqual(
+            [[(s["phonemic_ipa"], s["phonetic_ipa"], s["ukrainian_transliteration"])
+              for s in token["syllables"]] for token in before],
+            [[(s["phonemic_ipa"], s["phonetic_ipa"], s["ukrainian_transliteration"])
+              for s in token["syllables"]] for token in after],
+        )
 
     def test_annotations_do_not_claim_full_morphology_or_scores(self):
         result = analyze_morphology(["การ", "เรียน"])
