@@ -584,3 +584,9 @@ The Pages workflow now includes a post-deployment HTTP contract check for the wh
 - Generator output: 60,963 entries, 1,085 two-code-point prefix buckets, largest bucket 1,521, generated JavaScript 1,629,301 bytes (13,587 bytes / ~0.84% larger than the previous index). This is not a measured runtime speedup.
 - PR #80 merged the matrix/handoff evidence at `dd2260356f7de17d56d25b06c7c6b2c5999c0709`. The exact documentation-head CI run [40467565451](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40467565451) was still in progress at this audit refresh; the runtime code is unchanged from the verified code-bearing commit.
 - The product remains a partial research prototype. Independent Thai segmentation adjudication, Thai IPA/acoustic gold, two independent Ukrainian target-form reviews, contextual review of `บรรจุ` final /ʔ/, lawful official OBEC PDF access, and per-resource licensing/attribution remain blockers.
+
+## 2026-10-27 — methodology matrix outcome
+
+- Added `docs/ukrainian-transcription-methodology.md` and linked it from README; validation matrix and master handoff record the continuation.
+- Classification: PARTIAL. This is a documented first-pass method table, not a runtime rule registry and not a linguistically validated standard. It distinguishes onset/coda, IPA layers, vowel/rime patterns, tone/length, context rules and lexical uncertainty.
+- Evidence limits: the Thai–Russian practical table is a comparison reference, not an authority for Ukrainian output. The exact 2025 edition mentioned by the reference page was not independently checked against the book itself. No independent IPA gold, Ukrainian-form adjudication, or held-out accuracy result was added by this documentation change.
