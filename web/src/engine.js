@@ -306,6 +306,16 @@ function approximateSyllable(fragment){
     evidenceStatus:"UNVERIFIED_ORTHOGRAPHIC_FALLBACK",
     warnings:["Суперм’який резервний результат: приблизну IPA сформовано зі структури написання й передано через IPA → українська. Це не підтверджена вимова; тон і лексичне читання можуть бути неправильними."]};
 }
+function provisionalSyllable(analysis){
+  if(analysis.status==="analyzed" && analysis.phonemicIpa){
+    const adaptation=adaptIpaToUkrainian(analysis.phonemicIpa);
+    if(adaptation.status==="adapted") return {...analysis,status:"approximate:orthographic-fallback",
+      ukrainian:adaptation.output,ukrainianAdaptation:adaptation,
+      evidenceStatus:"UNVERIFIED_ORTHOGRAPHIC_FALLBACK",
+      warnings:[...(analysis.warnings||[]),"Суперм’який режим: структурно можливе читання не підтверджене лексично; результат позначено як приблизний."]};
+  }
+  return approximateSyllable(analysis.input);
+}
 function analyzeThaiSegment(token, mode="strict"){
   const lexicalOverride=LEXICAL_IPA_OVERRIDES.has(token.input);
   const syllables=lexicalOverride?[token.input]:TEXT_LEXICON.get(token.input);
@@ -313,7 +323,7 @@ function analyzeThaiSegment(token, mode="strict"){
     if(mode==="soft" || mode==="super-soft"){
       const provisional=softSyllabify(token.input);
       return {...token,segmentationStatus:mode==="super-soft"?"super-soft-approximate":"soft-orthographic-clusters",
-        syllables:mode==="super-soft"?provisional.map(s=>s.status==="analyzed"?s:approximateSyllable(s.input)):provisional,
+        syllables:mode==="super-soft"?provisional.map(provisionalSyllable):provisional,
         warnings:[mode==="super-soft"
           ?"Суперм’який режим: кожен нерозв’язаний тайський фрагмент отримує приблизний IPA-кандидат і український вихід. Повнота не означає точність."
           :"М’який режим: використано жадібний структурний розбір складів без підтвердження меж слів. IPA та українські форми є попередніми; перевірте їх вручну."]};
