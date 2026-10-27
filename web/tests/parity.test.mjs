@@ -112,6 +112,27 @@ const pepper = analyzeText("พริก")[0];
 if (!pepper || pepper.segmentationStatus !== "lexicon" || pepper.syllables[0].phonemicIpa?.slice(-1) !== "k" || pepper.syllables[0].ukrainian?.slice(-1) !== "к") throw new Error("Thai final /k/ regression failed for พริก");
 console.log("Thai text tokenizer/segmentation regression passed");
 
+const superSoftSamples = ["ดินแดนที่เป็นประเทศยูเครนสมัยใหม่", "สหพันธ์เผ่าชนแห่งรุสเคียฟ", "ฮอลอดอมอร์", "ค.ศ. 1917", "โปแลนด์–ลิทัวเนีย"];
+for (const sample of superSoftSamples) {
+  const tokens = analyzeText(sample, {mode:"super-soft"});
+  const thai = tokens.filter(token => token.kind === "thai");
+  if (!thai.length) throw new Error("Super-soft fixture contains no Thai tokens: " + sample);
+  for (const token of thai) {
+    if (!token.syllables?.length || token.syllables.some(s => !s.phonemicIpa || !s.ukrainian ||
+      !["analyzed", "approximate:orthographic-fallback"].includes(s.status))) {
+      throw new Error("Super-soft mode failed full Thai-fragment coverage for " + token.input + ": " + JSON.stringify(token));
+    }
+    for (const syllable of token.syllables) {
+      const adapted = adaptIpaToUkrainian(syllable.phonemicIpa);
+      if (adapted.status !== "adapted" || adapted.output !== syllable.ukrainian) {
+        throw new Error("Super-soft Ukrainian output bypassed or diverged from the IPA adapter: " + JSON.stringify(syllable));
+      }
+    }
+  }
+}
+console.log("Super-soft Thai full-coverage and IPA-boundary regression passed");
+
+
 const lexicalRegression = ["จริง","สร้าง","ศรี","ทราบ","ทรง","ทรัพย์","แทรก","เศร้า","จันทร์","ศุกร์","เสาร์","สัตว์","ฟิล์ม","ฤทธิ์","เตอร์","เทอร์","ยนต์","ไซต์","กอล์ฟ","อย่า","อยู่","อย่าง","อยาก"];
 for (const input of lexicalRegression) {
   const a = analyze(input);
