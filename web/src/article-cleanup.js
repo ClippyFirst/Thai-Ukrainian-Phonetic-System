@@ -55,39 +55,39 @@ function replaceMarkdownLinks(source) {
       cursor = close;
       continue;
     }
-    output += source.slice(open + 1, labelEnd).replace(/\\([\\[\\]])/g, "$1");
+    output += source.slice(open + 1, labelEnd).replace(/\\([\\[\]])/g, "$1");
     cursor = end;
   }
   return output;
 }
 
 /**
- * Prepares pasted wiki/Markdown article content for phonetic analysis.
- * It keeps visible link labels and ordinary prose while dropping link targets,
- * reference links, HTML markup and presentation-only syntax. It is not a
- * general-purpose HTML parser or a semantic translation step.
+ * Prepare pasted wiki/Markdown article content while keeping visible link labels.
+ * This is deliberately not a general-purpose HTML parser or a translation step.
  */
 function preprocessArticleText(input) {
   const original = String(input ?? "");
+  const looksMarkedUp = /<ref\b|<[^>]+>|\[[^\]]+\]\([^)]*\)|\[\[|&(?:#(?:x[0-9a-f]+|[0-9]+)|[a-z][a-z0-9]+);|'{2,5}/i.test(original);
+  if (!looksMarkedUp) return { text: original, changed: false };
+
   let text = original
-    .replace(/<ref\\b[^>]*>[\\s\\S]*?<\\/ref\\s*>/gi, " ")
-    .replace(/<ref\\b[^>]*\\/>/gi, " ")
+    .replace(/<ref\b[^>]*>[\s\S]*?<\/ref\s*>/gi, " ")
+    .replace(/<ref\b[^>]*\/>/gi, " ")
     .replace(/<[^>]*>/g, " ")
-    .replace(/\\[\\[(?:[^\\]]+)\\]\\]\\s*\\([^)]*\\)/g, " ")
-    .replace(/\\[\\[([^\\]|]+)\\|([^\\]]+)\\]\\]/g, "$2")
-    .replace(/\\[\\[([^\\]]+)\\]\\]/g, "$1");
+    .replace(/\[\[(?:[^\]]+)\]\]\s*\([^)]*\)/g, " ")
+    .replace(/\[\[([^\]|]+)\|([^\]]+)\]\]/g, "$2")
+    .replace(/\[\[([^\]]+)\]\]/g, "$1");
   text = replaceMarkdownLinks(text);
   text = text
-    .replace(/\\\\([\\[\\]{}|])/g, "$1")
-    .replace(/\\[(?:[a-z]|[0-9]{1,4})\\]/gi, " ")
-    .replace(/\\[([a-z]{1,4}|[0-9]{1,4})\\]/gi, " ")
+    .replace(/\\([\[\]{}|])/g, "$1")
+    .replace(/\[(?:[a-z]|[0-9]{1,4})\]/gi, " ")
     .replace(/&(?:#(?:x[0-9a-f]+|[0-9]+)|[a-z][a-z0-9]+);/gi, decodeEntity)
-    .replace(/(?:https?:\\/\\/|www\\.)[^\\s<>]+/gi, " ")
+    .replace(/(?:https?:\/\/|www\.)[^\s<>]+/gi, " ")
     .replace(/'{2,5}/g, "")
     .replace(/_{2,}/g, "")
-    .replace(/<escape><\\/escape>/g, "")
-    .replace(/[ \\t]+([,.;:!?])/g, "$1")
-    .replace(/[ \\t]{2,}/g, " ");
+    .replace(/[ \t]+([,.;:!?])/g, "$1")
+    .replace(/[ \t]{2,}/g, " ")
+    .replace(/[ \t]*\n[ \t]*/g, "\n");
   return { text, changed: text !== original };
 }
 
