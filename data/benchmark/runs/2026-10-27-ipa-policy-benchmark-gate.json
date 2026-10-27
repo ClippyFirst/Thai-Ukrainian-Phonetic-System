@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-10-27",
+  "repository": "ClippyFirst/Thai-Ukrainian-Phonetic-System",
+  "base_main_before_merge": "c7e686d4665c978577f771e62947545ddbc67cfe",
+  "merged_pr": 106,
+  "merged_head": "7e4ccb8aa789f97144ee46a9b5927402cb58e05c",
+  "merge_commit": "e3052ff9bede79ed8b4f19e746ce545912cfd7d5",
+  "verification": {
+    "ci": {
+      "run_id": 40586665956,
+      "head": "7e4ccb8aa789f97144ee46a9b5927402cb58e05c",
+      "status": "success",
+      "url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40586665956"
+    },
+    "web_static": {
+      "run_id": 40586665936,
+      "head": "7e4ccb8aa789f97144ee46a9b5927402cb58e05c",
+      "status": "success",
+      "url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40586665936"
+    },
+    "local_clone": "BLOCKED: DNS resolution for github.com unavailable in execution environment; no local tests claimed"
+  },
+  "benchmark_data_quality": {
+    "gold_tsv": {
+      "rows": 0,
+      "status": "HEADER_ONLY"
+    },
+    "source_attested_ipa_tsv": {
+      "rows": 6,
+      "status": "SOURCE_ATTESTED_NOT_GOLD"
+    },
+    "thai_g2p_challenge_jsonl": {
+      "rows": 42,
+      "adjudicated_ipa_gold_rows": 0,
+      "status": "CANDIDATE_PROBES_ONLY"
+    },
+    "segmentation_gold_tsv": {
+      "bytes": 606026,
+      "status": "PRESENT_BUT_UNSCORABLE_WITHOUT_PREDICTIONS"
+    },
+    "segmentation_predictions_tsv": {
+      "bytes": 47,
+      "rows": 0,
+      "status": "HEADER_ONLY"
+    },
+    "ukrainian_target_candidates_tsv": {
+      "bytes": 2910,
+      "status": "CANDIDATES_NOT_ADJUDICATED"
+    },
+    "ukrainian_target_adjudication": {
+      "status": "PENDING_INDEPENDENT_ADJUDICATION"
+    }
+  },
+  "claims": {
+    "end_to_end_accuracy": null,
+    "segmentation_accuracy": null,
+    "ipa_accuracy": null,
+    "ukrainian_target_accuracy": null,
+    "reason": "No adjudicated IPA gold; no segmentation predictions; Ukrainian target forms pending adjudication."
+  },
+  "task_ledger": {
+    "thai_ukrainian_ipa_adapter_policy": "DONE_VERIFIED",
+    "exact_head_ci_and_web_static": "DONE_VERIFIED",
+    "end_to_end_g2p_accuracy": "BLOCKED",
+    "segmentation_accuracy": "BLOCKED",
+    "ukrainian_target_form_accuracy": "BLOCKED",
+    "external_engine_production_integration": "DEFERRED",
+    "pr_104_morphology_reconciliation": "PARTIAL"
+  },
+  "external_engines": {
+    "goruut": "Smoke/coverage/repeatability evidence only; no gold accuracy",
+    "thaiphon": "Prior smoke comparison only; no independent gold",
+    "fastthaig2p": "Prior smoke comparison only; resource-level licensing/provenance unresolved"
+  }
+}
