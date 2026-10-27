@@ -95,8 +95,8 @@ function card(token, index) {
 }
 
 
-// Explicit reviewed word grouping for the curated phrase; other entries retain
-// their source lexicon contract and are never split by guessed word boundaries.
+// Explicit project-defined word grouping for the curated phrase; other entries
+// retain their source lexicon contract and are never split by guessed boundaries.
 const REVIEWED_WORD_GROUPS = new Map([['กินข้าวกับไข่และผลไม้', [1, 1, 1, 1, 1, 2]]]);
 
 function continuousToken(token, mode) {
