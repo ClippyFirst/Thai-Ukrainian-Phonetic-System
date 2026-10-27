@@ -458,3 +458,11 @@ This section is the current decision record for the whole-text Thai input work. 
 - **Tests added:** generated index must contain all 60,963 pinned unique entries, every word must be in the correct prefix bucket, and every bucket must be sorted longest-first with deterministic code-point ordering. Existing Python/browser parity and UI regressions cover user-visible segmentation behavior, including `กาแฟ` and unresolved unknown spans.
 - **Acceptance:** exact branch-head CI `test` + `master-artifact`, web static validation, and Pages workflow where applicable. No measured speedup is claimed until a reproducible benchmark is run; this is an algorithmic candidate-scan reduction, not a linguistic accuracy improvement.
 - **Unchanged blocker:** independent expert segmentation/IPA gold and independent Ukrainian target-form adjudication remain unavailable; arbitrary-text IPA coverage remains partial.
+
+
+## Browser dictionary lookup optimization — 2026-10-27
+
+| Workstream | Status | Evidence / acceptance |
+|---|---|---|
+| Browser dictionary candidate lookup | IN_PROGRESS | Dedicated branch `perf/browser-dictionary-prefix-index-20261027` changes the generated CC0 index from first-character buckets to two-code-point prefix buckets, reducing the candidate list inspected at each offset. Single-code-point dictionary entries retain a separate short-word bucket and are checked alongside the two-code-point bucket. This is a performance optimization only; segmentation remains greedy max-match and not context-aware or expert-validated. Exact-head CI and Pages verification are required before marking DONE_VERIFIED. |
+| Linguistic segmentation quality | BLOCKED / evidence-limited | Do not interpret a smaller candidate set or green regression suite as accuracy evidence. Existing 993-row Wisesight evaluation remains source-annotated, not expert-adjudicated; independent review and a separately defined acceptance gate are still required. |
