@@ -101,6 +101,14 @@ export function adaptIpaToUkrainian(sourceIpa) {
   if (typeof sourceIpa !== "string" || !sourceIpa.trim()) {
     return {status:"withheld", sourceIpa:sourceIpa ?? null, normalizedIpa:null, output:null, candidates:[], preservedFeatures:[], neutralizedFeatures:[], rulesApplied:[], inputNotes:[], warnings:["IPA input is empty."]};
   }
+  const trimmedSource = sourceIpa.trim();
+  // Mismatched outer delimiters are malformed notation, not an IPA variant.
+  if ((trimmedSource.startsWith("[") !== trimmedSource.endsWith("]")) ||
+      (trimmedSource.startsWith("/") !== trimmedSource.endsWith("/")) ||
+      (trimmedSource.startsWith("[") && trimmedSource.endsWith("/")) ||
+      (trimmedSource.startsWith("/") && trimmedSource.endsWith("]"))) {
+    return {status:"withheld", sourceIpa, normalizedIpa:null, output:null, candidates:[], preservedFeatures:[], neutralizedFeatures:[], rulesApplied:[], inputNotes:[], warnings:["IPA delimiters are mismatched; Ukrainian output withheld."]};
+  }
   const normalized = normalizeIpaInput(sourceIpa);
   const ipa = normalized.ipa;
   const inputNotes = [];
