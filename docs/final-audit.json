@@ -1318,5 +1318,28 @@
       ],
       "caveat": "Editorial Ukrainian usage only; no independent Thai IPA, etymological pathway, or target-form adjudication established."
     }
+  },
+  "thai_ukrainian_ipa_policy_and_benchmark_gate_2026_10_27": {
+    "status": "PARTIAL",
+    "merged_pr": 106,
+    "merge_commit": "e3052ff9bede79ed8b4f19e746ce545912cfd7d5",
+    "exact_head_ci": {
+      "run_id": 40586665956,
+      "status": "success"
+    },
+    "exact_head_web_static": {
+      "run_id": 40586665936,
+      "status": "success"
+    },
+    "benchmark_data_quality": {
+      "gold_ipa_rows": 0,
+      "source_attested_ipa_rows": 6,
+      "challenge_candidates": 42,
+      "challenge_gold_ipa_rows": 0,
+      "segmentation_predictions_rows": 0,
+      "ukrainian_target_adjudication": "PENDING_INDEPENDENT_ADJUDICATION"
+    },
+    "acceptance": "Do not claim accuracy improvement until independent IPA gold and target adjudication exist and reproducible predictions are scored; populate segmentation predictions from a pinned engine commit before evaluating segmentation.",
+    "handoff_branch": "audit/thai-ipa-benchmark-gates-20261027"
   }
 }
