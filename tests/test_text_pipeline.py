@@ -18,6 +18,17 @@ class TextPipelineTests(unittest.TestCase):
         self.assertEqual(segment_thai_word("รถบัส"), (("รถ", "บัส"), "lexicon"))
         self.assertEqual(segment_thai_word("คอมพิวเตอร์"), (("คอม", "พิว", "เตอร์"), "lexicon"))
 
+    def test_source_attested_ukraine_name_uses_two_syllable_lexicon(self):
+        # en.wiktionary Thai entry oldid 88025965 attests /juː˧.kʰreːn˧/.
+        # This is a pinned source reading, not independent expert/acoustic gold.
+        self.assertEqual(segment_thai_word("ยูเครน"), (("ยู", "เครน"), "lexicon"))
+        token = analyze_text("ยูเครน")[0]
+        self.assertEqual(token["segmentation_status"], "lexicon")
+        self.assertEqual([s["input"] for s in token["syllables"]], ["ยู", "เครน"])
+        self.assertEqual([s["phonemic_ipa"] for s in token["syllables"]], ["juː", "kʰreːn"])
+        self.assertEqual([s["tone"]["tone"] for s in token["syllables"]], ["mid", "mid"])
+        self.assertTrue(all(s["ukrainian_transliteration"] for s in token["syllables"]))
+
     def test_unknown_text_is_not_falsely_segmented(self):
         for text in ("คำใหม่ที่ไม่อยู่ในพจนานุกรม", "กากล้าขายแล้วไหว้แสดง"):
             with self.subTest(text=text):
