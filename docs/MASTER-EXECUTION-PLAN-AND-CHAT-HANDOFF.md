@@ -1,3 +1,12 @@
+## 2026-10-27 — porting research-only morphology layer onto current main
+
+- PR [#101](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/101) exact-head CI run [40557271206](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40557271206) and Web static validation [40557271224](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40557271224) passed on source head `a3b6a4292837a2c1dda77df568a780497d5fc31e`. A direct merge failed because PR #101 conflicts with newer main; no force merge was attempted.
+- Port branch: `feat/port-research-morphology-after-ipa-adapter-20261027`, based on current `main`. Port preserves the separate research-only scope and the IPA-first production path: Python opt-in diagnostics, mirrored browser candidate rules, a visibly provisional panel, tests, and methodology docs. It does not add morphology guesses to phonetic output.
+- **Current status:** implementation ported; exact-head CI, generated-artifact checks, web static validation and live Pages contract must pass on this branch before merge. This handoff does not claim local tests were run.
+- **Remaining evidence gates:** independent annotated Thai morphology gold set and held-out evaluation; independent Thai IPA/acoustic gold; Ukrainian target-form adjudication; unresolved TLTK license contradiction and resource-level external-model provenance. The system remains a partial research prototype, not release-ready for arbitrary text.
+
+---
+
 ## 2026-10-27 — direct IPA adapter merged; published-site verification in progress
 
 - **Merged to `main`:** PR [#103](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/103) added fail-closed malformed delimiter handling to PR [#102](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/102)'s branch; PR #102 was then merged to main. Main merge commit: `070687575026ebc6d5d5dabdd0bb7bf647656bfc`.
