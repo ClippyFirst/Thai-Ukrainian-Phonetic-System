@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Direct IPA adapter is merged and verified by the user-reported successful workflows. A separate conservative Thai morphology-candidate overlay is being ported onto current main after PR #101 conflicted with newer IPA-adapter changes; exact-head verification for the port is pending. Product remains a partial research prototype, not release-ready for arbitrary Thai text or independently validated target forms.",
+  "status": "The direct IPA adapter is merged. Main CI on 9c527e46b3fa012e277c8914683ae70834165a22 passed (run 40571017009); the Pages deployment and published whole-text + direct IPA adapter contract passed on workflow commit 3a69b65de3a42f8573e6106061702230638c52cf (run 40570951858, build and deploy both success). A research-only morphology overlay is being ported on PR #104; its exact-head workflows are still pending. Product remains a partial research prototype, not release-ready for arbitrary Thai text or independently validated target forms.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -1225,9 +1225,13 @@
     }
   },
   "website_deployment_verification": {
-    "workflow_commit": "3a69b65de3a42f8573e6106061702230638c52cf",
-    "status": "PENDING_LIVE_PAGES_WORKFLOW_RESULT",
-    "acceptance": "GitHub Pages deployment workflow must pass its published homepage, app.js, engine.js and ipa-ua.js checks including direct IPA input form markers."
+    "status": "DONE_VERIFIED",
+    "workflow_run": 40570951858,
+    "commit": "3a69b65de3a42f8573e6106061702230638c52cf",
+    "build": "success",
+    "deploy": "success",
+    "published_contract": "success",
+    "url": "https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/"
   },
   "morphology_overlay_2026_10_27_port": {
     "pull_request_source": 101,
