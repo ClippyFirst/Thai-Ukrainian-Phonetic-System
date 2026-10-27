@@ -1281,23 +1281,23 @@
     ],
     "implementation": "documentation only; runtime rules unchanged",
     "findings": [
-      "Russian practical transcription must not be an intermediate for Ukrainian output",
-      "Thai /ɯ/ → Ukrainian и is a practical approximation, not identity",
-      "current /h/ → х mapping is project-specific and needs comparison with г",
-      "aspiration remains explicit in IPA; no automatic х insertion in Ukrainian practical output",
-      "дж/дз are not automatic mappings for Thai จ/ฉ/ช"
+      "Russian practical transcription is comparative only; Ukrainian output is not generated through Russian.",
+      "Project policy: Thai /h/ → Ukrainian г in the practical adapter; preserve typed IPA /h/ and allow sourced lexical exceptions for established Ukrainian exonyms.",
+      "Thai aspirates /kʰ pʰ tʰ tɕʰ/ use one Ukrainian practical letter each: к/п/т/ч; aspiration remains explicit in IPA and is not rendered as a second х.",
+      "Standard Thai /tɕ/ and /tɕʰ/ are voiceless alveolo-palatal affricates differing by aspiration, not voicing. Both map to practical ч; дж /d͡ʒ/ is inappropriate because it introduces voicing absent from the Thai phonemes.",
+      "Ч is a practical approximation, not exact IPA identity; the adapter must preserve IPA distinctions and document neutralized features."
     ],
     "not_claimed": [
       "official Ukrainian Thai transcription standard",
-      "independent adjudication of Ukrainian forms",
-      "corpus-validated preferred mapping",
-      "runtime coverage or accuracy improvement"
+      "independent adjudication of all Ukrainian Thai forms",
+      "corpus-validated preferred mapping or improved runtime accuracy",
+      "runtime implementation of the updated policy; current changes are documentation only"
     ],
     "acceptance": [
-      "collect source-attested Ukrainian Thai names",
-      "independent Thai pronunciation/IPA validation",
-      "blind Ukrainian editorial adjudication of candidate forms",
-      "encode only adjudicated rules in a versioned registry and regression tests"
+      "update the IPA-to-Ukrainian runtime adapter to implement /h/ → г and the one-letter aspiration-neutralizing policy",
+      "add exact IPA adapter regression tests for /h/, /kʰ pʰ tʰ tɕ tɕʰ/ and verify that no aspirated form adds х and no Thai /tɕ/ is rendered дж",
+      "collect source-attested Ukrainian Thai names and identify lexical exceptions",
+      "independently validate Thai pronunciation/IPA and adjudicate Ukrainian forms before claiming linguistic accuracy"
     ],
     "attested_examples": {
       "status": "SOURCE_ATTESTED_NOT_GOLD",
