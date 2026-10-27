@@ -1,3 +1,14 @@
+## Continuation — malformed IPA delimiter rejection (2026-10-27)
+
+- Working branch: `fix/ipa-normalization-audit-20261027`, based on PR #102 code head `a85452f9623b87f1d3270df9eb8f29efb0542fbd`.
+- Added fail-closed validation in both Python and browser IPA adapters for unmatched or mixed outer delimiters. Previously strings such as `[kʰaː/`, `/kʰaː]`, `[kʰaː`, and `kʰaː]` could reach token parsing and be treated as merely unsupported characters rather than malformed notation; they now return `withheld` before normalization.
+- Added matching regression cases to `tests/test_ukrainian_adaptation.py` and `web/tests/ipa-ua.test.mjs`.
+- Implementation commits: Python `e70ddd43946cd9fe25d886da3f697a5389c8ae8e`; browser `b3d11e927a36f87646e24863fb5f65e14b9f0acc`; tests `bfe33ba25fecb0db10ca351f8d28605449c47a93` and `db6316125ca19a036740ecc55bcad720afbd0c9d`. Documentation updates follow in this branch.
+- Exact-head CI and static validation are pending. The connector's workflow-run lookup returned no PR-triggered runs for the new head before a PR was opened; no local checkout/test execution was available. Do not mark this fix DONE_VERIFIED until CI runs on the final branch HEAD.
+- This fix validates delimiter syntax only. It does not establish expert correctness of IPA, tone interpretation, or Ukrainian target forms. PR #101 morphology remains separate and research-only.
+
+---
+
 # Latest continuation — direct IPA recognition and Ukrainian adapter hardening (2026-10-27)
 
 - Dedicated branch `feat/ipa-input-adapter-robustness-20261027`; PR [#102](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/102) remains open pending exact-head verification and integration. PR #101 morphology work remains separate.
