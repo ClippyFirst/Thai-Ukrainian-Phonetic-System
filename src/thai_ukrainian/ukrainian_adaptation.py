@@ -18,7 +18,7 @@ IPA_TO_UA = {
     "ŋ": ("нг", "UA-NG"), "n": ("н", "UA-N"), "m": ("м", "UA-M"),
     "r": ("р", "UA-R"), "l": ("л", "UA-L"), "j": ("й", "UA-J"),
     "w": ("в", "UA-W"), "s": ("с", "UA-S"), "f": ("ф", "UA-F"),
-    "h": ("х", "UA-H"), "ʔ": ("", "UA-GLOTTAL-STOP"),
+    "h": ("г", "UA-H"), "ʔ": ("", "UA-GLOTTAL-STOP"),
     "a": ("а", "UA-A"), "i": ("і", "UA-I"), "e": ("е", "UA-E"),
     "ɛ": ("е", "UA-EPSILON"), "ɯ": ("и", "UA-BARRED-I"),
     "ɤ": ("е", "UA-GAMMA"), "u": ("у", "UA-U"), "o": ("о", "UA-O"),
@@ -136,6 +136,8 @@ def adapt_phonetic_result(result: PhoneticResult) -> dict:
         rules.append(rule)
         if token in {"kʰ", "pʰ", "tʰ", "tɕʰ"}:
             neutralized.append("aspiration")
+        if token == "h":
+            neutralized.append("glottal place and voicing")
         if token in {"ɛ", "ɯ", "ɤ", "ɔ"}:
             neutralized.append("vowel quality")
         previous_base = token

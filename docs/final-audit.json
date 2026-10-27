@@ -1227,5 +1227,96 @@
     "workflow_commit": "3a69b65de3a42f8573e6106061702230638c52cf",
     "status": "PENDING_LIVE_PAGES_WORKFLOW_RESULT",
     "acceptance": "GitHub Pages deployment workflow must pass its published homepage, app.js, engine.js and ipa-ua.js checks including direct IPA input form markers."
+  },
+  "thai_ukrainian_methodology_matrix_2026_10_27": {
+    "status": "PARTIAL",
+    "document": "docs/ukrainian-transcription-methodology.md",
+    "branch": "docs/thai-ukrainian-method-table-20261027",
+    "base_commit": "c7e686d4665c978577f771e62947545ddbc67cfe",
+    "scope": [
+      "onset consonants",
+      "coda neutralization",
+      "vowel/rime orientations",
+      "IPA-to-Ukrainian candidate conventions",
+      "tone and length preservation",
+      "context and special orthography",
+      "evidence-gated statuses"
+    ],
+    "reference_policy": "Thai–Russian practical transcription is comparison material, not Ukrainian normative authority; the exact primary 2025 edition was not independently inspected.",
+    "implementation": "documentation only; no runtime rules changed",
+    "validation": "Fetched branch document, README, and validation matrix; checked document sections and source anchors. Exact-head CI run 40582576927 was queued at last inspection.",
+    "not_claimed": [
+      "independent IPA gold",
+      "independent Ukrainian target-form adjudication",
+      "held-out accuracy",
+      "official Ukrainian transcription standard"
+    ],
+    "acceptance": [
+      "independent expert IPA adjudication",
+      "independent Ukrainian target-form review",
+      "review primary references and exact locators",
+      "only then encode approved rules in a versioned machine-readable registry and add regression cases"
+    ]
+  },
+  "ukrainian_vs_russian_thai_transcription_2026_10_27": {
+    "status": "PARTIAL",
+    "document": "docs/ukrainian-vs-russian-thai-transcription.md",
+    "branch": "docs/thai-ukrainian-method-table-20261027",
+    "commit": "88445a9af2902dd284d34b3c00c670520fcd535d",
+    "scope": [
+      "Thai /ɯ/ and Ukrainian и approximation",
+      "Thai /h/ г-versus-х decision",
+      "aspiration /kʰ pʰ tʰ",
+      "/j/ and Ukrainian йотовані vowels",
+      "/w/ adaptation",
+      "/ɛ/~/e/ neutralization",
+      "Ukrainian г/ґ and дж/дз boundaries",
+      "tone and vowel-length preservation in IPA"
+    ],
+    "sources": [
+      "official Ukrainian orthography standard 2026",
+      "Holovach 2022 DOI 10.18523/lcmp2522-9281.2022.8.187-212",
+      "Thai–Russian practical transcription comparison",
+      "Tingsabadh & Abramson 1993 DOI 10.1017/S0025100300004746"
+    ],
+    "implementation": "The policy is already present in both runtime IPA→Ukrainian adapters (web/src/ipa-ua.js and src/thai_ukrainian/ukrainian_adaptation.py): h→г, kʰ/pʰ/tʰ→к/п/т, tɕ/tɕʰ→ч. Existing web/tests/ipa-ua.test.mjs and tests/test_ukrainian_adaptation.py include relevant assertions. This work reconciles documentation and records the rationale; CI is queued and local execution is blocked by unavailable network access to GitHub.",
+    "findings": [
+      "Russian practical transcription is comparative only; Ukrainian output is not generated through Russian.",
+      "Project policy: Thai /h/ → Ukrainian г in the practical adapter; preserve typed IPA /h/ and allow sourced lexical exceptions for established Ukrainian exonyms.",
+      "Thai aspirates /kʰ pʰ tʰ tɕʰ/ use one Ukrainian practical letter each: к/п/т/ч; aspiration remains explicit in IPA and is not rendered as a second х.",
+      "Standard Thai /tɕ/ and /tɕʰ/ are voiceless alveolo-palatal affricates differing by aspiration, not voicing. Both map to practical ч; дж /d͡ʒ/ is inappropriate because it introduces voicing absent from the Thai phonemes.",
+      "Ч is a practical approximation, not exact IPA identity; the adapter must preserve IPA distinctions and document neutralized features.",
+      "Implementation now uses /h/ → г in both Python and browser IPA adapters; the generated consonant correspondence rows for ห/ฮ now show г.",
+      "Code inspection confirms the existing browser and Python adapters already implement the agreed mappings; this is not a new runtime accuracy improvement."
+    ],
+    "not_claimed": [
+      "official Ukrainian Thai transcription standard",
+      "independent adjudication of all Ukrainian Thai forms",
+      "corpus-validated preferred mapping or improved runtime accuracy",
+      "tests passing in this run; GitHub Actions was queued and local checkout was blocked by DNS/network access"
+    ],
+    "acceptance": [
+      "CI must pass the existing web IPA adapter and Python Ukrainian adaptation test suites on the current PR head",
+      "collect source-attested Ukrainian Thai names and identify lexical exceptions to systematic /h/ → г",
+      "independently validate Thai pronunciation/IPA and adjudicate Ukrainian forms before claiming linguistic accuracy"
+    ],
+    "attested_examples": {
+      "status": "SOURCE_ATTESTED_NOT_GOLD",
+      "examples": [
+        {
+          "form": "Таїланд; Бангкок",
+          "source": "https://suspilne.media/amp/culture/1431571-ukrainska-dizajnerka-predstavila-suknu-na-vistavci-u-tailandi-vona-poednala-ukrainskij-lon-i-tajskij-sovk/"
+        },
+        {
+          "form": "Пхукет",
+          "source": "https://suspilne.media/116948-tailand-dostrokovo-vidkrie-phuket-dla-vakcinovanih-turistiv/"
+        },
+        {
+          "form": "Ліса",
+          "source": "https://suspilne.media/culture/786987-najpopularnisa-k-pop-spivacka-ak-lisa-z-tailandu-zavouvala-serca-usogo-svitu-ta-za-so-ii-kritikuut/"
+        }
+      ],
+      "caveat": "Editorial Ukrainian usage only; no independent Thai IPA, etymological pathway, or target-form adjudication established."
+    }
   }
 }

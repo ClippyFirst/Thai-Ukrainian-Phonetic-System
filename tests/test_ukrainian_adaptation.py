@@ -85,6 +85,12 @@ def test_common_external_thai_ipa_notation_is_normalized_before_adaptation():
     base = PhoneticResult.from_syllable_analysis(analyze_syllable("กา"))
     cases = [
         ("[kʰaː˩˩˦]", "ка"),
+        ("haː", "га"),
+        ("kʰaː", "ка"),
+        ("pʰaː", "па"),
+        ("tʰaː", "та"),
+        ("tɕa", "ча"),
+        ("tɕʰa", "ча"),
         ("/kʰaː/", "ка"),
         ("kʰàː", "ка"),
         ("ˈkʰaː", "ка"),
@@ -98,6 +104,12 @@ def test_common_external_thai_ipa_notation_is_normalized_before_adaptation():
         assert adapted["status"] == "adapted", ipa
         assert adapted["output"] == expected, ipa
         assert adapted["input_notes"], ipa
+    h_result = adapt_phonetic_result(replace(base, phonemic_ipa="haː"))
+    assert h_result["output"] == "га"
+    assert "glottal place and voicing" in h_result["neutralized_features"]
+    voiced_affricate = adapt_phonetic_result(replace(base, phonemic_ipa="dʒa"))
+    assert voiced_affricate["status"] == "withheld"
+    assert voiced_affricate["output"] is None
 
 
 def test_tone_only_ipa_and_unknown_symbols_are_not_guessed():

@@ -502,3 +502,35 @@ This section is the current decision record for the whole-text Thai input work. 
 - **Measurement contract:** this is a wall-clock diagnostic, not a fixed-threshold performance gate. CI-runner timing is environment-specific; compare only like-for-like runs. It measures neither segmentation accuracy nor IPA/Ukrainian correctness.
 - **Acceptance:** exact-head CI must pass and the artifact must be inspectable before reporting measured timings. Do not claim a speedup without a comparable pre-index baseline on the same runner/runtime. Unknown text must continue to abstain from IPA/Ukrainian output.
 - **Unchanged evidence blockers:** independent Thai word-boundary adjudication, independent Thai IPA/acoustic gold, independent Ukrainian target-form reviews, contextual review of `บรรจุ` final /ʔ/, lawful access to the complete official OBEC PDF, and per-resource license/attribution review.
+
+
+## 2026-10-27 — Thai → Ukrainian context-sensitive methodology matrix
+
+- Added [docs/ukrainian-transcription-methodology.md](ukrainian-transcription-methodology.md), a human-readable first-pass method table covering onset consonants, coda neutralization, vowel/rime mapping, tone separation, context-sensitive glide handling, special orthography, statuses and evidence gates.
+- Added comparison references for the published Thai–Russian practical transcription and a Thai dictionary transcription resource. Russian mappings are explicitly comparison material, not copied as Ukrainian normative rules.
+- README links to the method document. The table is a specification for review, not a runtime truth source and not a claim of accuracy.
+- **PARTIAL:** documentation commit only; no engine rules changed and no new phonetic accuracy was measured. IPA/adaptation adjudication and held-out evaluation remain required. Any questionable or lexical-dependent reading must remain gated rather than be guessed.
+
+- Follow-up completeness correction: methodology doc now explicitly inventories all 44 traditional consonants (including obsolete ฃ/ฅ), the conventional 32 vowel forms, four tone marks, relevant diacritics/special symbols, Thai digits and mixed-text handling; cites NECTEC, W3C Thai Layout Requirements and Thai Orthography Notes. This is inventory-level documentation, **not yet a verified character-by-character runtime coverage result**.
+- Status remains **PARTIAL** until an executable inventory test confirms the implementation’s actual behavior for each category and phonetic exceptions have evidence-backed tests.
+
+
+## 2026-10-27 — українсько-російські відмінності в тайській транскрипції
+
+- Додано [матрицю українських особливостей](ukrainian-vs-russian-thai-transcription.md): /ɯ/, /h/, придих /kʰ pʰ tʰ/, /j/ перед голосними, /w/, /ɛ/~/e/, українські г/ґ, йотовані літери та межі застосування дж/дз.
+- Основні дослідницькі джерела: офіційне видання «Українського правопису» 2026 року, стаття Уляни Головач (2022), порівняльна тайсько-російська таблиця та JIPA-опис тайської.
+- **PARTIAL / EVIDENCE-LIMITED:** це джерельно орієнтована матриця кандидатів, а не затверджена транскрипційна норма. Поточне /h/ → «х» позначено як проєктну конвенцію; альтернативу «г» треба перевірити на україномовних тайських назвах. /ɯ/ → «и» — наближення, не точна IPA-тотожність. Runtime не змінювався.
+- Acceptance: зібрати джерельно підтверджений набір українських тайських назв; провести незалежне IPA та українське редакторське оцінювання; лише після ад’юдикації затвердити machine-readable правила й тести. Не заявляти нормативність чи точність до виконання цих кроків.
+
+
+## 2026-10-27 — українські відповідники /h/, придиху та тайських африкат
+
+- Прийнято проєктну політику **тайський /h/ → українське «г»**; IPA /h/ лишається незмінним, тобто це адаптація, а не фонетична тотожність із українським /ɦ/. Усталені назви можуть бути окремими лексичними винятками.
+- Придих /kʰ pʰ tʰ tɕʰ/ не отримує додаткової української літери: практичні відповідники **к/п/т/ч**; придих зберігається в типізованому IPA.
+- Стандартні тайські /tɕ/ і /tɕʰ/ — глухі альвеоло-палатальні африкати, що розрізняються придихом. Обидві передаємо «ч» у практичному шарі; **«дж» /d͡ʒ/ не доречне**, бо є дзвінким відповідником і додає відсутню дзвінкість. «Ч» — наближення, не точна тотожність.
+- **Статус PARTIAL:** документаційна політика зафіксована; runtime-код та регресійні fixtures ще не змінено. Приймання потребує окремих тестів IPA→UA, тестів для ห/ฮ, จ/ฉ/ช/ฌ та перевірки усталених українських назв. Немає заяви про приріст точності рушія.
+
+
+### Follow-up update — runtime implementation added after the initial note
+
+The Python and browser IPA adapters now map Thai /h/ to Ukrainian «г», and regression cases cover /h/, /kʰ pʰ tʰ/, /tɕ/ and /tɕʰ/. The generated consonant correspondence table was aligned. This supersedes the earlier statement that no runtime code had changed. Status remains PARTIAL until exact-head CI and generated-artifact checks pass; no linguistic-accuracy improvement is claimed.

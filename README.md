@@ -16,6 +16,10 @@ The typed `PhoneticResult` is that adapter boundary. It carries phonemic IPA and
 
 The browser IPA adapter is maintained as a separately tested implementation. Cross-runtime parity tests remain required; passing a Python test alone does not establish browser parity. This is **not RTGS** and not a Thai-character → Ukrainian-character substitution table.
 
+## Thai → Ukrainian methodology table
+
+The initial context-sensitive methodology matrix is documented in [`docs/ukrainian-transcription-methodology.md`](docs/ukrainian-transcription-methodology.md). It distinguishes onset/coda, phonemic vs surface IPA, contextual rules, tone/length, and evidence-gated cases. It is explicitly PARTIAL pending independent IPA and Ukrainian-form adjudication; it is not an official Ukrainian standard.
+
 ## Whole-text operating modes
 
 The browser exposes three distinct policies: **strict** withholds unsupported readings; **soft** emits structurally plausible syllables but keeps unresolved spans visibly unresolved; **super-soft** prioritizes complete copyable coverage and generates an explicitly unverified IPA fallback for Thai spans that cannot be resolved. Every Ukrainian candidate still comes from the IPA → Ukrainian adapter. Super-soft coverage is not a claim of correct segmentation, pronunciation, tone, or Ukrainian orthography.
@@ -118,6 +122,7 @@ Core evidence includes Royal Institute of Thailand materials, Tingsabadh & Abram
 See:
 
 - Research protocol: docs/research-protocol.md
+- Ukrainian-specific Thai transcription and comparison with Russian: [docs/ukrainian-vs-russian-thai-transcription.md](docs/ukrainian-vs-russian-thai-transcription.md)
 - Corpus validation: docs/corpus-validation.md
 - Evidence registry: docs/evidence.md
 - Final audit: docs/final-audit.md

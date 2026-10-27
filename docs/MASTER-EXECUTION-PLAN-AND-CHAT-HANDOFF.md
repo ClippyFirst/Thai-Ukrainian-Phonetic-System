@@ -1190,3 +1190,27 @@ Branch `perf/browser-segmentation-latency-benchmark-20261027` adds a non-gating,
 - FastThaiG2P remains benchmark-only: repo-level Apache-2.0 metadata does not by itself clear its bundled IPA dictionary, TLTK-derived fallback, or all resource-level provenance. No third-party code, model, or dictionary has been imported.
 - Task ledger: PR #98 lexical fixture regression = DONE_VERIFIED for exact-head CI/static checks, post-merge main CI and Pages = PARTIAL pending current main workflows; TLTK license correction = PARTIAL pending reconciled docs PR and authoritative scope clarification; FastThaiG2P asset reuse = BLOCKED pending resource-level provenance; independent expert/acoustic IPA gold and Ukrainian adaptation review = EVIDENCE_LIMITED; arbitrary-text readiness = PARTIAL PROTOTYPE.
 - Verification source: GitHub Actions API job/run records and repository file inspection. No local checkout or local test run was performed in this continuation.
+
+
+## 2026-10-27 — Thai → Ukrainian methodology table
+
+- Branch: `docs/thai-ukrainian-method-table-20261027`, based on main at `c7e686d4665c978577f771e62947545ddbc67cfe`.
+- Added `docs/ukrainian-transcription-methodology.md`: context-aware initial/coda consonant table, vowel/rime orientations, Ukrainian IPA adapter conventions, tone/length preservation, contextual rules, evidence statuses, and comparison references to Thai–Russian practical transcription.
+- README and validation matrix updated. No engine behavior changed. Method document is PARTIAL, not a verified standard; examples are illustrative and not independent phonetic gold.
+- Remaining acceptance criteria: review the exact primary 2025 Russian reference edition if using its rules comparatively; independently adjudicate Thai IPA and Ukrainian target forms; encode approved rules in a versioned machine-readable registry only after evidence review; add regression tests and held-out evaluation. Keep lexical ambiguity fail-closed.
+
+- Follow-up after the completeness question: added section 11 to the method document enumerating the 44-consonant inventory, conventional 32-vowel-form set, tone marks, diacritics, special signs, digits, and mixed-script policy. Added NECTEC/W3C/Thai Orthography Notes references. This closes a documentation inventory gap, not the engine-coverage gate.
+- Still required: automated inventory/Unicode tests against actual runtime, exact per-character/context rule registry, independent IPA and Ukrainian target review. Do not describe all-letter support as verified until those checks run.
+
+
+## 2026-10-27 — українські особливості тайської практичної транскрипції
+
+- Branch: `docs/thai-ukrainian-method-table-20261027`; new research document: `docs/ukrainian-vs-russian-thai-transcription.md`.
+- Compared the Thai–Russian practical table against the official Ukrainian orthography standard and Ukrainian scholarship on practical transcription of foreign proper names.
+- Candidate issues recorded: Thai /ɯ/ → Ukrainian «и» as an approximation; project policy /h/ → «г» with IPA /h/ preserved; one-letter Ukrainian practical forms for aspirates; contextual /j/ and Ukrainian йотated letters; /w/; /ɛ/~/e/ neutralization; Thai /tɕ, tɕʰ/ → «ч», not «дж».
+- **PARTIAL / EVIDENCE-LIMITED.** Documentation now records the chosen project policy: /h/ → «г»; /kʰ pʰ tʰ tɕʰ/ → one Ukrainian letter each (к/п/т/ч); Thai /tɕ/ and /tɕʰ/ both → «ч», not «дж» because they are voiceless and differ by aspiration, whereas Ukrainian «дж» is voiced /d͡ʒ/. IPA must preserve /h/, aspiration, and the affricate distinction. No runtime rules changed in this documentation batch. Code inspection confirms the browser and Python IPA→Ukrainian adapters already implement these mappings, and their existing test files assert them. Next acceptance: obtain passing CI evidence on the current PR head, then validate source-attested Ukrainian names and independent IPA/editorial adjudication.
+
+
+### Follow-up — Thai Ukrainian IPA adaptation implementation (2026-10-27)
+
+This note supersedes the preceding documentation-only status. The branch now changes `src/thai_ukrainian/ukrainian_adaptation.py` and `web/src/ipa-ua.js` so IPA /h/ maps to Ukrainian «г»; aspirated /kʰ pʰ tʰ tɕʰ/ render as one practical Ukrainian letter each; /tɕ/ and /tɕʰ/ both render as «ч», never «дж». Regression cases were added to `tests/test_ukrainian_adaptation.py` and `web/tests/ipa-ua.test.mjs`, and `data/derived/thai_consonant_correspondence.csv` was aligned with the candidate generator. Status: PARTIAL pending exact-head CI, parity, and generated-artifact validation. This is a project adaptation decision, not an official standard or an accuracy benchmark; IPA retains /h/ and aspiration distinctions.
