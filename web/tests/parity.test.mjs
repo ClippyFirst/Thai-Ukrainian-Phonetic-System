@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import {analyze,analyzeText,tokenizeText} from "../src/engine.js";
 import {WORDS_BY_PREFIX} from "../src/word-dictionary.generated.js";
+import {adaptIpaToUkrainian} from "../src/ipa-ua.js";
 
 
 // The generated dictionary index is grouped by the first two Unicode code
