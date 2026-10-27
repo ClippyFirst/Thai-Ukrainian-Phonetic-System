@@ -174,7 +174,9 @@ function matchTextWord(chars, offset, boundaries){
 }
 
 function matchDictionaryWord(chars, offset, boundaries){
-  const candidates=WORDS_BY_PREFIX.get(chars.slice(offset, offset + 2).join("")) || [];
+  const prefix=WORDS_BY_PREFIX.get(chars.slice(offset, offset + 2).join("")) || [];
+  const short=WORDS_BY_PREFIX.get(chars[offset]) || [];
+  const candidates=short.length ? [...prefix, ...short] : prefix;
   const matchesAtPrefix = words => {
     for(const word of words){
       const length=[...word].length, end=offset+length;
