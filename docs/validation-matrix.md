@@ -7,7 +7,7 @@
 
 | Component | State | Validation |
 |---|---|---|
-| Super-soft whole-text coverage | PARTIAL — exact-head Web static validation passed and CI test job passed; master-artifact job pending | Code commit 6f53ca955a2702db8e070a04c181dbb68d6d6900; Web static run 40577745185 passed. CI run 40577745331 test job passed, including browser parity/UI contracts; master-artifact still runs generate_master_table.py. PR #105 remains draft and unpublished because PR #104 overlaps changed files. Coverage is not pronunciation accuracy. |
+| Super-soft whole-text coverage | DONE_VERIFIED for code commit 6f53ca955a2702db8e070a04c181dbb68d6d6900; not merged/deployed | Web static run 40577745185 and full CI run 40577745331 passed, including browser parity/UI tests and master-artifact generation. Documentation-only checkpoint 502940ea61005b8b3494d074688301d23a1aeb29 follows the verified code commit. PR #105 remains draft because PR #104 overlaps changed files. Coverage is not pronunciation accuracy. |
 
 ## 2026-10-27 — direct IPA input and notation normalization
 
