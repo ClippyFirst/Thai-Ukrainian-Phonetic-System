@@ -1,4 +1,4 @@
-import { analyzeText } from './engine.js';
+import { analyzeText, analyzeMorphology } from './engine.js';
 import { adaptIpaToUkrainian } from './ipa-ua.js';
 import { preprocessArticleText } from './article-cleanup.js';
 
@@ -164,6 +164,26 @@ function bindCopyButtons() {
   }));
 }
 
+
+function morphologyPanel(result){
+  const items=result.candidates.length
+    ? '<ul class="morphology-candidates">' + result.candidates.map(item =>
+        '<li><div class="morphology-candidate-head"><strong lang="th">' + esc(item.token) +
+        '</strong><span class="subline">' + esc(item.label) + '</span></div><p><code>' +
+        esc(item.ruleId) + '</code> · ' + esc(item.status) + '</p><p>' + esc(item.scope) +
+        '</p><p class="morphology-evidence">' + esc(item.evidence) + '</p></li>'
+      ).join('') + '</ul>'
+    : '<p>У цьому вході не виявлено жодного маркера з обмеженого набору правил. Це не означає, що текст не має морфологічної структури.</p>';
+  return '<section class="morphology-panel" aria-labelledby="morphology-heading">' +
+    '<div class="section-head"><div><p class="eyebrow">ДОСЛІДНИЦЬКИЙ ШАР</p><h3 id="morphology-heading">Морфологічні підказки</h3></div>' +
+    '<span class="badge warn">не остаточний аналіз</span></div>' +
+    '<p>Виявляються лише контекстні кандидати для частини граматичних маркерів. Межі слів успадковано від сегментатора; синтаксичний обсяг, частини мови та значення автоматично не доведені. Цей шар не змінює IPA або український результат.</p>' +
+    items +
+    '<details><summary>Обмеження й статус доказів</summary><ul>' +
+    result.limitations.map(item => '<li>' + esc(item) + '</li>').join('') +
+    '</ul><p>Статус: <code>' + esc(result.status) + '</code>; правило не є оцінкою впевненості.</p></details></section>';
+}
+
 function run() {
   const text = input.value;
   if (!text.trim()) {
@@ -178,6 +198,7 @@ function run() {
   const prepared = preprocessArticleText(text);
   const analysisText = prepared.text;
   const tokens = analyzeText(analysisText, { mode });
+  const morphology = analyzeMorphology(tokens);
   const thaiTokens = tokens.filter(token => token.kind === 'thai');
   const unresolvedCount = thaiTokens.length === 0 ? 1 : thaiTokens.filter(token =>
     !['lexicon', 'lexical_ipa_override', ...(mode === 'soft' ? ['soft-orthographic-clusters'] : [])].includes(token.segmentationStatus) ||
@@ -210,6 +231,7 @@ function run() {
       mode === 'soft' ? 'Попередній український кандидат; неперевірені структурні сегменти можуть бути неточними.' : 'Один суцільний текст для читання та копіювання. Внутрішні склади з’єднано; межі слів відокремлено.', 'ua-continuous') +
     continuousPanel('IPA — проміжне представлення', ipaOutput,
       mode === 'soft' ? 'Попередній IPA-проміжний результат; перевірте сегментацію та читання.' : 'Контрольний IPA-вихід для перевірки фонетичної основи українського кандидата.', 'ipa-continuous') +
+    morphologyPanel(morphology) +
     '<details class="analysis-details"><summary>Детальний аналіз сегментів і складів</summary>' +
     tokens.map(card).join('') + '</details>';
   out.hidden = false;
