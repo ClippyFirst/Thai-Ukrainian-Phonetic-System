@@ -26,6 +26,28 @@ class ExternalG2PBenchmarkHarnessTests(unittest.TestCase):
         self.assertTrue(all(row.get("gold_phonemic_ipa") is None for row in rows))
         self.assertTrue(all(row.get("gold_broad_surface_ipa") is None for row in rows))
 
+    def test_article_style_challenge_probes_are_present_and_unscored(self):
+        rows = load_rows(ROOT / "data" / "benchmark" / "thai_g2p_challenge.jsonl")
+        by_id = {row["id"]: row for row in rows}
+        expected = {
+            "TH-G2P-037": "ยูเครน",
+            "TH-G2P-038": "ประเทศยูเครน",
+            "TH-G2P-039": "ยูเครนเป็นประเทศหนึ่ง",
+            "TH-G2P-040": "เป็นประเทศหนึ่ง",
+            "TH-G2P-041": "ยุโรปตะวันออก",
+            "TH-G2P-042": "ประเทศในยุโรปตะวันออก",
+        }
+        for record_id, input_text in expected.items():
+            with self.subTest(record_id=record_id):
+                row = by_id[record_id]
+                self.assertEqual(row["input"], input_text)
+                self.assertEqual(row["stratum"].startswith("article-style"), True)
+                self.assertEqual(row["orthography_validity"], "not_adjudicated")
+                self.assertEqual(row["structural_parse_status"], "not_adjudicated")
+                self.assertIsNone(row["gold_phonemic_ipa"])
+                self.assertIsNone(row["gold_word_boundaries"])
+                self.assertEqual(row["references"], [])
+
     def test_empty_or_failed_result_is_not_a_successful_smoke_output(self):
         self.assertTrue(has_usable_output({"raw_output": "kaː", "error": None}))
         self.assertFalse(has_usable_output({"raw_output": "", "error": None}))
