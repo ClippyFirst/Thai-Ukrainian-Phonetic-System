@@ -1279,23 +1279,24 @@
       "Thai–Russian practical transcription comparison",
       "Tingsabadh & Abramson 1993 DOI 10.1017/S0025100300004746"
     ],
-    "implementation": "documentation only; runtime rules unchanged",
+    "implementation": "Runtime changes added on this branch in src/thai_ukrainian/ukrainian_adaptation.py and web/src/ipa-ua.js: /h/ → г; aspirated stops/affricate map to one Ukrainian letter; derived consonant correspondence table aligned. Regression cases added in Python and browser adapter tests. Exact-head CI still required.",
     "findings": [
       "Russian practical transcription is comparative only; Ukrainian output is not generated through Russian.",
       "Project policy: Thai /h/ → Ukrainian г in the practical adapter; preserve typed IPA /h/ and allow sourced lexical exceptions for established Ukrainian exonyms.",
       "Thai aspirates /kʰ pʰ tʰ tɕʰ/ use one Ukrainian practical letter each: к/п/т/ч; aspiration remains explicit in IPA and is not rendered as a second х.",
       "Standard Thai /tɕ/ and /tɕʰ/ are voiceless alveolo-palatal affricates differing by aspiration, not voicing. Both map to practical ч; дж /d͡ʒ/ is inappropriate because it introduces voicing absent from the Thai phonemes.",
-      "Ч is a practical approximation, not exact IPA identity; the adapter must preserve IPA distinctions and document neutralized features."
+      "Ч is a practical approximation, not exact IPA identity; the adapter must preserve IPA distinctions and document neutralized features.",
+      "Implementation now uses /h/ → г in both Python and browser IPA adapters; the generated consonant correspondence rows for ห/ฮ now show г."
     ],
     "not_claimed": [
       "official Ukrainian Thai transcription standard",
       "independent adjudication of all Ukrainian Thai forms",
-      "corpus-validated preferred mapping or improved runtime accuracy",
-      "runtime implementation of the updated policy; current changes are documentation only"
+      "corpus-validated preferred mapping or improved linguistic accuracy",
+      "CI or local test success before the current branch's exact-head workflow completes"
     ],
     "acceptance": [
-      "update the IPA-to-Ukrainian runtime adapter to implement /h/ → г and the one-letter aspiration-neutralizing policy",
-      "add exact IPA adapter regression tests for /h/, /kʰ pʰ tʰ tɕ tɕʰ/ and verify that no aspirated form adds х and no Thai /tɕ/ is rendered дж",
+      "exact-head CI must pass Python tests, browser IPA adapter tests, parity tests, and generated-artifact checks",
+      "verify adapter regression tests for /h/, /kʰ pʰ tʰ tɕ tɕʰ/ and ensure no aspirated form adds х and no Thai /tɕ/ is rendered дж",
       "collect source-attested Ukrainian Thai names and identify lexical exceptions",
       "independently validate Thai pronunciation/IPA and adjudicate Ukrainian forms before claiming linguistic accuracy"
     ],
