@@ -451,3 +451,10 @@ This section is the current decision record for the whole-text Thai input work. 
 - The generator validates each bucket key against each word and reports the largest bucket so CI logs provide a deterministic candidate-scan bound for the pinned snapshot.
 - Existing UI contract tests continue to guard `กาแฟ` (no false partial IPA for `กา`), adjacent known entries, unresolved spans, lexical IPA overrides, punctuation, and whole-sentence input.
 - Acceptance: exact-head CI `test` + `master-artifact`, web static validation, and Pages build/deploy must pass. This optimization is not evidence of linguistic accuracy; independent segmentation adjudication and IPA/UA review remain blocked by missing human evidence.
+
+## Browser prefix-index performance change — 2026-10-27
+
+- **TODO / exact-head verification pending:** branch `perf/browser-dictionary-prefix-index-20261027` changes the generated CC0 dictionary index from one-code-point to two-code-point prefixes. Lookup checks the longer-prefix bucket first and falls back to the one-code-point bucket for single-character dictionary entries, preserving longest-match behavior.
+- **Tests added:** generated index must contain all 60,963 pinned unique entries, every word must be in the correct prefix bucket, and every bucket must be sorted longest-first with deterministic code-point ordering. Existing Python/browser parity and UI regressions cover user-visible segmentation behavior, including `กาแฟ` and unresolved unknown spans.
+- **Acceptance:** exact branch-head CI `test` + `master-artifact`, web static validation, and Pages workflow where applicable. No measured speedup is claimed until a reproducible benchmark is run; this is an algorithmic candidate-scan reduction, not a linguistic accuracy improvement.
+- **Unchanged blocker:** independent expert segmentation/IPA gold and independent Ukrainian target-form adjudication remain unavailable; arbitrary-text IPA coverage remains partial.
