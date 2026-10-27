@@ -223,19 +223,55 @@ function segmentThaiRun(input){
   return segments;
 }
 
-function analyzeThaiSegment(token){
+function softSyllabify(input){
+  const chars=[...input], {ends}=clusterBoundaries(chars);
+  const boundaries=[...ends].filter(end=>end>0).sort((a,b)=>a-b);
+  const result=[]; let offset=0;
+  while(offset<chars.length){
+    let best=null;
+    // Longest structurally valid candidate first. This is a heuristic syllable
+    // parse only; it is not a reviewed lexical word boundary.
+    for(const end of boundaries.filter(end=>end>offset && end-offset<=8).sort((a,b)=>b-a)){
+      const candidate=chars.slice(offset,end).join("");
+      const analysis=analyze(candidate);
+      if(analysis.status==="analyzed" && analysis.phonemicIpa && analysis.ukrainian){
+        best={end,analysis}; break;
+      }
+    }
+    if(best){
+      result.push(best.analysis);
+      offset=best.end;
+    }else{
+      const end=boundaries.find(end=>end>offset) ?? offset+1;
+      const fragment=chars.slice(offset,end).join("");
+      result.push({...analyze(fragment),input:fragment,status:"unresolved:soft-fallback",phonemicIpa:null,phoneticIpa:null,ukrainian:null,
+        warnings:["М’який режим: фрагмент не вдалося надійно розкласти на склад; збережено як невизначений замість вигадування IPA."]});
+      offset=end;
+    }
+  }
+  return result;
+}
+
+function analyzeThaiSegment(token, mode="strict"){
   const lexicalOverride=LEXICAL_IPA_OVERRIDES.has(token.input);
   const syllables=lexicalOverride?[token.input]:TEXT_LEXICON.get(token.input);
-  if(!syllables) return {...token,segmentationStatus:"unresolved",syllables:[],warnings:["No reviewed dictionary segmentation or deterministic pronunciation is available for this span. IPA and Ukrainian output are withheld; the span is preserved without a guessed pronunciation."]};
+  if(!syllables){
+    if(mode==="soft"){
+      return {...token,segmentationStatus:"soft-orthographic-clusters",syllables:softSyllabify(token.input),
+        warnings:["М’який режим: використано жадібний структурний розбір складів без підтвердження меж слів. IPA та українські форми є попередніми; перевірте їх вручну."]};
+    }
+    return {...token,segmentationStatus:"unresolved",syllables:[],warnings:["No reviewed dictionary segmentation or deterministic pronunciation is available for this span. IPA and Ukrainian output are withheld; the span is preserved without a guessed pronunciation."]};
+  }
   return {...token,segmentationStatus:lexicalOverride?"lexical_ipa_override":"lexicon",syllables:syllables.map(analyze),warnings:[]};
 }
 
-function analyzeText(text){
+function analyzeText(text, options={}){
+  const mode=options.mode==="soft"?"soft":"strict";
   return tokenizeText(text).flatMap(token=>{
     if(token.kind!=="thai") return [{...token,segmentationStatus:"not_applicable",syllables:[],warnings:[]}];
-    // Preserve a complete dictionary phrase as one match when it is known;
-    // otherwise segment the unspaced run into known entries and unresolved spans.
-    return segmentThaiRun(token.input).map(analyzeThaiSegment);
+    // Preserve reviewed entries in both modes. Soft mode only broadens the
+    // fallback for spans lacking reviewed segmentation; strict remains fail-closed.
+    return segmentThaiRun(token.input).map(part=>analyzeThaiSegment(part,mode));
   });
 }
 export {analyzeText,tokenizeText};
