@@ -170,6 +170,7 @@ mode.value = "soft";
 input.value = "ทดสอบกาไฟ";
 analyze.click();
 assert.match(status.textContent, /М’який/);
+assert.equal(status.className, "status notice", "soft mode must visibly remain provisional even when every parsed syllable has a candidate");
 assert.match(output.innerHTML, /soft-orthographic-clusters/);
 assert.match(output.innerHTML, /М’який режим — попередній результат/);
 assert.match(output.innerHTML, /IPA — проміжне представлення/);
