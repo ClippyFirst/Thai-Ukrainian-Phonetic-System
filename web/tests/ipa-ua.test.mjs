@@ -26,6 +26,8 @@ assert.equal(adaptIpaToUkrainian("kʰaː").sourceIpa, "kʰaː");
 const thaiH = adaptIpaToUkrainian("haː");
 assert.equal(thaiH.output, "га");
 assert(thaiH.rulesApplied.includes("UA-H"));
+assert(thaiH.neutralizedFeatures.includes("glottal place and voicing"));
+assert.equal(adaptIpaToUkrainian("dʒa").status, "withheld", "voiced /dʒ/ is not a Thai affricate mapping");
 for (const ipa of ["tɕa", "tɕʰa"]) {
   const affricate = adaptIpaToUkrainian(ipa);
   assert.equal(affricate.output, "ча", ipa);
