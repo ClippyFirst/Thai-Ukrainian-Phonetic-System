@@ -1,5 +1,15 @@
 # Master execution plan and chat handoff — Thai → Ukrainian Phonetic System
 
+## Latest continuation — source-attested Ukraine/Eastern Europe article forms and parser gap (2026-10-27)
+
+- Dedicated PR [#98](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/98), branch `feat/source-attested-east-thai-lexicon-20261027`, now includes `ตะวันออก` → `ตะ|วัน|ออก`, `ยุโรป` → `ยุ|โรป`, and `ยุโรปตะวันออก` → `ยุ|โรป|ตะ|วัน|ออก`. Sources are pinned to en.wiktionary revisions 86398986, 91325849 and 87721830 (CC BY-SA 4.0).
+- Exact-head CI first exposed a real engine defect: the Python text test received `None` rather than IPA for the final syllable `ออก`. The PR was not merged. A follow-up adds a source-pinned `ออก` lexical IPA override (`ʔɔːk`, long vowel, low tone), Python/browser parity fixture and typed IPA → Ukrainian assertions (`ок`); the full phrase `ตะวันออก` yields `таванок`.
+- Additional regression tests assert `ยุโรป` source IPA `/ju˦˥.roːp̚˨˩/` and the five-syllable phrase `ยุโรปตะวันออก` `/ju˦˥.roːp̚˨˩.ta˨˩.wan˧.ʔɔːk̚˨˩/`, with expected project candidates `йуроп` and `йуроптаванок`. These are source-attested dictionary readings, not independent expert/acoustic gold.
+- `docs/generated-audit.json` now records 11 source-registry rows. The exact-head CI and Web static validation for the latest commit must both pass before merge; do not mark DONE_VERIFIED while checks are pending or failing.
+- Readiness remains a partial research prototype. The missing independent adjudicated Thai segmentation/IPA set and Ukrainian target-form review remain genuine blockers.
+
+---
+
 ## Latest continuation — source-attested lexical coverage, article diagnostics and cluster-safe benchmark (2026-10-27)
 
 - Checkpoint at PR #95 merge: `e6fed3689d6cec8cb8b7effaa885a20c95885678`. Follow-up PR [#96](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/96) then merged as `2d0616cf8b1837749724caa05e858764cec583dc`, adding exact expected Ukrainian output assertions for `ยูเครน` (`йу` + `крен` → `йукрен`). Exact-head CI [40513150425](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40513150425) passed both `test` and `master-artifact`; static validation [40513191551](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40513191551) passed. Post-merge CI run [40513842348](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40513842348) has passed the test job; its master-artifact job was still queued, and Pages run [40513842696](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40513842696) was still building at this checkpoint.

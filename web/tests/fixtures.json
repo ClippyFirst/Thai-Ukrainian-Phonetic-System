@@ -334,5 +334,17 @@
       "toneIpa": null,
       "ukrainian": null
     }
+  },
+  {
+    "input": "ออก",
+    "expected": {
+      "input": "ออก",
+      "status": "analyzed",
+      "phonemicIpa": "ʔɔːk",
+      "phoneticIpa": null,
+      "tone": "low",
+      "toneIpa": "˩",
+      "ukrainian": "ок"
+    }
   }
 ]

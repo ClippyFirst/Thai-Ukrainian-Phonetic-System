@@ -30,6 +30,39 @@ class TextPipelineTests(unittest.TestCase):
         self.assertEqual([s["ukrainian_transliteration"] for s in token["syllables"]], ["йу", "крен"])
         self.assertEqual("".join(s["ukrainian_transliteration"] for s in token["syllables"]), "йукрен")
 
+    def test_source_attested_eastern_direction_uses_three_syllable_lexicon(self):
+        # en.wiktionary revision 86398986 records ตะ-วัน-ออก and
+        # /ta˨˩.wan˧.ʔɔːk̚˨˩/. Source-attested, not independent gold.
+        self.assertEqual(segment_thai_word("ตะวันออก"), (("ตะ", "วัน", "ออก"), "lexicon"))
+        token = analyze_text("ตะวันออก")[0]
+        self.assertEqual(token["segmentation_status"], "lexicon")
+        self.assertEqual([s["input"] for s in token["syllables"]], ["ตะ", "วัน", "ออก"])
+        self.assertEqual([s["phonemic_ipa"] for s in token["syllables"]], ["ta", "wan", "ʔɔːk"])
+        self.assertEqual([s["tone"]["tone"] for s in token["syllables"]], ["low", "mid", "low"])
+        self.assertEqual([s["ukrainian_transliteration"] for s in token["syllables"]], ["та", "ван", "ок"])
+        self.assertEqual("".join(s["ukrainian_transliteration"] for s in token["syllables"]), "таванок")
+
+    def test_source_attested_europe_and_eastern_europe_use_pinned_syllabification(self):
+        # en.wiktionary oldid 91325849: /ju˦˥.roːp̚˨˩/.
+        # en.wiktionary oldid 87721830: /ju˦˥.roːp̚˨˩.ta˨˩.wan˧.ʔɔːk̚˨˩/.
+        # These dictionary transcriptions are source-attested, not independent gold.
+        self.assertEqual(segment_thai_word("ยุโรป"), (("ยุ", "โรป"), "lexicon"))
+        europe = analyze_text("ยุโรป")[0]
+        self.assertEqual(europe["segmentation_status"], "lexicon")
+        self.assertEqual([s["phonemic_ipa"] for s in europe["syllables"]], ["ju", "roːp"])
+        self.assertEqual([s["tone"]["tone"] for s in europe["syllables"]], ["high", "falling"])
+        self.assertEqual([s["ukrainian_transliteration"] for s in europe["syllables"]], ["йу", "роп"])
+        self.assertEqual("".join(s["ukrainian_transliteration"] for s in europe["syllables"]), "йуроп")
+
+        phrase = "ยุโรปตะวันออก"
+        self.assertEqual(segment_thai_word(phrase), (("ยุ", "โรป", "ตะ", "วัน", "ออก"), "lexicon"))
+        result = analyze_text(phrase)[0]
+        self.assertEqual(result["segmentation_status"], "lexicon")
+        self.assertEqual([s["phonemic_ipa"] for s in result["syllables"]], ["ju", "roːp", "ta", "wan", "ʔɔːk"])
+        self.assertEqual([s["tone"]["tone"] for s in result["syllables"]], ["high", "falling", "low", "mid", "low"])
+        self.assertEqual([s["ukrainian_transliteration"] for s in result["syllables"]], ["йу", "роп", "та", "ван", "ок"])
+        self.assertEqual("".join(s["ukrainian_transliteration"] for s in result["syllables"]), "йуроптаванок")
+
     def test_unknown_text_is_not_falsely_segmented(self):
         for text in ("คำใหม่ที่ไม่อยู่ในพจนานุกรม", "กากล้าขายแล้วไหว้แสดง"):
             with self.subTest(text=text):

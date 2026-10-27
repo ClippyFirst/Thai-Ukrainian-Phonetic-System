@@ -22,7 +22,7 @@ const fixture = JSON.parse(fs.readFileSync(new URL("./fixtures.json", import.met
 if (!Array.isArray(fixture) || fixture.length < 27) throw new Error("Parity fixture set is unexpectedly small");
 
 const seen = new Set();
-const required = ["กฉ","กผ","จริง","สร้าง","เศร้า","ไซร้","ไกล","ใกล้","ไก่","เงิน","เดิน"];
+const required = ["กฉ","กผ","จริง","สร้าง","เศร้า","ไซร้","ไกล","ใกล้","ไก่","เงิน","เดิน","ออก"];
 if (required.some(input => !fixture.some(x => x.input === input))) throw new Error("required linguistic regression probes are missing");
 const pick = a => ({
   input: a.input,
@@ -59,6 +59,15 @@ const thaiTokens = textRegression.filter(x => x.kind === "thai");
 if (thaiTokens.length !== 2 || thaiTokens.some(x => x.segmentationStatus !== "lexicon")) throw new Error("Thai text segmentation regression failed");
 if (thaiTokens[0].syllables.map(x => x.input).join("|") !== "ครอบ|ครัว") throw new Error("Unexpected ครอบครัว segmentation");
 if (thaiTokens[1].syllables.map(x => x.input).join("|") !== "รถ|บัส") throw new Error("Unexpected รถบัส segmentation");
+const europe = analyzeText("ยุโรป")[0];
+if (europe.segmentationStatus !== "lexicon") throw new Error("ยุโรป should use source-attested lexical segmentation");
+if (europe.syllables.map(x => x.phonemicIpa).join("|") !== "ju|roːp") throw new Error("Unexpected ยุโรป IPA syllables");
+if (europe.syllables.map(x => x.tone).join("|") !== "high|falling") throw new Error("Unexpected ยุโรป tone sequence");
+if (europe.syllables.map(x => x.ukrainian).join("|") !== "йу|роп") throw new Error("Unexpected ยุโรป IPA-derived Ukrainian output");
+const easternEurope = analyzeText("ยุโรปตะวันออก")[0];
+if (easternEurope.segmentationStatus !== "lexicon") throw new Error("ยุโรปตะวันออก should use source-attested lexical segmentation");
+if (easternEurope.syllables.map(x => x.phonemicIpa).join("|") !== "ju|roːp|ta|wan|ʔɔːk") throw new Error("Unexpected Eastern Europe IPA syllables");
+if (easternEurope.syllables.map(x => x.ukrainian).join("|") !== "йу|роп|та|ван|ок") throw new Error("Unexpected Eastern Europe IPA-derived Ukrainian output");
 const unknown = analyzeText("ทดสอบ")[0];
 if (unknown.segmentationStatus !== "unresolved" || unknown.syllables.length !== 0 || !unknown.warnings.some(x => x.includes("IPA and Ukrainian output are withheld"))) throw new Error("Unknown continuous Thai text leaked a whole-word phonetic result without segmentation");
 if (!textRegression.some(x => x.kind === "latin" && x.input === "Bangkok")) throw new Error("Latin tokenization regression failed");

@@ -44,11 +44,42 @@ class SourceAttestedIpaRegistryTests(unittest.TestCase):
         self.assertEqual(row["status"], "SOURCE_ATTESTED")
         self.assertIn("not independently adjudicated gold", row["claim_scope"])
 
+    def test_eastern_direction_lexical_source_is_pinned_and_not_gold(self):
+        path = ROOT / "data" / "thai" / "text_lexicon_sources.csv"
+        with path.open("r", encoding="utf-8-sig", newline="") as stream:
+            rows = {row["word"]: row for row in csv.DictReader(stream)}
+        row = rows["ตะวันออก"]
+        self.assertEqual(row["syllables"], "ตะ|วัน|ออก")
+        self.assertEqual(row["source_id"], "SRC-WIKTIONARY-EN-TH-ตะวันออก")
+        self.assertEqual(row["source_url"], "https://en.wiktionary.org/w/index.php?title=ตะวันออก&oldid=86398986")
+        self.assertEqual(row["source_revision"], "86398986")
+        self.assertEqual(row["license"], "CC-BY-SA-4.0")
+        self.assertEqual(row["status"], "SOURCE_ATTESTED")
+        self.assertIn("not independently adjudicated gold", row["claim_scope"])
+
+    def test_europe_lexical_sources_are_pinned_and_not_gold(self):
+        path = ROOT / "data" / "thai" / "text_lexicon_sources.csv"
+        with path.open("r", encoding="utf-8-sig", newline="") as stream:
+            rows = {row["word"]: row for row in csv.DictReader(stream)}
+        expected = {
+            "ยุโรป": ("ยุ|โรป", "91325849", "https://en.wiktionary.org/w/index.php?title=ยุโรป&oldid=91325849"),
+            "ยุโรปตะวันออก": ("ยุ|โรป|ตะ|วัน|ออก", "87721830", "https://en.wiktionary.org/w/index.php?title=ยุโรปตะวันออก&oldid=87721830"),
+        }
+        for word, (syllables, revision, url) in expected.items():
+            with self.subTest(word=word):
+                row = rows[word]
+                self.assertEqual(row["syllables"], syllables)
+                self.assertEqual(row["source_revision"], revision)
+                self.assertEqual(row["source_url"], url)
+                self.assertEqual(row["license"], "CC-BY-SA-4.0")
+                self.assertEqual(row["status"], "SOURCE_ATTESTED")
+                self.assertIn("not independent expert/acoustic gold", row["claim_scope"])
+
     def test_lexical_ipa_override_is_pinned_and_kept_separate_from_source_gold(self):
         path = ROOT / "data" / "thai" / "lexical_ipa_overrides.tsv"
         with path.open("r", encoding="utf-8-sig", newline="") as stream:
             overrides = list(csv.DictReader(stream, delimiter="\t"))
-        self.assertEqual([row["word"] for row in overrides], ["เงิน", "เดิน"])
+        self.assertEqual([row["word"] for row in overrides], ["เงิน", "เดิน", "ออก"])
         row = overrides[0]
         self.assertEqual(row["segmental_ipa"], "ŋɤn")
         self.assertEqual(row["tone_category"], "mid")
@@ -63,6 +94,15 @@ class SourceAttestedIpaRegistryTests(unittest.TestCase):
         self.assertEqual(walk["source_revision"], "1908803")
         self.assertEqual(walk["license"], "CC-BY-SA-4.0")
         self.assertEqual(walk["status"], "ACTIVE_SOURCE_ATTESTED_NOT_GOLD")
+        final_coda = overrides[2]
+        self.assertEqual(final_coda["segmental_ipa"], "ʔɔːk")
+        self.assertEqual(final_coda["tone_category"], "low")
+        self.assertEqual(final_coda["tone_contour_ipa"], "˩")
+        self.assertEqual(final_coda["vowel_length"], "long")
+        self.assertEqual(final_coda["source_revision"], "86398986")
+        self.assertEqual(final_coda["source_url"], "https://en.wiktionary.org/w/index.php?title=ตะวันออก&oldid=86398986")
+        self.assertEqual(final_coda["license"], "CC-BY-SA-4.0")
+        self.assertEqual(final_coda["status"], "ACTIVE_SOURCE_ATTESTED_NOT_GOLD")
 
 
     def test_money_override_and_lexicon_source_registry_share_exact_revision(self):

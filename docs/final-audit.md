@@ -1,3 +1,11 @@
+## 2026-10-27 source-attested lexical coverage continuation
+
+- Added the source-attested three-syllable entry `ตะวันออก` → `ตะ|วัน|ออก`, pinned to en.wiktionary revision 86398986, which records standard IPA `/ta˨˩.wan˧.ʔɔːk̚˨˩/`. The implementation uses the existing Thai structural/phonological parser and IPA → Ukrainian adapter; it does not import external G2P output.
+- Added Python/browser regressions for segmentation, IPA segments, tones and exact downstream candidate `таванок`; the source is recorded as CC BY-SA 4.0 and explicitly not independent expert/acoustic gold.
+- This is a narrow lexical coverage improvement, not a general accuracy claim. The dedicated branch's latest CI and web static validation must pass before this entry is marked `DONE_VERIFIED`; independent Thai word-boundary/IPA adjudication and Ukrainian target-form review remain open.
+
+---
+
 ## 2026-10-08 transliteration hardening
 
 A second adversarial pass found a material false-cluster hazard that was not covered by the earlier generic cluster safeguards. Established Thai sequences **จร, สร, ศร, ซร** can contain a written ร that is not pronounced; lexical **ทร** is similarly reading-dependent. The parser now routes these constructions through the machine-readable special-orthography registry and returns **analysis-dependent:special-orthography** rather than fabricating an /r/ onset.
