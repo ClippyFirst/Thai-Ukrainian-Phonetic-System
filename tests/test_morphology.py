@@ -1,6 +1,7 @@
 import unittest
 
 from thai_ukrainian.morphology import analyze_morphology
+from thai_ukrainian.text import analyze_text_morphology
 
 
 class ConservativeMorphologyTests(unittest.TestCase):
@@ -40,6 +41,14 @@ class ConservativeMorphologyTests(unittest.TestCase):
         ])
         self.assertEqual([c["token_index"] for c in result["candidates"]], [0])
         self.assertEqual(result["input_token_count"], 2)
+
+    def test_opt_in_text_api_preserves_input_and_keeps_segmentation_metadata(self):
+        text = "ฉันจะไปไหมครับ"
+        result = analyze_text_morphology(text)
+        self.assertEqual("".join(token["input"] for token in result["tokens"]), text)
+        self.assertEqual(result["morphology"]["status"], "research-only")
+        self.assertIn("word_segmentation_complete", result)
+        self.assertEqual(result["input"], text)
 
     def test_annotations_do_not_claim_full_morphology_or_scores(self):
         result = analyze_morphology(["การ", "เรียน"])
