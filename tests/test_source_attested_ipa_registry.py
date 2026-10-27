@@ -31,6 +31,19 @@ class SourceAttestedIpaRegistryTests(unittest.TestCase):
         self.assertIn("/dɤːn˧/", rows["เดิน"]["phonemic_ipa"])
         self.assertIn("long /ɤː/", rows["เดิน"]["vowel_length_note"])
 
+    def test_ukraine_lexical_segmentation_source_is_pinned_and_not_gold(self):
+        path = ROOT / "data" / "thai" / "text_lexicon_sources.csv"
+        with path.open("r", encoding="utf-8-sig", newline="") as stream:
+            rows = {row["word"]: row for row in csv.DictReader(stream)}
+        row = rows["ยูเครน"]
+        self.assertEqual(row["syllables"], "ยู|เครน")
+        self.assertEqual(row["source_id"], "SRC-WIKTIONARY-EN-TH-ยูเครน")
+        self.assertEqual(row["source_url"], "https://en.wiktionary.org/w/index.php?title=ยูเครน&oldid=88025965")
+        self.assertEqual(row["source_revision"], "88025965")
+        self.assertEqual(row["license"], "CC-BY-SA-4.0")
+        self.assertEqual(row["status"], "SOURCE_ATTESTED")
+        self.assertIn("not independently adjudicated gold", row["claim_scope"])
+
     def test_lexical_ipa_override_is_pinned_and_kept_separate_from_source_gold(self):
         path = ROOT / "data" / "thai" / "lexical_ipa_overrides.tsv"
         with path.open("r", encoding="utf-8-sig", newline="") as stream:
