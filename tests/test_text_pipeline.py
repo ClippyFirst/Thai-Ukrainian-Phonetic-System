@@ -30,6 +30,18 @@ class TextPipelineTests(unittest.TestCase):
         self.assertEqual([s["ukrainian_transliteration"] for s in token["syllables"]], ["йу", "крен"])
         self.assertEqual("".join(s["ukrainian_transliteration"] for s in token["syllables"]), "йукрен")
 
+    def test_source_attested_eastern_direction_uses_three_syllable_lexicon(self):
+        # en.wiktionary revision 86398986 records ตะ-วัน-ออก and
+        # /ta˨˩.wan˧.ʔɔːk̚˨˩/. Source-attested, not independent gold.
+        self.assertEqual(segment_thai_word("ตะวันออก"), (("ตะ", "วัน", "ออก"), "lexicon"))
+        token = analyze_text("ตะวันออก")[0]
+        self.assertEqual(token["segmentation_status"], "lexicon")
+        self.assertEqual([s["input"] for s in token["syllables"]], ["ตะ", "วัน", "ออก"])
+        self.assertEqual([s["phonemic_ipa"] for s in token["syllables"]], ["ta", "wan", "ʔɔːk"])
+        self.assertEqual([s["tone"]["tone"] for s in token["syllables"]], ["low", "mid", "low"])
+        self.assertEqual([s["ukrainian_transliteration"] for s in token["syllables"]], ["та", "ван", "ок"])
+        self.assertEqual("".join(s["ukrainian_transliteration"] for s in token["syllables"]), "таванок")
+
     def test_unknown_text_is_not_falsely_segmented(self):
         for text in ("คำใหม่ที่ไม่อยู่ในพจนานุกรม", "กากล้าขายแล้วไหว้แสดง"):
             with self.subTest(text=text):
