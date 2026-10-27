@@ -37,7 +37,10 @@ const clear = element("clear");
 input.value = "พริก";
 analyze.click();
 assert.equal(output.hidden, false);
-assert.match(output.innerHTML, /Результати аналізу/);
+assert.match(output.innerHTML, /Цілісний результат/);
+assert.match(output.innerHTML, /Український фонетичний кандидат/);
+assert.match(output.innerHTML, /IPA — проміжне представлення/);
+assert.match(output.innerHTML, /<details class="analysis-details">/);
 assert.match(output.innerHTML, /ФОНОЛОГІЧНА IPA/);
 assert.match(output.innerHTML, /aria-labelledby=/);
 assert.equal(status.className, "status");
@@ -128,6 +131,21 @@ assert.match(output.innerHTML, /<div class="thai">,<\/div>/);
 assert.match(output.innerHTML, /<div class="thai">!<\/div>/);
 assert.equal((output.innerHTML.match(/class="label">ФОНОЛОГІЧНА IPA<\/span>/g) || []).length, 3);
 
+// Continuous output joins known syllables into words, separates adjacent
+// lexical segments, preserves source punctuation/whitespace, and marks unknowns.
+input.value = "กาไฟ มา!";
+analyze.click();
+assert.match(output.innerHTML, /กา/);
+assert.match(output.innerHTML, /กาไฟ มา!/);
+assert.match(output.innerHTML, /Копіювати/);
+assert.match(output.innerHTML, /analysis-details/);
+assert.match(output.innerHTML, /⟦НЕВИЗНАЧЕНО:/) === false;
+
+input.value = "ทดสอบกาไฟ";
+analyze.click();
+assert.match(output.innerHTML, /⟦НЕВИЗНАЧЕНО: ทดสอบ⟧ กา ไฟ/);
+assert.match(output.innerHTML, /UNRESOLVED/);
+
 input.value = "กาไฟ มา!";
 analyze.click();
 assert.match(output.innerHTML, /Результат 1: กา/);
@@ -151,9 +169,9 @@ const homeHtml = await readFile(new URL("../index.html", import.meta.url), "utf8
 const systemHtml = await readFile(new URL("../system.html", import.meta.url), "utf8");
 const styles = await readFile(new URL("../src/styles.css", import.meta.url), "utf8");
 assert.match(homeHtml, /БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ/);
-assert.match(homeHtml, /Вводьте цілий тайський текст/);
+assert.match(homeHtml, /Вставте цілий текст або статтю/);
 assert.match(homeHtml, /<label class="input-label" for="thai-input">Тайський текст<\/label>/);
-assert.match(homeHtml, /пробіли між словами не обов’язкові/);
+assert.match(homeHtml, /один суцільний український кандидат/);
 for (const example of examples) assert.ok(homeHtml.includes(`data-example="${example.dataset.example}"`), `homepage must expose ${example.dataset.example}`);
 assert.match(homeHtml, /system\.html#beta-evidence/);
 assert.match(systemHtml, /id="beta-evidence"/);
