@@ -92,6 +92,17 @@ assert.match(output.innerHTML, /continuous-output-value[^>]*>йукрен<\/pre>
 assert.equal((output.innerHTML.match(/class="label">ФОНОЛОГІЧНА IPA<\/span>/g) || []).length, 2);
 assert.equal(status.className, "status");
 
+// Source-attested three-syllable direction name; each IPA syllable must
+// flow through the same adapter into the continuous Ukrainian candidate.
+input.value = "ตะวันออก";
+analyze.click();
+assert.match(output.innerHTML, /Результат 1: ตะวันออก/);
+assert.match(output.innerHTML, /ta/);
+assert.match(output.innerHTML, /wan/);
+assert.match(output.innerHTML, /ʔɔːk/);
+assert.match(output.innerHTML, /continuous-output-value[^>]*>таванок<\/pre>/);
+assert.equal((output.innerHTML.match(/class="label">ФОНОЛОГІЧНА IPA<\/span>/g) || []).length, 3);
+
 // A longer CC0 dictionary word must win over a supported substring.
 // กาแฟ contains กา, but the engine must not claim IPA for only that substring.
 input.value = "กาแฟ";
