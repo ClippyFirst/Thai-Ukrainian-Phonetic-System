@@ -76,8 +76,8 @@ grapheme,role,syllable_position,class,phonemic_ipa,surface_ipa,coda_allowed,ukra
 ษ,coda,syllable-final,high,t,t̚,true,т,т,,registry
 ส,onset,syllable-initial,high,s,s,true,с,с,,registry
 ส,coda,syllable-final,high,t,t̚,true,т,т,,registry
-ห,onset,syllable-initial,high,h,h,false,х,х,,registry
+ห,onset,syllable-initial,high,h,h,false,г,г,,registry
 ฬ,onset,syllable-initial,low,l,l,true,л,л,,registry
 ฬ,coda,syllable-final,low,n,n,true,н,н,,registry
 อ,onset,syllable-initial,mid,ʔ,ʔ,false,,,carrier; not a final consonant in the core inventory,registry
-ฮ,onset,syllable-initial,low,h,h,false,х,х,,registry
+ฮ,onset,syllable-initial,low,h,h,false,г,г,,registry
