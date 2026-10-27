@@ -1,7 +1,7 @@
 # Validation matrix
 
 | Component | State | Validation |
-| Pasted Wikipedia/Markdown/HTML input cleanup | PARTIAL — merged to main as `ebaa7ec2c27698005dadf33f464cf37ae433e7a4`; post-merge Pages gate caught nested IPA link debris in the contract test | Pre-merge CI passed, but post-merge Pages run [40505659010](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40505659010) failed at `web/tests/article-cleanup.test.mjs`: nested `[[IPA]](URL \"title\")` lost the brackets but left the URL title. Fix is on branch `fix/article-cleanup-nested-wikilink-20261027`; focused regression now asserts the IPA label survives and no `Help:IPA/Ukrainian` title leaks into cleaned text. Acceptance: exact-head CI passes, PR merges, Pages deploy plus live contract passes.
+| Pasted Wikipedia/Markdown/HTML input cleanup | PARTIAL — cleanup fix merged in `463e81b5ec5b90dedb84eaeb2ec5f27330be3ec2`; deployment succeeded but the live contract gate failed on a stale marker location | Post-merge Pages run [40508000707](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40508000707) deployed the site, but its contract looked for `softSyllabify` in `/src/app.js`; the function actually lives in `/src/engine.js`. The IPA-link cleanup regression itself is fixed and branch-tested. PR [#93](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/93) corrects the live checker to fetch/check `engine.js`; acceptance is the next post-merge Pages run passing the served-page contract.
 |---|---|---|
 | 44 consonant graphemes | implemented | inventory tests |
 | 5 lexical tone categories | implemented | tone engine |
@@ -18,7 +18,7 @@
 | corpus validation | infrastructure implemented | external licensed JSONL; no CI gold corpus claimed |
 | malformed syllable surface rejection | implemented | repeated tone/vowel signs, concatenated material and unsupported-symbol probes |
 | calibrated probability | not claimed | calibration dataset still required |
-| strict/soft browser modes | PARTIAL — code merged and CI-verified; live Pages contract unresolved | PR #87 merged as `3074bb7`; exact-head CI [40485018684](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40485018684), post-merge CI [40485685242](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40485685242), and static validation passed. Pages deploy [40485685042](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40485685042) reported deploy success but failed the live contract after 12 attempts; diagnostic follow-up PR #88 merged, rerun queued. Do not mark DONE_VERIFIED until live selector/app markers pass. |
+| strict/soft browser modes | PARTIAL — code and UI tests pass; deployed-page gate is being corrected | PR #87 implementation and PR #88 diagnostics remain merged. Pages run [40508000707](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40508000707) deployed successfully but failed because the contract searched for `softSyllabify` in `app.js` rather than `engine.js`. PR #93 fixes the checker; do not mark live deployment DONE_VERIFIED until the corrected check passes.
 
 
 | tone-bearing class in consonant clusters | implemented for declared cluster rule | separate `tone_class` field + adversarial cluster fixture |
