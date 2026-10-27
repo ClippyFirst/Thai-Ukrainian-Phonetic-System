@@ -1,3 +1,14 @@
+## 2026-10-27 — super-soft full-coverage fallback
+
+- Added an opt-in **Суперм’який** browser mode for whole-text transcription. For unresolved Thai orthographic fragments it produces a provisional segmental IPA candidate, then obtains the Ukrainian candidate exclusively through the existing IPA → Ukrainian adapter.
+- This mode is designed to avoid unresolved placeholders in the continuous Ukrainian/IPA output for Thai fragments. It preserves non-Thai spans, punctuation, whitespace, and numbers. It does not promise correct word segmentation, lexical reading, tone, or sound quality.
+- Existing strict and soft modes remain distinct. Research-only morphology and open PRs #101/#104 are untouched.
+- Acceptance gate: exact-head GitHub CI + Web static validation must pass; UI and parity regressions must verify full coverage on article-like inputs and prove each provisional Ukrainian form equals the adapter result for its IPA. No independent linguistic-accuracy claim is made.
+
+| Component | State | Validation |
+|---|---|---|
+| Super-soft whole-text coverage | PARTIAL — implementation and regression assertions added on feat/supersoft-full-coverage-20261027; exact-head CI pending | Covers Thai fragments with provisional IPA → Ukrainian fallback; retains non-Thai material. Acceptance: exact-head CI/static checks pass and output contains no unresolved markers for Thai fragments. This validates output coverage, not pronunciation accuracy. |
+
 ## 2026-10-27 — direct IPA input and notation normalization
 
 - Added a separate website IPA → Ukrainian panel for externally sourced Thai IPA. It calls the same `adaptIpaToUkrainian` adapter used by the Thai→IPA pipeline; no direct Thai-grapheme-to-Ukrainian path was added.
