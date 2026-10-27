@@ -75,7 +75,6 @@ function preprocessArticleText(input) {
     .replace(/<ref\b[^>]*>[\s\S]*?<\/ref\s*>/gi, " ")
     .replace(/<ref\b[^>]*\/>/gi, " ")
     .replace(/<[^>]*>/g, " ")
-    .replace(/\[\[(?:[^\]]+)\]\]\s*\([^)]*\)/g, " ")
     .replace(/\[\[([^\]|]+)\|([^\]]+)\]\]/g, "$2")
     .replace(/\[\[([^\]]+)\]\]/g, "$1");
   text = replaceMarkdownLinks(text);
