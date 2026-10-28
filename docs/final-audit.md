@@ -765,3 +765,12 @@ The first run with the new coverage tests completed master-table generation and 
 - Exact code/test commit `82d7fd5d6469b3d2c2fcad98158bf98dcb452135`: full CI passed, including Python unit tests, RTGS tests/parity, IPA→Ukrainian tests, browser parity, UI contract tests and the 351,780-row master-artifact gate: [CI run 40723829479](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40723829479).
 - Web static validation passed: [run 40723829245](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40723829245).
 - **Still pending:** PR #125 merge and post-merge GitHub Pages live-content verification. Do not describe the status-label change as published until that gate passes.
+
+
+## 2026-10-28 — final interaction and result hierarchy polish
+
+- Branch: `ux/final-interaction-and-result-polish-20261028`, based on `main` at `3b70e3e78ae83f72a345c077464cb3b2d825e48f`.
+- Implemented: RTGS output is now a collapsed secondary disclosure by default; the primary Ukrainian candidate and IPA remain visible. The selected engine mode dynamically explains its consequence and uncertainty in Ukrainian. Copy and clear controls use a consistent 44px minimum target; small eyebrow labels are increased; CSS/JS cache keys are refreshed.
+- Added UI regression assertions for RTGS disclosure and mode-specific guidance, and added published-content checks for the new markers.
+- Status: PARTIAL until exact-head CI, static validation, and post-merge Pages published-content verification pass.
+- Evidence limits: no browser screenshot or real-device session was available through the connector-only workflow; do not claim manual visual QA or WCAG 2.2 AA certification. Independent expert-adjudicated Thai IPA, word-boundary, and Ukrainian target-form gold remain unavailable.
