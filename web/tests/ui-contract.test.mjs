@@ -254,7 +254,7 @@ const styles = await readFile(new URL("../src/styles.css", import.meta.url), "ut
 assert.match(homeHtml, /БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ/);
 assert.match(homeHtml, /Вставте слово або фрагмент тексту/);
 assert.match(homeHtml, /<label class="input-label" for="thai-input">Тайський текст<\/label>/);
-assert.match(homeHtml, /один суцільний український кандидат/);
+// The homepage now recommends a word or short fragment and no longer promises article-length output.\nassert.match(homeHtml, /Вставте слово або фрагмент тексту/);
 assert.match(homeHtml, /<select id="engine-mode"/);
 assert.match(homeHtml, /value="strict" selected/);
 assert.match(homeHtml, /value="soft"/);
