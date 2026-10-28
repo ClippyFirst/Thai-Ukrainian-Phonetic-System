@@ -14,7 +14,7 @@ ISO 11940 is not a substitute: it is a reversible orthographic transliteration s
 
 ## Implementation and provenance
 
-- Upstream: PyThaiNLP `v5.4.0`, `pythainlp/transliterate/royin.py`, release published 2026-10-09; pinned in CI as `pythainlp==5.4.0`.
+- Upstream: PyThaiNLP `v5.4.0`, `pythainlp/transliterate/royin.py`, release published 2026-10-09; immutable release commit `7f26adf5ce09c3d77c39ca2ef86f7138e9071088`; pinned in CI as `pythainlp==5.4.0`.
 - Reference source: https://github.com/PyThaiNLP/pythainlp/blob/v5.4.0/pythainlp/transliterate/royin.py
 - API documentation: https://pythainlp.org/docs/5.4.0/api/transliterate.html
 - License: Apache-2.0; attribution and license text are included in `THIRD_PARTY_NOTICES.md` and `licenses/Apache-2.0-PyThaiNLP.txt`.
