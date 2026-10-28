@@ -72,5 +72,49 @@ class SpecialOrthographyEvidenceTests(unittest.TestCase):
         self.assertIn("printed p. 275", sources[source_id]["notes"])
 
 
+    def test_ambiguous_orthography_fails_closed_for_unlisted_forms(self):
+        from thai_ukrainian.parser import parse_syllable
+
+        # These are ambiguity sentinels, not proposed pronunciations. Each
+        # family has source-backed lexical exceptions, but the spelling alone
+        # is insufficient to choose one reading for these generic probes.
+        cases = {
+            "ทราย": "ทร lexical reading is sense/context dependent",
+            "จร": "written ร may be silent in established lexical forms",
+            "สร": "written ร may be silent in established lexical forms",
+            "ศร": "written ร may be silent in established lexical forms",
+            "ซร": "written ร may be silent in established lexical forms",
+            "กรรม": "lexicalized reading must come from an exact known entry",
+            "ฤ": "special vowel letter requires word-level evidence",
+            "ฤๅ": "special vowel letter requires word-level evidence",
+            "ฦ": "rare special vowel letter requires word-level evidence",
+            "ฦๅ": "rare special vowel letter requires word-level evidence",
+            "ก์": "thanthakhat scope cannot be guessed from the mark alone",
+        }
+        for text, reason in cases.items():
+            with self.subTest(text=text):
+                result = parse_syllable(text)
+                # กรรม is deliberately a known exact lexical exception in the
+                # core parser, so it is excluded from the unresolved probes.
+                if text == "กรรม":
+                    self.assertEqual(result.status, "analyzed")
+                    self.assertIsNotNone(result.phonemic_ipa)
+                    continue
+                self.assertEqual(result.status, "analysis-dependent:special-orthography", (text, result.status, result.warnings))
+                self.assertIsNone(result.phonemic_ipa, (text, reason, result.phonemic_ipa))
+                self.assertIsNone(result.phonetic_ipa, (text, reason, result.phonetic_ipa))
+
+    def test_exact_lexical_thor_reading_does_not_become_a_productive_rule(self):
+        from thai_ukrainian.parser import parse_syllable
+
+        known = parse_syllable("ทราบ")
+        ambiguous = parse_syllable("ทราย")
+        self.assertEqual(known.status, "analyzed")
+        self.assertEqual(known.normalized, "ซาบ")
+        self.assertIsNotNone(known.phonemic_ipa)
+        self.assertEqual(ambiguous.status, "analysis-dependent:special-orthography")
+        self.assertIsNone(ambiguous.phonemic_ipa)
+
+
 if __name__ == "__main__":
     unittest.main()
