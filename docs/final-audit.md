@@ -782,3 +782,12 @@ The first run with the new coverage tests completed master-table generation and 
 - **DONE_VERIFIED:** UI contract, Python/browser/IPA regression suite and generated master-artifact gate passed at PR head `2978a4cd1d93f6c71aaff1b22e1b6b6e7fe5a136` in [CI 40729153978](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40729153978). Static validation passed in [40729160689](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40729160689).
 - **DONE_VERIFIED — published:** merged commit `743a412cd9343cbbbe4ccf3428f0a3c736d8cf58`; GitHub Pages deployment and live contract passed in [40729942455](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40729942455). Public URL: https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/
 - **PARTIAL / evidence-limited:** no real-browser screenshots or physical-device sessions were available in this connector-only execution; no WCAG 2.2 AA conformance claim. Independent Thai IPA, word-boundary and Ukrainian target-form gold remain unavailable. Project remains a research prototype, not release-ready for accuracy claims.
+
+
+## 2026-10-28 — user-directed result order supersedes collapsed RTGS
+
+- User requirement: the three result types must be visible immediately on screen, ordered **RTGS romanization → IPA → Ukrainian candidate**. RTGS must not be a hidden disclosure/tab.
+- Implementation on `ux/show-romanization-ipa-ukrainian-in-order-20261028`: three separate continuous panels, explicit numbered headings, concise RTGS limits (including aspirated `ph/th/kh` notation), shortened first-use copy, refreshed cache keys, and UI/Pages regression checks for order and visibility.
+- Architectural distinction retained: the displayed order is not the computation order. The source pipeline remains Thai structural/phonological analysis → IPA → Ukrainian adaptation; RTGS is a separate reference romanization and never the input to Ukrainian adaptation.
+- **PARTIAL pending verification:** exact-head full CI, static validation, merge, and post-merge GitHub Pages content gate. No claim of publication until those checks pass.
+- **Evidence-limited:** connector-only work does not provide a real-browser screenshot/device session; do not claim manual visual QA or WCAG 2.2 AA. Independent expert-adjudicated Thai IPA, word-boundary and Ukrainian target-form gold remain unavailable.
