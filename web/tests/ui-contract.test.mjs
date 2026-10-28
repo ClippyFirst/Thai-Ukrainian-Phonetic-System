@@ -52,7 +52,8 @@ assert.match(status.textContent, /Проаналізовано 1 токен/);
 
 input.value = "ทดสอบ";
 analyze.click();
-assert.doesNotMatch(output.innerHTML, /RTGS НЕ ПЕРЕВІРЕНО/);\nassert.match(output.innerHTML, /PyThaiNLP 5\.4\.0|RTGS/);
+assert.doesNotMatch(output.innerHTML, /RTGS НЕ ПЕРЕВІРЕНО/);
+assert.match(output.innerHTML, /PyThaiNLP 5\.4\.0|RTGS/);
 assert.equal(status.className, "status notice");
 assert.match(status.textContent, /потребують перевірки або залишилися невизначеними/);
 assert.doesNotMatch(output.innerHTML, /ФОНОЛОГІЧНА IPA/);
@@ -174,9 +175,11 @@ assert.match(output.innerHTML, /analysis-details/);
 assert.doesNotMatch(output.innerHTML, /⟦НЕВИЗНАЧЕНО:/);
 
 // Leading/trailing whitespace and internal spacing survive whole-text assembly.
-input.value = "  กา  ไฟ!\n";
+input.value = "  กา  ไฟ!
+";
 analyze.click();
-assert.match(output.innerHTML, /<pre class="continuous-output-value">  ка  фай!\n<\/pre>/);
+assert.match(output.innerHTML, /<pre class="continuous-output-value">  ка  фай!
+<\/pre>/);
 
 // The continuous IPA intermediate includes tone, not only segmental phonemes.
 input.value = "กา";
