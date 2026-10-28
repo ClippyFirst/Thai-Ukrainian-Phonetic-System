@@ -65,7 +65,7 @@ This verifies implementation parity for declared inputs and repository regressio
 6. [x] Latest-head `master-artifact` job completes successfully (CI [40691939835](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40691939835)).
 7. [x] Confirm deployed website behavior through the post-deploy contract in [40692707861](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40692707861) and [40694421367](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40694421367).
 8. [ ] Complete manual browser visual review across viewport sizes/devices; automated served-content checks are not visual QA.
-8. [ ] Decide whether to bundle a Thai word tokenizer/dictionary only after separate browser compatibility, provenance and license review.
+9. [ ] Decide whether to bundle a Thai word tokenizer/dictionary only after separate browser compatibility, provenance and license review.
 
 ## Remaining independent research gaps
 
