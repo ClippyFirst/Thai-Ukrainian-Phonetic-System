@@ -1426,5 +1426,5 @@ This note supersedes the preceding documentation-only status. The branch now cha
 
 - Working branch: `ux/final-interaction-and-result-polish-20261028`, based on `main` `3b70e3e78ae83f72a345c077464cb3b2d825e48f`.
 - Changes: dynamic, mode-specific uncertainty guidance; collapsed secondary RTGS output while preserving visible Ukrainian/IPA outputs; 44px copy/clear target minimum; larger eyebrow labels; cache-busting for CSS/JS; UI and live Pages contract assertions.
-- Code, tests, workflow, and audit/matrix updates are staged as branch commits. Next: verify exact branch head, run CI/static validation, open PR, merge only with passing checks, and verify GitHub Pages published-content gate.
+- PR [#126](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/126) is open at the current branch head. Web static validation passed at `e9d04ea07589a8ec5f8f214b5c9f39910055c741`; full CI is still running. Merge only after exact-head CI passes, then verify GitHub Pages published-content gate and replace this pending status with the merge/deployment evidence.
 - Do not claim real-browser visual QA or WCAG 2.2 AA; this connector-only session cannot capture/inspect browser screenshots. Independent IPA/word-boundary/Ukrainian gold remains an evidence-limited linguistic blocker.
