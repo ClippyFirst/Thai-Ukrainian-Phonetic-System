@@ -47,7 +47,7 @@ const VOWEL_SOURCE = String.raw`เ*ียว,$1iao
 เ*ิ,$1oe
 *อ,$1o
 เ*าะ,$1o
-เ*็,$1e
+*็,$1e
 โ*ะ,$1o
 โ*,$1o
 แ*ะ,$1ae
