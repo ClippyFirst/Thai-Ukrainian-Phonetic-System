@@ -676,3 +676,9 @@ The Python and browser IPA adapters now map Thai /h/ to Ukrainian «г», and re
 - **DONE_VERIFIED criteria:** UI contract tests cover known, soft, and super-soft status labels; Pages deployment verifies the same labels in the served browser bundle; exact-head CI/static validation pass.
 - **Preserved:** strict mode remains default; uncertainty is not hidden; IPA stays the intermediate source for Ukrainian adaptation; RTGS stays a separate reference; no pronunciation behavior changed.
 - **Remaining evidence-limited work:** real-browser responsive screenshots/manual keyboard and screen-reader checks; WCAG 2.2 AA validation; independent linguistic gold corpus.
+
+### Verification update — 2026-10-28
+
+- **DONE_VERIFIED — code and automated acceptance at `82d7fd5d6469b3d2c2fcad98158bf98dcb452135`:** full CI passed [40723829479](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40723829479), including the UI contract and 351,780-row master-artifact gate; static validation passed [40723829245](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40723829245).
+- **PARTIAL — publication:** PR #125 is open; the live Pages contract must pass after merge.
+- **BLOCKED/evidence-limited:** manual real-browser/mobile/screen-reader review and independent linguistic gold corpus are not available in this no-Work session.
