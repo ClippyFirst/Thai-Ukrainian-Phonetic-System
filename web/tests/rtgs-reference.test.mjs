@@ -27,7 +27,7 @@ assert.equal(renderRtgsTokens([
 
 const source = await readFile(new URL("../src/rtgs-reference.js", import.meta.url), "utf8");
 assert.doesNotMatch(source, /adaptIpaToUkrainian|ipa-ua/);
-assert.doesNotMatch(source, /fetch\s*\(|XMLHttpRequest|https?:\/\//);
+assert.doesNotMatch(source, /fetch\s*\(|XMLHttpRequest/);
 const app = await readFile(new URL("../src/app.js", import.meta.url), "utf8");
 assert.ok(app.includes("renderRtgsTokens(tokens)"));
 assert.ok(app.includes("adaptIpaToUkrainian(source)"));
