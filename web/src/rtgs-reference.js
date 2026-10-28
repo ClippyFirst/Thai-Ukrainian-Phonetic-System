@@ -5,6 +5,13 @@
 // https://github.com/PyThaiNLP/pythainlp/blob/v5.4.0/pythainlp/transliterate/royin.py
 
 const C = "กขฃคฅฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮ";
+// Reviewed lexical RTGS corrections, kept separate from the upstream parity port.
+const RTGS_LEXICAL_OVERRIDES = new Map([
+  ["จริง", "ching"], ["สามารถ", "samat"], ["สวัสดี", "sawatdi"],
+  ["พัฒนา", "phatthana"], ["ฤทธิ์", "rit"], ["ฤๅ", "rue"],
+  ["รถไฟ", "rotfai"], ["ผลไม้", "phonlamai"], ["ยูเครน", "yukhren"],
+  ["ทราบ", "sap"], ["ทรัพย์", "sap"], ["แทรก", "saek"], ["อักษร", "akson"]
+]);
 const VOWELS = new Set(["a", "e", "i", "o", "u"]);
 const CONSONANTS = {
   ก:["k","k"],ข:["kh","k"],ฃ:["kh","k"],ค:["kh","k"],ฅ:["kh","k"],ฆ:["kh","k"],ง:["ng","ng"],
@@ -33,6 +40,7 @@ const VOWEL_SOURCE = String.raw`เ*ียว,$1iao
 ไ*ย,$1ai
 *ัย,$1ai
 ไ**,$1$2ai
+ใ**,$1$2ai
 ไ*,$1ai
 ใ*,$1ai
 *ว*,$1ua$2
@@ -125,6 +133,11 @@ export function romanizeRtgsWord(input) {
   if (!original || [...original].some(ch => /[^\u0E00-\u0E7F]/u.test(ch)))
     return { status:"unavailable", value:null, source:null };
   if (original === "ห") return { status:"transliterated", value:"", source:"PyThaiNLP 5.4.0 royin port + ClippyFirst orthographic correction" };
+  if (RTGS_LEXICAL_OVERRIDES.has(original)) {
+    return { status:"transliterated", value:RTGS_LEXICAL_OVERRIDES.get(original), source:"PyThaiNLP 5.4.0 royin port + ClippyFirst orthographic correction" };
+  }
+  // ทร is lexically variable; do not confidently romanize an unreviewed token by the generic consonant table.
+  if (original.includes("ทร")) return { status:"unavailable", value:null, source:null };
   const normalized = normalize(original);
   // A leading vowel is written before ห, but in ห นำ clusters it belongs to the following sonorant.
   // Reorder only this orthographic pattern before vowel matching so ใหม่/ไหม become mai, not aim.
@@ -134,7 +147,9 @@ export function romanizeRtgsWord(input) {
   if ([...word].length === 2 && consonants.length === 2) {
     const chars = [...word]; chars.splice(1, 0, "o"); word = chars.join("");
   }
-  return { status:"transliterated", value:replaceConsonants(word, consonants), source:"PyThaiNLP 5.4.0 royin port + ClippyFirst orthographic correction" };
+  const value = replaceConsonants(word, consonants);
+  if (/[^\\x00-\\x7F]/u.test(value)) return { status:"unavailable", value:null, source:null };
+  return { status:"transliterated", value, source:"PyThaiNLP 5.4.0 royin port + ClippyFirst orthographic correction" };
 }
 function shouldAddSeparator(prevWord, word, prevRomanized) {
   if (!prevRomanized || [...word].length < 2) return false;
