@@ -103,7 +103,7 @@ analyze.click();
 assert.match(output.innerHTML, /Результат 1: ยูเครน/);
 assert.match(output.innerHTML, /juː/);
 assert.match(output.innerHTML, /kʰreːn/);
-assert.match(output.innerHTML, /continuous-output-value[^>]*>йук(?:'|&#39;)рен<\/pre>/);
+assert.match(output.innerHTML, /class="continuous-output ua-continuous"[\s\S]*?<pre class="continuous-output-value">йук(?:'|&#39;)рен<\/pre>/);
 assert.equal((output.innerHTML.match(/class="label">ФОНОЛОГІЧНА IPA<\/span>/g) || []).length, 2);
 assert.equal(status.className, "status");
 
@@ -115,7 +115,7 @@ assert.match(output.innerHTML, /Результат 1: ตะวันออก/)
 assert.match(output.innerHTML, /ta/);
 assert.match(output.innerHTML, /wan/);
 assert.match(output.innerHTML, /ʔɔːk/);
-assert.match(output.innerHTML, /continuous-output-value[^>]*>таванок<\/pre>/);
+assert.match(output.innerHTML, /class="continuous-output ua-continuous"[\s\S]*?<pre class="continuous-output-value">таванок<\/pre>/);
 assert.equal((output.innerHTML.match(/class="label">ФОНОЛОГІЧНА IPA<\/span>/g) || []).length, 3);
 
 // A longer CC0 dictionary word must win over a supported substring.
@@ -186,7 +186,7 @@ assert.doesNotMatch(output.innerHTML, /⟦НЕВИЗНАЧЕНО:/);
 // Leading/trailing whitespace and internal spacing survive whole-text assembly.
 input.value = "  กา  ไฟ!\n";
 analyze.click();
-assert.match(output.innerHTML, /<pre class="continuous-output-value">  ка  фай!\n<\/pre>/);
+assert.match(output.innerHTML, /class="continuous-output ua-continuous"[\s\S]*?<pre class="continuous-output-value">  ка  фай!\n<\/pre>/);
 
 // The continuous IPA intermediate includes tone, not only segmental phonemes.
 input.value = "กา";
@@ -216,7 +216,7 @@ assert.match(output.innerHTML, /soft-orthographic-clusters/);
 assert.match(output.innerHTML, /М’який режим — попередній результат/);
 assert.match(output.innerHTML, /Попередній структурний розбір/);
 assert.match(output.innerHTML, /IPA — проміжне представлення/);
-assert.match(output.innerHTML, /<pre class="continuous-output-value">[^<]*(?:ка|фай)/, "soft mode should emit a recoverable Ukrainian candidate for recognized/structurally parsed spans");
+assert.match(output.innerHTML, /class="continuous-output ua-continuous"[\s\S]*?<pre class="continuous-output-value">[^<]*(?:ка|фай)/, "soft mode should emit a recoverable Ukrainian candidate for recognized/structurally parsed spans");
 mode.value = "super-soft";
 mode.listeners.change?.();
 assert.match(modeHint.textContent, /приблизний кандидат/);
