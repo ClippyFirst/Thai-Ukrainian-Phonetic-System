@@ -98,10 +98,10 @@ class SpecialOrthographyEvidenceTests(unittest.TestCase):
                 self.assertIsNone(result.phonetic_ipa, (text, reason, result.phonetic_ipa))
 
     def test_exact_lexical_thor_reading_does_not_become_a_productive_rule(self):
-        from thai_ukrainian.parser import parse_syllable
+        from thai_ukrainian.api import analyze_syllable
 
-        known = parse_syllable("ทราบ")
-        ambiguous = parse_syllable("ทราย")
+        known = analyze_syllable("ทราบ")
+        ambiguous = analyze_syllable("ทราย")
         self.assertEqual(known.status, "analyzed")
         self.assertEqual(known.normalized, "ซาบ")
         self.assertIsNotNone(known.phonemic_ipa)
