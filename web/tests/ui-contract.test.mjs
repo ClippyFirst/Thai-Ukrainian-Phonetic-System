@@ -252,7 +252,7 @@ const homeHtml = await readFile(new URL("../index.html", import.meta.url), "utf8
 const systemHtml = await readFile(new URL("../system.html", import.meta.url), "utf8");
 const styles = await readFile(new URL("../src/styles.css", import.meta.url), "utf8");
 assert.match(homeHtml, /БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ/);
-assert.match(homeHtml, /Вставте цілий текст або статтю/);
+assert.match(homeHtml, /Вставте слово або фрагмент тексту/);
 assert.match(homeHtml, /<label class="input-label" for="thai-input">Тайський текст<\/label>/);
 assert.match(homeHtml, /один суцільний український кандидат/);
 assert.match(homeHtml, /<select id="engine-mode"/);
