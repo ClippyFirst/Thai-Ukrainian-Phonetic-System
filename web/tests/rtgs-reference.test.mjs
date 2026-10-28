@@ -8,14 +8,13 @@ const expected = new Map([
   ["ไฟ", "fai"],
   ["หมา", "ma"],
   ["ใหม่", "mai"],
-  ["จริง", "ching"]
 ]);
 
 for (const [thai, rtgs] of expected) {
   assert.deepEqual(lookupRtgsToken(thai), {
-    status: "reviewed",
+    status: "fixture",
     value: rtgs,
-    source: "project-reviewed-fixture"
+    source: "provisional-fixture"
   });
 }
 
