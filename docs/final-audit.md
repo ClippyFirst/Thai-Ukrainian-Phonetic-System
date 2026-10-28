@@ -741,4 +741,5 @@ The first run with the new coverage tests completed master-table generation and 
 - Starting main: `25ebb8f70264ee76f3a93c48b42fd35154cfb77e` (the UX refresh and corrected Pages contract were already present).
 - Increased navigation, mode disclosure, and methodology-link hit areas to 44px, including mobile navigation; bumped both stylesheet cache keys so browsers fetch the refinement.
 - Added UI contract assertions for target sizes, keyboard focus, and cache keys. Strict-mode default, uncertainty copy, IPA-first output and separate RTGS reference remain intact; no pronunciation rules changed.
-- Status PARTIAL pending exact-head CI and post-deploy verification. Real-browser visual review and WCAG 2.2 AA checks remain unperformed; linguistic gold remains evidence-limited.
+- **DONE_VERIFIED — code and tests at `00fbd12780d6951fe9d820027d29f12ac1861974`:** CI [40718211681](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40718211681) and web static validation [40718211647](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40718211647) passed.
+- **PARTIAL — publication:** the 44px target/cache-key follow-up still requires merge and a successful post-merge Pages live-content gate. Real-browser visual review and WCAG 2.2 AA checks remain unperformed; linguistic gold remains evidence-limited.
