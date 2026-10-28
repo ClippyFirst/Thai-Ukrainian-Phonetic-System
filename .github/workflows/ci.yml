@@ -10,7 +10,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: python -m pip install -e .\n      - run: python -m pip install pythainlp==5.4.0
+      - run: python -m pip install -e .
+      - run: python -m pip install pythainlp==5.4.0
       - run: python scripts/generate_derived.py
       - run: python scripts/generate_syllable_space.py
       - run: git diff --exit-code -- docs/generated-audit.json docs/syllable-space.json docs/source-final-manifest.json
@@ -25,7 +26,8 @@ jobs:
       - run: node web/tests/ipa-ua.test.mjs
       - run: node web/tests/parity.test.mjs
       - run: node web/tests/ui-contract.test.mjs
-      - run: node web/tests/rtgs-reference.test.mjs\n      - run: python scripts/test_rtgs_parity.py
+      - run: node web/tests/rtgs-reference.test.mjs
+      - run: python scripts/test_rtgs_parity.py
       - name: Benchmark browser Thai text segmentation latency
         run: node scripts/benchmark_web_segmentation.mjs
       - uses: actions/upload-artifact@v4
