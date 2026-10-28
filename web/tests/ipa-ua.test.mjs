@@ -5,8 +5,8 @@ import { analyze } from "../src/engine.js";
 
 const canonical = adaptIpaToUkrainian("kʰaː");
 assert.equal(canonical.status, "adapted");
-assert.equal(canonical.output, "ка");
-assert.deepEqual(canonical.candidates, ["ка"]);
+assert.equal(canonical.output, "к\u0027а");
+assert.deepEqual(canonical.candidates, ["к\u0027а"]);
 assert(canonical.preservedFeatures.includes("aspiration (apostrophe)"));
 assert(!canonical.neutralizedFeatures.includes("aspiration"));
 assert(canonical.neutralizedFeatures.includes("length"));
@@ -31,7 +31,7 @@ assert(thaiH.neutralizedFeatures.includes("glottal place and voicing"));
 assert.equal(adaptIpaToUkrainian("dʒa").status, "withheld", "voiced /dʒ/ is not a Thai affricate mapping");
 for (const ipa of ["tɕa", "tɕʰa"]) {
   const affricate = adaptIpaToUkrainian(ipa);
-  assert.equal(affricate.output, "ча", ipa);
+  assert.equal(affricate.output, ipa === "tɕʰa" ? "ч\u0027а" : "ча", ipa);
   assert(!affricate.output.includes("дж"), ipa);
 }
 
