@@ -148,19 +148,57 @@ function continuousPanel(title, value, hint, extraClass = '') {
     '</div><pre class="continuous-output-value">' + esc(value) + '</pre></section>';
 }
 
+async function copyText(value) {
+  if (globalThis.navigator?.clipboard?.writeText) {
+    try {
+      await globalThis.navigator.clipboard.writeText(value);
+      return;
+    } catch {
+      // Fall through to the local selection-based fallback when clipboard
+      // permissions are denied or unavailable.
+    }
+  }
+  if (!document.createElement || !document.body || !document.execCommand) {
+    throw new Error('Clipboard API is unavailable');
+  }
+  const fallback = document.createElement('textarea');
+  fallback.value = value;
+  fallback.setAttribute('readonly', '');
+  fallback.setAttribute('aria-hidden', 'true');
+  fallback.style.position = 'fixed';
+  fallback.style.opacity = '0';
+  fallback.style.pointerEvents = 'none';
+  document.body.appendChild(fallback);
+  fallback.select();
+  const copied = document.execCommand('copy');
+  fallback.remove();
+  if (!copied) throw new Error('Copy command was rejected');
+}
+
 function bindCopyButtons() {
   out.querySelectorAll('[data-copy]').forEach(button => button.addEventListener('click', async () => {
+    const previous = button.textContent;
+    const previousLabel = button.getAttribute('aria-label');
     try {
-      await navigator.clipboard.writeText(button.dataset.copy);
-      const previous = button.textContent;
+      await copyText(button.dataset.copy);
       button.textContent = 'Скопійовано';
       button.setAttribute('aria-label', 'Скопійовано');
+      button.setAttribute('aria-live', 'polite');
       setTimeout(() => {
         button.textContent = previous;
-        button.removeAttribute('aria-label');
-      }, 900);
+        if (previousLabel) button.setAttribute('aria-label', previousLabel);
+        else button.removeAttribute('aria-label');
+        button.removeAttribute('aria-live');
+      }, 1400);
     } catch {
       button.textContent = 'Не вдалося скопіювати';
+      button.setAttribute('aria-live', 'polite');
+      setTimeout(() => {
+        button.textContent = previous;
+        if (previousLabel) button.setAttribute('aria-label', previousLabel);
+        else button.removeAttribute('aria-label');
+        button.removeAttribute('aria-live');
+      }, 2200);
     }
   }));
 }
