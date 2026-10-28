@@ -8,11 +8,11 @@ from .phonetic_result import PhoneticResult
 # deliberately absent: the typed phonetic result is the sole input boundary.
 # This is a project convention, not an official Ukrainian transliteration standard.
 IPA_TO_UA = {
-    "tɕʰ": ("ч", "UA-AFFRICATE-ASP"),
+    "tɕʰ": ("ч\\'", "UA-AFFRICATE-ASP"),
     "tɕ": ("ч", "UA-AFFRICATE"),
-    "kʰ": ("к", "UA-K-ASP"),
-    "pʰ": ("п", "UA-P-ASP"),
-    "tʰ": ("т", "UA-T-ASP"),
+    "kʰ": ("к\\'", "UA-K-ASP"),
+    "pʰ": ("п\\'", "UA-P-ASP"),
+    "tʰ": ("т\\'", "UA-T-ASP"),
     "k": ("к", "UA-K"), "p": ("п", "UA-P"), "t": ("т", "UA-T"),
     "d": ("д", "UA-D"), "b": ("б", "UA-B"),
     "ŋ": ("нг", "UA-NG"), "n": ("н", "UA-N"), "m": ("м", "UA-M"),
@@ -134,8 +134,8 @@ def adapt_phonetic_result(result: PhoneticResult) -> dict:
             neutralized.append("glide-vowel sequence represented by Ukrainian vowel spelling")
         output.append(rendered)
         rules.append(rule)
-        if token in {"kʰ", "pʰ", "tʰ", "tɕʰ"}:
-            neutralized.append("aspiration")
+        # Aspiration is represented by an apostrophe in the Ukrainian candidate;
+        # it is not a neutralized feature.
         if token == "h":
             neutralized.append("glottal place and voicing")
         if token in {"ɛ", "ɯ", "ɤ", "ɔ"}:
