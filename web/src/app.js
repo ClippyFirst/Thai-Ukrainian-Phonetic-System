@@ -10,6 +10,17 @@ const input = document.getElementById('thai-input');
 const out = document.getElementById('results');
 const status = document.getElementById('status');
 const modeInput = document.getElementById('engine-mode');
+const modeHint = document.getElementById('mode-hint');
+
+function updateModeHint() {
+  if (!modeHint) return;
+  const hints = {
+    strict: 'Строгий режим: невідомі фрагменти залишаються невизначеними замість вгадування.',
+    soft: 'М’який режим: можливі структурні припущення; читання й межі слів потребують перевірки.',
+    'super-soft': 'Суперм’який режим: невідомі фрагменти отримують приблизний кандидат, який може бути помилковим.'
+  };
+  modeHint.textContent = hints[modeInput?.value] || hints.strict;
+}
 
 const statusLabel = {
   analyzed: 'Проаналізовано',
@@ -266,8 +277,9 @@ function run() {
       mode === 'super-soft' ? 'Повний приблизний український кандидат; неперевірені звукові відповідності можуть бути неточними.' : mode === 'soft' ? 'Попередній український кандидат; неперевірені структурні сегменти можуть бути неточними.' : 'Один суцільний текст для читання та копіювання. Внутрішні склади з’єднано; межі слів відокремлено.', 'ua-continuous') +
     continuousPanel('IPA — проміжне представлення', ipaOutput,
       mode === 'super-soft' ? 'Приблизний IPA для повного покриття; резервні читання не підтверджені.' : mode === 'soft' ? 'Попередній IPA-проміжний результат; перевірте сегментацію та читання.' : 'Контрольний IPA-вихід для перевірки фонетичної основи українського кандидата.', 'ipa-continuous') +
+    '<details class="rtgs-details"><summary>Додатково: латинська романізація RTGS</summary>' +
     continuousPanel('RTGS — латинська романізація (не IPA)', rtgsOutput,
-      'Локальний порт алгоритму RTGS PyThaiNLP 5.4.0; межі токенів беруться з аналізатора ClippyFirst і можуть відрізнятися від сегментації PyThaiNLP. RTGS не позначає тон і не зберігає надійно довготу голосних та частину фонетичних розрізнень; ph/th/kh позначають придихові приголосні, а не англійські /f/, /θ/ чи назви літер. Цей результат є окремою романізацією, не джерелом українського виходу.', 'rtgs-continuous') +
+      'Локальний порт алгоритму RTGS PyThaiNLP 5.4.0; межі токенів беруться з аналізатора ClippyFirst і можуть відрізнятися від сегментації PyThaiNLP. RTGS не позначає тон і не зберігає надійно довготу голосних та частину фонетичних розрізнень; ph/th/kh позначають придихові приголосні, а не англійські /f/, /θ/ чи назви літер. Цей результат є окремою романізацією, не джерелом українського виходу.', 'rtgs-continuous') + '</details>' +
     '<details class="analysis-details"><summary>Детальний аналіз сегментів і складів</summary>' +
     tokens.map(card).join('') + '</details>';
   out.hidden = false;
@@ -290,6 +302,8 @@ document.getElementById('clear').addEventListener('click', () => {
 });
 
 document.getElementById('analyze').addEventListener('click', run);
+modeInput?.addEventListener('change', updateModeHint);
+updateModeHint();
 input.addEventListener('keydown', event => {
   if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
     event.preventDefault();
