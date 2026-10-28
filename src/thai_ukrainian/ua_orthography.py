@@ -6,7 +6,7 @@ from __future__ import annotations
 # validated against adjudicated Ukrainian output before being treated as gold.
 
 SEGMENTS = {
-    "tɕʰ": ["ч"], "tɕ": ["ч"], "pʰ": ["п"], "tʰ": ["т"], "kʰ": ["к"],
+    "tɕʰ": ["ч\u0027"], "tɕ": ["ч"], "pʰ": ["п\u0027"], "tʰ": ["т\u0027"], "kʰ": ["к\u0027"],
     "p": ["п"], "b": ["б"], "m": ["м"], "f": ["ф"], "t": ["т"], "d": ["д"],
     "n": ["н"], "s": ["с"], "r": ["р"], "l": ["л"], "k": ["к"], "ŋ": ["нг"],
     "h": ["г"], "w": ["в"], "j": ["й"], "ʔ": [""],
