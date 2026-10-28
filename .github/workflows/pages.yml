@@ -103,7 +103,10 @@ jobs:
               && grep -Fq 'Приблизне резервне читання' /tmp/deployed-app.js \
               && grep -Fq 'Цілісний результат' /tmp/deployed-app.js \
               && grep -Fq 'class="skip-link"' /tmp/deployed-index.html \
-              && grep -Fq 'class="mode-help"' /tmp/deployed-index.html \
+
+&& grep -Fq 'src/styles.css?v=20261028-ux-polish-2' /tmp/deployed-index.html \
+              && grep -Fq 'src/app.js?v=20261028-ux-polish-2' /tmp/deployed-index.html \
+                            && grep -Fq 'class="mode-help"' /tmp/deployed-index.html \
               && grep -Fq 'RTGS — окрема латинська довідкова романізація' /tmp/deployed-index.html \
               && grep -Fq 'Текст аналізується локально у браузері' /tmp/deployed-index.html \
               && grep -Fq 'RTGS — латинська романізація' /tmp/deployed-system.html \
