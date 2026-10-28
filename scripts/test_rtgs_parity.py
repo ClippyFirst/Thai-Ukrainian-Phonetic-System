@@ -55,6 +55,10 @@ def main() -> int:
         elif got != expected:
             failures.append(f"word {word!r}: browser={got!r}; PyThaiNLP={expected!r}")
 
+    for item in actual.get("unsupported", []):
+        if item["status"] != "unavailable":
+            failures.append(f"unsupported token {item['word']!r} did not abstain: {item['status']!r}")
+
     for words, got in zip(corpus["sequences"], actual["sequences"], strict=True):
         expected_parts: list[str] = []
         for i, word in enumerate(words):
