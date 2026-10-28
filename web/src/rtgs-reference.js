@@ -9,6 +9,7 @@ const C = "กขฃคฅฆงจฉชซฌญฎฏฐฑฒณดตถท
 const RTGS_UNSUPPORTED_TOKENS = new Set(["ๆ", "ฯ", "ฦ", "สตรีเศรษฐบุตรบำเพ็ญ"]);
 const RTGS_LEXICAL_OVERRIDES = new Map([
   ["จริง", "ching"], ["สามารถ", "samat"], ["สวัสดี", "sawatdi"],
+  ["สร้าง", "sang"], ["ศรี", "si"], ["เศร้า", "sao"], ["ไซร้", "sai"], ["ทรง", "song"], ["ทราม", "sam"],
   ["พัฒนา", "phatthana"], ["ฤทธิ์", "rit"], ["ฤๅ", "rue"],
   ["รถไฟ", "rotfai"], ["ผลไม้", "phonlamai"], ["ยูเครน", "yukhren"],
   ["ทราบ", "sap"], ["ทรัพย์", "sap"], ["แทรก", "saek"], ["อักษร", "akson"]
