@@ -1364,5 +1364,34 @@
     ],
     "claim_boundary": "Targeted source-attested lexical coverage only; not independently adjudicated gold and not evidence of overall G2P accuracy.",
     "benchmark_blocker": "data/benchmark/gold.tsv remains header-only; overall IPA/end-to-end accuracy remains NOT_MEASURED."
+  },
+  "phonology_ambiguity_audit": {
+    "status": "PARTIAL_PENDING_EXACT_HEAD_CI",
+    "audit_document": "docs/phonology-ambiguity-coverage.md",
+    "branch": "audit/thai-phonology-ambiguity-coverage-20261028",
+    "pull_request": 110,
+    "coverage": [
+      "tone and live/dead rules",
+      "initial clusters and codas",
+      "ห นำ and อ นำ",
+      "ทร sense ambiguity",
+      "จร/สร/ศร/ซร false clusters",
+      "รร",
+      "ฤ/ฤๅ/ฦ/ฦๅ",
+      "thanthakhat and silent-letter scope",
+      "lexical segmentation and connected speech"
+    ],
+    "key_case": {
+      "form": "ทราย",
+      "decision": "remain analysis-dependent without sense context",
+      "source": "https://www.orst.go.th/FILEROOM/CABROYINWEB/DRAWER004/GENERAL/DATA0000/00000630.FLP/html/48/"
+    },
+    "tests_added": [
+      "unlisted special-orthography forms fail closed",
+      "exact ทราบ lexical reading does not generalize to ทร"
+    ],
+    "independent_ipa_gold": false,
+    "accuracy_claimed": false,
+    "ci_status": "in_progress_at_generate_master_table.py; no new-branch test result claimed"
   }
 }
