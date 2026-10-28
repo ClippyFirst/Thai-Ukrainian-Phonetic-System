@@ -74,13 +74,13 @@ jobs:
           set -eu
           for attempt in $(seq 1 12); do
             if curl --fail --silent --show-error "$PAGE_URL" -o /tmp/deployed-index.html \
-              && grep -Fq 'Вставте цілий текст або статтю' /tmp/deployed-index.html \
+              && grep -Eq 'Вставте (цілий текст або статтю|слово або фрагмент тексту)' /tmp/deployed-index.html \
               && grep -Fq 'data-example="กา"' /tmp/deployed-index.html \
               && grep -Fq 'data-example="จริง"' /tmp/deployed-index.html \
               && grep -Fq 'id="engine-mode"' /tmp/deployed-index.html \
               && grep -Fq 'value="soft"' /tmp/deployed-index.html \
               && grep -Fq 'value="super-soft"' /tmp/deployed-index.html \
-              && grep -Fq 'Суперм’який — повне покриття, приблизні звуки' /tmp/deployed-index.html \
+              && grep -Eq 'Суперм’який — (повне покриття, приблизні звуки|приблизний кандидат для кожного фрагмента)' /tmp/deployed-index.html \
               && grep -Fq 'БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ' /tmp/deployed-index.html \
               && grep -Fq 'id="ipa-input"' /tmp/deployed-index.html \
               && grep -Fq 'id="ipa-adapt"' /tmp/deployed-index.html \
@@ -106,7 +106,7 @@ jobs:
             fi
             if [ "$attempt" -eq 12 ]; then
               echo "Published homepage or RTGS contract did not appear after 12 attempts" >&2
-              for marker in 'Вставте цілий текст або статтю' 'data-example="กา"' 'data-example="จริง"' 'id="engine-mode"' 'value="soft"' 'value="super-soft"' 'Суперм’який — повне покриття, приблизні звуки' 'БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ' 'id="ipa-input"' 'id="ipa-adapt"' 'id="ipa-adapter-result"'; do
+              for marker in 'data-example="กา"' 'data-example="จริง"' 'id="engine-mode"' 'value="soft"' 'value="super-soft"' 'БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ' 'id="ipa-input"' 'id="ipa-adapt"' 'id="ipa-adapter-result"'; do
                 grep -Fq "$marker" /tmp/deployed-index.html || echo "Missing homepage marker: $marker" >&2
               done
               if [ -f /tmp/deployed-app.js ]; then
