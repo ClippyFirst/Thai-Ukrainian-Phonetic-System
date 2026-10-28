@@ -1413,3 +1413,10 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Implementation: human-readable Ukrainian status labels in detailed token cards; raw engine code remains alongside as secondary diagnostic information; removed orphaned styles for the retired standalone IPA-input panel; cache-busted CSS; strengthened UI and live Pages contracts.
 - Verification to record after CI: exact commit SHA, CI run, static validation run, PR merge SHA, Pages deployment run.
 - Do not claim manual browser/WCAG completion or linguistic accuracy. Independent Thai IPA, word-boundary and Ukrainian target gold remain the real research blocker.
+
+### Verification update — 2026-10-28
+
+- Exact code/test commit: `82d7fd5d6469b3d2c2fcad98158bf98dcb452135`.
+- Full CI passed: [40723829479](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40723829479); web static validation passed: [40723829245](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40723829245).
+- PR #125: https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/125. Next step is merge only after exact-head checks pass, then confirm the live GitHub Pages gate and update this handoff with the merge SHA/deployment run.
+- No manual visual/WCAG claim; independent Thai IPA/word-boundary/Ukrainian gold remains unavailable.
