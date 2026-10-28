@@ -1393,6 +1393,20 @@
     ],
     "independent_ipa_gold": false,
     "accuracy_claimed": false,
-    "ci_status": "in_progress_at_generate_master_table.py; downstream unit tests have not started; no new-branch test result claimed"
+    "ci_status": "in progress; new compound parity tests and tone-rule coverage have not yet executed because CI is stalled at generate_master_table.py",
+    "context_scoped_reading": {
+      "word": "ทะเลทราย",
+      "syllables": [
+        "ทะ",
+        "เล",
+        "ซาย"
+      ],
+      "ipa": "tʰa˦˥.leː˧.saːj˧",
+      "source_id": "SRC-WIKTIONARY-EN-TH-ทะเลทราย",
+      "source_revision": "87239667",
+      "license": "CC-BY-SA-4.0",
+      "status": "SOURCE_ATTESTED_NOT_GOLD",
+      "isolated_homograph": "ทราย remains analysis-dependent without sense context"
+    }
   }
 }

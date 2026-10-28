@@ -1270,3 +1270,10 @@ This note supersedes the preceding documentation-only status. The branch now cha
 
 - Added `tests/test_tone_rule_coverage.py`: exact expected matrix for all 15 conventional tone rules, duplicate-condition detection, runtime lookup verification for every row, and rejection of mai-tri/mai-chattawa with high/low-class initials.
 - This validates completeness of the declared orthographic rule table, not the parser's segmentation or acoustic tone accuracy. CI remains in progress at `generate_master_table.py`; no pass is claimed until downstream test jobs execute.
+
+
+### Follow-up — context-scoped resolution for ทราย (2026-10-28)
+
+- Source-pinned English Wiktionary revision 87239667 records the exact sand compound `ทะเลทราย` as `ทะ-เล-ซาย`, IPA `/tʰa˦˥.leː˧.saːj˧/`, CC BY-SA 4.0. Added this exact compound to the Python text lexicon and browser lexical map; its Ukrainian candidate is produced syllable-by-syllable through the existing IPA adapter.
+- The isolated homograph `ทราย` remains analysis-dependent because the Royal Institute 2011 article distinguishes sand from the deer-name sense, which has a true cluster. No context-free override was added.
+- Added Python and browser regression tests for the exact compound, IPA/tone sequence and Ukrainian adapter result, while retaining the isolated-homograph abstention test. CI still needs to complete before marking the code/data change DONE_VERIFIED.

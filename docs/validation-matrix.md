@@ -587,3 +587,6 @@ The Python and browser IPA adapters now map Thai /h/ to Ukrainian «г», and re
 
 
 | Productive tone rule table coverage | PARTIAL pending CI | Added `tests/test_tone_rule_coverage.py` with an explicit 15-condition truth table, uniqueness check, runtime lookup checks and restricted tone-mark negative cases. Acceptance: exact-head CI must run this test and all downstream parity/generated-artifact checks. This proves rule-table completeness only, not end-to-end accuracy. |
+
+
+| Context-specific ทราย disambiguation | PARTIAL pending CI | Added pinned lexical segmentation `ทะเลทราย → ทะ|เล|ซาย` from English Wiktionary oldid 87239667, with matching Python/browser tests. The isolated homograph remains unresolved. Acceptance: exact-head CI verifies IPA `tʰa|leː|saːj`, tones high/mid/mid, UA `та|ле|сай`, and no forced IPA for isolated `ทราย`. |

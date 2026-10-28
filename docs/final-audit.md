@@ -647,3 +647,10 @@ The current PR branch now implements the selected IPA-adapter policy: Thai /h/ �
 - Royal Institute 2011 material distinguishes `ทราย` meaning sand (historically non-cluster /s/) from the deer-name sense (true cluster reading). A context-free override is unsafe without word/sense context.
 - Added Python regression coverage for fail-closed behavior and for the exact lexical `ทราบ` reading not generalizing to `ทราย`.
 - Current status: implementation coverage audit is PARTIAL; exact-head CI has started but remains in progress at `generate_master_table.py`. No test pass is claimed for this new branch yet. Independent IPA gold and Ukrainian target adjudication remain separate blockers.
+
+
+## 2026-10-28 — sense-scoped ทราย reading
+
+- Added the source-pinned compound `ทะเลทราย → ทะ|เล|ซาย` from en.wiktionary oldid 87239667, which records `/tʰa˦˥.leː˧.saːj˧/`. The source is dictionary evidence, not independent gold.
+- Isolated `ทราย` remains withheld because the Royal Institute distinguishes the sand sense from the deer-name sense with a true cluster. This resolves one documented context without generalizing the `ทร` spelling rule.
+- Python and browser regression tests are added; the final branch CI remains in progress at the master-table generator, so these tests are not yet verified.
