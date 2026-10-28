@@ -1,3 +1,10 @@
+## 2026-10-28 — public website UX/UI refresh
+
+- **PARTIAL — awaiting exact-head CI and published-content contract.** Branch `ux/full-site-ux-ui-overhaul-20261028`; current implementation commit `7097cb9ee6f39147ab53a445fc0b2cd849ff3855`.
+- Reduced first-action friction; clarified strict/soft/super-soft trade-offs without changing their semantics; kept the Thai → analysis → IPA → Ukrainian pipeline; improved result hierarchy, mobile breakpoints, keyboard focus, skip navigation, touch target sizes, reduced-motion behavior, and clipboard feedback/fallback.
+- Automated acceptance: UI contract checks the new page structure, mode guidance, examples, no duplicate IPA input panel, accessible affordances and preserved IPA/RTGS/audit output. Pages deployment contract checks the served HTML/JS and methodology.
+- Remaining evidence limits: browser screenshots/manual cross-device visual QA not performed; keyboard and screen-reader testing not performed; WCAG 2.2 AA not certified. Independent expert-reviewed Thai IPA/segmentation/Ukrainian target gold remains unavailable. Do not equate CI success with linguistic accuracy.
+
 ## 2026-10-28 — IPA adaptation explained in the main flow; redundant input panel removed
 
 - User-facing correction: the standalone “02 / IPA → УКРАЇНСЬКА” form duplicated an adapter that already runs in the main Thai-text pipeline. It is removed from the public homepage; IPA remains the mandatory internal boundary, not a second user workflow.
