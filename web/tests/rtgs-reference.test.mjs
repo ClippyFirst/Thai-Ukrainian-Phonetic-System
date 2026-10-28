@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import { romanizeRtgsWord, romanizeRtgsWords, renderRtgsTokens } from "../src/rtgs-reference.js";
 
 const examples = new Map([
-  ["กา", "ka"], ["พริก", "phrik"], ["มา", "ma"], ["ไฟ", "fai"], ["หมา", "ma"], ["ใหม่", "mai"], ["ไหม", "mai"], ["เหงา", "ngao"]
+  ["กา", "ka"], ["พริก", "phrik"], ["มา", "ma"], ["ไฟ", "fai"], ["หมา", "ma"], ["ใหม่", "mai"], ["ไหม", "mai"], ["เหงา", "ngao"], ["ใกล้", "klai"], ["ใคร", "khrai"], ["จริง", "ching"], ["สามารถ", "samat"], ["สวัสดี", "sawatdi"], ["พัฒนา", "phatthana"], ["ฤทธิ์", "rit"], ["ฤๅ", "rue"], ["รถไฟ", "rotfai"], ["ผลไม้", "phonlamai"], ["ยูเครน", "yukhren"], ["ทราบ", "sap"], ["ทรัพย์", "sap"], ["แทรก", "saek"], ["อักษร", "akson"]
 ]);
 for (const [thai, expected] of examples) {
   const result = romanizeRtgsWord(thai);
@@ -15,6 +15,8 @@ assert.equal(romanizeRtgsWord("test").status, "unavailable");
 assert.equal(romanizeRtgsWord("").status, "unavailable");
 assert.equal(romanizeRtgsWord("ห").value, "");
 assert.equal(romanizeRtgsWord("ให้").value, "hai");
+assert.equal(romanizeRtgsWord("ทราย").status, "unavailable");
+assert.equal(romanizeRtgsWord("ฦ").status, "unavailable");
 assert.equal(romanizeRtgsWord("พริก").value, "phrik");
 assert.equal(romanizeRtgsWords(["กา", "กร"]).length > 0, true);
 
