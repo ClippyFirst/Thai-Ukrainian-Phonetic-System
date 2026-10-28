@@ -101,7 +101,7 @@ jobs:
               && grep -Fq 'Словниковий запис' /tmp/deployed-app.js \
               && grep -Fq 'Попередній структурний розбір' /tmp/deployed-app.js \
               && grep -Fq 'Приблизне резервне читання' /tmp/deployed-app.js \
-              && grep -Fq 'Цілісний результат' /tmp/deployed-app.js \
+              && grep -Fq 'Результати · 3 представлення' /tmp/deployed-app.js \
               && grep -Fq 'class="skip-link"' /tmp/deployed-index.html \
               && grep -Fq 'src/styles.css?v=20261028-result-order-1' /tmp/deployed-index.html \
               && grep -Fq 'src/app.js?v=20261028-result-order-1' /tmp/deployed-index.html \
@@ -143,7 +143,7 @@ jobs:
                 grep -Fq "$marker" /tmp/deployed-index.html || echo "Missing homepage marker: $marker" >&2
               done
               if [ -f /tmp/deployed-app.js ]; then
-                for marker in 'Цілісний результат' 'continuous-output-value' 'М’який режим — попередній результат' 'Суперм’який' 'АУДИТ IPA → УКРАЇНСЬКА' 'RTGS — латинська романізація (не IPA)' 'renderRtgsTokens'; do
+                for marker in 'Результати · 3 представлення' 'continuous-output-value' 'М’який режим — попередній результат' 'Суперм’який' 'АУДИТ IPA → УКРАЇНСЬКА' 'RTGS — латинська романізація (не IPA)' 'renderRtgsTokens'; do
                   grep -Fq "$marker" /tmp/deployed-app.js || echo "Missing app marker: $marker" >&2
                 done
               else
