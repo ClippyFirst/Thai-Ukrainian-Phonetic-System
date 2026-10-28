@@ -676,8 +676,18 @@ The first run with the new coverage tests completed master-table generation and 
 - Readiness remains **research prototype / PARTIAL linguistic coverage**. Independent IPA gold and Ukrainian target adjudication are still absent; source-attested lexical entries are not accuracy evidence.
 
 
-## 2026-10-28 — aspiration marker policy (in progress on PR #115)
+## 2026-10-28 — aspiration marker policy (merged and deployed via PR #115)
 
 - The IPA→Ukrainian adapter previously mapped aspirated stops/affricate to the plain Ukrainian letter and recorded aspiration as neutralized. This contradicted the approved project decision.
 - Changed Python and browser mappings so /kʰ pʰ tʰ tɕʰ/ produce к' п' т' ч'. The apostrophe is appended to the adapted consonant segment, before any following segment; plain /k p t tɕ/ remain к п т ч. /h/ remains «г» and /ʔ/ remains separately handled.
-- Added matched positive/negative tests. Exact-head CI and independent linguistic review are still required; this is a project transcription convention, not an official Ukrainian norm.
+- Added matched positive/negative tests. Exact-head CI passed in run [40691939835](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40691939835); independent linguistic review remains evidence-limited. This is a project transcription convention, not an official Ukrainian norm.
+
+
+## Production closeout — RTGS and aspiration, 2026-10-28
+
+- PR #115 merged to `main` as `fa75fe153a845aadbc7aad6b3e47a1ac5a6965f5`.
+- Full exact-head CI, including the `master-artifact` job, passed: [40691939835](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40691939835). Web static validation passed: [40691940070](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40691940070).
+- GitHub Pages deployment [40692707861](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40692707861) passed and verified the published RTGS panel plus `src/rtgs-reference.js` at https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/.
+- The Pages build now runs the RTGS browser regression tests, pinned PyThaiNLP 5.4.0 parity, and IPA-adapter tests before deployment; the post-deploy job verifies the actual published JavaScript markers.
+- **PARTIAL — PR #116:** short-input guidance, explicit fallback-mode caveats, RTGS explanation and revised evidence communication are included in the proposed site copy. They are not live until exact-head CI and a post-merge Pages deployment pass.
+- Readiness remains **research prototype / PARTIAL linguistic coverage**. Independent expert-adjudicated Thai IPA, word boundaries and Ukrainian target forms remain absent; no general accuracy claim is justified.
