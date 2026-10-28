@@ -1,11 +1,10 @@
-## 2026-10-28 — full-site UX/UI implementation pass
+## 2026-10-28 — post-merge UX/UI publication verification
 
-- User asked to fix the UX/UI findings in one pass and return the updated public site URL; explicit constraint: use repository/GitHub skills and do not use Work mode.
-- Branch: `ux/full-site-ux-ui-overhaul-20261028`, created from main commit `d950f7d10f6a7a3a7335717747b932e8c693a49c`.
-- Implementation includes homepage information-hierarchy simplification, compact mode disclosure, visible uncertainty guidance, skip links/focusable main targets, responsive and touch-target improvements, result hierarchy, clipboard fallback/feedback, current methodology evidence links, UI contract updates, and Pages live-content contract updates.
-- Latest recorded implementation head before this handoff update: `7097cb9ee6f39147ab53a445fc0b2cd849ff3855`. Exact-head CI/static checks and PR/Pages deployment still need to be checked after the documentation commit. Do not claim the new design is live until the Pages workflow passes on the merged head.
-- Verification limits: no real browser screenshots were captured in this connector-only workflow, so manual visual review, real-device checks, keyboard end-to-end testing, and screen-reader checks remain PARTIAL. No WCAG certification or linguistic-accuracy claim is made.
-- Stop condition: fix all CI failures, verify static validation and the Pages published-content contract, merge only after checks pass, then return the actual deployed URL and links to CI/deploy evidence.
+- PR #120 merged into main as `ad2f899978b66d3bbcb92124688b62261bb5225d`. Exact-head CI and web static validation passed; post-merge CI test job passed while master-artifact validation continued.
+- Pages run [40712965523](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40712965523) deployed the new homepage and system page, but the final live contract failed on a stale privacy-copy string. The page copy is correct; the contract needs to expect `Текст аналізується локально у браузері`.
+- Follow-up branch `fix/pages-contract-and-ux-handoff-20261028` corrects the contract and removes stale fixed-run references from the public methodology page.
+- Do not call publication fully verified until the follow-up branch's checks and the subsequent Pages live-content contract pass. Manual screenshot/device review could not be performed because the available screenshot provider had no credits; no WCAG certification or linguistic-accuracy claim.
+
 
 ## 2026-10-28 — IPA adapter guidance integrated into the primary UI
 

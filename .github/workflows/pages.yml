@@ -102,7 +102,7 @@ jobs:
               && grep -Fq 'class="skip-link"' /tmp/deployed-index.html \
               && grep -Fq 'class="mode-help"' /tmp/deployed-index.html \
               && grep -Fq 'RTGS — окрема латинська довідкова романізація' /tmp/deployed-index.html \
-              && grep -Fq 'Аналіз виконується локально у браузері' /tmp/deployed-index.html \
+              && grep -Fq 'Текст аналізується локально у браузері' /tmp/deployed-index.html \
               && grep -Fq 'RTGS — латинська романізація' /tmp/deployed-system.html \
               && grep -Fq 'Тести — не мовний еталон' /tmp/deployed-system.html \
               && grep -Fq 'незалежно експертно перевірених рядків у поточному еталоні немає' /tmp/deployed-system.html \

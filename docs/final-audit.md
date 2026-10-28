@@ -1,12 +1,10 @@
-## 2026-10-28 — focused UX/UI refresh of the public website
+## 2026-10-28 — UX/UI refresh merged; published-contract follow-up
 
-- Branch: `ux/full-site-ux-ui-overhaul-20261028`, based on main `d950f7d10f6a7a3a7335717747b932e8c693a49c`; implementation head at the time of this entry: `7097cb9ee6f39147ab53a445fc0b2cd849ff3855`.
-- Homepage: removed the three-card instructional block that pushed the main action down; shortened the introduction; clarified the main action and mode risk; moved detailed mode explanations into a native disclosure; retained strict mode as default and all seven examples.
-- Accessibility/responsive: added skip navigation and a focusable main target on both pages; enlarged example and navigation targets; improved visible focus, responsive layout, small-screen result layout, and reduced-motion handling; stopped announcing the entire large result subtree while retaining the concise live status message.
-- Results: improved visual hierarchy for the Ukrainian candidate, IPA and RTGS; preserved detailed syllable audit; added clipboard fallback and clearer, time-limited accessible copy feedback.
-- Methodology page: refreshed evidence links and added skip navigation. No phonological rules or IPA adapter behavior were intentionally changed.
-- Tests/contracts: expanded UI contract checks and updated the Pages live-content gate to assert the revised UI.
-- Status: PARTIAL until exact-head CI and post-merge Pages deployment pass. Browser screenshot/manual visual review remains not performed in this connector-only workflow; no WCAG conformance claim is made. Linguistic accuracy remains separately evidence-limited.
+- PR #120 merged as `ad2f899978b66d3bbcb92124688b62261bb5225d`; branch exact-head CI and static validation passed. Post-merge CI's test job passed; generated master-artifact validation was still running when this entry was written.
+- GitHub Pages deploy step completed for [run 40712965523](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40712965523), but the live-content contract failed because it expected the old privacy-copy phrase `Аналіз виконується локально у браузері`; the updated homepage correctly says `Текст аналізується локально у браузері`.
+- Follow-up branch: `fix/pages-contract-and-ux-handoff-20261028`. It updates the live contract marker and replaces stale fixed-run references on the methodology page with stable workflow links.
+- Status: PARTIAL until the follow-up branch passes checks and the next Pages deployment's published-content contract succeeds. Browser screenshot/manual device review remains unavailable in this connector-only run; no WCAG or linguistic-accuracy claim is made.
+
 
 ## 2026-10-28 — integrate IPA adaptation guidance into the primary workflow
 

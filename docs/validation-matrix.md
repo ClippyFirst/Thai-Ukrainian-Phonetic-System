@@ -1,9 +1,10 @@
-## 2026-10-28 — public website UX/UI refresh
+## 2026-10-28 — UX/UI refresh post-merge acceptance
 
-- **PARTIAL — awaiting exact-head CI and published-content contract.** Branch `ux/full-site-ux-ui-overhaul-20261028`; current implementation commit `7097cb9ee6f39147ab53a445fc0b2cd849ff3855`.
-- Reduced first-action friction; clarified strict/soft/super-soft trade-offs without changing their semantics; kept the Thai → analysis → IPA → Ukrainian pipeline; improved result hierarchy, mobile breakpoints, keyboard focus, skip navigation, touch target sizes, reduced-motion behavior, and clipboard feedback/fallback.
-- Automated acceptance: UI contract checks the new page structure, mode guidance, examples, no duplicate IPA input panel, accessible affordances and preserved IPA/RTGS/audit output. Pages deployment contract checks the served HTML/JS and methodology.
-- Remaining evidence limits: browser screenshots/manual cross-device visual QA not performed; keyboard and screen-reader testing not performed; WCAG 2.2 AA not certified. Independent expert-reviewed Thai IPA/segmentation/Ukrainian target gold remains unavailable. Do not equate CI success with linguistic accuracy.
+- **PARTIAL — code merged; published-content contract needs a marker correction.** Main commit `ad2f899978b66d3bbcb92124688b62261bb5225d`; PR exact-head CI and static validation passed, and the post-merge CI test job passed.
+- Pages deployment run [40712965523](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40712965523) deployed the site, but its final live-content check failed on a stale privacy-copy marker. Correct expected text to `Текст аналізується локально у браузері`.
+- Follow-up branch: `fix/pages-contract-and-ux-handoff-20261028`. Acceptance requires branch CI/static checks and a successful post-merge Pages live-content contract.
+- Manual visual QA and real-device/accessibility testing remain unperformed; no WCAG certification or linguistic-accuracy claim.
+
 
 ## 2026-10-28 — IPA adaptation explained in the main flow; redundant input panel removed
 
