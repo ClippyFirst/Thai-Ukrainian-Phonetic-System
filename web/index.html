@@ -6,9 +6,10 @@
   <meta name="description" content="Дослідницький сервіс передавання тайської мови українською.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'">
   <title>Thai → Ukrainian — Сервіс</title>
-  <link rel="stylesheet" href="src/styles.css?v=20261028-rtgs-guidance">
+  <link rel="stylesheet" href="src/styles.css?v=20261028-ux-refresh">
 </head>
 <body>
+<a class="skip-link" href="#main-content">Перейти до основного вмісту</a>
 <header class="site-header">
   <a class="brand" href="./" aria-label="Thai → Ukrainian — сервіс">THAI <span>→</span> UKRAINIAN</a>
   <nav aria-label="Основна навігація">
@@ -18,28 +19,28 @@
   </nav>
 </header>
 <div class="beta-notice" role="note" aria-label="Статус бета-версії"><strong>БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ</strong><p>Результат — кандидат для перевірки, а не офіційна норма чи гарантовано правильна вимова. Система може утриматися від відповіді, коли даних недостатньо. <a href="system.html#beta-evidence">Що перевірено та які обмеження залишаються →</a></p></div>
-<main class="container">
+<main class="container" id="main-content">
 <section class="hero">
   <p class="eyebrow">ФОНЕТИКО-ГРАФЕМНИЙ АНАЛІЗАТОР · v0.6.1</p>
   <h1>Тайське написання → українське передавання</h1>
-  <p class="lede">Почніть з одного тайського слова. Можна перевірити й довший фрагмент, але межі слів у суцільному тайському тексті не завжди очевидні, а точність сегментації ще не підтверджена незалежним експертним корпусом.</p>
+  <p class="lede">Введіть тайське слово або фрагмент, щоб отримати український фонетичний кандидат і перевірити його через IPA. Це дослідницький результат, не переклад і не гарантована вимова.</p>
 </section>
-<section class="usage-guide" aria-labelledby="usage-heading"><div class="section-head"><h2 id="usage-heading">Як отримати результат, якому легше довіряти</h2></div><div class="system-grid"><article><p class="eyebrow">01 / ПОЧНІТЬ ІЗ КОРОТКОГО</p><h2>Одне слово за раз</h2><p>Перевірте спочатку коротке слово або відомий приклад. У довгому тексті можуть бути неоднозначні межі слів, власні назви та запозичення.</p></article><article><p class="eyebrow">02 / РЕЖИМ</p><h2>Спершу строгий</h2><p>Строгий режим показує лише розбори, які підтримує поточна модель. Якщо результат невизначений, це не означає, що слово не має вимови — рушієві бракує підстав її встановити.</p></article><article><p class="eyebrow">03 / ОБЕРЕЖНО З FALLBACK</p><h2>Приблизно — не означає правильно</h2><p>М’який і суперм’який режими корисні для діагностики покриття, а не для підтвердження вимови. Не використовуйте приблизний результат як перевірену транскрипцію без незалежного джерела.</p></article></div></section>
 <section class="workbench" aria-labelledby="input-heading">
   <div class="section-head">
-    <div><p class="eyebrow">01 / ВХІД</p><h2 id="input-heading">Тайський текст</h2></div>
+    <div><p class="eyebrow">ПОЧАТОК</p><h2 id="input-heading">Введіть тайський текст</h2><p class="workbench-intro">Для найкращої інтерпретації почніть з одного слова або короткого відомого прикладу.</p></div>
     <button class="text-button" id="clear" type="button">Очистити</button>
   </div>
   <label class="input-label" for="thai-input">Тайський текст</label>
   <textarea id="thai-input" lang="th" rows="3" spellcheck="false" autocomplete="off" autocapitalize="off" aria-describedby="input-hint" placeholder="Напр. กาไฟมา або กินข้าวกับไข่และผลไม้"></textarea>
-  <p class="input-hint" id="input-hint">Вставте слово або фрагмент тексту. Сервіс покаже український кандидат і окремий IPA-вихід; деталі по сегментах можна розгорнути нижче. <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>Enter</kbd> — проаналізувати.</p>
+  <p class="input-hint" id="input-hint">Можна вставити довший текст, але межі тайських слів можуть бути невизначеними. <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>Enter</kbd> — аналізувати.</p>
   <label class="input-label" for="engine-mode">Режим рушія</label>
   <select id="engine-mode" aria-describedby="mode-hint">
-    <option value="strict" selected>Строгий — лише підтримані розбори</option>
-    <option value="soft">М’який — попередні структурні припущення</option>
-    <option value="super-soft">Суперм’який — приблизний кандидат для кожного фрагмента</option>
+    <option value="strict" selected>Строгий · лише підтримані розбори</option>
+    <option value="soft">М’який · попередні структурні припущення</option>
+    <option value="super-soft">Суперм’який · приблизне читання для кожного фрагмента</option>
   </select>
-  <p class="input-hint" id="mode-hint">Рекомендовано починати зі строгого режиму. М’який може припускати структурно можливі склади; суперм’який створює приблизний кандидат навіть там, де читання не встановлено. Більше покриття не означає більшої точності.</p>
+  <p class="input-hint" id="mode-hint">Рекомендовано: строгий. М’якші режими дають більше покриття, але можуть помилятися.</p>
+  <details class="mode-help"><summary>Чим відрізняються режими?</summary><dl><dt>Строгий</dt><dd>Не вгадує непідтверджені розбори; невизначені фрагменти позначаються.</dd><dt>М’який</dt><dd>Дозволяє попередні структурні припущення, які потребують перевірки.</dd><dt>Суперм’який</dt><dd>Створює приблизний кандидат і для невідомих фрагментів. Повніше покриття не означає точнішої вимови.</dd></dl></details>
   <div class="examples" aria-label="Швидкі приклади">
     <span class="examples-label">Приклади:</span>
     <button type="button" data-example="กา">กา</button>
@@ -50,19 +51,19 @@
     <button type="button" data-example="ใหม่">ใหม่</button>
     <button type="button" data-example="จริง">จริง</button>
   </div>
-  <button class="primary" id="analyze" type="button">Проаналізувати <span aria-hidden="true">↗</span></button>
+  <div class="action-row"><button class="primary" id="analyze" type="button">Аналізувати текст <span aria-hidden="true">↗</span></button><span class="action-note">Обробка відбувається у вашому браузері.</span></div>
 </section>
 <section id="status" class="status" role="status" aria-live="polite" aria-atomic="true"></section>
-<section id="results" class="results" aria-live="polite" aria-label="Результати аналізу" hidden></section>
-<section class="method-note">
+<section id="results" class="results" aria-label="Результати аналізу" aria-live="off" hidden></section>
+<section class="method-note" aria-labelledby="method-heading">
   <p class="eyebrow">ПРИВАТНІСТЬ І МЕТОД</p>
-  <p>Аналіз виконується локально у браузері: сторінка не надсилає введений текст до зовнішнього API.</p>
-  <p><strong>Як утворюється український кандидат.</strong> Єдиний основний потік: тайський текст → структурний і фонологічний аналіз → IPA → адаптація до української графіки. Адаптер зіставляє відомі IPA-сегменти з українськими відповідниками, застосовує найдовше відповідне правило, окремо обробляє придихові /kʰ pʰ tʰ tɕʰ/ як к' п' т' ч', передає самостійний /h/ як «г» і не вгадує невідомі сегменти. Тон, довгота й наголос не кодуються в практичному українському записі; ці втрати та застосовані правила видно в детальному аудиті складу. IPA — обов’язкова межа адаптації: тайська орфографія не передається до українського адаптера напряму.</p>
-  <p>RTGS — окрема латинська довідкова романізація, а не IPA і не джерело українського кандидата. Вона не позначає тон і не зберігає надійно довготу голосних та всі фонологічні розрізнення.</p>
-  <div class="method-links"><a href="system.html">Як працює система →</a><a href="system.html#statuses">Статуси результату →</a></div>
+  <h2 id="method-heading">Як формується результат</h2>
+  <p>Текст аналізується локально у браузері й не надсилається до зовнішнього API.</p>
+  <p>Основний шлях: тайський текст → структурний і фонологічний аналіз → IPA → адаптація до української графіки. Невідомі IPA-сегменти не вгадуються; тон і довгота не зберігаються повністю в практичному українському записі.</p>
+  <div class="method-links"><a href="system.html">Методологія та обмеження →</a><a href="system.html#statuses">Що означають статуси →</a><a href="system.html#beta-evidence">Докази й межі →</a></div>
 </section>
 </main>
 <footer><span>Thai → Ukrainian Phonetic-Graphemic Correspondence System · v0.6.1</span><a href="https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System" rel="noopener noreferrer">Вихідний код</a></footer>
-<script type="module" src="src/app.js?v=20261028-ipa-flow-guidance"></script>
+<script type="module" src="src/app.js?v=20261028-ux-refresh"></script>
 </body>
 </html>
