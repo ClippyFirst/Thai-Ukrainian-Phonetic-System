@@ -1420,3 +1420,11 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Full CI passed: [40723829479](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40723829479); web static validation passed: [40723829245](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40723829245).
 - PR #125: https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/125. Next step is merge only after exact-head checks pass, then confirm the live GitHub Pages gate and update this handoff with the merge SHA/deployment run.
 - No manual visual/WCAG claim; independent Thai IPA/word-boundary/Ukrainian gold remains unavailable.
+
+
+## 2026-10-28 — final interaction/result polish continuation
+
+- Working branch: `ux/final-interaction-and-result-polish-20261028`, based on `main` `3b70e3e78ae83f72a345c077464cb3b2d825e48f`.
+- Changes: dynamic, mode-specific uncertainty guidance; collapsed secondary RTGS output while preserving visible Ukrainian/IPA outputs; 44px copy/clear target minimum; larger eyebrow labels; cache-busting for CSS/JS; UI and live Pages contract assertions.
+- Code, tests, workflow, and audit/matrix updates are staged as branch commits. Next: verify exact branch head, run CI/static validation, open PR, merge only with passing checks, and verify GitHub Pages published-content gate.
+- Do not claim real-browser visual QA or WCAG 2.2 AA; this connector-only session cannot capture/inspect browser screenshots. Independent IPA/word-boundary/Ukrainian gold remains an evidence-limited linguistic blocker.
