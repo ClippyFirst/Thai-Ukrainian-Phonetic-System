@@ -257,5 +257,17 @@ class TextPipelineTests(unittest.TestCase):
                 self.assertTrue(result.special_analyses)
 
 
+    def test_source_attested_desert_compound_resolves_only_in_sand_context(self):
+        # en.wiktionary oldid 87239667 gives ทะเลทราย /tʰa˦˥.leː˧.saːj˧/.
+        # This exact compound supplies the context for ทราย = sand. The isolated
+        # homograph remains unresolved because the deer-name sense uses a true cluster.
+        self.assertEqual(segment_thai_word("ทะเลทราย"), (("ทะ", "เล", "ซาย"), "lexicon"))
+        result = analyze_text("ทะเลทราย")[0]
+        self.assertEqual(result["segmentation_status"], "lexicon")
+        self.assertEqual([s["phonemic_ipa"] for s in result["syllables"]], ["tʰa", "leː", "saːj"])
+        self.assertEqual([s["tone"]["tone"] for s in result["syllables"]], ["high", "mid", "mid"])
+        self.assertEqual([s["ukrainian_transliteration"] for s in result["syllables"]], ["та", "ле", "сай"])
+        self.assertEqual(analyze_syllable("ทราย").status, "analysis-dependent:special-orthography")
+
 if __name__ == "__main__":
     unittest.main()
