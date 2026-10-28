@@ -584,3 +584,6 @@ The Python and browser IPA adapters now map Thai /h/ to Ukrainian «г», and re
 | Special-orthography ambiguity handling | PARTIAL, fail-closed | New `docs/phonology-ambiguity-coverage.md` documents `ทร`, `รร`, `ฤ/ฤๅ/ฦ/ฦๅ`, silent letters, false clusters, and `ห นำ`/`อ นำ`. Exact-head tests pending CI. |
 | Sense-dependent `ทราย` and lexical `ทร` readings | PARTIAL, intentionally unresolved absent lexical/sense evidence | Royal Institute 2011 source distinguishes sand /s/ from deer-name cluster reading. Exact lexical readings such as `ทราบ` must not generalize to arbitrary `ทร` forms. |
 | Connected-speech phonetics, lexical exception completeness, independent IPA gold | TODO / BLOCKED by evidence | Need sourced lexical/context rules and independent Thai phonetic adjudication; dictionary transcriptions remain SOURCE_ATTESTED_NOT_GOLD. |
+
+
+| Productive tone rule table coverage | PARTIAL pending CI | Added `tests/test_tone_rule_coverage.py` with an explicit 15-condition truth table, uniqueness check, runtime lookup checks and restricted tone-mark negative cases. Acceptance: exact-head CI must run this test and all downstream parity/generated-artifact checks. This proves rule-table completeness only, not end-to-end accuracy. |
