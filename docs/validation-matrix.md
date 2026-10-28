@@ -614,3 +614,12 @@ The Python and browser IPA adapters now map Thai /h/ to Ukrainian «г», and re
 - **PASS:** the RTGS browser unit tests, pinned PyThaiNLP 5.4.0 parity script, derived-data generation and structural-space generation completed successfully in the current full CI run before its longer master-table stage.
 - **PARTIAL:** full exact-head CI and generated master-artifact are not yet confirmed. Earlier run `40688279406` failed three Python assertions because the new aspirated outputs had not yet been reflected in tests; those expected outputs were corrected. Do not mark the feature DONE_VERIFIED until a subsequent full CI passes.
 - **Implementation coverage:** canonical Python/browser adapters, IPA-based candidate renderer, generated consonant correspondence CSV, regression tests, public IPA panel, system page, methodology and Ukrainian-vs-Russian comparison matrix all reflect the apostrophe convention.
+
+
+### Latest checkpoint — 2026-10-28, RTGS merged and live
+
+- **DONE_VERIFIED:** PR #115 merged as `fa75fe153a845aadbc7aad6b3e47a1ac5a6965f5`; exact-head CI including `master-artifact` passed in [40691939835](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40691939835), and web static validation passed in [40691940070](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40691940070).
+- **DONE_VERIFIED:** Pages deployment [40692707861](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40692707861) passed at https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/. The deploy job fetched the deployed app and RTGS module and verified the RTGS panel and exported romanization function.
+- **DONE_VERIFIED:** Pages build itself runs RTGS browser regression tests, pinned PyThaiNLP 5.4.0 parity and IPA-adapter tests before upload.
+- **PARTIAL:** public content audit is being ported to the post-RTGS main state on `feat/site-guidance-rtgs-20261028`; CI and a new Pages deployment must pass before those copy changes are marked published.
+- **BLOCKED:** independent expert-adjudicated Thai IPA/segmentation and Ukrainian target-form gold remains unavailable. No linguistic accuracy claim is inferred from implementation parity.
