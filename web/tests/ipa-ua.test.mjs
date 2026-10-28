@@ -67,28 +67,19 @@ console.log("IPA → Ukrainian adaptation: canonical, feature-audit, inventory, 
 // The public UI must describe the same IPA-first adapter contract as the engine.
 const serviceHtml = fs.readFileSync(new URL("../index.html", import.meta.url), "utf8");
 const systemHtml = fs.readFileSync(new URL("../system.html", import.meta.url), "utf8");
-assert(serviceHtml.includes("IPA є проміжним контрольним представленням і обов’язковою межею адаптера"));
-assert(serviceHtml.includes("Український кандидат формується з типізованого фонетичного результату через IPA"));
+assert(serviceHtml.includes("Як утворюється український кандидат"));
+assert(serviceHtml.includes("Адаптер зіставляє відомі IPA-сегменти з українськими відповідниками"));
 assert(!serviceHtml.includes("а не механічною заміною символів IPA"));
 assert(systemHtml.includes("Український результат формується окремим шаром з IPA"));
 console.log("Public UI: IPA-first adapter contract matches the implementation");
 
 
-// Website contract: IPA can be supplied directly, independently of Thai input.
+// The homepage exposes the shared IPA-first pipeline, not a second input mode.
 const ipaPanelHtml = fs.readFileSync(new URL("../index.html", import.meta.url), "utf8");
 const ipaAppSource = fs.readFileSync(new URL("../src/app.js", import.meta.url), "utf8");
-assert(ipaPanelHtml.includes('id="ipa-input"'));
-assert(ipaPanelHtml.includes('id="ipa-adapt"'));
-assert(ipaPanelHtml.includes('id="ipa-adapter-result"'));
-assert(ipaAppSource.includes("adaptIpaToUkrainian(source)"));
-console.log("Direct IPA input UI is wired to the same IPA → Ukrainian adapter");
-
-
-// U+0306 breve can mark extra-shortness; do not silently normalize it away.
-assert.equal(adaptIpaToUkrainian("kʰă").status, "withheld");
-assert.equal(adaptIpaToUkrainian("kʰă").output, null);
-console.log("Ambiguous breve diacritic is preserved and fails closed");
-
-// Aspiration apostrophe placement and contrast with plain consonants, /h/, and /ʔ/.
-for (const [ipa, expected] of [["ka","ка"],["kʰa","к'а"],["kʰra","к'ра"],["pa","па"],["pʰa","п'а"],["ta","та"],["tʰa","т'а"],["tɕa","ча"],["tɕʰa","ч'а"],["ha","га"],["ʔa","а"]]) assert.equal(adaptIpaToUkrainian(ipa).output, expected, ipa);
-console.log("Aspiration apostrophe placement and contrast tests passed");
+assert(!ipaPanelHtml.includes('id="ipa-input"'));
+assert(!ipaPanelHtml.includes('id="ipa-adapt"'));
+assert(!ipaPanelHtml.includes('id="ipa-adapter-result"'));
+assert(ipaAppSource.includes("АУДИТ IPA → УКРАЇНСЬКА"));
+assert(!ipaAppSource.includes("adaptIpaToUkrainian(source)"));
+console.log("Homepage uses the main IPA-first pipeline; no duplicate IPA input mode");

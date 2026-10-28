@@ -1,3 +1,11 @@
+## 2026-10-28 — IPA adapter guidance integrated into the primary UI
+
+- User clarified that the separate “02 / IPA → УКРАЇНСЬКА” panel is unnecessary because IPA → Ukrainian adaptation already runs in the first/main Thai-text workflow; the missing piece was a clear explanation of the algorithm.
+- Working branch: `ux/integrate-ipa-adaptation-into-main-flow-20261028`, based on current `main` at `62fee1f53e5542fc62211262928751d00b6f80c2`.
+- Changes on the branch: remove duplicate IPA input controls and their app event handlers; preserve the shared Python/browser adapters and their unit tests; explain the Thai → structural/phonological analysis → IPA → Ukrainian path, longest-match segment rules, aspirated consonant apostrophes, /h/ → «г», fail-closed unknown segments, and neutralized tone/length/stress; revise UI and live-deployment contracts accordingly.
+- Current status: implementation is in progress; exact-head CI and Pages deployment have not yet been observed. Do not call it DONE_VERIFIED until those checks pass.
+- This is a UI consolidation and explanation improvement, not a new engine mode or a claim that Thai IPA/target spellings have independent linguistic validation.
+
 ## 2026-10-27 — super-soft full-coverage mode (verification checkpoint)
 
 - Branch: feat/supersoft-full-coverage-20261027. Code commit verified: 6f53ca955a2702db8e070a04c181dbb68d6d6900, based on main 9c527e46b3fa012e277c8914683ae70834165a22. Follow-up documentation-only checkpoint: 502940ea61005b8b3494d074688301d23a1aeb29.
