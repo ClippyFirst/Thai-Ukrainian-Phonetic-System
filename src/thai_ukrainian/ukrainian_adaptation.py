@@ -8,11 +8,11 @@ from .phonetic_result import PhoneticResult
 # deliberately absent: the typed phonetic result is the sole input boundary.
 # This is a project convention, not an official Ukrainian transliteration standard.
 IPA_TO_UA = {
-    "tɕʰ": ("ч\\'", "UA-AFFRICATE-ASP"),
+    "tɕʰ": ("ч'", "UA-AFFRICATE-ASP"),
     "tɕ": ("ч", "UA-AFFRICATE"),
-    "kʰ": ("к\\'", "UA-K-ASP"),
-    "pʰ": ("п\\'", "UA-P-ASP"),
-    "tʰ": ("т\\'", "UA-T-ASP"),
+    "kʰ": ("к'", "UA-K-ASP"),
+    "pʰ": ("п'", "UA-P-ASP"),
+    "tʰ": ("т'", "UA-T-ASP"),
     "k": ("к", "UA-K"), "p": ("п", "UA-P"), "t": ("т", "UA-T"),
     "d": ("д", "UA-D"), "b": ("б", "UA-B"),
     "ŋ": ("нг", "UA-NG"), "n": ("н", "UA-N"), "m": ("м", "UA-M"),
