@@ -590,3 +590,6 @@ The Python and browser IPA adapters now map Thai /h/ to Ukrainian «г», and re
 
 
 | Context-specific ทราย disambiguation | PARTIAL pending CI | Added pinned lexical segmentation `ทะเลทราย → ทะ|เล|ซาย` from English Wiktionary oldid 87239667, with matching Python/browser tests. The isolated homograph remains unresolved. Acceptance: exact-head CI verifies IPA `tʰa|leː|saːj`, tones high/mid/mid, UA `та|ле|сай`, and no forced IPA for isolated `ทราย`. |
+
+
+| Special-orthography registry performance | DONE_IMPLEMENTED, verification pending | Cached `load_special_rules()` with `lru_cache(maxsize=1)` to avoid reopening the static CSV for every parser call during the 351,780-row master generator. Acceptance: latest-head CI completes master-table generation and downstream Python/browser checks. |

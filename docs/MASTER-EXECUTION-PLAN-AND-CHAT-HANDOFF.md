@@ -1277,3 +1277,9 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Source-pinned English Wiktionary revision 87239667 records the exact sand compound `ทะเลทราย` as `ทะ-เล-ซาย`, IPA `/tʰa˦˥.leː˧.saːj˧/`, CC BY-SA 4.0. Added this exact compound to the Python text lexicon and browser lexical map; its Ukrainian candidate is produced syllable-by-syllable through the existing IPA adapter.
 - The isolated homograph `ทราย` remains analysis-dependent because the Royal Institute 2011 article distinguishes sand from the deer-name sense, which has a true cluster. No context-free override was added.
 - Added Python and browser regression tests for the exact compound, IPA/tone sequence and Ukrainian adapter result, while retaining the isolated-homograph abstention test. CI still needs to complete before marking the code/data change DONE_VERIFIED.
+
+
+### CI generator performance fix — special-orthography registry cache
+
+- Added `functools.lru_cache(maxsize=1)` to `load_special_rules()`. The exhaustive master-table generator re-parses 351,780 structural combinations; the uncached loader reopened `data/thai/special_orthography.csv` for each parse, making a registry lookup an avoidable per-row file I/O operation.
+- This is semantics-preserving: the registry is static during a run, callers do not mutate it, and the returned rules remain identical. The latest exact-head CI must verify that generation completes and all Python/browser tests pass.

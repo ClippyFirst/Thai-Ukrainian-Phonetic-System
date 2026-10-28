@@ -79,7 +79,7 @@
     "independently_validated_external_ipa_input_accuracy",
     "independently_adjudicated_ukrainian_ipa_adapter_forms"
   ],
-  "lexical_attestation": "Nine source-backed runtime text lexicon entries now include ยูเครน (en.wiktionary oldid 88025965), ตะวันออก (oldid 86398986), ยุโรป (oldid 91325849) and ยุโรปตะวันออก (oldid 87721830), plus three active typed IPA overrides (เงิน, เดิน and ออก). All are source-attested dictionary evidence, not independent expert/acoustic gold.",
+  "lexical_attestation": "Ten source-backed runtime text lexicon entries now include ยูเครน (en.wiktionary oldid 88025965), ตะวันออก (oldid 86398986), ยุโรป (oldid 91325849), ยุโรปตะวันออก (oldid 87721830), and the sense-scoped compound ทะเลทราย (oldid 87239667), plus three active typed IPA overrides (เงิน, เดิน and ออก). All are source-attested dictionary evidence, not independent expert/acoustic gold.",
   "corpus_attestation": "993 source-annotated Wisesight word-tokenization rows (CC0-1.0; test-only, never training/tuning); pinned UD Thai TUD source snapshots under CC BY-SA 4.0 for a research-only frequency-Viterbi experiment; zero independently adjudicated IPA/tone/vowel-length gold rows.",
   "word_boundary_benchmark": {
     "dataset": "PyThaiNLP/Wisesight word-tokenization labels",
@@ -1393,7 +1393,7 @@
     ],
     "independent_ipa_gold": false,
     "accuracy_claimed": false,
-    "ci_status": "in progress; new compound parity tests and tone-rule coverage have not yet executed because CI is stalled at generate_master_table.py",
+    "ci_status": "latest head includes cached special-orthography registry; exact-head CI is running at generate_master_table.py and downstream tests are pending",
     "context_scoped_reading": {
       "word": "ทะเลทราย",
       "syllables": [
