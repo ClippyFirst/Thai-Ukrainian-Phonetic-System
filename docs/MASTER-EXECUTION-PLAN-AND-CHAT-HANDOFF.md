@@ -1,3 +1,13 @@
+## 2026-10-28 — additional exact lexical exception guards
+
+- Branch: `audit/thai-lexical-exception-guards-20261028`, based on main `d39fc9e2c40db4a9f760069099c1f45973d592c8`.
+- Added a test covering nine source-discussed false-cluster / lexical `ทร` spellings and requiring the result to flow through typed IPA and the existing Ukrainian adapter: `จริง, สร้าง, ศรี, เศร้า, ไซร้, ทราบ, ทรง, ทรัพย์, แทรก`.
+- Existing ambiguity sentinels stay conservative: generic `จร/สร/ศร/ซร` and isolated `ทราย` remain unresolved absent lexical/sense context. This is a test-coverage expansion, not a new general spelling rule.
+- Evidence: Royal Institute of Thailand Journal 36(4), 2011, [article section on false clusters and lexical readings](https://www.orst.go.th/FILEROOM/CABROYINWEB/DRAWER004/GENERAL/DATA0000/00000630.FLP/html/49/). Evidence supports lexical scope; it is not independent IPA or Ukrainian orthographic gold.
+- Status: PARTIAL until exact-head CI passes. If green, merge only after reviewing the exact head and generated-artifact drift; then record the final merge SHA and CI run. Do not claim local tests ran (GitHub DNS blocked the prior local clone attempt).
+
+---
+
 ## 2026-10-27 — super-soft full-coverage mode (verification checkpoint)
 
 - Branch: feat/supersoft-full-coverage-20261027. Code commit verified: 6f53ca955a2702db8e070a04c181dbb68d6d6900, based on main 9c527e46b3fa012e277c8914683ae70834165a22. Follow-up documentation-only checkpoint: 502940ea61005b8b3494d074688301d23a1aeb29.
