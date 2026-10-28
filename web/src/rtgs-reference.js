@@ -122,7 +122,7 @@ function replaceConsonants(word, consonants) {
 }
 export function romanizeRtgsWord(input) {
   const original = String(input ?? "").normalize("NFC");
-  if (!original || [...original].some(ch => /[^\\u0E00-\\u0E7F]/u.test(ch)))
+  if (!original || [...original].some(ch => /[^\u0E00-\u0E7F]/u.test(ch)))
     return { status:"unavailable", value:null, source:null };
   if (original === "ห") return { status:"transliterated", value:"", source:"PyThaiNLP 5.4.0 royin port" };
   let word = replaceVowels(normalize(original));
