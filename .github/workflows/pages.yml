@@ -98,6 +98,9 @@ jobs:
               && curl --fail --silent --show-error "$PAGE_URL/src/ipa-ua.js" -o /tmp/deployed-ipa-ua.js \
               && curl --fail --silent --show-error "$PAGE_URL/src/rtgs-reference.js" -o /tmp/deployed-rtgs.js \
               && curl --fail --silent --show-error "$PAGE_URL/system.html" -o /tmp/deployed-system.html \
+              && grep -Fq 'Словниковий запис' /tmp/deployed-app.js \\
+              && grep -Fq 'Попередній структурний розбір' /tmp/deployed-app.js \\
+              && grep -Fq 'Приблизне резервне читання' /tmp/deployed-app.js \\
               && grep -Fq 'Цілісний результат' /tmp/deployed-app.js \
               && grep -Fq 'class="skip-link"' /tmp/deployed-index.html \
               && grep -Fq 'class="mode-help"' /tmp/deployed-index.html \
