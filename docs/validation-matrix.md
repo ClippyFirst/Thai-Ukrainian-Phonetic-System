@@ -657,3 +657,9 @@ The Python and browser IPA adapters now map Thai /h/ to Ukrainian «г», and re
 - **DONE_VERIFIED:** live RTGS and public guidance confirmed by Pages deployments [40692707861](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40692707861) and [40694421367](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40694421367).
 - **PARTIAL:** manual browser visual QA was not performed.
 - **BLOCKED:** independent expert-adjudicated Thai IPA, segmentation and Ukrainian target-form gold remain unavailable; the system is not release-ready.
+
+### UX accessibility polish — 2026-10-28
+
+- **PARTIAL pending exact-head CI and Pages deployment:** nav, mode disclosure, and methodology links now have 44px minimum targets; stylesheet cache keys bumped on both pages; UI contract tests cover targets and cache consistency.
+- Primary UX refresh and corrected live Pages contract were already on main before this follow-up. No phonological rules changed.
+- Real-browser responsive review/WCAG audit not performed; independent linguistic gold remains blocked by missing expert-adjudicated Thai IPA, segmentation, and Ukrainian targets.
