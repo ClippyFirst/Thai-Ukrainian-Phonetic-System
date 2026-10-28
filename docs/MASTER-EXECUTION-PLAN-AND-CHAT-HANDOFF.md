@@ -1442,7 +1442,7 @@ This note supersedes the preceding documentation-only status. The branch now cha
 
 ### Final closeout — visible RTGS → IPA → Ukrainian results (2026-10-28)
 
-- **DONE_VERIFIED — merged and published:** code merge commit `086e62f252f0b16f6c4035ccb80b4b2183ef5a17`; documentation closeout is being recorded on main after the successful Pages run.
+- **DONE_VERIFIED — merged and published:** code merge commit `086e62f252f0b16f6c4035ccb80b4b2183ef5a17`; the validation matrix, final audit and this handoff now record the successful post-merge Pages evidence.
 - Exact-head full CI (including the master-artifact gate) passed: [40743456590](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40743456590).
 - Exact-head static validation passed: [40743456356](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40743456356).
 - Post-merge Pages build, deployment and published-content check passed: [40744444939](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40744444939). Live gate checks visible RTGS → IPA → Ukrainian call order and that RTGS is not wrapped in a disclosure.
