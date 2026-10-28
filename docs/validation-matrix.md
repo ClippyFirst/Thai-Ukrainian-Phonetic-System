@@ -574,3 +574,13 @@ The Python and browser IPA adapters now map Thai /h/ to Ukrainian «г», and re
 - Post-merge CI run [40592864584](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40592864584) had its `test` job pass; its separate `master-artifact` job was still running at audit time. The exact-head PR CI above passed both jobs, and the Pages build independently generated the master table and passed its Python/browser checks.
 - PR #101 was closed as a duplicate of #104; PR #104 was closed/deferred because its separate research-only morphology overlay was based on an older main and had not been reconciled against the deployed head. Both source branches are preserved. Reopen/port that feature only after rebasing, exact-head CI and browser parity, and keeping morphology outside practical phonetic output.
 - Readiness: engineering and deployment checks are verified; the project remains a research prototype, not release-ready for accuracy claims, pending independent IPA gold and Ukrainian target-form adjudication.
+
+
+## 2026-10-28 — phonology completeness / ambiguity matrix
+
+| Component | State | Acceptance evidence / remaining work |
+|---|---|---|
+| Productive tone rules and syllable class/quantity interactions | DONE_VERIFIED as implemented rule tables; accuracy over arbitrary text not claimed | `data/thai/tone_rules.csv`, parser/tone tests, source basis JIPA 1993; still depends on correct syllable segmentation. |
+| Special-orthography ambiguity handling | PARTIAL, fail-closed | New `docs/phonology-ambiguity-coverage.md` documents `ทร`, `รร`, `ฤ/ฤๅ/ฦ/ฦๅ`, silent letters, false clusters, and `ห นำ`/`อ นำ`. Exact-head tests pending CI. |
+| Sense-dependent `ทราย` and lexical `ทร` readings | PARTIAL, intentionally unresolved absent lexical/sense evidence | Royal Institute 2011 source distinguishes sand /s/ from deer-name cluster reading. Exact lexical readings such as `ทราบ` must not generalize to arbitrary `ทร` forms. |
+| Connected-speech phonetics, lexical exception completeness, independent IPA gold | TODO / BLOCKED by evidence | Need sourced lexical/context rules and independent Thai phonetic adjudication; dictionary transcriptions remain SOURCE_ATTESTED_NOT_GOLD. |
