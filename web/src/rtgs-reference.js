@@ -1,7 +1,8 @@
 // RTGS reference prototype for a small provisional fixture list only.
 // This deliberately does not guess romanization for arbitrary Thai strings.
-// Source family: PyThaiNLP's Apache-2.0-licensed "royin" implementation;
-// see docs/research/thai-romanization-integration.md for provenance and limits.
+// Planned reference for parity work: PyThaiNLP's Apache-2.0-licensed "royin" implementation.
+// These fixtures are provisional and have not been checked against that implementation.
+// See docs/research/thai-romanization-integration.md for provenance and limits.
 
 const RTGS_FIXTURES = new Map([
   ["กา", "ka"],
