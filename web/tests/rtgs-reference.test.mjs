@@ -3,17 +3,18 @@ import { readFile } from "node:fs/promises";
 import { romanizeRtgsWord, romanizeRtgsWords, renderRtgsTokens } from "../src/rtgs-reference.js";
 
 const examples = new Map([
-  ["กา", "ka"], ["พริก", "phrik"], ["มา", "ma"], ["ไฟ", "fai"], ["หมา", "ma"], ["ใหม่", "mai"]
+  ["กา", "ka"], ["พริก", "phrik"], ["มา", "ma"], ["ไฟ", "fai"], ["หมา", "ma"], ["ใหม่", "mai"], ["ไหม", "mai"], ["เหงา", "ngao"]
 ]);
 for (const [thai, expected] of examples) {
   const result = romanizeRtgsWord(thai);
   assert.equal(result.status, "transliterated", thai);
   assert.equal(result.value, expected, thai);
-  assert.equal(result.source, "PyThaiNLP 5.4.0 royin port");
+  assert.equal(result.source, "PyThaiNLP 5.4.0 royin port + ClippyFirst orthographic correction");
 }
 assert.equal(romanizeRtgsWord("test").status, "unavailable");
 assert.equal(romanizeRtgsWord("").status, "unavailable");
 assert.equal(romanizeRtgsWord("ห").value, "");
+assert.equal(romanizeRtgsWord("ให้").value, "hai");
 assert.equal(romanizeRtgsWord("พริก").value, "phrik");
 assert.equal(romanizeRtgsWords(["กา", "กร"]).length > 0, true);
 
