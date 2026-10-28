@@ -17,6 +17,8 @@ assert.equal(romanizeRtgsWord("ห").value, "");
 assert.equal(romanizeRtgsWord("ให้").value, "hai");
 assert.equal(romanizeRtgsWord("ทราย").status, "unavailable");
 assert.equal(romanizeRtgsWord("ฦ").status, "unavailable");
+assert.equal(romanizeRtgsWord("ๆ").status, "unavailable");
+assert.equal(romanizeRtgsWord("ฯ").status, "unavailable");
 assert.equal(romanizeRtgsWord("พริก").value, "phrik");
 assert.equal(romanizeRtgsWords(["กา", "กร"]).length > 0, true);
 
