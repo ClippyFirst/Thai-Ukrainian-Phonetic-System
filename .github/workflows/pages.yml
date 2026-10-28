@@ -128,19 +128,12 @@ jobs:
               && grep -Fq 'Суперм’який' /tmp/deployed-app.js \
               && grep -Fq 'super-soft-approximate' /tmp/deployed-engine.js \
               && grep -Fq 'UNVERIFIED_ORTHOGRAPHIC_FALLBACK' /tmp/deployed-engine.js; then
-              python - <<'PY'
-from pathlib import Path
-source = Path("/tmp/deployed-app.js").read_text(encoding="utf-8")
-markers = [
-    "continuousPanel('01 · RTGS — латинська романізація (не IPA)'",
-    "continuousPanel('02 · IPA — фонетичне представлення'",
-    "continuousPanel('03 · Український фонетичний кандидат'",
-]
-positions = [source.index(marker) for marker in markers]
-assert positions == sorted(positions), f"Published output order is wrong: {positions}"
-assert '<details class="rtgs-details"' not in source, "RTGS output must not be hidden behind a disclosure"
-print("Published RTGS → IPA → Ukrainian order verified")
-PY
+              rtgs_line=$(grep -nF "continuousPanel('01 · RTGS — латинська романізація (не IPA)'" /tmp/deployed-app.js | cut -d: -f1)
+              ipa_line=$(grep -nF "continuousPanel('02 · IPA — фонетичне представлення'" /tmp/deployed-app.js | cut -d: -f1)
+              ukrainian_line=$(grep -nF "continuousPanel('03 · Український фонетичний кандидат'" /tmp/deployed-app.js | cut -d: -f1)
+              test "$rtgs_line" -lt "$ipa_line"
+              test "$ipa_line" -lt "$ukrainian_line"
+              ! grep -Fq '<details class="rtgs-details"' /tmp/deployed-app.js
               echo "Published homepage and ordered RTGS/IPA/Ukrainian contract verified at $PAGE_URL"
               exit 0
             fi
