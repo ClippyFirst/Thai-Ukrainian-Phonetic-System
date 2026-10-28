@@ -1,3 +1,12 @@
+## 2026-10-28 — full-site UX/UI implementation pass
+
+- User asked to fix the UX/UI findings in one pass and return the updated public site URL; explicit constraint: use repository/GitHub skills and do not use Work mode.
+- Branch: `ux/full-site-ux-ui-overhaul-20261028`, created from main commit `d950f7d10f6a7a3a7335717747b932e8c693a49c`.
+- Implementation includes homepage information-hierarchy simplification, compact mode disclosure, visible uncertainty guidance, skip links/focusable main targets, responsive and touch-target improvements, result hierarchy, clipboard fallback/feedback, current methodology evidence links, UI contract updates, and Pages live-content contract updates.
+- Latest recorded implementation head before this handoff update: `7097cb9ee6f39147ab53a445fc0b2cd849ff3855`. Exact-head CI/static checks and PR/Pages deployment still need to be checked after the documentation commit. Do not claim the new design is live until the Pages workflow passes on the merged head.
+- Verification limits: no real browser screenshots were captured in this connector-only workflow, so manual visual review, real-device checks, keyboard end-to-end testing, and screen-reader checks remain PARTIAL. No WCAG certification or linguistic-accuracy claim is made.
+- Stop condition: fix all CI failures, verify static validation and the Pages published-content contract, merge only after checks pass, then return the actual deployed URL and links to CI/deploy evidence.
+
 ## 2026-10-28 — IPA adapter guidance integrated into the primary UI
 
 - User clarified that the separate “02 / IPA → УКРАЇНСЬКА” panel is unnecessary because IPA → Ukrainian adaptation already runs in the first/main Thai-text workflow; the missing piece was a clear explanation of the algorithm.

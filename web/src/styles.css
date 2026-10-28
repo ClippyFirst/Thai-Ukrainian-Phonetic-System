@@ -80,3 +80,88 @@ kbd{font-family:inherit;font-size:12px;font-weight:600;line-height:1.2;border:1p
 .ipa-adapter-row{padding:16px;background:var(--paper);min-width:0}
 .ipa-adapter-row .value{overflow-wrap:anywhere}
 @media(max-width:700px){.ipa-adapter-input{font-size:20px}.ipa-adapter-grid{grid-template-columns:1fr}}
+
+
+/* UX refresh 2026-10-28: clearer first action, stronger hierarchy, resilient controls. */
+:root{--blue:#2d2a8c;--red:#a51931;--ink:#17171b;--muted:#595963;--line:#d4d4dc;--paper:#fff;--wash:#f6f6f9;--max:1080px;--focus:#5b57c7}
+html{scroll-behavior:smooth;scroll-padding-top:18px}
+body{font-size:16px}
+.skip-link{position:absolute;z-index:100;left:12px;top:12px;transform:translateY(-160%);padding:12px 16px;background:var(--ink);color:#fff;font-weight:800}
+.skip-link:focus{transform:translateY(0);outline:3px solid var(--red);outline-offset:3px}
+.site-header{min-height:68px;height:auto;flex-wrap:wrap;padding-top:14px;padding-bottom:14px}
+.site-header nav a{display:inline-flex;align-items:center;min-height:40px}
+.hero{padding:48px 0 30px;max-width:860px}
+.hero h1{max-width:850px;font-size:clamp(34px,5.3vw,60px);line-height:1.06;letter-spacing:-.035em}
+.lede{font-size:18px;max-width:720px}
+.workbench{background:var(--wash);border:1px solid var(--line);padding:clamp(18px,3vw,32px);margin:0 0 12px}
+.workbench .section-head{align-items:flex-start;margin-bottom:18px}
+.workbench .section-head h2{font-size:clamp(23px,3vw,30px);margin:0 0 4px}
+.workbench-intro{margin:0;color:var(--muted);max-width:650px;font-size:15px}
+.input-label{margin-top:18px;font-size:15px}
+textarea{min-height:112px;font-size:clamp(25px,3vw,32px);background:#fff;border-color:#555560}
+textarea:focus-visible,#engine-mode:focus-visible,.primary:focus-visible,.text-button:focus-visible,.examples button:focus-visible,.copy:focus-visible,.mode-help summary:focus-visible,.site-header a:focus-visible,.method-links a:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.input-hint{font-size:14px;line-height:1.55;margin:8px 0 14px}
+#engine-mode{min-height:48px;background:#fff;margin-bottom:0}
+.mode-help{margin:6px 0 10px;font-size:14px}
+.mode-help summary{display:inline-flex;align-items:center;min-height:40px;cursor:pointer;color:var(--blue);font-weight:800;text-decoration:underline;text-underline-offset:3px}
+.mode-help dl{display:grid;grid-template-columns:minmax(100px,140px) 1fr;gap:8px 16px;margin:10px 0 2px;padding:14px;background:#fff;border:1px solid var(--line)}
+.mode-help dt{font-weight:800}
+.mode-help dd{margin:0;color:#414149}
+.examples{align-items:center;gap:8px 12px;padding:12px 0 18px}
+.examples button{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:5px 10px;border:1px solid var(--line);background:#fff;color:var(--ink);font-size:21px}
+.examples button:hover{border-color:var(--blue);background:#efeffa}
+.action-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.primary{min-height:48px;padding:13px 20px}
+.action-note{font-size:13px;color:var(--muted)}
+.status{min-height:0;margin:14px 0;padding:0 0 0 12px;line-height:1.55}
+.status:empty{display:none}
+.status.notice,.status.error{padding:12px 14px}
+.results{padding-bottom:36px}
+.results-heading{font-size:clamp(25px,3vw,32px);line-height:1.15;margin:30px 0 12px}
+.continuous-output{padding:clamp(14px,2.4vw,24px);margin:14px 0}
+.continuous-output.ua-continuous{border-top:3px solid var(--blue);border-bottom:1px solid var(--line)}
+.continuous-output-head h3{font-size:clamp(18px,2vw,22px)}
+.continuous-output-head p{max-width:650px;line-height:1.5}
+.continuous-output-value{font-size:clamp(17px,2vw,21px);line-height:1.8}
+.ua-continuous .continuous-output-value{font-size:clamp(22px,3vw,30px);font-weight:600}
+.copy{min-height:40px;padding:8px 12px}
+.result-card{padding:22px 0}
+.data-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.data{min-width:0}
+.label{font-size:12px;letter-spacing:.07em;line-height:1.45}
+.value{line-height:1.55}
+.method-note{padding:38px 0 54px}
+.method-note h2{font-size:28px;line-height:1.2;margin:0 0 14px}
+.method-note p{max-width:780px}
+.method-links{gap:8px 22px}
+.method-links a{display:inline-flex;align-items:center;min-height:40px}
+footer{font-size:13px}
+@media(max-width:700px){
+  .site-header{gap:8px 16px;padding:12px 14px}
+  .brand{font-size:14px}
+  .site-header nav{gap:6px;flex-wrap:wrap}
+  .site-header nav a{padding:0 7px;min-height:40px;font-size:14px}
+  .container{width:calc(100% - 28px)}
+  .hero{padding:34px 0 24px}
+  .hero h1{font-size:clamp(32px,9vw,42px);line-height:1.08}
+  .lede{font-size:16px}
+  .workbench{padding:16px 14px}
+  .workbench .section-head{gap:10px}
+  .workbench-intro{font-size:14px}
+  textarea{padding:13px;min-height:100px}
+  .mode-help dl{grid-template-columns:1fr;gap:3px}
+  .mode-help dd{margin-bottom:8px}
+  .examples{gap:7px}
+  .examples button{min-width:44px;min-height:44px}
+  .action-row{align-items:flex-start;flex-direction:column;gap:8px}
+  .primary{width:100%}
+  .continuous-output-head{display:flex;flex-direction:column;align-items:stretch}
+  .continuous-output-head .copy{align-self:flex-start;margin-top:4px}
+  .continuous-output-value{font-size:17px;padding:12px}
+  .data-grid{grid-template-columns:minmax(0,1fr)}
+  .result-top{display:flex;flex-direction:column;align-items:flex-start}
+  .badge{max-width:100%;overflow-wrap:anywhere}
+  footer{padding:18px 14px}
+}
+@media(min-width:701px) and (max-width:900px){.container{width:calc(100% - 40px)}.site-header{padding-left:20px;padding-right:20px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
