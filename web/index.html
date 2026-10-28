@@ -6,7 +6,7 @@
   <meta name="description" content="Дослідницький сервіс передавання тайської мови українською.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'">
   <title>Thai → Ukrainian — Сервіс</title>
-  <link rel="stylesheet" href="src/styles.css?v=20261028-ux-polish-2">
+  <link rel="stylesheet" href="src/styles.css?v=20261028-result-order-1">
 </head>
 <body>
 <a class="skip-link" href="#main-content">Перейти до основного вмісту</a>
@@ -23,11 +23,11 @@
 <section class="hero">
   <p class="eyebrow">ФОНЕТИКО-ГРАФЕМНИЙ АНАЛІЗАТОР · v0.6.1</p>
   <h1>Тайське написання → українське передавання</h1>
-  <p class="lede">Введіть тайське слово або фрагмент, щоб отримати український фонетичний кандидат і перевірити його через IPA. Це дослідницький результат, не переклад і не гарантована вимова.</p>
+  <p class="lede">Введіть тайський текст і отримайте три окремі результати: романізацію RTGS, IPA та український фонетичний кандидат. Це дослідницькі форми, не переклад і не гарантована вимова.</p>
 </section>
 <section class="workbench" aria-labelledby="input-heading">
   <div class="section-head">
-    <div><p class="eyebrow">ПОЧАТОК</p><h2 id="input-heading">Введіть тайський текст</h2><p class="workbench-intro">Для найкращої інтерпретації почніть з одного слова або короткого відомого прикладу.</p></div>
+    <div><p class="eyebrow">ПОЧАТОК</p><h2 id="input-heading">Введіть тайський текст</h2></div>
     <button class="text-button" id="clear" type="button">Очистити</button>
   </div>
   <label class="input-label" for="thai-input">Тайський текст</label>
@@ -59,11 +59,11 @@
   <p class="eyebrow">ПРИВАТНІСТЬ І МЕТОД</p>
   <h2 id="method-heading">Як формується результат</h2>
   <p>Текст аналізується локально у браузері й не надсилається до зовнішнього API.</p>
-  <p>Основний шлях: тайський текст → структурний і фонологічний аналіз → IPA → адаптація до української графіки. Невідомі IPA-сегменти не вгадуються; тон і довгота не зберігаються повністю в практичному українському записі. RTGS — окрема латинська довідкова романізація, не IPA й не джерело українського кандидата.</p>
+  <p>Порядок відображення результатів: RTGS → IPA → український кандидат. Це порядок подання, а не обчислень: тайський текст проходить структурний і фонологічний аналіз, далі формується IPA, а українська форма адаптується саме з IPA. RTGS — окрема латинська довідкова романізація, не IPA й не джерело українського кандидата. Невідомі IPA-сегменти не вгадуються; тон і довгота не зберігаються повністю в практичному українському записі.</p>
   <div class="method-links"><a href="system.html">Методологія та обмеження →</a><a href="system.html#statuses">Що означають статуси →</a><a href="system.html#beta-evidence">Докази й межі →</a></div>
 </section>
 </main>
 <footer><span>Thai → Ukrainian Phonetic-Graphemic Correspondence System · v0.6.1</span><a href="https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System" rel="noopener noreferrer">Вихідний код</a></footer>
-<script type="module" src="src/app.js?v=20261028-ux-polish-2"></script>
+<script type="module" src="src/app.js?v=20261028-result-order-1"></script>
 </body>
 </html>
