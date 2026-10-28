@@ -12,3 +12,8 @@
 - Runtime: the website does not import PyThaiNLP, download models, or make network requests. PyThaiNLP 5.4.0 is installed in CI only as a parity oracle.
 
 Copyright 2016-2026 PyThaiNLP Project. The copied/ported algorithm is provided under Apache-2.0; see the full license text linked above.
+
+
+## ClippyFirst RTGS correction data
+
+The finite correction/abstention layer in `web/src/rtgs-reference.js` is maintained by ClippyFirst and is not copied from PyThaiNLP. The word-level RTGS forms are documented with source links in `docs/research/thai-romanization-integration.md`; the orthographic correction for preposed vowels is separately identified. The PyThaiNLP algorithm port remains under the Apache-2.0 notice above.
