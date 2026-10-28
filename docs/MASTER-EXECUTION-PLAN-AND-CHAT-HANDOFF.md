@@ -1366,3 +1366,13 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - **DONE_VERIFIED:** public-content audit register is now maintained in `docs/final-audit.md`; the prior PR #112 copy changes were ported through PR #116 instead of merged blindly.
 - **PARTIAL:** a manual visual review in a real browser has not been performed in this session. Automated served-HTML/JavaScript contract checks pass; this is not a claim of visual QA.
 - **BLOCKED:** independent expert-adjudicated Thai IPA, word-boundary and Ukrainian target-form gold remain unavailable. Overall project status remains research prototype / partial linguistic coverage, not release-ready.
+
+
+## 2026-10-28 — final PR reconciliation
+
+- PR #117 merged as `713f42ec816856d352ea2efbacfd534590e456df`; exact-head CI including `test` and `master-artifact` passed in [40695138890](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40695138890).
+- PR #112 was closed as superseded after its unique homepage/system copy and UI-test changes were ported through PR #116 and the structured audit register was added in PR #117.
+- PR #115 and PR #116 are merged; Pages deployments [40692707861](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40692707861) and [40694421367](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40694421367) verified the live RTGS module and public guidance.
+- **DONE_VERIFIED:** code, regression tests, source/license attribution, public UI copy, post-deploy contract and handoff/audit/validation updates.
+- **PARTIAL:** manual visual review in a real browser has not been performed.
+- **BLOCKED:** independent expert-adjudicated Thai IPA, word boundaries and Ukrainian target forms are unavailable; full PyThaiNLP `newmm` tokenizer/dictionary parity is out of scope pending provenance and compatibility research. Project remains a research prototype, not release-ready.
