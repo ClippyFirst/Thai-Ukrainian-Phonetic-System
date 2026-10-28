@@ -42,6 +42,7 @@ assert.match(output.innerHTML, /Український фонетичний ка
 assert.match(output.innerHTML, /IPA — проміжне представлення/);
 assert.match(output.innerHTML, /RTGS — латинська романізація \(не IPA\)/);
 assert.match(output.innerHTML, /phrik/);
+assert.match(output.innerHTML, /<details class="rtgs-details"><summary>Додатково: латинська романізація RTGS<\/summary>/);
 assert.match(output.innerHTML, /RTGS не позначає тон/);
 assert.match(output.innerHTML, /ph\/th\/kh позначають придихові приголосні/);
 assert.match(output.innerHTML, /довготу голосних/);
@@ -198,7 +199,10 @@ assert.match(output.innerHTML, /UNRESOLVED/);
 // Soft mode is opt-in: it broadens unknown spans into structural syllable
 // candidates, while preserving explicit uncertainty and the IPA→Ukrainian path.
 const mode = element("engine-mode");
+const modeHint = element("mode-hint");
 mode.value = "soft";
+mode.listeners.change?.();
+assert.match(modeHint.textContent, /структурні припущення/);
 input.value = "ทดสอบกาไฟ";
 analyze.click();
 assert.match(status.textContent, /М’який/);
@@ -209,6 +213,8 @@ assert.match(output.innerHTML, /Попередній структурний ро
 assert.match(output.innerHTML, /IPA — проміжне представлення/);
 assert.match(output.innerHTML, /<pre class="continuous-output-value">[^<]*(?:ка|фай)/, "soft mode should emit a recoverable Ukrainian candidate for recognized/structurally parsed spans");
 mode.value = "super-soft";
+mode.listeners.change?.();
+assert.match(modeHint.textContent, /приблизний кандидат/);
 input.value = "ดินแดนที่เป็นประเทศยูเครนสมัยใหม่ ค.ศ. 1917, ฮอลอดอมอร์!";
 analyze.click();
 assert.match(status.textContent, /Суперм’який/);
@@ -226,6 +232,8 @@ assert.match(superSoftUa[1], /!/);
 assert.match(output.innerHTML, /approximate:orthographic-fallback/);
 assert.equal(status.className, "status notice", "full coverage must still be marked provisional");
 mode.value = "strict";
+mode.listeners.change?.();
+assert.match(modeHint.textContent, /залишаються невизначеними/);
 input.value = "ทดสอบกาไฟ";
 analyze.click();
 assert.match(status.textContent, /Строгий/);
