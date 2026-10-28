@@ -259,7 +259,7 @@ assert.match(homeHtml, /<select id="engine-mode"/);
 assert.match(homeHtml, /value="strict" selected/);
 assert.match(homeHtml, /value="soft"/);
 assert.match(homeHtml, /value="super-soft"/);
-assert.match(homeHtml, /повне покриття, приблизні звуки/);
+assert.match(homeHtml, /Суперм’який — (повне покриття, приблизні звуки|приблизний кандидат для кожного фрагмента)/);
 for (const example of examples) assert.ok(homeHtml.includes(`data-example="${example.dataset.example}"`), `homepage must expose ${example.dataset.example}`);
 assert.match(homeHtml, /system\.html#beta-evidence/);
 assert.match(systemHtml, /id="beta-evidence"/);
