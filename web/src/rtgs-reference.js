@@ -154,9 +154,24 @@ export function romanizeRtgsWords(words) {
 }
 /** Uses the existing analyzer's token boundaries; it does not call PyThaiNLP newmm. */
 export function renderRtgsTokens(tokens) {
+  let previousThai = null, previousRomanized = "";
   return (tokens || []).map(token => {
-    if (token.kind !== "thai") return token.input;
+    if (token.kind !== "thai") {
+      previousThai = null;
+      previousRomanized = "";
+      return token.input;
+    }
     const result = romanizeRtgsWord(token.input);
-    return result.status === "transliterated" ? result.value : "⟦RTGS НЕ ПЕРЕВІРЕНО: " + token.input + "⟧";
+    if (result.status !== "transliterated") {
+      previousThai = null;
+      previousRomanized = "";
+      return "⟦RTGS НЕ ПЕРЕВІРЕНО: " + token.input + "⟧";
+    }
+    let value = result.value;
+    if (previousThai !== null && value &&
+        shouldAddSeparator(previousThai, token.input, previousRomanized)) value = "a" + value;
+    previousThai = token.input;
+    previousRomanized = value;
+    return value;
   }).join("");
 }
