@@ -1336,3 +1336,11 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Implementation: the adapters now append ASCII apostrophe immediately after the corresponding Ukrainian consonant: /kʰa/ → к'а, /pʰa/ → п'а, /tʰa/ → т'а, /tɕʰa/ → ч'а. Non-aspirated /ka/ remains ка; /ha/ → га; /ʔa/ → а. RTGS is not used to infer these mappings.
 - Tests updated for aspirated vs non-aspirated contrasts, clusters, tone/length notation and h/glottal-stop separation. Methodology, validation matrix and final audit updated in place.
 - **Status at checkpoint:** PARTIAL pending exact-head GitHub Actions CI, generated-artifact/master-artifact checks, and inspection of all downstream output changes. No local checkout is available, so no local tests are claimed. The convention is a project decision, not an independently adjudicated Ukrainian norm.
+
+
+## 2026-10-28 — adapter, candidate renderer, data table and UI reconciled
+
+- Follow-up to the aspiration-policy implementation: the IPA-based candidate renderer (`src/thai_ukrainian/ua_orthography.py`) now agrees with the canonical Python/browser IPA adapters, and `data/derived/thai_consonant_correspondence.csv` has been regenerated to show к'/п'/т'/ч' for aspirated onset rows, including obsolete grapheme rows.
+- Public explanations were updated in `web/index.html` and `web/system.html`; the Ukrainian-vs-Russian comparison matrix no longer describes aspiration as unmarked. `tests/test_completion_layers.py` and `tests/test_text_pipeline.py` now expect the new forms for the source-attested `ยูเครน` and sense-scoped `ทะเลทราย` examples.
+- **Evidence:** Web static validation passed at `8c855b9ec1d557d70135a9353c30df7c20b8f26f` (run [40688615996](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40688615996)). The full CI run on that exact code head was still in progress at the latest check; no full-suite pass is claimed. An earlier full CI run exposed three stale expected-output assertions, which were updated. The exact-head suite must confirm all tests and master-artifact generation.
+- No local tests were possible because this execution environment has no repository checkout. RTGS parity tests and source-registry generation had passed at the start of the latest CI run; full Python/browser/master-artifact verification remains pending.
