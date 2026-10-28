@@ -686,11 +686,11 @@ The Python and browser IPA adapters now map Thai /h/ to Ukrainian «г», and re
 
 ## UX/UI follow-up — final interaction polish (2026-10-28)
 
-| Check | Acceptance criterion | State before CI |
+| Check | Acceptance criterion | Final state |
 |---|---|---|
-| Primary-result hierarchy | Ukrainian candidate and IPA remain immediately visible; RTGS is collapsed by default | PARTIAL |
-| Mode comprehension | Selecting strict/soft/super-soft updates a concise Ukrainian explanation of the uncertainty trade-off | PARTIAL |
-| Interaction targets | Copy and clear controls have at least 44px minimum height; disclosure summary is keyboard-focusable | PARTIAL |
-| Regression coverage | UI test covers RTGS disclosure and all three dynamic mode explanations | PARTIAL |
-| Deployment contract | Pages workflow checks the new public JS markers after deployment | PARTIAL |
+| Primary-result hierarchy | Ukrainian candidate and IPA remain immediately visible; RTGS is collapsed by default | DONE_VERIFIED — CI + Pages contract |
+| Mode comprehension | Selecting strict/soft/super-soft updates a concise Ukrainian explanation of the uncertainty trade-off | DONE_VERIFIED — UI contract |
+| Interaction targets | Copy and clear controls have at least 44px minimum height; disclosure summary is keyboard-focusable | DONE_VERIFIED — static CSS contract |
+| Regression coverage | UI test covers RTGS disclosure and all three dynamic mode explanations | DONE_VERIFIED — full CI |
+| Deployment contract | Pages workflow checks the new public JS markers after deployment | DONE_VERIFIED — Pages run 40729942455 |
 | Visual/accessibility QA | Browser screenshots, real-device checks, contrast/focus/zoom/screen-reader tests | BLOCKED in this connector-only session; requires browser/device execution |
