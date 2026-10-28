@@ -654,3 +654,8 @@ The current PR branch now implements the selected IPA-adapter policy: Thai /h/ �
 - Added the source-pinned compound `ทะเลทราย → ทะ|เล|ซาย` from en.wiktionary oldid 87239667, which records `/tʰa˦˥.leː˧.saːj˧/`. The source is dictionary evidence, not independent gold.
 - Isolated `ทราย` remains withheld because the Royal Institute distinguishes the sand sense from the deer-name sense with a true cluster. This resolves one documented context without generalizing the `ทร` spelling rule.
 - Python and browser regression tests are added; the final branch CI remains in progress at the master-table generator, so these tests are not yet verified.
+
+
+### Verification note — regression harness correction
+
+The first run with the new coverage tests completed master-table generation and ran 209 Python tests. The source-attested `ทะเลทราย` compound test, the ambiguity sentinels, and all tone-table tests passed; one newly added `ทราบ` regression failed because it called the structural parser but asserted final IPA. The test now calls `api.analyze_syllable()`. The latest branch head requires a full rerun; no green status is claimed yet.

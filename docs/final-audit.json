@@ -1393,7 +1393,7 @@
     ],
     "independent_ipa_gold": false,
     "accuracy_claimed": false,
-    "ci_status": "latest head includes cached special-orthography registry; exact-head CI is running at generate_master_table.py and downstream tests are pending",
+    "ci_status": "latest test fix committed; rerun pending. Previous run: master-table generation completed, 208/209 Python tests passed; one new regression incorrectly used structural-only parse_syllable instead of api.analyze_syllable and has been corrected.",
     "context_scoped_reading": {
       "word": "ทะเลทราย",
       "syllables": [

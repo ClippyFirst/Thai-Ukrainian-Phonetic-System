@@ -1283,3 +1283,8 @@ This note supersedes the preceding documentation-only status. The branch now cha
 
 - Added `functools.lru_cache(maxsize=1)` to `load_special_rules()`. The exhaustive master-table generator re-parses 351,780 structural combinations; the uncached loader reopened `data/thai/special_orthography.csv` for each parse, making a registry lookup an avoidable per-row file I/O operation.
 - This is semantics-preserving: the registry is static during a run, callers do not mutate it, and the returned rules remain identical. The latest exact-head CI must verify that generation completes and all Python/browser tests pass.
+
+
+### Test correction after first executable run
+
+- The generator completed after caching the special-orthography registry. The first Python suite then ran 209 tests and reported one failure in the newly added exact-`ทราบ` regression: the test called the structural-only `parse_syllable()` API but asserted that it had already composed IPA. The production path is `api.analyze_syllable()`; the regression now exercises that end-to-end API. The source-attested desert compound and all three new tone-table tests passed in that run. Latest-head CI must rerun after this test correction.

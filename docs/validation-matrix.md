@@ -593,3 +593,6 @@ The Python and browser IPA adapters now map Thai /h/ to Ukrainian «г», and re
 
 
 | Special-orthography registry performance | DONE_IMPLEMENTED, verification pending | Cached `load_special_rules()` with `lru_cache(maxsize=1)` to avoid reopening the static CSV for every parser call during the 351,780-row master generator. Acceptance: latest-head CI completes master-table generation and downstream Python/browser checks. |
+
+
+| Exact lexical ทร regression test API | FIXED, rerun pending | First CI execution: 208/209 tests passed; the new `ทราบ` test incorrectly asserted phonemic IPA from the structural-only `parse_syllable()` function. Switched it to `api.analyze_syllable()` so the assertion covers the full phonology pipeline. Latest-head CI is the acceptance gate. |
