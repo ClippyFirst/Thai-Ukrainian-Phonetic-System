@@ -1392,3 +1392,9 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - **DONE_VERIFIED:** code, regression tests, source/license attribution, public UI copy, post-deploy contract and handoff/audit/validation updates.
 - **PARTIAL:** manual visual review in a real browser has not been performed.
 - **BLOCKED:** independent expert-adjudicated Thai IPA, word boundaries and Ukrainian target forms are unavailable; full PyThaiNLP `newmm` tokenizer/dictionary parity is out of scope pending provenance and compatibility research. Project remains a research prototype, not release-ready.
+
+## 2026-10-28 — UX accessibility polish continuation
+
+- Starting main: `25ebb8f70264ee76f3a93c48b42fd35154cfb77e`; branch: `fix/ux-accessibility-polish-20261028`.
+- Primary UX refresh and fixed Pages contract were already on main. This follow-up raises navigation, mode disclosure, and methodology-link targets to 44px, updates stylesheet cache keys, and strengthens UI assertions.
+- Acceptance: exact-head CI and post-merge Pages deployment/content verification pass. Browser screenshots/manual device review and WCAG 2.2 AA are not claimed in this connector-only run. No Thai phonological rules changed; independent linguistic gold remains an evidence-limited blocker.
