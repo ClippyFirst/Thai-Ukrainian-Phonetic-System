@@ -599,3 +599,10 @@ The Python and browser IPA adapters now map Thai /h/ to Ukrainian «г», and re
 
 
 | Main merge and deployment | DONE_VERIFIED | PR #110 squash-merged as `403e0bc02dee5e469511d91bba64d64010b2594d`; post-merge CI `40645764144` passed test/master-artifact jobs; Pages deploy `40645764146` passed and verified the live homepage contract. This does not close independent IPA/UA gold or full lexical coverage. |
+
+
+## 2026-10-28 — aspiration marker policy (PR #115 continuation)
+
+- **PARTIAL until exact-head CI:** Python and browser IPA→Ukrainian adapters encode IPA aspiration on /kʰ pʰ tʰ tɕʰ/ with an apostrophe immediately after the consonant output (к' п' т' ч'), rather than silently neutralizing aspiration or using «х».
+- Regression cases cover aspirated/non-aspirated pairs, consonant clusters, standalone /h/ → «г», and /ʔ/ as a separate segment. RTGS remains a separate reference output and is not consulted by the adapter.
+- Acceptance: exact-head CI must pass Python tests, browser adapter tests, parity, generated artifact checks and master-artifact; review any expected-output drift before calling this DONE_VERIFIED. Independent linguistic review of the project apostrophe convention remains evidence-limited.
