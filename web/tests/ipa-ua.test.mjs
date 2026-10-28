@@ -67,8 +67,8 @@ console.log("IPA → Ukrainian adaptation: canonical, feature-audit, inventory, 
 // The public UI must describe the same IPA-first adapter contract as the engine.
 const serviceHtml = fs.readFileSync(new URL("../index.html", import.meta.url), "utf8");
 const systemHtml = fs.readFileSync(new URL("../system.html", import.meta.url), "utf8");
-assert(serviceHtml.includes("Як утворюється український кандидат"));
-assert(serviceHtml.includes("Адаптер зіставляє відомі IPA-сегменти з українськими відповідниками"));
+assert(serviceHtml.includes("Як формується результат"));
+assert(serviceHtml.includes("Основний шлях: тайський текст → структурний і фонологічний аналіз → IPA → адаптація до української графіки"));
 assert(!serviceHtml.includes("а не механічною заміною символів IPA"));
 assert(systemHtml.includes("Український результат формується окремим шаром з IPA"));
 console.log("Public UI: IPA-first adapter contract matches the implementation");
