@@ -42,8 +42,16 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 22
+      - name: Install pinned RTGS parity reference
+        run: python -m pip install pythainlp==5.4.0
       - name: Generate pinned CC0 browser word dictionary
         run: python scripts/generate_web_word_dictionary.py
+      - name: Run RTGS browser regression tests
+        run: node web/tests/rtgs-reference.test.mjs
+      - name: Run RTGS reference parity tests
+        run: python scripts/test_rtgs_parity.py
+      - name: Run IPA adaptation browser tests
+        run: node web/tests/ipa-ua.test.mjs
       - name: Run browser parity test
         run: node web/tests/parity.test.mjs
       - name: Run article markup cleanup contract test
