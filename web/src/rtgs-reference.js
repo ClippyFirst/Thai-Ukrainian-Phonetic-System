@@ -32,6 +32,6 @@ export function renderRtgsTokens(tokens) {
   return (tokens || []).map(token => {
     if (token.kind !== "thai") return token.input;
     const result = lookupRtgsToken(token.input);
-    return result.status === "reviewed" ? result.value : "⟦RTGS НЕ ПЕРЕВІРЕНО: " + token.input + "⟧";
+    return result.status === "fixture" ? result.value : "⟦RTGS НЕ ПЕРЕВІРЕНО: " + token.input + "⟧";
   }).join("");
 }
