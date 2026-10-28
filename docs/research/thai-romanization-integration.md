@@ -18,14 +18,14 @@ ISO 11940 is not a substitute: it is a reversible orthographic transliteration s
 - Reference source: https://github.com/PyThaiNLP/pythainlp/blob/v5.4.0/pythainlp/transliterate/royin.py
 - API documentation: https://pythainlp.org/docs/5.4.0/api/transliterate.html
 - License: Apache-2.0; attribution and license text are included in `THIRD_PARTY_NOTICES.md` and `licenses/Apache-2.0-PyThaiNLP.txt`.
-- The browser implementation ports the vowel rules, consonant mapping, normalization, `รร` handling, and the reference syllable-separator rule.
+- The browser implementation ports the vowel rules, consonant mapping, normalization, `รร` handling, and the reference syllable-separator rule. It also applies a narrowly scoped orthographic correction for preposed vowels in ห นำ clusters (e.g. ใหม่/ไหม → `mai`, เหงา → `ngao`), because blindly applying the upstream per-token pattern order can misorder the vowel.
 - The static website has no runtime dependency on Python, external APIs, model downloads, or network calls. PyThaiNLP is a CI-only oracle.
 
 ## Parity corpus and what it proves
 
 `docs/research/rtgs-parity-corpus.json` is a versioned list of token inputs and pre-segmented token sequences. `scripts/test_rtgs_parity.py` invokes the browser implementation under Node and compares results with the private per-token `_romanize` and `_should_add_syllable_separator` functions from pinned PyThaiNLP 5.4.0. CI must pass this test before parity can be called verified.
 
-This is **algorithm parity for supplied token boundaries**, not:
+This is **algorithm parity for supplied token boundaries except the explicitly tested ห นำ orthographic corrections**, not:
 - parity with PyThaiNLP's default `newmm` tokenizer or its dictionary;
 - proof that either system has the correct segmentation for every Thai sentence;
 - an independent IPA, acoustic, or Ukrainian-transcription accuracy benchmark.
@@ -39,8 +39,9 @@ The website currently passes token boundaries from ClippyFirst's own analyzer. A
 3. [x] Keep RTGS separate from the IPA → Ukrainian adapter.
 4. [x] Add a versioned corpus and CI comparison against the pinned upstream implementation.
 5. [ ] Verify the full CI run on the final branch head, including the reference parity test.
-6. [ ] Decide whether to port or bundle a compatible Thai word tokenizer and dictionary, or keep the documented ClippyFirst-token-boundary contract.
-7. [ ] Run browser visual/accessibility checks and confirm deployment/build behavior before promoting the feature out of draft.
+6. [ ] Review the documented ห นำ correction against an authoritative Thai orthography/RTGS reference and expand lexical edge-case coverage before claiming standards-level completeness.
+7. [ ] Decide whether to port or bundle a compatible Thai word tokenizer and dictionary, or keep the documented ClippyFirst-token-boundary contract.
+8. [ ] Run browser visual/accessibility checks and confirm deployment/build behavior before promoting the feature out of draft.
 
 ## Remaining independent research gaps
 
