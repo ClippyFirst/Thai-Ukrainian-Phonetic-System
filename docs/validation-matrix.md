@@ -682,3 +682,15 @@ The Python and browser IPA adapters now map Thai /h/ to Ukrainian «г», and re
 - **DONE_VERIFIED — code and automated acceptance at `82d7fd5d6469b3d2c2fcad98158bf98dcb452135`:** full CI passed [40723829479](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40723829479), including the UI contract and 351,780-row master-artifact gate; static validation passed [40723829245](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40723829245).
 - **PARTIAL — publication:** PR #125 is open; the live Pages contract must pass after merge.
 - **BLOCKED/evidence-limited:** manual real-browser/mobile/screen-reader review and independent linguistic gold corpus are not available in this no-Work session.
+
+
+## UX/UI follow-up — final interaction polish (2026-10-28)
+
+| Check | Acceptance criterion | State before CI |
+|---|---|---|
+| Primary-result hierarchy | Ukrainian candidate and IPA remain immediately visible; RTGS is collapsed by default | PARTIAL |
+| Mode comprehension | Selecting strict/soft/super-soft updates a concise Ukrainian explanation of the uncertainty trade-off | PARTIAL |
+| Interaction targets | Copy and clear controls have at least 44px minimum height; disclosure summary is keyboard-focusable | PARTIAL |
+| Regression coverage | UI test covers RTGS disclosure and all three dynamic mode explanations | PARTIAL |
+| Deployment contract | Pages workflow checks the new public JS markers after deployment | PARTIAL |
+| Visual/accessibility QA | Browser screenshots, real-device checks, contrast/focus/zoom/screen-reader tests | BLOCKED in this connector-only session; requires browser/device execution |
