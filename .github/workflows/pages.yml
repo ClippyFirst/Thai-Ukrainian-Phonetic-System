@@ -75,7 +75,7 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-      - name: Verify published whole-text UI and RTGS contract
+      - name: Verify published single-flow UI, IPA adapter and RTGS contract
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
         run: |
@@ -90,9 +90,9 @@ jobs:
               && grep -Fq 'value="super-soft"' /tmp/deployed-index.html \
               && grep -Fq 'Суперм’який — приблизний кандидат для кожного фрагмента' /tmp/deployed-index.html \
               && grep -Fq 'БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ' /tmp/deployed-index.html \
-              && grep -Fq 'id="ipa-input"' /tmp/deployed-index.html \
-              && grep -Fq 'id="ipa-adapt"' /tmp/deployed-index.html \
-              && grep -Fq 'id="ipa-adapter-result"' /tmp/deployed-index.html \
+              && ! grep -Fq 'id="ipa-input"' /tmp/deployed-index.html \
+              && ! grep -Fq 'id="ipa-adapt"' /tmp/deployed-index.html \
+              && grep -Fq 'Як утворюється український кандидат' /tmp/deployed-index.html \
               && curl --fail --silent --show-error "$PAGE_URL/src/app.js" -o /tmp/deployed-app.js \
               && curl --fail --silent --show-error "$PAGE_URL/src/engine.js" -o /tmp/deployed-engine.js \
               && curl --fail --silent --show-error "$PAGE_URL/src/ipa-ua.js" -o /tmp/deployed-ipa-ua.js \
@@ -106,7 +106,7 @@ jobs:
               && grep -Fq 'Тести — не мовний еталон' /tmp/deployed-system.html \
               && grep -Fq 'незалежно експертно перевірених рядків у поточному еталоні немає' /tmp/deployed-system.html \
               && grep -Fq 'continuous-output-value' /tmp/deployed-app.js \
-              && grep -Fq 'adaptIpaToUkrainian(source)' /tmp/deployed-app.js \
+              && grep -Fq 'АУДИТ IPA → УКРАЇНСЬКА' /tmp/deployed-app.js \
               && grep -Fq 'RTGS — латинська романізація (не IPA)' /tmp/deployed-app.js \
               && grep -Fq 'renderRtgsTokens' /tmp/deployed-app.js \
               && grep -Fq 'romanizeRtgsWord' /tmp/deployed-rtgs.js \
@@ -121,11 +121,11 @@ jobs:
             fi
             if [ "$attempt" -eq 12 ]; then
               echo "Published homepage or RTGS contract did not appear after 12 attempts" >&2
-              for marker in 'data-example="กา"' 'data-example="จริง"' 'id="engine-mode"' 'value="soft"' 'value="super-soft"' 'БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ' 'id="ipa-input"' 'id="ipa-adapt"' 'id="ipa-adapter-result"' 'Вставте слово або фрагмент тексту' 'usage-guide' 'RTGS — окрема латинська довідкова романізація'; do
+              for marker in 'data-example="กา"' 'data-example="จริง"' 'id="engine-mode"' 'value="soft"' 'value="super-soft"' 'БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ' 'Як утворюється український кандидат' 'Вставте слово або фрагмент тексту' 'usage-guide' 'RTGS — окрема латинська довідкова романізація'; do
                 grep -Fq "$marker" /tmp/deployed-index.html || echo "Missing homepage marker: $marker" >&2
               done
               if [ -f /tmp/deployed-app.js ]; then
-                for marker in 'Цілісний результат' 'continuous-output-value' 'М’який режим — попередній результат' 'Суперм’який' 'adaptIpaToUkrainian(source)' 'RTGS — латинська романізація (не IPA)' 'renderRtgsTokens'; do
+                for marker in 'Цілісний результат' 'continuous-output-value' 'М’який режим — попередній результат' 'Суперм’який' 'АУДИТ IPA → УКРАЇНСЬКА' 'RTGS — латинська романізація (не IPA)' 'renderRtgsTokens'; do
                   grep -Fq "$marker" /tmp/deployed-app.js || echo "Missing app marker: $marker" >&2
                 done
               else
