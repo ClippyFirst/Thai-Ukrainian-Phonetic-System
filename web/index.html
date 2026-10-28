@@ -54,25 +54,15 @@
 </section>
 <section id="status" class="status" role="status" aria-live="polite" aria-atomic="true"></section>
 <section id="results" class="results" aria-live="polite" aria-label="Результати аналізу" hidden></section>
- <section class="workbench ipa-adapter" aria-labelledby="ipa-adapter-heading">
-  <div class="section-head">
-    <div><p class="eyebrow">02 / IPA → УКРАЇНСЬКА</p><h2 id="ipa-adapter-heading">Маєте транскрипцію IPA?</h2></div>
-  </div>
-  <label class="input-label" for="ipa-input">Тайська IPA-транскрипція</label>
-  <textarea id="ipa-input" class="ipa-adapter-input" lang="und-fonipa" rows="2" spellcheck="false" autocomplete="off" autocapitalize="off" aria-describedby="ipa-input-hint" placeholder="[kʰaː˩˩˦] або /t͡ɕʰaː/"></textarea>
-  <p class="input-hint" id="ipa-input-hint">Вставте IPA у квадратних дужках або між скісними рисками. Невідомий сегмент блокує результат, а не вгадується. Придихові /kʰ pʰ tʰ tɕʰ/ передаються апострофом після приголосного (к' п' т' ч'); самостійний /h/ передається як «г». Тон, довгота й наголос відображаються в аудиті як нейтралізовані ознаки: український кандидат їх не кодує.</p>
-  <button class="primary" id="ipa-adapt" type="button">Адаптувати IPA → українська <span aria-hidden="true">↗</span></button>
-  <section id="ipa-adapter-result" class="ipa-adapter-result" role="status" aria-live="polite" aria-atomic="true" hidden></section>
-</section>
 <section class="method-note">
   <p class="eyebrow">ПРИВАТНІСТЬ І МЕТОД</p>
   <p>Аналіз виконується локально у браузері: сторінка не надсилає введений текст до зовнішнього API.</p>
-  <p>IPA є проміжним контрольним представленням і обов’язковою межею адаптера. Український кандидат формується з типізованого фонетичного результату через IPA; тайська орфографія не передається до адаптера IPA → українська.</p>
+  <p><strong>Як утворюється український кандидат.</strong> Єдиний основний потік: тайський текст → структурний і фонологічний аналіз → IPA → адаптація до української графіки. Адаптер зіставляє відомі IPA-сегменти з українськими відповідниками, застосовує найдовше відповідне правило, окремо обробляє придихові /kʰ pʰ tʰ tɕʰ/ як к\u0027 п\u0027 т\u0027 ч\u0027, передає самостійний /h/ як «г» і не вгадує невідомі сегменти. Тон, довгота й наголос не кодуються в практичному українському записі; ці втрати та застосовані правила видно в детальному аудиті складу. IPA — обов’язкова межа адаптації: тайська орфографія не передається до українського адаптера напряму.</p>
   <p>RTGS — окрема латинська довідкова романізація, а не IPA і не джерело українського кандидата. Вона не позначає тон і не зберігає надійно довготу голосних та всі фонологічні розрізнення.</p>
   <div class="method-links"><a href="system.html">Як працює система →</a><a href="system.html#statuses">Статуси результату →</a></div>
 </section>
 </main>
 <footer><span>Thai → Ukrainian Phonetic-Graphemic Correspondence System · v0.6.1</span><a href="https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System" rel="noopener noreferrer">Вихідний код</a></footer>
-<script type="module" src="src/app.js?v=20261028-rtgs-guidance"></script>
+<script type="module" src="src/app.js?v=20261028-ipa-flow-guidance"></script>
 </body>
 </html>
