@@ -1,3 +1,11 @@
+## 2026-10-28 — IPA adaptation explained in the main flow; redundant input panel removed
+
+- User-facing correction: the standalone “02 / IPA → УКРАЇНСЬКА” form duplicated an adapter that already runs in the main Thai-text pipeline. It is removed from the public homepage; IPA remains the mandatory internal boundary, not a second user workflow.
+- The main method note now explains the actual flow (Thai text → structural/phonological analysis → IPA → Ukrainian adaptation), longest supported segment matching, aspiration apostrophes, standalone /h/ → «г», fail-closed unknown-segment handling, and neutralization of tone/length/stress. Per-syllable output continues to expose applied rules and neutralized features.
+- Python/browser adapter modules and their unit tests remain intact. Only the duplicate homepage controls and their UI-specific test path are removed.
+- Exact-head CI and Pages deployment are pending for branch `ux/integrate-ipa-adaptation-into-main-flow-20261028`; do not mark DONE_VERIFIED until CI, UI-contract tests, and the live published-content contract pass.
+- Acceptance: homepage has no standalone IPA input IDs; main flow still exposes IPA and the per-syllable adaptation audit; unknown IPA segments remain fail-closed in adapter tests.
+
 ## 2026-10-27 — super-soft full-coverage fallback
 
 - Added an opt-in **Суперм’який** browser mode for whole-text transcription. For unresolved Thai orthographic fragments it produces a provisional segmental IPA candidate, then obtains the Ukrainian candidate exclusively through the existing IPA → Ukrainian adapter.
