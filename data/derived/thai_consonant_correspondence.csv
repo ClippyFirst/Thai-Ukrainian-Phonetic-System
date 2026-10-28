@@ -3,11 +3,11 @@ grapheme,role,syllable_position,class,phonemic_ipa,surface_ipa,coda_allowed,ukra
 ก,coda,syllable-final,mid,k,k̚,true,к,к,,registry
 ข,onset,syllable-initial,high,kʰ,kʰ,true,к',к',,registry
 ข,coda,syllable-final,high,k,k̚,true,к,к,,registry
-ฃ,onset,syllable-initial,high,kʰ,kʰ,true,к,к,obsolete,registry
+ฃ,onset,syllable-initial,high,kʰ,kʰ,true,к',к',obsolete,registry
 ฃ,coda,syllable-final,high,k,k̚,true,к,к,obsolete,registry
 ค,onset,syllable-initial,low,kʰ,kʰ,true,к',к',,registry
 ค,coda,syllable-final,low,k,k̚,true,к,к,,registry
-ฅ,onset,syllable-initial,low,kʰ,kʰ,true,к,к,obsolete,registry
+ฅ,onset,syllable-initial,low,kʰ,kʰ,true,к',к',obsolete,registry
 ฅ,coda,syllable-final,low,k,k̚,true,к,к,obsolete,registry
 ฆ,onset,syllable-initial,low,kʰ,kʰ,true,к',к',,registry
 ฆ,coda,syllable-final,low,k,k̚,true,к,к,,registry
