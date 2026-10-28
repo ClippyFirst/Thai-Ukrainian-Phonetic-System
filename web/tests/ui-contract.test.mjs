@@ -270,7 +270,7 @@ assert.match(homeHtml, /Суперм’який — приблизний кан�
 for (const example of examples) assert.ok(homeHtml.includes(`data-example="${example.dataset.example}"`), `homepage must expose ${example.dataset.example}`);
 assert.match(homeHtml, /system\.html#beta-evidence/);
 assert.match(homeHtml, /RTGS — окрема латинська довідкова романізація/);
-assert.match(homeHtml, /Придихові \/kʰ pʰ tʰ tɕʰ\//);
+assert.match(homeHtml, /обробляє придихові \/kʰ pʰ tʰ tɕʰ\//);
 assert.doesNotMatch(homeHtml, /id="ipa-input"|id="ipa-adapt"|id="ipa-adapter-result"/, "the homepage must not duplicate the existing IPA→Ukrainian pipeline as a second input mode");
 assert.match(homeHtml, /Як утворюється український кандидат/);
 assert.match(homeHtml, /Адаптер зіставляє відомі IPA-сегменти/);
