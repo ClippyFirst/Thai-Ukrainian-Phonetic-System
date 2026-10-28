@@ -1264,3 +1264,9 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Added regression tests requiring unlisted special-orthography forms to remain analysis-dependent and verifying that the exact lexical reading `ทราบ` does not make `ทร` a productive global /s/ rule. The Royal Institute source explicitly distinguishes `ทราย` “sand” (non-cluster /s/) from `ทราย` in the deer-name family (true cluster reading); the engine must not guess the sense from spelling alone.
 - This is a coverage audit and fail-closed regression hardening, not a broad phonology expansion. No unsupported IPA labels or accuracy claims were added. Independent IPA gold remains blocked on expert adjudication.
 - Status pending: exact-head CI, generated master artifact, browser/Python parity and static web validation on the PR head. Do not mark the new tests DONE_VERIFIED until CI completes.
+
+
+### Follow-up — productive tone-table completeness test
+
+- Added `tests/test_tone_rule_coverage.py`: exact expected matrix for all 15 conventional tone rules, duplicate-condition detection, runtime lookup verification for every row, and rejection of mai-tri/mai-chattawa with high/low-class initials.
+- This validates completeness of the declared orthographic rule table, not the parser's segmentation or acoustic tone accuracy. CI remains in progress at `generate_master_table.py`; no pass is claimed until downstream test jobs execute.
