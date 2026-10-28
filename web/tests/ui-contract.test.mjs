@@ -39,7 +39,7 @@ analyze.click();
 assert.equal(output.hidden, false);
 assert.match(output.innerHTML, /Результати · 3 представлення/);
 assert.match(output.innerHTML, /Український фонетичний кандидат/);
-assert.match(output.innerHTML, /IPA — проміжне представлення/);
+assert.match(output.innerHTML, /02 · IPA — фонетичне представлення/);
 assert.match(output.innerHTML, /RTGS — латинська романізація \(не IPA\)/);
 assert.match(output.innerHTML, /phrik/);
 assert.match(output.innerHTML, /01 · RTGS — латинська романізація \(не IPA\)/);
