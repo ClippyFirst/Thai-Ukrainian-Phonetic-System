@@ -68,8 +68,7 @@ const VOWEL_SOURCE = String.raw`เ*ียว,$1iao
 *ะ,$1a
 #ฤ,$1rue
 $ฤ,$1ri`;
-const VOWEL_PATTERNS = VOWEL_SOURCE.split("
-").map(line => {
+const VOWEL_PATTERNS = VOWEL_SOURCE.split("\n").map(line => {
   const i = line.indexOf(",");
   const pattern = line.slice(0, i).replace(/\*/g, () => "(" + "[" + C + "])")
     .replace(/#/g, "([คนพมห])").replace(/\$/g, "([กตทปศส])");
