@@ -103,6 +103,8 @@ jobs:
               && grep -Fq 'Приблизне резервне читання' /tmp/deployed-app.js \
               && grep -Fq 'Цілісний результат' /tmp/deployed-app.js \
               && grep -Fq 'class="skip-link"' /tmp/deployed-index.html \
+              && grep -Fq 'src/styles.css?v=20261028-ux-polish-2' /tmp/deployed-index.html \
+              && grep -Fq 'src/app.js?v=20261028-ux-polish-2' /tmp/deployed-index.html \
               && grep -Fq 'class="mode-help"' /tmp/deployed-index.html \
               && grep -Fq 'RTGS — окрема латинська довідкова романізація' /tmp/deployed-index.html \
               && grep -Fq 'Текст аналізується локально у браузері' /tmp/deployed-index.html \
@@ -110,6 +112,9 @@ jobs:
               && grep -Fq 'Тести — не мовний еталон' /tmp/deployed-system.html \
               && grep -Fq 'незалежно експертно перевірених рядків у поточному еталоні немає' /tmp/deployed-system.html \
               && grep -Fq 'continuous-output-value' /tmp/deployed-app.js \
+              && grep -Fq 'rtgs-details' /tmp/deployed-app.js \
+              && grep -Fq 'Строгий режим: невідомі фрагменти залишаються невизначеними' /tmp/deployed-app.js \
+              && grep -Fq 'Суперм’який режим: невідомі фрагменти отримують приблизний кандидат' /tmp/deployed-app.js \
               && grep -Fq 'АУДИТ IPA → УКРАЇНСЬКА' /tmp/deployed-app.js \
               && grep -Fq 'RTGS — латинська романізація (не IPA)' /tmp/deployed-app.js \
               && grep -Fq 'renderRtgsTokens' /tmp/deployed-app.js \
