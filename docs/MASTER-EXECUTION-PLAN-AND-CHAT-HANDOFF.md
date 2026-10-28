@@ -1328,3 +1328,11 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - **GitHub Pages deployment:** [40645764146](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40645764146) passed and verified the published homepage contract at https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/.
 - The context-scoped `ทะเลทราย → ทะ|เล|ซาย` reading is deployed in both Python and browser engines. Isolated `ทราย` intentionally remains unresolved without sense context.
 - **Readiness:** engineering/deployment checks pass; overall project remains a research prototype with partial linguistic coverage. Independent IPA gold, independent Ukrainian target adjudication, broader lexical exception coverage and connected-speech phonetics remain open. No accuracy claim is made.
+
+## 2026-10-28 — aspiration apostrophe implementation (continuation on PR #115)
+
+- Working branch: `feat/thai-rtgs-reference-20261028`; existing draft PR [#115](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/115), based on main `d39fc9e2c40db4a9f760069099c1f45973d592c8`. RTGS reference work remains isolated from the IPA adapter.
+- Current finding: both Python and browser adapters recognized /kʰ pʰ tʰ tɕʰ/ but mapped them to plain к/п/т/ч and listed aspiration as neutralized. That contradicted the agreed project convention.
+- Implementation: the adapters now append ASCII apostrophe immediately after the corresponding Ukrainian consonant: /kʰa/ → к'а, /pʰa/ → п'а, /tʰa/ → т'а, /tɕʰa/ → ч'а. Non-aspirated /ka/ remains ка; /ha/ → га; /ʔa/ → а. RTGS is not used to infer these mappings.
+- Tests updated for aspirated vs non-aspirated contrasts, clusters, tone/length notation and h/glottal-stop separation. Methodology, validation matrix and final audit updated in place.
+- **Status at checkpoint:** PARTIAL pending exact-head GitHub Actions CI, generated-artifact/master-artifact checks, and inspection of all downstream output changes. No local checkout is available, so no local tests are claimed. The convention is a project decision, not an independently adjudicated Ukrainian norm.
