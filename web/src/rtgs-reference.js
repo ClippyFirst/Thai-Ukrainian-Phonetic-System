@@ -133,6 +133,7 @@ export function romanizeRtgsWord(input) {
   if (!original || [...original].some(ch => /[^\u0E00-\u0E7F]/u.test(ch)))
     return { status:"unavailable", value:null, source:null };
   if (original === "ห") return { status:"transliterated", value:"", source:"PyThaiNLP 5.4.0 royin port + ClippyFirst orthographic correction" };
+  if (original === "ๆ" || original === "ฯ") return { status:"unavailable", value:null, source:null };
   if (RTGS_LEXICAL_OVERRIDES.has(original)) {
     return { status:"transliterated", value:RTGS_LEXICAL_OVERRIDES.get(original), source:"PyThaiNLP 5.4.0 royin port + ClippyFirst orthographic correction" };
   }
