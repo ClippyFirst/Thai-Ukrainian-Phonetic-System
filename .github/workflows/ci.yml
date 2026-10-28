@@ -25,6 +25,7 @@ jobs:
       - run: node web/tests/ipa-ua.test.mjs
       - run: node web/tests/parity.test.mjs
       - run: node web/tests/ui-contract.test.mjs
+      - run: node web/tests/rtgs-reference.test.mjs
       - name: Benchmark browser Thai text segmentation latency
         run: node scripts/benchmark_web_segmentation.mjs
       - uses: actions/upload-artifact@v4
