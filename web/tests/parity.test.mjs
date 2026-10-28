@@ -228,3 +228,16 @@ for (const spelling of ["ฤ", "ฤๅ", "ฦ", "ฦๅ"]) {
   }
 }
 console.log("Thai special vowel-letter uncertainty contract passed");
+
+const desert = analyzeText("ทะเลทราย")[0];
+if (desert.segmentationStatus !== "lexicon" ||
+    desert.syllables.map(x => x.phonemicIpa).join("|") !== "tʰa|leː|saːj" ||
+    desert.syllables.map(x => x.tone).join("|") !== "high|mid|mid" ||
+    desert.syllables.map(x => x.ukrainian).join("|") !== "та|ле|сай") {
+  throw new Error("Source-attested sand-sense compound did not resolve through the IPA adapter: " + JSON.stringify(desert));
+}
+const isolatedSandHomograph = analyze("ทราย");
+if (isolatedSandHomograph.status !== "analysis-dependent:special-orthography" ||
+    isolatedSandHomograph.phonemicIpa != null) {
+  throw new Error("Isolated sense-ambiguous ทราย must remain unresolved: " + JSON.stringify(isolatedSandHomograph));
+}
