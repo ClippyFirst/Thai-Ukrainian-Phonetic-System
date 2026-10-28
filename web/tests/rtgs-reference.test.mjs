@@ -36,8 +36,10 @@ assert.equal(renderRtgsTokens([{ kind: "latin", input: "ph" }]), "ph");
 const rtgsSource = await readFile(new URL("../src/rtgs-reference.js", import.meta.url), "utf8");
 assert.doesNotMatch(rtgsSource, /adaptIpaToUkrainian|ipa-ua/);
 const appSource = await readFile(new URL("../src/app.js", import.meta.url), "utf8");
-assert.match(appSource, /renderRtgsTokens\\(tokens\\)/);
-assert.match(appSource, /adaptIpaToUkrainian\\(source\\)/);
-assert.doesNotMatch(rtgsSource, /fetch\\(|XMLHttpRequest|https?:\\/\\//);
+assert.ok(appSource.includes("renderRtgsTokens(tokens)"));
+assert.ok(appSource.includes("adaptIpaToUkrainian(source)"));
+assert.ok(!rtgsSource.includes("fetch("));
+assert.ok(!rtgsSource.includes("XMLHttpRequest"));
+assert.ok(!rtgsSource.includes("https://"));
 
 console.log("RTGS reference fixtures and pipeline separation: OK");
