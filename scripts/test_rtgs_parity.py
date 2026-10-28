@@ -1,0 +1,72 @@
+#!/usr/bin/env python3
+"""Compare the browser RTGS port with the pinned PyThaiNLP 5.4.0 source.
+
+This checks implementation parity for fixed tokens, not tokenizer parity or
+linguistic correctness. PyThaiNLP is test-only and is never loaded by the website.
+"""
+from __future__ import annotations
+
+import json
+import subprocess
+from pathlib import Path
+
+from pythainlp.transliterate.royin import _romanize, _should_add_syllable_separator
+
+ROOT = Path(__file__).resolve().parents[1]
+CORPUS = ROOT / "docs" / "research" / "rtgs-parity-corpus.json"
+NODE = r"""
+import { romanizeRtgsWord, romanizeRtgsWords } from './web/src/rtgs-reference.js';
+let input = '';
+for await (const chunk of process.stdin) input += chunk;
+const corpus = JSON.parse(input);
+const result = {
+  words: corpus.words.map(word => romanizeRtgsWord(word).value),
+  sequences: corpus.sequences.map(words => romanizeRtgsWords(words))
+};
+process.stdout.write(JSON.stringify(result));
+"""
+
+def main() -> int:
+    corpus = json.loads(CORPUS.read_text(encoding="utf-8"))
+    run = subprocess.run(
+        ["node", "--input-type=module", "-e", NODE],
+        input=json.dumps(corpus, ensure_ascii=False),
+        text=True,
+        capture_output=True,
+        cwd=ROOT,
+        check=True,
+    )
+    actual = json.loads(run.stdout)
+    failures: list[str] = []
+
+    for word, got in zip(corpus["words"], actual["words"], strict=True):
+        expected = _romanize(word)
+        if got != expected:
+            failures.append(f"word {word!r}: browser={got!r}; PyThaiNLP={expected!r}")
+
+    for words, got in zip(corpus["sequences"], actual["sequences"], strict=True):
+        expected_parts: list[str] = []
+        for i, word in enumerate(words):
+            romanized = _romanize(word)
+            if i > 0 and romanized:
+                previous = expected_parts[-1] if expected_parts else ""
+                if _should_add_syllable_separator(words[i - 1], word, previous):
+                    romanized = "a" + romanized
+            expected_parts.append(romanized)
+        expected = "".join(expected_parts)
+        if got != expected:
+            failures.append(f"sequence {words!r}: browser={got!r}; PyThaiNLP={expected!r}")
+
+    if failures:
+        print("RTGS parity FAILED against PyThaiNLP 5.4.0:")
+        print("\n".join(failures))
+        return 1
+    print(
+        "RTGS per-token parity PASS: "
+        f"{len(corpus['words'])} tokens, {len(corpus['sequences'])} presegmented sequences; "
+        "PyThaiNLP 5.4.0. Tokenizer parity is not tested."
+    )
+    return 0
+
+if __name__ == "__main__":
+    raise SystemExit(main())
