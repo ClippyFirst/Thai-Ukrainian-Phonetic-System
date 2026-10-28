@@ -1436,5 +1436,15 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - User explicitly requested that romanization must not be hidden and that all three results appear on screen in this order: **romanization (RTGS) → IPA → Ukrainian**. This supersedes the earlier UX decision to collapse RTGS.
 - Implemented: RTGS, IPA and Ukrainian candidate are now three visible continuous panels with numbered headings. RTGS description clarifies that it is a separate Latin reference, not IPA or the source for Ukrainian adaptation. First-use copy is shorter; cache keys refreshed.
 - Regression coverage updated to assert panel visibility/order and absence of RTGS disclosure. Pages workflow now verifies all three deployed markers and new cache keys. Validation matrix and final audit updated.
-- Verification still pending: inspect exact-head CI/static checks, fix any failures, merge only after checks pass, then verify post-merge Pages published-content gate. Do not claim the site is updated before deployment evidence.
+- **DONE_VERIFIED:** PR [#128](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/128) merged as `086e62f252f0b16f6c4035ccb80b4b2183ef5a17`. Exact-head full CI and 351,780-row master-artifact gate passed in [40743456590](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40743456590); static validation passed in [40743456356](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40743456356). Post-merge GitHub Pages deployment and live result-order/visibility gate passed in [40744444939](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40744444939). Public site: https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/
 - Evidence limits remain: no browser screenshot/device session or WCAG 2.2 AA audit in this connector-only session; independent expert-adjudicated Thai IPA, word-boundary and Ukrainian target-form gold remain unavailable.
+
+
+### Final closeout — visible RTGS → IPA → Ukrainian results (2026-10-28)
+
+- **DONE_VERIFIED — merged and published:** code merge commit `086e62f252f0b16f6c4035ccb80b4b2183ef5a17`; documentation closeout is being recorded on main after the successful Pages run.
+- Exact-head full CI (including the master-artifact gate) passed: [40743456590](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40743456590).
+- Exact-head static validation passed: [40743456356](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40743456356).
+- Post-merge Pages build, deployment and published-content check passed: [40744444939](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40744444939). Live gate checks visible RTGS → IPA → Ukrainian call order and that RTGS is not wrapped in a disclosure.
+- The visual result order is not the processing order: Thai structural/phonological analysis → IPA → Ukrainian adaptation; RTGS is an independent reference romanization.
+- **Remaining evidence limits:** no browser screenshot/real-device QA or WCAG 2.2 AA audit in this connector-only run. Independent expert-adjudicated Thai IPA, word boundaries and Ukrainian target-form gold are still unavailable. Do not present this research prototype as validated for production linguistic accuracy.
