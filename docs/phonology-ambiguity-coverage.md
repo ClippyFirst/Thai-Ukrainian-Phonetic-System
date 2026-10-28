@@ -39,6 +39,15 @@
 - Obtain independent Thai-speaker/phonetics adjudication for IPA and Ukrainian target forms before reporting accuracy.
 - Audit all registered vowel patterns against the structural generator and all browser/Python implementations; do not infer completeness from a passing fixture suite alone.
 
+## Lexical exception guard expansion (2026-10-28)
+
+- Added regression guards for nine exact source-discussed false-cluster / `ทร` lexical forms: `จริง→จิง`, `สร้าง→ส้าง`, `ศรี→สี`, `เศร้า→เส้า`, `ไซร้→ไซ้`, `ทราบ→ซาบ`, `ทรง→ซง`, `ทรัพย์→ซับ`, `แทรก→แซก`.
+- The tests assert that these exact entries produce a structured IPA result and a Ukrainian candidate through the existing IPA adapter. They do not assert that dictionary-derived readings are independent gold.
+- Generic sentinels (`จร`, `สร`, `ศร`, `ซร`, isolated `ทราย`) remain analysis-dependent. This prevents a lexical exception from becoming a productive replacement rule.
+- Evidence source: Royal Institute of Thailand Journal (2011), [เรื่องยุ่ง ๆ เกี่ยวกับอักษรควบ](https://www.orst.go.th/FILEROOM/CABROYINWEB/DRAWER004/GENERAL/DATA0000/00000630.FLP/html/49/) and its discussion of lexical/sense-conditioned cluster readings.
+- Verification state on branch `audit/thai-lexical-exception-guards-20261028`: pending exact-head GitHub CI at the time of this edit. No local run is claimed; the environment's direct GitHub clone previously failed DNS resolution.
+- Acceptance: exact-head CI passes, generated artifacts remain unchanged, and the new test confirms only enumerated lexical forms resolve while generic ambiguity probes still fail closed.
+
 ## Overall verdict
 
 **Core deterministic rules: implemented; edge-case coverage: partial; lexical pronunciation coverage: partial; connected-speech model: deferred; independent IPA accuracy: not measured.** The current design correctly prefers uncertainty over a fabricated pronunciation. This audit does not certify the engine as complete or release-ready.
