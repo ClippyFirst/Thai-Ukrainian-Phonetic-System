@@ -656,3 +656,11 @@ The Python and browser IPA adapters now map Thai /h/ to Ukrainian «г», and re
 - **DONE_VERIFIED:** live RTGS and public guidance confirmed by Pages deployments [40692707861](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40692707861) and [40694421367](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40694421367).
 - **PARTIAL:** manual browser visual QA was not performed.
 - **BLOCKED:** independent expert-adjudicated Thai IPA, segmentation and Ukrainian target-form gold remain unavailable; the system is not release-ready.
+
+## 2026-10-28 — UX refresh verification follow-up
+
+- **PARTIAL — exact-head CI and Pages deployment gate pending** on branch `fix/ux-refresh-a11y-pages-gate-20261028`, based on main `ad2f899978b66d3bbcb92124688b62261bb5225d`.
+- **Implemented:** corrected the stale post-deploy copy assertion to match the actual privacy text; increased navigation, mode disclosure, and methodology link hit areas to 44px; bumped stylesheet cache keys on both pages; expanded static UI assertions for these conditions.
+- **Preserved:** Thai → structural/phonological analysis → IPA → Ukrainian adaptation, strict mode default, approximate-mode warnings, copyable whole-text output, RTGS as separate lossy Latin reference, and detailed syllable/adaptation audit.
+- **Acceptance:** all repository CI jobs pass at exact head; Pages deploys and its live-content contract confirms the published homepage, app modules, system page, absence of duplicate direct-IPA panel, and updated cache key.
+- **PARTIAL:** real-browser screenshot/manual responsive review and WCAG 2.2 AA checks have not been performed. **BLOCKED/evidence-limited:** independent expert-adjudicated Thai IPA, segmentation, and Ukrainian target-form gold are still absent. Do not call the linguistic engine release-ready.
