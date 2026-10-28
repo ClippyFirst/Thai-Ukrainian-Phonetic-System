@@ -1415,5 +1415,31 @@
     "pages_url": "https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/",
     "pages_deploy_run": 40645764146,
     "main_ci_run": 40645764144
+  },
+  "lexical_exception_guard_expansion": {
+    "date": "2026-10-28",
+    "branch": "audit/thai-lexical-exception-guards-20261028",
+    "pull_request": 111,
+    "status": "PARTIAL_PENDING_EXACT_HEAD_CI",
+    "source": "https://www.orst.go.th/FILEROOM/CABROYINWEB/DRAWER004/GENERAL/DATA0000/00000630.FLP/html/49/",
+    "forms": [
+      "จริง",
+      "สร้าง",
+      "ศรี",
+      "เศร้า",
+      "ไซร้",
+      "ทราบ",
+      "ทรง",
+      "ทรัพย์",
+      "แทรก"
+    ],
+    "checks": [
+      "exact lexical normalization",
+      "structured IPA result",
+      "Ukrainian candidate through typed IPA adapter",
+      "generic ambiguity sentinels remain fail-closed"
+    ],
+    "evidence_boundary": "Royal Institute source supports lexical readings; no independent IPA or Ukrainian orthographic gold is claimed.",
+    "acceptance": "Latest PR #111 head must pass full CI including the 351780-row master-artifact job before DONE_VERIFIED."
   }
 }
