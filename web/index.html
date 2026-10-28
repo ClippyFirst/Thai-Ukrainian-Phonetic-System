@@ -22,8 +22,9 @@
 <section class="hero">
   <p class="eyebrow">ФОНЕТИКО-ГРАФЕМНИЙ АНАЛІЗАТОР · v0.6.1</p>
   <h1>Тайське написання → українське передавання</h1>
-  <p class="lede">Введіть тайський текст, слово або явно поділені склади. Сервіс токенізує текст, відокремлює пунктуацію, латиницю й цифри, а для відомих слів виконує лексичну сегментацію складів.</p>
+  <p class="lede">Почніть з одного тайського слова. Можна перевірити й довший фрагмент, але межі слів у суцільному тайському тексті не завжди очевидні, а точність сегментації ще не підтверджена незалежним експертним корпусом.</p>
 </section>
+<section class="usage-guide" aria-labelledby="usage-heading"><div class="section-head"><h2 id="usage-heading">Як отримати результат, якому легше довіряти</h2></div><div class="system-grid"><article><p class="eyebrow">01 / ПОЧНІТЬ ІЗ КОРОТКОГО</p><h2>Одне слово за раз</h2><p>Перевірте спочатку коротке слово або відомий приклад. У довгому тексті можуть бути неоднозначні межі слів, власні назви та запозичення.</p></article><article><p class="eyebrow">02 / РЕЖИМ</p><h2>Спершу строгий</h2><p>Строгий режим показує лише розбори, які підтримує поточна модель. Якщо результат невизначений, це не означає, що слово не має вимови — рушієві бракує підстав її встановити.</p></article><article><p class="eyebrow">03 / ОБЕРЕЖНО З FALLBACK</p><h2>Приблизно — не означає правильно</h2><p>М’який і суперм’який режими корисні для діагностики покриття, а не для підтвердження вимови. Не використовуйте приблизний результат як перевірену транскрипцію без незалежного джерела.</p></article></div></section>
 <section class="workbench" aria-labelledby="input-heading">
   <div class="section-head">
     <div><p class="eyebrow">01 / ВХІД</p><h2 id="input-heading">Тайський текст</h2></div>
@@ -31,14 +32,14 @@
   </div>
   <label class="input-label" for="thai-input">Тайський текст</label>
   <textarea id="thai-input" lang="th" rows="3" spellcheck="false" autocomplete="off" autocapitalize="off" aria-describedby="input-hint" placeholder="Напр. กาไฟมา або กินข้าวกับไข่และผลไม้"></textarea>
-  <p class="input-hint" id="input-hint">Вставте цілий текст або статтю. Після аналізу сервіс покаже один суцільний український кандидат і окремий IPA-вихід; деталі по сегментах можна розгорнути нижче. <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>Enter</kbd> — проаналізувати.</p>
+  <p class="input-hint" id="input-hint">Вставте слово або фрагмент тексту. Сервіс покаже український кандидат і окремий IPA-вихід; деталі по сегментах можна розгорнути нижче. <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>Enter</kbd> — проаналізувати.</p>
   <label class="input-label" for="engine-mode">Режим рушія</label>
   <select id="engine-mode" aria-describedby="mode-hint">
-    <option value="strict" selected>Строгий — лише детермінований розбір</option>
-    <option value="soft">М’який — попередній структурний результат</option>
-    <option value="super-soft">Суперм’який — повне покриття, приблизні звуки</option>
+    <option value="strict" selected>Строгий — лише підтримані розбори</option>
+    <option value="soft">М’який — попередні структурні припущення</option>
+    <option value="super-soft">Суперм’який — приблизний кандидат для кожного фрагмента</option>
   </select>
-  <p class="input-hint" id="mode-hint">Строгий режим утримується від непідтвердженої вимови. М’який шукає структурно можливі склади, але залишає невирішені фрагменти позначеними. Суперм’який формує український кандидат для кожного тайського фрагмента через приблизну IPA → українська адаптацію; повне покриття не гарантує правильної вимови.</p>
+  <p class="input-hint" id="mode-hint">Рекомендовано починати зі строгого режиму. М’який може припускати структурно можливі склади; суперм’який створює приблизний кандидат навіть там, де читання не встановлено. Більше покриття не означає більшої точності.</p>
   <div class="examples" aria-label="Швидкі приклади">
     <span class="examples-label">Приклади:</span>
     <button type="button" data-example="กา">กา</button>
@@ -59,12 +60,13 @@
   </div>
   <label class="input-label" for="ipa-input">Тайська IPA-транскрипція</label>
   <textarea id="ipa-input" class="ipa-adapter-input" lang="und-fonipa" rows="2" spellcheck="false" autocomplete="off" autocapitalize="off" aria-describedby="ipa-input-hint" placeholder="[kʰaː˩˩˦] або /t͡ɕʰaː/"></textarea>
-  <p class="input-hint" id="ipa-input-hint">Вставте IPA з дужками або скісними рисками. Адаптер розпізнає поширені позначення тону, наголосу, довготи, нерелізованого вибуху й африкат із tie bar. Невідомий сегмент блокує результат, а не вгадується. Тон, довгота й наголос показуються як нейтралізовані ознаки, а не губляться непомітно.</p>
+  <p class="input-hint" id="ipa-input-hint">Вставте IPA у квадратних дужках або між скісними рисками. Невідомий сегмент блокує результат, а не вгадується. Тон, довгота й наголос відображаються в аудиті як нейтралізовані ознаки: український кандидат їх не кодує.</p>
   <button class="primary" id="ipa-adapt" type="button">Адаптувати IPA → українська <span aria-hidden="true">↗</span></button>
   <section id="ipa-adapter-result" class="ipa-adapter-result" role="status" aria-live="polite" aria-atomic="true" hidden></section>
 </section>
 <section class="method-note">
-  <p class="eyebrow">МЕТОД</p>
+  <p class="eyebrow">ПРИВАТНІСТЬ І МЕТОД</p>
+  <p>Аналіз виконується локально у браузері: сторінка не надсилає введений текст до зовнішнього API.</p>
   <p>IPA є проміжним контрольним представленням і обов’язковою межею адаптера. Український кандидат формується з типізованого фонетичного результату через IPA; тайська орфографія не передається до адаптера IPA → українська.</p>
   <div class="method-links"><a href="system.html">Як працює система →</a><a href="system.html#statuses">Статуси результату →</a></div>
 </section>
