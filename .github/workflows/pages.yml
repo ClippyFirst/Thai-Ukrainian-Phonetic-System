@@ -112,7 +112,10 @@ jobs:
               && grep -Fq 'Тести — не мовний еталон' /tmp/deployed-system.html \
               && grep -Fq 'незалежно експертно перевірених рядків у поточному еталоні немає' /tmp/deployed-system.html \
               && grep -Fq 'continuous-output-value' /tmp/deployed-app.js \
-              && grep -Fq 'rtgs-details' /tmp/deployed-app.js \
+              && grep -Fq '01 · RTGS — латинська романізація (не IPA)' /tmp/deployed-app.js \
+              && grep -Fq '02 · IPA — фонетичне представлення' /tmp/deployed-app.js \
+              && grep -Fq '03 · Український фонетичний кандидат' /tmp/deployed-app.js \
+              && ! grep -Fq '<details class="rtgs-details"' /tmp/deployed-app.js \
               && grep -Fq 'Строгий режим: невідомі фрагменти залишаються невизначеними' /tmp/deployed-app.js \
               && grep -Fq 'Суперм’який режим: невідомі фрагменти отримують приблизний кандидат' /tmp/deployed-app.js \
               && grep -Fq 'АУДИТ IPA → УКРАЇНСЬКА' /tmp/deployed-app.js \
