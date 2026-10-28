@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Compare the browser RTGS port with the pinned PyThaiNLP 5.4.0 source.
+"""Compare the browser RTGS port with pinned PyThaiNLP 5.4.0.
 
-This checks implementation parity for fixed tokens, not tokenizer parity or
-linguistic correctness. PyThaiNLP is test-only and is never loaded by the website.
+This verifies per-token implementation parity, not tokenizer parity or
+linguistic correctness. PyThaiNLP is test-only, never loaded by the website.
 """
 from __future__ import annotations
 
@@ -13,6 +13,7 @@ from pathlib import Path
 from pythainlp.transliterate.royin import _romanize, _should_add_syllable_separator
 
 ROOT = Path(__file__).resolve().parents[1]
+ORTHOGRAPHIC_CORRECTIONS = {"ใหม่": "mai", "ไหม": "mai", "เหงา": "ngao", "ให้": "hai"}
 CORPUS = ROOT / "docs" / "research" / "rtgs-parity-corpus.json"
 NODE = r"""
 import { romanizeRtgsWord, romanizeRtgsWords } from './web/src/rtgs-reference.js';
@@ -38,10 +39,17 @@ def main() -> int:
     )
     actual = json.loads(run.stdout)
     failures: list[str] = []
+    known_divergences: list[str] = []
 
     for word, got in zip(corpus["words"], actual["words"], strict=True):
         expected = _romanize(word)
-        if got != expected:
+        if word in ORTHOGRAPHIC_CORRECTIONS:
+            corrected = ORTHOGRAPHIC_CORRECTIONS[word]
+            if got != corrected:
+                failures.append(f"orthographic correction {word!r}: browser={got!r}; expected={corrected!r}")
+            if expected != corrected:
+                known_divergences.append(f"{word}: PyThaiNLP={expected!r}, ClippyFirst={corrected!r}")
+        elif got != expected:
             failures.append(f"word {word!r}: browser={got!r}; PyThaiNLP={expected!r}")
 
     for words, got in zip(corpus["sequences"], actual["sequences"], strict=True):
@@ -62,10 +70,13 @@ def main() -> int:
         print("\n".join(failures))
         return 1
     print(
-        "RTGS per-token parity PASS: "
-        f"{len(corpus['words'])} tokens, {len(corpus['sequences'])} presegmented sequences; "
+        "RTGS parity PASS: "
+        f"{len(corpus['words'])} token inputs and {len(corpus['sequences'])} presegmented sequences; "
         "PyThaiNLP 5.4.0. Tokenizer parity is not tested."
     )
+    if known_divergences:
+        print("Documented orthographic corrections (intentional upstream divergences):")
+        print("\n".join(known_divergences))
     return 0
 
 if __name__ == "__main__":
