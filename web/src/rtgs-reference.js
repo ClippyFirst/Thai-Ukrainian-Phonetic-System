@@ -148,7 +148,7 @@ export function romanizeRtgsWord(input) {
     const chars = [...word]; chars.splice(1, 0, "o"); word = chars.join("");
   }
   const value = replaceConsonants(word, consonants);
-  if (/[^\\x00-\\x7F]/u.test(value)) return { status:"unavailable", value:null, source:null };
+  if (/[^\x00-\x7F]/u.test(value)) return { status:"unavailable", value:null, source:null };
   return { status:"transliterated", value, source:"PyThaiNLP 5.4.0 royin port + ClippyFirst orthographic correction" };
 }
 function shouldAddSeparator(prevWord, word, prevRomanized) {
