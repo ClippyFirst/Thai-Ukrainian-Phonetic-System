@@ -40,6 +40,9 @@ assert.equal(output.hidden, false);
 assert.match(output.innerHTML, /Цілісний результат/);
 assert.match(output.innerHTML, /Український фонетичний кандидат/);
 assert.match(output.innerHTML, /IPA — проміжне представлення/);
+assert.match(output.innerHTML, /RTGS — латинська романізація \(не IPA\)/);
+assert.match(output.innerHTML, /phrik/);
+assert.match(output.innerHTML, /RTGS не позначає тон/);
 assert.match(output.innerHTML, /<details class="analysis-details">/);
 assert.match(output.innerHTML, /ФОНОЛОГІЧНА IPA/);
 assert.match(output.innerHTML, /aria-labelledby=/);
@@ -48,6 +51,7 @@ assert.match(status.textContent, /Проаналізовано 1 токен/);
 
 input.value = "ทดสอบ";
 analyze.click();
+assert.match(output.innerHTML, /RTGS НЕ ПЕРЕВІРЕНО: ทดสอบ/);
 assert.equal(status.className, "status notice");
 assert.match(status.textContent, /потребують перевірки або залишилися невизначеними/);
 assert.doesNotMatch(output.innerHTML, /ФОНОЛОГІЧНА IPA/);
