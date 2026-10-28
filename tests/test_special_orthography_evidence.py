@@ -84,7 +84,6 @@ class SpecialOrthographyEvidenceTests(unittest.TestCase):
             "สร": "written ร may be silent in established lexical forms",
             "ศร": "written ร may be silent in established lexical forms",
             "ซร": "written ร may be silent in established lexical forms",
-            "กรรม": "lexicalized reading must come from an exact known entry",
             "ฤ": "special vowel letter requires word-level evidence",
             "ฤๅ": "special vowel letter requires word-level evidence",
             "ฦ": "rare special vowel letter requires word-level evidence",
@@ -94,12 +93,6 @@ class SpecialOrthographyEvidenceTests(unittest.TestCase):
         for text, reason in cases.items():
             with self.subTest(text=text):
                 result = parse_syllable(text)
-                # กรรม is deliberately a known exact lexical exception in the
-                # core parser, so it is excluded from the unresolved probes.
-                if text == "กรรม":
-                    self.assertEqual(result.status, "analyzed")
-                    self.assertIsNotNone(result.phonemic_ipa)
-                    continue
                 self.assertEqual(result.status, "analysis-dependent:special-orthography", (text, result.status, result.warnings))
                 self.assertIsNone(result.phonemic_ipa, (text, reason, result.phonemic_ipa))
                 self.assertIsNone(result.phonetic_ipa, (text, reason, result.phonetic_ipa))
