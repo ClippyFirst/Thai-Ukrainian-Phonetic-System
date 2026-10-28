@@ -109,5 +109,37 @@ class SpecialOrthographyEvidenceTests(unittest.TestCase):
         self.assertIsNone(ambiguous.phonemic_ipa)
 
 
+    def test_source_attested_false_cluster_and_thor_lexemes_are_exact_not_productive(self):
+        from thai_ukrainian.parser import parse_syllable
+
+        # The Royal Institute article discusses these as lexical readings,
+        # not a productive replacement rule for every spelling containing ร.
+        # This guards the known exceptions while the generic-family sentinels
+        # above continue to fail closed.
+        expected = {
+            "จริง": "จิง",
+            "สร้าง": "ส้าง",
+            "ศรี": "สี",
+            "เศร้า": "เส้า",
+            "ไซร้": "ไซ้",
+            "ทราบ": "ซาบ",
+            "ทรง": "ซง",
+            "ทรัพย์": "ซับ",
+            "แทรก": "แซก",
+        }
+        source_rows = {row["source_id"]: row for row in _rows(ROOT / "data/thai/sources.csv")}
+        source_id = "SRC-ORST-CLUSTER-2011"
+        self.assertIn(source_id, source_rows)
+        self.assertIn("2011", source_rows[source_id]["url"])
+        self.assertIn("lexical reading evidence only", source_rows[source_id]["notes"])
+
+        for word, normalized in expected.items():
+            with self.subTest(word=word):
+                result = parse_syllable(word)
+                self.assertEqual(result.status, "analyzed", (word, result.status, result.warnings))
+                self.assertEqual(result.normalized, normalized)
+                self.assertIsNotNone(result.phonemic_ipa, (word, result.warnings))
+
+
 if __name__ == "__main__":
     unittest.main()
