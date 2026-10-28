@@ -1388,10 +1388,11 @@
     },
     "tests_added": [
       "unlisted special-orthography forms fail closed",
-      "exact ทราบ lexical reading does not generalize to ทร"
+      "exact ทราบ lexical reading does not generalize to ทร",
+      "15-condition productive Thai tone-rule truth table and runtime lookup parity"
     ],
     "independent_ipa_gold": false,
     "accuracy_claimed": false,
-    "ci_status": "in_progress_at_generate_master_table.py; no new-branch test result claimed"
+    "ci_status": "in_progress_at_generate_master_table.py; downstream unit tests have not started; no new-branch test result claimed"
   }
 }
