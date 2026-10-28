@@ -759,3 +759,9 @@ The first run with the new coverage tests completed master-table generation and 
 - Added regression assertions and a published-content contract for human-readable statuses; stylesheet cache keys were bumped.
 - **Acceptance pending:** exact-head CI and static validation, PR review/merge, and successful GitHub Pages published-content gate.
 - **Evidence limits:** no real-browser screenshots/manual device review or full WCAG 2.2 AA assessment claimed; independent expert-adjudicated Thai IPA/word-boundary/Ukrainian-target gold remains unavailable. No phonological rules changed.
+
+### Verification update — 2026-10-28
+
+- Exact code/test commit `82d7fd5d6469b3d2c2fcad98158bf98dcb452135`: full CI passed, including Python unit tests, RTGS tests/parity, IPA→Ukrainian tests, browser parity, UI contract tests and the 351,780-row master-artifact gate: [CI run 40723829479](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40723829479).
+- Web static validation passed: [run 40723829245](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40723829245).
+- **Still pending:** PR #125 merge and post-merge GitHub Pages live-content verification. Do not describe the status-label change as published until that gate passes.
