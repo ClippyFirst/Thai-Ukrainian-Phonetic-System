@@ -43,6 +43,7 @@ assert.match(output.innerHTML, /IPA — проміжне представлен�
 assert.match(output.innerHTML, /RTGS — латинська романізація \(не IPA\)/);
 assert.match(output.innerHTML, /phrik/);
 assert.match(output.innerHTML, /RTGS не позначає тон/);
+assert.match(output.innerHTML, /ph\/th\/kh позначають придихові приголосні/);
 assert.match(output.innerHTML, /довготу голосних/);
 assert.match(output.innerHTML, /<details class="analysis-details">/);
 assert.match(output.innerHTML, /ФОНОЛОГІЧНА IPA/);
