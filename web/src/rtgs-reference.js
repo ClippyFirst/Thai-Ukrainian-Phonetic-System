@@ -124,7 +124,7 @@ export function romanizeRtgsWord(input) {
   const original = String(input ?? "").normalize("NFC");
   if (!original || [...original].some(ch => /[^\u0E00-\u0E7F]/u.test(ch)))
     return { status:"unavailable", value:null, source:null };
-  if (original === "ห") return { status:"transliterated", value:"", source:"PyThaiNLP 5.4.0 royin port" };
+  if (original === "ห") return { status:"transliterated", value:"", source:"PyThaiNLP 5.4.0 royin port + ClippyFirst orthographic correction" };
   const normalized = normalize(original);
   // A leading vowel is written before ห, but in ห นำ clusters it belongs to the following sonorant.
   // Reorder only this orthographic pattern before vowel matching so ใหม่/ไหม become mai, not aim.
@@ -134,7 +134,7 @@ export function romanizeRtgsWord(input) {
   if ([...word].length === 2 && consonants.length === 2) {
     const chars = [...word]; chars.splice(1, 0, "o"); word = chars.join("");
   }
-  return { status:"transliterated", value:replaceConsonants(word, consonants), source:"PyThaiNLP 5.4.0 royin port" };
+  return { status:"transliterated", value:replaceConsonants(word, consonants), source:"PyThaiNLP 5.4.0 royin port + ClippyFirst orthographic correction" };
 }
 function shouldAddSeparator(prevWord, word, prevRomanized) {
   if (!prevRomanized || [...word].length < 2) return false;
