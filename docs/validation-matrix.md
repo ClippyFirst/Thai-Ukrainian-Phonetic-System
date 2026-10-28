@@ -702,14 +702,23 @@ The user's explicit requirement supersedes the prior UX decision to collapse RTG
 
 | Check | Acceptance criterion | State |
 |---|---|---|
-| Result visibility | RTGS, IPA and Ukrainian candidate render as three visible continuous panels; none is inside a disclosure | PARTIAL until exact-head CI and Pages contract pass |
-| Result order | RTGS first, IPA second, Ukrainian candidate third | PARTIAL until exact-head UI contract and Pages contract pass |
-| Semantic clarity | RTGS is labelled a separate Latin romanization, not IPA and not the source of the Ukrainian result; page copy distinguishes display order from computation order | PARTIAL until UI/static tests pass |
-| First-use friction | Remove redundant workbench intro while preserving beta caveat, input guidance, examples and mode uncertainty copy | PARTIAL until UI/static tests pass |
-| Responsive hierarchy | Retain 44px interaction targets, visible focus, reduced-motion support and mobile one-column layout; distinguish the three output panels without relying on color alone | PARTIAL; static checks available, real-browser/device evidence still needed |
-| Regression protection | UI test asserts all three panels exist in requested order and no RTGS disclosure remains | PARTIAL until full CI passes |
-| Published-content gate | Pages workflow checks the new cache keys and exact visible result order markers in the deployed JavaScript | PARTIAL until post-merge deployment passes |
+| Result visibility | RTGS, IPA and Ukrainian candidate render as three visible continuous panels; none is inside a disclosure | DONE_VERIFIED — exact-head CI + Pages content gate |
+| Result order | RTGS first, IPA second, Ukrainian candidate third | DONE_VERIFIED — UI regression + published-content order check |
+| Semantic clarity | RTGS is labelled a separate Latin romanization, not IPA and not the source of the Ukrainian result; page copy distinguishes display order from computation order | DONE_VERIFIED — UI contract + Pages gate |
+| First-use friction | Remove redundant workbench intro while preserving beta caveat, input guidance, examples and mode uncertainty copy | DONE_VERIFIED — UI contract + static validation |
+| Responsive hierarchy | Retain 44px interaction targets, visible focus, reduced-motion support and mobile one-column layout; distinguish the three output panels without relying on color alone | PARTIAL — static CSS/UI contracts pass; real-browser/device evidence still needed |
+| Regression protection | UI test asserts all three panels exist in requested order and no RTGS disclosure remains | DONE_VERIFIED — exact-head full CI + master-artifact gate |
+| Published-content gate | Pages workflow checks the new cache keys and exact visible result order markers in the deployed JavaScript | DONE_VERIFIED — Pages run 40744444939 |
 
 - Branch: `ux/show-romanization-ipa-ukrainian-in-order-20261028`, based on main `8fa745a87d548f0145f6c367f85291ca85f9cb1f`.
 - No phonological/romanization rules changed; this is a presentation and explanation change only.
 - Manual browser screenshots, real-device checks and WCAG 2.2 AA remain evidence-limited until performed in an actual browser/device environment.
+
+
+### Publication closeout — 2026-10-28
+
+- **DONE_VERIFIED:** PR [#128](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/128) merged to `main` as `086e62f252f0b16f6c4035ccb80b4b2183ef5a17`.
+- **DONE_VERIFIED:** exact PR-head full CI, including the 351,780-row master-artifact gate, passed in [run 40743456590](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40743456590); static validation passed in [run 40743456356](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40743456356).
+- **DONE_VERIFIED — published:** post-merge GitHub Pages build, deployment and live-content contract passed in [run 40744444939](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40744444939). The live gate verifies RTGS → IPA → Ukrainian order and absence of a hidden RTGS disclosure.
+- Public site: https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/
+- **PARTIAL / evidence-limited:** no real-browser screenshots or physical-device sessions were captured; do not claim full manual visual QA or WCAG 2.2 AA. Independent expert-adjudicated Thai IPA, word-boundary and Ukrainian target-form gold remain unavailable.
