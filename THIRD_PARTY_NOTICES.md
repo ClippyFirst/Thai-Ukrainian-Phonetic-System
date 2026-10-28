@@ -3,7 +3,7 @@
 ## PyThaiNLP RTGS (`royin`) algorithm port
 
 - Upstream project: PyThaiNLP Project
-- Pinned upstream release: `v5.4.0` (release commit begins `7f26adf`)
+- Pinned upstream release: `v5.4.0` (release commit `7f26adf5ce09c3d77c39ca2ef86f7138e9071088`)
 - Source file: https://github.com/PyThaiNLP/pythainlp/blob/v5.4.0/pythainlp/transliterate/royin.py
 - License: Apache License 2.0
 - License text: [licenses/Apache-2.0-PyThaiNLP.txt](licenses/Apache-2.0-PyThaiNLP.txt)
