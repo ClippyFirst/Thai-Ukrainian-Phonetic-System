@@ -586,13 +586,13 @@ The Python and browser IPA adapters now map Thai /h/ to Ukrainian «г», and re
 | Connected-speech phonetics, lexical exception completeness, independent IPA gold | TODO / BLOCKED by evidence | Need sourced lexical/context rules and independent Thai phonetic adjudication; dictionary transcriptions remain SOURCE_ATTESTED_NOT_GOLD. |
 
 
-| Productive tone rule table coverage | PARTIAL pending CI | Added `tests/test_tone_rule_coverage.py` with an explicit 15-condition truth table, uniqueness check, runtime lookup checks and restricted tone-mark negative cases. Acceptance: exact-head CI must run this test and all downstream parity/generated-artifact checks. This proves rule-table completeness only, not end-to-end accuracy. |
+| Productive tone rule table coverage | DONE_VERIFIED on tested code head `7a47e1f86862f33bb8eadfb34de75aeba5fd3809` (CI 40645028725) | Added `tests/test_tone_rule_coverage.py` with an explicit 15-condition truth table, uniqueness check, runtime lookup checks and restricted tone-mark negative cases. Acceptance: exact-head CI must run this test and all downstream parity/generated-artifact checks. This proves rule-table completeness only, not end-to-end accuracy. |
 
 
-| Context-specific ทราย disambiguation | PARTIAL pending CI | Added pinned lexical segmentation `ทะเลทราย → ทะ|เล|ซาย` from English Wiktionary oldid 87239667, with matching Python/browser tests. The isolated homograph remains unresolved. Acceptance: exact-head CI verifies IPA `tʰa|leː|saːj`, tones high/mid/mid, UA `та|ле|сай`, and no forced IPA for isolated `ทราย`. |
+| Context-specific ทราย disambiguation | DONE_VERIFIED as a source-pinned exact compound case on tested code head `7a47e1f86862f33bb8eadfb34de75aeba5fd3809` (CI 40645028725); broader sense coverage remains PARTIAL | Added pinned lexical segmentation `ทะเลทราย → ทะ|เล|ซาย` from English Wiktionary oldid 87239667, with matching Python/browser tests. The isolated homograph remains unresolved. Acceptance: exact-head CI verifies IPA `tʰa|leː|saːj`, tones high/mid/mid, UA `та|ле|сай`, and no forced IPA for isolated `ทราย`. |
 
 
-| Special-orthography registry performance | DONE_IMPLEMENTED, verification pending | Cached `load_special_rules()` with `lru_cache(maxsize=1)` to avoid reopening the static CSV for every parser call during the 351,780-row master generator. Acceptance: latest-head CI completes master-table generation and downstream Python/browser checks. |
+| Special-orthography registry performance | DONE_VERIFIED on tested code head `7a47e1f86862f33bb8eadfb34de75aeba5fd3809` (CI 40645028725) | Cached `load_special_rules()` with `lru_cache(maxsize=1)` to avoid reopening the static CSV for every parser call during the 351,780-row master generator. Acceptance met: master-table generation and downstream Python/browser checks passed; master artifact verified 351,780 rows. |
 
 
 | Exact lexical ทร regression test API | FIXED, rerun pending | First CI execution: 208/209 tests passed; the new `ทราบ` test incorrectly asserted phonemic IPA from the structural-only `parse_syllable()` function. Switched it to `api.analyze_syllable()` so the assertion covers the full phonology pipeline. Latest-head CI is the acceptance gate. |

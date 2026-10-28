@@ -1288,3 +1288,13 @@ This note supersedes the preceding documentation-only status. The branch now cha
 ### Test correction after first executable run
 
 - The generator completed after caching the special-orthography registry. The first Python suite then ran 209 tests and reported one failure in the newly added exact-`ทราบ` regression: the test called the structural-only `parse_syllable()` API but asserted that it had already composed IPA. The production path is `api.analyze_syllable()`; the regression now exercises that end-to-end API. The source-attested desert compound and all three new tone-table tests passed in that run. Latest-head CI must rerun after this test correction.
+
+
+## 2026-10-28 — ambiguity audit verification result
+
+- Exact code/documentation head tested: `7a47e1f86862f33bb8eadfb34de75aeba5fd3809`.
+- **CI run 40645028725: PASS** — all 209 Python unit tests; challenge diagnostics; web word-dictionary generation; IPA adapter, Python/browser parity and UI-contract tests; browser latency benchmark; Wisesight and TUD segmentation diagnostics; source-attested IPA diagnostic; target-candidate registry check; and the generated master artifact. The separate `master-artifact` job verified exactly 351,780 rows and 41 vowel records.
+- **Web static validation run 40645028587: PASS**.
+- The first new regression attempt exposed a test-harness mistake (structural-only parser asserted final IPA); it was corrected to use `api.analyze_syllable()` and the full suite then passed. The registry cache eliminated the long-running master-generator bottleneck.
+- Remaining state is intentionally PARTIAL for linguistic completeness: isolated sense-ambiguous `ทราย`, the broader lexical exception space, connected speech, and independent IPA/Ukrainian target adjudication remain unresolved. Source-attested dictionary entries are not gold labels.
+- Verified code/test head above is the parent of the final audit-register-only commit. The final documentation commit SHA is reported in the handoff's Git history / final report.

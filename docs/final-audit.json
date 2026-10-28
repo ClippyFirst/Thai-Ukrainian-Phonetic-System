@@ -1366,7 +1366,7 @@
     "benchmark_blocker": "data/benchmark/gold.tsv remains header-only; overall IPA/end-to-end accuracy remains NOT_MEASURED."
   },
   "phonology_ambiguity_audit": {
-    "status": "PARTIAL_PENDING_EXACT_HEAD_CI",
+    "status": "DONE_VERIFIED_IMPLEMENTATION_AND_TESTS; OVERALL_LINGUISTIC_COVERAGE_PARTIAL",
     "audit_document": "docs/phonology-ambiguity-coverage.md",
     "branch": "audit/thai-phonology-ambiguity-coverage-20261028",
     "pull_request": 110,
@@ -1393,7 +1393,7 @@
     ],
     "independent_ipa_gold": false,
     "accuracy_claimed": false,
-    "ci_status": "latest test fix committed; rerun pending. Previous run: master-table generation completed, 208/209 Python tests passed; one new regression incorrectly used structural-only parse_syllable instead of api.analyze_syllable and has been corrected.",
+    "ci_status": "PASS on tested code head 7a47e1f86862f33bb8eadfb34de75aeba5fd3809: 209 Python tests and downstream diagnostics/browser checks; master artifact 351780 rows/41 vowels; web static validation 40645028587 passed. Independent IPA gold and target adjudication remain blocked.",
     "context_scoped_reading": {
       "word": "ทะเลทราย",
       "syllables": [
@@ -1407,6 +1407,9 @@
       "license": "CC-BY-SA-4.0",
       "status": "SOURCE_ATTESTED_NOT_GOLD",
       "isolated_homograph": "ทราย remains analysis-dependent without sense context"
-    }
+    },
+    "verified_code_head": "7a47e1f86862f33bb8eadfb34de75aeba5fd3809",
+    "ci_run": 40645028725,
+    "web_static_run": 40645028587
   }
 }

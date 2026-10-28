@@ -42,3 +42,10 @@
 ## Overall verdict
 
 **Core deterministic rules: implemented; edge-case coverage: partial; lexical pronunciation coverage: partial; connected-speech model: deferred; independent IPA accuracy: not measured.** The current design correctly prefers uncertainty over a fabricated pronunciation. This audit does not certify the engine as complete or release-ready.
+
+
+## Verification closure (2026-10-28)
+
+- Exact code head `7a47e1f86862f33bb8eadfb34de75aeba5fd3809`: [CI 40645028725](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40645028725) passed 209 Python tests, browser parity/UI contracts, benchmark and diagnostic gates, and the master artifact (351,780 structural rows, 41 vowels).
+- [Web static validation 40645028587](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40645028587) passed.
+- The code/test work is verified; the project remains a partial linguistic prototype because independent IPA/UA gold, exhaustive lexical exceptions and connected speech remain open.

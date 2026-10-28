@@ -659,3 +659,10 @@ The current PR branch now implements the selected IPA-adapter policy: Thai /h/ �
 ### Verification note — regression harness correction
 
 The first run with the new coverage tests completed master-table generation and ran 209 Python tests. The source-attested `ทะเลทราย` compound test, the ambiguity sentinels, and all tone-table tests passed; one newly added `ทราบ` regression failed because it called the structural parser but asserted final IPA. The test now calls `api.analyze_syllable()`. The latest branch head requires a full rerun; no green status is claimed yet.
+
+
+### Verification closure — 2026-10-28
+
+- Exact code head `7a47e1f86862f33bb8eadfb34de75aeba5fd3809`: CI run [40645028725](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40645028725) passed all 209 Python tests and all downstream diagnostics/browser checks; its `master-artifact` job passed and verified 351,780 rows / 41 vowel records.
+- Web static validation [40645028587](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40645028587) passed.
+- Overall status remains research prototype / PARTIAL for full linguistic coverage and accuracy because independent IPA gold, independent Ukrainian target adjudication, broad lexical coverage and connected speech are not complete.
