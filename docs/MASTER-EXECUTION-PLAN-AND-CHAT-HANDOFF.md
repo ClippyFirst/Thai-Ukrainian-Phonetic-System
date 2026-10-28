@@ -1392,3 +1392,9 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - **DONE_VERIFIED:** code, regression tests, source/license attribution, public UI copy, post-deploy contract and handoff/audit/validation updates.
 - **PARTIAL:** manual visual review in a real browser has not been performed.
 - **BLOCKED:** independent expert-adjudicated Thai IPA, word boundaries and Ukrainian target forms are unavailable; full PyThaiNLP `newmm` tokenizer/dictionary parity is out of scope pending provenance and compatibility research. Project remains a research prototype, not release-ready.
+
+## 2026-10-28 — UX accessibility polish continuation
+
+- Starting main: `25ebb8f70264ee76f3a93c48b42fd35154cfb77e`; branch: `fix/ux-accessibility-polish-20261028`.
+- Primary UX refresh and fixed Pages contract were already on main. This follow-up raises navigation, mode disclosure, and methodology-link targets to 44px, updates stylesheet cache keys, and strengthens UI assertions.
+- Exact-head CI [40718211681](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40718211681) and web static validation [40718211647](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40718211647) passed at `00fbd12780d6951fe9d820027d29f12ac1861974`. Merge and post-merge Pages verification remain pending. Browser screenshots/manual device review and WCAG 2.2 AA are not claimed; no Thai phonological rules changed and independent linguistic gold remains an evidence-limited blocker.
