@@ -52,7 +52,7 @@ This verifies implementation parity for declared inputs and repository regressio
 ## Open PR reconciliation
 
 - **PR #111** (`feat: pin Thai ทร lexical exception and guard ambiguity`) remains open and was not merged or cherry-picked. Its source-backed lexical cases informed only this separate RTGS correction layer; no IPA engine, text lexicon or branch changes from that PR were copied.
-- **PR #112** (`docs(site): audit public guidance and evidence status`) was not merged blindly. Its homepage/system copy and UI-contract changes were ported alongside the live RTGS implementation through PR #116, merged as `f4cc4d061c529fc5aec094af896dea5aaec9378f`. The structured public-content audit register is maintained in `docs/final-audit.md`; PR #112 is now superseded and should be closed after this closeout update is merged.
+- **PR #112** (`docs(site): audit public guidance and evidence status`) was not merged blindly. Its homepage/system copy and UI-contract changes were ported alongside the live RTGS implementation through PR #116, merged as `f4cc4d061c529fc5aec094af896dea5aaec9378f`. PR #112 was closed as superseded after PR #116 and PR #117 merged. Its unique homepage/system copy and UI-contract changes are preserved in `main`; the structured public-content audit register is maintained in `docs/final-audit.md`.
 - Recently merged PR #110 and earlier Thai IPA/lexicon work are preserved because this branch is based on current `main` at `d39fc9e2c40db4a9f760069099c1f45973d592c8`.
 
 ## Acceptance gates
@@ -72,3 +72,11 @@ This verifies implementation parity for declared inputs and repository regressio
 - Independent Thai IPA adjudication and Ukrainian target-form review remain separate research requirements; RTGS parity does not resolve them.
 - If full PyThaiNLP behavior is required, tokenizer and dictionary provenance/licensing must be inspected separately and parity measured on a reviewed sentence corpus.
 - No general accuracy claim should be inferred from passing algorithm parity.
+
+
+## Final repository reconciliation — 2026-10-28
+
+- PR #115 (RTGS implementation) and PR #116 (public site guidance) are merged and deployed; post-deploy contracts passed in [40692707861](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40692707861) and [40694421367](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40694421367).
+- PR #117 reconciled the handoff, validation matrix and public-content audit register; exact-head CI including `master-artifact` passed in [40695138890](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40695138890).
+- PR #112 was closed as superseded after its unique changes were ported. PR #111 remains open and untouched beyond source-backed RTGS evidence already reflected in the correction layer.
+- Manual browser visual QA remains unperformed. Independent expert-adjudicated Thai IPA, segmentation and Ukrainian target forms remain unavailable; these are the substantive release blockers.

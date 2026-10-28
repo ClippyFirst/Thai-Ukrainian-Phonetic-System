@@ -712,3 +712,11 @@ The first run with the new coverage tests completed master-table generation and 
 - Pages deployment [40694421367](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40694421367) passed and confirmed the updated public guidance and RTGS panel at https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/.
 - Manual visual review was not performed. Automated deployment checks prove the served content and module markers, not visual polish across browsers or devices.
 - Readiness remains **research prototype / PARTIAL linguistic coverage**, not release-ready, because independent expert IPA, segmentation and Ukrainian target-form gold are absent.
+
+
+## Final repository checkpoint — 2026-10-28
+
+- PR #117 merged as `713f42ec816856d352ea2efbacfd534590e456df`; full exact-head CI including `master-artifact` passed in [40695138890](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40695138890).
+- PR #112 was closed as superseded after its unique copy and UI-contract changes were ported through PR #116 and the audit register was ported through PR #117.
+- The site is live at https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/. RTGS deployment [40692707861](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40692707861) and public-guidance deployment [40694421367](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40694421367) passed served-content checks.
+- Manual browser visual review remains PARTIAL; independent linguistic gold remains BLOCKED. No end-to-end accuracy claim is made.
