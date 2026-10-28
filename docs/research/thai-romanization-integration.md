@@ -1,6 +1,6 @@
 # Thai romanization integration research
 
-**Status:** PARTIAL — focused RTGS tests and static validation pass on the latest implementation head; the latest full CI run's `test` job passed, while its `master-artifact` job is still running. Full tokenizer parity and deployed-site visual review remain open.
+**Status:** DONE_VERIFIED for the RTGS implementation and deployment; PARTIAL for linguistic coverage. Exact-head CI, static validation and post-deploy Pages checks passed. Full PyThaiNLP tokenizer/dictionary parity, manual browser visual review and independent linguistic gold remain open.
 
 ## Decision and pipeline boundary
 
@@ -43,16 +43,16 @@ The following cases explicitly abstain rather than produce a plausible-looking u
 
 `docs/research/rtgs-parity-corpus.json` contains 66 normal token inputs, five explicit abstention cases and pre-segmented token sequences. `scripts/test_rtgs_parity.py` compares the browser implementation with private per-token `_romanize` and `_should_add_syllable_separator` functions from pinned PyThaiNLP 5.4.0, except the 25 documented correction cases which are checked against their reviewed outputs.
 
-- Focused `node web/tests/rtgs-reference.test.mjs` and `python scripts/test_rtgs_parity.py` passed in the latest full CI `test` job on `fd4d74ecd8cba44588b81f3efb5f01cfec6f8c19`.
-- Latest-head web static validation [40684119187](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40684119187) — PASS.
-- Full repository CI on earlier implementation head `e3bbdf285f95d835bc1e9674dce11b6780e564f2` passed both `test` and `master-artifact` jobs ([run 40683075009](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40683075009)). The latest `test` job passes; its `master-artifact` job is still running.
+- Focused `node web/tests/rtgs-reference.test.mjs` and `python scripts/test_rtgs_parity.py` passed in exact-head CI [40691939835](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40691939835) on `13d89d6f9b8a85b3ba85612e738a583a9c81ca0f`; both `test` and `master-artifact` jobs passed.
+- Latest-head web static validation [40691940070](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40691940070) — PASS.
+- RTGS Pages deployment [40692707861](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40692707861) passed and verified the published module/panel. After the public guidance update, Pages deployment [40694421367](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40694421367) also passed and verified the served homepage, system page and RTGS module.
 
 This verifies implementation parity for declared inputs and repository regression tests, not full PyThaiNLP `newmm` tokenizer/dictionary parity, correctness for every sentence/proper name, independent Thai IPA adjudication, or Ukrainian target-transcription accuracy. The website uses ClippyFirst token boundaries; phrase spacing can differ from PyThaiNLP's full text API.
 
 ## Open PR reconciliation
 
 - **PR #111** (`feat: pin Thai ทร lexical exception and guard ambiguity`) remains open and was not merged or cherry-picked. Its source-backed lexical cases informed only this separate RTGS correction layer; no IPA engine, text lexicon or branch changes from that PR were copied.
-- **PR #112** (`docs(site): audit public guidance and evidence status`) remains open and was not ported into this feature branch to avoid combining independent homepage/system copy changes with the RTGS feature. It overlaps `docs/MASTER-EXECUTION-PLAN-AND-CHAT-HANDOFF.md` and `web/tests/ui-contract.test.mjs`; the RTGS handoff entry is placed in dated history rather than appended at EOF to reduce avoidable conflict. Reconcile those shared files after PR #112 lands; do not merge blindly.
+- **PR #112** (`docs(site): audit public guidance and evidence status`) was not merged blindly. Its homepage/system copy and UI-contract changes were ported alongside the live RTGS implementation through PR #116, merged as `f4cc4d061c529fc5aec094af896dea5aaec9378f`. The structured public-content audit register is maintained in `docs/final-audit.md`; PR #112 is now superseded and should be closed after this closeout update is merged.
 - Recently merged PR #110 and earlier Thai IPA/lexicon work are preserved because this branch is based on current `main` at `d39fc9e2c40db4a9f760069099c1f45973d592c8`.
 
 ## Acceptance gates
@@ -62,9 +62,10 @@ This verifies implementation parity for declared inputs and repository regressio
 3. [x] Add reviewed lexical/orthographic corrections and explicit abstentions for unsupported cases.
 4. [x] Add 66-token parity corpus and CI comparison against pinned PyThaiNLP 5.4.0.
 5. [x] Focused RTGS tests and latest-head static validation pass; latest full CI `test` job passes.
-6. [ ] Latest-head `master-artifact` job completes successfully.
-7. [ ] Complete browser visual review and confirm deployed website behavior before promoting the feature out of draft.
-8. [ ] Decide whether to bundle a Thai word tokenizer/dictionary only after separate browser compatibility, provenance and license review.
+6. [x] Latest-head `master-artifact` job completes successfully (CI [40691939835](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40691939835)).
+7. [x] Confirm deployed website behavior through the post-deploy contract in [40692707861](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40692707861) and [40694421367](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40694421367).
+8. [ ] Complete manual browser visual review across viewport sizes/devices; automated served-content checks are not visual QA.
+9. [ ] Decide whether to bundle a Thai word tokenizer/dictionary only after separate browser compatibility, provenance and license review.
 
 ## Remaining independent research gaps
 

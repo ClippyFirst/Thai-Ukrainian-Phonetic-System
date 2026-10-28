@@ -621,5 +621,14 @@ The Python and browser IPA adapters now map Thai /h/ to Ukrainian «г», and re
 - **DONE_VERIFIED:** PR #115 merged as `fa75fe153a845aadbc7aad6b3e47a1ac5a6965f5`; exact-head CI including `master-artifact` passed in [40691939835](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40691939835), and web static validation passed in [40691940070](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40691940070).
 - **DONE_VERIFIED:** Pages deployment [40692707861](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40692707861) passed at https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/. The deploy job fetched the deployed app and RTGS module and verified the RTGS panel and exported romanization function.
 - **DONE_VERIFIED:** Pages build itself runs RTGS browser regression tests, pinned PyThaiNLP 5.4.0 parity and IPA-adapter tests before upload.
-- **PARTIAL:** public content audit is proposed in PR #116 on `feat/site-guidance-rtgs-20261028`; CI and a new Pages deployment must pass before those copy changes are marked published.
+- **DONE_VERIFIED:** public content audit merged in PR #116 as `f4cc4d061c529fc5aec094af896dea5aaec9378f`. Exact-head CI [40693398363](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40693398363), static validation [40693398375](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40693398375), and Pages deployment [40694421367](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40694421367) passed; the served homepage, system page and RTGS JavaScript contract were verified.
 - **BLOCKED:** independent expert-adjudicated Thai IPA/segmentation and Ukrainian target-form gold remains unavailable. No linguistic accuracy claim is inferred from implementation parity.
+
+
+### Latest checkpoint — 2026-10-28, public guidance live
+
+- **DONE_VERIFIED:** PR #116 merged to `main` as `f4cc4d061c529fc5aec094af896dea5aaec9378f`.
+- **PASS:** exact-head CI [40693398363](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40693398363), web static validation [40693398375](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40693398375), and post-merge Pages deployment [40694421367](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40694421367).
+- **DONE_VERIFIED:** deployed homepage advises one-word-first use, foregrounds segmentation uncertainty, labels fallback modes as approximate, explains IPA feature neutralization and describes RTGS as a parallel lossy Latin reference. The system page separates engineering tests from linguistic gold.
+- **PARTIAL:** manual visual review across browsers/devices was not performed. Automated live-page checks validate served HTML/JavaScript contracts, not visual quality.
+- **BLOCKED:** independent expert-adjudicated Thai IPA, segmentation and Ukrainian target-form gold remains unavailable. The project is still a research prototype, not release-ready.
