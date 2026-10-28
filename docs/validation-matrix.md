@@ -632,3 +632,12 @@ The Python and browser IPA adapters now map Thai /h/ to Ukrainian «г», and re
 - **DONE_VERIFIED:** deployed homepage advises one-word-first use, foregrounds segmentation uncertainty, labels fallback modes as approximate, explains IPA feature neutralization and describes RTGS as a parallel lossy Latin reference. The system page separates engineering tests from linguistic gold.
 - **PARTIAL:** manual visual review across browsers/devices was not performed. Automated live-page checks validate served HTML/JavaScript contracts, not visual quality.
 - **BLOCKED:** independent expert-adjudicated Thai IPA, segmentation and Ukrainian target-form gold remains unavailable. The project is still a research prototype, not release-ready.
+
+
+### Final checkpoint — 2026-10-28, audit and handoff reconciled
+
+- **PASS:** PR #117 exact-head CI [40695138890](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40695138890), including `test` and `master-artifact`.
+- **DONE_VERIFIED:** PR #112 closed as superseded; its unique copy/UI changes and public audit findings are preserved in merged PRs #116/#117.
+- **DONE_VERIFIED:** live RTGS and public guidance confirmed by Pages deployments [40692707861](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40692707861) and [40694421367](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40694421367).
+- **PARTIAL:** manual browser visual QA was not performed.
+- **BLOCKED:** independent expert-adjudicated Thai IPA, segmentation and Ukrainian target-form gold remain unavailable; the system is not release-ready.
