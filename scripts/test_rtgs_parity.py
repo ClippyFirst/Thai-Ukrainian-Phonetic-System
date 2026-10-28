@@ -7,9 +7,11 @@ linguistic correctness. PyThaiNLP is test-only, never loaded by the website.
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 from pathlib import Path
 
+os.environ.setdefault("PYTHAINLP_OFFLINE", "1")
 from pythainlp.transliterate.royin import _romanize, _should_add_syllable_separator
 
 ROOT = Path(__file__).resolve().parents[1]
