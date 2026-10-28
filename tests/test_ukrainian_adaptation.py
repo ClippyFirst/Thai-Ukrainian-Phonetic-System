@@ -3,14 +3,15 @@ from dataclasses import replace
 from thai_ukrainian.api import analyze_syllable
 from thai_ukrainian.phonetic_result import PhoneticResult
 from thai_ukrainian.ukrainian_adaptation import adapt_phonetic_result
+from thai_ukrainian.ua_orthography import candidates_for_ipa
 
 
 def test_ukrainian_output_is_adapted_from_typed_ipa_result():
     for text, expected in [
         ("อา", "а"),
         ("อัน", "ан"),
-        ("พอ", "по"),
-        ("ขอ", "ко"),
+        ("พอ", "п\u0027о"),
+        ("ขอ", "к\u0027о"),
         ("งอ", "нго"),
         ("สอง", "сонг"),
     ]:
@@ -84,18 +85,18 @@ def test_tone_and_provenance_survive_in_typed_phonetic_result():
 def test_common_external_thai_ipa_notation_is_normalized_before_adaptation():
     base = PhoneticResult.from_syllable_analysis(analyze_syllable("กา"))
     cases = [
-        ("[kʰaː˩˩˦]", "ка"),
+        ("[kʰaː˩˩˦]", "к'а"),
         ("haː", "га"),
-        ("kʰaː", "ка"),
-        ("pʰaː", "па"),
-        ("tʰaː", "та"),
+        ("kʰaː", "к'а"),
+        ("pʰaː", "п'а"),
+        ("tʰaː", "т'а"),
         ("tɕa", "ча"),
-        ("tɕʰa", "ча"),
-        ("/kʰaː/", "ка"),
-        ("kʰàː", "ка"),
-        ("ˈkʰaː", "ка"),
-        ("t͡ɕʰa˥", "ча"),
-        ("t͜ɕʰa˦˥", "ча"),
+        ("tɕʰa", "ч'а"),
+        ("/kʰaː/", "к'а"),
+        ("kʰàː", "к'а"),
+        ("ˈkʰaː", "к'а"),
+        ("t͡ɕʰa˥", "ч'а"),
+        ("t͜ɕʰa˦˥", "ч'а"),
         ("ŋɤːn˧", "нген"),
         ("k̚aː˧", "ка"),
     ]
@@ -132,3 +133,25 @@ def test_ambiguous_breve_is_not_silently_discarded_as_tone():
     adapted = adapt_phonetic_result(replace(base, phonemic_ipa="kʰă"))
     assert adapted["status"] == "withheld"
     assert adapted["output"] is None
+
+
+def test_aspiration_is_marked_by_apostrophe_not_h_and_not_added_to_plain_stops():
+    base = PhoneticResult.from_syllable_analysis(analyze_syllable("กา"))
+    cases = [("ka", "ка"), ("kʰa", "к'а"), ("kʰra", "к'ра"),
+             ("pa", "па"), ("pʰa", "п'а"), ("ta", "та"), ("tʰa", "т'а"),
+             ("tɕa", "ча"), ("tɕʰa", "ч'а"), ("ha", "га"), ("ʔa", "а")]
+    for ipa, expected in cases:
+        adapted = adapt_phonetic_result(replace(base, phonemic_ipa=ipa))
+        assert adapted["status"] == "adapted", ipa
+        assert adapted["output"] == expected, ipa
+    assert "aspiration" not in adapt_phonetic_result(replace(base, phonemic_ipa="kʰa")).get("neutralized_features", [])
+
+
+def test_ipa_candidate_renderer_preserves_aspiration_with_apostrophe():
+    assert candidates_for_ipa("ka") == ["ка"]
+    assert candidates_for_ipa("kʰa") == ["к'а"]
+    assert candidates_for_ipa("pʰa") == ["п'а"]
+    assert candidates_for_ipa("tʰa") == ["т'а"]
+    assert candidates_for_ipa("tɕa") == ["ча"]
+    assert candidates_for_ipa("tɕʰa") == ["ч'а"]
+    assert candidates_for_ipa("ha") == ["га"]

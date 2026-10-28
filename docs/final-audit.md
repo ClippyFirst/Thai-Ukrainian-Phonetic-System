@@ -674,3 +674,10 @@ The first run with the new coverage tests completed master-table generation and 
 - Post-merge CI [40645764144](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40645764144) passed the full test and master-artifact jobs.
 - Pages deployment [40645764146](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40645764146) succeeded; published homepage contract verified at https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/.
 - Readiness remains **research prototype / PARTIAL linguistic coverage**. Independent IPA gold and Ukrainian target adjudication are still absent; source-attested lexical entries are not accuracy evidence.
+
+
+## 2026-10-28 — aspiration marker policy (in progress on PR #115)
+
+- The IPA→Ukrainian adapter previously mapped aspirated stops/affricate to the plain Ukrainian letter and recorded aspiration as neutralized. This contradicted the approved project decision.
+- Changed Python and browser mappings so /kʰ pʰ tʰ tɕʰ/ produce к' п' т' ч'. The apostrophe is appended to the adapted consonant segment, before any following segment; plain /k p t tɕ/ remain к п т ч. /h/ remains «г» and /ʔ/ remains separately handled.
+- Added matched positive/negative tests. Exact-head CI and independent linguistic review are still required; this is a project transcription convention, not an official Ukrainian norm.

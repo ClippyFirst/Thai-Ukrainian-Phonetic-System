@@ -5,16 +5,17 @@ import { analyze } from "../src/engine.js";
 
 const canonical = adaptIpaToUkrainian("kʰaː");
 assert.equal(canonical.status, "adapted");
-assert.equal(canonical.output, "ка");
-assert.deepEqual(canonical.candidates, ["ка"]);
-assert(canonical.neutralizedFeatures.includes("aspiration"));
+assert.equal(canonical.output, "к\u0027а");
+assert.deepEqual(canonical.candidates, ["к\u0027а"]);
+assert(canonical.preservedFeatures.includes("aspiration (apostrophe)"));
+assert(!canonical.neutralizedFeatures.includes("aspiration"));
 assert(canonical.neutralizedFeatures.includes("length"));
 assert(canonical.rulesApplied.includes("UA-K-ASP"));
 
 for (const [ipa, expected] of [
-  ["ka", "ка"], ["kʰa", "ка"], ["kaː", "ка"],
+  ["ka", "ка"], ["kʰa", "к\u0027а"], ["kaː", "ка"],
   ["iw", "іу"], ["ew", "еу"], ["iaw", "іау"],
-  ["pʰaː", "па"], ["tʰaː", "та"], ["tɕa", "ча"], ["tɕʰa", "ча"], ["haː", "га"],
+  ["pʰaː", "п\u0027а"], ["tʰaː", "т\u0027а"], ["tɕa", "ча"], ["tɕʰa", "ч\u0027а"], ["haː", "га"],
   ["ŋaː", "нга"], ["klaj", "клай"], ["kaw", "кау"]
 ]) {
   assert.equal(adaptIpaToUkrainian(ipa).output, expected, ipa);
@@ -30,19 +31,19 @@ assert(thaiH.neutralizedFeatures.includes("glottal place and voicing"));
 assert.equal(adaptIpaToUkrainian("dʒa").status, "withheld", "voiced /dʒ/ is not a Thai affricate mapping");
 for (const ipa of ["tɕa", "tɕʰa"]) {
   const affricate = adaptIpaToUkrainian(ipa);
-  assert.equal(affricate.output, "ча", ipa);
+  assert.equal(affricate.output, ipa === "tɕʰa" ? "ч\u0027а" : "ча", ipa);
   assert(!affricate.output.includes("дж"), ipa);
 }
 
 // External Thai IPA commonly adds delimiters, tone letters/diacritics, stress,
 // and a tie bar. These are parsed as notation, not mistaken for unknown phones.
 for (const [ipa, expected] of [
-  ["[kʰaː˩˩˦]", "ка"],
-  ["/kʰaː/", "ка"],
-  ["kʰàː", "ка"],
-  ["ˈkʰaː", "ка"],
-  ["t͡ɕʰa˥", "ча"],
-  ["t͜ɕʰa˦˥", "ча"],
+  ["[kʰaː˩˩˦]", "к\u0027а"],
+  ["/kʰaː/", "к\u0027а"],
+  ["kʰàː", "к\u0027а"],
+  ["ˈkʰaː", "к\u0027а"],
+  ["t͡ɕʰa˥", "ч\u0027а"],
+  ["t͜ɕʰa˦˥", "ч\u0027а"],
   ["ŋɤːn˧", "нген"],
   ["k̚aː˧", "ка"]
 ]) {
@@ -87,3 +88,7 @@ console.log("Direct IPA input UI is wired to the same IPA → Ukrainian adapter"
 assert.equal(adaptIpaToUkrainian("kʰă").status, "withheld");
 assert.equal(adaptIpaToUkrainian("kʰă").output, null);
 console.log("Ambiguous breve diacritic is preserved and fails closed");
+
+// Aspiration apostrophe placement and contrast with plain consonants, /h/, and /ʔ/.
+for (const [ipa, expected] of [["ka","ка"],["kʰa","к'а"],["kʰra","к'ра"],["pa","па"],["pʰa","п'а"],["ta","та"],["tʰa","т'а"],["tɕa","ча"],["tɕʰa","ч'а"],["ha","га"],["ʔa","а"]]) assert.equal(adaptIpaToUkrainian(ipa).output, expected, ipa);
+console.log("Aspiration apostrophe placement and contrast tests passed");

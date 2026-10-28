@@ -44,7 +44,7 @@ class CompletionLayerTests(unittest.TestCase):
 
     def test_ukrainian_output_is_explicitly_project_candidate(self):
         result = candidates_for_ipa("tɕʰaː")
-        self.assertIn("ча", result)
+        self.assertIn("ч'а", result)
 
     def test_lexicon_requires_explicit_external_evidence(self):
         with tempfile.TemporaryDirectory() as d:

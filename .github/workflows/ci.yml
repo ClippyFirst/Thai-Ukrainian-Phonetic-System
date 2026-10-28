@@ -11,6 +11,12 @@ jobs:
         with:
           python-version: "3.12"
       - run: python -m pip install -e .
+      - run: python -m pip install pythainlp==5.4.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node web/tests/rtgs-reference.test.mjs
+      - run: python scripts/test_rtgs_parity.py
       - run: python scripts/generate_derived.py
       - run: python scripts/generate_syllable_space.py
       - run: git diff --exit-code -- docs/generated-audit.json docs/syllable-space.json docs/source-final-manifest.json
@@ -18,9 +24,6 @@ jobs:
       - run: python -m unittest discover -s tests -v
       - run: python scripts/run_challenge_diagnostics.py --output /tmp/challenge-runtime-diagnostics.json
       - run: python -c "import json; r=json.load(open('/tmp/challenge-runtime-diagnostics.json',encoding='utf-8')); s=r['summary']; assert s['challenge_inputs']==42, s; assert s['inputs_with_engine_output']+s['inputs_abstained_or_without_complete_output']==42, s; assert r['evaluation_kind']=='runtime_diagnostic_not_accuracy_benchmark'; assert 'accuracy' not in s"
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
       - run: python scripts/generate_web_word_dictionary.py
       - run: node web/tests/ipa-ua.test.mjs
       - run: node web/tests/parity.test.mjs

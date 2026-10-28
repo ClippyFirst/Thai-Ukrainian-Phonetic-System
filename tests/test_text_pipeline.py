@@ -27,8 +27,8 @@ class TextPipelineTests(unittest.TestCase):
         self.assertEqual([s["input"] for s in token["syllables"]], ["ยู", "เครน"])
         self.assertEqual([s["phonemic_ipa"] for s in token["syllables"]], ["juː", "kʰreːn"])
         self.assertEqual([s["tone"]["tone"] for s in token["syllables"]], ["mid", "mid"])
-        self.assertEqual([s["ukrainian_transliteration"] for s in token["syllables"]], ["йу", "крен"])
-        self.assertEqual("".join(s["ukrainian_transliteration"] for s in token["syllables"]), "йукрен")
+        self.assertEqual([s["ukrainian_transliteration"] for s in token["syllables"]], ["йу", "к'рен"])
+        self.assertEqual("".join(s["ukrainian_transliteration"] for s in token["syllables"]), "йук'рен")
 
     def test_source_attested_eastern_direction_uses_three_syllable_lexicon(self):
         # en.wiktionary revision 86398986 records ตะ-วัน-ออก and
@@ -266,7 +266,7 @@ class TextPipelineTests(unittest.TestCase):
         self.assertEqual(result["segmentation_status"], "lexicon")
         self.assertEqual([s["phonemic_ipa"] for s in result["syllables"]], ["tʰa", "leː", "saːj"])
         self.assertEqual([s["tone"]["tone"] for s in result["syllables"]], ["high", "mid", "mid"])
-        self.assertEqual([s["ukrainian_transliteration"] for s in result["syllables"]], ["та", "ле", "сай"])
+        self.assertEqual([s["ukrainian_transliteration"] for s in result["syllables"]], ["т'а", "ле", "сай"])
         self.assertEqual(analyze_syllable("ทราย").status, "analysis-dependent:special-orthography")
 
 if __name__ == "__main__":

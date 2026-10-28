@@ -57,6 +57,7 @@ kbd{font-family:inherit;font-size:12px;font-weight:600;line-height:1.2;border:1p
 .continuous-output-head p{font-size:13px;color:var(--muted);margin:0}
 .continuous-output-head .copy{margin:0;flex-shrink:0}
 .continuous-output-value{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;line-height:1.8;margin:18px 0 0;padding:16px;background:var(--wash);border-left:3px solid var(--blue);user-select:text}
+.rtgs-continuous .continuous-output-value{border-left-color:var(--red);font-family:Arial,"Noto Sans",sans-serif}
 .ipa-continuous .continuous-output-value{font-family:"Charis SIL","Doulos SIL","DejaVu Sans","Noto Sans",sans-serif}
 .continuous-output-notice{padding:12px 14px;background:var(--wash);border-left:4px solid var(--red);font-size:14px}
 .analysis-details{margin-top:28px;border-top:1px solid var(--line);padding-top:18px}

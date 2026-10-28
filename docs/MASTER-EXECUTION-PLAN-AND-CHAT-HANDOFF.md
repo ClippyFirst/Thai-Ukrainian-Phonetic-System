@@ -7,6 +7,26 @@
 - PR #104 (research-only morphology) remains open and overlaps web/src/app.js, web/src/engine.js, web/tests/parity.test.mjs, web/tests/ui-contract.test.mjs, README and audit/handoff documents. Keep #105 draft and do not merge blindly; reconcile/rebase after #104's disposition. PR #101 is the earlier competing morphology branch and remains untouched.
 - Evidence boundary: full output coverage is an engineering contract, not evidence of correct Thai word boundaries, lexical pronunciation, tone, proper names or Ukrainian target spelling. Research status remains a partial prototype, not release-ready.
 
+
+## 2026-10-28 — RTGS comparison layer (verified test job; one CI artifact gate pending)
+
+- **Starting point:** PR base `main` at `d39fc9e2c40db4a9f760069099c1f45973d592c8`.
+- **Working branch:** `feat/thai-rtgs-reference-20261028`; draft PR [#115](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/115); tracking issue [#114](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/issues/114).
+- **Latest implementation head:** `fd4d74ecd8cba44588b81f3efb5f01cfec6f8c19`. The subsequent documentation-only commit does not change executable code.
+- **Implemented:** offline browser port of PyThaiNLP 5.4.0 `royin` per-token rules; 66 normal token inputs, five abstention cases, pre-segmented sequences and 25 reviewed correction cases; source attribution and Apache-2.0 license text; independent RTGS UI panel and strict IPA → Ukrainian separation.
+- **Evidence:** latest full CI `test` job on `fd4d74ecd8cba44588b81f3efb5f01cfec6f8c19` passed, including RTGS unit tests, pinned PyThaiNLP parity, Python tests, browser/UI tests and generated-artifact drift checks. Latest-head web static validation [40684119187](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40684119187) passed. The latest full CI run's `master-artifact` job is still generating/checking the 351,780-row artifact; the previous full run [40683075009](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40683075009) passed both jobs on the earlier implementation head.
+- **Open PR reconciliation:** PR #111 was reviewed and left open; only its source-backed lexical evidence was reflected in the separate RTGS override layer, with no IPA-engine/text-lexicon cherry-pick. PR #112 was reviewed and left open because its homepage/system copy audit is a separate scope; it overlaps the handoff and UI-contract test, so reconcile those shared files after #112 lands. The RTGS section is placed in dated history rather than appended at EOF to reduce avoidable merge conflict. PR #110 and prior Thai IPA work are preserved from current `main`.
+- **Linguistic safeguards:** finite word-level corrections are documented in `docs/research/thai-romanization-integration.md`; unknown initial `ทร`, context-dependent `ๆ`/`ฯ`, unsupported `ฦ`, and one unreviewed long proper-name token abstain rather than guess. The two-consonant `ใ**` rule and preposed-vowel `ห นำ` correction address observed upstream failure modes.
+- **Pipeline invariant:** `Thai orthography → ClippyFirst analysis → IPA/typed result → Ukrainian adaptation` remains unchanged. RTGS is a parallel, lossy Latin reference only; it is not a pronunciation engine and not an input to Ukrainian adaptation.
+- **Task ledger:**
+  - `DONE_VERIFIED`: offline adapter and separation from IPA→Ukrainian; pinned reference and license attribution; 66-token/five-abstention corpus; 25 correction cases; focused RTGS tests; latest CI `test` job; latest-head static validation.
+  - `PARTIAL`: latest-head `master-artifact` job is still in progress; browser visual review and deployed-site behavior confirmation remain outstanding.
+  - `TODO`: confirm latest `master-artifact` success; perform visual review and confirm the site after an owner-approved merge/deployment. Do not merge this draft PR autonomously.
+  - `DEFERRED`: bundling/porting PyThaiNLP `newmm` tokenizer and dictionary until compatibility, provenance and licenses are separately reviewed.
+  - `EVIDENCE-LIMITED`: full text/tokenizer parity and independent Thai IPA/Ukrainian transcription accuracy are not established by RTGS parity.
+- **Release classification:** research-ready integration branch, not release-ready. No merge or release was performed.
+
+
 ## 2026-10-27 — direct IPA adapter merged; published-site verification in progress
 
 - **Merged to `main`:** PR [#103](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/103) added fail-closed malformed delimiter handling to PR [#102](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/102)'s branch; PR #102 was then merged to main. Main merge commit: `070687575026ebc6d5d5dabdd0bb7bf647656bfc`.
@@ -1308,3 +1328,19 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - **GitHub Pages deployment:** [40645764146](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40645764146) passed and verified the published homepage contract at https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/.
 - The context-scoped `ทะเลทราย → ทะ|เล|ซาย` reading is deployed in both Python and browser engines. Isolated `ทราย` intentionally remains unresolved without sense context.
 - **Readiness:** engineering/deployment checks pass; overall project remains a research prototype with partial linguistic coverage. Independent IPA gold, independent Ukrainian target adjudication, broader lexical exception coverage and connected-speech phonetics remain open. No accuracy claim is made.
+
+## 2026-10-28 — aspiration apostrophe implementation (continuation on PR #115)
+
+- Working branch: `feat/thai-rtgs-reference-20261028`; existing draft PR [#115](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/115), based on main `d39fc9e2c40db4a9f760069099c1f45973d592c8`. RTGS reference work remains isolated from the IPA adapter.
+- Current finding: both Python and browser adapters recognized /kʰ pʰ tʰ tɕʰ/ but mapped them to plain к/п/т/ч and listed aspiration as neutralized. That contradicted the agreed project convention.
+- Implementation: the adapters now append ASCII apostrophe immediately after the corresponding Ukrainian consonant: /kʰa/ → к'а, /pʰa/ → п'а, /tʰa/ → т'а, /tɕʰa/ → ч'а. Non-aspirated /ka/ remains ка; /ha/ → га; /ʔa/ → а. RTGS is not used to infer these mappings.
+- Tests updated for aspirated vs non-aspirated contrasts, clusters, tone/length notation and h/glottal-stop separation. Methodology, validation matrix and final audit updated in place.
+- **Status at checkpoint:** PARTIAL pending exact-head GitHub Actions CI, generated-artifact/master-artifact checks, and inspection of all downstream output changes. No local checkout is available, so no local tests are claimed. The convention is a project decision, not an independently adjudicated Ukrainian norm.
+
+
+## 2026-10-28 — adapter, candidate renderer, data table and UI reconciled
+
+- Follow-up to the aspiration-policy implementation: the IPA-based candidate renderer (`src/thai_ukrainian/ua_orthography.py`) now agrees with the canonical Python/browser IPA adapters, and `data/derived/thai_consonant_correspondence.csv` has been regenerated to show к'/п'/т'/ч' for aspirated onset rows, including obsolete grapheme rows.
+- Public explanations were updated in `web/index.html` and `web/system.html`; the Ukrainian-vs-Russian comparison matrix no longer describes aspiration as unmarked. `tests/test_completion_layers.py` and `tests/test_text_pipeline.py` now expect the new forms for the source-attested `ยูเครน` and sense-scoped `ทะเลทราย` examples.
+- **Evidence:** Web static validation passed at `8c855b9ec1d557d70135a9353c30df7c20b8f26f` (run [40688615996](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40688615996)). The full CI run on that exact code head was still in progress at the latest check; no full-suite pass is claimed. An earlier full CI run exposed three stale expected-output assertions, which were updated. The exact-head suite must confirm all tests and master-artifact generation.
+- No local tests were possible because this execution environment has no repository checkout. RTGS parity tests and source-registry generation had passed at the start of the latest CI run; full Python/browser/master-artifact verification remains pending.

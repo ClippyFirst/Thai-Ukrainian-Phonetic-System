@@ -1,6 +1,7 @@
 import { analyzeText } from './engine.js';
 import { adaptIpaToUkrainian } from './ipa-ua.js';
 import { preprocessArticleText } from './article-cleanup.js';
+import { renderRtgsTokens } from './rtgs-reference.js';
 
 const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
@@ -194,6 +195,7 @@ function run() {
         '. Це фонетичний кандидат, а не переклад.';
   const uaOutput = assembleOutput(analysisText, tokens, 'ua');
   const ipaOutput = assembleOutput(analysisText, tokens, 'ipa');
+  const rtgsOutput = renderRtgsTokens(tokens);
   const unresolved = (uaOutput.match(/⟦НЕВИЗНАЧЕНО:/g) || []).length;
   const notice = thaiTokens.length === 0
     ? '<p class="continuous-output-notice" role="note">Тайського тексту для фонетичного перетворення не знайдено; нетайські фрагменти збережено без інтерпретації.</p>'
@@ -213,6 +215,8 @@ function run() {
       mode === 'super-soft' ? 'Повний приблизний український кандидат; неперевірені звукові відповідності можуть бути неточними.' : mode === 'soft' ? 'Попередній український кандидат; неперевірені структурні сегменти можуть бути неточними.' : 'Один суцільний текст для читання та копіювання. Внутрішні склади з’єднано; межі слів відокремлено.', 'ua-continuous') +
     continuousPanel('IPA — проміжне представлення', ipaOutput,
       mode === 'super-soft' ? 'Приблизний IPA для повного покриття; резервні читання не підтверджені.' : mode === 'soft' ? 'Попередній IPA-проміжний результат; перевірте сегментацію та читання.' : 'Контрольний IPA-вихід для перевірки фонетичної основи українського кандидата.', 'ipa-continuous') +
+    continuousPanel('RTGS — латинська романізація (не IPA)', rtgsOutput,
+      'Локальний порт алгоритму RTGS PyThaiNLP 5.4.0; межі токенів беруться з аналізатора ClippyFirst і можуть відрізнятися від сегментації PyThaiNLP. RTGS не позначає тон і не зберігає надійно довготу голосних та частину фонетичних розрізнень; ph/th/kh позначають придихові приголосні, а не англійські /f/, /θ/ чи назви літер. Цей результат є окремою романізацією, не джерелом українського виходу.', 'rtgs-continuous') +
     '<details class="analysis-details"><summary>Детальний аналіз сегментів і складів</summary>' +
     tokens.map(card).join('') + '</details>';
   out.hidden = false;

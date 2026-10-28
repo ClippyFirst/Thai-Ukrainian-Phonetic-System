@@ -233,7 +233,7 @@ const desert = analyzeText("ทะเลทราย")[0];
 if (desert.segmentationStatus !== "lexicon" ||
     desert.syllables.map(x => x.phonemicIpa).join("|") !== "tʰa|leː|saːj" ||
     desert.syllables.map(x => x.tone).join("|") !== "high|mid|mid" ||
-    desert.syllables.map(x => x.ukrainian).join("|") !== "та|ле|сай") {
+    desert.syllables.map(x => x.ukrainian).join("|") !== "т\u0027а|ле|сай") {
   throw new Error("Source-attested sand-sense compound did not resolve through the IPA adapter: " + JSON.stringify(desert));
 }
 const isolatedSandHomograph = analyze("ทราย");
