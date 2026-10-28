@@ -130,7 +130,8 @@ class SpecialOrthographyEvidenceTests(unittest.TestCase):
         source_rows = {row["source_id"]: row for row in _rows(ROOT / "data/thai/sources.csv")}
         source_id = "SRC-ORST-CLUSTER-2011"
         self.assertIn(source_id, source_rows)
-        self.assertIn("2011", source_rows[source_id]["url"])
+        self.assertIn("/html/49/", source_rows[source_id]["url"])
+        self.assertIn("2011", source_rows[source_id]["notes"])
         self.assertIn("lexical reading evidence only", source_rows[source_id]["notes"])
 
         for word, normalized in expected.items():
