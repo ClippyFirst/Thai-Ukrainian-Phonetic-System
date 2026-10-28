@@ -735,3 +735,10 @@ The first run with the new coverage tests completed master-table generation and 
 - PR #112 was closed as superseded after its unique copy and UI-contract changes were ported through PR #116 and the audit register was ported through PR #117.
 - The site is live at https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/. RTGS deployment [40692707861](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40692707861) and public-guidance deployment [40694421367](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40694421367) passed served-content checks.
 - Manual browser visual review remains PARTIAL; independent linguistic gold remains BLOCKED. No end-to-end accuracy claim is made.
+
+## 2026-10-28 — UX accessibility polish
+
+- Starting main: `25ebb8f70264ee76f3a93c48b42fd35154cfb77e` (the UX refresh and corrected Pages contract were already present).
+- Increased navigation, mode disclosure, and methodology-link hit areas to 44px, including mobile navigation; bumped both stylesheet cache keys so browsers fetch the refinement.
+- Added UI contract assertions for target sizes, keyboard focus, and cache keys. Strict-mode default, uncertainty copy, IPA-first output and separate RTGS reference remain intact; no pronunciation rules changed.
+- Status PARTIAL pending exact-head CI and post-deploy verification. Real-browser visual review and WCAG 2.2 AA checks remain unperformed; linguistic gold remains evidence-limited.
