@@ -125,6 +125,7 @@ class SpecialOrthographyEvidenceTests(unittest.TestCase):
             "ทราบ": "ซาบ",
             "ทรง": "ซง",
             "ทรัพย์": "ซับ",
+            "ทราม": "ซาม",
             "แทรก": "แซก",
         }
         source_rows = {row["source_id"]: row for row in _rows(ROOT / "data/thai/sources.csv")}
@@ -133,6 +134,13 @@ class SpecialOrthographyEvidenceTests(unittest.TestCase):
         self.assertIn("/html/49/", source_rows[source_id]["url"])
         self.assertIn("2011", source_rows[source_id]["notes"])
         self.assertIn("lexical reading evidence only", source_rows[source_id]["notes"])
+        lexicon_sources = {row["word"]: row for row in _rows(ROOT / "data/thai/text_lexicon_sources.csv")}
+        thram_source = lexicon_sources["ทราม"]
+        self.assertEqual(thram_source["source_id"], "SRC-WIKTIONARY-EN-TH-ทราม")
+        self.assertEqual(thram_source["source_revision"], "88637433")
+        self.assertEqual(thram_source["source_url"], "https://en.wiktionary.org/w/index.php?title=ทราม&oldid=88637433")
+        self.assertEqual(thram_source["license"], "CC-BY-SA-4.0")
+        self.assertEqual(thram_source["status"], "SOURCE_ATTESTED")
 
         for word, normalized in expected.items():
             with self.subTest(word=word):
