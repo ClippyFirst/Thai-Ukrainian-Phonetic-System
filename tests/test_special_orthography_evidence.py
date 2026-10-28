@@ -110,7 +110,7 @@ class SpecialOrthographyEvidenceTests(unittest.TestCase):
 
 
     def test_source_attested_false_cluster_and_thor_lexemes_are_exact_not_productive(self):
-        from thai_ukrainian.parser import parse_syllable
+        from thai_ukrainian.api import analyze_syllable
 
         # The Royal Institute article discusses these as lexical readings,
         # not a productive replacement rule for every spelling containing ร.
@@ -135,10 +135,12 @@ class SpecialOrthographyEvidenceTests(unittest.TestCase):
 
         for word, normalized in expected.items():
             with self.subTest(word=word):
-                result = parse_syllable(word)
+                result = analyze_syllable(word)
                 self.assertEqual(result.status, "analyzed", (word, result.status, result.warnings))
                 self.assertEqual(result.normalized, normalized)
                 self.assertIsNotNone(result.phonemic_ipa, (word, result.warnings))
+                self.assertEqual(result.phonetic_result["phonemic_ipa"], result.phonemic_ipa)
+                self.assertIsNotNone(result.ukrainian_transliteration)
 
 
 if __name__ == "__main__":
