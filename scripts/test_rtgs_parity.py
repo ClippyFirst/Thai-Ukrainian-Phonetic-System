@@ -15,7 +15,7 @@ os.environ.setdefault("PYTHAINLP_OFFLINE", "1")
 from pythainlp.transliterate.royin import _romanize, _should_add_syllable_separator
 
 ROOT = Path(__file__).resolve().parents[1]
-ORTHOGRAPHIC_CORRECTIONS = {"ใหม่": "mai", "ไหม": "mai", "เหงา": "ngao", "ให้": "hai", "ใกล้": "klai", "ใคร": "khrai", "จริง": "ching", "สามารถ": "samat", "สวัสดี": "sawatdi", "พัฒนา": "phatthana", "ฤทธิ์": "rit", "ฤๅ": "rue", "รถไฟ": "rotfai", "ผลไม้": "phonlamai", "ยูเครน": "yukhren", "ทราบ": "sap", "ทรัพย์": "sap", "แทรก": "saek", "อักษร": "akson"}
+ORTHOGRAPHIC_CORRECTIONS = {"ใหม่": "mai", "ไหม": "mai", "เหงา": "ngao", "ให้": "hai", "ใกล้": "klai", "ใคร": "khrai", "จริง": "ching", "สามารถ": "samat", "สวัสดี": "sawatdi", "สร้าง": "sang", "ศรี": "si", "เศร้า": "sao", "ไซร้": "sai", "ทรง": "song", "ทราม": "sam", "พัฒนา": "phatthana", "ฤทธิ์": "rit", "ฤๅ": "rue", "รถไฟ": "rotfai", "ผลไม้": "phonlamai", "ยูเครน": "yukhren", "ทราบ": "sap", "ทรัพย์": "sap", "แทรก": "saek", "อักษร": "akson"}
 CORPUS = ROOT / "docs" / "research" / "rtgs-parity-corpus.json"
 NODE = r"""
 import { romanizeRtgsWord, romanizeRtgsWords } from './web/src/rtgs-reference.js';
