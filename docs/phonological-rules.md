@@ -16,3 +16,8 @@ For a nonconforming sequence such as แสดง supplied as one syllable, the 
 A contextual rule must declare its domain and evidence before becoming an automatic global transformation.
 
 The remaining special-orthography domains (รร, broader ห นำ, silent letters, lexical exceptions and connected speech) remain evidence-gated.
+
+
+## Completeness and ambiguity boundary (2026-10-28)
+
+See [`docs/phonology-ambiguity-coverage.md`](phonology-ambiguity-coverage.md) for the source-backed review matrix. Core tone/segmental rules are implemented, but lexical readings of `ทร`, `รร`, `ฤ/ฤๅ/ฦ/ฦๅ`, silent-letter constructions and connected speech are not exhaustive. Unlisted ambiguous forms must remain analysis-dependent; dictionary-attested readings are not independent IPA gold. Regression tests enforce fail-closed behavior for unlisted special-orthography forms and ensure an exact lexical reading such as `ทราบ` does not become a global rule for `ทร`.

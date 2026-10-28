@@ -574,3 +574,25 @@ The Python and browser IPA adapters now map Thai /h/ to Ukrainian «г», and re
 - Post-merge CI run [40592864584](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40592864584) had its `test` job pass; its separate `master-artifact` job was still running at audit time. The exact-head PR CI above passed both jobs, and the Pages build independently generated the master table and passed its Python/browser checks.
 - PR #101 was closed as a duplicate of #104; PR #104 was closed/deferred because its separate research-only morphology overlay was based on an older main and had not been reconciled against the deployed head. Both source branches are preserved. Reopen/port that feature only after rebasing, exact-head CI and browser parity, and keeping morphology outside practical phonetic output.
 - Readiness: engineering and deployment checks are verified; the project remains a research prototype, not release-ready for accuracy claims, pending independent IPA gold and Ukrainian target-form adjudication.
+
+
+## 2026-10-28 — phonology completeness / ambiguity matrix
+
+| Component | State | Acceptance evidence / remaining work |
+|---|---|---|
+| Productive tone rules and syllable class/quantity interactions | DONE_VERIFIED as implemented rule tables; accuracy over arbitrary text not claimed | `data/thai/tone_rules.csv`, parser/tone tests, source basis JIPA 1993; still depends on correct syllable segmentation. |
+| Special-orthography ambiguity handling | PARTIAL, fail-closed | New `docs/phonology-ambiguity-coverage.md` documents `ทร`, `รร`, `ฤ/ฤๅ/ฦ/ฦๅ`, silent letters, false clusters, and `ห นำ`/`อ นำ`. Exact-head tests pending CI. |
+| Sense-dependent `ทราย` and lexical `ทร` readings | PARTIAL, intentionally unresolved absent lexical/sense evidence | Royal Institute 2011 source distinguishes sand /s/ from deer-name cluster reading. Exact lexical readings such as `ทราบ` must not generalize to arbitrary `ทร` forms. |
+| Connected-speech phonetics, lexical exception completeness, independent IPA gold | TODO / BLOCKED by evidence | Need sourced lexical/context rules and independent Thai phonetic adjudication; dictionary transcriptions remain SOURCE_ATTESTED_NOT_GOLD. |
+
+
+| Productive tone rule table coverage | DONE_VERIFIED on tested code head `7a47e1f86862f33bb8eadfb34de75aeba5fd3809` (CI 40645028725) | Added `tests/test_tone_rule_coverage.py` with an explicit 15-condition truth table, uniqueness check, runtime lookup checks and restricted tone-mark negative cases. Acceptance met on tested code head `7a47e1f86862f33bb8eadfb34de75aeba5fd3809`: all 209 Python tests, downstream parity/generated-artifact checks and the 351,780-row master artifact passed. This proves rule-table completeness only, not end-to-end accuracy. |
+
+
+| Context-specific ทราย disambiguation | DONE_VERIFIED as a source-pinned exact compound case on tested code head `7a47e1f86862f33bb8eadfb34de75aeba5fd3809` (CI 40645028725); broader sense coverage remains PARTIAL | Added pinned lexical segmentation `ทะเลทราย → ทะ|เล|ซาย` from English Wiktionary oldid 87239667, with matching Python/browser tests. The isolated homograph remains unresolved. Acceptance: exact-head CI verifies IPA `tʰa|leː|saːj`, tones high/mid/mid, UA `та|ле|сай`, and no forced IPA for isolated `ทราย`. |
+
+
+| Special-orthography registry performance | DONE_VERIFIED on tested code head `7a47e1f86862f33bb8eadfb34de75aeba5fd3809` (CI 40645028725) | Cached `load_special_rules()` with `lru_cache(maxsize=1)` to avoid reopening the static CSV for every parser call during the 351,780-row master generator. Acceptance met: master-table generation and downstream Python/browser checks passed; master artifact verified 351,780 rows. |
+
+
+| Exact lexical ทร regression test API | FIXED, rerun pending | First CI execution: 208/209 tests passed; the new `ทราบ` test incorrectly asserted phonemic IPA from the structural-only `parse_syllable()` function. Switched it to `api.analyze_syllable()` so the assertion covers the full phonology pipeline. Latest-head CI is the acceptance gate. |

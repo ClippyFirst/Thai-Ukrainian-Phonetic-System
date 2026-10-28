@@ -79,7 +79,7 @@
     "independently_validated_external_ipa_input_accuracy",
     "independently_adjudicated_ukrainian_ipa_adapter_forms"
   ],
-  "lexical_attestation": "Nine source-backed runtime text lexicon entries now include ยูเครน (en.wiktionary oldid 88025965), ตะวันออก (oldid 86398986), ยุโรป (oldid 91325849) and ยุโรปตะวันออก (oldid 87721830), plus three active typed IPA overrides (เงิน, เดิน and ออก). All are source-attested dictionary evidence, not independent expert/acoustic gold.",
+  "lexical_attestation": "Ten source-backed runtime text lexicon entries now include ยูเครน (en.wiktionary oldid 88025965), ตะวันออก (oldid 86398986), ยุโรป (oldid 91325849), ยุโรปตะวันออก (oldid 87721830), and the sense-scoped compound ทะเลทราย (oldid 87239667), plus three active typed IPA overrides (เงิน, เดิน and ออก). All are source-attested dictionary evidence, not independent expert/acoustic gold.",
   "corpus_attestation": "993 source-annotated Wisesight word-tokenization rows (CC0-1.0; test-only, never training/tuning); pinned UD Thai TUD source snapshots under CC BY-SA 4.0 for a research-only frequency-Viterbi experiment; zero independently adjudicated IPA/tone/vowel-length gold rows.",
   "word_boundary_benchmark": {
     "dataset": "PyThaiNLP/Wisesight word-tokenization labels",
@@ -1364,5 +1364,52 @@
     ],
     "claim_boundary": "Targeted source-attested lexical coverage only; not independently adjudicated gold and not evidence of overall G2P accuracy.",
     "benchmark_blocker": "data/benchmark/gold.tsv remains header-only; overall IPA/end-to-end accuracy remains NOT_MEASURED."
+  },
+  "phonology_ambiguity_audit": {
+    "status": "DONE_VERIFIED_IMPLEMENTATION_AND_TESTS; OVERALL_LINGUISTIC_COVERAGE_PARTIAL",
+    "audit_document": "docs/phonology-ambiguity-coverage.md",
+    "branch": "audit/thai-phonology-ambiguity-coverage-20261028",
+    "pull_request": 110,
+    "coverage": [
+      "tone and live/dead rules",
+      "initial clusters and codas",
+      "ห นำ and อ นำ",
+      "ทร sense ambiguity",
+      "จร/สร/ศร/ซร false clusters",
+      "รร",
+      "ฤ/ฤๅ/ฦ/ฦๅ",
+      "thanthakhat and silent-letter scope",
+      "lexical segmentation and connected speech"
+    ],
+    "key_case": {
+      "form": "ทราย",
+      "decision": "remain analysis-dependent without sense context",
+      "source": "https://www.orst.go.th/FILEROOM/CABROYINWEB/DRAWER004/GENERAL/DATA0000/00000630.FLP/html/48/"
+    },
+    "tests_added": [
+      "unlisted special-orthography forms fail closed",
+      "exact ทราบ lexical reading does not generalize to ทร",
+      "15-condition productive Thai tone-rule truth table and runtime lookup parity"
+    ],
+    "independent_ipa_gold": false,
+    "accuracy_claimed": false,
+    "ci_status": "PASS on tested code head 7a47e1f86862f33bb8eadfb34de75aeba5fd3809: 209 Python tests and downstream diagnostics/browser checks; master artifact 351780 rows/41 vowels; web static validation 40645028587 passed. Independent IPA gold and target adjudication remain blocked.",
+    "context_scoped_reading": {
+      "word": "ทะเลทราย",
+      "syllables": [
+        "ทะ",
+        "เล",
+        "ซาย"
+      ],
+      "ipa": "tʰa˦˥.leː˧.saːj˧",
+      "source_id": "SRC-WIKTIONARY-EN-TH-ทะเลทราย",
+      "source_revision": "87239667",
+      "license": "CC-BY-SA-4.0",
+      "status": "SOURCE_ATTESTED_NOT_GOLD",
+      "isolated_homograph": "ทราย remains analysis-dependent without sense context"
+    },
+    "verified_code_head": "7a47e1f86862f33bb8eadfb34de75aeba5fd3809",
+    "ci_run": 40645028725,
+    "web_static_run": 40645028587
   }
 }

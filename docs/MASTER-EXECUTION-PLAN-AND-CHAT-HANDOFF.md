@@ -1255,3 +1255,46 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Post-merge CI run [40592864584](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40592864584) had its `test` job pass; its separate `master-artifact` job was still running at audit time. The exact-head PR CI above passed both jobs, and the Pages build independently generated the master table and passed its Python/browser checks.
 - PR #101 was closed as a duplicate of #104; PR #104 was closed/deferred because its separate research-only morphology overlay was based on an older main and had not been reconciled against the deployed head. Both source branches are preserved. Reopen/port that feature only after rebasing, exact-head CI and browser parity, and keeping morphology outside practical phonetic output.
 - Readiness: engineering and deployment checks are verified; the project remains a research prototype, not release-ready for accuracy claims, pending independent IPA gold and Ukrainian target-form adjudication.
+
+
+## 2026-10-28 — Thai phonology completeness and ambiguous readings
+
+- Working branch: `audit/thai-phonology-ambiguity-coverage-20261028`, based on current `main` at `c1d19996b027822d6e079ba33cabee52587da592`.
+- Added `docs/phonology-ambiguity-coverage.md`, a source-backed audit matrix for tone/live-dead rules, onset clusters, codas, `ห นำ`/`อ นำ`, `ทร`, false clusters (`จร/สร/ศร/ซร`), `รร`, `ฤ/ฤๅ/ฦ/ฦๅ`, thanthakhat, lexical segmentation, and connected speech.
+- Added regression tests requiring unlisted special-orthography forms to remain analysis-dependent and verifying that the exact lexical reading `ทราบ` does not make `ทร` a productive global /s/ rule. The Royal Institute source explicitly distinguishes `ทราย` “sand” (non-cluster /s/) from `ทราย` in the deer-name family (true cluster reading); the engine must not guess the sense from spelling alone.
+- This is a coverage audit and fail-closed regression hardening, not a broad phonology expansion. No unsupported IPA labels or accuracy claims were added. Independent IPA gold remains blocked on expert adjudication.
+- Status pending: exact-head CI, generated master artifact, browser/Python parity and static web validation on the PR head. Do not mark the new tests DONE_VERIFIED until CI completes.
+
+
+### Follow-up — productive tone-table completeness test
+
+- Added `tests/test_tone_rule_coverage.py`: exact expected matrix for all 15 conventional tone rules, duplicate-condition detection, runtime lookup verification for every row, and rejection of mai-tri/mai-chattawa with high/low-class initials.
+- This validates completeness of the declared orthographic rule table, not the parser's segmentation or acoustic tone accuracy. CI remains in progress at `generate_master_table.py`; no pass is claimed until downstream test jobs execute.
+
+
+### Follow-up — context-scoped resolution for ทราย (2026-10-28)
+
+- Source-pinned English Wiktionary revision 87239667 records the exact sand compound `ทะเลทราย` as `ทะ-เล-ซาย`, IPA `/tʰa˦˥.leː˧.saːj˧/`, CC BY-SA 4.0. Added this exact compound to the Python text lexicon and browser lexical map; its Ukrainian candidate is produced syllable-by-syllable through the existing IPA adapter.
+- The isolated homograph `ทราย` remains analysis-dependent because the Royal Institute 2011 article distinguishes sand from the deer-name sense, which has a true cluster. No context-free override was added.
+- Added Python and browser regression tests for the exact compound, IPA/tone sequence and Ukrainian adapter result, while retaining the isolated-homograph abstention test. CI still needs to complete before marking the code/data change DONE_VERIFIED.
+
+
+### CI generator performance fix — special-orthography registry cache
+
+- Added `functools.lru_cache(maxsize=1)` to `load_special_rules()`. The exhaustive master-table generator re-parses 351,780 structural combinations; the uncached loader reopened `data/thai/special_orthography.csv` for each parse, making a registry lookup an avoidable per-row file I/O operation.
+- This is semantics-preserving: the registry is static during a run, callers do not mutate it, and the returned rules remain identical. The latest exact-head CI must verify that generation completes and all Python/browser tests pass.
+
+
+### Test correction after first executable run
+
+- The generator completed after caching the special-orthography registry. The first Python suite then ran 209 tests and reported one failure in the newly added exact-`ทราบ` regression: the test called the structural-only `parse_syllable()` API but asserted that it had already composed IPA. The production path is `api.analyze_syllable()`; the regression now exercises that end-to-end API. The source-attested desert compound and all three new tone-table tests passed in that run. Latest-head CI must rerun after this test correction.
+
+
+## 2026-10-28 — ambiguity audit verification result
+
+- Exact code/documentation head tested: `7a47e1f86862f33bb8eadfb34de75aeba5fd3809`.
+- **CI run 40645028725: PASS** — all 209 Python unit tests; challenge diagnostics; web word-dictionary generation; IPA adapter, Python/browser parity and UI-contract tests; browser latency benchmark; Wisesight and TUD segmentation diagnostics; source-attested IPA diagnostic; target-candidate registry check; and the generated master artifact. The separate `master-artifact` job verified exactly 351,780 rows and 41 vowel records.
+- **Web static validation run 40645028587: PASS**.
+- The first new regression attempt exposed a test-harness mistake (structural-only parser asserted final IPA); it was corrected to use `api.analyze_syllable()` and the full suite then passed. The registry cache eliminated the long-running master-generator bottleneck.
+- Remaining state is intentionally PARTIAL for linguistic completeness: isolated sense-ambiguous `ทราย`, the broader lexical exception space, connected speech, and independent IPA/Ukrainian target adjudication remain unresolved. Source-attested dictionary entries are not gold labels.
+- Verified code/test head above is the parent of the final audit-register-only commit. The final documentation commit SHA is reported in the handoff's Git history / final report.

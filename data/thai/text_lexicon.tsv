@@ -119,3 +119,5 @@
 # Dictionary IPA is evidence for these lexical forms, not independently adjudicated phonetic gold.
 ยุโรป	ยุ|โรป
 ยุโรปตะวันออก	ยุ|โรป|ตะ|วัน|ออก
+# Exact compound context resolves ทราย as the sand sense; the isolated homograph remains unresolved.
+ทะเลทราย	ทะ|เล|ซาย

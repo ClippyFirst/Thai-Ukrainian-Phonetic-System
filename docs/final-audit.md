@@ -638,3 +638,31 @@ The current PR branch now implements the selected IPA-adapter policy: Thai /h/ �
 - Post-merge CI run [40592864584](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40592864584) had its `test` job pass; its separate `master-artifact` job was still running at audit time. The exact-head PR CI above passed both jobs, and the Pages build independently generated the master table and passed its Python/browser checks.
 - PR #101 was closed as a duplicate of #104; PR #104 was closed/deferred because its separate research-only morphology overlay was based on an older main and had not been reconciled against the deployed head. Both source branches are preserved. Reopen/port that feature only after rebasing, exact-head CI and browser parity, and keeping morphology outside practical phonetic output.
 - Readiness: engineering and deployment checks are verified; the project remains a research prototype, not release-ready for accuracy claims, pending independent IPA gold and Ukrainian target-form adjudication.
+
+
+## 2026-10-28 — phonology completeness and ambiguous readings
+
+- Added source-backed coverage matrix: `docs/phonology-ambiguity-coverage.md`.
+- The current engine correctly keeps unlisted `ทร`, `รร`, `ฤ/ฤๅ/ฦ/ฦๅ`, false-cluster and thanthakhat constructions analysis-dependent. Source-backed exact lexical readings must not be extrapolated into global spelling rules.
+- Royal Institute 2011 material distinguishes `ทราย` meaning sand (historically non-cluster /s/) from the deer-name sense (true cluster reading). A context-free override is unsafe without word/sense context.
+- Added Python regression coverage for fail-closed behavior and for the exact lexical `ทราบ` reading not generalizing to `ทราย`.
+- Current status: implementation coverage audit is PARTIAL; exact-head CI has started but remains in progress at `generate_master_table.py`. No test pass is claimed for this new branch yet. Independent IPA gold and Ukrainian target adjudication remain separate blockers.
+
+
+## 2026-10-28 — sense-scoped ทราย reading
+
+- Added the source-pinned compound `ทะเลทราย → ทะ|เล|ซาย` from en.wiktionary oldid 87239667, which records `/tʰa˦˥.leː˧.saːj˧/`. The source is dictionary evidence, not independent gold.
+- Isolated `ทราย` remains withheld because the Royal Institute distinguishes the sand sense from the deer-name sense with a true cluster. This resolves one documented context without generalizing the `ทร` spelling rule.
+- Python and browser regression tests are added; the final branch CI remains in progress at the master-table generator, so these tests are not yet verified.
+
+
+### Verification note — regression harness correction
+
+The first run with the new coverage tests completed master-table generation and ran 209 Python tests. The source-attested `ทะเลทราย` compound test, the ambiguity sentinels, and all tone-table tests passed; one newly added `ทราบ` regression failed because it called the structural parser but asserted final IPA. The test now calls `api.analyze_syllable()`. The latest branch head requires a full rerun; no green status is claimed yet.
+
+
+### Verification closure — 2026-10-28
+
+- Exact code head `7a47e1f86862f33bb8eadfb34de75aeba5fd3809`: CI run [40645028725](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40645028725) passed all 209 Python tests and all downstream diagnostics/browser checks; its `master-artifact` job passed and verified 351,780 rows / 41 vowel records.
+- Web static validation [40645028587](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40645028587) passed.
+- Overall status remains research prototype / PARTIAL for full linguistic coverage and accuracy because independent IPA gold, independent Ukrainian target adjudication, broad lexical coverage and connected speech are not complete.
