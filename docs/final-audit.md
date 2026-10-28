@@ -666,3 +666,11 @@ The first run with the new coverage tests completed master-table generation and 
 - Exact code head `7a47e1f86862f33bb8eadfb34de75aeba5fd3809`: CI run [40645028725](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40645028725) passed all 209 Python tests and all downstream diagnostics/browser checks; its `master-artifact` job passed and verified 351,780 rows / 41 vowel records.
 - Web static validation [40645028587](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40645028587) passed.
 - Overall status remains research prototype / PARTIAL for full linguistic coverage and accuracy because independent IPA gold, independent Ukrainian target adjudication, broad lexical coverage and connected speech are not complete.
+
+
+## Production closeout — 2026-10-28
+
+- PR #110 merged to `main` as `403e0bc02dee5e469511d91bba64d64010b2594d`.
+- Post-merge CI [40645764144](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40645764144) passed the full test and master-artifact jobs.
+- Pages deployment [40645764146](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40645764146) succeeded; published homepage contract verified at https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/.
+- Readiness remains **research prototype / PARTIAL linguistic coverage**. Independent IPA gold and Ukrainian target adjudication are still absent; source-attested lexical entries are not accuracy evidence.

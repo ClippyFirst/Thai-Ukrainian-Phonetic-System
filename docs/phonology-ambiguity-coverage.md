@@ -49,3 +49,8 @@
 - Exact code head `7a47e1f86862f33bb8eadfb34de75aeba5fd3809`: [CI 40645028725](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40645028725) passed 209 Python tests, browser parity/UI contracts, benchmark and diagnostic gates, and the master artifact (351,780 structural rows, 41 vowels).
 - [Web static validation 40645028587](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40645028587) passed.
 - The code/test work is verified; the project remains a partial linguistic prototype because independent IPA/UA gold, exhaustive lexical exceptions and connected speech remain open.
+
+
+## Production status
+
+Merged in PR #110 as `403e0bc02dee5e469511d91bba64d64010b2594d`. Post-merge CI `40645764144` and GitHub Pages deployment `40645764146` passed. The exact context-specific compound is deployed; isolated `ทราย` remains unresolved without sense context. Independent IPA/UA gold and broader lexical coverage remain open.

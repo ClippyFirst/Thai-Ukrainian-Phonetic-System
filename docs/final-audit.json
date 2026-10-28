@@ -1366,7 +1366,7 @@
     "benchmark_blocker": "data/benchmark/gold.tsv remains header-only; overall IPA/end-to-end accuracy remains NOT_MEASURED."
   },
   "phonology_ambiguity_audit": {
-    "status": "DONE_VERIFIED_IMPLEMENTATION_AND_TESTS; OVERALL_LINGUISTIC_COVERAGE_PARTIAL",
+    "status": "DONE_VERIFIED_IMPLEMENTATION_TESTS_AND_DEPLOYMENT; OVERALL_LINGUISTIC_COVERAGE_PARTIAL",
     "audit_document": "docs/phonology-ambiguity-coverage.md",
     "branch": "audit/thai-phonology-ambiguity-coverage-20261028",
     "pull_request": 110,
@@ -1393,7 +1393,7 @@
     ],
     "independent_ipa_gold": false,
     "accuracy_claimed": false,
-    "ci_status": "PASS on tested code head 7a47e1f86862f33bb8eadfb34de75aeba5fd3809: 209 Python tests and downstream diagnostics/browser checks; master artifact 351780 rows/41 vowels; web static validation 40645028587 passed. Independent IPA gold and target adjudication remain blocked.",
+    "ci_status": "PASS: exact code/test head 7a47e1f86862f33bb8eadfb34de75aeba5fd3809 passed 209 Python tests, browser parity/UI, diagnostics and 351780-row master artifact; post-merge main CI 40645764144 passed; Pages deployment 40645764146 passed.",
     "context_scoped_reading": {
       "word": "ทะเลทราย",
       "syllables": [
@@ -1410,6 +1410,10 @@
     },
     "verified_code_head": "7a47e1f86862f33bb8eadfb34de75aeba5fd3809",
     "ci_run": 40645028725,
-    "web_static_run": 40645028587
+    "web_static_run": 40645028587,
+    "merge_commit": "403e0bc02dee5e469511d91bba64d64010b2594d",
+    "pages_url": "https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/",
+    "pages_deploy_run": 40645764146,
+    "main_ci_run": 40645764144
   }
 }

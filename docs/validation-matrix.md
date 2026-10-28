@@ -596,3 +596,6 @@ The Python and browser IPA adapters now map Thai /h/ to Ukrainian «г», and re
 
 
 | Exact lexical ทร regression test API | FIXED, rerun pending | First CI execution: 208/209 tests passed; the new `ทราบ` test incorrectly asserted phonemic IPA from the structural-only `parse_syllable()` function. Switched it to `api.analyze_syllable()` so the assertion covers the full phonology pipeline. Latest-head CI is the acceptance gate. |
+
+
+| Main merge and deployment | DONE_VERIFIED | PR #110 squash-merged as `403e0bc02dee5e469511d91bba64d64010b2594d`; post-merge CI `40645764144` passed test/master-artifact jobs; Pages deploy `40645764146` passed and verified the live homepage contract. This does not close independent IPA/UA gold or full lexical coverage. |

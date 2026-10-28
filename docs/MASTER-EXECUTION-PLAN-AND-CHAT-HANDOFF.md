@@ -1298,3 +1298,13 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - The first new regression attempt exposed a test-harness mistake (structural-only parser asserted final IPA); it was corrected to use `api.analyze_syllable()` and the full suite then passed. The registry cache eliminated the long-running master-generator bottleneck.
 - Remaining state is intentionally PARTIAL for linguistic completeness: isolated sense-ambiguous `ทราย`, the broader lexical exception space, connected speech, and independent IPA/Ukrainian target adjudication remain unresolved. Source-attested dictionary entries are not gold labels.
 - Verified code/test head above is the parent of the final audit-register-only commit. The final documentation commit SHA is reported in the handoff's Git history / final report.
+
+
+## Final closeout — 2026-10-28
+
+- **Implementation merged to `main`:** PR [#110](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/110), squash merge commit `403e0bc02dee5e469511d91bba64d64010b2594d`.
+- **Exact code/test head:** `7a47e1f86862f33bb8eadfb34de75aeba5fd3809`; CI [40645028725](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40645028725) passed all 209 Python tests, all browser/diagnostic checks and the 351,780-row master artifact. Web static validation [40645458877](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40645458877) passed on the final branch head.
+- **Post-merge main CI:** [40645764144](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40645764144) passed all test and master-artifact jobs.
+- **GitHub Pages deployment:** [40645764146](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40645764146) passed and verified the published homepage contract at https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/.
+- The context-scoped `ทะเลทราย → ทะ|เล|ซาย` reading is deployed in both Python and browser engines. Isolated `ทราย` intentionally remains unresolved without sense context.
+- **Readiness:** engineering/deployment checks pass; overall project remains a research prototype with partial linguistic coverage. Independent IPA gold, independent Ukrainian target adjudication, broader lexical exception coverage and connected-speech phonetics remain open. No accuracy claim is made.
