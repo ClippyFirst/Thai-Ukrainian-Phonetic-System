@@ -41,7 +41,7 @@
 
 ## Lexical exception guard expansion (2026-10-28)
 
-- Added regression guards for nine exact source-discussed false-cluster / `ทร` lexical forms: `จริง→จิง`, `สร้าง→ส้าง`, `ศรี→สี`, `เศร้า→เส้า`, `ไซร้→ไซ้`, `ทราบ→ซาบ`, `ทรง→ซง`, `ทรัพย์→ซับ`, `แทรก→แซก`.
+- Added regression guards for ten exact source-backed false-cluster / `ทร` lexical forms, including newly pinned `ทราม → ซาม`: `จริง→จิง`, `สร้าง→ส้าง`, `ศรี→สี`, `เศร้า→เส้า`, `ไซร้→ไซ้`, `ทราบ→ซาบ`, `ทรง→ซง`, `ทรัพย์→ซับ`, `ทราม→ซาม`, `แทรก→แซก`.
 - The tests assert that these exact entries produce a structured IPA result and a Ukrainian candidate through the existing IPA adapter. They do not assert that dictionary-derived readings are independent gold.
 - Generic sentinels (`จร`, `สร`, `ศร`, `ซร`, isolated `ทราย`) remain analysis-dependent. This prevents a lexical exception from becoming a productive replacement rule.
 - Evidence source: Royal Institute of Thailand Journal (2011), [เรื่องยุ่ง ๆ เกี่ยวกับอักษรควบ](https://www.orst.go.th/FILEROOM/CABROYINWEB/DRAWER004/GENERAL/DATA0000/00000630.FLP/html/49/) and its discussion of lexical/sense-conditioned cluster readings.

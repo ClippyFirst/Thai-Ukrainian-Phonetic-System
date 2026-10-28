@@ -679,6 +679,6 @@ The first run with the new coverage tests completed master-table generation and 
 ## 2026-10-28 — exact lexical exception regression guards
 
 - PR [#111](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/111), branch `audit/thai-lexical-exception-guards-20261028`.
-- Added nine exact forms from the Royal Institute discussion of false clusters and lexical `ทร`: `จริง, สร้าง, ศรี, เศร้า, ไซร้, ทราบ, ทรง, ทรัพย์, แทรก`.
+- Added ten exact false-cluster / lexical `ทร` regression cases: `จริง, สร้าง, ศรี, เศร้า, ไซร้, ทราบ, ทรง, ทรัพย์, ทราม, แทรก`. The additional `ทราม → ซาม` reading is pinned to English Wiktionary oldid 88637433 (`/saːm˧/`, CC BY-SA 4.0) and is mirrored in Python, browser, and text lexicon data.
 - Tests require structured IPA plus a Ukrainian candidate through the typed IPA adapter; existing generic sentinels still require withholding where context/lexical evidence is absent.
 - Status: PARTIAL pending exact-head CI. No local execution or gold accuracy claim.
