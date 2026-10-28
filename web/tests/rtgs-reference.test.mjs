@@ -27,6 +27,7 @@ assert.equal(renderRtgsTokens([
   { kind: "space", input: " " },
   { kind: "latin", input: "ph" }
 ]), "phrik ph");
+assert.equal(renderRtgsTokens([{ kind: "thai", input: "ทราย" }]), "⟦RTGS НЕ ПЕРЕВІРЕНО: ทราย⟧");
 
 const source = await readFile(new URL("../src/rtgs-reference.js", import.meta.url), "utf8");
 assert.doesNotMatch(source, /adaptIpaToUkrainian|ipa-ua/);
