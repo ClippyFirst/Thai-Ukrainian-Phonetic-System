@@ -8,11 +8,11 @@
  * It never guesses an unknown segment: unrecognized symbols withhold output.
  */
 const SEGMENTS = new Map([
-  ["tɕʰ", {out:"ч", rule:"UA-AFFRICATE-ASP", neutralized:["aspiration"]}],
+  ["tɕʰ", {out:"ч\u0027", rule:"UA-AFFRICATE-ASP", preserved:["aspiration (apostrophe)"]}],
   ["tɕ", {out:"ч", rule:"UA-AFFRICATE", preserved:["place","manner"]}],
-  ["kʰ", {out:"к", rule:"UA-K-ASP", neutralized:["aspiration"]}],
-  ["pʰ", {out:"п", rule:"UA-P-ASP", neutralized:["aspiration"]}],
-  ["tʰ", {out:"т", rule:"UA-T-ASP", neutralized:["aspiration"]}],
+  ["kʰ", {out:"к\u0027", rule:"UA-K-ASP", preserved:["aspiration (apostrophe)"]}],
+  ["pʰ", {out:"п\u0027", rule:"UA-P-ASP", preserved:["aspiration (apostrophe)"]}],
+  ["tʰ", {out:"т\u0027", rule:"UA-T-ASP", preserved:["aspiration (apostrophe)"]}],
   ["k", {out:"к", rule:"UA-K", preserved:["place","manner"]}],
   ["p", {out:"п", rule:"UA-P", preserved:["place","manner"]}],
   ["t", {out:"т", rule:"UA-T", preserved:["place","manner"]}],
