@@ -67,7 +67,7 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-      - name: Verify published whole-text UI contract
+      - name: Verify published whole-text UI and RTGS contract
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
         run: |
@@ -88,36 +88,38 @@ jobs:
               && curl --fail --silent --show-error "$PAGE_URL/src/app.js" -o /tmp/deployed-app.js \
               && curl --fail --silent --show-error "$PAGE_URL/src/engine.js" -o /tmp/deployed-engine.js \
               && curl --fail --silent --show-error "$PAGE_URL/src/ipa-ua.js" -o /tmp/deployed-ipa-ua.js \
+              && curl --fail --silent --show-error "$PAGE_URL/src/rtgs-reference.js" -o /tmp/deployed-rtgs.js \
               && grep -Fq 'Цілісний результат' /tmp/deployed-app.js \
               && grep -Fq 'continuous-output-value' /tmp/deployed-app.js \
               && grep -Fq 'adaptIpaToUkrainian(source)' /tmp/deployed-app.js \
+              && grep -Fq 'RTGS — латинська романізація (не IPA)' /tmp/deployed-app.js \
+              && grep -Fq 'renderRtgsTokens' /tmp/deployed-app.js \
+              && grep -Fq 'romanizeRtgsWord' /tmp/deployed-rtgs.js \
               && grep -Fq 'IPA delimiters are mismatched' /tmp/deployed-ipa-ua.js \
               && grep -Fq 'softSyllabify' /tmp/deployed-engine.js \
               && grep -Fq 'М’який режим — попередній результат' /tmp/deployed-app.js \
               && grep -Fq 'Суперм’який' /tmp/deployed-app.js \
               && grep -Fq 'super-soft-approximate' /tmp/deployed-engine.js \
               && grep -Fq 'UNVERIFIED_ORTHOGRAPHIC_FALLBACK' /tmp/deployed-engine.js; then
-              echo "Published homepage contract verified at $PAGE_URL"
+              echo "Published homepage and RTGS contract verified at $PAGE_URL"
               exit 0
             fi
             if [ "$attempt" -eq 12 ]; then
-              echo "Published homepage did not expose the expected whole-text UI contract after 12 attempts" >&2
+              echo "Published homepage or RTGS contract did not appear after 12 attempts" >&2
               for marker in 'Вставте цілий текст або статтю' 'data-example="กา"' 'data-example="จริง"' 'id="engine-mode"' 'value="soft"' 'value="super-soft"' 'Суперм’який — повне покриття, приблизні звуки' 'БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ' 'id="ipa-input"' 'id="ipa-adapt"' 'id="ipa-adapter-result"'; do
                 grep -Fq "$marker" /tmp/deployed-index.html || echo "Missing homepage marker: $marker" >&2
               done
               if [ -f /tmp/deployed-app.js ]; then
-                for marker in 'Цілісний результат' 'continuous-output-value' 'М’який режим — попередній результат' 'Суперм’який' 'adaptIpaToUkrainian(source)'; do
+                for marker in 'Цілісний результат' 'continuous-output-value' 'М’який режим — попередній результат' 'Суперм’який' 'adaptIpaToUkrainian(source)' 'RTGS — латинська романізація (не IPA)' 'renderRtgsTokens'; do
                   grep -Fq "$marker" /tmp/deployed-app.js || echo "Missing app marker: $marker" >&2
                 done
               else
                 echo "Missing deployed app.js file" >&2
               fi
-              if [ -f /tmp/deployed-engine.js ]; then
-                grep -Fq 'softSyllabify' /tmp/deployed-engine.js || echo "Missing engine marker: softSyllabify" >&2
-                grep -Fq 'super-soft-approximate' /tmp/deployed-engine.js || echo "Missing engine marker: super-soft-approximate" >&2
-                grep -Fq 'UNVERIFIED_ORTHOGRAPHIC_FALLBACK' /tmp/deployed-engine.js || echo "Missing engine marker: UNVERIFIED_ORTHOGRAPHIC_FALLBACK" >&2
+              if [ -f /tmp/deployed-rtgs.js ]; then
+                grep -Fq 'romanizeRtgsWord' /tmp/deployed-rtgs.js || echo "Missing RTGS marker: romanizeRtgsWord" >&2
               else
-                echo "Missing deployed engine.js file" >&2
+                echo "Missing deployed rtgs-reference.js file" >&2
               fi
               exit 1
             fi
