@@ -52,7 +52,7 @@ assert.match(status.textContent, /Проаналізовано 1 токен/);
 
 input.value = "ทดสอบ";
 analyze.click();
-assert.match(output.innerHTML, /RTGS НЕ ПЕРЕВІРЕНО/);
+assert.doesNotMatch(output.innerHTML, /RTGS НЕ ПЕРЕВІРЕНО/);\nassert.match(output.innerHTML, /PyThaiNLP 5\.4\.0|RTGS/);
 assert.equal(status.className, "status notice");
 assert.match(status.textContent, /потребують перевірки або залишилися невизначеними/);
 assert.doesNotMatch(output.innerHTML, /ФОНОЛОГІЧНА IPA/);
