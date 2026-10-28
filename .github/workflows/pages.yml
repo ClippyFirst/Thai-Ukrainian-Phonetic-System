@@ -101,10 +101,10 @@ jobs:
               && grep -Fq 'Словниковий запис' /tmp/deployed-app.js \
               && grep -Fq 'Попередній структурний розбір' /tmp/deployed-app.js \
               && grep -Fq 'Приблизне резервне читання' /tmp/deployed-app.js \
-              && grep -Fq 'Цілісний результат' /tmp/deployed-app.js \
+              && grep -Fq 'Результати · 3 представлення' /tmp/deployed-app.js \
               && grep -Fq 'class="skip-link"' /tmp/deployed-index.html \
-              && grep -Fq 'src/styles.css?v=20261028-ux-polish-2' /tmp/deployed-index.html \
-              && grep -Fq 'src/app.js?v=20261028-ux-polish-2' /tmp/deployed-index.html \
+              && grep -Fq 'src/styles.css?v=20261028-result-order-1' /tmp/deployed-index.html \
+              && grep -Fq 'src/app.js?v=20261028-result-order-1' /tmp/deployed-index.html \
               && grep -Fq 'class="mode-help"' /tmp/deployed-index.html \
               && grep -Fq 'RTGS — окрема латинська довідкова романізація' /tmp/deployed-index.html \
               && grep -Fq 'Текст аналізується локально у браузері' /tmp/deployed-index.html \
@@ -112,7 +112,10 @@ jobs:
               && grep -Fq 'Тести — не мовний еталон' /tmp/deployed-system.html \
               && grep -Fq 'незалежно експертно перевірених рядків у поточному еталоні немає' /tmp/deployed-system.html \
               && grep -Fq 'continuous-output-value' /tmp/deployed-app.js \
-              && grep -Fq 'rtgs-details' /tmp/deployed-app.js \
+              && grep -Fq '01 · RTGS — латинська романізація (не IPA)' /tmp/deployed-app.js \
+              && grep -Fq '02 · IPA — фонетичне представлення' /tmp/deployed-app.js \
+              && grep -Fq '03 · Український фонетичний кандидат' /tmp/deployed-app.js \
+              && ! grep -Fq '<details class="rtgs-details"' /tmp/deployed-app.js \
               && grep -Fq 'Строгий режим: невідомі фрагменти залишаються невизначеними' /tmp/deployed-app.js \
               && grep -Fq 'Суперм’який режим: невідомі фрагменти отримують приблизний кандидат' /tmp/deployed-app.js \
               && grep -Fq 'АУДИТ IPA → УКРАЇНСЬКА' /tmp/deployed-app.js \
@@ -125,7 +128,13 @@ jobs:
               && grep -Fq 'Суперм’який' /tmp/deployed-app.js \
               && grep -Fq 'super-soft-approximate' /tmp/deployed-engine.js \
               && grep -Fq 'UNVERIFIED_ORTHOGRAPHIC_FALLBACK' /tmp/deployed-engine.js; then
-              echo "Published homepage and RTGS contract verified at $PAGE_URL"
+              rtgs_line=$(grep -nF "continuousPanel('01 · RTGS — латинська романізація (не IPA)'" /tmp/deployed-app.js | cut -d: -f1)
+              ipa_line=$(grep -nF "continuousPanel('02 · IPA — фонетичне представлення'" /tmp/deployed-app.js | cut -d: -f1)
+              ukrainian_line=$(grep -nF "continuousPanel('03 · Український фонетичний кандидат'" /tmp/deployed-app.js | cut -d: -f1)
+              test "$rtgs_line" -lt "$ipa_line"
+              test "$ipa_line" -lt "$ukrainian_line"
+              ! grep -Fq '<details class="rtgs-details"' /tmp/deployed-app.js
+              echo "Published homepage and ordered RTGS/IPA/Ukrainian contract verified at $PAGE_URL"
               exit 0
             fi
             if [ "$attempt" -eq 12 ]; then
@@ -134,7 +143,7 @@ jobs:
                 grep -Fq "$marker" /tmp/deployed-index.html || echo "Missing homepage marker: $marker" >&2
               done
               if [ -f /tmp/deployed-app.js ]; then
-                for marker in 'Цілісний результат' 'continuous-output-value' 'М’який режим — попередній результат' 'Суперм’який' 'АУДИТ IPA → УКРАЇНСЬКА' 'RTGS — латинська романізація (не IPA)' 'renderRtgsTokens'; do
+                for marker in 'Результати · 3 представлення' 'continuous-output-value' 'М’який режим — попередній результат' 'Суперм’який' 'АУДИТ IPA → УКРАЇНСЬКА' 'RTGS — латинська романізація (не IPA)' 'renderRtgsTokens'; do
                   grep -Fq "$marker" /tmp/deployed-app.js || echo "Missing app marker: $marker" >&2
                 done
               else

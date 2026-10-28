@@ -688,9 +688,28 @@ The Python and browser IPA adapters now map Thai /h/ to Ukrainian «г», and re
 
 | Check | Acceptance criterion | Final state |
 |---|---|---|
-| Primary-result hierarchy | Ukrainian candidate and IPA remain immediately visible; RTGS is collapsed by default | DONE_VERIFIED — CI + Pages contract |
+| Primary-result hierarchy (superseded by user requirement 2026-10-28) | All three outputs visible in order RTGS → IPA → Ukrainian | SUPERSEDED; see latest acceptance section below |
 | Mode comprehension | Selecting strict/soft/super-soft updates a concise Ukrainian explanation of the uncertainty trade-off | DONE_VERIFIED — UI contract |
 | Interaction targets | Copy and clear controls have at least 44px minimum height; disclosure summary is keyboard-focusable | DONE_VERIFIED — static CSS contract |
 | Regression coverage | UI test covers RTGS disclosure and all three dynamic mode explanations | DONE_VERIFIED — full CI |
 | Deployment contract | Pages workflow checks the new public JS markers after deployment | DONE_VERIFIED — Pages run 40729942455 |
 | Visual/accessibility QA | Browser screenshots, real-device checks, contrast/focus/zoom/screen-reader tests | BLOCKED in this connector-only session; requires browser/device execution |
+
+
+## 2026-10-28 — user-directed result order and visibility
+
+The user's explicit requirement supersedes the prior UX decision to collapse RTGS. Keep the existing linguistic architecture and present the three separate outputs immediately on screen, in this visual order:
+
+| Check | Acceptance criterion | State |
+|---|---|---|
+| Result visibility | RTGS, IPA and Ukrainian candidate render as three visible continuous panels; none is inside a disclosure | PARTIAL until exact-head CI and Pages contract pass |
+| Result order | RTGS first, IPA second, Ukrainian candidate third | PARTIAL until exact-head UI contract and Pages contract pass |
+| Semantic clarity | RTGS is labelled a separate Latin romanization, not IPA and not the source of the Ukrainian result; page copy distinguishes display order from computation order | PARTIAL until UI/static tests pass |
+| First-use friction | Remove redundant workbench intro while preserving beta caveat, input guidance, examples and mode uncertainty copy | PARTIAL until UI/static tests pass |
+| Responsive hierarchy | Retain 44px interaction targets, visible focus, reduced-motion support and mobile one-column layout; distinguish the three output panels without relying on color alone | PARTIAL; static checks available, real-browser/device evidence still needed |
+| Regression protection | UI test asserts all three panels exist in requested order and no RTGS disclosure remains | PARTIAL until full CI passes |
+| Published-content gate | Pages workflow checks the new cache keys and exact visible result order markers in the deployed JavaScript | PARTIAL until post-merge deployment passes |
+
+- Branch: `ux/show-romanization-ipa-ukrainian-in-order-20261028`, based on main `8fa745a87d548f0145f6c367f85291ca85f9cb1f`.
+- No phonological/romanization rules changed; this is a presentation and explanation change only.
+- Manual browser screenshots, real-device checks and WCAG 2.2 AA remain evidence-limited until performed in an actual browser/device environment.

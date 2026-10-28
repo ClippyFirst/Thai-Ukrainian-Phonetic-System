@@ -1428,3 +1428,13 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Changes: dynamic, mode-specific uncertainty guidance; collapsed secondary RTGS output while preserving visible Ukrainian/IPA outputs; 44px copy/clear target minimum; larger eyebrow labels; cache-busting for CSS/JS; UI and live Pages contract assertions.
 - **DONE_VERIFIED:** PR [#126](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/126) merged as `743a412cd9343cbbbe4ccf3428f0a3c736d8cf58`. Exact-head full CI and master-artifact gate passed in [40729153978](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40729153978); static validation passed in [40729160689](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40729160689); post-merge Pages deployment and live-content contract passed in [40729942455](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40729942455). Public site: https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/
 - Do not claim real-browser visual QA or WCAG 2.2 AA; this connector-only session cannot capture/inspect browser screenshots. Independent IPA/word-boundary/Ukrainian gold remains an evidence-limited linguistic blocker.
+
+
+## 2026-10-28 — visible output order continuation
+
+- Branch: `ux/show-romanization-ipa-ukrainian-in-order-20261028`; based on main `8fa745a87d548f0145f6c367f85291ca85f9cb1f`.
+- User explicitly requested that romanization must not be hidden and that all three results appear on screen in this order: **romanization (RTGS) → IPA → Ukrainian**. This supersedes the earlier UX decision to collapse RTGS.
+- Implemented: RTGS, IPA and Ukrainian candidate are now three visible continuous panels with numbered headings. RTGS description clarifies that it is a separate Latin reference, not IPA or the source for Ukrainian adaptation. First-use copy is shorter; cache keys refreshed.
+- Regression coverage updated to assert panel visibility/order and absence of RTGS disclosure. Pages workflow now verifies all three deployed markers and new cache keys. Validation matrix and final audit updated.
+- Verification still pending: inspect exact-head CI/static checks, fix any failures, merge only after checks pass, then verify post-merge Pages published-content gate. Do not claim the site is updated before deployment evidence.
+- Evidence limits remain: no browser screenshot/device session or WCAG 2.2 AA audit in this connector-only session; independent expert-adjudicated Thai IPA, word-boundary and Ukrainian target-form gold remain unavailable.
