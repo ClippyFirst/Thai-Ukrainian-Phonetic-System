@@ -1393,3 +1393,12 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - **DONE_VERIFIED:** code, regression tests, source/license attribution, public UI copy, post-deploy contract and handoff/audit/validation updates.
 - **PARTIAL:** manual visual review in a real browser has not been performed.
 - **BLOCKED:** independent expert-adjudicated Thai IPA, word boundaries and Ukrainian target forms are unavailable; full PyThaiNLP `newmm` tokenizer/dictionary parity is out of scope pending provenance and compatibility research. Project remains a research prototype, not release-ready.
+
+## 2026-10-28 — UX refresh final verification continuation
+
+- User requested implementation of the entire UX/UI audit in one pass and a link to the updated public site, explicitly without Work mode.
+- Starting default-branch commit: `ad2f899978b66d3bbcb92124688b62261bb5225d`; work branch: `fix/ux-refresh-a11y-pages-gate-20261028`.
+- Existing main already contained the primary UX refresh. This continuation preserves it and repairs a concrete deployment blocker: the Pages workflow expected stale privacy copy, causing the deploy job's live-content assertion to fail after the Pages deployment step itself reported success.
+- Also increased navigation, mode disclosure, and methodology-link hit areas to 44px, bumped CSS cache keys on both pages, and expanded UI tests for focus/touch-target/cache/deployment-copy contracts.
+- Next required actions: inspect exact-head GitHub Actions results; repair any failures; merge the verified PR; confirm successful Pages deployment and the live-content contract; update this handoff with final SHA and actual run URLs.
+- Evidence limits: no local checkout or real-browser screenshot capture in this connector-only workflow. Do not claim manual visual QA or full WCAG conformance. Independent linguistic gold remains a separate blocker; this work changes UX/accessibility and verification, not Thai pronunciation rules.
