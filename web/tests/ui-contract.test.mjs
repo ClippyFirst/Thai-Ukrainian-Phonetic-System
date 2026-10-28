@@ -263,11 +263,10 @@ assert.match(homeHtml, /Суперм’який — (повне покриття
 for (const example of examples) assert.ok(homeHtml.includes(`data-example="${example.dataset.example}"`), `homepage must expose ${example.dataset.example}`);
 assert.match(homeHtml, /system\.html#beta-evidence/);
 assert.match(systemHtml, /id="beta-evidence"/);
-assert.match(systemHtml, /незалежно перевірених рядків — 0/);
-assert.match(systemHtml, /76 із 50 000/);
-assert.match(systemHtml, /16 із 50 000/);
-assert.match(systemHtml, /192 із 993/);
-assert.match(systemHtml, /119 із 993/);
+assert.match(systemHtml, /Тести — не мовний еталон/);
+assert.match(systemHtml, /Діагностика сегментації/);
+assert.match(systemHtml, /незалежно експертно перевірених рядків у поточному еталоні немає/);
+assert.doesNotMatch(systemHtml, /76 із 50 000|16 із 50 000|192 із 993|119 із 993/);
 assert.match(styles, /\.beta-notice/);
 assert.match(styles, /@media\(max-width:700px\)\{\.beta-notice/);
 
