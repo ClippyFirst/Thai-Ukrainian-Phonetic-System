@@ -17,3 +17,8 @@ Copyright 2016-2026 PyThaiNLP Project. The copied/ported algorithm is provided u
 ## ClippyFirst RTGS correction data
 
 The finite correction/abstention layer in `web/src/rtgs-reference.js` is maintained by ClippyFirst and is not copied from PyThaiNLP. The word-level RTGS forms are documented with source links in `docs/research/thai-romanization-integration.md`; the orthographic correction for preposed vowels is separately identified. The PyThaiNLP algorithm port remains under the Apache-2.0 notice above.
+
+
+## ClippyFirst RTGS correction data
+
+The finite correction/abstention layer in `web/src/rtgs-reference.js` is maintained by ClippyFirst and is not copied from PyThaiNLP. The word-level RTGS forms and source scope are documented in `docs/research/thai-romanization-integration.md`; the preposed-vowel and lexical exception handling is separately identified. The PyThaiNLP algorithm port remains under the Apache-2.0 notice above.

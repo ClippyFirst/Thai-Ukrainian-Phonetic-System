@@ -1,6 +1,6 @@
 # Thai romanization integration research
 
-**Status:** PARTIAL / ENGINEERING CI PASS — the offline browser port, reviewed correction layer and pinned-reference parity test pass in CI. Full tokenizer parity and website visual/deployment review are still open.
+**Status:** PARTIAL — focused RTGS tests and static validation pass on the latest implementation head; the latest full CI run's `test` job passed, while its `master-artifact` job is still running. Full tokenizer parity and deployed-site visual review remain open.
 
 ## Decision and pipeline boundary
 
@@ -23,54 +23,48 @@ ISO 11940 is a separate reversible orthographic transliteration scheme, not pron
 
 ## Reviewed correction layer and abstentions
 
-The upstream algorithm is a useful reference, not a complete standards implementation. A focused output review exposed predictable rule-engine failures, so ClippyFirst applies a small, source-attested correction layer rather than treating every upstream output as authoritative.
+The upstream algorithm is a useful reference, not a complete standards implementation. A focused output review exposed predictable rule-engine failures, so ClippyFirst applies a finite, source-backed correction layer rather than treating every upstream output as authoritative.
 
 | Input | ClippyFirst RTGS output | Evidence / reason |
 |---|---|---|
-| `จริง` | `ching` | UK BGN/PCGN Thai romanization reference documents the conventional `จริง → ching` form. |
-| `สามารถ` | `samat` | UK BGN/PCGN reference documents the conventional form. |
-| `สวัสดี` | `sawatdi` | Royal Institute romanization: [Thai Wiktionary entry](https://th.wiktionary.org/wiki/สวัสดี). |
-| `พัฒนา` | `phatthana` | Royal Institute romanization: [Thai Wiktionary entry](https://th.wiktionary.org/wiki/พัฒนา). |
-| `ฤทธิ์` | `rit` | Royal Institute romanization: [Thai Wiktionary entry](https://th.wiktionary.org/wiki/ฤทธิ์). |
-| `ฤๅ` | `rue` | Royal Institute romanization: [Thai Wiktionary entry](https://th.wiktionary.org/wiki/ฤๅ). |
-| `อักษร` | `akson` | Royal Institute romanization: [Thai Wiktionary entry](https://th.wiktionary.org/wiki/อักษร). |
-| `ยูเครน` | `yukhren` | Royal Institute romanization: [Thai Wiktionary entry](https://th.wiktionary.org/wiki/ยูเครน). |
-| `ทราบ` / `ทรัพย์` / `แทรก` | `sap` / `sap` / `saek` | Word-level Royal Institute forms: [ทราบ](https://th.wiktionary.org/wiki/ทราบ), [ทรัพย์](https://th.wiktionary.org/wiki/ทรัพย์), [แทรก](https://th.wiktionary.org/wiki/แทรก). Unknown initial `ทร` tokens abstain rather than extrapolate. |
-| `รถไฟ` | `rotfai` | Reviewed word-level RTGS form: [ThaiRoots reference](https://www.thairoots.com/). |
-| `ผลไม้` | `phonlamai` | Royal Institute form for `น้ำผลไม้` is `nam-phon-la-mai`; see [Thai Wiktionary entry](https://th.wiktionary.org/wiki/น้ำผลไม้). |
+| `จริง` / `สามารถ` | `ching` / `samat` | UK BGN/PCGN Thai romanization reference documents these conventional forms. |
+| `สร้าง` / `ศรี` / `เศร้า` / `ไซร้` | `sang` / `si` / `sao` / `sai` | Royal Institute discussion of non-compositional clusters: https://www.orst.go.th/FILEROOM/CABROYINWEB/DRAWER004/GENERAL/DATA0000/00000630.FLP/html/49/ |
+| `ทรง` / `ทราม` / `ทราบ` / `ทรัพย์` / `แทรก` | `song` / `sam` / `sap` / `sap` / `saek` | Same Royal Institute lexical-scope reference; `ทราม` is additionally pinned to English Wiktionary revision 88637433 (`/saːm˧/`, CC BY-SA 4.0): https://en.wiktionary.org/w/index.php?title=ทราม&oldid=88637433. These are lexical cases, not a productive `ทร → s` rule. |
+| `สวัสดี` / `พัฒนา` / `ฤทธิ์` / `ฤๅ` / `อักษร` / `ยูเครน` | `sawatdi` / `phatthana` / `rit` / `rue` / `akson` / `yukhren` | Word-level Royal Institute romanization fields: [สวัสดี](https://th.wiktionary.org/wiki/สวัสดี), [พัฒนา](https://th.wiktionary.org/wiki/พัฒนา), [ฤทธิ์](https://th.wiktionary.org/wiki/ฤทธิ์), [ฤๅ](https://th.wiktionary.org/wiki/ฤๅ), [อักษร](https://th.wiktionary.org/wiki/อักษร), [ยูเครน](https://th.wiktionary.org/wiki/ยูเครน). |
+| `รถไฟ` / `ผลไม้` | `rotfai` / `phonlamai` | Word-level forms: [รถไฟ](https://th.wiktionary.org/wiki/รถไฟ); Royal Institute form for `น้ำผลไม้` is `nam-phon-la-mai`: https://th.wiktionary.org/wiki/น้ำผลไม้. |
 | `ใหม่` / `ไหม` / `เหงา` / `ให้` | `mai` / `mai` / `ngao` / `hai` | ClippyFirst correction for preposed vowels in `ห นำ` clusters; compare [W3C Thai Layout Requirements](https://www.w3.org/TR/2026/DNOTE-thai-lreq-20260315/) and [r12a Thai script notes](https://r12a.github.io/scripts/thai/block.html). |
-| `ใกล้` / `ใคร` | `klai` / `khrai` | Added the two-consonant `ใ**` pattern, analogous to the existing `ไ**` pattern; the vowel is not allowed to swallow the onset cluster. |
+| `ใกล้` / `ใคร` | `klai` / `khrai` | Added the two-consonant `ใ**` pattern, analogous to the existing `ไ**` pattern, so the vowel does not swallow the onset cluster. |
 
-These lexical/orthographic corrections are separately tested; they are not counted as exact parity with PyThaiNLP. The project-maintained correction list is intentionally finite and does not imply standards-level completeness.
+These 25 lexical/orthographic corrections are separately tested; they are not counted as exact parity with PyThaiNLP. The correction list is finite and does not imply standards-level completeness.
 
-The following cases explicitly abstain instead of producing a plausible-looking but unsupported result: unreviewed initial `ทร` tokens (e.g. `ทราย`), repetition/abbreviation marks `ๆ` and `ฯ`, unsupported letter `ฦ`, and the unreviewed long proper-name token `สตรีเศรษฐบุตรบำเพ็ญ`.
+The following cases explicitly abstain rather than produce a plausible-looking unsupported result: unreviewed initial `ทร` tokens (e.g. `ทราย`), repetition/abbreviation marks `ๆ` and `ฯ`, unsupported letter `ฦ`, and the unreviewed long proper-name token `สตรีเศรษฐบุตรบำเพ็ญ`.
 
-## Parity corpus and what it proves
+## Parity corpus and evidence
 
-`docs/research/rtgs-parity-corpus.json` contains 60 normal token inputs, five explicit abstention cases and pre-segmented token sequences. `scripts/test_rtgs_parity.py` compares the browser implementation with private per-token `_romanize` and `_should_add_syllable_separator` functions from pinned PyThaiNLP 5.4.0, except the 19 documented correction cases which are checked against their reviewed outputs.
+`docs/research/rtgs-parity-corpus.json` contains 66 normal token inputs, five explicit abstention cases and pre-segmented token sequences. `scripts/test_rtgs_parity.py` compares the browser implementation with private per-token `_romanize` and `_should_add_syllable_separator` functions from pinned PyThaiNLP 5.4.0, except the 25 documented correction cases which are checked against their reviewed outputs.
 
-**Verified on commit `e3bbdf285f95d835bc1e9674dce11b6780e564f2`:**
-- `node web/tests/rtgs-reference.test.mjs` — PASS.
-- `python scripts/test_rtgs_parity.py` — PASS.
-- Full repository CI run [40683075009](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40683075009) — PASS.
-- Web static validation [40683074832](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40683074832) — PASS.
+- Focused `node web/tests/rtgs-reference.test.mjs` and `python scripts/test_rtgs_parity.py` passed in the latest full CI `test` job on `fd4d74ecd8cba44588b81f3efb5f01cfec6f8c19`.
+- Latest-head web static validation [40684119187](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40684119187) — PASS.
+- Full repository CI on earlier implementation head `e3bbdf285f95d835bc1e9674dce11b6780e564f2` passed both `test` and `master-artifact` jobs ([run 40683075009](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40683075009)). The latest `test` job passes; its `master-artifact` job is still running.
 
-This verifies implementation parity for the declared inputs and the repository's existing CI suite, not:
-- parity with PyThaiNLP's `newmm` tokenizer/dictionary or full `romanize(text)`;
-- correctness for every Thai sentence or proper name;
-- independent Thai IPA adjudication or Ukrainian target-transcription accuracy.
+This verifies implementation parity for declared inputs and repository regression tests, not full PyThaiNLP `newmm` tokenizer/dictionary parity, correctness for every sentence/proper name, independent Thai IPA adjudication, or Ukrainian target-transcription accuracy. The website uses ClippyFirst token boundaries; phrase spacing can differ from PyThaiNLP's full text API.
 
-The website uses ClippyFirst's token boundaries. Phrase spacing and separator behavior can therefore differ from PyThaiNLP's full text API. The UI states this limitation.
+## Open PR reconciliation
+
+- **PR #111** (`feat: pin Thai ทร lexical exception and guard ambiguity`) remains open and was not merged or cherry-picked. Its source-backed lexical cases informed only this separate RTGS correction layer; no IPA engine, text lexicon or branch changes from that PR were copied.
+- **PR #112** (`docs(site): audit public guidance and evidence status`) remains open and was not ported into this feature branch to avoid combining independent homepage/system copy changes with the RTGS feature. It overlaps `docs/MASTER-EXECUTION-PLAN-AND-CHAT-HANDOFF.md` and `web/tests/ui-contract.test.mjs`; the RTGS handoff entry is placed in dated history rather than appended at EOF to reduce avoidable conflict. Reconcile those shared files after PR #112 lands; do not merge blindly.
+- Recently merged PR #110 and earlier Thai IPA/lexicon work are preserved because this branch is based on current `main` at `d39fc9e2c40db4a9f760069099c1f45973d592c8`.
 
 ## Acceptance gates
 
 1. [x] Pin upstream source and include license attribution.
 2. [x] Implement an offline browser adapter, separated from IPA → Ukrainian.
 3. [x] Add reviewed lexical/orthographic corrections and explicit abstentions for unsupported cases.
-4. [x] Add 60-token parity corpus and CI comparison against pinned PyThaiNLP 5.4.0.
-5. [x] Focused RTGS tests, full repository CI and static validation pass on the implementation commit.
-6. [ ] Complete a browser visual review and confirm the deployed website behavior before promoting the feature out of draft.
-7. [ ] Decide whether to bundle a Thai word tokenizer/dictionary only after separate browser compatibility, provenance and license review.
+4. [x] Add 66-token parity corpus and CI comparison against pinned PyThaiNLP 5.4.0.
+5. [x] Focused RTGS tests and latest-head static validation pass; latest full CI `test` job passes.
+6. [ ] Latest-head `master-artifact` job completes successfully.
+7. [ ] Complete browser visual review and confirm deployed website behavior before promoting the feature out of draft.
+8. [ ] Decide whether to bundle a Thai word tokenizer/dictionary only after separate browser compatibility, provenance and license review.
 
 ## Remaining independent research gaps
 
