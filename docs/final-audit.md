@@ -674,3 +674,11 @@ The first run with the new coverage tests completed master-table generation and 
 - Post-merge CI [40645764144](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40645764144) passed the full test and master-artifact jobs.
 - Pages deployment [40645764146](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40645764146) succeeded; published homepage contract verified at https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/.
 - Readiness remains **research prototype / PARTIAL linguistic coverage**. Independent IPA gold and Ukrainian target adjudication are still absent; source-attested lexical entries are not accuracy evidence.
+
+
+## 2026-10-28 — exact lexical exception regression guards
+
+- PR [#111](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/111), branch `audit/thai-lexical-exception-guards-20261028`.
+- Added nine exact forms from the Royal Institute discussion of false clusters and lexical `ทร`: `จริง, สร้าง, ศรี, เศร้า, ไซร้, ทราบ, ทรง, ทรัพย์, แทรก`.
+- Tests require structured IPA plus a Ukrainian candidate through the typed IPA adapter; existing generic sentinels still require withholding where context/lexical evidence is absent.
+- Status: PARTIAL pending exact-head CI. No local execution or gold accuracy claim.
