@@ -1,6 +1,6 @@
 # Thai romanization integration research
 
-**Status:** IMPLEMENTED WITH BOUNDED PARITY — offline browser port of PyThaiNLP 5.4.0's per-token RTGS algorithm is present; CI compares it against the pinned upstream source. Word-tokenizer parity is explicitly not claimed.
+**Status:** PARTIAL — the offline browser port and pinned-reference parity test are implemented, but CI has not completed successfully on the latest head yet. Word-tokenizer parity is explicitly not claimed.
 
 ## Decision and pipeline boundary
 
