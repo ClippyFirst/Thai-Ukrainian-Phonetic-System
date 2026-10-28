@@ -663,3 +663,9 @@ The Python and browser IPA adapters now map Thai /h/ to Ukrainian «г», and re
 - **DONE_VERIFIED — code and CI at `00fbd12780d6951fe9d820027d29f12ac1861974`:** CI [40718211681](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40718211681) and web static validation [40718211647](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40718211647) passed. The code is verified; **PARTIAL — publication** until merge and post-merge Pages verification.
 - Primary UX refresh and corrected live Pages contract were already on main before this follow-up. No phonological rules changed.
 - Real-browser responsive review/WCAG audit not performed; independent linguistic gold remains blocked by missing expert-adjudicated Thai IPA, segmentation, and Ukrainian targets.
+
+### UX refresh publication verified — 2026-10-28
+
+- **DONE_VERIFIED:** merged commit `275d615424ef425599d2cce550b0bbc100348719`; Pages deployment/live content contract [40719517666](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40719517666) and web static validation [40719517689](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40719517689) passed.
+- **DONE_VERIFIED:** full CI, including `test` and `master-artifact`, passed at exact PR head `54f42190db100613adac9151053c62beea35c6a4` in [run 40719154739](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40719154739). The squash merge contains the same verified code and docs.
+- **PARTIAL:** manual browser/device review and full WCAG 2.2 AA verification were not performed. **BLOCKED/evidence-limited:** independent expert-adjudicated Thai IPA, segmentation, and Ukrainian target-form gold remain absent; not release-ready linguistically.

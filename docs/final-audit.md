@@ -743,3 +743,10 @@ The first run with the new coverage tests completed master-table generation and 
 - Added UI contract assertions for target sizes, keyboard focus, and cache keys. Strict-mode default, uncertainty copy, IPA-first output and separate RTGS reference remain intact; no pronunciation rules changed.
 - **DONE_VERIFIED — code and tests at `00fbd12780d6951fe9d820027d29f12ac1861974`:** CI [40718211681](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40718211681) and web static validation [40718211647](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40718211647) passed.
 - **PARTIAL — publication:** the 44px target/cache-key follow-up still requires merge and a successful post-merge Pages live-content gate. Real-browser visual review and WCAG 2.2 AA checks remain unperformed; linguistic gold remains evidence-limited.
+
+## 2026-10-28 — UX refresh publication verified
+
+- **DONE_VERIFIED:** PR [#123](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/123) merged as `275d615424ef425599d2cce550b0bbc100348719`.
+- **DONE_VERIFIED:** Pages deployment and live single-flow UI/IPA/RTGS content contract passed in [run 40719517666](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40719517666); web static validation passed in [run 40719517689](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40719517689). Full CI including `master-artifact` passed at the exact PR head in [run 40719154739](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40719154739).
+- Public site: https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/ .
+- **PARTIAL:** manual real-browser visual review and full WCAG 2.2 AA verification were not performed in this connector-only workflow. Independent expert-adjudicated Thai IPA, segmentation and Ukrainian target-form gold remain unavailable; the project is a research prototype, not release-ready.
