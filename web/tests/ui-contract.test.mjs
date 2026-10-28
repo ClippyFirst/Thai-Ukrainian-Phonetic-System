@@ -276,10 +276,11 @@ assert.match(homeHtml, /Суперм’який · приблизне читан
 for (const example of examples) assert.ok(homeHtml.includes(`data-example="${example.dataset.example}"`), `homepage must expose ${example.dataset.example}`);
 assert.match(homeHtml, /system\.html#beta-evidence/);
 assert.match(homeHtml, /RTGS — окрема латинська довідкова романізація/);
-assert.match(homeHtml, /придихові \/kʰ pʰ tʰ tɕʰ\//);
+assert.match(systemHtml, /Придихові \/kʰ pʰ tʰ tɕʰ\//);
 assert.doesNotMatch(homeHtml, /id="ipa-input"|id="ipa-adapt"|id="ipa-adapter-result"/, "the homepage must not duplicate the existing IPA→Ukrainian pipeline as a second input mode");
-assert.match(homeHtml, /Як утворюється український кандидат/);
-assert.match(homeHtml, /Адаптер зіставляє відомі IPA-сегменти/);
+assert.match(homeHtml, /Як формується результат/);
+assert.match(homeHtml, /Основний шлях: тайський текст → структурний і фонологічний аналіз → IPA → адаптація до української графіки/);
+assert.match(systemHtml, /Український результат формується окремим шаром з IPA/);
 assert.match(systemHtml, /id="beta-evidence"/);
 assert.match(systemHtml, /Тести — не мовний еталон/);
 assert.match(systemHtml, /Діагностика сегментації/);
