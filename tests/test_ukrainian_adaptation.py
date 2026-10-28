@@ -9,8 +9,8 @@ def test_ukrainian_output_is_adapted_from_typed_ipa_result():
     for text, expected in [
         ("อา", "а"),
         ("อัน", "ан"),
-        ("พอ", "по"),
-        ("ขอ", "ко"),
+        ("พอ", "п\u0027о"),
+        ("ขอ", "к\u0027о"),
         ("งอ", "нго"),
         ("สอง", "сонг"),
     ]:
