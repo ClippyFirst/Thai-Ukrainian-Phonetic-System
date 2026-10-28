@@ -1308,3 +1308,13 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - **GitHub Pages deployment:** [40645764146](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40645764146) passed and verified the published homepage contract at https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/.
 - The context-scoped `ทะเลทราย → ทะ|เล|ซาย` reading is deployed in both Python and browser engines. Isolated `ทราย` intentionally remains unresolved without sense context.
 - **Readiness:** engineering/deployment checks pass; overall project remains a research prototype with partial linguistic coverage. Independent IPA gold, independent Ukrainian target adjudication, broader lexical exception coverage and connected-speech phonetics remain open. No accuracy claim is made.
+
+
+## 2026-10-28 — public-site content audit (PR #112)
+
+- **DONE_VERIFIED (copy change; software acceptance still pending):** homepage now recommends starting with one Thai word, explains that longer unspaced text has uncertain word boundaries, recommends strict mode first, and explicitly labels soft/super-soft as provisional coverage rather than accuracy modes. Direct IPA input now says tone, length, and stress are neutralized in the Ukrainian candidate rather than implying they are preserved in output.
+- **DONE_VERIFIED (public explanation):** system page records the 28 Oct verified CI and Pages deployment checkpoints, distinguishes source-attested dictionary readings and segmentation diagnostics from independent expert IPA/Ukrainian gold, and avoids treating segmentation scores as end-to-end transcription accuracy.
+- **PARTIAL:** exact-head CI exposed a stale UI contract assertion expecting the previous homepage sentence. The assertion is updated to the new user-facing copy; re-run exact-head CI is the acceptance gate.
+- **BLOCKED:** independent expert-adjudicated Thai IPA and Ukrainian target-form gold corpus remains unavailable. No general accuracy claim may be made until a versioned, independently reviewed corpus and evaluation report exist.
+- **Verification:** Web static validation run 40651766944 passed on head b87e0d3a3c088be231407ec91d27457b9555e07a; full CI run 40651766797 failed only at web/tests/ui-contract.test.mjs because of the stale text assertion. Python tests, generated-artifact drift check, master table generation, IPA adapter tests, and Python/browser parity passed earlier in that run; downstream jobs were skipped after the UI failure.
+
