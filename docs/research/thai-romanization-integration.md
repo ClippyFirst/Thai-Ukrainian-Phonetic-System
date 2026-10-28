@@ -1,45 +1,49 @@
 # Thai romanization integration research
 
-**Status:** PARTIAL prototype on branch `feat/thai-rtgs-reference-20261028`; a separate UI panel and conservative fixture adapter exist, but the examples have not yet been verified against a pinned PyThaiNLP release. Do not treat this as a complete RTGS engine.
+**Status:** IMPLEMENTED WITH BOUNDED PARITY — offline browser port of PyThaiNLP 5.4.0's per-token RTGS algorithm is present; CI compares it against the pinned upstream source. Word-tokenizer parity is explicitly not claimed.
 
-## Decision
+## Decision and pipeline boundary
 
-The first comparison layer should be **RTGS (Royal Thai General System of Transcription)**, displayed in parallel with the existing IPA output. It must not be used to generate Ukrainian output. The existing route remains:
+RTGS (Royal Thai General System of Transcription) is displayed as a parallel Latin reference, never as input to Ukrainian adaptation. The main route remains:
 
-`Thai orthography → structural analysis → source phonology → IPA/typed result → Ukrainian adaptation`
+`Thai orthography → structural analysis → source phonology → IPA/typed result → Ukrainian adaptation → Ukrainian practical orthography`
 
-RTGS is a separate reference rendering, not an intermediate representation. The interface must label it “RTGS (латинська романізація; не IPA)” and warn that it is lossy: it does not encode tone and does not reliably preserve vowel length or all phonemic distinctions. It is not English pronunciation spelling. In RTGS, `ph`, `th`, and `kh` conventionally represent aspirated Thai stops, not English /f/, /θ/, or English letter-name values.
+RTGS is lossy: it does not encode tone and does not reliably preserve vowel length or all phonemic distinctions. It is not English pronunciation spelling. In RTGS, `ph`, `th`, and `kh` conventionally represent aspirated Thai stops, not English /f/, /θ/, or English letter-name values.
 
-ISO 11940 is not a substitute for RTGS: it is a reversible orthographic transliteration scheme, useful for inspecting character-level conversion rather than representing pronunciation. If added later, it needs its own explicitly orthographic panel.
+ISO 11940 is not a substitute: it is a reversible orthographic transliteration scheme, not a pronunciation transcription. If added later, it requires its own explicitly orthographic panel.
 
-## Implementation candidate reviewed
+## Implementation and provenance
 
-PyThaiNLP documents `romanize(..., engine="royin")` as an RTGS implementation and distinguishes it from phonetic engines such as `thaig2p` and `ipa`. The current PyThaiNLP project is Apache-2.0 licensed; data/models may carry separate CC0/CC-BY terms, so dependency and asset provenance must be checked separately.
-
+- Upstream: PyThaiNLP `v5.4.0`, `pythainlp/transliterate/royin.py`, release published 2026-10-09; pinned in CI as `pythainlp==5.4.0`.
+- Reference source: https://github.com/PyThaiNLP/pythainlp/blob/v5.4.0/pythainlp/transliterate/royin.py
 - API documentation: https://pythainlp.org/docs/5.4.0/api/transliterate.html
-- Current source implementation (SPDX Apache-2.0): https://github.com/PyThaiNLP/pythainlp/blob/dev/pythainlp/transliterate/royin.py
-- Project licensing overview: https://github.com/PyThaiNLP/pythainlp
+- License: Apache-2.0; attribution and license text are included in `THIRD_PARTY_NOTICES.md` and `licenses/Apache-2.0-PyThaiNLP.txt`.
+- The browser implementation ports the vowel rules, consonant mapping, normalization, `รร` handling, and the reference syllable-separator rule.
+- The static website has no runtime dependency on Python, external APIs, model downloads, or network calls. PyThaiNLP is a CI-only oracle.
 
-PyThaiNLP itself is Python-only, and the website is a static browser application with CSP `connect-src 'none'`. Calling a remote service is not acceptable. Before porting or packaging the algorithm, inspect its word-tokenization dependency and source version, preserve attribution/license headers, and compare outputs against a pinned PyThaiNLP release over a reviewed fixture corpus. A direct transliteration of each arbitrary Thai substring without word segmentation would not be equivalent to the reference implementation.
+## Parity corpus and what it proves
+
+`docs/research/rtgs-parity-corpus.json` is a versioned list of token inputs and pre-segmented token sequences. `scripts/test_rtgs_parity.py` invokes the browser implementation under Node and compares results with the private per-token `_romanize` and `_should_add_syllable_separator` functions from pinned PyThaiNLP 5.4.0. CI must pass this test before parity can be called verified.
+
+This is **algorithm parity for supplied token boundaries**, not:
+- parity with PyThaiNLP's default `newmm` tokenizer or its dictionary;
+- proof that either system has the correct segmentation for every Thai sentence;
+- an independent IPA, acoustic, or Ukrainian-transcription accuracy benchmark.
+
+The website currently passes token boundaries from ClippyFirst's own analyzer. As a result, a phrase may receive different spaces or RTGS context behavior than PyThaiNLP's full `romanize(text)` function. The UI calls this out rather than silently claiming full package equivalence.
 
 ## Acceptance gates
 
-1. Pin an immutable PyThaiNLP release/tag and review the RTGS source plus tokenizer dependency/license.
-2. Implement or bundle a browser-compatible, offline RTGS adapter; no runtime API/network calls.
-3. Ensure the adapter's inputs/outputs are independent from `adaptIpaToUkrainian`; only the IPA result may reach the Ukrainian adapter.
-4. Build a versioned parity fixture corpus from reviewed Thai words, including aspirated-stop examples and known RTGS edge cases. Compare browser results with the pinned reference implementation. Do not assert parity without running the reference.
-5. Tests currently cover the provisional fixture adapter, unknown/non-Thai input, and separate UI presentation. Remaining: Unicode marks, broader token-boundary cases, and a reference-parity corpus against the pinned release.
-6. Run the existing web UI, engine, parity, Python, artifact-drift and deployment checks. Do not claim general linguistic accuracy from romanization parity.
-7. Only then expose the RTGS field in the website. If a word's boundaries are not known, show a warning or per-token result rather than inventing spaces.
+1. [x] Pin a released upstream implementation and preserve license attribution.
+2. [x] Implement the per-token RTGS algorithm as an offline browser adapter.
+3. [x] Keep RTGS separate from the IPA → Ukrainian adapter.
+4. [x] Add a versioned corpus and CI comparison against the pinned upstream implementation.
+5. [ ] Verify the full CI run on the final branch head, including the reference parity test.
+6. [ ] Decide whether to port or bundle a compatible Thai word tokenizer and dictionary, or keep the documented ClippyFirst-token-boundary contract.
+7. [ ] Run browser visual/accessibility checks and confirm deployment/build behavior before promoting the feature out of draft.
 
-## Source notes
+## Remaining independent research gaps
 
-- PyThaiNLP docs demonstrate that RTGS and IPA are distinct engines and that outputs can differ (e.g. `สามารถ`: RTGS `samant` vs IPA-oriented engines returning phonetic forms).
-- ISO 11940: https://www.iso.org/standard/20574.html
-- UK BGN/PCGN romanization reference: https://assets.publishing.service.gov.uk/media/5ab4e60aed915d78b9a459f5/ROMANIZATION_OF_THAI.pdf
-
-## Current blockers
-
-- The repository's website has no Python runtime and deliberately prohibits network connections.
-- Browser-port/tokenizer compatibility and reference parity have not yet been implemented or tested.
-- Independent Thai IPA and Ukrainian target-form gold remain separate research gaps; RTGS does not resolve those gaps.
+- Independent Thai IPA adjudication and Ukrainian target-form review remain separate research requirements; RTGS parity does not resolve them.
+- If full PyThaiNLP behavior is required, tokenizer and dictionary provenance/licensing must be inspected separately and parity measured on a reviewed sentence corpus.
+- No general accuracy claim should be inferred from passing algorithm parity.
