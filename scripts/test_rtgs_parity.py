@@ -24,7 +24,8 @@ for await (const chunk of process.stdin) input += chunk;
 const corpus = JSON.parse(input);
 const result = {
   words: corpus.words.map(word => romanizeRtgsWord(word).value),
-  sequences: corpus.sequences.map(words => romanizeRtgsWords(words))
+  sequences: corpus.sequences.map(words => romanizeRtgsWords(words)),
+  unsupported: (corpus.unsupported || []).map(word => ({ word, status: romanizeRtgsWord(word).status }))
 };
 process.stdout.write(JSON.stringify(result));
 """
