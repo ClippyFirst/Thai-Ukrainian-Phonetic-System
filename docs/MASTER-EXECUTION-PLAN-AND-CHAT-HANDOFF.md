@@ -1255,3 +1255,12 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Post-merge CI run [40592864584](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40592864584) had its `test` job pass; its separate `master-artifact` job was still running at audit time. The exact-head PR CI above passed both jobs, and the Pages build independently generated the master table and passed its Python/browser checks.
 - PR #101 was closed as a duplicate of #104; PR #104 was closed/deferred because its separate research-only morphology overlay was based on an older main and had not been reconciled against the deployed head. Both source branches are preserved. Reopen/port that feature only after rebasing, exact-head CI and browser parity, and keeping morphology outside practical phonetic output.
 - Readiness: engineering and deployment checks are verified; the project remains a research prototype, not release-ready for accuracy claims, pending independent IPA gold and Ukrainian target-form adjudication.
+
+
+## 2026-10-28 — Thai phonology completeness and ambiguous readings
+
+- Working branch: `audit/thai-phonology-ambiguity-coverage-20261028`, based on current `main` at `c1d19996b027822d6e079ba33cabee52587da592`.
+- Added `docs/phonology-ambiguity-coverage.md`, a source-backed audit matrix for tone/live-dead rules, onset clusters, codas, `ห นำ`/`อ นำ`, `ทร`, false clusters (`จร/สร/ศร/ซร`), `รร`, `ฤ/ฤๅ/ฦ/ฦๅ`, thanthakhat, lexical segmentation, and connected speech.
+- Added regression tests requiring unlisted special-orthography forms to remain analysis-dependent and verifying that the exact lexical reading `ทราบ` does not make `ทร` a productive global /s/ rule. The Royal Institute source explicitly distinguishes `ทราย` “sand” (non-cluster /s/) from `ทราย` in the deer-name family (true cluster reading); the engine must not guess the sense from spelling alone.
+- This is a coverage audit and fail-closed regression hardening, not a broad phonology expansion. No unsupported IPA labels or accuracy claims were added. Independent IPA gold remains blocked on expert adjudication.
+- Status pending: exact-head CI, generated master artifact, browser/Python parity and static web validation on the PR head. Do not mark the new tests DONE_VERIFIED until CI completes.
