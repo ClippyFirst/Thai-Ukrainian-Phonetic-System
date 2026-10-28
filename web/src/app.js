@@ -89,12 +89,26 @@ function card(token, index) {
   const warnings = (token.warnings || []).map(warning =>
     '<div class="warning">' + esc(warning) + '</div>'
   ).join('');
+  const tokenStatusLabel = {
+    lexicon: 'Словниковий запис',
+    lexical_ipa_override: 'Словникове читання з IPA',
+    'soft-orthographic-clusters': 'Попередній структурний розбір',
+    'super-soft-approximate': 'Приблизне резервне читання'
+  }[token.segmentationStatus] ||
+    (token.segmentationStatus.startsWith('analysis-dependent:')
+      ? 'Потрібне лексичне або контекстне рішення'
+      : token.segmentationStatus.startsWith('unresolved:')
+        ? 'Розбір не встановлено'
+        : token.segmentationStatus.startsWith('invalid:')
+          ? 'Комбінація не підтримується моделлю'
+          : 'Потребує перевірки');
   return '<article class="result-card" aria-labelledby="' + headingId + '">' +
     '<div class="result-top"><div><h3 class="result-title" id="' + headingId + '">Результат ' +
     (index + 1) + ': ' + esc(token.input) + '</h3><div class="thai" lang="th">' +
-    esc(token.input) + '</div><div class="subline">Сегментація: ' +
-    esc(token.segmentationStatus) + '</div></div><span class="badge ' +
-    (unresolved ? 'warn' : 'ok') + '">' + esc(token.segmentationStatus) +
+    esc(token.input) + '</div><div class="subline">Статус: ' + esc(tokenStatusLabel) +
+    ' · технічний код: <code>' + esc(token.segmentationStatus) +
+    '</code></div></div><span class="badge ' +
+    (unresolved ? 'warn' : 'ok') + '">' + esc(tokenStatusLabel) +
     '</span></div>' + syllables + warnings + '</article>';
 }
 
