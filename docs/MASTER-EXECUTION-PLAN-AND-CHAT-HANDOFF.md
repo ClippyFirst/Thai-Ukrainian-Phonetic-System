@@ -1405,3 +1405,18 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Public site: https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/ . Pages deployment and published-content verification passed: [40719517666](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40719517666). Web static validation passed: [40719517689](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40719517689). Full CI including `master-artifact` passed at PR head in [40719154739](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40719154739).
 - Completed: simplified first-use flow, clearer mode uncertainty, output hierarchy, keyboard focus/skip navigation, 44px nav/disclosure/link targets, stylesheet cache-busting, UI contract coverage, and audit/matrix/handoff updates. IPA remains the adapter boundary; RTGS remains separate. No Thai pronunciation rules changed.
 - Remaining: manual real-browser responsive/visual review and full WCAG 2.2 AA test are not performed; independent expert-adjudicated Thai IPA, word-boundary, and Ukrainian target-form gold remain the blocker to release readiness. Current classification: research prototype, not release-ready.
+
+## 2026-10-28 — UX status-language clarity continuation
+
+- Branch: `ux/clarify-analysis-statuses-published-20261028`; based on main `77d8cd4c4328342e0ca11344c4bc2af9f5c6f25e`.
+- Goal: complete the source-based UX audit's remaining actionable point by avoiding raw internal segmentation codes as the primary visible status.
+- Implementation: human-readable Ukrainian status labels in detailed token cards; raw engine code remains alongside as secondary diagnostic information; removed orphaned styles for the retired standalone IPA-input panel; cache-busted CSS; strengthened UI and live Pages contracts.
+- Verification to record after CI: exact commit SHA, CI run, static validation run, PR merge SHA, Pages deployment run.
+- Do not claim manual browser/WCAG completion or linguistic accuracy. Independent Thai IPA, word-boundary and Ukrainian target gold remain the real research blocker.
+
+### Verification update — 2026-10-28
+
+- Exact code/test commit: `82d7fd5d6469b3d2c2fcad98158bf98dcb452135`.
+- Full CI passed: [40723829479](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40723829479); web static validation passed: [40723829245](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40723829245).
+- PR #125: https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/125. Next step is merge only after exact-head checks pass, then confirm the live GitHub Pages gate and update this handoff with the merge SHA/deployment run.
+- No manual visual/WCAG claim; independent Thai IPA/word-boundary/Ukrainian gold remains unavailable.
