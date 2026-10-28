@@ -1,6 +1,6 @@
 # Thai romanization integration research
 
-**Status:** implementation design gate; no browser RTGS result is shipped yet.
+**Status:** PARTIAL prototype on branch `feat/thai-rtgs-reference-20261028`; a separate UI panel and conservative fixture adapter exist, but the examples have not yet been verified against a pinned PyThaiNLP release. Do not treat this as a complete RTGS engine.
 
 ## Decision
 
@@ -28,7 +28,7 @@ PyThaiNLP itself is Python-only, and the website is a static browser application
 2. Implement or bundle a browser-compatible, offline RTGS adapter; no runtime API/network calls.
 3. Ensure the adapter's inputs/outputs are independent from `adaptIpaToUkrainian`; only the IPA result may reach the Ukrainian adapter.
 4. Build a versioned parity fixture corpus from reviewed Thai words, including aspirated-stop examples and known RTGS edge cases. Compare browser results with the pinned reference implementation. Do not assert parity without running the reference.
-5. Add tests for RTGS/IPA separation, unknown and non-Thai input, Unicode marks, spacing/token boundaries, and labels describing loss of tone/length.
+5. Tests currently cover the provisional fixture adapter, unknown/non-Thai input, and separate UI presentation. Remaining: Unicode marks, broader token-boundary cases, and a reference-parity corpus against the pinned release.
 6. Run the existing web UI, engine, parity, Python, artifact-drift and deployment checks. Do not claim general linguistic accuracy from romanization parity.
 7. Only then expose the RTGS field in the website. If a word's boundaries are not known, show a warning or per-token result rather than inventing spaces.
 
