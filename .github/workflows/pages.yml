@@ -82,13 +82,13 @@ jobs:
           set -eu
           for attempt in $(seq 1 12); do
             if curl --fail --silent --show-error "$PAGE_URL" -o /tmp/deployed-index.html \
-              && grep -Eq 'Вставте (цілий текст або статтю|слово або фрагмент тексту)' /tmp/deployed-index.html \
+              && grep -Fq 'Вставте слово або фрагмент тексту' /tmp/deployed-index.html \
               && grep -Fq 'data-example="กา"' /tmp/deployed-index.html \
               && grep -Fq 'data-example="จริง"' /tmp/deployed-index.html \
               && grep -Fq 'id="engine-mode"' /tmp/deployed-index.html \
               && grep -Fq 'value="soft"' /tmp/deployed-index.html \
               && grep -Fq 'value="super-soft"' /tmp/deployed-index.html \
-              && grep -Eq 'Суперм’який — (повне покриття, приблизні звуки|приблизний кандидат для кожного фрагмента)' /tmp/deployed-index.html \
+              && grep -Fq 'Суперм’який — приблизний кандидат для кожного фрагмента' /tmp/deployed-index.html \
               && grep -Fq 'БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ' /tmp/deployed-index.html \
               && grep -Fq 'id="ipa-input"' /tmp/deployed-index.html \
               && grep -Fq 'id="ipa-adapt"' /tmp/deployed-index.html \
@@ -97,7 +97,14 @@ jobs:
               && curl --fail --silent --show-error "$PAGE_URL/src/engine.js" -o /tmp/deployed-engine.js \
               && curl --fail --silent --show-error "$PAGE_URL/src/ipa-ua.js" -o /tmp/deployed-ipa-ua.js \
               && curl --fail --silent --show-error "$PAGE_URL/src/rtgs-reference.js" -o /tmp/deployed-rtgs.js \
+              && curl --fail --silent --show-error "$PAGE_URL/system.html" -o /tmp/deployed-system.html \
               && grep -Fq 'Цілісний результат' /tmp/deployed-app.js \
+              && grep -Fq 'usage-guide' /tmp/deployed-index.html \
+              && grep -Fq 'RTGS — окрема латинська довідкова романізація' /tmp/deployed-index.html \
+              && grep -Fq 'Аналіз виконується локально у браузері' /tmp/deployed-index.html \
+              && grep -Fq 'RTGS — латинська романізація' /tmp/deployed-system.html \
+              && grep -Fq 'Тести — не мовний еталон' /tmp/deployed-system.html \
+              && grep -Fq 'незалежно експертно перевірених рядків у поточному еталоні немає' /tmp/deployed-system.html \
               && grep -Fq 'continuous-output-value' /tmp/deployed-app.js \
               && grep -Fq 'adaptIpaToUkrainian(source)' /tmp/deployed-app.js \
               && grep -Fq 'RTGS — латинська романізація (не IPA)' /tmp/deployed-app.js \
@@ -114,7 +121,7 @@ jobs:
             fi
             if [ "$attempt" -eq 12 ]; then
               echo "Published homepage or RTGS contract did not appear after 12 attempts" >&2
-              for marker in 'data-example="กา"' 'data-example="จริง"' 'id="engine-mode"' 'value="soft"' 'value="super-soft"' 'БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ' 'id="ipa-input"' 'id="ipa-adapt"' 'id="ipa-adapter-result"'; do
+              for marker in 'data-example="กา"' 'data-example="จริง"' 'id="engine-mode"' 'value="soft"' 'value="super-soft"' 'БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ' 'id="ipa-input"' 'id="ipa-adapt"' 'id="ipa-adapter-result"' 'Вставте слово або фрагмент тексту' 'usage-guide' 'RTGS — окрема латинська довідкова романізація'; do
                 grep -Fq "$marker" /tmp/deployed-index.html || echo "Missing homepage marker: $marker" >&2
               done
               if [ -f /tmp/deployed-app.js ]; then
@@ -123,6 +130,13 @@ jobs:
                 done
               else
                 echo "Missing deployed app.js file" >&2
+              fi
+              if [ -f /tmp/deployed-system.html ]; then
+                for marker in 'RTGS — латинська романізація' 'Тести — не мовний еталон' 'незалежно експертно перевірених рядків у поточному еталоні немає'; do
+                  grep -Fq "$marker" /tmp/deployed-system.html || echo "Missing system-page marker: $marker" >&2
+                done
+              else
+                echo "Missing deployed system.html file" >&2
               fi
               if [ -f /tmp/deployed-rtgs.js ]; then
                 grep -Fq 'romanizeRtgsWord' /tmp/deployed-rtgs.js || echo "Missing RTGS marker: romanizeRtgsWord" >&2
