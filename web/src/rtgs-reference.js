@@ -1,4 +1,4 @@
-// RTGS reference layer for reviewed lexical fixtures only.
+// RTGS reference prototype for a small provisional fixture list only.
 // This deliberately does not guess romanization for arbitrary Thai strings.
 // Source family: PyThaiNLP's Apache-2.0-licensed "royin" implementation;
 // see docs/research/thai-romanization-integration.md for provenance and limits.
@@ -10,18 +10,17 @@ const REVIEWED_RTGS = new Map([
   ["ไฟ", "fai"],
   ["หมา", "ma"],
   ["ใหม่", "mai"],
-  ["จริง", "ching"]
 ]);
 
 /**
- * Return a reviewed RTGS reference for an exact lexical token.
+ * Return a provisional RTGS fixture for an exact lexical token.
  * RTGS is a lossy Latin transcription, not IPA and not English G2P.
  * Unknown tokens are explicitly unavailable rather than guessed.
  */
 export function lookupRtgsToken(token) {
   const value = REVIEWED_RTGS.get(String(token ?? "").normalize("NFC"));
   return value
-    ? { status: "reviewed", value, source: "project-reviewed-fixture" }
+    ? { status: "fixture", value, source: "provisional-fixture" }
     : { status: "unavailable", value: null, source: null };
 }
 
