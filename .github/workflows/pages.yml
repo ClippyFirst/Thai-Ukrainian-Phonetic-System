@@ -128,7 +128,20 @@ jobs:
               && grep -Fq 'Суперм’який' /tmp/deployed-app.js \
               && grep -Fq 'super-soft-approximate' /tmp/deployed-engine.js \
               && grep -Fq 'UNVERIFIED_ORTHOGRAPHIC_FALLBACK' /tmp/deployed-engine.js; then
-              echo "Published homepage and RTGS contract verified at $PAGE_URL"
+              python - <<'PY'
+from pathlib import Path
+source = Path("/tmp/deployed-app.js").read_text(encoding="utf-8")
+markers = [
+    "continuousPanel('01 · RTGS — латинська романізація (не IPA)'",
+    "continuousPanel('02 · IPA — фонетичне представлення'",
+    "continuousPanel('03 · Український фонетичний кандидат'",
+]
+positions = [source.index(marker) for marker in markers]
+assert positions == sorted(positions), f"Published output order is wrong: {positions}"
+assert '<details class="rtgs-details"' not in source, "RTGS output must not be hidden behind a disclosure"
+print("Published RTGS → IPA → Ukrainian order verified")
+PY
+              echo "Published homepage and ordered RTGS/IPA/Ukrainian contract verified at $PAGE_URL"
               exit 0
             fi
             if [ "$attempt" -eq 12 ]; then
