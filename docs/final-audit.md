@@ -737,3 +737,12 @@ The first run with the new coverage tests completed master-table generation and 
 - PR #112 was closed as superseded after its unique copy and UI-contract changes were ported through PR #116 and the audit register was ported through PR #117.
 - The site is live at https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/. RTGS deployment [40692707861](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40692707861) and public-guidance deployment [40694421367](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40694421367) passed served-content checks.
 - Manual browser visual review remains PARTIAL; independent linguistic gold remains BLOCKED. No end-to-end accuracy claim is made.
+
+## 2026-10-28 — UX refresh follow-up and deployment-contract repair
+
+- **Starting main:** `ad2f899978b66d3bbcb92124688b62261bb5225d` (the homepage UX refresh was already present on main when this continuation began).
+- Preserved the existing UX refresh: shorter first-use flow, clear uncertainty labels, strict mode default, accessible skip links, more prominent whole-text Ukrainian output, IPA/RTGS separation, and optional detailed audit. No phonological rules were changed.
+- Fixed a real deployment-verification defect: the Pages workflow asserted copy that no longer existed (`Аналіз виконується локально у браузері`) while the shipped homepage correctly said `Обробка відбувається у вашому браузері.`. The live gate now checks the actual privacy statement.
+- Increased minimum target height for navigation links, the mode-help disclosure, and methodology links to 44px; bumped both page stylesheet cache keys so deployed clients fetch the accessibility refinement.
+- Expanded the UI contract to lock the 44px targets, focus treatment, cache-busting keys, and consistency between homepage privacy copy and the Pages deployment gate.
+- **Status: PARTIAL** until exact-head CI and the live Pages content check pass. Browser screenshots/manual visual review are not available in this connector-only run; no WCAG conformance claim is made. Linguistic gold data remains independently evidence-limited.
