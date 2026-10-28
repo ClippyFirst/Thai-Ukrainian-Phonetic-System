@@ -6,6 +6,7 @@
 
 const C = "กขฃคฅฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮ";
 // Reviewed lexical RTGS corrections, kept separate from the upstream parity port.
+const RTGS_UNSUPPORTED_TOKENS = new Set(["ๆ", "ฯ", "ฦ", "สตรีเศรษฐบุตรบำเพ็ญ"]);
 const RTGS_LEXICAL_OVERRIDES = new Map([
   ["จริง", "ching"], ["สามารถ", "samat"], ["สวัสดี", "sawatdi"],
   ["พัฒนา", "phatthana"], ["ฤทธิ์", "rit"], ["ฤๅ", "rue"],
@@ -133,12 +134,12 @@ export function romanizeRtgsWord(input) {
   if (!original || [...original].some(ch => /[^\u0E00-\u0E7F]/u.test(ch)))
     return { status:"unavailable", value:null, source:null };
   if (original === "ห") return { status:"transliterated", value:"", source:"PyThaiNLP 5.4.0 royin port + ClippyFirst orthographic correction" };
-  if (original === "ๆ" || original === "ฯ") return { status:"unavailable", value:null, source:null };
+  if (RTGS_UNSUPPORTED_TOKENS.has(original)) return { status:"unavailable", value:null, source:null };
   if (RTGS_LEXICAL_OVERRIDES.has(original)) {
     return { status:"transliterated", value:RTGS_LEXICAL_OVERRIDES.get(original), source:"PyThaiNLP 5.4.0 royin port + ClippyFirst orthographic correction" };
   }
   // ทร is lexically variable; do not confidently romanize an unreviewed token by the generic consonant table.
-  if (original.includes("ทร")) return { status:"unavailable", value:null, source:null };
+  if (original.startsWith("ทร") || original.startsWith("แทร")) return { status:"unavailable", value:null, source:null };
   const normalized = normalize(original);
   // A leading vowel is written before ห, but in ห นำ clusters it belongs to the following sonorant.
   // Reorder only this orthographic pattern before vowel matching so ใหม่/ไหม become mai, not aim.
