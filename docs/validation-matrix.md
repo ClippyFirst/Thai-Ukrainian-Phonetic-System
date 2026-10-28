@@ -606,3 +606,11 @@ The Python and browser IPA adapters now map Thai /h/ to Ukrainian «г», and re
 - **PARTIAL until exact-head CI:** Python and browser IPA→Ukrainian adapters encode IPA aspiration on /kʰ pʰ tʰ tɕʰ/ with an apostrophe immediately after the consonant output (к' п' т' ч'), rather than silently neutralizing aspiration or using «х».
 - Regression cases cover aspirated/non-aspirated pairs, consonant clusters, standalone /h/ → «г», and /ʔ/ as a separate segment. RTGS remains a separate reference output and is not consulted by the adapter.
 - Acceptance: exact-head CI must pass Python tests, browser adapter tests, parity, generated artifact checks and master-artifact; review any expected-output drift before calling this DONE_VERIFIED. Independent linguistic review of the project apostrophe convention remains evidence-limited.
+
+
+### Latest checkpoint — 2026-10-28, adapter/data/UI reconciliation
+
+- **PASS:** Web static validation on code head `8c855b9ec1d557d70135a9353c30df7c20b8f26f` (run [40688615996](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40688615996)).
+- **PASS:** the RTGS browser unit tests, pinned PyThaiNLP 5.4.0 parity script, derived-data generation and structural-space generation completed successfully in the current full CI run before its longer master-table stage.
+- **PARTIAL:** full exact-head CI and generated master-artifact are not yet confirmed. Earlier run `40688279406` failed three Python assertions because the new aspirated outputs had not yet been reflected in tests; those expected outputs were corrected. Do not mark the feature DONE_VERIFIED until a subsequent full CI passes.
+- **Implementation coverage:** canonical Python/browser adapters, IPA-based candidate renderer, generated consonant correspondence CSV, regression tests, public IPA panel, system page, methodology and Ukrainian-vs-Russian comparison matrix all reflect the apostrophe convention.
