@@ -82,24 +82,25 @@ jobs:
           set -eu
           for attempt in $(seq 1 12); do
             if curl --fail --silent --show-error "$PAGE_URL" -o /tmp/deployed-index.html \
-              && grep -Fq 'Вставте слово або фрагмент тексту' /tmp/deployed-index.html \
+              && grep -Fq 'Можна вставити довший текст' /tmp/deployed-index.html \
               && grep -Fq 'data-example="กา"' /tmp/deployed-index.html \
               && grep -Fq 'data-example="จริง"' /tmp/deployed-index.html \
               && grep -Fq 'id="engine-mode"' /tmp/deployed-index.html \
               && grep -Fq 'value="soft"' /tmp/deployed-index.html \
               && grep -Fq 'value="super-soft"' /tmp/deployed-index.html \
-              && grep -Fq 'Суперм’який — приблизний кандидат для кожного фрагмента' /tmp/deployed-index.html \
+              && grep -Fq 'Суперм’який · приблизне читання для кожного фрагмента' /tmp/deployed-index.html \
               && grep -Fq 'БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ' /tmp/deployed-index.html \
               && ! grep -Fq 'id="ipa-input"' /tmp/deployed-index.html \
               && ! grep -Fq 'id="ipa-adapt"' /tmp/deployed-index.html \
-              && grep -Fq 'Як утворюється український кандидат' /tmp/deployed-index.html \
+              && grep -Fq 'Як формується результат' /tmp/deployed-index.html \
               && curl --fail --silent --show-error "$PAGE_URL/src/app.js" -o /tmp/deployed-app.js \
               && curl --fail --silent --show-error "$PAGE_URL/src/engine.js" -o /tmp/deployed-engine.js \
               && curl --fail --silent --show-error "$PAGE_URL/src/ipa-ua.js" -o /tmp/deployed-ipa-ua.js \
               && curl --fail --silent --show-error "$PAGE_URL/src/rtgs-reference.js" -o /tmp/deployed-rtgs.js \
               && curl --fail --silent --show-error "$PAGE_URL/system.html" -o /tmp/deployed-system.html \
               && grep -Fq 'Цілісний результат' /tmp/deployed-app.js \
-              && grep -Fq 'usage-guide' /tmp/deployed-index.html \
+              && grep -Fq 'class="skip-link"' /tmp/deployed-index.html \
+              && grep -Fq 'class="mode-help"' /tmp/deployed-index.html \
               && grep -Fq 'RTGS — окрема латинська довідкова романізація' /tmp/deployed-index.html \
               && grep -Fq 'Аналіз виконується локально у браузері' /tmp/deployed-index.html \
               && grep -Fq 'RTGS — латинська романізація' /tmp/deployed-system.html \
@@ -121,7 +122,7 @@ jobs:
             fi
             if [ "$attempt" -eq 12 ]; then
               echo "Published homepage or RTGS contract did not appear after 12 attempts" >&2
-              for marker in 'data-example="กา"' 'data-example="จริง"' 'id="engine-mode"' 'value="soft"' 'value="super-soft"' 'БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ' 'Як утворюється український кандидат' 'Вставте слово або фрагмент тексту' 'usage-guide' 'RTGS — окрема латинська довідкова романізація'; do
+              for marker in 'data-example="กา"' 'data-example="จริง"' 'id="engine-mode"' 'value="soft"' 'value="super-soft"' 'БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ' 'Як формується результат' 'Можна вставити довший текст' 'class="skip-link"' 'class="mode-help"' 'RTGS — окрема латинська довідкова романізація'; do
                 grep -Fq "$marker" /tmp/deployed-index.html || echo "Missing homepage marker: $marker" >&2
               done
               if [ -f /tmp/deployed-app.js ]; then
