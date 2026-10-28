@@ -3,7 +3,7 @@
 // Source family: PyThaiNLP's Apache-2.0-licensed "royin" implementation;
 // see docs/research/thai-romanization-integration.md for provenance and limits.
 
-const REVIEWED_RTGS = new Map([
+const RTGS_FIXTURES = new Map([
   ["กา", "ka"],
   ["พริก", "phrik"],
   ["มา", "ma"],
@@ -18,7 +18,7 @@ const REVIEWED_RTGS = new Map([
  * Unknown tokens are explicitly unavailable rather than guessed.
  */
 export function lookupRtgsToken(token) {
-  const value = REVIEWED_RTGS.get(String(token ?? "").normalize("NFC"));
+  const value = RTGS_FIXTURES.get(String(token ?? "").normalize("NFC"));
   return value
     ? { status: "fixture", value, source: "provisional-fixture" }
     : { status: "unavailable", value: null, source: null };
