@@ -215,7 +215,7 @@ assert.equal(status.className, "status notice", "soft mode must visibly remain p
 assert.match(output.innerHTML, /soft-orthographic-clusters/);
 assert.match(output.innerHTML, /М’який режим — попередній результат/);
 assert.match(output.innerHTML, /Попередній структурний розбір/);
-assert.match(output.innerHTML, /IPA — проміжне представлення/);
+assert.match(output.innerHTML, /02 · IPA — фонетичне представлення/);
 assert.match(output.innerHTML, /class="continuous-output ua-continuous"[\s\S]*?<pre class="continuous-output-value">[^<]*(?:ка|фай)/, "soft mode should emit a recoverable Ukrainian candidate for recognized/structurally parsed spans");
 mode.value = "super-soft";
 mode.listeners.change?.();
@@ -225,7 +225,7 @@ analyze.click();
 assert.match(status.textContent, /Суперм’який/);
 assert.match(output.innerHTML, /Суперм’який режим — повне покриття, приблизна вимова/);
 assert.match(output.innerHTML, /Приблизне резервне читання/);
-assert.match(output.innerHTML, /IPA — проміжне представлення/);
+assert.match(output.innerHTML, /02 · IPA — фонетичне представлення/);
 const superSoftUa = output.innerHTML.match(/class="continuous-output ua-continuous".*?<pre class="continuous-output-value">(.*?)<\/pre>/s);
 const superSoftIpa = output.innerHTML.match(/class="continuous-output ipa-continuous".*?<pre class="continuous-output-value">(.*?)<\/pre>/s);
 assert.ok(superSoftUa, "super-soft Ukrainian output should exist");
