@@ -37,7 +37,7 @@ const clear = element("clear");
 input.value = "พริก";
 analyze.click();
 assert.equal(output.hidden, false);
-assert.match(output.innerHTML, /Цілісний результат/);
+assert.match(output.innerHTML, /Результати · 3 представлення/);
 assert.match(output.innerHTML, /Український фонетичний кандидат/);
 assert.match(output.innerHTML, /IPA — проміжне представлення/);
 assert.match(output.innerHTML, /RTGS — латинська романізація \(не IPA\)/);
