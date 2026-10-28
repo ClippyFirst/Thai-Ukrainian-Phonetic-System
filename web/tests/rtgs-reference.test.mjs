@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import { lookupRtgsToken, renderRtgsTokens } from "../src/rtgs-reference.js";
 
 const expected = new Map([
@@ -32,4 +33,11 @@ assert.equal(renderRtgsTokens([
 ]), "phrik ⟦RTGS НЕ ПЕРЕВІРЕНО: ทดสอบ⟧");
 assert.equal(renderRtgsTokens([{ kind: "latin", input: "ph" }]), "ph");
 
-console.log("RTGS reference fixtures: OK");
+const rtgsSource = await readFile(new URL("../src/rtgs-reference.js", import.meta.url), "utf8");
+assert.doesNotMatch(rtgsSource, /adaptIpaToUkrainian|ipa-ua/);
+const appSource = await readFile(new URL("../src/app.js", import.meta.url), "utf8");
+assert.match(appSource, /renderRtgsTokens\\(tokens\\)/);
+assert.match(appSource, /adaptIpaToUkrainian\\(source\\)/);
+assert.doesNotMatch(rtgsSource, /fetch\\(|XMLHttpRequest|https?:\\/\\//);
+
+console.log("RTGS reference fixtures and pipeline separation: OK");
