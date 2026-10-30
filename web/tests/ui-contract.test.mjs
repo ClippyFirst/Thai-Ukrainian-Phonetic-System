@@ -279,6 +279,9 @@ const pagesWorkflow = await readFile(new URL("../../.github/workflows/pages.yml"
 assert.match(homeHtml, /БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ/);
 assert.match(homeHtml, /Текст аналізується локально у браузері/);
 assert.match(pagesWorkflow, /grep -Fq 'Текст аналізується локально у браузері' \/tmp\/deployed-index\.html/);
+assert.match(pagesWorkflow, /grep -Fq 'Можна вставити й ціле речення' \/tmp\/deployed-index\.html/);
+assert.match(pagesWorkflow, /grep -Fq 'Як передати тайський текст українською' \/tmp\/deployed-index\.html/);
+assert.match(pagesWorkflow, /grep -Fq 'Цей розділ призначений для дослідників і розробників\.' \/tmp\/deployed-system\.html/);
 assert.match(homeHtml, /Можна вставити й ціле речення/);
 assert.match(homeHtml, /<label class="input-label" for="thai-input">Тайський текст<\/label>/);
 assert.match(homeHtml, /class="skip-link"/);
