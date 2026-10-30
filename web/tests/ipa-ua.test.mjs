@@ -67,13 +67,12 @@ console.log("IPA → Ukrainian adaptation: canonical, feature-audit, inventory, 
 // The public UI must describe the same IPA-first adapter contract as the engine.
 const serviceHtml = fs.readFileSync(new URL("../index.html", import.meta.url), "utf8");
 const systemHtml = fs.readFileSync(new URL("../system.html", import.meta.url), "utf8");
-assert(serviceHtml.includes("Як формується результат"));
-assert(serviceHtml.includes("Порядок відображення результатів: RTGS → IPA → український кандидат"));
-assert(serviceHtml.includes("українська форма адаптується саме з IPA"));
-assert(serviceHtml.includes("RTGS — окрема латинська довідкова романізація"));
-assert(!serviceHtml.includes("а не механічною заміною символів IPA"));
-assert(systemHtml.includes("Український результат формується окремим шаром з IPA"));
-console.log("Public UI: IPA-first adapter contract matches the implementation");
+assert(serviceHtml.includes("Що означає результат"));
+assert(serviceHtml.includes("Тайські звуки не завжди можна точно передати українськими літерами"));
+assert(systemHtml.includes("Український запис не створюється прямою заміною тайських літер"));
+assert(systemHtml.includes("IPA — це окремий проміжний рівень"));
+assert(systemHtml.includes("RTGS — окрема латинська система"));
+console.log("Public UI: plain-language explanation preserves the IPA-first adapter contract");
 
 
 // The homepage exposes the shared IPA-first pipeline, not a second input mode.
