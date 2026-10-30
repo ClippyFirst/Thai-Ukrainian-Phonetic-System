@@ -956,3 +956,18 @@ The user's explicit requirement supersedes the prior UX decision to collapse RTG
 - Test-first evidence: test-only commit e2e0e6783d277092ecf05ac87a2b712d9c03f260 failed only the new regression because no error log was emitted; implementation commit 60ac49dd1d3f6c387c306616e1c5a435dea4662a passed the full CI workflow.
 - Runtime change is limited to server-side logging and redaction of unexpected 500 responses. Expected malformed-request exceptions retain their existing 400 response contract.
 - This is API error-hygiene hardening, not a claim that the local standard-library server is production-ready for public internet exposure.
+
+## 2026-10-31 — HTTP Content-Length framing validation
+
+| Acceptance criterion | State | Evidence |
+|---|---|---|
+| Reject negative and malformed Content-Length values before reading the request body | DONE_VERIFIED on PR head | `APIHandler.do_POST` now requires ASCII decimal digits before conversion; malformed values use the existing 400 `invalid_request` response path. |
+| Prevent negative Content-Length from turning `read(n)` into unbounded `read(-1)` | DONE_VERIFIED on PR head | Raw-socket regression sends a valid JSON body with `Content-Length: -1`; exact PR-head CI passes the assertion. |
+| Preserve the 1 MB request-size limit and existing valid-request behavior | DONE_VERIFIED on PR head | Existing API contract tests pass; implementation changes only the length-field validation. |
+| Python, browser/parity, research diagnostics and isolated wheel smoke | DONE_VERIFIED on PR head | CI [41141511448](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41141511448): 216 Python tests, browser IPA/parity/UI, diagnostics and wheel smoke passed. |
+| Master artifact | PARTIAL / running at checkpoint | Push CI [41141452681](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41141452681) and PR CI [41141511448](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41141511448) master-artifact jobs were still generating the table; final 351,780-row / 41-record assertions pending. |
+
+- Test-first commit `3814af5e8b083117d93634531a5c62e1db5757d8`; red CI [41141368949](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41141368949) failed only the new test: the old server returned HTTP 200 and analyzed the body despite `Content-Length: -1`.
+- Implementation commit `47c3f335fb5aa902784f4964a842dd00e5ea01c7`; exact PR-head CI passed 216 Python tests, including the regression.
+- Scope is limited to HTTP request framing. No parser, Thai phonology, segmentation, IPA, RTGS, Ukrainian adaptation or browser behavior changed.
+- PR [#153](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/153) is open against `main`; merge and post-merge main CI remain pending.

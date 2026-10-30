@@ -1656,3 +1656,14 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Local clone/tests remain unavailable in this environment because the container cannot resolve github.com; verification is from GitHub Actions.
 - This hardening does not convert the local standard-library API into a production internet-facing service. PR exact-head and post-merge checks are to be recorded after integration.
 - Issue #114 was reconciled: the RTGS feature is implemented; its remaining open scope is independent linguistic gold, manual browser/device and WCAG review, and any separately licensed tokenizer evaluation. The obsolete PR #111-open note was corrected.
+
+## 2026-10-31 — HTTP Content-Length framing fix (PR #153)
+
+- Starting `main`: `52dfb640a3129818c23ed36079d531cd3f9c0fac`, which includes merged PR #152 API error redaction.
+- Working branch: `fix/http-content-length-validation-20261031`.
+- PR: [#153 — fix: reject invalid HTTP content lengths](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/153).
+- TDD red commit: `3814af5e8b083117d93634531a5c62e1db5757d8`; CI [41141368949](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41141368949) failed only the new test. It proved the old handler returned HTTP 200 and analyzed a valid body sent with `Content-Length: -1`.
+- Implementation commit: `47c3f335fb5aa902784f4964a842dd00e5ea01c7`. The handler now requires ASCII decimal digits before converting the header or reading the request body. Existing 1 MB cap and 400/413/500 contracts remain unchanged.
+- Exact PR-head CI [41141511448](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41141511448) passed Ruff, 216 Python tests, browser IPA/parity/UI checks, research diagnostics and isolated wheel-install smoke. The exact-head master-artifact job was still running at the last status read; verify its 351,780-row / 41-vowel assertions and artifact upload before merge.
+- Local checkout remains unavailable because the execution container cannot resolve `github.com`; verification is from GitHub Actions.
+- No Thai phonology, segmentation, IPA, RTGS, Ukrainian adaptation or web UI behavior changed. After merge, verify main CI and update this handoff with the merge SHA and final job outcomes.
