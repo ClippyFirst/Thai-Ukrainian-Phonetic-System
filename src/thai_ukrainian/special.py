@@ -1,7 +1,6 @@
 from __future__ import annotations
 import csv
 from functools import lru_cache
-from pathlib import Path
 
 from ._paths import THAI_DATA_ROOT
 
