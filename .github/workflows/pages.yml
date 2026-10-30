@@ -87,8 +87,8 @@ jobs:
               && grep -Fq 'Текст залишається у вашому браузері' /tmp/deployed-index.html \
               && grep -Fq 'ТЕСТОВА ВЕРСІЯ' /tmp/deployed-index.html \
               && grep -Fq 'Суворість інтерпретації · шкала 1–3' /tmp/deployed-index.html \
-              && grep -Fq '3 · Консервативна — максимальна суворість' /tmp/deployed-index.html \
-              && grep -Fq '1 · Евристична — мінімальна суворість' /tmp/deployed-index.html \
+              && grep -Fq '3 · Консервативний' /tmp/deployed-index.html \
+              && grep -Fq '1 · Евристичний' /tmp/deployed-index.html \
               && grep -Fq '2 · Структурний' /tmp/deployed-index.html \
               && grep -Fq 'data-example="กา"' /tmp/deployed-index.html \
               && grep -Fq 'data-example="จริง"' /tmp/deployed-index.html \
