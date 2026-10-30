@@ -2,8 +2,6 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
-from pathlib import Path
-from .word import analyze_word
 from .lexical_ipa import load_lexical_ipa_overrides
 
 from ._paths import THAI_DATA_ROOT
