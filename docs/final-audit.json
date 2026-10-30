@@ -1554,5 +1554,38 @@
     },
     "pull_request": 141,
     "verified_implementation_head": "caab0adfd5b22fd07702e0aa0f86635aa46d5406"
+  },
+  "repository_hygiene_followup_2026_10_30": {
+    "main_after_pr_141_merge": "4d087e66778854503a0e6d355d605d83a50354f8",
+    "pr_141": {
+      "status": "MERGED",
+      "merge_commit": "4d087e66778854503a0e6d355d605d83a50354f8",
+      "pr_ci_run": 41121318912,
+      "pr_web_static_run": 41121319014,
+      "post_merge_ci_run": 41122595309,
+      "post_merge_web_static_run": 41122595149,
+      "pages_deploy_run": 41122595375,
+      "pages_deploy_conclusion": "success",
+      "master_rows": 351780,
+      "vowel_records": 41
+    },
+    "citation_version_alignment": {
+      "branch": "chore/citation-version-alignment-20261030",
+      "status": "PARTIAL_PENDING_EXACT_HEAD_CI",
+      "package_version": "0.6.1",
+      "previous_citation_version": "0.5.1",
+      "change": "CITATION.cff version aligned to 0.6.1; stale date-released omitted pending a verified release date.",
+      "red_test_commit": "462abcf475edb4458bb54267165ae369071892db",
+      "red_ci_run": 41123351618,
+      "red_test_failure": "test_citation_metadata_matches_package_version failed because CFF reported 0.5.1 while distribution metadata reported 0.6.1.",
+      "implementation_commit": "0375eb71ac2c7b42825dce160a3b75cf9fb7123b"
+    },
+    "pr_111": {
+      "status": "OPEN_NON_MERGEABLE",
+      "head": "4bf7aee987863a88f61416cd2c5a7ea3b1119985",
+      "action": "Keep separate pending forward-port/rebase and exact-head CI; do not merge stale-base branch blindly."
+    },
+    "local_checkout": "BLOCKED: execution container DNS could not resolve github.com; GitHub Actions used for verification.",
+    "linguistic_readiness": "Research prototype; independent expert-adjudicated Thai segmentation, IPA and Ukrainian target gold remain unavailable."
   }
 }
