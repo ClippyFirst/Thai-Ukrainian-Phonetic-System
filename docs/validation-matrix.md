@@ -1,3 +1,11 @@
+## 2026-10-30 — public service copy vs researcher methodology
+
+| Component | State | Validation |
+|---|---|---|
+| User-facing Thai service copy | PARTIAL — revised on PR #129 | Homepage copy now describes the input and three output forms in plain Ukrainian and explains the strict/soft/super-soft choice without implying that broader coverage means greater accuracy. Web static validation run 41070023201 passed on initial PR head; exact-head full CI and UI-contract test still required. |
+| Researcher methodology page framing | PARTIAL — revised on PR #129 | Page title, navigation and introduction now identify the page as research/developer methodology; existing technical pipeline, evidence and limitation detail is preserved. Exact-head CI pending. |
+| In-repository Ukrainian copy corrector | BLOCKED — no dedicated corrector/formatter found in tracked repository files or declared project dependencies | No execution can be claimed. Use existing static/UI-contract checks for HTML and required-copy regressions; if a specific corrector was intended, its path or dependency must be identified. |
+
 ## 2026-10-28 — UX/UI refresh post-merge acceptance
 
 - **PARTIAL — code merged; published-content contract needs a marker correction.** Main commit `ad2f899978b66d3bbcb92124688b62261bb5225d`; PR exact-head CI and static validation passed, and the post-merge CI test job passed.
