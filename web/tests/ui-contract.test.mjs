@@ -51,6 +51,7 @@ const ipaPosition = output.innerHTML.indexOf('02 · Детальний запи�
 const ukrainianPosition = output.innerHTML.indexOf('03 · Українськими літерами');
 assert.ok(rtgsPosition >= 0 && rtgsPosition < ipaPosition && ipaPosition < ukrainianPosition, 'visible result panels must be ordered RTGS → IPA → Ukrainian');
 assert.match(output.innerHTML, /<details class="analysis-details">/);
+assert.match(output.innerHTML, /Показати подробиці про окремі частини/);
 assert.match(output.innerHTML, /Статус: Словниковий запис/);
 assert.match(output.innerHTML, /технічний код: <code>lexicon<\/code>/);
 assert.match(output.innerHTML, /ФОНОЛОГІЧНА IPA/);
