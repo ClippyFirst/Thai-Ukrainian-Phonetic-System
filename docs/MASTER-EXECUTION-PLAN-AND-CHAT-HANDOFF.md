@@ -1,3 +1,24 @@
+## 2026-10-30 — verification follow-up for service-copy change
+
+- The first full CI attempt on the initial copy commit `550dde6cc14e47c818cd3032733e1946ee48126e` failed only at `web/tests/ui-contract.test.mjs`: its expected old homepage hint (`Можна вставити довший текст`) no longer matched the intentionally rewritten user-facing hint.
+- Root cause was a stale copy assertion, not an engine, parser, IPA, RTGS, or browser-runtime defect. The test assertion was updated to require the new user-facing phrase `Можна вставити й ціле речення` in commit `49f7c4924ca851bfe2e7dfe46653cbd9965338ac`.
+- On that exact head, Web static validation run `41070448695` passed. Full CI run `41070448275` was still executing `python scripts/generate_master_table.py` when last checked; the UI-contract step had not yet been reached. The final documentation update below will trigger another exact-head workflow run.
+- Status remains PARTIAL. Do not merge or publish until full CI, including UI contract, parity and master-artifact checks, passes on the final PR head.
+
+---
+
+## 2026-10-30 — Thai service copy and research-methodology separation
+
+- Starting main: `590f85ab7ffddba184d5ecfba9605682c566bc43`; working branch: `docs/thai-user-copy-methodology-20261030`; PR [#129](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/129), current code/documentation head before this handoff update: `550dde6cc14e47c818cd3032733e1946ee48126e`.
+- Updated `web/index.html` to explain the service in user-oriented Ukrainian: input, RTGS/IPA/Ukrainian outputs, and the strict/soft/super-soft trade-off. Kept the uncertainty warning and the distinction that RTGS is a parallel reference, while the Ukrainian candidate is derived from IPA.
+- Updated `web/system.html` navigation/title/intro to make its role explicit: researcher/developer methodology, including the pipeline, evidence status and limitations. No linguistic engine behavior or claims were changed.
+- Repository inspection found no dedicated Ukrainian copy-corrector/formatter executable or dependency in the tracked source tree. Therefore no such tool is claimed as run; the existing web static and UI-contract workflows are the available automated copy/contract checks.
+- Verification: Web static validation run `41070023201` passed on the initial PR head. Full CI run `41070023108` was still in progress at master-table generation when this entry was written; its later Python/browser/UI test steps had not yet run. Local test execution was unavailable through the GitHub-only workspace.
+- Status: PARTIAL pending exact final-head CI (including UI contract, parity, generated-artifact checks and master table). No merge or Pages publication performed.
+- Preserved open PR #111 untouched: its source-attested lexical `ทราม` change is 12 commits ahead and 17 behind main, with separate engine/data scope; it must be rebased and revalidated independently rather than folded into this copy-only change.
+
+---
+
 ## 2026-10-28 — post-merge UX/UI publication verification
 
 - PR #120 merged into main as `ad2f899978b66d3bbcb92124688b62261bb5225d`. Exact-head CI and web static validation passed; post-merge CI test job passed while master-artifact validation continued.
