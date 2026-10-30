@@ -386,11 +386,11 @@
       "acceptance": "CI 41133766851 passed Ruff and 214 Python tests."
     }
   ],
-  "latest_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
+  "latest_implementation_branch": "chore/python-static-analysis-gate-20261030",
   "latest_implementation_commit_pending_ci": {
-    "commit": "dd2260356f7de17d56d25b06c7c6b2c5999c0709",
-    "status": "DOCUMENTATION_ONLY_HEAD_CI_PENDING",
-    "notes": "Runtime code unchanged from the fully verified PR #79 code-bearing head. The latest main CI run is 40467565451; its exact-head completion must be checked after this documentation update."
+    "commit": "e8282dfb85f53ae18cbed5fcdc676b1b6049c313",
+    "status": "MAINLINE_CODE_HEAD_VERIFIED",
+    "notes": "PR #150 exact-head CI 41133766851 and post-merge main CI 41134406351 passed; Pages 41134406540 passed."
   },
   "current_head_status_at_audit_refresh": "Code/workflow checkpoint b6dbec7928b106f0ab52e06af33a26635df75412 passed CI 40322960615 and Web static validation 40322959844. Documentation checkpoint e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff passed full CI 40323209539 and Web static validation 40323209471. This audit-register update creates a newer documentation HEAD and requires exact-head CI/static validation before the current branch HEAD is marked green.",
   "current_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
@@ -1742,6 +1742,26 @@
     ],
     "open_pull_request_numbers": [
       151
-    ]
+    ],
+    "branch_prefix_counts": {
+      "audit": 8,
+      "chore": 5,
+      "ci": 1,
+      "copy": 2,
+      "design": 2,
+      "docs": 46,
+      "feat": 26,
+      "(no prefix)": 7,
+      "finalize": 1,
+      "fix": 24,
+      "perf": 2,
+      "polish": 1,
+      "research": 24,
+      "site": 1,
+      "test": 4,
+      "ui": 1,
+      "ux": 7,
+      "web": 1
+    }
   }
 }
