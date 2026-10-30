@@ -330,6 +330,7 @@ assert.match(styles, /\.continuous-output\.ipa-continuous\{border-top:3px solid 
 assert.match(styles, /\.continuous-output\.ua-continuous\{border-top:3px solid var\(--blue\)\}/);
 assert.doesNotMatch(styles, /\.rtgs-details/, "visible RTGS output must not retain collapsed-disclosure styling");
 assert.match(styles, /#engine-mode\[type="range"\]:focus-visible/);
+assert.match(styles, /#engine-mode\[type="range"\]\{[^}]*min-height:44px/);
 assert.match(styles, /\.strictness-scale/);
 assert.match(styles, /accent-color:var\(--blue\)/);
 assert.match(styles, /\.mode-help summary:focus-visible/);

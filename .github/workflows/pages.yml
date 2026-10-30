@@ -98,6 +98,9 @@ jobs:
               && ! grep -Fq 'id="ipa-input"' /tmp/deployed-index.html \
               && ! grep -Fq 'id="ipa-adapt"' /tmp/deployed-index.html \
               && curl --fail --silent --show-error "$PAGE_URL/src/app.js?v=20261030-graded-scale-1" -o /tmp/deployed-app.js \
+              && curl --fail --silent --show-error "$PAGE_URL/src/styles.css?v=20261030-graded-scale-2" -o /tmp/deployed-styles.css \
+              && grep -Fq '.strictness-scale' /tmp/deployed-styles.css \
+              && grep -Fq '#engine-mode[type="range"]{display:block;width:100%;min-height:44px' /tmp/deployed-styles.css \
               && curl --fail --silent --show-error "$PAGE_URL/src/engine.js" -o /tmp/deployed-engine.js \
               && curl --fail --silent --show-error "$PAGE_URL/src/ipa-ua.js" -o /tmp/deployed-ipa-ua.js \
               && curl --fail --silent --show-error "$PAGE_URL/src/rtgs-reference.js" -o /tmp/deployed-rtgs.js \
