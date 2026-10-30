@@ -6,13 +6,13 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
       - run: python -m pip install -e .
       - run: python -m pip install pythainlp==5.4.0
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
       - run: node web/tests/rtgs-reference.test.mjs
@@ -30,7 +30,7 @@ jobs:
       - run: node web/tests/ui-contract.test.mjs
       - name: Benchmark browser Thai text segmentation latency
         run: node scripts/benchmark_web_segmentation.mjs
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: thai-browser-segmentation-latency-diagnostic
           path: /tmp/thai-browser-segmentation-benchmark.json
@@ -58,36 +58,36 @@ jobs:
         run: python scripts/build_segmentation_manual_review.py --report /tmp/thai-segmentation-comparative-error-review.json --tud-model /tmp/thai-tud-word-model.json --output /tmp/thai-segmentation-manual-review.tsv --sample-per-stratum 8 --control-sample 12 --seed thai-segmentation-review-v1
       - name: Validate manual review sample remains unadjudicated
         run: python -c "import csv,json; rows=list(csv.DictReader(open('/tmp/thai-segmentation-manual-review.tsv',encoding='utf-8'),delimiter='\\t')); assert rows; assert any('UNIFORM_CONTROL' in r['sampled_for'].split(';') for r in rows); assert all(r['gold_status']=='SOURCE_ANNOTATED' and r['adjudicated']=='NO' and not r['human_decision'] and not r['reviewer_id'] and not r['decision_rationale'] for r in rows); assert all(''.join(json.loads(r[k]))==r['text'] for r in rows for k in ('gold_tokens_json','dictionary_tokens_json','tud_tokens_json'))"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: thai-tud-word-segmentation-model-and-report
           path: |
             /tmp/thai-tud-word-model.json
             /tmp/thai-tud-word-segmentation-report.json
           if-no-files-found: error
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: wisesight1000-segmentation-baseline
           path: /tmp/wisesight1000-segmentation-baseline.json
           if-no-files-found: error
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: wisesight1000-dictionary-segmentation
           path: /tmp/wisesight1000-dictionary-segmentation.json
           if-no-files-found: error
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: thai-segmentation-error-review
           path: /tmp/thai-segmentation-error-review.json
           if-no-files-found: error
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: thai-segmentation-comparative-error-review
           path: |
             /tmp/thai-segmentation-comparative-error-review.json
             /tmp/thai-segmentation-manual-review.tsv
           if-no-files-found: error
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: source-attested-ipa-diagnostic
           path: /tmp/source-attested-ipa-diagnostic.json
@@ -96,14 +96,14 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
       - run: python -m pip install -e .
       - run: python scripts/generate_master_table.py
       - run: python -c "import json; m=json.load(open('data/derived/thai_ukrainian_master.json',encoding='utf-8')); assert m['rows']==m['expected_rows']==351780; assert m['vowel_records']==41"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: thai-ukrainian-master-table
           path: |

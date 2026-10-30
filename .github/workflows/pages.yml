@@ -25,8 +25,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-python@v6
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
       - name: Run Python regression tests
@@ -39,7 +39,7 @@ jobs:
           python -m pip install -e .
           python scripts/generate_web_fixtures.py
           cmp web/tests/fixtures.json web/tests/fixtures.python.json
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
       - name: Install pinned RTGS parity reference
@@ -59,9 +59,9 @@ jobs:
       - name: Run UI contract and beta disclosure checks
         run: node web/tests/ui-contract.test.mjs
       - name: Setup GitHub Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v5
         with:
           path: web
 
@@ -74,7 +74,7 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
       - name: Verify published plain-language service and transcription pipeline
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
