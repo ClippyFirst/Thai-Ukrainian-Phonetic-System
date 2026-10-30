@@ -1483,3 +1483,9 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - PARTIAL / BLOCKED evidence: no real-browser/device visual review or WCAG 2.2 AA audit was performed in this connector-only session. Independent expert-adjudicated Thai IPA, word-boundary and Ukrainian target-form gold remain unavailable. Project remains a research prototype, not release-ready for linguistic-accuracy claims.
 - PR #111, a separate ทร lexical exception task, was not changed; it needs its own evidence review and exact-head CI.
 - Public service: https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/
+
+
+### Post-merge verification completion — 2026-10-30
+
+- Update to the status recorded above: main CI run [41073985130](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41073985130) has now completed successfully. Both jobs passed: test and master-artifact. The master-artifact generator and assertion completed with 351,780 rows and 41 vowel records. This closes the previously pending post-merge CI item.
+- Documentation closeout PR #132 merged as 78e24924ece18c92a9d872afbfe40e1f842b912b. Current main includes the execution handoff, validation matrix and final audit records.
