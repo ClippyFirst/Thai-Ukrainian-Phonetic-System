@@ -827,3 +827,17 @@ The first run with the new coverage tests completed master-table generation and 
 - **DONE_VERIFIED:** exact PR-head CI passed, including UI tests, Python regression tests, browser/Python parity, IPA adapter tests, research diagnostics and the 351,780-row master artifact. Static validation passed.
 - **DONE_VERIFIED — live:** GitHub Pages build/deployment and the published-content contract passed after merge. Public URL: https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/
 - **PARTIAL / evidence-limited:** connector-only execution did not provide a real-browser screenshot or physical-device session; no WCAG 2.2 AA conformance claim. Independent expert-adjudicated Thai IPA, word-boundary and Ukrainian target-form gold remain unavailable; the project is still a research prototype, not release-ready for accuracy claims.
+
+
+
+## Final audit update — 2026-10-30: Thai copy/methodology publication
+
+- PASS — user-facing copy: PR #129 merged at 2bb0e264ed74e4d10c1a0c59ecf1d1990bcb9241; homepage copy is task-first and explains RTGS, IPA, Ukrainian candidate and uncertainty in accessible terms.
+- PASS — researcher documentation separation: system.html now identifies its audience as researchers and developers and retains technical pipeline, IPA boundary, statuses, evidence and limitations.
+- PASS — regression/deployment contract: PR #131 merged at feef61cba8d1a5ee6d1a79b72bfaa952f53b5e66; Pages checks new visible markers rather than stale pre-edit wording.
+- PASS — exact PR-head CI: run 41073081887; both test and master-artifact jobs succeeded. Master artifact: 351,780 rows, 41 vowel records. Automated diagnostics explicitly retain evidence grades and do not claim linguistic accuracy.
+- PASS — publication: Pages run 41073985170 succeeded including build, deploy and published-content checks. Live homepage and methodology page were independently fetched and contain the expected updated copy.
+- PENDING at audit write time: post-merge main CI run 41073985130 had test job success while master-artifact generation was still running. Update once complete.
+- No linguistic/runtime change: these PRs modify copy, a UI text assertion and Pages workflow smoke-test expectations only; Thai engine, RTGS algorithm, IPA generation and Ukrainian adapter are unchanged.
+- Not release-ready for accuracy claims: no independent expert-adjudicated Thai IPA/segmentation/Ukrainian target-form gold corpus; no real-browser/device QA or WCAG 2.2 AA audit in this connector-only session.
+- PR #111 (ทร lexical exception) remains an independent open task, untouched by this copy-only work.

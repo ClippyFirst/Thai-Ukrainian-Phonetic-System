@@ -747,3 +747,24 @@ The user's explicit requirement supersedes the prior UX decision to collapse RTG
 - **DONE_VERIFIED — published:** post-merge GitHub Pages build, deployment and live-content contract passed in [run 40744444939](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40744444939). The live gate verifies RTGS → IPA → Ukrainian order and absence of a hidden RTGS disclosure.
 - Public site: https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/
 - **PARTIAL / evidence-limited:** no real-browser screenshots or physical-device sessions were captured; do not claim full manual visual QA or WCAG 2.2 AA. Independent expert-adjudicated Thai IPA, word-boundary and Ukrainian target-form gold remain unavailable.
+
+
+
+## 2026-10-30 — service copy and methodology publication
+
+| Acceptance criterion | State | Evidence |
+|---|---|---|
+| User-facing copy explains the task and outputs without exposing research jargon as primary instructions | DONE_VERIFIED | PR #129, merge 2bb0e264ed74e4d10c1a0c59ecf1d1990bcb9241; live homepage |
+| Research methodology is clearly separated and labelled for researchers/developers | DONE_VERIFIED | PR #129; live system.html |
+| UI copy contract matches revised mode prompt | DONE_VERIFIED | Exact-head CI run 41073081887 |
+| Pages publication gate checks new copy markers | DONE_VERIFIED | PR #131; Pages run 41073985170 |
+| Live homepage and methodology page contain revised text | DONE_VERIFIED | Live fetch after merge; Pages deployment gate |
+| Runtime/linguistic behavior unchanged by copy-only work | DONE_VERIFIED | PR diffs limited to HTML, UI test assertion and Pages workflow |
+| Exact-head full CI + master artifact | DONE_VERIFIED | 41073081887; 351,780 rows, 41 vowel records |
+| Post-merge main CI | PARTIAL at entry time | Test job success; master-artifact still running in 41073985130; update after completion |
+| Manual browser/device visual QA and WCAG 2.2 AA | BLOCKED | Requires actual browser/device and accessibility review |
+| Independent expert-adjudicated Thai IPA, word boundaries and Ukrainian target forms | BLOCKED / evidence-limited | Gold reference corpus and expert adjudication not yet available |
+
+- Editorial precedent: Korean reviewed copy revision 2a16bae3bb6d4297225d358180adcefa0f301de8; treated as a style/structure reference, not as proof that an executable corrector was run.
+- PR #130 superseded and closed; clean PR #131 merged as feef61cba8d1a5ee6d1a79b72bfaa952f53b5e66. PR #111 remains separate and untouched.
+- Status: published copy update DONE_VERIFIED; overall project remains a research prototype, not release-ready for linguistic-accuracy claims.

@@ -1469,3 +1469,17 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Post-merge Pages build, deployment and published-content check passed: [40744444939](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40744444939). Live gate checks visible RTGS → IPA → Ukrainian call order and that RTGS is not wrapped in a disclosure.
 - The visual result order is not the processing order: Thai structural/phonological analysis → IPA → Ukrainian adaptation; RTGS is an independent reference romanization.
 - **Remaining evidence limits:** no browser screenshot/real-device QA or WCAG 2.2 AA audit in this connector-only run. Independent expert-adjudicated Thai IPA, word boundaries and Ukrainian target-form gold are still unavailable. Do not present this research prototype as validated for production linguistic accuracy.
+
+
+
+## 2026-10-30 — Thai service copy / methodology separation closeout
+
+- DONE_VERIFIED — editorial implementation: PR #129 merged as 2bb0e264ed74e4d10c1a0c59ecf1d1990bcb9241. User-facing web/index.html now explains the Thai → Ukrainian task, RTGS/IPA/Ukrainian outputs, uncertainty and operating modes in plain Ukrainian. web/system.html is explicitly framed as methodology for researchers/developers. UI contract assertion updated. No runtime, phonological, segmentation, IPA or Ukrainian-adapter behavior changed.
+- Editorial reference: Korean repository reviewed copy revision 2a16bae3bb6d4297225d358180adcefa0f301de8; applied as a writing/editing pattern. No standalone corrector executable was found or run in the Thai repository; do not claim automated corrector execution.
+- DONE_VERIFIED — deployment contract: PR #131 merged as feef61cba8d1a5ee6d1a79b72bfaa952f53b5e66. Pages smoke test now asserts the revised homepage heading, mode prompt, methodology heading and researcher/developer framing. Superseded PR #130 was closed; no unique changes were lost.
+- DONE_VERIFIED — exact-head validation: CI run 41073081887 passed both test and master-artifact; master table asserted 351,780 rows and 41 vowel records. Test job covered Python unit tests, RTGS parity, derived-artifact drift, challenge diagnostics, IPA adaptation, browser/Python parity, UI contract, segmentation and source-attested IPA evidence gates, and candidate generation.
+- DONE_VERIFIED — published: post-merge Pages run 41073985170 succeeded (build, deploy and published-content assertions). Live homepage and https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/system.html were fetched live and show the updated copy.
+- Post-merge main CI run 41073985130: test job succeeded; master-artifact was still running at the time of this entry. Update this status after the job completes.
+- PARTIAL / BLOCKED evidence: no real-browser/device visual review or WCAG 2.2 AA audit was performed in this connector-only session. Independent expert-adjudicated Thai IPA, word-boundary and Ukrainian target-form gold remain unavailable. Project remains a research prototype, not release-ready for linguistic-accuracy claims.
+- PR #111, a separate ทร lexical exception task, was not changed; it needs its own evidence review and exact-head CI.
+- Public service: https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/
