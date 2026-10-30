@@ -1002,3 +1002,11 @@ The first run with the new coverage tests completed master-table generation and 
 - **PASS — packaging and generated artifact:** isolated sdist→wheel→install smoke passed; master table asserted 351,780 rows and 41 vowel records.
 - The change does not alter Thai parsing, phonology, segmentation, IPA, RTGS, or Ukrainian adaptation. It does not change the documented local-by-default deployment boundary.
 - PR integration and post-merge main CI are recorded in the continuation handoff after merge.
+
+## Final audit update — 2026-10-31: HTTP Content-Length framing
+
+- **PASS — regression reproduced:** test-only commit `3814af5e8b083117d93634531a5c62e1db5757d8`; CI [41141368949](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41141368949) failed only the new raw-socket regression. The old handler accepted `Content-Length: -1`, read the body without a declared bound, and returned HTTP 200 for a valid JSON payload.
+- **PASS — implementation:** commit `47c3f335fb5aa902784f4964a842dd00e5ea01c7` validates the header as ASCII decimal digits before conversion and body reading. Invalid values use the existing 400 `invalid_request` response path.
+- **PASS — exact PR-head test and packaging checks:** CI [41141511448](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41141511448) passed 216 Python tests, Ruff, browser IPA/parity/UI tests, research diagnostics and isolated wheel installation.
+- **PARTIAL — master artifact:** exact-head master-artifact jobs were still generating the 351,780-row table at this audit checkpoint; the 351,780 / 41 assertions and artifact upload must finish before merge.
+- PR [#153](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/153) is open. No linguistic or browser runtime behavior changed. Post-merge main CI is required to close the implementation record.
