@@ -112,6 +112,7 @@ jobs:
               && grep -Fq 'Для частини слів сервіс зробив припущення' /tmp/deployed-app.js \
               && grep -Fq 'Це приблизне читання' /tmp/deployed-app.js \
               && grep -Fq 'continuous-output-value' /tmp/deployed-app.js \
+              && grep -Fq 'Показати подробиці про окремі частини' /tmp/deployed-app.js \
               && grep -Fq 'renderRtgsTokens' /tmp/deployed-app.js \
               && grep -Fq 'romanizeRtgsWord' /tmp/deployed-rtgs.js \
               && grep -Fq 'IPA delimiters are mismatched' /tmp/deployed-ipa-ua.js \
