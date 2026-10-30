@@ -2,7 +2,7 @@
 
 | Component | State | Validation |
 |---|---|---|
-| User-facing mode selector | PARTIAL — implemented on `ui/graded-analysis-policy-20261030` | Replaced colloquial prompts with an explicit 1–3 strictness scale: 1/3 heuristic fallback, 2/3 structural syllabification, 3/3 conservative abstention. The numeric ordering is inverse to permissiveness: higher means stricter. |
+| User-facing strictness control | PARTIAL — implemented on `ui/graded-analysis-policy-20261030` | Replaced colloquial prompts with an accessible three-position range control: 1/3 heuristic fallback, 2/3 structural syllabification, 3/3 conservative abstention. The numeric ordering is inverse to permissiveness: higher means stricter. |
 | Mode semantics | PARTIAL — copy aligned to engine behavior | 1/3 describes `super-soft` fallback IPA generated from orthographic structure and routed through the IPA → Ukrainian adapter; 2/3 describes greedy structural syllabification without lexical word-boundary claims; 3/3 describes reviewed lexical segmentation and supported deterministic parsing with abstention for unresolved spans. These levels are policy profiles, not calibrated confidence scores. |
 | Homepage and methodology | PARTIAL — revised | Replaced child-directed wording with concise methodological descriptions for an educated user. Added explicit caveat that greater coverage at lower strictness does not imply greater accuracy. |
 | UI regression and Pages publication contract | PARTIAL — updated | `web/tests/ui-contract.test.mjs` and `.github/workflows/pages.yml` now assert the scale and its explanatory copy. Exact-head CI and live Pages verification remain pending. |
