@@ -1,3 +1,14 @@
+## 2026-10-30 — Korean editorial reference applied; Thai copy closeout
+
+| Component | State | Validation |
+|---|---|---|
+| User-facing Thai service copy | DONE_VERIFIED — merged in PR #129 | Applied the Korean service's user-oriented editorial pattern (commit `2a16bae3bb6d4297225d358180adcefa0f301de8`): task-first wording, concise output explanations, plain-language mode trade-offs and explicit uncertainty. Full exact-head CI run 41070939453 and static validation 41070939558 passed. |
+| Researcher methodology framing | DONE_VERIFIED — merged in PR #129 | The system page identifies its researcher/developer audience and retains technical pipeline, IPA boundary, statuses, sources and evidence limits. Full exact-head CI and static validation passed. |
+| Korean copy-edit reference | DONE_VERIFIED — editorial precedent applied | Reviewed Korean repository commit `2a16bae3bb6d4297225d358180adcefa0f301de8`. This is a reviewed copy revision, not a standalone formatter executable. No executable corrector invocation is claimed. |
+| Thai UI copy contract | DONE_VERIFIED | Updated stale assertion for the revised homepage hint. Full CI passed UI contract and both test/master-artifact jobs; static validation passed. |
+| Publication | PARTIAL | PR #129 merged as `2bb0e264ed74e4d10c1a0c59ecf1d1990bcb9241`; post-merge Pages/live-content verification not observed in this session. |
+| Linguistic validation | BLOCKED / evidence-limited | No independent expert-adjudicated Thai segmentation, IPA and Ukrainian target-form gold set; copy changes do not affect or resolve this gate. |
+
 ## 2026-10-30 — service copy verification follow-up
 
 | Component | State | Validation |
