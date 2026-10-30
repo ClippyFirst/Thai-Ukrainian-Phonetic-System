@@ -1710,7 +1710,7 @@
       "pages": 41134406540,
       "status": "SUCCESS"
     },
-    "pr_111": "closed_as_superseded; historical branch preserved",
+    "pr_111": "closed_as_superseded_by_pr_144; historical branch preserved",
     "issue_113": "closed_as_duplicate_of_114",
     "issue_114": "open_for_independent_linguistic_gold_and_manual_visual_accessibility_review",
     "issue_147": "closed_completed_by_pr_149",
@@ -1762,6 +1762,10 @@
       "ui": 1,
       "ux": 7,
       "web": 1
+    },
+    "pr_143": {
+      "status": "closed_unmerged_superseded_by_pr_144",
+      "historical_branch_preserved": true
     }
   }
 }
