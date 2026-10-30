@@ -36,9 +36,11 @@ def read_txt(path: Path) -> list[dict[str, str]]:
     return rows
 
 
-def read_csv(path: Path, column: str | None = None) -> list[dict[str, str]]:
+def read_csv(
+    path: Path, column: str | None = None, delimiter: str = ","
+) -> list[dict[str, str]]:
     with path.open(encoding="utf-8-sig", newline="") as handle:
-        reader = csv.DictReader(handle)
+        reader = csv.DictReader(handle, delimiter=delimiter)
         if not reader.fieldnames:
             raise ValueError("CSV input has no header row.")
         field = column or ("thai" if "thai" in reader.fieldnames else reader.fieldnames[0])
@@ -87,7 +89,8 @@ def load_batch(path: str | Path, column: str | None = None, sheet: str | None = 
     if suffix == ".txt":
         return read_txt(path)
     if suffix in {".csv", ".tsv"}:
-        return read_csv(path, column)
+        delimiter = "\t" if suffix == ".tsv" else ","
+        return read_csv(path, column, delimiter)
     if suffix in {".xlsx", ".xlsm"}:
         return read_xlsx(path, column, sheet)
     raise ValueError("Supported batch inputs: .txt, .csv, .tsv, .xlsx, .xlsm")
