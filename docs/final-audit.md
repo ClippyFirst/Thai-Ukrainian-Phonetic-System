@@ -841,3 +841,9 @@ The first run with the new coverage tests completed master-table generation and 
 - No linguistic/runtime change: these PRs modify copy, a UI text assertion and Pages workflow smoke-test expectations only; Thai engine, RTGS algorithm, IPA generation and Ukrainian adapter are unchanged.
 - Not release-ready for accuracy claims: no independent expert-adjudicated Thai IPA/segmentation/Ukrainian target-form gold corpus; no real-browser/device QA or WCAG 2.2 AA audit in this connector-only session.
 - PR #111 (ทร lexical exception) remains an independent open task, untouched by this copy-only work.
+
+
+### Final status correction — post-merge CI completed (2026-10-30)
+
+- The post-merge main CI run 41073985130, which was pending at the time of the preceding audit entry, has completed successfully. Both test and master-artifact jobs passed; the generated master table passed the 351,780-row and 41-vowel assertions.
+- PR #132 merged the documentation closeout as 78e24924ece18c92a9d872afbfe40e1f842b912b. The three canonical tracking documents now contain the verified closeout and completed CI status.
