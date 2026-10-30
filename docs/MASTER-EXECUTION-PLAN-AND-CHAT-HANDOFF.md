@@ -1667,6 +1667,6 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Exact final PR-head CI [41141850559](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41141850559) passed all three jobs: Ruff, 216 Python tests, browser IPA/parity/UI checks, research diagnostics, isolated wheel-install smoke, and master-artifact (351,780 rows; 41 vowel/rime records; artifact uploaded).
 - Local checkout remains unavailable because the execution container cannot resolve `github.com`; verification is from GitHub Actions.
 - PR #153 was squash-merged to `main` as `8a539193798e55c3010e3a6a72a0e2578ea413c9`.
-- Post-merge main CI [41142211674](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41142211674): test passed (216 Python tests) and wheel-install-smoke passed; the separate master-artifact job was still running at this handoff refresh. Exact PR-head master-artifact already passed with 351,780 rows / 41 vowel records.
+- Post-merge main CI [41142211674](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41142211674): test passed (216 Python tests) and wheel-install-smoke passed; the separate master-artifact job also passed, asserting 351,780 rows / 41 vowel records.
 - Pages [41142211675](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41142211675) passed build, deployment and live-content/pipeline verification.
 - No Thai phonology, segmentation, IPA, RTGS, Ukrainian adaptation or web UI behavior changed.

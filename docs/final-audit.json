@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Main includes PRs #141, #144–#146, #148–#153. HTTP Content-Length framing validation is merged; exact PR-head CI and post-merge main test/wheel plus Pages checks passed. The post-merge main master-artifact job was still running at this audit refresh; the exact PR-head master artifact passed (351,780 rows; 41 vowel/rime records). Engineering-verified research prototype; not release-ready for independent linguistic-accuracy claims.",
+  "status": "Main includes PRs #141, #144–#146, #148–#153. HTTP Content-Length framing validation is merged and fully verified. Exact PR-head and post-merge main CI passed 216 Python tests, Ruff, browser/parity/UI, diagnostics, wheel-install smoke and master artifact (351,780 rows; 41 vowel/rime records); Pages deployment and live-content verification passed. Engineering-verified research prototype; not release-ready for independent linguistic-accuracy claims.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -112,7 +112,7 @@
     "latest_fully_successful_ci_run": 41141850559,
     "python_tests": 216,
     "generated_data_drift": "PASS",
-    "master_artifact": "PASS on exact PR head — 351,780 rows; 41 vowel/rime records; artifact uploaded",
+    "master_artifact": "PASS — exact PR head and post-merge main: 351,780 rows; 41 vowel/rime records; artifact uploaded",
     "node_ipa_ua_parity_ui_tests": "PASS on exact PR head 7db6e591303c1f232cb98d54a333b0300bbefa0e (CI 41141850559)",
     "wisesight_baseline": "PASS",
     "source_attested_ipa_diagnostic": "PASS",
@@ -124,7 +124,7 @@
     "current_head_web_validation_runs": [
       41142211675
     ],
-    "current_head_status_at_audit_refresh": "PR #153 merged as 8a539193798e55c3010e3a6a72a0e2578ea413c9. Exact PR-head CI 41141850559 passed Ruff, 216 Python tests, generated-data checks, browser parity/UI, research diagnostics, wheel smoke and master artifact (351,780 rows; 41 vowel/rime records). Post-merge main CI 41142211674 passed test and wheel-install-smoke; its master-artifact job was still running. Pages 41142211675 passed build, deploy and live-content verification.",
+    "current_head_status_at_audit_refresh": "PR #153 merged as 8a539193798e55c3010e3a6a72a0e2578ea413c9. Exact PR-head CI 41141850559 and post-merge main CI 41142211674 passed Ruff, 216 Python tests, generated-data checks, browser parity/UI, research diagnostics, wheel smoke and master artifact (351,780 rows; 41 vowel/rime records). Pages 41142211675 passed build, deploy and live-content verification.",
     "latest_full_repository_head": "8a539193798e55c3010e3a6a72a0e2578ea413c9",
     "latest_full_repository_head_ci_run": 41142211674,
     "latest_full_repository_head_web_validation_run": 41142211675,
@@ -1809,12 +1809,12 @@
     "implementation_commit": "47c3f335fb5aa902784f4964a842dd00e5ea01c7",
     "exact_pr_head_ci_run": 41141850559,
     "exact_pr_head_ci_status": "PASS — 216 Python tests, Ruff, browser IPA/parity/UI, research diagnostics, wheel-install smoke, master artifact 351780 rows / 41 vowel/rime records.",
-    "master_artifact_status": "PASS — exact PR-head job asserted 351780 rows and 41 vowel/rime records and uploaded artifact. Post-merge main job was still running at audit refresh.",
+    "master_artifact_status": "PASS — exact PR-head and post-merge main jobs asserted 351780 rows and 41 vowel/rime records and uploaded artifact.",
     "behavior": "Content-Length must contain ASCII decimal digits before conversion or body reading; malformed values return the existing 400 invalid_request response.",
     "scope": "HTTP request framing only; no Thai linguistic, browser or Ukrainian adapter behavior changed.",
     "merge_commit": "8a539193798e55c3010e3a6a72a0e2578ea413c9",
     "post_merge_main_ci_run": 41142211674,
-    "post_merge_main_ci_status": "PASS — test (216 Python tests) and wheel-install-smoke; master-artifact job still in progress at audit refresh.",
+    "post_merge_main_ci_status": "PASS — test (216 Python tests), wheel-install-smoke, and master-artifact (351780 rows; 41 vowel/rime records).",
     "post_merge_pages_run": 41142211675,
     "post_merge_pages_status": "PASS — build, deploy and published-content/pipeline verification."
   }
