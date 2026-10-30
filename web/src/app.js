@@ -280,7 +280,7 @@ function run() {
       'Запис вимови спеціальними знаками. Він допомагає точніше побачити, як звучить слово.', 'ipa-continuous') +
     continuousPanel('03 · Українськими літерами', uaOutput,
       'Головний результат — приблизний запис тайської вимови українськими літерами. Це не переклад.', 'ua-continuous') +
-    '<details class="analysis-details"><summary>Детальний аналіз сегментів і складів</summary>' +
+    '<details class="analysis-details"><summary>Показати подробиці про окремі частини</summary>' +
     tokens.map(card).join('') + '</details>';
   out.hidden = false;
   bindCopyButtons();
