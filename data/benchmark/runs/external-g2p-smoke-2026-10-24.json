@@ -1,0 +1,203 @@
+{
+  "schema_version": "1.0",
+  "language": "Thai",
+  "run_id": 40123365441,
+  "artifact_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40123365441/artifacts/12571583780",
+  "artifact_zip_sha256": "a4688f082f9a6307fded825b96d7cd025c39869383a4483311707b2d7c2c53ab",
+  "input_count": 36,
+  "outputs_total": 72,
+  "runtime_errors": 0,
+  "independent_gold_count": 0,
+  "accuracy": null,
+  "score_status": "NOT_SCORED_NO_INDEPENDENT_GOLD",
+  "engines": [
+    {
+      "name": "thaiphon",
+      "version": "0.7.0",
+      "configuration": "IPA scheme; optional thaiphon-data-volubilis lexicon absent",
+      "output_count": 36
+    },
+    {
+      "name": "FastThaiG2P",
+      "version": "0.1.0",
+      "source_commit": "c4759eef7df03e11fcbb9aa83efe8cf21709fd2f",
+      "configuration": "default dictionary + fallback",
+      "output_count": 36
+    }
+  ],
+  "representative_cases": [
+    {
+      "id": "TH-G2P-001",
+      "input": "กา",
+      "thaiphon": "/kaː˧/",
+      "FastThaiG2P": "/kaː˧/"
+    },
+    {
+      "id": "TH-G2P-002",
+      "input": "กะ",
+      "thaiphon": "/ka˨˩/",
+      "FastThaiG2P": "/kaʔ˨˩/"
+    },
+    {
+      "id": "TH-G2P-003",
+      "input": "ไกล",
+      "thaiphon": "/kaj˧/ /la˦˥/",
+      "FastThaiG2P": "/klaj˧/"
+    },
+    {
+      "id": "TH-G2P-004",
+      "input": "ใกล้",
+      "thaiphon": "/klaj˥˩/",
+      "FastThaiG2P": "/klaj˥˩/"
+    },
+    {
+      "id": "TH-G2P-006",
+      "input": "จริง",
+      "thaiphon": "/tɕa˨˩/ /ri˦˥/ /ŋa˦˥/",
+      "FastThaiG2P": "/t͡ɕiŋ˧/"
+    }
+  ],
+  "interpretation": "36 inputs were processed by thaiphon 0.7.0 and FastThaiG2P at pinned commit c4759eef7df03e11fcbb9aa83efe8cf21709fd2f, yielding 72 raw outputs and 0 runtime errors. Engines agree exactly on 13/36 inputs; agreement after removing tone letters in a diagnostic copy is 14/36. These are inter-engine consistency metrics, not accuracy. Independent gold count is zero. The selected Wiktionary spot-check is source-attested, not independently adjudicated, and may overlap with upstream resources.",
+  "source_attested_spot_check": {
+    "status": "SPOT_CHECK_NOT_ACCURACY",
+    "retrieved_on": "2026-10-24",
+    "reference_convention": "Wiktionary Thai entries' standard IPA (R) as displayed in the Pronunciation section; preserve tone marks and affricate tie bar.",
+    "cases": [
+      {
+        "input": "กา",
+        "source_ipa": "/kaː˧/",
+        "source_url": "https://th.wiktionary.org/w/index.php?title=%E0%B8%81%E0%B8%B2&oldid=5734858",
+        "source_locator": "Thai section > การออกเสียง > (มาตรฐาน) สัทอักษรสากล",
+        "thaiphon_raw": "/kaː˧/",
+        "fastthaig2p_raw": "/kaː˧/",
+        "thaiphon_source_string_match": true,
+        "fastthaig2p_source_string_match": true,
+        "source_revision_id": 5734858
+      },
+      {
+        "input": "ไกล",
+        "source_ipa": "/klaj˧/",
+        "source_url": "https://th.wiktionary.org/w/index.php?title=%E0%B9%84%E0%B8%81%E0%B8%A5&oldid=5688545",
+        "source_locator": "Thai section > การออกเสียง > (มาตรฐาน) สัทอักษรสากล",
+        "thaiphon_raw": "/kaj˧/ /la˦˥/",
+        "fastthaig2p_raw": "/klaj˧/",
+        "thaiphon_source_string_match": false,
+        "fastthaig2p_source_string_match": true,
+        "source_revision_id": 5688545
+      },
+      {
+        "input": "จริง",
+        "source_ipa": "/t͡ɕiŋ˧/",
+        "source_url": "https://th.wiktionary.org/w/index.php?title=%E0%B8%88%E0%B8%A3%E0%B8%B4%E0%B8%87&oldid=2441036",
+        "source_locator": "Thai section > การออกเสียง > (มาตรฐาน) สัทอักษรสากล",
+        "thaiphon_raw": "/tɕa˨˩/ /ri˦˥/ /ŋa˦˥/",
+        "fastthaig2p_raw": "/t͡ɕiŋ˧/",
+        "thaiphon_source_string_match": false,
+        "fastthaig2p_source_string_match": true,
+        "source_revision_id": 2441036
+      }
+    ],
+    "diagnostic_counts": {
+      "thaiphon_exact_source_string_matches": 1,
+      "fastthaig2p_exact_source_string_matches": 3,
+      "cases": 3
+    },
+    "independence_and_selection_caveats": [
+      "This three-item check is selected to inspect known disagreements and is not a representative test set.",
+      "These Wiktionary entries are source-attested, not independently adjudicated by a language expert; do not promote them to gold labels automatically.",
+      "FastThaiG2P upstream describes Wiktionary-derived dictionary entries, and thaiphon reports a Wiktionary-derived etalon, so source overlap/circularity is plausible. The 3/3 concordance is therefore not an independent accuracy estimate.",
+      "String mismatch can reflect IPA convention, affricate tie-bar normalization or segmentation as well as phonological error; review raw output before any normalization."
+    ],
+    "attribution": {
+      "source": "Wiktionary Thai entries, pinned revisions: กา oldid=5734858; ไกล oldid=5688545; จริง oldid=2441036",
+      "source_license": "Wiktionary content is generally available under CC BY-SA 4.0; check the source page's current legal footer before redistribution",
+      "source_urls": [
+        "https://th.wiktionary.org/wiki/กา",
+        "https://th.wiktionary.org/wiki/ไกล",
+        "https://th.wiktionary.org/wiki/จริง"
+      ],
+      "use_note": "Only the IPA facts and URLs are reproduced here; attribution retained. This is a source-attested diagnostic, not an adjudicated corpus."
+    }
+  },
+  "latest_run_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40123365441",
+  "inter_engine_diagnostic": {
+    "comparable_inputs": 36,
+    "engine_pairs_compared": 36,
+    "exact_agreement_pairs": 13,
+    "tone_stripped_agreement_pairs_diagnostic_only": 14,
+    "tone_only_disagreements_diagnostic_only": 1,
+    "non_tone_or_format_disagreements_requiring_review": 22,
+    "exact_agreement_rate": 0.3611111111111111,
+    "tone_stripped_agreement_rate_diagnostic_only": 0.3888888888888889,
+    "interpretation": "Inter-engine agreement is not accuracy. Tone-stripped results are diagnostic only; raw outputs and tone-sensitive exact-match rules are unchanged."
+  },
+  "latest_three_engine_run": {
+    "run_id": 40128121032,
+    "run_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40128121032",
+    "artifact_id": 12574080008,
+    "artifact_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40128121032/artifacts/12574080008",
+    "artifact_zip_sha256": "83cde4269dad940ef3d2521b6aba0b8f22eda56f71ec3612bb7230f6274f5b6b",
+    "source_commit": "ba4a59afdb4b52b235c168965df89438cc15624d",
+    "goruut_upstream_commit": "b224bde02151f8f86d0fe260804e4ca743bda620",
+    "input_count": 36,
+    "output_rows": 108,
+    "per_engine": {
+      "thaiphon": {
+        "outputs": 36,
+        "successful_nonempty": 36,
+        "failed": 0
+      },
+      "fastthaig2p": {
+        "outputs": 36,
+        "successful_nonempty": 36,
+        "failed": 0
+      },
+      "goruut": {
+        "outputs": 36,
+        "successful_nonempty": 26,
+        "no_words": 10,
+        "request_errors": 0
+      }
+    },
+    "independent_gold_count": 0,
+    "accuracy": null,
+    "score_status": "NOT_SCORED_NO_INDEPENDENT_GOLD",
+    "inter_engine_diagnostic": {
+      "valid_engine_pairs": 88,
+      "raw_exact_matches": 13,
+      "slash_delimiter_stripped_matches_diagnostic_only": 21,
+      "slash_and_tone_stripped_matches_diagnostic_only": 24,
+      "slash_only_format_matches_additional": 8,
+      "tone_only_matches_additional_after_slash_removal": 3,
+      "remaining_mismatches_after_limited_diagnostics": 64,
+      "interpretation": "Agreement counts are pairwise inter-engine diagnostics, not accuracy. Ten Goruut no-Words outputs mean not all 108 possible pairs were comparable."
+    },
+    "pairwise_engine_diagnostic": [
+      {
+        "engines": "thaiphon vs FastThaiG2P",
+        "comparable_inputs": 36,
+        "raw_exact_matches": 13,
+        "slash_delimiter_stripped_matches": 13,
+        "slash_and_tone_stripped_matches": 14,
+        "remaining_mismatches": 22
+      },
+      {
+        "engines": "thaiphon vs Goruut",
+        "comparable_inputs": 26,
+        "raw_exact_matches": 0,
+        "slash_delimiter_stripped_matches": 2,
+        "slash_and_tone_stripped_matches": 3,
+        "remaining_mismatches": 23
+      },
+      {
+        "engines": "FastThaiG2P vs Goruut",
+        "comparable_inputs": 26,
+        "raw_exact_matches": 0,
+        "slash_delimiter_stripped_matches": 6,
+        "slash_and_tone_stripped_matches": 7,
+        "remaining_mismatches": 19
+      }
+    ],
+    "caveat": "The raw artifact predates the newer per-engine summary and repeatability probe; counts above were independently inspected from the downloaded JSONL artifact. A refreshed run is required to validate the latest diagnostic schema and repeatability."
+  }
+}

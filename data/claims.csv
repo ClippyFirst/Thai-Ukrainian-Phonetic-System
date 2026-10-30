@@ -1,0 +1,10 @@
+claim_id,domain,claim,status,evidence_ids
+CLM-CONSONANT-44,orthography,Thai traditional consonant-letter inventory contains 44 letters,core,SRC-ORST
+CLM-TONE-5,phonology,Standard Thai has five lexical tones,core,SRC-JIPA-1993
+CLM-FINAL-9,phonology,Core final consonant phonemes are represented by nine categories including glides and glottal stop,core,SRC-JIPA-1993
+CLM-ORTHO-PHONO,methodology,Thai orthographic order is not identical to phonological constituent order,core,SRC-ORST
+CLM-HNAM,orthography,ห นำ can change the effective consonant-class environment and requires lexical/contextual analysis,analysis-dependent,SRC-ORST
+CLM-CLUSTERS,phonotactics,Thai written consonant sequences may represent true clusters, leading consonants, or separate syllables,analysis-dependent,SRC-ORST
+CLM-CLUSTER-LICENSING,phonotactics,Standard Thai complex onsets are structurally restricted; arbitrary adjacent consonants are not licensed as a generic complex onset,core,SRC-JIPA-1993
+CLM-SPECIAL-VOWEL-LETTERS,orthography,Thai special letters ฤ ฤๅ ฦ ฦๅ are syllabic or lexical constructions rather than freely compositional vowel signs; readings require word-level evidence,analysis-dependent,SRC-OBEC-SPECIAL-VOWELS-2022
+CLM-O-NAM-LEXICAL,orthography,The educational reading guide identifies อ นำ ย and lexical examples อย่า อยู่ อย่าง อยาก; the leading อ affects the tone environment and these examples require lexical/effective-onset analysis,analysis-dependent,SRC-OBEC-O-NAM-2022

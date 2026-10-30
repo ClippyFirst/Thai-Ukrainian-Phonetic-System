@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Вставте тайський текст і подивіться, як його можна записати українськими літерами.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <title>Тайська українською — простий запис вимови</title>
+  <link rel="stylesheet" href="src/styles.css?v=20261030-graded-scale-2">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Перейти до основного вмісту</a>
+<header class="site-header">
+  <a class="brand" href="./" aria-label="Тайська українською — сервіс">ТАЙСЬКА <span>→</span> УКРАЇНСЬКА</a>
+  <nav aria-label="Основна навігація">
+    <a class="active" href="./">Сервіс</a>
+    <a href="system.html">Як це працює</a>
+    <a href="https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System" rel="noopener noreferrer">Проєкт на GitHub</a>
+  </nav>
+</header>
+<div class="beta-notice" role="note" aria-label="Статус бета-версії"><strong>ТЕСТОВА ВЕРСІЯ</strong><p>Сервіс ще розвивається. Він може помилятися, особливо з незнайомими словами. Сприймайте український запис як підказку, а не як остаточний варіант. <a href="system.html#beta-evidence">Що вже перевірено →</a></p></div>
+<main class="container" id="main-content" tabindex="-1">
+<section class="hero">
+  <p class="eyebrow">ТАЙСЬКА → УКРАЇНСЬКА</p>
+  <h1>Як прочитати тайський текст українською</h1>
+  <p class="lede">Вставте слово або речення тайською. Сервіс покаже його приблизну вимову українськими літерами. Це не переклад: значення слова не змінюється.</p>
+</section>
+<section class="workbench" aria-labelledby="input-heading">
+  <div class="section-head">
+    <div><p class="eyebrow">КРОК 1</p><h2 id="input-heading">Вставте тайський текст</h2></div>
+    <button class="text-button" id="clear" type="button">Очистити</button>
+  </div>
+  <label class="input-label" for="thai-input">Текст тайською</label>
+  <textarea id="thai-input" lang="th" rows="3" spellcheck="false" autocomplete="off" autocapitalize="off" aria-describedby="input-hint" placeholder="Наприклад: สวัสดี"></textarea>
+  <p class="input-hint" id="input-hint">Можна вставити одне слово або ціле речення. Якщо сервіс не зможе впевнено прочитати частину тексту, він про це повідомить. <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>Enter</kbd> — показати результат.</p>
+  <label class="input-label" for="engine-mode">Суворість інтерпретації · шкала 1–3</label>
+  <input id="engine-mode" type="range" min="1" max="3" step="1" value="3" aria-describedby="mode-hint">
+  <div class="strictness-scale" aria-hidden="true"><span>1 · Евристичний</span><span>2 · Структурний</span><span>3 · Консервативний</span></div>
+  <p class="input-hint" id="mode-hint" aria-live="polite">3/3 · Консервативний профіль: непідтверджені фрагменти залишаються невизначеними; фонетичний кандидат для них не генерується.</p>
+  <details class="mode-help"><summary>Методологія рівнів суворості</summary><dl><dt>1/3 · Евристичний</dt><dd>Максимізує повноту: для нерозпізнаних фрагментів формує резервний IPA-кандидат зі структури написання й передає його через IPA → українська. Тон і лексичне читання можуть бути хибними; це найнижчий рівень суворості.</dd><dt>2/3 · Структурний</dt><dd>Застосовує структурний поділ на склади без підтвердження меж слів. Кандидати позначаються як попередні; фрагменти, які не вдалося розібрати, залишаються невизначеними.</dd><dt>3/3 · Консервативний</dt><dd>Використовує словниково підтверджену сегментацію та підтримувані детерміновані правила. Для непідтверджених фрагментів IPA й український результат не генеруються.</dd></dl></details>
+  <div class="examples" aria-label="Швидкі приклади">
+    <span class="examples-label">Спробуйте:</span>
+    <button type="button" data-example="กา">กา</button>
+    <button type="button" data-example="พริก">พริก</button>
+    <button type="button" data-example="มา">มา</button>
+    <button type="button" data-example="ไฟ">ไฟ</button>
+    <button type="button" data-example="หมา">หมา</button>
+    <button type="button" data-example="ใหม่">ใหม่</button>
+    <button type="button" data-example="จริง">จริง</button>
+  </div>
+  <div class="action-row"><button class="primary" id="analyze" type="button">Показати, як це читається <span aria-hidden="true">↗</span></button><span class="action-note">Текст залишається у вашому браузері.</span></div>
+</section>
+<section id="status" class="status" role="status" aria-live="polite" aria-atomic="true"></section>
+<section id="results" class="results" aria-label="Результати" aria-live="off" hidden></section>
+<section class="method-note" aria-labelledby="method-heading">
+  <p class="eyebrow">ВАЖЛИВО ЗНАТИ</p>
+  <h2 id="method-heading">Що означає результат</h2>
+  <p>Це підказка, як може звучати тайський текст, а не переклад українською. Сервіс також показує додаткові записи, які допомагають перевірити вимову.</p>
+  <p>Тайські звуки не завжди можна точно передати українськими літерами. Тони й деякі відмінності вимови в такому записі можуть загубитися. Тому для важливих слів перевіряйте вимову за надійним словником або з носієм мови.</p>
+  <div class="method-links"><a href="system.html">Як працює сервіс — просте пояснення →</a><a href="system.html#statuses">Що означають позначки біля результату →</a><a href="system.html#beta-evidence">Що саме перевірено →</a></div>
+</section>
+</main>
+<footer><span>Дослідницький проєкт «Тайська → українська»</span><a href="https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System" rel="noopener noreferrer">Вихідний код</a></footer>
+<script type="module" src="src/app.js?v=20261030-graded-scale-1"></script>
+</body>
+</html>

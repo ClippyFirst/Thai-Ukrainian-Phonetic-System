@@ -1,0 +1,6 @@
+id,name,ipa_contour,type
+T-1,mid,˧,level
+T-2,low,˩,level
+T-3,falling,˥˩,contour
+T-4,high,˥,level
+T-5,rising,˩˥,contour

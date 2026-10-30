@@ -1,0 +1,13 @@
+rule_id,pattern,construction,analysis_status,candidate_ipa,notes,source_ids
+SP-RR-001,รร,รร construction,analysis-dependent,a|aː|an|am,Surface realization depends on lexical/morphological environment; do not force a single parse.,SRC-ORST;SRC-OBEC-RR-2022
+SP-RUE-001,ฤ,ฤ vowel-letter,analysis-dependent,rɯ|ri|rɤ,OBEC teaching material describes these as syllabic units rather than free vowel signs; deterministic reading still requires word-level evidence and must not be inferred from this broad description alone.,SRC-ORST;SRC-OBEC-SPECIAL-VOWELS-2022
+SP-RUE-LONG-001,ฤๅ,ฤๅ vowel-letter,analysis-dependent,rɯː,OBEC teaching material supports the syllabic/lexical status; a deterministic reading still requires word-level evidence.,SRC-ORST;SRC-OBEC-SPECIAL-VOWELS-2022
+SP-LUE-001,ฦ,ฦ vowel-letter,analysis-dependent,lɯ,OBEC teaching material supports the syllabic/lexical status; the spelling is rare and a deterministic reading requires word-level evidence.,SRC-ORST;SRC-OBEC-SPECIAL-VOWELS-2022
+SP-LUE-LONG-001,ฦๅ,ฦๅ vowel-letter,analysis-dependent,lɯː,OBEC teaching material supports the syllabic/lexical status; the spelling is rare and a deterministic reading requires word-level evidence.,SRC-ORST;SRC-OBEC-SPECIAL-VOWELS-2022
+SP-KARAN-001,์,thanthakhat,analysis-dependent,∅,Silences preceding material but exact scope is lexical; never silently delete without evidence.,SRC-ORST
+SP-THR-001,ทร,ทร lexical pronunciation,analysis-dependent,s|tʰr,Some lexical items have /s/ rather than the compositional cluster; lexicon evidence required.,SRC-ORST;SRC-ORST-CLUSTER-2011
+SP-JR-001,จร,จร false cluster,analysis-dependent,tɕ|tɕr,The written ร is silent in established standard forms such as จริง; lexical exceptions exist, so do not force /r/.,SRC-ORST
+SP-SR-001,สร,สร false cluster,analysis-dependent,s|sr,The written ร is silent in common standard forms such as สร้าง; lexical evidence is required for exceptional readings.,SRC-ORST
+SP-SR-HIGH-001,ศร,ศร false cluster,analysis-dependent,s|sr,The written ร is silent in established forms such as ศรี and เศร้า; lexical evidence is required.,SRC-ORST
+SP-ZR-001,ซร,ซร false cluster,analysis-dependent,s|sr,The written ร is silent in established forms such as ไซร้; lexical evidence is required.,SRC-ORST
+SP-O-NAM-001,อย,อ นำ,analysis-dependent,j,OBEC teaching guide (printed p. 275) identifies อ นำ ย and the lexical examples อย่า/อยู่/อย่าง/อยาก; preserve the effective onset/tone environment and do not generalize from these words to arbitrary spellings.,SRC-ORST;SRC-OBEC-O-NAM-2022
