@@ -249,10 +249,14 @@ function run() {
   ).length;
   status.className = unresolvedCount || mode === 'soft' || mode === 'super-soft' ? 'status notice' : 'status';
   status.textContent = thaiTokens.length === 0
-    ? 'Тайських токенів не знайдено; нетайський текст збережено без фонетичної інтерпретації.'
+    ? 'У введеному тексті не знайдено тайських слів.'
     : unresolvedCount
-      ? 'Не всі слова вдалося прочитати впевнено. Є ' + unresolvedCount + ' фрагмент(ів), які варто перевірити.'
-      : 'Готово. Нижче — три варіанти запису вимови. Це не переклад.';
+      ? 'Не всі слова вдалося прочитати впевнено. Є ' + unresolvedCount + ' місць, які варто перевірити.'
+      : mode === 'soft'
+        ? 'Для частини слів сервіс зробив припущення. Перевірте їх.'
+        : mode === 'super-soft'
+          ? 'Це приблизне читання. Перевірте його перед використанням.'
+          : 'Готово. Нижче — три варіанти запису вимови. Це не переклад.';
   const uaOutput = assembleOutput(analysisText, tokens, 'ua');
   const ipaOutput = assembleOutput(analysisText, tokens, 'ipa');
   const rtgsOutput = renderRtgsTokens(tokens);
