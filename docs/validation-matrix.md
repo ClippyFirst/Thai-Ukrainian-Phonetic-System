@@ -8,7 +8,7 @@
 | Post-PR #150 mainline verification | DONE_VERIFIED | Main SHA `e8282dfb85f53ae18cbed5fcdc676b1b6049c313`; post-merge CI [41134406351](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41134406351) passed test, wheel-install smoke and master-artifact; Pages [41134406540](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41134406540) passed build and deploy. |
 | Wheel packaging issue #147 | DONE_VERIFIED / CLOSED | Acceptance met by PR #149 and exact-head isolated distribution smoke; no runtime research corpora bundled. |
 | Python development tooling | DONE_VERIFIED | Pinned dev extra, CI Ruff gate, 16 initial lint findings resolved; formatter/type-checker intentionally not introduced because the current task was a correctness-only baseline. |
-| Historical branch retention | PARTIAL | No bulk deletion or force-rebase. Historical branches remain preserved pending a reviewed retention policy; current inventory is updated below after API recount. |
+| Historical branch retention | PARTIAL | 163 refs across two API pages: docs 46, feat 26, fix 24, research 24, chore 5, audit 8, ux 7; other prefixes and exact counts are recorded in `final-audit.json`. No mass deletion or force-rebase; retention policy remains unapproved. |
 | Linguistic/UI evidence gates | BLOCKED / evidence-limited | Issue #114 remains open for independent expert-adjudicated Thai segmentation/IPA/Ukrainian target gold, manual browser/device visual review and WCAG 2.2 AA review. Software parity and source-attested forms are not linguistic gold. |
 | Local checkout | BLOCKED | Container DNS cannot resolve `github.com`; no local test run is claimed. Verification is from GitHub Actions. |
 
