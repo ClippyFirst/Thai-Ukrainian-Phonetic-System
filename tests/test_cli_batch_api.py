@@ -49,7 +49,7 @@ class CliBatchApiTests(unittest.TestCase):
     def test_citation_metadata_matches_package_version(self):
         installed_version = distribution_version("thai-ukrainian-phonetic-system")
         citation = (Path(__file__).parents[1] / "CITATION.cff").read_text(encoding="utf-8")
-        self.assertRegex(citation, rf"(?m)^version: {installed_version.replace('.', r'\\.')}$")
+        self.assertIn(f"version: {installed_version}", citation.splitlines())
 
     def test_csv_batch(self):
         with tempfile.TemporaryDirectory() as d:
