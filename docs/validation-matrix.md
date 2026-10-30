@@ -985,3 +985,11 @@ The user's explicit requirement supersedes the prior UX decision to collapse RTG
 - PR [#155](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/155) merged as `3325e98b98bde6926f36c74ad76dc94fe35480b0`.
 - Before optimization, the master-artifact job regenerated the table in approximately 126.9 seconds. After optimization, artifact download plus validation took approximately 1.1 seconds; the independent assertion and artifact name are unchanged.
 - No application code, generated data content, Thai parsing, phonology, IPA, RTGS, Ukrainian adaptation or browser behavior changed.
+
+
+## 2026-10-31 — Branch inventory and retention boundary
+
+- **PARTIAL — 169 branch refs inventoried.** Prefix counts: `docs/` 49, `feat/` 26, `fix/` 26, `research/` 24, `audit/` 8, `ux/` 7, unprefixed 7, `chore/` 5, `test/` 4, `ci/` 2, `copy/` 2, `design/` 2, `perf/` 2, and one each under `polish/`, `finalize/`, `site/`, `ui/`, `web/`.
+- All implementation PRs reconciled in this run are merged; the remaining refs are historical/work branches rather than unmerged open PRs.
+- No branch deletion was performed. Historical refs may contain unique research/evidence work; no owner-approved retention policy exists, and the connected GitHub action set exposes no branch-deletion operation.
+- Acceptance: review unique commits and obtain an explicit archive/delete policy before pruning. Keep `BRANCH-HYGIENE-001` PARTIAL until that decision and cleanup are complete.

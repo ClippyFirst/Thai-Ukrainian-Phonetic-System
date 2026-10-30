@@ -132,11 +132,11 @@
     "latest_web_static_verified_code_run": 40286893366,
     "latest_verified_commit_note": "Current main 3325e98b98bde6926f36c74ad76dc94fe35480b0 includes the strict HTTP Content-Length validation and the single-generation master-artifact workflow. Exact PR and post-merge CI pass; independent linguistic gold and manual accessibility review remain open.",
     "latest_verified_code_commit_note": "Current main is fully engineering-verified by CI 41143907732; independent Thai IPA/acoustic gold, Ukrainian target-form adjudication, and production segmentation quality remain unverified.",
-    "latest_fully_successful_documentation_commit": "e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff",
-    "latest_fully_successful_documentation_ci_run": 40323209539,
+    "latest_fully_successful_documentation_commit": "499e0bd5f14d7809d1a041223db8864c2875917e",
+    "latest_fully_successful_documentation_ci_run": 41144266328,
     "latest_fully_successful_documentation_web_validation_run": 40323209471,
-    "latest_documentation_head_ci_run": 40320450844,
-    "latest_documentation_head_web_validation_run": 40320450587,
+    "latest_documentation_head_ci_run": 41144266328,
+    "latest_documentation_head_web_validation_run": 41142211675,
     "latest_implementation_ci_run": 41143907732,
     "latest_implementation_web_validation_run": 40320450587,
     "latest_implementation_commit_ci_verified": "3325e98b98bde6926f36c74ad76dc94fe35480b0",
@@ -218,6 +218,31 @@
         "merged": true,
         "merge_sha": "3325e98b98bde6926f36c74ad76dc94fe35480b0"
       }
+    },
+    "branch_inventory": {
+      "total_refs": 169,
+      "prefix_counts": {
+        "docs": 49,
+        "feat": 26,
+        "fix": 26,
+        "research": 24,
+        "audit": 8,
+        "ux": 7,
+        "(no-prefix)": 7,
+        "chore": 5,
+        "test": 4,
+        "ci": 2,
+        "copy": 2,
+        "design": 2,
+        "perf": 2,
+        "polish": 1,
+        "finalize": 1,
+        "site": 1,
+        "ui": 1,
+        "web": 1
+      },
+      "status": "PARTIAL",
+      "reason": "No owner-approved archive/delete policy; connector has no branch deletion action; historical refs preserved."
     }
   },
   "challenge_runtime": {
@@ -363,9 +388,9 @@
     {
       "id": "BRANCH-HYGIENE-001",
       "status": "PARTIAL",
-      "implementation": "Inventoried 163 refs; reconciled PRs #148–#150; preserved historical branches and superseded PR #111 branch.",
-      "blocker": "No owner-approved archive/delete policy; branch history may contain unique work.",
-      "acceptance": "Review unique commits and establish an explicit retention policy before pruning."
+      "implementation": "Inventoried 169 branch refs (docs 49, feat 26, fix 26, research 24, audit 8, ux 7, unprefixed 7, chore 5, test 4, ci 2, copy 2, design 2, perf 2, and one each polish/finalize/site/ui/web). Reconciled PRs #68/#71/#111 and #153–#155; no implementation PR remains open after closeout.",
+      "blocker": "Historical refs may contain unique work; no owner-approved archive/delete policy exists, and the connected GitHub tool set exposes no branch-deletion action. Four temporary work branches from this continuation remain.",
+      "acceptance": "Review unique commits and obtain explicit owner-approved retention policy before archiving/deleting any historical branch; then re-inventory and verify no unmerged unique work is lost."
     },
     {
       "id": "LOCAL-CLONE-001",

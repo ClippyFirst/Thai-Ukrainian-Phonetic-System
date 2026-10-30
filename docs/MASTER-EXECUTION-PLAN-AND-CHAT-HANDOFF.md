@@ -1683,3 +1683,11 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Measured old master-artifact generation: ~126.9 seconds. New download + validation: ~1.1 seconds. The separate validation job and artifact name are preserved; the duplicate generation is removed.
 - PR #155 merged as `3325e98b98bde6926f36c74ad76dc94fe35480b0`. Post-merge main CI [41143907732](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41143907732) passed all three jobs.
 - No application code, data, linguistic rules, browser behavior or release semantics changed.
+
+
+## Branch retention checkpoint — 2026-10-31
+
+- Latest inventory: 169 branch refs. Prefix counts are recorded in `docs/validation-matrix.md`.
+- PRs #153, #154 and #155 are merged; PR #156 is the documentation closeout currently under CI at this checkpoint.
+- Four temporary work branches created during this continuation remain as refs: `fix/http-content-length-validation-20261031`, `docs/post-merge-closeout-20261031`, `ci/reuse-master-table-artifact-20261031`, and `docs/ci-artifact-reuse-closeout-20261031`.
+- Branch deletion is not performed automatically: historical branches may hold unique evidence, no owner-approved retention policy exists, and the connected GitHub tools do not expose branch deletion. Keep branch hygiene PARTIAL until owner policy and a commit-level inventory authorize pruning.
