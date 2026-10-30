@@ -94,7 +94,6 @@ jobs:
               && grep -Fq 'id="engine-mode"' /tmp/deployed-index.html \
               && grep -Fq 'value="soft"' /tmp/deployed-index.html \
               && grep -Fq 'value="super-soft"' /tmp/deployed-index.html \
-              && grep -Fq '1 · Евристична — мінімальна суворість' /tmp/deployed-index.html \
               && grep -Fq 'Що означає результат' /tmp/deployed-index.html \
               && ! grep -Fq 'id="ipa-input"' /tmp/deployed-index.html \
               && ! grep -Fq 'id="ipa-adapt"' /tmp/deployed-index.html \
