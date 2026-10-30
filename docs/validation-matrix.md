@@ -1,16 +1,19 @@
-## 2026-10-30 — strictness scale merged; consolidated layout under verification
+## 2026-10-30 — strictness scale and responsive layout — merged and published
 
 | Component | State | Validation |
 |---|---|---|
 | User-facing strictness control | DONE_VERIFIED — PR #138 merged as `398a25e7f884f11bee85e0888026a6b2875bdf8f` | Three-position range control: 1/3 heuristic, 2/3 structural, 3/3 conservative (default). Higher values are stricter. |
-| Mode semantics and evidence caveat | DONE_VERIFIED | Existing `super-soft`, `soft`, and `strict` engine policies are mapped to the scale; lower strictness increases coverage, not accuracy. The scale is not a calibrated confidence score. |
-| Homepage and methodology | DONE_VERIFIED — published | Homepage and `system.html` describe the three profiles for an educated user and retain the IPA → Ukrainian adapter boundary and uncertainty disclosures. |
-| Exact-head CI for PR #138 | DONE_VERIFIED | Head `d28e5b39d390686369c1dc6d2b193efd9fccf7e6`; validate [41101688585](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41101688585), test and master-artifact [41101688094](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41101688094), and duplicate push test [41101681373](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41101681373) passed. |
-| Post-merge main CI | DONE_VERIFIED | Run [41107725903](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41107725903): both `test` and `master-artifact` passed; master artifact asserted 351,780 rows and 41 vowel records. |
-| Static validation and Pages publication | DONE_VERIFIED | Static validation [41107725992](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41107725992) and Pages build/deploy/live-content contract [41107726300](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41107726300) passed on main `398a25e7f884f11bee85e0888026a6b2875bdf8f`. Live homepage fetch returned HTTP 200 and exposed the 1–3 slider and explanatory copy. |
-| Consolidated responsive layout | PARTIAL — PR #139 open | Branch `design/thai-layout-20261030`, current PR head, based on current main. Stylesheet cache keys, range-control styling, touch targets, focus states and UI contract selectors are aligned. Exact-head CI/static checks are queued; do not merge until they pass. |
-| Manual browser/device visual QA and WCAG 2.2 AA | PARTIAL / not performed | Automated static and published-content checks are not a substitute for screenshot review, physical-device testing, keyboard/screen-reader checks or a full WCAG audit. |
-| Linguistic accuracy | BLOCKED / evidence-limited | Independent expert-adjudicated Thai segmentation, IPA and Ukrainian target-form gold remains unavailable. UI changes do not validate pronunciation accuracy. |
+| Mode semantics and evidence caveat | DONE_VERIFIED | Existing `super-soft`, `soft`, and `strict` engine policies map to the scale; lower strictness increases coverage, not accuracy. The positions are strategy profiles, not calibrated confidence scores. |
+| Responsive layout and accessibility baseline | DONE_VERIFIED — PR #139 merged as `720b528e0f6560912d87750158c510fc746a3044` | Consolidated responsive stylesheet; 44px slider/control targets; visible focus styles; mobile layout; updated cache-busting keys. |
+| README and canonical project records | DONE_VERIFIED | README now documents the 1/3–3/3 scale. Validation matrix, final audit and handoff updated in place. |
+| Exact-head CI for PR #139 | DONE_VERIFIED | Head `8558efd9f7690938be629c3d659d6701f4597898`: test and master-artifact passed in [41109778299](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41109778299) and [41109785725](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41109785725); Web static validation passed in [41109778408](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41109778408) and [41109786238](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41109786238). |
+| Post-merge main CI | DONE_VERIFIED | Run [41110504231](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41110504231): `test` and `master-artifact` passed; generated master table asserted 351,780 rows and 41 vowel records. |
+| Post-merge static validation | DONE_VERIFIED | Web static validation [41110501009](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41110501009) passed on main `720b528e0f6560912d87750158c510fc746a3044`. |
+| Pages publication and served-CSS contract | DONE_VERIFIED | Pages run [41110501072](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41110501072): build, deploy and live-content checks passed. The published stylesheet was fetched using its versioned URL and checked for the strictness scale and 44px slider target. |
+| Manual browser/device visual QA and WCAG 2.2 AA | PARTIAL / not performed | Automated static and published-content checks do not substitute for screenshot review, physical-device testing, keyboard/screen-reader checks or a full WCAG audit. |
+| Linguistic accuracy | BLOCKED / evidence-limited | Independent expert-adjudicated Thai segmentation, IPA and Ukrainian target-form gold remains unavailable. UI and CI changes do not validate pronunciation accuracy. |
+
+- PR #111 remains a separate source-attested `ทร` lexical-exception task on an older base; it was not included in either UI merge.
 
 ## 2026-10-30 — Korean editorial reference applied; Thai copy closeout
 
