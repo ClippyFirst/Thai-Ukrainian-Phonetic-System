@@ -261,7 +261,7 @@ assert.equal(input.focused, true);
 input.value = "ABC 123";
 analyze.click();
 assert.equal(status.className, "status notice");
-assert.match(status.textContent, /Тайських токенів не знайдено/);
+assert.match(status.textContent, /Тайський текст не знайдено/);
 assert.match(output.innerHTML, /ABC/);
 assert.match(output.innerHTML, /Тайського тексту для фонетичного перетворення не знайдено/);
 
