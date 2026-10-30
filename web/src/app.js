@@ -15,9 +15,9 @@ const modeHint = document.getElementById('mode-hint');
 function updateModeHint() {
   if (!modeHint) return;
   const hints = {
-    strict: 'Строгий режим: невідомі фрагменти залишаються невизначеними замість вгадування.',
-    soft: 'М’який режим: можливі структурні припущення; читання й межі слів потребують перевірки.',
-    'super-soft': 'Суперм’який режим: невідомі фрагменти отримують приблизний кандидат, який може бути помилковим.'
+    strict: 'Невідомі місця залишаються без відповіді.',
+    soft: 'Система спробує розібрати невідомі місця. Перевірте їх.',
+    'super-soft': 'Для всього тексту буде показано приблизний варіант.'
   };
   modeHint.textContent = hints[modeInput?.value] || hints.strict;
 }
@@ -249,12 +249,12 @@ function run() {
   ).length;
   status.className = unresolvedCount || mode === 'soft' || mode === 'super-soft' ? 'status notice' : 'status';
   status.textContent = thaiTokens.length === 0
-    ? 'Тайських токенів не знайдено; нетайський текст збережено без фонетичної інтерпретації.'
+    ? 'Тайський текст не знайдено. Перевірте введення.'
     : unresolvedCount
-      ? 'Режим «' + (mode === 'super-soft' ? 'Суперм’який' : mode === 'soft' ? 'М’який' : 'Строгий') + '». Проаналізовано ' + tokens.length + ' токен(ів), тайських: ' + thaiTokens.length +
-        '; ' + unresolvedCount + (mode === 'super-soft' ? ' фрагмент(ів) мають приблизне читання або потребують перевірки.' : ' фрагмент(ів) потребують перевірки або залишилися невизначеними.')
-      : 'Режим «' + (mode === 'super-soft' ? 'Суперм’який' : mode === 'soft' ? 'М’який' : 'Строгий') + '». Проаналізовано ' + tokens.length + ' токен(ів), тайських: ' + thaiTokens.length +
-        '. Це фонетичний кандидат, а не переклад.';
+      ? 'Деякі місця система не змогла прочитати. Перевірте результат.'
+      : mode === 'strict'
+        ? 'Готово. Перевірте вимову перед використанням.'
+        : 'Готово. Це приблизний варіант — перевірте його.';
   const uaOutput = assembleOutput(analysisText, tokens, 'ua');
   const ipaOutput = assembleOutput(analysisText, tokens, 'ipa');
   const rtgsOutput = renderRtgsTokens(tokens);
@@ -262,23 +262,22 @@ function run() {
   const notice = thaiTokens.length === 0
     ? '<p class="continuous-output-notice" role="note">Тайського тексту для фонетичного перетворення не знайдено; нетайські фрагменти збережено без інтерпретації.</p>'
     : mode === 'super-soft'
-      ? '<p class="continuous-output-notice" role="note"><strong>Суперм’який режим — повне покриття, приблизна вимова.</strong> Український вихід формується для кожного тайського фрагмента. Непідтверджені місця отримують резервну IPA-оцінку, яку обробляє IPA → українська; вона може бути помилковою, а тон і межі слів не гарантовані.</p>'
+      ? '<p class="continuous-output-notice" role="note"><strong>Приблизний варіант.</strong> Система запропонувала читання для всього тексту, але частина звуків може бути визначена неправильно.</p>'
       : mode === 'soft'
-      ? '<p class="continuous-output-notice" role="note"><strong>М’який режим — попередній результат.</strong> Невідомі фрагменти додатково розкладаються на структурно можливі склади. Межі слів і такі читання не підтверджені лексикографічно; невирішені фрагменти позначаються, а не вгадуються.</p>'
+      ? '<p class="continuous-output-notice" role="note"><strong>Попередній варіант.</strong> Система спробувала прочитати невідомі місця. Перевірте їх окремо.</p>'
       : unresolved
-        ? '<p class="continuous-output-notice" role="note">Строгий режим: є ' + unresolved +
-          ' невизначених фрагментів. Їх навмисно позначено замість вигадування вимови.</p>'
-        : '<p class="continuous-output-notice">Строгий режим: цілісний дослідницький кандидат. Перед використанням перевірте правильність вимови.</p>';
+        ? '<p class="continuous-output-notice" role="note">Частину тексту не вдалося прочитати. Система не стала вгадувати.</p>'
+        : '<p class="continuous-output-notice">Перевірте вимову перед використанням.</p>';
   const cleanupNotice = prepared.changed
     ? '<p class="continuous-output-notice" role="note">Перед аналізом очищено вікі-/Markdown-розмітку: адреси посилань, HTML-теги та службові виноски прибрано; видимі підписи посилань збережено. Аналізується очищений текст, а не початкова розмітка.</p>'
     : '';
-  out.innerHTML = '<h2 class="results-heading">Результати · 3 представлення</h2>' + cleanupNotice + notice +
-    continuousPanel('01 · RTGS — латинська романізація (не IPA)', rtgsOutput,
-      'Довідкова романізація латиницею. Це окреме представлення, не IPA і не джерело українського кандидата. RTGS не позначає тон і не зберігає надійно довготу голосних; ph/th/kh позначають придихові приголосні, а не англійські /f/, /θ/ чи назви літер.', 'rtgs-continuous') +
-    continuousPanel('02 · IPA — фонетичне представлення', ipaOutput,
-      mode === 'super-soft' ? 'Приблизний IPA для повного покриття; резервні читання не підтверджені.' : mode === 'soft' ? 'Попередній IPA-проміжний результат; перевірте сегментацію та читання.' : 'Фонетична основа, яку використовує адаптація до української графіки.', 'ipa-continuous') +
-    continuousPanel('03 · Український фонетичний кандидат', uaOutput,
-      mode === 'super-soft' ? 'Повний приблизний український кандидат; неперевірені звукові відповідності можуть бути неточними.' : mode === 'soft' ? 'Попередній український кандидат; неперевірені структурні сегменти можуть бути неточними.' : 'Український запис, адаптований із IPA. Один суцільний текст для читання та копіювання; межі слів відокремлено.', 'ua-continuous') +
+  out.innerHTML = '<h2 class="results-heading">Результат</h2>' + cleanupNotice + notice +
+    continuousPanel('01 · Латиницею (RTGS)', rtgsOutput,
+      'Довідковий запис латиницею. Він не передає всіх особливостей вимови.', 'rtgs-continuous') +
+    continuousPanel('02 · Звуками (IPA)', ipaOutput,
+      'Міжнародний запис вимови. За ним формується український варіант.', 'ipa-continuous') +
+    continuousPanel('03 · Українськими літерами', uaOutput,
+      'Приблизний запис звучання, а не переклад значення.', 'ua-continuous') +
     '<details class="analysis-details"><summary>Детальний аналіз сегментів і складів</summary>' +
     tokens.map(card).join('') + '</details>';
   out.hidden = false;
