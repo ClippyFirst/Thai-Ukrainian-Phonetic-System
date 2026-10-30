@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Main includes PR #141 repository hygiene and PR #144 bounded source-attested ทราม lexical exception (main cb7ff2a49731d3c02ddba400a4ddbc166395d493). Exact PR #144 checks passed; post-merge main CI and Pages were still running at last check. Engineering-verified research prototype, not release-ready for independent Thai IPA/Ukrainian accuracy claims.",
+  "status": "Main includes PR #141 repository hygiene, PR #144 source-attested ทราม lexical exception and PR #145 optional workflow action refresh (main 009060cdf12908d27d399419952bdcb50828bfd6). API request-object validation is engineering-verified on maintenance branch; main post-merge CI/G2P still pending at last check. Research prototype, not release-ready for independent linguistic accuracy.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -1635,30 +1635,53 @@
     "original_pr_status": "closed_as_superseded"
   },
   "current_mainline_closeout_2026_10_30": {
-    "main_sha": "cb7ff2a49731d3c02ddba400a4ddbc166395d493",
+    "main_sha": "009060cdf12908d27d399419952bdcb50828bfd6",
     "pr_141": "merged",
     "pr_144": {
       "status": "merged",
       "merge_sha": "cb7ff2a49731d3c02ddba400a4ddbc166395d493",
       "head_sha": "72a0e147fbbcd6d21fefc40a4219f9fb7c0bfc0b",
       "checks": "5/5 successful",
-      "lexical_scope": "ทราม → ซาม; no productive ทร → ซ rule",
       "evidence_grade": "SOURCE_ATTESTED_NOT_GOLD"
     },
+    "pr_145": {
+      "status": "merged",
+      "merge_sha": "009060cdf12908d27d399419952bdcb50828bfd6",
+      "head_sha": "bf28abc48fd23e6c85d96bbf2da9402988c2d90f",
+      "checks": "core CI, master-artifact, optional G2P smoke and VISTEC evaluation successful"
+    },
     "pr_111": "closed_as_superseded; historical branch preserved",
-    "post_merge_runs": {
-      "ci": 41128531462,
-      "pages": 41128531547,
-      "web_static": 41128531495,
-      "web_static_status": "success",
-      "ci_status": "in_progress_at_last_check",
-      "pages_status": "in_progress_at_last_check"
+    "api_json_object_validation": {
+      "status": "DONE_VERIFIED_ON_BRANCH",
+      "commit": "16a58185cd42b687a982bb59dabbf1a49d161fed",
+      "red_run": 41128931305,
+      "green_run": 41129088376
+    },
+    "post_merge_main_runs": {
+      "ci": 41129543349,
+      "optional_g2p": 41129543570,
+      "status": "in_progress_at_last_check"
     },
     "branch_refs_observed": 156,
-    "debt": [
-      "optional external G2P/VISTEC action pins",
-      "no declared development dependency extra or lint/type-check gate",
-      "historical branch retention/pruning policy"
+    "technical_debt": [
+      {
+        "id": "PACKAGING-WHEEL-001",
+        "status": "TODO",
+        "risk": "runtime loaders resolve repository-root data/ which is not declared as wheel package data",
+        "acceptance": "build/install wheel in isolated environment and run CLI/API/data-loader smoke tests"
+      },
+      {
+        "id": "DEV-TOOLING-001",
+        "status": "TODO",
+        "risk": "no declared development extra or lint/type-check gate",
+        "acceptance": "inventory current code, choose minimal tooling, run and fix baseline"
+      },
+      {
+        "id": "BRANCH-RETENTION-001",
+        "status": "PARTIAL",
+        "risk": "156 historical refs; no reviewed retention policy",
+        "acceptance": "classify unique commits and obtain explicit deletion policy before pruning"
+      }
     ],
     "blockers": [
       "independent expert-adjudicated Thai segmentation/IPA/Ukrainian target gold",
