@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Main includes PR #141, #144, #145, #146, #148, #149 and #150. Wheel portability and a pinned Python Ruff correctness gate are implemented. Exact-head CI and post-merge main CI/Pages checks passed. Engineering-verified research prototype; not release-ready for independent linguistic-accuracy claims.",
+  "status": "Main includes PRs #141, #144–#146, #148–#152. Version/TSV contracts, bounded lexical evidence, workflow maintenance, API request/error handling, wheel portability and Ruff checks are integrated. PR #153 adds strict HTTP Content-Length framing validation; exact PR-head tests passed, master-artifact verification and merge are pending. Engineering-verified research prototype; not release-ready for independent linguistic-accuracy claims.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -273,7 +273,7 @@
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
   "latest_code_checkpoint": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
   "readiness": "engineering-verified research prototype; not release-ready for independent Thai segmentation, IPA or Ukrainian target accuracy",
-  "latest_verified_repository_head": "e8282dfb85f53ae18cbed5fcdc676b1b6049c313",
+  "latest_verified_repository_head": "52dfb640a3129818c23ed36079d531cd3f9c0fac",
   "task_ledger": [
     {
       "id": "SEG-TRAIN-001",
@@ -391,6 +391,13 @@
       "implementation": "Unexpected analysis exceptions are logged server-side; API clients receive a stable generic 500 payload without internal exception details. Test-first commits e2e0e6783d277092ecf05ac87a2b712d9c03f260 → 60ac49dd1d3f6c387c306616e1c5a435dea4662a.",
       "blocker": null,
       "acceptance": "CI 41139203848 passed 215 Python tests, isolated wheel-install smoke, browser/parity/diagnostic checks, and the 351,780-row / 41-vowel master-artifact assertion."
+    },
+    {
+      "id": "API-CONTENT-LENGTH-001",
+      "status": "PARTIAL",
+      "implementation": "Strict ASCII-decimal Content-Length validation before body reads; negative-length raw-socket regression added; exact PR-head CI passed 216 Python tests, Ruff, browser/parity/UI diagnostics and wheel smoke.",
+      "blocker": "Master-artifact job, PR merge and post-merge main CI still pending at audit refresh.",
+      "acceptance": "Master artifact asserts 351780 rows and 41 vowel/rime records; PR #153 merges; post-merge main CI passes."
     }
   ],
   "latest_implementation_branch": "chore/python-static-analysis-gate-20261030",
@@ -1790,5 +1797,19 @@
     "vowel_records": 41,
     "behavior": "Unexpected exceptions are logged server-side and return a generic 500 response; malformed requests retain the existing 400 contract.",
     "scope": "HTTP error handling only; no Thai linguistic or browser behavior changed."
+  },
+  "http_content_length_validation_2026_10_31": {
+    "starting_main": "52dfb640a3129818c23ed36079d531cd3f9c0fac",
+    "branch": "fix/http-content-length-validation-20261031",
+    "pull_request": 153,
+    "test_commit": "3814af5e8b083117d93634531a5c62e1db5757d8",
+    "red_ci_run": 41141368949,
+    "red_failure": "The raw-socket regression failed as expected: the old handler accepted Content-Length: -1, read the valid JSON body, and returned HTTP 200.",
+    "implementation_commit": "47c3f335fb5aa902784f4964a842dd00e5ea01c7",
+    "exact_pr_head_ci_run": 41141511448,
+    "exact_pr_head_ci_status": "PASS — 216 Python tests, Ruff, browser IPA/parity/UI, research diagnostics and wheel-install smoke.",
+    "master_artifact_status": "PENDING at audit refresh — verify 351780 rows, 41 vowel/rime records and artifact upload before merge.",
+    "behavior": "Content-Length must contain ASCII decimal digits before conversion or body reading; malformed values return the existing 400 invalid_request response.",
+    "scope": "HTTP request framing only; no Thai linguistic, browser or Ukrainian adapter behavior changed."
   }
 }
