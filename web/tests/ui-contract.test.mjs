@@ -301,8 +301,8 @@ assert.match(homeHtml, /приблизну вимову українськими
 assert.match(systemHtml, /Придихові \/kʰ pʰ tʰ tɕʰ\//);
 assert.doesNotMatch(homeHtml, /id="ipa-input"|id="ipa-adapt"|id="ipa-adapter-result"/, "the homepage must not duplicate the existing IPA→Ukrainian pipeline as a second input mode");
 assert.match(homeHtml, /Що означає результат/);
-assert.match(homeHtml, /Сервіс спочатку визначає, як воно має звучати/);
-assert.match(homeHtml, /український запис будується через визначену вимову/);
+assert.match(homeHtml, /Вставте слово або речення тайською/);
+assert.match(homeHtml, /Тайські звуки не завжди можна точно передати українськими літерами/);
 assert.match(homeHtml, /приблизну вимову українськими літерами/);
 assert.match(systemHtml, /український запис добирається після визначення вимови/);
 assert.match(systemHtml, /id="beta-evidence"/);
