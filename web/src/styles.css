@@ -153,4 +153,13 @@ footer a:hover{text-decoration:underline;text-underline-offset:3px}
   .result-card{padding:16px}
   .data{padding:13px}
 }
+
+/* Three-level strictness scale; the labels are visible at every viewport. */
+#engine-mode[type="range"]{display:block;width:100%;min-height:32px;margin:0;padding:0;border:0;background:transparent;accent-color:var(--blue);cursor:pointer}
+#engine-mode[type="range"]:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.strictness-scale{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 12px;color:var(--muted);font-size:.78rem;font-weight:750;line-height:1.4}
+.strictness-scale span:nth-child(2){text-align:center}
+.strictness-scale span:nth-child(3){text-align:right}
+@media(max-width:420px){.strictness-scale{font-size:.66rem;gap:4px}}
+
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}

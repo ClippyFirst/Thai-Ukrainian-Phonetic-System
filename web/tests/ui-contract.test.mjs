@@ -324,6 +324,8 @@ assert.match(styles, /\.ipa-continuous\{border-top:3px solid var\(--focus\)\}/);
 assert.match(styles, /\.ua-continuous\{border-top:3px solid var\(--blue\)\}/);
 assert.doesNotMatch(styles, /\.rtgs-details/, "visible RTGS output must not retain collapsed-disclosure styling");
 assert.match(styles, /#engine-mode:focus-visible/);
+assert.match(styles, /\.strictness-scale/);
+assert.match(styles, /accent-color:var\(--blue\)/);
 assert.match(styles, /\.mode-help summary:focus-visible/);
 assert.match(styles, /\.mode-help dl/);
 assert.doesNotMatch(styles, /\.ipa-adapter-input/, "the removed standalone IPA input must not leave dead adapter styling behind");
