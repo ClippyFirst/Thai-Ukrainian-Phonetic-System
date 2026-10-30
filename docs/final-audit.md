@@ -2,7 +2,7 @@
 
 - User clarified that the previous plain-language pass had become child-directed and had erased the methodological distinction between operating profiles. The interface is now being revised for an educated user.
 - Introduced a 1–3 strictness scale: **1/3 heuristic** (`super-soft`) maximizes output coverage through orthography-derived fallback IPA; **2/3 structural** (`soft`) attempts syllable parsing without claiming lexical word boundaries; **3/3 conservative** (`strict`) withholds output for unresolved spans and uses reviewed lexical segmentation / supported deterministic rules.
-- The scale is a discrete selector over existing engine strategies, not a new numeric confidence model. Higher values are stricter; lower values permit broader provisional output. No algorithm or phonological rule was changed.
+- The scale is an accessible three-position range control over existing engine strategies, not a new numeric confidence model. Higher values are stricter; lower values permit broader provisional output. No algorithm or phonological rule was changed.
 - Homepage helper text, methodology explanation, browser UI contract tests, and the Pages live-content gate were updated together. Exact-head CI and published-page verification are pending.
 - The main branch at the start of this continuation was `b64c239d012612435b7578241086b988cd96b262` (PR #137). Work is isolated on `ui/graded-analysis-policy-20261030`; no merge or release has been performed.
 - Linguistic readiness remains evidence-limited: independent expert-adjudicated Thai segmentation, IPA and Ukrainian target-form gold are still absent.
