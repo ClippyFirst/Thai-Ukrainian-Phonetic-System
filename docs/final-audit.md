@@ -1,11 +1,19 @@
+## 2026-10-30 — Thai lexical exception forward-port
+
+- Historical PR #111 was 452 commits behind main; its bounded change was ported onto a fresh branch based on the latest main after PR #142, without force-rebasing or rewriting the historical ref.
+- Added exact `ทราม → ซาม` handling in Python/browser maps, text lexicon and source registries, plus ten enumerated false-cluster/lexical regression cases through the typed IPA → Ukrainian adapter.
+- No productive `ทร → ซ` rule was added. Generic ambiguity sentinels, including isolated `ทราย`, remain fail-closed.
+- Evidence: Royal Institute Journal 36(4), 2011, p. 557 discusses `ทราม` among historical /s/-reading forms; English Wiktionary records `/saːm˧/`. Evidence is source-attested, not independent IPA gold.
+- TDD red evidence: browser parity run `41124129117` and Python run `41124128896` failed on the expected missing lexical mapping/source-registry row before implementation. Exact-head full CI remains the acceptance gate.
+
 ## 2026-10-30 — PR #141 integrated; citation metadata follow-up
 
 - PR [#141](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/141) was squash-merged into `main` as `4d087e66778854503a0e6d355d605d83a50354f8`.
 - Exact-head PR checks passed: CI `41121318912` and Web Static Validation `41121319014`. Post-merge main CI `41122595309` and Web Static Validation `41122595149` completed successfully; Pages build/deploy and published-content verification `41122595375` completed successfully.
 - The post-merge CI generated the master artifact and its assertions passed: 351,780 rows and 41 vowel records. The test job passed.
 - Follow-up hygiene finding: `CITATION.cff` still identified the software as `0.5.1`, while `pyproject.toml` and the single package-version source declare `0.6.1`. A regression test was added first; CI on the test-only commit failed on this exact mismatch. The implementation now aligns the CFF version to `0.6.1` and removes the stale `date-released` field rather than inventing a release date.
-- Follow-up branch: `chore/citation-version-alignment-20261030`, based on the merged `main`. Exact-head CI is required before integration.
-- PR #111 remains open and non-mergeable on an older base. Its source-attested `ทราม → ซาม` change is distinct; rebase/port and exact-head verification remain outstanding. No historical branch was deleted or force-rebased.
+- PR #142 merged into `main` as `81123ef50fbfc0335e22e6f16f4a5b02d967bb14`. Exact-head CI `41123979097` passed (212 Python tests and master-artifact job); post-merge main CI `41125905331` and Pages deployment `41125905186` passed. `CITATION.cff` now matches package version 0.6.1; no release date is asserted without evidence.
+- Historical PR #111 remains open on its stale base, but its bounded `ทราม → ซาม` change is forward-ported in PR #144. Close #111 as superseded after #144 merges; retain its historical branch. No historical branch was deleted or force-rebased.
 - Local checkout remains unavailable because the execution container cannot resolve `github.com`; verification is via GitHub Actions. Research/linguistic readiness remains limited by the absence of independent expert-adjudicated IPA and Ukrainian target gold.
 
 ---

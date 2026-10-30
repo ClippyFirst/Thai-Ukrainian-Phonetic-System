@@ -1571,14 +1571,23 @@
     },
     "citation_version_alignment": {
       "branch": "chore/citation-version-alignment-20261030",
-      "status": "PARTIAL_PENDING_EXACT_HEAD_CI",
+      "status": "DONE_VERIFIED",
       "package_version": "0.6.1",
       "previous_citation_version": "0.5.1",
       "change": "CITATION.cff version aligned to 0.6.1; stale date-released omitted pending a verified release date.",
       "red_test_commit": "462abcf475edb4458bb54267165ae369071892db",
       "red_ci_run": 41123351618,
       "red_test_failure": "test_citation_metadata_matches_package_version failed because CFF reported 0.5.1 while distribution metadata reported 0.6.1.",
-      "implementation_commit": "0375eb71ac2c7b42825dce160a3b75cf9fb7123b"
+      "implementation_commit": "0375eb71ac2c7b42825dce160a3b75cf9fb7123b",
+      "merged_pr": 142,
+      "merge_commit": "81123ef50fbfc0335e22e6f16f4a5b02d967bb14",
+      "pr_ci_run": 41123979097,
+      "post_merge_ci_run": 41125905331,
+      "pages_deploy_run": 41125905186,
+      "python_tests": 212,
+      "master_rows": 351780,
+      "vowel_records": 41,
+      "status_note": "CITATION.cff now matches package version 0.6.1; date-released omitted because no verified release date was established."
     },
     "pr_111": {
       "status": "OPEN_NON_MERGEABLE",
@@ -1587,5 +1596,40 @@
     },
     "local_checkout": "BLOCKED: execution container DNS could not resolve github.com; GitHub Actions used for verification.",
     "linguistic_readiness": "Research prototype; independent expert-adjudicated Thai segmentation, IPA and Ukrainian target gold remain unavailable."
+  },
+  "lexical_exception_guard_forwardport_2026_10_30": {
+    "branch": "feat/thai-lexical-exception-mainline-20261030",
+    "base_main": "81123ef50fbfc0335e22e6f16f4a5b02d967bb14",
+    "status": "PARTIAL_PENDING_EXACT_HEAD_CI",
+    "original_pr": 111,
+    "original_branch": "audit/thai-lexical-exception-guards-20261028",
+    "original_branch_behind_main": 452,
+    "tests": {
+      "browser_red_run": 41124129117,
+      "python_red_run": 41124128896,
+      "expected_failures": [
+        "browser parity: ทราม unresolved",
+        "source registry row for ทราม missing"
+      ]
+    },
+    "forms": [
+      "จริง",
+      "สร้าง",
+      "ศรี",
+      "เศร้า",
+      "ไซร้",
+      "ทราบ",
+      "ทรง",
+      "ทรัพย์",
+      "ทราม",
+      "แทรก"
+    ],
+    "evidence": {
+      "royal_institute": "https://www.orst.go.th/FILEROOM/CABROYINWEB/DRAWER004/GENERAL/DATA0000/00000630.FLP/html/49/",
+      "wiktionary_revision": 88637433,
+      "ipa": "/saːm˧/",
+      "grade": "SOURCE_ATTESTED_NOT_GOLD"
+    },
+    "acceptance": "Exact forward-port head must pass full Python/browser parity, generated artifact drift and 351780-row master artifact CI before merge."
   }
 }

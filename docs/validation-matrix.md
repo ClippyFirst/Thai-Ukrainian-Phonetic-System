@@ -1,10 +1,20 @@
+## 2026-10-30 — Thai lexical exception forward-port
+
+| Task | State | Evidence |
+|---|---|---|
+| Exact lexical `ทราม → ซาม` and false-cluster guards | PARTIAL — fresh mainline branch | Ported PR #111's bounded change onto current main; added source registry/text lexicon entries, Python/browser exact mappings, and tests for ten enumerated forms through typed IPA → Ukrainian adaptation. No productive `ทร → ซ` rule; isolated ambiguous forms remain fail-closed. |
+| Linguistic evidence scope | SOURCE_ATTESTED_NOT_GOLD | Royal Institute Journal 36(4), 2011, p. 557 discusses `ทราม` among historical /s/-reading forms; Wiktionary records `/saːm˧/`. Neither is independent expert/acoustic IPA gold. |
+| TDD | DONE_VERIFIED_FOR_RED_STAGE | Browser parity run `41124129117` and Python run `41124128896` failed on the expected missing lexical handling/source-registry row before implementation. |
+| Exact-head acceptance | TODO / pending | Must pass full Python suite, browser parity, generated-data drift checks and 351,780-row master-artifact assertions before merge. |
+| Historical PR #111 | DEFERRED / preserved | Original branch remains untouched and 452 commits behind main. Its bounded change is forward-ported; close as superseded after PR #144 merges. |
+
 ## 2026-10-30 — repository hygiene integration and follow-up
 
 | Task | State | Evidence |
 |---|---|---|
 | PR #141 repository hygiene | DONE_VERIFIED | Squash-merged to `main` as `4d087e66778854503a0e6d355d605d83a50354f8`. Exact PR CI `41121318912` and Web Static `41121319014` passed. Post-merge CI `41122595309`, Web Static `41122595149`, and Pages build/deploy/live-content verification `41122595375` passed. Master artifact asserted 351,780 rows and 41 vowel records. |
-| Citation metadata version alignment | PARTIAL — follow-up branch | Regression test added first; test-only CI failed on the real mismatch (`CITATION.cff` 0.5.1 vs package 0.6.1). CFF now uses 0.6.1 and omits the stale release date rather than asserting an unverified release date. Exact-head CI is pending. |
-| PR #111 lexical exception | BLOCKED / PARTIAL | PR remains open and non-mergeable against current main. Exact source-backed `ทราม → ซาม` is a separate lexical exception; it needs a clean forward-port/rebase and exact-head CI before merge. |
+| Citation metadata version alignment | DONE_VERIFIED | PR #142 merged as `81123ef50fbfc0335e22e6f16f4a5b02d967bb14`; exact-head CI `41123979097` passed (212 Python tests and master artifact), post-merge main CI `41125905331` and Pages verification `41125905186` passed. CFF version is 0.6.1; unverified `date-released` removed. |
+| PR #111 lexical exception | PARTIAL — forward-port PR #144 | Historical PR #111 remains open on its stale base; the bounded `ทราม → ซาม` change is ported to a fresh current-main branch. Exact-head CI is pending. |
 | Historical branch cleanup | PARTIAL | Existing branch inventory is retained. No destructive deletion or force-rebase; branch disposition requires review of unique commit content. |
 | Linguistic validation | BLOCKED / evidence-limited | Independent expert-adjudicated Thai segmentation, IPA and Ukrainian target-form gold is still absent. |
 
@@ -19,7 +29,7 @@
 | Pages workflow action runtime | PARTIAL | Updated configure-pages to v6, upload-pages-artifact to v5 and deploy-pages to v5. Deployment was not triggered from this unmerged branch to avoid publishing unmerged content; validate on the next main deployment. |
 | Optional external workflow action pins | DEFERRED | Optional G2P and VISTEC workflows retain older action pins. Updating their own workflow files would trigger long-running external comparator/corpus jobs; defer to a dedicated run. |
 | Local clean clone/test execution | BLOCKED | `git clone` could not resolve `github.com` in the execution container. Verification evidence is from GitHub Actions; no local test run is claimed. |
-| Branch inventory and reconciliation | PARTIAL | 151 branch refs inventoried: 44 `docs/`, 24 `research/`, 22 `feat/`, 22 `fix/`, plus the remaining categories. PR #140 was squash-merged into `main` as `37a2b5be62896a758ddc59b9b91184e448b4d963`. PR #111 remains open and non-mergeable: 12 commits ahead / 30 behind current main; it contains a distinct source-attested lexical change and needs a deliberate rebase/evidence review. Historical branches were not mass-rebased or deleted because doing so would rewrite or discard distinct work. |
+| Branch inventory and reconciliation | PARTIAL | 151 branch refs inventoried: 44 `docs/`, 24 `research/`, 22 `feat/`, 22 `fix/`, plus the remaining categories. PR #140 was squash-merged into `main` as `37a2b5be62896a758ddc59b9b91184e448b4d963`. PR #111 remains an untouched historical ref; its source-attested lexical change is forward-ported in PR #144 and the old PR will be closed as superseded after merge. Historical branches were not mass-rebased or deleted because doing so would rewrite or discard distinct work. |
 | Linguistic/release readiness | BLOCKED / evidence-limited | Independent expert-adjudicated Thai segmentation, IPA and Ukrainian target-form gold remains unavailable. Automated CI verifies implementation contracts, not linguistic accuracy. |
 
 Working branch is based on main after PR #140. PR #141 is open against the post-PR-140 main head. The verified implementation/workflow head is `caab0adfd5b22fd07702e0aa0f86635aa46d5406`; subsequent commits update only the audit/handoff documents. The branch inventory is recorded without destructive branch rewriting; old branches remain preserved for review.
