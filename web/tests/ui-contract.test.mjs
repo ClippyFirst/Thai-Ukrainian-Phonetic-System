@@ -62,7 +62,7 @@ assert.match(status.textContent, /Готово\. Нижче — три варі�
 input.value = "ทดสอบ";
 analyze.click();
 assert.doesNotMatch(output.innerHTML, /RTGS НЕ ПЕРЕВІРЕНО/);
-assert.match(output.innerHTML, /PyThaiNLP 5\.4\.0|RTGS/);
+assert.match(output.innerHTML, /Латинський запис/);
 assert.equal(status.className, "status notice");
 assert.match(status.textContent, /потребують перевірки або залишилися невизначеними/);
 assert.doesNotMatch(output.innerHTML, /ФОНОЛОГІЧНА IPA/);
