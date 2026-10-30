@@ -312,7 +312,7 @@ assert.match(systemHtml, /Автоматичні тести показують, 
 assert.match(systemHtml, /набору слів і вимов/);
 assert.match(systemHtml, /Шкала суворості обробки/);
 assert.match(systemHtml, /Зменшення суворості збільшує покриття, але не точність/);
-assert.match(systemHtml, /не каліброваним відсоткам упевненості/);
+assert.match(systemHtml, /не є каліброваною оцінкою впевненості/);
 assert.match(systemHtml, /не маємо незалежно перевіреного фахівцями набору/);
 assert.match(systemHtml, /RTGS — окрема латинська система/);
 assert.match(systemHtml, /Придихові \/kʰ pʰ tʰ tɕʰ\//);
