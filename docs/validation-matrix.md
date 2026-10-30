@@ -971,3 +971,17 @@ The user's explicit requirement supersedes the prior UX decision to collapse RTG
 - Implementation commit `47c3f335fb5aa902784f4964a842dd00e5ea01c7`; exact PR-head CI passed 216 Python tests, including the regression.
 - Scope is limited to HTTP request framing. No parser, Thai phonology, segmentation, IPA, RTGS, Ukrainian adaptation or browser behavior changed.
 - PR [#153](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/153) was squash-merged as `8a539193798e55c3010e3a6a72a0e2578ea413c9`. Post-merge main CI [41142211674](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41142211674) passed test and wheel-install-smoke; the separate master-artifact job was still running. Pages build/deploy and published-content verification [41142211675](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41142211675) passed.
+
+
+## 2026-10-31 — CI master-table artifact reuse
+
+| Acceptance criterion | State | Evidence |
+|---|---|---|
+| Generate the exhaustive master table once per workflow run | DONE_VERIFIED | The `test` job generates the three files once for `test_master_table.py`, then uploads them as `thai-ukrainian-master-table`. |
+| Preserve an independent master-artifact validation job | DONE_VERIFIED | `master-artifact` downloads the artifact with `actions/download-artifact@v8.0.2`, verifies the artifact digest, and asserts 351,780 rows plus 41 vowel/rime records. |
+| Preserve the existing artifact contract and Python/browser/research checks | DONE_VERIFIED | Exact PR CI [41143491570](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41143491570) passed all three jobs, including 216 Python tests, Ruff, browser parity/UI, research diagnostics, wheel smoke and downloaded-artifact validation. |
+| Verify the optimized workflow on main | DONE_VERIFIED | Post-merge main CI [41143907732](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41143907732) passed test, wheel-install-smoke and master-artifact. |
+
+- PR [#155](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/155) merged as `3325e98b98bde6926f36c74ad76dc94fe35480b0`.
+- Before optimization, the master-artifact job regenerated the table in approximately 126.9 seconds. After optimization, artifact download plus validation took approximately 1.1 seconds; the independent assertion and artifact name are unchanged.
+- No application code, generated data content, Thai parsing, phonology, IPA, RTGS, Ukrainian adaptation or browser behavior changed.

@@ -1012,3 +1012,13 @@ The first run with the new coverage tests completed master-table generation and 
 - **PASS — integration:** PR [#153](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/153) was squash-merged to `main` as `8a539193798e55c3010e3a6a72a0e2578ea413c9`.
 - **PASS — post-merge main checks:** CI [41142211674](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41142211674) passed test (216 Python tests) and wheel-install-smoke; its separate master-artifact job also passed, asserting 351,780 rows and 41 vowel/rime records. Pages [41142211675](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41142211675) passed build, deploy and published-content/pipeline verification.
 - No linguistic or browser runtime behavior changed.
+
+
+## Final audit update — 2026-10-31: CI master-table artifact reuse
+
+- **PASS — duplicate generation removed:** the `test` job uploads the already-generated master CSV, two-column CSV and JSON. The separate `master-artifact` job downloads that exact artifact and validates it rather than checking out, installing the package and regenerating the 351,780-row table.
+- **PASS — integrity and structural gate preserved:** `actions/download-artifact@v8.0.2` verified the artifact SHA-256 digest; the independent job passed the 351,780-row and 41 vowel/rime assertions.
+- **PASS — exact PR CI:** [41143491570](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41143491570) passed all three jobs, including 216 Python tests, Ruff, browser parity/UI, research diagnostics, wheel-install smoke and artifact download/validation.
+- **PASS — post-merge main CI:** [41143907732](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41143907732) passed all three jobs.
+- **Measured improvement:** the previous master-artifact generator step took approximately 126.9 seconds; the new download plus validation took approximately 1.1 seconds. This removes roughly 126 seconds of duplicate work from the dependent job on each full CI run.
+- PR [#155](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/155) merged as `3325e98b98bde6926f36c74ad76dc94fe35480b0`. No application or linguistic behavior changed.

@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Main includes PRs #141, #144–#146, #148–#153. HTTP Content-Length framing validation is merged and fully verified. Exact PR-head and post-merge main CI passed 216 Python tests, Ruff, browser/parity/UI, diagnostics, wheel-install smoke and master artifact (351,780 rows; 41 vowel/rime records); Pages deployment and live-content verification passed. Engineering-verified research prototype; not release-ready for independent linguistic-accuracy claims.",
+  "status": "Main includes PRs #141, #144–#146, #148–#155. HTTP Content-Length framing hardening and CI master-artifact reuse are merged and fully verified. Main CI 41143907732 passed all three jobs, including 216 Python tests, Ruff, browser/parity/UI, research diagnostics, wheel-install smoke and artifact download/validation (351,780 rows; 41 vowel/rime records). Pages deployment and live-content verification for the preceding web change passed. Engineering-verified research prototype; not release-ready for independent linguistic-accuracy claims.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -108,38 +108,38 @@
   "latest_verified_code_commit": "e8282dfb85f53ae18cbed5fcdc676b1b6049c313",
   "starting_branch_commit": "7e39fd4bc108386148c1e9a79d257d75babcc9aa",
   "ci": {
-    "latest_fully_successful_code_data_commit": "7db6e591303c1f232cb98d54a333b0300bbefa0e",
-    "latest_fully_successful_ci_run": 41141850559,
+    "latest_fully_successful_code_data_commit": "3325e98b98bde6926f36c74ad76dc94fe35480b0",
+    "latest_fully_successful_ci_run": 41143907732,
     "python_tests": 216,
     "generated_data_drift": "PASS",
-    "master_artifact": "PASS — exact PR head and post-merge main: 351,780 rows; 41 vowel/rime records; artifact uploaded",
-    "node_ipa_ua_parity_ui_tests": "PASS on exact PR head 7db6e591303c1f232cb98d54a333b0300bbefa0e (CI 41141850559)",
+    "master_artifact": "PASS — generated once in test job, uploaded, downloaded by independent master-artifact job, SHA-256 verified, and asserted at 351780 rows / 41 vowel/rime records.",
+    "node_ipa_ua_parity_ui_tests": "PASS — exact PR #155 CI 41143491570 and post-merge main CI 41143907732.",
     "wisesight_baseline": "PASS",
     "source_attested_ipa_diagnostic": "PASS",
     "current_browser_parity_code_head": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
     "current_head_ci_runs": [
-      41141850559,
-      41142211674
+      41143491570,
+      41143907732
     ],
     "current_head_web_validation_runs": [
       41142211675
     ],
-    "current_head_status_at_audit_refresh": "PR #153 merged as 8a539193798e55c3010e3a6a72a0e2578ea413c9. Exact PR-head CI 41141850559 and post-merge main CI 41142211674 passed Ruff, 216 Python tests, generated-data checks, browser parity/UI, research diagnostics, wheel smoke and master artifact (351,780 rows; 41 vowel/rime records). Pages 41142211675 passed build, deploy and live-content verification.",
-    "latest_full_repository_head": "8a539193798e55c3010e3a6a72a0e2578ea413c9",
-    "latest_full_repository_head_ci_run": 41142211674,
+    "current_head_status_at_audit_refresh": "PR #155 merged as 3325e98b98bde6926f36c74ad76dc94fe35480b0. Exact PR CI 41143491570 and post-merge main CI 41143907732 passed all three jobs. The master-artifact job now downloads the 3,086,353-byte artifact, verifies SHA-256, and asserts 351780 rows / 41 vowel/rime records without rerunning generation.",
+    "latest_full_repository_head": "3325e98b98bde6926f36c74ad76dc94fe35480b0",
+    "latest_full_repository_head_ci_run": 41143907732,
     "latest_full_repository_head_web_validation_run": 41142211675,
     "latest_web_static_verified_code_commit": "1ed4c7aa30759fd8d31136e46d7490bf9b2c5e8b",
     "latest_web_static_verified_code_run": 40286893366,
-    "latest_verified_commit_note": "43687b2753379b1d617b1c925f87358f8aad13bd is the historical last fully verified code commit before the current TUD trainer and เดิน override changes; it is not the current branch head.",
-    "latest_verified_code_commit_note": "Exact-head engineering checks pass on cb775d6156f62392fa2d0f4bcf8d1aa30d219530; independent Thai IPA/acoustic gold, Ukrainian target-form adjudication, and production segmentation quality remain unverified.",
+    "latest_verified_commit_note": "Current main 3325e98b98bde6926f36c74ad76dc94fe35480b0 includes the strict HTTP Content-Length validation and the single-generation master-artifact workflow. Exact PR and post-merge CI pass; independent linguistic gold and manual accessibility review remain open.",
+    "latest_verified_code_commit_note": "Current main is fully engineering-verified by CI 41143907732; independent Thai IPA/acoustic gold, Ukrainian target-form adjudication, and production segmentation quality remain unverified.",
     "latest_fully_successful_documentation_commit": "e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff",
     "latest_fully_successful_documentation_ci_run": 40323209539,
     "latest_fully_successful_documentation_web_validation_run": 40323209471,
     "latest_documentation_head_ci_run": 40320450844,
     "latest_documentation_head_web_validation_run": 40320450587,
-    "latest_implementation_ci_run": 41133766851,
+    "latest_implementation_ci_run": 41143907732,
     "latest_implementation_web_validation_run": 40320450587,
-    "latest_implementation_commit_ci_verified": "7db6e591303c1f232cb98d54a333b0300bbefa0e",
+    "latest_implementation_commit_ci_verified": "3325e98b98bde6926f36c74ad76dc94fe35480b0",
     "latest_fully_successful_web_static_validation_run": 40322959844,
     "comparative_error_review_status": "DONE_VERIFIED — report, tests and CI artifact passed on code checkpoint b6dbec7928b106f0ab52e06af33a26635df75412",
     "comparative_error_review_script": "scripts/compare_segmentation_error_review.py",
@@ -159,7 +159,7 @@
       "54e1db86cf3882f025f00ede86d86e7efb3909e2",
       "b6dbec7928b106f0ab52e06af33a26635df75412"
     ],
-    "current_audit_head_ci_status": "PENDING_EXACT_HEAD_CI_FOR_PR_151_DOCUMENTATION_CHECKPOINT",
+    "current_audit_head_ci_status": "PASS — PR #155 exact-head CI 41143491570 and post-merge main CI 41143907732 passed all three jobs.",
     "comparative_error_review_metrics": {
       "rows": 993,
       "source_annotated_rows": 993,
@@ -190,13 +190,33 @@
     "pr_reconciliation": {
       "pr68": {
         "state": "closed",
-        "reason": "superseded by PR #71 after all eight changed paths and substantive OBEC evidence/tests were reconciled",
-        "branch_preserved": true
+        "merged": false,
+        "reason": "superseded by PR #71; branch preserved"
       },
       "pr71": {
-        "state": "open",
-        "draft": true,
-        "mergeable": true
+        "state": "closed",
+        "merged": true,
+        "merge_sha": "b4ae9e9f88a79d6f55cb1207363ac6877df080ba"
+      },
+      "pr111": {
+        "state": "closed",
+        "merged": false,
+        "reason": "superseded; its source-attested lexical exception was independently reconciled through PR #144"
+      },
+      "pr153": {
+        "state": "closed",
+        "merged": true,
+        "merge_sha": "8a539193798e55c3010e3a6a72a0e2578ea413c9"
+      },
+      "pr154": {
+        "state": "closed",
+        "merged": true,
+        "merge_sha": "0f7c41a753efa7abb88ea279ddc6a22ccdf11c6d"
+      },
+      "pr155": {
+        "state": "closed",
+        "merged": true,
+        "merge_sha": "3325e98b98bde6926f36c74ad76dc94fe35480b0"
       }
     }
   },
@@ -274,7 +294,7 @@
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
   "latest_code_checkpoint": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
   "readiness": "engineering-verified research prototype; not release-ready for independent Thai segmentation, IPA or Ukrainian target accuracy",
-  "latest_verified_repository_head": "8a539193798e55c3010e3a6a72a0e2578ea413c9",
+  "latest_verified_repository_head": "3325e98b98bde6926f36c74ad76dc94fe35480b0",
   "task_ledger": [
     {
       "id": "SEG-TRAIN-001",
@@ -399,6 +419,13 @@
       "implementation": "Strict ASCII-decimal Content-Length validation before body reads; raw-socket regression proves the old handler accepted Content-Length: -1 and the fixed handler rejects it. Test-first red CI 41141368949; exact PR-head CI 41141850559 passed 216 Python tests, Ruff, browser/parity/UI, diagnostics, wheel smoke and master artifact.",
       "blocker": null,
       "acceptance": "PR #153 merged as 8a539193798e55c3010e3a6a72a0e2578ea413c9; exact PR-head master artifact 351780 rows / 41 vowel records passed; post-merge main test/wheel and Pages checks passed."
+    },
+    {
+      "id": "CI-MASTER-ARTIFACT-001",
+      "status": "DONE_VERIFIED",
+      "implementation": "The test job uploads the master CSV, two-column CSV and JSON generated once for unit tests. The separate master-artifact job downloads the artifact, verifies SHA-256, and asserts 351780 rows and 41 vowel/rime records. It no longer checks out, installs the package or regenerates the table.",
+      "blocker": null,
+      "acceptance": "Exact PR CI 41143491570 and post-merge main CI 41143907732 passed all three jobs; measured master-artifact work fell from ~126.9 seconds of regeneration to ~1.1 seconds of download plus validation."
     }
   ],
   "latest_implementation_branch": "chore/python-static-analysis-gate-20261030",
@@ -1817,5 +1844,23 @@
     "post_merge_main_ci_status": "PASS — test (216 Python tests), wheel-install-smoke, and master-artifact (351780 rows; 41 vowel/rime records).",
     "post_merge_pages_run": 41142211675,
     "post_merge_pages_status": "PASS — build, deploy and published-content/pipeline verification."
+  },
+  "ci_artifact_reuse_2026_10_31": {
+    "branch": "ci/reuse-master-table-artifact-20261031",
+    "pull_request": 155,
+    "implementation_commit": "d75da3bd5c96e30372a85b6afb61abed09443bda",
+    "merge_commit": "3325e98b98bde6926f36c74ad76dc94fe35480b0",
+    "exact_pr_ci_run": 41143491570,
+    "push_ci_run": 41143478308,
+    "post_merge_main_ci_run": 41143907732,
+    "python_tests": 216,
+    "master_artifact_rows": 351780,
+    "vowel_rime_records": 41,
+    "artifact_size_bytes": 3086353,
+    "artifact_sha256_verified": true,
+    "previous_master_artifact_generation_seconds": 126.9,
+    "new_download_and_validation_seconds": 1.1,
+    "estimated_duplicate_work_removed_seconds": 125.8,
+    "result": "DONE_VERIFIED — all three exact PR-head jobs and all three post-merge main jobs passed; master artifact is transferred and independently validated without a second generation."
   }
 }
