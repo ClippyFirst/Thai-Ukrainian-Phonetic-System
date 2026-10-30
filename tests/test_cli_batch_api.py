@@ -46,6 +46,11 @@ class CliBatchApiTests(unittest.TestCase):
         self.assertEqual(thai_ukrainian.__version__, installed_version)
         self.assertEqual(APIHandler.server_version, f"thai-ua/{installed_version}")
 
+    def test_citation_metadata_matches_package_version(self):
+        installed_version = distribution_version("thai-ukrainian-phonetic-system")
+        citation = (Path(__file__).parents[1] / "CITATION.cff").read_text(encoding="utf-8")
+        self.assertRegex(citation, rf"(?m)^version: {installed_version.replace('.', r'\\.')}$")
+
     def test_csv_batch(self):
         with tempfile.TemporaryDirectory() as d:
             root = Path(d)
