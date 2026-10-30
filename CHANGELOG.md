@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-10-30 — packaging and Python maintenance
+
+- Regular wheel installs now include only runtime-required Thai registries and Ukrainian target vectors under the package data directory; source distributions retain the source files and per-dataset license/provenance notices.
+- CI rebuilds a wheel from the source distribution, installs it into an isolated environment outside the checkout, and smoke-tests the installed `thai-ua` CLI, API, data loaders and licensing notices.
+- Added a pinned Ruff development extra and a correctness-only Pyflakes gate across `src/`, `tests/` and `scripts/`; removed 15 unused imports and explicitly exported the existing package `__version__`.
+- No phonological rules, IPA mappings, segmentation policy or Ukrainian adaptation behavior changed.
+
+
 ## 2026-10-27 — strict and soft whole-text analysis modes
 
 - Added an accessible mode selector to the whole-text browser interface. Strict remains the default and keeps the fail-closed behavior for unknown Thai spans.

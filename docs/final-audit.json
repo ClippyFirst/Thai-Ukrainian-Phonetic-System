@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Main includes PR #141 repository hygiene, PR #144 source-attested ทราม lexical exception, PR #145 optional workflow action refresh and PR #146 JSON API request validation (main 1f53eef6522d437de546d6540ebc6c7d40ecdd82). Exact-head checks passed; post-merge main CI and Pages were still running at last check. Engineering-verified research prototype, not release-ready for independent linguistic accuracy.",
+  "status": "Main includes PR #141, #144, #145, #146, #148, #149 and #150. Wheel portability and a pinned Python Ruff correctness gate are implemented. Exact-head CI and post-merge main CI/Pages checks passed. Engineering-verified research prototype; not release-ready for independent linguistic-accuracy claims.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -105,27 +105,27 @@
     "status": "SOURCE_ATTESTED_NOT_GOLD",
     "includes_short_long_oe_contrast": true
   },
-  "latest_verified_code_commit": "b6dbec7928b106f0ab52e06af33a26635df75412",
+  "latest_verified_code_commit": "e8282dfb85f53ae18cbed5fcdc676b1b6049c313",
   "starting_branch_commit": "7e39fd4bc108386148c1e9a79d257d75babcc9aa",
   "ci": {
-    "latest_fully_successful_code_data_commit": "b6dbec7928b106f0ab52e06af33a26635df75412",
-    "latest_fully_successful_ci_run": 40322960615,
-    "python_tests": 182,
+    "latest_fully_successful_code_data_commit": "e8282dfb85f53ae18cbed5fcdc676b1b6049c313",
+    "latest_fully_successful_ci_run": 41133766851,
+    "python_tests": 214,
     "generated_data_drift": "PASS",
     "master_artifact": "PASS — 351,780 rows; 41 vowel/rime records; artifact uploaded",
-    "node_ipa_ua_parity_ui_tests": "PASS on exact head 4b1592cd72298d1ca92e0b99ab330975764a078a",
+    "node_ipa_ua_parity_ui_tests": "PASS on exact head e8282dfb85f53ae18cbed5fcdc676b1b6049c313 (CI 41133766851)",
     "wisesight_baseline": "PASS",
     "source_attested_ipa_diagnostic": "PASS",
     "current_browser_parity_code_head": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
     "current_head_ci_runs": [
-      40315032771
+      41133766851
     ],
     "current_head_web_validation_runs": [
       40315032788
     ],
-    "current_head_status_at_audit_refresh": "PASS: code-bearing head 4b1592cd72298d1ca92e0b99ab330975764a078a passed CI run 40320450844 (test and master-artifact) and Web static validation run 40320450587. CI includes 182 Python tests, generated-data drift, 351,780-row master artifact, Node IPA→Ukrainian, 28 parity fixtures, UI contract, Wisesight diagnostics, deterministic false-split/false-merge error review, source-attested IPA diagnostics, candidate registry check, and TUD research evaluation. This is engineering verification, not independent linguistic gold.",
-    "latest_full_repository_head": "4b1592cd72298d1ca92e0b99ab330975764a078a",
-    "latest_full_repository_head_ci_run": 40320450844,
+    "current_head_status_at_audit_refresh": "Exact-head PR #150 push CI 41133766851 passed Ruff, 214 Python tests, generated-data drift, browser parity/UI, research diagnostics, wheel smoke and master artifact (351,780 rows; 41 vowel records); VISTEC 41133770393 passed. Post-merge main CI 41134406351 passed test, wheel-install smoke and master-artifact; Pages 41134406540 passed build and deploy.",
+    "latest_full_repository_head": "e8282dfb85f53ae18cbed5fcdc676b1b6049c313",
+    "latest_full_repository_head_ci_run": 41133766851,
     "latest_full_repository_head_web_validation_run": 40320450587,
     "latest_web_static_verified_code_commit": "1ed4c7aa30759fd8d31136e46d7490bf9b2c5e8b",
     "latest_web_static_verified_code_run": 40286893366,
@@ -136,9 +136,9 @@
     "latest_fully_successful_documentation_web_validation_run": 40323209471,
     "latest_documentation_head_ci_run": 40320450844,
     "latest_documentation_head_web_validation_run": 40320450587,
-    "latest_implementation_ci_run": 40320450844,
+    "latest_implementation_ci_run": 41133766851,
     "latest_implementation_web_validation_run": 40320450587,
-    "latest_implementation_commit_ci_verified": "4b1592cd72298d1ca92e0b99ab330975764a078a",
+    "latest_implementation_commit_ci_verified": "e8282dfb85f53ae18cbed5fcdc676b1b6049c313",
     "latest_fully_successful_web_static_validation_run": 40322959844,
     "comparative_error_review_status": "DONE_VERIFIED — report, tests and CI artifact passed on code checkpoint b6dbec7928b106f0ab52e06af33a26635df75412",
     "comparative_error_review_script": "scripts/compare_segmentation_error_review.py",
@@ -158,7 +158,7 @@
       "54e1db86cf3882f025f00ede86d86e7efb3909e2",
       "b6dbec7928b106f0ab52e06af33a26635df75412"
     ],
-    "current_audit_head_ci_status": "PENDING_AFTER_AUDIT_UPDATE",
+    "current_audit_head_ci_status": "PENDING_EXACT_HEAD_CI_FOR_PR_151_DOCUMENTATION_CHECKPOINT",
     "comparative_error_review_metrics": {
       "rows": 993,
       "source_annotated_rows": 993,
@@ -215,11 +215,17 @@
     "vowel_rime_records": 41
   },
   "latest_documentation_checkpoint": {
-    "commit": "dd2260356f7de17d56d25b06c7c6b2c5999c0709",
-    "ci_run": 40467565451,
-    "web_static_validation_run": 40466830820,
-    "ci_status": "IN_PROGRESS_AT_AUDIT_UPDATE",
-    "note": "Documentation-only PR #80 reconciles the matrix/handoff after PR #79. The code-bearing prefix-index commit already passed CI test + master-artifact and Web static validation; post-merge Pages deployment and live homepage contract passed. This new audit-register commit will itself require exact-head CI."
+    "branch": "docs/mainline-maintenance-closeout-20261030",
+    "pull_request": 151,
+    "status": "PENDING_EXACT_HEAD_CI",
+    "scope": [
+      "README installation instructions",
+      "CHANGELOG packaging and Ruff maintenance",
+      "validation matrix",
+      "final audit",
+      "machine-readable audit JSON",
+      "execution handoff"
+    ]
   },
   "text_only_checkpoint": {
     "branch": "research/thai-segmentation-gold-parity-verified-20261025",
@@ -266,8 +272,8 @@
   },
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
   "latest_code_checkpoint": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
-  "readiness": "engineering-verified research prototype; not release-ready for arbitrary Thai text or empirically validated IPA/Ukrainian output",
-  "latest_verified_repository_head": "37a2b5be62896a758ddc59b9b91184e448b4d963",
+  "readiness": "engineering-verified research prototype; not release-ready for independent Thai segmentation, IPA or Ukrainian target accuracy",
+  "latest_verified_repository_head": "e8282dfb85f53ae18cbed5fcdc676b1b6049c313",
   "task_ledger": [
     {
       "id": "SEG-TRAIN-001",
@@ -336,9 +342,9 @@
     {
       "id": "BRANCH-HYGIENE-001",
       "status": "PARTIAL",
-      "implementation": "Inventoried 151 refs, merged PR #140, compared active/historically relevant branch candidates, and preserved PR #111 for separate evidence review.",
-      "blocker": "Historical branch refs contain distinct or superseded commit histories; mass rebasing/deletion would rewrite or discard work. PR #111 is 12 ahead/30 behind and not mergeable.",
-      "acceptance": "Owner-approved policy for archiving/deleting historical refs; rebase and verify PR #111 or explicitly defer its unique lexical exception."
+      "implementation": "Inventoried 163 refs; reconciled PRs #148–#150; preserved historical branches and superseded PR #111 branch.",
+      "blocker": "No owner-approved archive/delete policy; branch history may contain unique work.",
+      "acceptance": "Review unique commits and establish an explicit retention policy before pruning."
     },
     {
       "id": "LOCAL-CLONE-001",
@@ -355,24 +361,36 @@
     },
     {
       "id": "CI-ACTIONS-PAGES-001",
-      "status": "PARTIAL",
-      "implementation": "Updated Pages workflow to configure-pages v6, upload-pages-artifact v5 and deploy-pages v5.",
-      "blocker": "Pages deployment is intentionally not triggered from an unmerged feature branch.",
-      "acceptance": "Merge approved PR and verify a successful Pages build/deploy/live-content contract on main."
+      "status": "DONE_VERIFIED",
+      "implementation": "Pages action pins upgraded and post-merge deployments verified on main.",
+      "blocker": null,
+      "acceptance": "Post-merge Pages deployments passed, including PR #149 mainline run 41133469238."
     },
     {
       "id": "CI-ACTIONS-OPTIONAL-001",
-      "status": "DEFERRED",
-      "implementation": "Optional external G2P and VISTEC workflow action pins remain unchanged.",
-      "blocker": "Changing these workflow files triggers long-running external comparator/corpus evaluation jobs, outside this focused cleanup run.",
-      "acceptance": "Upgrade pins in a dedicated maintenance change and verify both external workflows on their exact heads."
+      "status": "DONE_VERIFIED",
+      "implementation": "PR #145 refreshed optional G2P/VISTEC action pins; both external workflows passed.",
+      "blocker": null,
+      "acceptance": "PR #145 exact-head optional G2P and VISTEC runs passed."
+    },
+    {
+      "id": "PACKAGING-WHEEL-001",
+      "status": "DONE_VERIFIED",
+      "implementation": "Canonical runtime data path and package resources verified by isolated source-distribution→wheel→install CLI/API/data-loader/license smoke.",
+      "acceptance": "CI 41132834082 passed; issue #147 closed."
+    },
+    {
+      "id": "DEV-TOOLING-001",
+      "status": "DONE_VERIFIED",
+      "implementation": "Pinned Ruff 0.17.3 dev extra and F-only correctness gate; 16 initial findings resolved.",
+      "acceptance": "CI 41133766851 passed Ruff and 214 Python tests."
     }
   ],
-  "latest_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
+  "latest_implementation_branch": "chore/python-static-analysis-gate-20261030",
   "latest_implementation_commit_pending_ci": {
-    "commit": "dd2260356f7de17d56d25b06c7c6b2c5999c0709",
-    "status": "DOCUMENTATION_ONLY_HEAD_CI_PENDING",
-    "notes": "Runtime code unchanged from the fully verified PR #79 code-bearing head. The latest main CI run is 40467565451; its exact-head completion must be checked after this documentation update."
+    "commit": "e8282dfb85f53ae18cbed5fcdc676b1b6049c313",
+    "status": "MAINLINE_CODE_HEAD_VERIFIED",
+    "notes": "PR #150 exact-head CI 41133766851 and post-merge main CI 41134406351 passed; Pages 41134406540 passed."
   },
   "current_head_status_at_audit_refresh": "Code/workflow checkpoint b6dbec7928b106f0ab52e06af33a26635df75412 passed CI 40322960615 and Web static validation 40322959844. Documentation checkpoint e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff passed full CI 40323209539 and Web static validation 40323209471. This audit-register update creates a newer documentation HEAD and requires exact-head CI/static validation before the current branch HEAD is marked green.",
   "current_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
@@ -445,8 +463,8 @@
   },
   "latest_implementation_commit_ci_verified": "4b1592cd72298d1ca92e0b99ab330975764a078a",
   "latest_documentation_head_ci_verified": "4b1592cd72298d1ca92e0b99ab330975764a078a",
-  "latest_documentation_head_ci_run": 40320450844,
-  "latest_documentation_head_web_validation_run": 40320450587,
+  "latest_documentation_head_ci_run": null,
+  "latest_documentation_head_web_validation_run": null,
   "latest_implementation_ci_run": 40320450844,
   "latest_implementation_web_validation_run": 40320450587,
   "segmentation_error_review": {
@@ -1635,66 +1653,119 @@
     "original_pr_status": "closed_as_superseded"
   },
   "current_mainline_closeout_2026_10_30": {
-    "main_sha": "1f53eef6522d437de546d6540ebc6c7d40ecdd82",
-    "pr_141": "merged",
+    "main_sha": "e8282dfb85f53ae18cbed5fcdc676b1b6049c313",
+    "pr_141": {
+      "status": "merged",
+      "merge_sha": "4d087e66778854503a0e6d355d605d83a50354f8"
+    },
     "pr_144": {
       "status": "merged",
       "merge_sha": "cb7ff2a49731d3c02ddba400a4ddbc166395d493",
-      "checks": "5/5 successful",
       "evidence_grade": "SOURCE_ATTESTED_NOT_GOLD",
       "pages_run": 41128531547
     },
     "pr_145": {
       "status": "merged",
       "merge_sha": "009060cdf12908d27d399419952bdcb50828bfd6",
-      "checks": "core CI and master-artifact successful; optional G2P smoke and VISTEC evaluation successful",
-      "main_ci_run": 41129543349,
-      "g2p_run": 41129543570,
+      "core_ci": "success",
+      "optional_g2p_run": 41129543570,
       "vistec_run": 41128819687
     },
     "pr_146": {
       "status": "merged",
       "merge_sha": "1f53eef6522d437de546d6540ebc6c7d40ecdd82",
-      "head_sha": "b0cd2f073399f9a70d3b441544b95151fc69c577",
-      "checks": "push and PR CI successful; 214 Python tests; 351780-row master artifact; 41 vowel records",
-      "push_run": 41129878010,
-      "pr_run": 41129841355,
-      "red_run": 41128931305
+      "python_tests": 214,
+      "master_rows": 351780,
+      "vowel_records": 41
+    },
+    "pr_148": {
+      "status": "merged",
+      "merge_sha": "85182af4af5a69970e8cb9506b4283056e7c65d6",
+      "main_ci_run": 41132476418
+    },
+    "pr_149": {
+      "status": "merged",
+      "merge_sha": "2fbf3d35a7050ae60afc7426e561503c91983446",
+      "ci_run": 41132834082,
+      "vistec_run": 41132834077,
+      "pages_run": 41133469238,
+      "main_ci_run": 41133469438,
+      "python_tests": 214,
+      "wheel_sdist_smoke": "PASS",
+      "master_rows": 351780,
+      "vowel_records": 41
+    },
+    "pr_150": {
+      "status": "merged",
+      "merge_sha": "e8282dfb85f53ae18cbed5fcdc676b1b6049c313",
+      "ci_run": 41133766851,
+      "vistec_run": 41133770393,
+      "python_tests": 214,
+      "ruff": "PASS",
+      "master_rows": 351780,
+      "vowel_records": 41
     },
     "post_merge_runs": {
-      "ci": 41130536672,
-      "pages": 41130536830,
-      "status": "in_progress_at_last_check"
+      "ci": 41134406351,
+      "pages": 41134406540,
+      "status": "SUCCESS"
     },
-    "pr_111": "closed_as_superseded; historical branch preserved",
+    "pr_111": "closed_as_superseded_by_pr_144; historical branch preserved",
     "issue_113": "closed_as_duplicate_of_114",
-    "issue_114": "open_for_manual_visual_and_linguistic_evidence_gates",
-    "issue_147": "open_wheel_packaging_portability",
-    "branch_refs_observed": 159,
+    "issue_114": "open_for_independent_linguistic_gold_and_manual_visual_accessibility_review",
+    "issue_147": "closed_completed_by_pr_149",
+    "branch_refs_observed": 163,
+    "open_pull_requests": 1,
     "technical_debt": [
       {
         "id": "PACKAGING-WHEEL-001",
-        "status": "TODO",
+        "status": "DONE_VERIFIED",
         "issue": 147,
-        "risk": "runtime loaders resolve repository-root data/ which is not declared as wheel package data",
-        "acceptance": "build/install wheel in isolated environment and run CLI/API/data-loader smoke tests"
+        "acceptance": "sdist→wheel→isolated install, CLI/API/data-loader/license smoke and CI verified"
       },
       {
         "id": "DEV-TOOLING-001",
-        "status": "TODO",
-        "risk": "no declared development extra or lint/type-check gate",
-        "acceptance": "inventory current code, choose minimal tooling, run and fix baseline"
+        "status": "DONE_VERIFIED",
+        "acceptance": "pinned Ruff dev extra; F checks across src/tests/scripts; exact-head CI passes"
       },
       {
         "id": "BRANCH-RETENTION-001",
         "status": "PARTIAL",
-        "risk": "159 historical refs; no reviewed retention policy",
-        "acceptance": "classify unique commits and obtain explicit deletion policy before pruning"
+        "risk": "163 historical refs; no reviewed retention policy",
+        "acceptance": "classify unique commits and obtain explicit deletion/archival policy before pruning"
       }
     ],
     "blockers": [
       "independent expert-adjudicated Thai segmentation/IPA/Ukrainian target gold",
-      "manual browser/device and WCAG 2.2 AA review"
-    ]
+      "manual browser/device and WCAG 2.2 AA review",
+      "local git clone blocked by container DNS resolution for github.com"
+    ],
+    "open_pull_request_numbers": [
+      151
+    ],
+    "branch_prefix_counts": {
+      "audit": 8,
+      "chore": 5,
+      "ci": 1,
+      "copy": 2,
+      "design": 2,
+      "docs": 46,
+      "feat": 26,
+      "(no prefix)": 7,
+      "finalize": 1,
+      "fix": 24,
+      "perf": 2,
+      "polish": 1,
+      "research": 24,
+      "site": 1,
+      "test": 4,
+      "ui": 1,
+      "ux": 7,
+      "web": 1
+    },
+    "pr_143": {
+      "status": "closed_unmerged_superseded_by_pr_144",
+      "historical_branch_preserved": true
+    }
   }
 }
