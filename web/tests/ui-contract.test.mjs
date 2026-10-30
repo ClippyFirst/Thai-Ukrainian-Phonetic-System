@@ -279,7 +279,7 @@ const pagesWorkflow = await readFile(new URL("../../.github/workflows/pages.yml"
 assert.match(homeHtml, /БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ/);
 assert.match(homeHtml, /Текст аналізується локально у браузері/);
 assert.match(pagesWorkflow, /grep -Fq 'Текст аналізується локально у браузері' \/tmp\/deployed-index\.html/);
-assert.match(homeHtml, /Можна вставити довший текст/);
+assert.match(homeHtml, /Можна вставити й ціле речення/);
 assert.match(homeHtml, /<label class="input-label" for="thai-input">Тайський текст<\/label>/);
 assert.match(homeHtml, /class="skip-link"/);
 assert.match(homeHtml, /id="main-content" tabindex="-1"/);
