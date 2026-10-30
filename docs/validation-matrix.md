@@ -13,8 +13,8 @@
 | Task | State | Evidence |
 |---|---|---|
 | PR #141 repository hygiene | DONE_VERIFIED | Squash-merged to `main` as `4d087e66778854503a0e6d355d605d83a50354f8`. Exact PR CI `41121318912` and Web Static `41121319014` passed. Post-merge CI `41122595309`, Web Static `41122595149`, and Pages build/deploy/live-content verification `41122595375` passed. Master artifact asserted 351,780 rows and 41 vowel records. |
-| Citation metadata version alignment | PARTIAL — follow-up branch | Regression test added first; test-only CI failed on the real mismatch (`CITATION.cff` 0.5.1 vs package 0.6.1). CFF now uses 0.6.1 and omits the stale release date rather than asserting an unverified release date. Exact-head CI is pending. |
-| PR #111 lexical exception | BLOCKED / PARTIAL | PR remains open and non-mergeable against current main. Exact source-backed `ทราม → ซาม` is a separate lexical exception; it needs a clean forward-port/rebase and exact-head CI before merge. |
+| Citation metadata version alignment | DONE_VERIFIED | PR #142 merged as `81123ef50fbfc0335e22e6f16f4a5b02d967bb14`; exact-head CI `41123979097` passed (212 Python tests and master artifact), post-merge main CI `41125905331` and Pages verification `41125905186` passed. CFF version is 0.6.1; unverified `date-released` removed. |
+| PR #111 lexical exception | PARTIAL — forward-port PR #144 | Historical PR #111 remains open on its stale base; the bounded `ทราม → ซาม` change is ported to a fresh current-main branch. Exact-head CI is pending. |
 | Historical branch cleanup | PARTIAL | Existing branch inventory is retained. No destructive deletion or force-rebase; branch disposition requires review of unique commit content. |
 | Linguistic validation | BLOCKED / evidence-limited | Independent expert-adjudicated Thai segmentation, IPA and Ukrainian target-form gold is still absent. |
 
