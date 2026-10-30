@@ -990,7 +990,7 @@ The first run with the new coverage tests completed master-table generation and 
 - **PASS — post-merge main CI:** run 41080245372; both test and master-artifact jobs passed, including the 351,780-row / 41-vowel assertion.
 - **PARTIAL — user evidence:** automated copy contract is green, but wording has not been moderated with non-specialist users. Do not describe it as user-tested.
 - **Not release-ready for linguistic accuracy:** independent expert-adjudicated Thai IPA/segmentation/Ukrainian target-form gold remains unavailable. Real-device visual QA and WCAG 2.2 AA review also remain outstanding.
-- PR #111 (`ทร` lexical exception) was superseded open and untouched.
+- PR #111 (`ทร` lexical exception) was closed as superseded by PR #144, which forward-ported the source-attested exception to current main; the historical branch remains preserved.
 
 
 ## Final audit update — 2026-10-31: API internal-error disclosure
