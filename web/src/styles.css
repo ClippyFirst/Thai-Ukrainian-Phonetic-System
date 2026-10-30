@@ -90,7 +90,7 @@ kbd{padding:2px 5px;border:1px solid var(--line);background:var(--wash);font:inh
 .continuous-output-head h3{margin:0 0 5px;font-size:1.1rem;line-height:1.35}
 .continuous-output-head p{max-width:700px;margin:0;color:var(--muted);font-size:.88rem;line-height:1.55}
 .continuous-output-head .copy{flex:none;margin:0}
-.continuous-output-value{margin:16px 0 0;padding:16px;border-left:3px solid var(--blue);background:var(--wash);font:1.15rem/1.7 inherit;white-space:pre-wrap;overflow-wrap:anywhere;user-select:text}
+.continuous-output-value{margin:16px 0 0;padding:16px;border-left:3px solid var(--blue);background:var(--wash);font:inherit;font-size:1.15rem;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere;user-select:text}
 .rtgs-continuous .continuous-output-value{border-left-color:var(--red)}
 .ipa-continuous .continuous-output-value{border-left-color:var(--focus);font-family:"Charis SIL","Doulos SIL","DejaVu Sans","Noto Sans",sans-serif}
 .ua-continuous .continuous-output-value{font-size:clamp(1.2rem,2.2vw,1.55rem);font-weight:700}
