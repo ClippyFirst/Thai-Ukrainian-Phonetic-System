@@ -111,3 +111,21 @@ jobs:
             data/derived/thai_ukrainian_master_2col.csv
             data/derived/thai_ukrainian_master.json
           if-no-files-found: error
+
+  wheel-install-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Build wheel
+        run: python -m pip wheel . --no-deps --wheel-dir "$RUNNER_TEMP/wheels"
+      - name: Install wheel into an isolated environment
+        run: |
+          python -m venv "$RUNNER_TEMP/wheel-env"
+          "$RUNNER_TEMP/wheel-env/bin/python" -m pip install --no-deps "$RUNNER_TEMP"/wheels/*.whl
+      - name: Smoke-test installed package data outside the checkout
+        run: |
+          cd "$RUNNER_TEMP"
+          "$RUNNER_TEMP/wheel-env/bin/python" "$GITHUB_WORKSPACE/scripts/wheel_install_smoke.py"
