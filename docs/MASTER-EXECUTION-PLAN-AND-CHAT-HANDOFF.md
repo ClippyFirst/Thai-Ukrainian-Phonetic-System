@@ -1,3 +1,12 @@
+## 2026-10-30 — strictness scale verification continuation
+
+- Follow-up review found two stale contract references from the prior UI revision: the homepage still loaded the app script with the old `plain-language-2` cache key, and UI tests still asserted the old cache key / old select-option wording. Corrected the homepage script cache key and the UI test assertions; this is a concrete fix, not a linguistic-engine change.
+- Final branch head for this continuation: `8d4b8675e2b5424ab3d7e0991c87da4f1b7c4483`. PR #138 remains open and mergeable, based on main `b64c239d012612435b7578241086b988cd96b262`.
+- Exact-head CI and Web static validation runs `41101645980` and `41101646080` are queued (as are earlier superseded runs); no success/failure conclusion is available yet. Do not merge until current-head checks complete and pass. Pages deployment/published-content check remains post-merge.
+- The control is now a three-position range input, not a select: 1 = heuristic, 2 = structural, 3 = conservative. The runtime maps those numeric positions to the existing `super-soft`, `soft`, and `strict` engine modes. Tests exercise each position and verify its hint and engine behavior.
+
+---
+
 ## 2026-10-30 — graded strictness UI continuation (PR #138)
 
 - Starting main: `b64c239d012612435b7578241086b988cd96b262` (PR #137, readability baseline). Working branch: `ui/graded-analysis-policy-20261030`; pull request: [#138](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/138).
