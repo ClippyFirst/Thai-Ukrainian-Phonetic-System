@@ -781,3 +781,24 @@ The user's explicit requirement supersedes the prior UX decision to collapse RTG
 - Final main commit for this completed documentation closeout: fafb38143de4fecbebc143eb4b98ca71aed94cf6.
 - Post-merge main CI run 41073985130 completed successfully: test and master-artifact jobs passed; master artifact contains 351,780 rows and 41 vowel records.
 - Pages deployment and live-content verification passed in run 41073985170. Both public pages were fetched live and show the intended audience split.
+
+
+
+## 2026-10-30 — second plain-language copy pass
+
+| Acceptance criterion | State | Evidence |
+|---|---|---|
+| Homepage begins with the user's task and explains the Ukrainian-letter output without research jargon | DONE_VERIFIED | PR #135, merge `867974bb16050bd815050d1b4a976283de47cdbf`; live homepage |
+| Main result headings and uncertainty/mode explanations use ordinary Ukrainian | DONE_VERIFIED | PR #135; UI contract passed in CI 41079488713 |
+| Research page explains the process plainly before technical detail | DONE_VERIFIED | PR #135; live `system.html` |
+| Technical details remain available separately for researchers | DONE_VERIFIED | Collapsed “Технічні подробиці для дослідників” section |
+| IPA-first adapter boundary and all language-engine behavior preserved | DONE_VERIFIED | Code diff restricted to copy, UI assertions and Pages smoke tests; IPA adapter/parity tests passed |
+| PR-head full CI and master artifact | DONE_VERIFIED | 41079488713; 351,780 rows, 41 vowel records |
+| Pages build, deployment and live copy contract | DONE_VERIFIED | 41080245447; live homepage and system page fetched after deployment |
+| Post-merge main CI | DONE_VERIFIED | 41080245372; both test and master-artifact jobs passed |
+| Plain-language wording validated with non-specialist users | PARTIAL | No moderated user test performed |
+| Independent expert-adjudicated Thai IPA, word boundaries and Ukrainian target forms | BLOCKED / evidence-limited | Gold reference corpus and expert adjudication not yet available |
+| Manual browser/device QA and WCAG 2.2 AA | BLOCKED | Requires actual browser/device and accessibility review |
+
+- PR #135 supersedes the insufficient first copy pass for the user-facing text; it does not alter the engine or research claims.
+- Overall project remains a research prototype, not release-ready for linguistic-accuracy claims. PR #111 remains separate and untouched.
