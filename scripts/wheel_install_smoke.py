@@ -23,7 +23,7 @@ def main() -> None:
     assert len(load_consonants()) == 44
     assert len(load_word_dictionary()) == 60963
     assert "ทราม" in LEXICON
-    assert "ทราม" in load_lexical_ipa_overrides()
+    assert "เงิน" in load_lexical_ipa_overrides()
     assert load_orthographic_rules()
     assert load_special_rules()
     assert analyze_syllable("กา").status == "analyzed"
