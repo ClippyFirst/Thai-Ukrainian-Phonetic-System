@@ -1489,3 +1489,10 @@ This note supersedes the preceding documentation-only status. The branch now cha
 
 - Update to the status recorded above: main CI run [41073985130](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41073985130) has now completed successfully. Both jobs passed: test and master-artifact. The master-artifact generator and assertion completed with 351,780 rows and 41 vowel records. This closes the previously pending post-merge CI item.
 - Documentation closeout PR #132 merged as 78e24924ece18c92a9d872afbfe40e1f842b912b. Current main includes the execution handoff, validation matrix and final audit records.
+
+
+### Repository closeout reference — 2026-10-30
+
+- Final main commit for this completed documentation closeout: fafb38143de4fecbebc143eb4b98ca71aed94cf6.
+- Post-merge main CI run 41073985130 completed successfully: test and master-artifact jobs passed; master artifact contains 351,780 rows and 41 vowel records.
+- Pages deployment and live-content verification passed in run 41073985170. Both public pages were fetched live and show the intended audience split.
