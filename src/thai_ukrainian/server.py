@@ -5,6 +5,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from typing import Any
 
 from .batch import analyze_input
+from ._version import __version__
 
 
 def _send(handler: BaseHTTPRequestHandler, status: int, payload: dict[str, Any]) -> None:
@@ -20,7 +21,7 @@ def _send(handler: BaseHTTPRequestHandler, status: int, payload: dict[str, Any])
 
 
 class APIHandler(BaseHTTPRequestHandler):
-    server_version = "thai-ua/0.5.0"
+    server_version = f"thai-ua/{__version__}"
 
     def do_OPTIONS(self) -> None:
         _send(self, 200, {"status": "ok"})
