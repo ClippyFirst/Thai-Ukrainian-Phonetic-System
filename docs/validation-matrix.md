@@ -1,3 +1,9 @@
+## 2026-10-30 — service copy verification follow-up
+
+| Component | State | Validation |
+|---|---|---|
+| Homepage copy contract | PARTIAL — stale assertion corrected | Initial CI failed because the test expected the previous hint string. Updated `web/tests/ui-contract.test.mjs` to assert the revised phrase. Web static validation run 41070448695 passed on head 49f7c4924ca851bfe2e7dfe46653cbd9965338ac; full CI run 41070448275 was still at master-table generation. Require a fresh full CI pass on the final documentation-updated PR head. |
+
 ## 2026-10-30 — public service copy vs researcher methodology
 
 | Component | State | Validation |
