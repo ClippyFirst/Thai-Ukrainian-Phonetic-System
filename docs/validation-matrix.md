@@ -940,7 +940,7 @@ The user's explicit requirement supersedes the prior UX decision to collapse RTG
 | Manual browser/device QA and WCAG 2.2 AA | BLOCKED | Requires actual browser/device and accessibility review |
 
 - PR #135 supersedes the insufficient first copy pass for the user-facing text; it does not alter the engine or research claims.
-- Overall project remains a research prototype, not release-ready for linguistic-accuracy claims. PR #111 remains separate and untouched.
+- Overall project remains a research prototype, not release-ready for linguistic-accuracy claims. PR #111 was closed as superseded; its source-attested lexical exception was forward-ported to main through PR #144, while the historical branch remains preserved.
 
 
 ## 2026-10-31 — JSON API internal-error disclosure hardening
