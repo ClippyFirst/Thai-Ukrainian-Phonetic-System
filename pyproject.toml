@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "thai-ukrainian-phonetic-system"
-version = "0.6.1"
+dynamic = ["version"]
 description = "Research-oriented Thai to Ukrainian phonetic-graphemic correspondence model"
 requires-python = ">=3.10"
 license = {text = "MIT"}
@@ -14,6 +14,9 @@ excel = ["openpyxl>=3.1.5"]
 
 [project.scripts]
 thai-ua = "thai_ukrainian.cli:main"
+
+[tool.setuptools.dynamic]
+version = {attr = "thai_ukrainian._version.__version__"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
