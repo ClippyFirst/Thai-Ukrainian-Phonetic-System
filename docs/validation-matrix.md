@@ -768,3 +768,9 @@ The user's explicit requirement supersedes the prior UX decision to collapse RTG
 - Editorial precedent: Korean reviewed copy revision 2a16bae3bb6d4297225d358180adcefa0f301de8; treated as a style/structure reference, not as proof that an executable corrector was run.
 - PR #130 superseded and closed; clean PR #131 merged as feef61cba8d1a5ee6d1a79b72bfaa952f53b5e66. PR #111 remains separate and untouched.
 - Status: published copy update DONE_VERIFIED; overall project remains a research prototype, not release-ready for linguistic-accuracy claims.
+
+
+### Post-merge CI result update — 2026-10-30
+
+- The previously pending post-merge main CI run 41073985130 is now DONE_VERIFIED: both test and master-artifact jobs succeeded. Master artifact asserted exactly 351,780 rows and 41 vowel records.
+- The handoff/matrix/audit closeout was merged in PR #132 as 78e24924ece18c92a9d872afbfe40e1f842b912b.
