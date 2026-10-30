@@ -10,4 +10,4 @@ __all__=[
     "load_records","evaluate_records","evaluate_file",
     "tokenize_text","segment_thai_word","analyze_text",
 ]
-__version__="0.5.1"
+from ._version import __version__
