@@ -1,3 +1,23 @@
+## 2026-10-30 — current mainline closeout after PR #144
+
+| Task | State | Evidence / next acceptance |
+|---|---|---|
+| PR #141 repository hygiene | DONE_VERIFIED | Merged to main previously; version single-source, TSV delimiter regression and core/Pages action upgrades retained. |
+| PR #144 lexical evidence forward-port | DONE_VERIFIED_FOR_IMPLEMENTATION | Squash-merged as `cb7ff2a49731d3c02ddba400a4ddbc166395d493`. Exact-head checks on `72a0e147fbbcd6d21fefc40a4219f9fb7c0bfc0b`: 5/5 check runs successful (Python/browser tests, master artifact and web-static validation). Adds bounded `ทราม → ซาม` handling and ten enumerated regression forms; no productive `ทร → ซ` rule. Evidence grade remains SOURCE_ATTESTED_NOT_GOLD. |
+| Historical PR #111 | DONE — superseded | Closed after the same 13-file bounded change was forward-ported onto current main through PR #144. Original branch/history preserved; no force-rebase. |
+| Mainline post-merge CI | PARTIAL / RUNNING at handoff | Main SHA `cb7ff2a49731d3c02ddba400a4ddbc166395d493`; CI run [41128531462](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41128531462) and Pages run [41128531547](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41128531547) were still in progress at last check. Web Static run [41128531495](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41128531495) passed. Do not call post-merge CI/Pages complete until those runs finish successfully. |
+| Branch inventory | PARTIAL | 156 branch refs observed across two API pages. No mass deletion or force-rebase; classify unique commits and retain branch provenance before any destructive pruning. |
+| Optional G2P/VISTEC action pins | DEFERRED | Older action pins remain in external research workflows. Updating them triggers external benchmark jobs; handle as a bounded workflow-maintenance change with explicit result inspection. |
+| Dependency/tooling hygiene | TODO | `pyproject.toml` currently declares only the setuptools build requirement and optional `openpyxl`; there is no declared development extra or formatter/linter/type-checker gate. Audit actual imports and CI commands before adding dependencies. |
+| Changelog synchronization | DONE_VERIFIED | Added v0.6.1 closeout entry reflecting merged implementation and evidence boundaries. |
+| Linguistic accuracy / release readiness | BLOCKED / evidence-limited | Independent expert-adjudicated Thai segmentation, IPA and Ukrainian target-form gold is still absent. Source-attested dictionary forms and parity tests are not accuracy gold. Manual browser/device and WCAG 2.2 AA review also remain outstanding. |
+
+**Current main:** `cb7ff2a49731d3c02ddba400a4ddbc166395d493`.
+**Working branch:** `chore/closeout-docs-and-debt-register-20261030` (documentation-only follow-up).
+**Public service:** https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/
+
+---
+
 ## 2026-10-30 — Thai lexical exception forward-port
 
 | Task | State | Evidence |
@@ -14,7 +34,7 @@
 |---|---|---|
 | PR #141 repository hygiene | DONE_VERIFIED | Squash-merged to `main` as `4d087e66778854503a0e6d355d605d83a50354f8`. Exact PR CI `41121318912` and Web Static `41121319014` passed. Post-merge CI `41122595309`, Web Static `41122595149`, and Pages build/deploy/live-content verification `41122595375` passed. Master artifact asserted 351,780 rows and 41 vowel records. |
 | Citation metadata version alignment | DONE_VERIFIED | PR #142 merged as `81123ef50fbfc0335e22e6f16f4a5b02d967bb14`; exact-head CI `41123979097` passed (212 Python tests and master artifact), post-merge main CI `41125905331` and Pages verification `41125905186` passed. CFF version is 0.6.1; unverified `date-released` removed. |
-| PR #111 lexical exception | PARTIAL — forward-port PR #144 | Historical PR #111 remains open on its stale base; the bounded `ทราม → ซาม` change is ported to a fresh current-main branch. Exact-head CI is pending. |
+| PR #111 lexical exception | PARTIAL — forward-port PR #144 | Historical PR #111 is closed as superseded on its stale base; the bounded `ทราม → ซาม` change is ported to a fresh current-main branch. Exact-head CI is pending. |
 | Historical branch cleanup | PARTIAL | Existing branch inventory is retained. No destructive deletion or force-rebase; branch disposition requires review of unique commit content. |
 | Linguistic validation | BLOCKED / evidence-limited | Independent expert-adjudicated Thai segmentation, IPA and Ukrainian target-form gold is still absent. |
 
@@ -51,7 +71,7 @@ Working branch is based on main after PR #140. PR #141 is open against the post-
 | Manual browser/device visual QA and WCAG 2.2 AA | PARTIAL / not performed | Automated static and published-content checks do not substitute for screenshot review, physical-device testing, keyboard/screen-reader checks or a full WCAG audit. |
 | Linguistic accuracy | BLOCKED / evidence-limited | Independent expert-adjudicated Thai segmentation, IPA and Ukrainian target-form gold remains unavailable. UI and CI changes do not validate pronunciation accuracy. |
 
-- PR #111 remains a separate source-attested `ทร` lexical-exception task on an older base; it was not included in either UI merge.
+- PR #111 was superseded by PR #144 source-attested `ทร` lexical-exception task on an older base; it was not included in either UI merge.
 
 ## 2026-10-30 — Korean editorial reference applied; Thai copy closeout
 
