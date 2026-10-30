@@ -276,7 +276,7 @@ function run() {
   out.innerHTML = '<h2 class="results-heading">Три варіанти запису</h2>' + cleanupNotice + notice +
     continuousPanel('01 · Латинський запис', rtgsOutput,
       'Довідковий запис латиницею. Він не показує тон і не передає всіх особливостей вимови.', 'rtgs-continuous') +
-    continuousPanel('02 · Запис звуків (IPA)', ipaOutput,
+    continuousPanel('02 · Запис звуків IPA', ipaOutput,
       'Точніший запис звуків спеціальними знаками. Він допомагає побачити, як сервіс визначив вимову.', 'ipa-continuous') +
     continuousPanel('03 · Українськими літерами', uaOutput,
       'Головний результат — приблизний запис тайської вимови українськими літерами. Це не переклад.', 'ua-continuous') +
