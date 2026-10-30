@@ -1,3 +1,17 @@
+## 2026-10-30 — continuation handoff after PR #150
+
+- **Current main:** `e8282dfb85f53ae18cbed5fcdc676b1b6049c313`.
+- **Merged:** PR #148 audit closeout (`85182af4...`), PR #149 wheel packaging portability (`2fbf3d35...`), and PR #150 pinned Ruff correctness gate (`e8282dfb...`). No open PRs were present at the latest inventory.
+- **Issue #147:** closed as completed. Runtime data resolution now distinguishes source/editable installs from regular wheels; sdist→wheel rebuild and isolated installation outside the checkout are verified. The installed `thai-ua` CLI, API, core registries, Ukrainian target vectors and license notices all passed smoke checks.
+- **Development tooling:** `ruff==0.17.3` is available in the `dev` extra. CI runs `ruff check src tests scripts` with the Pyflakes `F` profile. The first lint run found 16 unused imports; 15 were removed and `__version__` was added to the public `__all__`. Exact-head CI [41133766851](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41133766851) passed Ruff, 214 Python tests, generated-data drift, browser parity/UI tests, diagnostics, wheel smoke and master-artifact (351,780 rows; 41 vowel records). VISTEC [41133770393](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41133770393) passed.
+- **Post-merge status:** PR #149 main CI [41133469438](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41133469438) and Pages [41133469238](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41133469238) passed. After PR #150, main CI [41134406351](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41134406351) and Pages [41134406540](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41134406540) were running when this handoff was written; verify both before declaring the latest mainline fully green.
+- **Branch inventory:** 163 refs across two API pages. No destructive mass deletion or force-rebase. PR #111 is closed as superseded; its historical branch is preserved. A retention/archive policy remains unapproved.
+- **Open pull requests:** none at inventory time.
+- **Remaining blockers:** issue #114 still needs independent expert-adjudicated Thai segmentation/IPA/Ukrainian target gold, manual browser/device visual review and WCAG 2.2 AA review. Local clone/testing remains blocked because this execution container cannot resolve `github.com`; all test claims are GitHub Actions results.
+- **Readiness:** engineering-verified research prototype, not release-ready for independent linguistic-accuracy claims. The software pipeline and CI are stronger; independent linguistic gold and manual accessibility evidence remain absent.
+
+---
+
 ## 2026-10-30 — verified mainline closeout after PR #146
 
 | Task | State | Evidence / next acceptance |
