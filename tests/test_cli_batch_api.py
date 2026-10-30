@@ -3,11 +3,14 @@ from __future__ import annotations
 import csv
 import json
 import tempfile
+from importlib.metadata import version as distribution_version
 import unittest
 from pathlib import Path
 from unittest.mock import patch
 
+import thai_ukrainian
 from thai_ukrainian.batch import analyze_input, load_batch, write_batch
+from thai_ukrainian.server import APIHandler
 from thai_ukrainian.cli import main
 
 
@@ -30,6 +33,18 @@ class CliBatchApiTests(unittest.TestCase):
             records = [json.loads(line) for line in output.read_text(encoding="utf-8").splitlines()]
             self.assertEqual(len(records), 2)
             self.assertEqual(records[0]["input"], "กา")
+
+    def test_tsv_batch_uses_tab_delimiter(self):
+        with tempfile.TemporaryDirectory() as d:
+            source = Path(d) / "input.tsv"
+            source.write_text("thai\tnote\nกา\tfixture\n", encoding="utf-8")
+            rows = load_batch(source)
+            self.assertEqual(rows, [{"id": "1", "thai": "กา"}])
+
+    def test_package_and_http_server_share_distribution_version(self):
+        installed_version = distribution_version("thai-ukrainian-phonetic-system")
+        self.assertEqual(thai_ukrainian.__version__, installed_version)
+        self.assertEqual(APIHandler.server_version, f"thai-ua/{installed_version}")
 
     def test_csv_batch(self):
         with tempfile.TemporaryDirectory() as d:
