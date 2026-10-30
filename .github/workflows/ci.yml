@@ -94,17 +94,6 @@ jobs:
           name: source-attested-ipa-diagnostic
           path: /tmp/source-attested-ipa-diagnostic.json
           if-no-files-found: error
-  master-artifact:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-python@v7
-        with:
-          python-version: "3.12"
-      - run: python -m pip install -e .
-      - run: python scripts/generate_master_table.py
-      - run: python -c "import json; m=json.load(open('data/derived/thai_ukrainian_master.json',encoding='utf-8')); assert m['rows']==m['expected_rows']==351780; assert m['vowel_records']==41"
       - uses: actions/upload-artifact@v7
         with:
           name: thai-ukrainian-master-table
@@ -113,6 +102,19 @@ jobs:
             data/derived/thai_ukrainian_master_2col.csv
             data/derived/thai_ukrainian_master.json
           if-no-files-found: error
+  master-artifact:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - uses: actions/download-artifact@v8.0.2
+        with:
+          name: thai-ukrainian-master-table
+          path: data/derived
+      - name: Validate the generated master artifact
+        run: python -c "import json; m=json.load(open('data/derived/thai_ukrainian_master.json',encoding='utf-8')); assert m['rows']==m['expected_rows']==351780; assert m['vowel_records']==41"
 
   wheel-install-smoke:
     runs-on: ubuntu-latest
