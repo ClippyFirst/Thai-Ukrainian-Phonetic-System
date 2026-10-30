@@ -2,7 +2,6 @@ from __future__ import annotations
 import csv, json
 from pathlib import Path
 from .orthography import VOWEL_SIGNATURES, SIGNATURES, GLIDE_PATTERNS, NUCLEUS_CONSONANTS, TONE_MARKS
-from .inventory import load_consonants
 
 from ._paths import THAI_DATA_ROOT
 
