@@ -3,10 +3,14 @@ from __future__ import annotations
 import csv
 import json
 import tempfile
+import threading
+import urllib.error
+import urllib.request
 from importlib.metadata import version as distribution_version
 import unittest
 from pathlib import Path
 from unittest.mock import patch
+from http.server import ThreadingHTTPServer
 
 import thai_ukrainian
 from thai_ukrainian.batch import analyze_input, load_batch, write_batch
@@ -40,6 +44,30 @@ class CliBatchApiTests(unittest.TestCase):
             source.write_text("thai\tnote\nกา\tfixture\n", encoding="utf-8")
             rows = load_batch(source)
             self.assertEqual(rows, [{"id": "1", "thai": "กา"}])
+
+    def test_json_non_object_request_returns_400_not_500(self):
+        server = ThreadingHTTPServer(("127.0.0.1", 0), APIHandler)
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        try:
+            url = f"http://127.0.0.1:{server.server_port}/analyze"
+            for payload in ([], None, "not-an-object"):
+                request = urllib.request.Request(
+                    url,
+                    data=json.dumps(payload).encode("utf-8"),
+                    headers={"Content-Type": "application/json"},
+                    method="POST",
+                )
+                with self.subTest(payload=payload):
+                    with self.assertRaises(urllib.error.HTTPError) as raised:
+                        urllib.request.urlopen(request, timeout=3)
+                    self.assertEqual(raised.exception.code, 400)
+                    body = json.loads(raised.exception.read().decode("utf-8"))
+                    self.assertEqual(body["error"], "invalid_request")
+        finally:
+            server.shutdown()
+            server.server_close()
+            thread.join(timeout=3)
 
     def test_package_and_http_server_share_distribution_version(self):
         installed_version = distribution_version("thai-ukrainian-phonetic-system")
