@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Main includes PRs #141, #144–#146, #148–#152. Version/TSV contracts, bounded lexical evidence, workflow maintenance, API request/error handling, wheel portability and Ruff checks are integrated. PR #153 adds strict HTTP Content-Length framing validation; exact PR-head tests passed, master-artifact verification and merge are pending. Engineering-verified research prototype; not release-ready for independent linguistic-accuracy claims.",
+  "status": "Main includes PRs #141, #144–#146, #148–#153. HTTP Content-Length framing validation is merged and fully verified. Exact PR-head and post-merge main CI passed 216 Python tests, Ruff, browser/parity/UI, diagnostics, wheel-install smoke and master artifact (351,780 rows; 41 vowel/rime records); Pages deployment and live-content verification passed. Engineering-verified research prototype; not release-ready for independent linguistic-accuracy claims.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -108,25 +108,26 @@
   "latest_verified_code_commit": "e8282dfb85f53ae18cbed5fcdc676b1b6049c313",
   "starting_branch_commit": "7e39fd4bc108386148c1e9a79d257d75babcc9aa",
   "ci": {
-    "latest_fully_successful_code_data_commit": "e8282dfb85f53ae18cbed5fcdc676b1b6049c313",
-    "latest_fully_successful_ci_run": 41133766851,
-    "python_tests": 214,
+    "latest_fully_successful_code_data_commit": "7db6e591303c1f232cb98d54a333b0300bbefa0e",
+    "latest_fully_successful_ci_run": 41141850559,
+    "python_tests": 216,
     "generated_data_drift": "PASS",
-    "master_artifact": "PASS — 351,780 rows; 41 vowel/rime records; artifact uploaded",
-    "node_ipa_ua_parity_ui_tests": "PASS on exact head e8282dfb85f53ae18cbed5fcdc676b1b6049c313 (CI 41133766851)",
+    "master_artifact": "PASS — exact PR head and post-merge main: 351,780 rows; 41 vowel/rime records; artifact uploaded",
+    "node_ipa_ua_parity_ui_tests": "PASS on exact PR head 7db6e591303c1f232cb98d54a333b0300bbefa0e (CI 41141850559)",
     "wisesight_baseline": "PASS",
     "source_attested_ipa_diagnostic": "PASS",
     "current_browser_parity_code_head": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
     "current_head_ci_runs": [
-      41133766851
+      41141850559,
+      41142211674
     ],
     "current_head_web_validation_runs": [
-      40315032788
+      41142211675
     ],
-    "current_head_status_at_audit_refresh": "Exact-head PR #150 push CI 41133766851 passed Ruff, 214 Python tests, generated-data drift, browser parity/UI, research diagnostics, wheel smoke and master artifact (351,780 rows; 41 vowel records); VISTEC 41133770393 passed. Post-merge main CI 41134406351 passed test, wheel-install smoke and master-artifact; Pages 41134406540 passed build and deploy.",
-    "latest_full_repository_head": "e8282dfb85f53ae18cbed5fcdc676b1b6049c313",
-    "latest_full_repository_head_ci_run": 41133766851,
-    "latest_full_repository_head_web_validation_run": 40320450587,
+    "current_head_status_at_audit_refresh": "PR #153 merged as 8a539193798e55c3010e3a6a72a0e2578ea413c9. Exact PR-head CI 41141850559 and post-merge main CI 41142211674 passed Ruff, 216 Python tests, generated-data checks, browser parity/UI, research diagnostics, wheel smoke and master artifact (351,780 rows; 41 vowel/rime records). Pages 41142211675 passed build, deploy and live-content verification.",
+    "latest_full_repository_head": "8a539193798e55c3010e3a6a72a0e2578ea413c9",
+    "latest_full_repository_head_ci_run": 41142211674,
+    "latest_full_repository_head_web_validation_run": 41142211675,
     "latest_web_static_verified_code_commit": "1ed4c7aa30759fd8d31136e46d7490bf9b2c5e8b",
     "latest_web_static_verified_code_run": 40286893366,
     "latest_verified_commit_note": "43687b2753379b1d617b1c925f87358f8aad13bd is the historical last fully verified code commit before the current TUD trainer and เดิน override changes; it is not the current branch head.",
@@ -138,7 +139,7 @@
     "latest_documentation_head_web_validation_run": 40320450587,
     "latest_implementation_ci_run": 41133766851,
     "latest_implementation_web_validation_run": 40320450587,
-    "latest_implementation_commit_ci_verified": "e8282dfb85f53ae18cbed5fcdc676b1b6049c313",
+    "latest_implementation_commit_ci_verified": "7db6e591303c1f232cb98d54a333b0300bbefa0e",
     "latest_fully_successful_web_static_validation_run": 40322959844,
     "comparative_error_review_status": "DONE_VERIFIED — report, tests and CI artifact passed on code checkpoint b6dbec7928b106f0ab52e06af33a26635df75412",
     "comparative_error_review_script": "scripts/compare_segmentation_error_review.py",
@@ -273,7 +274,7 @@
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
   "latest_code_checkpoint": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
   "readiness": "engineering-verified research prototype; not release-ready for independent Thai segmentation, IPA or Ukrainian target accuracy",
-  "latest_verified_repository_head": "52dfb640a3129818c23ed36079d531cd3f9c0fac",
+  "latest_verified_repository_head": "8a539193798e55c3010e3a6a72a0e2578ea413c9",
   "task_ledger": [
     {
       "id": "SEG-TRAIN-001",
@@ -394,10 +395,10 @@
     },
     {
       "id": "API-CONTENT-LENGTH-001",
-      "status": "PARTIAL",
-      "implementation": "Strict ASCII-decimal Content-Length validation before body reads; negative-length raw-socket regression added; exact PR-head CI passed 216 Python tests, Ruff, browser/parity/UI diagnostics and wheel smoke.",
-      "blocker": "Master-artifact job, PR merge and post-merge main CI still pending at audit refresh.",
-      "acceptance": "Master artifact asserts 351780 rows and 41 vowel/rime records; PR #153 merges; post-merge main CI passes."
+      "status": "DONE_VERIFIED",
+      "implementation": "Strict ASCII-decimal Content-Length validation before body reads; raw-socket regression proves the old handler accepted Content-Length: -1 and the fixed handler rejects it. Test-first red CI 41141368949; exact PR-head CI 41141850559 passed 216 Python tests, Ruff, browser/parity/UI, diagnostics, wheel smoke and master artifact.",
+      "blocker": null,
+      "acceptance": "PR #153 merged as 8a539193798e55c3010e3a6a72a0e2578ea413c9; exact PR-head master artifact 351780 rows / 41 vowel records passed; post-merge main test/wheel and Pages checks passed."
     }
   ],
   "latest_implementation_branch": "chore/python-static-analysis-gate-20261030",
@@ -1806,10 +1807,15 @@
     "red_ci_run": 41141368949,
     "red_failure": "The raw-socket regression failed as expected: the old handler accepted Content-Length: -1, read the valid JSON body, and returned HTTP 200.",
     "implementation_commit": "47c3f335fb5aa902784f4964a842dd00e5ea01c7",
-    "exact_pr_head_ci_run": 41141511448,
-    "exact_pr_head_ci_status": "PASS — 216 Python tests, Ruff, browser IPA/parity/UI, research diagnostics and wheel-install smoke.",
-    "master_artifact_status": "PENDING at audit refresh — verify 351780 rows, 41 vowel/rime records and artifact upload before merge.",
+    "exact_pr_head_ci_run": 41141850559,
+    "exact_pr_head_ci_status": "PASS — 216 Python tests, Ruff, browser IPA/parity/UI, research diagnostics, wheel-install smoke, master artifact 351780 rows / 41 vowel/rime records.",
+    "master_artifact_status": "PASS — exact PR-head and post-merge main jobs asserted 351780 rows and 41 vowel/rime records and uploaded artifact.",
     "behavior": "Content-Length must contain ASCII decimal digits before conversion or body reading; malformed values return the existing 400 invalid_request response.",
-    "scope": "HTTP request framing only; no Thai linguistic, browser or Ukrainian adapter behavior changed."
+    "scope": "HTTP request framing only; no Thai linguistic, browser or Ukrainian adapter behavior changed.",
+    "merge_commit": "8a539193798e55c3010e3a6a72a0e2578ea413c9",
+    "post_merge_main_ci_run": 41142211674,
+    "post_merge_main_ci_status": "PASS — test (216 Python tests), wheel-install-smoke, and master-artifact (351780 rows; 41 vowel/rime records).",
+    "post_merge_pages_run": 41142211675,
+    "post_merge_pages_status": "PASS — build, deploy and published-content/pipeline verification."
   }
 }
