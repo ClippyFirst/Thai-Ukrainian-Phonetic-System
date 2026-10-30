@@ -1,5 +1,3 @@
-from pathlib import Path
-import csv
 from .inventory import load_consonants
 from ._paths import THAI_DATA_ROOT
 def inventory_report():
