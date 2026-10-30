@@ -63,7 +63,7 @@ analyze.click();
 assert.doesNotMatch(output.innerHTML, /RTGS НЕ ПЕРЕВІРЕНО/);
 assert.match(output.innerHTML, /Латинський запис/);
 assert.equal(status.className, "status notice");
-assert.match(status.textContent, /потребують перевірки або залишилися невизначеними/);
+assert.match(status.textContent, /Не всі слова вдалося прочитати впевнено/);
 assert.doesNotMatch(output.innerHTML, /ФОНОЛОГІЧНА IPA/);
 assert.match(output.innerHTML, /unresolved/);
 
