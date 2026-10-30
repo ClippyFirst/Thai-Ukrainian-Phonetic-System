@@ -4,8 +4,10 @@ from pathlib import Path
 from .orthography import VOWEL_SIGNATURES, SIGNATURES, GLIDE_PATTERNS, NUCLEUS_CONSONANTS, TONE_MARKS
 from .inventory import load_consonants
 
+from ._paths import THAI_DATA_ROOT
+
 ROOT = Path(__file__).resolve().parents[2]
-THAI = ROOT / "data" / "thai"
+THAI = THAI_DATA_ROOT
 OUT = ROOT / "docs" / "source-final-manifest.json"
 
 def _rows(path: Path):

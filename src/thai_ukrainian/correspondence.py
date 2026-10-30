@@ -2,8 +2,9 @@ from __future__ import annotations
 import csv
 from pathlib import Path
 from .models import Candidate
-ROOT=Path(__file__).resolve().parents[2]
-UA_VECTORS=ROOT/"data"/"ua_target_vectors.csv"
+from ._paths import DATA_ROOT
+
+UA_VECTORS=DATA_ROOT/"ua_target_vectors.csv"
 FEATURES=("consonantal","sonorant","syllabic","voice","continuant","nasal","lateral","rhotic","labial","coronal","dorsal","palatal","palatalized","affricate","aspirated","long")
 WEIGHTS={"consonantal":2.0,"sonorant":1.5,"syllabic":1.0,"voice":1.0,"continuant":1.5,"nasal":1.5,"lateral":1.0,"rhotic":1.0,"labial":1.5,"coronal":1.5,"dorsal":1.5,"palatal":2.0,"palatalized":1.5,"affricate":1.5,"aspirated":0.5,"long":0.5}
 THAI_FEATURES={

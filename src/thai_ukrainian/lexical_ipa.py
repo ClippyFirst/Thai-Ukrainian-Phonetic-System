@@ -12,8 +12,9 @@ from pathlib import Path
 
 from .models import SyllableAnalysis, ToneResult
 
-ROOT = Path(__file__).resolve().parents[2]
-OVERRIDES_PATH = ROOT / "data" / "thai" / "lexical_ipa_overrides.tsv"
+from ._paths import THAI_DATA_ROOT
+
+OVERRIDES_PATH = THAI_DATA_ROOT / "lexical_ipa_overrides.tsv"
 FIELDS = (
     "word", "segmental_ipa", "tone_category", "tone_contour_ipa",
     "vowel_length", "source_id", "source_url", "source_revision",
