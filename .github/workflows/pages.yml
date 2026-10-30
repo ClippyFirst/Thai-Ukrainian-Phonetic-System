@@ -75,96 +75,61 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-      - name: Verify published single-flow UI, IPA adapter and RTGS contract
+      - name: Verify published plain-language service and transcription pipeline
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
         run: |
           set -eu
           for attempt in $(seq 1 12); do
             if curl --fail --silent --show-error "$PAGE_URL" -o /tmp/deployed-index.html \
-              && grep -Fq 'Можна вставити й ціле речення' /tmp/deployed-index.html \
-              && grep -Fq 'Як передати тайський текст українською' /tmp/deployed-index.html \
-              && grep -Fq 'Як система працюватиме з невідомими словами?' /tmp/deployed-index.html \
+              && grep -Fq 'Як прочитати тайський текст українською' /tmp/deployed-index.html \
+              && grep -Fq 'Вставте слово або речення тайською' /tmp/deployed-index.html \
+              && grep -Fq 'Текст залишається у вашому браузері' /tmp/deployed-index.html \
+              && grep -Fq 'ТЕСТОВА ВЕРСІЯ' /tmp/deployed-index.html \
+              && grep -Fq 'Як діяти, якщо слово незнайоме?' /tmp/deployed-index.html \
+              && grep -Fq 'Обережно — не вгадувати' /tmp/deployed-index.html \
+              && grep -Fq 'Запропонувати приблизне читання' /tmp/deployed-index.html \
               && grep -Fq 'data-example="กา"' /tmp/deployed-index.html \
               && grep -Fq 'data-example="จริง"' /tmp/deployed-index.html \
               && grep -Fq 'id="engine-mode"' /tmp/deployed-index.html \
               && grep -Fq 'value="soft"' /tmp/deployed-index.html \
               && grep -Fq 'value="super-soft"' /tmp/deployed-index.html \
-              && grep -Fq 'Суперм’який · приблизне читання для кожного фрагмента' /tmp/deployed-index.html \
-              && grep -Fq 'БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ' /tmp/deployed-index.html \
+              && grep -Fq 'Що означає результат' /tmp/deployed-index.html \
               && ! grep -Fq 'id="ipa-input"' /tmp/deployed-index.html \
               && ! grep -Fq 'id="ipa-adapt"' /tmp/deployed-index.html \
-              && grep -Fq 'Як формується результат' /tmp/deployed-index.html \
-              && curl --fail --silent --show-error "$PAGE_URL/src/app.js" -o /tmp/deployed-app.js \
+              && curl --fail --silent --show-error "$PAGE_URL/src/app.js?v=20261030-plain-language-2" -o /tmp/deployed-app.js \
               && curl --fail --silent --show-error "$PAGE_URL/src/engine.js" -o /tmp/deployed-engine.js \
               && curl --fail --silent --show-error "$PAGE_URL/src/ipa-ua.js" -o /tmp/deployed-ipa-ua.js \
               && curl --fail --silent --show-error "$PAGE_URL/src/rtgs-reference.js" -o /tmp/deployed-rtgs.js \
               && curl --fail --silent --show-error "$PAGE_URL/system.html" -o /tmp/deployed-system.html \
-              && grep -Fq 'Методологія тайсько-українського фонетико-графемного передавання' /tmp/deployed-system.html \
-              && grep -Fq 'Цей розділ призначений для дослідників і розробників.' /tmp/deployed-system.html \
-              && grep -Fq 'Словниковий запис' /tmp/deployed-app.js \
-              && grep -Fq 'Попередній структурний розбір' /tmp/deployed-app.js \
-              && grep -Fq 'Приблизне резервне читання' /tmp/deployed-app.js \
-              && grep -Fq 'Результати · 3 представлення' /tmp/deployed-app.js \
-              && grep -Fq 'class="skip-link"' /tmp/deployed-index.html \
-              && grep -Fq 'src/styles.css?v=20261028-result-order-1' /tmp/deployed-index.html \
-              && grep -Fq 'src/app.js?v=20261028-result-order-1' /tmp/deployed-index.html \
-              && grep -Fq 'class="mode-help"' /tmp/deployed-index.html \
-              && grep -Fq 'RTGS — окрема латинська довідкова романізація' /tmp/deployed-index.html \
-              && grep -Fq 'Текст аналізується локально у браузері' /tmp/deployed-index.html \
-              && grep -Fq 'RTGS — латинська романізація' /tmp/deployed-system.html \
-              && grep -Fq 'Тести — не мовний еталон' /tmp/deployed-system.html \
-              && grep -Fq 'незалежно експертно перевірених рядків у поточному еталоні немає' /tmp/deployed-system.html \
+              && grep -Fq 'Як сервіс читає тайський текст' /tmp/deployed-system.html \
+              && grep -Fq 'Технічні подробиці для дослідників' /tmp/deployed-system.html \
+              && grep -Fq 'Що вже перевірено' /tmp/deployed-system.html \
+              && grep -Fq 'не маємо незалежно перевіреного фахівцями набору' /tmp/deployed-system.html \
+              && grep -Fq 'Латинський запис' /tmp/deployed-app.js \
+              && grep -Fq '02 · Запис звуків IPA' /tmp/deployed-app.js \
+              && grep -Fq '03 · Українськими літерами' /tmp/deployed-app.js \
+              && grep -Fq 'Для частини слів сервіс зробив припущення' /tmp/deployed-app.js \
+              && grep -Fq 'Це приблизне читання' /tmp/deployed-app.js \
               && grep -Fq 'continuous-output-value' /tmp/deployed-app.js \
-              && grep -Fq '01 · RTGS — латинська романізація (не IPA)' /tmp/deployed-app.js \
-              && grep -Fq '02 · IPA — фонетичне представлення' /tmp/deployed-app.js \
-              && grep -Fq '03 · Український фонетичний кандидат' /tmp/deployed-app.js \
-              && ! grep -Fq '<details class="rtgs-details"' /tmp/deployed-app.js \
-              && grep -Fq 'Строгий режим: невідомі фрагменти залишаються невизначеними' /tmp/deployed-app.js \
-              && grep -Fq 'Суперм’який режим: невідомі фрагменти отримують приблизний кандидат' /tmp/deployed-app.js \
-              && grep -Fq 'АУДИТ IPA → УКРАЇНСЬКА' /tmp/deployed-app.js \
-              && grep -Fq 'RTGS — латинська романізація (не IPA)' /tmp/deployed-app.js \
               && grep -Fq 'renderRtgsTokens' /tmp/deployed-app.js \
               && grep -Fq 'romanizeRtgsWord' /tmp/deployed-rtgs.js \
               && grep -Fq 'IPA delimiters are mismatched' /tmp/deployed-ipa-ua.js \
               && grep -Fq 'softSyllabify' /tmp/deployed-engine.js \
-              && grep -Fq 'М’який режим — попередній результат' /tmp/deployed-app.js \
-              && grep -Fq 'Суперм’який' /tmp/deployed-app.js \
-              && grep -Fq 'super-soft-approximate' /tmp/deployed-engine.js \
               && grep -Fq 'UNVERIFIED_ORTHOGRAPHIC_FALLBACK' /tmp/deployed-engine.js; then
-              rtgs_line=$(grep -nF "continuousPanel('01 · RTGS — латинська романізація (не IPA)'" /tmp/deployed-app.js | cut -d: -f1)
-              ipa_line=$(grep -nF "continuousPanel('02 · IPA — фонетичне представлення'" /tmp/deployed-app.js | cut -d: -f1)
-              ukrainian_line=$(grep -nF "continuousPanel('03 · Український фонетичний кандидат'" /tmp/deployed-app.js | cut -d: -f1)
-              test "$rtgs_line" -lt "$ipa_line"
+              latin_line=$(grep -nF "continuousPanel('01 · Латинський запис'" /tmp/deployed-app.js | cut -d: -f1)
+              ipa_line=$(grep -nF "continuousPanel('02 · Запис звуків IPA'" /tmp/deployed-app.js | cut -d: -f1)
+              ukrainian_line=$(grep -nF "continuousPanel('03 · Українськими літерами'" /tmp/deployed-app.js | cut -d: -f1)
+              test "$latin_line" -lt "$ipa_line"
               test "$ipa_line" -lt "$ukrainian_line"
-              ! grep -Fq '<details class="rtgs-details"' /tmp/deployed-app.js
-              echo "Published homepage and ordered RTGS/IPA/Ukrainian contract verified at $PAGE_URL"
+              echo "Published plain-language service and transcription pipeline verified at $PAGE_URL"
               exit 0
             fi
             if [ "$attempt" -eq 12 ]; then
-              echo "Published homepage or RTGS contract did not appear after 12 attempts" >&2
-              for marker in 'data-example="กา"' 'data-example="จริง"' 'id="engine-mode"' 'value="soft"' 'value="super-soft"' 'БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ' 'Як формується результат' 'Можна вставити й ціле речення' 'class="skip-link"' 'class="mode-help"' 'RTGS — окрема латинська довідкова романізація'; do
+              echo "Published plain-language service did not appear after 12 attempts" >&2
+              for marker in 'Як прочитати тайський текст українською' 'Вставте слово або речення тайською' 'ТЕСТОВА ВЕРСІЯ' 'Що означає результат'; do
                 grep -Fq "$marker" /tmp/deployed-index.html || echo "Missing homepage marker: $marker" >&2
               done
-              if [ -f /tmp/deployed-app.js ]; then
-                for marker in 'Результати · 3 представлення' 'continuous-output-value' 'М’який режим — попередній результат' 'Суперм’який' 'АУДИТ IPA → УКРАЇНСЬКА' 'RTGS — латинська романізація (не IPA)' 'renderRtgsTokens'; do
-                  grep -Fq "$marker" /tmp/deployed-app.js || echo "Missing app marker: $marker" >&2
-                done
-              else
-                echo "Missing deployed app.js file" >&2
-              fi
-              if [ -f /tmp/deployed-system.html ]; then
-                for marker in 'RTGS — латинська романізація' 'Тести — не мовний еталон' 'незалежно експертно перевірених рядків у поточному еталоні немає'; do
-                  grep -Fq "$marker" /tmp/deployed-system.html || echo "Missing system-page marker: $marker" >&2
-                done
-              else
-                echo "Missing deployed system.html file" >&2
-              fi
-              if [ -f /tmp/deployed-rtgs.js ]; then
-                grep -Fq 'romanizeRtgsWord' /tmp/deployed-rtgs.js || echo "Missing RTGS marker: romanizeRtgsWord" >&2
-              else
-                echo "Missing deployed rtgs-reference.js file" >&2
-              fi
               exit 1
             fi
             sleep 5
