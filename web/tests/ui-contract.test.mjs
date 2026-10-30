@@ -286,8 +286,8 @@ assert.match(homeHtml, /id="main-content" tabindex="-1"/);
 assert.match(systemHtml, /class="skip-link"/);
 assert.match(systemHtml, /id="main-content" tabindex="-1"/);
 assert.match(homeHtml, /class="mode-help"/);
-assert.match(homeHtml, /20261030-graded-scale-1/);
-assert.match(systemHtml, /20261030-graded-scale-1/);
+assert.match(homeHtml, /20261030-graded-scale-2/);
+assert.match(systemHtml, /20261030-graded-scale-2/);
 assert.doesNotMatch(homeHtml, /class="usage-guide"/, "the first action should not be pushed down by a long instructional panel");
 assert.match(homeHtml, /aria-live="off"/);
 assert.match(homeHtml, /<input id="engine-mode" type="range" min="1" max="3" step="1" value="3"/);
@@ -325,11 +325,12 @@ assert.match(styles, /\.site-header nav a\{[^}]*min-height:44px/);
 assert.match(styles, /\.mode-help summary\{[^}]*min-height:44px/);
 assert.match(styles, /\.method-links a\{[^}]*min-height:44px/);
 assert.match(styles, /\.text-button,\.copy\{min-height:44px/);
-assert.match(styles, /\.rtgs-continuous\{border-top:3px solid var\(--red\)\}/);
-assert.match(styles, /\.ipa-continuous\{border-top:3px solid var\(--focus\)\}/);
-assert.match(styles, /\.ua-continuous\{border-top:3px solid var\(--blue\)\}/);
+assert.match(styles, /\.continuous-output\.rtgs-continuous\{border-top:3px solid var\(--red\)\}/);
+assert.match(styles, /\.continuous-output\.ipa-continuous\{border-top:3px solid var\(--focus\)\}/);
+assert.match(styles, /\.continuous-output\.ua-continuous\{border-top:3px solid var\(--blue\)\}/);
 assert.doesNotMatch(styles, /\.rtgs-details/, "visible RTGS output must not retain collapsed-disclosure styling");
-assert.match(styles, /#engine-mode:focus-visible/);
+assert.match(styles, /#engine-mode\[type="range"\]:focus-visible/);
+assert.match(styles, /#engine-mode\[type="range"\]\{[^}]*min-height:44px/);
 assert.match(styles, /\.strictness-scale/);
 assert.match(styles, /accent-color:var\(--blue\)/);
 assert.match(styles, /\.mode-help summary:focus-visible/);
@@ -340,7 +341,7 @@ const appSource = await readFile(new URL("../src/app.js", import.meta.url), "utf
 assert.match(appSource, /async function copyText/);
 assert.match(appSource, /document\.execCommand\('copy'\)/);
 assert.match(appSource, /button\.setAttribute\('aria-live', 'polite'\)/);
-assert.match(styles, /@media\(max-width:700px\)\{\.beta-notice/);
+assert.match(styles, /@media\(max-width:760px\)\{[\s\S]*?\.beta-notice/);
 
 console.log("Thai current UI uncertainty/accessibility contract passed");
 
