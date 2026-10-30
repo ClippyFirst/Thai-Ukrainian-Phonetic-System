@@ -130,7 +130,7 @@ See:
 
 ## User interface
 
-The research core is also available as an installable `thai-ua` CLI with single-input analysis, TXT/CSV/TSV/XLSX batch processing and a local JSON API. Excel support is optional: `pip install -e ".[excel]"`.
+The research core is also available as an installable `thai-ua` CLI with single-input analysis, TXT/CSV/TSV/XLSX batch processing and a local JSON API. Excel support is optional: `pip install ".[excel]"`.
 
 Examples:
 
@@ -147,10 +147,17 @@ See `docs/cli-batch-api.md` for the complete CLI and API reference.
 From a clean Python environment:
 
 ~~~bash
-pip install -e .
+pip install .
 python scripts/generate_derived.py
 python scripts/generate_syllable_space.py
 python -m unittest discover -s tests -v
+~~~
+
+For development and the repository's static-analysis gate:
+
+~~~bash
+pip install -e ".[dev]"
+ruff check src tests scripts
 ~~~
 
 For an external gold JSONL corpus:
