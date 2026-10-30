@@ -1,3 +1,15 @@
+## 2026-10-30 — PR #141 integrated; citation metadata follow-up
+
+- PR [#141](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/141) was squash-merged into `main` as `4d087e66778854503a0e6d355d605d83a50354f8`.
+- Exact-head PR checks passed: CI `41121318912` and Web Static Validation `41121319014`. Post-merge main CI `41122595309` and Web Static Validation `41122595149` completed successfully; Pages build/deploy and published-content verification `41122595375` completed successfully.
+- The post-merge CI generated the master artifact and its assertions passed: 351,780 rows and 41 vowel records. The test job passed.
+- Follow-up hygiene finding: `CITATION.cff` still identified the software as `0.5.1`, while `pyproject.toml` and the single package-version source declare `0.6.1`. A regression test was added first; CI on the test-only commit failed on this exact mismatch. The implementation now aligns the CFF version to `0.6.1` and removes the stale `date-released` field rather than inventing a release date.
+- Follow-up branch: `chore/citation-version-alignment-20261030`, based on the merged `main`. Exact-head CI is required before integration.
+- PR #111 remains open and non-mergeable on an older base. Its source-attested `ทราม → ซาม` change is distinct; rebase/port and exact-head verification remain outstanding. No historical branch was deleted or force-rebased.
+- Local checkout remains unavailable because the execution container cannot resolve `github.com`; verification is via GitHub Actions. Research/linguistic readiness remains limited by the absence of independent expert-adjudicated IPA and Ukrainian target gold.
+
+---
+
 ## 2026-10-30 — repository hygiene checkpoint
 
 - Starting default-branch head: `720b528e0f6560912d87750158c510fc746a3044`.

@@ -1,3 +1,13 @@
+## 2026-10-30 — repository hygiene integration and follow-up
+
+| Task | State | Evidence |
+|---|---|---|
+| PR #141 repository hygiene | DONE_VERIFIED | Squash-merged to `main` as `4d087e66778854503a0e6d355d605d83a50354f8`. Exact PR CI `41121318912` and Web Static `41121319014` passed. Post-merge CI `41122595309`, Web Static `41122595149`, and Pages build/deploy/live-content verification `41122595375` passed. Master artifact asserted 351,780 rows and 41 vowel records. |
+| Citation metadata version alignment | PARTIAL — follow-up branch | Regression test added first; test-only CI failed on the real mismatch (`CITATION.cff` 0.5.1 vs package 0.6.1). CFF now uses 0.6.1 and omits the stale release date rather than asserting an unverified release date. Exact-head CI is pending. |
+| PR #111 lexical exception | BLOCKED / PARTIAL | PR remains open and non-mergeable against current main. Exact source-backed `ทราม → ซาม` is a separate lexical exception; it needs a clean forward-port/rebase and exact-head CI before merge. |
+| Historical branch cleanup | PARTIAL | Existing branch inventory is retained. No destructive deletion or force-rebase; branch disposition requires review of unique commit content. |
+| Linguistic validation | BLOCKED / evidence-limited | Independent expert-adjudicated Thai segmentation, IPA and Ukrainian target-form gold is still absent. |
+
 ## 2026-10-30 — repository hygiene: version and TSV contract
 
 | Task | State | Evidence |
