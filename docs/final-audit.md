@@ -1,3 +1,12 @@
+## 2026-10-30 — separation of service copy and research methodology
+
+- PR [#129](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/129), branch `docs/thai-user-copy-methodology-20261030`.
+- The homepage was edited for ordinary users: plain-language task description, explanation of RTGS/IPA/Ukrainian output forms, and clearer descriptions of strict, soft and super-soft modes. The researcher page was explicitly framed as methodology for researchers/developers; its technical content and evidence caveats were retained.
+- No engine, pronunciation, segmentation, IPA adaptation or RTGS behavior changed.
+- A dedicated copy-corrector/formatter was not found in the tracked source tree or declared dependencies; no run of such a tool is claimed.
+- Web static validation run [41070023201](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41070023201) passed on the initial PR head. Full CI run [41070023108](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41070023108) was still processing the generated master table; exact-head CI remains the acceptance gate. No local tests or live publication are claimed.
+- Classification: PARTIAL pending full CI and PR review; the repository's wider linguistic-evidence limitations remain unchanged.
+
 ## 2026-10-28 — UX/UI refresh merged; published-contract follow-up
 
 - PR #120 merged as `ad2f899978b66d3bbcb92124688b62261bb5225d`; branch exact-head CI and static validation passed. Post-merge CI's test job passed; generated master-artifact validation was still running when this entry was written.
