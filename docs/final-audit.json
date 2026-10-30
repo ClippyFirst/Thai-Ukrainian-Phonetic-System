@@ -1476,7 +1476,6 @@
         "feat": 22,
         "fix": 22,
         "finalize": 1,
-        "final": 7,
         "perf": 2,
         "polish": 1,
         "research": 24,
@@ -1484,7 +1483,8 @@
         "test": 4,
         "ui": 1,
         "ux": 7,
-        "web": 1
+        "web": 1,
+        "(no prefix)": 7
       },
       "merged_pr_140": "37a2b5be62896a758ddc59b9b91184e448b4d963",
       "open_pr_111": {
