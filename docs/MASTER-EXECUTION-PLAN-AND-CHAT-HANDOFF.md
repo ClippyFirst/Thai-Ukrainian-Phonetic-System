@@ -1655,3 +1655,4 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - The fix preserves the existing 400 contract for malformed requests and does not change the linguistic pipeline.
 - Local clone/tests remain unavailable in this environment because the container cannot resolve github.com; verification is from GitHub Actions.
 - This hardening does not convert the local standard-library API into a production internet-facing service. PR exact-head and post-merge checks are to be recorded after integration.
+- Issue #114 was reconciled: the RTGS feature is implemented; its remaining open scope is independent linguistic gold, manual browser/device and WCAG review, and any separately licensed tokenizer evaluation. The obsolete PR #111-open note was corrected.
