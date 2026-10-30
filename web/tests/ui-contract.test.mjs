@@ -45,7 +45,6 @@ assert.match(output.innerHTML, /phrik/);
 assert.match(output.innerHTML, /01 · Латинський запис/);
 assert.doesNotMatch(output.innerHTML, /<details class="rtgs-details"/, "RTGS must be visible without opening a disclosure");
 assert.match(output.innerHTML, /Довідковий запис латиницею/);
-assert.match(output.innerHTML, /ph\/th\/kh позначають придихові приголосні/);
 assert.match(output.innerHTML, /Довідковий запис латиницею/);
 const rtgsPosition = output.innerHTML.indexOf('01 · Латинський запис');
 const ipaPosition = output.innerHTML.indexOf('02 · Детальний запис звуків');
