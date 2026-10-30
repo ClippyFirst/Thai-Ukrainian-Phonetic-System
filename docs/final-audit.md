@@ -1,3 +1,15 @@
+## 2026-10-30 — Thai service copy and methodology closeout
+
+- Applied the editorial distinction established in the Korean service revision [2a16bae](https://github.com/ClippyFirst/Korean-Ukrainian-Phonetic-System/commit/2a16bae3bb6d4297225d358180adcefa0f301de8): homepage for ordinary users; methodology for researchers and developers.
+- Homepage copy now leads with the user task, explains RTGS as a Latin reference, IPA as the phonetic representation, and Ukrainian output as the practical candidate; it explains strict/soft/super-soft trade-offs without implying that broader coverage improves accuracy.
+- Methodology page title, navigation and introduction explicitly identify its audience and scope; existing technical details and evidence caveats remain intact.
+- The Korean reference is a reviewed editorial revision, not a standalone formatter executable. No Thai-local formatter was invoked or claimed. Automated safeguards are the static validation and UI-contract tests.
+- PR [#129](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/129) merged to `main` as `2bb0e264ed74e4d10c1a0c59ecf1d1990bcb9241`.
+- **PASS:** exact PR-head full CI [41070939453](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41070939453): `test` and `master-artifact` both succeeded. Master artifact generation verified 351,780 rows and 41 vowel records. Web static validation [41070939558](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41070939558) succeeded.
+- No runtime/linguistic behavior changed. No local tests are claimed.
+- **PARTIAL — publication:** post-merge Pages deployment and live-content verification were not confirmed in this session.
+- **BLOCKED / evidence-limited — linguistic readiness:** independent expert-adjudicated Thai segmentation, IPA and Ukrainian target-form gold remain absent. Repository remains a research prototype, not release-ready for accuracy claims.
+
 ## 2026-10-30 — copy-contract regression and correction
 
 - The first CI run failed at the homepage copy assertion because `web/tests/ui-contract.test.mjs` still expected the old text `Можна вставити довший текст`.
