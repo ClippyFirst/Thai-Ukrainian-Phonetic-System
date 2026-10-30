@@ -1643,3 +1643,15 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Existing blockers remain: no independent expert-adjudicated Thai IPA/word-boundary/Ukrainian target-form gold corpus; no real-device visual QA or WCAG 2.2 AA audit. Project remains a research prototype, not release-ready for linguistic-accuracy claims.
 - PR #111 (`ทร` lexical exception) was superseded a separate open task and was not changed.
 - Public service: https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/
+
+
+## 2026-10-31 — API error disclosure hardening
+
+- Starting main: 7ec678b5a0af57b9d68de6024ead1b1442f3b074.
+- Branch: fix/api-error-redaction-20261031.
+- Test-first commit: e2e0e6783d277092ecf05ac87a2b712d9c03f260. CI run [41138939134](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41138939134) ran 215 tests and failed only the new expected regression: the server did not log the injected internal exception.
+- Implementation commit: 60ac49dd1d3f6c387c306616e1c5a435dea4662a. Unexpected API exceptions now use the module logger and return a generic 500 payload; internal exception details are not sent to clients.
+- Exact implementation-head CI [41139203848](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41139203848) passed test, wheel-install-smoke, and master-artifact; 215 Python tests passed, the isolated wheel smoke passed, and the master artifact asserted 351,780 rows / 41 vowel records.
+- The fix preserves the existing 400 contract for malformed requests and does not change the linguistic pipeline.
+- Local clone/tests remain unavailable in this environment because the container cannot resolve github.com; verification is from GitHub Actions.
+- This hardening does not convert the local standard-library API into a production internet-facing service. PR exact-head and post-merge checks are to be recorded after integration.
