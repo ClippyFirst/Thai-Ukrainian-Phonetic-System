@@ -5,8 +5,7 @@ message: "If you use this research software, please cite it."
 authors:
   - family-names: Tkachuk
     given-names: Vitalii
-version: 0.5.1
-date-released: 2026-10-08
+version: 0.6.1
 repository-code: "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System"
 license: MIT
 keywords:
