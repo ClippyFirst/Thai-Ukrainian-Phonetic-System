@@ -1,3 +1,23 @@
+## 2026-10-30 — repository hygiene checkpoint
+
+- Starting default-branch head: `720b528e0f6560912d87750158c510fc746a3044`.
+- Merged PR #140, a documentation-only release closeout, as `37a2b5be62896a758ddc59b9b91184e448b4d963`. Its exact-head CI passed before merge; it records the already verified #138/#139 UI and Pages work.
+- Working branch: `chore/repository-hygiene-20261030`, based on the post-merge `main` head `37a2b5be62896a758ddc59b9b91184e448b4d963`.
+- Fixed two reproducible CLI/package defects:
+  1. `pyproject.toml` declared 0.6.1 while `thai_ukrainian.__version__` was 0.5.1 and `APIHandler.server_version` was 0.5.0. Added `src/thai_ukrainian/_version.py` as the single source and configured setuptools dynamic version metadata.
+  2. `load_batch` accepted `.tsv` but parsed it with the comma delimiter. TSV now uses tabs; CSV remains comma-delimited. CLI documentation now distinguishes both formats.
+- TDD evidence: tests were added first in commit `e770511cae4d2e0ddf85a66b3eb785cda1453c5b`; CI run [41118188899](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41118188899) failed with the two expected assertions (package version mismatch and TSV field parsing). After implementation, exact code head `9f488a983b77393c161afa0bfe01f0550d7c2cf3` passed [CI run 41118657251](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41118657251): 211 Python tests; browser IPA, parity and UI contract tests; RTGS parity; challenge, Wisesight, dictionary, source-attested IPA and TUD research diagnostics; generated data drift checks; master-artifact job asserted 351,780 rows and 41 vowel records.
+- Core CI and web-static workflow actions upgraded to Node 24-compatible releases: checkout/setup-python/setup-node/upload-artifact v7. Web static run `41120184197` passed; exact PR-head CI run `41120192415` completed test and master-artifact jobs successfully (211 Python tests; 351,780 master rows; 41 vowel records). The Node.js 20 deprecation warning is absent from the updated core CI logs. Pages workflow actions were also updated (configure-pages v6, upload-pages-artifact v5, deploy-pages v5), but no deployment was triggered from this unmerged branch. Optional external G2P and VISTEC workflow action pins remain deferred because changing those workflow files launches long external evaluations.
+- Branch inventory: 151 branch refs. Prefix counts include 44 `docs/`, 24 `research/`, 22 `feat/`, 22 `fix/`. No mass branch rewrite/deletion was performed. PR #140 is merged; PR #111 remains open and non-mergeable (12 ahead / 30 behind current main), containing a separate source-attested `ทราม` lexical exception. Keep it separate until rebased and its exact head passes evidence and CI review.
+- Local clone attempt failed with DNS resolution error for `github.com`; no local test execution is claimed.
+- Self-review performed (no subagent reviewer available): checked the complete PR diff, packaging metadata, TSV routing, regression tests, workflow action upgrades and CI evidence.
+- PR #141 remains open; its verified implementation/workflow head is `caab0adfd5b22fd07702e0aa0f86635aa46d5406`. Later commits in the branch only reconcile the canonical audit and handoff documents.
+- Remaining blockers: independent expert-adjudicated Thai segmentation/IPA/Ukrainian target gold; manual visual/device and WCAG review; PR #111 rebase and evidence review; disposition policy for historical branches.
+- Status: CLI fixes DONE_VERIFIED on this branch; branch cleanup PARTIAL; overall project remains an engineering-verified research prototype, not release-ready for linguistic-accuracy claims.
+- Public service: https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/
+
+---
+
 ## 2026-10-30 — final continuation checkpoint
 
 - Starting main for this UI continuation: `b64c239d012612435b7578241086b988cd96b262`.
