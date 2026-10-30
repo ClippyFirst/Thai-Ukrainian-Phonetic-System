@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import csv
 import json
+import socket
 import tempfile
 import threading
 import urllib.error
@@ -64,6 +65,33 @@ class CliBatchApiTests(unittest.TestCase):
                     self.assertEqual(raised.exception.code, 400)
                     body = json.loads(raised.exception.read().decode("utf-8"))
                     self.assertEqual(body["error"], "invalid_request")
+        finally:
+            server.shutdown()
+            server.server_close()
+            thread.join(timeout=3)
+
+    def test_negative_content_length_is_rejected_before_reading_body(self):
+        server = ThreadingHTTPServer(("127.0.0.1", 0), APIHandler)
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        try:
+            body = json.dumps({"text": "กา"}).encode("utf-8")
+            request = (
+                b"POST /analyze HTTP/1.1\r\n"
+                b"Host: 127.0.0.1\r\n"
+                b"Content-Type: application/json\r\n"
+                b"Content-Length: -1\r\n"
+                b"Connection: close\r\n\r\n"
+                + body
+            )
+            with socket.create_connection(("127.0.0.1", server.server_port), timeout=3) as client:
+                client.sendall(request)
+                client.shutdown(socket.SHUT_WR)
+                response = b""
+                while chunk := client.recv(4096):
+                    response += chunk
+            self.assertTrue(response.startswith(b"HTTP/1.0 400"), response)
+            self.assertIn(b'"error": "invalid_request"', response)
         finally:
             server.shutdown()
             server.server_close()
