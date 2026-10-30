@@ -1670,3 +1670,24 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Post-merge main CI [41142211674](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41142211674): test passed (216 Python tests) and wheel-install-smoke passed; the separate master-artifact job also passed, asserting 351,780 rows / 41 vowel records.
 - Pages [41142211675](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41142211675) passed build, deployment and live-content/pipeline verification.
 - No Thai phonology, segmentation, IPA, RTGS, Ukrainian adaptation or web UI behavior changed.
+
+
+## 2026-10-31 — CI master-table artifact reuse (PR #155)
+
+- Starting `main`: `0f7c41a753efa7abb88ea279ddc6a22ccdf11c6d`.
+- Working branch: `ci/reuse-master-table-artifact-20261031`.
+- PR: [#155 — ci: reuse the generated master-table artifact](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/155).
+- The `test` job already generated the 351,780-row master table for `test_master_table.py`. Previously, `master-artifact` checked out, installed and regenerated the same table. The change uploads the generated CSV, two-column CSV and JSON from the test job; the dependent master-artifact job downloads them with `actions/download-artifact@v8.0.2` and keeps the independent 351,780-row / 41-record assertion.
+- Exact PR CI [41143491570](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41143491570): all three jobs passed, including 216 Python tests, Ruff, browser parity/UI, diagnostics, wheel smoke and artifact digest/download/assertion.
+- Push CI [41143478308](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41143478308) also passed all three jobs.
+- Measured old master-artifact generation: ~126.9 seconds. New download + validation: ~1.1 seconds. The separate validation job and artifact name are preserved; the duplicate generation is removed.
+- PR #155 merged as `3325e98b98bde6926f36c74ad76dc94fe35480b0`. Post-merge main CI [41143907732](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41143907732) passed all three jobs.
+- No application code, data, linguistic rules, browser behavior or release semantics changed.
+
+
+## Branch retention checkpoint — 2026-10-31
+
+- Latest inventory: 169 branch refs. Prefix counts are recorded in `docs/validation-matrix.md`.
+- PRs #153, #154 and #155 are merged; PR #156 is the documentation closeout currently under CI at this checkpoint.
+- Four temporary work branches created during this continuation remain as refs: `fix/http-content-length-validation-20261031`, `docs/post-merge-closeout-20261031`, `ci/reuse-master-table-artifact-20261031`, and `docs/ci-artifact-reuse-closeout-20261031`.
+- Branch deletion is not performed automatically: historical branches may hold unique evidence, no owner-approved retention policy exists, and the connected GitHub tools do not expose branch deletion. Keep branch hygiene PARTIAL until owner policy and a commit-level inventory authorize pruning.
