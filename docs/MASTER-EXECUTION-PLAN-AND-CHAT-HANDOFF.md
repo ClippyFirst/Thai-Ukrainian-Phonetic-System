@@ -1,3 +1,12 @@
+## 2026-10-30 — verification follow-up for service-copy change
+
+- The first full CI attempt on the initial copy commit `550dde6cc14e47c818cd3032733e1946ee48126e` failed only at `web/tests/ui-contract.test.mjs`: its expected old homepage hint (`Можна вставити довший текст`) no longer matched the intentionally rewritten user-facing hint.
+- Root cause was a stale copy assertion, not an engine, parser, IPA, RTGS, or browser-runtime defect. The test assertion was updated to require the new user-facing phrase `Можна вставити й ціле речення` in commit `49f7c4924ca851bfe2e7dfe46653cbd9965338ac`.
+- On that exact head, Web static validation run `41070448695` passed. Full CI run `41070448275` was still executing `python scripts/generate_master_table.py` when last checked; the UI-contract step had not yet been reached. The final documentation update below will trigger another exact-head workflow run.
+- Status remains PARTIAL. Do not merge or publish until full CI, including UI contract, parity and master-artifact checks, passes on the final PR head.
+
+---
+
 ## 2026-10-30 — Thai service copy and research-methodology separation
 
 - Starting main: `590f85ab7ffddba184d5ecfba9605682c566bc43`; working branch: `docs/thai-user-copy-methodology-20261030`; PR [#129](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/129), current code/documentation head before this handoff update: `550dde6cc14e47c818cd3032733e1946ee48126e`.
