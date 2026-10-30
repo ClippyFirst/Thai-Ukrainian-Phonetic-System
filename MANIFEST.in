@@ -1,0 +1,3 @@
+# Preserve per-dataset license and provenance notices in source distributions.
+recursive-include data/thai *
+include data/ua_target_vectors.csv

@@ -3,8 +3,9 @@ import csv
 from functools import lru_cache
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
-PATH = ROOT / "data" / "thai" / "special_orthography.csv"
+from ._paths import THAI_DATA_ROOT
+
+PATH = THAI_DATA_ROOT / "special_orthography.csv"
 
 @lru_cache(maxsize=1)
 def load_special_rules() -> list[dict[str, str]]:

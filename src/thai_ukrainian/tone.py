@@ -3,8 +3,9 @@ from pathlib import Path
 from functools import lru_cache
 from .models import ToneResult
 
-ROOT = Path(__file__).resolve().parents[2]
-RULES_PATH = ROOT / "data" / "thai" / "tone_rules.csv"
+from ._paths import THAI_DATA_ROOT
+
+RULES_PATH = THAI_DATA_ROOT / "tone_rules.csv"
 TONE_IPA = {"mid": "˧", "low": "˩", "falling": "˥˩", "high": "˥", "rising": "˩˥"}
 
 @lru_cache(maxsize=1)

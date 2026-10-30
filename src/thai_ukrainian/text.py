@@ -6,8 +6,9 @@ from pathlib import Path
 from .word import analyze_word
 from .lexical_ipa import load_lexical_ipa_overrides
 
-ROOT = Path(__file__).resolve().parents[2]
-LEXICON_PATH = ROOT / "data" / "thai" / "text_lexicon.tsv"
+from ._paths import THAI_DATA_ROOT
+
+LEXICON_PATH = THAI_DATA_ROOT / "text_lexicon.tsv"
 
 THAI = re.compile(r"[\u0E00-\u0E7F]")
 LATIN = re.compile(r"[A-Za-z]")

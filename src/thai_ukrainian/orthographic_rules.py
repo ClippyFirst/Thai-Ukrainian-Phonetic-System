@@ -5,8 +5,9 @@ from pathlib import Path
 from functools import lru_cache
 
 
-ROOT = Path(__file__).resolve().parents[2]
-RULES_PATH = ROOT / "data" / "thai" / "orthographic_rules.csv"
+from ._paths import THAI_DATA_ROOT
+
+RULES_PATH = THAI_DATA_ROOT / "orthographic_rules.csv"
 
 
 class ORole(str, Enum):

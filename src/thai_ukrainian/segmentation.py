@@ -12,9 +12,10 @@ from pathlib import Path
 from typing import Any
 
 
-_REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
-_DICTIONARY_PATH = _REPOSITORY_ROOT / "data" / "thai" / "words_th_cc0.txt"
-_MANIFEST_PATH = _REPOSITORY_ROOT / "data" / "thai" / "word-segmentation-dictionary-source.json"
+from ._paths import THAI_DATA_ROOT
+
+_DICTIONARY_PATH = THAI_DATA_ROOT / "words_th_cc0.txt"
+_MANIFEST_PATH = THAI_DATA_ROOT / "word-segmentation-dictionary-source.json"
 _EXPECTED_ENTRIES = 60963
 _END = object()
 _PREPOSED_VOWELS = frozenset("เแโใไ")
