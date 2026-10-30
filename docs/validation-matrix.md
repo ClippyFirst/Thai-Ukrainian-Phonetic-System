@@ -1,3 +1,22 @@
+## 2026-10-30 — post-PR #150 maintenance closeout
+
+| Task | State | Evidence / next acceptance |
+|---|---|---|
+| PR #148 canonical audit closeout | DONE_VERIFIED | Squash-merged as `85182af4af5a69970e8cb9506b4283056e7c65d6`; refreshed the previous mainline record and task register. Post-merge CI run [41132476418](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41132476418) passed test and master-artifact jobs. |
+| PR #149 wheel packaging portability | DONE_VERIFIED | Squash-merged as `2fbf3d35a7050ae60afc7426e561503c91983446`; issue #147 closed. Runtime loaders use canonical checkout data in source/editable installs and packaged `_data/` in wheels. Source distribution → wheel → isolated install passed; installed CLI, API, all core runtime registries, Ukrainian target vectors and license notices were smoke-tested outside the checkout. Exact-head CI [41132834082](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41132834082): 214 Python tests, generated-data drift and master artifact (351,780 rows; 41 vowel records) passed. External VISTEC evaluation [41132834077](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41132834077) passed. Post-merge Pages [41133469238](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41133469238) and main CI [41133469438](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41133469438) passed. |
+| PR #150 Python static-analysis gate | DONE_VERIFIED | Squash-merged as `e8282dfb85f53ae18cbed5fcdc676b1b6049c313`. Added pinned `ruff==0.17.3` dev extra and correctness-only `F` checks for `src tests scripts`. Initial Ruff red run [41133551142](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41133551142) found 16 unused-import findings; 15 stale imports were removed and `__version__` was explicitly added to `__all__`. Exact-head push CI [41133766851](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41133766851) passed Ruff, 214 Python tests, browser parity/UI tests, diagnostics, wheel smoke and master-artifact (351,780 rows; 41 vowel records). VISTEC [41133770393](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41133770393) passed. |
+| Post-PR #150 mainline verification | PARTIAL / RUNNING at this checkpoint | Main SHA `e8282dfb85f53ae18cbed5fcdc676b1b6049c313`; exact post-merge CI is running and must complete before this documentation checkpoint is marked green. |
+| Wheel packaging issue #147 | DONE_VERIFIED / CLOSED | Acceptance met by PR #149 and exact-head isolated distribution smoke; no runtime research corpora bundled. |
+| Python development tooling | DONE_VERIFIED | Pinned dev extra, CI Ruff gate, 16 initial lint findings resolved; formatter/type-checker intentionally not introduced because the current task was a correctness-only baseline. |
+| Historical branch retention | PARTIAL | No bulk deletion or force-rebase. Historical branches remain preserved pending a reviewed retention policy; current inventory is updated below after API recount. |
+| Linguistic/UI evidence gates | BLOCKED / evidence-limited | Issue #114 remains open for independent expert-adjudicated Thai segmentation/IPA/Ukrainian target gold, manual browser/device visual review and WCAG 2.2 AA review. Software parity and source-attested forms are not linguistic gold. |
+| Local checkout | BLOCKED | Container DNS cannot resolve `github.com`; no local test run is claimed. Verification is from GitHub Actions. |
+
+**Current main:** `e8282dfb85f53ae18cbed5fcdc676b1b6049c313`.
+**Readiness:** engineering-verified research prototype; not release-ready for independent linguistic-accuracy claims.
+
+---
+
 ## 2026-10-30 — verified mainline closeout after PR #146
 
 | Task | State | Evidence / next acceptance |
