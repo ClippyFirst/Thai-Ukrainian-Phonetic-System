@@ -6,7 +6,7 @@
   <meta name="description" content="Вставте тайський текст і подивіться, як його можна записати українськими літерами.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'">
   <title>Тайська українською — простий запис вимови</title>
-  <link rel="stylesheet" href="src/styles.css?v=20261030-plain-language-2">
+  <link rel="stylesheet" href="src/styles.css?v=20261030-graded-scale-1">
 </head>
 <body>
 <a class="skip-link" href="#main-content">Перейти до основного вмісту</a>
@@ -33,14 +33,14 @@
   <label class="input-label" for="thai-input">Текст тайською</label>
   <textarea id="thai-input" lang="th" rows="3" spellcheck="false" autocomplete="off" autocapitalize="off" aria-describedby="input-hint" placeholder="Наприклад: สวัสดี"></textarea>
   <p class="input-hint" id="input-hint">Можна вставити одне слово або ціле речення. Якщо сервіс не зможе впевнено прочитати частину тексту, він про це повідомить. <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>Enter</kbd> — показати результат.</p>
-  <label class="input-label" for="engine-mode">Як діяти, якщо слово незнайоме?</label>
+  <label class="input-label" for="engine-mode">Суворість інтерпретації · шкала 1–3</label>
   <select id="engine-mode" aria-describedby="mode-hint">
-    <option value="strict" selected>Обережно — не вгадувати</option>
-    <option value="soft">Спробувати розібрати слово</option>
-    <option value="super-soft">Запропонувати приблизне читання</option>
+    <option value="super-soft">1 · Евристична — мінімальна суворість</option>
+    <option value="soft">2 · Структурна — помірна суворість</option>
+    <option value="strict" selected>3 · Консервативна — максимальна суворість</option>
   </select>
-  <p class="input-hint" id="mode-hint" aria-live="polite">Обережний режим: якщо сервіс не знає, як прочитати слово, він не буде вигадувати відповідь.</p>
-  <details class="mode-help"><summary>Чим відрізняються ці режими?</summary><dl><dt>Обережно — не вгадувати</dt><dd>Покаже результат лише там, де має достатньо підстав. Невідоме слово залишить без припущення.</dd><dt>Спробувати розібрати слово</dt><dd>Спробує прочитати незнайоме слово за правилами тайського письма. Такий результат може бути помилковим.</dd><dt>Запропонувати приблизне читання</dt><dd>Спробує дати варіант для всього тексту, навіть коли не впевнений. Це здогадка, а не підтверджена вимова.</dd></dl></details>
+  <p class="input-hint" id="mode-hint" aria-live="polite">3/3 · Консервативний профіль: непідтверджені фрагменти залишаються невизначеними; фонетичний кандидат для них не генерується.</p>
+  <details class="mode-help"><summary>Методологія рівнів суворості</summary><dl><dt>1/3 · Евристичний</dt><dd>Максимізує повноту: для нерозпізнаних фрагментів формує резервний IPA-кандидат зі структури написання й передає його через IPA → українська. Тон і лексичне читання можуть бути хибними; це найнижчий рівень суворості.</dd><dt>2/3 · Структурний</dt><dd>Застосовує структурний поділ на склади без підтвердження меж слів. Кандидати позначаються як попередні; фрагменти, які не вдалося розібрати, залишаються невизначеними.</dd><dt>3/3 · Консервативний</dt><dd>Використовує словниково підтверджену сегментацію та підтримувані детерміновані правила. Для непідтверджених фрагментів IPA й український результат не генеруються.</dd></dl></details>
   <div class="examples" aria-label="Швидкі приклади">
     <span class="examples-label">Спробуйте:</span>
     <button type="button" data-example="กา">กา</button>
