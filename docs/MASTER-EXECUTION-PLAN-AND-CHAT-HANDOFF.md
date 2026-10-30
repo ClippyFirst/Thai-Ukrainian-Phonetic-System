@@ -1,3 +1,62 @@
+## 2026-10-30 — verified mainline closeout after PR #146
+
+| Task | State | Evidence / next acceptance |
+|---|---|---|
+| PR #141 repository hygiene | DONE_VERIFIED | Integrated into main; single package-version source, TSV delimiter correction, regression tests and core/Pages action upgrades retained. |
+| PR #144 lexical evidence forward-port | DONE_VERIFIED_FOR_IMPLEMENTATION | Squash-merged as `cb7ff2a49731d3c02ddba400a4ddbc166395d493`. Exact-head checks 5/5 successful. Adds bounded `ทราม → ซาม` mapping and ten enumerated Python/browser regression forms; no productive `ทร → ซ` rule. Evidence grade SOURCE_ATTESTED_NOT_GOLD. Post-merge Pages deployment [41128531547](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41128531547) succeeded. |
+| PR #145 optional workflow action refresh | DONE_VERIFIED | Squash-merged as `009060cdf12908d27d399419952bdcb50828bfd6`. Core CI, master-artifact, optional G2P smoke and VISTEC external evaluation all passed. Updated checkout/setup-python/setup-go/upload-artifact pins to v7 in the optional research workflows. Post-merge main CI [41129543349](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41129543349) and optional G2P [41129543570](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41129543570) succeeded. |
+| PR #146 JSON API request contract | DONE_VERIFIED | Squash-merged as `1f53eef6522d437de546d6540ebc6c7d40ecdd82`. Non-object JSON bodies (array, null, string) now return 400 `invalid_request`, not 500. Exact-head CI passed on both push and PR runs [41129878010](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41129878010) and [41129841355](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41129841355): 214 Python tests; master artifact 351,780 rows and 41 vowel records. Red-stage run [41128931305](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41128931305) showed all three new payload cases returning 500 instead of expected 400 before the fix. |
+| Mainline post-merge verification after PR #146 | PARTIAL / RUNNING at handoff | Main SHA `1f53eef6522d437de546d6540ebc6c7d40ecdd82`; CI [41130536672](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41130536672) and Pages [41130536830](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41130536830) were still in progress at last check. |
+| Historical PR #111 | DONE — superseded | Closed after its bounded 13-file change was forward-ported through PR #144. Original branch/history preserved. |
+| Duplicate issue #113 | DONE — duplicate closed | Closed as duplicate of issue #114 after the RTGS implementation and its later evidence-gated follow-ups were already tracked there. |
+| Branch inventory | PARTIAL | 159 branch refs observed across two API pages. No mass deletion or force-rebase; preserve provenance and review unique commits before any destructive pruning. |
+| Wheel packaging portability | TODO — tracked as issue #147 | Runtime loaders resolve repository-root `data/` via `Path(__file__).parents[2]`, while `pyproject.toml` does not declare/package those data files. Editable installs work; a regular wheel install may not find required registries. Acceptance: build a wheel, install into an isolated environment, run CLI/API/data-loader smoke tests outside the checkout, and verify dataset licensing/provenance. This is a verified structural risk, not yet an isolated wheel reproduction. |
+| Development tooling gate | TODO | No declared dev extra or lint/type-check gate. Inventory imports/style and choose minimal tooling before adding dependencies. |
+| Remaining research/UI acceptance | BLOCKED / evidence-limited | Issue #114 remains open for manual browser/device review, independent expert-adjudicated Thai segmentation/IPA/Ukrainian target gold, and separate tokenizer compatibility/licensing decisions. Automated parity and source-attested dictionary entries do not prove linguistic accuracy. |
+
+**Current main:** `1f53eef6522d437de546d6540ebc6c7d40ecdd82`.
+**Branch inventory:** 159 refs; no historical branch deletion or history rewriting.
+**Open pull requests:** none at last inventory.
+**Tracked open issues:** #114 (research/UI evidence gates), #147 (wheel packaging portability).
+**Public service:** https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/
+
+---
+
+## 2026-10-30 — current mainline and API contract closeout
+
+| Task | State | Evidence / next acceptance |
+|---|---|---|
+| PR #141 repository hygiene | DONE_VERIFIED | Merged to main; single package-version source, TSV delimiter correction, regression tests and core/Pages action upgrades retained. |
+| PR #144 lexical evidence forward-port | DONE_VERIFIED_FOR_IMPLEMENTATION | Squash-merged as `cb7ff2a49731d3c02ddba400a4ddbc166395d493`. Exact-head checks 5/5 successful. Adds bounded `ทราม → ซาม` mapping and ten enumerated Python/browser regression forms; no productive `ทร → ซ` rule. Evidence grade SOURCE_ATTESTED_NOT_GOLD. |
+| PR #145 optional workflow action refresh | DONE_VERIFIED_FOR_PR_HEAD | Squash-merged as `009060cdf12908d27d399419952bdcb50828bfd6`. Core CI and master-artifact checks passed; optional G2P smoke and VISTEC external evaluation both passed. Updated checkout/setup-python/setup-go/upload-artifact to v7 in the optional research workflows. Post-merge main CI and G2P workflow were still running at last check. |
+| Historical PR #111 | DONE — superseded | Closed after its bounded 13-file change was forward-ported through PR #144. Original branch/history preserved. |
+| JSON API request contract | DONE_VERIFIED | Non-object JSON bodies (array, null, string) now return 400 `invalid_request`, not an accidental 500. Test-first run [41128931305](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41128931305) failed in the unittest job after the regression was added; implementation head `16a58185cd42b687a982bb59dabbf1a49d161fed` passed test and master-artifact in [41129088376](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41129088376). |
+| Mainline post-merge verification | PARTIAL / RUNNING at handoff | Main SHA `009060cdf12908d27d399419952bdcb50828bfd6`; CI run [41129543349](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41129543349) and optional G2P run [41129543570](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41129543570) were still in progress. Pages deployment after PR #144 had succeeded in [41128531547](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41128531547). |
+| Branch inventory | PARTIAL | 156 branch refs observed across two API pages. No mass deletion or force-rebase; preserve provenance and review unique commits before any destructive pruning. |
+| Wheel packaging portability | TODO — verified structural risk | Runtime data loaders resolve repository-root `data/` via `Path(__file__).parents[2]`, while `pyproject.toml` does not declare/package these data files. Editable installs work; a regular wheel install may not find required registries. Acceptance: build a wheel, install into an isolated environment, run CLI/API smoke tests, and verify all required datasets are present without repository checkout. |
+| Development tooling gate | TODO | No declared dev extra or lint/type-check gate. First inventory actual imports/style and select minimal tooling; do not add dependencies without an executable baseline. |
+| Linguistic accuracy / release readiness | BLOCKED / evidence-limited | Independent expert-adjudicated Thai segmentation, IPA and Ukrainian target-form gold is still absent. Source-attested dictionary forms and parity tests are not accuracy gold. Manual browser/device and WCAG 2.2 AA review also remain outstanding. |
+
+**Current main:** `009060cdf12908d27d399419952bdcb50828bfd6`.
+**Working branch:** `chore/closeout-docs-and-debt-register-20261030` (maintenance/API contract follow-up).
+**Public service:** https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/
+
+---
+
+## 2026-10-30 — current mainline closeout after PR #144
+
+- PR #141 repository hygiene is integrated in main. The package version has one source of truth; TSV batch ingestion uses a tab delimiter; core CI, web-static and Pages action pins were upgraded.
+- PR #144 forward-ported the bounded lexical work from historical PR #111 and was squash-merged as `cb7ff2a49731d3c02ddba400a4ddbc166395d493`.
+- Exact PR #144 head `72a0e147fbbcd6d21fefc40a4219f9fb7c0bfc0b` has five successful check runs. The change adds source-attested `ทราม → ซาม` handling in Python/browser paths and ten enumerated cross-runtime regression cases; it does not add a productive `ทร → ซ` rule. Evidence grade remains SOURCE_ATTESTED_NOT_GOLD.
+- Historical PR #111 is now closed as superseded. Its branch/history remains preserved.
+- Post-merge main CI [41128531462](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41128531462) and Pages [41128531547](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41128531547) were still in progress at the last status read; Web Static [41128531495](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41128531495) passed.
+- Branch inventory now totals 156 refs across two API pages. No destructive branch deletion or history rewriting was performed.
+- Remaining engineering debt: optional external G2P/VISTEC workflow action pins are old; no declared development extra/linter/formatter/type-checker gate; stale historical branches need a reviewed retention/pruning policy.
+- Evidence blockers: independent expert-adjudicated Thai segmentation, IPA and Ukrainian target-form gold remains unavailable. Automated parity and source-attested dictionary entries do not prove linguistic accuracy. Manual browser/device and WCAG 2.2 AA review remain outstanding.
+- Classification: engineering-verified research prototype, not release-ready for linguistic-accuracy claims.
+
+---
+
 ## 2026-10-30 — Thai lexical exception forward-port
 
 - Fresh branch `feat/thai-lexical-exception-mainline-20261030` is based on current `main` (`81123ef50fbfc0335e22e6f16f4a5b02d967bb14`), including the citation metadata correction merged in PR #142.
@@ -1567,5 +1626,5 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - **DONE_VERIFIED — post-merge main CI:** run [41080245372](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41080245372) passed both `test` and `master-artifact`; master table assertions confirmed 351,780 rows and 41 vowel records.
 - **PARTIAL — plain-language usability evidence:** copy has been rewritten and automated contract checks pass, but no moderated test with non-specialist Thai learners/readers has been performed. Treat this as a clearer editorial version, not user-research validated wording.
 - Existing blockers remain: no independent expert-adjudicated Thai IPA/word-boundary/Ukrainian target-form gold corpus; no real-device visual QA or WCAG 2.2 AA audit. Project remains a research prototype, not release-ready for linguistic-accuracy claims.
-- PR #111 (`ทร` lexical exception) remains a separate open task and was not changed.
+- PR #111 (`ทร` lexical exception) was superseded a separate open task and was not changed.
 - Public service: https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/

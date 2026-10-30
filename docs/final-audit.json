@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Main includes the verified UI closeout merged as 37a2b5be62896a758ddc59b9b91184e448b4d963. Repository hygiene fixes are engineering-verified on chore/repository-hygiene-20261030; the system remains a research prototype, not release-ready for independent Thai IPA/Ukrainian accuracy claims.",
+  "status": "Main includes PR #141 repository hygiene, PR #144 source-attested ทราม lexical exception, PR #145 optional workflow action refresh and PR #146 JSON API request validation (main 1f53eef6522d437de546d6540ebc6c7d40ecdd82). Exact-head checks passed; post-merge main CI and Pages were still running at last check. Engineering-verified research prototype, not release-ready for independent linguistic accuracy.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -1600,7 +1600,7 @@
   "lexical_exception_guard_forwardport_2026_10_30": {
     "branch": "feat/thai-lexical-exception-mainline-20261030",
     "base_main": "81123ef50fbfc0335e22e6f16f4a5b02d967bb14",
-    "status": "PARTIAL_PENDING_EXACT_HEAD_CI",
+    "status": "DONE_VERIFIED_IMPLEMENTATION_MERGED",
     "original_pr": 111,
     "original_branch": "audit/thai-lexical-exception-guards-20261028",
     "original_branch_behind_main": 452,
@@ -1630,6 +1630,71 @@
       "ipa": "/saːm˧/",
       "grade": "SOURCE_ATTESTED_NOT_GOLD"
     },
-    "acceptance": "Exact forward-port head must pass full Python/browser parity, generated artifact drift and 351780-row master artifact CI before merge."
+    "acceptance": "Exact-head PR checks passed 5/5; post-merge main CI and Pages remain pending.",
+    "merge_sha": "cb7ff2a49731d3c02ddba400a4ddbc166395d493",
+    "original_pr_status": "closed_as_superseded"
+  },
+  "current_mainline_closeout_2026_10_30": {
+    "main_sha": "1f53eef6522d437de546d6540ebc6c7d40ecdd82",
+    "pr_141": "merged",
+    "pr_144": {
+      "status": "merged",
+      "merge_sha": "cb7ff2a49731d3c02ddba400a4ddbc166395d493",
+      "checks": "5/5 successful",
+      "evidence_grade": "SOURCE_ATTESTED_NOT_GOLD",
+      "pages_run": 41128531547
+    },
+    "pr_145": {
+      "status": "merged",
+      "merge_sha": "009060cdf12908d27d399419952bdcb50828bfd6",
+      "checks": "core CI and master-artifact successful; optional G2P smoke and VISTEC evaluation successful",
+      "main_ci_run": 41129543349,
+      "g2p_run": 41129543570,
+      "vistec_run": 41128819687
+    },
+    "pr_146": {
+      "status": "merged",
+      "merge_sha": "1f53eef6522d437de546d6540ebc6c7d40ecdd82",
+      "head_sha": "b0cd2f073399f9a70d3b441544b95151fc69c577",
+      "checks": "push and PR CI successful; 214 Python tests; 351780-row master artifact; 41 vowel records",
+      "push_run": 41129878010,
+      "pr_run": 41129841355,
+      "red_run": 41128931305
+    },
+    "post_merge_runs": {
+      "ci": 41130536672,
+      "pages": 41130536830,
+      "status": "in_progress_at_last_check"
+    },
+    "pr_111": "closed_as_superseded; historical branch preserved",
+    "issue_113": "closed_as_duplicate_of_114",
+    "issue_114": "open_for_manual_visual_and_linguistic_evidence_gates",
+    "issue_147": "open_wheel_packaging_portability",
+    "branch_refs_observed": 159,
+    "technical_debt": [
+      {
+        "id": "PACKAGING-WHEEL-001",
+        "status": "TODO",
+        "issue": 147,
+        "risk": "runtime loaders resolve repository-root data/ which is not declared as wheel package data",
+        "acceptance": "build/install wheel in isolated environment and run CLI/API/data-loader smoke tests"
+      },
+      {
+        "id": "DEV-TOOLING-001",
+        "status": "TODO",
+        "risk": "no declared development extra or lint/type-check gate",
+        "acceptance": "inventory current code, choose minimal tooling, run and fix baseline"
+      },
+      {
+        "id": "BRANCH-RETENTION-001",
+        "status": "PARTIAL",
+        "risk": "159 historical refs; no reviewed retention policy",
+        "acceptance": "classify unique commits and obtain explicit deletion policy before pruning"
+      }
+    ],
+    "blockers": [
+      "independent expert-adjudicated Thai segmentation/IPA/Ukrainian target gold",
+      "manual browser/device and WCAG 2.2 AA review"
+    ]
   }
 }
