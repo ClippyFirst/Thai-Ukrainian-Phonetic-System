@@ -1,3 +1,18 @@
+## 2026-10-30 — repository hygiene: version and TSV contract
+
+| Task | State | Evidence |
+|---|---|---|
+| Single package-version source | DONE_VERIFIED on `chore/repository-hygiene-20261030` | Added `src/thai_ukrainian/_version.py`; setuptools reads its value dynamically; package `__version__` and HTTP server banner use the same value. Regression test compares both with installed distribution metadata. |
+| TSV input delimiter | DONE_VERIFIED | `.tsv` input now uses a tab delimiter while `.csv` remains comma-delimited. Added a real-file regression test for a two-column TSV. |
+| TDD evidence | DONE_VERIFIED | Test-only commit `e770511cae4d2e0ddf85a66b3eb785cda1453c5b` failed as expected in CI run [41118188899](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41118188899) with exactly the two regressions above. Implementation head `9f488a983b77393c161afa0bfe01f0550d7c2cf3` passed full CI run [41118657251](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41118657251): 211 Python tests; browser parity, IPA adapter, UI contract and research diagnostics; master-artifact job passed with 351,780 rows and 41 vowel records. |
+| Local clean clone/test execution | BLOCKED | `git clone` could not resolve `github.com` in the execution container. Verification evidence is from GitHub Actions; no local test run is claimed. |
+| Branch inventory and reconciliation | PARTIAL | 151 branch refs inventoried: 44 `docs/`, 24 `research/`, 22 `feat/`, 22 `fix/`, plus the remaining categories. PR #140 was squash-merged into `main` as `37a2b5be62896a758ddc59b9b91184e448b4d963`. PR #111 remains open and non-mergeable: 12 commits ahead / 30 behind current main; it contains a distinct source-attested lexical change and needs a deliberate rebase/evidence review. Historical branches were not mass-rebased or deleted because doing so would rewrite or discard distinct work. |
+| Linguistic/release readiness | BLOCKED / evidence-limited | Independent expert-adjudicated Thai segmentation, IPA and Ukrainian target-form gold remains unavailable. Automated CI verifies implementation contracts, not linguistic accuracy. |
+
+Working branch is based on main after PR #140. The branch inventory is recorded without destructive branch rewriting; old branches remain preserved for review.
+
+---
+
 ## 2026-10-30 — strictness scale and responsive layout — merged and published
 
 | Component | State | Validation |
