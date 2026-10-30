@@ -42,6 +42,8 @@ class APIHandler(BaseHTTPRequestHandler):
                 _send(self, 413, {"error": "request_too_large"})
                 return
             payload = json.loads(self.rfile.read(length).decode("utf-8"))
+            if not isinstance(payload, dict):
+                raise ValueError("JSON request body must be an object.")
             text = payload.get("text")
             if not isinstance(text, str) or not text.strip():
                 _send(self, 400, {"error": "field 'text' must be a non-empty string"})
