@@ -39,5 +39,5 @@ const app = await readFile(new URL("../src/app.js", import.meta.url), "utf8");
 assert.ok(app.includes("renderRtgsTokens(tokens)"));
 assert.ok(app.includes("АУДИТ IPA → УКРАЇНСЬКА"));
 assert.doesNotMatch(app, /adaptIpaToUkrainian\(source\)/, "the main app must not expose a duplicate standalone IPA input path");
-assert.ok(app.includes("RTGS не позначає тон"));
+assert.ok(app.includes("Довідковий запис латиницею"));
 console.log("RTGS offline port, shared IPA audit, and no-network contract: OK");
