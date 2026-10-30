@@ -384,6 +384,13 @@
       "status": "DONE_VERIFIED",
       "implementation": "Pinned Ruff 0.17.3 dev extra and F-only correctness gate; 16 initial findings resolved.",
       "acceptance": "CI 41133766851 passed Ruff and 214 Python tests."
+    },
+    {
+      "id": "API-ERROR-REDACTION-001",
+      "status": "DONE_VERIFIED",
+      "implementation": "Unexpected analysis exceptions are logged server-side; API clients receive a stable generic 500 payload without internal exception details. Test-first commits e2e0e6783d277092ecf05ac87a2b712d9c03f260 → 60ac49dd1d3f6c387c306616e1c5a435dea4662a.",
+      "blocker": null,
+      "acceptance": "CI 41139203848 passed 215 Python tests, isolated wheel-install smoke, browser/parity/diagnostic checks, and the 351,780-row / 41-vowel master-artifact assertion."
     }
   ],
   "latest_implementation_branch": "chore/python-static-analysis-gate-20261030",
@@ -1767,5 +1774,21 @@
       "status": "closed_unmerged_superseded_by_pr_144",
       "historical_branch_preserved": true
     }
+  },
+  "api_error_redaction_2026_10_31": {
+    "starting_main": "7ec678b5a0af57b9d68de6024ead1b1442f3b074",
+    "branch": "fix/api-error-redaction-20261031",
+    "red_test_commit": "e2e0e6783d277092ecf05ac87a2b712d9c03f260",
+    "red_ci_run": 41138939134,
+    "red_failure": "The new test failed because unexpected analysis exceptions were neither logged nor redacted from the HTTP 500 response.",
+    "implementation_commit": "60ac49dd1d3f6c387c306616e1c5a435dea4662a",
+    "exact_head_ci_run": 41139203848,
+    "exact_head_ci_status": "SUCCESS",
+    "python_tests": 215,
+    "wheel_install_smoke": "PASS",
+    "master_rows": 351780,
+    "vowel_records": 41,
+    "behavior": "Unexpected exceptions are logged server-side and return a generic 500 response; malformed requests retain the existing 400 contract.",
+    "scope": "HTTP error handling only; no Thai linguistic or browser behavior changed."
   }
 }
