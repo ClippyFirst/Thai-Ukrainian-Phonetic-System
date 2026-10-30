@@ -1,3 +1,10 @@
+## 2026-10-30 — copy-contract regression and correction
+
+- The first CI run failed at the homepage copy assertion because `web/tests/ui-contract.test.mjs` still expected the old text `Можна вставити довший текст`.
+- This was a stale test expectation caused by the deliberate user-facing rewrite; no production behavior failed. The assertion now checks `Можна вставити й ціле речення`.
+- Web static validation run [41070448695](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41070448695) passed on head `49f7c4924ca851bfe2e7dfe46653cbd9965338ac`. Full CI run [41070448275](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41070448275) had not completed master-table generation at the last check. Full exact-head CI remains required.
+- Status: PARTIAL; no merge or deployment.
+
 ## 2026-10-30 — separation of service copy and research methodology
 
 - PR [#129](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/129), branch `docs/thai-user-copy-methodology-20261030`.
