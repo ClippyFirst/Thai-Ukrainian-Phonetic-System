@@ -1,12 +1,16 @@
-## 2026-10-30 — graded interpretation strictness
+## 2026-10-30 — strictness scale merged; consolidated layout under verification
 
 | Component | State | Validation |
 |---|---|---|
-| User-facing strictness control | PARTIAL — implemented on `ui/graded-analysis-policy-20261030` | Replaced colloquial prompts with an accessible three-position range control: 1/3 heuristic fallback, 2/3 structural syllabification, 3/3 conservative abstention. The numeric ordering is inverse to permissiveness: higher means stricter. |
-| Mode semantics | PARTIAL — copy aligned to engine behavior | 1/3 describes `super-soft` fallback IPA generated from orthographic structure and routed through the IPA → Ukrainian adapter; 2/3 describes greedy structural syllabification without lexical word-boundary claims; 3/3 describes reviewed lexical segmentation and supported deterministic parsing with abstention for unresolved spans. These levels are policy profiles, not calibrated confidence scores. |
-| Homepage and methodology | PARTIAL — revised | Replaced child-directed wording with concise methodological descriptions for an educated user. Added explicit caveat that greater coverage at lower strictness does not imply greater accuracy. |
-| UI regression and Pages publication contract | PARTIAL — updated | `web/tests/ui-contract.test.mjs` and `.github/workflows/pages.yml` now assert the scale and its explanatory copy. Exact-head CI and live Pages verification remain pending. |
-| Linguistic accuracy | BLOCKED / evidence-limited | No independent expert-adjudicated Thai segmentation, IPA and Ukrainian target-form gold set. This UI change does not alter or validate linguistic behavior. |
+| User-facing strictness control | DONE_VERIFIED — PR #138 merged as `398a25e7f884f11bee85e0888026a6b2875bdf8f` | Three-position range control: 1/3 heuristic, 2/3 structural, 3/3 conservative (default). Higher values are stricter. |
+| Mode semantics and evidence caveat | DONE_VERIFIED | Existing `super-soft`, `soft`, and `strict` engine policies are mapped to the scale; lower strictness increases coverage, not accuracy. The scale is not a calibrated confidence score. |
+| Homepage and methodology | DONE_VERIFIED — published | Homepage and `system.html` describe the three profiles for an educated user and retain the IPA → Ukrainian adapter boundary and uncertainty disclosures. |
+| Exact-head CI for PR #138 | DONE_VERIFIED | Head `d28e5b39d390686369c1dc6d2b193efd9fccf7e6`; validate [41101688585](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41101688585), test and master-artifact [41101688094](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41101688094), and duplicate push test [41101681373](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41101681373) passed. |
+| Post-merge main CI | DONE_VERIFIED | Run [41107725903](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41107725903): both `test` and `master-artifact` passed; master artifact asserted 351,780 rows and 41 vowel records. |
+| Static validation and Pages publication | DONE_VERIFIED | Static validation [41107725992](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41107725992) and Pages build/deploy/live-content contract [41107726300](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41107726300) passed on main `398a25e7f884f11bee85e0888026a6b2875bdf8f`. Live homepage fetch returned HTTP 200 and exposed the 1–3 slider and explanatory copy. |
+| Consolidated responsive layout | PARTIAL — PR #139 open | Branch `design/thai-layout-20261030`, head `be693819c69686fb269de7bd4a6484f582628d6e`, based on current main. Stylesheet cache keys, range-control styling, touch targets, focus states and UI contract selectors are aligned. Exact-head CI/static checks are queued; do not merge until they pass. |
+| Manual browser/device visual QA and WCAG 2.2 AA | PARTIAL / not performed | Automated static and published-content checks are not a substitute for screenshot review, physical-device testing, keyboard/screen-reader checks or a full WCAG audit. |
+| Linguistic accuracy | BLOCKED / evidence-limited | Independent expert-adjudicated Thai segmentation, IPA and Ukrainian target-form gold remains unavailable. UI changes do not validate pronunciation accuracy. |
 
 ## 2026-10-30 — Korean editorial reference applied; Thai copy closeout
 

@@ -1,11 +1,14 @@
-## 2026-10-30 — graded interpretation strictness revision
+## 2026-10-30 — graded strictness scale merged; layout integration pending
 
-- User clarified that the previous plain-language pass had become child-directed and had erased the methodological distinction between operating profiles. The interface is now being revised for an educated user.
-- Introduced a 1–3 strictness scale: **1/3 heuristic** (`super-soft`) maximizes output coverage through orthography-derived fallback IPA; **2/3 structural** (`soft`) attempts syllable parsing without claiming lexical word boundaries; **3/3 conservative** (`strict`) withholds output for unresolved spans and uses reviewed lexical segmentation / supported deterministic rules.
-- The scale is an accessible three-position range control over existing engine strategies, not a new numeric confidence model. Higher values are stricter; lower values permit broader provisional output. No algorithm or phonological rule was changed.
-- Homepage helper text, methodology explanation, browser UI contract tests, and the Pages live-content gate were updated together. Exact-head CI and published-page verification are pending.
-- The main branch at the start of this continuation was `b64c239d012612435b7578241086b988cd96b262` (PR #137). Work is isolated on `ui/graded-analysis-policy-20261030`; no merge or release has been performed.
-- Linguistic readiness remains evidence-limited: independent expert-adjudicated Thai segmentation, IPA and Ukrainian target-form gold are still absent.
+- PR [#138](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/138) was squash-merged into `main` as `398a25e7f884f11bee85e0888026a6b2875bdf8f`.
+- The control is a three-position range scale: 1/3 heuristic (`super-soft`), 2/3 structural (`soft`), 3/3 conservative (`strict`, default). It selects existing engine strategies, not calibrated confidence. Lower strictness increases coverage, not accuracy.
+- Exact PR-head CI passed on `d28e5b39d390686369c1dc6d2b193efd9fccf7e6`: validate run [41101688585](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41101688585), test/master-artifact run [41101688094](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41101688094), and push-event test run [41101681373](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41101681373).
+- Post-merge main CI [41107725903](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41107725903) passed both test and master-artifact jobs; the generated master table asserted 351,780 rows and 41 vowel records. Web static validation [41107725992](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41107725992) passed.
+- Pages deployment [41107726300](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41107726300) passed build, deploy and the published homepage/methodology content contract. A live homepage fetch returned HTTP 200 and showed the 1–3 control and helper text.
+- No Thai parsing, phonology, segmentation, IPA generation or Ukrainian adaptation behavior changed in PR #138.
+- PR [#139](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/139) consolidates responsive CSS. Its branch includes the merged main tree and the slider styling, 44px interaction targets, visible focus treatment, updated cache-busting keys and matching UI-contract selectors. Current head: `be693819c69686fb269de7bd4a6484f582628d6e`; exact-head checks are queued. It remains open and must not be merged before those checks pass.
+- Manual real-browser/device visual QA and WCAG 2.2 AA review have not been performed. Automated contracts do not establish visual quality or full accessibility conformance.
+- Independent expert-adjudicated Thai segmentation, IPA and Ukrainian target-form gold remain absent. Overall project remains a research prototype, not release-ready for linguistic-accuracy claims. PR #111 remains separate and untouched.
 
 ## 2026-10-30 — Thai service copy and methodology closeout
 

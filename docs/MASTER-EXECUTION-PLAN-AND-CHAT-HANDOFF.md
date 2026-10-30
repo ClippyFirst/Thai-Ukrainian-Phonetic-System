@@ -1,22 +1,14 @@
-## 2026-10-30 — strictness scale verification continuation
+## 2026-10-30 — current continuation checkpoint
 
-- Follow-up review found two stale contract references from the prior UI revision: the homepage still loaded the app script with the old `plain-language-2` cache key, and UI tests still asserted the old cache key / old select-option wording. Corrected the homepage script cache key and the UI test assertions; this is a concrete fix, not a linguistic-engine change.
-- Final branch head for this continuation: `8d4b8675e2b5424ab3d7e0991c87da4f1b7c4483`. PR #138 remains open and mergeable, based on main `b64c239d012612435b7578241086b988cd96b262`.
-- Exact-head CI and Web static validation runs `41101645980` and `41101646080` are queued (as are earlier superseded runs); no success/failure conclusion is available yet. Do not merge until current-head checks complete and pass. Pages deployment/published-content check remains post-merge.
-- The control is now a three-position range input, not a select: 1 = heuristic, 2 = structural, 3 = conservative. The runtime maps those numeric positions to the existing `super-soft`, `soft`, and `strict` engine modes. Tests exercise each position and verify its hint and engine behavior.
-
----
-
-## 2026-10-30 — graded strictness UI continuation (PR #138)
-
-- Starting main: `b64c239d012612435b7578241086b988cd96b262` (PR #137, readability baseline). Working branch: `ui/graded-analysis-policy-20261030`; pull request: [#138](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/138).
-- User clarified that the preceding copy pass had become child-directed. The interface must address an educated user and express operating policy through a defined scale rather than conversational prompts about unfamiliar words.
-- Implemented a discrete **strictness scale 1–3** over the existing engine modes: **1/3 heuristic** (`super-soft`) creates orthography-derived fallback IPA and routes it through the IPA → Ukrainian adapter; **2/3 structural** (`soft`) attempts greedy syllabification without claiming lexical word boundaries; **3/3 conservative** (`strict`) withholds output for unresolved spans and relies on reviewed lexical segmentation / supported deterministic rules. Higher values are stricter. These are strategy profiles, not calibrated confidence scores.
-- Updated homepage selector/helper/disclosure, methodology explanation, UI contract tests, Pages live-content markers, `docs/validation-matrix.md`, and `docs/final-audit.md`. No parser, phonology, segmentation algorithm, IPA generation or Ukrainian adaptation behavior changed.
-- A first review of the Pages smoke test caught obsolete text markers left by the prior interface; they were replaced with the new scale labels before PR verification.
-- Current PR head at this handoff entry: `67981d7668ec2e29f612b85d3812bfdff6f04666`. Exact-head CI and Pages publication are pending; do not mark DONE_VERIFIED until those complete.
-- Mainline PR #137 is merged at `b64c239d012612435b7578241086b988cd96b262`. Open PR #111 for the source-attested `ทร` lexical exception remains unrelated and untouched.
-- Linguistic readiness remains evidence-limited: no independent expert-adjudicated Thai segmentation, IPA and Ukrainian target-form gold set; no accuracy claim is supported by this UI change.
+- Starting main for the strictness-scale task: `b64c239d012612435b7578241086b988cd96b262`. PR #138 head `d28e5b39d390686369c1dc6d2b193efd9fccf7e6) passed exact-head validation, tests and master-artifact generation; PR #138 was squash-merged as `398a25e7f884f11bee85e0888026a6b2875bdf8f`.
+- Post-merge main CI [41107725903](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41107725903) passed `test` and `master-artifact`; the artifact asserts 351,780 rows and 41 vowel records. Web static validation [41107725992](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41107725992) passed.
+- Pages deployment and published-content verification [41107726300](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41107726300) passed on that main commit. The live homepage fetch returned HTTP 200 and contained the three-level slider and its explanatory labels; the deployment workflow also checked the live methodology page and served JS pipeline markers.
+- PR #139 continues the responsive layout consolidation. Branch: `design/thai-layout-20261030`; current head: `be693819c69686fb269de7bd4a6484f582628d6e`; base: `398a25e7f884f11bee85e0888026a6b2875bdf8f`. It now contains the current main tree, preserves the scale, adds its stylesheet treatment and 44px focus/touch-target rules, and aligns UI contract assertions with the new selectors. Exact-head CI and static checks are queued; do not merge until both pass.
+- README's two-mode description has been corrected to document the same 1/3 heuristic, 2/3 structural and 3/3 conservative scale. The validation matrix, audit and handoff now distinguish completed publication from the still-pending PR #139 layout work.
+- PR #111 remains a separate, older-base lexical-evidence task; it is not included in this UI change and remains untouched.
+- No local test run is claimed: the container could not resolve GitHub for a clone. Exact GitHub Actions checks are the current execution evidence.
+- Manual browser/device visual QA and WCAG 2.2 AA review remain unperformed. Independent expert-adjudicated Thai segmentation, IPA and Ukrainian target-form gold remains unavailable. The project is a research prototype, not release-ready for linguistic-accuracy claims.
+- Public service: https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/
 
 ---
 
