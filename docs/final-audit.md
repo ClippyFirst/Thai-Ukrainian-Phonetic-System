@@ -847,3 +847,10 @@ The first run with the new coverage tests completed master-table generation and 
 
 - The post-merge main CI run 41073985130, which was pending at the time of the preceding audit entry, has completed successfully. Both test and master-artifact jobs passed; the generated master table passed the 351,780-row and 41-vowel assertions.
 - PR #132 merged the documentation closeout as 78e24924ece18c92a9d872afbfe40e1f842b912b. The three canonical tracking documents now contain the verified closeout and completed CI status.
+
+
+### Repository closeout reference — 2026-10-30
+
+- Final main commit for this completed documentation closeout: fafb38143de4fecbebc143eb4b98ca71aed94cf6.
+- Post-merge main CI run 41073985130 completed successfully: test and master-artifact jobs passed; master artifact contains 351,780 rows and 41 vowel records.
+- Pages deployment and live-content verification passed in run 41073985170. Both public pages were fetched live and show the intended audience split.
