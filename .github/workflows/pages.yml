@@ -101,7 +101,7 @@ jobs:
               && curl --fail --silent --show-error "$PAGE_URL/src/rtgs-reference.js" -o /tmp/deployed-rtgs.js \
               && curl --fail --silent --show-error "$PAGE_URL/system.html" -o /tmp/deployed-system.html \
               && grep -Fq 'Методологія тайсько-українського фонетико-графемного передавання' /tmp/deployed-system.html \
-              && grep -Fq 'Цей розділ призначений для дослідників і розробників.' /tmp/deployed-system.html \
+              && grep -Fq 'Ця сторінка — для тих, хто хоче знати, як працює сервіс.' /tmp/deployed-system.html \
               && grep -Fq 'Словниковий запис' /tmp/deployed-app.js \
               && grep -Fq 'Попередній структурний розбір' /tmp/deployed-app.js \
               && grep -Fq 'Приблизне резервне читання' /tmp/deployed-app.js \
@@ -120,10 +120,10 @@ jobs:
               && grep -Fq '02 · Звуками (IPA)' /tmp/deployed-app.js \
               && grep -Fq '03 · Українськими літерами' /tmp/deployed-app.js \
               && ! grep -Fq '<details class="rtgs-details"' /tmp/deployed-app.js \
-              && grep -Fq 'Строгий режим: невідомі фрагменти залишаються невизначеними' /tmp/deployed-app.js \
+              && grep -Fq 'Невідомі місця залишаються без відповіді' /tmp/deployed-app.js \
               && grep -Fq 'Для всього тексту буде показано приблизний варіант' /tmp/deployed-app.js \
               && grep -Fq 'АУДИТ IPA → УКРАЇНСЬКА' /tmp/deployed-app.js \
-              && grep -Fq 'RTGS — латинська романізація (не IPA)' /tmp/deployed-app.js \
+              && grep -Fq 'Латиницею (RTGS)' /tmp/deployed-app.js \
               && grep -Fq 'renderRtgsTokens' /tmp/deployed-app.js \
               && grep -Fq 'romanizeRtgsWord' /tmp/deployed-rtgs.js \
               && grep -Fq 'IPA delimiters are mismatched' /tmp/deployed-ipa-ua.js \
@@ -147,7 +147,7 @@ jobs:
                 grep -Fq "$marker" /tmp/deployed-index.html || echo "Missing homepage marker: $marker" >&2
               done
               if [ -f /tmp/deployed-app.js ]; then
-                for marker in 'Результат' 'continuous-output-value' 'Попередній варіант' 'Приблизний' 'АУДИТ IPA → УКРАЇНСЬКА' 'RTGS — латинська романізація (не IPA)' 'renderRtgsTokens'; do
+                for marker in 'Результат' 'continuous-output-value' 'Попередній варіант' 'Приблизний' 'АУДИТ IPA → УКРАЇНСЬКА' 'Латиницею (RTGS)' 'renderRtgsTokens'; do
                   grep -Fq "$marker" /tmp/deployed-app.js || echo "Missing app marker: $marker" >&2
                 done
               else
