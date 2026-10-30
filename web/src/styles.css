@@ -172,3 +172,11 @@ footer{font-size:13px}
 .subline,.label,.badge,.examples-label,.eyebrow{font-size:.75rem}
 .text-button,.copy,.button,.primary{min-height:44px}
 .examples button{min-height:36px}
+
+
+/* Three-point strictness scale */
+#engine-mode{display:block;width:100%;min-height:32px;margin:0;padding:0;border:0;background:transparent;accent-color:var(--blue);cursor:pointer}
+.strictness-scale{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 12px;color:var(--muted);font-size:12px;font-weight:700;line-height:1.35}
+.strictness-scale span:nth-child(2){text-align:center}
+.strictness-scale span:nth-child(3){text-align:right}
+@media(max-width:420px){.strictness-scale{font-size:10px;gap:4px}}

@@ -15,11 +15,12 @@ const modeHint = document.getElementById('mode-hint');
 function updateModeHint() {
   if (!modeHint) return;
   const hints = {
-    strict: 'Обережний режим: якщо сервіс не знає, як прочитати слово, він не буде вигадувати відповідь.',
-    soft: 'Спроба розібрати: сервіс може запропонувати читання незнайомого слова. Перевірте його.',
-    'super-soft': 'Приблизне читання: сервіс спробує прочитати весь текст, але може помилитися.'
+    strict: '3/3 · Консервативний профіль: непідтверджені фрагменти залишаються невизначеними; фонетичний кандидат для них не генерується.',
+    soft: '2/3 · Структурний профіль: застосовується поділ на склади без підтвердження меж слів; результати такого розбору попередні.',
+    'super-soft': '1/3 · Евристичний профіль: для нерозпізнаних фрагментів генерується резервний IPA-кандидат зі структури написання; тон і лексичне читання не підтверджені.'
   };
-  modeHint.textContent = hints[modeInput?.value] || hints.strict;
+  const modeByLevel = { '1': 'super-soft', '2': 'soft', '3': 'strict' };
+  modeHint.textContent = hints[modeByLevel[modeInput?.value] || 'strict'];
 }
 
 const statusLabel = {
@@ -238,7 +239,7 @@ function run() {
     return;
   }
 
-  const mode = ['soft', 'super-soft'].includes(modeInput?.value) ? modeInput.value : 'strict';
+  const mode = ({ '1': 'super-soft', '2': 'soft', '3': 'strict' })[modeInput?.value] || 'strict';
   const prepared = preprocessArticleText(text);
   const analysisText = prepared.text;
   const tokens = analyzeText(analysisText, { mode });

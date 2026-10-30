@@ -1,3 +1,25 @@
+## 2026-10-30 — strictness scale verification continuation
+
+- Follow-up review found two stale contract references from the prior UI revision: the homepage still loaded the app script with the old `plain-language-2` cache key, and UI tests still asserted the old cache key / old select-option wording. Corrected the homepage script cache key and the UI test assertions; this is a concrete fix, not a linguistic-engine change.
+- Final branch head for this continuation: `8d4b8675e2b5424ab3d7e0991c87da4f1b7c4483`. PR #138 remains open and mergeable, based on main `b64c239d012612435b7578241086b988cd96b262`.
+- Exact-head CI and Web static validation runs `41101645980` and `41101646080` are queued (as are earlier superseded runs); no success/failure conclusion is available yet. Do not merge until current-head checks complete and pass. Pages deployment/published-content check remains post-merge.
+- The control is now a three-position range input, not a select: 1 = heuristic, 2 = structural, 3 = conservative. The runtime maps those numeric positions to the existing `super-soft`, `soft`, and `strict` engine modes. Tests exercise each position and verify its hint and engine behavior.
+
+---
+
+## 2026-10-30 — graded strictness UI continuation (PR #138)
+
+- Starting main: `b64c239d012612435b7578241086b988cd96b262` (PR #137, readability baseline). Working branch: `ui/graded-analysis-policy-20261030`; pull request: [#138](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/138).
+- User clarified that the preceding copy pass had become child-directed. The interface must address an educated user and express operating policy through a defined scale rather than conversational prompts about unfamiliar words.
+- Implemented a discrete **strictness scale 1–3** over the existing engine modes: **1/3 heuristic** (`super-soft`) creates orthography-derived fallback IPA and routes it through the IPA → Ukrainian adapter; **2/3 structural** (`soft`) attempts greedy syllabification without claiming lexical word boundaries; **3/3 conservative** (`strict`) withholds output for unresolved spans and relies on reviewed lexical segmentation / supported deterministic rules. Higher values are stricter. These are strategy profiles, not calibrated confidence scores.
+- Updated homepage selector/helper/disclosure, methodology explanation, UI contract tests, Pages live-content markers, `docs/validation-matrix.md`, and `docs/final-audit.md`. No parser, phonology, segmentation algorithm, IPA generation or Ukrainian adaptation behavior changed.
+- A first review of the Pages smoke test caught obsolete text markers left by the prior interface; they were replaced with the new scale labels before PR verification.
+- Current PR head at this handoff entry: `67981d7668ec2e29f612b85d3812bfdff6f04666`. Exact-head CI and Pages publication are pending; do not mark DONE_VERIFIED until those complete.
+- Mainline PR #137 is merged at `b64c239d012612435b7578241086b988cd96b262`. Open PR #111 for the source-attested `ทร` lexical exception remains unrelated and untouched.
+- Linguistic readiness remains evidence-limited: no independent expert-adjudicated Thai segmentation, IPA and Ukrainian target-form gold set; no accuracy claim is supported by this UI change.
+
+---
+
 ## 2026-10-30 — verification follow-up for service-copy change
 
 - The first full CI attempt on the initial copy commit `550dde6cc14e47c818cd3032733e1946ee48126e` failed only at `web/tests/ui-contract.test.mjs`: its expected old homepage hint (`Можна вставити довший текст`) no longer matched the intentionally rewritten user-facing hint.
