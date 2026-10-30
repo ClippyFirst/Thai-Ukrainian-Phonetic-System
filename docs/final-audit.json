@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Main includes PR #141, #144, #145, #146, #148, #149 and #150. Wheel portability and a pinned Python Ruff correctness gate are implemented and exact-head CI passed. Post-PR #150 main CI and Pages deployment are running at this audit checkpoint. Engineering-verified research prototype; not release-ready for independent linguistic-accuracy claims.",
+  "status": "Main includes PR #141, #144, #145, #146, #148, #149 and #150. Wheel portability and a pinned Python Ruff correctness gate are implemented. Exact-head CI and post-merge main CI/Pages checks passed. Engineering-verified research prototype; not release-ready for independent linguistic-accuracy claims.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -123,7 +123,7 @@
     "current_head_web_validation_runs": [
       40315032788
     ],
-    "current_head_status_at_audit_refresh": "Exact-head push CI 41133766851 passed Ruff, 214 Python tests, generated-data drift, browser IPA/UA parity and UI contract, research diagnostics, wheel-install smoke, and master-artifact (351,780 rows; 41 vowel records). VISTEC evaluation 41133770393 passed. Post-merge main CI 41134406351 and Pages 41134406540 were running when this audit checkpoint was written.",
+    "current_head_status_at_audit_refresh": "Exact-head PR #150 push CI 41133766851 passed Ruff, 214 Python tests, generated-data drift, browser parity/UI, research diagnostics, wheel smoke and master artifact (351,780 rows; 41 vowel records); VISTEC 41133770393 passed. Post-merge main CI 41134406351 passed test, wheel-install smoke and master-artifact; Pages 41134406540 passed build and deploy.",
     "latest_full_repository_head": "e8282dfb85f53ae18cbed5fcdc676b1b6049c313",
     "latest_full_repository_head_ci_run": 41133766851,
     "latest_full_repository_head_web_validation_run": 40320450587,
@@ -158,7 +158,7 @@
       "54e1db86cf3882f025f00ede86d86e7efb3909e2",
       "b6dbec7928b106f0ab52e06af33a26635df75412"
     ],
-    "current_audit_head_ci_status": "PENDING_EXACT_HEAD_CI_FOR_PR_151",
+    "current_audit_head_ci_status": "PENDING_EXACT_HEAD_CI_FOR_PR_151_DOCUMENTATION_CHECKPOINT",
     "comparative_error_review_metrics": {
       "rows": 993,
       "source_annotated_rows": 993,
@@ -216,7 +216,6 @@
   },
   "latest_documentation_checkpoint": {
     "branch": "docs/mainline-maintenance-closeout-20261030",
-    "head": "78439b1f19248be0c1fb5882ac57582af063f8c3",
     "pull_request": 151,
     "status": "PENDING_EXACT_HEAD_CI",
     "scope": [
@@ -1709,7 +1708,7 @@
     "post_merge_runs": {
       "ci": 41134406351,
       "pages": 41134406540,
-      "status": "RUNNING_AT_AUDIT_CHECKPOINT"
+      "status": "SUCCESS"
     },
     "pr_111": "closed_as_superseded; historical branch preserved",
     "issue_113": "closed_as_duplicate_of_114",
