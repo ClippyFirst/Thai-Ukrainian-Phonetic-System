@@ -119,8 +119,10 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
-      - name: Build wheel
-        run: python -m pip wheel . --no-deps --wheel-dir "$RUNNER_TEMP/wheels"
+      - name: Build source distribution with declared runtime data
+        run: python setup.py sdist --dist-dir "$RUNNER_TEMP/sdist"
+      - name: Build wheel from source distribution
+        run: python -m pip wheel "$RUNNER_TEMP"/sdist/*.tar.gz --no-deps --wheel-dir "$RUNNER_TEMP/wheels"
       - name: Install wheel into an isolated environment
         run: |
           python -m venv "$RUNNER_TEMP/wheel-env"
