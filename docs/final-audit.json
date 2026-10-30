@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Main includes the verified UI closeout merged as 37a2b5be62896a758ddc59b9b91184e448b4d963. Repository hygiene fixes are engineering-verified on chore/repository-hygiene-20261030; the system remains a research prototype, not release-ready for independent Thai IPA/Ukrainian accuracy claims.",
+  "status": "Main includes PR #141 repository hygiene and PR #144 bounded source-attested ทราม lexical exception (main cb7ff2a49731d3c02ddba400a4ddbc166395d493). Exact PR #144 checks passed; post-merge main CI and Pages were still running at last check. Engineering-verified research prototype, not release-ready for independent Thai IPA/Ukrainian accuracy claims.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -1600,7 +1600,7 @@
   "lexical_exception_guard_forwardport_2026_10_30": {
     "branch": "feat/thai-lexical-exception-mainline-20261030",
     "base_main": "81123ef50fbfc0335e22e6f16f4a5b02d967bb14",
-    "status": "PARTIAL_PENDING_EXACT_HEAD_CI",
+    "status": "DONE_VERIFIED_IMPLEMENTATION_MERGED",
     "original_pr": 111,
     "original_branch": "audit/thai-lexical-exception-guards-20261028",
     "original_branch_behind_main": 452,
@@ -1630,6 +1630,39 @@
       "ipa": "/saːm˧/",
       "grade": "SOURCE_ATTESTED_NOT_GOLD"
     },
-    "acceptance": "Exact forward-port head must pass full Python/browser parity, generated artifact drift and 351780-row master artifact CI before merge."
+    "acceptance": "Exact-head PR checks passed 5/5; post-merge main CI and Pages remain pending.",
+    "merge_sha": "cb7ff2a49731d3c02ddba400a4ddbc166395d493",
+    "original_pr_status": "closed_as_superseded"
+  },
+  "current_mainline_closeout_2026_10_30": {
+    "main_sha": "cb7ff2a49731d3c02ddba400a4ddbc166395d493",
+    "pr_141": "merged",
+    "pr_144": {
+      "status": "merged",
+      "merge_sha": "cb7ff2a49731d3c02ddba400a4ddbc166395d493",
+      "head_sha": "72a0e147fbbcd6d21fefc40a4219f9fb7c0bfc0b",
+      "checks": "5/5 successful",
+      "lexical_scope": "ทราม → ซาม; no productive ทร → ซ rule",
+      "evidence_grade": "SOURCE_ATTESTED_NOT_GOLD"
+    },
+    "pr_111": "closed_as_superseded; historical branch preserved",
+    "post_merge_runs": {
+      "ci": 41128531462,
+      "pages": 41128531547,
+      "web_static": 41128531495,
+      "web_static_status": "success",
+      "ci_status": "in_progress_at_last_check",
+      "pages_status": "in_progress_at_last_check"
+    },
+    "branch_refs_observed": 156,
+    "debt": [
+      "optional external G2P/VISTEC action pins",
+      "no declared development dependency extra or lint/type-check gate",
+      "historical branch retention/pruning policy"
+    ],
+    "blockers": [
+      "independent expert-adjudicated Thai segmentation/IPA/Ukrainian target gold",
+      "manual browser/device and WCAG 2.2 AA review"
+    ]
   }
 }
