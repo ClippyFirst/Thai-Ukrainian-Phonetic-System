@@ -940,4 +940,19 @@ The user's explicit requirement supersedes the prior UX decision to collapse RTG
 | Manual browser/device QA and WCAG 2.2 AA | BLOCKED | Requires actual browser/device and accessibility review |
 
 - PR #135 supersedes the insufficient first copy pass for the user-facing text; it does not alter the engine or research claims.
-- Overall project remains a research prototype, not release-ready for linguistic-accuracy claims. PR #111 remains separate and untouched.
+- Overall project remains a research prototype, not release-ready for linguistic-accuracy claims. PR #111 was closed as superseded; its source-attested lexical exception was forward-ported to main through PR #144, while the historical branch remains preserved.
+
+
+## 2026-10-31 — JSON API internal-error disclosure hardening
+
+| Acceptance criterion | State | Evidence |
+|---|---|---|
+| Unexpected analysis exceptions do not expose internal exception text to API clients | DONE_VERIFIED | Regression test: test_unexpected_api_error_is_logged_but_not_exposed; client receives a stable generic 500 response |
+| Unexpected exceptions remain diagnosable server-side | DONE_VERIFIED | Regression test asserts the exception is logged through thai_ukrainian.server |
+| Existing malformed-request behavior remains 400 | DONE_VERIFIED | Existing non-object JSON regression remains green |
+| Full Python/browser/diagnostic CI and package smoke | DONE_VERIFIED on code head | CI [41139203848](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41139203848): 215 Python tests, wheel-install smoke, browser parity/UI contracts and research diagnostics passed |
+| Master artifact | DONE_VERIFIED on code head | Same CI run generated and asserted 351,780 structural rows and 41 vowel records |
+
+- Test-first evidence: test-only commit e2e0e6783d277092ecf05ac87a2b712d9c03f260 failed only the new regression because no error log was emitted; implementation commit 60ac49dd1d3f6c387c306616e1c5a435dea4662a passed the full CI workflow.
+- Runtime change is limited to server-side logging and redaction of unexpected 500 responses. Expected malformed-request exceptions retain their existing 400 response contract.
+- This is API error-hygiene hardening, not a claim that the local standard-library server is production-ready for public internet exposure.

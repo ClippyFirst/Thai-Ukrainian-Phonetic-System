@@ -106,3 +106,10 @@ The response is the same structured analysis envelope used by the batch layer. T
 The CLI/API is an interface layer, not a new transliteration algorithm. It does not invent word segmentation, override unresolved analyses, or convert project-specific Ukrainian candidates into an official Ukrainian transliteration standard.
 
 For research workflows, `status`, `warnings`, `analyses`, and provenance-bearing fields should be retained rather than reduced to a single output string.
+
+
+### API error responses
+
+- Invalid JSON, non-object JSON bodies, and invalid or empty text fields return **400 Bad Request**.
+- Requests larger than the server's 1 MB limit return **413 Request Entity Too Large**.
+- Unexpected internal analysis failures are logged by the server and return a generic **500 Internal Server Error** response. Internal exception text is not returned to the client.

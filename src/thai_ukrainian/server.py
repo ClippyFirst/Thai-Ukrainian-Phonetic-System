@@ -1,11 +1,14 @@
 from __future__ import annotations
 
 import json
+import logging
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from typing import Any
 
 from .batch import analyze_input
 from ._version import __version__
+
+logger = logging.getLogger(__name__)
 
 
 def _send(handler: BaseHTTPRequestHandler, status: int, payload: dict[str, Any]) -> None:
@@ -51,8 +54,9 @@ class APIHandler(BaseHTTPRequestHandler):
             _send(self, 200, analyze_input(text))
         except (UnicodeDecodeError, json.JSONDecodeError, ValueError, TypeError) as exc:
             _send(self, 400, {"error": "invalid_request", "detail": str(exc)})
-        except Exception as exc:
-            _send(self, 500, {"error": "analysis_failed", "detail": str(exc)})
+        except Exception:
+            logger.exception("Unhandled exception while processing API request")
+            _send(self, 500, {"error": "analysis_failed", "detail": "Internal server error."})
 
     def log_message(self, format: str, *args: object) -> None:
         return

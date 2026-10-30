@@ -990,4 +990,15 @@ The first run with the new coverage tests completed master-table generation and 
 - **PASS — post-merge main CI:** run 41080245372; both test and master-artifact jobs passed, including the 351,780-row / 41-vowel assertion.
 - **PARTIAL — user evidence:** automated copy contract is green, but wording has not been moderated with non-specialist users. Do not describe it as user-tested.
 - **Not release-ready for linguistic accuracy:** independent expert-adjudicated Thai IPA/segmentation/Ukrainian target-form gold remains unavailable. Real-device visual QA and WCAG 2.2 AA review also remain outstanding.
-- PR #111 (`ทร` lexical exception) was superseded open and untouched.
+- PR #111 (`ทร` lexical exception) was closed as superseded by PR #144, which forward-ported the source-attested exception to current main; the historical branch remains preserved.
+
+
+## Final audit update — 2026-10-31: API internal-error disclosure
+
+- **PASS — regression reproduced:** test-only commit e2e0e6783d277092ecf05ac87a2b712d9c03f260 failed the new test because unexpected API exceptions were not logged and their text was still exposed by the old response path.
+- **PASS — implementation:** commit 60ac49dd1d3f6c387c306616e1c5a435dea4662a logs unexpected exceptions server-side and returns a generic 500 payload without the exception string.
+- **PASS — exact code-head CI:** run [41139203848](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41139203848) completed all three jobs successfully: test, wheel-install-smoke, and master-artifact.
+- **PASS — test evidence:** 215 Python tests passed; the new test checks both the generic client response and server-side exception logging. Existing malformed JSON/non-object request behavior remains 400.
+- **PASS — packaging and generated artifact:** isolated sdist→wheel→install smoke passed; master table asserted 351,780 rows and 41 vowel records.
+- The change does not alter Thai parsing, phonology, segmentation, IPA, RTGS, or Ukrainian adaptation. It does not change the documented local-by-default deployment boundary.
+- PR integration and post-merge main CI are recorded in the continuation handoff after merge.
