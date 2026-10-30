@@ -40,12 +40,13 @@ One non-empty Thai input per line:
 thai-ua batch input.txt -o output.jsonl
 ```
 
-### CSV
+### CSV and TSV
 
-The CLI uses a `thai` column automatically when present:
+CSV files use commas; TSV files use tabs. Both formats use a `thai` column automatically when present:
 
 ```powershell
 thai-ua batch input.csv -o output.csv
+thai-ua batch input.tsv -o output.csv
 ```
 
 Or specify a column:
