@@ -1,6 +1,5 @@
 from __future__ import annotations
 import csv
-from pathlib import Path
 from .models import Candidate
 from ._paths import DATA_ROOT
 

@@ -8,6 +8,6 @@ __all__=[
     "transliterate_thai","rank_ukrainian_candidates",
     "analyze_input","analyze_rows","load_batch","write_batch",
     "load_records","evaluate_records","evaluate_file",
-    "tokenize_text","segment_thai_word","analyze_text",
+    "tokenize_text","segment_thai_word","analyze_text","__version__",
 ]
 from ._version import __version__
