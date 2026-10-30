@@ -86,23 +86,24 @@ jobs:
               && grep -Fq 'Вставте слово або речення тайською' /tmp/deployed-index.html \
               && grep -Fq 'Текст залишається у вашому браузері' /tmp/deployed-index.html \
               && grep -Fq 'ТЕСТОВА ВЕРСІЯ' /tmp/deployed-index.html \
-              && grep -Fq 'Як діяти, якщо слово незнайоме?' /tmp/deployed-index.html \
-              && grep -Fq 'Обережно — не вгадувати' /tmp/deployed-index.html \
-              && grep -Fq 'Запропонувати приблизне читання' /tmp/deployed-index.html \
+              && grep -Fq 'Суворість інтерпретації · шкала 1–3' /tmp/deployed-index.html \
+              && grep -Fq '3 · Консервативний' /tmp/deployed-index.html \
+              && grep -Fq '1 · Евристичний' /tmp/deployed-index.html \
+              && grep -Fq '2 · Структурний' /tmp/deployed-index.html \
               && grep -Fq 'data-example="กา"' /tmp/deployed-index.html \
               && grep -Fq 'data-example="จริง"' /tmp/deployed-index.html \
               && grep -Fq 'id="engine-mode"' /tmp/deployed-index.html \
-              && grep -Fq 'value="soft"' /tmp/deployed-index.html \
-              && grep -Fq 'value="super-soft"' /tmp/deployed-index.html \
+              && grep -Fq 'type="range" min="1" max="3" step="1" value="3"' /tmp/deployed-index.html \
               && grep -Fq 'Що означає результат' /tmp/deployed-index.html \
               && ! grep -Fq 'id="ipa-input"' /tmp/deployed-index.html \
               && ! grep -Fq 'id="ipa-adapt"' /tmp/deployed-index.html \
-              && curl --fail --silent --show-error "$PAGE_URL/src/app.js?v=20261030-plain-language-2" -o /tmp/deployed-app.js \
+              && curl --fail --silent --show-error "$PAGE_URL/src/app.js?v=20261030-graded-scale-1" -o /tmp/deployed-app.js \
               && curl --fail --silent --show-error "$PAGE_URL/src/engine.js" -o /tmp/deployed-engine.js \
               && curl --fail --silent --show-error "$PAGE_URL/src/ipa-ua.js" -o /tmp/deployed-ipa-ua.js \
               && curl --fail --silent --show-error "$PAGE_URL/src/rtgs-reference.js" -o /tmp/deployed-rtgs.js \
               && curl --fail --silent --show-error "$PAGE_URL/system.html" -o /tmp/deployed-system.html \
               && grep -Fq 'Як сервіс читає тайський текст' /tmp/deployed-system.html \
+              && grep -Fq 'Шкала суворості обробки' /tmp/deployed-system.html \
               && grep -Fq 'Технічні подробиці для дослідників' /tmp/deployed-system.html \
               && grep -Fq 'Що вже перевірено' /tmp/deployed-system.html \
               && grep -Fq 'не маємо незалежно перевіреного фахівцями набору' /tmp/deployed-system.html \

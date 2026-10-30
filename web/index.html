@@ -33,14 +33,11 @@
   <label class="input-label" for="thai-input">Текст тайською</label>
   <textarea id="thai-input" lang="th" rows="3" spellcheck="false" autocomplete="off" autocapitalize="off" aria-describedby="input-hint" placeholder="Наприклад: สวัสดี"></textarea>
   <p class="input-hint" id="input-hint">Можна вставити одне слово або ціле речення. Якщо сервіс не зможе впевнено прочитати частину тексту, він про це повідомить. <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>Enter</kbd> — показати результат.</p>
-  <label class="input-label" for="engine-mode">Як діяти, якщо слово незнайоме?</label>
-  <select id="engine-mode" aria-describedby="mode-hint">
-    <option value="strict" selected>Обережно — не вгадувати</option>
-    <option value="soft">Спробувати розібрати слово</option>
-    <option value="super-soft">Запропонувати приблизне читання</option>
-  </select>
-  <p class="input-hint" id="mode-hint" aria-live="polite">Обережний режим: якщо сервіс не знає, як прочитати слово, він не буде вигадувати відповідь.</p>
-  <details class="mode-help"><summary>Чим відрізняються ці режими?</summary><dl><dt>Обережно — не вгадувати</dt><dd>Покаже результат лише там, де має достатньо підстав. Невідоме слово залишить без припущення.</dd><dt>Спробувати розібрати слово</dt><dd>Спробує прочитати незнайоме слово за правилами тайського письма. Такий результат може бути помилковим.</dd><dt>Запропонувати приблизне читання</dt><dd>Спробує дати варіант для всього тексту, навіть коли не впевнений. Це здогадка, а не підтверджена вимова.</dd></dl></details>
+  <label class="input-label" for="engine-mode">Суворість інтерпретації · шкала 1–3</label>
+  <input id="engine-mode" type="range" min="1" max="3" step="1" value="3" aria-describedby="mode-hint">
+  <div class="strictness-scale" aria-hidden="true"><span>1 · Евристичний</span><span>2 · Структурний</span><span>3 · Консервативний</span></div>
+  <p class="input-hint" id="mode-hint" aria-live="polite">3/3 · Консервативний профіль: непідтверджені фрагменти залишаються невизначеними; фонетичний кандидат для них не генерується.</p>
+  <details class="mode-help"><summary>Методологія рівнів суворості</summary><dl><dt>1/3 · Евристичний</dt><dd>Максимізує повноту: для нерозпізнаних фрагментів формує резервний IPA-кандидат зі структури написання й передає його через IPA → українська. Тон і лексичне читання можуть бути хибними; це найнижчий рівень суворості.</dd><dt>2/3 · Структурний</dt><dd>Застосовує структурний поділ на склади без підтвердження меж слів. Кандидати позначаються як попередні; фрагменти, які не вдалося розібрати, залишаються невизначеними.</dd><dt>3/3 · Консервативний</dt><dd>Використовує словниково підтверджену сегментацію та підтримувані детерміновані правила. Для непідтверджених фрагментів IPA й український результат не генеруються.</dd></dl></details>
   <div class="examples" aria-label="Швидкі приклади">
     <span class="examples-label">Спробуйте:</span>
     <button type="button" data-example="กา">กา</button>
@@ -64,6 +61,6 @@
 </section>
 </main>
 <footer><span>Дослідницький проєкт «Тайська → українська»</span><a href="https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System" rel="noopener noreferrer">Вихідний код</a></footer>
-<script type="module" src="src/app.js?v=20261030-plain-language-2"></script>
+<script type="module" src="src/app.js?v=20261030-graded-scale-1"></script>
 </body>
 </html>
