@@ -158,7 +158,7 @@
       "54e1db86cf3882f025f00ede86d86e7efb3909e2",
       "b6dbec7928b106f0ab52e06af33a26635df75412"
     ],
-    "current_audit_head_ci_status": "PENDING_AFTER_DOCUMENTATION_UPDATE",
+    "current_audit_head_ci_status": "PENDING_EXACT_HEAD_CI_FOR_PR_151",
     "comparative_error_review_metrics": {
       "rows": 993,
       "source_annotated_rows": 993,
@@ -215,11 +215,18 @@
     "vowel_rime_records": 41
   },
   "latest_documentation_checkpoint": {
-    "commit": "dd2260356f7de17d56d25b06c7c6b2c5999c0709",
-    "ci_run": 40467565451,
-    "web_static_validation_run": 40466830820,
-    "ci_status": "IN_PROGRESS_AT_AUDIT_UPDATE",
-    "note": "Documentation-only PR #80 reconciles the matrix/handoff after PR #79. The code-bearing prefix-index commit already passed CI test + master-artifact and Web static validation; post-merge Pages deployment and live homepage contract passed. This new audit-register commit will itself require exact-head CI."
+    "branch": "docs/mainline-maintenance-closeout-20261030",
+    "head": "78439b1f19248be0c1fb5882ac57582af063f8c3",
+    "pull_request": 151,
+    "status": "PENDING_EXACT_HEAD_CI",
+    "scope": [
+      "README installation instructions",
+      "CHANGELOG packaging and Ruff maintenance",
+      "validation matrix",
+      "final audit",
+      "machine-readable audit JSON",
+      "execution handoff"
+    ]
   },
   "text_only_checkpoint": {
     "branch": "research/thai-segmentation-gold-parity-verified-20261025",
@@ -457,8 +464,8 @@
   },
   "latest_implementation_commit_ci_verified": "4b1592cd72298d1ca92e0b99ab330975764a078a",
   "latest_documentation_head_ci_verified": "4b1592cd72298d1ca92e0b99ab330975764a078a",
-  "latest_documentation_head_ci_run": 40320450844,
-  "latest_documentation_head_web_validation_run": 40320450587,
+  "latest_documentation_head_ci_run": null,
+  "latest_documentation_head_web_validation_run": null,
   "latest_implementation_ci_run": 40320450844,
   "latest_implementation_web_validation_run": 40320450587,
   "segmentation_error_review": {
@@ -1709,7 +1716,7 @@
     "issue_114": "open_for_independent_linguistic_gold_and_manual_visual_accessibility_review",
     "issue_147": "closed_completed_by_pr_149",
     "branch_refs_observed": 163,
-    "open_pull_requests": 0,
+    "open_pull_requests": 1,
     "technical_debt": [
       {
         "id": "PACKAGING-WHEEL-001",
@@ -1733,6 +1740,9 @@
       "independent expert-adjudicated Thai segmentation/IPA/Ukrainian target gold",
       "manual browser/device and WCAG 2.2 AA review",
       "local git clone blocked by container DNS resolution for github.com"
+    ],
+    "open_pull_request_numbers": [
+      151
     ]
   }
 }
