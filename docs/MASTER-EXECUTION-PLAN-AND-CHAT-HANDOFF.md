@@ -1,3 +1,16 @@
+## 2026-10-30 — graded strictness UI continuation (PR #138)
+
+- Starting main: `b64c239d012612435b7578241086b988cd96b262` (PR #137, readability baseline). Working branch: `ui/graded-analysis-policy-20261030`; pull request: [#138](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/138).
+- User clarified that the preceding copy pass had become child-directed. The interface must address an educated user and express operating policy through a defined scale rather than conversational prompts about unfamiliar words.
+- Implemented a discrete **strictness scale 1–3** over the existing engine modes: **1/3 heuristic** (`super-soft`) creates orthography-derived fallback IPA and routes it through the IPA → Ukrainian adapter; **2/3 structural** (`soft`) attempts greedy syllabification without claiming lexical word boundaries; **3/3 conservative** (`strict`) withholds output for unresolved spans and relies on reviewed lexical segmentation / supported deterministic rules. Higher values are stricter. These are strategy profiles, not calibrated confidence scores.
+- Updated homepage selector/helper/disclosure, methodology explanation, UI contract tests, Pages live-content markers, `docs/validation-matrix.md`, and `docs/final-audit.md`. No parser, phonology, segmentation algorithm, IPA generation or Ukrainian adaptation behavior changed.
+- A first review of the Pages smoke test caught obsolete text markers left by the prior interface; they were replaced with the new scale labels before PR verification.
+- Current PR head at this handoff entry: `67981d7668ec2e29f612b85d3812bfdff6f04666`. Exact-head CI and Pages publication are pending; do not mark DONE_VERIFIED until those complete.
+- Mainline PR #137 is merged at `b64c239d012612435b7578241086b988cd96b262`. Open PR #111 for the source-attested `ทร` lexical exception remains unrelated and untouched.
+- Linguistic readiness remains evidence-limited: no independent expert-adjudicated Thai segmentation, IPA and Ukrainian target-form gold set; no accuracy claim is supported by this UI change.
+
+---
+
 ## 2026-10-30 — verification follow-up for service-copy change
 
 - The first full CI attempt on the initial copy commit `550dde6cc14e47c818cd3032733e1946ee48126e` failed only at `web/tests/ui-contract.test.mjs`: its expected old homepage hint (`Можна вставити довший текст`) no longer matched the intentionally rewritten user-facing hint.
