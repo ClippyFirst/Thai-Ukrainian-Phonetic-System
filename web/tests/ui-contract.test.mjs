@@ -238,10 +238,10 @@ assert.match(output.innerHTML, /approximate:orthographic-fallback/);
 assert.equal(status.className, "status notice", "full coverage must still be marked provisional");
 mode.value = "strict";
 mode.listeners.change?.();
-assert.match(modeHint.textContent, /залишаються невизначеними/);
+assert.match(modeHint.textContent, /не буде вигадувати відповідь/);
 input.value = "ทดสอบกาไฟ";
 analyze.click();
-assert.match(status.textContent, /Строгий/);
+assert.match(status.textContent, /Не всі слова вдалося прочитати впевнено/);
 assert.match(output.innerHTML, /⟦НЕВИЗНАЧЕНО: ทดสอบ⟧/);
 assert.doesNotMatch(output.innerHTML, /soft-orthographic-clusters/);
 
@@ -261,13 +261,13 @@ assert.equal(input.focused, true);
 input.value = "ABC 123";
 analyze.click();
 assert.equal(status.className, "status notice");
-assert.match(status.textContent, /Тайських токенів не знайдено/);
+assert.match(status.textContent, /не знайдено тайських слів/);
 assert.match(output.innerHTML, /ABC/);
 assert.match(output.innerHTML, /Тайського тексту для фонетичного перетворення не знайдено/);
 
 input.value = '**ยูเครน** ([อังกฤษ](https://th.wikipedia.org/wiki/ภาษาอังกฤษ "ภาษาอังกฤษ"): *Ukraine*) [\\[a\\]](https://example.org) &#x20;';
 analyze.click();
-assert.match(output.innerHTML, /Перед аналізом очищено вікі-\/Markdown-розмітку/);
+assert.match(output.innerHTML, /Перед читанням сервіс прибрав із тексту технічну розмітку посилань/);
 assert.match(output.innerHTML, /: Ukraine/);
 assert.doesNotMatch(output.innerHTML, /wikipedia\.org|example\.org|&#x20;/i);
 
@@ -276,11 +276,11 @@ const homeHtml = await readFile(new URL("../index.html", import.meta.url), "utf8
 const systemHtml = await readFile(new URL("../system.html", import.meta.url), "utf8");
 const styles = await readFile(new URL("../src/styles.css", import.meta.url), "utf8");
 const pagesWorkflow = await readFile(new URL("../../.github/workflows/pages.yml", import.meta.url), "utf8");
-assert.match(homeHtml, /БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ/);
-assert.match(homeHtml, /Текст аналізується локально у браузері/);
-assert.match(pagesWorkflow, /grep -Fq 'Текст аналізується локально у браузері' \/tmp\/deployed-index\.html/);
-assert.match(homeHtml, /Можна вставити й ціле речення/);
-assert.match(homeHtml, /<label class="input-label" for="thai-input">Тайський текст<\/label>/);
+assert.match(homeHtml, /ТЕСТОВА ВЕРСІЯ/);
+assert.match(homeHtml, /Текст залишається у вашому браузері/);
+assert.match(pagesWorkflow, /Текст залишається у вашому браузері/);
+assert.match(homeHtml, /Можна вставити одне слово або ціле речення/);
+assert.match(homeHtml, /<label class="input-label" for="thai-input">Текст тайською<\/label>/);
 assert.match(homeHtml, /class="skip-link"/);
 assert.match(homeHtml, /id="main-content" tabindex="-1"/);
 assert.match(systemHtml, /class="skip-link"/);
