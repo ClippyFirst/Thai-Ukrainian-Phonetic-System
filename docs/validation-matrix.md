@@ -774,3 +774,10 @@ The user's explicit requirement supersedes the prior UX decision to collapse RTG
 
 - The previously pending post-merge main CI run 41073985130 is now DONE_VERIFIED: both test and master-artifact jobs succeeded. Master artifact asserted exactly 351,780 rows and 41 vowel records.
 - The handoff/matrix/audit closeout was merged in PR #132 as 78e24924ece18c92a9d872afbfe40e1f842b912b.
+
+
+### Repository closeout reference — 2026-10-30
+
+- Final main commit for this completed documentation closeout: fafb38143de4fecbebc143eb4b98ca71aed94cf6.
+- Post-merge main CI run 41073985130 completed successfully: test and master-artifact jobs passed; master artifact contains 351,780 rows and 41 vowel records.
+- Pages deployment and live-content verification passed in run 41073985170. Both public pages were fetched live and show the intended audience split.
