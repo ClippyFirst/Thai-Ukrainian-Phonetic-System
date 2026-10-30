@@ -1,3 +1,11 @@
+## 2026-10-30 — Thai lexical exception forward-port
+
+- Historical PR #111 was 452 commits behind main; its bounded change was ported onto a fresh branch based on the latest main after PR #142, without force-rebasing or rewriting the historical ref.
+- Added exact `ทราม → ซาม` handling in Python/browser maps, text lexicon and source registries, plus ten enumerated false-cluster/lexical regression cases through the typed IPA → Ukrainian adapter.
+- No productive `ทร → ซ` rule was added. Generic ambiguity sentinels, including isolated `ทราย`, remain fail-closed.
+- Evidence: Royal Institute Journal 36(4), 2011, p. 557 discusses `ทราม` among historical /s/-reading forms; English Wiktionary records `/saːm˧/`. Evidence is source-attested, not independent IPA gold.
+- TDD red evidence: browser parity run `41124129117` and Python run `41124128896` failed on the expected missing lexical mapping/source-registry row before implementation. Exact-head full CI remains the acceptance gate.
+
 ## 2026-10-30 — PR #141 integrated; citation metadata follow-up
 
 - PR [#141](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/141) was squash-merged into `main` as `4d087e66778854503a0e6d355d605d83a50354f8`.

@@ -1,3 +1,14 @@
+## 2026-10-30 — Thai lexical exception forward-port
+
+- Fresh branch `feat/thai-lexical-exception-mainline-20261030` is based on current `main` (`81123ef50fbfc0335e22e6f16f4a5b02d967bb14`), including the citation metadata correction merged in PR #142.
+- Ported exact source-attested `ทราม → ซาม` handling into Python/browser mappings, text lexicon and source registries. No productive `ทร → ซ` rule is introduced.
+- Added ten exact false-cluster/lexical regression cases: `จริง, สร้าง, ศรี, เศร้า, ไซร้, ทราบ, ทรง, ทรัพย์, ทราม, แทรก`. Tests require structured IPA and a Ukrainian candidate through the existing typed IPA adapter; generic ambiguous forms including isolated `ทราย` remain fail-closed.
+- Evidence: Royal Institute of Thailand Journal 36(4), 2011, p. 557 discusses lexical/historical `ทร` readings and lists `ทราม` among /s/-reading examples; English Wiktionary records standard IPA `/saːm˧/`. The registry pins revision 88637433. This is source-attested lexical evidence, not independent expert/acoustic IPA gold.
+- TDD red stage: browser parity run `41124129117` failed because `ทราม` remained unresolved; Python run `41124128896` failed because the new source-registry row was absent. A previous implementation branch passed test and static validation but hit a documentation merge conflict after PR #142 updated shared audit files; this fresh branch is based on the new main head to avoid that conflict.
+- Status: PARTIAL pending exact-head full CI, browser parity, generated-artifact checks and master-artifact verification. No local run is claimed because the execution container cannot resolve `github.com`.
+
+---
+
 ## 2026-10-30 — PR #141 integrated; citation metadata follow-up
 
 - PR [#141](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/141) was squash-merged into `main` as `4d087e66778854503a0e6d355d605d83a50354f8`.
@@ -5,7 +16,7 @@
 - The post-merge CI generated the master artifact and its assertions passed: 351,780 rows and 41 vowel records. The test job passed.
 - Follow-up hygiene finding: `CITATION.cff` still identified the software as `0.5.1`, while `pyproject.toml` and the single package-version source declare `0.6.1`. A regression test was added first; CI on the test-only commit failed on this exact mismatch. The implementation now aligns the CFF version to `0.6.1` and removes the stale `date-released` field rather than inventing a release date.
 - Follow-up branch: `chore/citation-version-alignment-20261030`, based on the merged `main`. Exact-head CI is required before integration.
-- PR #111 remains open and non-mergeable on an older base. Its source-attested `ทราม → ซาม` change is distinct; rebase/port and exact-head verification remain outstanding. No historical branch was deleted or force-rebased.
+- PR #111's source-attested `ทราม → ซาม` change is being forward-ported in PR #144; the original stale-base branch is preserved and will be closed as superseded after the new PR merges. No historical branch was deleted or force-rebased.
 - Local checkout remains unavailable because the execution container cannot resolve `github.com`; verification is via GitHub Actions. Research/linguistic readiness remains limited by the absence of independent expert-adjudicated IPA and Ukrainian target gold.
 
 ---
@@ -23,7 +34,7 @@
 - Branch inventory: 151 branch refs. Prefix counts include 44 `docs/`, 24 `research/`, 22 `feat/`, 22 `fix/`. No mass branch rewrite/deletion was performed. PR #140 is merged; PR #111 remains open and non-mergeable (12 ahead / 30 behind current main), containing a separate source-attested `ทราม` lexical exception. Keep it separate until rebased and its exact head passes evidence and CI review.
 - Local clone attempt failed with DNS resolution error for `github.com`; no local test execution is claimed.
 - Self-review performed (no subagent reviewer available): checked the complete PR diff, packaging metadata, TSV routing, regression tests, workflow action upgrades and CI evidence.
-- PR #141 remains open; its verified implementation/workflow head is `caab0adfd5b22fd07702e0aa0f86635aa46d5406`. Later commits in the branch only reconcile the canonical audit and handoff documents.
+- PR #141 was merged as `4d087e66778854503a0e6d355d605d83a50354f8`; post-merge CI, Web Static and Pages deployment passed. PR #142 subsequently aligned `CITATION.cff` to package version 0.6.1 and was merged as `81123ef50fbfc0335e22e6f16f4a5b02d967bb14` after exact-head CI passed.
 - Remaining blockers: independent expert-adjudicated Thai segmentation/IPA/Ukrainian target gold; manual visual/device and WCAG review; PR #111 rebase and evidence review; disposition policy for historical branches.
 - Status: CLI fixes DONE_VERIFIED on this branch; branch cleanup PARTIAL; overall project remains an engineering-verified research prototype, not release-ready for linguistic-accuracy claims.
 - Public service: https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/

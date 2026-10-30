@@ -241,3 +241,11 @@ if (isolatedSandHomograph.status !== "analysis-dependent:special-orthography" ||
     isolatedSandHomograph.phonemicIpa != null) {
   throw new Error("Isolated sense-ambiguous ทราย must remain unresolved: " + JSON.stringify(isolatedSandHomograph));
 }
+
+const thram = analyzeText("ทราม")[0];
+if (thram.segmentationStatus !== "lexicon" ||
+    thram.syllables.map(x => x.phonemicIpa).join("|") !== "saːm" ||
+    thram.syllables.map(x => x.tone).join("|") !== "mid" ||
+    thram.syllables.map(x => x.ukrainian).join("|") !== "сам") {
+  throw new Error("Source-pinned ทราม reading did not resolve through the browser IPA adapter: " + JSON.stringify(thram));
+}
