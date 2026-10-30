@@ -107,7 +107,7 @@ jobs:
               && grep -Fq 'Що вже перевірено' /tmp/deployed-system.html \
               && grep -Fq 'не маємо незалежно перевіреного фахівцями набору' /tmp/deployed-system.html \
               && grep -Fq 'Латинський запис' /tmp/deployed-app.js \
-              && grep -Fq '02 · Запис звуків IPA' /tmp/deployed-app.js \
+              && grep -Fq '02 · Детальний запис звуків' /tmp/deployed-app.js \
               && grep -Fq '03 · Українськими літерами' /tmp/deployed-app.js \
               && grep -Fq 'Для частини слів сервіс зробив припущення' /tmp/deployed-app.js \
               && grep -Fq 'Це приблизне читання' /tmp/deployed-app.js \
@@ -118,7 +118,7 @@ jobs:
               && grep -Fq 'softSyllabify' /tmp/deployed-engine.js \
               && grep -Fq 'UNVERIFIED_ORTHOGRAPHIC_FALLBACK' /tmp/deployed-engine.js; then
               latin_line=$(grep -nF "continuousPanel('01 · Латинський запис'" /tmp/deployed-app.js | cut -d: -f1)
-              ipa_line=$(grep -nF "continuousPanel('02 · Запис звуків IPA'" /tmp/deployed-app.js | cut -d: -f1)
+              ipa_line=$(grep -nF "continuousPanel('02 · Детальний запис звуків'" /tmp/deployed-app.js | cut -d: -f1)
               ukrainian_line=$(grep -nF "continuousPanel('03 · Українськими літерами'" /tmp/deployed-app.js | cut -d: -f1)
               test "$latin_line" -lt "$ipa_line"
               test "$ipa_line" -lt "$ukrainian_line"
