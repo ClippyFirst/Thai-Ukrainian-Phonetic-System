@@ -11,7 +11,7 @@
 - Branch inventory: 151 branch refs. Prefix counts include 44 `docs/`, 24 `research/`, 22 `feat/`, 22 `fix/`. No mass branch rewrite/deletion was performed. PR #140 is merged; PR #111 remains open and non-mergeable (12 ahead / 30 behind current main), containing a separate source-attested `ทราม` lexical exception. Keep it separate until rebased and its exact head passes evidence and CI review.
 - Local clone attempt failed with DNS resolution error for `github.com`; no local test execution is claimed.
 - Self-review performed (no subagent reviewer available): checked the complete PR diff, packaging metadata, TSV routing, regression tests, workflow action upgrades and CI evidence.
-- Latest PR #141 branch head after the canonical documentation checkpoint: `f85db146079ab5456353c7cc86f7059aa2ea5945`.
+- PR #141 remains open; its verified implementation/workflow head is `caab0adfd5b22fd07702e0aa0f86635aa46d5406`. Later commits in the branch only reconcile the canonical audit and handoff documents.
 - Remaining blockers: independent expert-adjudicated Thai segmentation/IPA/Ukrainian target gold; manual visual/device and WCAG review; PR #111 rebase and evidence review; disposition policy for historical branches.
 - Status: CLI fixes DONE_VERIFIED on this branch; branch cleanup PARTIAL; overall project remains an engineering-verified research prototype, not release-ready for linguistic-accuracy claims.
 - Public service: https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/

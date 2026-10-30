@@ -12,7 +12,7 @@
 | Branch inventory and reconciliation | PARTIAL | 151 branch refs inventoried: 44 `docs/`, 24 `research/`, 22 `feat/`, 22 `fix/`, plus the remaining categories. PR #140 was squash-merged into `main` as `37a2b5be62896a758ddc59b9b91184e448b4d963`. PR #111 remains open and non-mergeable: 12 commits ahead / 30 behind current main; it contains a distinct source-attested lexical change and needs a deliberate rebase/evidence review. Historical branches were not mass-rebased or deleted because doing so would rewrite or discard distinct work. |
 | Linguistic/release readiness | BLOCKED / evidence-limited | Independent expert-adjudicated Thai segmentation, IPA and Ukrainian target-form gold remains unavailable. Automated CI verifies implementation contracts, not linguistic accuracy. |
 
-Working branch is based on main after PR #140. Current PR #141 head: `f85db146079ab5456353c7cc86f7059aa2ea5945`; exact-head CI is running. The branch inventory is recorded without destructive branch rewriting; old branches remain preserved for review.
+Working branch is based on main after PR #140. PR #141 is open against the post-PR-140 main head. The verified implementation/workflow head is `caab0adfd5b22fd07702e0aa0f86635aa46d5406`; subsequent commits update only the audit/handoff documents. The branch inventory is recorded without destructive branch rewriting; old branches remain preserved for review.
 
 ---
 

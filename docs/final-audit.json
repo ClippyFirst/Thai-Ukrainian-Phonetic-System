@@ -1466,7 +1466,6 @@
     "base_main_before_closeout": "720b528e0f6560912d87750158c510fc746a3044",
     "main_after_pr_140_merge": "37a2b5be62896a758ddc59b9b91184e448b4d963",
     "working_branch": "chore/repository-hygiene-20261030",
-    "working_head": "f85db146079ab5456353c7cc86f7059aa2ea5945",
     "changes": [
       "single source of package version in src/thai_ukrainian/_version.py; setuptools metadata, package __version__ and HTTP server banner agree",
       "TSV batch input uses tab delimiter; CSV remains comma-delimited",
@@ -1553,7 +1552,7 @@
         "reason": "Updating their workflow files triggers long-running external G2P and VISTEC evaluations; keep the scope of this PR to core CI and deployment workflows."
       }
     },
-    "latest_pr_head": "f85db146079ab5456353c7cc86f7059aa2ea5945",
-    "pull_request": 141
+    "pull_request": 141,
+    "verified_implementation_head": "caab0adfd5b22fd07702e0aa0f86635aa46d5406"
   }
 }
