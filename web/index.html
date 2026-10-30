@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Дослідницький сервіс передавання тайської мови українською.">
+  <meta name="description" content="Інструмент для перегляду вимови тайського тексту та її передавання українською.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'">
   <title>Thai → Ukrainian — Сервіс</title>
   <link rel="stylesheet" href="src/styles.css?v=20261028-result-order-1">
@@ -21,9 +21,9 @@
 <div class="beta-notice" role="note" aria-label="Статус бета-версії"><strong>БЕТА · ДОСЛІДНИЦЬКА ВЕРСІЯ</strong><p>Результат — кандидат для перевірки, а не офіційна норма чи гарантовано правильна вимова. Система може утриматися від відповіді, коли даних недостатньо. <a href="system.html#beta-evidence">Що перевірено та які обмеження залишаються →</a></p></div>
 <main class="container" id="main-content" tabindex="-1">
 <section class="hero">
-  <p class="eyebrow">ФОНЕТИКО-ГРАФЕМНИЙ АНАЛІЗАТОР · v0.6.1</p>
-  <h1>Тайське написання → українське передавання</h1>
-  <p class="lede">Введіть тайський текст і отримайте три окремі результати: романізацію RTGS, IPA та український фонетичний кандидат. Це дослідницькі форми, не переклад і не гарантована вимова.</p>
+  <p class="eyebrow">ТАЙСЬКА → УКРАЇНСЬКА · v0.6.1</p>
+  <h1>Як передати тайський текст українською</h1>
+  <p class="lede">Вставте тайський текст, щоб побачити три форми запису: латинську довідку RTGS, вимову в міжнародній фонетичній транскрипції IPA та український варіант. Це не переклад. Результат може потребувати перевірки.</p>
 </section>
 <section class="workbench" aria-labelledby="input-heading">
   <div class="section-head">
@@ -32,15 +32,15 @@
   </div>
   <label class="input-label" for="thai-input">Тайський текст</label>
   <textarea id="thai-input" lang="th" rows="3" spellcheck="false" autocomplete="off" autocapitalize="off" aria-describedby="input-hint" placeholder="Напр. กาไฟมา або กินข้าวกับไข่และผลไม้"></textarea>
-  <p class="input-hint" id="input-hint">Можна вставити довший текст, але межі тайських слів можуть бути невизначеними. <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>Enter</kbd> — аналізувати.</p>
-  <label class="input-label" for="engine-mode">Режим рушія</label>
+  <p class="input-hint" id="input-hint">Можна вставити й ціле речення. Якщо система не впевнена, де закінчується слово або як його вимовляти, вона позначить це. <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>Enter</kbd> — аналізувати.</p>
+  <label class="input-label" for="engine-mode">Як система працюватиме з невідомими словами?</label>
   <select id="engine-mode" aria-describedby="mode-hint">
     <option value="strict" selected>Строгий · лише підтримані розбори</option>
     <option value="soft">М’який · попередні структурні припущення</option>
     <option value="super-soft">Суперм’який · приблизне читання для кожного фрагмента</option>
   </select>
   <p class="input-hint" id="mode-hint" aria-live="polite">Строгий режим: невідомі фрагменти залишаються невизначеними замість вгадування.</p>
-  <details class="mode-help"><summary>Чим відрізняються режими?</summary><dl><dt>Строгий</dt><dd>Не вгадує непідтверджені розбори; невизначені фрагменти позначаються.</dd><dt>М’який</dt><dd>Дозволяє попередні структурні припущення, які потребують перевірки.</dd><dt>Суперм’який</dt><dd>Створює приблизний кандидат і для невідомих фрагментів. Повніше покриття не означає точнішої вимови.</dd></dl></details>
+  <details class="mode-help"><summary>Що змінюють режими?</summary><dl><dt>Строгий</dt><dd>Показує лише ті фрагменти, для яких має достатньо підстав. Невідоме залишає невизначеним.</dd><dt>М’який</dt><dd>Пробує розібрати невідомі фрагменти за будовою тайського письма. Такі припущення позначаються як попередні.</dd><dt>Суперм’який</dt><dd>Намагається запропонувати приблизний варіант навіть для невідомих фрагментів. Це зручніше для огляду цілого тексту, але не робить результат точнішим.</dd></dl></details>
   <div class="examples" aria-label="Швидкі приклади">
     <span class="examples-label">Приклади:</span>
     <button type="button" data-example="กา">กา</button>
@@ -51,7 +51,7 @@
     <button type="button" data-example="ใหม่">ใหม่</button>
     <button type="button" data-example="จริง">จริง</button>
   </div>
-  <div class="action-row"><button class="primary" id="analyze" type="button">Аналізувати текст <span aria-hidden="true">↗</span></button><span class="action-note">Обробка відбувається у вашому браузері.</span></div>
+  <div class="action-row"><button class="primary" id="analyze" type="button">Показати результат <span aria-hidden="true">↗</span></button><span class="action-note">Обробка відбувається у вашому браузері.</span></div>
 </section>
 <section id="status" class="status" role="status" aria-live="polite" aria-atomic="true"></section>
 <section id="results" class="results" aria-label="Результати аналізу" aria-live="off" hidden></section>
