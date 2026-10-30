@@ -5,7 +5,6 @@ import json
 from pathlib import Path
 from typing import Any, Iterable
 
-from .api import parse_thai
 from .text import analyze_text
 
 
