@@ -1496,3 +1496,17 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Final main commit for this completed documentation closeout: fafb38143de4fecbebc143eb4b98ca71aed94cf6.
 - Post-merge main CI run 41073985130 completed successfully: test and master-artifact jobs passed; master artifact contains 351,780 rows and 41 vowel records.
 - Pages deployment and live-content verification passed in run 41073985170. Both public pages were fetched live and show the intended audience split.
+
+
+
+## 2026-10-30 — second, plain-language copy pass
+
+- **DONE_VERIFIED — revised user-facing language:** PR [#135](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/135) merged to main as `867974bb16050bd815050d1b4a976283de47cdbf`. This follow-up was required because the earlier copy pass still foregrounded research terminology (RTGS, IPA, “three representations”, “phonetic candidate”, structural assumptions). The homepage now begins with the user's task: paste Thai text and see an approximate Ukrainian-letter reading. Main result labels are plain-language; mode choices describe whether to abstain, try a structural reading, or show an approximate guess. The system page explains the process in everyday Ukrainian first and puts the technical pipeline in a collapsed section for researchers.
+- **DONE_VERIFIED — technical contract preserved:** no Thai parsing, phonology, word segmentation, IPA generation/adaptation, RTGS algorithm, or Ukrainian mapping behavior changed. IPA remains the real intermediate adapter boundary; the simplified text only changes how the results are named and explained.
+- **DONE_VERIFIED — tests updated and passed:** PR-head CI [41079488713](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41079488713) passed both `test` and `master-artifact`. This included Python regression tests, RTGS parity, IPA adaptation, browser/Python parity, UI copy contract, segmentation diagnostics, evidence-grade checks, and master artifact assertions (351,780 rows; 41 vowel records). Web static validation passed in [41079488733](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41079488733).
+- **DONE_VERIFIED — published:** main Pages run [41080245447](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41080245447) passed build, deployment and the new plain-language content/pipeline smoke test. Live homepage and `system.html` were fetched after deployment and show the new text.
+- **DONE_VERIFIED — post-merge main CI:** run [41080245372](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41080245372) passed both `test` and `master-artifact`; master table assertions confirmed 351,780 rows and 41 vowel records.
+- **PARTIAL — plain-language usability evidence:** copy has been rewritten and automated contract checks pass, but no moderated test with non-specialist Thai learners/readers has been performed. Treat this as a clearer editorial version, not user-research validated wording.
+- Existing blockers remain: no independent expert-adjudicated Thai IPA/word-boundary/Ukrainian target-form gold corpus; no real-device visual QA or WCAG 2.2 AA audit. Project remains a research prototype, not release-ready for linguistic-accuracy claims.
+- PR #111 (`ทร` lexical exception) remains a separate open task and was not changed.
+- Public service: https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/

@@ -854,3 +854,17 @@ The first run with the new coverage tests completed master-table generation and 
 - Final main commit for this completed documentation closeout: fafb38143de4fecbebc143eb4b98ca71aed94cf6.
 - Post-merge main CI run 41073985130 completed successfully: test and master-artifact jobs passed; master artifact contains 351,780 rows and 41 vowel records.
 - Pages deployment and live-content verification passed in run 41073985170. Both public pages were fetched live and show the intended audience split.
+
+
+
+## Final audit update — 2026-10-30: plain-language follow-up
+
+- **PASS — homepage copy:** PR #135 merged at `867974bb16050bd815050d1b4a976283de47cdbf`. The main page now starts with a simple action and result explanation; research acronyms are no longer the primary labels for the three visible output panels. Mode descriptions explain user consequences rather than internal algorithmic behavior.
+- **PASS — system page:** explains the process in plain Ukrainian first; researcher-only implementation detail is in a collapsed section. Beta and uncertainty disclosures remain visible and do not overclaim accuracy.
+- **PASS — technical behavior preserved:** changes are limited to `web/index.html`, `web/system.html`, visible copy in `web/src/app.js`, UI tests, and Pages smoke-test expectations. No engine, segmentation, RTGS, IPA or Ukrainian adapter behavior changed.
+- **PASS — PR-head CI:** run 41079488713; test and master-artifact both passed. Web static validation run 41079488733 passed. Master artifact assertions: 351,780 rows and 41 vowel records.
+- **PASS — deployment:** Pages run 41080245447 passed build, deployment and plain-language content/pipeline assertions. Both public pages were independently fetched after deployment.
+- **PASS — post-merge main CI:** run 41080245372; both test and master-artifact jobs passed, including the 351,780-row / 41-vowel assertion.
+- **PARTIAL — user evidence:** automated copy contract is green, but wording has not been moderated with non-specialist users. Do not describe it as user-tested.
+- **Not release-ready for linguistic accuracy:** independent expert-adjudicated Thai IPA/segmentation/Ukrainian target-form gold remains unavailable. Real-device visual QA and WCAG 2.2 AA review also remain outstanding.
+- PR #111 (`ทร` lexical exception) remains open and untouched.
