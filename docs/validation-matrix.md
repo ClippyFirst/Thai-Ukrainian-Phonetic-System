@@ -1,3 +1,13 @@
+## 2026-10-30 — Thai lexical exception forward-port
+
+| Task | State | Evidence |
+|---|---|---|
+| Exact lexical `ทราม → ซาม` and false-cluster guards | PARTIAL — fresh forward-port branch | Ported PR #111's bounded change onto current main; added source registry/text lexicon entries, Python/browser exact mappings, and tests for ten enumerated forms through typed IPA → Ukrainian adaptation. No productive `ทร → ซ` rule; isolated ambiguous forms remain fail-closed. |
+| Linguistic evidence scope | SOURCE_ATTESTED_NOT_GOLD | Royal Institute Journal 36(4), 2011, p. 557 discusses `ทราม` among historical /s/-reading forms; Wiktionary records `/saːm˧/`. Neither is independent expert/acoustic IPA gold. |
+| TDD | DONE_VERIFIED_FOR_RED_STAGE | Browser parity run `41124129117` and Python run `41124128896` failed on the expected missing lexical handling/source-registry row before implementation. |
+| Exact-head acceptance | TODO / pending | Must pass full Python suite, browser parity, generated-data drift checks and 351,780-row master-artifact assertions before merge. |
+| Historical PR #111 | DEFERRED / preserved | Original branch remains untouched; it is 452 commits behind current main. Forward-port is isolated on a fresh branch; do not force-rebase or delete the historical ref. |
+
 ## 2026-10-30 — repository hygiene: version and TSV contract
 
 | Task | State | Evidence |

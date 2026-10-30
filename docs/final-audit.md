@@ -1,3 +1,11 @@
+## 2026-10-30 — Thai lexical exception forward-port
+
+- Historical PR #111 was 452 commits behind current `main`; its bounded change was ported onto a fresh branch rather than force-rebasing or rewriting the historical ref.
+- Added exact `ทราม → ซาม` handling in Python/browser maps, text lexicon and source registries, plus ten enumerated false-cluster/lexical regression cases through the typed IPA → Ukrainian adapter.
+- No productive `ทร → ซ` rule was added. Generic ambiguity sentinels, including isolated `ทราย`, remain fail-closed.
+- Evidence: Royal Institute Journal 36(4), 2011, p. 557 discusses `ทราม` among historical /s/-reading forms; English Wiktionary records `/saːm˧/`. Evidence is source-attested, not independent IPA gold.
+- TDD red evidence: browser parity run `41124129117` and Python run `41124128896` failed on the expected missing lexical mapping/source-registry row before implementation. Exact-head full CI remains the acceptance gate.
+
 ## 2026-10-30 — repository hygiene and CLI contract
 
 - **DONE_VERIFIED on branch `chore/repository-hygiene-20261030`:** package version drift is removed. `_version.py` is the single source used by setuptools metadata, the Python package and the HTTP server banner.

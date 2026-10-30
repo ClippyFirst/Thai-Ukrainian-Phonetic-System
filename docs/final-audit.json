@@ -1554,5 +1554,40 @@
     },
     "pull_request": 141,
     "verified_implementation_head": "caab0adfd5b22fd07702e0aa0f86635aa46d5406"
+  },
+  "lexical_exception_guard_forwardport_2026_10_30": {
+    "branch": "feat/thai-lexical-exception-forwardport-main-20261030",
+    "base_main": "4d087e66778854503a0e6d355d605d83a50354f8",
+    "status": "PARTIAL_PENDING_EXACT_HEAD_CI",
+    "original_pr": 111,
+    "original_branch": "audit/thai-lexical-exception-guards-20261028",
+    "original_branch_behind_main": 452,
+    "tests": {
+      "browser_red_run": 41124129117,
+      "python_red_run": 41124128896,
+      "expected_failures": [
+        "browser parity: ทราม unresolved",
+        "source registry row for ทราม missing"
+      ]
+    },
+    "forms": [
+      "จริง",
+      "สร้าง",
+      "ศรี",
+      "เศร้า",
+      "ไซร้",
+      "ทราบ",
+      "ทรง",
+      "ทรัพย์",
+      "ทราม",
+      "แทรก"
+    ],
+    "evidence": {
+      "royal_institute": "https://www.orst.go.th/FILEROOM/CABROYINWEB/DRAWER004/GENERAL/DATA0000/00000630.FLP/html/49/",
+      "wiktionary_revision": 88637433,
+      "ipa": "/saːm˧/",
+      "grade": "SOURCE_ATTESTED_NOT_GOLD"
+    },
+    "acceptance": "Exact forward-port head must pass full Python/browser parity, generated artifact drift and 351780-row master artifact CI before merge."
   }
 }

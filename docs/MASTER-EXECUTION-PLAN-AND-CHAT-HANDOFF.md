@@ -1,3 +1,14 @@
+## 2026-10-30 — Thai lexical exception forward-port
+
+- Fresh branch `feat/thai-lexical-exception-forwardport-main-20261030` is based on current `main` (`4d087e66778854503a0e6d355d605d83a50354f8`), avoiding the stale 452-commit divergence of historical PR #111.
+- Ported exact source-attested `ทราม → ซาม` handling into Python/browser mappings, text lexicon and source registries. No productive `ทร → ซ` rule is introduced.
+- Added ten exact false-cluster/lexical regression cases: `จริง, สร้าง, ศรี, เศร้า, ไซร้, ทราบ, ทรง, ทรัพย์, ทราม, แทรก`. Tests require structured IPA and a Ukrainian candidate through the existing typed IPA adapter; generic ambiguous forms including isolated `ทราย` remain fail-closed.
+- Evidence: Royal Institute of Thailand Journal 36(4), 2011, p. 557 discusses lexical/historical `ทร` readings and lists `ทราม` among /s/-reading examples; English Wiktionary records standard IPA `/saːm˧/`. The registry pins revision 88637433. This is source-attested lexical evidence, not independent expert/acoustic IPA gold.
+- TDD red stage: browser parity run `41124129117` failed because `ทราม` remained unresolved; Python run `41124128896` failed because the new source-registry row was absent. The red tests were run before implementation/data changes.
+- Status: PARTIAL pending exact-head full CI, browser parity, generated-artifact checks and master-artifact verification. No local run is claimed because the execution container cannot resolve `github.com`.
+
+---
+
 ## 2026-10-30 — repository hygiene checkpoint
 
 - Starting default-branch head: `720b528e0f6560912d87750158c510fc746a3044`.
