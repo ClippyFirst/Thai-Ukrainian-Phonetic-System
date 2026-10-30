@@ -304,7 +304,7 @@ assert.match(homeHtml, /Що означає результат/);
 assert.match(homeHtml, /Вставте слово або речення тайською/);
 assert.match(homeHtml, /Тайські звуки не завжди можна точно передати українськими літерами/);
 assert.match(homeHtml, /приблизну вимову українськими літерами/);
-assert.match(systemHtml, /український запис добирається після визначення вимови/);
+assert.match(systemHtml, /спочатку визначає, як воно має звучати, а вже потім добирає українські літери/);
 assert.match(systemHtml, /id="beta-evidence"/);
 assert.match(systemHtml, /Автоматичні тести показують, що програма працює за заданими правилами/);
 assert.match(systemHtml, /набору слів і вимов/);
