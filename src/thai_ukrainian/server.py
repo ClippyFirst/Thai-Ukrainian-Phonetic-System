@@ -40,7 +40,10 @@ class APIHandler(BaseHTTPRequestHandler):
             _send(self, 404, {"error": "not_found"})
             return
         try:
-            length = int(self.headers.get("Content-Length", "0"))
+            raw_length = self.headers.get("Content-Length", "0")
+            if not raw_length.isascii() or not raw_length.isdecimal():
+                raise ValueError("Content-Length must be a non-negative integer.")
+            length = int(raw_length)
             if length > 1_000_000:
                 _send(self, 413, {"error": "request_too_large"})
                 return
