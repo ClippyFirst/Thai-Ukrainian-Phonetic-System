@@ -1,3 +1,19 @@
+# Current continuation checkpoint — 2026-10-31
+
+- **Repository:** `ClippyFirst/Thai-Ukrainian-Phonetic-System`; default branch `main`.
+- **Current main:** `c4216d69982ec2564b5ed615b06d088d18143b4f`.
+- **PRs merged in the latest maintenance run:** #153 HTTP Content-Length validation, #154 post-merge documentation closeout, #155 master-artifact CI reuse, #156 audit/handoff reconciliation.
+- **Open pull requests:** none at checkpoint. Open issue #114 remains the canonical tracker for independent Thai phonology/segmentation/Ukrainian target adjudication and manual browser/accessibility review.
+- **Latest verification:** PR #156 exact-head CI [41144610012](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41144610012) passed all three jobs; post-merge main CI [41144968470](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41144968470) passed. Latest Pages build/deploy/live-content verification remains [41142211675](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41142211675), because #154–#156 changed docs only.
+- **Preserved architecture:** Thai orthography → structural analysis → Thai phonology → typed IPA → Ukrainian adaptation → practical Ukrainian orthography. RTGS remains a parallel lossy reference, not an input to Ukrainian adaptation.
+- **Engineering completed:** strict HTTP Content-Length validation; generic/redacted API 500 behavior; single-generation master artifact with independent download/hash/row-count validation; package/wheel smoke; Ruff gate; Python/browser parity and existing UI-contract checks.
+- **Remaining blockers:** independent Thai expert-adjudicated segmentation/IPA (and authorized acoustic evidence for acoustic claims); independent Ukrainian-native target-form adjudication; manual browser/device and WCAG 2.2 AA review; local checkout unavailable because container DNS cannot resolve github.com.
+- **Research-only:** TUD unigram-Viterbi segmenter and Wisesight comparison remain diagnostic; source-annotated rows are not expert gold. No production-default promotion without human error review, predeclared thresholds and independent licensed-domain evaluation.
+- **Branch hygiene:** 169 refs observed; four temporary branches from the latest maintenance run remain. Preserve historical branches until a commit-level review and owner-approved archive/delete policy exist. No destructive branch operation is authorized or exposed by the current connector.
+- **Readiness:** engineering-verified research prototype, not release-ready for linguistic-accuracy claims. Do not infer accuracy from parity or CI.
+
+---
+
 ## 2026-10-30 — continuation handoff after PR #150
 
 - **Current main:** `e8282dfb85f53ae18cbed5fcdc676b1b6049c313`.
