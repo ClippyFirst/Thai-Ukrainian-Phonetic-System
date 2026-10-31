@@ -1,3 +1,13 @@
+## Final audit update — 2026-10-31: CCOST source provenance reconciliation
+
+- **Evidence reconciliation added to PR #169:** the Zenodo dataset DOI [10.5281/zenodo.17366698](https://doi.org/10.5281/zenodo.17366698) is now distinguished from the associated LREC 2026 paper DOI [10.63317/3ds35jijmgrx](https://doi.org/10.63317/3ds35jijmgrx).
+- The dataset record declares CC BY-NC-SA 4.0. The paper abstract reports ASR/forced alignment followed by manual correction by phonetically trained native Thai speakers and describes orthographic, word-, syllable-, phone-level and toneme annotations.
+- The public abstract does **not** establish double independent blinded labels per item. CCOST is therefore a promising manually corrected external phonetic source, not automatically independent gold against ClippyFirst. The annotation manual and permitted use must be reviewed before selecting evaluation rows.
+- Updated `docs/evidence.md`, `data/corpus_sources.csv`, `docs/independent-adjudication-protocol.md`, and `tests/test_corpus_source_registry.py`. No corpus audio/TextGrid assets were redistributed.
+- **Status:** PARTIAL until exact-head CI passes for the updated PR #169. The previous PR-head CI [41241246352](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41241246352) passed before these additional commits and is not evidence for the updated head.
+
+---
+
 ## Final audit update — 2026-10-31: RTGS closeout, CI controls and post-merge verification
 
 - **PASS — PR #165 documentation/agent-contract reconciliation:** squash-merged as `d27e8ec2d7f233d62c1bb849566e4756ebeceffe`; exact-head CI [41236396997](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41236396997) and post-merge main CI [41239400828](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41239400828) passed.
