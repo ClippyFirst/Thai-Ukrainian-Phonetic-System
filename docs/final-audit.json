@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PRs #165–#167 are merged. Current main 72a77cb42ad05c33274d70c4dcd9f20e07432b64 passed exact-head and post-merge CI/Web Static checks. Main CI 41239440616 passed 251 pytest tests, 1164 subtests, Ruff, browser/Python parity, generated-data drift, wheel-install smoke and the 351780-row/41-rime master artifact. Independent Thai/UA adjudication and manual accessibility review remain outstanding; engineering-verified research prototype, not release-ready for linguistic-accuracy claims.",
+  "status": "PRs #165–#168 are merged; current main is 8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8. PR #169 is open with successful prior-head CI and an additional CCOST provenance reconciliation; its updated exact-head CI is pending. Independent Thai/UA adjudication and manual accessibility review remain outstanding; engineering-verified research prototype, not release-ready for linguistic-accuracy claims.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -2067,5 +2067,30 @@
   "latest_full_repository_head_ci_run": 41240699017,
   "latest_full_repository_head_web_validation_run": 41239440643,
   "latest_web_static_verified_code_commit": "72a77cb42ad05c33274d70c4dcd9f20e07432b64",
-  "latest_web_static_verified_code_run": 41239440643
+  "latest_web_static_verified_code_run": 41239440643,
+  "ccost_source_reconciliation_2026_10_31": {
+    "status": "PARTIAL — implementation on PR branch; updated exact-head CI pending",
+    "pr": 169,
+    "branch": "docs/mark-pr168-closeout-verified-20261031",
+    "base_main": "8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8",
+    "branch_refs": 183,
+    "dataset_doi": "10.5281/zenodo.17366698",
+    "article_doi": "10.63317/3ds35jijmgrx",
+    "dataset_license": "CC BY-NC-SA 4.0",
+    "annotation_process": "LREC 2026 abstract reports ASR/forced alignment followed by manual correction by phonetically trained native Thai speakers.",
+    "evidence_limit": "Public abstract does not establish two independently produced blinded labels per item; CCOST is not automatically independent gold against ClippyFirst.",
+    "files": [
+      "docs/evidence.md",
+      "data/corpus_sources.csv",
+      "docs/independent-adjudication-protocol.md",
+      "tests/test_corpus_source_registry.py",
+      "docs/validation-matrix.md",
+      "docs/final-audit.md",
+      "docs/final-audit.json",
+      "docs/MASTER-EXECUTION-PLAN-AND-CHAT-HANDOFF.md"
+    ],
+    "corpus_assets_redistributed": false,
+    "previous_pr_head_ci_run": 41241246352,
+    "previous_pr_head_ci_scope": "Passed on the prior PR #169 head before this source reconciliation; not evidence for the updated head."
+  }
 }
