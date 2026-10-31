@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PRs #165–#168 are merged. PR #169 current head 7bfee951af0f6fd402f6a2a985e2f34473aba2f6 has exact-head CI 41243581916 queued; preceding code/data/test head a331131567f6e17f9dd5fe96c8624620f093880c passed all three jobs in 41242513053. PR #170 test-only cleanup head 1cdc3d7971498ce3312ff9a79b23ee84b8d917aa has CI 41243709726 and Web Static 41243709639 queued. CCOST manual review, independent Thai/UA adjudication and manual accessibility review remain outstanding; engineering-verified research prototype, not release-ready for linguistic-accuracy claims.",
+  "status": "PRs #165–#168 are merged. PR #169's code/data/test changes passed all three CI jobs on a331131567f6e17f9dd5fe96c8624620f093880c in 41242513053; the final audit/handoff-only update is on the current PR branch and its exact-head CI is pending. PR #170 test-only cleanup has CI 41243709726 and Web Static 41243709639 queued. CCOST manual review, independent Thai/UA adjudication and manual accessibility review remain outstanding; engineering-verified research prototype, not release-ready for linguistic-accuracy claims.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -2102,8 +2102,8 @@
     "manual_review_status": "BLOCKED — CCOST_manual.pdf is listed separately on Zenodo but download was throttled/failed in this session; no manual contents are claimed as inspected.",
     "publication_readiness": "research prototype; no independent Thai/UA gold or manual accessibility audit",
     "latest_pr_head": "7bfee951af0f6fd402f6a2a985e2f34473aba2f6",
-    "latest_pr_head_ci_run": 41243581916,
-    "latest_pr_head_ci_status": "QUEUED — audit/handoff-only follow-up after code/data/test head a331131567f6e17f9dd5fe96c8624620f093880c passed all three jobs in 41242513053."
+    "latest_pr_head_ci_run": null,
+    "latest_pr_head_ci_status": "PENDING — final audit/handoff-only refresh follows code/data/test head a331131567f6e17f9dd5fe96c8624620f093880c; prior head CI 41242513053 passed all three jobs but is not exact-head verification for this final docs update."
   },
   "current_branch_inventory": {
     "branch_refs": 184,
@@ -2133,10 +2133,10 @@
   "open_prs_current": [
     {
       "number": 169,
-      "head": "7bfee951af0f6fd402f6a2a985e2f34473aba2f6",
+      "head": "current PR branch head; see PR metadata",
       "status": "OPEN",
-      "exact_head_ci_run": 41243581916,
-      "ci_status": "QUEUED",
+      "exact_head_ci_run": null,
+      "ci_status": "PENDING",
       "scope": "CCOST source provenance and canonical audit closeout"
     },
     {
@@ -2148,5 +2148,6 @@
       "ci_status": "QUEUED",
       "scope": "remove two duplicate UI contract assertions"
     }
-  ]
+  ],
+  "latest_pr_head_source": "GitHub PR #169 metadata; not duplicated as a literal SHA here because this file is committed in that same PR and would otherwise stale itself."
 }
