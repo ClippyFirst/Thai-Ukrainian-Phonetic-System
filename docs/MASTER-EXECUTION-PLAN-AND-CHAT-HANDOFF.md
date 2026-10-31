@@ -1,3 +1,20 @@
+# Continuation checkpoint after PR #164 merge — 2026-10-31
+
+- **Repository:** `ClippyFirst/Thai-Ukrainian-Phonetic-System`; default branch `main`.
+- **Starting main for the RTGS output batch:** `1b1480c5a79b6dd38dc8b916d52ad599e38a9748`.
+- **Feature branch:** `feat/rtgs-ukrainian-output-mode-20261031`; exact head `977f70ca13abe5d97b60f709038f2046d302b8d0`.
+- **PR #164:** [RTGS-based Ukrainian output mode and full method matrices](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/164), squash-merged to `main` as `01631b98173b2e54695bdf757a538735fca8fdff`.
+- **Exact-head verification:** CI runs [41234077035](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41234077035) and [41234072432](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41234072432) succeeded; Web static validation [41234077207](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41234077207) succeeded. CI workflow includes Ruff, pytest/unittest discovery, RTGS tests, Python RTGS parity, generated-data drift, IPA-UA and browser parity/UI contracts, research diagnostics, wheel-install smoke, and the independent 351,780-row / 41-rime master-artifact assertion.
+- **Implementation:** browser UI now offers a distinct response selector: phonetic IPA-first or romanization-based RTGS. The RTGS route consumes the existing offline PyThaiNLP 5.4.0 RTGS port and renders its Latin output through a separate Ukrainian practical-rendering adapter. It does not call the IPA → Ukrainian adapter. Unsupported RTGS tokens remain explicit unresolved markers; punctuation and non-Thai spans are preserved.
+- **Method matrices:** `docs/ukrainian-correspondence-matrices.md` contains separate phonetic and RTGS inventories: all 44 consonant graphemes with onset/coda positions, all 41 registered rime records, RTGS digraph/rime adaptation rules, and comparative examples. Tests assert source-registry coverage and the 41-row vowel matrices; the `iao → іау` regression is included.
+- **Method boundary correction:** `AGENTS.md` now explicitly permits the user-requested optional RTGS route while keeping typed IPA mandatory for the phonetic route. RTGS is not ISO 11940 and is not presented as phonetic transcription.
+- **Post-merge status:** PR merge is verified. Mainline CI and Pages deployment for merge commit `01631b98173b2e54695bdf757a538735fca8fdff` must be recorded only after their actual runs complete; no post-merge result is claimed in this checkpoint.
+- **Environment limitation:** local checkout/test execution remains unavailable in this environment because the execution container cannot resolve `github.com`. Verification claims above are from the exact-head GitHub Actions runs, not local execution.
+- **External evidence gates remain open:** independent Thai phonology/IPA and word-boundary adjudication; independent Ukrainian-native target-form adjudication; manual browser/device QA and WCAG 2.2 AA review. These are evidence/reviewer dependencies tracked by issue #114, not reasons to invent gold data.
+- **Readiness:** engineering-verified research prototype; not release-ready for general linguistic-accuracy claims.
+
+---
+
 # Continuation checkpoint after PR #162 merge — 2026-10-31
 
 - **Repository:** `ClippyFirst/Thai-Ukrainian-Phonetic-System`; default branch `main`.
