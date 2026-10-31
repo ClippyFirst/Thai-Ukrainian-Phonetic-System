@@ -23,7 +23,8 @@ jobs:
       - run: python scripts/generate_syllable_space.py
       - run: git diff --exit-code -- docs/generated-audit.json docs/syllable-space.json docs/source-final-manifest.json
       - run: python scripts/generate_master_table.py
-      - run: python -m unittest discover -s tests -v
+      - name: Run the complete Python test suite (pytest functions and unittest classes)
+        run: python -m pytest -q -ra
       - run: python scripts/run_challenge_diagnostics.py --output /tmp/challenge-runtime-diagnostics.json
       - run: python -c "import json; r=json.load(open('/tmp/challenge-runtime-diagnostics.json',encoding='utf-8')); s=r['summary']; assert s['challenge_inputs']==42, s; assert s['inputs_with_engine_output']+s['inputs_abstained_or_without_complete_output']==42, s; assert r['evaluation_kind']=='runtime_diagnostic_not_accuracy_benchmark'; assert 'accuracy' not in s"
       - run: python scripts/generate_web_word_dictionary.py

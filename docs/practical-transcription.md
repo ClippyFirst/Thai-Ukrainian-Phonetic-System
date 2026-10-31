@@ -16,11 +16,11 @@ The practical output must never be produced by direct Thai-character substitutio
 
 Canonical pipeline:
 
-**Thai orthography → graphemic analysis → syllable structure → Thai phonology → tone analysis → IPA audit → Ukrainian phonetic/phonological target → practical Ukrainian orthography**
+**Thai orthography → graphemic analysis → syllable structure → Thai phonology → tone analysis → typed IPA → Ukrainian IPA adaptation → practical Ukrainian orthography**
 
 The practical layer is therefore a projection of the research model, not an independent lookup table.
 
-The IPA layer remains independently inspectable. It is an audit/control representation; the implementation may derive the Ukrainian target directly from structured Thai phonology where this is explicitly declared.
+The typed `PhoneticResult` is an executable adapter boundary, not an audit-only side output. The practical Ukrainian renderer and secondary orthographic candidate renderer consume that typed result. Neither may independently reinterpret Thai graphemes, vowel IDs, or coda fields to determine Ukrainian output. Tone, length, syllable boundaries, provenance, and uncertainty remain inspectable at the boundary; unsupported or uncertain IPA withholds dependent output.
 
 ## 3. Output contract
 
@@ -212,7 +212,7 @@ The core engine must not invent lexical segmentation. This is especially importa
 9. Determine effective tone-bearing consonant class.
 10. Resolve Thai tone.
 11. Resolve phonemic IPA.
-12. Resolve conservative surface IPA for audit.
+12. Resolve conservative surface IPA and construct the typed `PhoneticResult` used by downstream adaptation.
 13. Generate Ukrainian phonological candidates from the canonical Ukrainian target.
 14. Apply the project-defined practical orthographic policy.
 15. Render the practical Ukrainian string.
@@ -324,7 +324,7 @@ Any discrepancy between source registry, parser, generated table, practical rend
 
 ## 22. Current implementation boundary
 
-The research repository already provides the necessary foundation: 44 Thai consonant graphemes; registered Thai vowel/rime inventory; positional onset/coda analysis; live/dead classification; five-tone rule engine; ห นำ; special-orthography layer; IPA audit layer; Ukrainian candidate generation; provenance; generated correspondence tables; CLI/batch/API interfaces; regression and negative-input testing.
+The research repository already provides the necessary foundation: 44 Thai consonant graphemes; registered Thai vowel/rime inventory; positional onset/coda analysis; live/dead classification; five-tone rule engine; ห นำ; special-orthography layer; typed IPA adapter boundary; Ukrainian candidate generation; provenance; generated correspondence tables; CLI/batch/API interfaces; regression and negative-input testing.
 
 The practical rendering policy is now executable in the structured Ukrainian adaptation layer and is covered by regression/parity fixtures. What remains empirically open is calibration and adjudication against a versioned gold corpus, especially for lexical special orthography and preferred Ukrainian spellings.
 
