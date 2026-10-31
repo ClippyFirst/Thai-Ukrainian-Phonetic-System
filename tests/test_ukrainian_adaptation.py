@@ -165,3 +165,20 @@ def test_secondary_orthography_candidates_require_supported_typed_ipa():
     assert candidates_for_phonetic_result(replace(result, status="UNSUPPORTED")) == []
     assert candidates_for_phonetic_result(replace(result, phonemic_ipa=None)) == []
     assert candidates_for_phonetic_result(replace(result, phonemic_ipa="k☃a")) == []
+
+
+def test_api_routes_secondary_candidates_through_typed_phonetic_result(monkeypatch):
+    import thai_ukrainian.api as api
+
+    received = []
+
+    def capture(result):
+        received.append(result)
+        return []
+
+    monkeypatch.setattr(api, "candidates_for_phonetic_result", capture)
+    api.analyze_syllable("กา")
+
+    assert len(received) == 1
+    assert isinstance(received[0], PhoneticResult)
+    assert received[0].status == "SUPPORTED"
