@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
-import { romanizeRtgsWord, romanizeRtgsWords, renderRtgsTokens } from "../src/rtgs-reference.js";
+import { romanizeRtgsWord, romanizeRtgsWords, renderRtgsTokens, romanizeRtgsTokenSequence } from "../src/rtgs-reference.js";
+import { adaptRtgsToUkrainian, renderRtgsUkrainianTokens } from "../src/rtgs-ukrainian.js";
 
 const examples = new Map([
   ["กา", "ka"], ["พริก", "phrik"], ["มา", "ma"], ["ไฟ", "fai"], ["หมา", "ma"], ["ใหม่", "mai"], ["ไหม", "mai"], ["เหงา", "ngao"], ["ใกล้", "klai"], ["ใคร", "khrai"], ["จริง", "ching"], ["สามารถ", "samat"], ["สวัสดี", "sawatdi"], ["สร้าง", "sang"], ["ศรี", "si"], ["เศร้า", "sao"], ["ไซร้", "sai"], ["ทรง", "song"], ["ทราม", "sam"], ["พัฒนา", "phatthana"], ["ฤทธิ์", "rit"], ["ฤๅ", "rue"], ["รถไฟ", "rotfai"], ["ผลไม้", "phonlamai"], ["ยูเครน", "yukhren"], ["ทราบ", "sap"], ["ทรัพย์", "sap"], ["แทรก", "saek"], ["อักษร", "akson"]
@@ -32,6 +33,31 @@ assert.equal(renderRtgsTokens([
 ]), "phrik ph");
 assert.equal(renderRtgsTokens([{ kind: "thai", input: "ทราย" }]), "⟦RTGS НЕ ПЕРЕВІРЕНО: ทราย⟧");
 
+// RTGS roman letters are mapped as a separate orthographic method, not via IPA.
+for (const [input, expected] of [
+  ["phrik", "пхрік"], ["khrai", "кхрай"], ["th", "тх"], ["ch", "ч"],
+  ["ngao", "нгао"], ["sawatdi", "саватді"], ["mai", "май"],
+  ["yukhren", "йукхрен"], ["phatthana", "пхаттхана"], ["sip-hok", "сіп-хок"]
+]) {
+  assert.equal(adaptRtgsToUkrainian(input).status, "adapted", input);
+  assert.equal(adaptRtgsToUkrainian(input).output, expected, input);
+}
+assert.equal(adaptRtgsToUkrainian("unknown?").status, "unavailable", "unsupported RTGS letters must fail closed");
+assert.equal(adaptRtgsToUkrainian("h").output, "х", "standalone RTGS h is represented as Ukrainian х");
+assert.equal(adaptRtgsToUkrainian("kh").output, "кх");
+assert.equal(adaptRtgsToUkrainian("ph").output, "пх");
+assert.equal(adaptRtgsToUkrainian("th").output, "тх");
+assert.equal(adaptRtgsToUkrainian("a-1!").output, "а-1!");
+assert.equal(renderRtgsUkrainianTokens([
+  { kind: "thai", input: "พริก" },
+  { kind: "space", input: " " },
+  { kind: "latin", input: "ph" }
+]), "пхрік ph", "non-Thai text must pass through unchanged");
+assert.equal(renderRtgsUkrainianTokens([{ kind: "thai", input: "ทราย" }]), "⟦RTGS НЕ ПЕРЕВІРЕНО: ทราย⟧");
+const sequence = romanizeRtgsTokenSequence([{ kind: "thai", input: "พริก" }]);
+assert.equal(sequence[0].romanized, "phrik");
+assert.equal(sequence[0].status, "transliterated");
+
 const source = await readFile(new URL("../src/rtgs-reference.js", import.meta.url), "utf8");
 assert.doesNotMatch(source, /adaptIpaToUkrainian|ipa-ua/);
 assert.doesNotMatch(source, /fetch\s*\(|XMLHttpRequest/);
@@ -40,4 +66,6 @@ assert.ok(app.includes("renderRtgsTokens(tokens)"));
 assert.ok(app.includes("АУДИТ IPA → УКРАЇНСЬКА"));
 assert.doesNotMatch(app, /adaptIpaToUkrainian\(source\)/, "the main app must not expose a duplicate standalone IPA input path");
 assert.ok(app.includes("Довідковий запис латиницею"));
+assert.ok(app.includes("renderRtgsUkrainianTokens(tokens)"));
+assert.doesNotMatch(source, /adaptRtgsToUkrainian|ipa-ua/, "RTGS source module remains independent of the IPA adapter");
 console.log("RTGS offline port, shared IPA audit, and no-network contract: OK");
