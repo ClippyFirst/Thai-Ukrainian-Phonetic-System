@@ -90,6 +90,15 @@ const consonantRegistry = (await readFile(new URL("../../data/thai/consonants.cs
 const onsetMatrix = matrices.split("### 2.1 Початок складу (onset)")[1].split("### 2.2")[0];
 const onsetGraphemes = [...onsetMatrix.matchAll(/^\| ([ก-๛ ]+) \|/gm)].flatMap(match => match[1].trim().split(/\s+/));
 assert.deepEqual(new Set(onsetGraphemes), new Set(consonantRegistry.map(row => row[1])), "onset matrix must inventory all source consonants");
+const onsetSource = new Map(consonantRegistry.map(row => [row[1], row[4]]));
+const onsetRows = [...onsetMatrix.matchAll(/^\| ([ก-๛ ]+) \| ([^|]+) \|/gm)];
+for (const row of onsetRows) {
+  const ipa = row[2].trim().replace(/^\//, "").replace(/\/$/, "");
+  for (const grapheme of row[1].trim().split(/\s+/)) {
+    if (grapheme === "อ") continue; // carrier can be a glottal onset or zero onset by structural role
+    assert.equal(onsetSource.get(grapheme), ipa, "onset IPA drift for " + grapheme);
+  }
+}
 const codaMatrix = matrices.split("### 2.2 Кінець складу (coda)")[1].split("## 3.")[0];
 const codaGraphemes = [...codaMatrix.matchAll(/^\| ([ก-๛ ]+) \|/gm)].flatMap(match => match[1].trim().split(/\s+/));
 assert.deepEqual(new Set(codaGraphemes), new Set(consonantRegistry.filter(row => row[6] === "true").map(row => row[1])), "coda matrix must match source coda_allowed inventory");
