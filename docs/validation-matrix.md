@@ -1,3 +1,22 @@
+## 2026-10-31 — exact-head verification refresh (PRs #169–#170)
+
+| Task / acceptance criterion | State | Evidence / next acceptance |
+|---|---|---|
+| Verify final CCOST provenance/audit PR head | DONE_VERIFIED | PR #169 head `8690b42ccbf5bbff35e57646c8624620f093880c`; exact-head CI [41243882073](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41243882073): `test`, `wheel-install-smoke`, and `master-artifact` all passed. |
+| Verify UI assertion cleanup | DONE_VERIFIED | PR #170 head `1cdc3d7971498ce3312ff9a79b23ee84b8d917aa`; CI [41243709726](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41243709726) and Web Static [41243709639](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41243709639) passed. |
+| Keep PR-only integration contract | DONE_VERIFIED | Both PRs remain open; no merge to `main` performed. Both branches are zero commits behind `main` at this checkpoint. |
+| Protect `main` | TODO — owner configuration | `protected=false`; acceptance requires owner decision on required checks/reviews and configuration of a ruleset. |
+| Inspect CCOST annotation manual | BLOCKED | Obtain and inspect `CCOST_manual.pdf`, including phone/toneme conventions, annotator workflow/independence, task metadata and permitted non-commercial use before selecting benchmark rows. |
+| Independent Thai IPA/segmentation adjudication | BLOCKED / evidence-limited | Qualified independent Thai reviewers, frozen annotation protocol, dual labels and disagreement log; issue #114. |
+| Ukrainian target-form adjudication | BLOCKED / evidence-limited | Two independent Ukrainian-native reviewers, predeclared criteria and adjudication log; issue #114. |
+| Manual browser/device and WCAG 2.2 AA review | BLOCKED | Human keyboard, screen-reader, viewport and device review with recorded findings; issue #114. |
+| Historical branch retention | PARTIAL | 184 refs inventoried; no destructive pruning without commit-level provenance review and owner-approved retention policy. |
+
+**Current main:** `8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8`.  
+**Readiness:** engineering-verified research prototype; not release-ready for general linguistic-accuracy claims.
+
+---
+
 ## 2026-10-31 — CCOST source provenance reconciliation (PR #169)
 
 | Task / acceptance criterion | State | Evidence / next acceptance |
