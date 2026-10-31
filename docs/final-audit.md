@@ -1,3 +1,23 @@
+## 2026-10-31 — PR #160 agent-workflow bridge merged and mainline verified
+
+| Task | State | Evidence / next acceptance |
+|---|---|---|
+| Repository-specific agent workflow bridge | DONE_VERIFIED | PR [#160](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/160) squash-merged to `main` as `bdcce023be0a9565658be586c66e53d7d13d33b1`. Adds root `AGENTS.md` (108 lines) adapting Superpowers, Matt Pocock engineering skills and Ponytail to this repository. Upstream skill files were linked, not vendored; no claim that plugins or autonomous agents were installed. |
+| PR #160 exact-head CI | DONE_VERIFIED | Exact PR-head run [41189619820](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41189619820) passed all three jobs: test, wheel-install-smoke and master-artifact. |
+| PR #160 post-merge main CI | DONE_VERIFIED | Main push run [41207672406](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41207672406) passed all three jobs. The test job passed Ruff, Python unittest discovery, Node RTGS/IPA-UA/parity/UI-contract checks, Python↔Node RTGS parity, derived-data and syllable-space generation with drift check, master-table generation, 42-input runtime diagnostics, browser segmentation latency diagnostic, Wisesight/source-attested IPA diagnostics, TUD research evaluation, comparative/manual segmentation-review packet validation and Ukrainian candidate checks. Wheel sdist→wheel→isolated-install smoke passed. Independent master-artifact validation passed at 351,780 rows / 41 vowel-rime records. |
+| Mainline / open PR inventory | DONE_VERIFIED | Current `main`: `bdcce023be0a9565658be586c66e53d7d13d33b1`; PR #160 is merged and there are no open pull requests. Issue #114 remains the canonical tracker for external linguistic and manual accessibility evidence. |
+| Historical branch retention | PARTIAL | 173 branch refs observed (100 + 73 across two API pages). No branch was deleted: there is no owner-approved retention/archive policy and the connected GitHub actions do not expose a safe branch-deletion operation. Acceptance: review unique commits/provenance and approve a retention policy before pruning. |
+| Main branch protection | TODO — owner configuration | GitHub branch endpoint reports `protected=false` and protection disabled for `main`. This was not changed because repository settings are outside the permitted write scope. Acceptance: repository owner enables an appropriate ruleset/branch protection requiring successful CI checks before merge (and decides review requirements). |
+| Local checkout | BLOCKED | The execution container cannot resolve `github.com`; no local tests are claimed. GitHub Actions run [41207672406](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41207672406) is the verification evidence for this checkpoint. |
+
+**Internal engineering status:** CI, package build/install, generated-artifact reproducibility, Python/Node parity and automated diagnostics are verified at this main SHA. The branch-protection setting and historical branch-retention policy remain repository-owner administrative decisions; they are not linguistic validation tasks.
+
+**External validation status (not internal technical debt):** independent Thai segmentation/IPA adjudication, independent Ukrainian-native target-form adjudication, and manual browser/device plus WCAG 2.2 AA review remain blocked pending qualified human reviewers and recorded evidence. Wisesight source annotations, source-attested dictionary IPA, model diagnostics and automated UI checks do not substitute for those reviews.
+
+**Readiness:** engineering-verified research prototype. The internal automated engineering gates at this checkpoint pass; the repository is not release-ready for general linguistic-accuracy claims until the external evidence gates are satisfied.
+
+---
+
 ## 2026-10-31 — canonical repository state at PR #158 merge
 
 | Task | State | Evidence / next acceptance |
