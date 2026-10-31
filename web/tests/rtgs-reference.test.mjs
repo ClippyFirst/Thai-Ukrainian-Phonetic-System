@@ -140,4 +140,42 @@ assert.doesNotMatch(app, /adaptIpaToUkrainian\(source\)/, "the main app must not
 assert.ok(app.includes("Довідковий запис латиницею"));
 assert.ok(app.includes("renderRtgsUkrainianTokens(tokens)"));
 assert.doesNotMatch(source, /adaptRtgsToUkrainian|ipa-ua/, "RTGS source module remains independent of the IPA adapter");
+// The published method matrices must stay executable specifications: every
+// displayed RTGS → Ukrainian value is checked against the actual adapter.
+const rtgsRimeTable = matrices
+  .split("## 5. Романізаційна матриця: рими")[1]
+  .split("### 5.1")[0];
+const rtgsRimeRows = [...rtgsRimeTable.matchAll(/^\| (V-[^|]+) \| ([^|]+) \| ([^|]+) \| ([^|]+) \|$/gm)];
+assert.equal(rtgsRimeRows.length, 41, "all registered RTGS rime rows must be checked against the adapter");
+for (const row of rtgsRimeRows) {
+  const rtgs = row[3].trim();
+  const ukrainian = row[4].trim();
+  assert.equal(adaptRtgsToUkrainian(rtgs).status, "adapted", "RTGS matrix rime must be supported: " + row[1]);
+  assert.equal(adaptRtgsToUkrainian(rtgs).output, ukrainian, "RTGS matrix Ukrainian rime output drift: " + row[1]);
+}
+
+const rtgsOnsetRows = [...rtgsOnsetMatrix.matchAll(/^\| ([ก-๛ ]+) \| ([^|]+) \| ([^|]+) \|/gm)];
+for (const row of rtgsOnsetRows) {
+  const rtgs = row[2].trim();
+  const ukrainian = row[3].trim();
+  if (rtgs === "—") continue;
+  assert.equal(adaptRtgsToUkrainian(rtgs).output, ukrainian, "RTGS onset matrix output drift: " + row[1]);
+}
+const rtgsCodaRows = [...rtgsCodaMatrix.matchAll(/^\| ([ก-๛ ]+) \| ([^|]+) \| ([^|]+) \|/gm)];
+for (const row of rtgsCodaRows) {
+  const rtgs = row[2].trim();
+  const ukrainian = row[3].trim();
+  if (rtgs === "—") continue;
+  assert.equal(adaptRtgsToUkrainian(rtgs).output, ukrainian, "RTGS coda matrix output drift: " + row[1]);
+}
+
+const rtgsSequenceMatrix = matrices.split("## 6. RTGS-склади та рими → українська")[1].split("## 7.")[0];
+const rtgsSequenceRows = [...rtgsSequenceMatrix.matchAll(/^\| ([a-z]+) \| ([^|]+) \|/gm)];
+assert.ok(rtgsSequenceRows.length >= 25, "RTGS digraph/rime sequence table must remain populated");
+for (const row of rtgsSequenceRows) {
+  const sequence = row[1].trim();
+  const ukrainian = row[2].trim();
+  assert.equal(adaptRtgsToUkrainian(sequence).output, ukrainian, "RTGS sequence table output drift: " + sequence);
+}
+
 console.log("RTGS offline port, shared IPA audit, and no-network contract: OK");
