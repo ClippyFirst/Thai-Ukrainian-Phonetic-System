@@ -64,6 +64,23 @@ assert.equal(sequence[0].status, "transliterated");
 const adapterSource = await readFile(new URL("../src/rtgs-ukrainian.js", import.meta.url), "utf8");
 assert.doesNotMatch(adapterSource, /adaptIpaToUkrainian|ipa-ua/, "RTGS → Ukrainian adapter must remain independent of IPA");
 assert.match(adapterSource, /RIME_SEQUENCES/);
+const matrices = await readFile(new URL("../../docs/ukrainian-correspondence-matrices.md", import.meta.url), "utf8");
+const phoneticRimeMatrix = matrices.split("## 3. Фонетична матриця: голосні та рими")[1].split("## 4.")[0];
+const rtgsRimeMatrix = matrices.split("## 5. Романізаційна матриця: рими")[1].split("## 6.")[0];
+assert.equal((phoneticRimeMatrix.match(/^\| V-/gm) || []).length, 41, "phonetic matrix must cover all 41 registered rimes");
+assert.equal((rtgsRimeMatrix.match(/^\| V-/gm) || []).length, 41, "RTGS matrix must cover all 41 registered rimes");
+const onsetMatrix = matrices.split("### 2.1 Початок складу (onset)")[1].split("### 2.2")[0];
+const onsetGraphemes = [...onsetMatrix.matchAll(/^\| ([ก-๛ ]+) \|/gm)].flatMap(match => match[1].trim().split(/\s+/));
+assert.equal(new Set(onsetGraphemes).size, 44, "phonetic onset matrix must inventory all 44 Thai consonant graphemes");
+for (const [input, expected] of [
+  ["ueai", "иай"], ["iao", "іо"], ["aeo", "еу"], ["oei", "ей"],
+  ["uai", "уай"], ["uea", "иа"], ["ai", "ай"], ["am", "ам"],
+  ["ao", "ау"], ["io", "іу"], ["ui", "уй"], ["eo", "еу"],
+  ["oi", "ой"], ["ia", "іа"], ["ue", "и"], ["oe", "е"],
+  ["ae", "е"], ["ua", "уа"]
+]) {
+  assert.equal(adaptRtgsToUkrainian(input).output, expected, input);
+}
 for (const [input, expected] of [["ya", "я"], ["ye", "є"], ["yi", "ї"], ["yo", "йо"], ["yu", "ю"]]) {
   assert.equal(adaptRtgsToUkrainian(input).output, expected, input);
 }
