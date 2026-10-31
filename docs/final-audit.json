@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Main is 2bba0fc43ebba08e82555a554c2e97e5d952e22f. PRs #153–#157 are merged; latest post-merge main CI 41184009121 passed all jobs. HTTP Content-Length validation, master-artifact single-generation/download validation, and canonical audit/handoff refresh are verified. Engineering-verified research prototype; not release-ready for independent Thai segmentation, IPA or Ukrainian target-accuracy claims.",
+  "status": "Main is 2bba0fc43ebba08e82555a554c2e97e5d952e22f. PRs #153–#157 are merged; latest post-merge main CI 41184009121 passed all jobs. Documentation-only PR #158 is open; its exact-head CI is pending. HTTP Content-Length validation, master-artifact single-generation/download validation, and canonical audit/handoff refresh are verified. Engineering-verified research prototype; not release-ready for independent Thai segmentation, IPA or Ukrainian target-accuracy claims.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -1906,9 +1906,15 @@
     "pr_157_exact_ci": 41183616913,
     "post_merge_main_ci": 41184009121,
     "post_merge_main_ci_status": "SUCCESS — all jobs passed, including tests, generators, diagnostics, drift checks and master-artifact validation.",
-    "open_prs": 0,
+    "open_prs": 1,
     "open_blocker_issue": 114,
-    "branch_refs": 170,
-    "readiness": "engineering-verified research prototype; not release-ready for independent Thai segmentation, IPA or Ukrainian target accuracy"
+    "branch_refs": 171,
+    "readiness": "engineering-verified research prototype; not release-ready for independent Thai segmentation, IPA or Ukrainian target accuracy",
+    "open_pr_158": {
+      "title": "docs: record PR #157 post-merge verification",
+      "head_sha": "3f8297028f3c2bbe1c29178422928d5d9f9d9e92",
+      "exact_ci_run": 41187526941,
+      "exact_ci_status": "IN_PROGRESS at checkpoint"
+    }
   }
 }
