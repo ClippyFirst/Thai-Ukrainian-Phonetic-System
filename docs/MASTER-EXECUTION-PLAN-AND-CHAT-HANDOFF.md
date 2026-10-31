@@ -1,3 +1,13 @@
+## 2026-11-01 — external benchmark discovery and registry update
+
+- Added a benchmark portfolio review to `docs/g2p-benchmark.md`: Thai G2P v4 is a candidate dictionary IPA comparator (8,076 test rows; CC0-1.0 declared by its card), but its Thai W2P/Wiktionary lineage means it is not independent expert/acoustic gold. Source-overlap audit against runtime lexical IPA overrides is a prerequisite; circular rows must be excluded.
+- BEST-2010 TEST_100K and LST20 were identified as segmentation benchmarks. LST20 has explicit restrictions: no modification or redistribution absent permission; commercial use needs a separate arrangement. BEST-2010 license/access must be checked before acquisition. Existing Wisesight/VISTEC/TUD work remains preserved.
+- FLEURS and Common Voice Thai are useful speech/ASR corpora but do not directly supply phone-level IPA or Ukrainian target gold. CCOST remains the closest phonetic corpus and its annotation manual remains uninspected.
+- Updated corpus registry and regression assertions. No new dataset downloaded, copied or bundled; no accuracy score claimed.
+- Exact-head CI for the update is pending. Prior PR #169 head `b4662ad95e3bbc312ae4562b9bd20880a3560b09` passed all three jobs in run [41244985871](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41244985871).
+
+---
+
 ## Exact-head verification refresh — 2026-10-31 (PRs #169–#170)
 
 - **Base `main`:** `8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8`; no mainline changes were made.
