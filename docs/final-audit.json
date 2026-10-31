@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Main at PR #160 merge checkpoint is bdcce023be0a9565658be586c66e53d7d13d33b1. PR #160 is merged; exact-head CI 41189619820 and post-merge main CI 41207672406 passed all three jobs. Internal automated engineering gates are verified; main branch protection and historical branch retention remain owner decisions. Engineering-verified research prototype, not release-ready for general linguistic-accuracy claims.",
+  "status": "Main code checkpoint 1b1480c5a79b6dd38dc8b916d52ad599e38a9748 includes merged PR #162. Exact-head CI 41229053598, post-merge main CI 41229435682, and Pages verification 41229435706 passed. The full Python suite now executes 251 tests and 1164 subtests. Internal automated engineering gates are verified; branch protection and historical branch retention remain owner decisions. Engineering-verified research prototype, not release-ready for general linguistic-accuracy claims.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -54,7 +54,11 @@
     "python_browser_ipa_adapter_normalization_parity",
     "direct_ipa_adapter_ui_contract_tests",
     "source-pinned-lexical-ipa-tone-pair-for-ไกล-and-ใกล้",
-    "tone-pair-ipa-to-ukrainian-adapter-regression-tests"
+    "tone-pair-ipa-to-ukrainian-adapter-regression-tests",
+    "typed_ipa_secondary_ukrainian_candidate_renderer",
+    "pytest_complete_functional_test_discovery",
+    "preserve_original_thai_orthographic_role_across_lexical_rewrite",
+    "typed_ipa_boundary_and_aspiration_policy_documentation_reconciled"
   ],
   "not_claimed": [
     "complete_lexical_segmentation",
@@ -105,41 +109,41 @@
     "status": "SOURCE_ATTESTED_NOT_GOLD",
     "includes_short_long_oe_contrast": true
   },
-  "latest_verified_code_commit": "3325e98b98bde6926f36c74ad76dc94fe35480b0",
+  "latest_verified_code_commit": "1b1480c5a79b6dd38dc8b916d52ad599e38a9748",
   "starting_branch_commit": "7e39fd4bc108386148c1e9a79d257d75babcc9aa",
   "ci": {
-    "latest_fully_successful_code_data_commit": "3325e98b98bde6926f36c74ad76dc94fe35480b0",
-    "latest_fully_successful_ci_run": 41207672406,
-    "python_tests": 216,
+    "latest_fully_successful_code_data_commit": "1b1480c5a79b6dd38dc8b916d52ad599e38a9748",
+    "latest_fully_successful_ci_run": 41229435682,
+    "python_tests": 251,
     "generated_data_drift": "PASS",
-    "master_artifact": "PASS — generated once in test job, uploaded, downloaded by independent master-artifact job, SHA-256 verified, and asserted at 351780 rows / 41 vowel/rime records.",
-    "node_ipa_ua_parity_ui_tests": "PASS — exact PR #155 CI 41143491570 and post-merge main CI 41143907732.",
+    "master_artifact": "PASS — run 41229435682: generated once, uploaded, downloaded, SHA-256 verified (6e39fed9f5df63410fcde1206985c07e3d9c3148d21f5d0d3486f06d8be9155f), and asserted at 351780 rows / 41 vowel-rime records.",
+    "node_ipa_ua_parity_ui_tests": "PASS — run 41229435682: RTGS/IPA-UA/browser parity and UI contracts; 29 Python/web parity fixtures passed.",
     "wisesight_baseline": "PASS",
     "source_attested_ipa_diagnostic": "PASS",
     "current_browser_parity_code_head": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
     "current_head_ci_runs": [
-      41189619820,
-      41207672406
+      41229053598,
+      41229435682
     ],
     "current_head_web_validation_runs": [
-      41142211675
+      41229435706
     ],
-    "current_head_status_at_audit_refresh": "PR #160 merged as bdcce023be0a9565658be586c66e53d7d13d33b1. Exact-head CI 41189619820 and post-merge main CI 41207672406 passed all three jobs. PR #160 added only repository-specific agent workflow documentation; no runtime or linguistic data changed.",
-    "latest_full_repository_head": "bdcce023be0a9565658be586c66e53d7d13d33b1",
-    "latest_full_repository_head_ci_run": 41207672406,
-    "latest_full_repository_head_web_validation_run": 41142211675,
+    "current_head_status_at_audit_refresh": "PR #162 merged as 1b1480c5a79b6dd38dc8b916d52ad599e38a9748. Exact-head CI 41229053598 and post-merge main CI 41229435682 passed all three jobs; Pages build/deploy verification 41229435706 passed. Pytest executed 251 tests and 1164 subtests. Typed IPA secondary-candidate routing and source orthographic metadata preservation are verified.",
+    "latest_full_repository_head": "1b1480c5a79b6dd38dc8b916d52ad599e38a9748",
+    "latest_full_repository_head_ci_run": 41229435682,
+    "latest_full_repository_head_web_validation_run": 41229435706,
     "latest_web_static_verified_code_commit": "1ed4c7aa30759fd8d31136e46d7490bf9b2c5e8b",
     "latest_web_static_verified_code_run": 40286893366,
-    "latest_verified_commit_note": "Latest code/data commit 3325e98b98bde6926f36c74ad76dc94fe35480b0 remains the latest runtime/data change checkpoint. Current documentation-only main head bdcce023be0a9565658be586c66e53d7d13d33b1 passed full main CI 41207672406; exact PR #160 head CI 41189619820 also passed all three jobs. Independent linguistic gold and manual accessibility review remain open.",
-    "latest_verified_code_commit_note": "Latest runtime/data implementation remains 3325e98b98bde6926f36c74ad76dc94fe35480b0; subsequent PR #160 changed only AGENTS.md. Current main head bdcce023be0a9565658be586c66e53d7d13d33b1 passed full CI 41207672406. Independent Thai IPA/acoustic gold, Ukrainian target-form adjudication, and production segmentation quality remain unverified.",
-    "latest_fully_successful_documentation_commit": "bdcce023be0a9565658be586c66e53d7d13d33b1",
-    "latest_fully_successful_documentation_ci_run": 41207672406,
-    "latest_fully_successful_documentation_web_validation_run": 40323209471,
-    "latest_documentation_head_ci_run": 41207672406,
-    "latest_documentation_head_web_validation_run": 41142211675,
-    "latest_implementation_ci_run": 41143907732,
-    "latest_implementation_web_validation_run": 40320450587,
-    "latest_implementation_commit_ci_verified": "3325e98b98bde6926f36c74ad76dc94fe35480b0",
+    "latest_verified_commit_note": "PR #162 code checkpoint 1b1480c5a79b6dd38dc8b916d52ad599e38a9748 passed exact-head CI 41229053598, post-merge main CI 41229435682 and Pages verification 41229435706. 251 Python tests and 1164 subtests passed. External expert linguistic and manual accessibility evidence remains outstanding.",
+    "latest_verified_code_commit_note": "Latest runtime implementation checkpoint 1b1480c5a79b6dd38dc8b916d52ad599e38a9748 routes secondary candidates through supported typed IPA and preserves original orthographic role across lexical rewrites. Post-merge CI 41229435682 passed all three jobs; Pages verification 41229435706 passed. No expert-gold or general linguistic-accuracy claim is made.",
+    "latest_fully_successful_documentation_commit": "1b1480c5a79b6dd38dc8b916d52ad599e38a9748",
+    "latest_fully_successful_documentation_ci_run": 41229435682,
+    "latest_fully_successful_documentation_web_validation_run": 41229435706,
+    "latest_documentation_head_ci_run": 41229435682,
+    "latest_documentation_head_web_validation_run": 41229435706,
+    "latest_implementation_ci_run": 41229435682,
+    "latest_implementation_web_validation_run": 41229435706,
+    "latest_implementation_commit_ci_verified": "1b1480c5a79b6dd38dc8b916d52ad599e38a9748",
     "latest_fully_successful_web_static_validation_run": 40322959844,
     "comparative_error_review_status": "DONE_VERIFIED — report, tests and CI artifact passed on code checkpoint b6dbec7928b106f0ab52e06af33a26635df75412",
     "comparative_error_review_script": "scripts/compare_segmentation_error_review.py",
@@ -217,34 +221,43 @@
         "state": "closed",
         "merged": true,
         "merge_sha": "3325e98b98bde6926f36c74ad76dc94fe35480b0"
+      },
+      "pr162": {
+        "state": "closed",
+        "merged": true,
+        "merge_sha": "1b1480c5a79b6dd38dc8b916d52ad599e38a9748",
+        "exact_head_ci": 41229053598,
+        "post_merge_main_ci": 41229435682,
+        "pages_verification": 41229435706
       }
     },
     "branch_inventory": {
-      "total_refs": 169,
+      "total_refs": 176,
       "prefix_counts": {
-        "docs": 49,
-        "feat": 26,
-        "fix": 26,
-        "research": 24,
         "audit": 8,
-        "ux": 7,
-        "(no-prefix)": 7,
-        "chore": 5,
-        "test": 4,
+        "chore": 6,
         "ci": 2,
         "copy": 2,
         "design": 2,
+        "docs": 54,
+        "feat": 26,
+        "(no-prefix)": 7,
+        "finalize": 1,
+        "fix": 27,
         "perf": 2,
         "polish": 1,
-        "finalize": 1,
+        "research": 24,
         "site": 1,
+        "test": 4,
         "ui": 1,
+        "ux": 7,
         "web": 1
       },
       "status": "PARTIAL",
-      "reason": "No owner-approved archive/delete policy; connector has no branch deletion action; historical refs preserved."
+      "reason": "No owner-approved archive/delete policy; historical refs preserved."
     },
-    "latest_checkpoint_note": "PR #160 merged as bdcce023be0a9565658be586c66e53d7d13d33b1. Exact-head CI 41189619820 and post-merge main CI 41207672406 passed all three jobs. Main branch protection is disabled and requires owner configuration; historical branches require an approved retention policy. Independent linguistic and manual accessibility evidence remains external and open."
+    "latest_checkpoint_note": "PR #162 merged as 1b1480c5a79b6dd38dc8b916d52ad599e38a9748; exact-head CI 41229053598, post-merge main CI 41229435682 and Pages verification 41229435706 passed. Main branch protection remains disabled and requires owner configuration; historical branches require an approved retention policy. Independent linguistic and manual accessibility evidence remains external and open.",
+    "python_subtests": 1164
   },
   "challenge_runtime": {
     "challenge_inputs": 36,
@@ -1917,27 +1930,60 @@
   },
   "latest_checkpoint": {
     "date": "2026-10-31",
-    "starting_main": "41b0991670381d801babd876880dc16b8ce9304c",
-    "main": "bdcce023be0a9565658be586c66e53d7d13d33b1",
-    "merged_pr": 160,
-    "branch": "chore/agent-workflow-bridge-20261031",
-    "exact_head_ci_run": 41189619820,
-    "post_merge_main_ci_run": 41207672406,
+    "starting_main": "d4d1ac1a03a25b55fba025b32e5f189344790e70",
+    "main": "1b1480c5a79b6dd38dc8b916d52ad599e38a9748",
+    "merged_pr": 162,
+    "branch": "fix/typed-ipa-candidate-rendering-20261031",
+    "exact_head_ci_run": 41229053598,
+    "post_merge_main_ci_run": 41229435682,
+    "post_merge_pages_run": 41229435706,
     "post_merge_jobs": {
       "test": "SUCCESS",
       "wheel_install_smoke": "SUCCESS",
       "master_artifact": "SUCCESS"
     },
+    "pages_jobs": {
+      "build": "SUCCESS",
+      "deploy": "SUCCESS",
+      "published_contract": "SUCCESS"
+    },
+    "python_test_suite": {
+      "pytest": "9.2.0",
+      "tests_passed": 251,
+      "unittest_subtests_passed": 1164,
+      "ruff": "PASS"
+    },
     "master_artifact": {
       "rows": 351780,
       "vowel_rime_records": 41,
+      "sha256": "6e39fed9f5df63410fcde1206985c07e3d9c3148d21f5d0d3486f06d8be9155f",
       "status": "PASS"
     },
     "open_pull_requests": 0,
-    "branch_refs": 173,
+    "branch_refs": 176,
+    "branch_prefix_counts": {
+      "audit": 8,
+      "chore": 6,
+      "ci": 2,
+      "copy": 2,
+      "design": 2,
+      "docs": 54,
+      "feat": 26,
+      "(no-prefix)": 7,
+      "finalize": 1,
+      "fix": 27,
+      "perf": 2,
+      "polish": 1,
+      "research": 24,
+      "site": 1,
+      "test": 4,
+      "ui": 1,
+      "ux": 7,
+      "web": 1
+    },
     "main_branch_protection": "DISABLED — owner configuration required; not changed in this run",
     "local_checkout": "BLOCKED — container DNS cannot resolve github.com",
-    "internal_engineering": "Automated CI, packaging, generated artifact, parity and diagnostic gates pass at this main SHA.",
+    "internal_engineering": "Typed IPA secondary-candidate boundary, complete pytest/unittest discovery, parser source-role preservation, packaging, reproducible artifacts, parity and automated diagnostics pass at this code checkpoint.",
     "external_validation": "Independent Thai segmentation/IPA adjudication, Ukrainian-native target-form adjudication, and manual browser/device/WCAG 2.2 AA review remain pending; tracked by issue #114."
   }
 }
