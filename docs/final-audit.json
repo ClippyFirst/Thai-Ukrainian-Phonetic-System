@@ -2101,9 +2101,9 @@
     },
     "manual_review_status": "BLOCKED — CCOST_manual.pdf is listed separately on Zenodo but download was throttled/failed in this session; no manual contents are claimed as inspected.",
     "publication_readiness": "research prototype; no independent Thai/UA gold or manual accessibility audit",
-    "latest_pr_head": "8690b42ccbf5bbff35e57646c8624620f093880c",
-    "latest_pr_head_ci_run": 41243882073,
-    "latest_pr_head_ci_status": "SUCCESS — exact current head; test, wheel-install-smoke and master-artifact all passed."
+    "latest_pr_head": "See PR #169 metadata; avoid self-referential SHA.",
+    "latest_pr_head_ci_run": null,
+    "latest_pr_head_ci_status": "See PR #169 metadata; previous exact-head run 41244614135 passed all three jobs."
   },
   "current_branch_inventory": {
     "branch_refs": 184,
@@ -2133,10 +2133,10 @@
   "open_prs_current": [
     {
       "number": 169,
-      "head": "8690b42ccbf5bbff35e57646c8624620f093880c",
+      "head": "See PR metadata; avoid self-referential SHA.",
       "status": "OPEN",
-      "exact_head_ci_run": 41243882073,
-      "ci_status": "SUCCESS",
+      "exact_head_ci_run": null,
+      "ci_status": "See PR metadata for current exact-head status; previous run 41244614135 passed.",
       "scope": "CCOST source provenance and canonical audit closeout"
     },
     {
@@ -2154,9 +2154,9 @@
   "status_refresh_2026_10_31": {
     "main_sha": "8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8",
     "pr_169": {
-      "head": "8690b42ccbf5bbff35e57646c8624620f093880c",
-      "exact_head_ci_run": 41243882073,
-      "ci_status": "SUCCESS",
+      "head": "See PR #169 metadata; avoid self-referential SHA.",
+      "exact_head_ci_run": null,
+      "ci_status": "See PR #169 metadata; previous exact-head run 41244614135 passed.",
       "jobs": {
         "test": "success",
         "wheel_install_smoke": "success",
@@ -2183,5 +2183,18 @@
     ],
     "local_execution": "NOT_RUN — connector-only session; no local checkout/runtime test result claimed",
     "readiness": "engineering-verified research prototype; not release-ready for general linguistic-accuracy claims"
+  },
+  "latest_exact_head_verification": {
+    "current_pr": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/169",
+    "current_head": "See PR metadata; this file is committed by the same PR and intentionally avoids a self-staling SHA.",
+    "current_exact_head_ci_run": null,
+    "current_exact_head_ci_status": "See PR metadata for the current branch head and its exact-head run.",
+    "previous_verified_head_ci_run": 41244614135,
+    "previous_verified_head_ci_status": "SUCCESS — test, wheel-install-smoke and master-artifact all passed.",
+    "pr_170_head": "1cdc3d7971498ce3312ff9a79b23ee84b8d917aa",
+    "pr_170_ci_run": 41243709726,
+    "pr_170_ci_status": "SUCCESS",
+    "pr_170_web_static_run": 41243709639,
+    "pr_170_web_static_status": "SUCCESS"
   }
 }
