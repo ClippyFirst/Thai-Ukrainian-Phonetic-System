@@ -11,7 +11,7 @@ def test_browser_ipa_output_uses_explicit_language_and_font_fallback():
         assert font in css
     for feature in ('"ccmp"', '"mark"', '"mkmk"'):
         assert feature in css
-    assert "unicode-bidi: isolate" in css
+    assert "unicode-bidi:isolate" in css
     assert "ipa-output" in app
     assert 'lang="und-fonipa"' in app
     assert "@import" not in css.lower()
