@@ -37,7 +37,9 @@ assert.equal(renderRtgsTokens([{ kind: "thai", input: "ทราย" }]), "⟦RT
 for (const [input, expected] of [
   ["phrik", "пхрік"], ["khrai", "кхрай"], ["th", "тх"], ["ch", "ч"],
   ["ngao", "нгао"], ["sawatdi", "саватді"], ["mai", "май"],
-  ["yukhren", "йукхрен"], ["phatthana", "пхаттхана"], ["sip-hok", "сіп-хок"]
+  ["ai", "ай"], ["ueai", "уеай"], ["uai", "уай"], ["oei", "оей"],
+  ["aeo", "аео"], ["iao", "іао"], ["yukhren", "йукхрен"],
+  ["phatthana", "пхаттхана"], ["sip-hok", "сіп-хок"]
 ]) {
   assert.equal(adaptRtgsToUkrainian(input).status, "adapted", input);
   assert.equal(adaptRtgsToUkrainian(input).output, expected, input);
