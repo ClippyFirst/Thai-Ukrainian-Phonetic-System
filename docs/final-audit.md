@@ -1,3 +1,12 @@
+## Final audit update — 2026-10-31: current PR heads and verification queue
+
+- PR [#169](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/169) current head: `7bfee951af0f6fd402f6a2a985e2f34473aba2f6`; exact-head CI [41243581916](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41243581916) is queued. The preceding code/data/test head `a331131567f6e17f9dd5fe96c8624620f093880c` passed all three CI jobs in [41242513053](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41242513053); later changes only refreshed audit/handoff status.
+- PR [#170](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/170) is a separate one-file test cleanup at `1cdc3d7971498ce3312ff9a79b23ee84b8d917aa`. It removes two immediately duplicated assertions from the first UI contract scenario. CI [41243709726](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41243709726) and Web Static [41243709639](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41243709639) are queued; no behavior change is claimed.
+- Latest branch inventory: 184 refs (docs 57, feat 27, fix 27, research 25, audit 8, ux 7, chore 8, unprefixed 7, test 5, ci 2, copy 2, design 2, perf 2, and one each finalize/polish/site/ui/web). No historical refs deleted.
+- Both PRs remain open under the user's PR-only integration preference. Do not treat queued exact-head runs as successful.
+
+---
+
 ## Final audit update — 2026-10-31: CCOST provenance and exact-head verification
 
 - **DONE_VERIFIED — source identity and provenance:** Zenodo dataset record [10.5281/zenodo.17366698](https://doi.org/10.5281/zenodo.17366698) and LREC/ACL article [10.63317/3ds35jijmgrx](https://doi.org/10.63317/3ds35jijmgrx) are distinct records. The dataset record declares CC BY-NC-SA 4.0 and lists a 6.2 GB WAV/TextGrid archive, metadata, word list, sentences and a separate annotation manual.
