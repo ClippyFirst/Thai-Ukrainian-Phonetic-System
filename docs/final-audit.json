@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Main includes PRs #141, #144–#146, #148–#155. HTTP Content-Length framing hardening and CI master-artifact reuse are merged and fully verified. Main CI 41143907732 passed all three jobs, including 216 Python tests, Ruff, browser/parity/UI, research diagnostics, wheel-install smoke and artifact download/validation (351,780 rows; 41 vowel/rime records). Pages deployment and live-content verification for the preceding web change passed. Engineering-verified research prototype; not release-ready for independent linguistic-accuracy claims.",
+  "status": "Main is c4216d69982ec2564b5ed615b06d088d18143b4f. PRs #153–#156 are merged; latest post-merge main CI 41144968470 passed all three jobs. HTTP Content-Length validation and master-artifact single-generation/download validation are verified. Engineering-verified research prototype; not release-ready for independent Thai segmentation, IPA or Ukrainian target-accuracy claims.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -105,7 +105,7 @@
     "status": "SOURCE_ATTESTED_NOT_GOLD",
     "includes_short_long_oe_contrast": true
   },
-  "latest_verified_code_commit": "e8282dfb85f53ae18cbed5fcdc676b1b6049c313",
+  "latest_verified_code_commit": "3325e98b98bde6926f36c74ad76dc94fe35480b0",
   "starting_branch_commit": "7e39fd4bc108386148c1e9a79d257d75babcc9aa",
   "ci": {
     "latest_fully_successful_code_data_commit": "3325e98b98bde6926f36c74ad76dc94fe35480b0",
@@ -125,12 +125,12 @@
       41142211675
     ],
     "current_head_status_at_audit_refresh": "PR #155 merged as 3325e98b98bde6926f36c74ad76dc94fe35480b0. Exact PR CI 41143491570 and post-merge main CI 41143907732 passed all three jobs. The master-artifact job now downloads the 3,086,353-byte artifact, verifies SHA-256, and asserts 351780 rows / 41 vowel/rime records without rerunning generation.",
-    "latest_full_repository_head": "3325e98b98bde6926f36c74ad76dc94fe35480b0",
-    "latest_full_repository_head_ci_run": 41143907732,
+    "latest_full_repository_head": "c4216d69982ec2564b5ed615b06d088d18143b4f",
+    "latest_full_repository_head_ci_run": 41144968470,
     "latest_full_repository_head_web_validation_run": 41142211675,
     "latest_web_static_verified_code_commit": "1ed4c7aa30759fd8d31136e46d7490bf9b2c5e8b",
     "latest_web_static_verified_code_run": 40286893366,
-    "latest_verified_commit_note": "Current main 3325e98b98bde6926f36c74ad76dc94fe35480b0 includes the strict HTTP Content-Length validation and the single-generation master-artifact workflow. Exact PR and post-merge CI pass; independent linguistic gold and manual accessibility review remain open.",
+    "latest_verified_commit_note": "Latest code/data commit 3325e98b98bde6926f36c74ad76dc94fe35480b0 is fully CI-verified by run 41143907732. Latest documentation/main head c4216d69982ec2564b5ed615b06d088d18143b4f passed main CI 41144968470. Independent linguistic gold and manual accessibility review remain open.",
     "latest_verified_code_commit_note": "Current main is fully engineering-verified by CI 41143907732; independent Thai IPA/acoustic gold, Ukrainian target-form adjudication, and production segmentation quality remain unverified.",
     "latest_fully_successful_documentation_commit": "499e0bd5f14d7809d1a041223db8864c2875917e",
     "latest_fully_successful_documentation_ci_run": 41144266328,
@@ -261,16 +261,13 @@
     "vowel_rime_records": 41
   },
   "latest_documentation_checkpoint": {
-    "branch": "docs/mainline-maintenance-closeout-20261030",
-    "pull_request": 151,
-    "status": "PENDING_EXACT_HEAD_CI",
+    "branch": "docs/canonical-status-refresh-20261031",
+    "status": "IN_PROGRESS",
+    "base_commit": "c4216d69982ec2564b5ed615b06d088d18143b4f",
     "scope": [
-      "README installation instructions",
-      "CHANGELOG packaging and Ruff maintenance",
-      "validation matrix",
-      "final audit",
-      "machine-readable audit JSON",
-      "execution handoff"
+      "canonical current-state block in validation matrix and final audit",
+      "current handoff checkpoint",
+      "machine-readable latest main and CI metadata"
     ]
   },
   "text_only_checkpoint": {
@@ -319,7 +316,7 @@
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
   "latest_code_checkpoint": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
   "readiness": "engineering-verified research prototype; not release-ready for independent Thai segmentation, IPA or Ukrainian target accuracy",
-  "latest_verified_repository_head": "3325e98b98bde6926f36c74ad76dc94fe35480b0",
+  "latest_verified_repository_head": "c4216d69982ec2564b5ed615b06d088d18143b4f",
   "task_ledger": [
     {
       "id": "SEG-TRAIN-001",
@@ -1720,7 +1717,7 @@
     "original_pr_status": "closed_as_superseded"
   },
   "current_mainline_closeout_2026_10_30": {
-    "main_sha": "e8282dfb85f53ae18cbed5fcdc676b1b6049c313",
+    "main_sha": "c4216d69982ec2564b5ed615b06d088d18143b4f",
     "pr_141": {
       "status": "merged",
       "merge_sha": "4d087e66778854503a0e6d355d605d83a50354f8"
@@ -1773,16 +1770,15 @@
       "vowel_records": 41
     },
     "post_merge_runs": {
-      "ci": 41134406351,
-      "pages": 41134406540,
+      "ci": 41144968470,
       "status": "SUCCESS"
     },
     "pr_111": "closed_as_superseded_by_pr_144; historical branch preserved",
     "issue_113": "closed_as_duplicate_of_114",
     "issue_114": "open_for_independent_linguistic_gold_and_manual_visual_accessibility_review",
     "issue_147": "closed_completed_by_pr_149",
-    "branch_refs_observed": 163,
-    "open_pull_requests": 1,
+    "branch_refs_observed": 169,
+    "open_pull_requests": 0,
     "technical_debt": [
       {
         "id": "PACKAGING-WHEEL-001",
@@ -1807,9 +1803,7 @@
       "manual browser/device and WCAG 2.2 AA review",
       "local git clone blocked by container DNS resolution for github.com"
     ],
-    "open_pull_request_numbers": [
-      151
-    ],
+    "open_pull_request_numbers": [],
     "branch_prefix_counts": {
       "audit": 8,
       "chore": 5,
@@ -1833,6 +1827,20 @@
     "pr_143": {
       "status": "closed_unmerged_superseded_by_pr_144",
       "historical_branch_preserved": true
+    },
+    "pr_154": {
+      "status": "merged",
+      "merge_sha": "0f7c41a753efa7abb88ea279ddc6a22ccdf11c6d"
+    },
+    "pr_155": {
+      "status": "merged",
+      "merge_sha": "3325e98b98bde6926f36c74ad76dc94fe35480b0"
+    },
+    "pr_156": {
+      "status": "merged",
+      "merge_sha": "c4216d69982ec2564b5ed615b06d088d18143b4f",
+      "exact_pr_ci_run": 41144610012,
+      "post_merge_main_ci_run": 41144968470
     }
   },
   "api_error_redaction_2026_10_31": {
@@ -1887,5 +1895,18 @@
     "new_download_and_validation_seconds": 1.1,
     "estimated_duplicate_work_removed_seconds": 125.8,
     "result": "DONE_VERIFIED — all three exact PR-head jobs and all three post-merge main jobs passed; master artifact is transferred and independently validated without a second generation."
+  },
+  "latest_canonical_status_refresh_2026_10_31": {
+    "main_sha": "c4216d69982ec2564b5ed615b06d088d18143b4f",
+    "pr_153_merge": "8a539193798e55c3010e3a6a72a0e2578ea413c9",
+    "pr_154_merge": "0f7c41a753efa7abb88ea279ddc6a22ccdf11c6d",
+    "pr_155_merge": "3325e98b98bde6926f36c74ad76dc94fe35480b0",
+    "pr_156_merge": "c4216d69982ec2564b5ed615b06d088d18143b4f",
+    "pr_156_exact_ci": 41144610012,
+    "post_merge_main_ci": 41144968470,
+    "open_prs": 0,
+    "open_blocker_issue": 114,
+    "branch_refs": 169,
+    "readiness": "engineering-verified research prototype; not release-ready for independent Thai segmentation, IPA or Ukrainian target accuracy"
   }
 }
