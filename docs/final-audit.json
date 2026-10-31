@@ -2101,9 +2101,9 @@
     },
     "manual_review_status": "BLOCKED — CCOST_manual.pdf is listed separately on Zenodo but download was throttled/failed in this session; no manual contents are claimed as inspected.",
     "publication_readiness": "research prototype; no independent Thai/UA gold or manual accessibility audit",
-    "latest_pr_head": "7bfee951af0f6fd402f6a2a985e2f34473aba2f6",
-    "latest_pr_head_ci_run": null,
-    "latest_pr_head_ci_status": "PENDING — final audit/handoff-only refresh follows code/data/test head a331131567f6e17f9dd5fe96c8624620f093880c; prior head CI 41242513053 passed all three jobs but is not exact-head verification for this final docs update."
+    "latest_pr_head": "8690b42ccbf5bbff35e57646c8624620f093880c",
+    "latest_pr_head_ci_run": 41243882073,
+    "latest_pr_head_ci_status": "SUCCESS — exact current head; test, wheel-install-smoke and master-artifact all passed."
   },
   "current_branch_inventory": {
     "branch_refs": 184,
@@ -2133,10 +2133,10 @@
   "open_prs_current": [
     {
       "number": 169,
-      "head": "current PR branch head; see PR metadata",
+      "head": "8690b42ccbf5bbff35e57646c8624620f093880c",
       "status": "OPEN",
-      "exact_head_ci_run": null,
-      "ci_status": "PENDING",
+      "exact_head_ci_run": 41243882073,
+      "ci_status": "SUCCESS",
       "scope": "CCOST source provenance and canonical audit closeout"
     },
     {
@@ -2145,9 +2145,43 @@
       "status": "OPEN",
       "exact_head_ci_run": 41243709726,
       "web_static_run": 41243709639,
-      "ci_status": "QUEUED",
-      "scope": "remove two duplicate UI contract assertions"
+      "ci_status": "SUCCESS",
+      "scope": "remove two duplicate UI contract assertions",
+      "web_static_status": "SUCCESS"
     }
   ],
-  "latest_pr_head_source": "GitHub PR #169 metadata; not duplicated as a literal SHA here because this file is committed in that same PR and would otherwise stale itself."
+  "latest_pr_head_source": "GitHub PR #169 metadata; not duplicated as a literal SHA here because this file is committed in that same PR and would otherwise stale itself.",
+  "status_refresh_2026_10_31": {
+    "main_sha": "8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8",
+    "pr_169": {
+      "head": "8690b42ccbf5bbff35e57646c8624620f093880c",
+      "exact_head_ci_run": 41243882073,
+      "ci_status": "SUCCESS",
+      "jobs": {
+        "test": "success",
+        "wheel_install_smoke": "success",
+        "master_artifact": "success"
+      },
+      "state": "OPEN"
+    },
+    "pr_170": {
+      "head": "1cdc3d7971498ce3312ff9a79b23ee84b8d917aa",
+      "ci_run": 41243709726,
+      "ci_status": "SUCCESS",
+      "web_static_run": 41243709639,
+      "web_static_status": "SUCCESS",
+      "state": "OPEN"
+    },
+    "branch_inventory": 184,
+    "main_protected": false,
+    "independent_review_submissions": 0,
+    "blockers": [
+      "CCOST_manual.pdf inspection",
+      "independent Thai segmentation/phonology/IPA adjudication",
+      "independent Ukrainian-native target-form adjudication",
+      "manual browser/device and WCAG 2.2 AA review"
+    ],
+    "local_execution": "NOT_RUN — connector-only session; no local checkout/runtime test result claimed",
+    "readiness": "engineering-verified research prototype; not release-ready for general linguistic-accuracy claims"
+  }
 }
