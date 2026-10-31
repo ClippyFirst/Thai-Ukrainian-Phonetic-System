@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PR #164 is merged as 01631b98173b2e54695bdf757a538735fca8fdff. Exact PR-head CI runs 41234072432 and 41234077035 and Web static validation 41234077207 passed. Post-merge main CI/Pages and follow-up PR #165/#166 checks are queued with no reported failures. The optional RTGS-first Ukrainian output mode and full method matrices are implemented; independent linguistic/accessibility adjudication remains pending. Engineering-verified research prototype, not release-ready for general linguistic-accuracy claims.",
+  "status": "PRs #165–#167 are merged. Current main 72a77cb42ad05c33274d70c4dcd9f20e07432b64 passed exact-head and post-merge CI/Web Static checks. Main CI 41239440616 passed 251 pytest tests, 1164 subtests, Ruff, browser/Python parity, generated-data drift, wheel-install smoke and the 351780-row/41-rime master artifact. Independent Thai/UA adjudication and manual accessibility review remain outstanding; engineering-verified research prototype, not release-ready for linguistic-accuracy claims.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -115,24 +115,25 @@
     "status": "SOURCE_ATTESTED_NOT_GOLD",
     "includes_short_long_oe_contrast": true
   },
-  "latest_verified_code_commit": "1b1480c5a79b6dd38dc8b916d52ad599e38a9748",
+  "latest_verified_code_commit": "72a77cb42ad05c33274d70c4dcd9f20e07432b64",
   "starting_branch_commit": "7e39fd4bc108386148c1e9a79d257d75babcc9aa",
   "ci": {
-    "latest_fully_successful_code_data_commit": "1b1480c5a79b6dd38dc8b916d52ad599e38a9748",
-    "latest_fully_successful_ci_run": 41229435682,
+    "latest_fully_successful_code_data_commit": "72a77cb42ad05c33274d70c4dcd9f20e07432b64",
+    "latest_fully_successful_ci_run": 41239440616,
     "python_tests": 251,
-    "generated_data_drift": "PASS",
-    "master_artifact": "PASS — run 41229435682: generated once, uploaded, downloaded, SHA-256 verified (6e39fed9f5df63410fcde1206985c07e3d9c3148d21f5d0d3486f06d8be9155f), and asserted at 351780 rows / 41 vowel-rime records.",
-    "node_ipa_ua_parity_ui_tests": "PASS — run 41229435682: RTGS/IPA-UA/browser parity and UI contracts; 29 Python/web parity fixtures passed.",
+    "generated_data_drift": "PASS — run 41239440616",
+    "master_artifact": "PASS — run 41239440616: 3,086,353 bytes; SHA-256 74f40079c2bae8a4f875fa8e2c860ac8a202bbb1bd8e4ae72d834f48d93adc09; independently downloaded and asserted 351780 rows / 41 vowel-rime records.",
+    "node_ipa_ua_parity_ui_tests": "PASS — run 41239440616: 29 Python/browser parity fixtures; RTGS/IPA-UA and UI contract checks passed.",
     "wisesight_baseline": "PASS",
     "source_attested_ipa_diagnostic": "PASS",
     "current_browser_parity_code_head": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
     "current_head_ci_runs": [
-      41229053598,
-      41229435682
+      41237340250,
+      41239440616
     ],
     "current_head_web_validation_runs": [
-      41229435706
+      41237340267,
+      41239440643
     ],
     "current_head_status_at_audit_refresh": "PR #162 merged as 1b1480c5a79b6dd38dc8b916d52ad599e38a9748. Exact-head CI 41229053598 and post-merge main CI 41229435682 passed all three jobs; Pages build/deploy verification 41229435706 passed. Pytest executed 251 tests and 1164 subtests. Typed IPA secondary-candidate routing and source orthographic metadata preservation are verified.",
     "latest_full_repository_head": "1b1480c5a79b6dd38dc8b916d52ad599e38a9748",
@@ -142,9 +143,9 @@
     "latest_web_static_verified_code_run": 40286893366,
     "latest_verified_commit_note": "PR #162 code checkpoint 1b1480c5a79b6dd38dc8b916d52ad599e38a9748 passed exact-head CI 41229053598, post-merge main CI 41229435682 and Pages verification 41229435706. 251 Python tests and 1164 subtests passed. External expert linguistic and manual accessibility evidence remains outstanding.",
     "latest_verified_code_commit_note": "Latest runtime implementation checkpoint 1b1480c5a79b6dd38dc8b916d52ad599e38a9748 routes secondary candidates through supported typed IPA and preserves original orthographic role across lexical rewrites. Post-merge CI 41229435682 passed all three jobs; Pages verification 41229435706 passed. No expert-gold or general linguistic-accuracy claim is made.",
-    "latest_fully_successful_documentation_commit": "1b1480c5a79b6dd38dc8b916d52ad599e38a9748",
-    "latest_fully_successful_documentation_ci_run": 41229435682,
-    "latest_fully_successful_documentation_web_validation_run": 41229435706,
+    "latest_fully_successful_documentation_commit": "d27e8ec2d7f233d62c1bb849566e4756ebeceffe",
+    "latest_fully_successful_documentation_ci_run": 41239400828,
+    "latest_fully_successful_documentation_web_validation_run": 41239420395,
     "latest_documentation_head_ci_run": 41229435682,
     "latest_documentation_head_web_validation_run": 41229435706,
     "latest_implementation_ci_run": 41229435682,
@@ -262,7 +263,7 @@
       "status": "PARTIAL",
       "reason": "No owner-approved archive/delete policy; historical refs preserved."
     },
-    "latest_checkpoint_note": "PR #162 merged as 1b1480c5a79b6dd38dc8b916d52ad599e38a9748; exact-head CI 41229053598, post-merge main CI 41229435682 and Pages verification 41229435706 passed. Main branch protection remains disabled and requires owner configuration; historical branches require an approved retention policy. Independent linguistic and manual accessibility evidence remains external and open.",
+    "latest_checkpoint_note": "PRs #165, #166 and #167 merged. Exact-head CI/static checks and post-merge main CI/static/Pages checks passed. Current main 72a77cb42ad05c33274d70c4dcd9f20e07432b64: 251 pytest tests, 1164 subtests, Ruff, 29 parity fixtures, drift checks, wheel smoke, 351780-row/41-rime artifact. External linguistic and manual accessibility gates remain open.",
     "python_subtests": 1164
   },
   "challenge_runtime": {
@@ -281,13 +282,13 @@
     "vowel_rime_records": 41
   },
   "latest_documentation_checkpoint": {
-    "branch": "docs/canonical-status-refresh-20261031",
+    "branch": "docs/closeout-rtgs-ci-and-audit-20261031",
     "status": "IN_PROGRESS",
-    "base_commit": "c4216d69982ec2564b5ed615b06d088d18143b4f",
+    "base_commit": "72a77cb42ad05c33274d70c4dcd9f20e07432b64",
     "scope": [
-      "canonical current-state block in validation matrix and final audit",
-      "current handoff checkpoint",
-      "machine-readable latest main and CI metadata"
+      "post-merge PR #165–#167 verification closeout",
+      "refresh canonical handoff and validation matrix",
+      "refresh final audit markdown and machine-readable latest checkpoint"
     ]
   },
   "text_only_checkpoint": {
@@ -336,7 +337,7 @@
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
   "latest_code_checkpoint": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
   "readiness": "engineering-verified research prototype; not release-ready for independent Thai segmentation, IPA or Ukrainian target accuracy",
-  "latest_verified_repository_head": "c4216d69982ec2564b5ed615b06d088d18143b4f",
+  "latest_verified_repository_head": "72a77cb42ad05c33274d70c4dcd9f20e07432b64",
   "task_ledger": [
     {
       "id": "SEG-TRAIN-001",
@@ -468,6 +469,24 @@
       "implementation": "The test job uploads the master CSV, two-column CSV and JSON generated once for unit tests. The separate master-artifact job downloads the artifact, verifies SHA-256, and asserts 351780 rows and 41 vowel/rime records. It no longer checks out, installs the package or regenerates the table.",
       "blocker": null,
       "acceptance": "Exact PR CI 41143491570 and post-merge main CI 41143907732 passed all three jobs; measured master-artifact work fell from ~126.9 seconds of regeneration to ~1.1 seconds of download plus validation."
+    },
+    {
+      "id": "RTGS-DOC-CLOSEOUT-001",
+      "status": "DONE_VERIFIED",
+      "implementation": "PR #165 reconciled AGENTS.md, the canonical handoff, validation matrix, final audit and RTGS research contract after PR #164.",
+      "acceptance": "Exact-head CI 41236396997 and post-merge main CI 41239400828 passed; no open PR remains."
+    },
+    {
+      "id": "RTGS-MATRIX-PARITY-001",
+      "status": "DONE_VERIFIED",
+      "implementation": "PR #166 adds executable checks for all 41 RTGS rime rows, onset/coda mappings and digraph/rime sequence output against the runtime adapter.",
+      "acceptance": "Exact-head CI 41236181030, Web Static 41236181002, post-merge main CI 41239420358 and Pages 41239420395 passed."
+    },
+    {
+      "id": "CI-CONCURRENCY-001",
+      "status": "DONE_VERIFIED",
+      "implementation": "PR #167 adds workflow/source-branch concurrency groups to CI and Web Static; superseded non-main runs are cancelled while main runs are preserved.",
+      "acceptance": "Exact-head CI 41237340250, Web Static 41237340267, post-merge main CI 41239440616 and Web Static 41239440643 passed."
     }
   ],
   "latest_implementation_branch": "chore/python-static-analysis-gate-20261030",
@@ -1917,80 +1936,76 @@
     "result": "DONE_VERIFIED — all three exact PR-head jobs and all three post-merge main jobs passed; master artifact is transferred and independently validated without a second generation."
   },
   "latest_canonical_status_refresh_2026_10_31": {
-    "main_sha": "0f155dc36a0046d3ed02457a9459a1fa6d755b75",
+    "main_sha": "72a77cb42ad05c33274d70c4dcd9f20e07432b64",
     "pr_153_merge": "8a539193798e55c3010e3a6a72a0e2578ea413c9",
     "pr_154_merge": "0f7c41a753efa7abb88ea279ddc6a22ccdf11c6d",
     "pr_155_merge": "3325e98b98bde6926f36c74ad76dc94fe35480b0",
     "pr_156_merge": "c4216d69982ec2564b5ed615b06d088d18143b4f",
     "pr_157_merge": "2bba0fc43ebba08e82555a554c2e97e5d952e22f",
     "pr_157_exact_ci": 41183616913,
-    "post_merge_main_ci": 41188107607,
-    "post_merge_main_ci_status": "SUCCESS — all three jobs passed: test, wheel-install-smoke and master-artifact.",
+    "post_merge_main_ci": 41239440616,
+    "post_merge_main_ci_status": "SUCCESS — test, wheel-install-smoke and master-artifact passed; 251 pytest tests, 1164 subtests; 351780 rows / 41 vowel-rime records.",
     "open_prs": 0,
     "open_blocker_issue": 114,
-    "branch_refs": 171,
+    "branch_refs": 180,
     "readiness": "engineering-verified research prototype; not release-ready for independent Thai segmentation, IPA or Ukrainian target accuracy",
     "pr_158_merge": "0f155dc36a0046d3ed02457a9459a1fa6d755b75",
     "pr_158_exact_ci": 41187802957,
-    "checkpoint_scope": "Repository state at PR #158 merge; subsequent change is documentation-only audit reconciliation."
+    "checkpoint_scope": "Repository state after PR #167 integration; all three follow-up PRs merged and post-merge checks verified.",
+    "pr_165_merge": "d27e8ec2d7f233d62c1bb849566e4756ebeceffe",
+    "pr_166_merge": "e5738560bddd4c2b9d0557bd2ad84d58446f6252",
+    "pr_167_merge": "72a77cb42ad05c33274d70c4dcd9f20e07432b64",
+    "post_merge_web_static": 41239440643,
+    "post_merge_web_static_status": "SUCCESS",
+    "post_merge_pages": 41239420395,
+    "post_merge_pages_status": "SUCCESS — build and deploy passed."
   },
   "latest_checkpoint": {
     "date": "2026-10-31",
-    "starting_main": "1b1480c5a79b6dd38dc8b916d52ad599e38a9748",
-    "merged_pr": 164,
-    "feature_branch": "feat/rtgs-ukrainian-output-mode-20261031",
-    "feature_head": "977f70ca13abe5d97b60f709038f2046d302b8d0",
-    "main": "01631b98173b2e54695bdf757a538735fca8fdff",
-    "exact_head_ci_runs": [
-      41234077035,
-      41234072432
-    ],
-    "exact_head_ci_status": "SUCCESS",
-    "exact_head_web_static_run": 41234077207,
-    "exact_head_web_static_status": "SUCCESS",
-    "post_merge_main_ci": "PENDING_AT_CHECKPOINT",
-    "post_merge_pages": "PENDING_AT_CHECKPOINT",
-    "matrices": {
-      "consonant_graphemes": 44,
-      "rime_records": 41,
-      "phonetic_and_rtgs_methods": true,
-      "onset_coda_separated": true,
-      "status": "INVENTORY_COVERAGE_VERIFIED; linguistic adjudication remains partial"
-    },
-    "output_modes": {
-      "phonetic": "Thai → structural analysis → typed IPA → Ukrainian adaptation",
-      "romanization": "Thai → pinned RTGS implementation → RTGS Latin sequence → separate Ukrainian practical rendering"
-    },
-    "external_validation": "Independent Thai segmentation/IPA adjudication, Ukrainian-native target-form adjudication, and manual browser/device/WCAG 2.2 AA review remain pending; tracked by issue #114.",
-    "local_execution": "BLOCKED — container DNS cannot resolve github.com; GitHub Actions is the verification source.",
-    "open_pull_requests": [
+    "starting_main": "01631b98173b2e54695bdf757a538735fca8fdff",
+    "main": "72a77cb42ad05c33274d70c4dcd9f20e07432b64",
+    "merged_prs": [
       165,
-      166
+      166,
+      167
+    ],
+    "merges": {
+      "165": "d27e8ec2d7f233d62c1bb849566e4756ebeceffe",
+      "166": "e5738560bddd4c2b9d0557bd2ad84d58446f6252",
+      "167": "72a77cb42ad05c33274d70c4dcd9f20e07432b64"
+    },
+    "exact_head_ci_runs": [
+      41236396997,
+      41236181030,
+      41237340250
+    ],
+    "exact_head_web_static_runs": [
+      41236181002,
+      41237340267
     ],
     "post_merge_runs": {
-      "ci": [
-        41235954608,
-        41235967491
-      ],
-      "pages": 41235954575,
-      "web_static": 41235954576,
-      "status": "QUEUED_NO_FAILURE_REPORTED"
+      "pr165_ci": 41239400828,
+      "pr166_ci": 41239420358,
+      "pr166_pages": 41239420395,
+      "pr167_ci": 41239440616,
+      "pr167_web_static": 41239440643,
+      "status": "SUCCESS"
     },
-    "followup_prs": {
-      "165": {
-        "branch": "docs/reconcile-rtgs-mode-and-postmerge-20261031",
-        "status": "OPEN_MERGEABLE_CI_PENDING",
-        "scope": "AGENTS.md and canonical handoff/audit/validation/research-doc reconciliation"
-      },
-      "166": {
-        "branch": "test/rtgs-matrix-runtime-parity-20261031",
-        "head": "4a4e6b5d21b866757d5a0a7aed2ddfd36864cbbf",
-        "status": "OPEN_MERGEABLE",
-        "ci_run": 41236173305,
-        "web_static_run": 41236173286,
-        "scope": "all 41 RTGS rime rows, onset/coda and sequence matrix output parity"
-      }
-    }
+    "python_tests": 251,
+    "python_subtests": 1164,
+    "parity_fixtures": 29,
+    "master_artifact": {
+      "rows": 351780,
+      "rime_records": 41,
+      "size_bytes": 3086353,
+      "sha256": "74f40079c2bae8a4f875fa8e2c860ac8a202bbb1bd8e4ae72d834f48d93adc09",
+      "status": "PASS"
+    },
+    "branch_refs": 180,
+    "open_pull_requests": [],
+    "external_validation": "Independent Thai segmentation/phonology/IPA adjudication, Ukrainian-native target-form adjudication, and manual browser/device/WCAG 2.2 AA review remain blocked by external reviewer/evidence dependencies; issue #114.",
+    "local_execution": "BLOCKED — container DNS cannot resolve github.com; GitHub Actions is the verification source.",
+    "readiness": "engineering-verified research prototype; not release-ready for general linguistic-accuracy claims"
   },
   "rtgs_ukrainian_output_mode_2026_10_31": {
     "status": "DONE_VERIFIED_FOR_IMPLEMENTATION_AND_AUTOMATED_TESTS",
@@ -2011,7 +2026,7 @@
       "The Ukrainian RTGS rendering is a project-defined practical rendering, not an official Ukrainian standard.",
       "This is not ISO 11940 orthographic transliteration.",
       "Automated inventory coverage and parity tests do not constitute independent linguistic adjudication.",
-      "Post-merge main CI and Pages deployment were not yet observed at the time this checkpoint was written."
+      "Post-merge main CI, Web Static validation and Pages deployment for follow-up PRs #165–#167 passed; independent linguistic adjudication remains open."
     ],
     "research_doc": "docs/research/thai-romanization-integration.md",
     "research_contract": "Updated to permit RTGS as the source for only the explicitly separate optional RTGS-based Ukrainian practical-rendering mode; phonetic IPA adapter remains independent.",
@@ -2021,16 +2036,23 @@
     },
     "post_merge_runs": {
       "ci": [
-        41235954608,
-        41235967491
+        41239420358
       ],
-      "pages": 41235954575,
-      "web_static": 41235954576,
-      "status": "QUEUED_NO_FAILURE_REPORTED"
+      "pages": 41239420395,
+      "web_static": [
+        41239440643
+      ],
+      "status": "SUCCESS — PR #166 post-merge CI/Pages and PR #167 post-merge CI/Web Static passed."
     },
     "followup_prs": [
       165,
-      166
+      166,
+      167
     ]
-  }
+  },
+  "latest_full_repository_head": "72a77cb42ad05c33274d70c4dcd9f20e07432b64",
+  "latest_full_repository_head_ci_run": 41239440616,
+  "latest_full_repository_head_web_validation_run": 41239440643,
+  "latest_web_static_verified_code_commit": "72a77cb42ad05c33274d70c4dcd9f20e07432b64",
+  "latest_web_static_verified_code_run": 41239440643
 }
