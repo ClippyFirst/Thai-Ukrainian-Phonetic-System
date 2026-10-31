@@ -119,7 +119,7 @@ const rtgsCodaMatrix = matrices.split("### 4.2 Кінець складу")[1].sp
 const rtgsCodaGraphemes = [...rtgsCodaMatrix.matchAll(/^\| ([ก-๛ ]+) \|/gm)].flatMap(match => match[1].trim().split(/\s+/));
 assert.deepEqual(new Set(rtgsCodaGraphemes), new Set(consonantRegistry.filter(row => row[6] === "true").map(row => row[1])), "RTGS coda matrix must cover the same positional inventory");
 for (const [input, expected] of [
-  ["ueai", "иай"], ["iao", "іо"], ["aeo", "еу"], ["oei", "ей"],
+  ["ueai", "иай"], ["iao", "іау"], ["aeo", "еу"], ["oei", "ей"],
   ["uai", "уай"], ["uea", "иа"], ["ai", "ай"], ["am", "ам"],
   ["ao", "ау"], ["io", "іу"], ["ui", "уй"], ["eo", "еу"],
   ["oi", "ой"], ["ia", "іа"], ["ue", "и"], ["oe", "е"],
