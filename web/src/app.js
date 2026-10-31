@@ -330,6 +330,7 @@ document.getElementById('clear').addEventListener('click', () => {
 
 document.getElementById('analyze').addEventListener('click', run);
 modeInput?.addEventListener('change', updateModeHint);
+outputModeInput?.addEventListener('change', () => { if (input.value.trim()) run(); });
 updateModeHint();
 input.addEventListener('keydown', event => {
   if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
