@@ -68,13 +68,34 @@ const adapterSource = await readFile(new URL("../src/rtgs-ukrainian.js", import.
 assert.doesNotMatch(adapterSource, /adaptIpaToUkrainian|ipa-ua/, "RTGS → Ukrainian adapter must remain independent of IPA");
 assert.match(adapterSource, /RIME_SEQUENCES/);
 const matrices = await readFile(new URL("../../docs/ukrainian-correspondence-matrices.md", import.meta.url), "utf8");
+const vowelRegistry = (await readFile(new URL("../../data/thai/vowels.csv", import.meta.url), "utf8"))
+  .trim().split(/\r?\n/).slice(1).map(line => line.split(","));
+const vowelSource = new Map(vowelRegistry.map(row => [row[0], { pattern: row[1], ipa: row[2] }]));
 const phoneticRimeMatrix = matrices.split("## 3. Фонетична матриця: голосні та рими")[1].split("## 4.")[0];
 const rtgsRimeMatrix = matrices.split("## 5. Романізаційна матриця: рими")[1].split("## 6.")[0];
 assert.equal((phoneticRimeMatrix.match(/^\| V-/gm) || []).length, 41, "phonetic matrix must cover all 41 registered rimes");
 assert.equal((rtgsRimeMatrix.match(/^\| V-/gm) || []).length, 41, "RTGS matrix must cover all 41 registered rimes");
+for (const [section, hasIpa] of [[phoneticRimeMatrix, true], [rtgsRimeMatrix, false]]) {
+  const rows = [...section.matchAll(/^\| (V-[^|]+) \| ([^|]+) \| ([^|]+) \|/gm)];
+  assert.equal(rows.length, 41);
+  for (const row of rows) {
+    const sourceRow = vowelSource.get(row[1].trim());
+    assert.ok(sourceRow, "missing source vowel ID " + row[1]);
+    assert.equal(row[2].trim(), sourceRow.pattern, "Thai pattern drift for " + row[1]);
+    if (hasIpa) assert.equal(row[3].trim().replace(/^\//, "").replace(/\/$/, ""), sourceRow.ipa, "IPA drift for " + row[1]);
+  }
+}
+const consonantRegistry = (await readFile(new URL("../../data/thai/consonants.csv", import.meta.url), "utf8"))
+  .trim().split(/\r?\n/).slice(1).map(line => line.split(","));
 const onsetMatrix = matrices.split("### 2.1 Початок складу (onset)")[1].split("### 2.2")[0];
 const onsetGraphemes = [...onsetMatrix.matchAll(/^\| ([ก-๛ ]+) \|/gm)].flatMap(match => match[1].trim().split(/\s+/));
-assert.equal(new Set(onsetGraphemes).size, 44, "phonetic onset matrix must inventory all 44 Thai consonant graphemes");
+assert.deepEqual(new Set(onsetGraphemes), new Set(consonantRegistry.map(row => row[1])), "onset matrix must inventory all source consonants");
+const codaMatrix = matrices.split("### 2.2 Кінець складу (coda)")[1].split("## 3.")[0];
+const codaGraphemes = [...codaMatrix.matchAll(/^\| ([ก-๛ ]+) \|/gm)].flatMap(match => match[1].trim().split(/\s+/));
+assert.deepEqual(new Set(codaGraphemes), new Set(consonantRegistry.filter(row => row[6] === "true").map(row => row[1])), "coda matrix must match source coda_allowed inventory");
+const rtgsCodaMatrix = matrices.split("### 4.2 Кінець складу")[1].split("## 5.")[0];
+const rtgsCodaGraphemes = [...rtgsCodaMatrix.matchAll(/^\| ([ก-๛ ]+) \|/gm)].flatMap(match => match[1].trim().split(/\s+/));
+assert.deepEqual(new Set(rtgsCodaGraphemes), new Set(consonantRegistry.filter(row => row[6] === "true").map(row => row[1])), "RTGS coda matrix must cover the same positional inventory");
 for (const [input, expected] of [
   ["ueai", "иай"], ["iao", "іо"], ["aeo", "еу"], ["oei", "ей"],
   ["uai", "уай"], ["uea", "иа"], ["ai", "ай"], ["am", "ам"],
