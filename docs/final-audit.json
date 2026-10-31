@@ -408,7 +408,7 @@
     {
       "id": "BRANCH-HYGIENE-001",
       "status": "PARTIAL",
-      "implementation": "Inventoried 182 branch refs: docs 57, feat 27, fix 27, research 24, audit 8, ux 7, chore 7, unprefixed 7, test 5, ci 2, copy 2, design 2, perf 2, and one each finalize/polish/site/ui/web. No historical branch was deleted.",
+      "implementation": "Inventoried 183 branch refs: docs 57, feat 27, fix 27, research 25, audit 8, ux 7, chore 7, unprefixed 7, test 5, ci 2, copy 2, design 2, perf 2, and one each finalize/polish/site/ui/web. No historical branch was deleted.",
       "blocker": "Historical refs may contain unique work; no owner-approved archive/delete policy exists, and the connected GitHub tool set exposes no branch-deletion action.",
       "acceptance": "Review unique commits and obtain an explicit owner-approved retention policy before archiving/deleting any historical branch; then re-inventory and verify no unmerged unique work is lost."
     },
@@ -2092,5 +2092,30 @@
     "corpus_assets_redistributed": false,
     "previous_pr_head_ci_run": 41241246352,
     "previous_pr_head_ci_scope": "Passed on the prior PR #169 head before this source reconciliation; not evidence for the updated head."
+  },
+  "current_branch_inventory": {
+    "branch_refs": 183,
+    "prefix_counts": {
+      "docs": 57,
+      "feat": 27,
+      "fix": 27,
+      "research": 25,
+      "audit": 8,
+      "ux": 7,
+      "chore": 7,
+      "unprefixed": 7,
+      "test": 5,
+      "ci": 2,
+      "copy": 2,
+      "design": 2,
+      "perf": 2,
+      "finalize": 1,
+      "polish": 1,
+      "site": 1,
+      "ui": 1,
+      "web": 1
+    },
+    "as_of": "2026-10-31",
+    "deletions": 0
   }
 }
