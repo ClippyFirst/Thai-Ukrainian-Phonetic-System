@@ -2196,5 +2196,49 @@
     "pr_170_ci_status": "SUCCESS",
     "pr_170_web_static_run": 41243709639,
     "pr_170_web_static_status": "SUCCESS"
+  },
+  "external_benchmark_research_2026_11_01": {
+    "thai_g2p_v4": {
+      "status": "RESEARCH_SCREENED_NOT_ACCURACY_BENCHMARK",
+      "dataset_card": "https://huggingface.co/datasets/pythainlp/thai-g2p-v4-dataset",
+      "declared_license": "CC0-1.0",
+      "rows": {
+        "train": 126718,
+        "validation": 10055,
+        "test": 8076,
+        "total": 144849
+      },
+      "provenance": [
+        "Thai W2P",
+        "Wiktionary th-pron transliterator"
+      ],
+      "split": "grouped by first two characters",
+      "limitations": [
+        "not independent expert or acoustic gold",
+        "source-overlap audit against runtime lexical IPA required",
+        "circular rows must be excluded",
+        "raw dataset not bundled"
+      ]
+    },
+    "segmentation": {
+      "best2010": {
+        "status": "CANDIDATE_LICENSE_AND_ACCESS_UNVERIFIED",
+        "reported_test": {
+          "samples": 2252,
+          "words_approx": 128000,
+          "characters_approx": 496000
+        },
+        "note": "verify exact InterBEST2010/TEST_100K access and license; do not infer terms from similarly named BEST I catalogue"
+      },
+      "lst20": {
+        "status": "CANDIDATE_RESTRICTED_NONCOMMERCIAL",
+        "note": "NECTEC terms prohibit modification and redistribution absent permission; commercial use requires separate arrangement"
+      }
+    },
+    "speech_corpora": {
+      "fleurs": "ASR/speech evaluation; not direct phone-level IPA or Ukrainian target gold",
+      "common_voice_thai": "ASR/read-speech resource; not phone-level IPA gold; respect no-speaker-identification and no-redistribution constraints"
+    },
+    "outcome": "No new dataset downloaded, copied, bundled or scored; no accuracy claim."
   }
 }
