@@ -58,7 +58,7 @@ class CorpusSourceRegistryTests(unittest.TestCase):
         with path.open("r", encoding="utf-8-sig", newline="") as stream:
             rows = {row["source_id"]: row for row in csv.DictReader(stream)}
         lst20 = rows["CORP-LST20"]
-        self.assertIn("prohibited", lst20["license_or_access"].lower())
+        self.assertIn("verify exact upstream terms", lst20["license_or_access"])\n        self.assertIn("do not use until license", lst20["notes"])
         self.assertIn("not bundled", lst20["notes"])
 
 
