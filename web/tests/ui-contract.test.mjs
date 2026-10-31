@@ -63,13 +63,13 @@ assert.match(status.textContent, /Готово\. Нижче — три варі�
 // not label it as an IPA-derived phonetic transcription.
 const outputMode = element("output-mode");
 outputMode.value = "romanization";
-input.value = "п".replace("п", "พัฒนา");
+input.value = "พริก";
 analyze.click();
 assert.match(output.innerHTML, /Результат за романізацією RTGS/);
 assert.match(output.innerHTML, /01 · Романізація RTGS/);
 assert.match(output.innerHTML, /02 · Українськими літерами за RTGS/);
-assert.match(output.innerHTML, /phatthana/);
-assert.match(output.innerHTML, /пхаттхана/);
+assert.match(output.innerHTML, /phrik/);
+assert.match(output.innerHTML, /пхрік/);
 assert.match(output.innerHTML, /kh\/ph\/th → кх\/пх\/тх/);
 assert.doesNotMatch(output.innerHTML, /class="continuous-output ipa-continuous"/);
 assert.match(output.innerHTML, /не проходить через IPA/);
