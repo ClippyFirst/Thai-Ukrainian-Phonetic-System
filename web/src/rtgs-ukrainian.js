@@ -1,7 +1,7 @@
 import { romanizeRtgsTokenSequence } from "./rtgs-reference.js";
 
-// Project-defined rendering of RTGS letter sequences in Ukrainian script.
-// Digraph h is retained as х (kh/ph/th → кх/пх/тх); this is not IPA adaptation.
+// Project-defined syllabic adaptation of RTGS to Ukrainian script.
+// RTGS rimes and digraphs are mapped as units; this is not IPA adaptation.
 const DIGRAPHS = Object.freeze({
   kh: "кх",
   ph: "пх",
