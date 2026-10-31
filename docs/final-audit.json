@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Main code checkpoint 1b1480c5a79b6dd38dc8b916d52ad599e38a9748 includes merged PR #162. Exact-head CI 41229053598, post-merge main CI 41229435682, and Pages verification 41229435706 passed. The full Python suite now executes 251 tests and 1164 subtests. Internal automated engineering gates are verified; branch protection and historical branch retention remain owner decisions. Engineering-verified research prototype, not release-ready for general linguistic-accuracy claims.",
+  "status": "PR #164 is merged as 01631b98173b2e54695bdf757a538735fca8fdff. Exact PR-head CI runs 41234077035 and 41234072432 and Web static validation 41234077207 passed. The optional RTGS-first Ukrainian output mode and full method matrices are implemented; post-merge main CI/Pages verification and independent linguistic/accessibility adjudication remain pending. Engineering-verified research prototype, not release-ready for general linguistic-accuracy claims.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -58,7 +58,11 @@
     "typed_ipa_secondary_ukrainian_candidate_renderer",
     "pytest_complete_functional_test_discovery",
     "preserve_original_thai_orthographic_role_across_lexical_rewrite",
-    "typed_ipa_boundary_and_aspiration_policy_documentation_reconciled"
+    "typed_ipa_boundary_and_aspiration_policy_documentation_reconciled",
+    "optional_rtgs_first_ukrainian_output_mode",
+    "independent_rtgs_to_ukrainian_practical_renderer",
+    "full_ipa_and_rtgs_consonant_rime_correspondence_matrices",
+    "rtgs_iao_rime_component_preservation_regression"
   ],
   "not_claimed": [
     "complete_lexical_segmentation",
@@ -1930,60 +1934,54 @@
   },
   "latest_checkpoint": {
     "date": "2026-10-31",
-    "starting_main": "d4d1ac1a03a25b55fba025b32e5f189344790e70",
-    "main": "1b1480c5a79b6dd38dc8b916d52ad599e38a9748",
-    "merged_pr": 162,
-    "branch": "fix/typed-ipa-candidate-rendering-20261031",
-    "exact_head_ci_run": 41229053598,
-    "post_merge_main_ci_run": 41229435682,
-    "post_merge_pages_run": 41229435706,
-    "post_merge_jobs": {
-      "test": "SUCCESS",
-      "wheel_install_smoke": "SUCCESS",
-      "master_artifact": "SUCCESS"
+    "starting_main": "1b1480c5a79b6dd38dc8b916d52ad599e38a9748",
+    "merged_pr": 164,
+    "feature_branch": "feat/rtgs-ukrainian-output-mode-20261031",
+    "feature_head": "977f70ca13abe5d97b60f709038f2046d302b8d0",
+    "main": "01631b98173b2e54695bdf757a538735fca8fdff",
+    "exact_head_ci_runs": [
+      41234077035,
+      41234072432
+    ],
+    "exact_head_ci_status": "SUCCESS",
+    "exact_head_web_static_run": 41234077207,
+    "exact_head_web_static_status": "SUCCESS",
+    "post_merge_main_ci": "PENDING_AT_CHECKPOINT",
+    "post_merge_pages": "PENDING_AT_CHECKPOINT",
+    "matrices": {
+      "consonant_graphemes": 44,
+      "rime_records": 41,
+      "phonetic_and_rtgs_methods": true,
+      "onset_coda_separated": true,
+      "status": "INVENTORY_COVERAGE_VERIFIED; linguistic adjudication remains partial"
     },
-    "pages_jobs": {
-      "build": "SUCCESS",
-      "deploy": "SUCCESS",
-      "published_contract": "SUCCESS"
+    "output_modes": {
+      "phonetic": "Thai → structural analysis → typed IPA → Ukrainian adaptation",
+      "romanization": "Thai → pinned RTGS implementation → RTGS Latin sequence → separate Ukrainian practical rendering"
     },
-    "python_test_suite": {
-      "pytest": "9.2.0",
-      "tests_passed": 251,
-      "unittest_subtests_passed": 1164,
-      "ruff": "PASS"
-    },
-    "master_artifact": {
-      "rows": 351780,
-      "vowel_rime_records": 41,
-      "sha256": "6e39fed9f5df63410fcde1206985c07e3d9c3148d21f5d0d3486f06d8be9155f",
-      "status": "PASS"
-    },
-    "open_pull_requests": 0,
-    "branch_refs": 176,
-    "branch_prefix_counts": {
-      "audit": 8,
-      "chore": 6,
-      "ci": 2,
-      "copy": 2,
-      "design": 2,
-      "docs": 54,
-      "feat": 26,
-      "(no-prefix)": 7,
-      "finalize": 1,
-      "fix": 27,
-      "perf": 2,
-      "polish": 1,
-      "research": 24,
-      "site": 1,
-      "test": 4,
-      "ui": 1,
-      "ux": 7,
-      "web": 1
-    },
-    "main_branch_protection": "DISABLED — owner configuration required; not changed in this run",
-    "local_checkout": "BLOCKED — container DNS cannot resolve github.com",
-    "internal_engineering": "Typed IPA secondary-candidate boundary, complete pytest/unittest discovery, parser source-role preservation, packaging, reproducible artifacts, parity and automated diagnostics pass at this code checkpoint.",
-    "external_validation": "Independent Thai segmentation/IPA adjudication, Ukrainian-native target-form adjudication, and manual browser/device/WCAG 2.2 AA review remain pending; tracked by issue #114."
+    "external_validation": "Independent Thai segmentation/IPA adjudication, Ukrainian-native target-form adjudication, and manual browser/device/WCAG 2.2 AA review remain pending; tracked by issue #114.",
+    "local_execution": "BLOCKED — container DNS cannot resolve github.com; GitHub Actions is the verification source."
+  },
+  "rtgs_ukrainian_output_mode_2026_10_31": {
+    "status": "DONE_VERIFIED_FOR_IMPLEMENTATION_AND_AUTOMATED_TESTS",
+    "pr": 164,
+    "merge_commit": "01631b98173b2e54695bdf757a538735fca8fdff",
+    "branch": "feat/rtgs-ukrainian-output-mode-20261031",
+    "head": "977f70ca13abe5d97b60f709038f2046d302b8d0",
+    "exact_head_ci_runs": [
+      41234077035,
+      41234072432
+    ],
+    "exact_head_web_static_run": 41234077207,
+    "matrices_path": "docs/ukrainian-correspondence-matrices.md",
+    "consonant_graphemes": 44,
+    "rime_records_per_method": 41,
+    "limitations": [
+      "RTGS omits tone and does not preserve all vowel-length distinctions.",
+      "The Ukrainian RTGS rendering is a project-defined practical rendering, not an official Ukrainian standard.",
+      "This is not ISO 11940 orthographic transliteration.",
+      "Automated inventory coverage and parity tests do not constitute independent linguistic adjudication.",
+      "Post-merge main CI and Pages deployment were not yet observed at the time this checkpoint was written."
+    ]
   }
 }
