@@ -1,3 +1,27 @@
+## 2026-10-31 — canonical repository state after PR #156
+
+| Task | State | Evidence / next acceptance |
+|---|---|---|
+| PR #153 HTTP Content-Length validation | DONE_VERIFIED | Merged as `8a539193798e55c3010e3a6a72a0e2578ea413c9`; negative and malformed lengths are rejected before body reads. Test-first red run [41141368949](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41141368949); exact PR CI [41141850559](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41141850559), post-merge main CI [41142211674](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41142211674), and Pages [41142211675](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41142211675) passed. |
+| PR #154 HTTP closeout documentation | DONE_VERIFIED | Merged as `0f7c41a753efa7abb88ea279ddc6a22ccdf11c6d`; exact-head CI [41142947816](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41142947816) and post-merge main CI [41143370393](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41143370393) passed. |
+| PR #155 master-artifact CI reuse | DONE_VERIFIED | Merged as `3325e98b98bde6926f36c74ad76dc94fe35480b0`; exact PR CI [41143491570](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41143491570) and post-merge main CI [41143907732](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41143907732) passed all three jobs and 216 Python tests. The master artifact is generated once, uploaded, downloaded, SHA-256 checked, and validated at 351,780 rows / 41 vowel-rime records. The dependent job fell from about 126.9 seconds of duplicate generation to about 1.1 seconds of download and validation. |
+| PR #156 audit/handoff reconciliation | DONE_VERIFIED | Merged as `c4216d69982ec2564b5ed615b06d088d18143b4f`; exact PR CI [41144610012](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41144610012) passed all three jobs; post-merge main CI [41144968470](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41144968470) completed successfully. |
+| Mainline / PR inventory | DONE_VERIFIED | Current `main` is `c4216d69982ec2564b5ed615b06d088d18143b4f`; no open pull requests were found. Open issue #114 retains the independent research and manual accessibility gates. |
+| Historical branch hygiene | PARTIAL | 169 refs remain, including four temporary branches from the recent maintenance run. No branches were deleted: unique historical evidence may exist, no owner-approved retention policy exists, and the connected GitHub actions expose no branch-deletion operation. |
+| Independent Thai segmentation / IPA gold | BLOCKED / evidence-limited | Requires qualified independent Thai reviewers, a frozen annotation protocol, authorized audio where acoustic claims are made, dual labels and a disagreement log. Current source-attested dictionaries and source-annotated Wisesight labels are not independent gold. |
+| Ukrainian target-form adjudication | BLOCKED / evidence-limited | Requires two independent Ukrainian-native reviewers, blinded judgments against agreed IPA targets, criteria versioning and an adjudication log. Existing adapter output is a project candidate, not gold. |
+| Manual browser/device visual and WCAG 2.2 AA review | BLOCKED | Automated UI-contract and served-content checks pass, but they do not replace human keyboard, screen-reader, viewport and device review. Acceptance requires recorded manual results and resolved findings. |
+| TUD segmentation research model | PARTIAL / research-only | Held-out/source-annotated comparisons are diagnostic, not independent gold. Do not promote it to production default without human error review, predeclared thresholds and independent licensed-domain evaluation. |
+| Thai tokenizer integration | DEFERRED | Requires separate provenance, license, browser-compatibility and parity review before bundling. |
+| Local checkout | BLOCKED | Container DNS could not resolve `github.com`; no local test run is claimed. GitHub Actions is the verification source for this run. |
+
+**Current main:** `c4216d69982ec2564b5ed615b06d088d18143b4f`.
+**Latest main CI:** [41144968470](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41144968470) — SUCCESS.
+**Latest published-site verification:** [41142211675](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41142211675) — PASS; no subsequent web-source change in PRs #154–#156.
+**Readiness:** engineering-verified research prototype; not release-ready for independent Thai segmentation, IPA or Ukrainian target-accuracy claims.
+
+---
+
 ## 2026-10-30 — post-PR #150 maintenance closeout
 
 | Task | State | Evidence / next acceptance |
