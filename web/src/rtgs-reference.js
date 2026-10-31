@@ -175,25 +175,32 @@ export function romanizeRtgsWords(words) {
   return result.join("");
 }
 /** Uses the existing analyzer's token boundaries; it does not call PyThaiNLP newmm. */
-export function renderRtgsTokens(tokens) {
+export function romanizeRtgsTokenSequence(tokens) {
   let previousThai = null, previousRomanized = "";
   return (tokens || []).map(token => {
     if (token.kind !== "thai") {
       previousThai = null;
       previousRomanized = "";
-      return token.input;
+      return { kind: token.kind, input: token.input, status: "passthrough", value: token.input, romanized: null };
     }
     const result = romanizeRtgsWord(token.input);
     if (result.status !== "transliterated") {
       previousThai = null;
       previousRomanized = "";
-      return "⟦RTGS НЕ ПЕРЕВІРЕНО: " + token.input + "⟧";
+      return {
+        kind: "thai", input: token.input, status: "unavailable",
+        value: "⟦RTGS НЕ ПЕРЕВІРЕНО: " + token.input + "⟧", romanized: null
+      };
     }
     let value = result.value;
     if (previousThai !== null && value &&
         shouldAddSeparator(previousThai, token.input, previousRomanized)) value = "a" + value;
     previousThai = token.input;
     previousRomanized = value;
-    return value;
-  }).join("");
+    return { kind: "thai", input: token.input, status: "transliterated", value, romanized: value, source: result.source };
+  });
+}
+
+export function renderRtgsTokens(tokens) {
+  return romanizeRtgsTokenSequence(tokens).map(item => item.value).join("");
 }

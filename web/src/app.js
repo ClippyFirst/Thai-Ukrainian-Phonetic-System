@@ -1,6 +1,7 @@
 import { analyzeText } from './engine.js';
 import { preprocessArticleText } from './article-cleanup.js';
 import { renderRtgsTokens } from './rtgs-reference.js';
+import { renderRtgsUkrainianTokens } from './rtgs-ukrainian.js';
 
 const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
@@ -11,6 +12,7 @@ const out = document.getElementById('results');
 const status = document.getElementById('status');
 const modeInput = document.getElementById('engine-mode');
 const modeHint = document.getElementById('mode-hint');
+const outputModeInput = document.getElementById('output-mode');
 
 function updateModeHint() {
   if (!modeHint) return;
@@ -240,6 +242,7 @@ function run() {
   }
 
   const mode = ({ '1': 'super-soft', '2': 'soft', '3': 'strict' })[modeInput?.value] || 'strict';
+  const responseMode = outputModeInput?.value === 'romanization' ? 'romanization' : 'phonetic';
   const prepared = preprocessArticleText(text);
   const analysisText = prepared.text;
   const tokens = analyzeText(analysisText, { mode });
@@ -248,21 +251,29 @@ function run() {
     !['lexicon', 'lexical_ipa_override', ...(mode === 'soft' ? ['soft-orthographic-clusters'] : []), ...(mode === 'super-soft' ? ['soft-orthographic-clusters', 'super-soft-approximate'] : [])].includes(token.segmentationStatus) ||
     (token.syllables || []).some(syllable => syllable.status !== 'analyzed')
   ).length;
-  status.className = unresolvedCount || mode === 'soft' || mode === 'super-soft' ? 'status notice' : 'status';
+  const rtgsOutput = renderRtgsTokens(tokens);
+  const rtgsUkrainianOutput = renderRtgsUkrainianTokens(tokens);
+  const rtgsUnresolved = rtgsOutput.includes('⟦RTGS НЕ ПЕРЕВІРЕНО:');
+  status.className = responseMode === 'romanization'
+    ? (thaiTokens.length === 0 || rtgsUnresolved ? 'status notice' : 'status')
+    : (unresolvedCount || mode === 'soft' || mode === 'super-soft' ? 'status notice' : 'status');
   status.textContent = thaiTokens.length === 0
     ? 'У введеному тексті не знайдено тайських слів.'
-    : unresolvedCount
-      ? mode === 'super-soft'
-        ? 'Це приблизне читання. Перевірте його перед використанням.'
-        : 'Не всі слова вдалося прочитати впевнено. Є місця, які варто перевірити.'
-      : mode === 'soft'
-        ? 'Для частини слів сервіс зробив припущення. Перевірте їх.'
-        : mode === 'super-soft'
+    : responseMode === 'romanization'
+      ? rtgsUnresolved
+        ? 'RTGS не має підтвердженого результату для всіх фрагментів; непідтримані частини позначено.'
+        : 'Готово. Нижче — романізація RTGS та її українське відтворення.'
+      : unresolvedCount
+        ? mode === 'super-soft'
           ? 'Це приблизне читання. Перевірте його перед використанням.'
-          : 'Готово. Нижче — три варіанти запису вимови. Це не переклад.';
+          : 'Не всі слова вдалося прочитати впевнено. Є місця, які варто перевірити.'
+        : mode === 'soft'
+          ? 'Для частини слів сервіс зробив припущення. Перевірте їх.'
+          : mode === 'super-soft'
+            ? 'Це приблизне читання. Перевірте його перед використанням.'
+            : 'Готово. Нижче — три варіанти запису вимови. Це не переклад.';
   const uaOutput = assembleOutput(analysisText, tokens, 'ua');
   const ipaOutput = assembleOutput(analysisText, tokens, 'ipa');
-  const rtgsOutput = renderRtgsTokens(tokens);
   const unresolved = (uaOutput.match(/⟦НЕВИЗНАЧЕНО:/g) || []).length;
   const notice = thaiTokens.length === 0
     ? '<p class="continuous-output-notice" role="note">Тайського тексту для фонетичного перетворення не знайдено; нетайські фрагменти збережено без інтерпретації.</p>'
@@ -276,15 +287,28 @@ function run() {
   const cleanupNotice = prepared.changed
     ? '<p class="continuous-output-notice" role="note">Перед читанням сервіс прибрав із тексту технічну розмітку посилань.</p>'
     : '';
-  out.innerHTML = '<h2 class="results-heading">Три варіанти запису</h2>' + cleanupNotice + notice +
-    continuousPanel('01 · Латинський запис', rtgsOutput,
-      'Довідковий запис латиницею. Він не показує тон і не передає всіх особливостей вимови.', 'rtgs-continuous') +
-    continuousPanel('02 · Детальний запис звуків', ipaOutput,
-      'Запис вимови спеціальними знаками. Він допомагає точніше побачити, як звучить слово.', 'ipa-continuous') +
-    continuousPanel('03 · Українськими літерами', uaOutput,
-      'Головний результат — приблизний запис тайської вимови українськими літерами. Це не переклад.', 'ua-continuous') +
-    '<details class="analysis-details"><summary>Показати подробиці про окремі частини</summary>' +
-    tokens.map(card).join('') + '</details>';
+  if (responseMode === 'romanization') {
+    const romanizationNotice = rtgsUnresolved
+      ? '<p class="continuous-output-notice" role="note">Частину написань RTGS-модуль не зміг підтвердити. Такі фрагменти залишено явними позначками, а не вгадано.</p>'
+      : '<p class="continuous-output-notice" role="note">RTGS не передає тон і не розрізняє короткість та довготу голосних. Український рядок нижче відтворює латинський запис RTGS, а не проходить через IPA.</p>';
+    out.innerHTML = '<h2 class="results-heading">Результат за романізацією RTGS</h2>' + cleanupNotice + romanizationNotice +
+      continuousPanel('01 · Романізація RTGS', rtgsOutput,
+        'Латинський запис за наявним RTGS-модулем. Це окрема система, не ISO 11940.', 'rtgs-continuous') +
+      continuousPanel('02 · Українськими літерами за RTGS', rtgsUkrainianOutput,
+        'Українська передача RTGS-складів і рим за окремою таблицею. kh/ph/th → кх/пх/тх; h → х. Це не IPA-фонетична адаптація.', 'ua-continuous') +
+      '<details class="analysis-details"><summary>Показати фонетичні подробиці та статуси аналізу</summary>' +
+      tokens.map(card).join('') + '</details>';
+  } else {
+    out.innerHTML = '<h2 class="results-heading">Три варіанти запису</h2>' + cleanupNotice + notice +
+      continuousPanel('01 · Латинський запис', rtgsOutput,
+        'Довідковий запис латиницею. Він не показує тон і не передає всіх особливостей вимови.', 'rtgs-continuous') +
+      continuousPanel('02 · Детальний запис звуків', ipaOutput,
+        'Запис вимови спеціальними знаками. Він допомагає точніше побачити, як звучить слово.', 'ipa-continuous') +
+      continuousPanel('03 · Українськими літерами', uaOutput,
+        'Головний результат — приблизний запис тайської вимови українськими літерами. Це не переклад.', 'ua-continuous') +
+      '<details class="analysis-details"><summary>Показати подробиці про окремі частини</summary>' +
+      tokens.map(card).join('') + '</details>';
+  }
   out.hidden = false;
   bindCopyButtons();
 }
@@ -306,6 +330,7 @@ document.getElementById('clear').addEventListener('click', () => {
 
 document.getElementById('analyze').addEventListener('click', run);
 modeInput?.addEventListener('change', updateModeHint);
+outputModeInput?.addEventListener('change', () => { if (input.value.trim()) run(); });
 updateModeHint();
 input.addEventListener('keydown', event => {
   if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
