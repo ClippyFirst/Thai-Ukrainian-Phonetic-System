@@ -76,9 +76,13 @@ def test_tone_and_provenance_survive_in_typed_phonetic_result():
     assert result.tone_category == "mid"
     assert result.vowel_length is not None
     assert result.provenance
-    assert result.broad_surface_ipa
+    # The pinned dictionary source attests segmental IPA and tone, not a
+    # separate surface-phonetic transcription; absence must remain explicit.
+    assert result.broad_surface_ipa is None
     assert result.segments
-    assert all(segment.surface_ipa for segment in result.segments)
+    assert all(segment.surface_ipa is None for segment in result.segments)
+    assert any("not independently adjudicated or acoustically verified gold" in item
+               for item in result.uncertainty)
     assert result.syllable_boundaries == (0, len(result.segments))
 
 
@@ -105,7 +109,10 @@ def test_common_external_thai_ipa_notation_is_normalized_before_adaptation():
         adapted = adapt_phonetic_result(replace(base, phonemic_ipa=ipa))
         assert adapted["status"] == "adapted", ipa
         assert adapted["output"] == expected, ipa
-        assert adapted["input_notes"], ipa
+        if ipa in {"tɕa", "tɕʰa"}:
+            assert adapted["input_notes"] == [], ipa  # already canonical segmental IPA
+        else:
+            assert adapted["input_notes"], ipa
     h_result = adapt_phonetic_result(replace(base, phonemic_ipa="haː"))
     assert h_result["output"] == "га"
     assert "glottal place and voicing" in h_result["neutralized_features"]
