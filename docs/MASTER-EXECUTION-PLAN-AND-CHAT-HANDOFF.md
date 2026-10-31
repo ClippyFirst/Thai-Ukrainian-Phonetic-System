@@ -1,3 +1,21 @@
+# Continuation checkpoint after PR #160 merge — 2026-10-31
+
+- **Repository:** `ClippyFirst/Thai-Ukrainian-Phonetic-System`; default branch `main`.
+- **Starting main:** `41b0991670381d801babd876880dc16b8ce9304c`.
+- **Current main:** `bdcce023be0a9565658be586c66e53d7d13d33b1` (PR #160 squash merge).
+- **PR #160:** [repository-specific agent workflow bridge](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/160), merged; branch `chore/agent-workflow-bridge-20261031`; added `AGENTS.md` with repository-specific workflow guidance referencing canonical upstream Superpowers, Matt Pocock and Ponytail skills. No third-party skill files were copied and no external agent/plugin installation is claimed.
+- **Exact-head CI:** [41189619820](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41189619820) — all three jobs passed.
+- **Post-merge main CI:** [41207672406](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41207672406) — all three jobs passed: `test`, `wheel-install-smoke`, `master-artifact`. Test job includes Ruff, Python tests, Node RTGS/IPA-UA/browser parity/UI tests, generation and drift checks, diagnostics, segmentation review packet checks and TUD research evaluation. Wheel installation outside checkout passed. Master artifact validated at 351,780 rows / 41 vowel-rime records.
+- **PR inventory:** no open PRs after #160. Latest merged PRs #153–#160 are on main.
+- **Branch inventory:** 173 refs (100 + 73). Preserve historical branches until commit-level provenance review and an owner-approved retention/archive policy exist; no destructive pruning performed.
+- **Repository configuration:** main branch protection is disabled (`protected=false`). Not changed because repository settings are outside this run's authorized scope. Owner acceptance: enable required CI checks/ruleset and decide review requirements.
+- **Local execution:** still unavailable because the container cannot resolve `github.com`; no local test result is claimed. GitHub Actions is the verification source.
+- **Internal engineering:** automated CI, package build/install, artifact generation/drift, parity and diagnostics are verified at current main. Administrative owner decisions remain branch protection and historical branch retention.
+- **External evidence gates (not internal technical debt):** independent Thai phonology/segmentation/IPA adjudication; independent Ukrainian-native target-form adjudication; manual browser/device and WCAG 2.2 AA review. Issue #114 remains the canonical tracker. Source-annotated data, source-attested dictionary IPA and automated UI checks are not substitutes for human validation.
+- **Readiness:** engineering-verified research prototype; not release-ready for general linguistic-accuracy claims.
+
+---
+
 # Continuation checkpoint at PR #158 merge — 2026-10-31
 
 - **Repository:** `ClippyFirst/Thai-Ukrainian-Phonetic-System`; default branch `main`.
