@@ -1,3 +1,23 @@
+## 2026-10-31 — PR #164 RTGS-based Ukrainian output mode and full method matrices
+
+| Task / acceptance criterion | State | Evidence / next acceptance |
+|---|---|---|
+| Separate user-selectable phonetic and romanization-based output modes | DONE_VERIFIED | PR [#164](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/164), merged as `01631b98173b2e54695bdf757a538735fca8fdff`. UI selector keeps IPA-first phonetic output separate from RTGS-first practical rendering. |
+| RTGS Ukrainian renderer is independent of IPA adapter | DONE_VERIFIED | `web/src/rtgs-ukrainian.js` consumes the RTGS token sequence and does not call the IPA adapter; tests assert module and UI boundaries. |
+| Preserve unsupported spans and non-Thai text | DONE_VERIFIED | Unsupported RTGS tokens remain explicit unresolved markers; punctuation, digits, whitespace and non-Thai text are preserved by the token renderer; regression tests cover these contracts. |
+| Full phonetic and RTGS correspondence matrices | DONE_VERIFIED — inventory coverage | `docs/ukrainian-correspondence-matrices.md`: 44 Thai consonant graphemes with onset/coda inventories and 41 registered rime records in each method matrix; RTGS digraph/rime mappings and comparison examples included. Automated tests compare matrix inventories against source registries. |
+| Preserve RTGS rime `iao` without component loss | DONE_VERIFIED | Regression expects `iao → іау`; matrix and adapter use the same output. |
+| Exact PR-head CI | DONE_VERIFIED | Runs [41234077035](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41234077035) and [41234072432](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41234072432) succeeded. |
+| Exact PR-head Web static validation | DONE_VERIFIED | Run [41234077207](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41234077207) succeeded. |
+| Post-merge main CI and Pages publication | TODO at this checkpoint | Record exact main CI (test, wheel-install-smoke, master-artifact) and Pages build/deploy/published-content results after they complete; do not infer from PR-head runs. |
+| Independent Thai phonology, segmentation and IPA adjudication | BLOCKED / evidence-limited | Requires independent Thai expert review and adjudicated reference records; issue #114. |
+| Independent Ukrainian-native target-form adjudication | BLOCKED / evidence-limited | Requires Ukrainian-native review with recorded decisions and rationale; issue #114. |
+| Manual browser/device and WCAG 2.2 AA review | BLOCKED | Requires real browser/device testing and accessibility review; automated static validation is not a substitute. |
+
+- The RTGS route is a separately labelled romanization-based practical rendering, not IPA transcription and not ISO 11940 orthographic transliteration.
+- RTGS does not preserve tone and all vowel-length distinctions. Matrix completeness is an inventory/programming fact, not independent proof of linguistic correctness or an official Ukrainian standard.
+- `AGENTS.md` was reconciled to permit the explicitly requested RTGS mode while preserving typed IPA as the mandatory boundary for phonetic output.
+
 ## 2026-10-31 — PR #162 typed-IPA boundary and complete test discovery
 
 | Task | State | Evidence / next acceptance |
