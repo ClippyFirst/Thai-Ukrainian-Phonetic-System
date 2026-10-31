@@ -9,6 +9,7 @@
 | Preserve RTGS rime `iao` without component loss | DONE_VERIFIED | Regression expects `iao → іау`; matrix and adapter use the same output. |
 | Exact PR-head CI | DONE_VERIFIED | Runs [41234077035](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41234077035) and [41234072432](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41234072432) succeeded. |
 | Exact PR-head Web static validation | DONE_VERIFIED | Run [41234077207](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41234077207) succeeded. |
+| RTGS integration research contract and historical PR status | DONE_VERIFIED | `docs/research/thai-romanization-integration.md` now distinguishes the optional RTGS → Ukrainian practical-rendering route from the mandatory IPA-first phonetic route; stale PR #111/#112 open-state claims were reconciled against GitHub. |
 | Post-merge main CI and Pages publication | TODO at this checkpoint | Record exact main CI (test, wheel-install-smoke, master-artifact) and Pages build/deploy/published-content results after they complete; do not infer from PR-head runs. |
 | Independent Thai phonology, segmentation and IPA adjudication | BLOCKED / evidence-limited | Requires independent Thai expert review and adjudicated reference records; issue #114. |
 | Independent Ukrainian-native target-form adjudication | BLOCKED / evidence-limited | Requires Ukrainian-native review with recorded decisions and rationale; issue #114. |
