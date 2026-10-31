@@ -143,10 +143,10 @@
     "latest_web_static_verified_code_run": 40286893366,
     "latest_verified_commit_note": "PR #162 code checkpoint 1b1480c5a79b6dd38dc8b916d52ad599e38a9748 passed exact-head CI 41229053598, post-merge main CI 41229435682 and Pages verification 41229435706. 251 Python tests and 1164 subtests passed. External expert linguistic and manual accessibility evidence remains outstanding.",
     "latest_verified_code_commit_note": "Latest runtime implementation checkpoint 1b1480c5a79b6dd38dc8b916d52ad599e38a9748 routes secondary candidates through supported typed IPA and preserves original orthographic role across lexical rewrites. Post-merge CI 41229435682 passed all three jobs; Pages verification 41229435706 passed. No expert-gold or general linguistic-accuracy claim is made.",
-    "latest_fully_successful_documentation_commit": "d27e8ec2d7f233d62c1bb849566e4756ebeceffe",
-    "latest_fully_successful_documentation_ci_run": 41239400828,
+    "latest_fully_successful_documentation_commit": "8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8",
+    "latest_fully_successful_documentation_ci_run": 41240699017,
     "latest_fully_successful_documentation_web_validation_run": 41239420395,
-    "latest_documentation_head_ci_run": 41229435682,
+    "latest_documentation_head_ci_run": 41240389404,
     "latest_documentation_head_web_validation_run": 41229435706,
     "latest_implementation_ci_run": 41229435682,
     "latest_implementation_web_validation_run": 41229435706,
@@ -263,7 +263,7 @@
       "status": "PARTIAL",
       "reason": "No owner-approved archive/delete policy; historical refs preserved."
     },
-    "latest_checkpoint_note": "PRs #165, #166 and #167 merged. Exact-head CI/static checks and post-merge main CI/static/Pages checks passed. Current main 72a77cb42ad05c33274d70c4dcd9f20e07432b64: 251 pytest tests, 1164 subtests, Ruff, 29 parity fixtures, drift checks, wheel smoke, 351780-row/41-rime artifact. External linguistic and manual accessibility gates remain open.",
+    "latest_checkpoint_note": "PR #168 audit closeout merged as 8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8. Exact-head CI 41240389404 and post-merge main CI 41240699017 passed; 251 pytest tests, 1164 subtests, Ruff, 29 parity fixtures, generated-data drift, wheel-install smoke and 351780-row/41-rime artifact verification passed. Independent Thai/UA adjudication and manual accessibility gates remain open.",
     "python_subtests": 1164
   },
   "challenge_runtime": {
@@ -283,13 +283,15 @@
   },
   "latest_documentation_checkpoint": {
     "branch": "docs/closeout-rtgs-ci-and-audit-20261031",
-    "status": "IN_PROGRESS",
+    "status": "MERGED",
     "base_commit": "72a77cb42ad05c33274d70c4dcd9f20e07432b64",
-    "scope": [
-      "post-merge PR #165–#167 verification closeout",
-      "refresh canonical handoff and validation matrix",
-      "refresh final audit markdown and machine-readable latest checkpoint"
-    ]
+    "head_commit": "721752d16783d70739c55864af0ccd128c1f6e49",
+    "pull_request": 168,
+    "merge_commit": "8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8",
+    "exact_head_ci_run": 41240389404,
+    "exact_head_ci_status": "SUCCESS",
+    "post_merge_main_ci_run": 41240699017,
+    "post_merge_main_ci_status": "SUCCESS"
   },
   "text_only_checkpoint": {
     "branch": "research/thai-segmentation-gold-parity-verified-20261025",
@@ -337,7 +339,7 @@
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
   "latest_code_checkpoint": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
   "readiness": "engineering-verified research prototype; not release-ready for independent Thai segmentation, IPA or Ukrainian target accuracy",
-  "latest_verified_repository_head": "72a77cb42ad05c33274d70c4dcd9f20e07432b64",
+  "latest_verified_repository_head": "8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8",
   "task_ledger": [
     {
       "id": "SEG-TRAIN-001",
@@ -1959,7 +1961,11 @@
     "post_merge_web_static_status": "SUCCESS",
     "post_merge_pages": 41239420395,
     "post_merge_pages_status": "SUCCESS — build and deploy passed.",
-    "post_merge_web_static_pr166": 41239420400
+    "post_merge_web_static_pr166": 41239420400,
+    "documentation_closeout_pr": 168,
+    "documentation_closeout_merge_commit": "8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8",
+    "documentation_closeout_exact_ci": "SUCCESS — run 41240389404",
+    "documentation_closeout_post_merge_ci": "SUCCESS — run 41240699017"
   },
   "latest_checkpoint": {
     "date": "2026-10-31",
@@ -2008,7 +2014,10 @@
     "external_validation": "Independent Thai segmentation/phonology/IPA adjudication, Ukrainian-native target-form adjudication, and manual browser/device/WCAG 2.2 AA review remain blocked by external reviewer/evidence dependencies; issue #114.",
     "local_execution": "BLOCKED — container DNS cannot resolve github.com; GitHub Actions is the verification source.",
     "readiness": "engineering-verified research prototype; not release-ready for general linguistic-accuracy claims",
-    "documentation_closeout_pr": 168
+    "documentation_closeout_pr": 168,
+    "documentation_closeout_merge_commit": "8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8",
+    "documentation_closeout_exact_ci_run": 41240389404,
+    "documentation_closeout_post_merge_ci_run": 41240699017
   },
   "rtgs_ukrainian_output_mode_2026_10_31": {
     "status": "DONE_VERIFIED_FOR_IMPLEMENTATION_AND_AUTOMATED_TESTS",
@@ -2054,8 +2063,8 @@
       167
     ]
   },
-  "latest_full_repository_head": "72a77cb42ad05c33274d70c4dcd9f20e07432b64",
-  "latest_full_repository_head_ci_run": 41239440616,
+  "latest_full_repository_head": "8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8",
+  "latest_full_repository_head_ci_run": 41240699017,
   "latest_full_repository_head_web_validation_run": 41239440643,
   "latest_web_static_verified_code_commit": "72a77cb42ad05c33274d70c4dcd9f20e07432b64",
   "latest_web_static_verified_code_run": 41239440643
