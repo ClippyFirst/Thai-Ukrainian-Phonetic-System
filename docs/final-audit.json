@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PRs #165–#168 are merged. PR #169 is open with exact-head CI 41242513053 SUCCESS on a331131567f6e17f9dd5fe96c8624620f093880c (test, wheel-install-smoke, master-artifact). CCOST dataset/article provenance and repository metadata/tests are verified. CCOST manual/annotation-protocol review, independent Thai/UA adjudication and manual accessibility review remain outstanding; engineering-verified research prototype, not release-ready for linguistic-accuracy claims.",
+  "status": "PRs #165–#168 are merged. PR #169 current head 7bfee951af0f6fd402f6a2a985e2f34473aba2f6 has exact-head CI 41243581916 queued; preceding code/data/test head a331131567f6e17f9dd5fe96c8624620f093880c passed all three jobs in 41242513053. PR #170 test-only cleanup head 1cdc3d7971498ce3312ff9a79b23ee84b8d917aa has CI 41243709726 and Web Static 41243709639 queued. CCOST manual review, independent Thai/UA adjudication and manual accessibility review remain outstanding; engineering-verified research prototype, not release-ready for linguistic-accuracy claims.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -2100,10 +2100,13 @@
       "master_artifact": "success"
     },
     "manual_review_status": "BLOCKED — CCOST_manual.pdf is listed separately on Zenodo but download was throttled/failed in this session; no manual contents are claimed as inspected.",
-    "publication_readiness": "research prototype; no independent Thai/UA gold or manual accessibility audit"
+    "publication_readiness": "research prototype; no independent Thai/UA gold or manual accessibility audit",
+    "latest_pr_head": "7bfee951af0f6fd402f6a2a985e2f34473aba2f6",
+    "latest_pr_head_ci_run": 41243581916,
+    "latest_pr_head_ci_status": "QUEUED — audit/handoff-only follow-up after code/data/test head a331131567f6e17f9dd5fe96c8624620f093880c passed all three jobs in 41242513053."
   },
   "current_branch_inventory": {
-    "branch_refs": 183,
+    "branch_refs": 184,
     "prefix_counts": {
       "docs": 57,
       "feat": 27,
@@ -2111,7 +2114,7 @@
       "research": 25,
       "audit": 8,
       "ux": 7,
-      "chore": 7,
+      "chore": 8,
       "unprefixed": 7,
       "test": 5,
       "ci": 2,
@@ -2126,5 +2129,24 @@
     },
     "as_of": "2026-10-31",
     "deletions": 0
-  }
+  },
+  "open_prs_current": [
+    {
+      "number": 169,
+      "head": "7bfee951af0f6fd402f6a2a985e2f34473aba2f6",
+      "status": "OPEN",
+      "exact_head_ci_run": 41243581916,
+      "ci_status": "QUEUED",
+      "scope": "CCOST source provenance and canonical audit closeout"
+    },
+    {
+      "number": 170,
+      "head": "1cdc3d7971498ce3312ff9a79b23ee84b8d917aa",
+      "status": "OPEN",
+      "exact_head_ci_run": 41243709726,
+      "web_static_run": 41243709639,
+      "ci_status": "QUEUED",
+      "scope": "remove two duplicate UI contract assertions"
+    }
+  ]
 }
