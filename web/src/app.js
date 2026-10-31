@@ -251,6 +251,8 @@ function run() {
     !['lexicon', 'lexical_ipa_override', ...(mode === 'soft' ? ['soft-orthographic-clusters'] : []), ...(mode === 'super-soft' ? ['soft-orthographic-clusters', 'super-soft-approximate'] : [])].includes(token.segmentationStatus) ||
     (token.syllables || []).some(syllable => syllable.status !== 'analyzed')
   ).length;
+  const rtgsOutput = renderRtgsTokens(tokens);
+  const rtgsUkrainianOutput = renderRtgsUkrainianTokens(tokens);
   const rtgsUnresolved = rtgsOutput.includes('⟦RTGS НЕ ПЕРЕВІРЕНО:');
   status.className = responseMode === 'romanization'
     ? (thaiTokens.length === 0 || rtgsUnresolved ? 'status notice' : 'status')
@@ -272,8 +274,6 @@ function run() {
             : 'Готово. Нижче — три варіанти запису вимови. Це не переклад.';
   const uaOutput = assembleOutput(analysisText, tokens, 'ua');
   const ipaOutput = assembleOutput(analysisText, tokens, 'ipa');
-  const rtgsOutput = renderRtgsTokens(tokens);
-  const rtgsUkrainianOutput = renderRtgsUkrainianTokens(tokens);
   const unresolved = (uaOutput.match(/⟦НЕВИЗНАЧЕНО:/g) || []).length;
   const notice = thaiTokens.length === 0
     ? '<p class="continuous-output-notice" role="note">Тайського тексту для фонетичного перетворення не знайдено; нетайські фрагменти збережено без інтерпретації.</p>'
