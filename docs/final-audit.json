@@ -406,9 +406,9 @@
     {
       "id": "BRANCH-HYGIENE-001",
       "status": "PARTIAL",
-      "implementation": "Inventoried 169 branch refs (docs 49, feat 26, fix 26, research 24, audit 8, ux 7, unprefixed 7, chore 5, test 4, ci 2, copy 2, design 2, perf 2, and one each polish/finalize/site/ui/web). Reconciled PRs #68/#71/#111 and #153–#155; no implementation PR remains open after closeout.",
-      "blocker": "Historical refs may contain unique work; no owner-approved archive/delete policy exists, and the connected GitHub tool set exposes no branch-deletion action. Four temporary work branches from this continuation remain.",
-      "acceptance": "Review unique commits and obtain explicit owner-approved retention policy before archiving/deleting any historical branch; then re-inventory and verify no unmerged unique work is lost."
+      "implementation": "Inventoried 181 branch refs: docs 56, feat 27, fix 27, research 24, audit 8, ux 7, chore 7, unprefixed 7, test 5, ci 2, copy 2, design 2, perf 2, and one each finalize/polish/site/ui/web. No historical branch was deleted.",
+      "blocker": "Historical refs may contain unique work; no owner-approved archive/delete policy exists, and the connected GitHub tool set exposes no branch-deletion action.",
+      "acceptance": "Review unique commits and obtain an explicit owner-approved retention policy before archiving/deleting any historical branch; then re-inventory and verify no unmerged unique work is lost."
     },
     {
       "id": "LOCAL-CLONE-001",
@@ -1947,7 +1947,7 @@
     "post_merge_main_ci_status": "SUCCESS — test, wheel-install-smoke and master-artifact passed; 251 pytest tests, 1164 subtests; 351780 rows / 41 vowel-rime records.",
     "open_prs": 0,
     "open_blocker_issue": 114,
-    "branch_refs": 180,
+    "branch_refs": 181,
     "readiness": "engineering-verified research prototype; not release-ready for independent Thai segmentation, IPA or Ukrainian target accuracy",
     "pr_158_merge": "0f155dc36a0046d3ed02457a9459a1fa6d755b75",
     "pr_158_exact_ci": 41187802957,
@@ -2003,11 +2003,12 @@
       "sha256": "74f40079c2bae8a4f875fa8e2c860ac8a202bbb1bd8e4ae72d834f48d93adc09",
       "status": "PASS"
     },
-    "branch_refs": 180,
+    "branch_refs": 181,
     "open_pull_requests": [],
     "external_validation": "Independent Thai segmentation/phonology/IPA adjudication, Ukrainian-native target-form adjudication, and manual browser/device/WCAG 2.2 AA review remain blocked by external reviewer/evidence dependencies; issue #114.",
     "local_execution": "BLOCKED — container DNS cannot resolve github.com; GitHub Actions is the verification source.",
-    "readiness": "engineering-verified research prototype; not release-ready for general linguistic-accuracy claims"
+    "readiness": "engineering-verified research prototype; not release-ready for general linguistic-accuracy claims",
+    "documentation_closeout_pr": 168
   },
   "rtgs_ukrainian_output_mode_2026_10_31": {
     "status": "DONE_VERIFIED_FOR_IMPLEMENTATION_AND_AUTOMATED_TESTS",
