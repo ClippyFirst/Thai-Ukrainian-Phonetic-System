@@ -1,3 +1,14 @@
+## External benchmark research refresh — 2026-11-01
+
+| Task / acceptance criterion | State | Evidence / next acceptance |
+|---|---|---|
+| Screen external Thai G2P/IPA benchmark | DONE_VERIFIED — research screening | Added Thai G2P v4 to `data/corpus_sources.csv` and `docs/g2p-benchmark.md`. Dataset card declares CC0-1.0 and reports 8,076 test rows, but source lineage includes Thai W2P and Wiktionary; use only as a source-attested comparator after runtime lexical-overlap audit, not independent gold. |
+| Screen external Thai segmentation corpora | DONE_VERIFIED — research screening | BEST-2010 official TEST_100K and LST20 identified. BEST license/access must be verified before acquisition; LST20 terms prohibit redistribution/modification absent permission and require separate commercial arrangements. No corpus copied. |
+| Separate ASR resources from phonetic gold | DONE_VERIFIED — scope clarification | FLEURS and Common Voice Thai are speech/ASR resources, not phone-level IPA or Ukrainian-target gold. CCOST remains the closest phone/toneme candidate but is blocked on manual review. |
+| Execute new accuracy benchmark | BLOCKED / evidence-limited | No new score calculated; requires source-overlap filtering, legal/access review, and independently adjudicated Thai IPA plus Ukrainian target labels. |
+
+---
+
 ## 2026-10-31 — exact-head verification refresh (PRs #169–#170)
 
 | Task / acceptance criterion | State | Evidence / next acceptance |
