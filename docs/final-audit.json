@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Main is c4216d69982ec2564b5ed615b06d088d18143b4f. PRs #153–#156 are merged; latest post-merge main CI 41144968470 passed all three jobs. HTTP Content-Length validation and master-artifact single-generation/download validation are verified. Engineering-verified research prototype; not release-ready for independent Thai segmentation, IPA or Ukrainian target-accuracy claims.",
+  "status": "Main is 2bba0fc43ebba08e82555a554c2e97e5d952e22f. PRs #153–#157 are merged; latest post-merge main CI 41184009121 passed all jobs. Documentation-only PR #158 is open; its exact-head CI is pending. HTTP Content-Length validation, master-artifact single-generation/download validation, and canonical audit/handoff refresh are verified. Engineering-verified research prototype; not release-ready for independent Thai segmentation, IPA or Ukrainian target-accuracy claims.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -1897,16 +1897,22 @@
     "result": "DONE_VERIFIED — all three exact PR-head jobs and all three post-merge main jobs passed; master artifact is transferred and independently validated without a second generation."
   },
   "latest_canonical_status_refresh_2026_10_31": {
-    "main_sha": "c4216d69982ec2564b5ed615b06d088d18143b4f",
+    "main_sha": "2bba0fc43ebba08e82555a554c2e97e5d952e22f",
     "pr_153_merge": "8a539193798e55c3010e3a6a72a0e2578ea413c9",
     "pr_154_merge": "0f7c41a753efa7abb88ea279ddc6a22ccdf11c6d",
     "pr_155_merge": "3325e98b98bde6926f36c74ad76dc94fe35480b0",
     "pr_156_merge": "c4216d69982ec2564b5ed615b06d088d18143b4f",
-    "pr_156_exact_ci": 41144610012,
-    "post_merge_main_ci": 41144968470,
-    "open_prs": 0,
+    "pr_157_merge": "2bba0fc43ebba08e82555a554c2e97e5d952e22f",
+    "pr_157_exact_ci": 41183616913,
+    "post_merge_main_ci": 41184009121,
+    "post_merge_main_ci_status": "SUCCESS — all jobs passed, including tests, generators, diagnostics, drift checks and master-artifact validation.",
+    "open_prs": 1,
     "open_blocker_issue": 114,
-    "branch_refs": 169,
-    "readiness": "engineering-verified research prototype; not release-ready for independent Thai segmentation, IPA or Ukrainian target accuracy"
+    "branch_refs": 171,
+    "readiness": "engineering-verified research prototype; not release-ready for independent Thai segmentation, IPA or Ukrainian target accuracy",
+    "open_pr_158": {
+      "title": "docs: record PR #157 post-merge verification",
+      "exact_ci_status": "PENDING for current PR head"
+    }
   }
 }
