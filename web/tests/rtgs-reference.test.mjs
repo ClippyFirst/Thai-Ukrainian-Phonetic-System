@@ -36,9 +36,10 @@ assert.equal(renderRtgsTokens([{ kind: "thai", input: "ทราย" }]), "⟦RT
 // RTGS roman letters are mapped as a separate orthographic method, not via IPA.
 for (const [input, expected] of [
   ["phrik", "пхрік"], ["khrai", "кхрай"], ["th", "тх"], ["ch", "ч"],
-  ["ngao", "нгао"], ["sawatdi", "саватді"], ["mai", "май"],
-  ["ai", "ай"], ["ueai", "уеай"], ["uai", "уай"], ["oei", "оей"],
-  ["aeo", "аео"], ["iao", "іао"], ["yukhren", "йукхрен"],
+  ["ngao", "нгау"], ["sawatdi", "саватді"], ["mai", "май"],
+  ["ai", "ай"], ["ueai", "иай"], ["uai", "уай"], ["oei", "ей"],
+  ["aeo", "еу"], ["iao", "іо"], ["ue", "и"], ["ae", "е"], ["oe", "е"],
+  ["io", "іу"], ["eo", "еу"], ["ao", "ау"], ["yukhren", "юкхрен"],
   ["phatthana", "пхаттхана"], ["sip-hok", "сіп-хок"]
 ]) {
   assert.equal(adaptRtgsToUkrainian(input).status, "adapted", input);
