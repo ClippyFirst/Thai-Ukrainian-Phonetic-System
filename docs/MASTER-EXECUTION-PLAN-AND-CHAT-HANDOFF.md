@@ -1,15 +1,16 @@
-# Current continuation checkpoint — 2026-10-31
+# Continuation checkpoint at PR #158 merge — 2026-10-31
 
 - **Repository:** `ClippyFirst/Thai-Ukrainian-Phonetic-System`; default branch `main`.
-- **Current main:** `2bba0fc43ebba08e82555a554c2e97e5d952e22f`.
-- **PRs merged in the latest maintenance run:** #153 HTTP Content-Length validation, #154 post-merge documentation closeout, #155 master-artifact CI reuse, #156 audit/handoff reconciliation, #157 canonical status refresh.
-- **Open pull requests:** [#158](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/158), documentation-only post-merge CI closeout; exact-head CI pending. Open issue #114 remains the canonical tracker for independent Thai phonology/segmentation/Ukrainian target adjudication and manual browser/accessibility review.
-- **Latest verification:** PR #157 exact-head CI [41183616913](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41183616913) passed all three jobs; post-merge main CI [41184009121](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41184009121) completed successfully with all jobs green, including Python/Node tests, generators, diagnostics, generated-artifact drift checks and master-artifact validation. Latest Pages build/deploy/live-content verification remains [41142211675](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41142211675), because PRs #153–#157 changed no web runtime source.
+- **Main at this checkpoint:** `0f155dc36a0046d3ed02457a9459a1fa6d755b75`.
+- **PRs merged in the latest maintenance run:** #153 HTTP Content-Length validation, #154 post-merge documentation closeout, #155 master-artifact CI reuse, #156 audit/handoff reconciliation, #157 canonical status refresh, #158 post-merge CI closeout.
+- **Open pull requests:** none at this checkpoint. Open issue #114 remains the canonical tracker for independent Thai phonology/segmentation/Ukrainian target adjudication and manual browser/accessibility review.
+- **Latest verification:** PR #158 exact-head CI [41187802957](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41187802957) passed all three jobs; post-merge main CI [41188107607](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41188107607) passed all three jobs, including Python/Node tests, generators, diagnostics, drift checks, wheel-install smoke and master-artifact validation.
+- **Published-site verification:** [41142211675](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41142211675) remains the latest Pages build/deploy/live-content verification; PRs #153–#158 changed no web runtime source.
 - **Preserved architecture:** Thai orthography → structural analysis → Thai phonology → typed IPA → Ukrainian adaptation → practical Ukrainian orthography. RTGS remains a parallel lossy reference, not an input to Ukrainian adaptation.
 - **Engineering completed:** strict HTTP Content-Length validation; generic/redacted API 500 behavior; single-generation master artifact with independent download/hash/row-count validation; package/wheel smoke; Ruff gate; Python/browser parity and existing UI-contract checks.
 - **Remaining blockers:** independent Thai expert-adjudicated segmentation/IPA (and authorized acoustic evidence for acoustic claims); independent Ukrainian-native target-form adjudication; manual browser/device and WCAG 2.2 AA review; local checkout unavailable because container DNS cannot resolve github.com.
 - **Research-only:** TUD unigram-Viterbi segmenter and Wisesight comparison remain diagnostic; source-annotated rows are not expert gold. No production-default promotion without human error review, predeclared thresholds and independent licensed-domain evaluation.
-- **Branch hygiene:** 171 refs observed (100 + 71 across two API pages). Preserve historical branches until a commit-level review and owner-approved archive/delete policy exist. No destructive branch operation is authorized or exposed by the current connector.
+- **Branch hygiene:** 171 refs observed at this checkpoint (100 + 71 across two API pages). Preserve historical branches until a commit-level review and owner-approved archive/delete policy exist. No destructive branch operation is authorized or exposed by the current connector.
 - **Readiness:** engineering-verified research prototype, not release-ready for linguistic-accuracy claims. Do not infer accuracy from parity or CI.
 ---
 
