@@ -7,8 +7,9 @@
 | Preserve corpus licensing and non-redistribution | DONE_VERIFIED | Dataset remains external; no WAV/TextGrid files were copied. The registry retains CC BY-NC-SA 4.0 non-commercial/share-alike terms. |
 
 - **Base main:** `8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8` (PR #168 closeout merged).
-- **PR:** [#169](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/169), documentation/audit closeout extended with CCOST evidence provenance; exact-head CI [41242513053](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41242513053) passed all three jobs on `a331131567f6e17f9dd5fe96c8624620f093880c`.
-- **Branch inventory:** 183 refs (research 25); the temporary research branch remains preserved, not deleted.
+- **PR:** [#169](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/169), documentation/audit closeout extended with CCOST evidence provenance; code/data/test changes passed all three jobs on prior head `a331131567f6e17f9dd5fe96c8624620f093880c` in run [41242513053](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41242513053). The current documentation head `7bfee951af0f6fd402f6a2a985e2f34473aba2f6` has exact-head CI [41243581916](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41243581916) queued; do not claim current-head verification until it completes.
+- **Branch inventory:** 184 refs (research 25, chore 8); the temporary research branch remains preserved, not deleted.
+- **PR #170:** separate test-only cleanup removes two immediately repeated assertions in `web/tests/ui-contract.test.mjs`; exact-head CI and Web Static are queued. No runtime behavior changes.
 - **Readiness:** engineering-verified research prototype; independent Thai/UA adjudication, CCOST manual/annotation protocol review, and manual accessibility review remain external blockers.
 
 ---
