@@ -64,7 +64,7 @@ assert.match(status.textContent, /Готово\. Нижче — три варі�
 const outputMode = element("output-mode");
 outputMode.value = "romanization";
 input.value = "พริก";
-analyze.click();
+outputMode.listeners.change?.();
 assert.match(output.innerHTML, /Результат за романізацією RTGS/);
 assert.match(output.innerHTML, /01 · Романізація RTGS/);
 assert.match(output.innerHTML, /02 · Українськими літерами за RTGS/);
