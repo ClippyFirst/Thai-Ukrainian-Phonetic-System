@@ -1912,8 +1912,8 @@
     "readiness": "engineering-verified research prototype; not release-ready for independent Thai segmentation, IPA or Ukrainian target accuracy",
     "open_pr_158": {
       "title": "docs: record PR #157 post-merge verification",
-      "head_sha": "3f8297028f3c2bbe1c29178422928d5d9f9d9e92",
-      "exact_ci_run": 41187526941,
+      "head_sha": "6dd918a78a0ecab1eae377a4f8b9ba3e7826477c",
+      "exact_ci_run": 41187647051,
       "exact_ci_status": "IN_PROGRESS at checkpoint"
     }
   }
