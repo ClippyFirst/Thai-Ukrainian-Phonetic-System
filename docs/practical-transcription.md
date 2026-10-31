@@ -46,7 +46,7 @@ A practical string must never hide an unresolved analysis.
 
 The practical system inherits the repository's positional consonant model.
 
-Thai consonants are mapped according to their phonological value and syllable role, not according to their graphic identity alone. In the current project convention, an apostrophe after an aspirated onset marks aspiration explicitly (for example, /kʰ/ → к\u0027); this is a transparent project-specific notation, not a claim about standard Ukrainian orthography.
+Thai consonants are mapped according to their phonological value and syllable role, not according to their graphic identity alone. In the current project convention, an apostrophe after an aspirated onset marks aspiration explicitly (for example, /kʰ/ → к'); this is a transparent project-specific notation, not a claim about standard Ukrainian orthography.
 
 | Thai phonological value | Ukrainian practical output | Principle |
 |---|---|---|
@@ -61,7 +61,7 @@ Thai consonants are mapped according to their phonological value and syllable ro
 | /n/ | н | direct target |
 | /m/ | м | direct target |
 | /p/ | п | unaspirated stop |
-| /pʰ/ | п\u0027 | project-specific apostrophe marker preserves aspiration |
+| /pʰ/ | п' | project-specific apostrophe marker preserves aspiration |
 | /b/ | б | direct target |
 | /f/ | ф | direct target |
 | /j/ | й | consonantal/glide realization |
@@ -242,9 +242,9 @@ These examples illustrate the architecture rather than claiming corpus-wide vali
 | Thai | Structural interpretation | Practical Ukrainian |
 |---|---|---|
 | กา | /kaː/ | ка |
-| ขา | /kʰaː/ | к\u0027а |
-| คอ | /kʰɔː/ | к\u0027о |
-| พอ | /pʰɔː/ | п\u0027о |
+| ขา | /kʰaː/ | к'а |
+| คอ | /kʰɔː/ | к'о |
+| พอ | /pʰɔː/ | п'о |
 | งอ | /ŋɔː/ | нго* |
 | ไก่ | onset + /aj/ + tone | кай* |
 | ไกล | true onset cluster /kl/ + /aj/ | клай* |
