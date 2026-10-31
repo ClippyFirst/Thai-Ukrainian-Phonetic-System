@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PRs #165–#168 are merged; current main is 8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8. PR #169 is open with successful prior-head CI and an additional CCOST provenance reconciliation; its updated exact-head CI is pending. Independent Thai/UA adjudication and manual accessibility review remain outstanding; engineering-verified research prototype, not release-ready for linguistic-accuracy claims.",
+  "status": "PRs #165–#168 are merged. PR #169 is open with exact-head CI 41242513053 SUCCESS on a331131567f6e17f9dd5fe96c8624620f093880c (test, wheel-install-smoke, master-artifact). CCOST dataset/article provenance and repository metadata/tests are verified. CCOST manual/annotation-protocol review, independent Thai/UA adjudication and manual accessibility review remain outstanding; engineering-verified research prototype, not release-ready for linguistic-accuracy claims.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -2069,7 +2069,7 @@
   "latest_web_static_verified_code_commit": "72a77cb42ad05c33274d70c4dcd9f20e07432b64",
   "latest_web_static_verified_code_run": 41239440643,
   "ccost_source_reconciliation_2026_10_31": {
-    "status": "PARTIAL — implementation on PR branch; updated exact-head CI pending",
+    "status": "DONE_VERIFIED — source records, provenance boundary, registry, protocol and regression tests passed exact-head CI run 41242513053 on a331131567f6e17f9dd5fe96c8624620f093880c. Separate external BLOCKED item: CCOST_manual.pdf could not be downloaded in this session; inspect before selecting rows.",
     "pr": 169,
     "branch": "docs/mark-pr168-closeout-verified-20261031",
     "base_main": "8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8",
@@ -2091,7 +2091,16 @@
     ],
     "corpus_assets_redistributed": false,
     "previous_pr_head_ci_run": 41241246352,
-    "previous_pr_head_ci_scope": "Passed on the prior PR #169 head before this source reconciliation; not evidence for the updated head."
+    "previous_pr_head_ci_scope": "Passed on the prior PR #169 head before this source reconciliation; not evidence for the updated head.",
+    "exact_head_ci_run": 41242513053,
+    "exact_head_sha": "a331131567f6e17f9dd5fe96c8624620f093880c",
+    "exact_head_jobs": {
+      "test": "success",
+      "wheel_install_smoke": "success",
+      "master_artifact": "success"
+    },
+    "manual_review_status": "BLOCKED — CCOST_manual.pdf is listed separately on Zenodo but download was throttled/failed in this session; no manual contents are claimed as inspected.",
+    "publication_readiness": "research prototype; no independent Thai/UA gold or manual accessibility audit"
   },
   "current_branch_inventory": {
     "branch_refs": 183,
