@@ -1979,12 +1979,7 @@
     "followup_prs": {
       "165": {
         "branch": "docs/reconcile-rtgs-mode-and-postmerge-20261031",
-        "head": "7985140975e0519ccb072736fc66b0bdbd20a283",
-        "status": "OPEN_MERGEABLE",
-        "ci_runs": [
-          41236138799,
-          41236136935
-        ],
+        "status": "OPEN_MERGEABLE_CI_PENDING",
         "scope": "AGENTS.md and canonical handoff/audit/validation/research-doc reconciliation"
       },
       "166": {
