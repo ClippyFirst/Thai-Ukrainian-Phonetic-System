@@ -1,3 +1,17 @@
+## Exact-head verification refresh — 2026-10-31 (PRs #169–#170)
+
+- **Base `main`:** `8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8`; no mainline changes were made.
+- **PR #169:** current code/audit branch has passed exact-head CI [41243882073](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41243882073): all three jobs passed — `test`, `wheel-install-smoke`, `master-artifact`. The test job passed Ruff, complete Python test discovery, RTGS reference/parity, generated-artifact drift, challenge diagnostics, browser IPA/parity/UI contracts, segmentation and source-attested IPA diagnostics, TUD research diagnostics, and review-packet integrity checks. The wheel job built sdist and wheel, installed in isolation, and smoke-tested packaged data outside the checkout. The master-artifact job downloaded and validated the generated artifact.
+- **PR #170:** exact-head CI [41243709726](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41243709726) and Web Static [41243709639](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41243709639) passed on `1cdc3d7971498ce3312ff9a79b23ee84b8d917aa`; only two immediately duplicated UI assertions were removed.
+- **PR state:** #169 and #170 remain open and unmerged, per the PR-only integration preference. Their branches were 28 and 1 commits ahead of `main`, respectively, and zero commits behind at the comparison checkpoint. No review submissions were recorded.
+- **Branch inventory:** 184 refs; no historical branch was deleted.
+- **Main protection:** `protected=false`; no ruleset or repository setting was changed.
+- **Remaining evidence blockers:** CCOST manual inspection; independent Thai IPA/segmentation adjudication; independent Ukrainian-native target-form adjudication; manual browser/device and WCAG 2.2 AA review (issue #114).
+- **Local execution:** not performed; this connector-only session did not provide a local checkout/runtime. All test claims above are from GitHub Actions.
+- **Readiness:** engineering-verified research prototype; not release-ready for general linguistic-accuracy claims.
+
+---
+
 ## Final audit update — 2026-10-31: final documentation head and cleanup PR
 
 - PR #169's CCOST source/data/test changes passed all three jobs on code-bearing head `a331131567f6e17f9dd5fe96c8624620f093880c` in [41242513053](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41242513053). Subsequent commits refresh the validation matrix, final audit, machine-readable audit and handoff; the exact-head CI for this final documentation-only update is pending. The current head is available from PR [#169](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/169); its final SHA and CI run are recorded in the PR description after push.
