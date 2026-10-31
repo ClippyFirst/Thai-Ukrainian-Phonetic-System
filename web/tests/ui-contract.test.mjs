@@ -59,6 +59,25 @@ assert.match(output.innerHTML, /aria-labelledby=/);
 assert.equal(status.className, "status");
 assert.match(status.textContent, /Готово\. Нижче — три варіанти запису вимови/);
 
+// The romanization mode produces a separate RTGS → Ukrainian result and does
+// not label it as an IPA-derived phonetic transcription.
+const outputMode = element("output-mode");
+outputMode.value = "romanization";
+input.value = "п".replace("п", "พัฒนา");
+analyze.click();
+assert.match(output.innerHTML, /Результат за романізацією RTGS/);
+assert.match(output.innerHTML, /01 · Романізація RTGS/);
+assert.match(output.innerHTML, /02 · Українськими літерами за RTGS/);
+assert.match(output.innerHTML, /phatthana/);
+assert.match(output.innerHTML, /пхаттхана/);
+assert.match(output.innerHTML, /kh\/ph\/th → кх\/пх\/тх/);
+assert.doesNotMatch(output.innerHTML, /class="continuous-output ipa-continuous"/);
+assert.match(output.innerHTML, /не проходить через IPA/);
+assert.equal(status.className, "status");
+outputMode.value = "phonetic";
+analyze.click();
+assert.match(output.innerHTML, /Три варіанти запису/);
+
 input.value = "ทดสอบ";
 analyze.click();
 assert.doesNotMatch(output.innerHTML, /RTGS НЕ ПЕРЕВІРЕНО/);
@@ -277,6 +296,8 @@ const systemHtml = await readFile(new URL("../system.html", import.meta.url), "u
 const styles = await readFile(new URL("../src/styles.css", import.meta.url), "utf8");
 const pagesWorkflow = await readFile(new URL("../../.github/workflows/pages.yml", import.meta.url), "utf8");
 assert.match(homeHtml, /ТЕСТОВА ВЕРСІЯ/);
+assert.match(homeHtml, /id="output-mode"/);
+assert.match(homeHtml, /За романізацією RTGS/);
 assert.match(homeHtml, /Текст залишається у вашому браузері/);
 assert.match(pagesWorkflow, /Текст залишається у вашому браузері/);
 assert.match(homeHtml, /Можна вставити одне слово або ціле речення/);
@@ -319,6 +340,7 @@ assert.match(systemHtml, /RTGS — окрема латинська систем�
 assert.match(systemHtml, /Придихові \/kʰ pʰ tʰ tɕʰ\//);
 assert.doesNotMatch(systemHtml, /76 із 50 000|16 із 50 000|192 із 993|119 із 993/);
 assert.match(styles, /\.beta-notice/);
+assert.match(styles, /#output-mode/);
 assert.match(styles, /\.skip-link:focus/);
 assert.match(styles, /min-height:44px/);
 assert.match(styles, /\.site-header nav a\{[^}]*min-height:44px/);
