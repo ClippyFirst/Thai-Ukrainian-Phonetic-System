@@ -93,6 +93,14 @@ assert.deepEqual(new Set(onsetGraphemes), new Set(consonantRegistry.map(row => r
 const codaMatrix = matrices.split("### 2.2 Кінець складу (coda)")[1].split("## 3.")[0];
 const codaGraphemes = [...codaMatrix.matchAll(/^\| ([ก-๛ ]+) \|/gm)].flatMap(match => match[1].trim().split(/\s+/));
 assert.deepEqual(new Set(codaGraphemes), new Set(consonantRegistry.filter(row => row[6] === "true").map(row => row[1])), "coda matrix must match source coda_allowed inventory");
+const codaSource = new Map(consonantRegistry.map(row => [row[1], row[5]]));
+const codaRows = [...codaMatrix.matchAll(/^\| ([ก-๛ ]+) \| ([^|]+) \|/gm)];
+for (const row of codaRows) {
+  const ipa = row[2].trim().replace(/^\//, "").replace(/\/$/, "");
+  for (const grapheme of row[1].trim().split(/\s+/)) {
+    assert.equal(codaSource.get(grapheme), ipa, "coda IPA drift for " + grapheme);
+  }
+}
 const rtgsCodaMatrix = matrices.split("### 4.2 Кінець складу")[1].split("## 5.")[0];
 const rtgsCodaGraphemes = [...rtgsCodaMatrix.matchAll(/^\| ([ก-๛ ]+) \|/gm)].flatMap(match => match[1].trim().split(/\s+/));
 assert.deepEqual(new Set(rtgsCodaGraphemes), new Set(consonantRegistry.filter(row => row[6] === "true").map(row => row[1])), "RTGS coda matrix must cover the same positional inventory");
