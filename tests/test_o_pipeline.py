@@ -39,4 +39,5 @@ def test_special_y_has_higher_structural_priority_than_carrier():
         # is applied by the parser; inspect the classifier on the original form.
         assert classify_o_role(thai).role == ORole.SPECIAL_Y_PATTERN
         analysis = analyze_syllable(thai)
+        assert analysis.orthographic_interpretations[0]["role"] == ORole.SPECIAL_Y_PATTERN.value
         assert analysis.status == "analyzed"
