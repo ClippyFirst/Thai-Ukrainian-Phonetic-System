@@ -1,3 +1,18 @@
+## 2026-10-31 — CCOST source provenance reconciliation (PR #169)
+
+| Task / acceptance criterion | State | Evidence / next acceptance |
+|---|---|---|
+| Distinguish CCOST dataset DOI from its LREC 2026 paper DOI and record the annotation process | PARTIAL | Zenodo dataset record [10.5281/zenodo.17366698](https://doi.org/10.5281/zenodo.17366698) declares CC BY-NC-SA 4.0; the associated LREC paper [10.63317/3ds35jijmgrx](https://doi.org/10.63317/3ds35jijmgrx) reports manual correction by phonetically trained native Thai speakers. The public abstract does not establish two independent blinded labels per item. Updated `docs/evidence.md`, `data/corpus_sources.csv`, and the independent adjudication protocol. |
+| Enforce CCOST provenance/license metadata in tests | PARTIAL | Added assertions in `tests/test_corpus_source_registry.py` for both DOI records, manual-correction provenance and the stated limit on independent adjudication. Exact-head CI for the updated PR is pending. |
+| Preserve corpus licensing and non-redistribution | DONE_VERIFIED_FOR_DOCUMENTATION | Dataset remains external; no WAV/TextGrid files were copied. The registry retains CC BY-NC-SA 4.0 non-commercial/share-alike terms. |
+
+- **Base main:** `8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8` (PR #168 closeout merged).
+- **PR:** [#169](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/169), documentation/audit closeout extended with CCOST evidence provenance; updated exact-head CI is pending.
+- **Branch inventory:** 183 refs (research 25); the temporary research branch remains preserved, not deleted.
+- **Readiness:** engineering-verified research prototype; independent Thai/UA adjudication and manual accessibility review remain external blockers.
+
+---
+
 ## 2026-10-31 — PRs #165–#167 integration closeout
 
 | Task / acceptance criterion | State | Evidence / next acceptance |
