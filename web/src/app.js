@@ -295,7 +295,7 @@ function run() {
       continuousPanel('01 · Романізація RTGS', rtgsOutput,
         'Латинський запис за наявним RTGS-модулем. Це окрема система, не ISO 11940.', 'rtgs-continuous') +
       continuousPanel('02 · Українськими літерами за RTGS', rtgsUkrainianOutput,
-        'Послідовне відтворення латинських RTGS-літер українською. kh/ph/th → кх/пх/тх; h → х. Це не IPA-фонетична адаптація.', 'ua-continuous') +
+        'Українська передача RTGS-складів і рим за окремою таблицею. kh/ph/th → кх/пх/тх; h → х. Це не IPA-фонетична адаптація.', 'ua-continuous') +
       '<details class="analysis-details"><summary>Показати фонетичні подробиці та статуси аналізу</summary>' +
       tokens.map(card).join('') + '</details>';
   } else {
