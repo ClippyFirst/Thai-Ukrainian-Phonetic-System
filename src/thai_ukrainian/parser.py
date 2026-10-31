@@ -131,16 +131,19 @@ def _o_interpretation(text: str) -> dict[str, str]:
     }
 
 def parse_syllable(syllable:str)->SyllableAnalysis:
-    s=normalize_thai(syllable)
+    original=normalize_thai(syllable)
+    s=original
     lexical_reading=LEXICAL_READINGS.get(s)
     lexical=bool(lexical_reading and "|" not in lexical_reading)
     if lexical:
         s=normalize_thai(lexical_reading)
     inv=load_consonants();cs=_consonants(s,inv)
-    o_rule=classify_o_role(s) if "อ" in s else None
+    # Preserve the source spelling's structural role even when an exact lexical
+    # reading rewrites its working form (notably the special อย- construction).
+    o_rule=classify_o_role(original) if "อ" in original else None
     if o_rule and o_rule.role.value in {"vowel_component", "orthographic_component"}:
         cs=[c for c in cs if c != "อ"]
-    interpretations=[_o_interpretation(s)] if o_rule and o_rule.role.value != "unknown" else []
+    interpretations=[_o_interpretation(original)] if o_rule and o_rule.role.value != "unknown" else []
 
     special_rules = [] if lexical else detect_special_orthography(s)
     if special_rules:
