@@ -10,14 +10,14 @@
 | Exact PR-head CI | DONE_VERIFIED | Runs [41234077035](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41234077035) and [41234072432](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41234072432) succeeded. |
 | Exact PR-head Web static validation | DONE_VERIFIED | Run [41234077207](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41234077207) succeeded. |
 | RTGS integration research contract and historical PR status | DONE_VERIFIED | `docs/research/thai-romanization-integration.md` now distinguishes the optional RTGS → Ukrainian practical-rendering route from the mandatory IPA-first phonetic route; stale PR #111/#112 open-state claims were reconciled against GitHub. |
-| Post-merge main CI and Pages publication | TODO at this checkpoint | Record exact main CI (test, wheel-install-smoke, master-artifact) and Pages build/deploy/published-content results after they complete; do not infer from PR-head runs. |
+| Post-merge main CI and Pages publication | TODO / QUEUED | Main CI runs 41235954608 and 41235967491, Pages 41235954575, Web static validation 41235954576; all queued at latest poll, no failure reported. Record success only after completion. |
 | Independent Thai phonology, segmentation and IPA adjudication | BLOCKED / evidence-limited | Requires independent Thai expert review and adjudicated reference records; issue #114. |
 | Independent Ukrainian-native target-form adjudication | BLOCKED / evidence-limited | Requires Ukrainian-native review with recorded decisions and rationale; issue #114. |
 | Manual browser/device and WCAG 2.2 AA review | BLOCKED | Requires real browser/device testing and accessibility review; automated static validation is not a substitute. |
 
 - The RTGS route is a separately labelled romanization-based practical rendering, not IPA transcription and not ISO 11940 orthographic transliteration.
 - RTGS does not preserve tone and all vowel-length distinctions. Matrix completeness is an inventory/programming fact, not independent proof of linguistic correctness or an official Ukrainian standard.
-- `AGENTS.md` was reconciled to permit the explicitly requested RTGS mode while preserving typed IPA as the mandatory boundary for phonetic output.
+- `AGENTS.md` and the stale RTGS research integration contract are reconciled on open PR #165 (exact-head CI queued). PR #166 adds all-row matrix/runtime checks (exact-head CI and static validation queued). Issue #114 has been updated. Neither follow-up is merged yet.
 
 ## 2026-10-31 — PR #162 typed-IPA boundary and complete test discovery
 
