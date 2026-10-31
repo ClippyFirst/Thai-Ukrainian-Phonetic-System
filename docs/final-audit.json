@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Main at the PR #158 merge checkpoint is 0f155dc36a0046d3ed02457a9459a1fa6d755b75. PRs #153–#158 are merged; latest post-merge main CI 41188107607 passed all three jobs. Engineering-verified research prototype; not release-ready for independent Thai segmentation, IPA or Ukrainian target-accuracy claims.",
+  "status": "Main at PR #160 merge checkpoint is bdcce023be0a9565658be586c66e53d7d13d33b1. PR #160 is merged; exact-head CI 41189619820 and post-merge main CI 41207672406 passed all three jobs. Internal automated engineering gates are verified; main branch protection and historical branch retention remain owner decisions. Engineering-verified research prototype, not release-ready for general linguistic-accuracy claims.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -108,8 +108,8 @@
   "latest_verified_code_commit": "3325e98b98bde6926f36c74ad76dc94fe35480b0",
   "starting_branch_commit": "7e39fd4bc108386148c1e9a79d257d75babcc9aa",
   "ci": {
-    "latest_fully_successful_code_data_commit": "3325e98b98bde6926f36c74ad76dc94fe35480b0",
-    "latest_fully_successful_ci_run": 41143907732,
+    "latest_fully_successful_code_data_commit": "bdcce023be0a9565658be586c66e53d7d13d33b1",
+    "latest_fully_successful_ci_run": 41207672406,
     "python_tests": 216,
     "generated_data_drift": "PASS",
     "master_artifact": "PASS — generated once in test job, uploaded, downloaded by independent master-artifact job, SHA-256 verified, and asserted at 351780 rows / 41 vowel/rime records.",
@@ -125,15 +125,15 @@
       41142211675
     ],
     "current_head_status_at_audit_refresh": "PR #155 merged as 3325e98b98bde6926f36c74ad76dc94fe35480b0. Exact PR CI 41143491570 and post-merge main CI 41143907732 passed all three jobs. The master-artifact job now downloads the 3,086,353-byte artifact, verifies SHA-256, and asserts 351780 rows / 41 vowel/rime records without rerunning generation.",
-    "latest_full_repository_head": "c4216d69982ec2564b5ed615b06d088d18143b4f",
-    "latest_full_repository_head_ci_run": 41144968470,
+    "latest_full_repository_head": "bdcce023be0a9565658be586c66e53d7d13d33b1",
+    "latest_full_repository_head_ci_run": 41207672406,
     "latest_full_repository_head_web_validation_run": 41142211675,
     "latest_web_static_verified_code_commit": "1ed4c7aa30759fd8d31136e46d7490bf9b2c5e8b",
     "latest_web_static_verified_code_run": 40286893366,
     "latest_verified_commit_note": "Latest code/data commit 3325e98b98bde6926f36c74ad76dc94fe35480b0 is fully CI-verified by run 41143907732. Latest documentation/main head c4216d69982ec2564b5ed615b06d088d18143b4f passed main CI 41144968470. Independent linguistic gold and manual accessibility review remain open.",
     "latest_verified_code_commit_note": "Current main is fully engineering-verified by CI 41143907732; independent Thai IPA/acoustic gold, Ukrainian target-form adjudication, and production segmentation quality remain unverified.",
-    "latest_fully_successful_documentation_commit": "499e0bd5f14d7809d1a041223db8864c2875917e",
-    "latest_fully_successful_documentation_ci_run": 41144266328,
+    "latest_fully_successful_documentation_commit": "bdcce023be0a9565658be586c66e53d7d13d33b1",
+    "latest_fully_successful_documentation_ci_run": 41207672406,
     "latest_fully_successful_documentation_web_validation_run": 40323209471,
     "latest_documentation_head_ci_run": 41144266328,
     "latest_documentation_head_web_validation_run": 41142211675,
@@ -243,7 +243,8 @@
       },
       "status": "PARTIAL",
       "reason": "No owner-approved archive/delete policy; connector has no branch deletion action; historical refs preserved."
-    }
+    },
+    "latest_checkpoint_note": "PR #160 merged as bdcce023be0a9565658be586c66e53d7d13d33b1. Exact-head CI 41189619820 and post-merge main CI 41207672406 passed all three jobs. Main branch protection is disabled and requires owner configuration; historical branches require an approved retention policy. Independent linguistic and manual accessibility evidence remains external and open."
   },
   "challenge_runtime": {
     "challenge_inputs": 36,
@@ -1913,5 +1914,30 @@
     "pr_158_merge": "0f155dc36a0046d3ed02457a9459a1fa6d755b75",
     "pr_158_exact_ci": 41187802957,
     "checkpoint_scope": "Repository state at PR #158 merge; subsequent change is documentation-only audit reconciliation."
+  },
+  "latest_checkpoint": {
+    "date": "2026-10-31",
+    "starting_main": "41b0991670381d801babd876880dc16b8ce9304c",
+    "main": "bdcce023be0a9565658be586c66e53d7d13d33b1",
+    "merged_pr": 160,
+    "branch": "chore/agent-workflow-bridge-20261031",
+    "exact_head_ci_run": 41189619820,
+    "post_merge_main_ci_run": 41207672406,
+    "post_merge_jobs": {
+      "test": "SUCCESS",
+      "wheel_install_smoke": "SUCCESS",
+      "master_artifact": "SUCCESS"
+    },
+    "master_artifact": {
+      "rows": 351780,
+      "vowel_rime_records": 41,
+      "status": "PASS"
+    },
+    "open_pull_requests": 0,
+    "branch_refs": 173,
+    "main_branch_protection": "DISABLED — owner configuration required; not changed in this run",
+    "local_checkout": "BLOCKED — container DNS cannot resolve github.com",
+    "internal_engineering": "Automated CI, packaging, generated artifact, parity and diagnostic gates pass at this main SHA.",
+    "external_validation": "Independent Thai segmentation/IPA adjudication, Ukrainian-native target-form adjudication, and manual browser/device/WCAG 2.2 AA review remain pending; tracked by issue #114."
   }
 }
