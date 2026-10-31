@@ -1,3 +1,19 @@
+# Continuation checkpoint — CCOST provenance reconciliation verified (2026-10-31)
+
+- **Repository:** `ClippyFirst/Thai-Ukrainian-Phonetic-System`; default branch `main`.
+- **Starting main:** `8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8`.
+- **PR branch:** `docs/mark-pr168-closeout-verified-20261031`; PR [#169](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/169) remains open as requested by the PR-only integration preference.
+- **PR head:** `a331131567f6e17f9dd5fe96c8624620f093880c`.
+- **Exact-head CI:** [41242513053](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41242513053) SUCCESS; all three jobs `test`, `wheel-install-smoke`, `master-artifact` passed. This is the actual PR head and supersedes the stale pending status in earlier checkpoint notes.
+- **CCOST source finding:** dataset DOI [10.5281/zenodo.17366698](https://doi.org/10.5281/zenodo.17366698), dataset license CC BY-NC-SA 4.0; associated LREC/ACL article DOI [10.63317/3ds35jijmgrx](https://doi.org/10.63317/3ds35jijmgrx). The abstract reports ASR/forced alignment with manual correction by phonetically trained native Thai speakers and orthographic, word-, syllable-, phone-level and toneme annotations. It does not establish two independent blinded labels per item.
+- **Implementation:** evidence registry, CSV source registry, independent adjudication protocol and regression tests were updated; validation matrix, final audit, machine-readable audit and this handoff now record exact-head CI success. No WAV/TextGrid assets were downloaded or redistributed.
+- **Separate external blocker:** Zenodo lists `CCOST_manual.pdf` as a 2.2 MB separate file. Download was throttled/failed in this session, so the manual's actual annotation and correction protocol remains uninspected. Do not select CCOST rows as evaluation references until this manual, speaker/task metadata, and permitted non-commercial use are reviewed.
+- **Other acceptance blockers:** independent Thai IPA/segmentation adjudication; two independent Ukrainian-native target-form reviews and disagreement log; manual browser/device and WCAG 2.2 AA review.
+- **Branch inventory:** 183 refs at the latest inventory (research 25); no historical branches deleted.
+- **Readiness:** engineering-verified research prototype, not release-ready for linguistic-accuracy claims. CI success does not establish linguistic validity or merge PR #169.
+
+---
+
 # Continuation checkpoint — CCOST source provenance reconciliation (2026-10-31)
 
 - **Repository:** `ClippyFirst/Thai-Ukrainian-Phonetic-System`; default branch `main`.
