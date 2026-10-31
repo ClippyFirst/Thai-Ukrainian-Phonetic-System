@@ -1,12 +1,13 @@
 # Thai romanization integration research
 
-**Status:** DONE_VERIFIED for the RTGS implementation and deployment; PARTIAL for linguistic coverage. Exact-head CI, static validation and post-deploy Pages checks passed. Full PyThaiNLP tokenizer/dictionary parity, manual browser visual review and independent linguistic gold remain open.
+**Status:** DONE_VERIFIED for the offline RTGS romanization port and the optional RTGS → Ukrainian practical-rendering mode; PARTIAL for linguistic coverage. PR #164 adds the separately selectable Ukrainian rendering route and full comparison matrices. Exact-head CI and static validation passed for PR #164; post-merge main CI/Pages evidence is recorded in the current handoff when available. Full PyThaiNLP tokenizer/dictionary parity, manual browser visual review and independent linguistic gold remain open.
 
 ## Decision and pipeline boundary
 
-RTGS (Royal Thai General System of Transcription) is displayed as a parallel Latin reference, never as input to Ukrainian adaptation. The main route remains:
+RTGS (Royal Thai General System of Transcription) is displayed as a parallel Latin reference and may feed only the explicitly separate, optional RTGS-based Ukrainian practical-rendering mode. It is never fed into the phonetic IPA → Ukrainian adapter. The two routes are:
 
-`Thai orthography → structural analysis → source phonology → IPA/typed result → Ukrainian adaptation → Ukrainian practical orthography`
+- **Primary phonetic route:** `Thai orthography → structural analysis → source phonology → IPA/typed result → Ukrainian phonetic adaptation → Ukrainian practical orthography`
+- **Optional romanization route:** `Thai orthography → pinned RTGS romanization → RTGS Latin sequence → separate Ukrainian practical rendering of RTGS`
 
 RTGS is lossy: it does not encode tone and does not reliably preserve vowel length or all phonemic distinctions. It is not English pronunciation spelling. RTGS `ph`, `th`, and `kh` represent aspirated Thai stops, not English /f/, /θ/, or English letter-name values.
 
@@ -51,8 +52,8 @@ This verifies implementation parity for declared inputs and repository regressio
 
 ## Open PR reconciliation
 
-- **PR #111** (`feat: pin Thai ทร lexical exception and guard ambiguity`) remains open and was not merged or cherry-picked. Its source-backed lexical cases informed only this separate RTGS correction layer; no IPA engine, text lexicon or branch changes from that PR were copied.
-- **PR #112** (`docs(site): audit public guidance and evidence status`) was not merged blindly. Its homepage/system copy and UI-contract changes were ported alongside the live RTGS implementation through PR #116, merged as `f4cc4d061c529fc5aec094af896dea5aaec9378f`. PR #112 was closed as superseded after PR #116 and PR #117 merged. Its unique homepage/system copy and UI-contract changes are preserved in `main`; the structured public-content audit register is maintained in `docs/final-audit.md`.
+- **PR #111** (`feat: pin Thai ทร lexical exception and guard ambiguity`) is closed unmerged as superseded. The independently source-attested `ทราม` lexical exception was separately forward-ported to current main through PR [#144](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/144), merged as `cb7ff2a49731d3c02ddba400a4ddbc166395d493`; the historical PR #111 branch remains preserved.
+- **PR #112** (`docs(site): audit public guidance and evidence status`) is closed unmerged as superseded. Its homepage/system copy and UI-contract changes were ported through PR #116, merged as `f4cc4d061c529fc5aec094af896dea5aaec9378f`; PR #117 (`docs(audit): close out RTGS and public-site deployment`) also merged as `713f42ec816856d352ea2efbacfd534590e456df`. Its structured public-content audit register remains in the canonical audit documentation.
 - Recently merged PR #110 and earlier Thai IPA/lexicon work are preserved because this branch is based on current `main` at `d39fc9e2c40db4a9f760069099c1f45973d592c8`.
 
 ## Acceptance gates
