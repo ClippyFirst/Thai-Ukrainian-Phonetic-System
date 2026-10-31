@@ -62,7 +62,9 @@
     "optional_rtgs_first_ukrainian_output_mode",
     "independent_rtgs_to_ukrainian_practical_renderer",
     "full_ipa_and_rtgs_consonant_rime_correspondence_matrices",
-    "rtgs_iao_rime_component_preservation_regression"
+    "rtgs_iao_rime_component_preservation_regression",
+    "rtgs_research_integration_contract_reconciled",
+    "historical_rtgs_pr_status_reconciled"
   ],
   "not_claimed": [
     "complete_lexical_segmentation",
@@ -1982,6 +1984,12 @@
       "This is not ISO 11940 orthographic transliteration.",
       "Automated inventory coverage and parity tests do not constitute independent linguistic adjudication.",
       "Post-merge main CI and Pages deployment were not yet observed at the time this checkpoint was written."
-    ]
+    ],
+    "research_doc": "docs/research/thai-romanization-integration.md",
+    "research_contract": "Updated to permit RTGS as the source for only the explicitly separate optional RTGS-based Ukrainian practical-rendering mode; phonetic IPA adapter remains independent.",
+    "historical_pr_reconciliation": {
+      "pr111": "closed_unmerged_superseded; source-attested lexical exception forward-ported separately by merged PR #144",
+      "pr112": "closed_unmerged_superseded; public copy/audit changes preserved through merged PR #116 and #117"
+    }
   }
 }
