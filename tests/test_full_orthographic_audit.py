@@ -1,5 +1,5 @@
+from thai_ukrainian.api import analyze_syllable
 from thai_ukrainian.parser import parse_syllable
-from thai_ukrainian.ukrainian_adaptation import adapt_syllable_to_ukrainian
 
 
 def assert_analyzed(text, vowel_id, vowel, onset, coda=None, ua=None):
@@ -10,7 +10,8 @@ def assert_analyzed(text, vowel_id, vowel, onset, coda=None, ua=None):
     assert a.onset == onset, (text, a.onset)
     assert a.coda == coda, (text, a.coda)
     if ua is not None:
-        assert adapt_syllable_to_ukrainian(a) == ua, (text, adapt_syllable_to_ukrainian(a))
+        practical = analyze_syllable(text).ukrainian_transliteration
+        assert practical == ua, (text, practical)
     return a
 
 
@@ -29,7 +30,8 @@ def test_post_consonant_o_component_is_not_glottal():
 def test_post_consonant_ue_length_carrier():
     assert_analyzed("คือ", "V-08", "ɯː", ["ค"], None)
     assert_analyzed("มือ", "V-08", "ɯː", ["ม"], None)
-    assert_analyzed("หนังสือ", "V-08", "ɯː", ["ส"], None)
+    # หนังสือ is a multi-syllable word, not a single input for parse_syllable.
+    assert_analyzed("สือ", "V-08", "ɯː", ["ส"], None)
 
 
 def test_mai_taikhu_shortens_preposed_e():
@@ -41,14 +43,30 @@ def test_mai_taikhu_shortens_preposed_e():
         assert_analyzed(text, "V-03", "e", onset, coda)
 
 
-def test_reduced_vowel_spellings_are_not_left_as_residual_signs():
-    for text, vowel_id, vowel, onset, coda in [
-        ("เดิน", "V-10", "ɤː", ["ด"], "น"),
-        ("เงิน", "V-10", "ɤː", ["ง"], "น"),
-        ("แข็ง", "V-05", "ɛ", ["ข"], "ง"),
-        ("เปิด", "V-10", "ɤː", ["ป"], "ด"),
+def test_reduced_vowel_spellings_preserve_ambiguity_until_lexical_evidence():
+    for text, onset, coda in [
+        ("เดิน", ["ด"], "น"),
+        ("เงิน", ["ง"], "น"),
+        ("เปิด", ["ป"], "ด"),
     ]:
-        assert_analyzed(text, vowel_id, vowel, onset, coda)
+        analysis = parse_syllable(text)
+        assert analysis.status == "analysis-dependent:vowel-length", (text, analysis.status)
+        assert analysis.onset == onset
+        assert analysis.coda == coda
+        assert analysis.phonemic_ipa is None
+
+    # The exact, revision-pinned dictionary overrides resolve only the two
+    # covered forms; they do not turn the spelling pattern into a productive rule.
+    for text, expected_ipa in (("เดิน", "dɤːn"), ("เงิน", "ŋɤn")):
+        analysis = analyze_syllable(text)
+        assert analysis.status == "analyzed"
+        assert analysis.phonemic_ipa == expected_ipa
+        assert analysis.phonetic_result["status"] == "SUPPORTED"
+        assert analysis.phonetic_result["broad_surface_ipa"] is None
+        assert any("source-attested lexical dictionary transcription" in warning
+                   for warning in analysis.warnings)
+
+    assert_analyzed("แข็ง", "V-05", "ɛ", ["ข"], "ง")
 
 
 def test_reduced_ua_uses_w_as_vowel_component():
@@ -95,7 +113,7 @@ def test_standalone_ai_carrier_uses_zero_ukrainian_onset():
 def test_existing_o_carrier_and_special_y_remain_distinct():
     assert_analyzed("อา", "V-12", "aː", ["อ"], None, "а")
     assert_analyzed("อัน", "V-11", "a", ["อ"], "น", "ан")
-    assert_analyzed("พอ", "V-18", "ɔː", ["พ"], None, "по")
+    assert_analyzed("พอ", "V-18", "ɔː", ["พ"], None, "п\u0027о")
 
 
 def test_hnam_stays_structural_and_tone_bearing():

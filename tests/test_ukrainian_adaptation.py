@@ -3,6 +3,7 @@ from dataclasses import replace
 from thai_ukrainian.api import analyze_syllable
 from thai_ukrainian.phonetic_result import PhoneticResult
 from thai_ukrainian.ukrainian_adaptation import adapt_phonetic_result
+from thai_ukrainian.ua_orthography import candidates_for_phonetic_result
 from thai_ukrainian.ua_orthography import candidates_for_ipa
 
 
@@ -75,9 +76,13 @@ def test_tone_and_provenance_survive_in_typed_phonetic_result():
     assert result.tone_category == "mid"
     assert result.vowel_length is not None
     assert result.provenance
-    assert result.broad_surface_ipa
+    # The pinned dictionary source attests segmental IPA and tone, not a
+    # separate surface-phonetic transcription; absence must remain explicit.
+    assert result.broad_surface_ipa is None
     assert result.segments
-    assert all(segment.surface_ipa for segment in result.segments)
+    assert all(segment.surface_ipa is None for segment in result.segments)
+    assert any("not independently adjudicated or acoustically verified gold" in item
+               for item in result.uncertainty)
     assert result.syllable_boundaries == (0, len(result.segments))
 
 
@@ -104,7 +109,10 @@ def test_common_external_thai_ipa_notation_is_normalized_before_adaptation():
         adapted = adapt_phonetic_result(replace(base, phonemic_ipa=ipa))
         assert adapted["status"] == "adapted", ipa
         assert adapted["output"] == expected, ipa
-        assert adapted["input_notes"], ipa
+        if ipa in {"tɕa", "tɕʰa"}:
+            assert adapted["input_notes"] == [], ipa  # already canonical segmental IPA
+        else:
+            assert adapted["input_notes"], ipa
     h_result = adapt_phonetic_result(replace(base, phonemic_ipa="haː"))
     assert h_result["output"] == "га"
     assert "glottal place and voicing" in h_result["neutralized_features"]
@@ -155,3 +163,29 @@ def test_ipa_candidate_renderer_preserves_aspiration_with_apostrophe():
     assert candidates_for_ipa("tɕa") == ["ча"]
     assert candidates_for_ipa("tɕʰa") == ["ч'а"]
     assert candidates_for_ipa("ha") == ["га"]
+
+
+def test_secondary_orthography_candidates_require_supported_typed_ipa():
+    result = PhoneticResult.from_syllable_analysis(analyze_syllable("กา"))
+    assert candidates_for_phonetic_result(result) == ["ка"]
+    assert candidates_for_phonetic_result(replace(result, status="UNCERTAIN")) == []
+    assert candidates_for_phonetic_result(replace(result, status="UNSUPPORTED")) == []
+    assert candidates_for_phonetic_result(replace(result, phonemic_ipa=None)) == []
+    assert candidates_for_phonetic_result(replace(result, phonemic_ipa="k☃a")) == []
+
+
+def test_api_routes_secondary_candidates_through_typed_phonetic_result(monkeypatch):
+    import thai_ukrainian.api as api
+
+    received = []
+
+    def capture(result):
+        received.append(result)
+        return []
+
+    monkeypatch.setattr(api, "candidates_for_phonetic_result", capture)
+    api.analyze_syllable("กา")
+
+    assert len(received) == 1
+    assert isinstance(received[0], PhoneticResult)
+    assert received[0].status == "SUPPORTED"

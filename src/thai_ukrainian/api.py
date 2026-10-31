@@ -5,7 +5,7 @@ from .tone import determine_tone
 from .phonology import phonologize, surface_phoneticize, ONSET_IPA, effective_onset
 from .correspondence import rank_ukrainian_candidates as _rank_candidates
 from .word import analyze_word
-from .ua_orthography import candidates_for_ipa
+from .ua_orthography import candidates_for_phonetic_result
 from .phonetic_result import PhoneticResult
 from .ukrainian_adaptation import adapt_syllable_to_ukrainian
 from .lexical_ipa import apply_lexical_ipa_override
@@ -37,10 +37,9 @@ def analyze_syllable(syllable: str):
         "status": phonetic_result.status,
     })
 
-    if a.phonemic_ipa:
-        a.ukrainian_orthography_candidates = candidates_for_ipa(a.phonemic_ipa)
-        if a.ukrainian_orthography_candidates:
-            a.selected_ukrainian_orthography = a.ukrainian_orthography_candidates[0]
+    a.ukrainian_orthography_candidates = candidates_for_phonetic_result(phonetic_result)
+    if a.ukrainian_orthography_candidates:
+        a.selected_ukrainian_orthography = a.ukrainian_orthography_candidates[0]
     onset = effective_onset(a)
     if onset:
         first = ONSET_IPA.get(onset[0])
