@@ -18,7 +18,7 @@
 | Local checkout/test execution | BLOCKED | Container DNS cannot resolve `github.com`; no local test result is claimed. GitHub Actions provides verification evidence. |
 
 **Current main:** `72a77cb42ad05c33274d70c4dcd9f20e07432b64`.  
-**Open PRs:** none. **Canonical external blocker:** issue #114.  
+**Implementation PRs:** none after #167. Documentation-only PR [#168](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/168) carries this audit/handoff refresh. **Canonical external blocker:** issue #114.  
 **Readiness:** engineering-verified research prototype; not release-ready for general linguistic-accuracy claims.
 
 ---
