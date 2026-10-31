@@ -9,6 +9,15 @@ const DIGRAPHS = Object.freeze({
   ch: "ч",
   ng: "нг"
 });
+// Registered RTGS vowel/rime sequences. Match these before single letters;
+// otherwise ai would incorrectly become аі instead of the rime mapping ай.
+const RIME_SEQUENCES = Object.freeze({
+  ueai: "уеай", iao: "іао", aeo: "аео", oei: "оей",
+  uai: "уай", uea: "уеа",
+  ai: "ай", am: "ам", ao: "ао", io: "іо", ui: "уй",
+  eo: "ео", oi: "ой", ia: "іа", ue: "уе", oe: "ое",
+  ae: "ае", ua: "уа"
+});
 const LETTERS = Object.freeze({
   a: "а", b: "б", d: "д", e: "е", f: "ф", h: "х", i: "і",
   k: "к", l: "л", m: "м", n: "н", o: "о", p: "п", r: "р",
@@ -23,6 +32,14 @@ export function adaptRtgsToUkrainian(romanized) {
   const rulesApplied = [];
   let i = 0;
   while (i < romanized.length) {
+    const lower = romanized.slice(i).toLowerCase();
+    const rime = Object.keys(RIME_SEQUENCES).find(sequence => lower.startsWith(sequence));
+    if (rime) {
+      output.push(RIME_SEQUENCES[rime]);
+      rulesApplied.push("RTGS-RIME-" + rime.toUpperCase());
+      i += rime.length;
+      continue;
+    }
     const pair = romanized.slice(i, i + 2).toLowerCase();
     if (Object.hasOwn(DIGRAPHS, pair)) {
       output.push(DIGRAPHS[pair]);
