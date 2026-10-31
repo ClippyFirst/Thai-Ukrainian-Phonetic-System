@@ -1,3 +1,12 @@
+## Final audit update — 2026-10-31: final documentation head and cleanup PR
+
+- PR #169's CCOST source/data/test changes passed all three jobs on code-bearing head `a331131567f6e17f9dd5fe96c8624620f093880c` in [41242513053](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41242513053). Subsequent commits refresh the validation matrix, final audit, machine-readable audit and handoff; the exact-head CI for this final documentation-only update is pending. The current head is available from PR [#169](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/169); its final SHA and CI run are recorded in the PR description after push.
+- PR [#170](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/170) removes two immediately repeated assertions in the initial UI contract scenario. Exact-head CI [41243709726](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41243709726) and Web Static [41243709639](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41243709639) are queued; no runtime or linguistic behavior changes.
+- Latest branch inventory: 184 refs (docs 57, feat 27, fix 27, research 25, audit 8, ux 7, chore 8, unprefixed 7, test 5, ci 2, copy 2, design 2, perf 2, and one each finalize/polish/site/ui/web). No historical refs deleted.
+- Both PRs remain open under the user's PR-only integration preference. Queued checks are not reported as passed.
+
+---
+
 ## Final audit update — 2026-10-31: current PR heads and verification queue
 
 - PR [#169](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/169) current head: `7bfee951af0f6fd402f6a2a985e2f34473aba2f6`; exact-head CI [41243581916](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41243581916) is queued. The preceding code/data/test head `a331131567f6e17f9dd5fe96c8624620f093880c` passed all three CI jobs in [41242513053](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41242513053); later changes only refreshed audit/handoff status.
