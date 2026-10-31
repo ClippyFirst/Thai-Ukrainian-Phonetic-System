@@ -1,3 +1,24 @@
+## 2026-10-31 — PR #164 RTGS-based Ukrainian output mode and full method matrices
+
+| Task / acceptance criterion | State | Evidence / next acceptance |
+|---|---|---|
+| Separate user-selectable phonetic and romanization-based output modes | DONE_VERIFIED | PR [#164](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/164), merged as `01631b98173b2e54695bdf757a538735fca8fdff`. UI selector keeps IPA-first phonetic output separate from RTGS-first practical rendering. |
+| RTGS Ukrainian renderer is independent of IPA adapter | DONE_VERIFIED | `web/src/rtgs-ukrainian.js` consumes the RTGS token sequence and does not call the IPA adapter; tests assert module and UI boundaries. |
+| Preserve unsupported spans and non-Thai text | DONE_VERIFIED | Unsupported RTGS tokens remain explicit unresolved markers; punctuation, digits, whitespace and non-Thai text are preserved by the token renderer; regression tests cover these contracts. |
+| Full phonetic and RTGS correspondence matrices | DONE_VERIFIED — inventory coverage | `docs/ukrainian-correspondence-matrices.md`: 44 Thai consonant graphemes with onset/coda inventories and 41 registered rime records in each method matrix; RTGS digraph/rime mappings and comparison examples included. Automated tests compare matrix inventories against source registries. |
+| Preserve RTGS rime `iao` without component loss | DONE_VERIFIED | Regression expects `iao → іау`; matrix and adapter use the same output. |
+| Exact PR-head CI | DONE_VERIFIED | Runs [41234077035](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41234077035) and [41234072432](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41234072432) succeeded. |
+| Exact PR-head Web static validation | DONE_VERIFIED | Run [41234077207](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41234077207) succeeded. |
+| RTGS integration research contract and historical PR status | DONE_VERIFIED | `docs/research/thai-romanization-integration.md` now distinguishes the optional RTGS → Ukrainian practical-rendering route from the mandatory IPA-first phonetic route; stale PR #111/#112 open-state claims were reconciled against GitHub. |
+| Post-merge main CI and Pages publication | TODO / QUEUED | Main CI runs 41235954608 and 41235967491, Pages 41235954575, Web static validation 41235954576; all queued at latest poll, no failure reported. Record success only after completion. |
+| Independent Thai phonology, segmentation and IPA adjudication | BLOCKED / evidence-limited | Requires independent Thai expert review and adjudicated reference records; issue #114. |
+| Independent Ukrainian-native target-form adjudication | BLOCKED / evidence-limited | Requires Ukrainian-native review with recorded decisions and rationale; issue #114. |
+| Manual browser/device and WCAG 2.2 AA review | BLOCKED | Requires real browser/device testing and accessibility review; automated static validation is not a substitute. |
+
+- The RTGS route is a separately labelled romanization-based practical rendering, not IPA transcription and not ISO 11940 orthographic transliteration.
+- RTGS does not preserve tone and all vowel-length distinctions. Matrix completeness is an inventory/programming fact, not independent proof of linguistic correctness or an official Ukrainian standard.
+- `AGENTS.md` and the stale RTGS research integration contract are reconciled on open PR #165 (exact-head CI queued). PR #166 adds all-row matrix/runtime checks (exact-head CI and static validation queued). Issue #114 has been updated. Neither follow-up is merged yet.
+
 ## 2026-10-31 — PR #162 typed-IPA boundary and complete test discovery
 
 | Task | State | Evidence / next acceptance |
