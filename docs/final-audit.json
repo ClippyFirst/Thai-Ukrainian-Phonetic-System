@@ -1910,10 +1910,6 @@
     "open_blocker_issue": 114,
     "branch_refs": 171,
     "readiness": "engineering-verified research prototype; not release-ready for independent Thai segmentation, IPA or Ukrainian target accuracy",
-    "open_pr_158": {
-      "title": "docs: record PR #157 post-merge verification",
-      "exact_ci_status": "PENDING for current PR head"
-    },
     "pr_158_merge": "0f155dc36a0046d3ed02457a9459a1fa6d755b75",
     "pr_158_exact_ci": 41187802957,
     "checkpoint_scope": "Repository state at PR #158 merge; subsequent change is documentation-only audit reconciliation."
