@@ -263,7 +263,7 @@ RTGS значення беруться з шаблонів наявного по
 2. **BGN/PCGN 2002 Agreement:** [офіційний урядовий PDF](https://assets.publishing.service.gov.uk/media/5ab4e60aed915d78b9a459f5/ROMANIZATION_OF_THAI.pdf). Пояснює позиційні відповідники приголосних, відсутність позначення тону/довготи та потребу перевіряти власні назви за словником. Це споріднений референс, не твердження про повну тотожність усіх деталей порту PyThaiNLP.
 3. **Royal Institute:** [Romanization, Transliteration, and Transcription for the Globalization of the Thai Language](https://www.orst.go.th/FILEROOM/CABROYINWEB/DRAWER004/GENERAL/DATA0000/00000639.FLP/html/105/) — інституційний матеріал про призначення й обмеження романізації.
 4. **Порівняльний російський підхід:** [Тайско-русская практическая транскрипция](https://ru.wikipedia.org/wiki/Тайско-русская_практическая_транскрипция). Використовується як порівняльний приклад позиційних таблиць і передачі RTGS диграфів, не як норматив для української.
-5. **ISO:** [ISO 11940:1998](https://www.iso.org/standard/20574.html) — окрема орфографічна транслітерація; [ISO 11940-2:2007](https://www.iso.org/standard/29544.html) — спрощена транскрипційна система, що не розрізняє короткість/довготу.
+5. **ISO:** [ISO 11940:1998](https://www.iso.org/cms/live/live/en/sites/isoorg/contents/data/standard/02/05/20574.html?browse=tc) — окрема орфографічна транслітерація (станом на 2026-10-31 версія 1998 року ще чинна, але ISO готує перегляд ISO/DIS 11940); [ISO 11940-2:2007](https://www.iso.org/standard/29544.html) — спрощена транскрипційна система, що не розрізняє короткість/довготу.
 6. **IPA-first:** чинні src/thai_ukrainian/ukrainian_adaptation.py і src/thai_ukrainian/phonetic_result.py.
 
 ## 9. Статус доказів
