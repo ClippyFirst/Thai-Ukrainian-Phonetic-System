@@ -47,6 +47,9 @@ for (const [input, expected] of [
 }
 assert.equal(adaptRtgsToUkrainian("zoo").status, "unavailable", "unsupported RTGS letters must fail closed");
 assert.equal(adaptRtgsToUkrainian("h").output, "х", "standalone RTGS h is represented as Ukrainian х");
+assert.equal(adaptRtgsToUkrainian("rue").output, "ри");
+assert.equal(adaptRtgsToUkrainian("ri").output, "рі");
+assert.equal(adaptRtgsToUkrainian("rit").output, "ріт");
 assert.equal(adaptRtgsToUkrainian("kh").output, "кх");
 assert.equal(adaptRtgsToUkrainian("ph").output, "пх");
 assert.equal(adaptRtgsToUkrainian("th").output, "тх");
