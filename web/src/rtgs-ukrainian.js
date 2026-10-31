@@ -9,14 +9,17 @@ const DIGRAPHS = Object.freeze({
   ch: "ч",
   ng: "нг"
 });
-// Registered RTGS vowel/rime sequences. Match these before single letters;
-// otherwise ai would incorrectly become аі instead of the rime mapping ай.
+// RTGS rimes are adapted as syllabic units, not letter by letter.
+// Values follow the phonetic distinctions retained by the RTGS vowel table.
+const Y_ONSET_SEQUENCES = Object.freeze({
+  ya: "я", ye: "є", yi: "ї", yo: "йо", yu: "ю"
+});
 const RIME_SEQUENCES = Object.freeze({
-  ueai: "уеай", iao: "іао", aeo: "аео", oei: "оей",
-  uai: "уай", uea: "уеа",
-  ai: "ай", am: "ам", ao: "ао", io: "іо", ui: "уй",
-  eo: "ео", oi: "ой", ia: "іа", ue: "уе", oe: "ое",
-  ae: "ае", ua: "уа"
+  ueai: "иай", iao: "іо", aeo: "еу", oei: "ей",
+  uai: "уай", uea: "иа",
+  ai: "ай", am: "ам", ao: "ау", io: "іу", ui: "уй",
+  eo: "еу", oi: "ой", ia: "іа", ue: "и", oe: "е",
+  ae: "е", ua: "уа"
 });
 const LETTERS = Object.freeze({
   a: "а", b: "б", d: "д", e: "е", f: "ф", h: "х", i: "і",
@@ -33,6 +36,15 @@ export function adaptRtgsToUkrainian(romanized) {
   let i = 0;
   while (i < romanized.length) {
     const lower = romanized.slice(i).toLowerCase();
+    const yOnset = romanized[i].toLowerCase() === "y"
+      ? Object.keys(Y_ONSET_SEQUENCES).find(sequence => lower.startsWith(sequence))
+      : null;
+    if (yOnset) {
+      output.push(Y_ONSET_SEQUENCES[yOnset]);
+      rulesApplied.push("RTGS-ONSET-" + yOnset.toUpperCase());
+      i += yOnset.length;
+      continue;
+    }
     const rime = Object.keys(RIME_SEQUENCES).find(sequence => lower.startsWith(sequence));
     if (rime) {
       output.push(RIME_SEQUENCES[rime]);
