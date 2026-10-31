@@ -46,22 +46,22 @@ A practical string must never hide an unresolved analysis.
 
 The practical system inherits the repository's positional consonant model.
 
-Thai consonants are mapped according to their phonological value and syllable role, not according to their graphic identity alone.
+Thai consonants are mapped according to their phonological value and syllable role, not according to their graphic identity alone. In the current project convention, an apostrophe after an aspirated onset marks aspiration explicitly (for example, /kʰ/ → к\u0027); this is a transparent project-specific notation, not a claim about standard Ukrainian orthography.
 
 | Thai phonological value | Ukrainian practical output | Principle |
 |---|---|---|
-| /k/ | к | aspirated/unaspirated contrast is not represented by a separate Ukrainian consonant |
-| /kʰ/ | к | aspiration is not represented as х |
-| /tɕ/ | ч | nearest established Ukrainian affricate target |
-| /tɕʰ/ | ч | aspiration is not separately represented |
+| /k/ | к | unaspirated stop |
+| /kʰ/ | к' | project-specific apostrophe marker preserves aspiration; it is not an official Ukrainian norm |
+| /tɕ/ | ч | unaspirated affricate |
+| /tɕʰ/ | ч' | project-specific apostrophe marker preserves aspiration |
 | /s/ | с | direct phonological approximation |
 | /d/ | д | direct target |
-| /t/ | т | direct target |
-| /tʰ/ | т | aspiration is not separately represented |
+| /t/ | т | unaspirated stop |
+| /tʰ/ | т' | project-specific apostrophe marker preserves aspiration |
 | /n/ | н | direct target |
 | /m/ | м | direct target |
-| /p/ | п | direct target |
-| /pʰ/ | п | aspiration is not separately represented |
+| /p/ | п | unaspirated stop |
+| /pʰ/ | п\u0027 | project-specific apostrophe marker preserves aspiration |
 | /b/ | б | direct target |
 | /f/ | ф | direct target |
 | /j/ | й | consonantal/glide realization |
@@ -242,9 +242,9 @@ These examples illustrate the architecture rather than claiming corpus-wide vali
 | Thai | Structural interpretation | Practical Ukrainian |
 |---|---|---|
 | กา | /kaː/ | ка |
-| ขา | /kʰaː/ | ка |
-| คอ | /kʰɔː/ | ко |
-| พอ | /pʰɔː/ | по |
+| ขา | /kʰaː/ | к\u0027а |
+| คอ | /kʰɔː/ | к\u0027о |
+| พอ | /pʰɔː/ | п\u0027о |
 | งอ | /ŋɔː/ | нго* |
 | ไก่ | onset + /aj/ + tone | кай* |
 | ไกล | true onset cluster /kl/ + /aj/ | клай* |
