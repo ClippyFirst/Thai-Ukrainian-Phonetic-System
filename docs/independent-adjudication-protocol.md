@@ -12,6 +12,8 @@ Template: `data/benchmark/ipa-adjudication-template.tsv`.
 4. Reconcile disagreements only after independent labels are frozen; preserve both original labels and a written disagreement log.
 5. Do not count an output sourced from the same dictionary record as agreement with that record. The `เดิน` lexical override is explicitly circular for the source-attested comparison and is excluded from independent agreement counts.
 6. Keep CCOST files external until the archive, annotation manual, access terms, and intended non-commercial use have been checked. This repository does not contain CCOST audio or TextGrid files.
+7. The CCOST dataset record (DOI 10.5281/zenodo.17366698) and its LREC 2026 paper (DOI 10.63317/3ds35jijmgrx) are distinct records. The paper abstract reports ASR/forced-alignment followed by manual correction by phonetically trained native Thai speakers. Treat this as manually corrected corpus evidence, not proof of two independent blinded labels per item: audit the manual and annotation scope before using a row as a reference.
+8. If the project claims independent adjudication of its own output, two new reviewers must still annotate blindly and independently under this protocol; existing CCOST annotations may be used as external references, but must not be relabelled as ClippyFirst's independent adjudication. Preserve the dataset's CC BY-NC-SA 4.0 non-commercial/share-alike terms and do not copy its audio or TextGrid assets into this repository.
 
 ## Ukrainian target-form preference
 
