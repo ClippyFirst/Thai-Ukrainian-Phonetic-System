@@ -1,3 +1,17 @@
+# Continuation checkpoint — CCOST source provenance reconciliation (2026-10-31)
+
+- **Repository:** `ClippyFirst/Thai-Ukrainian-Phonetic-System`; default branch `main`.
+- **Starting main:** `8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8` (PR #168 closeout merge).
+- **Work branch:** `docs/mark-pr168-closeout-verified-20261031` was created from the same main commit for the source-reconciliation batch. Its four evidence/data/protocol/test changes were ported into the existing PR #169 closeout branch so the canonical audit documents and evidence update travel together. The temporary research branch is preserved; no branch was deleted.
+- **PR #169:** remains open against `main`; its prior exact-head CI [41241246352](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41241246352) passed all three jobs before the CCOST additions. The updated PR head must receive a fresh exact-head CI run before this batch can be marked DONE_VERIFIED.
+- **Research finding:** Zenodo dataset DOI [10.5281/zenodo.17366698](https://doi.org/10.5281/zenodo.17366698) is distinct from the LREC 2026 article DOI [10.63317/3ds35jijmgrx](https://doi.org/10.63317/3ds35jijmgrx). Zenodo declares CC BY-NC-SA 4.0 for the dataset. The paper abstract reports ASR/forced alignment with manual correction by phonetically trained native Thai speakers; it does not establish two independent blinded labels per item.
+- **Implementation:** updated `docs/evidence.md`, `data/corpus_sources.csv`, `docs/independent-adjudication-protocol.md`, and `tests/test_corpus_source_registry.py`; canonical validation matrix, audit register, machine-readable audit and handoff were updated in place. No audio/TextGrid assets were copied or redistributed.
+- **Branch inventory:** 183 refs at the latest two-page API read (research 25); historical refs preserved. The extra temporary branch is retained because branch deletion is not authorized/exposed.
+- **Remaining blockers:** exact-head CI for the updated PR; qualified independent Thai IPA/segmentation adjudication; independent Ukrainian-native target-form adjudication; manual browser/device and WCAG 2.2 AA review; owner configuration of branch protection and branch-retention policy. Local tests remain unavailable because the execution container cannot resolve `github.com`.
+- **Readiness:** engineering-verified research prototype; not release-ready for general linguistic-accuracy claims.
+
+---
+
 # Continuation checkpoint after PR #167 merge — 2026-10-31
 
 - **Repository:** `ClippyFirst/Thai-Ukrainian-Phonetic-System`; default branch `main`.
