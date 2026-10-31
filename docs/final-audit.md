@@ -1,3 +1,14 @@
+## Final audit update — 2026-10-31: CCOST provenance and exact-head verification
+
+- **DONE_VERIFIED — source identity and provenance:** Zenodo dataset record [10.5281/zenodo.17366698](https://doi.org/10.5281/zenodo.17366698) and LREC/ACL article [10.63317/3ds35jijmgrx](https://doi.org/10.63317/3ds35jijmgrx) are distinct records. The dataset record declares CC BY-NC-SA 4.0 and lists a 6.2 GB WAV/TextGrid archive, metadata, word list, sentences and a separate annotation manual.
+- **DONE_VERIFIED — bounded annotation claim:** the LREC 2026 abstract reports ASR/forced alignment followed by manual correction by phonetically trained native Thai speakers; it describes orthographic, word-, syllable-, phone-level and toneme annotations. It does not establish two independently produced blinded labels per item. CCOST is a manually corrected external source, not automatically independent gold against ClippyFirst.
+- **DONE_VERIFIED — repository implementation and CI:** the source evidence, CSV registry, adjudication protocol and regression assertions are committed on PR #169. Exact-head CI [41242513053](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41242513053) completed successfully on `a331131567f6e17f9dd5fe96c8624620f093880c`; all three jobs passed: `test`, `wheel-install-smoke`, and `master-artifact`.
+- **BLOCKED — manual inspection and row-level suitability:** Zenodo exposes `CCOST_manual.pdf` separately, but this session could not download it (Zenodo returned/triggered access throttling; the execution environment download also failed). Before any CCOST row becomes a benchmark reference, inspect the manual's actual phone/toneme conventions, correction workflow, annotator count/independence, task and speaker metadata, and any item-specific limitations. No audio/TextGrid files were downloaded or redistributed.
+- **Not claimed:** independent expert gold, acoustic accuracy, Thai G2P accuracy, Ukrainian target-form accuracy, or generalization beyond the described Standard Thai corpus.
+- **PR #169 remains open by design** under the user's PR-only integration preference. CI success verifies this PR head; it does not merge it to `main`.
+
+---
+
 ## Final audit update — 2026-10-31: CCOST source provenance reconciliation
 
 - **Evidence reconciliation added to PR #169:** the Zenodo dataset DOI [10.5281/zenodo.17366698](https://doi.org/10.5281/zenodo.17366698) is now distinguished from the associated LREC 2026 paper DOI [10.63317/3ds35jijmgrx](https://doi.org/10.63317/3ds35jijmgrx).
