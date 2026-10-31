@@ -480,7 +480,7 @@
       "id": "RTGS-MATRIX-PARITY-001",
       "status": "DONE_VERIFIED",
       "implementation": "PR #166 adds executable checks for all 41 RTGS rime rows, onset/coda mappings and digraph/rime sequence output against the runtime adapter.",
-      "acceptance": "Exact-head CI 41236181030, Web Static 41236181002, post-merge main CI 41239420358 and Pages 41239420395 passed."
+      "acceptance": "Exact-head CI 41236181030, Web Static 41236181002, post-merge main CI 41239420358, Web Static 41239420400 and Pages 41239420395 passed."
     },
     {
       "id": "CI-CONCURRENCY-001",
@@ -1958,7 +1958,8 @@
     "post_merge_web_static": 41239440643,
     "post_merge_web_static_status": "SUCCESS",
     "post_merge_pages": 41239420395,
-    "post_merge_pages_status": "SUCCESS — build and deploy passed."
+    "post_merge_pages_status": "SUCCESS — build and deploy passed.",
+    "post_merge_web_static_pr166": 41239420400
   },
   "latest_checkpoint": {
     "date": "2026-10-31",
@@ -1989,7 +1990,8 @@
       "pr166_pages": 41239420395,
       "pr167_ci": 41239440616,
       "pr167_web_static": 41239440643,
-      "status": "SUCCESS"
+      "status": "SUCCESS",
+      "pr166_web_static": 41239420400
     },
     "python_tests": 251,
     "python_subtests": 1164,
@@ -2040,6 +2042,7 @@
       ],
       "pages": 41239420395,
       "web_static": [
+        41239420400,
         41239440643
       ],
       "status": "SUCCESS — PR #166 post-merge CI/Pages and PR #167 post-merge CI/Web Static passed."
