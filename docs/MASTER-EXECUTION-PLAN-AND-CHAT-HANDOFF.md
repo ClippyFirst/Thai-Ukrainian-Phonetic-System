@@ -1,3 +1,16 @@
+# Continuation checkpoint — final audit refresh and open PRs (2026-10-31)
+
+- **Repository:** `ClippyFirst/Thai-Ukrainian-Phonetic-System`; default branch `main`.
+- **Starting main:** `8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8`.
+- **PR #169:** [CCOST provenance and audit closeout](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/169), branch `docs/mark-pr168-closeout-verified-20261031`. The code/data/test changes passed `test`, `wheel-install-smoke`, and `master-artifact` on prior head `a331131567f6e17f9dd5fe96c8624620f093880c` in run [41242513053](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41242513053). Final audit/handoff-only updates are now committed to the PR branch; exact-head CI for that final documentation head is pending. The final head SHA and run ID are kept in PR metadata/description to avoid a self-staling SHA in a file committed by that same branch.
+- **PR #170:** [remove duplicate UI assertions](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/170), branch `chore/remove-duplicate-ui-assertions-20261031`, head `1cdc3d7971498ce3312ff9a79b23ee84b8d917aa`. Removes two immediately repeated assertions in `web/tests/ui-contract.test.mjs`; CI [41243709726](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41243709726) and Web Static [41243709639](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41243709639) are queued. No runtime behavior changes.
+- **CCOST:** dataset DOI [10.5281/zenodo.17366698](https://doi.org/10.5281/zenodo.17366698), dataset license CC BY-NC-SA 4.0; article DOI [10.63317/3ds35jijmgrx](https://doi.org/10.63317/3ds35jijmgrx). Paper abstract reports manual correction by phonetically trained native Thai speakers, but not independent dual blinded labels. The separate annotation manual could not be retrieved in this session; do not select rows for a benchmark until it is inspected.
+- **Branch inventory:** 184 refs: docs 57, feat 27, fix 27, research 25, audit 8, ux 7, chore 8, unprefixed 7, test 5, ci 2, copy 2, design 2, perf 2, and one each finalize/polish/site/ui/web. No historical branch deleted.
+- **Other acceptance blockers:** independent Thai IPA/segmentation adjudication; two independent Ukrainian-native target-form reviews and disagreement log; manual browser/device and WCAG 2.2 AA review.
+- **Readiness:** engineering-verified research prototype, not release-ready for linguistic-accuracy claims. Both PRs remain open under the PR-only integration preference.
+
+---
+
 # Continuation checkpoint — current PR verification queue (2026-10-31)
 
 - **Repository:** `ClippyFirst/Thai-Ukrainian-Phonetic-System`; default branch `main`.
