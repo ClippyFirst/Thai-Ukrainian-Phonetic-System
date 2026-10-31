@@ -14,11 +14,17 @@ The typed `PhoneticResult` is that adapter boundary. It carries phonemic IPA and
 
 **Acceptance rule:** test the whole chain `Thai input → IPA intermediate → Ukrainian output`, including tests proving that changing/withholding the IPA result changes/withholds the Ukrainian result accordingly. Python and browser implementations must obey the same boundary and pass cross-runtime parity checks.
 
-The browser IPA adapter is maintained as a separately tested implementation. Cross-runtime parity tests remain required; passing a Python test alone does not establish browser parity. This is **not RTGS** and not a Thai-character → Ukrainian-character substitution table.
+The browser IPA adapter is maintained as a separately tested implementation. Cross-runtime parity tests remain required; passing a Python test alone does not establish browser parity. This phonetic pipeline is **not RTGS** and is not a Thai-character → Ukrainian-character substitution table. The browser also offers a separate optional RTGS-based Ukrainian practical-transcription mode; it does not alter the IPA-first adapter contract.
 
 ## Thai → Ukrainian methodology table
 
 The initial context-sensitive methodology matrix is documented in [`docs/ukrainian-transcription-methodology.md`](docs/ukrainian-transcription-methodology.md). It distinguishes onset/coda, phonemic vs surface IPA, contextual rules, tone/length, and evidence-gated cases. It is explicitly PARTIAL pending independent IPA and Ukrainian-form adjudication; it is not an official Ukrainian standard.
+
+## Optional RTGS-based Ukrainian output
+
+The browser also offers a second, explicitly separate response mode: **Thai → RTGS romanization → Ukrainian practical rendering of RTGS rimes and consonant sequences**. It is not generated from IPA and must not be interpreted as the phonetic mode. The adapter maps RTGS units such as kh/ph/th to кх/пх/тх, rimes such as ao to ау and ue to и, and contextual y-onsets separately. It preserves unsupported RTGS spans as explicit unresolved markers.
+
+The full side-by-side inventory tables for the phonetic IPA-first and RTGS-first methods are in [docs/ukrainian-correspondence-matrices.md](docs/ukrainian-correspondence-matrices.md). The RTGS method is a project-defined Ukrainian adaptation, not an official Ukrainian standard or ISO 11940.
 
 ## Whole-text operating modes
 
@@ -75,7 +81,7 @@ The model distinguishes:
 
 ## Whole-text browser output
 
-The browser interface exposes the same three-position strictness scale described above: 1/3 heuristic, 2/3 structural, and 3/3 conservative (default). The scale selects an existing processing policy; it is not a numeric confidence estimate. The interface presents a single copyable Ukrainian phonetic candidate for the full input alongside a single IPA intermediate output. Source whitespace and punctuation are preserved; syllables within a known word are joined in the Ukrainian candidate, and adjacent recognized Thai segments are separated for Ukrainian readability. Detailed per-segment and per-syllable diagnostics remain available in a collapsible section. Unsupported or unresolved Thai spans are explicitly marked in the continuous output rather than silently omitted or guessed. Reducing strictness can increase provisional output coverage, but it does not establish word boundaries or improve pronunciation accuracy. The interface does not imply that arbitrary long Thai prose has been linguistically validated or that every word is recognized.
+The browser interface exposes the same three-position strictness scale described above: 1/3 heuristic, 2/3 structural, and 3/3 conservative (default). The scale selects an existing processing policy; it is not a numeric confidence estimate. In the default phonetic mode, the interface presents a single copyable Ukrainian phonetic candidate for the full input alongside a single IPA intermediate output. In the optional RTGS mode, it presents the RTGS romanization and a separate Ukrainian rendering based on RTGS consonant and rime sequences. Source whitespace and punctuation are preserved; syllables within a known word are joined in the Ukrainian candidate, and adjacent recognized Thai segments are separated for Ukrainian readability. Detailed per-segment and per-syllable diagnostics remain available in a collapsible section. Unsupported or unresolved Thai spans are explicitly marked in the continuous output rather than silently omitted or guessed. Reducing strictness can increase provisional output coverage, but it does not establish word boundaries or improve pronunciation accuracy. The interface does not imply that arbitrary long Thai prose has been linguistically validated or that every word is recognized.
 
 ### Pasted article preprocessing
 
