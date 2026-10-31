@@ -110,6 +110,9 @@ for (const row of codaRows) {
     assert.equal(codaSource.get(grapheme), ipa, "coda IPA drift for " + grapheme);
   }
 }
+const rtgsOnsetMatrix = matrices.split("### 4.1 Початок складу")[1].split("### 4.2")[0];
+const rtgsOnsetGraphemes = [...rtgsOnsetMatrix.matchAll(/^\| ([ก-๛ ]+) \|/gm)].flatMap(match => match[1].trim().split(/\s+/));
+assert.deepEqual(new Set(rtgsOnsetGraphemes), new Set(consonantRegistry.map(row => row[1])), "RTGS onset matrix must inventory all source consonants");
 const rtgsCodaMatrix = matrices.split("### 4.2 Кінець складу")[1].split("## 5.")[0];
 const rtgsCodaGraphemes = [...rtgsCodaMatrix.matchAll(/^\| ([ก-๛ ]+) \|/gm)].flatMap(match => match[1].trim().split(/\s+/));
 assert.deepEqual(new Set(rtgsCodaGraphemes), new Set(consonantRegistry.filter(row => row[6] === "true").map(row => row[1])), "RTGS coda matrix must cover the same positional inventory");
