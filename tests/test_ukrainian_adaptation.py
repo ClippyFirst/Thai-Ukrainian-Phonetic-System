@@ -3,6 +3,7 @@ from dataclasses import replace
 from thai_ukrainian.api import analyze_syllable
 from thai_ukrainian.phonetic_result import PhoneticResult
 from thai_ukrainian.ukrainian_adaptation import adapt_phonetic_result
+from thai_ukrainian.ua_orthography import candidates_for_phonetic_result
 from thai_ukrainian.ua_orthography import candidates_for_ipa
 
 
@@ -155,3 +156,12 @@ def test_ipa_candidate_renderer_preserves_aspiration_with_apostrophe():
     assert candidates_for_ipa("tɕa") == ["ча"]
     assert candidates_for_ipa("tɕʰa") == ["ч'а"]
     assert candidates_for_ipa("ha") == ["га"]
+
+
+def test_secondary_orthography_candidates_require_supported_typed_ipa():
+    result = PhoneticResult.from_syllable_analysis(analyze_syllable("กา"))
+    assert candidates_for_phonetic_result(result) == ["ка"]
+    assert candidates_for_phonetic_result(replace(result, status="UNCERTAIN")) == []
+    assert candidates_for_phonetic_result(replace(result, status="UNSUPPORTED")) == []
+    assert candidates_for_phonetic_result(replace(result, phonemic_ipa=None)) == []
+    assert candidates_for_phonetic_result(replace(result, phonemic_ipa="k☃a")) == []
