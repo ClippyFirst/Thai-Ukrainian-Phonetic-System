@@ -8,8 +8,8 @@ actual constraints. It does not vendor or claim to install those tools.
 
 Before changing code, read the relevant parts of:
 
-- `README.md` — product scope and the non-negotiable Thai → typed IPA →
-  Ukrainian adaptation pipeline.
+- `README.md` — product scope, the primary Thai → typed IPA → Ukrainian
+  phonetic pipeline, and the explicitly separate optional RTGS mode.
 - `docs/MASTER-EXECUTION-PLAN-AND-CHAT-HANDOFF.md` — current continuation
   checkpoint and unresolved work.
 - `docs/validation-matrix.md` and `docs/final-audit.md` — task status and
@@ -52,12 +52,21 @@ a parallel execution plan or duplicate an existing module.
 
 ## Linguistic and evidence gates
 
-- Preserve the documented pipeline:
-  Thai orthography → structural analysis → Thai phonology → typed, inspectable
-  IPA → Ukrainian target adaptation → practical Ukrainian orthography.
-- The typed IPA result is the only input contract for Ukrainian adaptation.
-  Never add a parallel Thai-grapheme, vowel-ID, RTGS, or coda-to-Ukrainian
-  shortcut that independently determines the final Ukrainian output.
+- Preserve two explicitly distinct output contracts:
+  - **Phonetic mode (primary):** Thai orthography → structural analysis → Thai
+    phonology → typed, inspectable IPA → Ukrainian target adaptation → practical
+    Ukrainian orthography. The typed IPA result is the only input contract for
+    this phonetic Ukrainian adaptation.
+  - **Optional RTGS mode (romanization-based):** Thai orthography → the pinned,
+    provenance-documented RTGS implementation → RTGS Latin sequence → separately
+    labelled Ukrainian practical rendering of that sequence. This is an
+    explicitly requested parallel method, not a phonetic result or an IPA
+    adapter shortcut. It must not call or bypass the IPA adapter in phonetic mode.
+    Unsupported RTGS spans must fail closed, and the UI/docs must state that RTGS
+    loses distinctions such as tone and some vowel length.
+- Never let the RTGS route silently replace, feed, or contaminate the IPA-first
+  phonetic route. Keep both outputs, provenance, uncertainty, and method labels
+  inspectable and separately tested.
 - Keep phonemic IPA distinct from conservative surface IPA; preserve tone,
   length, syllable boundaries, provenance, and uncertainty.
 - Do not turn source-attested examples, source-annotated corpora, model output,
