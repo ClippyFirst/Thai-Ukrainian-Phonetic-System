@@ -15,7 +15,7 @@ const Y_ONSET_SEQUENCES = Object.freeze({
   ya: "я", ye: "є", yi: "ї", yo: "йо", yu: "ю"
 });
 const RIME_SEQUENCES = Object.freeze({
-  ueai: "иай", iao: "іо", aeo: "еу", oei: "ей",
+  ueai: "иай", iao: "іау", aeo: "еу", oei: "ей",
   uai: "уай", uea: "иа",
   ai: "ай", am: "ам", ao: "ау", io: "іу", ui: "уй",
   eo: "еу", oi: "ой", ia: "іа", ue: "и", oe: "е",
