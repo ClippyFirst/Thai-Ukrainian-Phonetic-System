@@ -1,3 +1,27 @@
+## 2026-10-31 — PRs #165–#167 integration closeout
+
+| Task / acceptance criterion | State | Evidence / next acceptance |
+|---|---|---|
+| Reconcile agent contract, canonical handoff, validation matrix and RTGS research contract | DONE_VERIFIED | PR [#165](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/165), squash-merged as `d27e8ec2d7f233d62c1bb849566e4756ebeceffe`; exact-head CI [41236396997](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41236396997) and post-merge main CI [41239400828](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41239400828) passed. |
+| Verify every RTGS rime row and onset/coda/sequence matrix against runtime adapter | DONE_VERIFIED | PR [#166](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/166), squash-merged as `e5738560bddd4c2b9d0557bd2ad84d58446f6252`; exact-head CI [41236181030](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41236181030), Web Static [41236181002](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41236181002), post-merge main CI [41239420358](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41239420358), and Pages [41239420395](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41239420395) passed. |
+| Cancel superseded CI/Web Static runs on non-main refs while preserving main runs | DONE_VERIFIED | PR [#167](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/167), squash-merged as `72a77cb42ad05c33274d70c4dcd9f20e07432b64`; exact-head CI [41237340250](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41237340250), Web Static [41237340267](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41237340267), post-merge main CI [41239440616](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41239440616), and Web Static [41239440643](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41239440643) passed. |
+| Final main CI test suite and package smoke | DONE_VERIFIED | Run [41239440616](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41239440616): 251 pytest tests and 1,164 subtests passed; Ruff, Python/browser parity (29 fixtures), diagnostics, generated-data drift and isolated wheel-install smoke passed. |
+| Independent master artifact | DONE_VERIFIED | Same run [41239440616](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41239440616): artifact SHA-256 `74f40079c2bae8a4f875fa8e2c860ac8a202bbb1bd8e4ae72d834f48d93adc09`; 3,086,353 bytes; independent download/hash check and assertions passed at 351,780 rows / 41 rime records. |
+| Exact post-merge Web Static validation | DONE_VERIFIED | Run [41239440643](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41239440643) passed. |
+| Historical branch retention | PARTIAL | 180 refs inventoried. No destructive pruning: unique historical work may exist, no owner-approved retention/archive policy exists, and the connected GitHub tools expose no branch-deletion action. Acceptance: commit-level provenance review plus explicit retention policy. |
+| Main branch protection | TODO — owner configuration | GitHub reports `protected=false`; no rulesets configured. Acceptance: owner configures required CI checks and decides review requirements. |
+| Independent Thai segmentation / phonology / IPA gold | BLOCKED / evidence-limited | Requires qualified independent Thai reviewers, agreed transcription layer, authorized acoustic assets where acoustic claims are made, dual labels and disagreement log. Issue #114. |
+| Ukrainian target-form adjudication | BLOCKED / evidence-limited | Requires two independent Ukrainian-native reviewers, predefined criteria, blinded judgments and adjudication log. Issue #114. |
+| Manual browser/device and WCAG 2.2 AA review | BLOCKED | Requires human keyboard, screen-reader, viewport and device review; automated static/served-content tests are not a substitute. Issue #114. |
+| TUD segmentation model | PARTIAL / research-only | Same-row comparison is diagnostic on source-annotated data; do not promote to production default without human error review, predeclared thresholds and independent licensed-domain evaluation. |
+| Thai tokenizer integration | DEFERRED | Requires separate provenance, license and browser-compatibility review; outside current Thai phonetic/RTGS completion scope. |
+| Local checkout/test execution | BLOCKED | Container DNS cannot resolve `github.com`; no local test result is claimed. GitHub Actions provides verification evidence. |
+
+**Current main:** `72a77cb42ad05c33274d70c4dcd9f20e07432b64`.  
+**Open PRs:** none. **Canonical external blocker:** issue #114.  
+**Readiness:** engineering-verified research prototype; not release-ready for general linguistic-accuracy claims.
+
+---
 ## 2026-10-31 — PR #164 RTGS-based Ukrainian output mode and full method matrices
 
 | Task / acceptance criterion | State | Evidence / next acceptance |
