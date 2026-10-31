@@ -61,6 +61,12 @@ const sequence = romanizeRtgsTokenSequence([{ kind: "thai", input: "พริก
 assert.equal(sequence[0].romanized, "phrik");
 assert.equal(sequence[0].status, "transliterated");
 
+const adapterSource = await readFile(new URL("../src/rtgs-ukrainian.js", import.meta.url), "utf8");
+assert.doesNotMatch(adapterSource, /adaptIpaToUkrainian|ipa-ua/, "RTGS → Ukrainian adapter must remain independent of IPA");
+assert.match(adapterSource, /RIME_SEQUENCES/);
+for (const [input, expected] of [["ya", "я"], ["ye", "є"], ["yi", "ї"], ["yo", "йо"], ["yu", "ю"]]) {
+  assert.equal(adaptRtgsToUkrainian(input).output, expected, input);
+}
 const source = await readFile(new URL("../src/rtgs-reference.js", import.meta.url), "utf8");
 assert.doesNotMatch(source, /adaptIpaToUkrainian|ipa-ua/);
 assert.doesNotMatch(source, /fetch\s*\(|XMLHttpRequest/);
