@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PRs #171–#177 are merged. The repository structure pass added documentation and script ownership maps, removed unused browser maps, introduced generated-artifact drift checks, derived Python consonant maps from the canonical registry, and corrected the typed-IPA manifest contract. Main snapshot 1e0c2b3432a49178c6f00fbfb631a0258a7cc6fc passed post-merge CI (41325122025) and Pages build/deploy (41325122035). PR #178 is the sole open documentation closeout. Engineering-verified research prototype; independent Thai/UA adjudication and manual accessibility review remain outstanding.",
+  "status": "PRs #171–#179 are merged. Cleanup includes documentation and module ownership, 24-script inventory, removal of unused browser maps, generated-artifact drift checks and deterministic CSVs, canonical consonant maps, typed-IPA manifest correction, and removal of the word/API reverse dependency. Final main 1431c565ff5c160da4944942d687bc30b2f8d0b2 passed post-merge CI 41326865977 and Pages 41326865964. Independent Thai/UA adjudication and manual accessibility review remain outstanding; engineering-verified research prototype, not release-ready for linguistic-accuracy claims.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -339,7 +339,7 @@
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
   "latest_code_checkpoint": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
   "readiness": "engineering-verified research prototype; not release-ready for independent Thai segmentation, IPA or Ukrainian target accuracy",
-  "latest_verified_repository_head": "1e0c2b3432a49178c6f00fbfb631a0258a7cc6fc",
+  "latest_verified_repository_head": "1431c565ff5c160da4944942d687bc30b2f8d0b2",
   "task_ledger": [
     {
       "id": "SEG-TRAIN-001",
@@ -2063,9 +2063,9 @@
       167
     ]
   },
-  "latest_full_repository_head": "1e0c2b3432a49178c6f00fbfb631a0258a7cc6fc",
-  "latest_full_repository_head_ci_run": 41325122025,
-  "latest_full_repository_head_web_validation_run": 41325122035,
+  "latest_full_repository_head": "1431c565ff5c160da4944942d687bc30b2f8d0b2",
+  "latest_full_repository_head_ci_run": 41326865977,
+  "latest_full_repository_head_web_validation_run": 41326865964,
   "latest_web_static_verified_code_commit": "72a77cb42ad05c33274d70c4dcd9f20e07432b64",
   "latest_web_static_verified_code_run": 41239440643,
   "ccost_source_reconciliation_2026_10_31": {
@@ -2106,27 +2106,27 @@
     "latest_pr_head_ci_status": "See PR #169 metadata; previous exact-head run 41244614135 passed all three jobs."
   },
   "current_branch_inventory": {
-    "branch_refs": 10,
+    "branch_refs": 12,
     "prefix_counts": {
       "chore": 2,
       "ci": 1,
-      "docs": 2,
+      "docs": 3,
       "fix": 1,
       "main": 1,
-      "refactor": 3
+      "refactor": 4
     },
     "as_of": "2026-11-01",
     "deletions": 0,
-    "note": "9 refs were listed before this documentation closeout branch was created; this branch is the tenth ref. No branch deletion was performed."
+    "note": "12 refs including this documentation continuation branch; 11 non-main refs. No branch deletion was performed."
   },
   "open_prs_current": [
     {
-      "number": 178,
-      "head": "See PR metadata; avoid self-referential SHA.",
+      "number": 180,
+      "head": "See PR metadata; this file is committed by the same PR and intentionally avoids a self-staling SHA.",
       "status": "OPEN",
       "exact_head_ci_run": null,
       "ci_status": "Pending exact-head CI; consult PR metadata and Actions.",
-      "scope": "repository cleanup audit/matrix/handoff closeout"
+      "scope": "final repository-cleanup verification ledger"
     }
   ],
   "latest_pr_head_source": "PR #178 metadata; this file is committed by that PR, so its head SHA and exact-head run are intentionally not duplicated here.",
@@ -2164,18 +2164,18 @@
     "readiness": "engineering-verified research prototype; not release-ready for general linguistic-accuracy claims"
   },
   "latest_exact_head_verification": {
-    "current_pr": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/178",
+    "current_pr": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/180",
     "current_head": "See PR metadata; this file is committed by the same PR and intentionally avoids a self-staling SHA.",
     "current_exact_head_ci_run": null,
     "current_exact_head_ci_status": "Pending exact-head CI; consult PR metadata and Actions.",
-    "latest_merged_pr": 177,
-    "latest_merged_pr_head": "65d2cc47d9bf34e744f26f1ca60cb8a960e609ef",
-    "latest_merged_pr_exact_head_ci_run": 41324845398,
+    "latest_merged_pr": 179,
+    "latest_merged_pr_head": "2e7369abc43e50aee475c4e7c220e1c6bfd504c4",
+    "latest_merged_pr_exact_head_ci_run": 41326533814,
     "latest_merged_pr_exact_head_ci_status": "SUCCESS — test, wheel-install-smoke, master-artifact",
-    "post_merge_main_sha": "1e0c2b3432a49178c6f00fbfb631a0258a7cc6fc",
-    "post_merge_main_ci_run": 41325122025,
+    "post_merge_main_sha": "1431c565ff5c160da4944942d687bc30b2f8d0b2",
+    "post_merge_main_ci_run": 41326865977,
     "post_merge_main_ci_status": "SUCCESS — test, wheel-install-smoke, master-artifact",
-    "post_merge_pages_run": 41325122035,
+    "post_merge_pages_run": 41326865964,
     "post_merge_pages_status": "SUCCESS — build, deploy"
   },
   "external_benchmark_research_2026_11_01": {
@@ -2247,7 +2247,7 @@
     "accuracy_claimed": false
   },
   "current_status_2026_11_01": {
-    "main_sha": "1e0c2b3432a49178c6f00fbfb631a0258a7cc6fc",
+    "main_sha": "1431c565ff5c160da4944942d687bc30b2f8d0b2",
     "main_unchanged": false,
     "merged_prs": [
       171,
@@ -2256,15 +2256,17 @@
       174,
       175,
       176,
-      177
+      177,
+      178,
+      179
     ],
     "open_prs": [
-      178
+      180
     ],
     "review_submissions_and_inline_threads": 0,
-    "branch_refs": 10,
-    "non_main_refs": 9,
-    "branch_inventory": "10 refs including this documentation branch; 9 non-main refs. No branch deleted; retention policy remains owner-controlled.",
+    "branch_refs": 12,
+    "non_main_refs": 11,
+    "branch_inventory": "12 refs including this documentation continuation branch; 11 non-main refs. No branch deleted.",
     "ccost_manual_inspection": "DONE_VERIFIED",
     "ccost_textgrid_schema_and_detailed_methods": "BLOCKED_EVIDENCE_LIMITED",
     "thai_ipa_segmentation_adjudication": "BLOCKED_EVIDENCE_LIMITED",
@@ -2275,8 +2277,8 @@
     "broad_test_fixture_redundancy_review": "PARTIAL",
     "historical_document_reorganization": "DEFERRED_PENDING_REFERENCE_AUDIT",
     "local_test_execution": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
-    "latest_merged_pr_exact_head_ci_run": 41324845398,
-    "post_merge_main_ci_run": 41325122025,
+    "latest_merged_pr_exact_head_ci_run": 41326533814,
+    "post_merge_main_ci_run": 41326865977,
     "post_merge_main_ci_status": "SUCCESS — test, wheel-install-smoke, master-artifact",
     "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY",
     "post_merge_pages_status": "SUCCESS — build, deploy"
@@ -2327,6 +2329,18 @@
         "merge_sha": "1e0c2b3432a49178c6f00fbfb631a0258a7cc6fc",
         "ci_run": 41324845398,
         "scope": "typed IPA mandatory adapter wording in master manifest"
+      },
+      {
+        "number": 178,
+        "merge_sha": "a5856b4539148f5347da91a719a07aead614decd",
+        "ci_run": 41326222309,
+        "scope": "final audit, matrix, JSON and handoff reconciliation"
+      },
+      {
+        "number": 179,
+        "merge_sha": "1431c565ff5c160da4944942d687bc30b2f8d0b2",
+        "ci_run": 41326533814,
+        "scope": "inject syllable analyzer to remove word/API reverse dependency"
       }
     ],
     "generated_artifact_findings": {
@@ -2344,7 +2358,8 @@
       "browser_low_class_derived_from_registry": true,
       "python_onset_ipa_derived_from_registry": true,
       "python_low_class_derived_from_registry": true,
-      "registry_parity_regression_added": true
+      "registry_parity_regression_added": true,
+      "word_analysis_dependency_injection": true
     },
     "task_ledger": {
       "documentation_navigation": "DONE_VERIFIED",
@@ -2361,16 +2376,21 @@
       "main_branch_protection": "TODO_OWNER_CONFIGURATION",
       "independent_thai_ua_adjudication": "BLOCKED_EVIDENCE_LIMITED",
       "ccost_textgrid_method_reconciliation": "BLOCKED_EVIDENCE_LIMITED",
-      "manual_accessibility_review": "BLOCKED"
+      "manual_accessibility_review": "BLOCKED",
+      "word_analysis_api_reverse_dependency": "DONE_VERIFIED"
     },
     "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
     "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY",
     "open_prs": [
-      178
+      180
     ],
     "post_merge_main_ci_run": 41325122025,
     "post_merge_main_ci_status": "SUCCESS — all three jobs",
     "post_merge_pages_run": 41325122035,
-    "post_merge_pages_status": "SUCCESS — build and deploy"
+    "post_merge_pages_status": "SUCCESS — build and deploy",
+    "post_cleanup_main_sha": "1431c565ff5c160da4944942d687bc30b2f8d0b2",
+    "post_cleanup_main_ci_run": 41326865977,
+    "post_cleanup_pages_run": 41326865964,
+    "post_cleanup_status": "SUCCESS — main CI (test, wheel-install-smoke, master-artifact) and Pages (build, deploy)"
   }
 }
