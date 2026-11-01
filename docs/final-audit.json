@@ -2577,5 +2577,62 @@
     "local_tests": "NOT_RUN_NO_LOCAL_CHECKOUT_OR_NETWORK",
     "linguistic_accuracy": "NOT_MEASURED",
     "runtime_pronunciation_changed": false
+  },
+  "acceptance_gates_2026_11_02": {
+    "thai_ipa_segmentation": {
+      "status": "BLOCKED",
+      "closure": "Two qualified independent Thai reviewers; frozen annotations; adjudication/disagreement log; separate segmentation review; licensed asset provenance for acoustic claims."
+    },
+    "ukrainian_practical_transcription": {
+      "status": "BLOCKED",
+      "closure": "Two independent Ukrainian-native reviewers; frozen criteria; original preferences; adjudication/disagreement log."
+    },
+    "ccost_wordlist": {
+      "status": "BLOCKED",
+      "closure": "Written curator/author clarification or official correction/erratum for A-D order-set discrepancy."
+    },
+    "ccost_textgrid": {
+      "status": "BLOCKED",
+      "closure": "Inspect released archive; verify real tier structure; enumerate complete X-SAMPA inventory; map layers and provenance."
+    },
+    "lotusdis": {
+      "status": "PARTIAL",
+      "license": "CC-BY-SA-4.0",
+      "asset_registry": "HEADER_ONLY",
+      "closure": "Immutable revision, asset IDs/URIs, SHA-256, speaker pseudonyms, microphones/channels, overlap, duration and exact intervals."
+    },
+    "wcag_2_2_aa": {
+      "status": "BLOCKED",
+      "closure": "Recorded manual keyboard, screen-reader, device and viewport testing with fixes and retests."
+    },
+    "dependency_reference_graph": {
+      "status": "PARTIAL",
+      "closure": "Full import/call/reference graph plus review of dynamic and generated entry points.",
+      "local_checkout": "BLOCKED_DNS_GITHUB_COM"
+    },
+    "test_redundancy": {
+      "status": "PARTIAL",
+      "closure": "Contract/layer-based overlap analysis and evidence no acceptance-coverage loss."
+    },
+    "branch_protection": {
+      "status": "TODO_OWNER_DECISION",
+      "closure": "Owner-selected required checks, review and bypass policy, then verified ruleset."
+    }
+  },
+  "latest_exact_head_verification_2026_11_02": {
+    "verified_code_head": "d2d3043b61710496f48851f232f69ba836c8e0bc",
+    "ci_run": "41356471529",
+    "ci_result": "PASSED_ALL_3_JOBS",
+    "web_static_run": "41356471455",
+    "web_static_result": "PASSED",
+    "external_vistec_run": "41356471544",
+    "external_vistec_result": "PASSED",
+    "regression_narrow_ipa_abstention": "INCLUDED_IN_FULL_PYTEST",
+    "red_test_observed": false,
+    "local_tests": "NOT_RUN_GITHUB_CLONE_FAILED_DNS",
+    "branch": "research/independent-adjudication-gates-20261101",
+    "commits_ahead_of_main": 165,
+    "commits_behind_main": 0,
+    "linguistic_accuracy": "NOT_MEASURED"
   }
 }
