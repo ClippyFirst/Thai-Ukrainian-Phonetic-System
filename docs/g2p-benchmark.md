@@ -174,3 +174,14 @@ No new corpus was downloaded, copied, or bundled in this update. No external sco
 - FLEURS dataset card: https://huggingface.co/datasets/google/fleurs
 - Mozilla Common Voice Thai 27.0 datasheet: https://mozilladatacollective.com/datasets/cmu5x5tj000f2nq0755h8qcy5
 - CCOST LREC 2026 paper: https://aclanthology.org/2026.lrec-1.247/
+
+
+## Independent annotation packets and score gate — 2026-11-01
+
+- `data/benchmark/ipa-adjudication-blind.tsv` is a separate 42-item reviewer packet generated from the frozen challenge set. It contains no engine output or source-dictionary IPA. Two Thai phoneticians annotate separate copies before seeing candidate outputs.
+- `data/benchmark/gold.tsv` now requires two distinct reviewer IDs, both original IPA labels, adjudicator/outcome, transcription layer, adjudication record, and source/license provenance before a row can be marked `ADJUDICATED`.
+- The scorer refuses to combine broad phonemic and broad surface IPA in one run and reports results by profile/stratum. A non-empty source dictionary record is not enough to pass the gold gate.
+- `data/benchmark/ukrainian-target-preference-blind.tsv` enables six candidate-blind Ukrainian adaptation judgments against source-attested dictionary IPA. This is conditional adaptation preference, not a Thai IPA gold set or end-to-end score.
+- Current independent gold count remains **0**. The benchmark must print `NOT_MEASURED` until actual reviewer records are completed and reconciled.
+
+CCOST remains the preferred licensed acoustic source candidate. Its published abstract reports manual correction by phonetically trained native Thai speakers, but the actual TextGrid tier schema and transcription-layer mapping must be checked before use. The dataset is CC BY-NC-SA 4.0; no audio/TextGrid files are bundled here.

@@ -175,3 +175,20 @@ A reproducible external evaluation path has been added for VISTEC-TP-TH-2021, a 
 The adapter reads the annotated submissionText field, splits pipe-delimited tokens, strips only the documented <ne> and <msp...> annotation tags, and requires exact reconstruction. It intentionally evaluates the annotation's text, not the distinct raw questionText field. The report records the source commit/blob, license, row count, and evidence grade. The external workflow checks out the exact source snapshot, verifies the Git blob SHA and declared license, trains the research-only TUD model from its separate pinned training corpus, evaluates both segmenters, and uploads a report without bundling the third-party dataset.
 
 **Status: IMPLEMENTED; exact workflow run pending.** Until the workflow succeeds, no VISTEC metric is claimed. Even after success, these are metrics against the source's annotations, not independent expert re-adjudication by this project. Keep Wisesight and VISTEC reports separate because annotation conventions and domains differ; neither set may be used to tune the TUD model or production dictionary.
+
+
+## Independent adjudication and gold promotion gate — 2026-11-01
+
+The 42 frozen challenge prompts now have a **blind Thai review packet** at `data/benchmark/ipa-adjudication-blind.tsv`. It is bound to the challenge JSONL by exact ID, Thai input, stratum and probe; all reviewer fields must remain blank in the committed template. CI checks this invariant. Each expert works on a separate copy, blind to engine output and to the other reviewer.
+
+The packet records lexical reading, word and syllable boundaries, phonemic IPA, optional broad surface IPA, tone categories, vowel length, final glottal status, transcription level, uncertainty and abstention rationale. Narrow acoustic IPA requires an authorized recording reference and time interval. The review validator enforces exact item coverage, one stable reviewer ID per file, qualification reference, ISO review date, explicit abstention and valid acoustic intervals. Pair validation requires distinct reviewer IDs and matching item coverage; it does not automatically resolve disagreements.
+
+The IPA gold registry now records both independent IPA labels, reviewer IDs, adjudicator, outcome, transcription layer, source/license and adjudication record. The scorer rejects one-reviewer labels, inconsistent agreement/disagreement declarations, missing provenance and mixed phonemic/surface layers. It reports metrics separately by profile. **The current gold registry still has zero adjudicated rows, so IPA accuracy remains NOT MEASURED.**
+
+The Ukrainian preference packet `data/benchmark/ukrainian-target-preference-blind.tsv` is candidate-blind but uses six source-attested dictionary IPA references. Its purpose is to review Ukrainian adaptation conditional on those IPA strings, not to adjudicate Thai pronunciation. Every row remains `SOURCE_ATTESTED_NOT_GOLD`; this work cannot be described as end-to-end accuracy. Reviewers independently record preferred Ukrainian forms, syllable-boundary policy, tone-rendering policy, uncertainty and rationale.
+
+## CCOST suitability and remaining access gate
+
+The CCOST paper describes 49 Standard Thai speakers, about seven hours of spontaneous speech, repeated controlled word-list/sentence material, and orthographic, word, syllable, phone and toneme annotations. Zenodo lists a 6.2 GB audio/TextGrid archive under CC BY-NC-SA 4.0. The repository does not bundle the archive. Before use, the released TextGrid tier names and label inventory must be inspected directly and reconciled with the chosen target layer. The research-assistant manual alone is not a complete released-tier specification. Preserve non-commercial/share-alike obligations; no CCOST labels are currently counted as project gold.
+
+Primary references: [LREC 2026 CCOST paper](https://aclanthology.org/2026.lrec-1.247/), [Zenodo CCOST v1.0](https://zenodo.org/records/17366698), [Tingsabadh & Abramson, Thai (JIPA 1993)](https://doi.org/10.1017/S0025100300004746).
