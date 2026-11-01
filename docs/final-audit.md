@@ -1315,3 +1315,10 @@ The first run with the new coverage tests completed master-table generation and 
 - Broad phonemic reviews must not populate the narrow field. The IPA gold scorer continues to score only its declared broad phonemic or broad surface layers; narrow acoustic labels are retained as a separate evidence layer and are not silently mixed into that score.
 - Added tests for missing narrow IPA, missing audio provenance and syllable-count mismatch. CI now validates both the original 42-item blind packet and the six-item supplemental regression packet.
 - A CI failure on the latest pre-fix head was a faulty workflow invariant: it counted a non-circular but withheld row as independently comparable. The report logic was already correct; the workflow now applies the same completeness condition as the report and a unit test locks that denominator semantics.
+
+
+## Acoustic-source permission gate — 2026-11-01
+
+- Added `audio_source_id` to the Thai review packet. Narrow acoustic labels now require a source registry entry that is VERIFIED, has an exact registered URL/license, and explicitly permits `ACOUSTIC_PHONETICS_RESEARCH`, in addition to the bracketed `narrow_ipa`, asset ID and positive interval.
+- The CLI loads the canonical source registry for completed reviews and reviewer pairs. A blocked source such as current CCOST cannot be used for narrow acoustic review until its archive/tier/label mapping and permitted scope are verified.
+- Added unit tests for unregistered audio, allowed registered test audio, and rejection of blocked CCOST. This is a provenance gate; it does not validate the phonetic correctness of the narrow IPA.
