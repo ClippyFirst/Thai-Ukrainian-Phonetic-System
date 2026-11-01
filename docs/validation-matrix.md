@@ -1261,3 +1261,13 @@ The fix and test from draft PR #181 are included in this branch. A structurally 
 | Establish independent IPA gold and measure phonetic accuracy | BLOCKED / source and reviewer dependency | No currently approved source for IPA gold; CCOST remains blocked pending tier schema and licensed access. Accuracy remains NOT MEASURED. |
 
 The source registry does not itself create gold data. Wisesight and VISTEC remain source-annotated segmentation diagnostics; Wiktionary and Thai G2P v4 remain reference-only for IPA. No reviewer identity or qualification was fabricated.
+
+
+## Annotation-layer and denominator hardening — 2026-11-01
+
+| Task | State | Evidence / boundary |
+|---|---|---|
+| Separate narrow acoustic IPA from broad phonemic IPA | DONE_VERIFIED after exact-head CI | Added `narrow_ipa`; narrow review requires square-bracketed label, syllable alignment and audio/time provenance. Broad phonemic IPA remains separate; narrow labels are not scored by the broad IPA scorer. |
+| Validate both frozen Thai blind packets in CI | DONE_VERIFIED after exact-head CI | CI validates the 42-item base packet and the separate six-item user-regression supplement against their exact frozen source prompts. |
+| Correct independently-comparable denominator invariant | DONE_VERIFIED after exact-head CI | The summary excludes both circular overrides and incomplete/withheld engine outputs; a focused regression test covers both exclusion conditions. |
+| Independent Thai expert and Ukrainian-native submissions | BLOCKED / external human dependency | Reviewer registry remains empty. No identity, consent, qualification, or linguistic annotation is fabricated. |
