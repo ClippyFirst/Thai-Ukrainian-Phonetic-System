@@ -11,6 +11,22 @@ class CoreTests(unittest.TestCase):
         self.assertEqual(sum(v.class_=="high" for v in x.values()),11)
         self.assertEqual(sum(v.class_=="low" for v in x.values()),24)
 
+
+    def test_phonology_consonant_maps_match_canonical_inventory(self):
+        from thai_ukrainian.phonology import LOW_SINGLE, ONSET_IPA
+
+        inventory = load_consonants()
+        self.assertEqual(
+            ONSET_IPA,
+            {grapheme: consonant.onset_ipa for grapheme, consonant in inventory.items()
+             if consonant.onset_ipa},
+        )
+        self.assertEqual(
+            LOW_SINGLE,
+            {grapheme for grapheme, consonant in inventory.items()
+             if consonant.class_ == "low"},
+        )
+
     def test_tone_rules(self):
         cases=[
             ("mid","live","long",None,"mid"),
