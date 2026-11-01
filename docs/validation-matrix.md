@@ -1287,3 +1287,8 @@ The source registry does not itself create gold data. Wisesight and VISTEC remai
 | Select and pin individual LOTUSDIS audio assets | TODO / asset-level evidence | Requires exact dataset revision, file hash, asset ID, speaker pseudonym, mic/channel, non-overlap/near-field review and time interval. No assets downloaded or bundled. |
 | Use CCOST as controlled tonal/phonetic source | BLOCKED / evidence-limited | CC BY-NC-SA 4.0, A-D list mismatch and unreconciled TextGrid tier/label mapping remain. |
 | Use Common Voice Thai as a shared review packet | DEFERRED | CC0 dataset card separately prohibits re-hosting/re-sharing; no phone/toneme gold. |
+
+
+| Task | State | Evidence / boundary |
+|---|---|---|
+| Enforce file-level audio provenance, not just a non-empty asset string | DONE_VERIFIED after exact-head CI | Added `audio-assets.tsv` manifest; review validator requires exact source match, VERIFIED asset, SHA-256, speaker/mic metadata, non-overlap and interval within duration. Manifest is header-only until actual samples are pinned. |
