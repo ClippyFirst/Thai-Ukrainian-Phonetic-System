@@ -1,3 +1,18 @@
+## Repository structure cleanup checkpoint — 2026-11-01
+
+| Task / acceptance criterion | State | Evidence / next acceptance |
+|---|---|---|
+| Add repository documentation navigation and ownership guide | DONE_VERIFIED | PR [#171](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/171), squash-merged as `85ced007f6fab7572a78380553ebfe42ccb18e07`; exact-head CI [41310072386](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41310072386) passed `test`, `wheel-install-smoke`, and `master-artifact`. |
+| Reconcile architecture document with actual IPA-first output path and code ownership | PARTIAL pending exact-head CI | Updated `docs/architecture.md` to distinguish primary typed-IPA Ukrainian adaptation from secondary feature-space candidate ranking, map Python/browser module ownership, and document the separate RTGS route. |
+| Refresh current repository snapshot in documentation guide | DONE_VERIFIED — content update | `docs/README.md` now records the PR #171 merge SHA and exact-head CI rather than the superseded pre-merge main SHA. |
+| Perform destructive module/data/script moves or delete suspected legacy code | DEFERRED pending call-graph and reference evidence | Current modules have distinct boundaries; Python/browser duplication is cross-runtime parity, not automatically dead duplication. No module or dataset was moved/deleted without full reference and generated-artifact validation. |
+| Establish complete technical-debt inventory across Python, browser, scripts, tests, data and docs | PARTIAL | Initial ownership and entry-point review completed. Remaining acceptance: full caller/reference inventory, generated-data ownership audit, duplicate test semantics review, and exact test-backed refactors. |
+| Independent linguistic and accessibility release gates | BLOCKED / evidence-limited | Qualified Thai/UA adjudication and human browser/device/WCAG review remain external requirements; engineering CI cannot substitute for them. |
+
+**Main at start:** `85ced007f6fab7572a78380553ebfe42ccb18e07`. **Work branch:** `chore/architecture-ownership-20261101`. No runtime behavior, linguistic data, or generated artifacts changed in this batch.
+
+---
+
 ## External benchmark research refresh — 2026-11-01
 
 | Task / acceptance criterion | State | Evidence / next acceptance |
