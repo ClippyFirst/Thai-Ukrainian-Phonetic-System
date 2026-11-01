@@ -50,9 +50,11 @@ Reviewers should independently record whether the upstream tokenization is lingu
 The external acceptance dependency remains: qualified human reviewers must actually fill and sign off the packet. CI can verify sampling reproducibility, provenance, and lossless text reconstruction only; it cannot perform linguistic adjudication.
 
 
-## CCOST manual review — scope result (2026-11-01)
+## CCOST manual and paper review — scope result (2026-11-01)
 
-`CCOST_manual.pdf` is now inspected. The file documents an operational research-assistant workflow, not a complete annotation specification. It directs human correction of ASR transcripts, Thai orthographic normalization, Praat boundary refinement and BAS MAUS alignment. The manual's illustrated pipeline uses `OCTRA_1` as an input tier and `sampa` as MAUS output symbols, but this alone does not prove that the released TextGrids contain a fully documented SAMPA or IPA transcription tier. It does not specify the final TextGrid tier inventory, toneme label scheme, uncertainty handling, or independent double annotation. The manual-inspection task is complete; CCOST benchmark acceptance remains blocked until the released TextGrid schema and detailed paper methods are reconciled with the target transcription layer.
+`CCOST_manual.pdf` documents an operational research-assistant workflow: ASR transcript correction, Thai orthographic normalization, Praat boundary refinement and BAS MAUS alignment. The manual's illustrated pipeline uses `OCTRA_1` and `sampa`, but it is not the complete released-tier specification. The LREC 2026 paper supplies the intended map: ORT (orthographic word), KAN (canonical word pronunciation), KAS (canonical syllabified pronunciation), MAU (phonetic segment), MAS (phonemic syllable) and TRN (orthographic utterance transcript). It states that phonemic and phonetic labels use X-SAMPA and tone suffixes `_1=Mid`, `_2=Low`, `_3=Falling`, `_4=High`, `_5=Rising`.
+
+The paper reports manual correction by trained native Thai research assistants and spot checks by senior team members, but explicitly says formal inter-annotator agreement measures were not collected. The paper's intended schema is now documented; actual released TextGrid tier conformance, exact X-SAMPA inventory and item-level metadata remain blocked until the archive is inspected. CCOST must not be relabelled as independent double-review gold.
 
 ## Blind Thai phonetic packet — operational procedure (2026-11-01)
 

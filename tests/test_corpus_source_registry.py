@@ -6,6 +6,17 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class CorpusSourceRegistryTests(unittest.TestCase):
+    def test_ccost_wordlist_is_separately_catalogued_as_prompts_only(self):
+        path = ROOT / "data" / "corpus_sources.csv"
+        with path.open("r", encoding="utf-8-sig", newline="") as stream:
+            rows = {row["source_id"]: row for row in csv.DictReader(stream)}
+        row = rows["CORP-CCOST-WORDLIST"]
+        self.assertEqual(row["type"], "controlled_wordlist")
+        self.assertEqual(row["license_or_access"], "CC BY-NC-SA 4.0; non-commercial use only")
+        self.assertIn("orthographic prompts only", row["annotation"])
+        self.assertIn("no IPA", row["notes"])
+        self.assertIn("source-order consistency must be audited", row["notes"])
+
     def test_ccost_license_and_textgrid_access_are_explicit(self):
         path = ROOT / "data" / "corpus_sources.csv"
         with path.open("r", encoding="utf-8-sig", newline="") as stream:
