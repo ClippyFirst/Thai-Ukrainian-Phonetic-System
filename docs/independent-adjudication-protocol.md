@@ -249,3 +249,12 @@ The official Zenodo preview was reconstructed byte-for-byte from its published t
 - The generator correctly returns `SOURCE_ORDER_DISCREPANCY_REQUIRES_RECONCILIATION`, marks the packet `scoreable: false`, and emits a 208-prompt union locally. No CCOST-derived files or word strings are committed.
 
 **Decision:** do not freeze the 208-prompt packet or score it yet. The source author/data curator must confirm whether the two substitutions are intentional stimulus differences, spelling variants, or source-file errors and, if necessary, publish a corrected wordlist/erratum. The CC BY-NC-SA 4.0 attribution and non-commercial/share-alike conditions remain in force. This audit verifies the public wordlist file only; it does not inspect the 6.2 GB audio/TextGrid archive or establish phonetic gold.
+
+
+## Corpus selection and audio sample requirements
+
+- Controlled baseline: the 42-item project-authored Thai packet plus six supplemental regression prompts. These contain no audio and are suitable for blind lexical, word/syllable, broad phonemic IPA, tone-category, vowel-length and final-glottal review.
+- `CORP-LOTUSDIS` is registered as an audio/transcript source under CC BY-SA 4.0 for fresh expert annotation. It is **not** supplied phone/toneme gold. Before use, pin the exact dataset revision and individual asset; record speaker pseudonym, microphone/channel, near-field status, overlap status, exact time interval and file hash. Use only clear single-speaker segments for narrow acoustic review. The source record alone does not establish Standard Thai dialect representativeness.
+- CCOST remains BLOCKED for acoustic/narrow labels until the actual TextGrid tier/label mapping and source-order discrepancy are reconciled. Its CC BY-NC-SA 4.0 license must be acceptable for the intended use.
+- Common Voice Thai v27.0 is not bundled or re-hosted in reviewer packets because its data card forbids dataset re-hosting/re-sharing; its CC0 status does not remove those separate access terms.
+- Asset-level manifest and sample selection remain TODO. A VERIFIED corpus source does not mean a particular file/interval has been inspected or accepted as gold.
