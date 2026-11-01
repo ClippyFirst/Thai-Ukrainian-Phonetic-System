@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PRs #165–#168 are merged. PR #169's code/data/test changes passed all three CI jobs on a331131567f6e17f9dd5fe96c8624620f093880c in 41242513053; the final audit/handoff-only update is on the current PR branch and its exact-head CI is pending. PR #170 test-only cleanup has CI 41243709726 and Web Static 41243709639 queued. CCOST manual review, independent Thai/UA adjudication and manual accessibility review remain outstanding; engineering-verified research prototype, not release-ready for linguistic-accuracy claims.",
+  "status": "PRs #165–#168 are merged. PR #169 head e31db6b8cfcaff925c9a1e0196c399ab315b8665 passed all three exact-head CI jobs in run 41289728755. CCOST_manual.pdf was inspected; the operational workflow is documented, but the released TextGrid tier/phone/toneme schema and independent annotation protocol remain unverified. Independent Thai/UA adjudication and manual accessibility review remain outstanding; engineering-verified research prototype, not release-ready for linguistic-accuracy claims.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -2240,5 +2240,29 @@
       "common_voice_thai": "ASR/read-speech resource; not phone-level IPA gold; respect no-speaker-identification and no-redistribution constraints"
     },
     "outcome": "No new dataset downloaded, copied, bundled or scored; no accuracy claim."
+  },
+  "ccost_manual_review_2026_11_01": {
+    "status": "DONE_VERIFIED_document_inspection",
+    "source": "https://zenodo.org/api/records/17366698/files/CCOST_manual.pdf/content",
+    "record": "https://zenodo.org/records/17366698",
+    "pages": 19,
+    "md5": "caecb20d26e8458b20c7c269ca22b59e",
+    "findings": [
+      "RA Manual for BKK Thai Tone Project",
+      "OCTRA human correction of Google ASR transcript with Thai-script normalization",
+      "Praat transcript and boundary correction; <usb> for speaker noise",
+      "BAS pipeline CHUNKPREP -> G2P -> MAUS -> PHO2SYL",
+      "OCTRA_1 input tier and illustrated MAUS sampa output configuration"
+    ],
+    "not_established": [
+      "final released TextGrid tier schema",
+      "complete phone/toneme symbol inventory",
+      "tone/toneme label scheme",
+      "uncertainty/disagreement policy",
+      "two independent blinded annotations per item"
+    ],
+    "remaining_acceptance": "Inspect released TextGrid schema and detailed LREC paper methods; reconcile target transcription layer before selecting benchmark rows.",
+    "corpus_audio_or_textgrid_downloaded": false,
+    "accuracy_claimed": false
   }
 }
