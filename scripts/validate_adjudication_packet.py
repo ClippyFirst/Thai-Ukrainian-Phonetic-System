@@ -68,7 +68,15 @@ def main() -> int:
             if args.reviewer_b_packet is None:
                 raise ValueError("--reviewer-b-packet is required in pair mode")
             reviewer_b = read_tsv(args.reviewer_b_packet)
+            challenge = read_challenge(args.challenge)
             result = validate_independent_pair(rows, reviewer_b)
+            expected_ids = [row["id"] for row in challenge]
+            result["reviewer_a"] = validate_review_packet(
+                rows, expected_ids, result["reviewer_a_id"]
+            )
+            result["reviewer_b"] = validate_review_packet(
+                reviewer_b, expected_ids, result["reviewer_b_id"]
+            )
             result["reviewer_a"] = validate_review_packet(
                 rows, [row["id"] for row in challenge], result["reviewer_a_id"]
             )
