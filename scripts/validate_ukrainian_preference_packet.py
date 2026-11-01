@@ -15,13 +15,15 @@ from thai_ukrainian.adjudication import (
 )
 
 
-def read_tsv(path: Path, required: tuple[str, ...] | list[str]) -> list[dict[str, str]]:
+def read_tsv(
+    path: Path, required: tuple[str, ...] | list[str], *, exact: bool = True
+) -> list[dict[str, str]]:
     with path.open("r", encoding="utf-8-sig", newline="") as stream:
         reader = csv.DictReader(stream, delimiter="\t")
         fields = set(reader.fieldnames or [])
         missing = set(required) - fields
         unexpected = fields - set(required)
-        if missing or unexpected:
+        if missing or (exact and unexpected):
             raise ValueError(
                 f"{path}: columns mismatch; missing={sorted(missing)}, unexpected={sorted(unexpected)}"
             )
@@ -44,12 +46,15 @@ def main() -> int:
             source = read_tsv(
                 args.source,
                 ("id", "thai", "phonemic_ipa", "source_id", "source_url", "license"),
+                exact=False,
             )
             result = validate_ukrainian_blind_packet(packet, source)
         elif args.mode == "review":
             result = validate_ukrainian_review_packet(
                 packet, [row["id"] for row in read_tsv(
-                    args.source, ("id", "thai", "phonemic_ipa", "source_id", "source_url", "license")
+                    args.source,
+                    ("id", "thai", "phonemic_ipa", "source_id", "source_url", "license"),
+                    exact=False,
                 )], args.reviewer_id
             )
         else:
