@@ -2023,3 +2023,6 @@ This note supersedes the preceding documentation-only status. The branch now cha
 
 
 - Audio asset records must use an immutable dataset revision and absolute HTTP(S) asset URI; moving aliases such as `main` or `latest` are rejected. SHA-256, speaker pseudonym, mic/channel, overlap state and duration remain mandatory.
+
+
+- Fixed a pre-existing malformed row in `data/corpus_sources.csv` (unquoted commas in the TUD record) and added a parser-level schema/unique-ID regression test.
