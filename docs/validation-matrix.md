@@ -22,7 +22,7 @@
 | Independent Thai IPA/segmentation adjudication | BLOCKED / evidence-limited | Qualified independent Thai reviewers, frozen annotation protocol, dual labels and disagreement log; issue #114. |
 | Ukrainian target-form adjudication | BLOCKED / evidence-limited | Two independent Ukrainian-native reviewers, predeclared criteria and adjudication log; issue #114. |
 | Manual browser/device and WCAG 2.2 AA review | BLOCKED | Human keyboard, screen-reader, viewport and device review with recorded findings; issue #114. |
-| Historical branch retention | PARTIAL | Earlier inventory recorded 184 refs; the current branch listing is paginated and not yet fully reconciled to a commit-level inventory. No destructive pruning without provenance review and owner-approved retention policy. |
+| Historical branch retention | PARTIAL | Current branch listing reconciled across both API pages: 184 refs total (100 + 84). Retention/disposition remains unreviewed at commit level; no destructive pruning without provenance review and owner-approved retention policy. |
 
 **Current main:** `8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8`.  
 **Readiness:** engineering-verified research prototype; not release-ready for general linguistic-accuracy claims.
