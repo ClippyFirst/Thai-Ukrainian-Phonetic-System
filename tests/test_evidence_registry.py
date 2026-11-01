@@ -4,8 +4,8 @@ import unittest
 from pathlib import Path
 
 from thai_ukrainian.evidence_registry import (
-    load_reviewer_registry, load_source_registry,
-    validate_reviewer_reference, validate_source_reference,
+    load_audio_asset_registry, load_reviewer_registry, load_source_registry,
+    validate_audio_asset_reference, validate_reviewer_reference, validate_source_reference,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -107,6 +107,44 @@ class EvidenceRegistryTests(unittest.TestCase):
                 source_id, source["source_url"], "MIT", "BROAD_SURFACE_IPA_GOLD_INPUT",
                 registry, row_id="TH-G2P-SUP-001",
             )
+
+
+    def test_audio_asset_registry_requires_verified_source_hash_and_metadata(self):
+        sources = load_source_registry(ROOT / "data/benchmark/source-registry.tsv")
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "assets.tsv"
+            fields = [
+                "asset_id", "source_id", "dataset_revision", "asset_uri", "file_sha256",
+                "speaker_ref", "microphone", "overlap_status", "duration_seconds",
+                "verification_status", "verified_by", "verified_at", "notes",
+            ]
+            row = {
+                "asset_id": "LOTUS-TEST-001", "source_id": "CORP-LOTUSDIS",
+                "dataset_revision": "45145d7", "asset_uri": "https://example.org/audio.wav",
+                "file_sha256": "a" * 64, "speaker_ref": "speaker-01",
+                "microphone": "NEAR_FIELD", "overlap_status": "NONE",
+                "duration_seconds": "4.2", "verification_status": "VERIFIED",
+                "verified_by": "project-source-audit", "verified_at": "2026-11-01",
+                "notes": "Synthetic unit-test asset; no real recording.",
+            }
+            write_registry(path, fields, [row])
+            assets = load_audio_asset_registry(path, sources)
+            validate_audio_asset_reference("LOTUS-TEST-001", "CORP-LOTUSDIS", "0.2", "1.5", assets, row_id="review-1")
+            with self.assertRaisesRegex(ValueError, "does not match audio_source_id"):
+                validate_audio_asset_reference("LOTUS-TEST-001", "CORP-CCOST", "0.2", "1.5", assets, row_id="review-1")
+            with self.assertRaisesRegex(ValueError, "within the registered asset duration"):
+                validate_audio_asset_reference("LOTUS-TEST-001", "CORP-LOTUSDIS", "0.2", "5.0", assets, row_id="review-1")
+
+    def test_empty_audio_asset_registry_is_valid_but_contains_no_usable_assets(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "assets.tsv"
+            write_registry(path, [
+                "asset_id", "source_id", "dataset_revision", "asset_uri", "file_sha256",
+                "speaker_ref", "microphone", "overlap_status", "duration_seconds",
+                "verification_status", "verified_by", "verified_at", "notes",
+            ], [])
+            sources = load_source_registry(ROOT / "data/benchmark/source-registry.tsv")
+            self.assertEqual(load_audio_asset_registry(path, sources), {})
 
     def test_empty_reviewer_registry_is_valid_but_verifies_no_experts(self):
         self.assertEqual(load_reviewer_registry(ROOT / "data/benchmark/reviewer-qualifications.tsv"), {})
