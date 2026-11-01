@@ -1292,3 +1292,8 @@ The source registry does not itself create gold data. Wisesight and VISTEC remai
 | Task | State | Evidence / boundary |
 |---|---|---|
 | Enforce file-level audio provenance, not just a non-empty asset string | DONE_VERIFIED after exact-head CI | Added `audio-assets.tsv` manifest; review validator requires exact source match, VERIFIED asset, SHA-256, speaker/mic metadata, non-overlap and interval within duration. Manifest is header-only until actual samples are pinned. |
+
+
+| Task | State | Evidence / boundary |
+|---|---|---|
+| Require immutable dataset revisions and absolute asset URIs | DONE_VERIFIED after exact-head CI | Audio asset manifest rejects moving aliases such as `main`/`latest` and requires an absolute HTTP(S) asset URI; file SHA-256 and duration are also mandatory. |
