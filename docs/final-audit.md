@@ -1,8 +1,18 @@
+## 2026-11-01 — CCOST annotation manual inspected; benchmark gate remains evidence-limited
+
+- **DONE_VERIFIED — manual retrieval and document inspection:** official Zenodo record `10.5281/zenodo.17366698` exposes `CCOST_manual.pdf` (19 pages; MD5 `caecb20d26e8458b20c7c269ca22b59e`). The file was retrieved through its official Zenodo API content URL and parsed as a PDF; no corpus archive, WAV or TextGrid was downloaded.
+- **Findings:** the document title is “RA Manual for BKK Thai Tone Project”. It documents OCTRA correction of Google ASR output, Thai-script normalization, Praat transcript/boundary correction, `<usb>` for speaker noise, and BAS MAUS processing `CHUNKPREP → G2P → MAUS → PHO2SYL`. It names `OCTRA_1` and shows MAUS output symbols `sampa` in the UI configuration.
+- **Evidence limit:** it does not define the final released TextGrid tier inventory, complete phone/toneme symbol inventory, tone/toneme label scheme, uncertainty/disagreement policy, or independent dual-blind annotation. A tool configuration is not sufficient evidence that the released annotation layer is IPA/SAMPA or that each item has been independently adjudicated.
+- **Task ledger:** manual file inspection `DONE_VERIFIED`; released TextGrid schema reconciliation `BLOCKED`; independent Thai phonetic/segmentation adjudication `BLOCKED`; Ukrainian-native target-form adjudication `BLOCKED`; human browser/device and WCAG 2.2 AA review `BLOCKED`.
+- **Next acceptance:** inspect the released TextGrid schema and detailed LREC methods, reconcile the tier labels with the project's target layer, and only then select eligible rows. Keep all CCOST assets external under CC BY-NC-SA 4.0; no accuracy score is claimed.
+
+---
+
 ## 2026-11-01 — external benchmark research refresh
 
 - Screened Thai G2P v4 (dataset card: 126,718 train / 10,055 validation / 8,076 test; declared CC0-1.0) as a candidate dictionary IPA comparator. Its declared source lineage is Thai W2P plus Wiktionary `th-pron`; it is not independent expert/acoustic gold. Registry and benchmark protocol now require source-overlap audit against runtime lexical IPA overrides and exclusion of circular rows. No data copied or score claimed.
 - Identified BEST-2010 official TEST_100K and LST20 as additional segmentation benchmarks. LST20's NECTEC terms prohibit modification/redistribution without permission and require a separate commercial arrangement; it remains external and gated. BEST access/license terms must be verified before acquisition.
-- FLEURS and Common Voice Thai are classified as speech/ASR datasets, not direct IPA or Ukrainian orthographic gold. CCOST remains the phone/toneme candidate but its annotation manual is still a blocker.
+- FLEURS and Common Voice Thai are classified as speech/ASR datasets, not direct IPA or Ukrainian orthographic gold. CCOST remains the phone/toneme candidate; its manual is inspected, but the released TextGrid schema and detailed paper methods remain blockers.
 - Updated `docs/g2p-benchmark.md`, `data/corpus_sources.csv`, and regression tests. No new external corpus was downloaded or bundled; no accuracy metric was calculated.
 - Exact-current-head CI verification: PR #169 head `2295ce132eb96e0678f164da56361dc5b994df43` passed all three jobs in [41247367267](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41247367267): `test`, `wheel-install-smoke`, and `master-artifact`. The full Python suite, browser IPA/RTGS/parity/UI checks, benchmark diagnostics, generated-artifact validation, and isolated wheel installation passed. PR #169 remains open and unmerged; `main` is unchanged.
 
