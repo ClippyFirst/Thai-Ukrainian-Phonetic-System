@@ -169,7 +169,7 @@ def validate_review_packet(
         abstention_reason = (row.get("abstention_reason") or "").strip()
         if uncertainty == "ABSTAIN":
             abstentions += 1
-            if ipa or (row.get("broad_surface_ipa") or "").strip():
+            if ipa or (row.get("broad_surface_ipa") or "").strip() or (row.get("narrow_ipa") or "").strip():
                 raise ValueError(f"ABSTAIN rows must not contain IPA labels: {ident}")
             if not abstention_reason:
                 raise ValueError(f"abstention_reason is required: {ident}")
