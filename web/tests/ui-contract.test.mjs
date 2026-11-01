@@ -365,3 +365,12 @@ assert.match(styles, /@media\(max-width:760px\)\{[\s\S]*?\.beta-notice/);
 
 console.log("Thai current UI uncertainty/accessibility contract passed");
 
+// Legacy direct Thai-grapheme → Ukrainian maps are no longer part of the
+// browser pipeline; keep the runtime registry limited to active structural data.
+const browserDataSource = await readFile(new URL("../src/data.js", import.meta.url), "utf8");
+const browserEngineSource = await readFile(new URL("../src/engine.js", import.meta.url), "utf8");
+assert.doesNotMatch(browserDataSource, /export const (?:UA|OU|CU)\s*=/,
+  "unused direct grapheme-to-Ukrainian lookup tables must not return");
+assert.doesNotMatch(browserEngineSource, /import\s*\{[^}]*\b(?:UA|OU|CU)\b[^}]*\}\s*from\s*["']\.\/data\.js["']/,
+  "the browser engine must not import obsolete Ukrainian grapheme maps");
+
