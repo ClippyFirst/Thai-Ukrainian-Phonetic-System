@@ -1885,3 +1885,28 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - PR #170 remains open/unmerged at `1cdc3d7971498ce3312ff9a79b23ee84b8d917aa`; CI [41243709726](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41243709726) and Web Static [41243709639](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41243709639) succeeded.
 - No review submissions or inline review threads are present on either PR at this inspection. No branch deletion, force update, merge, mainline change or repository setting change was made.
 - Local test execution remains unavailable in this connector-only session; rely only on exact-head GitHub Actions evidence.
+
+
+## Current continuation checkpoint — one-pass repository cleanup (2026-11-01)
+
+- **Repository:** `ClippyFirst/Thai-Ukrainian-Phonetic-System`; default branch `main`.
+- **Starting main for this continuation:** `69dafe58a9458d33a645cdcd517e61e9978abdbd`.
+- **Latest main at this documentation checkpoint:** `1e0c2b3432a49178c6f00fbfb631a0258a7cc6fc` (PR #177 merge).
+- **Merged implementation/documentation batches:**
+  - #171 — documentation navigation and source-of-truth ownership guide; exact CI [41310072386](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41310072386), 3/3 success.
+  - #172 — architecture and module ownership aligned with the actual typed-IPA pipeline; post-merge main CI [41311528849](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41311528849), success.
+  - #173 — removed unused browser direct-grapheme Ukrainian maps and derived the low-class set from the canonical browser consonant registry; exact CI [41312044065](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41312044065) and Web Static [41312044090](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41312044090), success.
+  - #174 — documented all 24 scripts, ownership, inputs/outputs and evidence boundaries; exact CI [41312645359](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41312645359), success.
+  - #175 — added the committed generated-registry drift gate, fixed CSV line-ending determinism, and refreshed stale generated outputs; exact CI [41323955237](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41323955237), 3/3 success.
+  - #176 — derived Python `ONSET_IPA` and `LOW_SINGLE` from `data/thai/consonants.csv` and added parity regression coverage; exact CI [41324492017](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41324492017), 3/3 success.
+  - #177 — corrected the master manifest/generator/test so typed IPA is described as the mandatory Ukrainian-adaptation boundary; exact CI [41324845398](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41324845398), 3/3 success.
+- **Preserved prior work:** PR #170's removal of two immediately duplicated UI assertions, Python/browser parity contracts, RTGS's separate romanization route, typed IPA result/provenance and all existing research evidence remain intact.
+- **Generated data findings:** the first #175 drift-gate run exposed stale orthographic/vowel correspondence outputs and stale master-manifest metadata. The consonant CSV's apparent full-file diff was line-ending-only; setting every CSV writer in `generate_master_table.py` to `lineterminator="\\n"` removed platform-default CRLF churn. The updated generated outputs were committed and the exact-head gate passed. No Thai source registry or linguistic rule was changed to silence the gate.
+- **Manifest correction:** the prior text simultaneously said “IPA-first” and “IPA is an independent audit/control layer”. The generator now says “typed IPA is the mandatory adapter boundary”, matching `PhoneticResult → ukrainian_adaptation`.
+- **Current CI/deployment:** after PR #177 merge, main CI [41325122025](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41325122025) and Pages [41325122035](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41325122035) were in progress when this checkpoint was drafted. Check their final job conclusions before closing the continuation.
+- **Repository status:** no open PRs at the start of this documentation closeout. The branch API listed 9 refs before this branch was created; 8 were non-main. No branch was deleted. This closeout adds one temporary documentation branch. Main branch listing reports `protected=false`; branch-protection policy remains owner-controlled.
+- **Task ledger:** documentation and script inventories, browser map cleanup, generated-artifact drift gate, Python consonant-map derivation and IPA-manifest correction are DONE_VERIFIED. Full import/call/reference graph and broad test/fixture redundancy review remain PARTIAL. Moving or splitting the 317 KB chronological handoff, 183 KB validation matrix and 181 KB audit is DEFERRED until every internal/external reference is mapped and an archive plan is verified. Branch retention is PARTIAL pending owner policy.
+- **External blockers:** independent Thai IPA/segmentation adjudication; independent Ukrainian-native target-form adjudication; CCOST released TextGrid schema and detailed annotation-method reconciliation; manual browser/device and WCAG 2.2 AA review. These are not solvable by engineering CI alone.
+- **Local verification:** no local pytest/npm execution was available in the connector-only environment. All verification claims refer to the exact GitHub Actions runs listed above.
+- **Readiness:** engineering-verified research prototype; not release-ready for general linguistic-accuracy claims or WCAG conformance.
+
