@@ -121,68 +121,69 @@ def validate_review_packet(
                 raise ValueError(f"abstention_reason is required: {ident}")
         elif not ipa:
             raise ValueError(f"missing phonemic_ipa requires uncertainty=ABSTAIN: {ident}")
-        required_annotations = (
-            "lexical_reading", "word_boundaries", "syllable_boundaries",
-            "tone_sequence", "vowel_length", "final_glottal",
-        )
-        missing_annotations = [
-            field for field in required_annotations if not (row.get(field) or "").strip()
-        ]
-        if missing_annotations:
-            raise ValueError(
-                f"non-abstaining review requires lexical, boundary, tone, length and glottal labels for {ident}: "
-                f"{', '.join(missing_annotations)}"
+        if uncertainty != "ABSTAIN":
+            required_annotations = (
+                "lexical_reading", "word_boundaries", "syllable_boundaries",
+                "tone_sequence", "vowel_length", "final_glottal",
             )
-        word_boundaries = row["word_boundaries"].strip()
-        syllable_boundaries = row["syllable_boundaries"].strip()
-        thai_text = unicodedata.normalize("NFC", row["thai"])
-        if word_boundaries == "NOT_APPLICABLE":
-            if syllable_boundaries != "NOT_APPLICABLE":
-                raise ValueError(f"word and syllable boundaries must both be NOT_APPLICABLE: {ident}")
-            syllable_count = None
-        else:
-            word_parts = word_boundaries.split("|")
-            if any(not part for part in word_parts) or unicodedata.normalize("NFC", "".join(word_parts)) != thai_text:
-                raise ValueError(f"word_boundaries must reconstruct the Thai input for {ident}")
-            if syllable_boundaries == "NOT_APPLICABLE":
-                raise ValueError(f"syllable_boundaries cannot be NOT_APPLICABLE when words are annotated: {ident}")
-            syllable_words = syllable_boundaries.split("|")
-            syllable_parts = [part for word in syllable_words for part in word.split(".")]
-            if (
-                any(not part for part in syllable_parts)
-                or unicodedata.normalize("NFC", "".join(syllable_parts)) != thai_text
+            missing_annotations = [
+                field for field in required_annotations if not (row.get(field) or "").strip()
+            ]
+            if missing_annotations:
+                raise ValueError(
+                    f"non-abstaining review requires lexical, boundary, tone, length and glottal labels for {ident}: "
+                    f"{', '.join(missing_annotations)}"
+                )
+            word_boundaries = row["word_boundaries"].strip()
+            syllable_boundaries = row["syllable_boundaries"].strip()
+            thai_text = unicodedata.normalize("NFC", row["thai"])
+            if word_boundaries == "NOT_APPLICABLE":
+                if syllable_boundaries != "NOT_APPLICABLE":
+                    raise ValueError(f"word and syllable boundaries must both be NOT_APPLICABLE: {ident}")
+                syllable_count = None
+            else:
+                word_parts = word_boundaries.split("|")
+                if any(not part for part in word_parts) or unicodedata.normalize("NFC", "".join(word_parts)) != thai_text:
+                    raise ValueError(f"word_boundaries must reconstruct the Thai input for {ident}")
+                if syllable_boundaries == "NOT_APPLICABLE":
+                    raise ValueError(f"syllable_boundaries cannot be NOT_APPLICABLE when words are annotated: {ident}")
+                syllable_words = syllable_boundaries.split("|")
+                syllable_parts = [part for word in syllable_words for part in word.split(".")]
+                if (
+                    any(not part for part in syllable_parts)
+                    or unicodedata.normalize("NFC", "".join(syllable_parts)) != thai_text
+                ):
+                    raise ValueError(f"syllable_boundaries must reconstruct the Thai input for {ident}")
+                syllable_count = len(syllable_parts)
+            tone_values = [value.strip() for value in row["tone_sequence"].split(",")]
+            length_values = [value.strip() for value in row["vowel_length"].split(",")]
+            glottal_values = [value.strip() for value in row["final_glottal"].split(",")]
+            if any(not value for value in tone_values + length_values + glottal_values):
+                raise ValueError(f"tone, vowel-length and glottal sequences cannot contain empty values: {ident}")
+            if any(value not in TONE_VALUES for value in tone_values):
+                raise ValueError(f"invalid tone_sequence value for {ident}")
+            if any(value not in VOWEL_LENGTH_VALUES for value in length_values):
+                raise ValueError(f"invalid vowel_length value for {ident}")
+            if any(value not in FINAL_GLOTTAL_VALUES for value in glottal_values):
+                raise ValueError(f"invalid final_glottal value for {ident}")
+            if syllable_count is not None and not (
+                len(tone_values) == len(length_values) == len(glottal_values) == syllable_count
             ):
-                raise ValueError(f"syllable_boundaries must reconstruct the Thai input for {ident}")
-            syllable_count = len(syllable_parts)
-        tone_values = [value.strip() for value in row["tone_sequence"].split(",")]
-        length_values = [value.strip() for value in row["vowel_length"].split(",")]
-        glottal_values = [value.strip() for value in row["final_glottal"].split(",")]
-        if any(not value for value in tone_values + length_values + glottal_values):
-            raise ValueError(f"tone, vowel-length and glottal sequences cannot contain empty values: {ident}")
-        if any(value not in TONE_VALUES for value in tone_values):
-            raise ValueError(f"invalid tone_sequence value for {ident}")
-        if any(value not in VOWEL_LENGTH_VALUES for value in length_values):
-            raise ValueError(f"invalid vowel_length value for {ident}")
-        if any(value not in FINAL_GLOTTAL_VALUES for value in glottal_values):
-            raise ValueError(f"invalid final_glottal value for {ident}")
-        if syllable_count is not None and not (
-            len(tone_values) == len(length_values) == len(glottal_values) == syllable_count
-        ):
-            raise ValueError(f"tone, vowel-length and glottal labels must align with syllables for {ident}")
-        if syllable_count is None and not all(
-            values == ["NOT_APPLICABLE"] for values in (tone_values, length_values, glottal_values)
-        ):
-            raise ValueError(f"NOT_APPLICABLE syllables require NOT_APPLICABLE tone/length/glottal labels: {ident}")
-        if level == "NARROW_ACOUSTIC":
-            asset = (row.get("audio_asset_reference") or "").strip()
-            start = (row.get("audio_time_start") or "").strip()
-            end = (row.get("audio_time_end") or "").strip()
-            try:
-                start_value, end_value = float(start), float(end)
-            except ValueError as exc:
-                raise ValueError(f"narrow acoustic labels require an audio time interval: {ident}") from exc
-            if not asset or not isfinite(start_value) or not isfinite(end_value) or start_value < 0 or end_value <= start_value:
-                raise ValueError(f"narrow acoustic labels require a valid audio asset and interval: {ident}")
+                raise ValueError(f"tone, vowel-length and glottal labels must align with syllables for {ident}")
+            if syllable_count is None and not all(
+                values == ["NOT_APPLICABLE"] for values in (tone_values, length_values, glottal_values)
+            ):
+                raise ValueError(f"NOT_APPLICABLE syllables require NOT_APPLICABLE tone/length/glottal labels: {ident}")
+            if level == "NARROW_ACOUSTIC":
+                asset = (row.get("audio_asset_reference") or "").strip()
+                start = (row.get("audio_time_start") or "").strip()
+                end = (row.get("audio_time_end") or "").strip()
+                try:
+                    start_value, end_value = float(start), float(end)
+                except ValueError as exc:
+                    raise ValueError(f"narrow acoustic labels require an audio time interval: {ident}") from exc
+                if not asset or not isfinite(start_value) or not isfinite(end_value) or start_value < 0 or end_value <= start_value:
+                    raise ValueError(f"narrow acoustic labels require a valid audio asset and interval: {ident}")
     return {
         "records": len(indexed),
         "reviewer_id": reviewer_id,
