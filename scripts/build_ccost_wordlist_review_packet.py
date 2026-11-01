@@ -13,7 +13,6 @@ import hashlib
 import json
 import unicodedata
 from pathlib import Path
-from typing import Iterable
 
 from thai_ukrainian.adjudication import PACKET_FIELDS
 
@@ -28,8 +27,8 @@ ORDER_COLUMNS = ("A", "B", "C", "D")
 DEFAULT_EXPECTED_ITEMS = 206
 
 
-def read_wordlist(path: Path, expected_items: int = DEFAULT_EXPECTED_ITEMS) -> list[str]:
-    """Validate the four randomized orders and return one deterministic unique word list."""
+def inspect_wordlist(path: Path, expected_items: int = DEFAULT_EXPECTED_ITEMS) -> dict:
+    """Read each order independently and expose duplicates/set differences, never hide them."""
     with path.open("r", encoding="utf-8-sig", newline="") as stream:
         reader = csv.DictReader(stream)
         if tuple(reader.fieldnames or ()) != ORDER_COLUMNS:
@@ -47,21 +46,28 @@ def read_wordlist(path: Path, expected_items: int = DEFAULT_EXPECTED_ITEMS) -> l
             if not word:
                 raise ValueError(f"empty CCOST word in column {column}, CSV row {row_number}")
             if any(char.isspace() for char in word):
-                raise ValueError(f"controlled monosyllable contains whitespace in {column}, CSV row {row_number}")
+                raise ValueError(f"controlled word contains whitespace in {column}, CSV row {row_number}")
             orders[column].append(word)
 
-    expected = set(orders["A"])
-    if len(expected) != expected_items:
-        raise ValueError(f"order A must contain {expected_items} unique words")
-    for column, words in orders.items():
-        if len(set(words)) != expected_items:
-            raise ValueError(f"order {column} must contain {expected_items} unique words")
-        if set(words) != expected:
-            raise ValueError(f"randomized order {column} does not contain the same word set as order A")
-
-    # Sorting by Unicode code point makes packet IDs independent of which randomized
-    # presentation order happens to be stored in column A.
-    return sorted(expected)
+    sets = {column: set(words) for column, words in orders.items()}
+    base = sets["A"]
+    duplicate_words = {
+        column: sorted({word for word in words if words.count(word) > 1})
+        for column, words in orders.items()
+    }
+    missing_from_order = {column: sorted(base - sets[column]) for column in ORDER_COLUMNS}
+    extra_in_order = {column: sorted(sets[column] - base) for column in ORDER_COLUMNS}
+    concordant = all(sets[column] == base for column in ORDER_COLUMNS)
+    union = sorted(set().union(*sets.values()))
+    return {
+        "words": union,
+        "order_item_counts": {column: len(orders[column]) for column in ORDER_COLUMNS},
+        "order_unique_counts": {column: len(sets[column]) for column in ORDER_COLUMNS},
+        "duplicate_words_by_order": duplicate_words,
+        "missing_from_order_a_set": missing_from_order,
+        "extra_vs_order_a_set": extra_in_order,
+        "order_sets_concordant": concordant,
+    }
 
 
 def _challenge_row(index: int, thai: str) -> dict:
@@ -93,9 +99,9 @@ def generate_packets(
     *,
     expected_items: int = DEFAULT_EXPECTED_ITEMS,
 ) -> dict:
-    words = read_wordlist(wordlist_path, expected_items)
-    raw = wordlist_path.read_bytes()
-    digest = hashlib.sha256(raw).hexdigest()
+    analysis = inspect_wordlist(wordlist_path, expected_items)
+    words = analysis["words"]
+    digest = hashlib.sha256(wordlist_path.read_bytes()).hexdigest()
     output_dir.mkdir(parents=True, exist_ok=True)
 
     challenge_path = output_dir / "ccost-wordlist-challenge.jsonl"
@@ -113,6 +119,7 @@ def generate_packets(
             row["thai"] = word
             writer.writerow(row)
 
+    concordant = analysis["order_sets_concordant"]
     manifest = {
         "schema_version": "1.0",
         "source_id": SOURCE_ID,
@@ -121,11 +128,23 @@ def generate_packets(
         "attribution": SOURCE_ATTRIBUTION,
         "source_file": wordlist_path.name,
         "source_file_sha256": digest,
-        "item_count": len(words),
+        "expected_items_per_order": expected_items,
         "source_orders": list(ORDER_COLUMNS),
+        "order_item_counts": analysis["order_item_counts"],
+        "order_unique_counts": analysis["order_unique_counts"],
+        "duplicate_words_by_order": analysis["duplicate_words_by_order"],
+        "missing_from_order_a_set": analysis["missing_from_order_a_set"],
+        "extra_vs_order_a_set": analysis["extra_vs_order_a_set"],
+        "order_sets_concordant": concordant,
+        "unique_prompt_count": len(words),
         "review_layer": "BROAD_PHONEMIC",
         "source_evidence_grade": "TEXT_WORDLIST_ONLY_NOT_PRONUNCIATION_GOLD",
         "gold_status": "UNADJUDICATED",
+        "review_packet_status": (
+            "BLIND_PACKET_GENERATED_UNADJUDICATED"
+            if concordant else "SOURCE_ORDER_DISCREPANCY_REQUIRES_RECONCILIATION"
+        ),
+        "scoreable": False,
         "license_notice": (
             "This generated review packet is derived from CCOST wordlist material. "
             "Retain CC BY-NC-SA 4.0 attribution and share-alike terms; non-commercial use only."
@@ -133,6 +152,7 @@ def generate_packets(
         "limitations": [
             "The wordlist supplies Thai prompts only; it contains no IPA, audio, phone labels or tone labels.",
             "Independent qualified reviewers must supply phonemic IPA, syllable boundaries, tone and vowel length.",
+            "A set mismatch or within-order duplicate is reported, not silently repaired; reconcile source order discrepancies before freezing the review packet.",
             "This packet cannot support surface/acoustic phonetic claims without separately authorized audio and annotations.",
             "Do not commit generated packets or redistribute them outside the source license terms.",
         ],
@@ -143,10 +163,11 @@ def generate_packets(
     return {
         "items": len(words),
         "source_file_sha256": digest,
+        "order_sets_concordant": concordant,
+        "status": manifest["review_packet_status"],
         "challenge": str(challenge_path),
         "blind_packet": str(blind_path),
         "manifest": str(manifest_path),
-        "status": "BLIND_PACKET_GENERATED_UNADJUDICATED",
     }
 
 
