@@ -138,3 +138,6 @@ The CCOST source record is pinned to [Zenodo DOI 10.5281/zenodo.17366698](https:
 - Added header-only `data/benchmark/audio-assets.tsv`. The manifest schema binds each asset to a registered source, exact dataset revision, asset URI, SHA-256, pseudonymous speaker reference, microphone/channel, overlap status, duration and verification record.
 - Thai review validation now requires audio-backed rows to reference a VERIFIED asset in that manifest; source ID must match, overlap must be NONE, and the review interval must fit inside the registered duration. This applies to broad phonemic reviews that cite audio as well as NARROW_ACOUSTIC reviews.
 - The manifest is intentionally empty: LOTUSDIS assets have not yet been selected/downloaded/pinned, and CCOST remains blocked. No narrow acoustic annotation can be accepted until a specific asset is registered.
+
+
+- Registry integrity check also found and fixed an existing malformed `data/corpus_sources.csv` row: the TUD record's comma-containing metadata had not been quoted. A regression test now checks the exact seven-column schema and unique source IDs.
