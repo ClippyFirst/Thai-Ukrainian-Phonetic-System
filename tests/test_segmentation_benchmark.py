@@ -8,7 +8,12 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts" / "evaluate_segmentation.py"
-GOLD_FIELDS = ["id", "text", "gold_tokens_json", "gold_status", "source_id", "license", "split"]
+GOLD_FIELDS = [
+    "id", "text", "gold_tokens_json", "gold_status", "source_id", "license", "split",
+    "source_url", "reviewer_a_id", "reviewer_b_id", "reviewer_a_qualification_ref",
+    "reviewer_b_qualification_ref", "reviewer_a_tokens_json", "reviewer_b_tokens_json",
+    "adjudicator_id", "adjudication_outcome", "adjudication_record_id", "adjudication_notes",
+]
 PRED_FIELDS = ["id", "engine", "predicted_tokens_json", "status", "version"]
 
 
@@ -37,10 +42,22 @@ class SegmentationBenchmarkTests(unittest.TestCase):
 
     @staticmethod
     def gold(row_id="g1", text="ภาษาไทย", tokens=None, **overrides):
+        tokens = tokens if tokens is not None else ["ภาษา", "ไทย"]
         row = {
-            "id": row_id, "text": text, "gold_tokens_json": json.dumps(tokens if tokens is not None else ["ภาษา", "ไทย"], ensure_ascii=False),
-            "gold_status": "ADJUDICATED", "source_id": "fixture#1", "license": "CC0-1.0", "split": "test",
+            "id": row_id, "text": text, "gold_tokens_json": json.dumps(tokens, ensure_ascii=False),
+            "gold_status": "ADJUDICATED", "source_id": "fixture#1", "license": "CC0-1.0",
+            "split": "test", "source_url": "https://example.org/record",
+            "reviewer_a_id": "TH-PH-01", "reviewer_b_id": "TH-PH-02",
+            "reviewer_a_qualification_ref": "qualification:TH-PH-01",
+            "reviewer_b_qualification_ref": "qualification:TH-PH-02",
+            "reviewer_a_tokens_json": json.dumps(tokens, ensure_ascii=False),
+            "reviewer_b_tokens_json": json.dumps(tokens, ensure_ascii=False),
+            "adjudicator_id": "TH-ADJ-01", "adjudication_outcome": "AGREEMENT",
+            "adjudication_record_id": "SEG-ADJ-001", "adjudication_notes": "Independent labels agree.",
         }
+        if overrides.get("gold_status", "ADJUDICATED") != "ADJUDICATED":
+            for field in GOLD_FIELDS[7:]:
+                row[field] = ""
         row.update(overrides)
         return row
 
@@ -137,6 +154,31 @@ class SegmentationBenchmarkTests(unittest.TestCase):
         report = self.run_benchmark([self.gold(gold_status="SOURCE_ATTESTED")], [self.prediction()])
         self.assertEqual(report["gold"]["status"], "NOT_MEASURED")
         self.assertIsNone(report["engines"]["test-engine"]["exact_sequence_rate"])
+
+
+    def test_adjudicated_segmentation_requires_two_distinct_reviewers_and_raw_labels(self):
+        row = self.gold()
+        row["reviewer_b_id"] = row["reviewer_a_id"]
+        self.assertIn("two distinct reviewers", self.run_benchmark([row], [], expected=1))
+        row = self.gold()
+        row["reviewer_a_tokens_json"] = ""
+        self.assertIn("reviewer_a_tokens_json", self.run_benchmark([row], [], expected=1))
+
+    def test_consensus_gold_must_match_both_independent_tokenizations(self):
+        row = self.gold()
+        row["reviewer_b_tokens_json"] = json.dumps(["ภา", "ษาไทย"], ensure_ascii=False)
+        self.assertIn("AGREEMENT requires matching reviewer tokenizations", self.run_benchmark([row], [], expected=1))
+        row = self.gold()
+        row["gold_tokens_json"] = json.dumps(["ภา", "ษาไทย"], ensure_ascii=False)
+        self.assertIn("gold tokens must equal the agreed reviewer tokenization", self.run_benchmark([row], [], expected=1))
+
+    def test_resolved_disagreement_requires_different_labels_and_audit_note(self):
+        row = self.gold(adjudication_outcome="RESOLVED_DISAGREEMENT")
+        self.assertIn("RESOLVED_DISAGREEMENT requires differing reviewer tokenizations", self.run_benchmark([row], [], expected=1))
+        row = self.gold(adjudication_outcome="RESOLVED_DISAGREEMENT")
+        row["reviewer_b_tokens_json"] = json.dumps(["ภา", "ษาไทย"], ensure_ascii=False)
+        row["adjudication_notes"] = ""
+        self.assertIn("adjudication_notes", self.run_benchmark([row], [], expected=1))
 
     def test_adjudicated_rows_require_provenance_and_valid_concatenation(self):
         bad_source = self.gold(source_id="")
