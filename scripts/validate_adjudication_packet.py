@@ -12,7 +12,7 @@ from thai_ukrainian.adjudication import PACKET_FIELDS, validate_blind_packet, va
 
 def read_tsv(path: Path) -> list[dict[str, str]]:
     with path.open("r", encoding="utf-8-sig", newline="") as stream:
-        reader = csv.DictReader(stream, delimiter="\\t")
+        reader = csv.DictReader(stream, delimiter="\t")
         missing = set(PACKET_FIELDS) - set(reader.fieldnames or [])
         if missing:
             raise ValueError(f"{path}: missing columns: {', '.join(sorted(missing))}")
@@ -53,7 +53,7 @@ def main() -> int:
         else:
             result = validate_review_packet(rows, [row["id"] for row in challenge], args.reviewer_id)
     except (OSError, ValueError) as exc:
-        parser.exit(1, f"error: {exc}\\n")
+        parser.exit(1, f"error: {exc}\n")
     print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
     return 0
 
