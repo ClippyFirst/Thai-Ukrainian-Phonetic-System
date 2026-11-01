@@ -35,12 +35,17 @@ class EvidenceRegistryTests(unittest.TestCase):
         self.assertIn(source_id, registry)
         source = registry[source_id]
         self.assertEqual(source["license"], "MIT")
-        for use in ("IPA_GOLD_INPUT", "WORD_SEGMENTATION_GOLD_INPUT"):
+        for use in ("BROAD_PHONEMIC_IPA_GOLD_INPUT", "WORD_SEGMENTATION_GOLD_INPUT"):
             validate_source_reference(
                 source_id, source["source_url"], "MIT", use, registry, row_id="challenge-001"
             )
         self.assertIn("labels must come from independent reviewers", source["notes"])
         self.assertIn("not acoustic evidence", source["notes"])
+        with self.assertRaisesRegex(ValueError, "not approved for BROAD_SURFACE_IPA_GOLD_INPUT"):
+            validate_source_reference(
+                source_id, source["source_url"], "MIT", "BROAD_SURFACE_IPA_GOLD_INPUT",
+                registry, row_id="challenge-surface",
+            )
 
     def test_source_registry_binds_exact_url_license_and_allowed_use(self):
         registry = load_source_registry(ROOT / "data/benchmark/source-registry.tsv")
@@ -51,7 +56,7 @@ class EvidenceRegistryTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "license does not match"):
             validate_source_reference("SRC-WIKTIONARY-TH-ไกล", source["source_url"],
                                       "CC0-1.0", "UKRAINIAN_PREFERENCE_INPUT", registry, row_id="ua-1")
-        with self.assertRaisesRegex(ValueError, "not approved for IPA_GOLD_INPUT"):
+        with self.assertRaisesRegex(ValueError, "not approved for BROAD_SURFACE_IPA_GOLD_INPUT"):
             validate_source_reference("SRC-WIKTIONARY-TH-ไกล", source["source_url"],
                                       source["license"], "IPA_GOLD_INPUT", registry, row_id="ipa-1")
 

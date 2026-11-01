@@ -63,7 +63,7 @@ class BenchmarkIpaTests(unittest.TestCase):
             write_tsv(sources,
                 ["source_id", "source_url", "license", "allowed_uses", "verification_status", "verified_by", "verified_at", "notes"],
                 [{"source_id": "TEST-IPA-CORP", "source_url": "https://example.org/record", "license": "CC0-1.0",
-                  "allowed_uses": "IPA_GOLD_INPUT", "verification_status": "VERIFIED", "verified_by": "test",
+                  "allowed_uses": "BROAD_PHONEMIC_IPA_GOLD_INPUT", "verification_status": "VERIFIED", "verified_by": "test",
                   "verified_at": "2026-11-01", "notes": "Unit-test fixture source."}],
             )
             write_tsv(reviewers,
@@ -108,6 +108,14 @@ class BenchmarkIpaTests(unittest.TestCase):
         row = gold_row(adjudication_outcome="RESOLVED_DISAGREEMENT")
         stderr = self.run_benchmark([row], [], expected_returncode=1)
         self.assertIn("RESOLVED_DISAGREEMENT requires differing reviewer IPA", stderr)
+
+    def test_broad_surface_gold_requires_surface_approved_source(self):
+        surface = gold_row(
+            transcription_level="BROAD_SURFACE",
+            adjudication_record_id="ADJ-2026-SURFACE",
+        )
+        stderr = self.run_benchmark([surface], [], expected_returncode=1)
+        self.assertIn("not approved for BROAD_SURFACE_IPA_GOLD_INPUT", stderr)
 
     def test_empty_gold_does_not_report_accuracy(self):
         report = self.run_benchmark([], [prediction_row()])

@@ -79,9 +79,15 @@ def validate_gold_row(
         raise ValueError(f"ADJUDICATED gold row {ident!r} requires two distinct reviewers")
     if row["adjudicator_id"].strip() in {row["reviewer_a_id"].strip(), row["reviewer_b_id"].strip()}:
         raise ValueError(f"ADJUDICATED gold row {ident!r} requires an independent adjudicator")
+    if row["transcription_level"] not in TRANSCRIPTION_LEVELS:
+        raise ValueError(f"ADJUDICATED gold row {ident!r} has unsupported transcription_level")
+    source_use = {
+        "BROAD_PHONEMIC": "BROAD_PHONEMIC_IPA_GOLD_INPUT",
+        "BROAD_SURFACE": "BROAD_SURFACE_IPA_GOLD_INPUT",
+    }[row["transcription_level"]]
     if source_registry is not None:
         validate_source_reference(row["source_id"], row["source_url"], row["license"],
-                                  "IPA_GOLD_INPUT", source_registry, row_id=ident)
+                                  source_use, source_registry, row_id=ident)
     if reviewer_registry is not None:
         validate_reviewer_reference(row["reviewer_a_id"], row["reviewer_a_qualification_ref"], reviewer_registry,
                                     language="th", required_role="THAI_PHONETICIAN", row_id=ident)
@@ -89,8 +95,6 @@ def validate_gold_row(
                                     language="th", required_role="THAI_PHONETICIAN", row_id=ident)
         validate_reviewer_reference(row["adjudicator_id"], row["adjudicator_qualification_ref"], reviewer_registry,
                                     language="th", required_role="THAI_PHONETICIAN_ADJUDICATOR", row_id=ident)
-    if row["transcription_level"] not in TRANSCRIPTION_LEVELS:
-        raise ValueError(f"ADJUDICATED gold row {ident!r} has unsupported transcription_level")
     outcome = row["adjudication_outcome"]
     if outcome not in ADJUDICATION_OUTCOMES:
         raise ValueError(f"ADJUDICATED gold row {ident!r} has invalid adjudication_outcome")
