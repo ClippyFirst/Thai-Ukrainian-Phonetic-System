@@ -76,7 +76,7 @@ python scripts/validate_adjudication_packet.py --mode review --reviewer-id TH-PH
 python scripts/validate_adjudication_packet.py --mode pair --reviewer-b-packet data/benchmark/reviewer-b.tsv data/benchmark/reviewer-a.tsv
 ```
 
-The pair gate checks exact item coverage, distinct reviewer IDs, qualification references, dates, explicit abstentions and acoustic time references. It does not judge whether either pronunciation is correct or settle disagreements. Preserve both independent files, then write the adjudication decision and disagreement rationale. Only then may a row be promoted into `data/benchmark/gold.tsv`.
+The pair gate checks exact item coverage, distinct reviewer IDs, qualification references, dates, explicit abstentions and acoustic time references. It also reports per-field NFC-normalized exact agreement, one-sided missing labels and joint abstentions; these are descriptive raw agreement counts, not chance-corrected reliability statistics and not adjudication. It does not judge which pronunciation is correct or settle disagreements. Preserve both independent files, then write the adjudication decision and disagreement rationale. Only then may a row be promoted into `data/benchmark/gold.tsv`.
 
 ## Ukrainian preference review — conditional on supplied IPA
 
@@ -89,7 +89,7 @@ Criteria version `UA-PRACTICAL-TRANSCRIPTION-0.1` asks reviewers to record:
 4. whether tone is correctly kept in IPA/metadata rather than falsely encoded as ordinary Ukrainian letters;
 5. uncertainty or abstention where the supplied IPA itself is insufficient.
 
-Each Ukrainian-native reviewer receives a separate copy without the engine candidate. Keep reviewer forms and the later reconciliation record separate. Do not promote a preference to gold merely because two reviewers agree; retain the IPA reference grade and criteria version.
+Each Ukrainian-native reviewer receives a separate copy without the engine candidate. Keep reviewer forms and the later reconciliation record separate. The pair validator reports exact preference, syllable-policy and tone-policy agreement plus abstentions; this is descriptive agreement conditional on the supplied source IPA, not Thai IPA accuracy. Do not promote a preference to gold merely because two reviewers agree; retain the IPA reference grade and criteria version.
 
 ## Gold benchmark acceptance gate
 
