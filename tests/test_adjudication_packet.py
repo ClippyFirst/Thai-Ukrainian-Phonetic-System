@@ -74,6 +74,17 @@ class AdjudicationPacketTests(unittest.TestCase):
             validate_blind_packet(rows, CHALLENGE)
 
 
+
+    def test_blind_packet_rejects_prefilled_lexical_or_orthographic_labels(self):
+        rows = [blank_row("TH-G2P-001", "กา"), blank_row("TH-G2P-002", "กะ")]
+        rows[0]["lexical_reading"] = "กา"
+        with self.assertRaisesRegex(ValueError, "must be blank"):
+            validate_blind_packet(rows, CHALLENGE)
+        rows[0]["lexical_reading"] = ""
+        rows[0]["orthography_validity"] = "VALID"
+        with self.assertRaisesRegex(ValueError, "must be blank"):
+            validate_blind_packet(rows, CHALLENGE)
+
     def test_blind_packet_rejects_unexpected_engine_output_column(self):
         rows = [blank_row("TH-G2P-001", "กา"), blank_row("TH-G2P-002", "กะ")]
         rows[0]["engine_output"] = "/kaː/"
