@@ -324,9 +324,10 @@ function provisionalSyllable(analysis){
   if(analysis.status==="analyzed" && analysis.phonemicIpa){
     const adaptation=adaptIpaToUkrainian(analysis.phonemicIpa);
     if(adaptation.status==="adapted") return {...analysis,status:"approximate:orthographic-fallback",
+      phoneticIpa:null,tone:null,toneIpa:null,
       ukrainian:adaptation.output,ukrainianAdaptation:adaptation,
       evidenceStatus:"UNVERIFIED_ORTHOGRAPHIC_FALLBACK",
-      warnings:[...(analysis.warnings||[]),"Суперм’який режим: структурно можливе читання не підтверджене лексично; результат позначено як приблизний."]};
+      warnings:[...(analysis.warnings||[]),"Суперм’який режим: структурно можливе читання не підтверджене лексично; тон не подається як підтверджений; результат позначено як приблизний."]};
   }
   return approximateSyllable(analysis.input);
 }
