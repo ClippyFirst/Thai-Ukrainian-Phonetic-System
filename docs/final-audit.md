@@ -1,3 +1,12 @@
+## 2026-11-01 — repository structure and documentation ownership pass
+
+- **DONE_VERIFIED — documentation guide:** PR #171 was squash-merged as `85ced007f6fab7572a78380553ebfe42ccb18e07`; exact-head run [41310072386](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41310072386) passed all three CI jobs (`test`, `wheel-install-smoke`, `master-artifact`).
+- **Architecture correction:** the architecture guide now describes the actual primary pipeline through typed IPA and the IPA-only Ukrainian practical adapter. It distinguishes the secondary feature-space candidate ranker and the independent RTGS route, and maps current Python/browser module ownership.
+- **Confirmed intentional duplication:** Python and browser engines/adapters implement equivalent contracts in different runtimes and are guarded by parity tests. This is not evidence of dead code and should not be collapsed without a shared-source or parity-preserving design.
+- **Audit boundary:** no runtime module, corpus, registry, or generated artifact was moved or deleted in this pass. Current source review did not establish a safe dead-code deletion or module relocation with complete caller/reference coverage.
+- **Remaining technical-debt work:** full import/call/reference graph; generator-to-artifact ownership and reproducibility; script overlap analysis; duplicate test assertion/fixture review; and targeted refactors with regression coverage and exact-head CI.
+- **Release blockers unchanged:** independent Thai phonology/segmentation/IPA adjudication, independent Ukrainian target-form adjudication, and human browser/device/WCAG 2.2 AA review remain external evidence gates. Engineering CI is not linguistic gold.
+
 ## 2026-11-01 — CCOST annotation manual inspected; benchmark gate remains evidence-limited
 
 - **DONE_VERIFIED — manual retrieval and document inspection:** official Zenodo record `10.5281/zenodo.17366698` exposes `CCOST_manual.pdf` (19 pages; MD5 `caecb20d26e8458b20c7c269ca22b59e`). The file was retrieved through its official Zenodo API content URL and parsed as a PDF; no corpus archive, WAV or TextGrid was downloaded.
