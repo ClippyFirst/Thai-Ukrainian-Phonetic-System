@@ -39,6 +39,12 @@ def completed_row(ident, thai, reviewer_id="TH-PH-01"):
         "reviewer_qualification_ref": f"qualification-record:{reviewer_id}",
         "reviewed_at": "2026-11-01",
         "phonemic_ipa": "/kaː/",
+        "lexical_reading": "กา",
+        "word_boundaries": "กา",
+        "syllable_boundaries": "กา",
+        "tone_sequence": "MID",
+        "vowel_length": "LONG",
+        "final_glottal": "ABSENT",
     })
     return row
 
@@ -150,6 +156,17 @@ class AdjudicationPacketTests(unittest.TestCase):
         b = [completed_row("TH-G2P-001", "กะ", "TH-PH-02")]
         with self.assertRaisesRegex(ValueError, "input mismatch"):
             validate_independent_pair(a, b)
+
+
+    def test_review_requires_aligned_per_syllable_tone_length_and_glottal_labels(self):
+        row = completed_row("TH-G2P-001", "กา")
+        row["tone_sequence"] = "MID,LOW"
+        with self.assertRaisesRegex(ValueError, "must align with syllables"):
+            validate_review_packet([row], ["TH-G2P-001"], "TH-PH-01")
+        row = completed_row("TH-G2P-001", "กา")
+        row["word_boundaries"] = "กะ"
+        with self.assertRaisesRegex(ValueError, "reconstruct the Thai input"):
+            validate_review_packet([row], ["TH-G2P-001"], "TH-PH-01")
 
     def test_narrow_acoustic_labels_require_audio_asset_and_interval(self):
         row = completed_row("TH-G2P-001", "กา")
