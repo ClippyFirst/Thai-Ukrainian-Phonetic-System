@@ -10,13 +10,18 @@ class UkrainianTargetCandidateRegistryTests(unittest.TestCase):
     def test_registry_is_source_backed_and_not_mislabeled_as_gold(self):
         with REGISTRY.open("r", encoding="utf-8", newline="") as stream:
             rows = list(csv.DictReader(stream, delimiter="\t"))
-        self.assertEqual(len(rows), 6)
+        self.assertEqual(len(rows), 7)
         self.assertEqual({row["candidate_status"] for row in rows}, {"ENGINE_CANDIDATE_NOT_PREFERENCE_GOLD"})
         self.assertTrue(all(row["source_url"].startswith("https://th.wiktionary.org/") for row in rows))
         self.assertTrue(all(row["source_revision"] for row in rows))
         self.assertTrue(all(row["license"] == "CC-BY-SA-4.0" for row in rows))
         self.assertEqual(next(row for row in rows if row["thai"] == "เงิน")["ua_candidate"], "нген")
         self.assertEqual(next(row for row in rows if row["thai"] == "บรรจุ")["ua_candidate"], "бан.чу")
+        pəng = next(row for row in rows if row["thai"] == "เพิ่ง")
+        self.assertEqual(pəng["source_revision"], "1885200")
+        self.assertEqual(pəng["source_ipa"], "/pʰɤŋ˥˩/")
+        self.assertEqual(pəng["segmental_ipa"], "pʰɤŋ")
+        self.assertEqual(pəng["ua_candidate"], "п'енг")
         self.assertTrue(all("not independently adjudicated" in row["evidence_note"] for row in rows))
 
 

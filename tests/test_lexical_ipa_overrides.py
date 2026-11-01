@@ -7,7 +7,7 @@ from thai_ukrainian.lexical_ipa import load_lexical_ipa_overrides
 class LexicalIpaOverrideTests(unittest.TestCase):
     def test_active_override_is_source_pinned_and_not_gold(self):
         records = load_lexical_ipa_overrides()
-        self.assertEqual(set(records), {"เงิน", "เดิน", "ออก", "ไกล", "ใกล้"})
+        self.assertEqual(set(records), {"เงิน", "เดิน", "ออก", "ไกล", "ใกล้", "เพิ่ง"})
         row = records["เงิน"]
         self.assertEqual(row["segmental_ipa"], "ŋɤn")
         self.assertEqual(row["tone_category"], "mid")
@@ -92,6 +92,29 @@ class LexicalIpaOverrideTests(unittest.TestCase):
                 self.assertEqual(result.tone.tone, tone)
                 self.assertEqual(result.ukrainian_transliteration, ua)
                 self.assertTrue(any("not independently adjudicated" in warning for warning in result.warnings))
+
+    def test_pering_uses_pinned_source_attested_short_vowel_and_falling_tone(self):
+        row = load_lexical_ipa_overrides()["เพิ่ง"]
+        self.assertEqual(row["segmental_ipa"], "pʰɤŋ")
+        self.assertEqual(row["tone_category"], "falling")
+        self.assertEqual(row["tone_contour_ipa"], "˥˩")
+        self.assertEqual(row["vowel_length"], "short")
+        self.assertEqual(row["source_revision"], "1885200")
+        self.assertEqual(row["source_url"], "https://th.wiktionary.org/w/index.php?title=เพิ่ง&oldid=1885200")
+        self.assertEqual(row["license"], "CC-BY-SA-4.0")
+        self.assertEqual(row["status"], "ACTIVE_SOURCE_ATTESTED_NOT_GOLD")
+
+        result = analyze_syllable("เพิ่ง")
+        self.assertEqual(result.status, "analyzed")
+        self.assertEqual(result.phonemic_ipa, "pʰɤŋ")
+        self.assertIsNone(result.phonetic_ipa)
+        self.assertEqual(result.vowel_length, "short")
+        self.assertEqual(result.tone.tone, "falling")
+        self.assertEqual(result.tone.contour_ipa, "˥˩")
+        self.assertIn("SRC-WIKTIONARY-TH-เพิ่ง", result.sources)
+        self.assertIn("LEXICAL-IPA-OVERRIDE:SRC-WIKTIONARY-TH-เพิ่ง", result.rules_applied)
+        self.assertEqual(result.ukrainian_transliteration, "п'енг")
+        self.assertTrue(any("not independently adjudicated" in warning for warning in result.warnings))
 
     def test_unlisted_forms_do_not_receive_a_lexical_override(self):
         result = analyze_syllable("เดิน")

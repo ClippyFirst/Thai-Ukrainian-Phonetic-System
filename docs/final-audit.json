@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PRs #171–#179 are merged. Cleanup includes documentation and module ownership, 24-script inventory, removal of unused browser maps, generated-artifact drift checks and deterministic CSVs, canonical consonant maps, typed-IPA manifest correction, and removal of the word/API reverse dependency. Final main 1431c565ff5c160da4944942d687bc30b2f8d0b2 passed post-merge CI 41326865977 and Pages 41326865964. Independent Thai/UA adjudication and manual accessibility review remain outstanding; engineering-verified research prototype, not release-ready for linguistic-accuracy claims.",
+  "status": "Main remains cc398254c178171f74397aed556766e87356ab84. PR #182 research/independent-adjudication-gates-20261101 is 161 commits ahead and 0 behind main; exact code/test head 036fb2837c6e1df247e055df115d52c4b3c48b16 passed all three CI jobs (315 Python tests, 1169 subtests, Ruff, wheel-install smoke, master artifact), Web Static and external VISTEC evaluation. The all-mode adversarial suite covers 52 inputs across three profiles (156 combinations). Six unreferenced reported forms, including special-vowel ฤๅษี, are withheld in strict mode; เพิ่ง is a separate pinned source-attested NOT_GOLD override in both runtimes. The unsupported unsourced ฤๅษี→รือ|สี text-lexicon mapping was removed from Python and browser implementations. Seven source-attested IPA rows produce seven complete outputs; five are circular runtime/source rows and two are non-circular comparisons; no accuracy claim. Broad-surface IPA requires registered audio, asset, exact interval and source permission. LOTUSDIS is a verified CC BY-SA 4.0 supplementary source (114 aggregate device-hours, about 20 unique session hours, nine single-channel devices, overlap masks); no individual assets are pinned. CCOST wordlist preview reconstruction is byte-identical to the official MD5, but B/C/D each differ from A by two items (208-item union), so no scoreable packet was generated pending curator clarification. Reviewer registry remains empty; no Thai or Ukrainian expert submissions exist. Accuracy remains NOT_MEASURED; repository is engineering/research-infrastructure verified, not release-ready. No Vercel tools were used.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -64,7 +64,25 @@
     "full_ipa_and_rtgs_consonant_rime_correspondence_matrices",
     "rtgs_iao_rime_component_preservation_regression",
     "rtgs_research_integration_contract_reconciled",
-    "historical_rtgs_pr_status_reconciled"
+    "historical_rtgs_pr_status_reconciled",
+    "blind_42_item_thai_phonetic_adjudication_packet",
+    "candidate_blind_ukrainian_preference_packet",
+    "thai_adjudication_packet_schema_and_pair_validator",
+    "ukrainian_native_preference_review_pair_validator",
+    "double_reviewer_ipa_gold_provenance_gate",
+    "transcription_layer_separated_ipa_benchmark",
+    "profile_stratified_ipa_metrics",
+    "double_reviewer_word_syllable_segmentation_gold_gate",
+    "explicit_word_vs_syllable_segmentation_benchmark_layer",
+    "source_layer_specific_ipa_gold_gate",
+    "ccost_wordlist_blind_packet_generator",
+    "ccost_order_integrity_diagnostics",
+    "ccost_lrec_2026_textgrid_tier_mapping",
+    "ukrainian_native_review_criteria",
+    "source_attested_ipa_reference_for_เพิ่ง",
+    "public_independent_reviewer_outreach_shortlist",
+    "six_item_blind_thai_regression_supplement",
+    "byte_identical_ccost_wordlist_integrity_and_order_audit"
   ],
   "not_claimed": [
     "complete_lexical_segmentation",
@@ -87,9 +105,14 @@
     "production_quality_automatic_word_segmentation",
     "independent_acoustic_ipa_gold",
     "independently_validated_external_ipa_input_accuracy",
-    "independently_adjudicated_ukrainian_ipa_adapter_forms"
+    "independently_adjudicated_ukrainian_ipa_adapter_forms",
+    "independent Thai expert gold",
+    "independent Ukrainian-native preference evidence",
+    "CCOST actual TextGrid conformance",
+    "CCOST inter-annotator agreement",
+    "acoustic phonetic accuracy"
   ],
-  "lexical_attestation": "Ten source-backed runtime text lexicon entries now include ยูเครน (en.wiktionary oldid 88025965), ตะวันออก (oldid 86398986), ยุโรป (oldid 91325849), ยุโรปตะวันออก (oldid 87721830), and the sense-scoped compound ทะเลทราย (oldid 87239667), plus three active typed IPA overrides (เงิน, เดิน and ออก). All are source-attested dictionary evidence, not independent expert/acoustic gold.",
+  "lexical_attestation": "Ten source-backed runtime text lexicon entries include ยูเครน, ตะวันออก, ยุโรป, ยุโรปตะวันออก and the sense-scoped compound ทะเลทราย, plus six active typed IPA overrides (เงิน, เดิน, ออก, ไกล, ใกล้, เพิ่ง). All overrides preserve pinned source provenance and SOURCE_ATTESTED_NOT_GOLD status; they are not independent expert/acoustic gold. Unsupported ฤๅษี/ฤษี text-lexicon syllabifications without source-registry evidence have been removed.",
   "corpus_attestation": "993 source-annotated Wisesight word-tokenization rows (CC0-1.0; test-only, never training/tuning); pinned UD Thai TUD source snapshots under CC BY-SA 4.0 for a research-only frequency-Viterbi experiment; zero independently adjudicated IPA/tone/vowel-length gold rows.",
   "word_boundary_benchmark": {
     "dataset": "PyThaiNLP/Wisesight word-tokenization labels",
@@ -110,7 +133,7 @@
     "used_for_training": false
   },
   "source_attested_ipa_records": {
-    "count": 6,
+    "count": 7,
     "license": "CC-BY-SA-4.0",
     "status": "SOURCE_ATTESTED_NOT_GOLD",
     "includes_short_long_oe_contrast": true
@@ -281,18 +304,7 @@
     "rows": 351780,
     "vowel_rime_records": 41
   },
-  "latest_documentation_checkpoint": {
-    "branch": "docs/closeout-rtgs-ci-and-audit-20261031",
-    "status": "MERGED",
-    "base_commit": "72a77cb42ad05c33274d70c4dcd9f20e07432b64",
-    "head_commit": "721752d16783d70739c55864af0ccd128c1f6e49",
-    "pull_request": 168,
-    "merge_commit": "8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8",
-    "exact_head_ci_run": 41240389404,
-    "exact_head_ci_status": "SUCCESS",
-    "post_merge_main_ci_run": 41240699017,
-    "post_merge_main_ci_status": "SUCCESS"
-  },
+  "latest_documentation_checkpoint": "536f03327f11d258a4e7638091797128754b6602",
   "text_only_checkpoint": {
     "branch": "research/thai-segmentation-gold-parity-verified-20261025",
     "parent_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
@@ -303,18 +315,18 @@
     "remaining": "automatic segmentation needs a distinct training corpus; acoustic and independent expert claims remain unverified"
   },
   "source_attested_ipa_diagnostic": {
-    "source_records": 6,
-    "complete_engine_outputs": 6,
+    "source_records": 7,
+    "complete_engine_outputs": 7,
     "withheld_or_incomplete": 0,
     "segmental_agreements": 1,
     "tone_agreements": 2,
-    "source_override_circular_count": 4,
+    "source_override_circular_count": 5,
     "independently_comparable_records": 2,
-    "discrepancy": "บรรจุ: source transcription includes final /ʔ/ while current engine segmental output omits it; no universal rule added pending transcription-level/context adjudication",
+    "discrepancy": "บรรจุ: source transcription includes final /ʔ/ while the engine segmental output omits it; retain as an unresolved dictionary discrepancy, not a universal rule.",
     "evidence_grade": "SOURCE_ATTESTED_NOT_GOLD",
     "accuracy_claimed": false,
-    "verification_status": "PASS on exact-head CI run 40592380586; source-attested dictionary evidence only, not independent gold",
-    "artifact_id": "12648883086"
+    "verification_status": "PASS on exact-head CI run 41353088633; dictionary evidence only, not independent gold",
+    "artifact_id": "13102445818"
   },
   "word_boundary_baseline": {
     "corpus": "Wisesight-1000",
@@ -489,14 +501,23 @@
       "status": "DONE_VERIFIED",
       "implementation": "PR #167 adds workflow/source-branch concurrency groups to CI and Web Static; superseded non-main runs are cancelled while main runs are preserved.",
       "acceptance": "Exact-head CI 41237340250, Web Static 41237340267, post-merge main CI 41239440616 and Web Static 41239440643 passed."
+    },
+    {
+      "id": "CCOST-WORDLIST-001",
+      "status": "PARTIAL",
+      "implementation": "Local blind-packet generator with synthetic tests; checks 206 rows/order, duplicate words, set differences and SHA-256/license manifest; output remains unadjudicated and is not committed.",
+      "blocker": "Actual Zenodo wordlist.csv could not be downloaded into the connector-only session; order-set concordance has not been established.",
+      "acceptance": "Run generator against exact Zenodo CSV; reconcile any duplicates/order differences; obtain two independent Thai broad-phonemic annotations and adjudication record."
+    },
+    {
+      "id": "IPA-SOURCE-LAYER-GATE-001",
+      "status": "DONE_VERIFIED",
+      "implementation": "benchmark_ipa.py requires BROAD_PHONEMIC_IPA_GOLD_INPUT or BROAD_SURFACE_IPA_GOLD_INPUT according to transcription_level; text-only challenge and CCOST wordlist sources authorize only broad phonemic input.",
+      "acceptance": "Exact-head CI 41341792448 passed 296 Python tests and 1168 subtests; source misuse regression rejects text-only broad-surface scoring."
     }
   ],
-  "latest_implementation_branch": "chore/python-static-analysis-gate-20261030",
-  "latest_implementation_commit_pending_ci": {
-    "commit": "e8282dfb85f53ae18cbed5fcdc676b1b6049c313",
-    "status": "MAINLINE_CODE_HEAD_VERIFIED",
-    "notes": "PR #150 exact-head CI 41133766851 and post-merge main CI 41134406351 passed; Pages 41134406540 passed."
-  },
+  "latest_implementation_branch": "research/independent-adjudication-gates-20261101",
+  "latest_implementation_commit_pending_ci": null,
   "current_head_status_at_audit_refresh": "Code/workflow checkpoint b6dbec7928b106f0ab52e06af33a26635df75412 passed CI 40322960615 and Web static validation 40322959844. Documentation checkpoint e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff passed full CI 40323209539 and Web static validation 40323209471. This audit-register update creates a newer documentation HEAD and requires exact-head CI/static validation before the current branch HEAD is marked green.",
   "current_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
   "current_implementation_commit_before_audit_update": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
@@ -566,12 +587,12 @@
       ]
     }
   },
-  "latest_implementation_commit_ci_verified": "4b1592cd72298d1ca92e0b99ab330975764a078a",
-  "latest_documentation_head_ci_verified": "4b1592cd72298d1ca92e0b99ab330975764a078a",
-  "latest_documentation_head_ci_run": null,
-  "latest_documentation_head_web_validation_run": null,
-  "latest_implementation_ci_run": 40320450844,
-  "latest_implementation_web_validation_run": 40320450587,
+  "latest_implementation_commit_ci_verified": "536f03327f11d258a4e7638091797128754b6602",
+  "latest_documentation_head_ci_verified": "536f03327f11d258a4e7638091797128754b6602",
+  "latest_documentation_head_ci_run": "41342132989",
+  "latest_documentation_head_web_validation_run": "41342132990",
+  "latest_implementation_ci_run": "41353088633",
+  "latest_implementation_web_validation_run": "41353088642",
   "segmentation_error_review": {
     "script": "scripts/analyze_segmentation_errors.py",
     "test": "tests/test_segmentation_error_analysis.py",
@@ -2063,11 +2084,11 @@
       167
     ]
   },
-  "latest_full_repository_head": "1431c565ff5c160da4944942d687bc30b2f8d0b2",
-  "latest_full_repository_head_ci_run": 41326865977,
-  "latest_full_repository_head_web_validation_run": 41326865964,
-  "latest_web_static_verified_code_commit": "72a77cb42ad05c33274d70c4dcd9f20e07432b64",
-  "latest_web_static_verified_code_run": 41239440643,
+  "latest_full_repository_head": "536f03327f11d258a4e7638091797128754b6602",
+  "latest_full_repository_head_ci_run": "41353088633",
+  "latest_full_repository_head_web_validation_run": "41353088642",
+  "latest_web_static_verified_code_commit": "536f03327f11d258a4e7638091797128754b6602",
+  "latest_web_static_verified_code_run": "41342132990",
   "ccost_source_reconciliation_2026_10_31": {
     "status": "DONE_VERIFIED — source records, provenance boundary, registry, protocol and regression tests passed exact-head CI run 41242513053 on a331131567f6e17f9dd5fe96c8624620f093880c. Separate external BLOCKED item: CCOST_manual.pdf could not be downloaded in this session; inspect before selecting rows.",
     "pr": 169,
@@ -2247,8 +2268,8 @@
     "accuracy_claimed": false
   },
   "current_status_2026_11_01": {
-    "main_sha": "1431c565ff5c160da4944942d687bc30b2f8d0b2",
-    "main_unchanged": false,
+    "main_sha": "cc398254c178171f74397aed556766e87356ab84",
+    "main_unchanged": true,
     "merged_prs": [
       171,
       172,
@@ -2261,27 +2282,37 @@
       179
     ],
     "open_prs": [
-      180
+      182
     ],
-    "review_submissions_and_inline_threads": 0,
-    "branch_refs": 12,
-    "non_main_refs": 11,
-    "branch_inventory": "12 refs including this documentation continuation branch; 11 non-main refs. No branch deleted.",
-    "ccost_manual_inspection": "DONE_VERIFIED",
-    "ccost_textgrid_schema_and_detailed_methods": "BLOCKED_EVIDENCE_LIMITED",
-    "thai_ipa_segmentation_adjudication": "BLOCKED_EVIDENCE_LIMITED",
-    "ukrainian_target_form_adjudication": "BLOCKED_EVIDENCE_LIMITED",
-    "manual_browser_device_wcag_review": "BLOCKED",
-    "main_branch_protection": "TODO_OWNER_CONFIGURATION; branch listing reports protected=false",
-    "full_import_call_reference_graph": "PARTIAL",
-    "broad_test_fixture_redundancy_review": "PARTIAL",
-    "historical_document_reorganization": "DEFERRED_PENDING_REFERENCE_AUDIT",
+    "closed_superseded_prs": [
+      181
+    ],
+    "branch_refs": 14,
+    "non_main_refs": 13,
+    "branch_inventory": "14 refs including main; 13 non-main refs. No branch deletion was performed; PR #181 source branch retained.",
+    "research_branch": "research/independent-adjudication-gates-20261101",
+    "research_branch_base": "cc398254c178171f74397aed556766e87356ab84",
+    "research_branch_verified_code_checkpoint": "036fb2837c6e1df247e055df115d52c4b3c48b16",
+    "research_branch_documentation_checkpoint": "6c30f39e0aff05e53889cdab6ada3e283410cdb6",
+    "research_branch_ahead_at_code_checkpoint": 161,
+    "thai_blind_review_items": 42,
+    "ukrainian_conditional_review_items": 7,
+    "independent_thai_ipa_gold_rows": 0,
+    "independent_segmentation_gold_rows": 0,
+    "ukrainian_review_submissions": 0,
+    "ccost_manual_inspection": "WORDLIST_PREVIEW_RECONSTRUCTED_MD5_VERIFIED; PAPER_TIER_MAP_VERIFIED; ACTUAL_TEXTGRID_ARCHIVE_NOT_INSPECTED",
+    "ccost_released_textgrid_tier_mapping": "PAPER_INTENDED_SCHEMA_VERIFIED; ACTUAL_ARCHIVE_CONFORMANCE_BLOCKED",
+    "thai_ipa_segmentation_adjudication": "BLOCKED_EXTERNAL_EXPERTS",
+    "ukrainian_target_form_adjudication": "BLOCKED_EXTERNAL_NATIVE_REVIEWERS",
+    "main_branch_protection": "TODO_OWNER_CONFIGURATION; protected=false",
     "local_test_execution": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
-    "latest_merged_pr_exact_head_ci_run": 41326533814,
-    "post_merge_main_ci_run": 41326865977,
-    "post_merge_main_ci_status": "SUCCESS — test, wheel-install-smoke, master-artifact",
-    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY",
-    "post_merge_pages_status": "SUCCESS — build, deploy"
+    "full_push_ci_run": "41353088633_PASSED_ALL_3_JOBS",
+    "web_static_run": "41353088642_PASSED",
+    "pr_182_latest_head_ci": "41353088633_PASSED_ALL_3_JOBS",
+    "readiness": "ENGINEERING_RESEARCH_INFRASTRUCTURE_VERIFIED; NOT_RELEASE_READY; LINGUISTIC_ACCURACY_NOT_MEASURED",
+    "ccost_wordlist_generator": "IMPLEMENTED; SYNTHETIC_TESTS_PASS; PREVIEW_RECONSTRUCTED; A-D_SOURCE_ORDER_DISCREPANCY_BLOCKS_SCOREABLE_PACKET",
+    "external_vistec_run": "41353088643_PASSED",
+    "unsourced_ruesi_lexicon": "REMOVED_FROM_PYTHON_AND_BROWSER; STRICT_ABSTENTION_TESTS_PASS"
   },
   "repository_structure_cleanup_2026_11_01": {
     "main_at_start": "69dafe58a9458d33a645cdcd517e61e9978abdbd",
@@ -2392,5 +2423,216 @@
     "post_cleanup_main_ci_run": 41326865977,
     "post_cleanup_pages_run": 41326865964,
     "post_cleanup_status": "SUCCESS — main CI (test, wheel-install-smoke, master-artifact) and Pages (build, deploy)"
+  },
+  "independent_adjudication_work_2026_11_01": {
+    "branch": "research/independent-adjudication-gates-20261101",
+    "base_main": "cc398254c178171f74397aed556766e87356ab84",
+    "verified_code_checkpoint": "036fb2837c6e1df247e055df115d52c4b3c48b16",
+    "documentation_checkpoint": "6c30f39e0aff05e53889cdab6ada3e283410cdb6",
+    "status": "DONE_VERIFIED_ENGINEERING; EXPERT_EVIDENCE_BLOCKED",
+    "pr": 182,
+    "superseded_pr_closed": 181,
+    "artifacts": [
+      "data/benchmark/ipa-adjudication-blind.tsv",
+      "data/benchmark/ukrainian-target-preference-blind.tsv",
+      "data/benchmark/segmentation-adjudication-gold.tsv"
+    ],
+    "validators": [
+      "scripts/validate_adjudication_packet.py",
+      "scripts/validate_ukrainian_preference_packet.py"
+    ],
+    "scorers": [
+      "scripts/benchmark_ipa.py",
+      "scripts/evaluate_segmentation.py"
+    ],
+    "tests_added": [
+      "tests/test_adjudication_packet.py",
+      "tests/test_benchmark_ipa.py",
+      "tests/test_segmentation_benchmark.py",
+      "web/tests/mode-adversarial.test.mjs"
+    ],
+    "ci_run": "41353088633",
+    "ci_result": "PASSED_ALL_3_JOBS; 315_PYTHON_TESTS; 1169_SUBTESTS; RUFF",
+    "web_static_run": "41353088642",
+    "web_static_result": "PASSED",
+    "evidence_limits": {
+      "thai_ipa_gold_rows": 0,
+      "expert_segmentation_gold_rows": 0,
+      "ukrainian_review_submissions": 0,
+      "ccost_archive_imported": false,
+      "accuracy_status": "NOT_MEASURED",
+      "ccost_wordlist_packet_generated_from_actual_source": false,
+      "audio_asset_records": 0
+    },
+    "external_blockers": [
+      "two independent qualified Thai phoneticians for phonemic IPA, segmentation, tone and length",
+      "two independent Ukrainian-native reviewers for practical target forms",
+      "CCOST released TextGrid archive inspection and actual tier/label conformance",
+      "CCOST A-D wordlist source-order discrepancy requires data-curator clarification",
+      "pin and verify individual LOTUSDIS audio assets, microphone IDs, overlap intervals and file hashes"
+    ],
+    "vercel_used": false,
+    "ccost_paper_tier_map": "ORT/KAN/KAS/MAU/MAS/TRN; X-SAMPA; tone _1 Mid, _2 Low, _3 Falling, _4 High, _5 Rising",
+    "source_layer_permissions": {
+      "BROAD_PHONEMIC": "BROAD_PHONEMIC_IPA_GOLD_INPUT",
+      "BROAD_SURFACE": "BROAD_SURFACE_IPA_GOLD_INPUT"
+    },
+    "ccost_wordlist_generator": "scripts/build_ccost_wordlist_review_packet.py; outputs local blind packet plus source SHA-256/license manifest; actual source not downloaded in this session",
+    "vistec_run": "41353088643",
+    "vistec_result": "PASSED",
+    "unsourced_special_orthography_regression": "ฤๅษี text lexicon mapping removed; strict mode abstention verified"
+  },
+  "adjudication_readiness": {
+    "thai_project_challenge_prompts": 42,
+    "ccost_controlled_wordlist_expected_items_per_order": 206,
+    "ccost_wordlist_packet_generated_from_actual_source": false,
+    "ukrainian_conditional_preference_prompts": 7,
+    "verified_human_reviewers": 0,
+    "adjudicated_thai_ipa_rows": 0,
+    "adjudicated_segmentation_rows": 0,
+    "ukrainian_native_review_submissions": 0,
+    "accuracy_status": "NOT_MEASURED",
+    "source_layer_gate": {
+      "BROAD_PHONEMIC": "BROAD_PHONEMIC_IPA_GOLD_INPUT",
+      "BROAD_SURFACE": "Requires registered audio source + verified audio asset + exact in-bounds interval + explicit BROAD_SURFACE_IPA_GOLD_INPUT permission",
+      "NARROW_ACOUSTIC": "Requires registered audio source + verified audio asset + exact in-bounds interval"
+    },
+    "ccost": {
+      "paper_tier_schema": "VERIFIED_FROM_LREC_2026_PAPER",
+      "actual_archive_conformance": "BLOCKED_PENDING_LOCAL_TEXTGRID_INSPECTION",
+      "formal_inter_annotator_agreement": "NOT_REPORTED_BY_PAPER",
+      "license": "CC-BY-NC-SA-4.0"
+    },
+    "thai_supplemental_regression_prompts": 6,
+    "unsourced_special_vowel_words_withheld": [
+      "ฤๅษี"
+    ]
+  },
+  "latest_exact_head_verification_2026_11_01": {
+    "branch": "research/independent-adjudication-gates-20261101",
+    "head": "036fb2837c6e1df247e055df115d52c4b3c48b16",
+    "ahead_of_main": 161,
+    "behind_main": 0,
+    "ci_run": "41353088633",
+    "ci_result": "PASSED_ALL_3_JOBS",
+    "python_tests": 315,
+    "python_subtests": 1169,
+    "ruff": "PASSED",
+    "wheel_install_smoke": "PASSED",
+    "master_artifact": "PASSED",
+    "web_static_run": "41353088642",
+    "web_static_result": "PASSED",
+    "external_vistec_run": "41353088643",
+    "external_vistec_result": "PASSED",
+    "master_table_artifact_id": "13101821945",
+    "segmentation_error_review_artifact_id": "13102395834",
+    "source_attested_ipa_artifact_id": "13102445818",
+    "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT"
+  },
+  "ccost_wordlist_source_audit_2026_11_01": {
+    "source_md5": "e62f500d87b4ff8c6deb4c4595854d34",
+    "source_sha256": "e3836f6204c674a8d972dfd49de369eea7856ca6f00d520aafcd62f4e7273223",
+    "rows_per_order": {
+      "A": 206,
+      "B": 206,
+      "C": 206,
+      "D": 206
+    },
+    "unique_per_order": {
+      "A": 206,
+      "B": 206,
+      "C": 206,
+      "D": 206
+    },
+    "duplicates_by_order": {
+      "A": [],
+      "B": [],
+      "C": [],
+      "D": []
+    },
+    "missing_and_extra_items_vs_A": {
+      "B": 2,
+      "C": 2,
+      "D": 2
+    },
+    "unique_union": 208,
+    "generator_status": "SOURCE_ORDER_DISCREPANCY_REQUIRES_RECONCILIATION",
+    "scoreable": false,
+    "resolution": "BLOCKED_PENDING_CCOST_DATA_CURATOR_CLARIFICATION",
+    "derived_packets_committed": false
+  },
+  "follow_up_abstention_ipa_guard_2026_11_02": {
+    "status": "PARTIAL_PENDING_EXACT_HEAD_CI",
+    "finding": "ABSTAIN rows rejected phonemic_ipa and broad_surface_ipa but did not reject narrow_ipa",
+    "test_commit": "2852b47a3c07eabc2512e686d56673dbe9e0ad50",
+    "implementation_commit": "e22c686128d0f65dbd078713d4d4428d24a09f62",
+    "exact_head_ci_run": "41356275693",
+    "exact_head_ci_status": "IN_PROGRESS_AT_MASTER_TABLE_GENERATION_WHEN_RECORDED",
+    "web_static_run": "41356275500",
+    "web_static_status": "PASSED",
+    "external_vistec_run": "41356275512",
+    "external_vistec_status": "IN_PROGRESS_WHEN_RECORDED",
+    "red_test_observed": false,
+    "red_test_limitation": "Test-only push/PR runs were cancelled before the Python suite reached the regression; do not claim RED verified.",
+    "local_tests": "NOT_RUN_NO_LOCAL_CHECKOUT_OR_NETWORK",
+    "linguistic_accuracy": "NOT_MEASURED",
+    "runtime_pronunciation_changed": false
+  },
+  "acceptance_gates_2026_11_02": {
+    "thai_ipa_segmentation": {
+      "status": "BLOCKED",
+      "closure": "Two qualified independent Thai reviewers; frozen annotations; adjudication/disagreement log; separate segmentation review; licensed asset provenance for acoustic claims."
+    },
+    "ukrainian_practical_transcription": {
+      "status": "BLOCKED",
+      "closure": "Two independent Ukrainian-native reviewers; frozen criteria; original preferences; adjudication/disagreement log."
+    },
+    "ccost_wordlist": {
+      "status": "BLOCKED",
+      "closure": "Written curator/author clarification or official correction/erratum for A-D order-set discrepancy."
+    },
+    "ccost_textgrid": {
+      "status": "BLOCKED",
+      "closure": "Inspect released archive; verify real tier structure; enumerate complete X-SAMPA inventory; map layers and provenance."
+    },
+    "lotusdis": {
+      "status": "PARTIAL",
+      "license": "CC-BY-SA-4.0",
+      "asset_registry": "HEADER_ONLY",
+      "closure": "Immutable revision, asset IDs/URIs, SHA-256, speaker pseudonyms, microphones/channels, overlap, duration and exact intervals."
+    },
+    "wcag_2_2_aa": {
+      "status": "BLOCKED",
+      "closure": "Recorded manual keyboard, screen-reader, device and viewport testing with fixes and retests."
+    },
+    "dependency_reference_graph": {
+      "status": "PARTIAL",
+      "closure": "Full import/call/reference graph plus review of dynamic and generated entry points.",
+      "local_checkout": "BLOCKED_DNS_GITHUB_COM"
+    },
+    "test_redundancy": {
+      "status": "PARTIAL",
+      "closure": "Contract/layer-based overlap analysis and evidence no acceptance-coverage loss."
+    },
+    "branch_protection": {
+      "status": "TODO_OWNER_DECISION",
+      "closure": "Owner-selected required checks, review and bypass policy, then verified ruleset."
+    }
+  },
+  "latest_exact_head_verification_2026_11_02": {
+    "verified_code_head": "d2d3043b61710496f48851f232f69ba836c8e0bc",
+    "ci_run": "41356471529",
+    "ci_result": "PASSED_ALL_3_JOBS",
+    "web_static_run": "41356471455",
+    "web_static_result": "PASSED",
+    "external_vistec_run": "41356471544",
+    "external_vistec_result": "PASSED",
+    "regression_narrow_ipa_abstention": "INCLUDED_IN_FULL_PYTEST",
+    "red_test_observed": false,
+    "local_tests": "NOT_RUN_GITHUB_CLONE_FAILED_DNS",
+    "branch": "research/independent-adjudication-gates-20261101",
+    "commits_ahead_of_main": 165,
+    "commits_behind_main": 0,
+    "linguistic_accuracy": "NOT_MEASURED"
   }
 }

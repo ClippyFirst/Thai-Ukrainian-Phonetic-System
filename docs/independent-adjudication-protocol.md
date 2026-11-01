@@ -4,17 +4,17 @@ Status: **prepared, not adjudicated**. No expert values are pre-filled. These te
 
 ## IPA / tone / vowel length
 
-Template: `data/benchmark/ipa-adjudication-template.tsv`.
+Legacy reconciliation sheet: `data/benchmark/ipa-adjudication-template.tsv` (contains source-attested references and engine candidates; it is **not** a blind annotation sheet). Use `data/benchmark/ipa-adjudication-blind.tsv` for first-pass Thai expert annotation.
 
 1. Before annotation, agree whether the target is broad phonemic IPA, conservative broad surface IPA, or narrow acoustic transcription. Never compare these as if they were the same label layer.
-2. For any acoustic claim, use an authorized recording and record a stable asset reference, speaker metadata permitted by the license, and the exact relevant time interval. Text-only dictionary IPA is not acoustic evidence.
+2. For any acoustic claim, use an authorized recording and register its exact source revision and asset-level hash before review. Record the speaker pseudonym, microphone/channel, overlap status, duration and exact time interval. The validator rejects unregistered/BLOCKED sources, unregistered/BLOCKED assets, overlapping assets and intervals outside the asset duration; a non-empty asset string alone is not evidence of permission. Text-only dictionary IPA is not acoustic evidence.
 3. Two Thai phoneticians annotate independently and blind to the engine output where feasible. Record segmental IPA, syllable boundaries, tone category/contour, vowel length, final glottal realization, stress/context, and uncertainty.
 4. Reconcile disagreements only after independent labels are frozen; preserve both original labels and a written disagreement log.
 5. Do not count an output sourced from the same dictionary record as agreement with that record. The `เดิน` lexical override is explicitly circular for the source-attested comparison and is excluded from independent agreement counts.
 6. Keep CCOST files external and preserve its CC BY-NC-SA 4.0 non-commercial/share-alike terms. This repository does not contain CCOST audio or TextGrid files.
 7. The CCOST dataset record (DOI 10.5281/zenodo.17366698) and its LREC 2026 paper (DOI 10.63317/3ds35jijmgrx) are distinct records. The paper abstract reports ASR/forced-alignment followed by manual correction by phonetically trained native Thai speakers. Treat this as manually corrected corpus evidence, not proof of two independent blinded labels per item.
-8. `CCOST_manual.pdf` was inspected on 2026-11-01. It is an RA workflow manual describing OCTRA ASR transcript correction, Thai-script normalization, Praat boundary/transcript correction and the BAS `CHUNKPREP → G2P → MAUS → PHO2SYL` pipeline. It names `OCTRA_1` and illustrates MAUS output symbols `sampa`, but does not define the final released TextGrid tier schema, complete phone/toneme inventory, tone-label convention, uncertainty handling or independent double annotation. Do not infer these missing details from the manual's tool configuration.
-9. Before using CCOST rows, inspect the released TextGrid tier schema and detailed paper methods; map their labels to the declared target layer and exclude records whose annotation scope cannot be reconciled. Keep text/phone/toneme agreement claims separate from acoustic claims.
+8. `CCOST_manual.pdf` was inspected on 2026-11-01. It documents the RA workflow (OCTRA ASR transcript correction, Thai-script normalization, Praat boundary/transcript correction and BAS `CHUNKPREP → G2P → MAUS → PHO2SYL`), but it is not the complete tier specification. The **LREC 2026 paper** specifies the intended TextGrid tiers: `ORT` (orthographic word), `KAN` (canonical word pronunciation), `KAS` (canonical syllabified pronunciation), `MAU` (phonetic segment), `MAS` (phonemic syllable), and `TRN` (orthographic utterance transcript). The paper states that phonemic and phonetic representations use X-SAMPA and tone numerals `_1=Mid`, `_2=Low`, `_3=Falling`, `_4=High`, `_5=Rising`.
+9. The paper reports that trained native Thai research assistants manually corrected alignment boundaries and verified tone/segmental accuracy; it also explicitly states that formal inter-annotator agreement measures were not collected. Thus CCOST is a valuable manually corrected external reference, but not a two-independent-reviewer gold set. Before any automated import or scoring, inspect actual released TextGrid files to confirm that the archive conforms to the paper's tier names and label conventions, map X-SAMPA symbols to the declared target layer, and preserve speaker/recording/time provenance. Do not infer acoustic ground truth from canonical KAN/KAS tiers; keep canonical phonemic labels, realized MAU phone labels and acoustic measurements distinct.
 10. If the project claims independent adjudication of its own output, two new reviewers must still annotate blindly and independently under this protocol; existing CCOST annotations may be used as external references, but must not be relabelled as ClippyFirst's independent adjudication. Preserve the dataset's CC BY-NC-SA 4.0 non-commercial/share-alike terms and do not copy its audio or TextGrid assets into this repository.
 
 ## Ukrainian target-form preference
@@ -50,6 +50,215 @@ Reviewers should independently record whether the upstream tokenization is lingu
 The external acceptance dependency remains: qualified human reviewers must actually fill and sign off the packet. CI can verify sampling reproducibility, provenance, and lossless text reconstruction only; it cannot perform linguistic adjudication.
 
 
-## CCOST manual review — scope result (2026-11-01)
+## CCOST manual and paper review — scope result (2026-11-01)
 
-`CCOST_manual.pdf` is now inspected. The file documents an operational research-assistant workflow, not a complete annotation specification. It directs human correction of ASR transcripts, Thai orthographic normalization, Praat boundary refinement and BAS MAUS alignment. The manual's illustrated pipeline uses `OCTRA_1` as an input tier and `sampa` as MAUS output symbols, but this alone does not prove that the released TextGrids contain a fully documented SAMPA or IPA transcription tier. It does not specify the final TextGrid tier inventory, toneme label scheme, uncertainty handling, or independent double annotation. The manual-inspection task is complete; CCOST benchmark acceptance remains blocked until the released TextGrid schema and detailed paper methods are reconciled with the target transcription layer.
+`CCOST_manual.pdf` documents an operational research-assistant workflow: ASR transcript correction, Thai orthographic normalization, Praat boundary refinement and BAS MAUS alignment. The manual's illustrated pipeline uses `OCTRA_1` and `sampa`, but it is not the complete released-tier specification. The LREC 2026 paper supplies the intended map: ORT (orthographic word), KAN (canonical word pronunciation), KAS (canonical syllabified pronunciation), MAU (phonetic segment), MAS (phonemic syllable) and TRN (orthographic utterance transcript). It states that phonemic and phonetic labels use X-SAMPA and tone suffixes `_1=Mid`, `_2=Low`, `_3=Falling`, `_4=High`, `_5=Rising`.
+
+The paper reports manual correction by trained native Thai research assistants and spot checks by senior team members, but explicitly says formal inter-annotator agreement measures were not collected. The paper's intended schema is now documented; actual released TextGrid tier conformance, exact X-SAMPA inventory and item-level metadata remain blocked until the archive is inspected. CCOST must not be relabelled as independent double-review gold.
+
+## Blind Thai phonetic packet — operational procedure (2026-11-01)
+
+The frozen 42-item challenge set now has a separate reviewer-facing packet at `data/benchmark/ipa-adjudication-blind.tsv`. It is generated from `data/benchmark/thai_g2p_challenge.jsonl` and deliberately contains no engine output, source-dictionary IPA, or prefilled human labels. Each reviewer must work from a separate copy and must not see the other reviewer's sheet or any engine predictions before their own labels are frozen.
+
+- `word_boundaries`: separate orthographic words with `|`; preserve spaces/punctuation in a separate notes field where needed.
+- `syllable_boundaries`: separate syllables with `.`; annotate the actual reading, not a segmentation guessed from spelling.
+- `phonemic_ipa`: broad phonemic IPA; `broad_surface_ipa` is optional and must not be conflated with the phonemic target.
+- `tone_sequence`: categorical tone labels per syllable; `vowel_length`: short/long/uncertain per syllable; `final_glottal`: PRESENT / ABSENT / CONTEXTUAL / UNKNOWN / NOT_APPLICABLE.
+- `orthography_validity`: VALID / INVALID / AMBIGUOUS / UNKNOWN. `uncertainty`: LOW / MEDIUM / HIGH / ABSTAIN. An abstention requires a written reason and must not contain a guessed IPA.
+- `transcription_level`: BROAD_PHONEMIC or NARROW_ACOUSTIC. The primary `phonemic_ipa` field always records the broad phonemic layer. Optional `broad_surface_ipa` is a separate supplementary layer. Any audio-backed row must provide a registered `audio_source_id`, a stable `audio_asset_reference` present in `data/benchmark/audio-assets.tsv`, and a positive time interval within that asset's registered duration. The asset manifest binds the source ID, immutable dataset revision (not `main/latest`), absolute asset URI, SHA-256, pseudonymous speaker reference, microphone/channel, overlap status and duration. The source registry must mark the source VERIFIED and explicitly allow `ACOUSTIC_PHONETICS_RESEARCH`; the asset must also be VERIFIED and non-overlapping. For NARROW_ACOUSTIC, reviewers additionally fill `narrow_ipa` in square brackets, aligned one-to-one with syllable boundaries. The validator rejects unregistered assets and blocked sources such as CCOST until its archive mapping is cleared. A narrow label cannot be entered in `phonemic_ipa`; dictionary IPA cannot support a narrow acoustic claim. The current IPA scorer does not score narrow labels.
+- `reviewer_id` is a pseudonymous stable reviewer key; `reviewer_qualification_ref` points to the separately retained qualification evidence. Do not commit personal contact details or private credentials.
+
+The blank packet is checked against the frozen challenge set in CI. A completed copy can be checked with:
+
+```bash
+python scripts/validate_adjudication_packet.py --mode review --reviewer-id TH-PH-01 data/benchmark/reviewer-a.tsv
+python scripts/validate_adjudication_packet.py --mode review --reviewer-id TH-PH-02 data/benchmark/reviewer-b.tsv
+python scripts/validate_adjudication_packet.py --mode pair --reviewer-b-packet data/benchmark/reviewer-b.tsv data/benchmark/reviewer-a.tsv
+```
+
+The pair gate checks exact item coverage, distinct reviewer IDs, qualification references, dates, explicit abstentions and acoustic time references. It also reports per-field NFC-normalized exact agreement, one-sided missing labels and joint abstentions; these are descriptive raw agreement counts, not chance-corrected reliability statistics and not adjudication. It does not judge which pronunciation is correct or settle disagreements. Preserve both independent files, then write the adjudication decision and disagreement rationale. Only then may a row be promoted into `data/benchmark/gold.tsv`.
+
+## Ukrainian preference review — conditional on supplied IPA
+
+`data/benchmark/ukrainian-target-preference-blind.tsv` contains seven current source-attested examples, with the engine candidate removed. Reviewers judge the Ukrainian rendering **conditional on the supplied IPA**, not the correctness of the Thai pronunciation. Every row is explicitly marked `SOURCE_ATTESTED_NOT_GOLD`; these judgments cannot be used as an end-to-end Thai→Ukrainian accuracy score.
+
+Criteria version `UA-PRACTICAL-TRANSCRIPTION-0.1` asks reviewers to record:
+1. preferred practical Ukrainian form and rationale;
+2. whether syllable separators should be preserved, omitted, or treated as display-only;
+3. whether aspiration, /ŋ/, affricates, /ɯ/ and vowel contrasts are represented consistently and readably;
+4. whether tone is correctly kept in IPA/metadata rather than falsely encoded as ordinary Ukrainian letters;
+5. uncertainty or abstention where the supplied IPA itself is insufficient.
+
+Each Ukrainian-native reviewer receives a separate copy without the engine candidate. Keep reviewer forms and the later reconciliation record separate. The pair validator reports exact preference, syllable-policy and tone-policy agreement plus abstentions; this is descriptive agreement conditional on the supplied source IPA, not Thai IPA accuracy. Do not promote a preference to gold merely because two reviewers agree; retain the IPA reference grade and criteria version.
+
+## Gold benchmark acceptance gate
+
+The IPA scorer now requires two distinct reviewer IDs, both raw IPA labels, an adjudicator, an adjudication record, outcome, transcription level, source URL and license for every `ADJUDICATED` row. `AGREEMENT` requires matching raw labels; `RESOLVED_DISAGREEMENT` requires different raw labels and a written adjudication note. A single run cannot mix BROAD_PHONEMIC and BROAD_SURFACE references. Metrics are also stratified by the frozen profile/stratum.
+
+Current status remains **zero adjudicated gold rows**. The stricter gate and packets are infrastructure, not completed expert review. The seven dictionary readings remain source-attested references and must not enter the gold denominator.
+
+## CCOST source decision
+
+CCOST is the strongest current candidate for a licensed acoustic/phone/toneme evaluation: the public LREC 2026 description reports 49 Standard Thai speakers, approximately seven hours of spontaneous interview speech, a repeated 206-item monosyllabic word list, 25 repeated sentences, and orthographic/word/syllable/phone annotations including toneme labels. Zenodo identifies the dataset as CC BY-NC-SA 4.0 and lists a 6.2 GB audio/TextGrid archive. Its paper reports ASR/forced alignment followed by manual correction by phonetically trained native Thai speakers; that does not establish independent double-blind annotation per item.
+
+The repository does not redistribute CCOST. Before importing any labels, obtain the licensed archive under the non-commercial/share-alike terms, inspect actual released TextGrid tier names and label inventory, map tiers to the chosen phonemic/surface/acoustic target, record recording and speaker references plus time intervals, and exclude unmappable or uncertain rows. Existing manual inspection does not resolve the tier-schema blocker. New independent reviewers remain required for this project's own gold labels.
+
+
+## Reviewer packet schema and evidence separation — 2026-11-01 refinement
+
+The Thai blind packet has 42 rows and 23 columns. It intentionally omits challenge stratum/probe labels as well as all source-dictionary IPA and engine outputs, reducing hypothesis anchoring. It is candidate-blind, not a security boundary: distribute only the packet to reviewers and do not send them model output, diagnostic reports, source-attested worksheets or the other reviewer's sheet.
+
+For each non-abstaining row, the validator requires:
+- `phonemic_ipa` as the broad phonemic reference; optional `broad_surface_ipa` is separate and never substitutes for it;
+- for NARROW_ACOUSTIC only, a distinct square-bracketed `narrow_ipa` label with syllable alignment, a VERIFIED registered `audio_source_id` approved for `ACOUSTIC_PHONETICS_RESEARCH`, an asset ID and a positive time interval;
+- `lexical_reading` (or explicit `UNRESOLVED`);
+- `word_boundaries`: Thai orthographic words separated by `|`;
+- `syllable_boundaries`: syllables separated by `.`, with `|` retained between words;
+- `tone_sequence`: comma-separated `MID, LOW, FALLING, HIGH, RISING, UNKNOWN, NOT_APPLICABLE`, one value per syllable;
+- `vowel_length`: comma-separated `SHORT, LONG, UNKNOWN, NOT_APPLICABLE`, one value per syllable;
+- `final_glottal`: comma-separated `PRESENT, ABSENT, CONTEXTUAL, UNKNOWN, NOT_APPLICABLE`, one value per syllable;
+- `phonemic_ipa`, uncertainty and a declared transcription level.
+
+Boundary strings must reconstruct the exact Thai input after removing only their declared separators. Tone, vowel-length and glottal arrays must align one-to-one with syllables. Abstention is valid but requires a reason and must contain no phonemic or surface IPA. A narrow acoustic label requires an authorized audio reference and positive time interval.
+
+Completed reviewer copies can be checked independently and as a pair:
+
+```bash
+python scripts/validate_adjudication_packet.py --mode review --reviewer-id TH-PH-01 data/benchmark/reviewer-a.tsv
+python scripts/validate_adjudication_packet.py --mode review --reviewer-id TH-PH-02 data/benchmark/reviewer-b.tsv
+python scripts/validate_adjudication_packet.py --mode pair --reviewer-b-packet data/benchmark/reviewer-b.tsv data/benchmark/reviewer-a.tsv
+```
+
+The paired review validator checks distinct reviewer IDs, exact sample coverage, qualification references, source-input identity, syllable-aligned metadata and explicit abstention. It does not decide which pronunciation is correct.
+
+### Separate word- and syllable-segmentation gold
+
+`data/benchmark/segmentation-adjudication-gold.tsv` is an empty registry for future expert boundary labels. Each row declares `segmentation_layer=WORD|SYLLABLE`; a benchmark run may not mix the two. Every `ADJUDICATED` row requires two distinct reviewer IDs, both original tokenizations, qualification references, adjudicator, outcome, record, source URL and license. `AGREEMENT` requires matching reviewer token arrays and gold equal to them. `RESOLVED_DISAGREEMENT` requires different raw arrays and a written adjudication note. Existing Wisesight rows remain `SOURCE_ANNOTATED`, not expert gold.
+
+### Ukrainian-native preference review validation
+
+The seven-row `data/benchmark/ukrainian-target-preference-blind.tsv` has no engine candidates and is validated against the frozen source-attested IPA registry. Reviewers record a preferred Ukrainian form (or explicit abstention), rationale, syllable-boundary display policy and tone-rendering policy. Completed-review validation requires a stable reviewer ID, qualification reference, ISO date, rationale and fixed criteria version. Pair validation requires two different Ukrainian reviewer IDs and exact source/input identity.
+
+```bash
+python scripts/validate_ukrainian_preference_packet.py --mode review --reviewer-id UK-UA-01 data/benchmark/ukrainian-review-a.tsv
+python scripts/validate_ukrainian_preference_packet.py --mode pair --reviewer-b-packet data/benchmark/ukrainian-review-b.tsv data/benchmark/ukrainian-review-a.tsv
+```
+
+These are conditional judgments about Ukrainian rendering of supplied dictionary IPA. They remain `SOURCE_ATTESTED_NOT_GOLD` and cannot measure Thai pronunciation or end-to-end accuracy.
+
+
+## Verified evidence registries — 2026-11-01
+
+The review and scoring path now requires two machine-readable registries:
+
+- `data/benchmark/source-registry.tsv` binds each source ID to one exact URL, declared license, allowed use, verification state and provenance note. A source cannot be silently relabelled, used for a different evaluation layer, or upgraded from dictionary/reference evidence to acoustic gold. `BLOCKED` records are visible but rejected by the scorer.
+- `data/benchmark/reviewer-qualifications.tsv` stores pseudonymous reviewer IDs, language, narrowly scoped roles, a qualification-evidence reference, verification state, verifier and verification date. Do not add names, email addresses, phone numbers, identity documents or private credentials. Keep restricted qualification evidence in an appropriate private record system and store only its opaque reference here.
+
+The registry is intentionally header-only at present: **no real Thai phonetician, Thai linguist, Ukrainian-native reviewer or adjudicator has been verified or registered**. Unit-test fixtures use synthetic identities and are explicitly not real reviewers. Do not copy test fixtures into the production registry.
+
+Required reviewer roles are:
+- `THAI_PHONETICIAN` for Thai lexical/phonemic/tone review;
+- `THAI_PHONETICIAN_ADJUDICATOR` for independent Thai IPA adjudication;
+- `THAI_LINGUIST` and `THAI_LINGUIST_ADJUDICATOR` for word/syllable segmentation review;
+- `UKRAINIAN_NATIVE_REVIEWER` for Ukrainian practical-transcription preferences.
+
+The review CLIs load this registry by default. The IPA and segmentation scorers additionally require a source registry match and verified role/language/qualification references before counting any row as `ADJUDICATED`. A free-form qualification string is no longer sufficient. Source URL and license must match registered values exactly, and the source must explicitly allow the intended use.
+
+Run the registry check before review or scoring:
+
+```bash
+python scripts/validate_evidence_registry.py
+python scripts/validate_adjudication_packet.py --mode review --reviewer-registry data/benchmark/reviewer-qualifications.tsv --reviewer-id TH-PH-01 data/benchmark/reviewer-a.tsv
+python scripts/validate_ukrainian_preference_packet.py --mode review --source-registry data/benchmark/source-registry.tsv --reviewer-registry data/benchmark/reviewer-qualifications.tsv --reviewer-id UK-UA-01 data/benchmark/ukrainian-review-a.tsv
+```
+
+### Current source-use decisions
+
+- Wisesight (CC0-1.0) and the pinned VISTEC-TP-TH-2021 snapshot (CC BY-SA 3.0) are approved for source-annotated segmentation diagnostics. Their existing source labels are **not** expert-adjudicated gold. The text may be used as input to a new independent human annotation only with source attribution and applicable license conditions preserved.
+- The seven pinned Wiktionary IPA records are reference-only and may condition the Ukrainian preference task. They are not acoustic IPA gold. The `เดิน` record overlaps an engine lexical override and must not be counted as independent agreement.
+- The PyThaiNLP Thai G2P v4 collection is a reference/differential source with Wiktionary `th-pron` overlap. It is not an independent gold set and must not be presented as independent validation.
+- The project-authored 42-item challenge set is registered as `CLIPPYFIRST-THAI-CHALLENGE-CC398` and approved as the *input-text provenance* for expert IPA/word-segmentation gold. Its MIT-licensed prompt strings are not pronunciation evidence: only independently verified reviewer labels and a separate adjudication record may populate gold. This closes a source-registry wiring gap that previously meant no eligible source could pass the `IPA_GOLD_INPUT` gate.
+- CCOST's intended tier map is verified from the LREC 2026 paper: `ORT/KAN/KAS/MAU/MAS/TRN`, X-SAMPA and numbered tone labels. The dataset remains `BLOCKED` for automated scoring until actual released TextGrid files are inspected and the X-SAMPA inventory is mapped. The paper reports no formal inter-annotator agreement, so CCOST annotations remain external manually corrected references, not this project's independent double-review gold. Its CC BY-NC-SA 4.0 terms remain applicable; no audio or TextGrid is redistributed here.
+
+The production reviewer registry remains empty: no real Thai phonetician, Thai linguist or Ukrainian-native reviewer has been verified. Consequently independent IPA/segmentation/UA gold counts remain zero and accuracy remains **NOT MEASURED**. The empty reviewer registry is an honest blocker, not a successful expert review.
+
+
+## Ukrainian practical-transcription preference review — criteria and scope
+
+The current seven-row packet is a **conditional preference study**: reviewers see a source-attested IPA reference and Thai input, but no engine candidate. It asks how Ukrainian readers/native speakers would render that IPA in practical Ukrainian orthography. It does not validate the Thai IPA itself and does not establish an official or universal Ukrainian standard for Thai.
+
+Before distributing a packet, freeze a criteria version and tell reviewers that they must:
+1. Judge the supplied IPA, not reconstruct pronunciation from Thai spelling. If the IPA is unclear or internally inconsistent, record uncertainty or abstain rather than silently correcting it.
+2. Prefer a readable, consistent Ukrainian rendering that preserves meaningful segmental contrasts as far as Ukrainian orthography permits. Give a short rationale for choices involving /ŋ/, /ɯ/, /ɤ/, aspiration, affricates and final glottalization.
+3. Treat tone as a separate phonological feature. Do not encode lexical tone as ordinary Ukrainian letters unless the criteria explicitly define and justify a separate notation; retain tone in IPA/metadata by default.
+4. State whether syllable separators are part of the displayed form, optional reading aid, or omitted from continuous prose. Do not let punctuation policy change the underlying segment sequence.
+5. Distinguish common lexical items from unassimilated proper names. Holovach (2022) discusses practical transcription of foreign proper names and argues that assimilated loans and unassimilated proper names require different treatment; that distinction is useful for future name-specific strata but is not a binding rule for the seven current common-word examples.
+6. Work independently, blind to the engine candidate and the other reviewer's choices. Freeze the raw form and rationale before pair comparison; a third qualified adjudicator records any resolution without overwriting either original review.
+
+The review outcome is preference evidence, not an exact-match phonetic gold label. Report reviewer agreement, variant preferences and abstentions separately. Do not collapse disagreements into a single “correct” Ukrainian spelling without a declared editorial policy.
+
+Method reference: U. Holovach (2022), “До питання правопису чужомовних власних назв: ще раз про концептуальний підхід та головні принципи”, *Мова: класичне – модерне – постмодерне*, 8, 187–212, DOI [10.18523/lcmp2522-9281.2022.8.187-212](https://doi.org/10.18523/lcmp2522-9281.2022.8.187-212). The article's scope is proper names; it is cited here for the distinction between practical-transcription tasks, not as a Thai-specific orthographic standard.
+
+
+## CCOST controlled-wordlist review packet
+
+The CCOST paper describes a 206-item monosyllabic controlled word list balanced across five lexical tones, four initial-consonant classes, three syllable structures and short/long vowel contrasts in closed syllables. The separate Zenodo `wordlist.csv` provides four presentation-order columns A-D, but it supplies Thai prompts only—not IPA, phone labels, audio or tone annotations.
+
+Generate a local blind packet only after obtaining the licensed CSV:
+
+```bash
+python scripts/build_ccost_wordlist_review_packet.py \
+  --wordlist /path/to/wordlist.csv \
+  --output-dir /tmp/ccost-review
+python scripts/validate_adjudication_packet.py --mode blind \
+  --challenge /tmp/ccost-review/ccost-wordlist-challenge.jsonl \
+  /tmp/ccost-review/ccost-wordlist-blind.tsv
+```
+
+The generator validates 206 rows per order, records duplicates and set differences, emits a deterministic union of prompts and records the exact input SHA-256. If any order contains duplicates or a different set, its manifest is marked `SOURCE_ORDER_DISCREPANCY_REQUIRES_RECONCILIATION`; reconcile that source anomaly before freezing the packet or scoring it. Even a concordant packet is only a prompt list. Two independent Thai reviewers must supply broad phonemic IPA and per-syllable tone/length/boundary labels. Do not derive gold from the engine, dictionary IPA or CCOST's uninspected annotation archive.
+
+The source-use registry distinguishes broad phonemic from broad surface IPA. The project challenge and CCOST wordlist are approved only for `BROAD_PHONEMIC_IPA_GOLD_INPUT`; the full CCOST audio/TextGrid archive remains BLOCKED for both layers pending actual archive inspection and X-SAMPA mapping. This prevents text-only prompts from authorizing surface-phonetic scoring.
+
+
+## Source-attested regression reference: เพิ่ง (2026-11-01)
+
+The source-attested registry now includes the version-pinned Thai Wiktionary entry `เพิ่ง` (revision 1885200): **/pʰɤŋ˥˩/**. The entry explicitly labels the vowel short and lists the word as monosyllabic. The source IPA has one syllable, aspirated /pʰ/, short /ɤ/ and final /ŋ/ with falling tone. This directly contradicts the previously observed heuristic rendering that split the word into `pʰɤː ŋa`.
+
+This is a useful source-attested regression reference, not independent expert or acoustic gold. The reference is licensed CC BY-SA 4.0 and is included only as `SOURCE_ATTESTED_NOT_GOLD`; it is not installed as a runtime lexical override. The candidate-blind Ukrainian preference packet now has seven examples, including this source IPA. The engine candidate `п'енг` is separately recorded as a generated adapter candidate, not a preferred or adjudicated Ukrainian form.
+
+
+## Supplemental blind review of the reported adversarial examples — 2026-11-01
+
+The original 42-item challenge set remains frozen and source-pinned to main commit `cc398254c178171f74397aed556766e87356ab84`. To avoid changing that immutable source set, a separate six-item supplement is provided:
+
+- Challenge inputs: `data/benchmark/thai_g2p_supplemental_challenge.jsonl`.
+- Candidate-blind reviewer sheet: `data/benchmark/ipa-adjudication-supplemental-blind.tsv`.
+- Source record: `CLIPPYFIRST-THAI-REGRESSION-ADDENDUM-20261101`, pinned to addendum commit `8ae6e3ef1225a3e8b542371a4b3b26e29becf2a2`, MIT.
+- Six prompts cover `วันนี้`, a context containing `เห็น`, `อย่าเพิ่งเศร้า`, `อะไรบ้าง`, `อธิบายทฤษฎี`, and a phrase containing `ฤๅษี` plus `อธิบาย`.
+- The blind sheet excludes internal stratum/probe labels, all engine output, and the separately inspected Wiktionary IPA for `เพิ่ง`. All gold IPA, surface IPA, tone, length and boundary fields remain null/blank.
+
+This supplement is a set of review prompts, not labels or a benchmark score. It must be annotated independently under the same two-reviewer and separate-adjudicator protocol. The 42-item base packet and six-item supplement are validated separately to preserve the original challenge source hash.
+
+
+## Actual CCOST wordlist source audit — 2026-11-01
+
+The official Zenodo preview was reconstructed byte-for-byte from its published text representation and verified against the file's official MD5 `e62f500d87b4ff8c6deb4c4595854d34`. The reconstructed file is 9,730 bytes with SHA-256 `e3836f6204c674a8d972dfd49de369eea7856ca6f00d520aafcd62f4e7273223`. The repository's `inspect_wordlist`/packet-generation logic was run against those exact bytes:
+
+- Four order columns A-D each contain 206 data rows and 206 unique entries; no within-column duplicates were found.
+- Order A is not set-equivalent to B, C or D. Each of B/C/D differs from A by two missing and two extra entries; the union contains 208 unique prompts.
+- The generator correctly returns `SOURCE_ORDER_DISCREPANCY_REQUIRES_RECONCILIATION`, marks the packet `scoreable: false`, and emits a 208-prompt union locally. No CCOST-derived files or word strings are committed.
+
+**Decision:** do not freeze the 208-prompt packet or score it yet. The source author/data curator must confirm whether the two substitutions are intentional stimulus differences, spelling variants, or source-file errors and, if necessary, publish a corrected wordlist/erratum. The CC BY-NC-SA 4.0 attribution and non-commercial/share-alike conditions remain in force. This audit verifies the public wordlist file only; it does not inspect the 6.2 GB audio/TextGrid archive or establish phonetic gold.
+
+
+## Corpus selection and audio sample requirements
+
+- Controlled baseline: the 42-item project-authored Thai packet plus six supplemental regression prompts. These contain no audio and are suitable for blind lexical, word/syllable, broad phonemic IPA, tone-category, vowel-length and final-glottal review.
+- `CORP-LOTUSDIS` is registered as an audio/transcript source under CC BY-SA 4.0 for fresh expert annotation. It is **not** supplied phone/toneme gold. Before use, pin the exact dataset revision and individual asset; record speaker pseudonym, microphone/channel, near-field status, overlap status, exact time interval and file hash. Use only clear single-speaker segments for narrow acoustic review. The source record alone does not establish Standard Thai dialect representativeness.
+- CCOST remains BLOCKED for acoustic/narrow labels until the actual TextGrid tier/label mapping and source-order discrepancy are reconciled. Its CC BY-NC-SA 4.0 license must be acceptable for the intended use.
+- Common Voice Thai v27.0 is not bundled or re-hosted in reviewer packets because its data card forbids dataset re-hosting/re-sharing; its CC0 status does not remove those separate access terms.
+- Asset-level manifest and sample selection remain TODO. A VERIFIED corpus source does not mean a particular file/interval has been inspected or accepted as gold.
+
+## Surface-phonetic annotation requires audio provenance
+
+A reviewer may add `broad_surface_ipa` only when the row names a VERIFIED audio source, a VERIFIED asset from the audio manifest, and an exact in-bounds time interval. The source registry must separately authorize `BROAD_SURFACE_IPA_GOLD_INPUT` as well as `ACOUSTIC_PHONETICS_RESEARCH`. Text-only dictionaries and orthographic challenge prompts may support broad phonemic references, but cannot support surface phonetic labels. Narrow acoustic IPA has the same audio/asset/time requirement. A valid review packet is still not gold until the independent-review and adjudication requirements are satisfied.

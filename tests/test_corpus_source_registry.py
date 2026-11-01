@@ -6,6 +6,23 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class CorpusSourceRegistryTests(unittest.TestCase):
+    def test_ccost_wordlist_is_separately_catalogued_as_prompts_only(self):
+        path = ROOT / "data" / "corpus_sources.csv"
+        with path.open("r", encoding="utf-8-sig", newline="") as stream:
+            rows = {row["source_id"]: row for row in csv.DictReader(stream)}
+        row = rows["CORP-CCOST-WORDLIST"]
+        self.assertEqual(row["type"], "controlled_wordlist")
+        self.assertEqual(row["license_or_access"], "CC BY-NC-SA 4.0; non-commercial use only")
+        self.assertIn("orthographic prompts only", row["annotation"])
+        self.assertIn("no IPA", row["notes"])
+        self.assertIn("B/C/D each differ from A by two missing and two extra items", row["notes"])
+        self.assertIn("MD5 e62f500d87b4ff8c6deb4c4595854d34", row["notes"])
+        self.assertIn("SHA-256 e3836f6204c674a8d972dfd49de369eea7856ca6f00d520aafcd62f4e7273223", row["notes"])
+        self.assertIn("206 rows/order", row["notes"])
+        self.assertIn("zero duplicates", row["notes"])
+        self.assertIn("union 208", row["notes"])
+        self.assertIn("SOURCE_ORDER_DISCREPANCY_REQUIRES_RECONCILIATION", row["notes"])
+
     def test_ccost_license_and_textgrid_access_are_explicit(self):
         path = ROOT / "data" / "corpus_sources.csv"
         with path.open("r", encoding="utf-8-sig", newline="") as stream:
@@ -17,10 +34,14 @@ class CorpusSourceRegistryTests(unittest.TestCase):
         self.assertIn("not bundled", row["notes"])
         self.assertIn("10.5281/zenodo.17366698", row["notes"])
         self.assertIn("10.63317/3ds35jijmgrx", row["notes"])
-        self.assertIn("manual correction by phonetically trained native Thai speakers", row["notes"])
-        self.assertIn("dual independent adjudication not established", row["notes"])
+        self.assertIn("manual correction by trained native Thai research assistants", row["notes"])
+        self.assertIn("no formal inter-annotator agreement measures", row["notes"])
         self.assertIn("CCOST_manual.pdf inspected 2026-11-01", row["notes"])
-        self.assertIn("does not specify released phone/toneme label inventory", row["notes"])
+        self.assertIn("LREC 2026 paper specifies intended tiers ORT", row["notes"])
+        self.assertIn("X-SAMPA", row["notes"])
+        self.assertIn("tone numerals _1=Mid, _2=Low, _3=Falling, _4=High, _5=Rising", row["notes"])
+        self.assertIn("no formal inter-annotator agreement", row["notes"])
+        self.assertIn("actual released archive tier/label conformance and local sample mapping still require inspection", row["notes"])
 
     def test_segmentation_sources_preserve_license_and_usage_gates(self):
         path = ROOT / "data" / "corpus_sources.csv"

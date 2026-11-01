@@ -21,6 +21,8 @@ jobs:
         with:
           node-version: 22
       - run: node web/tests/rtgs-reference.test.mjs
+      - run: python scripts/generate_web_word_dictionary.py
+      - run: node web/tests/mode-adversarial.test.mjs
       - run: python scripts/test_rtgs_parity.py
       - run: python scripts/generate_derived.py
       - run: python scripts/generate_syllable_space.py
@@ -28,11 +30,18 @@ jobs:
       - run: python scripts/generate_master_table.py
       - name: Verify committed master-table registries are up to date
         run: git diff --exit-code -- data/derived/thai_consonant_correspondence.csv data/derived/thai_orthographic_correspondence.csv data/derived/thai_vowel_correspondence.csv data/derived/thai_ukrainian_master.json
+      - name: Validate source and reviewer evidence registries
+        run: python scripts/validate_evidence_registry.py
+      - name: Validate the blind Thai adjudication packet
+        run: python scripts/validate_adjudication_packet.py --mode blind --challenge data/benchmark/thai_g2p_challenge.jsonl data/benchmark/ipa-adjudication-blind.tsv
+      - name: Validate the supplemental blind Thai regression packet
+        run: python scripts/validate_adjudication_packet.py --mode blind --challenge data/benchmark/thai_g2p_supplemental_challenge.jsonl data/benchmark/ipa-adjudication-supplemental-blind.tsv
+      - name: Validate the candidate-blind Ukrainian preference packet
+        run: python scripts/validate_ukrainian_preference_packet.py data/benchmark/ukrainian-target-preference-blind.tsv
       - name: Run the complete Python test suite (pytest functions and unittest classes)
         run: python -m pytest -q -ra
       - run: python scripts/run_challenge_diagnostics.py --output /tmp/challenge-runtime-diagnostics.json
       - run: python -c "import json; r=json.load(open('/tmp/challenge-runtime-diagnostics.json',encoding='utf-8')); s=r['summary']; assert s['challenge_inputs']==42, s; assert s['inputs_with_engine_output']+s['inputs_abstained_or_without_complete_output']==42, s; assert r['evaluation_kind']=='runtime_diagnostic_not_accuracy_benchmark'; assert 'accuracy' not in s"
-      - run: python scripts/generate_web_word_dictionary.py
       - run: node web/tests/ipa-ua.test.mjs
       - run: node web/tests/parity.test.mjs
       - run: node web/tests/ui-contract.test.mjs
@@ -53,7 +62,7 @@ jobs:
       - name: Validate evidence grade and error review coverage
         run: python -c "import json; r=json.load(open('/tmp/thai-segmentation-error-review.json',encoding='utf-8')); d=r['dataset']; m=r['metrics']; assert d['rows_total']==993 and d['rows_source_annotated']==993 and d['rows_expert_adjudicated']==0, d; assert d['license']=='CC0-1.0' and d['split']=='test', d; assert m['false_split_count']>0 and m['false_merge_count']>0, m; assert m['exact_sequence_count']==192, m; assert r['report_type']=='SEGMENTATION_ERROR_TRIAGE_NOT_GOLD_ADJUDICATION'; assert r['method']['caveats']"
       - run: python scripts/run_source_attested_ipa_diagnostic.py --output /tmp/source-attested-ipa-diagnostic.json
-      - run: python -c "import json; r=json.load(open('/tmp/source-attested-ipa-diagnostic.json',encoding='utf-8')); s=r['summary']; records=r['records']; assert r['source_evidence_grade']=='SOURCE_ATTESTED_NOT_GOLD'; assert s['source_records']==6 and len(records)==6; assert s['accuracy_claimed'] is False; assert s['source_override_circular_count']==4, s; assert s['independently_comparable_records']==2, s; assert s['source_override_circular_count']==sum(bool(x['circular_source_override']) for x in records), s; assert s['independently_comparable_records']==sum(not bool(x['circular_source_override']) for x in records), s"
+      - run: python -c "import json; r=json.load(open('/tmp/source-attested-ipa-diagnostic.json',encoding='utf-8')); s=r['summary']; records=r['records']; assert r['source_evidence_grade']=='SOURCE_ATTESTED_NOT_GOLD'; assert s['source_records']==7 and len(records)==7; assert s['accuracy_claimed'] is False; assert s['source_override_circular_count']==5, s; assert s['independently_comparable_records']==2, s; assert s['source_override_circular_count']==sum(bool(x['circular_source_override']) for x in records), s; assert s['independently_comparable_records']==sum(not bool(x['circular_source_override']) and x['engine_segmental_ipa'] is not None for x in records), s"
       - name: Train pinned TUD segmentation model and evaluate held-out splits
         run: |
           python scripts/train_tud_word_segmenter.py --model /tmp/thai-tud-word-model.json --report /tmp/thai-tud-word-segmentation-report.json

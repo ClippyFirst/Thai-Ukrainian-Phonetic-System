@@ -18,12 +18,15 @@ This directory contains project tooling, not production runtime modules. Scripts
 
 | Script | Responsibility | Evidence boundary |
 |---|---|---|
-| `benchmark_ipa.py` | Compare submitted IPA predictions with a supplied TSV | Only non-empty `ADJUDICATED` IPA rows enter the score denominator; Unicode-code-point edit distance is not phonological feature distance |
+| `benchmark_ipa.py` | Compare submitted IPA predictions with a supplied TSV | `ADJUDICATED` rows require two distinct reviewers, both raw IPA labels, adjudicator/outcome/record, transcription layer and source/license provenance; mixed phonemic/surface runs are rejected and metrics are stratified by profile |
 | `evaluate_corpus.py` | CLI wrapper around the package's generic corpus evaluator | Uses the record schema accepted by `thai_ukrainian.evaluation` |
-| `evaluate_segmentation.py` | Generic word-boundary scorer | Separates `ADJUDICATED` from `SOURCE_ANNOTATED` evidence grades; exact source reconstruction is required |
+| `evaluate_segmentation.py` | Word- or syllable-boundary scorer | `ADJUDICATED` rows require two independent tokenizations, adjudicator/outcome/record and source/license provenance; WORD and SYLLABLE layers cannot be mixed; source-annotated rows remain separately labelled |
 | `evaluate_vistec_segmentation.py` | Adapt the pinned VISTEC-TP-TH-2021 annotation format | Source-annotated segmentation, not independently re-adjudicated gold; pinned source commit, blob and license are checked |
 | `run_external_g2p_benchmark.py` | Query optional external Thai G2P engines and capture raw outputs | Research-only comparator; score only independently adjudicated gold IPA rows; engine/network availability is external |
 | `probe_goruut_repeatability.py` | Repeat remote Goruut requests to inspect output stability | Repeatability diagnostic, not accuracy; requires an explicitly supplied service URL |
+| `build_ccost_wordlist_review_packet.py` | Build a local, blind Thai phonemic-review packet from the separately licensed CCOST 206-item controlled word list | Requires the researcher-supplied Zenodo `wordlist.csv`; validates all four randomized orders and 206 unique words; writes unadjudicated challenge JSONL, blank reviewer TSV and a provenance/license manifest outside the repository; no CCOST audio/TextGrid is read or copied |
+| `validate_adjudication_packet.py` | Validate blank, single-reviewer and paired Thai phonetic review packets | Exact challenge coverage, candidate-blind fields, reviewer qualification/date, syllable-aligned tone/length/glottal labels, explicit abstention and audio intervals |
+| `validate_ukrainian_preference_packet.py` | Validate blind and paired Ukrainian-native preference reviews | Source-bound IPA references, no engine candidate, fixed criteria version, reviewer qualification, rationale and explicit abstention; judgments remain conditional, not gold |
 
 ## Runtime and segmentation diagnostics
 
@@ -53,4 +56,4 @@ This directory contains project tooling, not production runtime modules. Scripts
 - Before changing a generator, identify its canonical input, output paths, tests and downstream consumers. Never hand-edit its generated artifacts.
 - Before changing an evaluator, preserve its evidence-grade and denominator rules. Source-annotated, source-attested and adjudicated records must not be silently mixed.
 - Keep optional network-dependent probes out of the production runtime and default release path unless a separate decision explicitly changes that boundary.
-- Scripts are not interchangeable merely because they consume the same corpus: baseline, dictionary, TUD, and error-triage runs answer different questions.
+- Current inventory: **27 scripts**. Scripts are not interchangeable merely because they consume the same corpus: baseline, dictionary, TUD, and error-triage runs answer different questions.

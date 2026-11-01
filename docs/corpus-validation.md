@@ -175,3 +175,53 @@ A reproducible external evaluation path has been added for VISTEC-TP-TH-2021, a 
 The adapter reads the annotated submissionText field, splits pipe-delimited tokens, strips only the documented <ne> and <msp...> annotation tags, and requires exact reconstruction. It intentionally evaluates the annotation's text, not the distinct raw questionText field. The report records the source commit/blob, license, row count, and evidence grade. The external workflow checks out the exact source snapshot, verifies the Git blob SHA and declared license, trains the research-only TUD model from its separate pinned training corpus, evaluates both segmenters, and uploads a report without bundling the third-party dataset.
 
 **Status: IMPLEMENTED; exact workflow run pending.** Until the workflow succeeds, no VISTEC metric is claimed. Even after success, these are metrics against the source's annotations, not independent expert re-adjudication by this project. Keep Wisesight and VISTEC reports separate because annotation conventions and domains differ; neither set may be used to tune the TUD model or production dictionary.
+
+
+## Independent adjudication and gold promotion gate — 2026-11-01
+
+The 42 frozen challenge prompts now have a **blind Thai review packet** at `data/benchmark/ipa-adjudication-blind.tsv`. It is bound to the challenge JSONL by exact ID, Thai input, stratum and probe; all reviewer fields must remain blank in the committed template. CI checks this invariant. Each expert works on a separate copy, blind to engine output and to the other reviewer.
+
+The packet records lexical reading, word and syllable boundaries, phonemic IPA, optional broad surface IPA, tone categories, vowel length, final glottal status, transcription level, uncertainty and abstention rationale. Narrow acoustic IPA requires an authorized recording reference and time interval. The review validator enforces exact item coverage, one stable reviewer ID per file, qualification reference, ISO review date, explicit abstention and valid acoustic intervals. Pair validation requires distinct reviewer IDs and matching item coverage; it does not automatically resolve disagreements.
+
+The IPA gold registry now records both independent IPA labels, reviewer IDs, adjudicator, outcome, transcription layer, source/license and adjudication record. The scorer rejects one-reviewer labels, inconsistent agreement/disagreement declarations, missing provenance and mixed phonemic/surface layers. It reports metrics separately by profile. **The current gold registry still has zero adjudicated rows, so IPA accuracy remains NOT MEASURED.**
+
+The Ukrainian preference packet `data/benchmark/ukrainian-target-preference-blind.tsv` is candidate-blind but uses six source-attested dictionary IPA references. Its purpose is to review Ukrainian adaptation conditional on those IPA strings, not to adjudicate Thai pronunciation. Every row remains `SOURCE_ATTESTED_NOT_GOLD`; this work cannot be described as end-to-end accuracy. Reviewers independently record preferred Ukrainian forms, syllable-boundary policy, tone-rendering policy, uncertainty and rationale.
+
+## CCOST suitability and remaining access gate
+
+The CCOST paper describes 49 Standard Thai speakers, about seven hours of spontaneous speech plus five hours of controlled word-list/sentence material, and orthographic, word, syllable, phone and toneme annotations. The paper specifies the intended tiers: ORT (orthographic word), KAN (canonical word pronunciation), KAS (canonical syllabified pronunciation), MAU (phonetic segment), MAS (phonemic syllable), and TRN (orthographic utterance transcript). Phonemic and phonetic representations use X-SAMPA; tone numerals map _1=Mid, _2=Low, _3=Falling, _4=High, _5=Rising. The 206-item monosyllabic word list was designed to cross five tones, four initial-consonant types, three syllable structures and vowel length. The paper reports manual correction by trained native Thai research assistants but no formal inter-annotator agreement measures. Zenodo lists a 6.2 GB audio/TextGrid archive under CC BY-NC-SA 4.0. The paper establishes the intended schema; actual released TextGrid conformance and exact label mapping still require local archive inspection. Keep the archive external and preserve non-commercial/share-alike obligations; no CCOST labels are currently counted as this project's independent gold.
+
+Primary references: [LREC 2026 CCOST paper](https://aclanthology.org/2026.lrec-1.247/), [Zenodo CCOST v1.0](https://zenodo.org/records/17366698), [Tingsabadh & Abramson, Thai (JIPA 1993)](https://doi.org/10.1017/S0025100300004746).
+
+
+## Separate expert word/syllable segmentation gold — 2026-11-01
+
+The blank `data/benchmark/segmentation-adjudication-gold.tsv` registry is reserved for two-reviewer word- or syllable-boundary adjudication. Each row declares `segmentation_layer=WORD|SYLLABLE`, preserves both original token arrays, two distinct reviewer IDs and qualification references, an adjudicator, outcome, record, source URL and license. The scorer checks exact reconstruction, requires consensus labels to match the final gold, requires different raw tokenizations for a resolved disagreement, and refuses to mix WORD and SYLLABLE reports. The existing Wisesight rows remain source-annotated WORD evidence; they are not promoted to expert gold.
+
+No expert segmentation rows have been submitted yet. The new registry is intentionally header-only and does not create an accuracy metric.
+
+
+The adjudication infrastructure and three-mode fallback correction are verified by full CI 41337529189 and Web Static 41337815975. This does not add expert labels: the adjudicated segmentation registry remains header-only and all 993 Wisesight records retain SOURCE_ANNOTATED status.
+
+
+The project-authored 42-item Thai challenge set is registered as input-text provenance for independent expert gold (`CLIPPYFIRST-THAI-CHALLENGE-CC398`). This does not turn the prompt text into phonetic evidence: pronunciation labels must still be independently supplied, qualified, and adjudicated. This registry record allows the IPA scorer's `IPA_GOLD_INPUT` gate to be satisfied without treating Wiktionary or a model-derived corpus as gold.
+
+
+## CCOST controlled-wordlist review packet — 2026-11-01
+
+The CCOST paper describes a 206-item controlled monosyllabic word list designed to cross five lexical tones, four initial-consonant classes, three syllable structures and short/long vowel contrasts in closed syllables. The separately released `wordlist.csv` has four presentation-order columns A-D. It is orthographic input only; it does not contain IPA, audio, phone labels or tone labels.
+
+The repository includes `scripts/build_ccost_wordlist_review_packet.py`. Supply the licensed CSV locally:
+
+```bash
+python scripts/build_ccost_wordlist_review_packet.py \
+  --wordlist /path/to/wordlist.csv \
+  --output-dir /tmp/ccost-review
+python scripts/validate_adjudication_packet.py --mode blind \
+  --challenge /tmp/ccost-review/ccost-wordlist-challenge.jsonl \
+  /tmp/ccost-review/ccost-wordlist-blind.tsv
+```
+
+The generator checks row count, columns, empty cells and whitespace, then reports per-order unique counts, duplicates and set differences. It does not assume that A-D are identical permutations. It generates a deterministic union packet and a manifest with the source SHA-256. If any order has duplicates or a different set, the manifest status is `SOURCE_ORDER_DISCREPANCY_REQUIRES_RECONCILIATION`; do not freeze or score the sample until the source discrepancy is understood. A concordant 206-item packet is still only a candidate-blind, unadjudicated broad-phonemic review packet. Reviewers must independently supply lexical reading, boundaries, phonemic IPA, tone and vowel length.
+
+The source registry allows `CORP-CCOST-WORDLIST` only for `BROAD_PHONEMIC_IPA_GOLD_INPUT`. It cannot support broad-surface IPA or acoustic claims. The full CCOST archive source remains BLOCKED until released TextGrid tier conformance and X-SAMPA mapping are verified. Generated wordlist packets are not committed and remain subject to CC BY-NC-SA 4.0 non-commercial/share-alike terms.

@@ -1,0 +1,90 @@
+#!/usr/bin/env python3
+"""Validate blank or completed independent Thai phonetic adjudication packets."""
+from __future__ import annotations
+
+import argparse
+import csv
+import json
+from pathlib import Path
+
+from thai_ukrainian.evidence_registry import load_audio_asset_registry, load_reviewer_registry, load_source_registry
+from thai_ukrainian.adjudication import (
+    PACKET_FIELDS,
+    validate_blind_packet,
+    validate_independent_pair,
+    validate_review_packet,
+)
+
+
+def read_tsv(path: Path) -> list[dict[str, str]]:
+    with path.open("r", encoding="utf-8-sig", newline="") as stream:
+        reader = csv.DictReader(stream, delimiter="\t")
+        fields = set(reader.fieldnames or [])
+        missing = set(PACKET_FIELDS) - fields
+        unexpected = fields - set(PACKET_FIELDS)
+        if missing or unexpected:
+            raise ValueError(
+                f"{path}: columns mismatch; missing={sorted(missing)}, unexpected={sorted(unexpected)}"
+            )
+        return [{key: (value or "") for key, value in row.items()} for row in reader]
+
+
+def read_challenge(path: Path) -> list[dict[str, str]]:
+    rows = []
+    with path.open("r", encoding="utf-8") as stream:
+        for line_number, line in enumerate(stream, 1):
+            if not line.strip():
+                continue
+            try:
+                value = json.loads(line)
+            except json.JSONDecodeError as exc:
+                raise ValueError(f"{path}:{line_number}: invalid JSON: {exc.msg}") from exc
+            rows.append({
+                "id": str(value.get("id") or ""),
+                "input": str(value.get("input") or ""),
+                "stratum": str(value.get("stratum") or ""),
+                "probe": str(value.get("probe") or ""),
+            })
+    return rows
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("packet", type=Path)
+    parser.add_argument("--challenge", type=Path, required=True)
+    parser.add_argument("--mode", choices=("blind", "review", "pair"), default="blind")
+    parser.add_argument("--reviewer-id", default="")
+    parser.add_argument("--reviewer-b-packet", type=Path)
+    parser.add_argument("--reviewer-registry", type=Path, default=Path("data/benchmark/reviewer-qualifications.tsv"))
+    parser.add_argument("--source-registry", type=Path, default=Path("data/benchmark/source-registry.tsv"))
+    parser.add_argument("--audio-asset-registry", type=Path, default=Path("data/benchmark/audio-assets.tsv"))
+    args = parser.parse_args()
+    try:
+        rows = read_tsv(args.packet)
+        challenge = read_challenge(args.challenge)
+        if args.mode == "blind":
+            result = validate_blind_packet(rows, challenge)
+        elif args.mode == "review":
+            reviewer_registry = load_reviewer_registry(args.reviewer_registry)
+            source_registry = load_source_registry(args.source_registry)
+            audio_asset_registry = load_audio_asset_registry(args.audio_asset_registry, source_registry)
+            result = validate_review_packet(
+                rows, [row["id"] for row in challenge], args.reviewer_id, challenge,
+                reviewer_registry, source_registry, audio_asset_registry,
+            )
+        else:
+            if args.reviewer_b_packet is None:
+                raise ValueError("--reviewer-b-packet is required in pair mode")
+            reviewer_b = read_tsv(args.reviewer_b_packet)
+            reviewer_registry = load_reviewer_registry(args.reviewer_registry)
+            source_registry = load_source_registry(args.source_registry)
+            audio_asset_registry = load_audio_asset_registry(args.audio_asset_registry, source_registry)
+            result = validate_independent_pair(rows, reviewer_b, challenge, reviewer_registry, source_registry, audio_asset_registry)
+    except (OSError, ValueError) as exc:
+        parser.exit(1, f"error: {exc}\n")
+    print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
