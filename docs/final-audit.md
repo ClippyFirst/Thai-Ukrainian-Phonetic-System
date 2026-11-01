@@ -1224,3 +1224,13 @@ The first run with the new coverage tests completed master-table generation and 
 - **BLOCKED / evidence-limited:** independent Thai IPA/segmentation and Ukrainian target-form adjudication, CCOST released TextGrid schema/method reconciliation, and manual browser/device/WCAG 2.2 AA review.
 - Local tests were not run in the connector-only environment. CI evidence is exact-head and post-merge GitHub Actions evidence only.
 - **Readiness:** engineering-verified research prototype; not release-ready for general linguistic-accuracy or accessibility-conformance claims.
+
+
+## Three-mode adversarial regression — 2026-11-01
+
+- The reported 1/3 heuristic output was traced through `analyzeText → analyzeThaiSegment → softSyllabify → provisionalSyllable → adaptIpaToUkrainian`. Structurally parsed syllables downgraded to `approximate:orthographic-fallback` retained their computed tone/tone contour and surface IPA, even though the UI described the fallback tone and lexical reading as unconfirmed.
+- **FIXED:** `provisionalSyllable` now clears `tone`, `toneIpa` and `phoneticIpa` when marking a structural parse provisional. Segmental IPA is retained as a provisional adapter input; Ukrainian output continues to be derived from that exact IPA.
+- **DONE_VERIFIED:** added `web/tests/mode-adversarial.test.mjs` covering ten mixed Thai/mixed-script cases across strict, soft and super-soft; strict abstention for `วันนี้`, `เห็น`, `เพิ่ง`, `อะไร`, `บ้าง`, `อธิบาย`; positive fallback coverage; adapter equality; source-attested lexical controls; and RTGS passthrough.
+- CI [41332785855](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41332785855) passed all three jobs: `test`, `wheel-install-smoke`, `master-artifact`. Web Static [41332785873](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41332785873) passed. Tested branch head: `39aa78ccb2e7ead4fa842ec72e8e191a9b12cbb3`.
+- The new suite is a runtime/adapter-contract regression, not an expert pronunciation gold set. No new IPA records, accuracy scores or linguistic claims were invented. Independent Thai IPA/segmentation and Ukrainian target-form adjudication remain BLOCKED / evidence-limited.
+- No Vercel services or tools were used.

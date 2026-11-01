@@ -1924,3 +1924,14 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - **PARTIAL:** full import/call/reference graph and broad semantic test/fixture redundancy review. **DEFERRED:** historical document reorganization until reference mapping/archive plan is verified.
 - **BLOCKED / evidence-limited:** independent Thai IPA/segmentation and Ukrainian target-form adjudication; CCOST released TextGrid schema and detailed method; manual browser/device and WCAG 2.2 AA review. These require external qualified reviewers/evidence and are not CI tasks.
 - Local pytest/npm were not run in the connector-only environment. This is an engineering-verified research prototype, not a linguistic-accuracy or accessibility-conformance release.
+
+
+## Handoff checkpoint — all-mode Thai adversarial verification (2026-11-01)
+
+- Branch: `test/all-modes-adversarial-20261101`; base main: `cc398254c178171f74397aed556766e87356ab84`; tested code/test head before this documentation commit: `39aa78ccb2e7ead4fa842ec72e8e191a9b12cbb3`.
+- Root cause: the 1/3 path's `provisionalSyllable` downgraded a structural parse to an orthographic fallback but retained computed tone/tone contour and surface IPA. This made unverified features look confirmed in the UI.
+- Fix: provisional structural syllables now expose segmental IPA only as a provisional candidate; tone, tone contour and surface IPA are withheld. Ukrainian output is still generated only by the existing IPA adapter.
+- Added `web/tests/mode-adversarial.test.mjs`: ten mixed Thai/mixed-script cases × three strictness profiles; six reported problematic forms are checked for strict-mode abstention; heuristic fallback must be exercised and labelled; every available Ukrainian output must equal adaptation of the exact IPA; source-attested controls and both RTGS output paths are checked.
+- Verification: CI [41332785855](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41332785855) passed all three jobs; Web Static [41332785873](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41332785873) passed. These are GitHub Actions results; local tests were not run because this session has connector-only repository access and direct GitHub clone was unavailable.
+- Evidence boundary: this is a runtime and adapter-contract regression, not proof of Thai pronunciation accuracy. Independent Thai-language and Ukrainian-native adjudication remains the genuine linguistic blocker. No corpus gold labels or accuracy scores were fabricated.
+- The linked Superpowers, Matt Pocock and Ponytail guidance was reviewed for systematic root-cause tracing, focused tests, verification before claims, and lean change review. No extra framework or dependency was introduced. Vercel was not used.

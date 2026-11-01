@@ -39,3 +39,17 @@ These probes target failure modes that can silently produce plausible but wrong 
 Standard Thai descriptions restrict complex onsets; the parser therefore refuses to manufacture a complex onset from arbitrary adjacent consonants. See the cited phonetic/orthographic sources in the project evidence registry.
 
 These probes do not establish empirical accuracy. A corpus benchmark still requires an external, named and versioned gold resource.
+
+
+## Mode-level adversarial regression — 2026-11-01
+
+The browser suite `web/tests/mode-adversarial.test.mjs` exercises ten mixed Thai/mixed-script inputs across all three strictness profiles (strict, soft, super-soft). It checks:
+
+- strict-mode abstention for unreviewed forms reported as malformed (`วันนี้`, `เห็น`, `เพิ่ง`, `อะไร`, `บ้าง`, `อธิบาย`);
+- non-empty, explicitly provisional coverage in super-soft mode, including a positive assertion that the orthography-derived fallback path is reached;
+- no confirmed tone/surface-IPA claims on structurally provisional syllables;
+- every emitted Ukrainian syllable equals the output of the IPA adapter applied to that exact segmental IPA;
+- source-attested lexical controls (`เงิน`, `เดิน`, `ออก`, `ไกล`, `ใกล้`) retain their evidence metadata and distinct tone metadata;
+- both RTGS rendering paths preserve mixed-script numeric content.
+
+These are runtime, abstention and adapter-contract regressions—not pronunciation gold labels, a corpus accuracy score, or independent linguistic adjudication. The three profiles are strategy levels, not calibrated confidence scores.

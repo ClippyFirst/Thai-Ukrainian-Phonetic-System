@@ -1201,3 +1201,14 @@ The user's explicit requirement supersedes the prior UX decision to collapse RTG
 | Independent linguistic adjudication and manual accessibility review | BLOCKED / evidence-limited | Thai IPA/segmentation, Ukrainian target forms, CCOST released TextGrid schema/method, and manual browser/device/WCAG 2.2 AA review remain external acceptance gates. |
 
 **Final verified main:** `1431c565ff5c160da4944942d687bc30b2f8d0b2`. **Post-merge CI:** [41326865977](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41326865977), all three jobs successful. **Pages:** [41326865964](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41326865964), build and deploy successful. Local pytest/npm were not run in this connector-only environment.
+
+
+## Mode-level adversarial verification — 2026-11-01
+
+| Task | Status | Evidence / boundary |
+|---|---|---|
+| Guard the three browser strictness profiles against reported mixed-text failures | DONE_VERIFIED | Added `web/tests/mode-adversarial.test.mjs`: ten mixed Thai/mixed-script cases across strict, soft and super-soft; strict abstention for six reported forms; positive coverage assertion for the heuristic fallback; IPA→Ukrainian exact-adapter equality; lexical evidence controls; RTGS numeric passthrough. |
+| Prevent structurally provisional syllables from presenting tone/surface IPA as confirmed | DONE_VERIFIED | `web/src/engine.js` now clears tone, tone contour and surface IPA when `provisionalSyllable` downgrades a structural parse to `approximate:orthographic-fallback`; the warning explains that tone is not confirmed. Segmental IPA remains provisional and is still the sole input to the Ukrainian adapter. |
+| Verify the complete branch after the mode regression change | DONE_VERIFIED | CI [41332785855](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41332785855) passed `test`, `wheel-install-smoke` and `master-artifact`; Web Static [41332785873](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41332785873) passed. Exact tested head: `39aa78ccb2e7ead4fa842ec72e8e191a9b12cbb3`. |
+
+**Evidence boundary:** this verifies runtime contracts and conservative abstention only. It does not establish that a generated Thai IPA candidate is linguistically correct. Independent Thai and Ukrainian expert adjudication remains BLOCKED / evidence-limited as recorded above.
