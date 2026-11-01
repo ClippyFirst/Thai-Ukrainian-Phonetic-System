@@ -6,7 +6,6 @@ judge linguistic correctness or promote labels to gold automatically.
 from __future__ import annotations
 
 from datetime import date
-from math import isfinite
 from typing import Iterable, Mapping
 import unicodedata
 
