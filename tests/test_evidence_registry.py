@@ -197,3 +197,9 @@ def test_lotusdis_is_registered_only_as_an_audio_source_for_fresh_human_annotati
     assert source["verification_status"] == "VERIFIED"
     assert "ACOUSTIC_PHONETICS_RESEARCH" in source["allowed_uses"]
     assert "not IPA/phone/toneme gold" in source["notes"]
+
+
+def test_committed_audio_asset_registry_is_valid_but_has_no_selected_assets():
+    sources = load_source_registry(ROOT / "data/benchmark/source-registry.tsv")
+    assets = load_audio_asset_registry(ROOT / "data/benchmark/audio-assets.tsv", sources)
+    assert assets == {}
