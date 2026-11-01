@@ -21,6 +21,7 @@ jobs:
         with:
           node-version: 22
       - run: node web/tests/rtgs-reference.test.mjs
+      - run: node web/tests/mode-adversarial.test.mjs
       - run: python scripts/test_rtgs_parity.py
       - run: python scripts/generate_derived.py
       - run: python scripts/generate_syllable_space.py
@@ -35,7 +36,6 @@ jobs:
       - run: python scripts/generate_web_word_dictionary.py
       - run: node web/tests/ipa-ua.test.mjs
       - run: node web/tests/parity.test.mjs
-      - run: node web/tests/mode-adversarial.test.mjs
       - run: node web/tests/ui-contract.test.mjs
       - name: Benchmark browser Thai text segmentation latency
         run: node scripts/benchmark_web_segmentation.mjs
