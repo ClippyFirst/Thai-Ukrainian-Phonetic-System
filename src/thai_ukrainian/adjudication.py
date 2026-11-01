@@ -258,9 +258,6 @@ def validate_review_packet(
                 )
             narrow_ipa = (row.get("narrow_ipa") or "").strip()
             if level == "NARROW_ACOUSTIC":
-                if not audio_source_id:
-                    raise ValueError(f"narrow acoustic review requires a registered audio_source_id: {ident}")
-
                 if not (narrow_ipa.startswith("[") and narrow_ipa.endswith("]") and len(narrow_ipa) > 2):
                     raise ValueError(f"narrow acoustic review requires a separate bracketed narrow_ipa label: {ident}")
                 narrow_body = narrow_ipa[1:-1]
@@ -272,6 +269,8 @@ def validate_review_packet(
                     or len(narrow_syllables) != syllable_count
                 ):
                     raise ValueError(f"narrow IPA syllabification must align with syllable boundaries for {ident}")
+                if not audio_source_id:
+                    raise ValueError(f"narrow acoustic review requires a registered audio_source_id: {ident}")
                 asset = (row.get("audio_asset_reference") or "").strip()
                 start = (row.get("audio_time_start") or "").strip()
                 end = (row.get("audio_time_end") or "").strip()
