@@ -50,18 +50,24 @@ def main() -> int:
             )
             result = validate_ukrainian_blind_packet(packet, source)
         elif args.mode == "review":
+            source = read_tsv(
+                args.source,
+                ("id", "thai", "phonemic_ipa", "source_id", "source_url", "license"),
+                exact=False,
+            )
             result = validate_ukrainian_review_packet(
-                packet, [row["id"] for row in read_tsv(
-                    args.source,
-                    ("id", "thai", "phonemic_ipa", "source_id", "source_url", "license"),
-                    exact=False,
-                )], args.reviewer_id
+                packet, [row["id"] for row in source], args.reviewer_id, source
             )
         else:
             if args.reviewer_b_packet is None:
                 raise ValueError("--reviewer-b-packet is required in pair mode")
             reviewer_b = read_tsv(args.reviewer_b_packet, UKRAINIAN_PREFERENCE_FIELDS)
-            result = validate_ukrainian_independent_pair(packet, reviewer_b)
+            source = read_tsv(
+                args.source,
+                ("id", "thai", "phonemic_ipa", "source_id", "source_url", "license"),
+                exact=False,
+            )
+            result = validate_ukrainian_independent_pair(packet, reviewer_b, source)
     except (OSError, ValueError) as exc:
         parser.exit(1, f"error: {exc}\n")
     print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))

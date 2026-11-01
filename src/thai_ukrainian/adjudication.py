@@ -284,6 +284,7 @@ def validate_ukrainian_review_packet(
     rows: Iterable[Mapping[str, str]],
     expected_ids: Iterable[str],
     reviewer_id: str,
+    source_rows: Iterable[Mapping[str, str]] | None = None,
 ) -> dict:
     """Validate one Ukrainian-native preference review, conditional on supplied IPA."""
     if not reviewer_id.strip():
@@ -292,10 +293,25 @@ def validate_ukrainian_review_packet(
     _require_exact_fields(indexed, UKRAINIAN_PREFERENCE_FIELDS, "Ukrainian review packet")
     if set(indexed) != set(expected_ids):
         raise ValueError("Ukrainian review packet must cover the exact frozen sample")
+    source_index = _unique_rows(source_rows) if source_rows is not None else None
+    if source_index is not None and set(indexed) != set(source_index):
+        raise ValueError("Ukrainian review packet must match the exact source-attested sample")
     abstentions = 0
     for ident, row in indexed.items():
         if row.get("ipa_reference_status") != "SOURCE_ATTESTED_NOT_GOLD":
             raise ValueError(f"Ukrainian review must preserve the source-attested-not-gold status: {ident}")
+        for field in ("source_ipa", "source_id", "source_url", "license"):
+            if not (row.get(field) or "").strip():
+                raise ValueError(f"Ukrainian review requires {field}: {ident}")
+        if source_index is not None:
+            source = source_index[ident]
+            for packet_field, source_field in (
+                ("thai", "thai"), ("source_ipa", "phonemic_ipa"),
+                ("source_id", "source_id"), ("source_url", "source_url"),
+                ("license", "license"),
+            ):
+                if (row.get(packet_field) or "") != (source.get(source_field) or ""):
+                    raise ValueError(f"Ukrainian review source mismatch for {packet_field}: {ident}")
         if row.get("criteria_version") != UKRAINIAN_CRITERIA_VERSION:
             raise ValueError(f"Ukrainian review criteria version mismatch: {ident}")
         if (row.get("reviewer_id") or "").strip() != reviewer_id:
@@ -334,6 +350,7 @@ def validate_ukrainian_review_packet(
 def validate_ukrainian_independent_pair(
     reviewer_a: Iterable[Mapping[str, str]],
     reviewer_b: Iterable[Mapping[str, str]],
+    source_rows: Iterable[Mapping[str, str]] | None = None,
 ) -> dict:
     """Require distinct Ukrainian reviewers and identical IPA-conditioned sample."""
     a = _unique_rows(reviewer_a)
@@ -353,8 +370,8 @@ def validate_ukrainian_independent_pair(
         for field in ("thai", "source_ipa", "source_id", "criteria_version"):
             if (a[ident].get(field) or "") != (b[ident].get(field) or ""):
                 raise ValueError(f"independent Ukrainian reviewer input mismatch for {field}: {ident}")
-    validate_ukrainian_review_packet(a.values(), a.keys(), reviewer_a_id)
-    validate_ukrainian_review_packet(b.values(), b.keys(), reviewer_b_id)
+    validate_ukrainian_review_packet(a.values(), a.keys(), reviewer_a_id, source_rows)
+    validate_ukrainian_review_packet(b.values(), b.keys(), reviewer_b_id, source_rows)
     return {
         "records": len(a),
         "reviewer_a_id": reviewer_a_id,
