@@ -205,3 +205,23 @@ The adjudication infrastructure and three-mode fallback correction are verified 
 
 
 The project-authored 42-item Thai challenge set is registered as input-text provenance for independent expert gold (`CLIPPYFIRST-THAI-CHALLENGE-CC398`). This does not turn the prompt text into phonetic evidence: pronunciation labels must still be independently supplied, qualified, and adjudicated. This registry record allows the IPA scorer's `IPA_GOLD_INPUT` gate to be satisfied without treating Wiktionary or a model-derived corpus as gold.
+
+
+## CCOST controlled-wordlist review packet — 2026-11-01
+
+The CCOST paper describes a 206-item controlled monosyllabic word list designed to cross five lexical tones, four initial-consonant classes, three syllable structures and short/long vowel contrasts in closed syllables. The separately released `wordlist.csv` has four presentation-order columns A-D. It is orthographic input only; it does not contain IPA, audio, phone labels or tone labels.
+
+The repository includes `scripts/build_ccost_wordlist_review_packet.py`. Supply the licensed CSV locally:
+
+```bash
+python scripts/build_ccost_wordlist_review_packet.py \
+  --wordlist /path/to/wordlist.csv \
+  --output-dir /tmp/ccost-review
+python scripts/validate_adjudication_packet.py --mode blind \
+  --challenge /tmp/ccost-review/ccost-wordlist-challenge.jsonl \
+  /tmp/ccost-review/ccost-wordlist-blind.tsv
+```
+
+The generator checks row count, columns, empty cells and whitespace, then reports per-order unique counts, duplicates and set differences. It does not assume that A-D are identical permutations. It generates a deterministic union packet and a manifest with the source SHA-256. If any order has duplicates or a different set, the manifest status is `SOURCE_ORDER_DISCREPANCY_REQUIRES_RECONCILIATION`; do not freeze or score the sample until the source discrepancy is understood. A concordant 206-item packet is still only a candidate-blind, unadjudicated broad-phonemic review packet. Reviewers must independently supply lexical reading, boundaries, phonemic IPA, tone and vowel length.
+
+The source registry allows `CORP-CCOST-WORDLIST` only for `BROAD_PHONEMIC_IPA_GOLD_INPUT`. It cannot support broad-surface IPA or acoustic claims. The full CCOST archive source remains BLOCKED until released TextGrid tier conformance and X-SAMPA mapping are verified. Generated wordlist packets are not committed and remain subject to CC BY-NC-SA 4.0 non-commercial/share-alike terms.

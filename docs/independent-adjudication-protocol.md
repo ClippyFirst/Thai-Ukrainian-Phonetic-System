@@ -194,3 +194,23 @@ Before distributing a packet, freeze a criteria version and tell reviewers that 
 The review outcome is preference evidence, not an exact-match phonetic gold label. Report reviewer agreement, variant preferences and abstentions separately. Do not collapse disagreements into a single “correct” Ukrainian spelling without a declared editorial policy.
 
 Method reference: U. Holovach (2022), “До питання правопису чужомовних власних назв: ще раз про концептуальний підхід та головні принципи”, *Мова: класичне – модерне – постмодерне*, 8, 187–212, DOI [10.18523/lcmp2522-9281.2022.8.187-212](https://doi.org/10.18523/lcmp2522-9281.2022.8.187-212). The article's scope is proper names; it is cited here for the distinction between practical-transcription tasks, not as a Thai-specific orthographic standard.
+
+
+## CCOST controlled-wordlist review packet
+
+The CCOST paper describes a 206-item monosyllabic controlled word list balanced across five lexical tones, four initial-consonant classes, three syllable structures and short/long vowel contrasts in closed syllables. The separate Zenodo `wordlist.csv` provides four presentation-order columns A-D, but it supplies Thai prompts only—not IPA, phone labels, audio or tone annotations.
+
+Generate a local blind packet only after obtaining the licensed CSV:
+
+```bash
+python scripts/build_ccost_wordlist_review_packet.py \
+  --wordlist /path/to/wordlist.csv \
+  --output-dir /tmp/ccost-review
+python scripts/validate_adjudication_packet.py --mode blind \
+  --challenge /tmp/ccost-review/ccost-wordlist-challenge.jsonl \
+  /tmp/ccost-review/ccost-wordlist-blind.tsv
+```
+
+The generator validates 206 rows per order, records duplicates and set differences, emits a deterministic union of prompts and records the exact input SHA-256. If any order contains duplicates or a different set, its manifest is marked `SOURCE_ORDER_DISCREPANCY_REQUIRES_RECONCILIATION`; reconcile that source anomaly before freezing the packet or scoring it. Even a concordant packet is only a prompt list. Two independent Thai reviewers must supply broad phonemic IPA and per-syllable tone/length/boundary labels. Do not derive gold from the engine, dictionary IPA or CCOST's uninspected annotation archive.
+
+The source-use registry distinguishes broad phonemic from broad surface IPA. The project challenge and CCOST wordlist are approved only for `BROAD_PHONEMIC_IPA_GOLD_INPUT`; the full CCOST audio/TextGrid archive remains BLOCKED for both layers pending actual archive inspection and X-SAMPA mapping. This prevents text-only prompts from authorizing surface-phonetic scoring.

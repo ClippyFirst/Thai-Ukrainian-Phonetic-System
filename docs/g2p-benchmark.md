@@ -152,13 +152,13 @@ This review adds candidate datasets to the existing harness; it does not claim a
 
 - FLEURS provides parallel read-speech evaluation material across 102 languages, including Thai. It is appropriate for ASR/recognition experiments, not direct scoring of Thai orthography-to-IPA or Thai-to-Ukrainian text output without a separately adjudicated phonetic transcription layer.
 - Mozilla Common Voice Thai is a large read-speech resource (the current surfaced 27.0 card reports 366,656 clips and 427.12 hours, including 173.36 validated hours). It can support acoustic/ASR robustness work, but its intended ASR transcripts are not phone-level gold. Respect the dataset's CC0 declaration and explicit prohibition on speaker identification and re-hosting/redistribution.
-- CCOST remains the most directly relevant phone/toneme-level candidate already registered in this repository. Its manual and item-level annotation protocol remain uninspected, so it stays BLOCKED for benchmark row selection until the manual is reviewed.
+- CCOST remains the most directly relevant phone/toneme-level source. The LREC 2026 paper now provides the intended ORT/KAN/KAS/MAU/MAS/TRN tier map, X-SAMPA notation and numbered tone convention. The paper reports manual correction by trained native Thai research assistants but no formal inter-annotator agreement. Actual released TextGrid conformance and exact symbol mapping remain blocked pending local archive inspection.
 
 ### Benchmark portfolio decision
 
 1. **Segmentation:** retain current Wisesight/VISTEC/TUD evaluations; add BEST-2010 as the next high-priority external benchmark after access and license verification; treat LST20 as gated/non-redistributable.
 2. **Thai G2P / IPA:** add Thai G2P v4 as a large source-attested dictionary comparator, but report circular-source exclusions and never label it independent gold.
-3. **Acoustic phonetics:** prioritize CCOST manual review; FLEURS/Common Voice are secondary audio/ASR resources, not substitutes for phone-level annotation.
+3. **Thai phonemic G2P:** the separate CCOST 206-item controlled monosyllable wordlist is a promising independent-review prompt source. Its four order columns must be audited for duplicates/set differences before the packet is frozen. The generated prompts contain no phonetic labels; only independent reviewers can supply broad phonemic gold. **Acoustic/surface phonetics:** use the full CCOST WAV/TextGrid archive only after its released tiers and X-SAMPA labels are inspected; FLEURS/Common Voice remain secondary ASR resources, not substitutes for phone-level annotation.
 4. **Ukrainian target rendering / end-to-end:** no suitable independent Thai-to-Ukrainian gold benchmark was found. Continue with independent Ukrainian-native adjudication and a frozen end-to-end test set; do not derive gold by consensus among the system and its comparator engines.
 
 No new corpus was downloaded, copied, or bundled in this update. No external score was calculated. The repository's existing accuracy fields remain null until independently adjudicated labels and source-overlap checks are available.
@@ -184,7 +184,7 @@ No new corpus was downloaded, copied, or bundled in this update. No external sco
 - `data/benchmark/ukrainian-target-preference-blind.tsv` enables six candidate-blind Ukrainian adaptation judgments against source-attested dictionary IPA. This is conditional adaptation preference, not a Thai IPA gold set or end-to-end score.
 - Current independent gold count remains **0**. The benchmark must print `NOT_MEASURED` until actual reviewer records are completed and reconciled.
 
-CCOST remains the preferred licensed acoustic source candidate. Its published abstract reports manual correction by phonetically trained native Thai speakers, but the actual TextGrid tier schema and transcription-layer mapping must be checked before use. The dataset is CC BY-NC-SA 4.0; no audio/TextGrid files are bundled here.
+CCOST's LREC 2026 paper specifies ORT/KAN/KAS/MAU/MAS/TRN tiers, X-SAMPA and tone numerals _1–_5. Actual archive conformance and symbol mapping remain unverified. The separate 206-item wordlist can be used to prepare broad-phonemic reviewer prompts; `scripts/build_ccost_wordlist_review_packet.py` creates a local blind packet and reports duplicates/order-set discrepancies. It does not supply IPA or gold labels. The dataset is CC BY-NC-SA 4.0; no audio/TextGrid or generated wordlist packet is bundled.
 
 
 ## Segmentation gold and Ukrainian review are separate evidence tracks
@@ -197,3 +197,23 @@ Current counts: 42 Thai review prompts prepared, 6 Ukrainian conditional prefere
 ## Verified engineering checkpoint — 2026-11-01
 
 The three-mode fallback correction and independent Thai/Ukrainian review and gold gates passed full push CI 41337529189 and Web Static 41337815975. This verifies implementation and validation contracts, not linguistic accuracy. The gold registries and reviewer packets remain unfilled by external experts; end-to-end accuracy is NOT MEASURED.
+
+
+## CCOST controlled-wordlist review packet — 2026-11-01
+
+The CCOST paper's 206-item monosyllabic task is a controlled prompt source, not a pronunciation gold set. It was designed to cross five lexical tones, four initial-consonant classes, three syllable structures and vowel-length contrasts in closed syllables. The wordlist CSV is a separate file from the 6.2 GB WAV/TextGrid archive.
+
+After obtaining the licensed `wordlist.csv` from Zenodo, run:
+
+```bash
+python scripts/build_ccost_wordlist_review_packet.py \
+  --wordlist /path/to/wordlist.csv \
+  --output-dir /tmp/ccost-review
+python scripts/validate_adjudication_packet.py --mode blind \
+  --challenge /tmp/ccost-review/ccost-wordlist-challenge.jsonl \
+  /tmp/ccost-review/ccost-wordlist-blind.tsv
+```
+
+The generator verifies 206 rows in each A-D column, reports duplicates and order-set differences, creates a deterministic union of distinct Thai prompts, and writes a SHA-256/license manifest. If the four order sets differ or any order repeats a word, the manifest status is `SOURCE_ORDER_DISCREPANCY_REQUIRES_RECONCILIATION`; do not freeze or score that packet until the source list discrepancy is explained. A concordant set still produces only an unadjudicated, broad-phonemic reviewer packet. The blind TSV has no engine output or prefilled labels. Generated outputs remain local and inherit CC BY-NC-SA 4.0 terms.
+
+The source-specific scorer gate now distinguishes `BROAD_PHONEMIC_IPA_GOLD_INPUT` from `BROAD_SURFACE_IPA_GOLD_INPUT`. The project-authored challenge and CCOST wordlist can support only independently reviewed broad phonemic labels. The full CCOST annotation archive remains BLOCKED for both IPA layers until actual TextGrid files and X-SAMPA labels are inspected and mapped. This prevents a text-only wordlist from being used as surface-phonetic evidence.
