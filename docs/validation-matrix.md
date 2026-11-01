@@ -4,7 +4,7 @@
 |---|---|---|
 | Screen external Thai G2P/IPA benchmark | DONE_VERIFIED — research screening | Added Thai G2P v4 to `data/corpus_sources.csv` and `docs/g2p-benchmark.md`. Dataset card declares CC0-1.0 and reports 8,076 test rows, but source lineage includes Thai W2P and Wiktionary; use only as a source-attested comparator after runtime lexical-overlap audit, not independent gold. |
 | Screen external Thai segmentation corpora | DONE_VERIFIED — research screening | BEST-2010 official TEST_100K and LST20 identified. BEST license/access must be verified before acquisition; LST20 terms prohibit redistribution/modification absent permission and require separate commercial arrangements. No corpus copied. |
-| Separate ASR resources from phonetic gold | DONE_VERIFIED — scope clarification | FLEURS and Common Voice Thai are speech/ASR resources, not phone-level IPA or Ukrainian-target gold. CCOST remains the closest phone/toneme candidate but is blocked on manual review. |
+| Separate ASR resources from phonetic gold | DONE_VERIFIED — scope clarification | FLEURS and Common Voice Thai are speech/ASR resources, not phone-level IPA or Ukrainian-target gold. CCOST remains the closest phone/toneme candidate; its manual is inspected, but the released TextGrid tier/toneme schema remains unverified. |
 | Exact-head CI for benchmark registry and test changes | DONE_VERIFIED on PR #169 head `2295ce1` | Run [41247367267](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41247367267): `test`, `wheel-install-smoke`, and `master-artifact` all passed, including full Python/browser suites, diagnostics, generated-artifact validation, and isolated wheel install. PR remains open/unmerged. |
 | Execute new accuracy benchmark | BLOCKED / evidence-limited | No new score calculated; requires source-overlap filtering, legal/access review, and independently adjudicated Thai IPA plus Ukrainian target labels. |
 
@@ -1136,3 +1136,12 @@ The user's explicit requirement supersedes the prior UX decision to collapse RTG
 - All implementation PRs reconciled in this run are merged; the remaining refs are historical/work branches rather than unmerged open PRs.
 - No branch deletion was performed. Historical refs may contain unique research/evidence work; no owner-approved retention policy exists, and the connected GitHub action set exposes no branch-deletion operation.
 - Acceptance: review unique commits and obtain an explicit archive/delete policy before pruning. Keep `BRANCH-HYGIENE-001` PARTIAL until that decision and cleanup are complete.
+
+
+## CCOST annotation manual review — 2026-11-01
+
+| Task / acceptance criterion | State | Evidence / next acceptance |
+|---|---|---|
+| Retrieve and inspect the official CCOST annotation manual | DONE_VERIFIED — document inspection | Official Zenodo file `CCOST_manual.pdf` (19 pages; MD5 `caecb20d26e8458b20c7c269ca22b59e`) inspected. It describes OCTRA ASR transcript correction, Thai-script normalization, Praat boundary/transcript correction and BAS `CHUNKPREP → G2P → MAUS → PHO2SYL`; it names `OCTRA_1` and illustrates MAUS output `sampa`. |
+| Establish the released TextGrid phone/toneme annotation contract | BLOCKED / evidence-limited | The manual does not define final released TextGrid tiers, full phone/toneme inventory, tone-label scheme, uncertainty policy or independent double annotation. Acceptance requires inspection of released TextGrid schema and detailed LREC paper methods, then mapping each label to a declared target layer. |
+| Use CCOST as independent phonetic gold | BLOCKED / evidence-limited | Manual inspection does not establish dual blinded annotation. Require two qualified Thai phoneticians' independent labels under the project protocol for independent accuracy claims; keep CCOST external under CC BY-NC-SA 4.0. |
