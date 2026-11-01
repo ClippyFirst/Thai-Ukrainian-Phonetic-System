@@ -203,3 +203,31 @@ def test_committed_audio_asset_registry_is_valid_but_has_no_selected_assets():
     sources = load_source_registry(ROOT / "data/benchmark/source-registry.tsv")
     assets = load_audio_asset_registry(ROOT / "data/benchmark/audio-assets.tsv", sources)
     assert assets == {}
+
+
+def test_audio_asset_revision_must_be_immutable_and_asset_uri_absolute():
+    sources = load_source_registry(ROOT / "data/benchmark/source-registry.tsv")
+    with tempfile.TemporaryDirectory() as directory:
+        path = Path(directory) / "assets.tsv"
+        fields = [
+            "asset_id", "source_id", "dataset_revision", "asset_uri", "file_sha256",
+            "speaker_ref", "microphone", "overlap_status", "duration_seconds",
+            "verification_status", "verified_by", "verified_at", "notes",
+        ]
+        base = {
+            "asset_id": "LOTUS-TEST-002", "source_id": "CORP-LOTUSDIS",
+            "dataset_revision": "main", "asset_uri": "https://example.org/audio.wav",
+            "file_sha256": "b" * 64, "speaker_ref": "speaker-02",
+            "microphone": "NEAR_FIELD", "overlap_status": "NONE",
+            "duration_seconds": "4.2", "verification_status": "VERIFIED",
+            "verified_by": "project-source-audit", "verified_at": "2026-11-01",
+            "notes": "Synthetic unit-test asset; no real recording.",
+        }
+        write_registry(path, fields, [base])
+        with unittest.TestCase().assertRaisesRegex(ValueError, "immutable dataset_revision"):
+            load_audio_asset_registry(path, sources)
+        base["dataset_revision"] = "45145d7"
+        base["asset_uri"] = "local-file.wav"
+        write_registry(path, fields, [base])
+        with unittest.TestCase().assertRaisesRegex(ValueError, "absolute HTTP"):
+            load_audio_asset_registry(path, sources)
