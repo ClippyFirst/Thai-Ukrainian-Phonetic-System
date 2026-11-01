@@ -1224,3 +1224,15 @@ The first run with the new coverage tests completed master-table generation and 
 - **BLOCKED / evidence-limited:** independent Thai IPA/segmentation and Ukrainian target-form adjudication, CCOST released TextGrid schema/method reconciliation, and manual browser/device/WCAG 2.2 AA review.
 - Local tests were not run in the connector-only environment. CI evidence is exact-head and post-merge GitHub Actions evidence only.
 - **Readiness:** engineering-verified research prototype; not release-ready for general linguistic-accuracy or accessibility-conformance claims.
+
+
+## Independent adjudication infrastructure — 2026-11-01
+
+- Added a 42-item Thai phonetic review packet bound to the frozen challenge set. The reviewer sheet omits engine output, source-dictionary IPA, stratum and probe metadata. It captures lexical reading, word and syllable boundaries, phonemic IPA, tone category, vowel length, final glottal status, uncertainty and provenance.
+- Added validators for blank packets, completed Thai reviewer copies and independent reviewer pairs. Non-abstaining rows must reconstruct the exact Thai input from word/syllable boundaries; tone, vowel-length and glottal arrays must align one-to-one with syllables. Narrow acoustic labels require authorized audio and time intervals.
+- Added a six-row Ukrainian-native preference packet with engine candidates removed. Each source IPA is explicitly `SOURCE_ATTESTED_NOT_GOLD`; resulting preference is conditional on that supplied IPA, not an end-to-end accuracy judgment. Individual and paired review validation preserves qualification references, criteria version, rationale and abstention.
+- Strengthened IPA scoring: an `ADJUDICATED` row now requires two distinct reviewers, both original IPA labels, adjudicator/outcome/record, source URL/license and one transcription layer. Consensus must equal the raw reviewer labels. Phonemic and surface IPA cannot be mixed; profile metrics are reported separately.
+- Added an empty expert segmentation gold registry. The segmentation scorer requires two independent tokenizations, explicit WORD/SYLLABLE layer, distinct reviewers, adjudication record and provenance before any row can be counted as expert gold. Existing Wisesight rows remain source-annotated.
+- **Evidence boundary:** no external reviewer submissions were available in this run. Thai IPA gold count remains zero; independent segmentation gold count remains zero; Ukrainian preference submissions remain zero. Accuracy remains NOT MEASURED.
+- **External source:** CCOST is the strongest current licensed acoustic candidate, but its 6.2 GB CC BY-NC-SA 4.0 archive is not bundled. Released TextGrid tier schema and label inventory still require direct inspection before import. See [LREC 2026 CCOST paper](https://aclanthology.org/2026.lrec-1.247/) and [Zenodo record](https://zenodo.org/records/17366698).
+- Code checkpoint: `af0d10d81f9f8cb2bbce97c35af414fc2f8613db`; base main `cc398254c178171f74397aed556766e87356ab84`. Exact-head CI pending. Local tests were not run because this session had connector-only repository access. No Vercel service/tool was used.

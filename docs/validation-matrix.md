@@ -1201,3 +1201,19 @@ The user's explicit requirement supersedes the prior UX decision to collapse RTG
 | Independent linguistic adjudication and manual accessibility review | BLOCKED / evidence-limited | Thai IPA/segmentation, Ukrainian target forms, CCOST released TextGrid schema/method, and manual browser/device/WCAG 2.2 AA review remain external acceptance gates. |
 
 **Final verified main:** `1431c565ff5c160da4944942d687bc30b2f8d0b2`. **Post-merge CI:** [41326865977](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41326865977), all three jobs successful. **Pages:** [41326865964](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41326865964), build and deploy successful. Local pytest/npm were not run in this connector-only environment.
+
+
+## Independent adjudication infrastructure — 2026-11-01 (research continuation)
+
+| Task / acceptance criterion | State before exact-head CI | Evidence / remaining acceptance |
+|---|---|---|
+| Prepare candidate-blind Thai phonetic review set | PARTIAL — implementation complete, CI pending | `data/benchmark/ipa-adjudication-blind.tsv`: 42 frozen inputs, no source IPA, engine output, stratum or probe labels; exact ID/input coverage checked by validator. |
+| Validate independent Thai reviews and syllable metadata | PARTIAL — implementation complete, CI pending | Validator checks qualification/date, lexical reading, lossless word/syllable boundaries, per-syllable tone/length/glottal alignment, explicit abstention and audio intervals; pair gate requires distinct reviewers and identical source text. |
+| Prepare Ukrainian-native preference review | PARTIAL — implementation complete, CI pending | Six candidate-blind rows in `data/benchmark/ukrainian-target-preference-blind.tsv`; IPA explicitly `SOURCE_ATTESTED_NOT_GOLD`; validator binds to exact source records and supports individual/pair review under criteria v0.1. |
+| Require double-reviewed IPA gold | PARTIAL — implementation complete, CI pending | Scorer requires two distinct reviewers, both raw IPA labels, adjudicator/outcome/record, source/license and transcription layer; consensus must equal both labels; mixed phonemic/surface runs are rejected and metrics stratified by profile. |
+| Require double-reviewed word/syllable segmentation gold | PARTIAL — implementation complete, CI pending | Empty `data/benchmark/segmentation-adjudication-gold.tsv`; scorer requires two independent tokenizations, distinct reviewers, adjudication record and one WORD or SYLLABLE layer per run. Existing 993 Wisesight records remain SOURCE_ANNOTATED. |
+| Independent Thai expert submissions | BLOCKED / external reviewer required | Two qualified Thai phoneticians must complete separate blind packets, freeze raw labels and adjudicate disagreements. Acceptance: auditable qualification references, raw labels, abstentions, record IDs and adjudication notes. |
+| Independent Ukrainian-native submissions | BLOCKED / external reviewer required | Two Ukrainian-native reviewers must complete separate candidate-blind sheets. Acceptance: preferred forms, rationale, criteria version, boundary/tone policy, uncertainty and disagreement reconciliation. Judgments remain conditional on supplied source IPA. |
+| CCOST acoustic corpus import | BLOCKED / access and schema evidence | CC BY-NC-SA 4.0; 6.2 GB archive not bundled. Inspect released TextGrid tiers/labels and map to phonemic/surface/acoustic targets before selecting rows. |
+
+Code checkpoint: `af0d10d81f9f8cb2bbce97c35af414fc2f8613db`; branch base main `cc398254c178171f74397aed556766e87356ab84`. Research branch is 30 commits ahead of main at this checkpoint. Exact-head CI and Web Static pending; do not mark these tasks DONE_VERIFIED until checks pass. No local test run is claimed in the connector-only environment. Vercel was not used.

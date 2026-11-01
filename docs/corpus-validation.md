@@ -192,3 +192,10 @@ The Ukrainian preference packet `data/benchmark/ukrainian-target-preference-blin
 The CCOST paper describes 49 Standard Thai speakers, about seven hours of spontaneous speech, repeated controlled word-list/sentence material, and orthographic, word, syllable, phone and toneme annotations. Zenodo lists a 6.2 GB audio/TextGrid archive under CC BY-NC-SA 4.0. The repository does not bundle the archive. Before use, the released TextGrid tier names and label inventory must be inspected directly and reconciled with the chosen target layer. The research-assistant manual alone is not a complete released-tier specification. Preserve non-commercial/share-alike obligations; no CCOST labels are currently counted as project gold.
 
 Primary references: [LREC 2026 CCOST paper](https://aclanthology.org/2026.lrec-1.247/), [Zenodo CCOST v1.0](https://zenodo.org/records/17366698), [Tingsabadh & Abramson, Thai (JIPA 1993)](https://doi.org/10.1017/S0025100300004746).
+
+
+## Separate expert word/syllable segmentation gold — 2026-11-01
+
+The blank `data/benchmark/segmentation-adjudication-gold.tsv` registry is reserved for two-reviewer word- or syllable-boundary adjudication. Each row declares `segmentation_layer=WORD|SYLLABLE`, preserves both original token arrays, two distinct reviewer IDs and qualification references, an adjudicator, outcome, record, source URL and license. The scorer checks exact reconstruction, requires consensus labels to match the final gold, requires different raw tokenizations for a resolved disagreement, and refuses to mix WORD and SYLLABLE reports. The existing Wisesight rows remain source-annotated WORD evidence; they are not promoted to expert gold.
+
+No expert segmentation rows have been submitted yet. The new registry is intentionally header-only and does not create an accuracy metric.

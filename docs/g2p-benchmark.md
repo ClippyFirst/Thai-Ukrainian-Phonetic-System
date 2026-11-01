@@ -185,3 +185,10 @@ No new corpus was downloaded, copied, or bundled in this update. No external sco
 - Current independent gold count remains **0**. The benchmark must print `NOT_MEASURED` until actual reviewer records are completed and reconciled.
 
 CCOST remains the preferred licensed acoustic source candidate. Its published abstract reports manual correction by phonetically trained native Thai speakers, but the actual TextGrid tier schema and transcription-layer mapping must be checked before use. The dataset is CC BY-NC-SA 4.0; no audio/TextGrid files are bundled here.
+
+
+## Segmentation gold and Ukrainian review are separate evidence tracks
+
+The Thai blind phonetic packet captures lexical reading, word/syllable boundaries, phonemic IPA, tone, vowel length and final glottal status. Word/syllable segmentation scoring has its own empty adjudicated registry, requiring two reviewers and an explicit WORD or SYLLABLE layer. The scorer cannot mix the two. The six-row Ukrainian preference packet is candidate-blind and validated, but its source IPA is still `SOURCE_ATTESTED_NOT_GOLD`; Ukrainian preferences remain conditional on those supplied strings.
+
+Current counts: 42 Thai review prompts prepared, 6 Ukrainian conditional preference prompts prepared, **0** independently adjudicated Thai IPA rows, **0** independently adjudicated segmentation rows and **0** Ukrainian-native review submissions. Therefore phonetic and practical-transcription accuracy remain NOT MEASURED.

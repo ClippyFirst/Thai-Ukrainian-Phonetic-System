@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PRs #171–#179 are merged. Cleanup includes documentation and module ownership, 24-script inventory, removal of unused browser maps, generated-artifact drift checks and deterministic CSVs, canonical consonant maps, typed-IPA manifest correction, and removal of the word/API reverse dependency. Final main 1431c565ff5c160da4944942d687bc30b2f8d0b2 passed post-merge CI 41326865977 and Pages 41326865964. Independent Thai/UA adjudication and manual accessibility review remain outstanding; engineering-verified research prototype, not release-ready for linguistic-accuracy claims.",
+  "status": "Main remains cc398254c178171f74397aed556766e87356ab84. PR #181 remains open and untouched. Research branch research/independent-adjudication-gates-20261101 adds 42-item blind Thai review infrastructure, six-item conditional Ukrainian preference review, two-reviewer IPA and segmentation gold gates, and layer/stratum-separated metrics. Exact-head CI is pending at this audit checkpoint; independent reviewer submissions are still zero, so linguistic accuracy remains NOT MEASURED.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -64,7 +64,16 @@
     "full_ipa_and_rtgs_consonant_rime_correspondence_matrices",
     "rtgs_iao_rime_component_preservation_regression",
     "rtgs_research_integration_contract_reconciled",
-    "historical_rtgs_pr_status_reconciled"
+    "historical_rtgs_pr_status_reconciled",
+    "blind_42_item_thai_phonetic_adjudication_packet",
+    "candidate_blind_ukrainian_preference_packet",
+    "thai_adjudication_packet_schema_and_pair_validator",
+    "ukrainian_native_preference_review_pair_validator",
+    "double_reviewer_ipa_gold_provenance_gate",
+    "transcription_layer_separated_ipa_benchmark",
+    "profile_stratified_ipa_metrics",
+    "double_reviewer_word_syllable_segmentation_gold_gate",
+    "explicit_word_vs_syllable_segmentation_benchmark_layer"
   ],
   "not_claimed": [
     "complete_lexical_segmentation",
@@ -491,11 +500,11 @@
       "acceptance": "Exact-head CI 41237340250, Web Static 41237340267, post-merge main CI 41239440616 and Web Static 41239440643 passed."
     }
   ],
-  "latest_implementation_branch": "chore/python-static-analysis-gate-20261030",
+  "latest_implementation_branch": "research/independent-adjudication-gates-20261101",
   "latest_implementation_commit_pending_ci": {
-    "commit": "e8282dfb85f53ae18cbed5fcdc676b1b6049c313",
-    "status": "MAINLINE_CODE_HEAD_VERIFIED",
-    "notes": "PR #150 exact-head CI 41133766851 and post-merge main CI 41134406351 passed; Pages 41134406540 passed."
+    "commit": "af0d10d81f9f8cb2bbce97c35af414fc2f8613db",
+    "status": "CI_PENDING",
+    "notes": "Code checkpoint before documentation closeout; exact-head CI and Web Static must be checked on final PR head."
   },
   "current_head_status_at_audit_refresh": "Code/workflow checkpoint b6dbec7928b106f0ab52e06af33a26635df75412 passed CI 40322960615 and Web static validation 40322959844. Documentation checkpoint e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff passed full CI 40323209539 and Web static validation 40323209471. This audit-register update creates a newer documentation HEAD and requires exact-head CI/static validation before the current branch HEAD is marked green.",
   "current_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
@@ -2247,8 +2256,8 @@
     "accuracy_claimed": false
   },
   "current_status_2026_11_01": {
-    "main_sha": "1431c565ff5c160da4944942d687bc30b2f8d0b2",
-    "main_unchanged": false,
+    "main_sha": "cc398254c178171f74397aed556766e87356ab84",
+    "main_unchanged": true,
     "merged_prs": [
       171,
       172,
@@ -2261,27 +2270,28 @@
       179
     ],
     "open_prs": [
-      180
+      181
     ],
-    "review_submissions_and_inline_threads": 0,
-    "branch_refs": 12,
-    "non_main_refs": 11,
-    "branch_inventory": "12 refs including this documentation continuation branch; 11 non-main refs. No branch deleted.",
-    "ccost_manual_inspection": "DONE_VERIFIED",
-    "ccost_textgrid_schema_and_detailed_methods": "BLOCKED_EVIDENCE_LIMITED",
-    "thai_ipa_segmentation_adjudication": "BLOCKED_EVIDENCE_LIMITED",
-    "ukrainian_target_form_adjudication": "BLOCKED_EVIDENCE_LIMITED",
-    "manual_browser_device_wcag_review": "BLOCKED",
-    "main_branch_protection": "TODO_OWNER_CONFIGURATION; branch listing reports protected=false",
-    "full_import_call_reference_graph": "PARTIAL",
-    "broad_test_fixture_redundancy_review": "PARTIAL",
-    "historical_document_reorganization": "DEFERRED_PENDING_REFERENCE_AUDIT",
+    "branch_refs": 14,
+    "non_main_refs": 13,
+    "branch_inventory": "14 refs including main; 13 non-main refs. No branch deletion was performed.",
+    "research_branch": "research/independent-adjudication-gates-20261101",
+    "research_branch_base": "cc398254c178171f74397aed556766e87356ab84",
+    "research_branch_code_checkpoint": "af0d10d81f9f8cb2bbce97c35af414fc2f8613db",
+    "research_branch_ahead_before_docs": 30,
+    "thai_blind_review_items": 42,
+    "ukrainian_conditional_review_items": 6,
+    "independent_thai_ipa_gold_rows": 0,
+    "independent_segmentation_gold_rows": 0,
+    "ukrainian_review_submissions": 0,
+    "ccost_manual_inspection": "DONE_VERIFIED_document_inspection",
+    "ccost_released_textgrid_tier_mapping": "BLOCKED_EVIDENCE_LIMITED",
+    "thai_ipa_segmentation_adjudication": "BLOCKED_EXTERNAL_EXPERTS",
+    "ukrainian_target_form_adjudication": "BLOCKED_EXTERNAL_NATIVE_REVIEWERS",
+    "main_branch_protection": "TODO_OWNER_CONFIGURATION; protected=false",
     "local_test_execution": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
-    "latest_merged_pr_exact_head_ci_run": 41326533814,
-    "post_merge_main_ci_run": 41326865977,
-    "post_merge_main_ci_status": "SUCCESS — test, wheel-install-smoke, master-artifact",
-    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY",
-    "post_merge_pages_status": "SUCCESS — build, deploy"
+    "exact_head_ci": "PENDING",
+    "readiness": "ENGINEERING_RESEARCH_INFRASTRUCTURE_IMPROVED; LINGUISTIC_ACCURACY_NOT_MEASURED"
   },
   "repository_structure_cleanup_2026_11_01": {
     "main_at_start": "69dafe58a9458d33a645cdcd517e61e9978abdbd",
@@ -2392,5 +2402,42 @@
     "post_cleanup_main_ci_run": 41326865977,
     "post_cleanup_pages_run": 41326865964,
     "post_cleanup_status": "SUCCESS — main CI (test, wheel-install-smoke, master-artifact) and Pages (build, deploy)"
+  },
+  "independent_adjudication_work_2026_11_01": {
+    "branch": "research/independent-adjudication-gates-20261101",
+    "base_main": "cc398254c178171f74397aed556766e87356ab84",
+    "code_checkpoint": "af0d10d81f9f8cb2bbce97c35af414fc2f8613db",
+    "status": "IMPLEMENTED_CI_PENDING",
+    "artifacts": [
+      "data/benchmark/ipa-adjudication-blind.tsv",
+      "data/benchmark/ukrainian-target-preference-blind.tsv",
+      "data/benchmark/segmentation-adjudication-gold.tsv"
+    ],
+    "validators": [
+      "scripts/validate_adjudication_packet.py",
+      "scripts/validate_ukrainian_preference_packet.py"
+    ],
+    "scorers": [
+      "scripts/benchmark_ipa.py",
+      "scripts/evaluate_segmentation.py"
+    ],
+    "tests_added": [
+      "tests/test_adjudication_packet.py",
+      "tests/test_benchmark_ipa.py",
+      "tests/test_segmentation_benchmark.py"
+    ],
+    "evidence_limits": {
+      "thai_ipa_gold_rows": 0,
+      "expert_segmentation_gold_rows": 0,
+      "ukrainian_review_submissions": 0,
+      "ccost_archive_imported": false,
+      "accuracy_status": "NOT_MEASURED"
+    },
+    "external_blockers": [
+      "two independent qualified Thai phoneticians for phonemic IPA, segmentation, tone and length",
+      "two independent Ukrainian-native reviewers for practical target forms",
+      "CCOST licensed archive access and exact released TextGrid tier/label mapping"
+    ],
+    "vercel_used": false
   }
 }
