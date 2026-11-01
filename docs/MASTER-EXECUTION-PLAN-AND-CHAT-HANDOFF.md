@@ -1999,3 +1999,9 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Both the frozen 42-item challenge packet and the six-item supplemental regression packet are now checked by explicit CI validator steps.
 - The source-attested IPA diagnostic correctly defines independently comparable rows as non-circular **and** complete. A withheld non-circular item is not in that denominator. The latest CI failure was a wrong workflow assertion, not a runtime diagnostic defect; the corrected invariant has a focused unit test.
 - Remaining blockers are external: two independent qualified Thai reviewers plus separate adjudication; two Ukrainian-native preference reviewers; CCOST curator clarification on A-D list discrepancy; actual licensed archive/TextGrid schema inspection. No expert labels or gold scores are claimed.
+
+
+## Handoff — registered acoustic provenance and reviewer agreement (2026-11-01)
+
+- The Thai blind packet is now 23 columns, including separate `narrow_ipa` and `audio_source_id`. A narrow acoustic review requires a VERIFIED source-registry record, exact URL/license, explicit `ACOUSTIC_PHONETICS_RESEARCH` permission, an asset identifier and a positive interval. Current CCOST is BLOCKED and will be rejected until the archive mapping is verified.
+- Thai and Ukrainian reviewer-pair validators now report NFC-normalized exact agreement per field, plus missing labels and joint/one-sided abstentions. These are descriptive statistics only, not chance-corrected reliability or gold.
