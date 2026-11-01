@@ -22,7 +22,7 @@ ADJUDICATION_OUTCOMES = {"AGREEMENT", "RESOLVED_DISAGREEMENT"}
 
 def read_tsv(path: Path, required: list[str]) -> list[dict[str, str]]:
     with path.open("r", encoding="utf-8-sig", newline="") as stream:
-        reader = csv.DictReader(stream, delimiter="\\t")
+        reader = csv.DictReader(stream, delimiter="\t")
         missing = set(required) - set(reader.fieldnames or [])
         if missing:
             raise ValueError(f"{path}: missing columns: {', '.join(sorted(missing))}")
