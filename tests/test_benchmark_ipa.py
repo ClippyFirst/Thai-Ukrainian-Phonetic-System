@@ -106,7 +106,7 @@ class BenchmarkIpaTests(unittest.TestCase):
             adjudicator_id="", adjudication_outcome="", adjudication_record_id="", adjudication_notes="",
         )
         report = self.run_benchmark(
-            [gold_row(gold_ipa="aː"), pending],
+            [gold_row(gold_ipa="aː", reviewer_a_ipa="aː", reviewer_b_ipa="aː"), pending],
             [prediction_row(ipa="aː"), prediction_row(id="b", raw_output="not-gold", ipa="not-gold")],
         )
         metrics = report["engines"]["candidate"]
@@ -116,7 +116,7 @@ class BenchmarkIpaTests(unittest.TestCase):
         self.assertEqual(metrics["exact_match_rate"], 1.0)
 
     def test_missing_prediction_row_remains_in_denominator(self):
-        second = gold_row(id="b", text="ปา", gold_ipa="paː", source_id="CCOST#record-2",
+        second = gold_row(id="b", text="ปา", gold_ipa="paː", reviewer_a_ipa="paː", reviewer_b_ipa="paː", source_id="CCOST#record-2",
                           source_url="https://zenodo.org/records/17366698",
                           adjudication_record_id="ADJ-2026-002")
         metrics = self.run_benchmark([gold_row(), second], [prediction_row()])["engines"]["candidate"]
@@ -139,7 +139,7 @@ class BenchmarkIpaTests(unittest.TestCase):
 
     def test_report_stratifies_metrics_by_profile(self):
         second = gold_row(
-            id="b", text="ปา", gold_ipa="paː", profile="core-onset",
+            id="b", text="ปา", gold_ipa="paː", reviewer_a_ipa="paː", reviewer_b_ipa="paː", profile="core-onset",
             source_id="CCOST#record-2",
             adjudication_record_id="ADJ-2026-002",
         )
@@ -150,7 +150,7 @@ class BenchmarkIpaTests(unittest.TestCase):
         self.assertEqual(profiles["core-onset"]["missing_predictions"], 1)
 
     def test_mismatch_reports_codepoint_cer(self):
-        metrics = self.run_benchmark([gold_row(gold_ipa="k")],
+        metrics = self.run_benchmark([gold_row(gold_ipa="k", reviewer_a_ipa="k", reviewer_b_ipa="k")],
                                      [prediction_row(raw_output="g", ipa="g")])["engines"]["candidate"]
         self.assertEqual(metrics["exact_matches"], 0)
         self.assertEqual(metrics["codepoint_cer"], 1.0)

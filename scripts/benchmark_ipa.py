@@ -73,6 +73,8 @@ def validate_gold_row(row: dict[str, str]) -> None:
     labels_agree = norm(row["reviewer_a_ipa"]) == norm(row["reviewer_b_ipa"])
     if outcome == "AGREEMENT" and not labels_agree:
         raise ValueError(f"ADJUDICATED gold row {ident!r}: AGREEMENT requires matching reviewer IPA")
+    if outcome == "AGREEMENT" and norm(row["gold_ipa"]) != norm(row["reviewer_a_ipa"]):
+        raise ValueError(f"ADJUDICATED gold row {ident!r}: gold_ipa must equal the agreed reviewer IPA")
     if outcome == "RESOLVED_DISAGREEMENT" and labels_agree:
         raise ValueError(
             f"ADJUDICATED gold row {ident!r}: RESOLVED_DISAGREEMENT requires differing reviewer IPA"
