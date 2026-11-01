@@ -316,7 +316,15 @@ class AdjudicationPacketTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "source registry"):
             validate_review_packet([row], ["TH-G2P-001"], "TH-PH-01")
         self.assertEqual(
-            validate_review_packet([row], ["TH-G2P-001"], "TH-PH-01", source_registry=source_registry)["records"], 1
+            validate_review_packet(
+                [row], ["TH-G2P-001"], "TH-PH-01",
+                source_registry=source_registry,
+                audio_asset_registry={"recording-001": {
+                    "asset_id": "recording-001", "source_id": "TEST-AUDIO",
+                    "duration_seconds": "3.0", "verification_status": "VERIFIED",
+                    "overlap_status": "NONE",
+                }},
+            )["records"], 1
         )
 
     def test_narrow_ipa_syllable_count_must_match_phonemic_boundaries(self):
@@ -335,7 +343,15 @@ class AdjudicationPacketTests(unittest.TestCase):
             "notes": "Unit-test-only audio source.",
         }}
         with self.assertRaisesRegex(ValueError, "narrow IPA syllabification"):
-            validate_review_packet([row], ["TH-G2P-001"], "TH-PH-01", source_registry=source_registry)
+            validate_review_packet(
+                [row], ["TH-G2P-001"], "TH-PH-01",
+                source_registry=source_registry,
+                audio_asset_registry={"recording-001": {
+                    "asset_id": "recording-001", "source_id": "TEST-AUDIO",
+                    "duration_seconds": "3.0", "verification_status": "VERIFIED",
+                    "overlap_status": "NONE",
+                }},
+            )
 
     def test_audio_asset_cannot_be_supplied_without_registered_source_and_interval(self):
         row = completed_row("TH-G2P-001", "กา")
@@ -361,7 +377,15 @@ class AdjudicationPacketTests(unittest.TestCase):
             "notes": "Released TextGrid tier and label mapping not yet verified.",
         }}
         with self.assertRaisesRegex(ValueError, "is blocked"):
-            validate_review_packet([row], ["TH-G2P-001"], "TH-PH-01", source_registry=source_registry)
+            validate_review_packet(
+                [row], ["TH-G2P-001"], "TH-PH-01",
+                source_registry=source_registry,
+                audio_asset_registry={"recording-001": {
+                    "asset_id": "recording-001", "source_id": "TEST-AUDIO",
+                    "duration_seconds": "3.0", "verification_status": "VERIFIED",
+                    "overlap_status": "NONE",
+                }},
+            )
 
 
     def test_thai_review_requires_verified_phonetician_registry(self):
