@@ -2005,3 +2005,11 @@ This note supersedes the preceding documentation-only status. The branch now cha
 
 - The Thai blind packet is now 23 columns, including separate `narrow_ipa` and `audio_source_id`. A narrow acoustic review requires a VERIFIED source-registry record, exact URL/license, explicit `ACOUSTIC_PHONETICS_RESEARCH` permission, an asset identifier and a positive interval. Current CCOST is BLOCKED and will be rejected until the archive mapping is verified.
 - Thai and Ukrainian reviewer-pair validators now report NFC-normalized exact agreement per field, plus missing labels and joint/one-sided abstentions. These are descriptive statistics only, not chance-corrected reliability or gold.
+
+
+## Handoff — Thai corpus source decision (2026-11-01)
+
+- `CORP-LOTUSDIS` is now registered as a VERIFIED CC BY-SA 4.0 audio/transcript source for new independent human phonetic annotation. It is not a phone/toneme IPA gold set.
+- Before acoustic use, pin dataset revision and each selected asset, verify near-field single-speaker non-overlap, and record speaker pseudonym, mic/channel, time interval and file hash. No audio was downloaded or bundled.
+- CCOST remains BLOCKED for acoustic gold pending TextGrid tier/label mapping and A-D source-order clarification; its CC BY-NC-SA 4.0 license may restrict commercial use. Common Voice Thai was not selected for redistribution because its data card forbids re-hosting/re-sharing.
+- The 42+6 project-authored blind packet remains the controlled baseline; human expert submissions are still absent. See `docs/phonetic-corpus-selection.md`.
