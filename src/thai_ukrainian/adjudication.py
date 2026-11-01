@@ -83,6 +83,7 @@ def validate_review_packet(
     rows: Iterable[Mapping[str, str]],
     expected_ids: Iterable[str],
     reviewer_id: str,
+    challenge_rows: Iterable[Mapping[str, str]] | None = None,
 ) -> dict:
     """Validate one reviewer's completed packet without scoring its judgments."""
     if not reviewer_id.strip():
@@ -92,8 +93,13 @@ def validate_review_packet(
     expected = set(expected_ids)
     if set(indexed) != expected:
         raise ValueError("review packet must cover the exact frozen challenge set")
+    challenge_index = _unique_rows(challenge_rows) if challenge_rows is not None else None
+    if challenge_index is not None and set(indexed) != set(challenge_index):
+        raise ValueError("review packet must match the exact frozen challenge inputs")
     abstentions = 0
     for ident, row in indexed.items():
+        if challenge_index is not None and (row.get("thai") or "") != (challenge_index[ident].get("input") or ""):
+            raise ValueError(f"review packet source text differs from frozen challenge: {ident}")
         if (row.get("reviewer_id") or "").strip() != reviewer_id:
             raise ValueError(f"all rows must name the same reviewer ({reviewer_id})")
         if not (row.get("reviewer_qualification_ref") or "").strip():
@@ -228,8 +234,8 @@ def validate_independent_pair(
     for ident in a:
         if (a[ident].get("thai") or "") != (b[ident].get("thai") or ""):
             raise ValueError(f"independent reviewer input mismatch: {ident}")
-    validate_review_packet(a.values(), a.keys(), reviewer_a_id)
-    validate_review_packet(b.values(), b.keys(), reviewer_b_id)
+    validate_review_packet(a.values(), a.keys(), reviewer_a_id, challenge_rows)
+    validate_review_packet(b.values(), b.keys(), reviewer_b_id, challenge_rows)
     return {
         "records": len(a),
         "reviewer_a_id": reviewer_a_id,
