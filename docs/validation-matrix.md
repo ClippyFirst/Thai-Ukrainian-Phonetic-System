@@ -1277,3 +1277,13 @@ The source registry does not itself create gold data. Wisesight and VISTEC remai
 |---|---|---|
 | Bind narrow acoustic labels to a verified, licensed audio source | DONE_VERIFIED after exact-head CI | Added `audio_source_id`; validator checks source registry status, exact URL/license and `ACOUSTIC_PHONETICS_RESEARCH` permission. Blocked CCOST is rejected. |
 | Report descriptive inter-reviewer agreement | DONE_VERIFIED after exact-head CI | Thai and Ukrainian pair validators return NFC-normalized exact agreement by field, missing-label counts and joint/one-sided abstentions. No chance-corrected reliability or gold status is implied. |
+
+
+## Corpus-source decision — 2026-11-01
+
+| Task | State | Evidence / boundary |
+|---|---|---|
+| Register a commercial-compatible Thai audio source for expert re-annotation | DONE_VERIFIED at source/license level | `CORP-LOTUSDIS` registered CC BY-SA 4.0 for acoustic research and broad IPA annotation input. It supplies audio/transcripts/TextGrid, not IPA gold. |
+| Select and pin individual LOTUSDIS audio assets | TODO / asset-level evidence | Requires exact dataset revision, file hash, asset ID, speaker pseudonym, mic/channel, non-overlap/near-field review and time interval. No assets downloaded or bundled. |
+| Use CCOST as controlled tonal/phonetic source | BLOCKED / evidence-limited | CC BY-NC-SA 4.0, A-D list mismatch and unreconciled TextGrid tier/label mapping remain. |
+| Use Common Voice Thai as a shared review packet | DEFERRED | CC0 dataset card separately prohibits re-hosting/re-sharing; no phone/toneme gold. |
