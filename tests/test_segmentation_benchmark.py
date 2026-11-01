@@ -12,7 +12,7 @@ GOLD_FIELDS = [
     "id", "text", "gold_tokens_json", "gold_status", "source_id", "license", "split",
     "source_url", "segmentation_layer", "reviewer_a_id", "reviewer_b_id", "reviewer_a_qualification_ref",
     "reviewer_b_qualification_ref", "reviewer_a_tokens_json", "reviewer_b_tokens_json",
-    "adjudicator_id", "adjudication_outcome", "adjudication_record_id", "adjudication_notes",
+    "adjudicator_id", "adjudicator_qualification_ref", "adjudication_outcome", "adjudication_record_id", "adjudication_notes",
 ]
 PRED_FIELDS = ["id", "engine", "predicted_tokens_json", "status", "version"]
 
@@ -29,10 +29,27 @@ class SegmentationBenchmarkTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             gold, predictions, output = root / "gold.tsv", root / "pred.tsv", root / "report.json"
+            sources, reviewers = root / "sources.tsv", root / "reviewers.tsv"
             write_tsv(gold, GOLD_FIELDS, gold_rows)
             write_tsv(predictions, PRED_FIELDS, pred_rows)
+            write_tsv(sources,
+                ["source_id", "source_url", "license", "allowed_uses", "verification_status", "verified_by", "verified_at", "notes"],
+                [{"source_id": "TEST-SEG-CORP", "source_url": "https://example.org/record", "license": "CC0-1.0",
+                  "allowed_uses": "WORD_SEGMENTATION_GOLD_INPUT;WORD_SEGMENTATION_DIAGNOSTIC",
+                  "verification_status": "VERIFIED", "verified_by": "test", "verified_at": "2026-11-01",
+                  "notes": "Unit-test fixture source."}],
+            )
+            write_tsv(reviewers,
+                ["reviewer_id", "language", "roles", "qualification_ref", "verification_status", "verified_by", "verified_at", "scope", "notes"],
+                [
+                    {"reviewer_id": "TH-PH-01", "language": "th", "roles": "THAI_LINGUIST", "qualification_ref": "qualification:TH-PH-01", "verification_status": "VERIFIED", "verified_by": "test", "verified_at": "2026-11-01", "scope": "Thai word segmentation", "notes": "Unit-test fixture only."},
+                    {"reviewer_id": "TH-PH-02", "language": "th", "roles": "THAI_LINGUIST", "qualification_ref": "qualification:TH-PH-02", "verification_status": "VERIFIED", "verified_by": "test", "verified_at": "2026-11-01", "scope": "Thai word segmentation", "notes": "Unit-test fixture only."},
+                    {"reviewer_id": "TH-ADJ-01", "language": "th", "roles": "THAI_LINGUIST_ADJUDICATOR", "qualification_ref": "qualification:TH-ADJ-01", "verification_status": "VERIFIED", "verified_by": "test", "verified_at": "2026-11-01", "scope": "Thai segmentation adjudication", "notes": "Unit-test fixture only."},
+                ],
+            )
             result = subprocess.run(
-                [sys.executable, str(SCRIPT), "--gold", str(gold), "--predictions", str(predictions), "--output", str(output)],
+                [sys.executable, str(SCRIPT), "--gold", str(gold), "--predictions", str(predictions),
+                 "--output", str(output), "--source-registry", str(sources), "--reviewer-registry", str(reviewers)],
                 cwd=ROOT, text=True, capture_output=True, check=False,
             )
             self.assertEqual(result.returncode, expected, result.stderr)
@@ -45,7 +62,7 @@ class SegmentationBenchmarkTests(unittest.TestCase):
         tokens = tokens if tokens is not None else ["ภาษา", "ไทย"]
         row = {
             "id": row_id, "text": text, "gold_tokens_json": json.dumps(tokens, ensure_ascii=False),
-            "gold_status": "ADJUDICATED", "source_id": "fixture#1", "license": "CC0-1.0",
+            "gold_status": "ADJUDICATED", "source_id": "TEST-SEG-CORP", "license": "CC0-1.0",
             "split": "test", "source_url": "https://example.org/record",
             "segmentation_layer": "WORD",
             "reviewer_a_id": "TH-PH-01", "reviewer_b_id": "TH-PH-02",
@@ -53,7 +70,7 @@ class SegmentationBenchmarkTests(unittest.TestCase):
             "reviewer_b_qualification_ref": "qualification:TH-PH-02",
             "reviewer_a_tokens_json": json.dumps(tokens, ensure_ascii=False),
             "reviewer_b_tokens_json": json.dumps(tokens, ensure_ascii=False),
-            "adjudicator_id": "TH-ADJ-01", "adjudication_outcome": "AGREEMENT",
+            "adjudicator_id": "TH-ADJ-01", "adjudicator_qualification_ref": "qualification:TH-ADJ-01", "adjudication_outcome": "AGREEMENT",
             "adjudication_record_id": "SEG-ADJ-001", "adjudication_notes": "Independent labels agree.",
         }
         if overrides.get("gold_status", "ADJUDICATED") != "ADJUDICATED":
@@ -204,7 +221,7 @@ class SegmentationBenchmarkTests(unittest.TestCase):
 
 
     def test_source_annotated_rows_are_scored_with_explicit_nonexpert_status(self):
-        gold = self.gold(gold_status="SOURCE_ANNOTATED", source_id="wisesight1000#1", license="CC0-1.0")
+        gold = self.gold(gold_status="SOURCE_ANNOTATED", source_id="TEST-SEG-CORP", license="CC0-1.0")
         report = self.run_benchmark([gold], [self.prediction()])
         self.assertEqual(report["gold"]["rows_source_annotated"], 1)
         self.assertEqual(report["gold"]["rows_adjudicated"], 0)

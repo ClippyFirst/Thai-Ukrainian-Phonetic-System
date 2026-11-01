@@ -253,5 +253,58 @@ class AdjudicationPacketTests(unittest.TestCase):
         self.assertEqual(validate_review_packet([row], ["TH-G2P-001"], "TH-PH-01")["records"], 1)
 
 
+    def test_thai_review_requires_verified_phonetician_registry(self):
+        row = completed_row("TH-G2P-001", "กา")
+        registry = {"TH-PH-01": {
+            "language": "th", "roles": "THAI_PHONETICIAN",
+            "qualification_ref": "qualification-record:TH-PH-01", "verification_status": "VERIFIED",
+            "verified_by": "test", "verified_at": "2026-11-01",
+            "scope": "Standard Thai broad phonemic transcription",
+        }}
+        result = validate_review_packet([row], ["TH-G2P-001"], "TH-PH-01", reviewer_registry=registry)
+        self.assertEqual(result["status"], "REVIEW_PACKET_VALID_NOT_GOLD")
+        registry["TH-PH-01"]["language"] = "uk"
+        with self.assertRaisesRegex(ValueError, "language"):
+            validate_review_packet([row], ["TH-G2P-001"], "TH-PH-01", reviewer_registry=registry)
+
+    def test_ukrainian_review_requires_verified_native_reviewer_and_registered_source(self):
+        row = {
+            "id": "TH-UA-001", "thai": "ไกล", "source_ipa": "/klaj˧/",
+            "ipa_reference_status": "SOURCE_ATTESTED_NOT_GOLD", "source_id": "SRC-1",
+            "source_url": "https://example.org/source", "license": "CC-BY-SA-4.0",
+            "criteria_version": "UA-PRACTICAL-TRANSCRIPTION-0.1", "reviewer_id": "UK-UA-01",
+            "reviewer_qualification_ref": "qualification:UK-UA-01", "preferred_ukrainian_form": "клай",
+            "syllable_boundary_policy": "DISPLAY_ONLY", "tone_rendering_policy": "NO_ORTHOGRAPHIC_TONE_MARK",
+            "uncertainty": "LOW", "abstention_reason": "", "reviewed_at": "2026-11-01",
+            "rationale": "Reasoned preference.",
+        }
+        reviewers = {"UK-UA-01": {
+            "language": "uk", "roles": "UKRAINIAN_NATIVE_REVIEWER",
+            "qualification_ref": "qualification:UK-UA-01", "verification_status": "VERIFIED",
+            "verified_by": "test", "verified_at": "2026-11-01",
+            "scope": "Native Ukrainian practical transcription",
+        }}
+        sources = {"SRC-1": {
+            "source_url": "https://example.org/source", "license": "CC-BY-SA-4.0",
+            "allowed_uses": "UKRAINIAN_PREFERENCE_INPUT", "verification_status": "VERIFIED",
+            "notes": "Test fixture source.",
+        }}
+        result = validate_ukrainian_review_packet(
+            [row], ["TH-UA-001"], "UK-UA-01", reviewer_registry=reviewers, source_registry=sources,
+        )
+        self.assertEqual(result["status"], "UKRAINIAN_REVIEW_VALID_CONDITIONAL_NOT_GOLD")
+        reviewers["UK-UA-01"]["roles"] = "THAI_PHONETICIAN"
+        with self.assertRaisesRegex(ValueError, "lacks required role"):
+            validate_ukrainian_review_packet(
+                [row], ["TH-UA-001"], "UK-UA-01", reviewer_registry=reviewers, source_registry=sources,
+            )
+        reviewers["UK-UA-01"]["roles"] = "UKRAINIAN_NATIVE_REVIEWER"
+        sources["SRC-1"]["source_url"] = "https://example.org/wrong"
+        with self.assertRaisesRegex(ValueError, "source_url does not match"):
+            validate_ukrainian_review_packet(
+                [row], ["TH-UA-001"], "UK-UA-01", reviewer_registry=reviewers, source_registry=sources,
+            )
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -12,7 +12,7 @@ GOLD_FIELDS = [
     "id", "text", "gold_ipa", "gold_status", "profile", "source_id", "source_url",
     "license", "transcription_level", "reviewer_a_id", "reviewer_b_id",
     "reviewer_a_qualification_ref", "reviewer_b_qualification_ref",
-    "reviewer_a_ipa", "reviewer_b_ipa", "adjudicator_id", "adjudication_outcome",
+    "reviewer_a_ipa", "reviewer_b_ipa", "adjudicator_id", "adjudicator_qualification_ref", "adjudication_outcome",
     "adjudication_record_id", "adjudication_notes",
 ]
 PRED_FIELDS = ["id", "engine", "raw_output", "ipa", "status", "version"]
@@ -28,14 +28,15 @@ def write_tsv(path, fields, rows):
 def gold_row(**changes):
     row = {
         "id": "a", "text": "กา", "gold_ipa": "kaː", "gold_status": "ADJUDICATED",
-        "profile": "core-vowel-length", "source_id": "CCOST#record-1",
-        "source_url": "https://zenodo.org/records/17366698", "license": "CC-BY-NC-SA-4.0",
+        "profile": "core-vowel-length", "source_id": "TEST-IPA-CORP",
+        "source_url": "https://example.org/record", "license": "CC0-1.0",
         "transcription_level": "BROAD_PHONEMIC", "reviewer_a_id": "TH-PH-01",
         "reviewer_b_id": "TH-PH-02",
         "reviewer_a_qualification_ref": "qualification:TH-PH-01",
         "reviewer_b_qualification_ref": "qualification:TH-PH-02",
         "reviewer_a_ipa": "kaː", "reviewer_b_ipa": "kaː",
-        "adjudicator_id": "TH-ADJ-01", "adjudication_outcome": "AGREEMENT",
+        "adjudicator_id": "TH-ADJ-01", "adjudicator_qualification_ref": "qualification:TH-ADJ-01",
+        "adjudication_outcome": "AGREEMENT",
         "adjudication_record_id": "ADJ-2026-001", "adjudication_notes": "Independent labels agree.",
     }
     row.update(changes)
@@ -55,14 +56,27 @@ class BenchmarkIpaTests(unittest.TestCase):
     def run_benchmark(self, gold_rows, pred_rows, expected_returncode=0):
         with tempfile.TemporaryDirectory() as directory:
             directory = Path(directory)
-            gold = directory / "gold.tsv"
-            predictions = directory / "pred.tsv"
-            output = directory / "report.json"
+            gold, predictions, output = directory / "gold.tsv", directory / "pred.tsv", directory / "report.json"
+            sources, reviewers = directory / "sources.tsv", directory / "reviewers.tsv"
             write_tsv(gold, GOLD_FIELDS, gold_rows)
             write_tsv(predictions, PRED_FIELDS, pred_rows)
+            write_tsv(sources,
+                ["source_id", "source_url", "license", "allowed_uses", "verification_status", "verified_by", "verified_at", "notes"],
+                [{"source_id": "TEST-IPA-CORP", "source_url": "https://example.org/record", "license": "CC0-1.0",
+                  "allowed_uses": "IPA_GOLD_INPUT", "verification_status": "VERIFIED", "verified_by": "test",
+                  "verified_at": "2026-11-01", "notes": "Unit-test fixture source."}],
+            )
+            write_tsv(reviewers,
+                ["reviewer_id", "language", "roles", "qualification_ref", "verification_status", "verified_by", "verified_at", "scope", "notes"],
+                [
+                    {"reviewer_id": "TH-PH-01", "language": "th", "roles": "THAI_PHONETICIAN", "qualification_ref": "qualification:TH-PH-01", "verification_status": "VERIFIED", "verified_by": "test", "verified_at": "2026-11-01", "scope": "Thai phonetic transcription", "notes": "Unit-test fixture only."},
+                    {"reviewer_id": "TH-PH-02", "language": "th", "roles": "THAI_PHONETICIAN", "qualification_ref": "qualification:TH-PH-02", "verification_status": "VERIFIED", "verified_by": "test", "verified_at": "2026-11-01", "scope": "Thai phonetic transcription", "notes": "Unit-test fixture only."},
+                    {"reviewer_id": "TH-ADJ-01", "language": "th", "roles": "THAI_PHONETICIAN_ADJUDICATOR", "qualification_ref": "qualification:TH-ADJ-01", "verification_status": "VERIFIED", "verified_by": "test", "verified_at": "2026-11-01", "scope": "Thai phonetic adjudication", "notes": "Unit-test fixture only."},
+                ],
+            )
             run = subprocess.run(
-                [sys.executable, str(SCRIPT), "--gold", str(gold),
-                 "--predictions", str(predictions), "--output", str(output)],
+                [sys.executable, str(SCRIPT), "--gold", str(gold), "--predictions", str(predictions),
+                 "--output", str(output), "--source-registry", str(sources), "--reviewer-registry", str(reviewers)],
                 cwd=ROOT, text=True, capture_output=True, check=False,
             )
             self.assertEqual(run.returncode, expected_returncode, msg=run.stderr)
@@ -108,7 +122,7 @@ class BenchmarkIpaTests(unittest.TestCase):
             id="b", text="test", gold_ipa="not-gold", gold_status="PROJECT_PROBE_NOT_GOLD",
             source_id="", source_url="", license="", profile="", transcription_level="",
             reviewer_a_id="", reviewer_b_id="", reviewer_a_ipa="", reviewer_b_ipa="",
-            adjudicator_id="", adjudication_outcome="", adjudication_record_id="", adjudication_notes="",
+            adjudicator_id="", adjudicator_qualification_ref="", adjudication_outcome="", adjudication_record_id="", adjudication_notes="",
         )
         report = self.run_benchmark(
             [gold_row(gold_ipa="aː", reviewer_a_ipa="aː", reviewer_b_ipa="aː"), pending],
@@ -121,8 +135,8 @@ class BenchmarkIpaTests(unittest.TestCase):
         self.assertEqual(metrics["exact_match_rate"], 1.0)
 
     def test_missing_prediction_row_remains_in_denominator(self):
-        second = gold_row(id="b", text="ปา", gold_ipa="paː", reviewer_a_ipa="paː", reviewer_b_ipa="paː", source_id="CCOST#record-2",
-                          source_url="https://zenodo.org/records/17366698",
+        second = gold_row(id="b", text="ปา", gold_ipa="paː", reviewer_a_ipa="paː", reviewer_b_ipa="paː", source_id="TEST-IPA-CORP",
+                          source_url="https://example.org/record",
                           adjudication_record_id="ADJ-2026-002")
         metrics = self.run_benchmark([gold_row(), second], [prediction_row()])["engines"]["candidate"]
         self.assertEqual(metrics["n_adjudicated_gold_rows"], 2)
@@ -134,8 +148,8 @@ class BenchmarkIpaTests(unittest.TestCase):
 
     def test_benchmark_rejects_mixed_phonemic_and_surface_gold(self):
         surface = gold_row(
-            id="b", text="กา", source_id="CCOST#record-2",
-            source_url="https://zenodo.org/records/17366698",
+            id="b", text="กา", source_id="TEST-IPA-CORP",
+            source_url="https://example.org/record",
             transcription_level="BROAD_SURFACE",
             adjudication_record_id="ADJ-2026-002",
         )
@@ -145,7 +159,7 @@ class BenchmarkIpaTests(unittest.TestCase):
     def test_report_stratifies_metrics_by_profile(self):
         second = gold_row(
             id="b", text="ปา", gold_ipa="paː", reviewer_a_ipa="paː", reviewer_b_ipa="paː", profile="core-onset",
-            source_id="CCOST#record-2",
+            source_id="TEST-IPA-CORP",
             adjudication_record_id="ADJ-2026-002",
         )
         report = self.run_benchmark([gold_row(), second], [prediction_row()])
