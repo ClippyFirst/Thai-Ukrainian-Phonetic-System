@@ -2560,5 +2560,22 @@
     "scoreable": false,
     "resolution": "BLOCKED_PENDING_CCOST_DATA_CURATOR_CLARIFICATION",
     "derived_packets_committed": false
+  },
+  "follow_up_abstention_ipa_guard_2026_11_02": {
+    "status": "PARTIAL_PENDING_EXACT_HEAD_CI",
+    "finding": "ABSTAIN rows rejected phonemic_ipa and broad_surface_ipa but did not reject narrow_ipa",
+    "test_commit": "2852b47a3c07eabc2512e686d56673dbe9e0ad50",
+    "implementation_commit": "e22c686128d0f65dbd078713d4d4428d24a09f62",
+    "exact_head_ci_run": "41356275693",
+    "exact_head_ci_status": "IN_PROGRESS_AT_MASTER_TABLE_GENERATION_WHEN_RECORDED",
+    "web_static_run": "41356275500",
+    "web_static_status": "PASSED",
+    "external_vistec_run": "41356275512",
+    "external_vistec_status": "IN_PROGRESS_WHEN_RECORDED",
+    "red_test_observed": false,
+    "red_test_limitation": "Test-only push/PR runs were cancelled before the Python suite reached the regression; do not claim RED verified.",
+    "local_tests": "NOT_RUN_NO_LOCAL_CHECKOUT_OR_NETWORK",
+    "linguistic_accuracy": "NOT_MEASURED",
+    "runtime_pronunciation_changed": false
   }
 }

@@ -1308,3 +1308,14 @@ The source registry does not itself create gold data. Wisesight and VISTEC remai
 | Withhold unsupported special-vowel word segmentation for `ฤๅษี` | DONE_VERIFIED | Removed the unsourced `ฤๅษี → รือ|สี` entry from the Python text lexicon and both `ฤๅษี → รือ|สี` / `ฤษี → รึ|สี` browser lexicon entries. Python text-pipeline and browser parity/mode regressions require strict-mode abstention; no IPA or Ukrainian form is emitted as confirmed. |
 
 | Verify removal of unsourced special-vowel word split | DONE_VERIFIED | Exact code/test head `036fb2837c6e1df247e055df115d52c4b3c48b16`; Python text-pipeline and browser parity/mode tests pass in CI [41353088633](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41353088633). Strict mode withholds `ฤๅษี`; the unreferenced `ฤๅษี → รือ|สี` and browser-only `ฤษี → รึ|สี` mappings are removed. |
+
+
+## Abstention IPA-layer guard follow-up — 2026-11-02
+
+| Task / acceptance criterion | State | Evidence / remaining acceptance |
+|---|---|---|
+| Reject narrow acoustic IPA on an explicitly abstained Thai review row | PARTIAL — implementation and regression test committed; full exact-head CI pending | Test-first commit `2852b47a3c07eabc2512e686d56673dbe9e0ad50` adds `test_abstention_cannot_include_narrow_ipa_without_audio_evidence`. Implementation commit `e22c686128d0f65dbd078713d4d4428d24a09f62` adds `narrow_ipa` to the existing abstention guard. Exact-head CI [41356275693](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41356275693) was still running at `generate_master_table.py` when recorded; Web Static [41356275500](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41356275500) passed; VISTEC [41356275512](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41356275512) was still running. |
+| Verify a red test run before implementation | BLOCKED — CI execution did not reach the Python suite | The test-only push run [41356118838](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41356118838) was cancelled during the push/PR workflow transition; its PR run [41356122208](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41356122208) was cancelled when the implementation commit advanced the PR head, before the complete Python suite started. Do not claim a CI-observed RED result. |
+| Run local focused or full Python tests | BLOCKED — no local checkout/network in this session | GitHub connector access is available, but `git clone` could not resolve `github.com`; no local test result is claimed. |
+
+The fix is deliberately limited to the existing abstention guard; no schema, runtime pronunciation, IPA adapter or linguistic data changed. Acceptance requires the full exact-head CI to complete successfully and the new regression test to be included in its Python suite.

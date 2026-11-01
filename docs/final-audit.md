@@ -1376,3 +1376,14 @@ The first run with the new coverage tests completed master-table generation and 
 - Web Static [41353088642](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41353088642) and VISTEC [41353088643](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41353088643) passed.
 - The six unreferenced user-regression forms are now guarded in strict mode; `เพิ่ง` is separately covered by a pinned dictionary override marked NOT_GOLD.
 - No expert annotations have been received. Linguistic accuracy remains NOT_MEASURED.
+
+
+## Follow-up review — narrow IPA must also be absent on abstention — 2026-11-02
+
+- A review of `validate_review_packet` found that `uncertainty=ABSTAIN` rejected `phonemic_ipa` and `broad_surface_ipa`, but did not reject `narrow_ipa`. This allowed a narrow acoustic IPA label to bypass the audio-provenance path on an abstained row.
+- Added regression test `test_abstention_cannot_include_narrow_ipa_without_audio_evidence` in test-first commit `2852b47a3c07eabc2512e686d56673dbe9e0ad50`.
+- Added the minimal guard in `src/thai_ukrainian/adjudication.py` in implementation commit `e22c686128d0f65dbd078713d4d4428d24a09f62`. All three IPA fields are now covered by the existing abstention check; no other annotation fields or runtime behavior changed.
+- Exact-head CI [41356275693](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41356275693) was still running at the master-table generation step at the time of this audit refresh. Web Static [41356275500](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41356275500) passed; VISTEC [41356275512](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41356275512) was still running.
+- The test-only workflow did not provide an observed RED result: its push run was cancelled during workflow transition, and its PR run was cancelled before the Python suite began when the implementation commit advanced the head. The test precedes the implementation in branch history, but RED is **NOT VERIFIED**.
+- No local tests were run. The environment had no repository checkout and `git clone` failed because `github.com` could not be resolved.
+- This follow-up is **PARTIAL** pending successful exact-head CI. It does not change the existing evidence boundary: no independent expert submissions; Thai phonetic accuracy remains **NOT MEASURED**.

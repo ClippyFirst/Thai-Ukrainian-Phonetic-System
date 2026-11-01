@@ -2057,3 +2057,16 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Web Static [41353088642](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41353088642) and VISTEC [41353088643](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41353088643) passed.
 - Strict mode withholds six unreferenced forms including `ฤๅษี`; its unsourced text-lexicon split is removed. `เพิ่ง` uses the pinned source-attested NOT_GOLD override.
 - All expert-review tables remain empty; no linguistic accuracy score is claimed.
+
+
+## Continuation checkpoint — abstention IPA-layer guard — 2026-11-02
+
+- Repository: `ClippyFirst/Thai-Ukrainian-Phonetic-System`; default branch `main`; working branch remains `research/independent-adjudication-gates-20261101`, the existing PR #182 branch based on main `cc398254c178171f74397aed556766e87356ab84`.
+- Starting branch head for this follow-up: `09e9feca41c6037afdbbe02832be016ed9315fd8`.
+- Test-first commit: `2852b47a3c07eabc2512e686d56673dbe9e0ad50`; implementation commit: `e22c686128d0f65dbd078713d4d4428d24a09f62`.
+- Finding: an abstained review row could still carry `narrow_ipa`; the existing guard covered only phonemic and broad-surface IPA. The minimal fix extends that same guard to narrow IPA. No runtime Thai analysis, Ukrainian adaptation, data or schema changed.
+- Verification snapshot on implementation head: Web Static [41356275500](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41356275500) passed; exact-head CI [41356275693](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41356275693) was still in progress at `generate_master_table.py`; external VISTEC [41356275512](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41356275512) was still in progress.
+- RED limitation: the test-only push run [41356118838](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41356118838) was cancelled during workflow transition; PR run [41356122208](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41356122208) was cancelled before the Python suite began after the implementation commit advanced the head. The regression test is committed before the fix, but a CI-observed failing test is **NOT VERIFIED**.
+- Local execution: not performed. No checkout was available and `git clone` failed because the environment could not resolve `github.com`.
+- Current acceptance: code/test change **PARTIAL pending exact-head CI**; independent Thai IPA/segmentation adjudication and Ukrainian-native preference adjudication remain blocked on qualified human reviewers; CCOST archive conformance/curator clarification and LOTUSDIS asset selection remain blocked; manual browser/device and WCAG 2.2 AA review remains external.
+- PR #182 remains open and unmerged. No changes to `main`, no force-push, no Vercel use. Do not call this release-ready; linguistic accuracy remains **NOT MEASURED**.

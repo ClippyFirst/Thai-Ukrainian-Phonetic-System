@@ -61,3 +61,8 @@ Current main snapshot: `cc398254c178171f74397aed556766e87356ab84`. Last recorded
 
 
 Research continuation closeout: PR [#182](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/182) is open from `research/independent-adjudication-gates-20261101`; PR #181 was closed as superseded after its engine/test/CI changes were ported. The #181 source branch remains intact. Exact code-head CI [41337529189](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41337529189) and Web Static [41337815975](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41337815975) passed. This is engineering verification, not independent linguistic accuracy.
+
+
+## 2026-11-02 — follow-up validator review
+
+PR #182 remains open on `research/independent-adjudication-gates-20261101`. A narrow-IPA-on-abstention guard was added after a test-first review: the new regression test is in commit `2852b47`, and the one-line implementation is in `e22c686`. Web Static passed on the implementation head; full CI and VISTEC were still running at the time of this snapshot. The test-only CI run was cancelled before the Python suite, so a red result is not claimed. See the newest continuation checkpoint and validation matrix for exact evidence and remaining blockers.
