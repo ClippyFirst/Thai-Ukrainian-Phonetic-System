@@ -1368,3 +1368,11 @@ The first run with the new coverage tests completed master-table generation and 
 - The Python text lexicon contained `ฤๅษี → รือ|สี` without a matching source-registry record. The browser lexicon also contained that split and an additional unsourced `ฤษี → รึ|สี` entry.
 - Both unreferenced browser entries and the Python `ฤๅษี` entry have been removed. This restores the special-vowel analysis-dependent path rather than silently converting the word into two structurally parsed syllables.
 - Strict mode now withholds IPA and Ukrainian output for `ฤๅษี`; soft/super-soft results remain explicitly provisional. Python text-pipeline, browser parity and all-mode adversarial tests cover the behavior.
+
+## Final code/test checkpoint — special-orthography abstention — 2026-11-01
+
+- Removed the unreferenced `ฤๅษี → รือ|สี` text-lexicon entry from Python and browser engines (and browser-only `ฤษี → รึ|สี`). Strict mode now withholds IPA/Ukrainian output for `ฤๅษี`; it remains in the blind Thai review packet.
+- CI [41353088633](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41353088633) passed all three jobs: 315 Python tests, 1169 subtests, Ruff, wheel-install smoke and master artifact.
+- Web Static [41353088642](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41353088642) and VISTEC [41353088643](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41353088643) passed.
+- The six unreferenced user-regression forms are now guarded in strict mode; `เพิ่ง` is separately covered by a pinned dictionary override marked NOT_GOLD.
+- No expert annotations have been received. Linguistic accuracy remains NOT_MEASURED.

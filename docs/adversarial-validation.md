@@ -57,3 +57,11 @@ Exact push CI [41337529189](https://github.com/ClippyFirst/Thai-Ukrainian-Phonet
 - Web Static [41352166906](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41352166906) and external VISTEC segmentation evaluation [41352166908](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41352166908) passed.
 - Source-attested diagnostic: 7 records, 7 complete engine outputs, 5 circular rows excluded, 2 non-circular comparisons; no accuracy claim.
 - Local tests were not run in this connector-only session. These CI results verify software and reproducibility, not expert pronunciation accuracy.
+
+## Exact-head verification after special-orthography correction — 2026-11-01
+
+- Code/test head `036fb2837c6e1df247e055df115d52c4b3c48b16`.
+- Full CI [41353088633](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41353088633) passed all three jobs: 315 Python tests, 1169 subtests, Ruff, wheel-install smoke and master-artifact validation.
+- Web Static [41353088642](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41353088642) and external VISTEC segmentation evaluation [41353088643](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41353088643) passed.
+- The browser suite reports 52 inputs × 3 profiles = 156 combinations; strict-mode abstention now explicitly includes `ฤๅษี`. The unsupported text-lexicon split has been removed.
+- Source-attested IPA diagnostic remains 7 rows / 7 complete outputs / 5 circular / 2 non-circular, with no accuracy claim.

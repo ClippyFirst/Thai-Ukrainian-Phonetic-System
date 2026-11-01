@@ -2049,3 +2049,11 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Removed `ฤๅษี → รือ|สี` from `data/thai/text_lexicon.tsv` and both the corresponding browser entry and the browser-only `ฤษี → รึ|สี` entry. Neither had a source-registry citation.
 - Added Python text-pipeline and browser parity regressions; `ฤๅษี` is now withheld in strict mode and cannot be treated as a confirmed lexicon split. It remains in the blind Thai review packet for expert adjudication.
 - The all-mode strict-abstention set now includes six unreferenced forms; `เพิ่ง` is separately covered by its pinned source-attested NOT_GOLD override.
+
+## Verified checkpoint — 2026-11-01 (final code/test state)
+
+- Code/test head: `036fb2837c6e1df247e055df115d52c4b3c48b16`; 161 commits ahead of main, 0 behind.
+- CI [41353088633](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41353088633): all three jobs passed; 315 Python tests, 1169 subtests, Ruff, wheel install and master artifact.
+- Web Static [41353088642](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41353088642) and VISTEC [41353088643](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41353088643) passed.
+- Strict mode withholds six unreferenced forms including `ฤๅษี`; its unsourced text-lexicon split is removed. `เพิ่ง` uses the pinned source-attested NOT_GOLD override.
+- All expert-review tables remain empty; no linguistic accuracy score is claimed.

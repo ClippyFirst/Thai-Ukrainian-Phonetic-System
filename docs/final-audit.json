@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Main remains cc398254c178171f74397aed556766e87356ab84. PR #182 research/independent-adjudication-gates-20261101 is 158 commits ahead and 0 behind main; exact code/test head 6412f34accdd913d8d4ad0525a5b3bf89d50f56a passed all three CI jobs (314 Python tests, 1169 subtests, Ruff, wheel-install smoke, master artifact), Web Static and external VISTEC evaluation. The seven source-attested IPA rows remain NOT_GOLD; six exact-form runtime lexical overrides now include เพิ่ง /pʰɤŋ˥˩/ from pinned Wiktionary oldid 1885200. The diagnostic has seven complete outputs, five circular rows excluded, two non-circular comparisons, and no accuracy claim. The all-mode adversarial suite covers 52 inputs across three profiles (156 combinations), plus focused regressions. The audio-source and review validators are implemented; broad surface IPA requires registered audio, asset, exact interval and source permission. LOTUSDIS is a verified CC BY-SA 4.0 supplementary source (114 aggregate device-hours, about 20 unique session hours, nine single-channel devices, overlap masks); no individual assets are pinned. CCOST wordlist preview reconstruction is byte-identical to the official MD5, but B/C/D each differ from A by two items (208-item union), so no scoreable packet was generated pending curator clarification. Reviewer registry remains empty; no Thai or Ukrainian expert submissions exist. Accuracy remains NOT_MEASURED; repository is engineering/research-infrastructure verified, not release-ready. No Vercel tools were used.",
+  "status": "Main remains cc398254c178171f74397aed556766e87356ab84. PR #182 research/independent-adjudication-gates-20261101 is 161 commits ahead and 0 behind main; exact code/test head 036fb2837c6e1df247e055df115d52c4b3c48b16 passed all three CI jobs (315 Python tests, 1169 subtests, Ruff, wheel-install smoke, master artifact), Web Static and external VISTEC evaluation. The all-mode adversarial suite covers 52 inputs across three profiles (156 combinations). Six unreferenced reported forms, including special-vowel ฤๅษี, are withheld in strict mode; เพิ่ง is a separate pinned source-attested NOT_GOLD override in both runtimes. The unsupported unsourced ฤๅษี→รือ|สี text-lexicon mapping was removed from Python and browser implementations. Seven source-attested IPA rows produce seven complete outputs; five are circular runtime/source rows and two are non-circular comparisons; no accuracy claim. Broad-surface IPA requires registered audio, asset, exact interval and source permission. LOTUSDIS is a verified CC BY-SA 4.0 supplementary source (114 aggregate device-hours, about 20 unique session hours, nine single-channel devices, overlap masks); no individual assets are pinned. CCOST wordlist preview reconstruction is byte-identical to the official MD5, but B/C/D each differ from A by two items (208-item union), so no scoreable packet was generated pending curator clarification. Reviewer registry remains empty; no Thai or Ukrainian expert submissions exist. Accuracy remains NOT_MEASURED; repository is engineering/research-infrastructure verified, not release-ready. No Vercel tools were used.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -112,7 +112,7 @@
     "CCOST inter-annotator agreement",
     "acoustic phonetic accuracy"
   ],
-  "lexical_attestation": "Ten source-backed runtime text lexicon entries include ยูเครน, ตะวันออก, ยุโรป, ยุโรปตะวันออก and the sense-scoped compound ทะเลทราย, plus six active typed IPA overrides (เงิน, เดิน, ออก, ไกล, ใกล้, เพิ่ง). All overrides preserve pinned source provenance and SOURCE_ATTESTED_NOT_GOLD status; they are not independent expert/acoustic gold.",
+  "lexical_attestation": "Ten source-backed runtime text lexicon entries include ยูเครน, ตะวันออก, ยุโรป, ยุโรปตะวันออก and the sense-scoped compound ทะเลทราย, plus six active typed IPA overrides (เงิน, เดิน, ออก, ไกล, ใกล้, เพิ่ง). All overrides preserve pinned source provenance and SOURCE_ATTESTED_NOT_GOLD status; they are not independent expert/acoustic gold. Unsupported ฤๅษี/ฤษี text-lexicon syllabifications without source-registry evidence have been removed.",
   "corpus_attestation": "993 source-annotated Wisesight word-tokenization rows (CC0-1.0; test-only, never training/tuning); pinned UD Thai TUD source snapshots under CC BY-SA 4.0 for a research-only frequency-Viterbi experiment; zero independently adjudicated IPA/tone/vowel-length gold rows.",
   "word_boundary_benchmark": {
     "dataset": "PyThaiNLP/Wisesight word-tokenization labels",
@@ -325,8 +325,8 @@
     "discrepancy": "บรรจุ: source transcription includes final /ʔ/ while the engine segmental output omits it; retain as an unresolved dictionary discrepancy, not a universal rule.",
     "evidence_grade": "SOURCE_ATTESTED_NOT_GOLD",
     "accuracy_claimed": false,
-    "verification_status": "PASS on exact-head CI run 41352166930; dictionary evidence only, not independent gold",
-    "artifact_id": "13100769718"
+    "verification_status": "PASS on exact-head CI run 41353088633; dictionary evidence only, not independent gold",
+    "artifact_id": "13102445818"
   },
   "word_boundary_baseline": {
     "corpus": "Wisesight-1000",
@@ -591,8 +591,8 @@
   "latest_documentation_head_ci_verified": "536f03327f11d258a4e7638091797128754b6602",
   "latest_documentation_head_ci_run": "41342132989",
   "latest_documentation_head_web_validation_run": "41342132990",
-  "latest_implementation_ci_run": "41352166930",
-  "latest_implementation_web_validation_run": "41352166906",
+  "latest_implementation_ci_run": "41353088633",
+  "latest_implementation_web_validation_run": "41353088642",
   "segmentation_error_review": {
     "script": "scripts/analyze_segmentation_errors.py",
     "test": "tests/test_segmentation_error_analysis.py",
@@ -2085,8 +2085,8 @@
     ]
   },
   "latest_full_repository_head": "536f03327f11d258a4e7638091797128754b6602",
-  "latest_full_repository_head_ci_run": "41352166930",
-  "latest_full_repository_head_web_validation_run": "41352166906",
+  "latest_full_repository_head_ci_run": "41353088633",
+  "latest_full_repository_head_web_validation_run": "41353088642",
   "latest_web_static_verified_code_commit": "536f03327f11d258a4e7638091797128754b6602",
   "latest_web_static_verified_code_run": "41342132990",
   "ccost_source_reconciliation_2026_10_31": {
@@ -2292,9 +2292,9 @@
     "branch_inventory": "14 refs including main; 13 non-main refs. No branch deletion was performed; PR #181 source branch retained.",
     "research_branch": "research/independent-adjudication-gates-20261101",
     "research_branch_base": "cc398254c178171f74397aed556766e87356ab84",
-    "research_branch_verified_code_checkpoint": "6412f34accdd913d8d4ad0525a5b3bf89d50f56a",
+    "research_branch_verified_code_checkpoint": "036fb2837c6e1df247e055df115d52c4b3c48b16",
     "research_branch_documentation_checkpoint": "6c30f39e0aff05e53889cdab6ada3e283410cdb6",
-    "research_branch_ahead_at_code_checkpoint": 158,
+    "research_branch_ahead_at_code_checkpoint": 161,
     "thai_blind_review_items": 42,
     "ukrainian_conditional_review_items": 7,
     "independent_thai_ipa_gold_rows": 0,
@@ -2306,12 +2306,13 @@
     "ukrainian_target_form_adjudication": "BLOCKED_EXTERNAL_NATIVE_REVIEWERS",
     "main_branch_protection": "TODO_OWNER_CONFIGURATION; protected=false",
     "local_test_execution": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
-    "full_push_ci_run": "41352166930_PASSED_ALL_3_JOBS",
-    "web_static_run": "41352166906_PASSED",
-    "pr_182_latest_head_ci": "41352166930_PASSED_ALL_3_JOBS",
+    "full_push_ci_run": "41353088633_PASSED_ALL_3_JOBS",
+    "web_static_run": "41353088642_PASSED",
+    "pr_182_latest_head_ci": "41353088633_PASSED_ALL_3_JOBS",
     "readiness": "ENGINEERING_RESEARCH_INFRASTRUCTURE_VERIFIED; NOT_RELEASE_READY; LINGUISTIC_ACCURACY_NOT_MEASURED",
     "ccost_wordlist_generator": "IMPLEMENTED; SYNTHETIC_TESTS_PASS; PREVIEW_RECONSTRUCTED; A-D_SOURCE_ORDER_DISCREPANCY_BLOCKS_SCOREABLE_PACKET",
-    "external_vistec_run": "41352166908_PASSED"
+    "external_vistec_run": "41353088643_PASSED",
+    "unsourced_ruesi_lexicon": "REMOVED_FROM_PYTHON_AND_BROWSER; STRICT_ABSTENTION_TESTS_PASS"
   },
   "repository_structure_cleanup_2026_11_01": {
     "main_at_start": "69dafe58a9458d33a645cdcd517e61e9978abdbd",
@@ -2426,7 +2427,7 @@
   "independent_adjudication_work_2026_11_01": {
     "branch": "research/independent-adjudication-gates-20261101",
     "base_main": "cc398254c178171f74397aed556766e87356ab84",
-    "verified_code_checkpoint": "6412f34accdd913d8d4ad0525a5b3bf89d50f56a",
+    "verified_code_checkpoint": "036fb2837c6e1df247e055df115d52c4b3c48b16",
     "documentation_checkpoint": "6c30f39e0aff05e53889cdab6ada3e283410cdb6",
     "status": "DONE_VERIFIED_ENGINEERING; EXPERT_EVIDENCE_BLOCKED",
     "pr": 182,
@@ -2450,9 +2451,9 @@
       "tests/test_segmentation_benchmark.py",
       "web/tests/mode-adversarial.test.mjs"
     ],
-    "ci_run": "41352166930",
-    "ci_result": "PASSED_ALL_3_JOBS; 314_PYTHON_TESTS; 1169_SUBTESTS; RUFF",
-    "web_static_run": "41352166906",
+    "ci_run": "41353088633",
+    "ci_result": "PASSED_ALL_3_JOBS; 315_PYTHON_TESTS; 1169_SUBTESTS; RUFF",
+    "web_static_run": "41353088642",
     "web_static_result": "PASSED",
     "evidence_limits": {
       "thai_ipa_gold_rows": 0,
@@ -2477,8 +2478,9 @@
       "BROAD_SURFACE": "BROAD_SURFACE_IPA_GOLD_INPUT"
     },
     "ccost_wordlist_generator": "scripts/build_ccost_wordlist_review_packet.py; outputs local blind packet plus source SHA-256/license manifest; actual source not downloaded in this session",
-    "vistec_run": "41352166908",
-    "vistec_result": "PASSED"
+    "vistec_run": "41353088643",
+    "vistec_result": "PASSED",
+    "unsourced_special_orthography_regression": "ฤๅษี text lexicon mapping removed; strict mode abstention verified"
   },
   "adjudication_readiness": {
     "thai_project_challenge_prompts": 42,
@@ -2500,24 +2502,31 @@
       "actual_archive_conformance": "BLOCKED_PENDING_LOCAL_TEXTGRID_INSPECTION",
       "formal_inter_annotator_agreement": "NOT_REPORTED_BY_PAPER",
       "license": "CC-BY-NC-SA-4.0"
-    }
+    },
+    "thai_supplemental_regression_prompts": 6,
+    "unsourced_special_vowel_words_withheld": [
+      "ฤๅษี"
+    ]
   },
   "latest_exact_head_verification_2026_11_01": {
     "branch": "research/independent-adjudication-gates-20261101",
-    "head": "6412f34accdd913d8d4ad0525a5b3bf89d50f56a",
-    "ahead_of_main": 158,
+    "head": "036fb2837c6e1df247e055df115d52c4b3c48b16",
+    "ahead_of_main": 161,
     "behind_main": 0,
-    "ci_run": "41352166930",
+    "ci_run": "41353088633",
     "ci_result": "PASSED_ALL_3_JOBS",
-    "python_tests": 314,
+    "python_tests": 315,
     "python_subtests": 1169,
     "ruff": "PASSED",
     "wheel_install_smoke": "PASSED",
     "master_artifact": "PASSED",
-    "web_static_run": "41352166906",
+    "web_static_run": "41353088642",
     "web_static_result": "PASSED",
-    "external_vistec_run": "41352166908",
+    "external_vistec_run": "41353088643",
     "external_vistec_result": "PASSED",
+    "master_table_artifact_id": "13101821945",
+    "segmentation_error_review_artifact_id": "13102395834",
+    "source_attested_ipa_artifact_id": "13102445818",
     "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT"
   },
   "ccost_wordlist_source_audit_2026_11_01": {
