@@ -4,7 +4,7 @@
 - Identified BEST-2010 official TEST_100K and LST20 as additional segmentation benchmarks. LST20's NECTEC terms prohibit modification/redistribution without permission and require a separate commercial arrangement; it remains external and gated. BEST access/license terms must be verified before acquisition.
 - FLEURS and Common Voice Thai are classified as speech/ASR datasets, not direct IPA or Ukrainian orthographic gold. CCOST remains the phone/toneme candidate but its annotation manual is still a blocker.
 - Updated `docs/g2p-benchmark.md`, `data/corpus_sources.csv`, and regression tests. No new external corpus was downloaded or bundled; no accuracy metric was calculated.
-- Current CI verification for this documentation/data-registry/test update: pending exact-head run. Previous exact-head head `b4662ad95e3bbc312ae4562b9bd20880a3560b09` passed all three jobs in [41244985871](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41244985871).
+- Exact-current-head CI verification: PR #169 head `2295ce132eb96e0678f164da56361dc5b994df43` passed all three jobs in [41247367267](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41247367267): `test`, `wheel-install-smoke`, and `master-artifact`. The full Python suite, browser IPA/RTGS/parity/UI checks, benchmark diagnostics, generated-artifact validation, and isolated wheel installation passed. PR #169 remains open and unmerged; `main` is unchanged.
 
 ---
 
