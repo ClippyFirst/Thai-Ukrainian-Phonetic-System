@@ -65,7 +65,7 @@ The frozen 42-item challenge set now has a separate reviewer-facing packet at `d
 - `phonemic_ipa`: broad phonemic IPA; `broad_surface_ipa` is optional and must not be conflated with the phonemic target.
 - `tone_sequence`: categorical tone labels per syllable; `vowel_length`: short/long/uncertain per syllable; `final_glottal`: PRESENT / ABSENT / CONTEXTUAL / UNKNOWN / NOT_APPLICABLE.
 - `orthography_validity`: VALID / INVALID / AMBIGUOUS / UNKNOWN. `uncertainty`: LOW / MEDIUM / HIGH / ABSTAIN. An abstention requires a written reason and must not contain a guessed IPA.
-- `transcription_level`: BROAD_PHONEMIC or NARROW_ACOUSTIC. The primary `phonemic_ipa` field is always syllabified; optional `broad_surface_ipa` is a supplementary layer, not a substitute for phonemic IPA. NARROW_ACOUSTIC is accepted only with a stable authorized audio asset reference and a positive time interval. Do not infer narrow phonetics from dictionary IPA.
+- `transcription_level`: BROAD_PHONEMIC or NARROW_ACOUSTIC. The primary `phonemic_ipa` field always records the broad phonemic layer. Optional `broad_surface_ipa` is a separate supplementary layer. For NARROW_ACOUSTIC, reviewers must additionally fill `narrow_ipa` in square brackets, aligned one-to-one with the syllable boundaries, and provide a stable authorized audio asset reference plus a positive time interval. A narrow label cannot be entered in `phonemic_ipa`; dictionary IPA cannot support a narrow acoustic claim. The current IPA scorer does not score narrow labels.
 - `reviewer_id` is a pseudonymous stable reviewer key; `reviewer_qualification_ref` points to the separately retained qualification evidence. Do not commit personal contact details or private credentials.
 
 The blank packet is checked against the frozen challenge set in CI. A completed copy can be checked with:
@@ -106,9 +106,11 @@ The repository does not redistribute CCOST. Before importing any labels, obtain 
 
 ## Reviewer packet schema and evidence separation — 2026-11-01 refinement
 
-The Thai blind packet has 42 rows and 21 columns. It intentionally omits challenge stratum/probe labels as well as all source-dictionary IPA and engine outputs, reducing hypothesis anchoring. It is candidate-blind, not a security boundary: distribute only the packet to reviewers and do not send them model output, diagnostic reports, source-attested worksheets or the other reviewer's sheet.
+The Thai blind packet has 42 rows and 22 columns. It intentionally omits challenge stratum/probe labels as well as all source-dictionary IPA and engine outputs, reducing hypothesis anchoring. It is candidate-blind, not a security boundary: distribute only the packet to reviewers and do not send them model output, diagnostic reports, source-attested worksheets or the other reviewer's sheet.
 
 For each non-abstaining row, the validator requires:
+- `phonemic_ipa` as the broad phonemic reference; optional `broad_surface_ipa` is separate and never substitutes for it;
+- for NARROW_ACOUSTIC only, a distinct square-bracketed `narrow_ipa` label with syllable alignment and a licensed asset/time interval;
 - `lexical_reading` (or explicit `UNRESOLVED`);
 - `word_boundaries`: Thai orthographic words separated by `|`;
 - `syllable_boundaries`: syllables separated by `.`, with `|` retained between words;
