@@ -7,7 +7,7 @@ Status: **prepared, not adjudicated**. No expert values are pre-filled. These te
 Legacy reconciliation sheet: `data/benchmark/ipa-adjudication-template.tsv` (contains source-attested references and engine candidates; it is **not** a blind annotation sheet). Use `data/benchmark/ipa-adjudication-blind.tsv` for first-pass Thai expert annotation.
 
 1. Before annotation, agree whether the target is broad phonemic IPA, conservative broad surface IPA, or narrow acoustic transcription. Never compare these as if they were the same label layer.
-2. For any acoustic claim, use an authorized recording and record a stable asset reference, speaker metadata permitted by the license, and the exact relevant time interval. Text-only dictionary IPA is not acoustic evidence.
+2. For any acoustic claim, use an authorized recording and record its registered source ID, stable asset reference, speaker metadata permitted by the license, and exact time interval. The validator rejects unregistered or BLOCKED audio sources; a non-empty asset string alone is not evidence of permission. Text-only dictionary IPA is not acoustic evidence.
 3. Two Thai phoneticians annotate independently and blind to the engine output where feasible. Record segmental IPA, syllable boundaries, tone category/contour, vowel length, final glottal realization, stress/context, and uncertainty.
 4. Reconcile disagreements only after independent labels are frozen; preserve both original labels and a written disagreement log.
 5. Do not count an output sourced from the same dictionary record as agreement with that record. The `เดิน` lexical override is explicitly circular for the source-attested comparison and is excluded from independent agreement counts.
@@ -65,7 +65,7 @@ The frozen 42-item challenge set now has a separate reviewer-facing packet at `d
 - `phonemic_ipa`: broad phonemic IPA; `broad_surface_ipa` is optional and must not be conflated with the phonemic target.
 - `tone_sequence`: categorical tone labels per syllable; `vowel_length`: short/long/uncertain per syllable; `final_glottal`: PRESENT / ABSENT / CONTEXTUAL / UNKNOWN / NOT_APPLICABLE.
 - `orthography_validity`: VALID / INVALID / AMBIGUOUS / UNKNOWN. `uncertainty`: LOW / MEDIUM / HIGH / ABSTAIN. An abstention requires a written reason and must not contain a guessed IPA.
-- `transcription_level`: BROAD_PHONEMIC or NARROW_ACOUSTIC. The primary `phonemic_ipa` field always records the broad phonemic layer. Optional `broad_surface_ipa` is a separate supplementary layer. For NARROW_ACOUSTIC, reviewers must additionally fill `narrow_ipa` in square brackets, aligned one-to-one with the syllable boundaries, and provide a stable authorized audio asset reference plus a positive time interval. A narrow label cannot be entered in `phonemic_ipa`; dictionary IPA cannot support a narrow acoustic claim. The current IPA scorer does not score narrow labels.
+- `transcription_level`: BROAD_PHONEMIC or NARROW_ACOUSTIC. The primary `phonemic_ipa` field always records the broad phonemic layer. Optional `broad_surface_ipa` is a separate supplementary layer. For NARROW_ACOUSTIC, reviewers must additionally fill `narrow_ipa` in square brackets, aligned one-to-one with the syllable boundaries, provide a registered `audio_source_id`, a stable `audio_asset_reference`, and a positive time interval. The source registry must mark that source VERIFIED and explicitly allow `ACOUSTIC_PHONETICS_RESEARCH`; the validator checks exact registered URL/license and rejects blocked sources such as CCOST until its archive mapping is cleared. A narrow label cannot be entered in `phonemic_ipa`; dictionary IPA cannot support a narrow acoustic claim. The current IPA scorer does not score narrow labels.
 - `reviewer_id` is a pseudonymous stable reviewer key; `reviewer_qualification_ref` points to the separately retained qualification evidence. Do not commit personal contact details or private credentials.
 
 The blank packet is checked against the frozen challenge set in CI. A completed copy can be checked with:
@@ -106,11 +106,11 @@ The repository does not redistribute CCOST. Before importing any labels, obtain 
 
 ## Reviewer packet schema and evidence separation — 2026-11-01 refinement
 
-The Thai blind packet has 42 rows and 22 columns. It intentionally omits challenge stratum/probe labels as well as all source-dictionary IPA and engine outputs, reducing hypothesis anchoring. It is candidate-blind, not a security boundary: distribute only the packet to reviewers and do not send them model output, diagnostic reports, source-attested worksheets or the other reviewer's sheet.
+The Thai blind packet has 42 rows and 23 columns. It intentionally omits challenge stratum/probe labels as well as all source-dictionary IPA and engine outputs, reducing hypothesis anchoring. It is candidate-blind, not a security boundary: distribute only the packet to reviewers and do not send them model output, diagnostic reports, source-attested worksheets or the other reviewer's sheet.
 
 For each non-abstaining row, the validator requires:
 - `phonemic_ipa` as the broad phonemic reference; optional `broad_surface_ipa` is separate and never substitutes for it;
-- for NARROW_ACOUSTIC only, a distinct square-bracketed `narrow_ipa` label with syllable alignment and a licensed asset/time interval;
+- for NARROW_ACOUSTIC only, a distinct square-bracketed `narrow_ipa` label with syllable alignment, a VERIFIED registered `audio_source_id` approved for `ACOUSTIC_PHONETICS_RESEARCH`, an asset ID and a positive time interval;
 - `lexical_reading` (or explicit `UNRESOLVED`);
 - `word_boundaries`: Thai orthographic words separated by `|`;
 - `syllable_boundaries`: syllables separated by `.`, with `|` retained between words;
