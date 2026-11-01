@@ -1937,3 +1937,15 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Added `data/benchmark/segmentation-adjudication-gold.tsv` and tightened `scripts/evaluate_segmentation.py`: two distinct reviewers, raw tokenizations, adjudicator/outcome/record, source/license and explicit WORD/SYLLABLE layer; consensus gold must equal both labels; no mixing of word and syllable runs. Existing Wisesight 993 rows remain SOURCE_ANNOTATED.
 - **Current evidence status:** zero independent Thai IPA labels; zero independent word/syllable segmentation labels; zero Ukrainian reviewer submissions. Therefore accuracy remains NOT MEASURED. Qualified reviewers and licensed/audio access are genuine external blockers.
 - **Verification:** exact-head CI and Web Static pending for the code checkpoint at the time of this documentation edit. Local pytest was not run in the connector-only environment. Re-run exact-head CI after final documentation commit and record the result in the PR. Vercel was not used.
+
+
+## 2026-11-01 closeout — combined PR #182
+
+- Main base: cc398254c178171f74397aed556766e87356ab84.
+- Research branch: research/independent-adjudication-gates-20261101.
+- Verified code checkpoint: a4de40b6479b217b24aed98a26bdade23e6e1dab (45 commits ahead of main); documentation closeout checkpoint: ce8d4b0450d67e465f76f140dde3b27ca45e313f.
+- Full push CI 41337529189 passed all three jobs. Web Static 41337815975 passed. PR #182 opened from the research branch.
+- PR #181's engine fallback correction, adversarial browser test and CI ordering fix were ported into this combined branch; PR #181 was closed as superseded. Its branch remains intact.
+- New artifacts: 42-row Thai blind review packet; six-row Ukrainian conditional preference packet; empty segmentation adjudication registry; updated IPA gold registry header. Validators require source binding, distinct reviewers, qualification references, raw independent labels, adjudication provenance, per-syllable metadata and explicit WORD/SYLLABLE layer.
+- No expert submissions exist; accuracy remains NOT MEASURED. CCOST archive/tier mapping and external Thai/Ukrainian expert review remain blockers.
+- Local tests not run (connector-only environment); exact push CI and Web Static are the verification evidence. Vercel was not used.

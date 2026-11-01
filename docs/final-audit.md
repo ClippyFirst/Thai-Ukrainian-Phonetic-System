@@ -1236,3 +1236,17 @@ The first run with the new coverage tests completed master-table generation and 
 - **Evidence boundary:** no external reviewer submissions were available in this run. Thai IPA gold count remains zero; independent segmentation gold count remains zero; Ukrainian preference submissions remain zero. Accuracy remains NOT MEASURED.
 - **External source:** CCOST is the strongest current licensed acoustic candidate, but its 6.2 GB CC BY-NC-SA 4.0 archive is not bundled. Released TextGrid tier schema and label inventory still require direct inspection before import. See [LREC 2026 CCOST paper](https://aclanthology.org/2026.lrec-1.247/) and [Zenodo record](https://zenodo.org/records/17366698).
 - Code checkpoint: `af0d10d81f9f8cb2bbce97c35af414fc2f8613db`; base main `cc398254c178171f74397aed556766e87356ab84`. Exact-head CI pending. Local tests were not run because this session had connector-only repository access. No Vercel service/tool was used.
+
+
+## Three-mode fallback fix and independent adjudication gates — verified 2026-11-01
+
+- Ported the fallback correction, 10-case × 3-profile adversarial browser test and CI generation-order fix from draft PR #181. The super-soft orthographic fallback no longer carries computed tone/tone contour/surface IPA as established output; provisional segmental IPA remains the adapter input.
+- Added candidate-blind 42-row Thai reviewer packet and validators for template, individual review and paired review. Reviews are bound to frozen challenge text; word/syllable/IPA boundaries align; per-syllable tone, vowel length and final glottal labels align; abstention contains no guessed IPA.
+- Added six-row candidate-blind Ukrainian-native preference packet, source-bound individual/pair validation and explicit conditional-not-gold status.
+- IPA gold scorer requires two distinct reviewers, both raw IPA labels and qualification references, adjudicator/outcome/record, source URL/license and transcription level. Consensus must match raw labels; phonemic/surface layers cannot mix; metrics are profile-stratified.
+- Segmentation scorer requires two distinct reviewers, both raw tokenizations and qualification references, adjudicator/outcome/record, source URL/license and explicit WORD/SYLLABLE layer. Gold rows must reconstruct source text; consensus matches both reviewers; one report cannot mix layers.
+- Exact code checkpoint a4de40b6479b217b24aed98a26bdade23e6e1dab passed full push CI 41337529189 (test, wheel-install-smoke, master-artifact). Web Static 41337815975 passed on docs-only closeout commit ce8d4b0450d67e465f76f140dde3b27ca45e313f.
+- PR #182 is the combined review. PR #181 was closed as superseded; its source branch was retained. No branch deletion or force push.
+- No expert submissions exist: Thai IPA gold 0, segmentation gold 0, Ukrainian review submissions 0. Accuracy remains NOT MEASURED.
+- CCOST remains a licensed candidate, not an imported corpus. Its 6.2 GB CC BY-NC-SA 4.0 archive is not bundled; exact released TextGrid tier mapping remains an external evidence/access blocker.
+- No local tests were run in the connector-only environment. No Vercel service/tool was used.
