@@ -2020,3 +2020,6 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Added `data/benchmark/audio-assets.tsv` as the asset-level registry. It requires dataset revision, asset URI, SHA-256, pseudonymous speaker ID, microphone/channel, overlap status, duration and verification record.
 - Every audio-backed Thai review now checks the registered source, exact asset ID, VERIFIED/non-overlap status and interval bounds. A random string or unregistered file path cannot pass.
 - The manifest is currently header-only. LOTUSDIS remains the preferred supplementary audio source, but actual sample selection, file hashes and metadata are still TODO. CCOST remains BLOCKED.
+
+
+- Audio asset records must use an immutable dataset revision and absolute HTTP(S) asset URI; moving aliases such as `main` or `latest` are rejected. SHA-256, speaker pseudonym, mic/channel, overlap state and duration remain mandatory.
