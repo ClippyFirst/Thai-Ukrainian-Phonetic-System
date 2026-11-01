@@ -55,6 +55,45 @@ def _require_exact_fields(
             )
 
 
+def _pairwise_agreement(
+    reviewer_a: Mapping[str, Mapping[str, str]],
+    reviewer_b: Mapping[str, Mapping[str, str]],
+    fields: Iterable[str],
+) -> dict:
+    """Report descriptive exact agreement without treating it as adjudication or gold."""
+    field_results = {}
+    for field in fields:
+        both_labeled = 0
+        exact = 0
+        a_only_missing = 0
+        b_only_missing = 0
+        both_missing = 0
+        for ident in reviewer_a:
+            value_a = unicodedata.normalize("NFC", (reviewer_a[ident].get(field) or "").strip())
+            value_b = unicodedata.normalize("NFC", (reviewer_b[ident].get(field) or "").strip())
+            if value_a and value_b:
+                both_labeled += 1
+                exact += value_a == value_b
+            elif not value_a and not value_b:
+                both_missing += 1
+            elif not value_a:
+                a_only_missing += 1
+            else:
+                b_only_missing += 1
+        field_results[field] = {
+            "n_both_labeled": both_labeled,
+            "exact_agreements": exact,
+            "exact_agreement_rate": exact / both_labeled if both_labeled else None,
+            "a_only_missing": a_only_missing,
+            "b_only_missing": b_only_missing,
+            "both_missing": both_missing,
+        }
+    return {
+        "method": "NFC-normalized exact string agreement among rows where both reviewers supplied a value; descriptive only, no chance correction",
+        "fields": field_results,
+    }
+
+
 def validate_blind_packet(
     rows: Iterable[Mapping[str, str]],
     challenge_rows: Iterable[Mapping[str, str]],
@@ -261,10 +300,28 @@ def validate_independent_pair(
             raise ValueError(f"independent reviewer input mismatch: {ident}")
     validate_review_packet(a.values(), a.keys(), reviewer_a_id, challenge_rows, reviewer_registry)
     validate_review_packet(b.values(), b.keys(), reviewer_b_id, challenge_rows, reviewer_registry)
+    agreement = _pairwise_agreement(
+        a, b,
+        (
+            "orthography_validity", "lexical_reading", "word_boundaries",
+            "syllable_boundaries", "phonemic_ipa", "broad_surface_ipa",
+            "narrow_ipa", "tone_sequence", "vowel_length", "final_glottal",
+            "uncertainty",
+        ),
+    )
+    agreement["joint_abstentions"] = sum(
+        a[ident].get("uncertainty") == "ABSTAIN" and b[ident].get("uncertainty") == "ABSTAIN"
+        for ident in a
+    )
+    agreement["one_sided_abstentions"] = sum(
+        (a[ident].get("uncertainty") == "ABSTAIN") != (b[ident].get("uncertainty") == "ABSTAIN")
+        for ident in a
+    )
     return {
         "records": len(a),
         "reviewer_a_id": reviewer_a_id,
         "reviewer_b_id": reviewer_b_id,
+        "agreement": agreement,
         "status": "TWO_REVIEWERS_PRESENT_ADJUDICATION_STILL_REQUIRED",
     }
 
@@ -446,9 +503,25 @@ def validate_ukrainian_independent_pair(
     validate_ukrainian_review_packet(
         b.values(), b.keys(), reviewer_b_id, source_rows, reviewer_registry, source_registry
     )
+    agreement = _pairwise_agreement(
+        a, b,
+        (
+            "preferred_ukrainian_form", "syllable_boundary_policy",
+            "tone_rendering_policy", "uncertainty",
+        ),
+    )
+    agreement["joint_abstentions"] = sum(
+        a[ident].get("uncertainty") == "ABSTAIN" and b[ident].get("uncertainty") == "ABSTAIN"
+        for ident in a
+    )
+    agreement["one_sided_abstentions"] = sum(
+        (a[ident].get("uncertainty") == "ABSTAIN") != (b[ident].get("uncertainty") == "ABSTAIN")
+        for ident in a
+    )
     return {
         "records": len(a),
         "reviewer_a_id": reviewer_a_id,
         "reviewer_b_id": reviewer_b_id,
+        "agreement": agreement,
         "status": "TWO_UKRAINIAN_REVIEWERS_PRESENT_CONDITIONAL_NOT_GOLD",
     }
