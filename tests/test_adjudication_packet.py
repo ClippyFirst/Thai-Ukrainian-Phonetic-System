@@ -185,6 +185,7 @@ class AdjudicationPacketTests(unittest.TestCase):
     def test_boundary_metadata_uses_nfc_reconstruction_without_losing_syllables(self):
         row = completed_row("TH-G2P-001", "กา")
         row["syllable_boundaries"] = "ก.า"
+        row["phonemic_ipa"] = "/k.aː/"
         row["tone_sequence"] = "MID"
         row["vowel_length"] = "SHORT,LONG"
         row["final_glottal"] = "ABSENT,ABSENT"
