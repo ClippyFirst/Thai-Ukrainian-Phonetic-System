@@ -63,7 +63,7 @@ The frozen 42-item challenge set now has a separate reviewer-facing packet at `d
 - `phonemic_ipa`: broad phonemic IPA; `broad_surface_ipa` is optional and must not be conflated with the phonemic target.
 - `tone_sequence`: categorical tone labels per syllable; `vowel_length`: short/long/uncertain per syllable; `final_glottal`: PRESENT / ABSENT / CONTEXTUAL / UNKNOWN / NOT_APPLICABLE.
 - `orthography_validity`: VALID / INVALID / AMBIGUOUS / UNKNOWN. `uncertainty`: LOW / MEDIUM / HIGH / ABSTAIN. An abstention requires a written reason and must not contain a guessed IPA.
-- `transcription_level`: BROAD_PHONEMIC, BROAD_SURFACE, or NARROW_ACOUSTIC. NARROW_ACOUSTIC is accepted only with a stable authorized audio asset reference and a positive time interval. Do not infer narrow phonetics from dictionary IPA.
+- `transcription_level`: BROAD_PHONEMIC or NARROW_ACOUSTIC. The primary `phonemic_ipa` field is always syllabified; optional `broad_surface_ipa` is a supplementary layer, not a substitute for phonemic IPA. NARROW_ACOUSTIC is accepted only with a stable authorized audio asset reference and a positive time interval. Do not infer narrow phonetics from dictionary IPA.
 - `reviewer_id` is a pseudonymous stable reviewer key; `reviewer_qualification_ref` points to the separately retained qualification evidence. Do not commit personal contact details or private credentials.
 
 The blank packet is checked against the frozen challenge set in CI. A completed copy can be checked with:

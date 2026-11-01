@@ -12,7 +12,7 @@ External engines are comparators or optional upstream IPA providers only. Preser
 
 The standard-library-only harness is scripts/benchmark_ipa.py. It reads tab-separated files:
 
-- Gold columns: id, text, gold_ipa, gold_status, profile, source_id, source_url, license, transcription_level, reviewer_a_id, reviewer_b_id, reviewer_a_ipa, reviewer_b_ipa, adjudicator_id, adjudication_outcome, adjudication_record_id, adjudication_notes.
+- Gold columns: id, text, gold_ipa, gold_status, profile, source_id, source_url, license, transcription_level, reviewer_a_id, reviewer_b_id, reviewer_a_qualification_ref, reviewer_b_qualification_ref, reviewer_a_ipa, reviewer_b_ipa, adjudicator_id, adjudication_outcome, adjudication_record_id, adjudication_notes.
 - Prediction columns: id, engine, raw_output, ipa, status, version.
 
 Run from the repository root:
@@ -190,3 +190,6 @@ Two source-pinned lexical overrides were added for `ไกล` and `ใกล้
 The 42-item Thai reviewer packet omits source IPA, engine output, stratum and probe metadata. Word and syllable boundaries must reconstruct the input; tone, vowel length and final glottal status are captured per syllable. A separate adjudicated segmentation registry supports WORD and SYLLABLE layers and enforces two independent tokenizations before scoring.
 
 The six-item Ukrainian preference sheet is candidate-blind. It uses source-attested dictionary IPA and therefore measures only Ukrainian preference conditional on that input. It cannot serve as IPA gold or end-to-end accuracy evidence. The 42 challenge prompts and six source-attested references remain diagnostic material, not expert labels.
+
+
+The primary 42-item Thai reviewer packet accepts BROAD_PHONEMIC as the scored layer; optional broad surface IPA is recorded separately. NARROW_ACOUSTIC requires audio/time evidence and is not a substitute for the phonemic gold target. The scorer's layer gate is applied before calculating any metric.

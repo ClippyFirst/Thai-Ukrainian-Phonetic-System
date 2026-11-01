@@ -39,3 +39,12 @@ These probes target failure modes that can silently produce plausible but wrong 
 Standard Thai descriptions restrict complex onsets; the parser therefore refuses to manufacture a complex onset from arbitrary adjacent consonants. See the cited phonetic/orthographic sources in the project evidence registry.
 
 These probes do not establish empirical accuracy. A corpus benchmark still requires an external, named and versioned gold resource.
+
+
+## Three-profile fallback regression — 2026-11-01
+
+The regression from the reported 1/3 output is now included in the main research branch and runs in CI after generating the browser word dictionary. Ten mixed Thai/mixed-script cases are exercised across strict, soft and super-soft profiles (30 profile/input combinations). Assertions cover strict abstention for six problematic forms, positive use of the heuristic fallback, source-attested lexical controls, IPA→Ukrainian adapter equality and RTGS numeric passthrough.
+
+A structurally provisional orthographic fallback no longer carries computed tone, tone contour or surface IPA into the result as if confirmed. Segmental IPA remains a provisional candidate and continues through the existing IPA adapter. This is a conservative uncertainty fix, not a claim that the fallback IPA is correct Thai pronunciation.
+
+Exact push CI [41337529189](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41337529189) passed all three jobs; Web Static [41337815975](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41337815975) passed. PR #181's implementation/test/CI changes were ported into PR #182 and #181 was closed as superseded; its branch was retained.
