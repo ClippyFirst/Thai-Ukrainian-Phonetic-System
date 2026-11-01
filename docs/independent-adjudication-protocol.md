@@ -4,7 +4,7 @@ Status: **prepared, not adjudicated**. No expert values are pre-filled. These te
 
 ## IPA / tone / vowel length
 
-Template: `data/benchmark/ipa-adjudication-template.tsv`.
+Legacy reconciliation sheet: `data/benchmark/ipa-adjudication-template.tsv` (contains source-attested references and engine candidates; it is **not** a blind annotation sheet). Use `data/benchmark/ipa-adjudication-blind.tsv` for first-pass Thai expert annotation.
 
 1. Before annotation, agree whether the target is broad phonemic IPA, conservative broad surface IPA, or narrow acoustic transcription. Never compare these as if they were the same label layer.
 2. For any acoustic claim, use an authorized recording and record a stable asset reference, speaker metadata permitted by the license, and the exact relevant time interval. Text-only dictionary IPA is not acoustic evidence.
@@ -100,3 +100,44 @@ Current status remains **zero adjudicated gold rows**. The stricter gate and pac
 CCOST is the strongest current candidate for a licensed acoustic/phone/toneme evaluation: the public LREC 2026 description reports 49 Standard Thai speakers, approximately seven hours of spontaneous interview speech, a repeated 206-item monosyllabic word list, 25 repeated sentences, and orthographic/word/syllable/phone annotations including toneme labels. Zenodo identifies the dataset as CC BY-NC-SA 4.0 and lists a 6.2 GB audio/TextGrid archive. Its paper reports ASR/forced alignment followed by manual correction by phonetically trained native Thai speakers; that does not establish independent double-blind annotation per item.
 
 The repository does not redistribute CCOST. Before importing any labels, obtain the licensed archive under the non-commercial/share-alike terms, inspect actual released TextGrid tier names and label inventory, map tiers to the chosen phonemic/surface/acoustic target, record recording and speaker references plus time intervals, and exclude unmappable or uncertain rows. Existing manual inspection does not resolve the tier-schema blocker. New independent reviewers remain required for this project's own gold labels.
+
+
+## Reviewer packet schema and evidence separation — 2026-11-01 refinement
+
+The Thai blind packet has 42 rows and 21 columns. It intentionally omits challenge stratum/probe labels as well as all source-dictionary IPA and engine outputs, reducing hypothesis anchoring. It is candidate-blind, not a security boundary: distribute only the packet to reviewers and do not send them model output, diagnostic reports, source-attested worksheets or the other reviewer's sheet.
+
+For each non-abstaining row, the validator requires:
+- `lexical_reading` (or explicit `UNRESOLVED`);
+- `word_boundaries`: Thai orthographic words separated by `|`;
+- `syllable_boundaries`: syllables separated by `.`, with `|` retained between words;
+- `tone_sequence`: comma-separated `MID, LOW, FALLING, HIGH, RISING, UNKNOWN, NOT_APPLICABLE`, one value per syllable;
+- `vowel_length`: comma-separated `SHORT, LONG, UNKNOWN, NOT_APPLICABLE`, one value per syllable;
+- `final_glottal`: comma-separated `PRESENT, ABSENT, CONTEXTUAL, UNKNOWN, NOT_APPLICABLE`, one value per syllable;
+- `phonemic_ipa`, uncertainty and a declared transcription level.
+
+Boundary strings must reconstruct the exact Thai input after removing only their declared separators. Tone, vowel-length and glottal arrays must align one-to-one with syllables. Abstention is valid but requires a reason and must contain no phonemic or surface IPA. A narrow acoustic label requires an authorized audio reference and positive time interval.
+
+Completed reviewer copies can be checked independently and as a pair:
+
+```bash
+python scripts/validate_adjudication_packet.py --mode review --reviewer-id TH-PH-01 data/benchmark/reviewer-a.tsv
+python scripts/validate_adjudication_packet.py --mode review --reviewer-id TH-PH-02 data/benchmark/reviewer-b.tsv
+python scripts/validate_adjudication_packet.py --mode pair --reviewer-b-packet data/benchmark/reviewer-b.tsv data/benchmark/reviewer-a.tsv
+```
+
+The paired review validator checks distinct reviewer IDs, exact sample coverage, qualification references, source-input identity, syllable-aligned metadata and explicit abstention. It does not decide which pronunciation is correct.
+
+### Separate word- and syllable-segmentation gold
+
+`data/benchmark/segmentation-adjudication-gold.tsv` is an empty registry for future expert boundary labels. Each row declares `segmentation_layer=WORD|SYLLABLE`; a benchmark run may not mix the two. Every `ADJUDICATED` row requires two distinct reviewer IDs, both original tokenizations, qualification references, adjudicator, outcome, record, source URL and license. `AGREEMENT` requires matching reviewer token arrays and gold equal to them. `RESOLVED_DISAGREEMENT` requires different raw arrays and a written adjudication note. Existing Wisesight rows remain `SOURCE_ANNOTATED`, not expert gold.
+
+### Ukrainian-native preference review validation
+
+The six-row `data/benchmark/ukrainian-target-preference-blind.tsv` has no engine candidates and is validated against the frozen source-attested IPA registry. Reviewers record a preferred Ukrainian form (or explicit abstention), rationale, syllable-boundary display policy and tone-rendering policy. Completed-review validation requires a stable reviewer ID, qualification reference, ISO date, rationale and fixed criteria version. Pair validation requires two different Ukrainian reviewer IDs and exact source/input identity.
+
+```bash
+python scripts/validate_ukrainian_preference_packet.py --mode review --reviewer-id UK-UA-01 data/benchmark/ukrainian-review-a.tsv
+python scripts/validate_ukrainian_preference_packet.py --mode pair --reviewer-b-packet data/benchmark/ukrainian-review-b.tsv data/benchmark/ukrainian-review-a.tsv
+```
+
+These are conditional judgments about Ukrainian rendering of supplied dictionary IPA. They remain `SOURCE_ATTESTED_NOT_GOLD` and cannot measure Thai pronunciation or end-to-end accuracy.

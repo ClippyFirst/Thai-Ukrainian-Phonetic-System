@@ -29,7 +29,7 @@ This page is the navigation layer for the repository. It distinguishes the maint
 - `web/src/` — browser implementation; parity with Python is a release gate.
 - `data/thai/` — runtime Thai registries and their provenance/license notices.
 - `data/ua_target_vectors.csv` — Ukrainian target feature inventory.
-- `data/benchmark/` — benchmark inputs, adjudication templates and diagnostic run records; evidence grades remain explicit.
+- `data/benchmark/` — benchmark inputs, blind Thai and Ukrainian reviewer packets, adjudication-gold registries and diagnostic run records; evidence grades remain explicit.
 - `schemas/` — machine-readable contracts.
 - [`scripts/README.md`](../scripts/README.md) — script inventory, ownership, input/output contracts and evidence boundaries.
 - `tests/` and `web/tests/` — Python and browser regression suites.
@@ -57,4 +57,4 @@ This page is the navigation layer for the repository. It distinguishes the maint
 
 ## Repository verification snapshot — 2026-11-01
 
-Final cleanup main snapshot: `1431c565ff5c160da4944942d687bc30b2f8d0b2`. Post-merge CI [41326865977](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41326865977) passed `test`, `wheel-install-smoke` and `master-artifact`; Pages [41326865964](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41326865964) passed `build` and `deploy`. This engineering verification is not a claim of independent linguistic gold or WCAG conformance.
+Current main snapshot: `cc398254c178171f74397aed556766e87356ab84`. Last recorded full main CI [41326865977](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41326865977) and Pages [41326865964](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41326865964) passed on the preceding main code checkpoint `1431c565ff5c160da4944942d687bc30b2f8d0b2`; those runs are not represented as testing the later documentation-only main commit. Research branch `research/independent-adjudication-gates-20261101` is 25 commits ahead of this main checkpoint before its documentation closeout. PR #181 remains open and untouched. This engineering verification is not a claim of independent linguistic gold or WCAG conformance.
