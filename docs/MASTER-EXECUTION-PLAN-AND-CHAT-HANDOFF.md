@@ -2,7 +2,7 @@
 
 - **Manual inspection:** `CCOST_manual.pdf` was retrieved from the official Zenodo API content endpoint and inspected (19 pages; MD5 `caecb20d26e8458b20c7c269ca22b59e`). It is the “RA Manual for BKK Thai Tone Project”, describing human correction of Google ASR output in OCTRA, Thai-script normalization, Praat transcript/boundary correction, `<usb>` for speaker noise, and BAS `CHUNKPREP → G2P → MAUS → PHO2SYL`. It names `OCTRA_1` and illustrates MAUS `sampa` output, but does not establish the final released TextGrid schema, complete phone/toneme inventory, tone labels or dual-independent annotation.
 - **Task ledger:** manual retrieval/inspection `DONE_VERIFIED`; released TextGrid schema and detailed paper-method reconciliation `BLOCKED` pending schema/method evidence; independent Thai phonetic/segmentation adjudication `BLOCKED`; independent Ukrainian-native target-form adjudication `BLOCKED`; manual browser/device and WCAG 2.2 AA review `BLOCKED`; branch-retention policy `PARTIAL`; main protection `TODO — owner configuration`.
-- **Exact-head CI before this documentation update:** PR #169 head `e31db6b8cfcaff925c9a1e0196c399ab315b8665` passed run [41289728755](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41289728755), all three jobs `test`, `wheel-install-smoke`, `master-artifact` successful. A fresh run is required for the new manual-review documentation commit.
+- **Exact-head CI before this documentation reconciliation:** PR #169 head `0dee9e36cd5391b599c8b785a8b2c1b81ea325a7` passed run [41300790280](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41300790280), all three jobs `test`, `wheel-install-smoke`, `master-artifact` successful. The current matrix/audit/handoff wording refresh creates a new documentation head and requires a fresh exact-head run.
 - **No corpus redistribution:** no CCOST WAV/TextGrid or 6.2 GB archive was downloaded or added. Dataset remains external under CC BY-NC-SA 4.0.
 - **Readiness:** engineering-verified research prototype; not release-ready for general linguistic-accuracy claims.
 
@@ -1860,3 +1860,12 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - PRs #153, #154 and #155 are merged; PR #156 is the documentation closeout currently under CI at this checkpoint.
 - Four temporary work branches created during this continuation remain as refs: `fix/http-content-length-validation-20261031`, `docs/post-merge-closeout-20261031`, `ci/reuse-master-table-artifact-20261031`, and `docs/ci-artifact-reuse-closeout-20261031`.
 - Branch deletion is not performed automatically: historical branches may hold unique evidence, no owner-approved retention policy exists, and the connected GitHub tools do not expose branch deletion. Keep branch hygiene PARTIAL until owner policy and a commit-level inventory authorize pruning.
+
+
+## Current continuation checkpoint — 2026-11-01 (after status reconciliation)
+
+- `main` is unchanged at `8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8`.
+- PR #169 remains open/unmerged. The last verified pre-reconciliation head was `0dee9e36cd5391b599c8b785a8b2c1b81ea325a7` (CI run [41300790280](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41300790280), 3/3 jobs success). Matrix/audit/handoff consistency edits follow that head; confirm the new exact-head CI before calling this documentation batch verified.
+- PR #170 remains open/unmerged at `1cdc3d7971498ce3312ff9a79b23ee84b8d917aa`; CI [41243709726](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41243709726) and Web Static [41243709639](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41243709639) succeeded.
+- No review submissions or inline review threads are present on either PR at this inspection. No branch deletion, force update, merge, mainline change or repository setting change was made.
+- Local test execution remains unavailable in this connector-only session; rely only on exact-head GitHub Actions evidence.
