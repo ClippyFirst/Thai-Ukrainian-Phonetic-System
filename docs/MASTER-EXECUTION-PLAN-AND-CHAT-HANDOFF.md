@@ -2013,3 +2013,10 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Before acoustic use, pin dataset revision and each selected asset, verify near-field single-speaker non-overlap, and record speaker pseudonym, mic/channel, time interval and file hash. No audio was downloaded or bundled.
 - CCOST remains BLOCKED for acoustic gold pending TextGrid tier/label mapping and A-D source-order clarification; its CC BY-NC-SA 4.0 license may restrict commercial use. Common Voice Thai was not selected for redistribution because its data card forbids re-hosting/re-sharing.
 - The 42+6 project-authored blind packet remains the controlled baseline; human expert submissions are still absent. See `docs/phonetic-corpus-selection.md`.
+
+
+## Handoff — file-level audio provenance gate (2026-11-01)
+
+- Added `data/benchmark/audio-assets.tsv` as the asset-level registry. It requires dataset revision, asset URI, SHA-256, pseudonymous speaker ID, microphone/channel, overlap status, duration and verification record.
+- Every audio-backed Thai review now checks the registered source, exact asset ID, VERIFIED/non-overlap status and interval bounds. A random string or unregistered file path cannot pass.
+- The manifest is currently header-only. LOTUSDIS remains the preferred supplementary audio source, but actual sample selection, file hashes and metadata are still TODO. CCOST remains BLOCKED.
