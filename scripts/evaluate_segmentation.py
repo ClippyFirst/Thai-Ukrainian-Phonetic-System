@@ -23,6 +23,12 @@ PRED_FIELDS = ["id", "engine", "predicted_tokens_json", "status", "version"]
 # remain in the input audit trail but cannot receive credit for stale tokens.
 SCOREABLE_PREDICTION_STATUSES = {"ok"}
 SCOREABLE_GOLD_STATUSES = {"ADJUDICATED", "SOURCE_ANNOTATED"}
+ADJUDICATION_FIELDS = (
+    "source_url", "reviewer_a_id", "reviewer_b_id",
+    "reviewer_a_qualification_ref", "reviewer_b_qualification_ref",
+    "reviewer_a_tokens_json", "reviewer_b_tokens_json", "adjudicator_id",
+    "adjudication_outcome", "adjudication_record_id", "adjudication_notes",
+)
 
 
 def read_tsv(path: Path, required: list[str]) -> list[dict[str, str]]:
@@ -69,6 +75,44 @@ def boundaries(text: str, tokens: list[str], *, row_id: str, field: str) -> set[
     return offsets
 
 
+def validate_adjudicated_row(row: dict[str, str]) -> tuple[list[str], list[str]]:
+    row_id = row["id"]
+    missing = [field for field in ADJUDICATION_FIELDS if not row.get(field, "").strip()]
+    if missing:
+        raise ValueError(
+            f"ADJUDICATED gold row {row_id!r} requires independent-review provenance: {', '.join(missing)}"
+        )
+    if row["reviewer_a_id"].strip() == row["reviewer_b_id"].strip():
+        raise ValueError(f"ADJUDICATED gold row {row_id!r} requires two distinct reviewers")
+    reviewer_a = parse_tokens(
+        row["reviewer_a_tokens_json"], row_id=row_id, field="reviewer_a_tokens_json"
+    )
+    reviewer_b = parse_tokens(
+        row["reviewer_b_tokens_json"], row_id=row_id, field="reviewer_b_tokens_json"
+    )
+    boundaries(row["text"], reviewer_a, row_id=row_id, field="reviewer_a_tokens_json")
+    boundaries(row["text"], reviewer_b, row_id=row_id, field="reviewer_b_tokens_json")
+    outcome = row["adjudication_outcome"]
+    labels_agree = reviewer_a == reviewer_b
+    if outcome == "AGREEMENT":
+        if not labels_agree:
+            raise ValueError(
+                f"ADJUDICATED gold row {row_id!r}: AGREEMENT requires matching reviewer tokenizations"
+            )
+        if parse_tokens(row["gold_tokens_json"], row_id=row_id, field="gold_tokens_json") != reviewer_a:
+            raise ValueError(
+                f"ADJUDICATED gold row {row_id!r}: gold tokens must equal the agreed reviewer tokenization"
+            )
+    elif outcome == "RESOLVED_DISAGREEMENT":
+        if labels_agree:
+            raise ValueError(
+                f"ADJUDICATED gold row {row_id!r}: RESOLVED_DISAGREEMENT requires differing reviewer tokenizations"
+            )
+    else:
+        raise ValueError(f"ADJUDICATED gold row {row_id!r} has invalid adjudication_outcome")
+    return reviewer_a, reviewer_b
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--gold", type=Path, required=True)
@@ -92,6 +136,10 @@ def main() -> int:
                 if not row[field].strip():
                     raise ValueError(f"ADJUDICATED gold row {row_id!r} requires {field}")
             tokens = parse_tokens(row["gold_tokens_json"], row_id=row_id, field="gold_tokens_json")
+            if row["gold_status"] == "ADJUDICATED":
+                reviewer_a_tokens, reviewer_b_tokens = validate_adjudicated_row(row)
+            else:
+                reviewer_a_tokens, reviewer_b_tokens = [], []
             gold[row_id] = {
                 "text": normalize(row["text"]),
                 "tokens": tokens,
@@ -100,6 +148,13 @@ def main() -> int:
                 "license": row["license"].strip(),
                 "split": row["split"].strip(),
                 "gold_status": row["gold_status"].strip(),
+                "source_url": row.get("source_url", "").strip(),
+                "reviewer_a_id": row.get("reviewer_a_id", "").strip(),
+                "reviewer_b_id": row.get("reviewer_b_id", "").strip(),
+                "reviewer_a_tokens": reviewer_a_tokens,
+                "reviewer_b_tokens": reviewer_b_tokens,
+                "adjudicator_id": row.get("adjudicator_id", "").strip(),
+                "adjudication_record_id": row.get("adjudication_record_id", "").strip(),
             }
 
     gold_statuses = {str(row["gold_status"]) for row in gold.values()}
@@ -145,7 +200,7 @@ def main() -> int:
     report: dict[str, object] = {
         "schema_version": "1.0",
         "method": {
-            "gold_gate": "gold_status is ADJUDICATED or SOURCE_ANNOTATED, with source_id, license, split and valid tokenization; evidence grades are never mixed",
+            "gold_gate": "ADJUDICATED requires two distinct reviewers, raw tokenizations, adjudicator/outcome/record and source provenance; SOURCE_ANNOTATED retains its source-only evidence grade; evidence grades are never mixed",
             "gold_status": scored_gold_status or "NONE",
             "normalization": "Unicode NFC only; token concatenation must equal normalized source text exactly",
             "boundary_units": "Python Unicode code-point offsets, excluding the final text boundary",
