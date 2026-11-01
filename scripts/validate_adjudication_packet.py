@@ -7,7 +7,7 @@ import csv
 import json
 from pathlib import Path
 
-from thai_ukrainian.evidence_registry import load_reviewer_registry
+from thai_ukrainian.evidence_registry import load_reviewer_registry, load_source_registry
 from thai_ukrainian.adjudication import (
     PACKET_FIELDS,
     validate_blind_packet,
@@ -56,6 +56,7 @@ def main() -> int:
     parser.add_argument("--reviewer-id", default="")
     parser.add_argument("--reviewer-b-packet", type=Path)
     parser.add_argument("--reviewer-registry", type=Path, default=Path("data/benchmark/reviewer-qualifications.tsv"))
+    parser.add_argument("--source-registry", type=Path, default=Path("data/benchmark/source-registry.tsv"))
     args = parser.parse_args()
     try:
         rows = read_tsv(args.packet)
@@ -64,16 +65,18 @@ def main() -> int:
             result = validate_blind_packet(rows, challenge)
         elif args.mode == "review":
             reviewer_registry = load_reviewer_registry(args.reviewer_registry)
+            source_registry = load_source_registry(args.source_registry)
             result = validate_review_packet(
                 rows, [row["id"] for row in challenge], args.reviewer_id, challenge,
-                reviewer_registry,
+                reviewer_registry, source_registry,
             )
         else:
             if args.reviewer_b_packet is None:
                 raise ValueError("--reviewer-b-packet is required in pair mode")
             reviewer_b = read_tsv(args.reviewer_b_packet)
             reviewer_registry = load_reviewer_registry(args.reviewer_registry)
-            result = validate_independent_pair(rows, reviewer_b, challenge, reviewer_registry)
+            source_registry = load_source_registry(args.source_registry)
+            result = validate_independent_pair(rows, reviewer_b, challenge, reviewer_registry, source_registry)
     except (OSError, ValueError) as exc:
         parser.exit(1, f"error: {exc}\n")
     print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
