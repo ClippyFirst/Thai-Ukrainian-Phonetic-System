@@ -3,12 +3,20 @@ from .models import SyllableAnalysis
 from .contextual import surface_ipa_for_consonant, vowel_surface_context
 from .inventory import load_consonants
 
-ONSET_IPA={
-"ก":"k","ข":"kʰ","ฃ":"kʰ","ค":"kʰ","ฅ":"kʰ","ฆ":"kʰ","ง":"ŋ","จ":"tɕ","ฉ":"tɕʰ","ช":"tɕʰ","ซ":"s","ฌ":"tɕʰ","ญ":"j",
-"ฎ":"d","ฏ":"t","ฐ":"tʰ","ฑ":"tʰ","ฒ":"tʰ","ณ":"n","ด":"d","ต":"t","ถ":"tʰ","ท":"tʰ","ธ":"tʰ","น":"n",
-"บ":"b","ป":"p","ผ":"pʰ","ฝ":"f","พ":"pʰ","ฟ":"f","ภ":"pʰ","ม":"m","ย":"j","ร":"r","ล":"l","ว":"w","ศ":"s","ษ":"s","ส":"s","ห":"h","ฬ":"l","อ":"ʔ","ฮ":"h"}
-
-LOW_SINGLE={"ค","ฅ","ฆ","ง","ช","ซ","ฌ","ญ","ฑ","ฒ","ณ","ท","ธ","น","พ","ฟ","ภ","ม","ย","ร","ล","ว","ฬ","ฮ"}
+# The Thai consonant registry is the sole source of onset IPA and consonant
+# class. Keep these fast lookup views derived rather than maintaining parallel
+# hand-written inventories in the phonology layer.
+_CONSONANTS = load_consonants()
+ONSET_IPA = {
+    grapheme: consonant.onset_ipa
+    for grapheme, consonant in _CONSONANTS.items()
+    if consonant.onset_ipa
+}
+LOW_SINGLE = {
+    grapheme
+    for grapheme, consonant in _CONSONANTS.items()
+    if consonant.class_ == "low"
+}
 
 def effective_onset(a:SyllableAnalysis)->list[str]:
     if len(a.onset)>=2 and a.onset[0]=="ห" and a.onset[1] in LOW_SINGLE:
