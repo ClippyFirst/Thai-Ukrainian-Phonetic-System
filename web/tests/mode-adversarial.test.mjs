@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { analyzeText } from "../src/engine.js";
 import { adaptIpaToUkrainian } from "../src/ipa-ua.js";
 import { renderRtgsTokens } from "../src/rtgs-reference.js";
@@ -18,6 +19,12 @@ const corpus = [
   "ก่า ก้า ก๊า ก๋า กะ กา กิ กี กึ กือ กุ กู",
   "กรุงเทพ ประเทศไทย เชียงใหม่ ภูเก็ต ขอนแก่น"
 ];
+
+const challengeCorpus = readFileSync(
+  new URL("../../data/benchmark/thai_g2p_challenge.jsonl", import.meta.url),
+  "utf8"
+).trim().split("\n").map(line => JSON.parse(line).input);
+corpus.push(...challengeCorpus);
 
 const modes = ["strict", "soft", "super-soft"];
 let thaiTokenCount = 0;
@@ -127,6 +134,8 @@ for (const word of ["วันนี้", "เห็น", "เพิ่ง", "�
 console.log(JSON.stringify({
   result: "PASS",
   corpus_cases: corpus.length,
+  frozen_challenge_cases: challengeCorpus.length,
+  profile_input_combinations: corpus.length * modes.length,
   modes: modes.length,
   thai_tokens_seen: thaiTokenCount,
   syllables_checked: syllableCount,
