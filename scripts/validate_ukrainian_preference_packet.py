@@ -15,7 +15,7 @@ from thai_ukrainian.adjudication import (
 
 def read_tsv(path: Path, required: tuple[str, ...] | list[str]) -> list[dict[str, str]]:
     with path.open("r", encoding="utf-8-sig", newline="") as stream:
-        reader = csv.DictReader(stream, delimiter="\\t")
+        reader = csv.DictReader(stream, delimiter="\t")
         missing = set(required) - set(reader.fieldnames or [])
         if missing:
             raise ValueError(f"{path}: missing columns: {', '.join(sorted(missing))}")
@@ -39,7 +39,7 @@ def main() -> int:
         )
         result = validate_ukrainian_blind_packet(packet, source)
     except (OSError, ValueError) as exc:
-        parser.exit(1, f"error: {exc}\\n")
+        parser.exit(1, f"error: {exc}\n")
     print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
     return 0
 
