@@ -2026,3 +2026,12 @@ This note supersedes the preceding documentation-only status. The branch now cha
 
 
 - Fixed a pre-existing malformed row in `data/corpus_sources.csv` (unquoted commas in the TUD record) and added a parser-level schema/unique-ID regression test.
+
+## Handoff — source-attested `เพิ่ง` correction and surface-IPA evidence gate (2026-11-01)
+
+- Added a source-pinned runtime override for `เพิ่ง` in Python and browser engines using Thai Wiktionary oldid 1885200: `pʰɤŋ`, short vowel, falling tone. It carries `SOURCE_ATTESTED_NOT_GOLD`, with no surface IPA; Ukrainian output is still derived by the typed IPA adapter.
+- This resolves the known malformed `pʰɤː ŋa` candidate for this exact lexical form, but it is dictionary-attested, not independently adjudicated or acoustically validated. Strict mode accepts it with the source warning; it continues to abstain for the other five reported forms.
+- The mode suite covers 52 inputs across three profiles (156 combinations), plus focused guards. The source-attested diagnostic now excludes five circular runtime/source rows and has two non-circular complete comparisons; no accuracy claim is made.
+- `broad_surface_ipa` now requires a registered audio source, asset manifest record, in-bounds interval, and explicit source permission for broad-surface IPA. A text-only source cannot pass this gate.
+- LOTUSDIS is more precisely described as nine separate single-channel devices: about 114 aggregate channel-hours / about 20 hours unique session time, with overlap masks. No individual audio asset has been selected or pinned yet.
+- Human Thai review, Ukrainian-native review, and an adjudicated gold set remain BLOCKED until qualified reviewers submit annotations.

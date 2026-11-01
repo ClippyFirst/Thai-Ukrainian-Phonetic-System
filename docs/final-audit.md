@@ -1280,7 +1280,7 @@ The first run with the new coverage tests completed master-table generation and 
 ## 2026-11-01 — source-attested เพิ่ง regression reference
 
 - Verified the Thai Wiktionary revision 1885200 for `เพิ่ง`: the entry gives one-syllable `/pʰɤŋ˥˩/` and explicitly describes the vowel as short. This is a direct source-attested counterexample to the heuristic output `pʰɤː ŋa` seen in the user's mode-1/3 test.
-- Added `SRC-WIKTIONARY-TH-เพิ่ง` to the evidence registry and `TH-SRC-IPA-007` to the source-attested IPA registry, strictly as `SOURCE_ATTESTED_NOT_GOLD`. No runtime lexical override was added.
+- Added `SRC-WIKTIONARY-TH-เพิ่ง` and `TH-SRC-IPA-007` as `SOURCE_ATTESTED_NOT_GOLD`. A later follow-up activates the same pinned dictionary reading through the existing typed lexical-IPA override mechanism, preserving its non-gold warning and withholding surface IPA.
 - Expanded the Ukrainian-native candidate-blind preference packet and engine-candidate registry from six to seven source-attested IPA examples. The generated adapter candidate `п'енг` is explicitly not a preference gold form.
 - Added tests for the exact source/license/allowed-use gate and the generated candidate row. The seven-item preference sheet remains blocked on actual Ukrainian-native reviews; the Thai IPA remains blocked on independent expert adjudication.
 
@@ -1327,7 +1327,7 @@ The first run with the new coverage tests completed master-table generation and 
 ## Alternative licensed audio source — LOTUSDIS (2026-11-01)
 
 - Added `CORP-LOTUSDIS` to the source registry as a verified CC BY-SA 4.0 audio/transcript source for fresh expert re-annotation. The official dataset card lists 160,915 rows / approx. 13.2 GB; the project README describes approx. 114 hours and 86 participants, with utterance transcripts and TextGrid.
-- **Evidence boundary:** LOTUSDIS does not provide phonemic IPA or tone gold. Its existing annotations are transcript/alignment material; new phonetic labels must come from independent qualified Thai reviewers. Multi-channel/far-field speech and overlap require careful near-field, single-speaker sample selection. Standard Thai representativeness is not established at source level.
+- **Evidence boundary:** LOTUSDIS does not provide phonemic IPA or tone gold. Its existing annotations are transcript/alignment material; new phonetic labels must come from independent qualified Thai reviewers. LOTUSDIS uses nine separately recorded single-channel microphone devices; its approximately 114 aggregate channel-hours correspond to about 20 hours of unique session time. Device placement ranges from near- to far-field and overlap masks are provided; sample selection must inspect the exact device and time interval rather than infer clean speech from a channel label. Standard Thai representativeness is not established at source level.
 - No LOTUSDIS media were downloaded or copied. Exact dataset revision, asset ID, speaker pseudonym, microphone/channel, non-overlap status, interval and file hash remain required before freezing any acoustic sample. Derivative annotation data must preserve CC BY-SA attribution/share-alike.
 - Corrected the Rungpat Roengpitya shortlist description: the public profile supports Standard Thai tone research and cross-language Japanese vowel-length perception, not a direct claim of Thai vowel-length expertise.
 - Common Voice Thai v27.0 was not selected for redistributed review packets because its data card forbids re-hosting/re-sharing despite CC0; it also supplies no phone/toneme IPA gold.
@@ -1347,3 +1347,11 @@ The first run with the new coverage tests completed master-table generation and 
 ## Corpus registry schema repair — 2026-11-01
 
 - The corpus source CSV contained an unquoted TUD metadata field with commas, producing extra columns on CSV parsing. Quoted the comma-containing fields and added a regression test for exact seven-column schema, complete rows and unique source IDs.
+
+## Source-attested correction for the reported `เพิ่ง` failure — 2026-11-01
+
+- The pinned Thai Wiktionary revision 1885200 explicitly gives one syllable, short vowel and Standard Thai IPA `/pʰɤŋ˥˩/`. This is dictionary evidence, not independent phonetic adjudication or acoustic gold.
+- Activated the existing source-attested lexical IPA override in both Python and browser engines: segmental IPA `pʰɤŋ`, short vowel, falling tone `˥˩`, with no surface-phonetic IPA claim. The Ukrainian result is still produced by the IPA adapter and is marked `SOURCE_ATTESTED_NOT_GOLD`.
+- The all-mode regression now verifies the exact result in strict, soft and super-soft modes. Strict mode continues to abstain for the five other reported forms that lack a pinned lexical override.
+- The source-attested diagnostic now excludes five circular rows (the same dictionary sources feed runtime overrides) and leaves two non-circular, complete comparisons. It remains a diagnostic, not a benchmark accuracy score.
+- The ten hand-written adversarial inputs plus the 42 frozen challenge inputs are exercised in all three profiles: 156 profile/input combinations, plus focused strict/super-soft guards.

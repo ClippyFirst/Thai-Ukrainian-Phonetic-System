@@ -258,3 +258,7 @@ The official Zenodo preview was reconstructed byte-for-byte from its published t
 - CCOST remains BLOCKED for acoustic/narrow labels until the actual TextGrid tier/label mapping and source-order discrepancy are reconciled. Its CC BY-NC-SA 4.0 license must be acceptable for the intended use.
 - Common Voice Thai v27.0 is not bundled or re-hosted in reviewer packets because its data card forbids dataset re-hosting/re-sharing; its CC0 status does not remove those separate access terms.
 - Asset-level manifest and sample selection remain TODO. A VERIFIED corpus source does not mean a particular file/interval has been inspected or accepted as gold.
+
+## Surface-phonetic annotation requires audio provenance
+
+A reviewer may add `broad_surface_ipa` only when the row names a VERIFIED audio source, a VERIFIED asset from the audio manifest, and an exact in-bounds time interval. The source registry must separately authorize `BROAD_SURFACE_IPA_GOLD_INPUT` as well as `ACOUSTIC_PHONETICS_RESEARCH`. Text-only dictionaries and orthographic challenge prompts may support broad phonemic references, but cannot support surface phonetic labels. Narrow acoustic IPA has the same audio/asset/time requirement. A valid review packet is still not gold until the independent-review and adjudication requirements are satisfied.

@@ -496,7 +496,7 @@ The latest code-bearing commit is engineering-verified by the above run. A docum
 | Workstream | Status | Evidence / acceptance |
 |---|---|---|
 | Text-attested IPA registry | PARTIAL | `data/benchmark/source-attested-ipa.tsv` pins six Thai Wiktionary revisions; status remains `SOURCE_ATTESTED_NOT_GOLD`. These records are dictionary evidence, not independent or acoustic gold. |
-| Runtime lexical IPA override | PARTIAL | `data/thai/lexical_ipa_overrides.tsv` enables the narrowly scoped source-attested short-vowel reading of `เงิน`; provenance and tone/length metadata are preserved through `PhoneticResult` and the IPA→Ukrainian adapter. Extend only with individually reviewed records and regression tests. |
+| Runtime lexical IPA override | PARTIAL | `data/thai/lexical_ipa_overrides.tsv` contains six exact-form, source-pinned dictionary readings, including short /ɤ/ in `เงิน` and short /ɤ/ + falling tone in `เพิ่ง`. Each is explicitly `ACTIVE_SOURCE_ATTESTED_NOT_GOLD`; the IPA-first adapter and warning preserve that evidence grade. Coverage remains narrow and is not an accuracy claim. |
 | Word-boundary corpus | PARTIAL | Pinned Wisesight 993-row CC0 source-annotated snapshot remains test-only. No use for training or dictionary construction; it is not independently re-adjudicated. |
 | Automatic word segmentation | TODO | No production segmenter is claimed. A valid implementation needs training data distinct from the pinned test snapshot and an untouched, source-annotated evaluation set. |
 | Orthographic exceptions | PARTIAL | `รร`, `ฤ/ฤๅ`, `ฦ/ฦๅ`, `ทร`, and silent letters remain lexical/context dependent; no universal rule inferred from a few examples. |
@@ -511,7 +511,7 @@ Verified code/data head: [CI 40238202167](https://github.com/ClippyFirst/Thai-Uk
 |---|---|---|
 | Typed lexical IPA override for `เงิน` | PARTIAL | Source-pinned override is active in Python and browser, runs through the IPA→Ukrainian adapter, and carries `SOURCE_ATTESTED_NOT_GOLD` provenance. Exact-head browser CI and Web static validation passed on the code head; the final documentation-only head also passed. |
 | Text pipeline routing and parity | PARTIAL | Python text pipeline recognizes the override; browser engine and text UI have matching fixture assertions. Exact-head CI passed after the fixture expectation/order correction. |
-| Source-attested IPA discrepancy diagnostic | DONE_VERIFIED on prior code/data checkpoint | Six source rows; 5 complete outputs, 4 segmental agreements, 5 tone-category agreements, 1 withheld; `บรรจุ` final-`/ʔ/` difference is retained for review, not auto-corrected. |
+| Source-attested IPA discrepancy diagnostic | DONE_VERIFIED on current code/data checkpoint | Seven source rows; five rows are circular because the same dictionary source feeds runtime overrides; two non-circular, complete rows remain independently comparable. The diagnostic is `SOURCE_ATTESTED_NOT_GOLD` and reports no accuracy score. |
 | Corpus license/access registry | DONE_VERIFIED on prior code/data checkpoint | Wisesight 993-row source-annotated test-only snapshot; LST20 and VISTEC candidate gates; CCOST CC BY-NC-SA 4.0 and 6.2 GB TextGrid archive recorded. |
 | Automatic word segmentation | TODO | No production segmenter or distinct license-cleared training corpus. Wisesight remains test-only. |
 | Independent IPA/tone/length gold and Ukrainian target gold | BLOCKED | Requires independent adjudication and, for acoustic claims, access to the matching audio. |

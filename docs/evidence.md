@@ -58,7 +58,7 @@ Standard Thai cluster descriptions distinguish true clusters from false clusters
 ## Additional pinned evidence — 2026-10-25
 
 - **SRC-WISESIGHT1000-CC0** — PyThaiNLP, `word-tokenization/wisesight-1000-samples-tokenised.label`, immutable source commit `c1d063649abc3a6870b5fd1aae26cd1c64bdde7b`, blob SHA-1 `279aeb2d4323fd8032306160144d33dcb5b2df84`, CC0-1.0. The pinned file contains 993 manually tokenized records. The repository retains these labels as `SOURCE_ANNOTATED`, not expert-adjudicated gold. See `data/benchmark/wisesight1000-source.json` for conversion and split contract. This source is for word-boundary evaluation only, not IPA/tone gold.
-- **SRC-WIKTIONARY-TH-LEXICON-2026-10-25** — six source-attested IPA records are maintained separately in `data/benchmark/source-attested-ipa.tsv`; the runtime lexicon subset added from exact Thai Wiktionary revisions is enumerated in `data/thai/text_lexicon_sources.csv`. Per-page revision locators and CC BY-SA 4.0 terms are explicit. These are source-attested readings, not independent expert/acoustic gold.
+- **SRC-WIKTIONARY-TH-LEXICON-2026-10-25** — seven source-attested IPA records are maintained separately in `data/benchmark/source-attested-ipa.tsv`; the runtime lexicon subset added from exact Thai Wiktionary revisions is enumerated in `data/thai/text_lexicon_sources.csv`. Per-page revision locators and CC BY-SA 4.0 terms are explicit. These are source-attested readings, not independent expert/acoustic gold.
 - The short-vowel reading of `เงิน` (/ŋɤn˧/) is source-attested, but it remains intentionally excluded from the runtime text lexicon until a typed lexical-pronunciation override preserves that lexical length through the IPA-first adapter. Do not substitute a parser default for this lexical fact.
 
 
@@ -141,3 +141,5 @@ The CCOST source record is pinned to [Zenodo DOI 10.5281/zenodo.17366698](https:
 
 
 - Registry integrity check also found and fixed an existing malformed `data/corpus_sources.csv` row: the TUD record's comma-containing metadata had not been quoted. A regression test now checks the exact seven-column schema and unique source IDs.
+
+- **SRC-WIKTIONARY-TH-เพิ่ง (oldid 1885200)** — Standard Thai dictionary entry gives one syllable and `/pʰɤŋ˥˩/`, with short-vowel notation. The engine uses this only as a pinned source-attested lexical override; it is not independent phonetic gold and does not authorize a surface-IPA claim.
