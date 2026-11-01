@@ -1991,3 +1991,11 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Ran the repository wordlist audit logic: A/B/C/D each 206 rows, 206 unique items, no duplicates; B/C/D each differ from A by two missing and two extra entries; union=208. Generator correctly returns `SOURCE_ORDER_DISCREPANCY_REQUIRES_RECONCILIATION`, scoreable=false.
 - Local 208-item challenge/blind packet and manifest were generated for inspection only under CC BY-NC-SA 4.0; no CCOST-derived data or outputs were committed.
 - Genuine blocker: obtain CCOST author/data-curator confirmation or erratum for the A-D discrepancy before freezing any review set. Audio/TextGrid archive remains uninspected; expert submissions remain zero.
+
+
+## Handoff — evidence-layer and CI denominator corrections (2026-11-01)
+
+- The Thai blind-review schema now separates `phonemic_ipa` (broad phonemic) from `narrow_ipa` (square-bracketed narrow acoustic). Narrow annotations require syllable alignment plus a licensed asset reference and positive time interval. They are not scored by the broad IPA scorer.
+- Both the frozen 42-item challenge packet and the six-item supplemental regression packet are now checked by explicit CI validator steps.
+- The source-attested IPA diagnostic correctly defines independently comparable rows as non-circular **and** complete. A withheld non-circular item is not in that denominator. The latest CI failure was a wrong workflow assertion, not a runtime diagnostic defect; the corrected invariant has a focused unit test.
+- Remaining blockers are external: two independent qualified Thai reviewers plus separate adjudication; two Ukrainian-native preference reviewers; CCOST curator clarification on A-D list discrepancy; actual licensed archive/TextGrid schema inspection. No expert labels or gold scores are claimed.
