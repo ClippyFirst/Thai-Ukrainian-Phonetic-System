@@ -131,3 +131,10 @@ The CCOST source record is pinned to [Zenodo DOI 10.5281/zenodo.17366698](https:
 - Standard Thai representativeness is not established by the source record alone. A Thai reviewer must confirm dialect/speaker suitability for each selected sample.
 - **Decision:** source-level permission is verified and registered; no LOTUSDIS assets have yet been selected, downloaded, or promoted to gold. The 42+6 project-authored blind packet remains the controlled baseline; CCOST remains the preferred controlled tonal stimulus source only if its non-commercial license is acceptable and its A-D discrepancy and TextGrid mapping are resolved.
 - Common Voice Thai v27.0 was not selected for a shared reviewer packet: its CC0 data card separately forbids re-hosting/re-sharing the dataset, and it supplies no phone/toneme IPA gold. It may be considered only where reviewers access the original source directly under its terms.
+
+
+## File-level audio provenance gate — 2026-11-01
+
+- Added header-only `data/benchmark/audio-assets.tsv`. The manifest schema binds each asset to a registered source, exact dataset revision, asset URI, SHA-256, pseudonymous speaker reference, microphone/channel, overlap status, duration and verification record.
+- Thai review validation now requires audio-backed rows to reference a VERIFIED asset in that manifest; source ID must match, overlap must be NONE, and the review interval must fit inside the registered duration. This applies to broad phonemic reviews that cite audio as well as NARROW_ACOUSTIC reviews.
+- The manifest is intentionally empty: LOTUSDIS assets have not yet been selected/downloaded/pinned, and CCOST remains blocked. No narrow acoustic annotation can be accepted until a specific asset is registered.
