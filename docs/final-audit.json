@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Main remains cc398254c178171f74397aed556766e87356ab84. PR #182 remains open on research/independent-adjudication-gates-20261101. CCOST paper tier schema and tone notation are mapped from the LREC 2026 full paper; actual archive conformance and X-SAMPA inventory remain blocked. Added broad-phonemic vs broad-surface source-use gating and a local CCOST 206-item wordlist blind-packet generator with order-integrity diagnostics. No real expert submissions exist; Thai/Ukrainian gold counts remain zero and linguistic accuracy remains NOT_MEASURED.",
+  "status": "Main remains cc398254c178171f74397aed556766e87356ab84. PR #182 branch research/independent-adjudication-gates-20261101 is 67 commits ahead, 0 behind, at fb398459cae0c6b0f14a0de8eb3eca014aec908e. Exact-head CI passed all 3 jobs (296 Python tests, 1168 subtests, Ruff, browser/IPA/RTGS diagnostics, wheel install and master artifact); Web Static and external VISTEC evaluation passed. CCOST paper tier schema is mapped; actual archive conformance remains blocked. CCOST wordlist packet generator is implemented and synthetically tested, but actual Zenodo CSV has not been locally inspected. No real expert submissions exist; accuracy remains NOT_MEASURED.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -508,16 +508,23 @@
       "status": "DONE_VERIFIED",
       "implementation": "PR #167 adds workflow/source-branch concurrency groups to CI and Web Static; superseded non-main runs are cancelled while main runs are preserved.",
       "acceptance": "Exact-head CI 41237340250, Web Static 41237340267, post-merge main CI 41239440616 and Web Static 41239440643 passed."
+    },
+    {
+      "id": "CCOST-WORDLIST-001",
+      "status": "PARTIAL",
+      "implementation": "Local blind-packet generator with synthetic tests; checks 206 rows/order, duplicate words, set differences and SHA-256/license manifest; output remains unadjudicated and is not committed.",
+      "blocker": "Actual Zenodo wordlist.csv could not be downloaded into the connector-only session; order-set concordance has not been established.",
+      "acceptance": "Run generator against exact Zenodo CSV; reconcile any duplicates/order differences; obtain two independent Thai broad-phonemic annotations and adjudication record."
+    },
+    {
+      "id": "IPA-SOURCE-LAYER-GATE-001",
+      "status": "DONE_VERIFIED",
+      "implementation": "benchmark_ipa.py requires BROAD_PHONEMIC_IPA_GOLD_INPUT or BROAD_SURFACE_IPA_GOLD_INPUT according to transcription_level; text-only challenge and CCOST wordlist sources authorize only broad phonemic input.",
+      "acceptance": "Exact-head CI 41341792448 passed 296 Python tests and 1168 subtests; source misuse regression rejects text-only broad-surface scoring."
     }
   ],
   "latest_implementation_branch": "research/independent-adjudication-gates-20261101",
-  "latest_implementation_commit_pending_ci": {
-    "commit": "a4de40b6479b217b24aed98a26bdade23e6e1dab",
-    "status": "DONE_VERIFIED",
-    "ci_run": "41337529189",
-    "web_static_run": "41337815975",
-    "notes": "Full push CI passed on code checkpoint; subsequent commits are documentation-only closeout."
-  },
+  "latest_implementation_commit_pending_ci": null,
   "current_head_status_at_audit_refresh": "Code/workflow checkpoint b6dbec7928b106f0ab52e06af33a26635df75412 passed CI 40322960615 and Web static validation 40322959844. Documentation checkpoint e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff passed full CI 40323209539 and Web static validation 40323209471. This audit-register update creates a newer documentation HEAD and requires exact-head CI/static validation before the current branch HEAD is marked green.",
   "current_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
   "current_implementation_commit_before_audit_update": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
@@ -587,12 +594,12 @@
       ]
     }
   },
-  "latest_implementation_commit_ci_verified": "4b1592cd72298d1ca92e0b99ab330975764a078a",
-  "latest_documentation_head_ci_verified": "4b1592cd72298d1ca92e0b99ab330975764a078a",
-  "latest_documentation_head_ci_run": null,
-  "latest_documentation_head_web_validation_run": null,
-  "latest_implementation_ci_run": 40320450844,
-  "latest_implementation_web_validation_run": 40320450587,
+  "latest_implementation_commit_ci_verified": "fb398459cae0c6b0f14a0de8eb3eca014aec908e",
+  "latest_documentation_head_ci_verified": "fb398459cae0c6b0f14a0de8eb3eca014aec908e",
+  "latest_documentation_head_ci_run": "41341792448",
+  "latest_documentation_head_web_validation_run": "41341792464",
+  "latest_implementation_ci_run": "41341792448",
+  "latest_implementation_web_validation_run": "41341792464",
   "segmentation_error_review": {
     "script": "scripts/analyze_segmentation_errors.py",
     "test": "tests/test_segmentation_error_analysis.py",
@@ -2084,11 +2091,11 @@
       167
     ]
   },
-  "latest_full_repository_head": "1431c565ff5c160da4944942d687bc30b2f8d0b2",
-  "latest_full_repository_head_ci_run": 41326865977,
-  "latest_full_repository_head_web_validation_run": 41326865964,
-  "latest_web_static_verified_code_commit": "72a77cb42ad05c33274d70c4dcd9f20e07432b64",
-  "latest_web_static_verified_code_run": 41239440643,
+  "latest_full_repository_head": "fb398459cae0c6b0f14a0de8eb3eca014aec908e",
+  "latest_full_repository_head_ci_run": "41341792448",
+  "latest_full_repository_head_web_validation_run": "41341792464",
+  "latest_web_static_verified_code_commit": "fb398459cae0c6b0f14a0de8eb3eca014aec908e",
+  "latest_web_static_verified_code_run": "41341792464",
   "ccost_source_reconciliation_2026_10_31": {
     "status": "DONE_VERIFIED — source records, provenance boundary, registry, protocol and regression tests passed exact-head CI run 41242513053 on a331131567f6e17f9dd5fe96c8624620f093880c. Separate external BLOCKED item: CCOST_manual.pdf could not be downloaded in this session; inspect before selecting rows.",
     "pr": 169,
@@ -2292,9 +2299,9 @@
     "branch_inventory": "14 refs including main; 13 non-main refs. No branch deletion was performed; PR #181 source branch retained.",
     "research_branch": "research/independent-adjudication-gates-20261101",
     "research_branch_base": "cc398254c178171f74397aed556766e87356ab84",
-    "research_branch_verified_code_checkpoint": "a4de40b6479b217b24aed98a26bdade23e6e1dab",
-    "research_branch_documentation_checkpoint": "ce8d4b0450d67e465f76f140dde3b27ca45e313f",
-    "research_branch_ahead_at_code_checkpoint": 45,
+    "research_branch_verified_code_checkpoint": "fb398459cae0c6b0f14a0de8eb3eca014aec908e",
+    "research_branch_documentation_checkpoint": "fb398459cae0c6b0f14a0de8eb3eca014aec908e",
+    "research_branch_ahead_at_code_checkpoint": 67,
     "thai_blind_review_items": 42,
     "ukrainian_conditional_review_items": 6,
     "independent_thai_ipa_gold_rows": 0,
@@ -2307,10 +2314,11 @@
     "main_branch_protection": "TODO_OWNER_CONFIGURATION; protected=false",
     "local_test_execution": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
     "full_push_ci_run": "41337529189_PASSED_ALL_3_JOBS",
-    "web_static_run": "41337815975_PASSED",
-    "pr_182_latest_head_ci": "PENDING_AFTER_SOURCE_LAYER_GATE_AND_CCOST_WORDLIST_GENERATOR",
+    "web_static_run": "41341792464_PASSED",
+    "pr_182_latest_head_ci": "41341792448_PASSED_ALL_3_JOBS",
     "readiness": "ENGINEERING_RESEARCH_INFRASTRUCTURE_VERIFIED; NOT_RELEASE_READY; LINGUISTIC_ACCURACY_NOT_MEASURED",
-    "ccost_wordlist_generator": "IMPLEMENTED; SYNTHETIC_TESTS_ADDED; REAL_ZENODO_CSV_NOT_DOWNLOADED"
+    "ccost_wordlist_generator": "IMPLEMENTED; SYNTHETIC_TESTS_PASS; REAL_ZENODO_CSV_NOT_DOWNLOADED",
+    "external_vistec_run": "41341792429_PASSED"
   },
   "repository_structure_cleanup_2026_11_01": {
     "main_at_start": "69dafe58a9458d33a645cdcd517e61e9978abdbd",
@@ -2425,7 +2433,7 @@
   "independent_adjudication_work_2026_11_01": {
     "branch": "research/independent-adjudication-gates-20261101",
     "base_main": "cc398254c178171f74397aed556766e87356ab84",
-    "verified_code_checkpoint": "a4de40b6479b217b24aed98a26bdade23e6e1dab",
+    "verified_code_checkpoint": "fb398459cae0c6b0f14a0de8eb3eca014aec908e",
     "documentation_checkpoint": "ce8d4b0450d67e465f76f140dde3b27ca45e313f",
     "status": "DONE_VERIFIED_ENGINEERING; EXPERT_EVIDENCE_BLOCKED",
     "pr": 182,
@@ -2449,16 +2457,17 @@
       "tests/test_segmentation_benchmark.py",
       "web/tests/mode-adversarial.test.mjs"
     ],
-    "ci_run": "41337529189",
-    "ci_result": "PASSED_ALL_3_JOBS",
-    "web_static_run": "41337815975",
+    "ci_run": "41341792448",
+    "ci_result": "PASSED_ALL_3_JOBS; 296_PYTHON_TESTS; 1168_SUBTESTS; RUFF",
+    "web_static_run": "41341792464",
     "web_static_result": "PASSED",
     "evidence_limits": {
       "thai_ipa_gold_rows": 0,
       "expert_segmentation_gold_rows": 0,
       "ukrainian_review_submissions": 0,
       "ccost_archive_imported": false,
-      "accuracy_status": "NOT_MEASURED"
+      "accuracy_status": "NOT_MEASURED",
+      "ccost_wordlist_packet_generated_from_actual_source": false
     },
     "external_blockers": [
       "two independent qualified Thai phoneticians for phonemic IPA, segmentation, tone and length",
@@ -2472,7 +2481,9 @@
       "BROAD_PHONEMIC": "BROAD_PHONEMIC_IPA_GOLD_INPUT",
       "BROAD_SURFACE": "BROAD_SURFACE_IPA_GOLD_INPUT"
     },
-    "ccost_wordlist_generator": "scripts/build_ccost_wordlist_review_packet.py; outputs local blind packet plus source SHA-256/license manifest; actual source not downloaded in this session"
+    "ccost_wordlist_generator": "scripts/build_ccost_wordlist_review_packet.py; outputs local blind packet plus source SHA-256/license manifest; actual source not downloaded in this session",
+    "vistec_run": "41341792429",
+    "vistec_result": "PASSED"
   },
   "adjudication_readiness": {
     "thai_project_challenge_prompts": 42,
