@@ -1342,3 +1342,8 @@ The first run with the new coverage tests completed master-table generation and 
 
 
 - Tightened the audio asset manifest further: mutable dataset aliases (`main`, `master`, `latest`, `default`, `head`) and non-absolute asset URIs are rejected. Each asset must be pinned to a specific revision and URI before it can be used.
+
+
+## Corpus registry schema repair — 2026-11-01
+
+- The corpus source CSV contained an unquoted TUD metadata field with commas, producing extra columns on CSV parsing. Quoted the comma-containing fields and added a regression test for exact seven-column schema, complete rows and unique source IDs.
