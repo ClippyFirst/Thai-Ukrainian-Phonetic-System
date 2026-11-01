@@ -83,7 +83,7 @@ class SourceAttestedIpaRegistryTests(unittest.TestCase):
         path = ROOT / "data" / "thai" / "lexical_ipa_overrides.tsv"
         with path.open("r", encoding="utf-8-sig", newline="") as stream:
             overrides = list(csv.DictReader(stream, delimiter="\t"))
-        self.assertEqual([row["word"] for row in overrides], ["เงิน", "เดิน", "ออก", "ไกล", "ใกล้"])
+        self.assertEqual([row["word"] for row in overrides], ["เงิน", "เดิน", "ออก", "ไกล", "ใกล้", "เพิ่ง"])
         row = overrides[0]
         self.assertEqual(row["segmental_ipa"], "ŋɤn")
         self.assertEqual(row["tone_category"], "mid")
