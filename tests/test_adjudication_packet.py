@@ -353,6 +353,25 @@ class AdjudicationPacketTests(unittest.TestCase):
                 }},
             )
 
+    def test_audio_backed_review_rejects_unregistered_asset_id(self):
+        row = completed_row("TH-G2P-001", "กา")
+        row.update({
+            "audio_source_id": "TEST-AUDIO",
+            "audio_asset_reference": "not-in-manifest",
+            "audio_time_start": "0.1",
+            "audio_time_end": "1.0",
+        })
+        source_registry = {"TEST-AUDIO": {
+            "source_url": "https://example.org/audio", "license": "CC0-1.0",
+            "allowed_uses": "ACOUSTIC_PHONETICS_RESEARCH", "verification_status": "VERIFIED",
+            "notes": "Unit-test-only audio source.",
+        }}
+        with self.assertRaisesRegex(ValueError, "unregistered audio asset"):
+            validate_review_packet(
+                [row], ["TH-G2P-001"], "TH-PH-01",
+                source_registry=source_registry, audio_asset_registry={},
+            )
+
     def test_audio_asset_cannot_be_supplied_without_registered_source_and_interval(self):
         row = completed_row("TH-G2P-001", "กา")
         row["audio_asset_reference"] = "recording-001"
