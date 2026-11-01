@@ -19,6 +19,8 @@ class CorpusSourceRegistryTests(unittest.TestCase):
         self.assertIn("10.63317/3ds35jijmgrx", row["notes"])
         self.assertIn("manual correction by phonetically trained native Thai speakers", row["notes"])
         self.assertIn("dual independent adjudication not established", row["notes"])
+        self.assertIn("CCOST_manual.pdf inspected 2026-11-01", row["notes"])
+        self.assertIn("does not specify released phone/toneme label inventory", row["notes"])
 
     def test_segmentation_sources_preserve_license_and_usage_gates(self):
         path = ROOT / "data" / "corpus_sources.csv"
