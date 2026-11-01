@@ -17,7 +17,7 @@ PACKET_FIELDS = (
     "word_boundaries", "syllable_boundaries", "phonemic_ipa", "broad_surface_ipa", "narrow_ipa",
     "tone_sequence", "vowel_length", "final_glottal", "transcription_level",
     "uncertainty", "abstention_reason", "reviewer_id", "reviewer_qualification_ref",
-    "reviewed_at", "audio_asset_reference", "audio_time_start", "audio_time_end",
+    "reviewed_at", "audio_source_id", "audio_asset_reference", "audio_time_start", "audio_time_end",
     "source_notes",
 )
 ANNOTATION_FIELDS = PACKET_FIELDS[2:]
@@ -126,6 +126,7 @@ def validate_review_packet(
     reviewer_id: str,
     challenge_rows: Iterable[Mapping[str, str]] | None = None,
     reviewer_registry: Mapping[str, Mapping[str, str]] | None = None,
+    source_registry: Mapping[str, Mapping[str, str]] | None = None,
 ) -> dict:
     """Validate one reviewer's completed packet without scoring its judgments."""
     if not reviewer_id.strip():
@@ -244,8 +245,22 @@ def validate_review_packet(
                 raise ValueError(f"invalid final_glottal value for {ident}")
             if not (len(tone_values) == len(length_values) == len(glottal_values) == syllable_count):
                 raise ValueError(f"tone, vowel-length and glottal labels must align with syllables for {ident}")
+            audio_source_id = (row.get("audio_source_id") or "").strip()
+            if audio_source_id:
+                if source_registry is None:
+                    raise ValueError(f"audio source registry is required when audio_source_id is supplied: {ident}")
+                audio_source = source_registry.get(audio_source_id)
+                if audio_source is None:
+                    raise ValueError(f"audio source_id is not registered: {ident}")
+                validate_source_reference(
+                    audio_source_id, audio_source["source_url"], audio_source["license"],
+                    "ACOUSTIC_PHONETICS_RESEARCH", source_registry, row_id=ident,
+                )
             narrow_ipa = (row.get("narrow_ipa") or "").strip()
             if level == "NARROW_ACOUSTIC":
+                if not audio_source_id:
+                    raise ValueError(f"narrow acoustic review requires a registered audio_source_id: {ident}")
+
                 if not (narrow_ipa.startswith("[") and narrow_ipa.endswith("]") and len(narrow_ipa) > 2):
                     raise ValueError(f"narrow acoustic review requires a separate bracketed narrow_ipa label: {ident}")
                 narrow_body = narrow_ipa[1:-1]
@@ -281,6 +296,7 @@ def validate_independent_pair(
     reviewer_b: Iterable[Mapping[str, str]],
     challenge_rows: Iterable[Mapping[str, str]] | None = None,
     reviewer_registry: Mapping[str, Mapping[str, str]] | None = None,
+    source_registry: Mapping[str, Mapping[str, str]] | None = None,
 ) -> dict:
     """Check reviewer separation and identical item coverage; do not adjudicate."""
     challenge_rows = list(challenge_rows) if challenge_rows is not None else None
@@ -298,8 +314,8 @@ def validate_independent_pair(
     for ident in a:
         if (a[ident].get("thai") or "") != (b[ident].get("thai") or ""):
             raise ValueError(f"independent reviewer input mismatch: {ident}")
-    validate_review_packet(a.values(), a.keys(), reviewer_a_id, challenge_rows, reviewer_registry)
-    validate_review_packet(b.values(), b.keys(), reviewer_b_id, challenge_rows, reviewer_registry)
+    validate_review_packet(a.values(), a.keys(), reviewer_a_id, challenge_rows, reviewer_registry, source_registry)
+    validate_review_packet(b.values(), b.keys(), reviewer_b_id, challenge_rows, reviewer_registry, source_registry)
     agreement = _pairwise_agreement(
         a, b,
         (
