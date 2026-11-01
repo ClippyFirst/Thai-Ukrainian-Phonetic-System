@@ -86,6 +86,11 @@ def load_audio_asset_registry(
         ident = row["asset_id"]
         if not ident or ident in result:
             raise ValueError(f"audio asset IDs must be non-empty and unique: {ident!r}")
+        if row["dataset_revision"].lower() in {"main", "master", "latest", "default", "head"}:
+            raise ValueError(f"audio asset {ident!r} requires an immutable dataset_revision, not a moving alias")
+        asset_uri = urlparse(row["asset_uri"])
+        if asset_uri.scheme not in {"http", "https"} or not asset_uri.netloc:
+            raise ValueError(f"audio asset {ident!r} requires an absolute HTTP(S) asset_uri")
         required = (
             "source_id", "dataset_revision", "asset_uri", "file_sha256", "speaker_ref",
             "microphone", "overlap_status", "duration_seconds", "notes",
