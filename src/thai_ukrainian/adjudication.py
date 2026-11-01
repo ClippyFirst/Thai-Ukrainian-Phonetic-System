@@ -143,6 +143,8 @@ def validate_independent_pair(
         raise ValueError("independent reviewers must have distinct reviewer_id values")
     if set(a) != set(b):
         raise ValueError("independent reviewers must cover identical item IDs")
+    validate_review_packet(a.values(), a.keys(), reviewer_a_id)
+    validate_review_packet(b.values(), b.keys(), reviewer_b_id)
     return {
         "records": len(a),
         "reviewer_a_id": reviewer_a_id,
