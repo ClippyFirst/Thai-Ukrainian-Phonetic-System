@@ -65,7 +65,7 @@ class AdjudicationPacketTests(unittest.TestCase):
         with (root / "data/benchmark/ipa-adjudication-supplemental-blind.tsv").open(
             "r", encoding="utf-8", newline=""
         ) as stream:
-            blind = list(csv.DictReader(stream, delimiter="\\t"))
+            blind = list(csv.DictReader(stream, delimiter="\t"))
         result = validate_blind_packet(blind, challenge)
         self.assertEqual(result["records"], 6)
         self.assertEqual(result["labels_prefilled"], 0)
