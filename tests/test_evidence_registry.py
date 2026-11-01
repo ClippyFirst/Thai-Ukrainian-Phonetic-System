@@ -150,3 +150,12 @@ class EvidenceRegistryTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def test_lotusdis_is_registered_only_as_an_audio_source_for_fresh_human_annotation():
+    registry = load_source_registry(ROOT / "data" / "benchmark" / "source-registry.tsv")
+    source = registry["CORP-LOTUSDIS"]
+    assert source["license"] == "CC-BY-SA-4.0"
+    assert source["verification_status"] == "VERIFIED"
+    assert "ACOUSTIC_PHONETICS_RESEARCH" in source["allowed_uses"]
+    assert "not IPA/phone/toneme gold" in source["notes"]
