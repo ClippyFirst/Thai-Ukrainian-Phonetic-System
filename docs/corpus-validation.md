@@ -189,7 +189,7 @@ The Ukrainian preference packet `data/benchmark/ukrainian-target-preference-blin
 
 ## CCOST suitability and remaining access gate
 
-The CCOST paper describes 49 Standard Thai speakers, about seven hours of spontaneous speech, repeated controlled word-list/sentence material, and orthographic, word, syllable, phone and toneme annotations. Zenodo lists a 6.2 GB audio/TextGrid archive under CC BY-NC-SA 4.0. The repository does not bundle the archive. Before use, the released TextGrid tier names and label inventory must be inspected directly and reconciled with the chosen target layer. The research-assistant manual alone is not a complete released-tier specification. Preserve non-commercial/share-alike obligations; no CCOST labels are currently counted as project gold.
+The CCOST paper describes 49 Standard Thai speakers, about seven hours of spontaneous speech plus five hours of controlled word-list/sentence material, and orthographic, word, syllable, phone and toneme annotations. The paper specifies the intended tiers: ORT (orthographic word), KAN (canonical word pronunciation), KAS (canonical syllabified pronunciation), MAU (phonetic segment), MAS (phonemic syllable), and TRN (orthographic utterance transcript). Phonemic and phonetic representations use X-SAMPA; tone numerals map _1=Mid, _2=Low, _3=Falling, _4=High, _5=Rising. The 206-item monosyllabic word list was designed to cross five tones, four initial-consonant types, three syllable structures and vowel length. The paper reports manual correction by trained native Thai research assistants but no formal inter-annotator agreement measures. Zenodo lists a 6.2 GB audio/TextGrid archive under CC BY-NC-SA 4.0. The paper establishes the intended schema; actual released TextGrid conformance and exact label mapping still require local archive inspection. Keep the archive external and preserve non-commercial/share-alike obligations; no CCOST labels are currently counted as this project's independent gold.
 
 Primary references: [LREC 2026 CCOST paper](https://aclanthology.org/2026.lrec-1.247/), [Zenodo CCOST v1.0](https://zenodo.org/records/17366698), [Tingsabadh & Abramson, Thai (JIPA 1993)](https://doi.org/10.1017/S0025100300004746).
 
@@ -202,3 +202,6 @@ No expert segmentation rows have been submitted yet. The new registry is intenti
 
 
 The adjudication infrastructure and three-mode fallback correction are verified by full CI 41337529189 and Web Static 41337815975. This does not add expert labels: the adjudicated segmentation registry remains header-only and all 993 Wisesight records retain SOURCE_ANNOTATED status.
+
+
+The project-authored 42-item Thai challenge set is registered as input-text provenance for independent expert gold (`CLIPPYFIRST-THAI-CHALLENGE-CC398`). This does not turn the prompt text into phonetic evidence: pronunciation labels must still be independently supplied, qualified, and adjudicated. This registry record allows the IPA scorer's `IPA_GOLD_INPUT` gate to be satisfied without treating Wiktionary or a model-derived corpus as gold.
