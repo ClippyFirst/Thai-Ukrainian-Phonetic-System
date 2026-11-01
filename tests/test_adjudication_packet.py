@@ -324,12 +324,38 @@ class AdjudicationPacketTests(unittest.TestCase):
         row.update({
             "transcription_level": "NARROW_ACOUSTIC",
             "narrow_ipa": "[kʰaː.t]",
-            "audio_asset_reference": "CCOST:recording-001",
+            "audio_source_id": "TEST-AUDIO",
+            "audio_asset_reference": "recording-001",
             "audio_time_start": "1.20",
             "audio_time_end": "1.85",
         })
+        source_registry = {"TEST-AUDIO": {
+            "source_url": "https://example.org/audio", "license": "CC0-1.0",
+            "allowed_uses": "ACOUSTIC_PHONETICS_RESEARCH", "verification_status": "VERIFIED",
+            "notes": "Unit-test-only audio source.",
+        }}
         with self.assertRaisesRegex(ValueError, "narrow IPA syllabification"):
-            validate_review_packet([row], ["TH-G2P-001"], "TH-PH-01")
+            validate_review_packet([row], ["TH-G2P-001"], "TH-PH-01", source_registry=source_registry)
+
+    def test_narrow_acoustic_rejects_blocked_ccost_source(self):
+        row = completed_row("TH-G2P-001", "กา")
+        row.update({
+            "transcription_level": "NARROW_ACOUSTIC",
+            "narrow_ipa": "[kʰaː]",
+            "audio_source_id": "CORP-CCOST",
+            "audio_asset_reference": "ccost_S01_WL_1.wav",
+            "audio_time_start": "1.20",
+            "audio_time_end": "1.85",
+        })
+        source_registry = {"CORP-CCOST": {
+            "source_url": "https://zenodo.org/records/17366698",
+            "license": "CC-BY-NC-SA-4.0",
+            "allowed_uses": "ACOUSTIC_PHONETICS_RESEARCH",
+            "verification_status": "BLOCKED",
+            "notes": "Released TextGrid tier and label mapping not yet verified.",
+        }}
+        with self.assertRaisesRegex(ValueError, "is blocked"):
+            validate_review_packet([row], ["TH-G2P-001"], "TH-PH-01", source_registry=source_registry)
 
 
     def test_thai_review_requires_verified_phonetician_registry(self):
