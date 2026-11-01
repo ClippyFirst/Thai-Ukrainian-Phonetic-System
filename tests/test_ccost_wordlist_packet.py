@@ -48,6 +48,15 @@ class CcostWordlistPacketTests(unittest.TestCase):
             self.assertEqual(result["extra_vs_order_a_set"]["C"], ["คา"])
             self.assertEqual(result["words"], sorted(["กา", "กะ", "ขา", "คา"]))
 
+    def test_identical_sets_with_repeated_items_are_not_declared_concordant(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "wordlist.csv"
+            repeated = ["กา", "กะ", "กะ"]
+            write_wordlist(path, {column: repeated for column in ("A", "B", "C", "D")})
+            result = inspect_wordlist(path, expected_items=3)
+            self.assertFalse(result["order_sets_concordant"])
+            self.assertEqual(result["duplicate_words_by_order"]["A"], ["กะ"])
+
     def test_rejects_wrong_item_count_and_whitespace(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "wordlist.csv"

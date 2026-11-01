@@ -73,7 +73,7 @@ class EvidenceRegistryTests(unittest.TestCase):
                                       "CC0-1.0", "UKRAINIAN_PREFERENCE_INPUT", registry, row_id="ua-1")
         with self.assertRaisesRegex(ValueError, "not approved for BROAD_SURFACE_IPA_GOLD_INPUT"):
             validate_source_reference("SRC-WIKTIONARY-TH-ไกล", source["source_url"],
-                                      source["license"], "IPA_GOLD_INPUT", registry, row_id="ipa-1")
+                                      source["license"], "BROAD_SURFACE_IPA_GOLD_INPUT", registry, row_id="ipa-1")
 
     def test_empty_reviewer_registry_is_valid_but_verifies_no_experts(self):
         self.assertEqual(load_reviewer_registry(ROOT / "data/benchmark/reviewer-qualifications.tsv"), {})

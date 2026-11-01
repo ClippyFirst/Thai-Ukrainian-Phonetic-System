@@ -57,7 +57,8 @@ def inspect_wordlist(path: Path, expected_items: int = DEFAULT_EXPECTED_ITEMS) -
     }
     missing_from_order = {column: sorted(base - sets[column]) for column in ORDER_COLUMNS}
     extra_in_order = {column: sorted(sets[column] - base) for column in ORDER_COLUMNS}
-    concordant = all(sets[column] == base for column in ORDER_COLUMNS)
+    no_duplicates = all(len(orders[column]) == len(sets[column]) for column in ORDER_COLUMNS)
+    concordant = no_duplicates and all(sets[column] == base for column in ORDER_COLUMNS)
     union = sorted(set().union(*sets.values()))
     return {
         "words": union,
