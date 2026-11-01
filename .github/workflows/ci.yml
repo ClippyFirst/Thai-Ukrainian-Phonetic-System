@@ -28,6 +28,8 @@ jobs:
       - run: python scripts/generate_master_table.py
       - name: Verify committed master-table registries are up to date
         run: git diff --exit-code -- data/derived/thai_consonant_correspondence.csv data/derived/thai_orthographic_correspondence.csv data/derived/thai_vowel_correspondence.csv data/derived/thai_ukrainian_master.json
+      - name: Validate the blind Thai adjudication packet
+        run: python scripts/validate_adjudication_packet.py --mode blind --challenge data/benchmark/thai_g2p_challenge.jsonl data/benchmark/ipa-adjudication-blind.tsv
       - name: Run the complete Python test suite (pytest functions and unittest classes)
         run: python -m pytest -q -ra
       - run: python scripts/run_challenge_diagnostics.py --output /tmp/challenge-runtime-diagnostics.json
