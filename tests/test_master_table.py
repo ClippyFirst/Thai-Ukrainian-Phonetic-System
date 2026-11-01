@@ -88,6 +88,8 @@ class MasterTableTests(unittest.TestCase):
         self.assertIn("IPA-first", self.report["principle"])
         self.assertIn("phonology → tone", self.report["principle"])
         self.assertIn("IPA → Ukrainian phonetic target", self.report["principle"])
+        self.assertIn("mandatory adapter boundary", self.report["principle"])
+        self.assertNotIn("independent audit/control layer", self.report["principle"])
 
     def test_surface_rows_are_revalidated_not_trusted_blindly(self):
         vowels = {v["id"]: v for v in self.gm.rows("vowels.csv")}
