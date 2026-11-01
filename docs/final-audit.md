@@ -14,7 +14,7 @@
 - Identified BEST-2010 official TEST_100K and LST20 as additional segmentation benchmarks. LST20's NECTEC terms prohibit modification/redistribution without permission and require a separate commercial arrangement; it remains external and gated. BEST access/license terms must be verified before acquisition.
 - FLEURS and Common Voice Thai are classified as speech/ASR datasets, not direct IPA or Ukrainian orthographic gold. CCOST remains the phone/toneme candidate; its manual is inspected, but the released TextGrid schema and detailed paper methods remain blockers.
 - Updated `docs/g2p-benchmark.md`, `data/corpus_sources.csv`, and regression tests. No new external corpus was downloaded or bundled; no accuracy metric was calculated.
-- Exact-current-head CI verification: PR #169 head `2295ce132eb96e0678f164da56361dc5b994df43` passed all three jobs in [41247367267](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41247367267): `test`, `wheel-install-smoke`, and `master-artifact`. The full Python suite, browser IPA/RTGS/parity/UI checks, benchmark diagnostics, generated-artifact validation, and isolated wheel installation passed. PR #169 remains open and unmerged; `main` is unchanged.
+- Exact-current-head CI verification before this documentation reconciliation: PR #169 head `0dee9e36cd5391b599c8b785a8b2c1b81ea325a7` passed all three jobs in [41300790280](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41300790280): `test`, `wheel-install-smoke`, and `master-artifact`. The full Python suite, browser IPA/RTGS/parity/UI checks, benchmark diagnostics, generated-artifact validation, and isolated wheel installation passed. This documentation-only reconciliation requires its own exact-head run. PR #169 remains open and unmerged; `main` is unchanged.
 
 ---
 
@@ -26,7 +26,7 @@
 - **PR state:** #169 and #170 remain open and unmerged, per the PR-only integration preference. Their branches were 28 and 1 commits ahead of `main`, respectively, and zero commits behind at the comparison checkpoint. No review submissions were recorded.
 - **Branch inventory:** 184 refs; no historical branch was deleted.
 - **Main protection:** `protected=false`; no ruleset or repository setting was changed.
-- **Remaining evidence blockers:** CCOST manual inspection; independent Thai IPA/segmentation adjudication; independent Ukrainian-native target-form adjudication; manual browser/device and WCAG 2.2 AA review (issue #114).
+- **Remaining evidence blockers:** released CCOST TextGrid tier schema and detailed LREC-method reconciliation; independent Thai IPA/segmentation adjudication; independent Ukrainian-native target-form adjudication; manual browser/device and WCAG 2.2 AA review (issue #114). CCOST manual retrieval/inspection is DONE_VERIFIED, not a remaining blocker.
 - **Local execution:** not performed; this connector-only session did not provide a local checkout/runtime. All test claims above are from GitHub Actions.
 - **Readiness:** engineering-verified research prototype; not release-ready for general linguistic-accuracy claims.
 
@@ -1159,3 +1159,14 @@ The first run with the new coverage tests completed master-table generation and 
 - **PASS — post-merge main CI:** [41143907732](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41143907732) passed all three jobs.
 - **Measured improvement:** the previous master-artifact generator step took approximately 126.9 seconds; the new download plus validation took approximately 1.1 seconds. This removes roughly 126 seconds of duplicate work from the dependent job on each full CI run.
 - PR [#155](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/155) merged as `3325e98b98bde6926f36c74ad76dc94fe35480b0`. No application or linguistic behavior changed.
+
+
+## Current continuation checkpoint — 2026-11-01
+
+- `main` remains `8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8`; no mainline write or merge was performed.
+- PR #169 is open/unmerged on `docs/mark-pr168-closeout-verified-20261031`. Its last verified head before this status reconciliation was `0dee9e36cd5391b599c8b785a8b2c1b81ea325a7`, with all three CI jobs successful in [41300790280](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41300790280). This checkpoint adds matrix/audit/handoff consistency edits; its new head requires its own CI run.
+- PR #170 remains open/unmerged at `1cdc3d7971498ce3312ff9a79b23ee84b8d917aa`; CI [41243709726](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41243709726) and Web Static [41243709639](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41243709639) succeeded. Its one-file patch only removes two duplicate UI assertions; it is preserved untouched.
+- Review submissions and inline review threads are empty for both PRs at the current inspection.
+- CCOST manual retrieval/inspection is DONE_VERIFIED; released TextGrid schema/detailed-method reconciliation remains BLOCKED / evidence-limited. No audio/TextGrid or 6.2 GB archive was downloaded or bundled.
+- Independent Thai and Ukrainian adjudication, manual browser/device and WCAG 2.2 AA review remain external acceptance gates. Main branch protection remains TODO — owner configuration; historical branch retention remains PARTIAL pending complete inventory and owner policy.
+- Local pytest/npm execution was not possible in the connector-only environment; GitHub Actions is the verification source. Do not claim a local test run.
