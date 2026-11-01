@@ -1283,3 +1283,9 @@ The first run with the new coverage tests completed master-table generation and 
 - Added `SRC-WIKTIONARY-TH-เพิ่ง` to the evidence registry and `TH-SRC-IPA-007` to the source-attested IPA registry, strictly as `SOURCE_ATTESTED_NOT_GOLD`. No runtime lexical override was added.
 - Expanded the Ukrainian-native candidate-blind preference packet and engine-candidate registry from six to seven source-attested IPA examples. The generated adapter candidate `п'енг` is explicitly not a preference gold form.
 - Added tests for the exact source/license/allowed-use gate and the generated candidate row. The seven-item preference sheet remains blocked on actual Ukrainian-native reviews; the Thai IPA remains blocked on independent expert adjudication.
+
+
+## Reviewer recruitment research — 2026-11-01
+
+- Added `docs/reviewer-outreach-shortlist.md` with potential Thai phonetics/phonology and Ukrainian practical-transcription reviewers, based on public university profiles and peer-reviewed work. It records no outreach, consent, availability, verified native status or qualification; the reviewer registry remains empty.
+- CCOST's official Zenodo wordlist preview exposes 206 data rows in columns A-D; metadata reports 9.7 kB and MD5 `e62f500d87b4ff8c6deb4c4595854d34`. The source registry and tests preserve these source-page facts. The original bytes were not downloaded in this session, so no SHA-256 or exact A-D set comparison is claimed.

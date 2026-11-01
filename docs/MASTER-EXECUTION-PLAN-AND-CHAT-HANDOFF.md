@@ -1969,3 +1969,9 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Expanded the candidate-blind Ukrainian-native preference packet from six to seven source-attested IPA items. Added the generated adapter candidate `п'енг` to the engine-candidate registry; it remains `ENGINE_CANDIDATE_NOT_PREFERENCE_GOLD`.
 - Added tests for exact source/license/allowed-use binding and generated candidate output. Code/test head: `8ba1d93293a69178bf0bdc23b7325d17b47c10a2`.
 - External human blockers remain: two qualified independent Thai reviewers plus adjudicator, two Ukrainian-native reviewers plus adjudication, and actual CCOST archive inspection for acoustic/phone-level evaluation. No gold or accuracy metrics are claimed.
+
+
+## Handoff — reviewer outreach shortlist and CCOST source metadata (2026-11-01)
+
+- Added `docs/reviewer-outreach-shortlist.md` with public-profile-based candidates for Thai phonetics/phonology and Ukrainian practical-transcription review. No emails were sent; no candidate is treated as verified, available, native or independent until checked. Reviewer registry remains empty.
+- Recorded official Zenodo wordlist preview metadata: 206 data rows, columns A-D, 9.7 kB, MD5 `e62f500d87b4ff8c6deb4c4595854d34`. Exact source CSV bytes were not downloaded; SHA-256 and complete order-set audit remain pending.
