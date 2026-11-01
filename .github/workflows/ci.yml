@@ -35,6 +35,7 @@ jobs:
       - run: python scripts/generate_web_word_dictionary.py
       - run: node web/tests/ipa-ua.test.mjs
       - run: node web/tests/parity.test.mjs
+      - run: node web/tests/mode-adversarial.test.mjs
       - run: node web/tests/ui-contract.test.mjs
       - name: Benchmark browser Thai text segmentation latency
         run: node scripts/benchmark_web_segmentation.mjs
