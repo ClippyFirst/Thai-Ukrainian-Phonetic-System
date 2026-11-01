@@ -168,6 +168,16 @@ class AdjudicationPacketTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "reconstruct the Thai input"):
             validate_review_packet([row], ["TH-G2P-001"], "TH-PH-01")
 
+
+    def test_boundary_metadata_uses_nfc_reconstruction_without_losing_syllables(self):
+        row = completed_row("TH-G2P-001", "กา")
+        row["syllable_boundaries"] = "ก.า"
+        row["tone_sequence"] = "MID,LOW"
+        row["vowel_length"] = "SHORT,LONG"
+        row["final_glottal"] = "ABSENT,ABSENT"
+        with self.assertRaisesRegex(ValueError, "must align with syllables"):
+            validate_review_packet([row], ["TH-G2P-001"], "TH-PH-01")
+
     def test_narrow_acoustic_labels_require_audio_asset_and_interval(self):
         row = completed_row("TH-G2P-001", "กา")
         row.update({"transcription_level": "NARROW_ACOUSTIC", "phonemic_ipa": "[kaː]"})

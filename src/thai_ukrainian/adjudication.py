@@ -8,6 +8,7 @@ from __future__ import annotations
 from datetime import date
 from math import isfinite
 from typing import Iterable, Mapping
+import unicodedata
 
 PACKET_FIELDS = (
     "id", "thai", "stratum", "probe", "orthography_validity", "lexical_reading",
@@ -138,19 +139,30 @@ def validate_review_packet(
             )
         word_boundaries = row["word_boundaries"].strip()
         syllable_boundaries = row["syllable_boundaries"].strip()
-        thai_text = row["thai"]
-        if word_boundaries != "NOT_APPLICABLE":
-            if "||" in word_boundaries or word_boundaries.replace("|", "") != thai_text:
-                raise ValueError(f"word_boundaries must reconstruct the Thai input for {ident}")
-        if syllable_boundaries == "NOT_APPLICABLE":
+        thai_text = unicodedata.normalize("NFC", row["thai"])
+        if word_boundaries == "NOT_APPLICABLE":
+            if syllable_boundaries != "NOT_APPLICABLE":
+                raise ValueError(f"word and syllable boundaries must both be NOT_APPLICABLE: {ident}")
             syllable_count = None
         else:
-            if "||" in syllable_boundaries or ".." in syllable_boundaries or syllable_boundaries.replace("|", "").replace(".", "") != thai_text:
+            word_parts = word_boundaries.split("|")
+            if any(not part for part in word_parts) or unicodedata.normalize("NFC", "".join(word_parts)) != thai_text:
+                raise ValueError(f"word_boundaries must reconstruct the Thai input for {ident}")
+            if syllable_boundaries == "NOT_APPLICABLE":
+                raise ValueError(f"syllable_boundaries cannot be NOT_APPLICABLE when words are annotated: {ident}")
+            syllable_words = syllable_boundaries.split("|")
+            syllable_parts = [part for word in syllable_words for part in word.split(".")]
+            if (
+                any(not part for part in syllable_parts)
+                or unicodedata.normalize("NFC", "".join(syllable_parts)) != thai_text
+            ):
                 raise ValueError(f"syllable_boundaries must reconstruct the Thai input for {ident}")
-            syllable_count = sum(len(word.split(".")) for word in syllable_boundaries.split("|"))
+            syllable_count = len(syllable_parts)
         tone_values = [value.strip() for value in row["tone_sequence"].split(",")]
         length_values = [value.strip() for value in row["vowel_length"].split(",")]
         glottal_values = [value.strip() for value in row["final_glottal"].split(",")]
+        if any(not value for value in tone_values + length_values + glottal_values):
+            raise ValueError(f"tone, vowel-length and glottal sequences cannot contain empty values: {ident}")
         if any(value not in TONE_VALUES for value in tone_values):
             raise ValueError(f"invalid tone_sequence value for {ident}")
         if any(value not in VOWEL_LENGTH_VALUES for value in length_values):
