@@ -31,5 +31,20 @@ class WordPositionTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             analyze_word_syllables([])
 
+    def test_word_analyzer_receives_syllable_analyzer_dependency(self):
+        from thai_ukrainian.models import SyllableAnalysis
+        from thai_ukrainian.word import analyze_word
+
+        calls = []
+
+        def fake_analyzer(text):
+            calls.append(text)
+            return SyllableAnalysis(input=text, normalized=text, phonemic_ipa="kaː")
+
+        result = analyze_word(["กา", "นา"], analyze_syllable=fake_analyzer)
+        self.assertEqual(calls, ["กา", "นา"])
+        self.assertEqual(result.phonemic_ipa, "kaː.kaː")
+        self.assertEqual(result.segmentation_status, "explicit")
+
 if __name__ == "__main__":
     unittest.main()
