@@ -1,3 +1,50 @@
+## External benchmark research refresh — 2026-11-01
+
+| Task / acceptance criterion | State | Evidence / next acceptance |
+|---|---|---|
+| Screen external Thai G2P/IPA benchmark | DONE_VERIFIED — research screening | Added Thai G2P v4 to `data/corpus_sources.csv` and `docs/g2p-benchmark.md`. Dataset card declares CC0-1.0 and reports 8,076 test rows, but source lineage includes Thai W2P and Wiktionary; use only as a source-attested comparator after runtime lexical-overlap audit, not independent gold. |
+| Screen external Thai segmentation corpora | DONE_VERIFIED — research screening | BEST-2010 official TEST_100K and LST20 identified. BEST license/access must be verified before acquisition; LST20 terms prohibit redistribution/modification absent permission and require separate commercial arrangements. No corpus copied. |
+| Separate ASR resources from phonetic gold | DONE_VERIFIED — scope clarification | FLEURS and Common Voice Thai are speech/ASR resources, not phone-level IPA or Ukrainian-target gold. CCOST remains the closest phone/toneme candidate; its manual is inspected, but the released TextGrid tier/toneme schema remains unverified. |
+| Exact-head CI for benchmark registry, CCOST manual-review updates and test changes | DONE_VERIFIED on PR #169 head `0dee9e36cd5391b599c8b785a8b2c1b81ea325a7` | Run [41300790280](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41300790280): `test`, `wheel-install-smoke`, and `master-artifact` all passed. This is the current exact PR head; PR remains open/unmerged. |
+| Execute new accuracy benchmark | BLOCKED / evidence-limited | No new score calculated; requires source-overlap filtering, legal/access review, and independently adjudicated Thai IPA plus Ukrainian target labels. |
+
+---
+
+## 2026-10-31 — exact-head verification refresh (PRs #169–#170)
+
+| Task / acceptance criterion | State | Evidence / next acceptance |
+|---|---|---|
+| Verify final CCOST provenance/audit PR head | DONE_VERIFIED | PR #169 head `8690b42ccbf5bbff35e57646c8624620f093880c`; exact-head CI [41243882073](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41243882073): `test`, `wheel-install-smoke`, and `master-artifact` all passed. |
+| Verify UI assertion cleanup | DONE_VERIFIED | PR #170 head `1cdc3d7971498ce3312ff9a79b23ee84b8d917aa`; CI [41243709726](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41243709726) and Web Static [41243709639](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41243709639) passed. |
+| Keep PR-only integration contract | DONE_VERIFIED | Both PRs remain open; no merge to `main` performed. Both branches are zero commits behind `main` at this checkpoint. |
+| Protect `main` | TODO — owner configuration | `protected=false`; acceptance requires owner decision on required checks/reviews and configuration of a ruleset. |
+| Retrieve and inspect CCOST annotation manual | DONE_VERIFIED — document inspection | Official Zenodo `CCOST_manual.pdf` (19 pages; MD5 `caecb20d26e8458b20c7c269ca22b59e`) inspected. It documents OCTRA ASR correction, Thai-script normalization, Praat transcript/boundary correction and BAS `CHUNKPREP → G2P → MAUS → PHO2SYL`; it does not define the released TextGrid tier/phone/toneme schema or independent double annotation. |
+| Independent Thai IPA/segmentation adjudication | BLOCKED / evidence-limited | Qualified independent Thai reviewers, frozen annotation protocol, dual labels and disagreement log; issue #114. |
+| Ukrainian target-form adjudication | BLOCKED / evidence-limited | Two independent Ukrainian-native reviewers, predeclared criteria and adjudication log; issue #114. |
+| Manual browser/device and WCAG 2.2 AA review | BLOCKED | Human keyboard, screen-reader, viewport and device review with recorded findings; issue #114. |
+| Historical branch retention | PARTIAL | Current branch listing reconciled across both API pages: 184 refs total (100 + 84). Retention/disposition remains unreviewed at commit level; no destructive pruning without provenance review and owner-approved retention policy. |
+
+**Current main:** `8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8`.  
+**Readiness:** engineering-verified research prototype; not release-ready for general linguistic-accuracy claims.
+
+---
+
+## 2026-10-31 — CCOST source provenance reconciliation (PR #169)
+
+| Task / acceptance criterion | State | Evidence / next acceptance |
+|---|---|---|
+| Distinguish CCOST dataset DOI from its LREC 2026 paper DOI and record the annotation process | DONE_VERIFIED | Primary Zenodo and LREC/ACL records identify separate dataset/article DOIs, dataset license, corpus composition, annotation layers and manual-correction provenance. The public abstract does not establish two independent blinded labels per item; the evidence is explicitly bounded. |
+| Enforce CCOST provenance/license metadata in tests | DONE_VERIFIED | Added assertions in `tests/test_corpus_source_registry.py` for both DOI records, manual-correction provenance and the stated limit on independent adjudication. Exact-head CI [41242513053](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41242513053) passed `test`, `wheel-install-smoke`, and `master-artifact` on head `a331131567f6e17f9dd5fe96c8624620f093880c`. |
+| Preserve corpus licensing and non-redistribution | DONE_VERIFIED | Dataset remains external; no WAV/TextGrid files were copied. The registry retains CC BY-NC-SA 4.0 non-commercial/share-alike terms. |
+
+- **Base main:** `8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8` (PR #168 closeout merged).
+- **PR:** [#169](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/169), documentation/audit closeout extended with CCOST evidence provenance; code/data/test changes passed all three jobs on prior head `a331131567f6e17f9dd5fe96c8624620f093880c` in run [41242513053](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41242513053). The final audit/handoff-only refresh is now on the PR branch; its exact-head CI is pending. The preceding code/data/test head `a331131567f6e17f9dd5fe96c8624620f093880c` passed all three jobs in [41242513053](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41242513053). Do not treat that prior run as verification of the final documentation head.
+- **Branch inventory:** 184 refs (research 25, chore 8); the temporary research branch remains preserved, not deleted.
+- **PR #170:** separate test-only cleanup removes two immediately repeated assertions in `web/tests/ui-contract.test.mjs`; exact-head CI [41243709726](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41243709726) and Web Static [41243709639](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41243709639) are queued. No runtime behavior changes.
+- **Readiness:** engineering-verified research prototype; independent Thai/UA adjudication, CCOST manual/annotation protocol review, and manual accessibility review remain external blockers.
+
+---
+
 ## 2026-10-31 — PRs #165–#167 integration closeout
 
 | Task / acceptance criterion | State | Evidence / next acceptance |
@@ -8,7 +55,7 @@
 | Final main CI test suite and package smoke | DONE_VERIFIED | Run [41239440616](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41239440616): 251 pytest tests and 1,164 subtests passed; Ruff, Python/browser parity (29 fixtures), diagnostics, generated-data drift and isolated wheel-install smoke passed. |
 | Independent master artifact | DONE_VERIFIED | Same run [41239440616](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41239440616): artifact SHA-256 `74f40079c2bae8a4f875fa8e2c860ac8a202bbb1bd8e4ae72d834f48d93adc09`; 3,086,353 bytes; independent download/hash check and assertions passed at 351,780 rows / 41 rime records. |
 | Exact post-merge Web Static validation | DONE_VERIFIED | Run [41239440643](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41239440643) passed. |
-| Historical branch retention | PARTIAL | 181 refs inventoried. No destructive pruning: unique historical work may exist, no owner-approved retention/archive policy exists, and the connected GitHub tools expose no branch-deletion action. Acceptance: commit-level provenance review plus explicit retention policy. |
+| Historical branch retention | PARTIAL | 182 refs inventoried. No destructive pruning: unique historical work may exist, no owner-approved retention/archive policy exists, and the connected GitHub tools expose no branch-deletion action. Acceptance: commit-level provenance review plus explicit retention policy. |
 | Main branch protection | TODO — owner configuration | GitHub reports `protected=false`; no rulesets configured. Acceptance: owner configures required CI checks and decides review requirements. |
 | Independent Thai segmentation / phonology / IPA gold | BLOCKED / evidence-limited | Requires qualified independent Thai reviewers, agreed transcription layer, authorized acoustic assets where acoustic claims are made, dual labels and disagreement log. Issue #114. |
 | Ukrainian target-form adjudication | BLOCKED / evidence-limited | Requires two independent Ukrainian-native reviewers, predefined criteria, blinded judgments and adjudication log. Issue #114. |
@@ -1089,3 +1136,28 @@ The user's explicit requirement supersedes the prior UX decision to collapse RTG
 - All implementation PRs reconciled in this run are merged; the remaining refs are historical/work branches rather than unmerged open PRs.
 - No branch deletion was performed. Historical refs may contain unique research/evidence work; no owner-approved retention policy exists, and the connected GitHub action set exposes no branch-deletion operation.
 - Acceptance: review unique commits and obtain an explicit archive/delete policy before pruning. Keep `BRANCH-HYGIENE-001` PARTIAL until that decision and cleanup are complete.
+
+
+## CCOST annotation manual review — 2026-11-01
+
+| Task / acceptance criterion | State | Evidence / next acceptance |
+|---|---|---|
+| Retrieve and inspect the official CCOST annotation manual | DONE_VERIFIED — document inspection | Official Zenodo file `CCOST_manual.pdf` (19 pages; MD5 `caecb20d26e8458b20c7c269ca22b59e`) inspected. It describes OCTRA ASR transcript correction, Thai-script normalization, Praat boundary/transcript correction and BAS `CHUNKPREP → G2P → MAUS → PHO2SYL`; it names `OCTRA_1` and illustrates MAUS output `sampa`. |
+| Establish the released TextGrid phone/toneme annotation contract | BLOCKED / evidence-limited | The manual does not define final released TextGrid tiers, full phone/toneme inventory, tone-label scheme, uncertainty policy or independent double annotation. Acceptance requires inspection of released TextGrid schema and detailed LREC paper methods, then mapping each label to a declared target layer. |
+| Use CCOST as independent phonetic gold | BLOCKED / evidence-limited | Manual inspection does not establish dual blinded annotation. Require two qualified Thai phoneticians' independent labels under the project protocol for independent accuracy claims; keep CCOST external under CC BY-NC-SA 4.0. |
+
+
+## Current continuation checkpoint — 2026-11-01 (PR #169)
+
+| Task / acceptance criterion | State | Evidence / next acceptance |
+|---|---|---|
+| Verify exact current PR #169 head | DONE_VERIFIED | Head `0dee9e36cd5391b599c8b785a8b2c1b81ea325a7`; CI [41300790280](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41300790280) completed successfully with `test`, `wheel-install-smoke`, and `master-artifact`. |
+| Verify exact current PR #170 head | DONE_VERIFIED | Head `1cdc3d7971498ce3312ff9a79b23ee84b8d917aa`; CI [41243709726](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41243709726) and Web Static [41243709639](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41243709639) succeeded. |
+| Review submissions and inline threads on #169/#170 | DONE_VERIFIED — none present at inspection | GitHub review and review-thread endpoints returned empty collections for both PRs. |
+| Reconcile CCOST manual-inspection status | DONE_VERIFIED | Manual retrieval/inspection is complete; released TextGrid tier schema and detailed LREC-method reconciliation remain BLOCKED / evidence-limited. |
+| Independent Thai IPA/segmentation adjudication | BLOCKED / evidence-limited | Requires qualified independent Thai reviewers, frozen layer-specific protocol, dual blind labels and disagreement log; issue #114. |
+| Ukrainian target-form adjudication | BLOCKED / evidence-limited | Requires two independent Ukrainian-native reviewers, predeclared criteria and adjudication log; issue #114. |
+| Manual browser/device and WCAG 2.2 AA review | BLOCKED | Requires human keyboard, screen-reader, viewport and device review with recorded findings; issue #114. |
+| Main branch protection | TODO — owner configuration | `protected=false`; acceptance requires owner decision on required checks/reviews and ruleset configuration. No setting changed. |
+
+**Current main:** `8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8` (unchanged). **PR #169 current head before this matrix refresh:** `0dee9e36cd5391b599c8b785a8b2c1b81ea325a7`. **Readiness:** engineering-verified research prototype; not release-ready for general linguistic-accuracy claims.
