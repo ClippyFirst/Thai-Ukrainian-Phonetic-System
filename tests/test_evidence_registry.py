@@ -75,6 +75,22 @@ class EvidenceRegistryTests(unittest.TestCase):
             validate_source_reference("SRC-WIKTIONARY-TH-ไกล", source["source_url"],
                                       source["license"], "BROAD_SURFACE_IPA_GOLD_INPUT", registry, row_id="ipa-1")
 
+    def test_เพิ่ง_source_is_reference_only_and_approved_for_conditional_ukrainian_review(self):
+        registry = load_source_registry(ROOT / "data/benchmark/source-registry.tsv")
+        source_id = "SRC-WIKTIONARY-TH-เพิ่ง"
+        source = registry[source_id]
+        self.assertEqual(source["verification_status"], "VERIFIED")
+        self.assertIn("not expert-adjudicated or acoustic gold", source["notes"])
+        validate_source_reference(
+            source_id, source["source_url"], "CC-BY-SA-4.0",
+            "UKRAINIAN_PREFERENCE_INPUT", registry, row_id="TH-SRC-IPA-007",
+        )
+        with self.assertRaisesRegex(ValueError, "not approved for BROAD_SURFACE_IPA_GOLD_INPUT"):
+            validate_source_reference(
+                source_id, source["source_url"], "CC-BY-SA-4.0",
+                "BROAD_SURFACE_IPA_GOLD_INPUT", registry, row_id="TH-SRC-IPA-007",
+            )
+
     def test_empty_reviewer_registry_is_valid_but_verifies_no_experts(self):
         self.assertEqual(load_reviewer_registry(ROOT / "data/benchmark/reviewer-qualifications.tsv"), {})
 
