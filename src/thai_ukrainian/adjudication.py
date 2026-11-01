@@ -10,7 +10,7 @@ from math import isfinite
 from typing import Iterable, Mapping
 import unicodedata
 
-from .evidence_registry import validate_reviewer_reference, validate_source_reference
+from .evidence_registry import validate_audio_asset_reference, validate_reviewer_reference, validate_source_reference
 
 PACKET_FIELDS = (
     "id", "thai", "orthography_validity", "lexical_reading",
@@ -127,6 +127,7 @@ def validate_review_packet(
     challenge_rows: Iterable[Mapping[str, str]] | None = None,
     reviewer_registry: Mapping[str, Mapping[str, str]] | None = None,
     source_registry: Mapping[str, Mapping[str, str]] | None = None,
+    audio_asset_registry: Mapping[str, Mapping[str, str]] | None = None,
 ) -> dict:
     """Validate one reviewer's completed packet without scoring its judgments."""
     if not reviewer_id.strip():
@@ -280,12 +281,11 @@ def validate_review_packet(
                     audio_source_id, audio_source["source_url"], audio_source["license"],
                     "ACOUSTIC_PHONETICS_RESEARCH", source_registry, row_id=ident,
                 )
-                try:
-                    start_value, end_value = float(start), float(end)
-                except ValueError as exc:
-                    raise ValueError(f"audio-backed review requires a numeric time interval: {ident}") from exc
-                if not isfinite(start_value) or not isfinite(end_value) or start_value < 0 or end_value <= start_value:
-                    raise ValueError(f"audio-backed review requires a valid positive time interval: {ident}")
+                if audio_asset_registry is None:
+                    raise ValueError(f"audio asset registry is required for audio-backed review: {ident}")
+                validate_audio_asset_reference(
+                    asset, audio_source_id, start, end, audio_asset_registry, row_id=ident,
+                )
             elif level == "NARROW_ACOUSTIC":
                 raise ValueError(f"narrow acoustic review requires a registered audio_source_id and asset interval: {ident}")
     return {
@@ -302,6 +302,7 @@ def validate_independent_pair(
     challenge_rows: Iterable[Mapping[str, str]] | None = None,
     reviewer_registry: Mapping[str, Mapping[str, str]] | None = None,
     source_registry: Mapping[str, Mapping[str, str]] | None = None,
+    audio_asset_registry: Mapping[str, Mapping[str, str]] | None = None,
 ) -> dict:
     """Check reviewer separation and identical item coverage; do not adjudicate."""
     challenge_rows = list(challenge_rows) if challenge_rows is not None else None
@@ -319,8 +320,14 @@ def validate_independent_pair(
     for ident in a:
         if (a[ident].get("thai") or "") != (b[ident].get("thai") or ""):
             raise ValueError(f"independent reviewer input mismatch: {ident}")
-    validate_review_packet(a.values(), a.keys(), reviewer_a_id, challenge_rows, reviewer_registry, source_registry)
-    validate_review_packet(b.values(), b.keys(), reviewer_b_id, challenge_rows, reviewer_registry, source_registry)
+    validate_review_packet(
+        a.values(), a.keys(), reviewer_a_id, challenge_rows, reviewer_registry,
+        source_registry, audio_asset_registry,
+    )
+    validate_review_packet(
+        b.values(), b.keys(), reviewer_b_id, challenge_rows, reviewer_registry,
+        source_registry, audio_asset_registry,
+    )
     agreement = _pairwise_agreement(
         a, b,
         (
