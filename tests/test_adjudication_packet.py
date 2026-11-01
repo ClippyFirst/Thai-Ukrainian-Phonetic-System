@@ -501,5 +501,19 @@ class AdjudicationPacketTests(unittest.TestCase):
             )
 
 
+    def test_abstention_cannot_include_narrow_ipa_without_audio_evidence(self):
+        row = completed_row("TH-G2P-001", "กา")
+        row.update({
+            "transcription_level": "NARROW_ACOUSTIC",
+            "uncertainty": "ABSTAIN",
+            "phonemic_ipa": "",
+            "broad_surface_ipa": "",
+            "narrow_ipa": "[kʰaː]",
+            "abstention_reason": "Insufficient audio evidence.",
+        })
+        with self.assertRaisesRegex(ValueError, "ABSTAIN rows must not contain IPA labels"):
+            validate_review_packet([row], ["TH-G2P-001"], "TH-PH-01")
+
+
 if __name__ == "__main__":
     unittest.main()
