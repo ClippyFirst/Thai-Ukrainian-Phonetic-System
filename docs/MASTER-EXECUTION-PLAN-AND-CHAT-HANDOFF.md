@@ -1975,3 +1975,11 @@ This note supersedes the preceding documentation-only status. The branch now cha
 
 - Added `docs/reviewer-outreach-shortlist.md` with public-profile-based candidates for Thai phonetics/phonology and Ukrainian practical-transcription review. No emails were sent; no candidate is treated as verified, available, native or independent until checked. Reviewer registry remains empty.
 - Recorded official Zenodo wordlist preview metadata: 206 data rows, columns A-D, 9.7 kB, MD5 `e62f500d87b4ff8c6deb4c4595854d34`. Exact source CSV bytes were not downloaded; SHA-256 and complete order-set audit remain pending.
+
+
+## Handoff — separate six-item Thai blind regression supplement (2026-11-01)
+
+- Added `data/benchmark/thai_g2p_supplemental_challenge.jsonl` and `data/benchmark/ipa-adjudication-supplemental-blind.tsv` for six exact reported problem forms/contexts: `วันนี้`, `เห็น`, `เพิ่ง`, `อะไรบ้าง`, `อธิบาย`, `ฤๅษี`.
+- The original 42-item challenge remains frozen and source-pinned. The supplement has its own MIT source record pinned to `8ae6e3ef1225a3e8b542371a4b3b26e29becf2a2`.
+- Regression test validates exact coverage, all 21 columns, no prefilled IPA or reviewer fields, and null gold fields. No source IPA for `เพิ่ง` is exposed in the Thai blind sheet.
+- No expert reviews have been received; this is a ready-to-review packet only. The six items must be independently annotated and separately adjudicated before scoring.

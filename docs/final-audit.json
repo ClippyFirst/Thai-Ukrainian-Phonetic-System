@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Main remains cc398254c178171f74397aed556766e87356ab84. PR #182 branch research/independent-adjudication-gates-20261101 includes code/test head 8ba1d93293a69178bf0bdc23b7325d17b47c10a2. Exact-head verification for the preceding code/test checkpoint passed all three CI jobs (296 Python tests, 1168 subtests, Ruff, browser/IPA/RTGS diagnostics, wheel install and master artifact); Web Static and external VISTEC evaluation passed. The source-attested IPA registry now contains seven pinned dictionary references, including the monosyllabic short-vowel /pʰɤŋ˥˩/ entry for เพิ่ง (not gold). The official CCOST wordlist preview is available and was inspected; file bytes were not downloaded in this connector-only session, so the generator/hash audit against the original CSV remains pending. No real expert submissions exist; accuracy remains NOT_MEASURED. A public reviewer outreach shortlist is documented from institutional profiles; no contact has been made and the reviewer registry remains empty. CCOST wordlist Zenodo preview metadata (206 rows, A-D, 9.7 kB, MD5 e62f500d87b4ff8c6deb4c4595854d34) is recorded; original CSV bytes and A-D set comparison remain pending.",
+  "status": "Main remains cc398254c178171f74397aed556766e87356ab84. PR #182 branch research/independent-adjudication-gates-20261101 includes code/test head 8ba1d93293a69178bf0bdc23b7325d17b47c10a2. Exact-head verification for the preceding code/test checkpoint passed all three CI jobs (296 Python tests, 1168 subtests, Ruff, browser/IPA/RTGS diagnostics, wheel install and master artifact); Web Static and external VISTEC evaluation passed. The source-attested IPA registry now contains seven pinned dictionary references, including the monosyllabic short-vowel /pʰɤŋ˥˩/ entry for เพิ่ง (not gold). The official CCOST wordlist preview is available and was inspected; file bytes were not downloaded in this connector-only session, so the generator/hash audit against the original CSV remains pending. No real expert submissions exist; accuracy remains NOT_MEASURED. A public reviewer outreach shortlist is documented from institutional profiles; no contact has been made and the reviewer registry remains empty. CCOST wordlist Zenodo preview metadata (206 rows, A-D, 9.7 kB, MD5 e62f500d87b4ff8c6deb4c4595854d34) is recorded; original CSV bytes and A-D set comparison remain pending. A separate six-item blind Thai review supplement now covers the exact user-reported forms and contexts; it preserves the original frozen 42-item challenge source and carries no gold labels.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -80,7 +80,8 @@
     "ccost_lrec_2026_textgrid_tier_mapping",
     "ukrainian_native_review_criteria",
     "source_attested_ipa_reference_for_เพิ่ง",
-    "public_independent_reviewer_outreach_shortlist"
+    "public_independent_reviewer_outreach_shortlist",
+    "six_item_blind_thai_regression_supplement"
   ],
   "not_claimed": [
     "complete_lexical_segmentation",

@@ -1289,3 +1289,11 @@ The first run with the new coverage tests completed master-table generation and 
 
 - Added `docs/reviewer-outreach-shortlist.md` with potential Thai phonetics/phonology and Ukrainian practical-transcription reviewers, based on public university profiles and peer-reviewed work. It records no outreach, consent, availability, verified native status or qualification; the reviewer registry remains empty.
 - CCOST's official Zenodo wordlist preview exposes 206 data rows in columns A-D; metadata reports 9.7 kB and MD5 `e62f500d87b4ff8c6deb4c4595854d34`. The source registry and tests preserve these source-page facts. The original bytes were not downloaded in this session, so no SHA-256 or exact A-D set comparison is claimed.
+
+
+## Supplemental Thai blind review packet — 2026-11-01
+
+- Preserved the original 42-item challenge as an immutable source and added a separately pinned six-item blind review supplement for the exact user-reported problem areas: `วันนี้`, `เห็น` in context, `เพิ่ง`, `อะไรบ้าง`, `อธิบาย` and `ฤๅษี` in context.
+- The supplemental packet contains only prompt text; IPA/tone/length/boundary gold fields remain null or blank. The blind reviewer sheet excludes engine output, probe labels and the separate source-attested `เพิ่ง` IPA to avoid anchoring.
+- Exact source record is `CLIPPYFIRST-THAI-REGRESSION-ADDENDUM-20261101`, pinned to commit `8ae6e3ef1225a3e8b542371a4b3b26e29becf2a2`. Automated tests verify all six rows, 21 TSV columns, no prefilled labels and permitted source use.
+- This makes the problem cases ready for independent Thai review; it does not create expert labels or establish accuracy. Reviewer registry remains empty.
