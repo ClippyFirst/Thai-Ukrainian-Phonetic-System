@@ -1297,3 +1297,8 @@ The source registry does not itself create gold data. Wisesight and VISTEC remai
 | Task | State | Evidence / boundary |
 |---|---|---|
 | Require immutable dataset revisions and absolute asset URIs | DONE_VERIFIED after exact-head CI | Audio asset manifest rejects moving aliases such as `main`/`latest` and requires an absolute HTTP(S) asset URI; file SHA-256 and duration are also mandatory. |
+
+
+| Task | State | Evidence / boundary |
+|---|---|---|
+| Repair malformed corpus-source CSV row and enforce schema | DONE_VERIFIED after exact-head CI | Quoted the TUD row's comma-containing fields; added test requiring exact seven-column header, no missing/extra columns and unique source IDs. |
