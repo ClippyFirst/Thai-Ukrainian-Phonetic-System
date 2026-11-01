@@ -167,6 +167,16 @@ class AdjudicationPacketTests(unittest.TestCase):
             validate_independent_pair(a, b)
 
 
+    def test_thai_independent_pair_reports_field_agreement_and_abstentions(self):
+        a = [completed_row("TH-G2P-001", "กา", "TH-PH-01")]
+        b = [completed_row("TH-G2P-001", "กา", "TH-PH-02")]
+        b[0]["tone_sequence"] = "LOW"
+        result = validate_independent_pair(a, b)
+        self.assertEqual(result["agreement"]["fields"]["phonemic_ipa"]["exact_agreements"], 1)
+        self.assertEqual(result["agreement"]["fields"]["tone_sequence"]["exact_agreements"], 0)
+        self.assertEqual(result["agreement"]["fields"]["tone_sequence"]["exact_agreement_rate"], 0.0)
+        self.assertEqual(result["agreement"]["joint_abstentions"], 0)
+
     def test_ukrainian_preference_packet_is_candidate_blind_and_source_bound(self):
         source = [{
             "id": "TH-UA-001", "thai": "ไกล", "phonemic_ipa": "/klaj˧/",
@@ -259,6 +269,24 @@ class AdjudicationPacketTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "distinct"):
             validate_ukrainian_independent_pair(a, b)
 
+
+    def test_ukrainian_pair_reports_preference_and_policy_agreement(self):
+        base = {
+            "id": "TH-UA-001", "thai": "ไกล", "source_ipa": "/klaj˧/",
+            "ipa_reference_status": "SOURCE_ATTESTED_NOT_GOLD",
+            "source_id": "SRC-1", "source_url": "https://example.org/source",
+            "license": "CC-BY-SA-4.0", "criteria_version": "UA-PRACTICAL-TRANSCRIPTION-0.1",
+            "reviewer_qualification_ref": "qualification", "preferred_ukrainian_form": "клай",
+            "syllable_boundary_policy": "DISPLAY_ONLY",
+            "tone_rendering_policy": "NO_ORTHOGRAPHIC_TONE_MARK", "uncertainty": "LOW",
+            "abstention_reason": "", "reviewed_at": "2026-11-01", "rationale": "Reasoned preference.",
+        }
+        a = [{**base, "reviewer_id": "UK-UA-01"}]
+        b = [{**base, "reviewer_id": "UK-UA-02", "preferred_ukrainian_form": "кляй"}]
+        result = validate_ukrainian_independent_pair(a, b)
+        self.assertEqual(result["agreement"]["fields"]["preferred_ukrainian_form"]["exact_agreements"], 0)
+        self.assertEqual(result["agreement"]["fields"]["syllable_boundary_policy"]["exact_agreements"], 1)
+        self.assertEqual(result["agreement"]["fields"]["tone_rendering_policy"]["exact_agreement_rate"], 1.0)
 
     def test_phonemic_packet_does_not_accept_surface_only_primary_level(self):
         row = completed_row("TH-G2P-001", "กา")
