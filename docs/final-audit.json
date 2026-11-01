@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PRs #171–#177 are merged. The repository structure pass added documentation and script ownership maps, removed unused browser maps, introduced generated-artifact drift checks, derived Python consonant maps from the canonical registry, and corrected the typed-IPA manifest contract. Current main at this documentation checkpoint is 1e0c2b3432a49178c6f00fbfb631a0258a7cc6fc. Engineering-verified research prototype; independent Thai/UA adjudication and manual accessibility review remain outstanding.",
+  "status": "PRs #171–#177 are merged. The repository structure pass added documentation and script ownership maps, removed unused browser maps, introduced generated-artifact drift checks, derived Python consonant maps from the canonical registry, and corrected the typed-IPA manifest contract. Main snapshot 1e0c2b3432a49178c6f00fbfb631a0258a7cc6fc passed post-merge CI (41325122025) and Pages build/deploy (41325122035). PR #178 is the sole open documentation closeout. Engineering-verified research prototype; independent Thai/UA adjudication and manual accessibility review remain outstanding.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -2119,8 +2119,17 @@
     "deletions": 0,
     "note": "9 refs were listed before this documentation closeout branch was created; this branch is the tenth ref. No branch deletion was performed."
   },
-  "open_prs_current": [],
-  "latest_pr_head_source": "No open PRs at the start of the documentation closeout; PR #177 was the latest merged PR.",
+  "open_prs_current": [
+    {
+      "number": 178,
+      "head": "de34882a797e2ec8a65324f8efb2d64efbf4e095",
+      "status": "OPEN",
+      "exact_head_ci_run": 41325709592,
+      "ci_status": "PENDING_AT_STATUS_REFRESH",
+      "scope": "repository cleanup audit/matrix/handoff closeout"
+    }
+  ],
+  "latest_pr_head_source": "PR #178 metadata; the current documentation branch is the only open PR.",
   "status_refresh_2026_10_31": {
     "main_sha": "8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8",
     "pr_169": {
@@ -2155,16 +2164,19 @@
     "readiness": "engineering-verified research prototype; not release-ready for general linguistic-accuracy claims"
   },
   "latest_exact_head_verification": {
-    "current_pr": null,
+    "current_pr": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/178",
+    "current_head": "de34882a797e2ec8a65324f8efb2d64efbf4e095",
+    "current_exact_head_ci_run": 41325709592,
+    "current_exact_head_ci_status": "PENDING at the first status refresh; check the latest PR head and Actions before merge.",
     "latest_merged_pr": 177,
     "latest_merged_pr_head": "65d2cc47d9bf34e744f26f1ca60cb8a960e609ef",
-    "latest_exact_head_ci_run": 41324845398,
-    "latest_exact_head_ci_status": "SUCCESS — test, wheel-install-smoke, master-artifact",
+    "latest_merged_pr_exact_head_ci_run": 41324845398,
+    "latest_merged_pr_exact_head_ci_status": "SUCCESS — test, wheel-install-smoke, master-artifact",
     "post_merge_main_sha": "1e0c2b3432a49178c6f00fbfb631a0258a7cc6fc",
     "post_merge_main_ci_run": 41325122025,
-    "post_merge_main_ci_status": "IN_PROGRESS at documentation checkpoint",
+    "post_merge_main_ci_status": "SUCCESS — test, wheel-install-smoke, master-artifact",
     "post_merge_pages_run": 41325122035,
-    "post_merge_pages_status": "IN_PROGRESS at documentation checkpoint"
+    "post_merge_pages_status": "SUCCESS — build, deploy"
   },
   "external_benchmark_research_2026_11_01": {
     "thai_g2p_v4": {
@@ -2246,7 +2258,9 @@
       176,
       177
     ],
-    "open_prs": [],
+    "open_prs": [
+      178
+    ],
     "review_submissions_and_inline_threads": 0,
     "branch_refs": 10,
     "non_main_refs": 9,
@@ -2263,8 +2277,9 @@
     "local_test_execution": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
     "latest_merged_pr_exact_head_ci_run": 41324845398,
     "post_merge_main_ci_run": 41325122025,
-    "post_merge_main_ci_status": "IN_PROGRESS_AT_AUDIT_CHECKPOINT",
-    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY"
+    "post_merge_main_ci_status": "SUCCESS — test, wheel-install-smoke, master-artifact",
+    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY",
+    "post_merge_pages_status": "SUCCESS — build, deploy"
   },
   "repository_structure_cleanup_2026_11_01": {
     "main_at_start": "69dafe58a9458d33a645cdcd517e61e9978abdbd",
@@ -2349,6 +2364,13 @@
       "manual_accessibility_review": "BLOCKED"
     },
     "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
-    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY"
+    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY",
+    "open_prs": [
+      178
+    ],
+    "post_merge_main_ci_run": 41325122025,
+    "post_merge_main_ci_status": "SUCCESS — all three jobs",
+    "post_merge_pages_run": 41325122035,
+    "post_merge_pages_status": "SUCCESS — build and deploy"
   }
 }
