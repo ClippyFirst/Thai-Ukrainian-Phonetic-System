@@ -56,4 +56,4 @@ This page is the navigation layer for the repository. It distinguishes the maint
 
 ## Current repository snapshot
 
-At the snapshot used to establish this guide (2026-11-01), `main` was `69dafe58a9458d33a645cdcd517e61e9978abdbd`; the main-branch CI run completed successfully for `test`, `wheel-install-smoke` and `master-artifact`, and the GitHub Pages deployment for that commit succeeded. This is an engineering verification snapshot, not a claim of independent linguistic gold or WCAG conformance. Check GitHub Actions and the validation matrix for later status.
+The navigation guide was added in PR #171 and merged to `main` as `85ced007f6fab7572a78380553ebfe42ccb18e07` on 2026-11-01. PR #171 exact-head CI run [41310072386](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41310072386) passed `test`, `wheel-install-smoke` and `master-artifact`. This is engineering verification, not a claim of independent linguistic gold or WCAG conformance. Check GitHub Actions and the validation matrix for later status.
