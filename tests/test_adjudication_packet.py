@@ -22,7 +22,7 @@ FIELDS = [
     "word_boundaries", "syllable_boundaries", "phonemic_ipa", "broad_surface_ipa", "narrow_ipa",
     "tone_sequence", "vowel_length", "final_glottal", "transcription_level",
     "uncertainty", "abstention_reason", "reviewer_id", "reviewer_qualification_ref",
-    "reviewed_at", "audio_asset_reference", "audio_time_start", "audio_time_end",
+    "reviewed_at", "audio_source_id", "audio_asset_reference", "audio_time_start", "audio_time_end",
     "source_notes",
 ]
 
@@ -303,11 +303,21 @@ class AdjudicationPacketTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "audio"):
             validate_review_packet([row], ["TH-G2P-001"], "TH-PH-01")
         row.update({
-            "audio_asset_reference": "CCOST:recording-001",
+            "audio_source_id": "TEST-AUDIO",
+            "audio_asset_reference": "recording-001",
             "audio_time_start": "1.20",
             "audio_time_end": "1.85",
         })
-        self.assertEqual(validate_review_packet([row], ["TH-G2P-001"], "TH-PH-01")["records"], 1)
+        source_registry = {"TEST-AUDIO": {
+            "source_url": "https://example.org/audio", "license": "CC0-1.0",
+            "allowed_uses": "ACOUSTIC_PHONETICS_RESEARCH", "verification_status": "VERIFIED",
+            "notes": "Unit-test-only audio source.",
+        }}
+        with self.assertRaisesRegex(ValueError, "source registry"):
+            validate_review_packet([row], ["TH-G2P-001"], "TH-PH-01")
+        self.assertEqual(
+            validate_review_packet([row], ["TH-G2P-001"], "TH-PH-01", source_registry=source_registry)["records"], 1
+        )
 
     def test_narrow_ipa_syllable_count_must_match_phonemic_boundaries(self):
         row = completed_row("TH-G2P-001", "กา")
