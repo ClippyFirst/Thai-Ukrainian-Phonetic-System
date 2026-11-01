@@ -36,12 +36,27 @@ def _unique_rows(rows: Iterable[Mapping[str, str]]) -> dict[str, Mapping[str, st
     return indexed
 
 
+def _require_exact_fields(
+    indexed: Mapping[str, Mapping[str, str]], expected_fields: Iterable[str], packet_name: str
+) -> None:
+    expected = set(expected_fields)
+    for ident, row in indexed.items():
+        actual = set(row)
+        if actual != expected:
+            missing = sorted(expected - actual)
+            extra = sorted(actual - expected)
+            raise ValueError(
+                f"{packet_name} fields mismatch for {ident}: missing={missing}, extra={extra}"
+            )
+
+
 def validate_blind_packet(
     rows: Iterable[Mapping[str, str]],
     challenge_rows: Iterable[Mapping[str, str]],
 ) -> dict:
     """Require a blank, output-blind packet matching the frozen challenge set."""
     indexed = _unique_rows(rows)
+    _require_exact_fields(indexed, PACKET_FIELDS, "Thai blind packet")
     expected = _unique_rows(challenge_rows)
     if set(indexed) != set(expected):
         missing = sorted(set(expected) - set(indexed))
@@ -74,6 +89,7 @@ def validate_review_packet(
     if not reviewer_id.strip():
         raise ValueError("reviewer_id must be supplied")
     indexed = _unique_rows(rows)
+    _require_exact_fields(indexed, PACKET_FIELDS, "Thai review packet")
     expected = set(expected_ids)
     if set(indexed) != expected:
         raise ValueError("review packet must cover the exact frozen challenge set")
@@ -100,8 +116,8 @@ def validate_review_packet(
         abstention_reason = (row.get("abstention_reason") or "").strip()
         if uncertainty == "ABSTAIN":
             abstentions += 1
-            if ipa:
-                raise ValueError(f"ABSTAIN rows must not contain phonemic_ipa: {ident}")
+            if ipa or (row.get("broad_surface_ipa") or "").strip():
+                raise ValueError(f"ABSTAIN rows must not contain IPA labels: {ident}")
             if not abstention_reason:
                 raise ValueError(f"abstention_reason is required: {ident}")
         elif not ipa:
@@ -143,6 +159,9 @@ def validate_independent_pair(
         raise ValueError("independent reviewers must have distinct reviewer_id values")
     if set(a) != set(b):
         raise ValueError("independent reviewers must cover identical item IDs")
+    for ident in a:
+        if (a[ident].get("thai") or "") != (b[ident].get("thai") or ""):
+            raise ValueError(f"independent reviewer input mismatch: {ident}")
     validate_review_packet(a.values(), a.keys(), reviewer_a_id)
     validate_review_packet(b.values(), b.keys(), reviewer_b_id)
     return {
@@ -169,6 +188,7 @@ def validate_ukrainian_blind_packet(
 ) -> dict:
     """Validate a candidate-blind UA preference packet conditional on source-attested IPA."""
     indexed = _unique_rows(rows)
+    _require_exact_fields(indexed, UKRAINIAN_PREFERENCE_FIELDS, "Ukrainian preference packet")
     expected = _unique_rows(source_rows)
     if set(indexed) != set(expected):
         raise ValueError("Ukrainian packet must cover the exact source-attested IPA sample")

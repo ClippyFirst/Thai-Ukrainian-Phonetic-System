@@ -16,10 +16,16 @@ from thai_ukrainian.adjudication import (
 def read_tsv(path: Path, required: tuple[str, ...] | list[str]) -> list[dict[str, str]]:
     with path.open("r", encoding="utf-8-sig", newline="") as stream:
         reader = csv.DictReader(stream, delimiter="\t")
-        missing = set(required) - set(reader.fieldnames or [])
+        fields = set(reader.fieldnames or [])
+        missing = set(required) - fields
+        unexpected = fields - set(required)
+        if missing or unexpected:
+            raise ValueError(
+                f"{path}: columns mismatch; missing={sorted(missing)}, unexpected={sorted(unexpected)}"
+            )
         if missing:
             raise ValueError(f"{path}: missing columns: {', '.join(sorted(missing))}")
-        if "engine_candidate" in (reader.fieldnames or []):
+
             raise ValueError(f"{path}: blind preference packet must not expose engine_candidate")
         return [{key: (value or "") for key, value in row.items()} for row in reader]
 

@@ -65,6 +65,28 @@ class AdjudicationPacketTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "unique"):
             validate_blind_packet(rows, CHALLENGE)
 
+
+    def test_blind_packet_rejects_unexpected_engine_output_column(self):
+        rows = [blank_row("TH-G2P-001", "กา"), blank_row("TH-G2P-002", "กะ")]
+        rows[0]["engine_output"] = "/kaː/"
+        with self.assertRaisesRegex(ValueError, "fields mismatch"):
+            validate_blind_packet(rows, CHALLENGE)
+
+    def test_abstention_cannot_smuggle_surface_ipa(self):
+        row = blank_row("TH-G2P-001", "กา")
+        row.update({
+            "orthography_validity": "AMBIGUOUS",
+            "transcription_level": "BROAD_PHONEMIC",
+            "uncertainty": "ABSTAIN",
+            "abstention_reason": "Reading not established.",
+            "reviewer_id": "TH-PH-01",
+            "reviewer_qualification_ref": "qualification-record:TH-PH-01",
+            "reviewed_at": "2026-11-01",
+            "broad_surface_ipa": "[kaː]",
+        })
+        with self.assertRaisesRegex(ValueError, "must not contain IPA labels"):
+            validate_review_packet([row], ["TH-G2P-001"], "TH-PH-01")
+
     def test_review_requires_one_identified_reviewer_and_complete_coverage(self):
         rows = [completed_row("TH-G2P-001", "กา"), completed_row("TH-G2P-002", "กะ")]
         result = validate_review_packet(rows, ["TH-G2P-001", "TH-G2P-002"], "TH-PH-01")

@@ -18,7 +18,13 @@ from thai_ukrainian.adjudication import (
 def read_tsv(path: Path) -> list[dict[str, str]]:
     with path.open("r", encoding="utf-8-sig", newline="") as stream:
         reader = csv.DictReader(stream, delimiter="\t")
-        missing = set(PACKET_FIELDS) - set(reader.fieldnames or [])
+        fields = set(reader.fieldnames or [])
+        missing = set(PACKET_FIELDS) - fields
+        unexpected = fields - set(PACKET_FIELDS)
+        if missing or unexpected:
+            raise ValueError(
+                f"{path}: columns mismatch; missing={sorted(missing)}, unexpected={sorted(unexpected)}"
+            )
         if missing:
             raise ValueError(f"{path}: missing columns: {', '.join(sorted(missing))}")
         return [{key: (value or "") for key, value in row.items()} for row in reader]
