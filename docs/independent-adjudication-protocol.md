@@ -236,3 +236,14 @@ The original 42-item challenge set remains frozen and source-pinned to main comm
 - The blind sheet excludes internal stratum/probe labels, all engine output, and the separately inspected Wiktionary IPA for `เพิ่ง`. All gold IPA, surface IPA, tone, length and boundary fields remain null/blank.
 
 This supplement is a set of review prompts, not labels or a benchmark score. It must be annotated independently under the same two-reviewer and separate-adjudicator protocol. The 42-item base packet and six-item supplement are validated separately to preserve the original challenge source hash.
+
+
+## Actual CCOST wordlist source audit — 2026-11-01
+
+The official Zenodo preview was reconstructed byte-for-byte from its published text representation and verified against the file's official MD5 `e62f500d87b4ff8c6deb4c4595854d34`. The reconstructed file is 9,730 bytes with SHA-256 `e3836f6204c674a8d972dfd49de369eea7856ca6f00d520aafcd62f4e7273223`. The repository's `inspect_wordlist`/packet-generation logic was run against those exact bytes:
+
+- Four order columns A-D each contain 206 data rows and 206 unique entries; no within-column duplicates were found.
+- Order A is not set-equivalent to B, C or D. Each of B/C/D differs from A by two missing and two extra entries; the union contains 208 unique prompts.
+- The generator correctly returns `SOURCE_ORDER_DISCREPANCY_REQUIRES_RECONCILIATION`, marks the packet `scoreable: false`, and emits a 208-prompt union locally. No CCOST-derived files or word strings are committed.
+
+**Decision:** do not freeze the 208-prompt packet or score it yet. The source author/data curator must confirm whether the two substitutions are intentional stimulus differences, spelling variants, or source-file errors and, if necessary, publish a corrected wordlist/erratum. The CC BY-NC-SA 4.0 attribution and non-commercial/share-alike conditions remain in force. This audit verifies the public wordlist file only; it does not inspect the 6.2 GB audio/TextGrid archive or establish phonetic gold.
