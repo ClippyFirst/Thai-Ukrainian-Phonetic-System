@@ -245,17 +245,6 @@ def validate_review_packet(
                 raise ValueError(f"invalid final_glottal value for {ident}")
             if not (len(tone_values) == len(length_values) == len(glottal_values) == syllable_count):
                 raise ValueError(f"tone, vowel-length and glottal labels must align with syllables for {ident}")
-            audio_source_id = (row.get("audio_source_id") or "").strip()
-            if audio_source_id:
-                if source_registry is None:
-                    raise ValueError(f"audio source registry is required when audio_source_id is supplied: {ident}")
-                audio_source = source_registry.get(audio_source_id)
-                if audio_source is None:
-                    raise ValueError(f"audio source_id is not registered: {ident}")
-                validate_source_reference(
-                    audio_source_id, audio_source["source_url"], audio_source["license"],
-                    "ACOUSTIC_PHONETICS_RESEARCH", source_registry, row_id=ident,
-                )
             narrow_ipa = (row.get("narrow_ipa") or "").strip()
             if level == "NARROW_ACOUSTIC":
                 if not (narrow_ipa.startswith("[") and narrow_ipa.endswith("]") and len(narrow_ipa) > 2):
@@ -269,19 +258,36 @@ def validate_review_packet(
                     or len(narrow_syllables) != syllable_count
                 ):
                     raise ValueError(f"narrow IPA syllabification must align with syllable boundaries for {ident}")
-                if not audio_source_id:
-                    raise ValueError(f"narrow acoustic review requires a registered audio_source_id: {ident}")
-                asset = (row.get("audio_asset_reference") or "").strip()
-                start = (row.get("audio_time_start") or "").strip()
-                end = (row.get("audio_time_end") or "").strip()
+            elif narrow_ipa:
+                raise ValueError(f"narrow_ipa is only valid for NARROW_ACOUSTIC reviews: {ident}")
+
+            audio_source_id = (row.get("audio_source_id") or "").strip()
+            asset = (row.get("audio_asset_reference") or "").strip()
+            start = (row.get("audio_time_start") or "").strip()
+            end = (row.get("audio_time_end") or "").strip()
+            audio_fields = (audio_source_id, asset, start, end)
+            if any(audio_fields):
+                if not all(audio_fields):
+                    raise ValueError(
+                        f"audio source ID, asset reference and time interval must be supplied together: {ident}"
+                    )
+                if source_registry is None:
+                    raise ValueError(f"audio source registry is required when audio_source_id is supplied: {ident}")
+                audio_source = source_registry.get(audio_source_id)
+                if audio_source is None:
+                    raise ValueError(f"audio source_id is not registered: {ident}")
+                validate_source_reference(
+                    audio_source_id, audio_source["source_url"], audio_source["license"],
+                    "ACOUSTIC_PHONETICS_RESEARCH", source_registry, row_id=ident,
+                )
                 try:
                     start_value, end_value = float(start), float(end)
                 except ValueError as exc:
-                    raise ValueError(f"narrow acoustic labels require an audio time interval: {ident}") from exc
-                if not asset or not isfinite(start_value) or not isfinite(end_value) or start_value < 0 or end_value <= start_value:
-                    raise ValueError(f"narrow acoustic labels require a valid audio asset and interval: {ident}")
-            elif narrow_ipa:
-                raise ValueError(f"narrow_ipa is only valid for NARROW_ACOUSTIC reviews: {ident}")
+                    raise ValueError(f"audio-backed review requires a numeric time interval: {ident}") from exc
+                if not isfinite(start_value) or not isfinite(end_value) or start_value < 0 or end_value <= start_value:
+                    raise ValueError(f"audio-backed review requires a valid positive time interval: {ident}")
+            elif level == "NARROW_ACOUSTIC":
+                raise ValueError(f"narrow acoustic review requires a registered audio_source_id and asset interval: {ident}")
     return {
         "records": len(indexed),
         "reviewer_id": reviewer_id,
