@@ -1,0 +1,59 @@
+# Repository guide
+
+This page is the navigation layer for the repository. It distinguishes the maintained product contract from research evidence and the chronological execution record.
+
+## Start here
+
+1. [Project overview and user-facing capabilities](../README.md)
+2. [Architecture and data flow](architecture.md)
+3. [Validation and evidence status](validation-matrix.md)
+4. [Current audit findings](final-audit.md)
+5. [Current continuation checkpoint and historical handoff](MASTER-EXECUTION-PLAN-AND-CHAT-HANDOFF.md)
+
+## Canonical documentation by concern
+
+| Concern | Canonical source | What belongs there |
+|---|---|---|
+| System boundaries | [Architecture](architecture.md) | Stable layers, invariants and data flow |
+| Thai analysis | [Thai orthography](thai-orthography.md), [syllable structure](thai-syllable-structure.md), [phonological rules](phonological-rules.md), [contextual phonology](contextual-phonology.md) | Linguistic model and rule scope |
+| IPA contract | [IPA](ipa.md), [benchmarking and external IPA](benchmarking-and-external-ipa.md) | Typed IPA, provenance, uncertainty and comparator limits |
+| Ukrainian output | [Target layer](ukrainian-target-layer.md), [transcription methodology](ukrainian-transcription-methodology.md), [correspondence matrices](ukrainian-correspondence-matrices.md) | IPA adaptation and practical orthography |
+| RTGS | [RTGS reference/parity research](research/rtgs-parity-corpus.json), [external renderer registry](external-ipa-renderers.md) | Separate romanization route; never an IPA substitute |
+| Data and licenses | [Evidence registry](evidence.md), [corpus validation](corpus-validation.md), `data/corpus_sources.csv`, dataset-specific license notices | Provenance, permitted use and evidence grades |
+| Interfaces | [CLI and batch API](cli-batch-api.md), [web architecture](web-service-architecture.md), [web requirements](web-service-requirements.md) | Supported interfaces and deployment boundaries |
+| Research protocol | [Research protocol](research-protocol.md), [independent adjudication](independent-adjudication-protocol.md) | Reproducible evaluation and human-review gates |
+
+## Code and data layout
+
+- `src/thai_ukrainian/` — Python reference implementation and public API.
+- `web/src/` — browser implementation; parity with Python is a release gate.
+- `data/thai/` — runtime Thai registries and their provenance/license notices.
+- `data/ua_target_vectors.csv` — Ukrainian target feature inventory.
+- `data/benchmark/` — benchmark inputs, adjudication templates and diagnostic run records; evidence grades remain explicit.
+- `schemas/` — machine-readable contracts.
+- `scripts/` — generators, diagnostics, evaluators and packaging checks.
+- `tests/` and `web/tests/` — Python and browser regression suites.
+- `.github/workflows/` — CI, static web validation, Pages deployment and opt-in external evaluations.
+
+## Document lifecycle and source of truth
+
+- `README.md` is the public product overview, not the task ledger.
+- `architecture.md` describes stable architecture; update it when an actual boundary changes.
+- `validation-matrix.md` is the acceptance/task ledger. Each task must have a state and evidence or a concrete blocker.
+- `final-audit.md` records audit findings and their evidence.
+- `MASTER-EXECUTION-PLAN-AND-CHAT-HANDOFF.md` is a chronological continuation log. Its historical entries are not necessarily current; use its newest dated entry and reconcile it with the matrix and live GitHub state.
+- `final-audit.json` and generated manifests are machine-readable/generated artifacts. Do not hand-edit generated output; update the owning source and run its generator.
+- `docs/archive/` is for superseded design snapshots that remain useful as history. Do not move active evidence or delete historical records merely to reduce file size.
+
+## Change discipline
+
+1. Find the owning source, generator, schema and tests before editing a derived artifact.
+2. Keep phonetic IPA-first output and RTGS romanization-based output distinct.
+3. Treat source-attested and source-annotated data as such; do not relabel them expert gold.
+4. For behavior changes, add a regression test and verify Python/browser parity.
+5. Update the matrix and audit only with evidence from the exact commit being described.
+6. Do not claim linguistic accuracy or accessibility conformance without the independent review specified by the relevant protocol.
+
+## Current repository snapshot
+
+At the snapshot used to establish this guide (2026-11-01), `main` was `69dafe58a9458d33a645cdcd517e61e9978abdbd`; the main-branch CI run completed successfully for `test`, `wheel-install-smoke` and `master-artifact`, and the GitHub Pages deployment for that commit succeeded. This is an engineering verification snapshot, not a claim of independent linguistic gold or WCAG conformance. Check GitHub Actions and the validation matrix for later status.
