@@ -47,6 +47,21 @@ class EvidenceRegistryTests(unittest.TestCase):
                 registry, row_id="challenge-surface",
             )
 
+    def test_ccost_wordlist_is_only_approved_as_broad_phonemic_input(self):
+        registry = load_source_registry(ROOT / "data/benchmark/source-registry.tsv")
+        source_id = "CORP-CCOST-WORDLIST"
+        source = registry[source_id]
+        self.assertEqual(source["verification_status"], "VERIFIED")
+        validate_source_reference(
+            source_id, source["source_url"], "CC-BY-NC-SA-4.0",
+            "BROAD_PHONEMIC_IPA_GOLD_INPUT", registry, row_id="ccost-word-1"
+        )
+        with self.assertRaisesRegex(ValueError, "not approved for BROAD_SURFACE_IPA_GOLD_INPUT"):
+            validate_source_reference(
+                source_id, source["source_url"], "CC-BY-NC-SA-4.0",
+                "BROAD_SURFACE_IPA_GOLD_INPUT", registry, row_id="ccost-surface-1"
+            )
+
     def test_source_registry_binds_exact_url_license_and_allowed_use(self):
         registry = load_source_registry(ROOT / "data/benchmark/source-registry.tsv")
         source = registry["SRC-WIKTIONARY-TH-ไกล"]
