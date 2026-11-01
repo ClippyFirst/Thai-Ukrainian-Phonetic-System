@@ -218,8 +218,10 @@ def validate_review_packet(
 def validate_independent_pair(
     reviewer_a: Iterable[Mapping[str, str]],
     reviewer_b: Iterable[Mapping[str, str]],
+    challenge_rows: Iterable[Mapping[str, str]] | None = None,
 ) -> dict:
     """Check reviewer separation and identical item coverage; do not adjudicate."""
+    challenge_rows = list(challenge_rows) if challenge_rows is not None else None
     a = _unique_rows(reviewer_a)
     b = _unique_rows(reviewer_b)
     ids_a = {(row.get("reviewer_id") or "").strip() for row in a.values()}
