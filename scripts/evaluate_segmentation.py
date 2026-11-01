@@ -24,7 +24,7 @@ PRED_FIELDS = ["id", "engine", "predicted_tokens_json", "status", "version"]
 SCOREABLE_PREDICTION_STATUSES = {"ok"}
 SCOREABLE_GOLD_STATUSES = {"ADJUDICATED", "SOURCE_ANNOTATED"}
 ADJUDICATION_FIELDS = (
-    "source_url", "reviewer_a_id", "reviewer_b_id",
+    "source_url", "segmentation_layer", "reviewer_a_id", "reviewer_b_id",
     "reviewer_a_qualification_ref", "reviewer_b_qualification_ref",
     "reviewer_a_tokens_json", "reviewer_b_tokens_json", "adjudicator_id",
     "adjudication_outcome", "adjudication_record_id", "adjudication_notes",
@@ -82,6 +82,8 @@ def validate_adjudicated_row(row: dict[str, str]) -> tuple[list[str], list[str]]
         raise ValueError(
             f"ADJUDICATED gold row {row_id!r} requires independent-review provenance: {', '.join(missing)}"
         )
+    if row["segmentation_layer"] not in {"WORD", "SYLLABLE"}:
+        raise ValueError(f"ADJUDICATED gold row {row_id!r} requires segmentation_layer WORD or SYLLABLE")
     if row["reviewer_a_id"].strip() == row["reviewer_b_id"].strip():
         raise ValueError(f"ADJUDICATED gold row {row_id!r} requires two distinct reviewers")
     reviewer_a = parse_tokens(
@@ -149,6 +151,9 @@ def main() -> int:
                 "split": row["split"].strip(),
                 "gold_status": row["gold_status"].strip(),
                 "source_url": row.get("source_url", "").strip(),
+                "segmentation_layer": row.get("segmentation_layer", "").strip() or (
+                    "WORD" if row["gold_status"] == "SOURCE_ANNOTATED" else ""
+                ),
                 "reviewer_a_id": row.get("reviewer_a_id", "").strip(),
                 "reviewer_b_id": row.get("reviewer_b_id", "").strip(),
                 "reviewer_a_tokens": reviewer_a_tokens,
@@ -158,6 +163,9 @@ def main() -> int:
             }
 
     gold_statuses = {str(row["gold_status"]) for row in gold.values()}
+    segmentation_layers = {str(row["segmentation_layer"]) for row in gold.values()}
+    if len(segmentation_layers) > 1:
+        raise ValueError("do not mix WORD and SYLLABLE segmentation rows in one report")
     if len(gold_statuses) > 1:
         raise ValueError(
             "do not mix ADJUDICATED and SOURCE_ANNOTATED rows in one report; "
@@ -202,6 +210,7 @@ def main() -> int:
         "method": {
             "gold_gate": "ADJUDICATED requires two distinct reviewers, raw tokenizations, adjudicator/outcome/record and source provenance; SOURCE_ANNOTATED retains its source-only evidence grade; evidence grades are never mixed",
             "gold_status": scored_gold_status or "NONE",
+            "segmentation_layer": next(iter(segmentation_layers), None),
             "normalization": "Unicode NFC only; token concatenation must equal normalized source text exactly",
             "boundary_units": "Python Unicode code-point offsets, excluding the final text boundary",
             "missing_predictions": "eligible gold rows remain in denominator; missing/empty tokenization contributes no predicted boundaries",

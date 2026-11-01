@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts" / "evaluate_segmentation.py"
 GOLD_FIELDS = [
     "id", "text", "gold_tokens_json", "gold_status", "source_id", "license", "split",
-    "source_url", "reviewer_a_id", "reviewer_b_id", "reviewer_a_qualification_ref",
+    "source_url", "segmentation_layer", "reviewer_a_id", "reviewer_b_id", "reviewer_a_qualification_ref",
     "reviewer_b_qualification_ref", "reviewer_a_tokens_json", "reviewer_b_tokens_json",
     "adjudicator_id", "adjudication_outcome", "adjudication_record_id", "adjudication_notes",
 ]
@@ -47,6 +47,7 @@ class SegmentationBenchmarkTests(unittest.TestCase):
             "id": row_id, "text": text, "gold_tokens_json": json.dumps(tokens, ensure_ascii=False),
             "gold_status": "ADJUDICATED", "source_id": "fixture#1", "license": "CC0-1.0",
             "split": "test", "source_url": "https://example.org/record",
+            "segmentation_layer": "WORD",
             "reviewer_a_id": "TH-PH-01", "reviewer_b_id": "TH-PH-02",
             "reviewer_a_qualification_ref": "qualification:TH-PH-01",
             "reviewer_b_qualification_ref": "qualification:TH-PH-02",
@@ -185,6 +186,13 @@ class SegmentationBenchmarkTests(unittest.TestCase):
         self.assertIn("requires source_id", self.run_benchmark([bad_source], [], expected=1))
         bad_tokens = self.gold(tokens=["ภาษา", "ไท"])
         self.assertIn("does not concatenate", self.run_benchmark([bad_tokens], [], expected=1))
+
+
+    def test_word_and_syllable_gold_cannot_be_mixed_in_one_report(self):
+        word = self.gold()
+        syllable = self.gold(row_id="g2", segmentation_layer="SYLLABLE")
+        stderr = self.run_benchmark([word, syllable], [], expected=1)
+        self.assertIn("do not mix WORD and SYLLABLE", stderr)
 
     def test_unicode_is_not_silently_normalized_away(self):
         # Decomposed input is NFC-normalized, but token boundaries must still cover the same text.
