@@ -62,7 +62,8 @@ for (const source of corpus) {
             `Ukrainian result must be derived from the exact IPA: ${syllable.input}`);
         }
         if (mode === "strict" && syllable.status !== "analyzed") {
-          assert.fail(`strict mode emitted a non-deterministic syllable: ${JSON.stringify(syllable)}`);
+          assert.equal(syllable.phonemicIpa ?? null, null, "strict mode must withhold IPA for unsupported syllables");
+          assert.equal(syllable.ukrainian ?? null, null, "strict mode must withhold Ukrainian output for unsupported syllables");
         }
       }
     }
