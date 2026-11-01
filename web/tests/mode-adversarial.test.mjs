@@ -83,7 +83,8 @@ for (const [word, ipa, tone, ua] of [
   ["เดิน", "dɤːn", "mid", "ден"],
   ["ไกล", "klaj", "mid", "клай"],
   ["ใกล้", "klaj", "falling", "клай"],
-  ["ออก", "ʔɔːk", "low", "ок"]
+  ["ออก", "ʔɔːk", "low", "ок"],
+  ["เพิ่ง", "pʰɤŋ", "falling", "п'енг"]
 ]) {
   for (const mode of modes) {
     const token = analyzeText(word, { mode }).find(item => item.kind === "thai");
@@ -94,6 +95,21 @@ for (const [word, ipa, tone, ua] of [
     assert.equal(syllable.ukrainian, ua);
     assert(syllable.sources?.length || syllable.sourceId || syllable.rulesApplied?.some(rule => rule.includes("LEXICAL-IPA-OVERRIDE")));
   }
+}
+
+// The pinned dictionary override for เพิ่ง is source-attested, not gold, and has no surface IPA.
+for (const mode of modes) {
+  const token = analyzeText("เพิ่ง", { mode }).find(item => item.kind === "thai");
+  const syllable = token?.syllables?.[0];
+  assert(syllable, "missing เพิ่ง in " + mode);
+  assert.equal(syllable.phonemicIpa, "pʰɤŋ");
+  assert.equal(syllable.vowelLength, "short");
+  assert.equal(syllable.tone, "falling");
+  assert.equal(syllable.toneIpa, "˥˩");
+  assert.equal(syllable.ukrainian, "п'енг");
+  assert.equal(syllable.evidenceStatus, "SOURCE_ATTESTED_NOT_GOLD");
+  assert.equal(syllable.phoneticIpa, null);
+  assert(syllable.warnings.some(w => w.includes("not independently adjudicated")));
 }
 
 // Compare both explicitly separate RTGS output paths on the same tokenization.
@@ -117,7 +133,7 @@ assert(fallbackCount > 0, "corpus must exercise the orthography-derived fallback
 
 // These forms caused visibly malformed output in the reported run. Strict mode
 // must abstain unless a reviewed lexical pronunciation is available.
-for (const word of ["วันนี้", "เห็น", "เพิ่ง", "อะไร", "บ้าง", "อธิบาย"]) {
+for (const word of ["วันนี้", "เห็น", "อะไร", "บ้าง", "อธิบาย"]) {
   const strictTokens = analyzeText(word, { mode: "strict" }).filter(token => token.kind === "thai");
   assert(strictTokens.length > 0, `strict mode lost Thai input: ${word}`);
   for (const token of strictTokens) {
