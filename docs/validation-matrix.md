@@ -1271,3 +1271,9 @@ The source registry does not itself create gold data. Wisesight and VISTEC remai
 | Validate both frozen Thai blind packets in CI | DONE_VERIFIED after exact-head CI | CI validates the 42-item base packet and the separate six-item user-regression supplement against their exact frozen source prompts. |
 | Correct independently-comparable denominator invariant | DONE_VERIFIED after exact-head CI | The summary excludes both circular overrides and incomplete/withheld engine outputs; a focused regression test covers both exclusion conditions. |
 | Independent Thai expert and Ukrainian-native submissions | BLOCKED / external human dependency | Reviewer registry remains empty. No identity, consent, qualification, or linguistic annotation is fabricated. |
+
+
+| Task | State | Evidence / boundary |
+|---|---|---|
+| Bind narrow acoustic labels to a verified, licensed audio source | DONE_VERIFIED after exact-head CI | Added `audio_source_id`; validator checks source registry status, exact URL/license and `ACOUSTIC_PHONETICS_RESEARCH` permission. Blocked CCOST is rejected. |
+| Report descriptive inter-reviewer agreement | DONE_VERIFIED after exact-head CI | Thai and Ukrainian pair validators return NFC-normalized exact agreement by field, missing-label counts and joint/one-sided abstentions. No chance-corrected reliability or gold status is implied. |
