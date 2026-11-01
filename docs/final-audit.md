@@ -1322,3 +1322,12 @@ The first run with the new coverage tests completed master-table generation and 
 - Added `audio_source_id` to the Thai review packet. Narrow acoustic labels now require a source registry entry that is VERIFIED, has an exact registered URL/license, and explicitly permits `ACOUSTIC_PHONETICS_RESEARCH`, in addition to the bracketed `narrow_ipa`, asset ID and positive interval.
 - The CLI loads the canonical source registry for completed reviews and reviewer pairs. A blocked source such as current CCOST cannot be used for narrow acoustic review until its archive/tier/label mapping and permitted scope are verified.
 - Added unit tests for unregistered audio, allowed registered test audio, and rejection of blocked CCOST. This is a provenance gate; it does not validate the phonetic correctness of the narrow IPA.
+
+
+## Alternative licensed audio source — LOTUSDIS (2026-11-01)
+
+- Added `CORP-LOTUSDIS` to the source registry as a verified CC BY-SA 4.0 audio/transcript source for fresh expert re-annotation. The official dataset card lists 160,915 rows / approx. 13.2 GB; the project README describes approx. 114 hours and 86 participants, with utterance transcripts and TextGrid.
+- **Evidence boundary:** LOTUSDIS does not provide phonemic IPA or tone gold. Its existing annotations are transcript/alignment material; new phonetic labels must come from independent qualified Thai reviewers. Multi-channel/far-field speech and overlap require careful near-field, single-speaker sample selection. Standard Thai representativeness is not established at source level.
+- No LOTUSDIS media were downloaded or copied. Exact dataset revision, asset ID, speaker pseudonym, microphone/channel, non-overlap status, interval and file hash remain required before freezing any acoustic sample. Derivative annotation data must preserve CC BY-SA attribution/share-alike.
+- Corrected the Rungpat Roengpitya shortlist description: the public profile supports Standard Thai tone research and cross-language Japanese vowel-length perception, not a direct claim of Thai vowel-length expertise.
+- Common Voice Thai v27.0 was not selected for redistributed review packets because its data card forbids re-hosting/re-sharing despite CC0; it also supplies no phone/toneme IPA gold.
