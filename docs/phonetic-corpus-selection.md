@@ -47,6 +47,6 @@ A row may be called independent gold only after:
 - Ukrainian-native preference submissions: **0**.
 - Adjudicated Thai IPA gold: **0**.
 - Adjudicated word/syllable segmentation gold: **0**.
-- LOTUSDIS source/license: verified and registered; individual audio assets not yet selected or pinned.
+- LOTUSDIS source/license: verified and registered; `data/benchmark/audio-assets.tsv` is header-only. Individual audio assets, hashes, speaker/mic metadata and intervals are not yet selected or pinned.
 - CCOST: blocked pending source-order and archive-tier clarification.
 - Therefore phonetic accuracy remains **NOT MEASURED**.
