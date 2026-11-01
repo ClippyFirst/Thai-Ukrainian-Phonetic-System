@@ -6,8 +6,19 @@
   "coda_graphemes": 38,
   "tone_mark_states": 5,
   "structural_upper_bound": 351780,
-  "principle": "Thai orthography → structural orthographic analysis → Thai phonology → Ukrainian adaptation; IPA is an independent audit/control layer",
+  "principle": "IPA-first: Thai orthography → structural orthographic analysis → Thai phonology → tone → IPA → Ukrainian phonetic target; IPA is an independent audit/control layer",
   "status": "structural-combinatorial-space-with-parser-revalidation",
   "warning": "All rows are exhaustive within the declared structural registry, but are not thereby valid, lexical, corpus-attested or semantically translated Thai.",
-  "attestation_status": "not_evaluated_lexically_or_corpus"
+  "attestation_status": "not_evaluated_lexically_or_corpus",
+  "status_counts": {
+    "analyzed": 138577,
+    "generation-mismatch:ipa": 6853,
+    "unresolved:nonconforming-consonant-sequence": 104889,
+    "unresolved:multiple-vowel-signs": 32905,
+    "generation-mismatch:tone": 44,
+    "invalid:tone-combination": 68228,
+    "analysis-dependent:special-orthography": 24,
+    "unresolved:empty-onset-after-vowel-analysis": 230,
+    "invalid:coda-not-licensed": 30
+  }
 }
