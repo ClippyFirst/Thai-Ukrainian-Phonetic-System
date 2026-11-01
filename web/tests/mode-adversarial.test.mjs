@@ -106,6 +106,23 @@ const heuristic = analyzeText(unresolvedSource, { mode: "super-soft" });
 assert(strict.some(token => token.kind === "thai"));
 assert(soft.some(token => token.kind === "thai"));
 assert(heuristic.some(token => token.kind === "thai" && token.syllables.length > 0));
+assert(fallbackCount > 0, "corpus must exercise the orthography-derived fallback path");
+
+// These forms caused visibly malformed output in the reported run. Strict mode
+// must abstain unless a reviewed lexical pronunciation is available.
+for (const word of ["วันนี้", "เห็น", "เพิ่ง", "อะไร", "บ้าง", "อธิบาย"]) {
+  const strictTokens = analyzeText(word, { mode: "strict" }).filter(token => token.kind === "thai");
+  assert(strictTokens.length > 0, `strict mode lost Thai input: ${word}`);
+  for (const token of strictTokens) {
+    for (const syllable of token.syllables || []) {
+      assert.equal(syllable.phonemicIpa ?? null, null, `strict mode guessed IPA for ${word}`);
+      assert.equal(syllable.ukrainian ?? null, null, `strict mode guessed Ukrainian output for ${word}`);
+    }
+  }
+  const heuristicTokens = analyzeText(word, { mode: "super-soft" }).filter(token => token.kind === "thai");
+  assert(heuristicTokens.length > 0 && heuristicTokens.every(token => token.syllables.length > 0),
+    `heuristic mode must preserve a visibly provisional result for ${word}`);
+}
 
 console.log(JSON.stringify({
   result: "PASS",
