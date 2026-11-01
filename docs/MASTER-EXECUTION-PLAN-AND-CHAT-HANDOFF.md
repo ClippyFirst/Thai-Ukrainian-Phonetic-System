@@ -4,7 +4,7 @@
 - BEST-2010 TEST_100K and LST20 were identified as segmentation benchmarks. LST20 has explicit restrictions: no modification or redistribution absent permission; commercial use needs a separate arrangement. BEST-2010 license/access must be checked before acquisition. Existing Wisesight/VISTEC/TUD work remains preserved.
 - FLEURS and Common Voice Thai are useful speech/ASR corpora but do not directly supply phone-level IPA or Ukrainian target gold. CCOST remains the closest phonetic corpus and its annotation manual remains uninspected.
 - Updated corpus registry and regression assertions. No new dataset downloaded, copied or bundled; no accuracy score claimed.
-- Exact-head CI for the update is pending. Prior PR #169 head `b4662ad95e3bbc312ae4562b9bd20880a3560b09` passed all three jobs in run [41244985871](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41244985871).
+- Exact-head CI for current PR #169 head `2295ce132eb96e0678f164da56361dc5b994df43` passed all three jobs in run [41247367267](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41247367267): `test`, `wheel-install-smoke`, and `master-artifact`. The full Python suite, browser IPA/RTGS/parity/UI tests, benchmark diagnostics, generated-artifact checks, and isolated wheel installation passed. PR #169 remains open and unmerged; `main` is unchanged.
 
 ---
 
