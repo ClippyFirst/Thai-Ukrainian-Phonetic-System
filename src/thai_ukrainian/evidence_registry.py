@@ -4,11 +4,20 @@ from __future__ import annotations
 import csv
 from datetime import date
 from pathlib import Path
+import re
+from math import isfinite
 from typing import Mapping
 from urllib.parse import urlparse
 
 SOURCE_FIELDS = ("source_id", "source_url", "license", "allowed_uses", "verification_status", "verified_by", "verified_at", "notes")
 REVIEWER_FIELDS = ("reviewer_id", "language", "roles", "qualification_ref", "verification_status", "verified_by", "verified_at", "scope", "notes")
+AUDIO_ASSET_FIELDS = (
+    "asset_id", "source_id", "dataset_revision", "asset_uri", "file_sha256",
+    "speaker_ref", "microphone", "overlap_status", "duration_seconds",
+    "verification_status", "verified_by", "verified_at", "notes",
+)
+AUDIO_MICROPHONES = {"NEAR_FIELD", "FAR_FIELD", "LAVALIER", "HEADSET", "OTHER", "UNKNOWN"}
+AUDIO_OVERLAP_STATES = {"NONE", "PRESENT", "UNKNOWN"}
 
 
 def _read_registry(path: Path, fields: tuple[str, ...], label: str) -> list[dict[str, str]]:
@@ -65,6 +74,78 @@ def load_reviewer_registry(path: Path) -> dict[str, dict[str, str]]:
         result[ident] = row
     return result
 
+
+
+def load_audio_asset_registry(
+    path: Path, source_registry: Mapping[str, Mapping[str, str]]
+) -> dict[str, dict[str, str]]:
+    """Load exact, file-level audio provenance; an empty header-only registry is valid."""
+    rows = _read_registry(path, AUDIO_ASSET_FIELDS, "audio asset")
+    result: dict[str, dict[str, str]] = {}
+    for row in rows:
+        ident = row["asset_id"]
+        if not ident or ident in result:
+            raise ValueError(f"audio asset IDs must be non-empty and unique: {ident!r}")
+        required = (
+            "source_id", "dataset_revision", "asset_uri", "file_sha256", "speaker_ref",
+            "microphone", "overlap_status", "duration_seconds", "notes",
+        )
+        missing = [field for field in required if not row[field]]
+        if missing:
+            raise ValueError(f"audio asset {ident!r} requires {', '.join(missing)}")
+        if not re.fullmatch(r"[0-9a-fA-F]{64}", row["file_sha256"]):
+            raise ValueError(f"audio asset {ident!r} requires a 64-character SHA-256")
+        if row["microphone"] not in AUDIO_MICROPHONES:
+            raise ValueError(f"audio asset {ident!r} has invalid microphone category")
+        if row["overlap_status"] not in AUDIO_OVERLAP_STATES:
+            raise ValueError(f"audio asset {ident!r} has invalid overlap_status")
+        try:
+            duration = float(row["duration_seconds"])
+        except ValueError as exc:
+            raise ValueError(f"audio asset {ident!r} requires numeric duration_seconds") from exc
+        if not isfinite(duration) or duration <= 0:
+            raise ValueError(f"audio asset {ident!r} requires positive finite duration_seconds")
+        source = source_registry.get(row["source_id"])
+        if source is None:
+            raise ValueError(f"audio asset {ident!r} uses unregistered source_id {row['source_id']!r}")
+        validate_source_reference(
+            row["source_id"], source["source_url"], source["license"],
+            "ACOUSTIC_PHONETICS_RESEARCH", source_registry, row_id=ident,
+        )
+        _validate_verification(row, "audio asset", ident)
+        result[ident] = row
+    return result
+
+
+def validate_audio_asset_reference(
+    asset_id: str,
+    source_id: str,
+    start: str,
+    end: str,
+    registry: Mapping[str, Mapping[str, str]],
+    *,
+    row_id: str,
+) -> Mapping[str, str]:
+    asset = registry.get(asset_id.strip())
+    if asset is None:
+        raise ValueError(f"row {row_id!r} uses unregistered audio asset {asset_id!r}")
+    if asset["verification_status"] != "VERIFIED":
+        raise ValueError(f"row {row_id!r} audio asset {asset_id!r} is blocked")
+    if asset["source_id"] != source_id.strip():
+        raise ValueError(f"row {row_id!r} audio asset source_id does not match audio_source_id")
+    if asset["overlap_status"] != "NONE":
+        raise ValueError(f"row {row_id!r} audio asset must be verified as non-overlapping")
+    try:
+        start_value, end_value = float(start), float(end)
+        duration = float(asset["duration_seconds"])
+    except ValueError as exc:
+        raise ValueError(f"row {row_id!r} requires numeric audio interval") from exc
+    if (
+        not isfinite(start_value) or not isfinite(end_value)
+        or start_value < 0 or end_value <= start_value or end_value > duration
+    ):
+        raise ValueError(f"row {row_id!r} audio interval must be positive and within the registered asset duration")
+    return asset
 
 def validate_source_reference(source_id: str, source_url: str, license_name: str,
                               required_use: str, registry: Mapping[str, Mapping[str, str]],
