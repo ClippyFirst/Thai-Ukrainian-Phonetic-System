@@ -1,3 +1,17 @@
+## 2026-11-01 — independent adjudication readiness and CCOST source reconciliation
+
+- **DONE_VERIFIED — paper-level CCOST schema extraction:** the LREC 2026 paper specifies intended TextGrid tiers ORT/KAN/KAS/MAU/MAS/TRN, X-SAMPA labels and tone suffixes _1=Mid, _2=Low, _3=Falling, _4=High, _5=Rising. MAU carries realized phonetic segments; MAS carries phonemic syllables; KAN/KAS are canonical forms.
+- **Important limitation:** the paper says trained native Thai research assistants manually corrected alignment and verified tone/segmental accuracy, with senior spot checks, but explicitly reports no formal inter-annotator agreement measures. The actual released 6.2 GB TextGrid archive and full X-SAMPA inventory remain uninspected; CCOST remains blocked for scoring until those files are reconciled.
+- **DONE_VERIFIED — expert-gold source wiring:** the 42-item project challenge is pinned as input provenance for broad-phonemic expert labels. A source-specific scorer gate prevents text-only challenge/wordlist sources from being used for broad-surface IPA.
+- **PARTIAL — controlled CCOST wordlist generator:** added `scripts/build_ccost_wordlist_review_packet.py` and synthetic regression tests. It reads a researcher-supplied Zenodo `wordlist.csv`, audits four A-D orders for duplicates and set differences, emits a local blind prompt packet and records input SHA-256/license metadata. It does not create IPA or gold labels and does not commit derived CCOST data. The actual source CSV could not be downloaded into this session.
+- **Ukrainian target review protocol:** six candidate-blind preference prompts remain conditional on source-attested IPA. Criteria distinguish common words from proper names, separate tone from Ukrainian letters, require blind independent first-pass judgments and preserve variants/disagreement. Holovach (2022) is used only for the proper-name/loanword distinction, not as a Thai-specific standard.
+- **BLOCKED — human submissions:** reviewer registry remains empty; no Thai expert or Ukrainian-native review is claimed. Independent Thai IPA/segmentation and Ukrainian preference counts remain zero; accuracy remains NOT_MEASURED.
+- **Verification:** latest exact-head CI is pending for the source-layer gate and CCOST packet generator. Earlier failed runs exposed and fixed a CSV quoting defect; do not treat those failures or cancelled runs as passes.
+- **No corpus redistribution:** CCOST WAV/TextGrid and generated wordlist packets are not committed. CC BY-NC-SA 4.0 non-commercial/share-alike terms remain applicable.
+- **No Vercel tools or services used.**
+
+---
+
 ## 2026-11-01 — end-to-end repository structure and technical-debt closeout
 
 - **DONE_VERIFIED — documentation ownership:** PRs #171 and #172 added the documentation map and reconciled the architecture guide with the actual IPA-first pipeline, including the distinction between primary typed-IPA Ukrainian adaptation, secondary feature-space candidates and the independent RTGS route.

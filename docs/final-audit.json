@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Main remains cc398254c178171f74397aed556766e87356ab84. Combined PR #182 is open from research/independent-adjudication-gates-20261101. PR #181 was closed as superseded after its fallback fix, adversarial test and CI ordering change were ported; its branch was retained. Full push CI on code checkpoint a4de40b6479b217b24aed98a26bdade23e6e1dab passed all three jobs; Web Static passed on documentation closeout checkpoint ce8d4b0450d67e465f76f140dde3b27ca45e313f. Linguistic accuracy remains NOT MEASURED because no independent expert submissions exist.",
+  "status": "Main remains cc398254c178171f74397aed556766e87356ab84. PR #182 remains open on research/independent-adjudication-gates-20261101. CCOST paper tier schema and tone notation are mapped from the LREC 2026 full paper; actual archive conformance and X-SAMPA inventory remain blocked. Added broad-phonemic vs broad-surface source-use gating and a local CCOST 206-item wordlist blind-packet generator with order-integrity diagnostics. No real expert submissions exist; Thai/Ukrainian gold counts remain zero and linguistic accuracy remains NOT_MEASURED.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -73,7 +73,12 @@
     "transcription_layer_separated_ipa_benchmark",
     "profile_stratified_ipa_metrics",
     "double_reviewer_word_syllable_segmentation_gold_gate",
-    "explicit_word_vs_syllable_segmentation_benchmark_layer"
+    "explicit_word_vs_syllable_segmentation_benchmark_layer",
+    "source_layer_specific_ipa_gold_gate",
+    "ccost_wordlist_blind_packet_generator",
+    "ccost_order_integrity_diagnostics",
+    "ccost_lrec_2026_textgrid_tier_mapping",
+    "ukrainian_native_review_criteria"
   ],
   "not_claimed": [
     "complete_lexical_segmentation",
@@ -96,7 +101,12 @@
     "production_quality_automatic_word_segmentation",
     "independent_acoustic_ipa_gold",
     "independently_validated_external_ipa_input_accuracy",
-    "independently_adjudicated_ukrainian_ipa_adapter_forms"
+    "independently_adjudicated_ukrainian_ipa_adapter_forms",
+    "independent Thai expert gold",
+    "independent Ukrainian-native preference evidence",
+    "CCOST actual TextGrid conformance",
+    "CCOST inter-annotator agreement",
+    "acoustic phonetic accuracy"
   ],
   "lexical_attestation": "Ten source-backed runtime text lexicon entries now include ยูเครน (en.wiktionary oldid 88025965), ตะวันออก (oldid 86398986), ยุโรป (oldid 91325849), ยุโรปตะวันออก (oldid 87721830), and the sense-scoped compound ทะเลทราย (oldid 87239667), plus three active typed IPA overrides (เงิน, เดิน and ออก). All are source-attested dictionary evidence, not independent expert/acoustic gold.",
   "corpus_attestation": "993 source-annotated Wisesight word-tokenization rows (CC0-1.0; test-only, never training/tuning); pinned UD Thai TUD source snapshots under CC BY-SA 4.0 for a research-only frequency-Viterbi experiment; zero independently adjudicated IPA/tone/vowel-length gold rows.",
@@ -2290,16 +2300,17 @@
     "independent_thai_ipa_gold_rows": 0,
     "independent_segmentation_gold_rows": 0,
     "ukrainian_review_submissions": 0,
-    "ccost_manual_inspection": "DOCUMENTATION_REVIEW_RECORDED; exact released tier mapping not independently confirmed in this continuation",
-    "ccost_released_textgrid_tier_mapping": "BLOCKED_EVIDENCE_ACCESS",
+    "ccost_manual_inspection": "MANUAL_INSPECTED; PAPER_TIER_MAP_VERIFIED; ACTUAL_ARCHIVE_NOT_INSPECTED",
+    "ccost_released_textgrid_tier_mapping": "PAPER_INTENDED_SCHEMA_VERIFIED; ACTUAL_ARCHIVE_CONFORMANCE_BLOCKED",
     "thai_ipa_segmentation_adjudication": "BLOCKED_EXTERNAL_EXPERTS",
     "ukrainian_target_form_adjudication": "BLOCKED_EXTERNAL_NATIVE_REVIEWERS",
     "main_branch_protection": "TODO_OWNER_CONFIGURATION; protected=false",
     "local_test_execution": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
     "full_push_ci_run": "41337529189_PASSED_ALL_3_JOBS",
     "web_static_run": "41337815975_PASSED",
-    "pr_182_latest_head_ci": "PENDING_AFTER_DOCUMENTATION_CLOSEOUT",
-    "readiness": "ENGINEERING_RESEARCH_INFRASTRUCTURE_VERIFIED; NOT_RELEASE_READY; LINGUISTIC_ACCURACY_NOT_MEASURED"
+    "pr_182_latest_head_ci": "PENDING_AFTER_SOURCE_LAYER_GATE_AND_CCOST_WORDLIST_GENERATOR",
+    "readiness": "ENGINEERING_RESEARCH_INFRASTRUCTURE_VERIFIED; NOT_RELEASE_READY; LINGUISTIC_ACCURACY_NOT_MEASURED",
+    "ccost_wordlist_generator": "IMPLEMENTED; SYNTHETIC_TESTS_ADDED; REAL_ZENODO_CSV_NOT_DOWNLOADED"
   },
   "repository_structure_cleanup_2026_11_01": {
     "main_at_start": "69dafe58a9458d33a645cdcd517e61e9978abdbd",
@@ -2452,8 +2463,36 @@
     "external_blockers": [
       "two independent qualified Thai phoneticians for phonemic IPA, segmentation, tone and length",
       "two independent Ukrainian-native reviewers for practical target forms",
-      "CCOST licensed archive access and exact released TextGrid tier/label mapping"
+      "CCOST licensed archive access and exact released TextGrid tier/label mapping",
+      "run the CCOST wordlist packet generator against the actual four-order Zenodo CSV and reconcile any discrepancies"
     ],
-    "vercel_used": false
+    "vercel_used": false,
+    "ccost_paper_tier_map": "ORT/KAN/KAS/MAU/MAS/TRN; X-SAMPA; tone _1 Mid, _2 Low, _3 Falling, _4 High, _5 Rising",
+    "source_layer_permissions": {
+      "BROAD_PHONEMIC": "BROAD_PHONEMIC_IPA_GOLD_INPUT",
+      "BROAD_SURFACE": "BROAD_SURFACE_IPA_GOLD_INPUT"
+    },
+    "ccost_wordlist_generator": "scripts/build_ccost_wordlist_review_packet.py; outputs local blind packet plus source SHA-256/license manifest; actual source not downloaded in this session"
+  },
+  "adjudication_readiness": {
+    "thai_project_challenge_prompts": 42,
+    "ccost_controlled_wordlist_expected_items_per_order": 206,
+    "ccost_wordlist_packet_generated_from_actual_source": false,
+    "ukrainian_conditional_preference_prompts": 6,
+    "verified_human_reviewers": 0,
+    "adjudicated_thai_ipa_rows": 0,
+    "adjudicated_segmentation_rows": 0,
+    "ukrainian_native_review_submissions": 0,
+    "accuracy_status": "NOT_MEASURED",
+    "source_layer_gate": {
+      "BROAD_PHONEMIC": "BROAD_PHONEMIC_IPA_GOLD_INPUT",
+      "BROAD_SURFACE": "BROAD_SURFACE_IPA_GOLD_INPUT"
+    },
+    "ccost": {
+      "paper_tier_schema": "VERIFIED_FROM_LREC_2026_PAPER",
+      "actual_archive_conformance": "BLOCKED_PENDING_LOCAL_TEXTGRID_INSPECTION",
+      "formal_inter_annotator_agreement": "NOT_REPORTED_BY_PAPER",
+      "license": "CC-BY-NC-SA-4.0"
+    }
   }
 }

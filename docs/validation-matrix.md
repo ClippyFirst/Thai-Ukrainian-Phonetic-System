@@ -1,3 +1,20 @@
+## Independent review and CCOST benchmark readiness — 2026-11-01
+
+| Task / acceptance criterion | State | Evidence / next acceptance |
+|---|---|---|
+| Correct source-use gate so text-only IPA inputs cannot be scored as broad-surface IPA | PARTIAL — CI pending | `benchmark_ipa.py` maps `BROAD_PHONEMIC` and `BROAD_SURFACE` to distinct source-registry permissions; project challenge and CCOST wordlist sources permit only broad phonemic labels. Exact-head CI remains pending. |
+| Register project-authored challenge text as input provenance for independent broad-phonemic gold | DONE_VERIFIED — registry/test authored | `CLIPPYFIRST-THAI-CHALLENGE-CC398` is pinned to the 42-item source file and may only supply broad-phonemic input text and segmentation inputs; it is not acoustic evidence. |
+| Prepare a controlled CCOST monosyllabic review packet generator | PARTIAL — generator implemented, real source file not locally inspected | `scripts/build_ccost_wordlist_review_packet.py` validates four A-D columns, row count, duplicates and order-set differences; creates local blind JSONL/TSV and a SHA-256/license manifest. Acceptance: run against the actual Zenodo wordlist, reconcile any order discrepancies, and obtain independent reviewer submissions. |
+| Map CCOST intended annotation tiers and phonetic conventions from the LREC 2026 paper | DONE_VERIFIED — primary paper | ORT/KAN/KAS/MAU/MAS/TRN, X-SAMPA and tone suffixes `_1–_5` are documented; MAU is phonetic segment, MAS phonemic syllable, KAN/KAS canonical forms. |
+| Verify actual released CCOST TextGrid archive and map X-SAMPA labels | BLOCKED / evidence-limited | 6.2 GB WAV/TextGrid archive not downloaded; paper's intended schema is known but actual files and full symbol inventory remain uninspected. No CCOST annotation row is scored. |
+| Obtain independent Thai phonetic/segmentation reviews | BLOCKED — external human input | 42 project prompts plus a CCOST 206-item generator are prepared; reviewer registry remains empty. Acceptance: two qualified Thai reviewers, frozen independent labels and disagreement log; acoustic claims additionally require authorized audio/time intervals. |
+| Obtain Ukrainian-native practical-transcription preferences | BLOCKED — external human input | Six candidate-blind prompts and criteria protocol are prepared; reviewer registry remains empty. Acceptance: two independent Ukrainian-native reviewers, frozen criteria, original preferences and adjudication log. |
+| Measure phonetic accuracy | BLOCKED — no adjudicated gold | IPA and segmentation gold registries remain empty; accuracy is NOT_MEASURED. |
+
+**Evidence boundary:** code and packet validation cannot substitute for real Thai/Ukrainian reviewers. CCOST manual correction is valuable external evidence, but the LREC paper reports no formal inter-annotator agreement. The CCOST wordlist contains prompts only. Do not claim independent gold, acoustic validity or accuracy before the acceptance criteria above are met.
+
+---
+
 ## Repository structure cleanup checkpoint — 2026-11-01
 
 | Task / acceptance criterion | State | Evidence / next acceptance |
