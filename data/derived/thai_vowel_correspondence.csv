@@ -47,8 +47,8 @@ V-23,อัวะ,diphthong,short,open,ua,ua,уа,уа,analysis-dependent
 V-23,อัวะ,diphthong,short,closed,ua,ua,уа,уа,analysis-dependent
 V-24,อัว,diphthong,long,open,uaː,uaː,уа,уа,analysis-dependent
 V-24,อัว,diphthong,long,closed,uaː,uaː,уа,уа,analysis-dependent
-V-X-AI,ไ/ใ,diphthong,long,open,aj,aj,ай,ай,context-dependent
-V-X-AI,ไ/ใ,diphthong,long,closed,aj,aj,ай,ай,context-dependent
+V-X-AI,ไ/ใ,diphthong,short,open,aj,aj,ай,ай,context-dependent
+V-X-AI,ไ/ใ,diphthong,short,closed,aj,aj,ай,ай,context-dependent
 V-X-AM,ำ,complex,short,open,am,am,ам,ам,context-dependent
 V-X-AM,ำ,complex,short,closed,am,am,ам,ам,context-dependent
 V-X-AJ,อ-ย,glide_sequence,long,open,aːj,aːj,ай,ай,analysis-dependent
@@ -79,3 +79,5 @@ V-X-UAJ,อัว-ย,glide_sequence,long,open,uaj,uaj,уай,уай,analysis-de
 V-X-UAJ,อัว-ย,glide_sequence,long,closed,uaj,uaj,уай,уай,analysis-dependent
 V-X-UEY,ือ-ย,glide_sequence,long,open,ɯaj,ɯaj,иай,иай,analysis-dependent
 V-X-UEY,ือ-ย,glide_sequence,long,closed,ɯaj,ɯaj,иай,иай,analysis-dependent
+V-X-UA,-ว-,reduced_diphthong,long,open,uaː,uaː,уа,уа,analysis-dependent
+V-X-UA,-ว-,reduced_diphthong,long,closed,uaː,uaː,уа,уа,analysis-dependent
