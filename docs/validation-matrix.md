@@ -13,6 +13,8 @@
 
 **Evidence boundary:** code and packet validation cannot substitute for real Thai/Ukrainian reviewers. CCOST manual correction is valuable external evidence, but the LREC paper reports no formal inter-annotator agreement. The CCOST wordlist contains prompts only. Do not claim independent gold, acoustic validity or accuracy before the acceptance criteria above are met.
 
+**Exact-head verification:** `536f03327f11d258a4e7638091797128754b6602`; CI [41342132989](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41342132989) passed all three jobs. Ruff passed; pytest reported **296 passed, 1168 subtests passed**; browser/IPA/RTGS/diagnostic checks passed; wheel-install smoke and master-artifact validation passed. Web Static [41342132990](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41342132990) passed; external VISTEC segmentation evaluation [41342132985](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41342132985) passed. Local tests were not run because the repository was accessed through the GitHub connector only.
+
 ---
 
 ## Repository structure cleanup checkpoint — 2026-11-01

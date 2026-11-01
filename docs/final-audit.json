@@ -300,18 +300,7 @@
     "rows": 351780,
     "vowel_rime_records": 41
   },
-  "latest_documentation_checkpoint": {
-    "branch": "docs/closeout-rtgs-ci-and-audit-20261031",
-    "status": "MERGED",
-    "base_commit": "72a77cb42ad05c33274d70c4dcd9f20e07432b64",
-    "head_commit": "721752d16783d70739c55864af0ccd128c1f6e49",
-    "pull_request": 168,
-    "merge_commit": "8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8",
-    "exact_head_ci_run": 41240389404,
-    "exact_head_ci_status": "SUCCESS",
-    "post_merge_main_ci_run": 41240699017,
-    "post_merge_main_ci_status": "SUCCESS"
-  },
+  "latest_documentation_checkpoint": "536f03327f11d258a4e7638091797128754b6602",
   "text_only_checkpoint": {
     "branch": "research/thai-segmentation-gold-parity-verified-20261025",
     "parent_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
@@ -594,12 +583,12 @@
       ]
     }
   },
-  "latest_implementation_commit_ci_verified": "fb398459cae0c6b0f14a0de8eb3eca014aec908e",
-  "latest_documentation_head_ci_verified": "fb398459cae0c6b0f14a0de8eb3eca014aec908e",
-  "latest_documentation_head_ci_run": "41341792448",
-  "latest_documentation_head_web_validation_run": "41341792464",
-  "latest_implementation_ci_run": "41341792448",
-  "latest_implementation_web_validation_run": "41341792464",
+  "latest_implementation_commit_ci_verified": "536f03327f11d258a4e7638091797128754b6602",
+  "latest_documentation_head_ci_verified": "536f03327f11d258a4e7638091797128754b6602",
+  "latest_documentation_head_ci_run": "41342132989",
+  "latest_documentation_head_web_validation_run": "41342132990",
+  "latest_implementation_ci_run": "41342132989",
+  "latest_implementation_web_validation_run": "41342132990",
   "segmentation_error_review": {
     "script": "scripts/analyze_segmentation_errors.py",
     "test": "tests/test_segmentation_error_analysis.py",
@@ -2091,11 +2080,11 @@
       167
     ]
   },
-  "latest_full_repository_head": "fb398459cae0c6b0f14a0de8eb3eca014aec908e",
-  "latest_full_repository_head_ci_run": "41341792448",
-  "latest_full_repository_head_web_validation_run": "41341792464",
-  "latest_web_static_verified_code_commit": "fb398459cae0c6b0f14a0de8eb3eca014aec908e",
-  "latest_web_static_verified_code_run": "41341792464",
+  "latest_full_repository_head": "536f03327f11d258a4e7638091797128754b6602",
+  "latest_full_repository_head_ci_run": "41342132989",
+  "latest_full_repository_head_web_validation_run": "41342132990",
+  "latest_web_static_verified_code_commit": "536f03327f11d258a4e7638091797128754b6602",
+  "latest_web_static_verified_code_run": "41342132990",
   "ccost_source_reconciliation_2026_10_31": {
     "status": "DONE_VERIFIED — source records, provenance boundary, registry, protocol and regression tests passed exact-head CI run 41242513053 on a331131567f6e17f9dd5fe96c8624620f093880c. Separate external BLOCKED item: CCOST_manual.pdf could not be downloaded in this session; inspect before selecting rows.",
     "pr": 169,
@@ -2299,9 +2288,9 @@
     "branch_inventory": "14 refs including main; 13 non-main refs. No branch deletion was performed; PR #181 source branch retained.",
     "research_branch": "research/independent-adjudication-gates-20261101",
     "research_branch_base": "cc398254c178171f74397aed556766e87356ab84",
-    "research_branch_verified_code_checkpoint": "fb398459cae0c6b0f14a0de8eb3eca014aec908e",
-    "research_branch_documentation_checkpoint": "fb398459cae0c6b0f14a0de8eb3eca014aec908e",
-    "research_branch_ahead_at_code_checkpoint": 67,
+    "research_branch_verified_code_checkpoint": "536f03327f11d258a4e7638091797128754b6602",
+    "research_branch_documentation_checkpoint": "536f03327f11d258a4e7638091797128754b6602",
+    "research_branch_ahead_at_code_checkpoint": 68,
     "thai_blind_review_items": 42,
     "ukrainian_conditional_review_items": 6,
     "independent_thai_ipa_gold_rows": 0,
@@ -2313,12 +2302,12 @@
     "ukrainian_target_form_adjudication": "BLOCKED_EXTERNAL_NATIVE_REVIEWERS",
     "main_branch_protection": "TODO_OWNER_CONFIGURATION; protected=false",
     "local_test_execution": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
-    "full_push_ci_run": "41337529189_PASSED_ALL_3_JOBS",
-    "web_static_run": "41341792464_PASSED",
-    "pr_182_latest_head_ci": "41341792448_PASSED_ALL_3_JOBS",
+    "full_push_ci_run": "41342132989_PASSED_ALL_3_JOBS",
+    "web_static_run": "41342132990_PASSED",
+    "pr_182_latest_head_ci": "41342132989_PASSED_ALL_3_JOBS",
     "readiness": "ENGINEERING_RESEARCH_INFRASTRUCTURE_VERIFIED; NOT_RELEASE_READY; LINGUISTIC_ACCURACY_NOT_MEASURED",
     "ccost_wordlist_generator": "IMPLEMENTED; SYNTHETIC_TESTS_PASS; REAL_ZENODO_CSV_NOT_DOWNLOADED",
-    "external_vistec_run": "41341792429_PASSED"
+    "external_vistec_run": "41342132985_PASSED"
   },
   "repository_structure_cleanup_2026_11_01": {
     "main_at_start": "69dafe58a9458d33a645cdcd517e61e9978abdbd",
@@ -2433,8 +2422,8 @@
   "independent_adjudication_work_2026_11_01": {
     "branch": "research/independent-adjudication-gates-20261101",
     "base_main": "cc398254c178171f74397aed556766e87356ab84",
-    "verified_code_checkpoint": "fb398459cae0c6b0f14a0de8eb3eca014aec908e",
-    "documentation_checkpoint": "ce8d4b0450d67e465f76f140dde3b27ca45e313f",
+    "verified_code_checkpoint": "536f03327f11d258a4e7638091797128754b6602",
+    "documentation_checkpoint": "536f03327f11d258a4e7638091797128754b6602",
     "status": "DONE_VERIFIED_ENGINEERING; EXPERT_EVIDENCE_BLOCKED",
     "pr": 182,
     "superseded_pr_closed": 181,
@@ -2457,9 +2446,9 @@
       "tests/test_segmentation_benchmark.py",
       "web/tests/mode-adversarial.test.mjs"
     ],
-    "ci_run": "41341792448",
+    "ci_run": "41342132989",
     "ci_result": "PASSED_ALL_3_JOBS; 296_PYTHON_TESTS; 1168_SUBTESTS; RUFF",
-    "web_static_run": "41341792464",
+    "web_static_run": "41342132990",
     "web_static_result": "PASSED",
     "evidence_limits": {
       "thai_ipa_gold_rows": 0,
@@ -2482,7 +2471,7 @@
       "BROAD_SURFACE": "BROAD_SURFACE_IPA_GOLD_INPUT"
     },
     "ccost_wordlist_generator": "scripts/build_ccost_wordlist_review_packet.py; outputs local blind packet plus source SHA-256/license manifest; actual source not downloaded in this session",
-    "vistec_run": "41341792429",
+    "vistec_run": "41342132985",
     "vistec_result": "PASSED"
   },
   "adjudication_readiness": {
@@ -2505,5 +2494,23 @@
       "formal_inter_annotator_agreement": "NOT_REPORTED_BY_PAPER",
       "license": "CC-BY-NC-SA-4.0"
     }
+  },
+  "latest_exact_head_verification_2026_11_01": {
+    "branch": "research/independent-adjudication-gates-20261101",
+    "head": "536f03327f11d258a4e7638091797128754b6602",
+    "ahead_of_main": 68,
+    "behind_main": 0,
+    "ci_run": "41342132989",
+    "ci_result": "PASSED_ALL_3_JOBS",
+    "python_tests": 296,
+    "python_subtests": 1168,
+    "ruff": "PASSED",
+    "wheel_install_smoke": "PASSED",
+    "master_artifact": "PASSED",
+    "web_static_run": "41342132990",
+    "web_static_result": "PASSED",
+    "external_vistec_run": "41342132985",
+    "external_vistec_result": "PASSED",
+    "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT"
   }
 }
