@@ -11,7 +11,7 @@ from typing import Iterable, Mapping
 import unicodedata
 
 PACKET_FIELDS = (
-    "id", "thai", "stratum", "probe", "orthography_validity", "lexical_reading",
+    "id", "thai", "orthography_validity", "lexical_reading",
     "word_boundaries", "syllable_boundaries", "phonemic_ipa", "broad_surface_ipa",
     "tone_sequence", "vowel_length", "final_glottal", "transcription_level",
     "uncertainty", "abstention_reason", "reviewer_id", "reviewer_qualification_ref",
@@ -71,10 +71,6 @@ def validate_blind_packet(
         source = expected[ident]
         if (row.get("thai") or "") != (source.get("input") or ""):
             raise ValueError(f"packet input does not match frozen challenge set: {ident}")
-        if (row.get("stratum") or "") != (source.get("stratum") or ""):
-            raise ValueError(f"packet stratum does not match frozen challenge set: {ident}")
-        if (row.get("probe") or "") != (source.get("probe") or ""):
-            raise ValueError(f"packet probe does not match frozen challenge set: {ident}")
         filled = [field for field in ANNOTATION_FIELDS if (row.get(field) or "").strip()]
         if filled:
             raise ValueError(

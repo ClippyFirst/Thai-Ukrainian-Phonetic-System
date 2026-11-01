@@ -13,7 +13,7 @@ CHALLENGE = [
     {"id": "TH-G2P-002", "input": "กะ", "stratum": "core-vowel-length", "probe": "core_contrast"},
 ]
 FIELDS = [
-    "id", "thai", "stratum", "probe", "orthography_validity", "lexical_reading",
+    "id", "thai", "orthography_validity", "lexical_reading",
     "word_boundaries", "syllable_boundaries", "phonemic_ipa", "broad_surface_ipa",
     "tone_sequence", "vowel_length", "final_glottal", "transcription_level",
     "uncertainty", "abstention_reason", "reviewer_id", "reviewer_qualification_ref",
@@ -22,10 +22,10 @@ FIELDS = [
 ]
 
 
-def blank_row(ident, thai, stratum="core-vowel-length", probe="core_contrast"):
+def blank_row(ident, thai):
     return {
-        "id": ident, "thai": thai, "stratum": stratum, "probe": probe,
-        **{field: "" for field in FIELDS[4:]},
+        "id": ident, "thai": thai,
+        **{field: "" for field in FIELDS[2:]},
     }
 
 

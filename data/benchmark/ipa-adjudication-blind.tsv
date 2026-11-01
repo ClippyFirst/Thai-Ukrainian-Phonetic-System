@@ -1,43 +1,43 @@
-id	thai	stratum	probe	orthography_validity	lexical_reading	word_boundaries	syllable_boundaries	phonemic_ipa	broad_surface_ipa	tone_sequence	vowel_length	final_glottal	transcription_level	uncertainty	abstention_reason	reviewer_id	reviewer_qualification_ref	reviewed_at	audio_asset_reference	audio_time_start	audio_time_end	source_notes
-TH-G2P-001	กา	core-vowel-length	core_contrast																			
-TH-G2P-002	กะ	core-vowel-length	core_contrast																			
-TH-G2P-003	ไกล	core-tone	core_contrast																			
-TH-G2P-004	ใกล้	core-tone	core_contrast																			
-TH-G2P-005	ไก่	core-tone	core_contrast																			
-TH-G2P-006	จริง	false-cluster	special_orthography																			
-TH-G2P-007	สร้าง	false-cluster	special_orthography																			
-TH-G2P-008	เศร้า	false-cluster	special_orthography																			
-TH-G2P-009	จันทร์	silent-writing	silent_consonant																			
-TH-G2P-010	ศุกร์	silent-writing	silent_consonant																			
-TH-G2P-011	เสาร์	silent-writing	silent_consonant																			
-TH-G2P-012	สัตว์	silent-writing	silent_consonant																			
-TH-G2P-013	ฟิล์ม	loanword	loanword																			
-TH-G2P-014	ฤทธิ์	ฤ-series	special_orthography																			
-TH-G2P-015	ทฤษฎี	lexical-segmentation	word_boundary																			
-TH-G2P-016	คอมพิวเตอร์	lexical-segmentation	word_boundary																			
-TH-G2P-017	โทรศัพท์	lexical-segmentation	word_boundary																			
-TH-G2P-018	ฤๅษี	ฤ-series	special_orthography																			
-TH-G2P-019	เงิน	vowel-length	length_uncertainty																			
-TH-G2P-020	เดิน	vowel-length	length_uncertainty																			
-TH-G2P-021	เตอร์	loanword	loanword																			
-TH-G2P-022	เทอร์	loanword	loanword																			
-TH-G2P-023	ยนต์	silent-writing	silent_consonant																			
-TH-G2P-024	ไซต์	loanword	loanword																			
-TH-G2P-025	กอล์ฟ	loanword	loanword																			
-TH-G2P-026	ครอบครัว	lexical-segmentation	word_boundary																			
-TH-G2P-027	รถบัส	lexical-segmentation	word_boundary																			
-TH-G2P-028	กรรม	รร-series	special_orthography																			
-TH-G2P-029	บรรจุ	รร-series	special_orthography																			
-TH-G2P-030	ฤๅ	ฤ-series	special_orthography																			
-TH-G2P-031	ฦ	ฦ-series	special_orthography																			
-TH-G2P-032	ฦๅ	ฦ-series	special_orthography																			
-TH-G2P-033	ทราบ	ทร-series	special_orthography																			
-TH-G2P-034	ทราย	ทร-series	special_orthography																			
-TH-G2P-035	ข๊า	invalid-input	adversarial																			
-TH-G2P-036	กฉ	invalid-input	adversarial																			
-TH-G2P-037	ยูเครน	article-style-proper-name	oov_lexical_name																			
-TH-G2P-038	ประเทศยูเครน	article-style-compound	compound-boundaries																			
-TH-G2P-039	ยูเครนเป็นประเทศหนึ่ง	article-style-continuous-text	continuous-prose-segmentation																			
-TH-G2P-040	เป็นประเทศหนึ่ง	article-style-phrase	phrase-boundaries																			
-TH-G2P-041	ยุโรปตะวันออก	article-style-place-name	multiword-place-name																			
-TH-G2P-042	ประเทศในยุโรปตะวันออก	article-style-continuous-text	continuous-prose-segmentation																			
+id	thai	orthography_validity	lexical_reading	word_boundaries	syllable_boundaries	phonemic_ipa	broad_surface_ipa	tone_sequence	vowel_length	final_glottal	transcription_level	uncertainty	abstention_reason	reviewer_id	reviewer_qualification_ref	reviewed_at	audio_asset_reference	audio_time_start	audio_time_end	source_notes
+TH-G2P-001	กา																			
+TH-G2P-002	กะ																			
+TH-G2P-003	ไกล																			
+TH-G2P-004	ใกล้																			
+TH-G2P-005	ไก่																			
+TH-G2P-006	จริง																			
+TH-G2P-007	สร้าง																			
+TH-G2P-008	เศร้า																			
+TH-G2P-009	จันทร์																			
+TH-G2P-010	ศุกร์																			
+TH-G2P-011	เสาร์																			
+TH-G2P-012	สัตว์																			
+TH-G2P-013	ฟิล์ม																			
+TH-G2P-014	ฤทธิ์																			
+TH-G2P-015	ทฤษฎี																			
+TH-G2P-016	คอมพิวเตอร์																			
+TH-G2P-017	โทรศัพท์																			
+TH-G2P-018	ฤๅษี																			
+TH-G2P-019	เงิน																			
+TH-G2P-020	เดิน																			
+TH-G2P-021	เตอร์																			
+TH-G2P-022	เทอร์																			
+TH-G2P-023	ยนต์																			
+TH-G2P-024	ไซต์																			
+TH-G2P-025	กอล์ฟ																			
+TH-G2P-026	ครอบครัว																			
+TH-G2P-027	รถบัส																			
+TH-G2P-028	กรรม																			
+TH-G2P-029	บรรจุ																			
+TH-G2P-030	ฤๅ																			
+TH-G2P-031	ฦ																			
+TH-G2P-032	ฦๅ																			
+TH-G2P-033	ทราบ																			
+TH-G2P-034	ทราย																			
+TH-G2P-035	ข๊า																			
+TH-G2P-036	กฉ																			
+TH-G2P-037	ยูเครน																			
+TH-G2P-038	ประเทศยูเครน																			
+TH-G2P-039	ยูเครนเป็นประเทศหนึ่ง																			
+TH-G2P-040	เป็นประเทศหนึ่ง																			
+TH-G2P-041	ยุโรปตะวันออก																			
+TH-G2P-042	ประเทศในยุโรปตะวันออก																			
