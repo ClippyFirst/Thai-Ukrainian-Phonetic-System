@@ -126,13 +126,20 @@ def main() -> int:
         if not row["id"] or row["id"] in gold:
             raise ValueError(f"gold IDs must be non-empty and unique: {row['id']!r}")
         gold[row["id"]] = row
-    for row in gold_rows:
-        if row["gold_status"] == "ADJUDICATED":
-            validate_gold_row(row, source_registry, reviewer_registry)
     eligible = {
         ident: row for ident, row in gold.items()
         if row["gold_status"] == "ADJUDICATED" and norm(row["gold_ipa"])
     }
+    # Reject mixed target layers before row-level source validation so the
+    # caller receives the benchmark-design error, not a misleading source error.
+    candidate_levels = {row["transcription_level"] for row in eligible.values()}
+    if len(candidate_levels) > 1:
+        raise ValueError(
+            "one benchmark run must use one transcription_level; run phonemic and surface IPA separately"
+        )
+    for row in gold_rows:
+        if row["gold_status"] == "ADJUDICATED":
+            validate_gold_row(row, source_registry, reviewer_registry)
     transcription_levels = {row["transcription_level"] for row in eligible.values()}
     if len(transcription_levels) > 1:
         raise ValueError(
