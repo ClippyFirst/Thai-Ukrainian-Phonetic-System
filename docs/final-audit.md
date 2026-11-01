@@ -1339,3 +1339,6 @@ The first run with the new coverage tests completed master-table generation and 
 - Audio-backed Thai review rows now require a matching VERIFIED asset record, matching source ID, non-overlap status and a positive time interval bounded by the registered asset duration. This applies to broad phonemic audio references and narrow acoustic labels.
 - Added tests for valid asset provenance, source mismatch, out-of-range intervals, unregistered asset IDs and an intentionally empty manifest.
 - **Evidence boundary:** no real LOTUSDIS audio asset has been selected or registered. The infrastructure is ready; acoustic review remains blocked until an asset is pinned. No media was downloaded or bundled.
+
+
+- Tightened the audio asset manifest further: mutable dataset aliases (`main`, `master`, `latest`, `default`, `head`) and non-absolute asset URIs are rejected. Each asset must be pinned to a specific revision and URI before it can be used.
