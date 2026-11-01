@@ -20,7 +20,11 @@ class CorpusSourceRegistryTests(unittest.TestCase):
         self.assertIn("manual correction by phonetically trained native Thai speakers", row["notes"])
         self.assertIn("dual independent adjudication not established", row["notes"])
         self.assertIn("CCOST_manual.pdf inspected 2026-11-01", row["notes"])
-        self.assertIn("does not specify released phone/toneme label inventory", row["notes"])
+        self.assertIn("paper specifies ORT, KAN, KAS, MAU, MAS and TRN tiers", row["notes"])
+        self.assertIn("X-SAMPA", row["notes"])
+        self.assertIn("tone labels _1 to _5", row["notes"])
+        self.assertIn("no formal inter-annotator agreement", row["notes"])
+        self.assertIn("actual archive tier conformance still needs inspection", row["notes"])
 
     def test_segmentation_sources_preserve_license_and_usage_gates(self):
         path = ROOT / "data" / "corpus_sources.csv"

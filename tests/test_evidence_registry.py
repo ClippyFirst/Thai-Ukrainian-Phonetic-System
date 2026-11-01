@@ -29,6 +29,19 @@ class EvidenceRegistryTests(unittest.TestCase):
             validate_source_reference("CORP-CCOST", "https://zenodo.org/records/17366698",
                                       "CC-BY-NC-SA-4.0", "IPA_GOLD_INPUT", registry, row_id="ccost-1")
 
+    def test_project_challenge_inputs_are_approved_for_independent_expert_gold(self):
+        registry = load_source_registry(ROOT / "data/benchmark/source-registry.tsv")
+        source_id = "CLIPPYFIRST-THAI-CHALLENGE-CC398"
+        self.assertIn(source_id, registry)
+        source = registry[source_id]
+        self.assertEqual(source["license"], "MIT")
+        for use in ("IPA_GOLD_INPUT", "WORD_SEGMENTATION_GOLD_INPUT"):
+            validate_source_reference(
+                source_id, source["source_url"], "MIT", use, registry, row_id="challenge-001"
+            )
+        self.assertIn("labels must come from independent reviewers", source["notes"])
+        self.assertIn("not acoustic evidence", source["notes"])
+
     def test_source_registry_binds_exact_url_license_and_allowed_use(self):
         registry = load_source_registry(ROOT / "data/benchmark/source-registry.tsv")
         source = registry["SRC-WIKTIONARY-TH-ไกล"]
