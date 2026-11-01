@@ -17,6 +17,11 @@ import unicodedata
 from collections import defaultdict
 from pathlib import Path
 
+from thai_ukrainian.evidence_registry import (
+    load_reviewer_registry, load_source_registry,
+    validate_reviewer_reference, validate_source_reference,
+)
+
 GOLD_FIELDS = ["id", "text", "gold_tokens_json", "gold_status", "source_id", "license", "split"]
 PRED_FIELDS = ["id", "engine", "predicted_tokens_json", "status", "version"]
 # Only a fully emitted prediction is scoreable. Error/abstention/partial rows
@@ -27,7 +32,8 @@ ADJUDICATION_FIELDS = (
     "source_url", "segmentation_layer", "reviewer_a_id", "reviewer_b_id",
     "reviewer_a_qualification_ref", "reviewer_b_qualification_ref",
     "reviewer_a_tokens_json", "reviewer_b_tokens_json", "adjudicator_id",
-    "adjudication_outcome", "adjudication_record_id", "adjudication_notes",
+    "adjudicator_qualification_ref", "adjudication_outcome", "adjudication_record_id",
+    "adjudication_notes",
 )
 
 
@@ -75,7 +81,11 @@ def boundaries(text: str, tokens: list[str], *, row_id: str, field: str) -> set[
     return offsets
 
 
-def validate_adjudicated_row(row: dict[str, str]) -> tuple[list[str], list[str]]:
+def validate_adjudicated_row(
+    row: dict[str, str],
+    source_registry: dict[str, dict[str, str]] | None = None,
+    reviewer_registry: dict[str, dict[str, str]] | None = None,
+) -> tuple[list[str], list[str]]:
     row_id = row["id"]
     missing = [field for field in ADJUDICATION_FIELDS if not row.get(field, "").strip()]
     if missing:
@@ -86,6 +96,17 @@ def validate_adjudicated_row(row: dict[str, str]) -> tuple[list[str], list[str]]
         raise ValueError(f"ADJUDICATED gold row {row_id!r} requires segmentation_layer WORD or SYLLABLE")
     if row["reviewer_a_id"].strip() == row["reviewer_b_id"].strip():
         raise ValueError(f"ADJUDICATED gold row {row_id!r} requires two distinct reviewers")
+    if row["adjudicator_id"].strip() in {row["reviewer_a_id"].strip(), row["reviewer_b_id"].strip()}:
+        raise ValueError(f"ADJUDICATED gold row {row_id!r} requires a distinct adjudicator")
+    if source_registry is not None:
+        validate_source_reference(row["source_id"], row["source_url"], row["license"],
+                                  "WORD_SEGMENTATION_GOLD_INPUT", source_registry, row_id=row_id)
+    if reviewer_registry is not None:
+        for field in ("reviewer_a", "reviewer_b"):
+            validate_reviewer_reference(row[f"{field}_id"], row[f"{field}_qualification_ref"], reviewer_registry,
+                                        language="th", required_role="THAI_LINGUIST", row_id=row_id)
+        validate_reviewer_reference(row["adjudicator_id"], row["adjudicator_qualification_ref"], reviewer_registry,
+                                    language="th", required_role="THAI_LINGUIST_ADJUDICATOR", row_id=row_id)
     reviewer_a = parse_tokens(
         row["reviewer_a_tokens_json"], row_id=row_id, field="reviewer_a_tokens_json"
     )
@@ -120,8 +141,12 @@ def main() -> int:
     parser.add_argument("--gold", type=Path, required=True)
     parser.add_argument("--predictions", type=Path, required=True)
     parser.add_argument("--output", type=Path, default=Path("segmentation-benchmark.json"))
+    parser.add_argument("--source-registry", type=Path, default=Path("data/benchmark/source-registry.tsv"))
+    parser.add_argument("--reviewer-registry", type=Path, default=Path("data/benchmark/reviewer-qualifications.tsv"))
     args = parser.parse_args()
 
+    source_registry = load_source_registry(args.source_registry)
+    reviewer_registry = load_reviewer_registry(args.reviewer_registry)
     gold_rows = read_tsv(args.gold, GOLD_FIELDS)
     prediction_rows = read_tsv(args.predictions, PRED_FIELDS)
     gold: dict[str, dict[str, object]] = {}
@@ -139,8 +164,15 @@ def main() -> int:
                     raise ValueError(f"ADJUDICATED gold row {row_id!r} requires {field}")
             tokens = parse_tokens(row["gold_tokens_json"], row_id=row_id, field="gold_tokens_json")
             if row["gold_status"] == "ADJUDICATED":
-                reviewer_a_tokens, reviewer_b_tokens = validate_adjudicated_row(row)
+                reviewer_a_tokens, reviewer_b_tokens = validate_adjudicated_row(
+                    row, source_registry, reviewer_registry
+                )
             else:
+                validate_source_reference(
+                    row["source_id"], row.get("source_url", ""), row["license"],
+                    "WORD_SEGMENTATION_DIAGNOSTIC", source_registry,
+                    row_id=row_id, require_url=False,
+                )
                 reviewer_a_tokens, reviewer_b_tokens = [], []
             gold[row_id] = {
                 "text": normalize(row["text"]),
@@ -150,7 +182,7 @@ def main() -> int:
                 "license": row["license"].strip(),
                 "split": row["split"].strip(),
                 "gold_status": row["gold_status"].strip(),
-                "source_url": row.get("source_url", "").strip(),
+                "source_url": row.get("source_url", "").strip() or source_registry[row["source_id"].strip()]["source_url"],
                 "segmentation_layer": row.get("segmentation_layer", "").strip() or (
                     "WORD" if row["gold_status"] == "SOURCE_ANNOTATED" else ""
                 ),
@@ -224,6 +256,10 @@ def main() -> int:
                 if scored_gold_status == "SOURCE_ANNOTATED"
                 else "not measured; no scoreable gold rows"
             ),
+        },
+        "evidence_registries": {
+            "source_records": len(source_registry),
+            "verified_reviewer_records": sum(row["verification_status"] == "VERIFIED" for row in reviewer_registry.values()),
         },
         "gold": {
             "rows_total": len(gold_rows),

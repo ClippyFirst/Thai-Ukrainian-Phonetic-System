@@ -9,11 +9,17 @@ import unicodedata
 from collections import defaultdict
 from pathlib import Path
 
+from thai_ukrainian.evidence_registry import (
+    load_reviewer_registry, load_source_registry,
+    validate_reviewer_reference, validate_source_reference,
+)
+
 GOLD_FIELDS = [
     "id", "text", "gold_ipa", "gold_status", "profile", "source_id", "source_url",
     "license", "transcription_level", "reviewer_a_id", "reviewer_b_id",
     "reviewer_a_qualification_ref", "reviewer_b_qualification_ref",
-    "reviewer_a_ipa", "reviewer_b_ipa", "adjudicator_id", "adjudication_outcome",
+    "reviewer_a_ipa", "reviewer_b_ipa", "adjudicator_id", "adjudicator_qualification_ref",
+    "adjudication_outcome",
     "adjudication_record_id", "adjudication_notes",
 ]
 PRED_FIELDS = ["id", "engine", "raw_output", "ipa", "status", "version"]
@@ -49,7 +55,11 @@ def distance(a: str, b: str) -> int:
     return previous[-1]
 
 
-def validate_gold_row(row: dict[str, str]) -> None:
+def validate_gold_row(
+    row: dict[str, str],
+    source_registry: dict[str, dict[str, str]] | None = None,
+    reviewer_registry: dict[str, dict[str, str]] | None = None,
+) -> None:
     ident = row["id"]
     if not norm(row["gold_ipa"]):
         raise ValueError(f"ADJUDICATED gold row {ident!r} requires non-empty gold_ipa")
@@ -67,6 +77,18 @@ def validate_gold_row(row: dict[str, str]) -> None:
         )
     if row["reviewer_a_id"].strip() == row["reviewer_b_id"].strip():
         raise ValueError(f"ADJUDICATED gold row {ident!r} requires two distinct reviewers")
+    if row["adjudicator_id"].strip() in {row["reviewer_a_id"].strip(), row["reviewer_b_id"].strip()}:
+        raise ValueError(f"ADJUDICATED gold row {ident!r} requires an independent adjudicator")
+    if source_registry is not None:
+        validate_source_reference(row["source_id"], row["source_url"], row["license"],
+                                  "IPA_GOLD_INPUT", source_registry, row_id=ident)
+    if reviewer_registry is not None:
+        validate_reviewer_reference(row["reviewer_a_id"], row["reviewer_a_qualification_ref"], reviewer_registry,
+                                    language="th", required_role="THAI_PHONETICIAN", row_id=ident)
+        validate_reviewer_reference(row["reviewer_b_id"], row["reviewer_b_qualification_ref"], reviewer_registry,
+                                    language="th", required_role="THAI_PHONETICIAN", row_id=ident)
+        validate_reviewer_reference(row["adjudicator_id"], row["adjudicator_qualification_ref"], reviewer_registry,
+                                    language="th", required_role="THAI_PHONETICIAN_ADJUDICATOR", row_id=ident)
     if row["transcription_level"] not in TRANSCRIPTION_LEVELS:
         raise ValueError(f"ADJUDICATED gold row {ident!r} has unsupported transcription_level")
     outcome = row["adjudication_outcome"]
@@ -88,7 +110,11 @@ def main() -> int:
     parser.add_argument("--gold", type=Path, required=True)
     parser.add_argument("--predictions", type=Path, required=True)
     parser.add_argument("--output", type=Path, default=Path("benchmark-report.json"))
+    parser.add_argument("--source-registry", type=Path, default=Path("data/benchmark/source-registry.tsv"))
+    parser.add_argument("--reviewer-registry", type=Path, default=Path("data/benchmark/reviewer-qualifications.tsv"))
     args = parser.parse_args()
+    source_registry = load_source_registry(args.source_registry)
+    reviewer_registry = load_reviewer_registry(args.reviewer_registry)
     gold_rows = read_tsv(args.gold, GOLD_FIELDS)
     prediction_rows = read_tsv(args.predictions, PRED_FIELDS)
     gold: dict[str, dict[str, str]] = {}
@@ -98,7 +124,7 @@ def main() -> int:
         gold[row["id"]] = row
     for row in gold_rows:
         if row["gold_status"] == "ADJUDICATED":
-            validate_gold_row(row)
+            validate_gold_row(row, source_registry, reviewer_registry)
     eligible = {
         ident: row for ident, row in gold.items()
         if row["gold_status"] == "ADJUDICATED" and norm(row["gold_ipa"])
@@ -123,14 +149,19 @@ def main() -> int:
         "schema_version": "1.1",
         "method": {
             "gold_gate": (
-                "ADJUDICATED, non-empty IPA, two distinct reviewer IDs and raw labels, "
-                "adjudicator, outcome, transcription level, source/license and adjudication record"
+                "ADJUDICATED, non-empty IPA, two distinct verified Thai-phonetician reviewers, "
+                "a distinct verified Thai-phonetician adjudicator, exact source/license registry match, "
+                "outcome, transcription level and adjudication record"
             ),
             "normalization": "Unicode NFC plus outer whitespace trim only",
             "exact_match": "strict full-string IPA match; tone, length and syllable separators remain significant",
             "cer": "Levenshtein over Unicode code points; not articulatory/feature-weighted",
             "missing_predictions": "every eligible gold row is in each engine's denominator; absent/empty IPA counts as missing",
             "accuracy_claim": "descriptive only for supplied independently reviewed rows; no generalization claim",
+        },
+        "evidence_registries": {
+            "source_records": len(source_registry),
+            "verified_reviewer_records": sum(row["verification_status"] == "VERIFIED" for row in reviewer_registry.values()),
         },
         "gold": {
             "transcription_level": next(iter(transcription_levels), None),

@@ -10,6 +10,8 @@ from math import isfinite
 from typing import Iterable, Mapping
 import unicodedata
 
+from .evidence_registry import validate_reviewer_reference, validate_source_reference
+
 PACKET_FIELDS = (
     "id", "thai", "orthography_validity", "lexical_reading",
     "word_boundaries", "syllable_boundaries", "phonemic_ipa", "broad_surface_ipa",
@@ -84,6 +86,7 @@ def validate_review_packet(
     expected_ids: Iterable[str],
     reviewer_id: str,
     challenge_rows: Iterable[Mapping[str, str]] | None = None,
+    reviewer_registry: Mapping[str, Mapping[str, str]] | None = None,
 ) -> dict:
     """Validate one reviewer's completed packet without scoring its judgments."""
     if not reviewer_id.strip():
@@ -104,6 +107,11 @@ def validate_review_packet(
             raise ValueError(f"all rows must name the same reviewer ({reviewer_id})")
         if not (row.get("reviewer_qualification_ref") or "").strip():
             raise ValueError(f"reviewer_qualification_ref is required: {ident}")
+        if reviewer_registry is not None:
+            validate_reviewer_reference(
+                reviewer_id, row["reviewer_qualification_ref"], reviewer_registry,
+                language="th", required_role="THAI_PHONETICIAN", row_id=ident,
+            )
         try:
             date.fromisoformat((row.get("reviewed_at") or "").strip())
         except ValueError as exc:
@@ -219,6 +227,7 @@ def validate_independent_pair(
     reviewer_a: Iterable[Mapping[str, str]],
     reviewer_b: Iterable[Mapping[str, str]],
     challenge_rows: Iterable[Mapping[str, str]] | None = None,
+    reviewer_registry: Mapping[str, Mapping[str, str]] | None = None,
 ) -> dict:
     """Check reviewer separation and identical item coverage; do not adjudicate."""
     challenge_rows = list(challenge_rows) if challenge_rows is not None else None
@@ -236,8 +245,8 @@ def validate_independent_pair(
     for ident in a:
         if (a[ident].get("thai") or "") != (b[ident].get("thai") or ""):
             raise ValueError(f"independent reviewer input mismatch: {ident}")
-    validate_review_packet(a.values(), a.keys(), reviewer_a_id, challenge_rows)
-    validate_review_packet(b.values(), b.keys(), reviewer_b_id, challenge_rows)
+    validate_review_packet(a.values(), a.keys(), reviewer_a_id, challenge_rows, reviewer_registry)
+    validate_review_packet(b.values(), b.keys(), reviewer_b_id, challenge_rows, reviewer_registry)
     return {
         "records": len(a),
         "reviewer_a_id": reviewer_a_id,
@@ -259,6 +268,7 @@ UKRAINIAN_ANNOTATION_FIELDS = UKRAINIAN_PREFERENCE_FIELDS[8:]
 def validate_ukrainian_blind_packet(
     rows: Iterable[Mapping[str, str]],
     source_rows: Iterable[Mapping[str, str]],
+    source_registry: Mapping[str, Mapping[str, str]] | None = None,
 ) -> dict:
     """Validate a candidate-blind UA preference packet conditional on source-attested IPA."""
     indexed = _unique_rows(rows)
@@ -280,6 +290,11 @@ def validate_ukrainian_blind_packet(
                 raise ValueError(f"Ukrainian packet {packet_field} does not match source: {ident}")
         if row.get("ipa_reference_status") != "SOURCE_ATTESTED_NOT_GOLD":
             raise ValueError(f"Ukrainian packet must label conditional IPA as not-gold: {ident}")
+        if source_registry is not None:
+            validate_source_reference(
+                row["source_id"], row["source_url"], row["license"],
+                "UKRAINIAN_PREFERENCE_INPUT", source_registry, row_id=ident,
+            )
         if row.get("criteria_version") != UKRAINIAN_CRITERIA_VERSION:
             raise ValueError(f"Ukrainian packet criteria version mismatch: {ident}")
         filled = [
@@ -311,6 +326,8 @@ def validate_ukrainian_review_packet(
     expected_ids: Iterable[str],
     reviewer_id: str,
     source_rows: Iterable[Mapping[str, str]] | None = None,
+    reviewer_registry: Mapping[str, Mapping[str, str]] | None = None,
+    source_registry: Mapping[str, Mapping[str, str]] | None = None,
 ) -> dict:
     """Validate one Ukrainian-native preference review, conditional on supplied IPA."""
     if not reviewer_id.strip():
@@ -338,12 +355,22 @@ def validate_ukrainian_review_packet(
             ):
                 if (row.get(packet_field) or "") != (source.get(source_field) or ""):
                     raise ValueError(f"Ukrainian review source mismatch for {packet_field}: {ident}")
+        if source_registry is not None:
+            validate_source_reference(
+                row["source_id"], row["source_url"], row["license"],
+                "UKRAINIAN_PREFERENCE_INPUT", source_registry, row_id=ident,
+            )
         if row.get("criteria_version") != UKRAINIAN_CRITERIA_VERSION:
             raise ValueError(f"Ukrainian review criteria version mismatch: {ident}")
         if (row.get("reviewer_id") or "").strip() != reviewer_id:
             raise ValueError(f"all rows must name the same Ukrainian reviewer ({reviewer_id})")
         if not (row.get("reviewer_qualification_ref") or "").strip():
             raise ValueError(f"reviewer_qualification_ref is required: {ident}")
+        if reviewer_registry is not None:
+            validate_reviewer_reference(
+                reviewer_id, row["reviewer_qualification_ref"], reviewer_registry,
+                language="uk", required_role="UKRAINIAN_NATIVE_REVIEWER", row_id=ident,
+            )
         try:
             date.fromisoformat((row.get("reviewed_at") or "").strip())
         except ValueError as exc:
@@ -377,6 +404,8 @@ def validate_ukrainian_independent_pair(
     reviewer_a: Iterable[Mapping[str, str]],
     reviewer_b: Iterable[Mapping[str, str]],
     source_rows: Iterable[Mapping[str, str]] | None = None,
+    reviewer_registry: Mapping[str, Mapping[str, str]] | None = None,
+    source_registry: Mapping[str, Mapping[str, str]] | None = None,
 ) -> dict:
     """Require distinct Ukrainian reviewers and identical IPA-conditioned sample."""
     source_rows = list(source_rows) if source_rows is not None else None
@@ -397,8 +426,12 @@ def validate_ukrainian_independent_pair(
         for field in ("thai", "source_ipa", "source_id", "criteria_version"):
             if (a[ident].get(field) or "") != (b[ident].get(field) or ""):
                 raise ValueError(f"independent Ukrainian reviewer input mismatch for {field}: {ident}")
-    validate_ukrainian_review_packet(a.values(), a.keys(), reviewer_a_id, source_rows)
-    validate_ukrainian_review_packet(b.values(), b.keys(), reviewer_b_id, source_rows)
+    validate_ukrainian_review_packet(
+        a.values(), a.keys(), reviewer_a_id, source_rows, reviewer_registry, source_registry
+    )
+    validate_ukrainian_review_packet(
+        b.values(), b.keys(), reviewer_b_id, source_rows, reviewer_registry, source_registry
+    )
     return {
         "records": len(a),
         "reviewer_a_id": reviewer_a_id,
