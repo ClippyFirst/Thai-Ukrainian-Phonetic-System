@@ -1197,3 +1197,17 @@ The first run with the new coverage tests completed master-table generation and 
 - CCOST manual retrieval/inspection is DONE_VERIFIED; released TextGrid schema/detailed-method reconciliation remains BLOCKED / evidence-limited. No audio/TextGrid or 6.2 GB archive was downloaded or bundled.
 - Independent Thai and Ukrainian adjudication, manual browser/device and WCAG 2.2 AA review remain external acceptance gates. Main branch protection remains TODO — owner configuration; historical branch inventory is now reconciled at 184 refs across two API pages; retention/disposition remains PARTIAL pending commit-level provenance review and owner-approved policy.
 - Local pytest/npm execution was not possible in the connector-only environment; GitHub Actions is the verification source. Do not claim a local test run.
+
+
+## Repository structure and technical-debt cleanup — 2026-11-01
+
+- **Starting main:** `69dafe58a9458d33a645cdcd517e61e9978abdbd`; **main at this closeout:** `1e0c2b3432a49178c6f00fbfb631a0258a7cc6fc`.
+- **DONE_VERIFIED:** PRs [#171–#177](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pulls?q=is%3Apr+is%3Amerged+171%2C172%2C173%2C174%2C175%2C176%2C177) add documentation/source-of-truth navigation, align architecture with the typed-IPA adapter, inventory all 24 scripts and their evidence boundaries, remove unused browser direct-grapheme Ukrainian maps, derive consonant maps from canonical registries, add generated-artifact drift detection with deterministic LF CSV output, and correct the master manifest's IPA contract. Exact-head CI runs for these PRs passed; post-merge main CI [41325122025](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41325122025) passed `test`, `wheel-install-smoke` and `master-artifact`; Pages [41325122035](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41325122035) passed build and deploy.
+- **PRESERVED:** IPA-first typed result and provenance, separate RTGS route, source/evidence grades, generated artifacts and prior tests. No unsupported linguistic data or accuracy claims were introduced.
+- **PARTIAL:** full import/call/reference graph and broad test/fixture redundancy review. Acceptance requires repository-wide static reference analysis plus manual review of dynamic imports, entry points and semantic test coverage.
+- **DEFERRED:** splitting/archiving the large chronological handoff, validation matrix and audit history until cross-reference/link mapping and a verified archive plan exist.
+- **PARTIAL / owner decision:** branch retention; 10 refs were present including this closeout branch, with no branch deletion. Main reports `protected=false`; choosing required checks/reviews and configuring protection remain owner-controlled.
+- **BLOCKED / evidence-limited:** independent Thai IPA/segmentation adjudication, independent Ukrainian-native target-form adjudication, released CCOST TextGrid schema/method reconciliation, and manual browser/device plus WCAG 2.2 AA review. Engineering CI cannot replace these reviews.
+- **Verification limitation:** no local test suite was run in the connector-only environment. Claims above refer to the recorded GitHub Actions runs, not local execution.
+- **Readiness:** engineering-verified research prototype; not release-ready for general linguistic-accuracy or accessibility-conformance claims.
+- **Current documentation closeout:** PR #178; exact-head CI must pass before merge. Consult live PR metadata for its current head SHA and status.
