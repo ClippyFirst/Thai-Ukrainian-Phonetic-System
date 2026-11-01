@@ -5,6 +5,8 @@ from thai_ukrainian.adjudication import (
     validate_independent_pair,
     validate_review_packet,
     validate_ukrainian_blind_packet,
+    validate_ukrainian_independent_pair,
+    validate_ukrainian_review_packet,
 )
 
 
@@ -177,6 +179,47 @@ class AdjudicationPacketTests(unittest.TestCase):
         row["final_glottal"] = "ABSENT,ABSENT"
         with self.assertRaisesRegex(ValueError, "must align with syllables"):
             validate_review_packet([row], ["TH-G2P-001"], "TH-PH-01")
+
+
+    def test_ukrainian_review_requires_conditional_status_and_native_reviewer_trace(self):
+        row = {
+            "id": "TH-UA-001", "thai": "ไกล", "source_ipa": "/klaj˧/",
+            "ipa_reference_status": "SOURCE_ATTESTED_NOT_GOLD",
+            "source_id": "SRC-1", "source_url": "https://example.org/source",
+            "license": "CC-BY-SA-4.0", "criteria_version": "UA-PRACTICAL-TRANSCRIPTION-0.1",
+            "reviewer_id": "UK-UA-01", "reviewer_qualification_ref": "qualification:UK-UA-01",
+            "preferred_ukrainian_form": "клай", "syllable_boundary_policy": "DISPLAY_ONLY",
+            "tone_rendering_policy": "NO_ORTHOGRAPHIC_TONE_MARK", "uncertainty": "LOW",
+            "abstention_reason": "", "reviewed_at": "2026-11-01", "rationale": "Readable and segmentally faithful.",
+        }
+        self.assertEqual(
+            validate_ukrainian_review_packet([row], ["TH-UA-001"], "UK-UA-01")["status"],
+            "UKRAINIAN_REVIEW_VALID_CONDITIONAL_NOT_GOLD",
+        )
+        row["ipa_reference_status"] = "ADJUDICATED"
+        with self.assertRaisesRegex(ValueError, "source-attested-not-gold"):
+            validate_ukrainian_review_packet([row], ["TH-UA-001"], "UK-UA-01")
+
+    def test_ukrainian_reviewer_pair_requires_distinct_native_reviewer_ids(self):
+        base = {
+            "id": "TH-UA-001", "thai": "ไกล", "source_ipa": "/klaj˧/",
+            "ipa_reference_status": "SOURCE_ATTESTED_NOT_GOLD",
+            "source_id": "SRC-1", "source_url": "https://example.org/source",
+            "license": "CC-BY-SA-4.0", "criteria_version": "UA-PRACTICAL-TRANSCRIPTION-0.1",
+            "reviewer_qualification_ref": "qualification", "preferred_ukrainian_form": "клай",
+            "syllable_boundary_policy": "DISPLAY_ONLY",
+            "tone_rendering_policy": "NO_ORTHOGRAPHIC_TONE_MARK", "uncertainty": "LOW",
+            "abstention_reason": "", "reviewed_at": "2026-11-01", "rationale": "Reasoned preference.",
+        }
+        a = [{**base, "reviewer_id": "UK-UA-01"}]
+        b = [{**base, "reviewer_id": "UK-UA-02"}]
+        self.assertEqual(
+            validate_ukrainian_independent_pair(a, b)["status"],
+            "TWO_UKRAINIAN_REVIEWERS_PRESENT_CONDITIONAL_NOT_GOLD",
+        )
+        b[0]["reviewer_id"] = "UK-UA-01"
+        with self.assertRaisesRegex(ValueError, "distinct"):
+            validate_ukrainian_independent_pair(a, b)
 
     def test_narrow_acoustic_labels_require_audio_asset_and_interval(self):
         row = completed_row("TH-G2P-001", "กา")

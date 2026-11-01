@@ -269,3 +269,95 @@ def validate_ukrainian_blind_packet(
         "status": "CANDIDATE_BLIND_UKRAINIAN_PREFERENCE_PACKET_VALID",
         "ipa_reference_status": "SOURCE_ATTESTED_NOT_GOLD",
     }
+
+
+UKRAINIAN_UNCERTAINTY_VALUES = {"LOW", "MEDIUM", "HIGH", "ABSTAIN"}
+UKRAINIAN_SYLLABLE_POLICIES = {
+    "PRESERVE_IN_DISPLAY", "DISPLAY_ONLY", "OMIT", "NOT_APPLICABLE"
+}
+UKRAINIAN_TONE_POLICIES = {
+    "NO_ORTHOGRAPHIC_TONE_MARK", "KEEP_EXPLICIT_MARK_WITH_RATIONALE", "NOT_APPLICABLE"
+}
+
+
+def validate_ukrainian_review_packet(
+    rows: Iterable[Mapping[str, str]],
+    expected_ids: Iterable[str],
+    reviewer_id: str,
+) -> dict:
+    """Validate one Ukrainian-native preference review, conditional on supplied IPA."""
+    if not reviewer_id.strip():
+        raise ValueError("reviewer_id must be supplied")
+    indexed = _unique_rows(rows)
+    _require_exact_fields(indexed, UKRAINIAN_PREFERENCE_FIELDS, "Ukrainian review packet")
+    if set(indexed) != set(expected_ids):
+        raise ValueError("Ukrainian review packet must cover the exact frozen sample")
+    abstentions = 0
+    for ident, row in indexed.items():
+        if row.get("ipa_reference_status") != "SOURCE_ATTESTED_NOT_GOLD":
+            raise ValueError(f"Ukrainian review must preserve the source-attested-not-gold status: {ident}")
+        if row.get("criteria_version") != UKRAINIAN_CRITERIA_VERSION:
+            raise ValueError(f"Ukrainian review criteria version mismatch: {ident}")
+        if (row.get("reviewer_id") or "").strip() != reviewer_id:
+            raise ValueError(f"all rows must name the same Ukrainian reviewer ({reviewer_id})")
+        if not (row.get("reviewer_qualification_ref") or "").strip():
+            raise ValueError(f"reviewer_qualification_ref is required: {ident}")
+        try:
+            date.fromisoformat((row.get("reviewed_at") or "").strip())
+        except ValueError as exc:
+            raise ValueError(f"reviewed_at must be an ISO date: {ident}") from exc
+        uncertainty = (row.get("uncertainty") or "").strip()
+        if uncertainty not in UKRAINIAN_UNCERTAINTY_VALUES:
+            raise ValueError(f"invalid Ukrainian preference uncertainty for {ident}")
+        preferred = (row.get("preferred_ukrainian_form") or "").strip()
+        abstention_reason = (row.get("abstention_reason") or "").strip()
+        if uncertainty == "ABSTAIN":
+            abstentions += 1
+            if preferred or not abstention_reason:
+                raise ValueError(f"Ukrainian abstention requires no preferred form and a reason: {ident}")
+        elif not preferred:
+            raise ValueError(f"preferred_ukrainian_form is required unless abstaining: {ident}")
+        if not (row.get("rationale") or "").strip():
+            raise ValueError(f"Ukrainian preference rationale is required: {ident}")
+        if row.get("syllable_boundary_policy") not in UKRAINIAN_SYLLABLE_POLICIES:
+            raise ValueError(f"invalid syllable_boundary_policy for {ident}")
+        if row.get("tone_rendering_policy") not in UKRAINIAN_TONE_POLICIES:
+            raise ValueError(f"invalid tone_rendering_policy for {ident}")
+    return {
+        "records": len(indexed),
+        "reviewer_id": reviewer_id,
+        "abstentions": abstentions,
+        "status": "UKRAINIAN_REVIEW_VALID_CONDITIONAL_NOT_GOLD",
+    }
+
+
+def validate_ukrainian_independent_pair(
+    reviewer_a: Iterable[Mapping[str, str]],
+    reviewer_b: Iterable[Mapping[str, str]],
+) -> dict:
+    """Require distinct Ukrainian reviewers and identical IPA-conditioned sample."""
+    a = _unique_rows(reviewer_a)
+    b = _unique_rows(reviewer_b)
+    _require_exact_fields(a, UKRAINIAN_PREFERENCE_FIELDS, "Ukrainian reviewer A packet")
+    _require_exact_fields(b, UKRAINIAN_PREFERENCE_FIELDS, "Ukrainian reviewer B packet")
+    ids_a = {(row.get("reviewer_id") or "").strip() for row in a.values()}
+    ids_b = {(row.get("reviewer_id") or "").strip() for row in b.values()}
+    if len(ids_a) != 1 or len(ids_b) != 1 or "" in ids_a or "" in ids_b:
+        raise ValueError("each Ukrainian review must contain exactly one reviewer_id")
+    reviewer_a_id, reviewer_b_id = next(iter(ids_a)), next(iter(ids_b))
+    if reviewer_a_id == reviewer_b_id:
+        raise ValueError("independent Ukrainian reviewers must have distinct reviewer_id values")
+    if set(a) != set(b):
+        raise ValueError("independent Ukrainian reviewers must cover identical item IDs")
+    for ident in a:
+        for field in ("thai", "source_ipa", "source_id", "criteria_version"):
+            if (a[ident].get(field) or "") != (b[ident].get(field) or ""):
+                raise ValueError(f"independent Ukrainian reviewer input mismatch for {field}: {ident}")
+    validate_ukrainian_review_packet(a.values(), a.keys(), reviewer_a_id)
+    validate_ukrainian_review_packet(b.values(), b.keys(), reviewer_b_id)
+    return {
+        "records": len(a),
+        "reviewer_a_id": reviewer_a_id,
+        "reviewer_b_id": reviewer_b_id,
+        "status": "TWO_UKRAINIAN_REVIEWERS_PRESENT_CONDITIONAL_NOT_GOLD",
+    }
