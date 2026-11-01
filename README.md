@@ -2,6 +2,10 @@
 
 Research-oriented, machine-readable reference implementation for mapping contemporary Standard Thai orthography through graphemic structure, phonology and IPA into a Ukrainian phonetic/phonological target.
 
+## Repository guide
+
+See [docs/README.md](docs/README.md) for the canonical documentation map, code/data layout, document ownership and change discipline.
+
 ## Research pipeline
 
 **Non-negotiable architecture invariant:**
