@@ -91,6 +91,23 @@ class EvidenceRegistryTests(unittest.TestCase):
                 "BROAD_SURFACE_IPA_GOLD_INPUT", registry, row_id="TH-SRC-IPA-007",
             )
 
+    def test_supplemental_user_regression_prompts_are_approved_only_as_blind_inputs(self):
+        registry = load_source_registry(ROOT / "data/benchmark/source-registry.tsv")
+        source_id = "CLIPPYFIRST-THAI-REGRESSION-ADDENDUM-20261101"
+        source = registry[source_id]
+        self.assertEqual(source["license"], "MIT")
+        self.assertIn("text inputs only", source["notes"])
+        for use in ("BROAD_PHONEMIC_IPA_GOLD_INPUT", "WORD_SEGMENTATION_GOLD_INPUT"):
+            validate_source_reference(
+                source_id, source["source_url"], "MIT", use, registry,
+                row_id="TH-G2P-SUP-001",
+            )
+        with self.assertRaisesRegex(ValueError, "not approved for BROAD_SURFACE_IPA_GOLD_INPUT"):
+            validate_source_reference(
+                source_id, source["source_url"], "MIT", "BROAD_SURFACE_IPA_GOLD_INPUT",
+                registry, row_id="TH-G2P-SUP-001",
+            )
+
     def test_empty_reviewer_registry_is_valid_but_verifies_no_experts(self):
         self.assertEqual(load_reviewer_registry(ROOT / "data/benchmark/reviewer-qualifications.tsv"), {})
 

@@ -1,4 +1,7 @@
 import unittest
+import csv
+import json
+from pathlib import Path
 
 from thai_ukrainian.adjudication import (
     validate_blind_packet,
@@ -52,6 +55,29 @@ def completed_row(ident, thai, reviewer_id="TH-PH-01"):
 
 
 class AdjudicationPacketTests(unittest.TestCase):
+    def test_repository_supplemental_user_regression_packet_is_blind_and_complete(self):
+        root = Path(__file__).resolve().parents[1]
+        challenge = [
+            json.loads(line)
+            for line in (root / "data/benchmark/thai_g2p_supplemental_challenge.jsonl")
+            .read_text(encoding="utf-8").splitlines()
+        ]
+        with (root / "data/benchmark/ipa-adjudication-supplemental-blind.tsv").open(
+            "r", encoding="utf-8", newline=""
+        ) as stream:
+            blind = list(csv.DictReader(stream, delimiter="\\t"))
+        result = validate_blind_packet(blind, challenge)
+        self.assertEqual(result["records"], 6)
+        self.assertEqual(result["labels_prefilled"], 0)
+        self.assertEqual(
+            {row["thai"] for row in blind},
+            {"วันนี้", "ฉันเห็นสัตว์ในฟิล์มเรื่องหนึ่ง", "อย่าเพิ่งเศร้า",
+             "อะไรบ้าง", "อธิบายทฤษฎี", "ฤๅษีอธิบายทฤษฎีเรื่องเสียงไทยอย่างไร"},
+        )
+        self.assertTrue(all(row["gold_phonemic_ipa"] is None for row in challenge))
+        self.assertTrue(all(row["gold_word_boundaries"] is None for row in challenge))
+        self.assertTrue(all(not row["phonemic_ipa"] and not row["reviewer_id"] for row in blind))
+
     def test_blind_packet_requires_exact_challenge_coverage(self):
         rows = [blank_row("TH-G2P-001", "กา"), blank_row("TH-G2P-002", "กะ")]
         self.assertEqual(validate_blind_packet(rows, CHALLENGE)["records"], 2)
