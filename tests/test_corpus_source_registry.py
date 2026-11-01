@@ -16,6 +16,8 @@ class CorpusSourceRegistryTests(unittest.TestCase):
         self.assertIn("orthographic prompts only", row["annotation"])
         self.assertIn("no IPA", row["notes"])
         self.assertIn("source-order consistency must be audited", row["notes"])
+        self.assertIn("MD5 e62f500d87b4ff8c6deb4c4595854d34", row["notes"])
+        self.assertIn("206 data rows", row["notes"])
 
     def test_ccost_license_and_textgrid_access_are_explicit(self):
         path = ROOT / "data" / "corpus_sources.csv"
