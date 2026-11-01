@@ -151,3 +151,53 @@ def validate_independent_pair(
         "reviewer_b_id": reviewer_b_id,
         "status": "TWO_REVIEWERS_PRESENT_ADJUDICATION_STILL_REQUIRED",
     }
+
+
+UKRAINIAN_PREFERENCE_FIELDS = (
+    "id", "thai", "source_ipa", "ipa_reference_status", "source_id", "source_url",
+    "license", "criteria_version", "reviewer_id", "reviewer_qualification_ref",
+    "preferred_ukrainian_form", "syllable_boundary_policy", "tone_rendering_policy",
+    "uncertainty", "abstention_reason", "reviewed_at", "rationale",
+)
+UKRAINIAN_CRITERIA_VERSION = "UA-PRACTICAL-TRANSCRIPTION-0.1"
+UKRAINIAN_ANNOTATION_FIELDS = UKRAINIAN_PREFERENCE_FIELDS[8:]
+
+
+def validate_ukrainian_blind_packet(
+    rows: Iterable[Mapping[str, str]],
+    source_rows: Iterable[Mapping[str, str]],
+) -> dict:
+    """Validate a candidate-blind UA preference packet conditional on source-attested IPA."""
+    indexed = _unique_rows(rows)
+    expected = _unique_rows(source_rows)
+    if set(indexed) != set(expected):
+        raise ValueError("Ukrainian packet must cover the exact source-attested IPA sample")
+    for ident, row in indexed.items():
+        source = expected[ident]
+        comparisons = (
+            ("thai", "thai"),
+            ("source_ipa", "phonemic_ipa"),
+            ("source_id", "source_id"),
+            ("source_url", "source_url"),
+            ("license", "license"),
+        )
+        for packet_field, source_field in comparisons:
+            if (row.get(packet_field) or "") != (source.get(source_field) or ""):
+                raise ValueError(f"Ukrainian packet {packet_field} does not match source: {ident}")
+        if row.get("ipa_reference_status") != "SOURCE_ATTESTED_NOT_GOLD":
+            raise ValueError(f"Ukrainian packet must label conditional IPA as not-gold: {ident}")
+        if row.get("criteria_version") != UKRAINIAN_CRITERIA_VERSION:
+            raise ValueError(f"Ukrainian packet criteria version mismatch: {ident}")
+        filled = [
+            field for field in UKRAINIAN_ANNOTATION_FIELDS
+            if (row.get(field) or "").strip()
+        ]
+        if filled:
+            raise ValueError(
+                f"Ukrainian blind packet reviewer fields must be blank for {ident}: {', '.join(filled)}"
+            )
+    return {
+        "records": len(indexed),
+        "status": "CANDIDATE_BLIND_UKRAINIAN_PREFERENCE_PACKET_VALID",
+        "ipa_reference_status": "SOURCE_ATTESTED_NOT_GOLD",
+    }

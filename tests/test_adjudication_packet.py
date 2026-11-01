@@ -4,6 +4,7 @@ from thai_ukrainian.adjudication import (
     validate_blind_packet,
     validate_independent_pair,
     validate_review_packet,
+    validate_ukrainian_blind_packet,
 )
 
 
@@ -97,6 +98,29 @@ class AdjudicationPacketTests(unittest.TestCase):
         b[0]["reviewer_id"] = "TH-PH-01"
         with self.assertRaisesRegex(ValueError, "distinct"):
             validate_independent_pair(a, b)
+
+
+    def test_ukrainian_preference_packet_is_candidate_blind_and_source_bound(self):
+        source = [{
+            "id": "TH-UA-001", "thai": "ไกล", "phonemic_ipa": "/klaj˧/",
+            "source_id": "SRC-1", "source_url": "https://example.org/source",
+            "license": "CC-BY-SA-4.0",
+        }]
+        packet = [{
+            "id": "TH-UA-001", "thai": "ไกล", "source_ipa": "/klaj˧/",
+            "ipa_reference_status": "SOURCE_ATTESTED_NOT_GOLD",
+            "source_id": "SRC-1", "source_url": "https://example.org/source",
+            "license": "CC-BY-SA-4.0",
+            "criteria_version": "UA-PRACTICAL-TRANSCRIPTION-0.1",
+            "reviewer_id": "", "reviewer_qualification_ref": "",
+            "preferred_ukrainian_form": "", "syllable_boundary_policy": "",
+            "tone_rendering_policy": "", "uncertainty": "", "abstention_reason": "",
+            "reviewed_at": "", "rationale": "",
+        }]
+        self.assertEqual(validate_ukrainian_blind_packet(packet, source)["records"], 1)
+        packet[0]["preferred_ukrainian_form"] = "клай"
+        with self.assertRaisesRegex(ValueError, "reviewer fields must be blank"):
+            validate_ukrainian_blind_packet(packet, source)
 
     def test_narrow_acoustic_labels_require_audio_asset_and_interval(self):
         row = completed_row("TH-G2P-001", "กา")
