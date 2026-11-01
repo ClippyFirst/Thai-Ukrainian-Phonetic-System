@@ -31,7 +31,7 @@ This page is the navigation layer for the repository. It distinguishes the maint
 - `data/ua_target_vectors.csv` — Ukrainian target feature inventory.
 - `data/benchmark/` — benchmark inputs, adjudication templates and diagnostic run records; evidence grades remain explicit.
 - `schemas/` — machine-readable contracts.
-- `scripts/` — generators, diagnostics, evaluators and packaging checks.
+- [`scripts/README.md`](../scripts/README.md) — script inventory, ownership, input/output contracts and evidence boundaries.
 - `tests/` and `web/tests/` — Python and browser regression suites.
 - `.github/workflows/` — CI, static web validation, Pages deployment and opt-in external evaluations.
 
