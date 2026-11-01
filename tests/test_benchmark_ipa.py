@@ -126,6 +126,29 @@ class BenchmarkIpaTests(unittest.TestCase):
         self.assertEqual(metrics["missing_prediction_rate"], 0.5)
         self.assertEqual(metrics["rows"][1]["status"], "MISSING_ROW")
 
+
+    def test_benchmark_rejects_mixed_phonemic_and_surface_gold(self):
+        surface = gold_row(
+            id="b", text="กา", source_id="CCOST#record-2",
+            source_url="https://zenodo.org/records/17366698",
+            transcription_level="BROAD_SURFACE",
+            adjudication_record_id="ADJ-2026-002",
+        )
+        stderr = self.run_benchmark([gold_row(), surface], [], expected_returncode=1)
+        self.assertIn("one benchmark run must use one transcription_level", stderr)
+
+    def test_report_stratifies_metrics_by_profile(self):
+        second = gold_row(
+            id="b", text="ปา", gold_ipa="paː", profile="core-onset",
+            source_id="CCOST#record-2",
+            adjudication_record_id="ADJ-2026-002",
+        )
+        report = self.run_benchmark([gold_row(), second], [prediction_row()])
+        profiles = report["engines"]["candidate"]["by_profile"]
+        self.assertEqual(profiles["core-vowel-length"]["n"], 1)
+        self.assertEqual(profiles["core-onset"]["n"], 1)
+        self.assertEqual(profiles["core-onset"]["missing_predictions"], 1)
+
     def test_mismatch_reports_codepoint_cer(self):
         metrics = self.run_benchmark([gold_row(gold_ipa="k")],
                                      [prediction_row(raw_output="g", ipa="g")])["engines"]["candidate"]

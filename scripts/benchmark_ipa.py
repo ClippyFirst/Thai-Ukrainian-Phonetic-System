@@ -99,6 +99,11 @@ def main() -> int:
         ident: row for ident, row in gold.items()
         if row["gold_status"] == "ADJUDICATED" and norm(row["gold_ipa"])
     }
+    transcription_levels = {row["transcription_level"] for row in eligible.values()}
+    if len(transcription_levels) > 1:
+        raise ValueError(
+            "one benchmark run must use one transcription_level; run phonemic and surface IPA separately"
+        )
     predictions: dict[str, dict[str, dict[str, str]]] = defaultdict(dict)
     unknown_ids = []
     for row in prediction_rows:
@@ -124,6 +129,7 @@ def main() -> int:
             "accuracy_claim": "descriptive only for supplied independently reviewed rows; no generalization claim",
         },
         "gold": {
+            "transcription_level": next(iter(transcription_levels), None),
             "rows_total": len(gold),
             "rows_adjudicated": len(eligible),
             "accuracy_status": "MEASURED_ON_ADJUDICATED_SUBSET" if eligible else "NOT_MEASURED",
@@ -153,7 +159,21 @@ def main() -> int:
         count = len(rows)
         edits = sum(row["edit_distance"] for row in rows)
         codepoints = sum(row["reference_codepoints"] for row in rows)
+        by_profile = {}
+        for profile in sorted({row["profile"] for row in rows}):
+            group = [row for row in rows if row["profile"] == profile]
+            group_count = len(group)
+            group_edits = sum(row["edit_distance"] for row in group)
+            group_codepoints = sum(row["reference_codepoints"] for row in group)
+            by_profile[profile] = {
+                "n": group_count,
+                "exact_matches": sum(row["exact_match"] for row in group),
+                "exact_match_rate": sum(row["exact_match"] for row in group) / group_count if group_count else None,
+                "missing_predictions": sum(row["missing_prediction"] for row in group),
+                "codepoint_cer": group_edits / group_codepoints if group_codepoints else None,
+            }
         report["engines"][engine] = {
+            "by_profile": by_profile,
             "n_adjudicated_gold_rows": count,
             "exact_matches": sum(row["exact_match"] for row in rows),
             "exact_match_rate": sum(row["exact_match"] for row in rows) / count if count else None,
