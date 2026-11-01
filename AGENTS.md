@@ -6,6 +6,8 @@ actual constraints. It does not vendor or claim to install those tools.
 
 ## Canonical project context
 
+- `docs/README.md` — documentation navigation, code/data layout, source-of-truth rules and document lifecycle.
+
 Before changing code, read the relevant parts of:
 
 - `README.md` — product scope, the primary Thai → typed IPA → Ukrainian
