@@ -20,7 +20,7 @@ PACKET_FIELDS = (
 )
 ANNOTATION_FIELDS = PACKET_FIELDS[2:]
 ORTHOGRAPHY_VALUES = {"VALID", "INVALID", "AMBIGUOUS", "UNKNOWN"}
-TRANSCRIPTION_LEVELS = {"BROAD_PHONEMIC", "BROAD_SURFACE", "NARROW_ACOUSTIC"}
+TRANSCRIPTION_LEVELS = {"BROAD_PHONEMIC", "NARROW_ACOUSTIC"}
 UNCERTAINTY_VALUES = {"LOW", "MEDIUM", "HIGH", "ABSTAIN"}
 FINAL_GLOTTAL_VALUES = {"PRESENT", "ABSENT", "CONTEXTUAL", "UNKNOWN", "NOT_APPLICABLE"}
 TONE_VALUES = {"MID", "LOW", "FALLING", "HIGH", "RISING", "UNKNOWN", "NOT_APPLICABLE"}
@@ -354,6 +354,7 @@ def validate_ukrainian_independent_pair(
     source_rows: Iterable[Mapping[str, str]] | None = None,
 ) -> dict:
     """Require distinct Ukrainian reviewers and identical IPA-conditioned sample."""
+    source_rows = list(source_rows) if source_rows is not None else None
     a = _unique_rows(reviewer_a)
     b = _unique_rows(reviewer_b)
     _require_exact_fields(a, UKRAINIAN_PREFERENCE_FIELDS, "Ukrainian reviewer A packet")

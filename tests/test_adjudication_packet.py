@@ -232,6 +232,13 @@ class AdjudicationPacketTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "distinct"):
             validate_ukrainian_independent_pair(a, b)
 
+
+    def test_phonemic_packet_does_not_accept_surface_only_primary_level(self):
+        row = completed_row("TH-G2P-001", "กา")
+        row["transcription_level"] = "BROAD_SURFACE"
+        with self.assertRaisesRegex(ValueError, "invalid transcription_level"):
+            validate_review_packet([row], ["TH-G2P-001"], "TH-PH-01")
+
     def test_narrow_acoustic_labels_require_audio_asset_and_interval(self):
         row = completed_row("TH-G2P-001", "กา")
         row.update({"transcription_level": "NARROW_ACOUSTIC", "phonemic_ipa": "[kaː]"})
