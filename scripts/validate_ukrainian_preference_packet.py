@@ -10,6 +10,8 @@ from pathlib import Path
 from thai_ukrainian.adjudication import (
     UKRAINIAN_PREFERENCE_FIELDS,
     validate_ukrainian_blind_packet,
+    validate_ukrainian_independent_pair,
+    validate_ukrainian_review_packet,
 )
 
 
@@ -29,17 +31,32 @@ def read_tsv(path: Path, required: tuple[str, ...] | list[str]) -> list[dict[str
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("packet", type=Path)
+    parser.add_argument("--mode", choices=("blind", "review", "pair"), default="blind")
+    parser.add_argument("--reviewer-id", default="")
+    parser.add_argument("--reviewer-b-packet", type=Path)
     parser.add_argument(
         "--source", type=Path, default=Path("data/benchmark/source-attested-ipa.tsv")
     )
     args = parser.parse_args()
     try:
         packet = read_tsv(args.packet, UKRAINIAN_PREFERENCE_FIELDS)
-        source = read_tsv(
-            args.source,
-            ("id", "thai", "phonemic_ipa", "source_id", "source_url", "license"),
-        )
-        result = validate_ukrainian_blind_packet(packet, source)
+        if args.mode == "blind":
+            source = read_tsv(
+                args.source,
+                ("id", "thai", "phonemic_ipa", "source_id", "source_url", "license"),
+            )
+            result = validate_ukrainian_blind_packet(packet, source)
+        elif args.mode == "review":
+            result = validate_ukrainian_review_packet(
+                packet, [row["id"] for row in read_tsv(
+                    args.source, ("id", "thai", "phonemic_ipa", "source_id", "source_url", "license")
+                )], args.reviewer_id
+            )
+        else:
+            if args.reviewer_b_packet is None:
+                raise ValueError("--reviewer-b-packet is required in pair mode")
+            reviewer_b = read_tsv(args.reviewer_b_packet, UKRAINIAN_PREFERENCE_FIELDS)
+            result = validate_ukrainian_independent_pair(packet, reviewer_b)
     except (OSError, ValueError) as exc:
         parser.exit(1, f"error: {exc}\n")
     print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
