@@ -53,6 +53,7 @@ class AdjudicationPacketTests(unittest.TestCase):
                 "transcription_level": "BROAD_PHONEMIC",
                 "uncertainty": "LOW",
                 "reviewer_id": "TH-PH-01",
+            "reviewer_qualification_ref": "qualification-record:TH-PH-01",
                 "reviewed_at": "2026-11-01",
                 "phonemic_ipa": "/kaː/" if row["id"].endswith("001") else "/kaʔ/",
             })
