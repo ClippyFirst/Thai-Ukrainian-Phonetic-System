@@ -80,7 +80,7 @@ The pair gate checks exact item coverage, distinct reviewer IDs, qualification r
 
 ## Ukrainian preference review — conditional on supplied IPA
 
-`data/benchmark/ukrainian-target-preference-blind.tsv` contains the six current source-attested examples, with the engine candidate removed. Reviewers judge the Ukrainian rendering **conditional on the supplied IPA**, not the correctness of the Thai pronunciation. Every row is explicitly marked `SOURCE_ATTESTED_NOT_GOLD`; these judgments cannot be used as an end-to-end Thai→Ukrainian accuracy score.
+`data/benchmark/ukrainian-target-preference-blind.tsv` contains seven current source-attested examples, with the engine candidate removed. Reviewers judge the Ukrainian rendering **conditional on the supplied IPA**, not the correctness of the Thai pronunciation. Every row is explicitly marked `SOURCE_ATTESTED_NOT_GOLD`; these judgments cannot be used as an end-to-end Thai→Ukrainian accuracy score.
 
 Criteria version `UA-PRACTICAL-TRANSCRIPTION-0.1` asks reviewers to record:
 1. preferred practical Ukrainian form and rationale;
@@ -95,7 +95,7 @@ Each Ukrainian-native reviewer receives a separate copy without the engine candi
 
 The IPA scorer now requires two distinct reviewer IDs, both raw IPA labels, an adjudicator, an adjudication record, outcome, transcription level, source URL and license for every `ADJUDICATED` row. `AGREEMENT` requires matching raw labels; `RESOLVED_DISAGREEMENT` requires different raw labels and a written adjudication note. A single run cannot mix BROAD_PHONEMIC and BROAD_SURFACE references. Metrics are also stratified by the frozen profile/stratum.
 
-Current status remains **zero adjudicated gold rows**. The stricter gate and packets are infrastructure, not completed expert review. The six dictionary readings remain source-attested references and must not enter the gold denominator.
+Current status remains **zero adjudicated gold rows**. The stricter gate and packets are infrastructure, not completed expert review. The seven dictionary readings remain source-attested references and must not enter the gold denominator.
 
 ## CCOST source decision
 
@@ -135,7 +135,7 @@ The paired review validator checks distinct reviewer IDs, exact sample coverage,
 
 ### Ukrainian-native preference review validation
 
-The six-row `data/benchmark/ukrainian-target-preference-blind.tsv` has no engine candidates and is validated against the frozen source-attested IPA registry. Reviewers record a preferred Ukrainian form (or explicit abstention), rationale, syllable-boundary display policy and tone-rendering policy. Completed-review validation requires a stable reviewer ID, qualification reference, ISO date, rationale and fixed criteria version. Pair validation requires two different Ukrainian reviewer IDs and exact source/input identity.
+The seven-row `data/benchmark/ukrainian-target-preference-blind.tsv` has no engine candidates and is validated against the frozen source-attested IPA registry. Reviewers record a preferred Ukrainian form (or explicit abstention), rationale, syllable-boundary display policy and tone-rendering policy. Completed-review validation requires a stable reviewer ID, qualification reference, ISO date, rationale and fixed criteria version. Pair validation requires two different Ukrainian reviewer IDs and exact source/input identity.
 
 ```bash
 python scripts/validate_ukrainian_preference_packet.py --mode review --reviewer-id UK-UA-01 data/benchmark/ukrainian-review-a.tsv
@@ -173,7 +173,7 @@ python scripts/validate_ukrainian_preference_packet.py --mode review --source-re
 ### Current source-use decisions
 
 - Wisesight (CC0-1.0) and the pinned VISTEC-TP-TH-2021 snapshot (CC BY-SA 3.0) are approved for source-annotated segmentation diagnostics. Their existing source labels are **not** expert-adjudicated gold. The text may be used as input to a new independent human annotation only with source attribution and applicable license conditions preserved.
-- The six pinned Wiktionary IPA records are reference-only and may condition the Ukrainian preference task. They are not acoustic IPA gold. The `เดิน` record overlaps an engine lexical override and must not be counted as independent agreement.
+- The seven pinned Wiktionary IPA records are reference-only and may condition the Ukrainian preference task. They are not acoustic IPA gold. The `เดิน` record overlaps an engine lexical override and must not be counted as independent agreement.
 - The PyThaiNLP Thai G2P v4 collection is a reference/differential source with Wiktionary `th-pron` overlap. It is not an independent gold set and must not be presented as independent validation.
 - The project-authored 42-item challenge set is registered as `CLIPPYFIRST-THAI-CHALLENGE-CC398` and approved as the *input-text provenance* for expert IPA/word-segmentation gold. Its MIT-licensed prompt strings are not pronunciation evidence: only independently verified reviewer labels and a separate adjudication record may populate gold. This closes a source-registry wiring gap that previously meant no eligible source could pass the `IPA_GOLD_INPUT` gate.
 - CCOST's intended tier map is verified from the LREC 2026 paper: `ORT/KAN/KAS/MAU/MAS/TRN`, X-SAMPA and numbered tone labels. The dataset remains `BLOCKED` for automated scoring until actual released TextGrid files are inspected and the X-SAMPA inventory is mapped. The paper reports no formal inter-annotator agreement, so CCOST annotations remain external manually corrected references, not this project's independent double-review gold. Its CC BY-NC-SA 4.0 terms remain applicable; no audio or TextGrid is redistributed here.
@@ -183,14 +183,14 @@ The production reviewer registry remains empty: no real Thai phonetician, Thai l
 
 ## Ukrainian practical-transcription preference review — criteria and scope
 
-The current six-row packet is a **conditional preference study**: reviewers see a source-attested IPA reference and Thai input, but no engine candidate. It asks how Ukrainian readers/native speakers would render that IPA in practical Ukrainian orthography. It does not validate the Thai IPA itself and does not establish an official or universal Ukrainian standard for Thai.
+The current seven-row packet is a **conditional preference study**: reviewers see a source-attested IPA reference and Thai input, but no engine candidate. It asks how Ukrainian readers/native speakers would render that IPA in practical Ukrainian orthography. It does not validate the Thai IPA itself and does not establish an official or universal Ukrainian standard for Thai.
 
 Before distributing a packet, freeze a criteria version and tell reviewers that they must:
 1. Judge the supplied IPA, not reconstruct pronunciation from Thai spelling. If the IPA is unclear or internally inconsistent, record uncertainty or abstain rather than silently correcting it.
 2. Prefer a readable, consistent Ukrainian rendering that preserves meaningful segmental contrasts as far as Ukrainian orthography permits. Give a short rationale for choices involving /ŋ/, /ɯ/, /ɤ/, aspiration, affricates and final glottalization.
 3. Treat tone as a separate phonological feature. Do not encode lexical tone as ordinary Ukrainian letters unless the criteria explicitly define and justify a separate notation; retain tone in IPA/metadata by default.
 4. State whether syllable separators are part of the displayed form, optional reading aid, or omitted from continuous prose. Do not let punctuation policy change the underlying segment sequence.
-5. Distinguish common lexical items from unassimilated proper names. Holovach (2022) discusses practical transcription of foreign proper names and argues that assimilated loans and unassimilated proper names require different treatment; that distinction is useful for future name-specific strata but is not a binding rule for the six current common-word examples.
+5. Distinguish common lexical items from unassimilated proper names. Holovach (2022) discusses practical transcription of foreign proper names and argues that assimilated loans and unassimilated proper names require different treatment; that distinction is useful for future name-specific strata but is not a binding rule for the seven current common-word examples.
 6. Work independently, blind to the engine candidate and the other reviewer's choices. Freeze the raw form and rationale before pair comparison; a third qualified adjudicator records any resolution without overwriting either original review.
 
 The review outcome is preference evidence, not an exact-match phonetic gold label. Report reviewer agreement, variant preferences and abstentions separately. Do not collapse disagreements into a single “correct” Ukrainian spelling without a declared editorial policy.
@@ -216,3 +216,10 @@ python scripts/validate_adjudication_packet.py --mode blind \
 The generator validates 206 rows per order, records duplicates and set differences, emits a deterministic union of prompts and records the exact input SHA-256. If any order contains duplicates or a different set, its manifest is marked `SOURCE_ORDER_DISCREPANCY_REQUIRES_RECONCILIATION`; reconcile that source anomaly before freezing the packet or scoring it. Even a concordant packet is only a prompt list. Two independent Thai reviewers must supply broad phonemic IPA and per-syllable tone/length/boundary labels. Do not derive gold from the engine, dictionary IPA or CCOST's uninspected annotation archive.
 
 The source-use registry distinguishes broad phonemic from broad surface IPA. The project challenge and CCOST wordlist are approved only for `BROAD_PHONEMIC_IPA_GOLD_INPUT`; the full CCOST audio/TextGrid archive remains BLOCKED for both layers pending actual archive inspection and X-SAMPA mapping. This prevents text-only prompts from authorizing surface-phonetic scoring.
+
+
+## Source-attested regression reference: เพิ่ง (2026-11-01)
+
+The source-attested registry now includes the version-pinned Thai Wiktionary entry `เพิ่ง` (revision 1885200): **/pʰɤŋ˥˩/**. The entry explicitly labels the vowel short and lists the word as monosyllabic. The source IPA has one syllable, aspirated /pʰ/, short /ɤ/ and final /ŋ/ with falling tone. This directly contradicts the previously observed heuristic rendering that split the word into `pʰɤː ŋa`.
+
+This is a useful source-attested regression reference, not independent expert or acoustic gold. The reference is licensed CC BY-SA 4.0 and is included only as `SOURCE_ATTESTED_NOT_GOLD`; it is not installed as a runtime lexical override. The candidate-blind Ukrainian preference packet now has seven examples, including this source IPA. The engine candidate `п'енг` is separately recorded as a generated adapter candidate, not a preferred or adjudicated Ukrainian form.

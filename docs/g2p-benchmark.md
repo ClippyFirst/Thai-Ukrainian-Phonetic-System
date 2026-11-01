@@ -181,7 +181,7 @@ No new corpus was downloaded, copied, or bundled in this update. No external sco
 - `data/benchmark/ipa-adjudication-blind.tsv` is a separate 42-item reviewer packet generated from the frozen challenge set. It contains no engine output or source-dictionary IPA. Two Thai phoneticians annotate separate copies before seeing candidate outputs.
 - `data/benchmark/gold.tsv` now requires two distinct reviewer IDs, both original IPA labels, adjudicator/outcome, transcription layer, adjudication record, and source/license provenance before a row can be marked `ADJUDICATED`.
 - The scorer refuses to combine broad phonemic and broad surface IPA in one run and reports results by profile/stratum. A non-empty source dictionary record is not enough to pass the gold gate.
-- `data/benchmark/ukrainian-target-preference-blind.tsv` enables six candidate-blind Ukrainian adaptation judgments against source-attested dictionary IPA. This is conditional adaptation preference, not a Thai IPA gold set or end-to-end score.
+- `data/benchmark/ukrainian-target-preference-blind.tsv` enables seven candidate-blind Ukrainian adaptation judgments against source-attested dictionary IPA. This is conditional adaptation preference, not a Thai IPA gold set or end-to-end score.
 - Current independent gold count remains **0**. The benchmark must print `NOT_MEASURED` until actual reviewer records are completed and reconciled.
 
 CCOST's LREC 2026 paper specifies ORT/KAN/KAS/MAU/MAS/TRN tiers, X-SAMPA and tone numerals _1–_5. Actual archive conformance and symbol mapping remain unverified. The separate 206-item wordlist can be used to prepare broad-phonemic reviewer prompts; `scripts/build_ccost_wordlist_review_packet.py` creates a local blind packet and reports duplicates/order-set discrepancies. It does not supply IPA or gold labels. The dataset is CC BY-NC-SA 4.0; no audio/TextGrid or generated wordlist packet is bundled.
@@ -189,7 +189,7 @@ CCOST's LREC 2026 paper specifies ORT/KAN/KAS/MAU/MAS/TRN tiers, X-SAMPA and ton
 
 ## Segmentation gold and Ukrainian review are separate evidence tracks
 
-The Thai blind phonetic packet captures lexical reading, word/syllable boundaries, phonemic IPA, tone, vowel length and final glottal status. Word/syllable segmentation scoring has its own empty adjudicated registry, requiring two reviewers and an explicit WORD or SYLLABLE layer. The scorer cannot mix the two. The six-row Ukrainian preference packet is candidate-blind and validated, but its source IPA is still `SOURCE_ATTESTED_NOT_GOLD`; Ukrainian preferences remain conditional on those supplied strings.
+The Thai blind phonetic packet captures lexical reading, word/syllable boundaries, phonemic IPA, tone, vowel length and final glottal status. Word/syllable segmentation scoring has its own empty adjudicated registry, requiring two reviewers and an explicit WORD or SYLLABLE layer. The scorer cannot mix the two. The seven-row Ukrainian preference packet is candidate-blind and validated, but its source IPA is still `SOURCE_ATTESTED_NOT_GOLD`; Ukrainian preferences remain conditional on those supplied strings.
 
 Current counts: 42 Thai review prompts prepared, 6 Ukrainian conditional preference prompts prepared, **0** independently adjudicated Thai IPA rows, **0** independently adjudicated segmentation rows and **0** Ukrainian-native review submissions. Therefore phonetic and practical-transcription accuracy remain NOT MEASURED.
 

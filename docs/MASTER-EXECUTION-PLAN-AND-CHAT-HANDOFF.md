@@ -1960,3 +1960,12 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Human dependency remains real: recruit/verify two Thai phoneticians, Thai segmentation reviewers and Ukrainian-native reviewers; obtain independent blind submissions; adjudicate disagreements. Current registry is empty and accuracy remains NOT MEASURED.
 - Next acoustic step: obtain CCOST under CC BY-NC-SA 4.0, inspect the released TextGrid tier/label inventory, map phone/toneme tiers to explicit broad phonemic vs surface/acoustic layers, then build a small license-compliant external adapter. No CCOST media/annotations are redistributed at this checkpoint.
 - No Vercel services/tools used. Local test execution is unavailable in connector-only repository access; rely only on exact-head GitHub Actions evidence after this commit.
+
+
+## Handoff — source-attested เพิ่ง correction and review-packet expansion (2026-11-01)
+
+- Added the version-pinned Thai Wiktionary source record for `เพิ่ง` (oldid 1885200), which gives one-syllable `/pʰɤŋ˥˩/` and explicitly labels the vowel short. This is a source-attested diagnostic reference for the malformed super-soft output `pʰɤː ŋa`; it is not expert/acoustic gold.
+- Added `TH-SRC-IPA-007` and its source-registry permission for IPA reference and conditional Ukrainian preference only. It is not a runtime lexical override.
+- Expanded the candidate-blind Ukrainian-native preference packet from six to seven source-attested IPA items. Added the generated adapter candidate `п'енг` to the engine-candidate registry; it remains `ENGINE_CANDIDATE_NOT_PREFERENCE_GOLD`.
+- Added tests for exact source/license/allowed-use binding and generated candidate output. Code/test head: `8ba1d93293a69178bf0bdc23b7325d17b47c10a2`.
+- External human blockers remain: two qualified independent Thai reviewers plus adjudicator, two Ukrainian-native reviewers plus adjudication, and actual CCOST archive inspection for acoustic/phone-level evaluation. No gold or accuracy metrics are claimed.
