@@ -141,3 +141,38 @@ python scripts/validate_ukrainian_preference_packet.py --mode pair --reviewer-b-
 ```
 
 These are conditional judgments about Ukrainian rendering of supplied dictionary IPA. They remain `SOURCE_ATTESTED_NOT_GOLD` and cannot measure Thai pronunciation or end-to-end accuracy.
+
+
+## Verified evidence registries — 2026-11-01
+
+The review and scoring path now requires two machine-readable registries:
+
+- `data/benchmark/source-registry.tsv` binds each source ID to one exact URL, declared license, allowed use, verification state and provenance note. A source cannot be silently relabelled, used for a different evaluation layer, or upgraded from dictionary/reference evidence to acoustic gold. `BLOCKED` records are visible but rejected by the scorer.
+- `data/benchmark/reviewer-qualifications.tsv` stores pseudonymous reviewer IDs, language, narrowly scoped roles, a qualification-evidence reference, verification state, verifier and verification date. Do not add names, email addresses, phone numbers, identity documents or private credentials. Keep restricted qualification evidence in an appropriate private record system and store only its opaque reference here.
+
+The registry is intentionally header-only at present: **no real Thai phonetician, Thai linguist, Ukrainian-native reviewer or adjudicator has been verified or registered**. Unit-test fixtures use synthetic identities and are explicitly not real reviewers. Do not copy test fixtures into the production registry.
+
+Required reviewer roles are:
+- `THAI_PHONETICIAN` for Thai lexical/phonemic/tone review;
+- `THAI_PHONETICIAN_ADJUDICATOR` for independent Thai IPA adjudication;
+- `THAI_LINGUIST` and `THAI_LINGUIST_ADJUDICATOR` for word/syllable segmentation review;
+- `UKRAINIAN_NATIVE_REVIEWER` for Ukrainian practical-transcription preferences.
+
+The review CLIs load this registry by default. The IPA and segmentation scorers additionally require a source registry match and verified role/language/qualification references before counting any row as `ADJUDICATED`. A free-form qualification string is no longer sufficient. Source URL and license must match registered values exactly, and the source must explicitly allow the intended use.
+
+Run the registry check before review or scoring:
+
+```bash
+python scripts/validate_evidence_registry.py
+python scripts/validate_adjudication_packet.py --mode review --reviewer-registry data/benchmark/reviewer-qualifications.tsv --reviewer-id TH-PH-01 data/benchmark/reviewer-a.tsv
+python scripts/validate_ukrainian_preference_packet.py --mode review --source-registry data/benchmark/source-registry.tsv --reviewer-registry data/benchmark/reviewer-qualifications.tsv --reviewer-id UK-UA-01 data/benchmark/ukrainian-review-a.tsv
+```
+
+### Current source-use decisions
+
+- Wisesight (CC0-1.0) and the pinned VISTEC-TP-TH-2021 snapshot (CC BY-SA 3.0) are approved for source-annotated segmentation diagnostics. Their existing source labels are **not** expert-adjudicated gold. The text may be used as input to a new independent human annotation only with source attribution and applicable license conditions preserved.
+- The six pinned Wiktionary IPA records are reference-only and may condition the Ukrainian preference task. They are not acoustic IPA gold. The `เดิน` record overlaps an engine lexical override and must not be counted as independent agreement.
+- The PyThaiNLP Thai G2P v4 collection is a reference/differential source with Wiktionary `th-pron` overlap. It is not an independent gold set and must not be presented as independent validation.
+- CCOST is metadata-registered but marked `BLOCKED` for IPA scoring until the released TextGrid tiers, label inventory, phonetic notation and phonemic/surface target layer are inspected and mapped. Its CC BY-NC-SA 4.0 conditions remain applicable; no audio or TextGrid is redistributed here.
+
+The production registry currently permits no source to be used as independent IPA gold. Consequently the IPA gold count remains zero and phonetic accuracy remains **NOT MEASURED**. The empty reviewer registry is an honest blocker, not a successful expert review.

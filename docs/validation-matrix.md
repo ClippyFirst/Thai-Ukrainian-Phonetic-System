@@ -1222,3 +1222,17 @@ Verified code checkpoint: `a4de40b6479b217b24aed98a26bdade23e6e1dab`; branch bas
 ### Ported three-mode fallback regression — DONE_VERIFIED
 
 The fix and test from draft PR #181 are included in this branch. A structurally provisional orthographic fallback now clears computed tone, tone contour and surface IPA instead of presenting them as confirmed. The segmental IPA candidate remains provisional and feeds the existing IPA-to-Ukrainian adapter. Ten adversarial cases exercise all three profiles (30 profile/input combinations), including six strict-abstention controls. CI 41337529189 and Web Static 41337815975 passed.
+
+
+## Evidence provenance hardening — 2026-11-01
+
+| Task / acceptance criterion | Status | Evidence / remaining acceptance |
+|---|---|---|
+| Register external source URL, exact license, scope and allowed benchmark use | DONE_VERIFIED after CI | `data/benchmark/source-registry.tsv`; `scripts/validate_evidence_registry.py`; exact source ID, URL, license and allowed-use match enforced by IPA/segmentation/UA review validators. |
+| Require verified language-specific reviewer qualification | DONE_VERIFIED after CI | `data/benchmark/reviewer-qualifications.tsv`; reviewer role, language, exact qualification reference, verification state, verifier and date are checked by Thai/UA review and gold-scoring paths. |
+| Reject non-independent adjudicator identity | DONE_VERIFIED after CI | IPA and segmentation gold rows require adjudicator distinct from both reviewers and a registered adjudicator role/reference. |
+| Keep CCOST blocked until TextGrid tier/label mapping is evidenced | DONE_VERIFIED | Source registry marks CCOST `BLOCKED`; it cannot be used as IPA gold until schema and transcription-layer reconciliation is completed. |
+| Obtain and verify two Thai phoneticians, Thai segmentation reviewers and Ukrainian-native reviewers | BLOCKED / external human dependency | Reviewer registry intentionally contains no real people. Acceptance: independently verified qualifications and separate blind submissions, then disagreement adjudication. |
+| Establish independent IPA gold and measure phonetic accuracy | BLOCKED / source and reviewer dependency | No currently approved source for IPA gold; CCOST remains blocked pending tier schema and licensed access. Accuracy remains NOT MEASURED. |
+
+The source registry does not itself create gold data. Wisesight and VISTEC remain source-annotated segmentation diagnostics; Wiktionary and Thai G2P v4 remain reference-only for IPA. No reviewer identity or qualification was fabricated.

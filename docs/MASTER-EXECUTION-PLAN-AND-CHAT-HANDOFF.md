@@ -1949,3 +1949,14 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - New artifacts: 42-row Thai blind review packet; six-row Ukrainian conditional preference packet; empty segmentation adjudication registry; updated IPA gold registry header. Validators require source binding, distinct reviewers, qualification references, raw independent labels, adjudication provenance, per-syllable metadata and explicit WORD/SYLLABLE layer.
 - No expert submissions exist; accuracy remains NOT MEASURED. CCOST archive/tier mapping and external Thai/Ukrainian expert review remain blockers.
 - Local tests not run (connector-only environment); exact push CI and Web Static are the verification evidence. Vercel was not used.
+
+
+## 2026-11-01 — registry-backed evidence and reviewer qualification gate
+
+- Added source provenance registry `data/benchmark/source-registry.tsv`: exact URLs, licenses, allowed uses, verification state and scope notes. Wisesight/VISTEC are segmentation diagnostics; Wiktionary is IPA-reference-only; Thai G2P v4 has Wiktionary overlap; CCOST is explicitly BLOCKED for IPA gold until its released TextGrid schema and notation are mapped.
+- Added header-only `data/benchmark/reviewer-qualifications.tsv`. No real experts have been registered. The schema uses pseudonymous IDs and opaque qualification evidence references; it must not contain names, contact details or private credentials.
+- Added `src/thai_ukrainian/evidence_registry.py` and `scripts/validate_evidence_registry.py`. Thai/UA review packet validators and IPA/segmentation scorers now require registered language-specific roles, exact qualification references, exact source URL/license and allowed use. Gold adjudicators must be distinct from both reviewers and have the appropriate verified role.
+- Added tests for blocked CCOST, exact source matching, source-use boundaries, empty reviewer state, language/role mismatch and unverified reviewer rejection. CI now runs the registry validation gate.
+- Human dependency remains real: recruit/verify two Thai phoneticians, Thai segmentation reviewers and Ukrainian-native reviewers; obtain independent blind submissions; adjudicate disagreements. Current registry is empty and accuracy remains NOT MEASURED.
+- Next acoustic step: obtain CCOST under CC BY-NC-SA 4.0, inspect the released TextGrid tier/label inventory, map phone/toneme tiers to explicit broad phonemic vs surface/acoustic layers, then build a small license-compliant external adapter. No CCOST media/annotations are redistributed at this checkpoint.
+- No Vercel services/tools used. Local test execution is unavailable in connector-only repository access; rely only on exact-head GitHub Actions evidence after this commit.

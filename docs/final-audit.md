@@ -1250,3 +1250,14 @@ The first run with the new coverage tests completed master-table generation and 
 - No expert submissions exist: Thai IPA gold 0, segmentation gold 0, Ukrainian review submissions 0. Accuracy remains NOT MEASURED.
 - CCOST remains a licensed candidate, not an imported corpus. Its 6.2 GB CC BY-NC-SA 4.0 archive is not bundled; exact released TextGrid tier mapping remains an external evidence/access blocker.
 - No local tests were run in the connector-only environment. No Vercel service/tool was used.
+
+
+## Evidence registry and expert-provenance gate — 2026-11-01
+
+- **Finding:** prior review packets only required a non-empty qualification-reference string. Gold scorers checked that source URL/license fields were non-empty but did not require an exact registered source, permitted use, verified language or reviewer role. This left a provenance/qualification gap: plausible-looking strings could be mistaken for verified evidence.
+- **FIXED:** added `src/thai_ukrainian/evidence_registry.py`, a source registry and a pseudonymous reviewer-qualification registry. Source ID, exact URL, exact license, permitted use and verification status are checked. Reviewer ID, language, role, qualification reference and verification state are checked.
+- **FIXED:** Thai and Ukrainian review validators now enforce registry-backed qualification references; IPA and segmentation scorers require two verified reviewers plus a distinct verified adjudicator. A dictionary source or blocked acoustic source cannot be silently promoted to IPA gold.
+- **FIXED:** CI validates the registry schemas. Added unit tests for empty reviewer state, blocked CCOST use, source URL/license mismatch, wrong reviewer language/role, unregistered/incorrect qualification references and non-verified reviewer rejection.
+- **Current evidence boundary:** production reviewer registry is empty; no external expert submissions exist. No gold count or accuracy claim changes. Synthetic reviewer identities exist only inside unit tests.
+- **Source decisions:** Wisesight/VISTEC are segmentation diagnostics and eligible text inputs for fresh human re-annotation, not expert gold by themselves; Wiktionary is IPA-reference-only; Thai G2P v4 has Wiktionary source overlap; CCOST remains blocked from IPA scoring pending exact TextGrid tier/label/notation mapping. No CCOST media or TextGrid is copied into the repository.
+- **Readiness:** this improves the integrity of future evidence ingestion; it does not complete independent Thai or Ukrainian linguistic adjudication. The project remains an engineering research prototype; phonetic accuracy remains NOT MEASURED.
