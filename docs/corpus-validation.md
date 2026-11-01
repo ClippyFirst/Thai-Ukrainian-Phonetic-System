@@ -199,3 +199,6 @@ Primary references: [LREC 2026 CCOST paper](https://aclanthology.org/2026.lrec-1
 The blank `data/benchmark/segmentation-adjudication-gold.tsv` registry is reserved for two-reviewer word- or syllable-boundary adjudication. Each row declares `segmentation_layer=WORD|SYLLABLE`, preserves both original token arrays, two distinct reviewer IDs and qualification references, an adjudicator, outcome, record, source URL and license. The scorer checks exact reconstruction, requires consensus labels to match the final gold, requires different raw tokenizations for a resolved disagreement, and refuses to mix WORD and SYLLABLE reports. The existing Wisesight rows remain source-annotated WORD evidence; they are not promoted to expert gold.
 
 No expert segmentation rows have been submitted yet. The new registry is intentionally header-only and does not create an accuracy metric.
+
+
+The adjudication infrastructure and three-mode fallback correction are verified by full CI 41337529189 and Web Static 41337815975. This does not add expert labels: the adjudicated segmentation registry remains header-only and all 993 Wisesight records retain SOURCE_ANNOTATED status.

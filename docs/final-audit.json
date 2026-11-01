@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Main remains cc398254c178171f74397aed556766e87356ab84. PR #181 remains open and untouched. Research branch research/independent-adjudication-gates-20261101 adds 42-item blind Thai review infrastructure, six-item conditional Ukrainian preference review, two-reviewer IPA and segmentation gold gates, and layer/stratum-separated metrics. Exact-head CI is pending at this audit checkpoint; independent reviewer submissions are still zero, so linguistic accuracy remains NOT MEASURED.",
+  "status": "Main remains cc398254c178171f74397aed556766e87356ab84. Combined PR #182 is open from research/independent-adjudication-gates-20261101. PR #181 was closed as superseded after its fallback fix, adversarial test and CI ordering change were ported; its branch was retained. Full push CI on code checkpoint a4de40b6479b217b24aed98a26bdade23e6e1dab passed all three jobs; Web Static passed on documentation closeout checkpoint ce8d4b0450d67e465f76f140dde3b27ca45e313f. Linguistic accuracy remains NOT MEASURED because no independent expert submissions exist.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -502,9 +502,11 @@
   ],
   "latest_implementation_branch": "research/independent-adjudication-gates-20261101",
   "latest_implementation_commit_pending_ci": {
-    "commit": "af0d10d81f9f8cb2bbce97c35af414fc2f8613db",
-    "status": "CI_PENDING",
-    "notes": "Code checkpoint before documentation closeout; exact-head CI and Web Static must be checked on final PR head."
+    "commit": "a4de40b6479b217b24aed98a26bdade23e6e1dab",
+    "status": "DONE_VERIFIED",
+    "ci_run": "41337529189",
+    "web_static_run": "41337815975",
+    "notes": "Full push CI passed on code checkpoint; subsequent commits are documentation-only closeout."
   },
   "current_head_status_at_audit_refresh": "Code/workflow checkpoint b6dbec7928b106f0ab52e06af33a26635df75412 passed CI 40322960615 and Web static validation 40322959844. Documentation checkpoint e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff passed full CI 40323209539 and Web static validation 40323209471. This audit-register update creates a newer documentation HEAD and requires exact-head CI/static validation before the current branch HEAD is marked green.",
   "current_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
@@ -2270,28 +2272,34 @@
       179
     ],
     "open_prs": [
+      182
+    ],
+    "closed_superseded_prs": [
       181
     ],
     "branch_refs": 14,
     "non_main_refs": 13,
-    "branch_inventory": "14 refs including main; 13 non-main refs. No branch deletion was performed.",
+    "branch_inventory": "14 refs including main; 13 non-main refs. No branch deletion was performed; PR #181 source branch retained.",
     "research_branch": "research/independent-adjudication-gates-20261101",
     "research_branch_base": "cc398254c178171f74397aed556766e87356ab84",
-    "research_branch_code_checkpoint": "af0d10d81f9f8cb2bbce97c35af414fc2f8613db",
-    "research_branch_ahead_before_docs": 30,
+    "research_branch_verified_code_checkpoint": "a4de40b6479b217b24aed98a26bdade23e6e1dab",
+    "research_branch_documentation_checkpoint": "ce8d4b0450d67e465f76f140dde3b27ca45e313f",
+    "research_branch_ahead_at_code_checkpoint": 45,
     "thai_blind_review_items": 42,
     "ukrainian_conditional_review_items": 6,
     "independent_thai_ipa_gold_rows": 0,
     "independent_segmentation_gold_rows": 0,
     "ukrainian_review_submissions": 0,
-    "ccost_manual_inspection": "DONE_VERIFIED_document_inspection",
-    "ccost_released_textgrid_tier_mapping": "BLOCKED_EVIDENCE_LIMITED",
+    "ccost_manual_inspection": "DOCUMENTATION_REVIEW_RECORDED; exact released tier mapping not independently confirmed in this continuation",
+    "ccost_released_textgrid_tier_mapping": "BLOCKED_EVIDENCE_ACCESS",
     "thai_ipa_segmentation_adjudication": "BLOCKED_EXTERNAL_EXPERTS",
     "ukrainian_target_form_adjudication": "BLOCKED_EXTERNAL_NATIVE_REVIEWERS",
     "main_branch_protection": "TODO_OWNER_CONFIGURATION; protected=false",
     "local_test_execution": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
-    "exact_head_ci": "PENDING",
-    "readiness": "ENGINEERING_RESEARCH_INFRASTRUCTURE_IMPROVED; LINGUISTIC_ACCURACY_NOT_MEASURED"
+    "full_push_ci_run": "41337529189_PASSED_ALL_3_JOBS",
+    "web_static_run": "41337815975_PASSED",
+    "pr_182_latest_head_ci": "PENDING_AFTER_DOCUMENTATION_CLOSEOUT",
+    "readiness": "ENGINEERING_RESEARCH_INFRASTRUCTURE_VERIFIED; NOT_RELEASE_READY; LINGUISTIC_ACCURACY_NOT_MEASURED"
   },
   "repository_structure_cleanup_2026_11_01": {
     "main_at_start": "69dafe58a9458d33a645cdcd517e61e9978abdbd",
@@ -2406,8 +2414,11 @@
   "independent_adjudication_work_2026_11_01": {
     "branch": "research/independent-adjudication-gates-20261101",
     "base_main": "cc398254c178171f74397aed556766e87356ab84",
-    "code_checkpoint": "af0d10d81f9f8cb2bbce97c35af414fc2f8613db",
-    "status": "IMPLEMENTED_CI_PENDING",
+    "verified_code_checkpoint": "a4de40b6479b217b24aed98a26bdade23e6e1dab",
+    "documentation_checkpoint": "ce8d4b0450d67e465f76f140dde3b27ca45e313f",
+    "status": "DONE_VERIFIED_ENGINEERING; EXPERT_EVIDENCE_BLOCKED",
+    "pr": 182,
+    "superseded_pr_closed": 181,
     "artifacts": [
       "data/benchmark/ipa-adjudication-blind.tsv",
       "data/benchmark/ukrainian-target-preference-blind.tsv",
@@ -2424,8 +2435,13 @@
     "tests_added": [
       "tests/test_adjudication_packet.py",
       "tests/test_benchmark_ipa.py",
-      "tests/test_segmentation_benchmark.py"
+      "tests/test_segmentation_benchmark.py",
+      "web/tests/mode-adversarial.test.mjs"
     ],
+    "ci_run": "41337529189",
+    "ci_result": "PASSED_ALL_3_JOBS",
+    "web_static_run": "41337815975",
+    "web_static_result": "PASSED",
     "evidence_limits": {
       "thai_ipa_gold_rows": 0,
       "expert_segmentation_gold_rows": 0,

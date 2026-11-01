@@ -192,3 +192,8 @@ CCOST remains the preferred licensed acoustic source candidate. Its published ab
 The Thai blind phonetic packet captures lexical reading, word/syllable boundaries, phonemic IPA, tone, vowel length and final glottal status. Word/syllable segmentation scoring has its own empty adjudicated registry, requiring two reviewers and an explicit WORD or SYLLABLE layer. The scorer cannot mix the two. The six-row Ukrainian preference packet is candidate-blind and validated, but its source IPA is still `SOURCE_ATTESTED_NOT_GOLD`; Ukrainian preferences remain conditional on those supplied strings.
 
 Current counts: 42 Thai review prompts prepared, 6 Ukrainian conditional preference prompts prepared, **0** independently adjudicated Thai IPA rows, **0** independently adjudicated segmentation rows and **0** Ukrainian-native review submissions. Therefore phonetic and practical-transcription accuracy remain NOT MEASURED.
+
+
+## Verified engineering checkpoint — 2026-11-01
+
+The three-mode fallback correction and independent Thai/Ukrainian review and gold gates passed full push CI 41337529189 and Web Static 41337815975. This verifies implementation and validation contracts, not linguistic accuracy. The gold registries and reviewer packets remain unfilled by external experts; end-to-end accuracy is NOT MEASURED.
