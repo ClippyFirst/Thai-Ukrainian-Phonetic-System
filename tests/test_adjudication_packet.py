@@ -337,6 +337,12 @@ class AdjudicationPacketTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "narrow IPA syllabification"):
             validate_review_packet([row], ["TH-G2P-001"], "TH-PH-01", source_registry=source_registry)
 
+    def test_audio_asset_cannot_be_supplied_without_registered_source_and_interval(self):
+        row = completed_row("TH-G2P-001", "กา")
+        row["audio_asset_reference"] = "recording-001"
+        with self.assertRaisesRegex(ValueError, "audio source ID, asset reference and time interval"):
+            validate_review_packet([row], ["TH-G2P-001"], "TH-PH-01")
+
     def test_narrow_acoustic_rejects_blocked_ccost_source(self):
         row = completed_row("TH-G2P-001", "กา")
         row.update({
