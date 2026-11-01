@@ -19,7 +19,7 @@ CHALLENGE = [
 ]
 FIELDS = [
     "id", "thai", "orthography_validity", "lexical_reading",
-    "word_boundaries", "syllable_boundaries", "phonemic_ipa", "broad_surface_ipa",
+    "word_boundaries", "syllable_boundaries", "phonemic_ipa", "broad_surface_ipa", "narrow_ipa",
     "tone_sequence", "vowel_length", "final_glottal", "transcription_level",
     "uncertainty", "abstention_reason", "reviewer_id", "reviewer_qualification_ref",
     "reviewed_at", "audio_asset_reference", "audio_time_start", "audio_time_end",
@@ -266,9 +266,12 @@ class AdjudicationPacketTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "invalid transcription_level"):
             validate_review_packet([row], ["TH-G2P-001"], "TH-PH-01")
 
-    def test_narrow_acoustic_labels_require_audio_asset_and_interval(self):
+    def test_narrow_acoustic_labels_require_separate_narrow_ipa_and_audio_interval(self):
         row = completed_row("TH-G2P-001", "กา")
-        row.update({"transcription_level": "NARROW_ACOUSTIC", "phonemic_ipa": "[kaː]"})
+        row.update({"transcription_level": "NARROW_ACOUSTIC"})
+        with self.assertRaisesRegex(ValueError, "separate bracketed narrow_ipa"):
+            validate_review_packet([row], ["TH-G2P-001"], "TH-PH-01")
+        row["narrow_ipa"] = "[kʰaː]"
         with self.assertRaisesRegex(ValueError, "audio"):
             validate_review_packet([row], ["TH-G2P-001"], "TH-PH-01")
         row.update({
@@ -277,6 +280,18 @@ class AdjudicationPacketTests(unittest.TestCase):
             "audio_time_end": "1.85",
         })
         self.assertEqual(validate_review_packet([row], ["TH-G2P-001"], "TH-PH-01")["records"], 1)
+
+    def test_narrow_ipa_syllable_count_must_match_phonemic_boundaries(self):
+        row = completed_row("TH-G2P-001", "กา")
+        row.update({
+            "transcription_level": "NARROW_ACOUSTIC",
+            "narrow_ipa": "[kʰaː.t]",
+            "audio_asset_reference": "CCOST:recording-001",
+            "audio_time_start": "1.20",
+            "audio_time_end": "1.85",
+        })
+        with self.assertRaisesRegex(ValueError, "narrow IPA syllabification"):
+            validate_review_packet([row], ["TH-G2P-001"], "TH-PH-01")
 
 
     def test_thai_review_requires_verified_phonetician_registry(self):
