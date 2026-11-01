@@ -14,7 +14,7 @@ from .evidence_registry import validate_reviewer_reference, validate_source_refe
 
 PACKET_FIELDS = (
     "id", "thai", "orthography_validity", "lexical_reading",
-    "word_boundaries", "syllable_boundaries", "phonemic_ipa", "broad_surface_ipa",
+    "word_boundaries", "syllable_boundaries", "phonemic_ipa", "broad_surface_ipa", "narrow_ipa",
     "tone_sequence", "vowel_length", "final_glottal", "transcription_level",
     "uncertainty", "abstention_reason", "reviewer_id", "reviewer_qualification_ref",
     "reviewed_at", "audio_asset_reference", "audio_time_start", "audio_time_end",
@@ -205,7 +205,19 @@ def validate_review_packet(
                 raise ValueError(f"invalid final_glottal value for {ident}")
             if not (len(tone_values) == len(length_values) == len(glottal_values) == syllable_count):
                 raise ValueError(f"tone, vowel-length and glottal labels must align with syllables for {ident}")
+            narrow_ipa = (row.get("narrow_ipa") or "").strip()
             if level == "NARROW_ACOUSTIC":
+                if not (narrow_ipa.startswith("[") and narrow_ipa.endswith("]") and len(narrow_ipa) > 2):
+                    raise ValueError(f"narrow acoustic review requires a separate bracketed narrow_ipa label: {ident}")
+                narrow_body = narrow_ipa[1:-1]
+                narrow_words = narrow_body.split("|")
+                narrow_syllables = [part for word in narrow_words for part in word.split(".")]
+                if (
+                    any(not part for part in narrow_syllables)
+                    or len(narrow_words) != len(word_parts)
+                    or len(narrow_syllables) != syllable_count
+                ):
+                    raise ValueError(f"narrow IPA syllabification must align with syllable boundaries for {ident}")
                 asset = (row.get("audio_asset_reference") or "").strip()
                 start = (row.get("audio_time_start") or "").strip()
                 end = (row.get("audio_time_end") or "").strip()
@@ -215,6 +227,8 @@ def validate_review_packet(
                     raise ValueError(f"narrow acoustic labels require an audio time interval: {ident}") from exc
                 if not asset or not isfinite(start_value) or not isfinite(end_value) or start_value < 0 or end_value <= start_value:
                     raise ValueError(f"narrow acoustic labels require a valid audio asset and interval: {ident}")
+            elif narrow_ipa:
+                raise ValueError(f"narrow_ipa is only valid for NARROW_ACOUSTIC reviews: {ident}")
     return {
         "records": len(indexed),
         "reviewer_id": reviewer_id,
