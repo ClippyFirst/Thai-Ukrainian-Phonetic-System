@@ -19,7 +19,7 @@ PRED_FIELDS = ["id", "engine", "raw_output", "ipa", "status", "version"]
 
 def write_tsv(path, fields, rows):
     with path.open("w", encoding="utf-8", newline="") as stream:
-        writer = csv.DictWriter(stream, fieldnames=fields, delimiter="\\t")
+        writer = csv.DictWriter(stream, fieldnames=fields, delimiter="\t")
         writer.writeheader()
         writer.writerows(rows)
 
