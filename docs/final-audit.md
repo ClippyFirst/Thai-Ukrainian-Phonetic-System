@@ -1331,3 +1331,11 @@ The first run with the new coverage tests completed master-table generation and 
 - No LOTUSDIS media were downloaded or copied. Exact dataset revision, asset ID, speaker pseudonym, microphone/channel, non-overlap status, interval and file hash remain required before freezing any acoustic sample. Derivative annotation data must preserve CC BY-SA attribution/share-alike.
 - Corrected the Rungpat Roengpitya shortlist description: the public profile supports Standard Thai tone research and cross-language Japanese vowel-length perception, not a direct claim of Thai vowel-length expertise.
 - Common Voice Thai v27.0 was not selected for redistributed review packets because its data card forbids re-hosting/re-sharing despite CC0; it also supplies no phone/toneme IPA gold.
+
+
+## File-level audio asset manifest — 2026-11-01
+
+- Added header-only `data/benchmark/audio-assets.tsv` with source ID, dataset revision, asset URI, SHA-256, speaker pseudonym, microphone/channel, overlap state, duration and verification provenance.
+- Audio-backed Thai review rows now require a matching VERIFIED asset record, matching source ID, non-overlap status and a positive time interval bounded by the registered asset duration. This applies to broad phonemic audio references and narrow acoustic labels.
+- Added tests for valid asset provenance, source mismatch, out-of-range intervals, unregistered asset IDs and an intentionally empty manifest.
+- **Evidence boundary:** no real LOTUSDIS audio asset has been selected or registered. The infrastructure is ready; acoustic review remains blocked until an asset is pinned. No media was downloaded or bundled.
