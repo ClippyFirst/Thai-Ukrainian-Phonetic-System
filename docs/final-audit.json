@@ -2122,14 +2122,14 @@
   "open_prs_current": [
     {
       "number": 178,
-      "head": "de34882a797e2ec8a65324f8efb2d64efbf4e095",
+      "head": "See PR metadata; avoid self-referential SHA.",
       "status": "OPEN",
-      "exact_head_ci_run": 41325709592,
-      "ci_status": "PENDING_AT_STATUS_REFRESH",
+      "exact_head_ci_run": null,
+      "ci_status": "Pending exact-head CI; consult PR metadata and Actions.",
       "scope": "repository cleanup audit/matrix/handoff closeout"
     }
   ],
-  "latest_pr_head_source": "PR #178 metadata; the current documentation branch is the only open PR.",
+  "latest_pr_head_source": "PR #178 metadata; this file is committed by that PR, so its head SHA and exact-head run are intentionally not duplicated here.",
   "status_refresh_2026_10_31": {
     "main_sha": "8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8",
     "pr_169": {
@@ -2165,9 +2165,9 @@
   },
   "latest_exact_head_verification": {
     "current_pr": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/178",
-    "current_head": "de34882a797e2ec8a65324f8efb2d64efbf4e095",
-    "current_exact_head_ci_run": 41325709592,
-    "current_exact_head_ci_status": "PENDING at the first status refresh; check the latest PR head and Actions before merge.",
+    "current_head": "See PR metadata; this file is committed by the same PR and intentionally avoids a self-staling SHA.",
+    "current_exact_head_ci_run": null,
+    "current_exact_head_ci_status": "Pending exact-head CI; consult PR metadata and Actions.",
     "latest_merged_pr": 177,
     "latest_merged_pr_head": "65d2cc47d9bf34e744f26f1ca60cb8a960e609ef",
     "latest_merged_pr_exact_head_ci_run": 41324845398,
