@@ -133,7 +133,7 @@ assert(fallbackCount > 0, "corpus must exercise the orthography-derived fallback
 
 // These forms caused visibly malformed output in the reported run. Strict mode
 // must abstain unless a reviewed lexical pronunciation is available.
-for (const word of ["วันนี้", "เห็น", "อะไร", "บ้าง", "อธิบาย"]) {
+for (const word of ["วันนี้", "เห็น", "อะไร", "บ้าง", "อธิบาย", "ฤๅษี"]) {
   const strictTokens = analyzeText(word, { mode: "strict" }).filter(token => token.kind === "thai");
   assert(strictTokens.length > 0, `strict mode lost Thai input: ${word}`);
   for (const token of strictTokens) {
