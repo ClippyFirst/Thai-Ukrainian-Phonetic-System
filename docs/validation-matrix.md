@@ -1302,3 +1302,5 @@ The source registry does not itself create gold data. Wisesight and VISTEC remai
 | Task | State | Evidence / boundary |
 |---|---|---|
 | Repair malformed corpus-source CSV row and enforce schema | DONE_VERIFIED after exact-head CI | Quoted the TUD row's comma-containing fields; added test requiring exact seven-column header, no missing/extra columns and unique source IDs. |
+
+| Verify exact all-mode/adjudication branch head | DONE_VERIFIED | Head `6412f34accdd913d8d4ad0525a5b3bf89d50f56a`; CI [41352166930](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41352166930) passed 314 Python tests / 1169 subtests, Ruff, wheel install and master artifact; Web Static [41352166906](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41352166906) and VISTEC [41352166908](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41352166908) passed. |

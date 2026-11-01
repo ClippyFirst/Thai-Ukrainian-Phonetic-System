@@ -2035,3 +2035,11 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - `broad_surface_ipa` now requires a registered audio source, asset manifest record, in-bounds interval, and explicit source permission for broad-surface IPA. A text-only source cannot pass this gate.
 - LOTUSDIS is more precisely described as nine separate single-channel devices: about 114 aggregate channel-hours / about 20 hours unique session time, with overlap masks. No individual audio asset has been selected or pinned yet.
 - Human Thai review, Ukrainian-native review, and an adjudicated gold set remain BLOCKED until qualified reviewers submit annotations.
+
+## Final verified checkpoint — 2026-11-01
+
+- Exact code/test head: `6412f34accdd913d8d4ad0525a5b3bf89d50f56a`; branch is 158 commits ahead of main and 0 behind.
+- CI [41352166930](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41352166930): all three jobs passed; 314 Python tests, 1169 subtests, Ruff, wheel-install smoke and master artifact.
+- Web Static [41352166906](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41352166906) and VISTEC [41352166908](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41352166908) passed.
+- `เพิ่ง` now has a source-pinned runtime IPA override in both runtimes, explicitly NOT_GOLD; broad-surface IPA requires registered audio provenance.
+- The Thai and Ukrainian blind packets are ready for external review, but the reviewer registry and all adjudicated gold tables remain empty. Linguistic accuracy is NOT_MEASURED.

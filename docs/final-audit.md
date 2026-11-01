@@ -1355,3 +1355,10 @@ The first run with the new coverage tests completed master-table generation and 
 - The all-mode regression now verifies the exact result in strict, soft and super-soft modes. Strict mode continues to abstain for the five other reported forms that lack a pinned lexical override.
 - The source-attested diagnostic now excludes five circular rows (the same dictionary sources feed runtime overrides) and leaves two non-circular, complete comparisons. It remains a diagnostic, not a benchmark accuracy score.
 - The ten hand-written adversarial inputs plus the 42 frozen challenge inputs are exercised in all three profiles: 156 profile/input combinations, plus focused strict/super-soft guards.
+
+## Exact-head verification closeout — 2026-11-01
+
+- Final code/test head `6412f34accdd913d8d4ad0525a5b3bf89d50f56a` passed CI [41352166930](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41352166930): all three jobs; 314 Python tests, 1169 subtests, Ruff, wheel-install smoke and master artifact.
+- Web Static [41352166906](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41352166906) and external VISTEC segmentation evaluation [41352166908](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41352166908) passed on the same head.
+- The source-attested diagnostic is seven complete outputs, five circular rows excluded, two non-circular comparisons; it remains explicitly NOT_GOLD and makes no accuracy claim.
+- The connector-only environment did not permit a local clone/test run. No local test result is claimed.
