@@ -1184,3 +1184,20 @@ The user's explicit requirement supersedes the prior UX decision to collapse RTG
 | Main branch protection | TODO — owner configuration | `protected=false`; acceptance requires owner decision on required checks/reviews and ruleset configuration. No setting changed. |
 
 **Current main:** `8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8` (unchanged). **PR #169 current head before this matrix refresh:** `0dee9e36cd5391b599c8b785a8b2c1b81ea325a7`. **Readiness:** engineering-verified research prototype; not release-ready for general linguistic-accuracy claims.
+
+
+## Final repository-cleanup verification — 2026-11-01 (PRs #178–#179)
+
+| Task / acceptance criterion | State | Evidence / next acceptance |
+|---|---|---|
+| Reconcile the audit, matrix and handoff with merged cleanup work | DONE_VERIFIED | PR #178 merged as `a5856b4539148f5347da91a719a07aead614decd`; exact-head CI [41326222309](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41326222309) passed `test`, `wheel-install-smoke` and `master-artifact`. The previously stale `final-audit.md` now contains the cleanup checkpoint. |
+| Remove the hidden `word.py → api.py` reverse dependency | DONE_VERIFIED | PR #179 merged as `1431c565ff5c160da4944942d687bc30b2f8d0b2`; exact-head CI [41326533814](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41326533814) passed all three jobs. `word.analyze_word` now receives the syllable analyzer as an explicit callable; the public API supplies it. A focused regression test covers the dependency boundary and explicit segmentation. |
+| Verify final merged main and published site | DONE_VERIFIED | Main CI [41326865977](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41326865977) passed `test`, `wheel-install-smoke` and `master-artifact`; Pages [41326865964](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41326865964) passed `build` and `deploy`. Main: `1431c565ff5c160da4944942d687bc30b2f8d0b2`. |
+| Complete the repository-wide import/call/reference graph and prove suspected dead code | PARTIAL | One concrete reverse dependency was removed. A complete static graph plus manual review of dynamic imports, entry points and runtime consumers remains required; connector-only access did not provide a clean local checkout or a reliable repository-wide analyzer run. |
+| Review broad test/fixture redundancy without reducing acceptance coverage | PARTIAL | Two immediately duplicated UI assertions were previously removed in #170. The wider suite has not been exhaustively deduplicated by semantic contract; no tests were removed on naming similarity alone. |
+| Reorganize large historical documents | DEFERRED | Preserve the chronological handoff and audit history. Do not split/archive until all internal and external references are mapped and the archive plan is verified. |
+| Review/prune historical branches | PARTIAL — owner policy required | 12 refs exist (11 non-main); merged feature branches remain. No branch was deleted. Commit provenance and owner-approved retention policy are required before pruning. |
+| Configure main branch protection | TODO — owner configuration | Main still reports `protected=false`; required checks/review policy and ruleset are owner decisions. |
+| Independent linguistic adjudication and manual accessibility review | BLOCKED / evidence-limited | Thai IPA/segmentation, Ukrainian target forms, CCOST released TextGrid schema/method, and manual browser/device/WCAG 2.2 AA review remain external acceptance gates. |
+
+**Final verified main:** `1431c565ff5c160da4944942d687bc30b2f8d0b2`. **Post-merge CI:** [41326865977](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41326865977), all three jobs successful. **Pages:** [41326865964](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41326865964), build and deploy successful. Local pytest/npm were not run in this connector-only environment.

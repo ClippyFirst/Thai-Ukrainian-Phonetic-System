@@ -1910,3 +1910,17 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - **Local verification:** no local pytest/npm execution was available in the connector-only environment. All verification claims refer to the exact GitHub Actions runs listed above.
 - **Readiness:** engineering-verified research prototype; not release-ready for general linguistic-accuracy claims or WCAG conformance.
 
+
+
+## 2026-11-01 — final repository cleanup verification
+
+- Starting main for this cleanup continuation: `69dafe58a9458d33a645cdcd517e61e9978abdbd`. Final main: `1431c565ff5c160da4944942d687bc30b2f8d0b2`.
+- PRs #171–#177 delivered the documentation/architecture/script ownership pass, removed unused browser grapheme output maps, added generated-artifact drift detection and deterministic CSV generation, derived Python consonant maps from the canonical registry, and corrected the typed-IPA adapter wording. Each exact-head CI run passed.
+- PR #178 merged as `a5856b4539148f5347da91a719a07aead614decd`; exact-head CI [41326222309](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41326222309) passed all three jobs. The final audit Markdown was synchronized with the matrix, JSON audit and handoff.
+- PR #179 merged as `1431c565ff5c160da4944942d687bc30b2f8d0b2`; exact-head CI [41326533814](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41326533814) passed all three jobs. It removed the local-import reverse dependency `word.py → api.py` by passing the syllable analyzer into `analyze_word`; the public API supplies the callback. No phonology, IPA, Ukrainian mapping, browser logic or data changed.
+- Final post-merge main CI [41326865977](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41326865977) passed `test`, `wheel-install-smoke` and `master-artifact`. Pages [41326865964](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41326865964) passed `build` and `deploy`.
+- Repository inventory: 12 branch refs (11 non-main) including this documentation continuation branch; no branches were deleted. No open PRs existed immediately after #179 merged. Branch retention remains PARTIAL pending owner policy; main branch protection remains TODO because GitHub reports `protected=false`.
+- **DONE_VERIFIED:** repository guide, architecture ownership, script inventory, removal of unused browser maps, generated-artifact drift gate, deterministic generated CSVs, canonical Python consonant maps, typed IPA manifest boundary, removal of word/API reverse dependency, exact-head CI and post-merge main/Pages checks.
+- **PARTIAL:** full import/call/reference graph and broad semantic test/fixture redundancy review. **DEFERRED:** historical document reorganization until reference mapping/archive plan is verified.
+- **BLOCKED / evidence-limited:** independent Thai IPA/segmentation and Ukrainian target-form adjudication; CCOST released TextGrid schema and detailed method; manual browser/device and WCAG 2.2 AA review. These require external qualified reviewers/evidence and are not CI tasks.
+- Local pytest/npm were not run in the connector-only environment. This is an engineering-verified research prototype, not a linguistic-accuracy or accessibility-conformance release.

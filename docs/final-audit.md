@@ -1211,3 +1211,16 @@ The first run with the new coverage tests completed master-table generation and 
 - **Verification limitation:** no local test suite was run in the connector-only environment. Claims above refer to the recorded GitHub Actions runs, not local execution.
 - **Readiness:** engineering-verified research prototype; not release-ready for general linguistic-accuracy or accessibility-conformance claims.
 - **Current documentation closeout:** PR #178; exact-head CI must pass before merge. Consult live PR metadata for its current head SHA and status.
+
+
+## Final repository-cleanup verification — 2026-11-01
+
+- PR #178 reconciled the master matrix, structured audit and chronological handoff; its missing `final-audit.md` checkpoint was added before merge. It merged as `a5856b4539148f5347da91a719a07aead614decd`; exact-head CI [41326222309](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41326222309) passed all three jobs.
+- PR #179 removed the hidden reverse dependency from `word.py` to `api.py` by injecting the syllable analyzer. The public API behavior and linguistic pipeline remain unchanged. A focused dependency-boundary test was added. It merged as `1431c565ff5c160da4944942d687bc30b2f8d0b2`; exact-head CI [41326533814](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41326533814) passed all three jobs.
+- Final main CI [41326865977](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41326865977) passed `test`, `wheel-install-smoke` and `master-artifact`; Pages [41326865964](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41326865964) passed build and deploy. Final main SHA: `1431c565ff5c160da4944942d687bc30b2f8d0b2`.
+- **DONE_VERIFIED:** documentation/source-of-truth guide, architecture ownership alignment, 24-script inventory, browser unused-map removal, generated-artifact drift gate and deterministic LF CSV generation, Python consonant single-source derivation, typed-IPA manifest correction, word-analysis dependency direction, exact-head CI and post-merge main/Pages verification.
+- **PARTIAL:** full import/call/reference graph and broad test/fixture redundancy review. The word/API reverse dependency is one proven issue corrected; no claim is made that every dead-code candidate or duplicate has been found.
+- **DEFERRED:** archival/splitting of large chronological documents pending cross-reference mapping. **PARTIAL:** branch retention pending owner-approved policy (12 refs including 11 non-main). **TODO:** branch protection remains owner configuration (`protected=false`).
+- **BLOCKED / evidence-limited:** independent Thai IPA/segmentation and Ukrainian target-form adjudication, CCOST released TextGrid schema/method reconciliation, and manual browser/device/WCAG 2.2 AA review.
+- Local tests were not run in the connector-only environment. CI evidence is exact-head and post-merge GitHub Actions evidence only.
+- **Readiness:** engineering-verified research prototype; not release-ready for general linguistic-accuracy or accessibility-conformance claims.
