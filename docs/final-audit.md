@@ -1352,7 +1352,7 @@ The first run with the new coverage tests completed master-table generation and 
 
 - The pinned Thai Wiktionary revision 1885200 explicitly gives one syllable, short vowel and Standard Thai IPA `/pʰɤŋ˥˩/`. This is dictionary evidence, not independent phonetic adjudication or acoustic gold.
 - Activated the existing source-attested lexical IPA override in both Python and browser engines: segmental IPA `pʰɤŋ`, short vowel, falling tone `˥˩`, with no surface-phonetic IPA claim. The Ukrainian result is still produced by the IPA adapter and is marked `SOURCE_ATTESTED_NOT_GOLD`.
-- The all-mode regression now verifies the exact result in strict, soft and super-soft modes. Strict mode continues to abstain for the five other reported forms that lack a pinned lexical override.
+- The all-mode regression now verifies the exact result in strict, soft and super-soft modes. Strict mode continues to abstain for the six other unreferenced forms, including special-vowel `ฤๅษี`.
 - The source-attested diagnostic now excludes five circular rows (the same dictionary sources feed runtime overrides) and leaves two non-circular, complete comparisons. It remains a diagnostic, not a benchmark accuracy score.
 - The ten hand-written adversarial inputs plus the 42 frozen challenge inputs are exercised in all three profiles: 156 profile/input combinations, plus focused strict/super-soft guards.
 
@@ -1362,3 +1362,9 @@ The first run with the new coverage tests completed master-table generation and 
 - Web Static [41352166906](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41352166906) and external VISTEC segmentation evaluation [41352166908](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41352166908) passed on the same head.
 - The source-attested diagnostic is seven complete outputs, five circular rows excluded, two non-circular comparisons; it remains explicitly NOT_GOLD and makes no accuracy claim.
 - The connector-only environment did not permit a local clone/test run. No local test result is claimed.
+
+## Unsupported `ฤๅษี` segmentation removed — 2026-11-01
+
+- The Python text lexicon contained `ฤๅษี → รือ|สี` without a matching source-registry record. The browser lexicon also contained that split and an additional unsourced `ฤษี → รึ|สี` entry.
+- Both unreferenced browser entries and the Python `ฤๅษี` entry have been removed. This restores the special-vowel analysis-dependent path rather than silently converting the word into two structurally parsed syllables.
+- Strict mode now withholds IPA and Ukrainian output for `ฤๅษี`; soft/super-soft results remain explicitly provisional. Python text-pipeline, browser parity and all-mode adversarial tests cover the behavior.

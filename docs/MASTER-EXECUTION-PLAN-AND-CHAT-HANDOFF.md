@@ -2043,3 +2043,9 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Web Static [41352166906](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41352166906) and VISTEC [41352166908](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41352166908) passed.
 - `เพิ่ง` now has a source-pinned runtime IPA override in both runtimes, explicitly NOT_GOLD; broad-surface IPA requires registered audio provenance.
 - The Thai and Ukrainian blind packets are ready for external review, but the reviewer registry and all adjudicated gold tables remain empty. Linguistic accuracy is NOT_MEASURED.
+
+## Follow-up — remove unsupported `ฤๅษี` text-lexicon split (2026-11-01)
+
+- Removed `ฤๅษี → รือ|สี` from `data/thai/text_lexicon.tsv` and both the corresponding browser entry and the browser-only `ฤษี → รึ|สี` entry. Neither had a source-registry citation.
+- Added Python text-pipeline and browser parity regressions; `ฤๅษี` is now withheld in strict mode and cannot be treated as a confirmed lexicon split. It remains in the blind Thai review packet for expert adjudication.
+- The all-mode strict-abstention set now includes six unreferenced forms; `เพิ่ง` is separately covered by its pinned source-attested NOT_GOLD override.
