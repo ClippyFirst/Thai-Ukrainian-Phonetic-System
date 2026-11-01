@@ -1983,3 +1983,11 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - The original 42-item challenge remains frozen and source-pinned. The supplement has its own MIT source record pinned to `8ae6e3ef1225a3e8b542371a4b3b26e29becf2a2`.
 - Regression test validates exact coverage, all 21 columns, no prefilled IPA or reviewer fields, and null gold fields. No source IPA for `เพิ่ง` is exposed in the Thai blind sheet.
 - No expert reviews have been received; this is a ready-to-review packet only. The six items must be independently annotated and separately adjudicated before scoring.
+
+
+## Handoff — exact CCOST wordlist source audit (2026-11-01)
+
+- Reconstructed Zenodo v1.0 `wordlist.csv` from the public preview with BOM/CRLF; reconstructed bytes match official MD5 `e62f500d87b4ff8c6deb4c4595854d34`. SHA-256: `e3836f6204c674a8d972dfd49de369eea7856ca6f00d520aafcd62f4e7273223`.
+- Ran the repository wordlist audit logic: A/B/C/D each 206 rows, 206 unique items, no duplicates; B/C/D each differ from A by two missing and two extra entries; union=208. Generator correctly returns `SOURCE_ORDER_DISCREPANCY_REQUIRES_RECONCILIATION`, scoreable=false.
+- Local 208-item challenge/blind packet and manifest were generated for inspection only under CC BY-NC-SA 4.0; no CCOST-derived data or outputs were committed.
+- Genuine blocker: obtain CCOST author/data-curator confirmation or erratum for the A-D discrepancy before freezing any review set. Audio/TextGrid archive remains uninspected; expert submissions remain zero.

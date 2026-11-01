@@ -1297,3 +1297,12 @@ The first run with the new coverage tests completed master-table generation and 
 - The supplemental packet contains only prompt text; IPA/tone/length/boundary gold fields remain null or blank. The blind reviewer sheet excludes engine output, probe labels and the separate source-attested `เพิ่ง` IPA to avoid anchoring.
 - Exact source record is `CLIPPYFIRST-THAI-REGRESSION-ADDENDUM-20261101`, pinned to commit `8ae6e3ef1225a3e8b542371a4b3b26e29becf2a2`. Automated tests verify all six rows, 21 TSV columns, no prefilled labels and permitted source use.
 - This makes the problem cases ready for independent Thai review; it does not create expert labels or establish accuracy. Reviewer registry remains empty.
+
+
+## CCOST wordlist exact-source audit — 2026-11-01
+
+- Reconstructed the published Zenodo `wordlist.csv` from its complete preview, including UTF-8 BOM and CRLF line endings. Reconstructed bytes match the official Zenodo MD5 `e62f500d87b4ff8c6deb4c4595854d34`; SHA-256 is `e3836f6204c674a8d972dfd49de369eea7856ca6f00d520aafcd62f4e7273223`.
+- Executed the CCOST wordlist audit/packet-generation logic on those exact bytes. Each A-D order has 206 rows, 206 unique words and zero duplicates. However, B/C/D each differ from A by two missing and two extra items; the union has 208 unique prompts.
+- The generator correctly returns `SOURCE_ORDER_DISCREPANCY_REQUIRES_RECONCILIATION`, `scoreable=false`, and emits local-only 208-row packets. No CCOST-derived data or output packets were committed.
+- **BLOCKED — curator clarification:** do not freeze the 208-prompt packet until the CCOST authors/data curator confirm whether the two substitutions are intentional stimulus differences or source-file errors, or publish a corrected wordlist/erratum. CC BY-NC-SA 4.0 remains applicable.
+- This resolves wordlist access and source-integrity uncertainty, but not the independent Thai reviewer requirement or the 6.2 GB audio/TextGrid archive conformance review.

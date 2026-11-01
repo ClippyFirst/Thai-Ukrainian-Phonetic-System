@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Main remains cc398254c178171f74397aed556766e87356ab84. PR #182 branch research/independent-adjudication-gates-20261101 includes code/test head 8ba1d93293a69178bf0bdc23b7325d17b47c10a2. Exact-head verification for the preceding code/test checkpoint passed all three CI jobs (296 Python tests, 1168 subtests, Ruff, browser/IPA/RTGS diagnostics, wheel install and master artifact); Web Static and external VISTEC evaluation passed. The source-attested IPA registry now contains seven pinned dictionary references, including the monosyllabic short-vowel /pʰɤŋ˥˩/ entry for เพิ่ง (not gold). The official CCOST wordlist preview is available and was inspected; file bytes were not downloaded in this connector-only session, so the generator/hash audit against the original CSV remains pending. No real expert submissions exist; accuracy remains NOT_MEASURED. A public reviewer outreach shortlist is documented from institutional profiles; no contact has been made and the reviewer registry remains empty. CCOST wordlist Zenodo preview metadata (206 rows, A-D, 9.7 kB, MD5 e62f500d87b4ff8c6deb4c4595854d34) is recorded; original CSV bytes and A-D set comparison remain pending. A separate six-item blind Thai review supplement now covers the exact user-reported forms and contexts; it preserves the original frozen 42-item challenge source and carries no gold labels.",
+  "status": "Main remains cc398254c178171f74397aed556766e87356ab84. PR #182 branch research/independent-adjudication-gates-20261101 includes code/test head 8ba1d93293a69178bf0bdc23b7325d17b47c10a2. Exact-head verification for the preceding code/test checkpoint passed all three CI jobs (296 Python tests, 1168 subtests, Ruff, browser/IPA/RTGS diagnostics, wheel install and master artifact); Web Static and external VISTEC evaluation passed. The source-attested IPA registry now contains seven pinned dictionary references, including the monosyllabic short-vowel /pʰɤŋ˥˩/ entry for เพิ่ง (not gold). The official CCOST wordlist preview is available and was inspected; file bytes were not downloaded in this connector-only session, so the generator/hash audit against the original CSV remains pending. No real expert submissions exist; accuracy remains NOT_MEASURED. A public reviewer outreach shortlist is documented from institutional profiles; no contact has been made and the reviewer registry remains empty. CCOST wordlist Zenodo preview metadata (206 rows, A-D, 9.7 kB, MD5 e62f500d87b4ff8c6deb4c4595854d34) is recorded; original CSV bytes and A-D set comparison remain pending. A separate six-item blind Thai review supplement now covers the exact user-reported forms and contexts; it preserves the original frozen 42-item challenge source and carries no gold labels. The CCOST wordlist preview has now been reconstructed byte-identically (official MD5 verified) and the generator run: 206 rows/206 unique items per A-D order, zero duplicates, but B/C/D each differ from A by two missing and two extra entries (208-item union). Generator status is SOURCE_ORDER_DISCREPANCY_REQUIRES_RECONCILIATION and scoreable=false; data-curator clarification is required. No derived CCOST files are committed.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -81,7 +81,8 @@
     "ukrainian_native_review_criteria",
     "source_attested_ipa_reference_for_เพิ่ง",
     "public_independent_reviewer_outreach_shortlist",
-    "six_item_blind_thai_regression_supplement"
+    "six_item_blind_thai_regression_supplement",
+    "byte_identical_ccost_wordlist_integrity_and_order_audit"
   ],
   "not_claimed": [
     "complete_lexical_segmentation",
@@ -2515,5 +2516,37 @@
     "external_vistec_run": "41342132985",
     "external_vistec_result": "PASSED",
     "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT"
+  },
+  "ccost_wordlist_source_audit_2026_11_01": {
+    "source_md5": "e62f500d87b4ff8c6deb4c4595854d34",
+    "source_sha256": "e3836f6204c674a8d972dfd49de369eea7856ca6f00d520aafcd62f4e7273223",
+    "rows_per_order": {
+      "A": 206,
+      "B": 206,
+      "C": 206,
+      "D": 206
+    },
+    "unique_per_order": {
+      "A": 206,
+      "B": 206,
+      "C": 206,
+      "D": 206
+    },
+    "duplicates_by_order": {
+      "A": [],
+      "B": [],
+      "C": [],
+      "D": []
+    },
+    "missing_and_extra_items_vs_A": {
+      "B": 2,
+      "C": 2,
+      "D": 2
+    },
+    "unique_union": 208,
+    "generator_status": "SOURCE_ORDER_DISCREPANCY_REQUIRES_RECONCILIATION",
+    "scoreable": false,
+    "resolution": "BLOCKED_PENDING_CCOST_DATA_CURATOR_CLARIFICATION",
+    "derived_packets_committed": false
   }
 }
