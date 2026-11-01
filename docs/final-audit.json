@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PRs #165–#168 are merged. PR #169 head e31db6b8cfcaff925c9a1e0196c399ab315b8665 passed all three exact-head CI jobs in run 41289728755. CCOST_manual.pdf was inspected; the operational workflow is documented, but the released TextGrid tier/phone/toneme schema and independent annotation protocol remain unverified. Independent Thai/UA adjudication and manual accessibility review remain outstanding; engineering-verified research prototype, not release-ready for linguistic-accuracy claims.",
+  "status": "PRs #171–#177 are merged. The repository structure pass added documentation and script ownership maps, removed unused browser maps, introduced generated-artifact drift checks, derived Python consonant maps from the canonical registry, and corrected the typed-IPA manifest contract. Main snapshot 1e0c2b3432a49178c6f00fbfb631a0258a7cc6fc passed post-merge CI (41325122025) and Pages build/deploy (41325122035). PR #178 is the sole open documentation closeout. Engineering-verified research prototype; independent Thai/UA adjudication and manual accessibility review remain outstanding.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -339,7 +339,7 @@
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
   "latest_code_checkpoint": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
   "readiness": "engineering-verified research prototype; not release-ready for independent Thai segmentation, IPA or Ukrainian target accuracy",
-  "latest_verified_repository_head": "8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8",
+  "latest_verified_repository_head": "1e0c2b3432a49178c6f00fbfb631a0258a7cc6fc",
   "task_ledger": [
     {
       "id": "SEG-TRAIN-001",
@@ -2063,9 +2063,9 @@
       167
     ]
   },
-  "latest_full_repository_head": "8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8",
-  "latest_full_repository_head_ci_run": 41240699017,
-  "latest_full_repository_head_web_validation_run": 41239440643,
+  "latest_full_repository_head": "1e0c2b3432a49178c6f00fbfb631a0258a7cc6fc",
+  "latest_full_repository_head_ci_run": 41325122025,
+  "latest_full_repository_head_web_validation_run": 41325122035,
   "latest_web_static_verified_code_commit": "72a77cb42ad05c33274d70c4dcd9f20e07432b64",
   "latest_web_static_verified_code_run": 41239440643,
   "ccost_source_reconciliation_2026_10_31": {
@@ -2106,51 +2106,30 @@
     "latest_pr_head_ci_status": "See PR #169 metadata; previous exact-head run 41244614135 passed all three jobs."
   },
   "current_branch_inventory": {
-    "branch_refs": 184,
+    "branch_refs": 10,
     "prefix_counts": {
-      "docs": 57,
-      "feat": 27,
-      "fix": 27,
-      "research": 25,
-      "audit": 8,
-      "ux": 7,
-      "chore": 8,
-      "unprefixed": 7,
-      "test": 5,
-      "ci": 2,
-      "copy": 2,
-      "design": 2,
-      "perf": 2,
-      "finalize": 1,
-      "polish": 1,
-      "site": 1,
-      "ui": 1,
-      "web": 1
+      "chore": 2,
+      "ci": 1,
+      "docs": 2,
+      "fix": 1,
+      "main": 1,
+      "refactor": 3
     },
     "as_of": "2026-11-01",
-    "deletions": 0
+    "deletions": 0,
+    "note": "9 refs were listed before this documentation closeout branch was created; this branch is the tenth ref. No branch deletion was performed."
   },
   "open_prs_current": [
     {
-      "number": 169,
+      "number": 178,
       "head": "See PR metadata; avoid self-referential SHA.",
       "status": "OPEN",
-      "exact_head_ci_run": 41300790280,
-      "ci_status": "SUCCESS on pre-reconciliation head 0dee9e36cd5391b599c8b785a8b2c1b81ea325a7; current documentation head must be verified separately.",
-      "scope": "CCOST source provenance and canonical audit closeout"
-    },
-    {
-      "number": 170,
-      "head": "1cdc3d7971498ce3312ff9a79b23ee84b8d917aa",
-      "status": "OPEN",
-      "exact_head_ci_run": 41243709726,
-      "web_static_run": 41243709639,
-      "ci_status": "SUCCESS",
-      "scope": "remove two duplicate UI contract assertions",
-      "web_static_status": "SUCCESS"
+      "exact_head_ci_run": null,
+      "ci_status": "Pending exact-head CI; consult PR metadata and Actions.",
+      "scope": "repository cleanup audit/matrix/handoff closeout"
     }
   ],
-  "latest_pr_head_source": "GitHub PR #169 metadata; not duplicated as a literal SHA here because this file is committed in that same PR and would otherwise stale itself.",
+  "latest_pr_head_source": "PR #178 metadata; this file is committed by that PR, so its head SHA and exact-head run are intentionally not duplicated here.",
   "status_refresh_2026_10_31": {
     "main_sha": "8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8",
     "pr_169": {
@@ -2185,17 +2164,19 @@
     "readiness": "engineering-verified research prototype; not release-ready for general linguistic-accuracy claims"
   },
   "latest_exact_head_verification": {
-    "current_pr": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/169",
+    "current_pr": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/178",
     "current_head": "See PR metadata; this file is committed by the same PR and intentionally avoids a self-staling SHA.",
     "current_exact_head_ci_run": null,
-    "current_exact_head_ci_status": "Pending exact-head CI for the current documentation-only status reconciliation; consult PR metadata and Actions.",
-    "previous_verified_head_ci_run": 41300790280,
-    "previous_verified_head_ci_status": "SUCCESS on PR #169 pre-reconciliation head 0dee9e36cd5391b599c8b785a8b2c1b81ea325a7 — test, wheel-install-smoke and master-artifact all passed.",
-    "pr_170_head": "1cdc3d7971498ce3312ff9a79b23ee84b8d917aa",
-    "pr_170_ci_run": 41243709726,
-    "pr_170_ci_status": "SUCCESS",
-    "pr_170_web_static_run": 41243709639,
-    "pr_170_web_static_status": "SUCCESS"
+    "current_exact_head_ci_status": "Pending exact-head CI; consult PR metadata and Actions.",
+    "latest_merged_pr": 177,
+    "latest_merged_pr_head": "65d2cc47d9bf34e744f26f1ca60cb8a960e609ef",
+    "latest_merged_pr_exact_head_ci_run": 41324845398,
+    "latest_merged_pr_exact_head_ci_status": "SUCCESS — test, wheel-install-smoke, master-artifact",
+    "post_merge_main_sha": "1e0c2b3432a49178c6f00fbfb631a0258a7cc6fc",
+    "post_merge_main_ci_run": 41325122025,
+    "post_merge_main_ci_status": "SUCCESS — test, wheel-install-smoke, master-artifact",
+    "post_merge_pages_run": 41325122035,
+    "post_merge_pages_status": "SUCCESS — build, deploy"
   },
   "external_benchmark_research_2026_11_01": {
     "thai_g2p_v4": {
@@ -2266,22 +2247,130 @@
     "accuracy_claimed": false
   },
   "current_status_2026_11_01": {
-    "main_sha": "8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8",
-    "main_unchanged": true,
-    "current_pr_169_head": "See PR metadata; this file is committed by the same PR and intentionally avoids a self-staling SHA.",
-    "pr_169_pre_reconciliation_head": "0dee9e36cd5391b599c8b785a8b2c1b81ea325a7",
-    "pr_169_pre_reconciliation_ci_run": 41300790280,
-    "pr_169_pre_reconciliation_ci_status": "SUCCESS — test, wheel-install-smoke, master-artifact",
-    "pr_170_head": "1cdc3d7971498ce3312ff9a79b23ee84b8d917aa",
-    "pr_170_ci_run": 41243709726,
-    "pr_170_web_static_run": 41243709639,
-    "pr_170_status": "OPEN_UNMERGED; both checks SUCCESS",
+    "main_sha": "1e0c2b3432a49178c6f00fbfb631a0258a7cc6fc",
+    "main_unchanged": false,
+    "merged_prs": [
+      171,
+      172,
+      173,
+      174,
+      175,
+      176,
+      177
+    ],
+    "open_prs": [
+      178
+    ],
     "review_submissions_and_inline_threads": 0,
-    "branch_refs": 184,
-    "branch_inventory": "Reconciled across two API pages (100 + 84); retention review remains partial.",
+    "branch_refs": 10,
+    "non_main_refs": 9,
+    "branch_inventory": "10 refs including this documentation branch; 9 non-main refs. No branch deleted; retention policy remains owner-controlled.",
     "ccost_manual_inspection": "DONE_VERIFIED",
     "ccost_textgrid_schema_and_detailed_methods": "BLOCKED_EVIDENCE_LIMITED",
+    "thai_ipa_segmentation_adjudication": "BLOCKED_EVIDENCE_LIMITED",
+    "ukrainian_target_form_adjudication": "BLOCKED_EVIDENCE_LIMITED",
+    "manual_browser_device_wcag_review": "BLOCKED",
+    "main_branch_protection": "TODO_OWNER_CONFIGURATION; branch listing reports protected=false",
+    "full_import_call_reference_graph": "PARTIAL",
+    "broad_test_fixture_redundancy_review": "PARTIAL",
+    "historical_document_reorganization": "DEFERRED_PENDING_REFERENCE_AUDIT",
     "local_test_execution": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
-    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY"
+    "latest_merged_pr_exact_head_ci_run": 41324845398,
+    "post_merge_main_ci_run": 41325122025,
+    "post_merge_main_ci_status": "SUCCESS — test, wheel-install-smoke, master-artifact",
+    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY",
+    "post_merge_pages_status": "SUCCESS — build, deploy"
+  },
+  "repository_structure_cleanup_2026_11_01": {
+    "main_at_start": "69dafe58a9458d33a645cdcd517e61e9978abdbd",
+    "main_at_closeout_start": "1e0c2b3432a49178c6f00fbfb631a0258a7cc6fc",
+    "merged_prs": [
+      {
+        "number": 171,
+        "merge_sha": "85ced007f6fab7572a78380553ebfe42ccb18e07",
+        "ci_run": 41310072386,
+        "scope": "documentation navigation and ownership"
+      },
+      {
+        "number": 172,
+        "merge_sha": "5d7a2ee9ca38ff37e3ea286de747828dfabe0c32",
+        "ci_run": 41311528849,
+        "scope": "architecture and module ownership"
+      },
+      {
+        "number": 173,
+        "merge_sha": "3d6e9f7dc184cdfd69f3aa284cd15ca2b48c78b1",
+        "ci_run": 41312044065,
+        "web_static_run": 41312044090,
+        "scope": "remove unused browser grapheme maps"
+      },
+      {
+        "number": 174,
+        "merge_sha": "fa33cb46aa8f5081e901241b6fb437e3fbf12306",
+        "ci_run": 41312645359,
+        "scope": "24-script ownership inventory"
+      },
+      {
+        "number": 175,
+        "merge_sha": "b957bd01d0a4269dc8d2a7d87f98c7519f0e193a",
+        "ci_run": 41323955237,
+        "scope": "generated artifact drift gate and deterministic CSV generation"
+      },
+      {
+        "number": 176,
+        "merge_sha": "bd0b3d7da60c2060a1c30d56ef22f069c21a41da",
+        "ci_run": 41324492017,
+        "scope": "derive Python consonant maps from canonical registry"
+      },
+      {
+        "number": 177,
+        "merge_sha": "1e0c2b3432a49178c6f00fbfb631a0258a7cc6fc",
+        "ci_run": 41324845398,
+        "scope": "typed IPA mandatory adapter wording in master manifest"
+      }
+    ],
+    "generated_artifact_findings": {
+      "drift_gate_added": true,
+      "stale_outputs": [
+        "thai_orthographic_correspondence.csv",
+        "thai_vowel_correspondence.csv",
+        "thai_ukrainian_master.json"
+      ],
+      "csv_line_ending_determinism": "explicit LF lineterminator added to all master-table CSV writers",
+      "regenerated_from_canonical_sources": true
+    },
+    "code_refactors": {
+      "browser_direct_grapheme_ukrainian_maps_removed": true,
+      "browser_low_class_derived_from_registry": true,
+      "python_onset_ipa_derived_from_registry": true,
+      "python_low_class_derived_from_registry": true,
+      "registry_parity_regression_added": true
+    },
+    "task_ledger": {
+      "documentation_navigation": "DONE_VERIFIED",
+      "architecture_ownership": "DONE_VERIFIED",
+      "script_inventory": "DONE_VERIFIED",
+      "browser_unused_map_cleanup": "DONE_VERIFIED",
+      "generated_artifact_drift_gate": "DONE_VERIFIED",
+      "python_consonant_registry_single_source": "DONE_VERIFIED",
+      "typed_ipa_manifest_contract": "DONE_VERIFIED",
+      "full_call_reference_graph": "PARTIAL",
+      "broad_test_fixture_redundancy_review": "PARTIAL",
+      "historical_document_reorganization": "DEFERRED",
+      "branch_retention": "PARTIAL",
+      "main_branch_protection": "TODO_OWNER_CONFIGURATION",
+      "independent_thai_ua_adjudication": "BLOCKED_EVIDENCE_LIMITED",
+      "ccost_textgrid_method_reconciliation": "BLOCKED_EVIDENCE_LIMITED",
+      "manual_accessibility_review": "BLOCKED"
+    },
+    "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
+    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY",
+    "open_prs": [
+      178
+    ],
+    "post_merge_main_ci_run": 41325122025,
+    "post_merge_main_ci_status": "SUCCESS — all three jobs",
+    "post_merge_pages_run": 41325122035,
+    "post_merge_pages_status": "SUCCESS — build and deploy"
   }
 }
