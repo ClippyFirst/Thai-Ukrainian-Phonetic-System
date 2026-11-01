@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PRs #165–#168 are merged. PR #169 head e31db6b8cfcaff925c9a1e0196c399ab315b8665 passed all three exact-head CI jobs in run 41289728755. CCOST_manual.pdf was inspected; the operational workflow is documented, but the released TextGrid tier/phone/toneme schema and independent annotation protocol remain unverified. Independent Thai/UA adjudication and manual accessibility review remain outstanding; engineering-verified research prototype, not release-ready for linguistic-accuracy claims.",
+  "status": "PR #171 merged as 85ced007f6fab7572a78380553ebfe42ccb18e07 after all three exact-head CI jobs passed. Repository guide and architecture ownership documentation refreshed on chore/architecture-ownership-20261101; full technical-debt inventory remains partial. Independent Thai/UA adjudication and manual accessibility review remain outstanding; engineering-verified research prototype, not release-ready for linguistic-accuracy claims.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -64,7 +64,9 @@
     "full_ipa_and_rtgs_consonant_rime_correspondence_matrices",
     "rtgs_iao_rime_component_preservation_regression",
     "rtgs_research_integration_contract_reconciled",
-    "historical_rtgs_pr_status_reconciled"
+    "historical_rtgs_pr_status_reconciled",
+    "repository_documentation_navigation",
+    "ipa_first_architecture_ownership_map"
   ],
   "not_claimed": [
     "complete_lexical_segmentation",
@@ -2283,5 +2285,17 @@
     "ccost_textgrid_schema_and_detailed_methods": "BLOCKED_EVIDENCE_LIMITED",
     "local_test_execution": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
     "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY"
+  },
+  "audit_checkpoint": {
+    "date": "2026-11-01",
+    "main_sha": "85ced007f6fab7572a78380553ebfe42ccb18e07",
+    "work_branch": "chore/architecture-ownership-20261101",
+    "exact_head_ci_run": 41310072386,
+    "exact_head_ci_jobs": [
+      "test",
+      "wheel-install-smoke",
+      "master-artifact"
+    ],
+    "status": "documentation_and_architecture_map_verified; full_technical_debt_inventory_partial"
   }
 }
