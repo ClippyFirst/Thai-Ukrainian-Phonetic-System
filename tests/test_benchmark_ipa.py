@@ -11,6 +11,7 @@ SCRIPT = ROOT / "scripts" / "benchmark_ipa.py"
 GOLD_FIELDS = [
     "id", "text", "gold_ipa", "gold_status", "profile", "source_id", "source_url",
     "license", "transcription_level", "reviewer_a_id", "reviewer_b_id",
+    "reviewer_a_qualification_ref", "reviewer_b_qualification_ref",
     "reviewer_a_ipa", "reviewer_b_ipa", "adjudicator_id", "adjudication_outcome",
     "adjudication_record_id", "adjudication_notes",
 ]
@@ -30,7 +31,10 @@ def gold_row(**changes):
         "profile": "core-vowel-length", "source_id": "CCOST#record-1",
         "source_url": "https://zenodo.org/records/17366698", "license": "CC-BY-NC-SA-4.0",
         "transcription_level": "BROAD_PHONEMIC", "reviewer_a_id": "TH-PH-01",
-        "reviewer_b_id": "TH-PH-02", "reviewer_a_ipa": "kaː", "reviewer_b_ipa": "kaː",
+        "reviewer_b_id": "TH-PH-02",
+        "reviewer_a_qualification_ref": "qualification:TH-PH-01",
+        "reviewer_b_qualification_ref": "qualification:TH-PH-02",
+        "reviewer_a_ipa": "kaː", "reviewer_b_ipa": "kaː",
         "adjudicator_id": "TH-ADJ-01", "adjudication_outcome": "AGREEMENT",
         "adjudication_record_id": "ADJ-2026-001", "adjudication_notes": "Independent labels agree.",
     }
@@ -73,6 +77,7 @@ class BenchmarkIpaTests(unittest.TestCase):
             ({"profile": ""}, "profile"),
             ({"reviewer_b_id": "TH-PH-01"}, "two distinct reviewers"),
             ({"reviewer_a_ipa": ""}, "reviewer_a_ipa"),
+            ({"reviewer_b_qualification_ref": ""}, "reviewer_b_qualification_ref"),
             ({"source_url": ""}, "source_url"),
         ]
         for changes, message in cases:

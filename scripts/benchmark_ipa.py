@@ -12,6 +12,7 @@ from pathlib import Path
 GOLD_FIELDS = [
     "id", "text", "gold_ipa", "gold_status", "profile", "source_id", "source_url",
     "license", "transcription_level", "reviewer_a_id", "reviewer_b_id",
+    "reviewer_a_qualification_ref", "reviewer_b_qualification_ref",
     "reviewer_a_ipa", "reviewer_b_ipa", "adjudicator_id", "adjudication_outcome",
     "adjudication_record_id", "adjudication_notes",
 ]
@@ -54,7 +55,8 @@ def validate_gold_row(row: dict[str, str]) -> None:
         raise ValueError(f"ADJUDICATED gold row {ident!r} requires non-empty gold_ipa")
     required = (
         "source_id", "source_url", "license", "profile", "transcription_level",
-        "reviewer_a_id", "reviewer_b_id", "reviewer_a_ipa", "reviewer_b_ipa",
+        "reviewer_a_id", "reviewer_b_id", "reviewer_a_qualification_ref",
+        "reviewer_b_qualification_ref", "reviewer_a_ipa", "reviewer_b_ipa",
         "adjudicator_id", "adjudication_outcome", "adjudication_record_id",
         "adjudication_notes",
     )
