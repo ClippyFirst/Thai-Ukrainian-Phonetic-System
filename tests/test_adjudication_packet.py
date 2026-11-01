@@ -327,6 +327,47 @@ class AdjudicationPacketTests(unittest.TestCase):
             )["records"], 1
         )
 
+    def test_broad_surface_ipa_requires_registered_audio_and_surface_permission(self):
+        row = completed_row("TH-G2P-001", "กา")
+        row["broad_surface_ipa"] = "[kʰaː]"
+        with self.assertRaisesRegex(ValueError, "broad surface IPA requires a registered audio source"):
+            validate_review_packet([row], ["TH-G2P-001"], "TH-PH-01")
+
+        row.update({
+            "audio_source_id": "TEST-AUDIO",
+            "audio_asset_reference": "recording-001",
+            "audio_time_start": "1.20",
+            "audio_time_end": "1.85",
+        })
+        source = {
+            "source_url": "https://example.org/audio",
+            "license": "CC0-1.0",
+            "allowed_uses": "ACOUSTIC_PHONETICS_RESEARCH;BROAD_SURFACE_IPA_GOLD_INPUT",
+            "verification_status": "VERIFIED",
+            "notes": "Unit-test-only audio source.",
+        }
+        asset = {
+            "asset_id": "recording-001", "source_id": "TEST-AUDIO",
+            "duration_seconds": "3.0", "verification_status": "VERIFIED",
+            "overlap_status": "NONE",
+        }
+        self.assertEqual(
+            validate_review_packet(
+                [row], ["TH-G2P-001"], "TH-PH-01",
+                source_registry={"TEST-AUDIO": source},
+                audio_asset_registry={"recording-001": asset},
+            )["status"],
+            "REVIEW_PACKET_VALID_NOT_GOLD",
+        )
+
+        source["allowed_uses"] = "ACOUSTIC_PHONETICS_RESEARCH"
+        with self.assertRaisesRegex(ValueError, "not approved for BROAD_SURFACE_IPA_GOLD_INPUT"):
+            validate_review_packet(
+                [row], ["TH-G2P-001"], "TH-PH-01",
+                source_registry={"TEST-AUDIO": source},
+                audio_asset_registry={"recording-001": asset},
+            )
+
     def test_narrow_ipa_syllable_count_must_match_phonemic_boundaries(self):
         row = completed_row("TH-G2P-001", "กา")
         row.update({

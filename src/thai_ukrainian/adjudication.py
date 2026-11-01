@@ -266,6 +266,11 @@ def validate_review_packet(
             start = (row.get("audio_time_start") or "").strip()
             end = (row.get("audio_time_end") or "").strip()
             audio_fields = (audio_source_id, asset, start, end)
+            surface_ipa = (row.get("broad_surface_ipa") or "").strip()
+            if surface_ipa and not all(audio_fields):
+                raise ValueError(
+                    f"broad surface IPA requires a registered audio source, asset and time interval: {ident}"
+                )
             if any(audio_fields):
                 if not all(audio_fields):
                     raise ValueError(
@@ -280,6 +285,11 @@ def validate_review_packet(
                     audio_source_id, audio_source["source_url"], audio_source["license"],
                     "ACOUSTIC_PHONETICS_RESEARCH", source_registry, row_id=ident,
                 )
+                if surface_ipa:
+                    validate_source_reference(
+                        audio_source_id, audio_source["source_url"], audio_source["license"],
+                        "BROAD_SURFACE_IPA_GOLD_INPUT", source_registry, row_id=ident,
+                    )
                 if audio_asset_registry is None:
                     raise ValueError(f"audio asset registry is required for audio-backed review: {ident}")
                 validate_audio_asset_reference(
