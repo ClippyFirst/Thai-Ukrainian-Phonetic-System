@@ -1,3 +1,19 @@
+# Continuation checkpoint — repository structure cleanup (2026-11-01)
+
+- **Repository:** `ClippyFirst/Thai-Ukrainian-Phonetic-System`; default branch `main`.
+- **Starting main:** `85ced007f6fab7572a78380553ebfe42ccb18e07`, the squash merge of PR #171.
+- **PR #171:** documentation/navigation guide merged after exact-head CI [41310072386](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41310072386) passed all three jobs: `test`, `wheel-install-smoke`, `master-artifact`.
+- **Work branch:** `chore/architecture-ownership-20261101`, created from the above main SHA.
+- **Changes on this branch:** architecture guide corrected to match the actual typed-IPA primary route; module ownership map added; repository guide verification snapshot refreshed; validation matrix and audit/handoff checkpoints updated.
+- **Code review findings:** Python and browser modules have intentional cross-runtime parity responsibilities. The Python package has separable parsing, phonology, adaptation, text, batch, CLI and server layers; no import cycle or proven dead module was established by the inspected import surfaces. `text.py` and `segmentation.py` are separate contracts (reviewed text-lexicon segmentation vs dictionary-boundary diagnostics), not safe candidates for blind consolidation.
+- **Not changed:** runtime behavior, linguistic registries, source datasets, generated artifacts, packaging hooks, and workflow commands. No evidence-backed code refactor was sufficiently established in this pass to justify behavior risk.
+- **Task status:** documentation navigation and architecture ownership map are implemented; full repository debt inventory remains PARTIAL. Remaining work: complete caller/reference graph, script and generator overlap audit, test redundancy review, generated artifact ownership verification, then focused TDD refactors.
+- **Local test limitation:** no local checkout/runtime is available through the connected GitHub-only workflow; no local tests are claimed. Exact-head GitHub Actions is the verification source.
+- **External release blockers:** qualified independent Thai phonetic/segmentation adjudication, independent Ukrainian-native target-form adjudication, and manual browser/device/WCAG 2.2 AA review.
+- **Readiness:** engineering-verified research prototype; not release-ready for general linguistic-accuracy claims.
+
+---
+
 ## 2026-11-01 — CCOST manual review and exact-head CI closeout
 
 - **Manual inspection:** `CCOST_manual.pdf` was retrieved from the official Zenodo API content endpoint and inspected (19 pages; MD5 `caecb20d26e8458b20c7c269ca22b59e`). It is the “RA Manual for BKK Thai Tone Project”, describing human correction of Google ASR output in OCTRA, Thai-script normalization, Praat transcript/boundary correction, `<usb>` for speaker noise, and BAS `CHUNKPREP → G2P → MAUS → PHO2SYL`. It names `OCTRA_1` and illustrates MAUS `sampa` output, but does not establish the final released TextGrid schema, complete phone/toneme inventory, tone labels or dual-independent annotation.
