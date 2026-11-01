@@ -1,1 +1,1 @@
-id\ttext\tgold_ipa\tgold_status\tprofile\tsource_id\tsource_url\tlicense\ttranscription_level\treviewer_a_id\treviewer_b_id\treviewer_a_ipa\treviewer_b_ipa\tadjudicator_id\tadjudication_outcome\tadjudication_record_id\tadjudication_notes\n
+id	text	gold_ipa	gold_status	profile	source_id	source_url	license	transcription_level	reviewer_a_id	reviewer_b_id	reviewer_a_ipa	reviewer_b_ipa	adjudicator_id	adjudication_outcome	adjudication_record_id	adjudication_notes
