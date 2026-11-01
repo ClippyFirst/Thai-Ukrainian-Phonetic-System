@@ -97,7 +97,7 @@ def _csv_candidates(ipa: str) -> str:
 def generate_grapheme_tables(cons):
     inv = load_consonants()
     with (OUT / "thai_consonant_correspondence.csv").open("w", encoding="utf-8", newline="") as f:
-        w = csv.writer(f)
+        w = csv.writer(f, lineterminator="\n")
         w.writerow([
             "grapheme", "role", "syllable_position", "class",
             "phonemic_ipa", "surface_ipa", "coda_allowed",
@@ -126,7 +126,7 @@ def generate_orthographic_table():
     rules = load_orthographic_rules()
     path = OUT / "thai_orthographic_correspondence.csv"
     with path.open("w", encoding="utf-8", newline="") as f:
-        w = csv.writer(f)
+        w = csv.writer(f, lineterminator="\n")
         w.writerow([
             "rule_id", "pattern", "grapheme", "role",
             "structural_condition", "phonological_action",
@@ -142,7 +142,7 @@ def generate_orthographic_table():
 
 def generate_vowel_tables(vows):
     with (OUT / "thai_vowel_correspondence.csv").open("w", encoding="utf-8", newline="") as f:
-        w = csv.writer(f)
+        w = csv.writer(f, lineterminator="\n")
         w.writerow([
             "vowel_id", "orthographic_pattern", "kind", "length",
             "syllable_context", "phonemic_ipa", "surface_ipa",
@@ -189,7 +189,7 @@ def build():
     status_counts: dict[str, int] = {}
 
     with rich_path.open("w", encoding="utf-8", newline="") as f, simple_path.open("w", encoding="utf-8", newline="") as g:
-        w, s = csv.writer(f), csv.writer(g)
+        w, s = csv.writer(f, lineterminator="\n"), csv.writer(g, lineterminator="\n")
         w.writerow([
             "thai", "thai_type", "onset_grapheme",
             "onset_position", "onset_phonemic_ipa", "onset_surface_ipa",
