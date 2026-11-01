@@ -1288,7 +1288,7 @@ The first run with the new coverage tests completed master-table generation and 
 ## Reviewer recruitment research — 2026-11-01
 
 - Added `docs/reviewer-outreach-shortlist.md` with potential Thai phonetics/phonology and Ukrainian practical-transcription reviewers, based on public university profiles and peer-reviewed work. It records no outreach, consent, availability, verified native status or qualification; the reviewer registry remains empty.
-- CCOST's official Zenodo wordlist preview exposes 206 data rows in columns A-D; metadata reports 9.7 kB and MD5 `e62f500d87b4ff8c6deb4c4595854d34`. The source registry and tests preserve these source-page facts. The original bytes were not downloaded in this session, so no SHA-256 or exact A-D set comparison is claimed.
+- CCOST's official Zenodo wordlist preview exposes 206 data rows in columns A-D; metadata reports 9.7 kB and MD5 `e62f500d87b4ff8c6deb4c4595854d34`. The initial metadata-only check was superseded by the subsequent exact-source reconstruction documented below: the preview bytes were reconstructed with BOM/CRLF and matched the official MD5; SHA-256 and the A-D set discrepancy are recorded in the later exact-source audit section.
 
 
 ## Supplemental Thai blind review packet — 2026-11-01
@@ -1306,3 +1306,12 @@ The first run with the new coverage tests completed master-table generation and 
 - The generator correctly returns `SOURCE_ORDER_DISCREPANCY_REQUIRES_RECONCILIATION`, `scoreable=false`, and emits local-only 208-row packets. No CCOST-derived data or output packets were committed.
 - **BLOCKED — curator clarification:** do not freeze the 208-prompt packet until the CCOST authors/data curator confirm whether the two substitutions are intentional stimulus differences or source-file errors, or publish a corrected wordlist/erratum. CC BY-NC-SA 4.0 remains applicable.
 - This resolves wordlist access and source-integrity uncertainty, but not the independent Thai reviewer requirement or the 6.2 GB audio/TextGrid archive conformance review.
+
+
+## Narrow-acoustic annotation contract correction — 2026-11-01
+
+- **FIXED:** the Thai review schema previously allowed a narrow acoustic label to be entered in the `phonemic_ipa` field, which is reserved for broad phonemic IPA. Audio provenance alone did not make that field semantically correct.
+- Added a distinct `narrow_ipa` field. A `NARROW_ACOUSTIC` review now requires square-bracketed narrow IPA, one-to-one syllable alignment, and an authorized audio asset plus a positive time interval. The broad phonemic label remains separately recorded.
+- Broad phonemic reviews must not populate the narrow field. The IPA gold scorer continues to score only its declared broad phonemic or broad surface layers; narrow acoustic labels are retained as a separate evidence layer and are not silently mixed into that score.
+- Added tests for missing narrow IPA, missing audio provenance and syllable-count mismatch. CI now validates both the original 42-item blind packet and the six-item supplemental regression packet.
+- A CI failure on the latest pre-fix head was a faulty workflow invariant: it counted a non-circular but withheld row as independently comparable. The report logic was already correct; the workflow now applies the same completeness condition as the report and a unit test locks that denominator semantics.
