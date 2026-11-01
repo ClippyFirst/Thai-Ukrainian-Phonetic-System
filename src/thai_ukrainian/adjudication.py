@@ -137,24 +137,47 @@ def validate_review_packet(
             word_boundaries = row["word_boundaries"].strip()
             syllable_boundaries = row["syllable_boundaries"].strip()
             thai_text = unicodedata.normalize("NFC", row["thai"])
-            if word_boundaries == "NOT_APPLICABLE":
-                if syllable_boundaries != "NOT_APPLICABLE":
-                    raise ValueError(f"word and syllable boundaries must both be NOT_APPLICABLE: {ident}")
-                syllable_count = None
-            else:
-                word_parts = word_boundaries.split("|")
-                if any(not part for part in word_parts) or unicodedata.normalize("NFC", "".join(word_parts)) != thai_text:
-                    raise ValueError(f"word_boundaries must reconstruct the Thai input for {ident}")
-                if syllable_boundaries == "NOT_APPLICABLE":
-                    raise ValueError(f"syllable_boundaries cannot be NOT_APPLICABLE when words are annotated: {ident}")
-                syllable_words = syllable_boundaries.split("|")
-                syllable_parts = [part for word in syllable_words for part in word.split(".")]
-                if (
-                    any(not part for part in syllable_parts)
-                    or unicodedata.normalize("NFC", "".join(syllable_parts)) != thai_text
+            word_parts = word_boundaries.split("|")
+            if any(not part for part in word_parts) or unicodedata.normalize("NFC", "".join(word_parts)) != thai_text:
+                raise ValueError(f"word_boundaries must reconstruct the Thai input for {ident}")
+            syllable_words = syllable_boundaries.split("|")
+            syllable_parts = [part for word in syllable_words for part in word.split(".")]
+            if (
+                any(not part for part in syllable_parts)
+                or unicodedata.normalize("NFC", "".join(syllable_parts)) != thai_text
+            ):
+                raise ValueError(f"syllable_boundaries must reconstruct the Thai input for {ident}")
+            if len(syllable_words) != len(word_parts):
+                raise ValueError(f"word and syllable boundary word counts differ for {ident}")
+            syllable_count = len(syllable_parts)
+            ipa_body = ipa.strip()
+            if (ipa_body.startswith("/") and ipa_body.endswith("/")) or (
+                ipa_body.startswith("[") and ipa_body.endswith("]")
+            ):
+                ipa_body = ipa_body[1:-1]
+            ipa_words = ipa_body.split("|")
+            ipa_syllables = [part for word in ipa_words for part in word.split(".")]
+            if (
+                any(not part for part in ipa_syllables)
+                or len(ipa_words) != len(word_parts)
+                or len(ipa_syllables) != syllable_count
+            ):
+                raise ValueError(f"phonemic IPA syllabification must align with syllable boundaries for {ident}")
+            surface_ipa = (row.get("broad_surface_ipa") or "").strip()
+            if surface_ipa:
+                surface_body = surface_ipa
+                if (surface_body.startswith("/") and surface_body.endswith("/")) or (
+                    surface_body.startswith("[") and surface_body.endswith("]")
                 ):
-                    raise ValueError(f"syllable_boundaries must reconstruct the Thai input for {ident}")
-                syllable_count = len(syllable_parts)
+                    surface_body = surface_body[1:-1]
+                surface_words = surface_body.split("|")
+                surface_syllables = [part for word in surface_words for part in word.split(".")]
+                if (
+                    any(not part for part in surface_syllables)
+                    or len(surface_words) != len(word_parts)
+                    or len(surface_syllables) != syllable_count
+                ):
+                    raise ValueError(f"surface IPA syllabification must align with syllable boundaries for {ident}")
             tone_values = [value.strip() for value in row["tone_sequence"].split(",")]
             length_values = [value.strip() for value in row["vowel_length"].split(",")]
             glottal_values = [value.strip() for value in row["final_glottal"].split(",")]
@@ -166,14 +189,8 @@ def validate_review_packet(
                 raise ValueError(f"invalid vowel_length value for {ident}")
             if any(value not in FINAL_GLOTTAL_VALUES for value in glottal_values):
                 raise ValueError(f"invalid final_glottal value for {ident}")
-            if syllable_count is not None and not (
-                len(tone_values) == len(length_values) == len(glottal_values) == syllable_count
-            ):
+            if not (len(tone_values) == len(length_values) == len(glottal_values) == syllable_count):
                 raise ValueError(f"tone, vowel-length and glottal labels must align with syllables for {ident}")
-            if syllable_count is None and not all(
-                values == ["NOT_APPLICABLE"] for values in (tone_values, length_values, glottal_values)
-            ):
-                raise ValueError(f"NOT_APPLICABLE syllables require NOT_APPLICABLE tone/length/glottal labels: {ident}")
             if level == "NARROW_ACOUSTIC":
                 asset = (row.get("audio_asset_reference") or "").strip()
                 start = (row.get("audio_time_start") or "").strip()
