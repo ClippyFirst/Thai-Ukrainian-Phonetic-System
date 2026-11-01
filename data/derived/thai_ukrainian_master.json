@@ -6,7 +6,7 @@
   "coda_graphemes": 38,
   "tone_mark_states": 5,
   "structural_upper_bound": 351780,
-  "principle": "IPA-first: Thai orthography → structural orthographic analysis → Thai phonology → tone → IPA → Ukrainian phonetic target; IPA is an independent audit/control layer",
+  "principle": "IPA-first: Thai orthography → structural orthographic analysis → Thai phonology → tone → typed IPA → Ukrainian phonetic target; typed IPA is the mandatory adapter boundary",
   "status": "structural-combinatorial-space-with-parser-revalidation",
   "warning": "All rows are exhaustive within the declared structural registry, but are not thereby valid, lexical, corpus-attested or semantically translated Thai.",
   "attestation_status": "not_evaluated_lexically_or_corpus",
