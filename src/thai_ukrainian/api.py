@@ -57,7 +57,7 @@ def parse_thai(text: str):
 
 
 def analyze_word_syllables(syllables: list[str] | tuple[str, ...]):
-    return analyze_word(syllables)
+    return analyze_word(syllables, analyze_syllable=analyze_syllable)
 
 
 def phonologize_thai(text: str):

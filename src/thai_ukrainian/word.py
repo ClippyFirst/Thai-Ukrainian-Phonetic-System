@@ -1,6 +1,8 @@
 from __future__ import annotations
 
-from .models import SyllablePosition, WordAnalysis
+from collections.abc import Callable
+
+from .models import SyllableAnalysis, SyllablePosition, WordAnalysis
 
 
 def position_label(index: int, total: int) -> str:
@@ -13,10 +15,13 @@ def position_label(index: int, total: int) -> str:
     return "medial"
 
 
-def analyze_word(syllables: list[str] | tuple[str, ...], *, source: str | None = None) -> WordAnalysis:
-    """Analyze a word from an explicit syllable segmentation."""
-    from .api import analyze_syllable
-
+def analyze_word(
+    syllables: list[str] | tuple[str, ...],
+    *,
+    analyze_syllable: Callable[[str], SyllableAnalysis],
+    source: str | None = None,
+) -> WordAnalysis:
+    """Analyze an explicitly segmented word using the supplied syllable analyzer."""
     if not syllables:
         raise ValueError("At least one syllable is required.")
     if any(not isinstance(s, str) or not s.strip() for s in syllables):
