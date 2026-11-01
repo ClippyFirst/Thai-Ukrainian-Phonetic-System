@@ -17,7 +17,11 @@ class CorpusSourceRegistryTests(unittest.TestCase):
         self.assertIn("no IPA", row["notes"])
         self.assertIn("source-order consistency must be audited", row["notes"])
         self.assertIn("MD5 e62f500d87b4ff8c6deb4c4595854d34", row["notes"])
-        self.assertIn("206 data rows", row["notes"])
+        self.assertIn("SHA-256 e3836f6204c674a8d972dfd49de369eea7856ca6f00d520aafcd62f4e7273223", row["notes"])
+        self.assertIn("206 rows/order", row["notes"])
+        self.assertIn("zero duplicates", row["notes"])
+        self.assertIn("union 208", row["notes"])
+        self.assertIn("SOURCE_ORDER_DISCREPANCY_REQUIRES_RECONCILIATION", row["notes"])
 
     def test_ccost_license_and_textgrid_access_are_explicit(self):
         path = ROOT / "data" / "corpus_sources.csv"
