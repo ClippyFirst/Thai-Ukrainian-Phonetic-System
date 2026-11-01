@@ -231,3 +231,16 @@ def test_audio_asset_revision_must_be_immutable_and_asset_uri_absolute():
         write_registry(path, fields, [base])
         with unittest.TestCase().assertRaisesRegex(ValueError, "absolute HTTP"):
             load_audio_asset_registry(path, sources)
+
+
+def test_corpus_sources_csv_has_exact_columns_and_unique_source_ids():
+    with (ROOT / "data" / "corpus_sources.csv").open(encoding="utf-8", newline="") as stream:
+        reader = csv.DictReader(stream)
+        assert reader.fieldnames == [
+            "source_id", "title", "type", "scope", "annotation", "license_or_access", "notes",
+        ]
+        rows = list(reader)
+    assert rows
+    assert all(None not in row and all(value is not None for value in row.values()) for row in rows)
+    source_ids = [row["source_id"] for row in rows]
+    assert len(source_ids) == len(set(source_ids))
