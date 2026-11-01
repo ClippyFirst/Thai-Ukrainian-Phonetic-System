@@ -144,6 +144,13 @@ class AdjudicationPacketTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "reviewer fields must be blank"):
             validate_ukrainian_blind_packet(packet, source)
 
+
+    def test_reviewer_pair_rejects_changed_source_input(self):
+        a = [completed_row("TH-G2P-001", "กา")]
+        b = [completed_row("TH-G2P-001", "กะ", "TH-PH-02")]
+        with self.assertRaisesRegex(ValueError, "input mismatch"):
+            validate_independent_pair(a, b)
+
     def test_narrow_acoustic_labels_require_audio_asset_and_interval(self):
         row = completed_row("TH-G2P-001", "กา")
         row.update({"transcription_level": "NARROW_ACOUSTIC", "phonemic_ipa": "[kaː]"})

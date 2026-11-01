@@ -23,10 +23,6 @@ def read_tsv(path: Path, required: tuple[str, ...] | list[str]) -> list[dict[str
             raise ValueError(
                 f"{path}: columns mismatch; missing={sorted(missing)}, unexpected={sorted(unexpected)}"
             )
-        if missing:
-            raise ValueError(f"{path}: missing columns: {', '.join(sorted(missing))}")
-
-            raise ValueError(f"{path}: blind preference packet must not expose engine_candidate")
         return [{key: (value or "") for key, value in row.items()} for row in reader]
 
 
