@@ -40,7 +40,7 @@ The Ukrainian task is conditional on supplied source IPA. It needs at least two 
 
 ## Current evidence and blockers
 
-- Thai blind packet: 42 challenge prompts; CCOST controlled wordlist: 206 prompts. Neither contains expert phonetic labels.
+- Thai blind packet: 42 frozen base prompts plus six supplemental user-regression prompts; CCOST controlled wordlist: 206 prompts. Neither contains expert phonetic labels.
 - Ukrainian preference packet: seven source-attested IPA examples, including `เพิ่ง /pʰɤŋ˥˩/`. These are conditional review prompts, not IPA gold.
 - Reviewer registry remains empty. No outreach has been sent and no human reviews have been received.
 - CCOST source page preview is inspectable; actual CSV bytes still need local download for SHA-256 and exact A-D order-set audit. The 6.2 GB audio/TextGrid archive remains uninspected.

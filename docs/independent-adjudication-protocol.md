@@ -223,3 +223,16 @@ The source-use registry distinguishes broad phonemic from broad surface IPA. The
 The source-attested registry now includes the version-pinned Thai Wiktionary entry `เพิ่ง` (revision 1885200): **/pʰɤŋ˥˩/**. The entry explicitly labels the vowel short and lists the word as monosyllabic. The source IPA has one syllable, aspirated /pʰ/, short /ɤ/ and final /ŋ/ with falling tone. This directly contradicts the previously observed heuristic rendering that split the word into `pʰɤː ŋa`.
 
 This is a useful source-attested regression reference, not independent expert or acoustic gold. The reference is licensed CC BY-SA 4.0 and is included only as `SOURCE_ATTESTED_NOT_GOLD`; it is not installed as a runtime lexical override. The candidate-blind Ukrainian preference packet now has seven examples, including this source IPA. The engine candidate `п'енг` is separately recorded as a generated adapter candidate, not a preferred or adjudicated Ukrainian form.
+
+
+## Supplemental blind review of the reported adversarial examples — 2026-11-01
+
+The original 42-item challenge set remains frozen and source-pinned to main commit `cc398254c178171f74397aed556766e87356ab84`. To avoid changing that immutable source set, a separate six-item supplement is provided:
+
+- Challenge inputs: `data/benchmark/thai_g2p_supplemental_challenge.jsonl`.
+- Candidate-blind reviewer sheet: `data/benchmark/ipa-adjudication-supplemental-blind.tsv`.
+- Source record: `CLIPPYFIRST-THAI-REGRESSION-ADDENDUM-20261101`, pinned to addendum commit `8ae6e3ef1225a3e8b542371a4b3b26e29becf2a2`, MIT.
+- Six prompts cover `วันนี้`, a context containing `เห็น`, `อย่าเพิ่งเศร้า`, `อะไรบ้าง`, `อธิบายทฤษฎี`, and a phrase containing `ฤๅษี` plus `อธิบาย`.
+- The blind sheet excludes internal stratum/probe labels, all engine output, and the separately inspected Wiktionary IPA for `เพิ่ง`. All gold IPA, surface IPA, tone, length and boundary fields remain null/blank.
+
+This supplement is a set of review prompts, not labels or a benchmark score. It must be annotated independently under the same two-reviewer and separate-adjudicator protocol. The 42-item base packet and six-item supplement are validated separately to preserve the original challenge source hash.
