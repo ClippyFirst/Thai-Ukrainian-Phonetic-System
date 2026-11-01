@@ -1,6 +1,6 @@
 import unittest
 
-from thai_ukrainian.adjudication import validate_blind_packet, validate_review_packet
+from thai_ukrainian.adjudication import (\n    validate_blind_packet, validate_independent_pair, validate_review_packet,\n)
 
 
 CHALLENGE = [
@@ -11,7 +11,7 @@ FIELDS = [
     "id", "thai", "stratum", "probe", "orthography_validity", "lexical_reading",
     "word_boundaries", "syllable_boundaries", "phonemic_ipa", "broad_surface_ipa",
     "tone_sequence", "vowel_length", "final_glottal", "transcription_level",
-    "uncertainty", "abstention_reason", "reviewer_id", "reviewed_at",
+    "uncertainty", "abstention_reason", "reviewer_id", "reviewer_qualification_ref", "reviewed_at",
     "audio_asset_reference", "audio_time_start", "audio_time_end", "source_notes",
 ]
 
@@ -75,6 +75,22 @@ class AdjudicationPacketTests(unittest.TestCase):
             validate_review_packet([row], ["TH-G2P-001"], "TH-PH-01")
         row["abstention_reason"] = "Lexical reading cannot be established from isolated spelling."
         self.assertEqual(validate_review_packet([row], ["TH-G2P-001"], "TH-PH-01")["abstentions"], 1)
+
+
+    def test_two_reviewer_pair_requires_distinct_ids_and_same_coverage(self):
+        a = [blank_row("TH-G2P-001", "กา"), blank_row("TH-G2P-002", "กะ")]
+        b = [blank_row("TH-G2P-001", "กา"), blank_row("TH-G2P-002", "กะ")]
+        for row in a:
+            row["reviewer_id"] = "TH-PH-01"
+        for row in b:
+            row["reviewer_id"] = "TH-PH-02"
+        self.assertEqual(
+            validate_independent_pair(a, b)["status"],
+            "TWO_REVIEWERS_PRESENT_ADJUDICATION_STILL_REQUIRED",
+        )
+        b[0]["reviewer_id"] = "TH-PH-01"
+        with self.assertRaisesRegex(ValueError, "distinct"):
+            validate_independent_pair(a, b)
 
     def test_narrow_acoustic_labels_require_audio_asset_and_interval(self):
         row = blank_row("TH-G2P-001", "กา")
