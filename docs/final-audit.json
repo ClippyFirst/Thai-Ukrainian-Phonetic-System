@@ -524,9 +524,9 @@
     {
       "id": "FASTTHAIG2P-SPIKE-2026-11-02",
       "status": "PARTIAL",
-      "implementation": "Added lazy optional Python adapter pinned to awslabs/FastThaiG2P c4759eef7df03e11fcbb9aa83efe8cf21709fd2f; extended existing 42-row same-input runner with ClippyFirst conservative abstention semantics, coverage/latency/runtime metadata and pairwise diagnostics; added tests and license/provenance register. First optional run 41431032031 was inspected and excluded: only thaiphon/Goruut produced rows because the local package was not installed. Workflow now installs the project editable; ClippyFirst output uses typed PhoneticResult plus tone contour.",
-      "blocker": "First optional workflow artifact showed ClippyFirst and FastThaiG2P imports failed because the local src-layout project was not installed in that workflow. The workflow was corrected to pip install -e .; exact-head rerun/artifact inspection is pending. Local clone/tests remain blocked by DNS. Accuracy is NOT_MEASURED (zero adjudicated IPA rows).",
-      "acceptance": "Exact-head GitHub Actions passes adapter/runner tests, Ruff and package smoke; corrected optional workflow installs local package and runs all candidates; inspect 42-row raw output and summary artifact. Keep accuracy NOT_MEASURED until independent double-reviewer Thai IPA gold and adjudication exist."
+      "implementation": "Added lazy optional Python adapter pinned to awslabs/FastThaiG2P c4759eef7df03e11fcbb9aa83efe8cf21709fd2f; extended existing 42-row same-input runner with ClippyFirst conservative abstention semantics, coverage/latency/runtime metadata and pairwise diagnostics; added tests and license/provenance register. First optional run 41431032031 was inspected and excluded: only thaiphon/Goruut produced rows because the local package was not installed. Workflow now installs the project editable; ClippyFirst output uses typed PhoneticResult plus tone contour. Corrected optional run 41431293483 verified FastThaiG2P/ClippyFirst imports and a 42-row shared-input run; follow-up dual-profile run 41431679913 passed and artifact was inspected: ClippyFirst phonemic 28/42 coverage, broad-surface 23/42, FastThaiG2P 42/42, thaiphon 42/42, Goruut 26/42. Raw agreement with FastThaiG2P: 12/28 phonemic, 9/23 surface. Accuracy remains NOT_MEASURED.",
+      "blocker": "Latest branch head still requires exact-head full CI and fresh optional workflow artifact inspection after dual-profile changes. The first valid run's artifact is on the earlier branch head 7900a7cc2e38bc69763f38273c97f73c6ebee2be; no adjudicated gold exists. Local clone/tests remain DNS-blocked.",
+      "acceptance": "Latest branch head passes full CI, Ruff and wheel-install smoke; optional workflow runs both ClippyFirst typed IPA profiles plus FastThaiG2P on all 42 inputs; inspect artifacts and keep accuracy NOT_MEASURED until independent Thai IPA gold is adjudicated."
     }
   ],
   "latest_implementation_branch": "research/independent-adjudication-gates-20261101 (merged into main)",
@@ -2929,6 +2929,27 @@
       "status": "INVALID_COMPARISON_LOCAL_PACKAGE_IMPORT_MISSING",
       "correction": "optional workflow now installs local package editable; ClippyFirst benchmark consumes typed PhoneticResult and tone contour",
       "rerun": "PENDING"
+    },
+    "first_valid_run": {
+      "run_id": 41431679913,
+      "branch_head": "7900a7cc2e38bc69763f38273c97f73c6ebee2be",
+      "artifact_sha256": "ed6ed4a6e2eca2f87442d0c77062bfbe976a3d8bce763da0c6ffff4101e2dbd7",
+      "rows": 210,
+      "challenge_inputs": 42,
+      "gold_rows": 0,
+      "coverage": {
+        "clippyfirst_phonemic": "28/42; 14 abstentions",
+        "clippyfirst_surface": "23/42; 19 abstentions",
+        "fastthaig2p": "42/42",
+        "thaiphon": "42/42",
+        "goruut": "26/42; 16 runtime no-output failures"
+      },
+      "pairwise_fastthaig2p": {
+        "clippyfirst_phonemic": "12/28 raw exact",
+        "clippyfirst_surface": "9/23 raw exact",
+        "interpretation": "inter-engine agreement only, not accuracy"
+      },
+      "accuracy_status": "NOT_MEASURED"
     }
   }
 }
