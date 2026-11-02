@@ -168,7 +168,14 @@ def run(input_path: Path = DEFAULT_INPUT) -> dict[str, Any]:
                 "elapsed_ms": round(external_ms, 6),
             },
             "same_syllable_count": len(clippy_ipa) == len(external_syllables),
-            "raw_exact_syllable_match_scored": bool(comparable),\n            "segmental_projection_matches": (\n                [segmental_projection(a) == segmental_projection(b) for a, b in zip(clippy_ipa, external_syllables, strict=True)]\n                if comparable else None\n            ),
+            "raw_exact_syllable_match_scored": bool(comparable),
+            "segmental_projection_matches": (
+                [
+                    segmental_projection(a) == segmental_projection(b)
+                    for a, b in zip(clippy_ipa, external_syllables, strict=True)
+                ]
+                if comparable else None
+            ),
         })
 
     return {
