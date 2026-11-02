@@ -1,3 +1,17 @@
+# Continuation checkpoint — control contrast correction (2026-11-02)
+
+- **Starting main:** `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`.
+- **Work branch:** `fix/accessibility-control-contrast-20261102`, based on current main.
+- **PR:** [#190](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/190), draft and unmerged.
+- **Implementation:** textarea and output-selector visible borders changed from `#9999a8` to `#767676`; the CSS regression check reads the active border rules and checks 3:1 against the white backgrounds.
+- **Exact code commit:** `7ea89691fcb904612c80370721555f1452eed6e9`.
+- **Verification:** Web Static [41482464764](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41482464764) passed; full CI [41482464813](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41482464813) passed `test`, `wheel-install-smoke`, and `master-artifact`. Ruff passed; pytest 319 passed / 1,169 subtests; generated artifacts, evidence packets, Python/browser parity, diagnostics, wheel and master artifact passed.
+- **Review correction:** an initial draft incorrectly counted the range input's overridden base border. The final test excludes it because `#engine-mode[type="range"]` resets the border to zero; no slider contrast claim is made.
+- **Not claimed:** manual WCAG conformance, screen-reader/device acceptance, or linguistic accuracy. Local tests were not run; verification came from GitHub Actions.
+- **Unchanged:** main, PRs #184–#189, research data and language-runtime behavior.
+
+---
+
 # Continuation checkpoint — repository structure cleanup (2026-11-01)
 
 - **Repository:** `ClippyFirst/Thai-Ukrainian-Phonetic-System`; default branch `main`.
