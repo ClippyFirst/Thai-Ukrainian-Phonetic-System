@@ -304,7 +304,7 @@
     "rows": 351780,
     "vowel_rime_records": 41
   },
-  "latest_documentation_checkpoint": "research/fastthaig2p-typed-ipa-boundary-20261102; final head 9b5b972a6f03cd09eacc710bc1b2a86c92fb2364 verified by Full CI 41445055973 and optional workflow 41445055888.",
+  "latest_documentation_checkpoint": "research/fastthaig2p-typed-ipa-boundary-20261102; verified branch head edd4668540dfa21c36e40ea8b49884477def0fbb; Full CI 41445684227 and optional workflow 41445684237 passed.",
   "text_only_checkpoint": {
     "branch": "research/thai-segmentation-gold-parity-verified-20261025",
     "parent_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
@@ -525,7 +525,7 @@
       "id": "FASTTHAIG2P-TYPED-BOUNDARY-001",
       "status": "DONE_VERIFIED_DIAGNOSTIC_ONLY",
       "implementation": "PR #186 adds a per-syllable typed diagnostic conversion grouped by word, preserves five canonical Chao tone contours and supported segment features, rejects incomplete output and unknown sentinel 8, and leaves phonemic_ipa/broad_surface_ipa unset. The comparison runner exercises all 76 challenge syllables and asserts the Ukrainian adapter withholds all 76.",
-      "acceptance": "Final exact-head Full CI 41445055973 passed all three jobs; Ruff clean; 330 pytest tests and 1169 subtests passed. Optional workflow 41445055888 passed; inspected artifact 13142640800 (JSON SHA-256 cfbf884ede962df72a633a26df4ce0d3cff105d5c77bf511405db6a0a03f7af3)."
+      "acceptance": "Final exact-head Full CI 41445684227 passed all three jobs; Ruff clean; 330 pytest tests and 1169 subtests passed. Optional workflow 41445684237 passed; inspected artifact 13141487619 (JSON SHA-256 0bcd3031e9bc5ce599656fd095dc0a75edcf75d30988f2af2a29b97446eea230)."
     },
     {
       "id": "FASTTHAIG2P-ACCURACY-001",
@@ -2987,19 +2987,19 @@
       "pull_request": 186,
       "draft": true,
       "base_branch": "research/fastthaig2p-integration-spike-20261102",
-      "verified_code_head": "bbc3eb36984a2b02ac1970e7b00c5b03e20316ba",
-      "full_ci_run": 41445055973,
+      "verified_code_head": "edd4668540dfa21c36e40ea8b49884477def0fbb",
+      "full_ci_run": 41445684227,
       "full_ci_result": "PASSED_ALL_3_JOBS",
       "ruff": "PASSED",
       "pytest": "330_PASSED",
       "unittest_subtests": 1169,
       "wheel_install_smoke": "PASSED",
       "master_artifact": "PASSED",
-      "optional_workflow_run": 41445055888,
+      "optional_workflow_run": 41445684237,
       "optional_workflow_result": "PASSED",
-      "artifact_id": 13142640800,
-      "artifact_archive_sha256": "dc9f115f03add54e2cc4e6cd66447308a5b57a44750d1ee6f5e5b774a4cc77da",
-      "artifact_json_sha256": "cfbf884ede962df72a633a26df4ce0d3cff105d5c77bf511405db6a0a03f7af3",
+      "artifact_id": 13141487619,
+      "artifact_archive_sha256": "525347ff91a048eb611722ed8c4399612889b476394bb67cb7229c938b931079",
+      "artifact_json_sha256": "0bcd3031e9bc5ce599656fd095dc0a75edcf75d30988f2af2a29b97446eea230",
       "typed_syllables": 76,
       "uncertain_syllables": 75,
       "unsupported_syllables": 1,
@@ -3016,8 +3016,8 @@
       },
       "phonemic_or_surface_ipa_promotion": false,
       "ukrainian_production_routing": false,
-      "latest_documentation_head": "9b5b972a6f03cd09eacc710bc1b2a86c92fb2364",
-      "latest_documentation_ci_run": 41445055973,
+      "latest_documentation_head": "edd4668540dfa21c36e40ea8b49884477def0fbb",
+      "latest_documentation_ci_run": 41445684227,
       "latest_documentation_ci_result": "PASSED_ALL_3_JOBS"
     },
     "challenge": {
@@ -3035,12 +3035,12 @@
       "segmental_projection_matches": 25,
       "segmental_projection_agreement": 0.625,
       "latest_median_ms": {
-        "clippyfirst": 0.23638050000229782,
-        "fastthaig2p": 0.04469199999945772
+        "clippyfirst": 0.4555670000030432,
+        "fastthaig2p": 0.07912299999901506
       },
       "latest_p95_ms": {
-        "clippyfirst": 1.2010330000009617,
-        "fastthaig2p": 1.0834160000001702
+        "clippyfirst": 2.2768499999870078,
+        "fastthaig2p": 2.1317890000034367
       }
     },
     "accuracy": "NOT_MEASURED",
