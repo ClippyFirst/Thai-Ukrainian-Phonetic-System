@@ -38,6 +38,13 @@ class ChallengeRuntimeDiagnosticsTests(unittest.TestCase):
         self.assertEqual(records["unknown"]["segmentation_status"], "unresolved")
         self.assertFalse(records["unknown"]["engine_output_emitted"])
         self.assertTrue(records["unknown"]["warnings"])
+        self.assertEqual(
+            records["unknown"]["coordination_cluster"],
+            "UNRESOLVED_SEGMENTATION_OR_PHONOLOGY_REVIEW",
+        )
+        self.assertIn("word_segmented_output_emitted", records["unknown"])
+        self.assertIn("coordination_cluster_counts", report["summary"])
+        self.assertNotIn("accuracy", report["summary"])
 
     def test_empty_challenge_fails_closed(self):
         with tempfile.TemporaryDirectory() as directory:
