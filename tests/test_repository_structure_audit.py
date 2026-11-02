@@ -107,6 +107,7 @@ class RepositoryStructureAuditTests(unittest.TestCase):
             )
             self.assertEqual(report["summary"]["test_functions"], 2)
             self.assertEqual(report["summary"]["exact_duplicate_test_name_clusters"], 1)
+            self.assertEqual(report["summary"]["exact_duplicate_test_body_clusters"], 0)
             self.assertEqual(report["summary"]["browser_test_files"], 1)
             self.assertEqual(report["summary"]["browser_test_assertion_calls"], 1)
             self.assertEqual(
@@ -128,6 +129,9 @@ class RepositoryStructureAuditTests(unittest.TestCase):
             report = build_report(root)
             candidates = report["test_overlap_review_candidates"]["exact_duplicate_names"]
             self.assertEqual(candidates[0]["test_name"], "test_same_contract")
+            body_candidates = report["test_overlap_review_candidates"]["exact_duplicate_bodies_manual_review_only"]
+            self.assertEqual(len(body_candidates), 1)
+            self.assertEqual(len(body_candidates[0]["instances"]), 2)
             self.assertIn("never grounds for deleting a test", " ".join(report["limitations"]))
 
 
