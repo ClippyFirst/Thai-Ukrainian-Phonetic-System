@@ -178,15 +178,30 @@ def build_report(root: Path = ROOT, revision: str | None = None) -> dict[str, An
             test_inventory.extend(_test_inventory(path, tree, root))
 
     js_paths = sorted((root / "web" / "src").glob("*.js"))
-    known_js = {path.relative_to(root).as_posix() for path in js_paths}
+    js_test_paths = sorted((root / "web" / "tests").glob("*.mjs"))
+    all_js_paths = js_paths + js_test_paths
+    known_js = {path.relative_to(root).as_posix() for path in all_js_paths}
     js_edges: set[tuple[str, str]] = set()
-    for path in js_paths:
+    browser_test_inventory: list[dict[str, Any]] = []
+    for path in all_js_paths:
         relative = path.relative_to(root).as_posix()
         source = path.read_text(encoding="utf-8")
         for match in JS_IMPORT.finditer(source):
             target = _resolve_js_import(Path(relative), match.group(1), known_js)
             if target:
                 js_edges.add((relative, target))
+        if path in js_test_paths:
+            browser_test_inventory.append({
+                "file": relative,
+                "assertion_calls": len(re.findall(
+                    r"\\bassert(?:\\.(?:equal|deepEqual|match|doesNotMatch|ok|throws|rejects|strictEqual|notEqual))?\\s*\\(",
+                    source,
+                )),
+                "imports_local_modules": sorted(
+                    target for edge_source, target in js_edges if edge_source == relative
+                ),
+                "suite_style": "TOP_LEVEL_ASSERTION_SCRIPT",
+            })
         for match in DYNAMIC_JS.finditer(source):
             dynamic_sites.append({
                 "file": relative,
@@ -227,7 +242,7 @@ def build_report(root: Path = ROOT, revision: str | None = None) -> dict[str, An
             if ratio >= 0.92:
                 near_name_candidates.append({"left": left, "right": right, "similarity": round(ratio, 3)})
 
-    files_for_hash = sorted(set(py_paths + js_paths))
+    files_for_hash = sorted(set(py_paths + all_js_paths))
     hashes = {
         path.relative_to(root).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
         for path in files_for_hash
@@ -240,7 +255,9 @@ def build_report(root: Path = ROOT, revision: str | None = None) -> dict[str, An
             "python_modules": len(py_modules),
             "python_import_edges": len(py_edges),
             "browser_modules": len(js_paths),
-            "browser_import_edges": len(js_edges),
+            "browser_test_files": len(js_test_paths),
+            "browser_test_assertion_calls": sum(item["assertion_calls"] for item in browser_test_inventory),
+            "browser_import_edges_including_test_dependencies": len(js_edges),
             "html_asset_edges": len(html_edges),
             "workflow_script_references": len(workflow_refs),
             "test_functions": len(test_inventory),
@@ -257,6 +274,7 @@ def build_report(root: Path = ROOT, revision: str | None = None) -> dict[str, An
             {"source": source, "target": target}
             for source, target in sorted(js_edges)
         ],
+        "browser_test_inventory": browser_test_inventory,
         "html_asset_edges": html_edges,
         "workflow_script_references": workflow_refs,
         "test_inventory": test_inventory,
