@@ -49,6 +49,12 @@ This directory contains project tooling, not production runtime modules. Scripts
 | `test_rtgs_parity.py` | Compare browser RTGS implementation with pinned PyThaiNLP 5.4.0 | Python + Node; per-token implementation parity, not tokenizer parity or linguistic correctness |
 | `wheel_install_smoke.py` | Exercise runtime registries and CLI from an installed wheel outside the checkout | Must run in the isolated wheel environment; verifies packaged data, API and console entry point |
 
+## Repository structure and test-overlap audit
+
+| Script | Responsibility | Evidence boundary |
+|---|---|---|
+| `audit_repository_structure.py` | Build a static Python/browser import graph, HTML asset edges, workflow script references, dynamic-import review sites and a test-function inventory | CI artifact `repository-static-dependency-and-test-audit`; static imports are not a complete runtime call graph; name similarity is only a manual-review candidate and never authorizes test deletion |
+
 ## Workflow and change rules
 
 - The authoritative default CI commands are in [`.github/workflows/ci.yml`](../.github/workflows/ci.yml). A script not invoked there is not implicitly verified by the default CI.
@@ -56,4 +62,4 @@ This directory contains project tooling, not production runtime modules. Scripts
 - Before changing a generator, identify its canonical input, output paths, tests and downstream consumers. Never hand-edit its generated artifacts.
 - Before changing an evaluator, preserve its evidence-grade and denominator rules. Source-annotated, source-attested and adjudicated records must not be silently mixed.
 - Keep optional network-dependent probes out of the production runtime and default release path unless a separate decision explicitly changes that boundary.
-- Current inventory: **27 scripts**. Scripts are not interchangeable merely because they consume the same corpus: baseline, dictionary, TUD, and error-triage runs answer different questions.
+- Current inventory: **28 scripts**. Scripts are not interchangeable merely because they consume the same corpus: baseline, dictionary, TUD, and error-triage runs answer different questions.
