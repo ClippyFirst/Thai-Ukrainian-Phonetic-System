@@ -1494,3 +1494,12 @@ The first optional run [41431032031](https://github.com/ClippyFirst/Thai-Ukraini
 ### First valid FastThaiG2P comparison artifact — 2026-11-02
 
 Optional run [41431679913](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41431679913) passed and uploaded 210 raw outputs for 42 identical challenge inputs × 5 profiles (artifact SHA-256 `ed6ed4a6e2eca2f87442d0c77062bfbe976a3d8bce763da0c6ffff4101e2dbd7`). ClippyFirst phonemic coverage was 28/42 (14 conservative abstentions); ClippyFirst broad-surface coverage was 23/42 (19 abstentions); FastThaiG2P and thaiphon each returned 42/42; Goruut returned 26/42 with 16 no-output failures. FastThaiG2P raw agreement was 12/28 with ClippyFirst phonemic and 9/23 with ClippyFirst broad-surface. Tone-stripped diagnostics are higher but are not accuracy. Challenge gold remains empty; linguistic accuracy remains NOT_MEASURED. FastThaiG2P's 100% output coverage also included `/kʰaː8˧/` for invalid prompt `ข๊า`, so output coverage must not be equated with validity.
+
+## Exact-head verification — 2026-11-02
+
+- Final spike branch head at this checkpoint: `84ca5c39e82e75db594a4a21152572a083d238db`.
+- Exact-head main CI run [41432085958](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41432085958): all three jobs passed — `test`, `wheel-install-smoke`, `master-artifact`. Ruff reported “All checks passed”; pytest reported **326 passed, 1,169 subtests passed**. The complete existing repository checks, source/evidence validators, generated artifacts, browser tests, IPA adapter tests and wheel smoke completed successfully.
+- Exact-head optional comparator run [41432085960](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41432085960): passed. Its install step successfully used `pip install -e ".[fastthaig2p]"`, validating the pinned optional extra itself.
+- Final-head benchmark artifact SHA-256: `c93e2a97b635470dadbef3776009d0d181dc5fd0d9967a8b195bd3571c55bbb7`; 210 rows, 42 inputs × 5 profiles; corpus SHA-256 unchanged.
+- Final-head median/p95 ms: ClippyFirst phonemic 0.487/2.199; ClippyFirst broad-surface 0.465/1.791; FastThaiG2P 0.030/2.116; thaiphon 0.180/0.889; Goruut 0.512/0.674. Coverage and pairwise agreement are unchanged from the first valid run.
+- This verifies the optional adapter, report generation and engineering integration. It does **not** resolve independent-gold accuracy or item-level rights for upstream generated/manual/fallback data. No production runtime change was made.
