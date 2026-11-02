@@ -51,6 +51,17 @@ Standard Thai cluster descriptions distinguish true clusters from false clusters
 - **SRC-WIKTIONARY-EN-TH-ทฤษฎี** — en.wiktionary immutable revision 87195875: https://en.wiktionary.org/w/index.php?title=ทฤษฎี&oldid=87195875 . The entry records **ทฺริด-สะ-ดี** and Standard Thai IPA /tʰrit̚˦˥.sa˨˩.diː˧/. The parser's exact `ทริด → ทริท` respelling resolves only the attested first syllable; it is not a productive `ทร` rule and must not affect homographs such as ทราย.
 - Both source records are registered in `data/benchmark/source-registry.tsv` for `LEXICAL_SEGMENTATION_REFERENCE` and `IPA_REFERENCE_ONLY` only. They are CC BY-SA 4.0 dictionary references, not independently adjudicated or acoustic gold. They are excluded from expert-accuracy claims.
 
+## Article-style challenge lexical coverage — 2026-11-02
+
+The opt-in dictionary-word-segmented challenge path exposed four common words whose boundaries were found but whose pronunciations were absent from the text lexicon. The following immutable Thai Wiktionary revisions support exact lexical entries:
+
+- **ประเทศ → ประ|เทศ**, /pra˨˩.tʰeːt̚˥˩/: [oldid 5722200](https://th.wiktionary.org/w/index.php?title=ประเทศ&oldid=5722200).
+- **เป็น → เป็น**, /pen˧/: [oldid 5770798](https://th.wiktionary.org/w/index.php?title=เป็น&oldid=5770798).
+- **หนึ่ง → หนึ่ง**, /nɯŋ˨˩/: [oldid 5721517](https://th.wiktionary.org/w/index.php?title=หนึ่ง&oldid=5721517).
+- **ใน → ใน**, /naj˧/: [oldid 5759122](https://th.wiktionary.org/w/index.php?title=ใน&oldid=5759122).
+
+These CC BY-SA 4.0 sources are registered for `LEXICAL_SEGMENTATION_REFERENCE` and `IPA_REFERENCE_ONLY`. They support lexical segmentation and source-attested readings, not expert-adjudicated or acoustic gold. Their IPA layer distinguishes phonemic segment content from surface coda release notation.
+
 ## Sense-ambiguous ทราย reading — 2026-10-25
 
 - **SRC-ORST-CLUSTER-2011-THRAY-SENSE** — Royal Institute of Thailand Journal, “เรื่องยุ่ง ๆ เกี่ยวกับอักษรควบ”, vol. 36 no. 4 (Oct–Dec 2011), p. 556, official source: https://www.orst.go.th/FILEROOM/CABROYINWEB/DRAWER004/GENERAL/DATA0000/00000630.FLP/html/48/ .
