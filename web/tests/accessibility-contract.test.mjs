@@ -52,6 +52,23 @@ assert.match(css, /#engine-mode\[type="range"\]:focus-visible/);
 assert.match(css, /\.skip-link:focus\s*\{/);
 assert.match(css, /@media\s*\(prefers-reduced-motion:\s*reduce\)/);
 
+
+// Native form-control boundaries are meaningful non-text UI components. Read
+// their border colors from the stylesheet itself rather than duplicating them
+// in this test, and enforce WCAG 1.4.11's 3:1 contrast threshold.
+const controlBorderRules = [
+  ["textarea", /textarea\s*\{[^}]*?border:\s*\d+px\s+solid\s+(#[0-9a-f]{6})/i],
+  ["engine mode", /#engine-mode\s*\{[^}]*?border:\s*\d+px\s+solid\s+(#[0-9a-f]{6})/i],
+  ["output mode", /#output-mode\s*\{[^}]*?border:\s*\d+px\s+solid\s+(#[0-9a-f]{6})/i]
+];
+const controlBorders = controlBorderRules.map(([label, pattern]) => {
+  const match = css.match(pattern);
+  assert(match, `${label} must declare an explicit solid border color`);
+  const ratio = contrast(match[1], "#ffffff");
+  assert(ratio >= 3, `${label} border contrast ${ratio.toFixed(2)}:1 is below WCAG 1.4.11's 3:1 threshold`);
+  return { label, color: match[1], contrast: Number(ratio.toFixed(2)) };
+});
+
 // Check the actual palette pairs used by the stylesheet against WCAG AA's 4.5:1
 // normal-text threshold. This is a source-level check, not a browser contrast audit.
 function luminance(hex) {
