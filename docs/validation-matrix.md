@@ -1393,3 +1393,18 @@ The fix is deliberately limited to the existing abstention guard; no schema, run
 - Exact-head Web Static [41406424761](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41406424761) and external VISTEC segmentation evaluation [41406424960](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41406424960) also passed on the same head.
 - Provenance distinction: CI [41406087052](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41406087052) ran on implementation commit `964b4930321e68c77ba5e956e1c0ecd12164ccfa`. The additional regression tests for required `microphone_id`, file-level overlap with a clean selected interval, and rejection of an overlapping selected interval were committed in `826fcddad4d66471b1ba95f00c4cc5b5f430e237`; **41406424727 is the CI run that verifies those tests**.
 - This is **DONE_VERIFIED engineering**, not linguistic validation. No audio assets or expert annotations were added; Thai IPA/segmentation and Ukrainian practical transcription accuracy remain **NOT MEASURED**. The external evidence gates below remain open.
+
+
+## FastThaiG2P optional comparison spike — 2026-11-02
+
+| Task | Status | Evidence / acceptance boundary |
+|---|---|---|
+| Pin upstream FastThaiG2P code and Python API | DONE_VERIFIED (source inspection) | Upstream commit `4e82a291b4cf2876326744c6580121e9986ad354`; `fastthaig2p.G2P().convert(text)`; Python >=3.11; PyThaiNLP >=5.3.4. Dedicated workflow pins PyThaiNLP 5.4.0 and installs FastThaiG2P from the exact commit. |
+| Add optional Python challenge comparator | PARTIAL | `scripts/run_fastthaig2p_challenge.py` compares the same 42 frozen challenge prompts, preserves raw IPA, reports dictionary/OOV counts, output availability, feature inventory and runtime diagnostics. Exact-head CI must pass before DONE_VERIFIED. |
+| Add comparator unit tests | PARTIAL | `tests/test_fastthaig2p_challenge.py` covers slash/dot parsing and IPA feature counting. Test execution is pending the dedicated workflow. |
+| License-layer audit | PARTIAL | FastThaiG2P code Apache-2.0; PyThaiNLP software Apache-2.0; vendored `_th2ipa.py` has BSD 3-Clause notice; ClippyFirst software MIT; current lexical IPA records CC BY-SA 4.0. FastThaiG2P mixed dictionary data rights remain unverified; no dictionary data copied. |
+| Typed IPA compatibility and Ukrainian adapter | TODO / BLOCKED by convention mapping | Upstream emits Chao tone contours and slash/dot boundaries; a lossless conversion into typed `PhoneticResult` has not been implemented. External output is not sent to the Ukrainian adapter. |
+| Independent quality score | BLOCKED | Challenge set has zero independently adjudicated IPA/tone/length/boundary labels. Inter-engine agreement is not accuracy. |
+| Dedicated optional CI report | PARTIAL | `.github/workflows/fastthaig2p-spike.yml` added; must pass on exact PR head and upload the JSON comparison artifact. |
+
+The prior 36-input smoke run (36 outputs, zero runtime errors, zero gold rows) remains historical execution evidence only; the new 42-item paired report is the intended comparison artifact.
