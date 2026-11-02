@@ -304,7 +304,7 @@
     "rows": 351780,
     "vowel_rime_records": 41
   },
-  "latest_documentation_checkpoint": "PR #190 draft; current exact head 10599fbb45654dfe7f92a50ebf924c2992c667ef passed Web Static 41530977700 and Full CI 41530977728 (test, wheel-install-smoke, master-artifact); workflow API confirms status=completed, conclusion=success, head_sha exact.",
+  "latest_documentation_checkpoint": "PR #190 draft; code/test hardening checkpoint 6b448579769ff28612fef89856c367666173fbce passed Web Static 41532496615 and Full CI 41532496665 (test, wheel-install-smoke, master-artifact); workflow API confirms completed/success on exact head. Subsequent documentation reconciliation creates a new docs-only head requiring its own exact-head checks.",
   "text_only_checkpoint": {
     "branch": "research/thai-segmentation-gold-parity-verified-20261025",
     "parent_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
@@ -351,7 +351,7 @@
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
   "latest_code_checkpoint": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
   "readiness": "engineering-verified research prototype; deployed on GitHub Pages; not release-ready for independent Thai segmentation, IPA or Ukrainian target accuracy",
-  "latest_verified_repository_head": "10599fbb45654dfe7f92a50ebf924c2992c667ef",
+  "latest_verified_repository_head": "6b448579769ff28612fef89856c367666173fbce",
   "task_ledger": [
     {
       "id": "SEG-TRAIN-001",
@@ -532,14 +532,14 @@
   "latest_implementation_commit_pending_ci": null,
   "current_head_status_at_audit_refresh": {
     "branch": "fix/accessibility-control-contrast-20261102",
-    "head": "10599fbb45654dfe7f92a50ebf924c2992c667ef",
+    "head": "6b448579769ff28612fef89856c367666173fbce",
     "base": "75c331f69aa3c8e5b4db3ccc5a6da85124600a01",
-    "commits_ahead_of_main": 15,
+    "commits_ahead_of_main": 20,
     "commits_behind_main": 0,
-    "web_static_run": 41530977700,
+    "web_static_run": 41532496615,
     "web_static_status": "PASS",
-    "ci_run": 41530977728,
-    "ci_status": "PASS — workflow completed success; test, wheel-install-smoke, master-artifact",
+    "ci_run": 41532496665,
+    "ci_status": "PASS — completed/success; test, wheel-install-smoke, master-artifact",
     "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT"
   },
   "current_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
@@ -2833,26 +2833,14 @@
     }
   },
   "latest_exact_head_verification_2026_11_02_followup": {
-    "branch": "research/independent-adjudication-gates-20261101",
-    "verified_code_head": "c68580a490f89af1cf08224d5811429e74f8ef5b",
-    "ci_run": "41418718922",
-    "ci_result": "PASSED_ALL_3_JOBS",
-    "test_job": "PASSED",
-    "wheel_install_smoke": "PASSED",
-    "master_artifact": "PASSED",
-    "python_test_suite": "319_PASSED",
-    "unittest_subtests": 1169,
-    "lint": "PASSED",
-    "browser_tests_and_parity": "PASSED",
-    "source_and_blind_packet_validators": "PASSED",
-    "generated_artifact_drift_checks": "PASSED",
-    "runtime_diagnostics": "PASSED_WITH_EXPLICIT_NON_ACCURACY_STATUS",
-    "web_static_run": "41418718843",
-    "web_static_result": "PASSED",
-    "external_vistec_run": "41418718412",
-    "external_vistec_result": "PASSED",
-    "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
-    "linguistic_accuracy": "NOT_MEASURED"
+    "commit": "6b448579769ff28612fef89856c367666173fbce",
+    "web_static_run": 41532496615,
+    "web_static_status": "PASS",
+    "ci_run": 41532496665,
+    "ci_status": "PASS — all three jobs: test, wheel-install-smoke, master-artifact",
+    "workflow_status": "completed",
+    "workflow_conclusion": "success",
+    "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT"
   },
   "latest_site_release_readiness_2026_11_02": {
     "starting_main_sha": "cc398254c178171f74397aed556766e87356ab84",
@@ -2927,7 +2915,7 @@
       "state": "open",
       "merged": false,
       "branch": "fix/accessibility-control-contrast-20261102",
-      "head": "10599fbb45654dfe7f92a50ebf924c2992c667ef",
+      "head": "6b448579769ff28612fef89856c367666173fbce",
       "scope": "textarea and output-selector visible border contrast; strictness slider excluded because its active range rule resets border to zero",
       "web_static_run": 41482464764,
       "full_ci_run": 41482464813,
@@ -2939,15 +2927,16 @@
       "prior_documentation_ci_status": "PASS",
       "prior_documentation_web_static_run": 41483211756,
       "prior_documentation_web_static_status": "PASS",
-      "latest_web_static_run": 41530977700,
+      "latest_web_static_run": 41532496615,
       "latest_web_static_status": "PASS",
-      "latest_ci_run": 41530977728,
-      "latest_ci_status": "PASS — workflow completed success; test, wheel-install-smoke, master-artifact",
+      "latest_ci_run": 41532496665,
+      "latest_ci_status": "PASS — completed/success; test, wheel-install-smoke, master-artifact",
       "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
       "exact_head_workflow_status": "completed",
       "exact_head_workflow_conclusion": "success",
-      "commits_ahead_of_main": 15,
-      "commits_behind_main": 0
+      "commits_ahead_of_main": 20,
+      "commits_behind_main": 0,
+      "regression_hardening": "DONE_VERIFIED — border and actual background are extracted from each CSS rule; 3- and 6-digit hex colors supported; exact-head CI and Web Static passed."
     }
   }
 }
