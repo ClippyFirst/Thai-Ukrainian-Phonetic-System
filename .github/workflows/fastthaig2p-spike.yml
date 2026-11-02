@@ -25,7 +25,7 @@ jobs:
         run: python scripts/run_fastthaig2p_challenge.py --output /tmp/fastthaig2p-challenge-comparison.json
       - name: Enforce report evidence grade and denominator
         run: |
-          python -c "import json; r=json.load(open('/tmp/fastthaig2p-challenge-comparison.json',encoding='utf-8')); s=r['summary']; assert r['report_type']=='ENGINE_COMPARISON_DIAGNOSTIC_NOT_ACCURACY_BENCHMARK'; assert r['challenge']['record_count']==42; assert r['challenge']['gold_status']=='NO_INDEPENDENTLY_ADJUDICATED_IPA'; assert s['challenge_inputs']==42; assert 'accuracy' not in s"
+          python -c "import json; r=json.load(open('/tmp/fastthaig2p-challenge-comparison.json',encoding='utf-8')); s=r['summary']; assert r['report_type']=='ENGINE_COMPARISON_DIAGNOSTIC_NOT_ACCURACY_BENCHMARK'; assert r['challenge']['record_count']==42; assert r['challenge']['gold_status']=='NO_INDEPENDENTLY_ADJUDICATED_IPA'; assert s['challenge_inputs']==42; assert s['fastthaig2p_typed_diagnostic_syllables']>0; assert s['fastthaig2p_ukrainian_withheld_syllables']==s['fastthaig2p_typed_diagnostic_syllables']; assert 'accuracy' not in s"
       - uses: actions/upload-artifact@v7
         with:
           name: fastthaig2p-challenge-comparison
