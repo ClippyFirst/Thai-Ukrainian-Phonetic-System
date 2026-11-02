@@ -33,3 +33,15 @@ The finite correction/abstention layer in `web/src/rtgs-reference.js` is maintai
 - Adaptation: selected dictionary IPA, tone and vowel-length fields are normalized into a tab-separated data registry and mirrored in the browser runtime. Each row retains its source ID, revision locator and license. These records are explicitly marked source-attested and not independently adjudicated or acoustic gold; the repository does not claim that dictionary transcription is an audio measurement.
 - The broader curated text-lexicon subset is documented separately in [`data/thai/TEXT-LEXICON-DATA-LICENSE.md`](data/thai/TEXT-LEXICON-DATA-LICENSE.md).
 - The MIT license applies to project software, not to these separately attributed data records. The CC BY-SA 4.0 terms continue to apply to the adapted Wiktionary-derived data.
+
+
+## FastThaiG2P optional benchmark dependency
+
+- Upstream: https://github.com/awslabs/FastThaiG2P
+- Pinned revision used by the experimental comparison workflow: `4e82a291b4cf2876326744c6580121e9986ad354`.
+- Upstream software license: Apache License 2.0 (upstream `LICENSE` at the pinned revision).
+- Runtime dependency declared upstream: PyThaiNLP `>=5.3.4`; PyThaiNLP software is Apache-2.0.
+- Scope: installed only in the optional FastThaiG2P comparison workflow; not a core dependency and not enabled by default.
+- Data boundary: FastThaiG2P's dictionary is not copied into this repository. Upstream describes a mixture of manual overrides, Wiktionary-derived records and LLM-generated records; the data-level provenance/rights of all rows have not been independently established. The Apache-2.0 software license is not treated as blanket permission for all bundled dictionary data.
+- Fallback boundary: upstream identifies a vendored TLTK-derived parser. Its file-level license/notice must be confirmed from the exact upstream source before ClippyFirst copies or modifies that code.
+- IPA boundary: upstream emits IPA with Chao tone contours. Raw output is preserved in benchmark reports; no unreviewed conversion into ClippyFirst typed IPA or Ukrainian output is performed.
