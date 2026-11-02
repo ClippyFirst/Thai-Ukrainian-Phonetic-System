@@ -156,6 +156,18 @@ class ExternalG2PBenchmarkHarnessTests(unittest.TestCase):
             self.assertEqual(metadata["configuration"]["ipa_field"], "broad_surface_ipa")
             self.assertEqual(metadata["configuration"]["transcription_layer"], "BROAD_SURFACE")
 
+    def test_clippyfirst_surface_profile_abstains_without_surface_ipa(self):
+        with patch("thai_ukrainian.text.analyze_text_with_word_segmentation", return_value=[
+            {"kind": "thai", "input": "ไกล", "segmentation_status": "lexicon",
+             "syllables": [{"phonetic_result": {
+                 "status": "SUPPORTED", "phonemic_ipa": "klaj",
+                 "broad_surface_ipa": None, "tone_contour_ipa": "˧"
+             }}]}
+        ]):
+            transcribe, _ = candidate_clippyfirst_surface()
+            with self.assertRaises(CandidateAbstention):
+                transcribe("ไกล")
+
     def test_pairwise_diagnostic_separates_format_and_tone_mismatches(self):
         report = build_pairwise_engine_diagnostic([
             {"record_id":"tone", "engine":"a", "raw_output":"/kaː˧/", "error":None},
