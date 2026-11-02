@@ -1416,3 +1416,15 @@ The prior 36-input smoke run (36 outputs, zero runtime errors, zero gold rows) r
 - **Measured diagnostic:** 28/42 ClippyFirst complete outputs vs 42/42 FastThaiG2P non-empty outputs; FastThaiG2P token path 45 dictionary hits + 5 OOV fallback tokens; 28 equal-syllable-count comparable records / 40 syllable pairs; 25/40 segmental projection matches (62.5%), raw exact match 0/40 due convention differences. Median runtime 0.452 ms vs 0.088 ms; p95 2.156 ms vs 2.229 ms.
 - **Interpretation:** FastThaiG2P has more output coverage and lower median time in this diagnostic, but it also emits output for invalid probes where ClippyFirst abstains. Inter-engine agreement is not correctness; independent gold remains zero. Accuracy is still `NOT_MEASURED`.
 - **Still BLOCKED:** typed IPA conversion preserving tone/length/boundaries and safe passage through the shared Ukrainian adapter; independent adjudicated challenge gold; row-level dictionary data rights. FastThaiG2P remains disabled by default.
+
+
+### FastThaiG2P integration spike — exact evidence and packaging follow-up (2026-11-02)
+
+| Task | Status | Evidence / acceptance boundary |
+|---|---|---|
+| Focused adapter and 42-input comparison | DONE_VERIFIED (prior exact code head) | Code head `e924063176d2d7402d98555642e86c0ce4f72077`; optional comparison run [41438311972](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41438311972), artifact [13138026677](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41438311972/artifacts/13138026677). 42/42 FastThaiG2P complete IPA vs 28/42 ClippyFirst complete; 25/40 segmental-projection agreement; no independent gold. |
+| Full repository CI | DONE_VERIFIED (prior exact code head) | Run [41438312216](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41438312216): `test`, `wheel-install-smoke`, `master-artifact` all passed. |
+| Declared optional dependency extra | PARTIAL pending new exact-head CI | `pyproject.toml` now declares pinned `fastthaig2p` extra with PyThaiNLP 5.4.0 and FastThaiG2P commit `4e82a291b4cf2876326744c6580121e9986ad354`; workflow now installs `.[dev,fastthaig2p]`. Close only after that exact head's optional workflow and full CI pass. |
+| Independent accuracy ranking | BLOCKED | 0 independently adjudicated IPA/tone/length/boundary gold rows; inter-engine agreement and coverage are not accuracy. |
+| Typed IPA adapter and Ukrainian path | TODO / BLOCKED by feature mapping and review | No lossless Chao-tone-to-typed-IPA conversion; FastThaiG2P output must remain outside Ukrainian adaptation until feature preservation and adapter tests pass. |
+| Data redistribution clearance | BLOCKED | Mixed dictionary and fallback data lack complete row/file-level provenance and license evidence; no upstream data is copied or bundled. |
