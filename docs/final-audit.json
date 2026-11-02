@@ -304,7 +304,7 @@
     "rows": 351780,
     "vowel_rime_records": 41
   },
-  "latest_documentation_checkpoint": "PR #190 draft; current branch head after audit/handoff refresh is recorded in GitHub metadata. Code head 7ea89691fcb904612c80370721555f1452eed6e9 passed Web Static 41482464764 and CI 41482464813.",
+  "latest_documentation_checkpoint": "PR #190 draft; code head 7ea89691 passed CI 41482464813 and Web Static 41482464764; prior documentation head a8d6dc27 passed CI 41483211761 and Web Static 41483211756; current reconciled documentation head 7316f4a94af8ffe21bba11ab4ade11b7f0187999 has Web Static 41529842089 PASS and CI 41529841951 IN_PROGRESS at this checkpoint.",
   "text_only_checkpoint": {
     "branch": "research/thai-segmentation-gold-parity-verified-20261025",
     "parent_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
@@ -530,7 +530,18 @@
   ],
   "latest_implementation_branch": "research/independent-adjudication-gates-20261101 (merged into main)",
   "latest_implementation_commit_pending_ci": null,
-  "current_head_status_at_audit_refresh": "Code/workflow checkpoint b6dbec7928b106f0ab52e06af33a26635df75412 passed CI 40322960615 and Web static validation 40322959844. Documentation checkpoint e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff passed full CI 40323209539 and Web static validation 40323209471. This audit-register update creates a newer documentation HEAD and requires exact-head CI/static validation before the current branch HEAD is marked green.",
+  "current_head_status_at_audit_refresh": {
+    "branch": "fix/accessibility-control-contrast-20261102",
+    "head": "7316f4a94af8ffe21bba11ab4ade11b7f0187999",
+    "base": "75c331f69aa3c8e5b4db3ccc5a6da85124600a01",
+    "commits_ahead_of_main": 13,
+    "commits_behind_main": 0,
+    "web_static_run": 41529842089,
+    "web_static_status": "PASS",
+    "ci_run": 41529841951,
+    "ci_status": "IN_PROGRESS",
+    "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT"
+  },
   "current_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
   "current_implementation_commit_before_audit_update": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
   "latest_documentation_checkpoint_before_audit": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
@@ -2916,12 +2927,23 @@
       "state": "open",
       "merged": false,
       "branch": "fix/accessibility-control-contrast-20261102",
-      "head": "7ea89691fcb904612c80370721555f1452eed6e9",
+      "head": "7316f4a94af8ffe21bba11ab4ade11b7f0187999",
       "scope": "textarea and output-selector visible border contrast; strictness slider excluded because its active range rule resets border to zero",
       "web_static_run": 41482464764,
       "full_ci_run": 41482464813,
       "full_ci_status": "PASS — test, wheel-install-smoke, master-artifact",
-      "manual_wcag_status": "BLOCKED — keyboard/screen-reader/zoom/mobile review not performed"
+      "manual_wcag_status": "BLOCKED — keyboard/screen-reader/zoom/mobile review not performed",
+      "code_head": "7ea89691fcb904612c80370721555f1452eed6e9",
+      "prior_documentation_head": "a8d6dc27c823f9f25c6ad403e3b272d4a1fe7a9e",
+      "prior_documentation_ci_run": 41483211761,
+      "prior_documentation_ci_status": "PASS",
+      "prior_documentation_web_static_run": 41483211756,
+      "prior_documentation_web_static_status": "PASS",
+      "latest_web_static_run": 41529842089,
+      "latest_web_static_status": "PASS",
+      "latest_ci_run": 41529841951,
+      "latest_ci_status": "IN_PROGRESS_AT_AUDIT_REFRESH",
+      "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT"
     }
   }
 }
