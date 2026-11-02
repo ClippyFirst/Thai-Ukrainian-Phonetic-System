@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PR #189 remains open as a draft on fix/benchmark-error-clusters-20261102. Runtime code head 55f2ef9966da065326873014e8066acc43b2a151 is exact-head CI verified; the 2026-11-03 literature/documentation continuation is recorded in latest_literature_evidence_2026_11_03 and awaits exact-head CI. Main remains unchanged; independent linguistic accuracy remains NOT_MEASURED.",
+  "status": "PR #189 remains open as a draft on fix/benchmark-error-clusters-20261102; current branch head 7391688c4c19b295f701812e8d6336bcf6abeb02 is 75 commits ahead of main and 0 behind. Runtime code head 55f2ef9966da065326873014e8066acc43b2a151 is exact-head CI verified. Literature and audit documentation checkpoint 7391688c4c19b295f701812e8d6336bcf6abeb02 passed exact-head CI 41537375617 and Web Static 41537375633. Main unchanged; linguistic accuracy remains NOT_MEASURED.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -3057,18 +3057,20 @@
     "runtime_changes": "NONE",
     "project_accuracy": "NOT_MEASURED",
     "independent_review": "BLOCKED_EXTERNAL_REVIEWERS",
-    "exact_head_verification": "PASSED_ON_450FE4B6527C8019EA7399218DAF30222FE190E2",
+    "exact_head_verification": "PASSED_ON_7391688C4C19B295F701812E8D6336BCF6ABEB02",
     "latest_document_commit_before_json": "276d70f2b60f90b12652a8ae0e382e6e954b85bc",
     "consensus_thread": "https://consensus.app/search/research-the-peer-reviewed-evidence-and-primary-sc/TPPdaWrzSWGIdPzNPruDdA/",
     "undermind_document": "https://app.undermind.ai/projects/49bbd978-a5a9-4cac-a7bb-a72848f50e10?path=/Research%20the%20peer-reviewed%20evidence%20and%20primary%20scholarly%20literature%20relevant%20to.md",
-    "ci_run": 41536529764,
+    "ci_run": 41537375617,
     "ci_result": "PASSED_ALL_3_JOBS",
-    "web_static_run": 41536529768,
+    "web_static_run": 41537375633,
     "web_static_result": "PASSED",
     "python_test_suite": "326_PASSED_1185_SUBTESTS_PASSED",
     "ruff": "PASSED",
     "wheel_install_smoke": "PASSED",
     "master_artifact": "PASSED",
-    "current_audit_documentation_update": "DOCUMENTATION_ONLY_FOLLOWUP_REQUIRES_FINAL_EXACT_HEAD_CI"
+    "current_audit_documentation_update": "DOCUMENTATION_ONLY_FOLLOWUP_REQUIRES_FINAL_EXACT_HEAD_CI",
+    "branch_ahead_of_main": 75,
+    "branch_behind_main": 0
   }
 }
