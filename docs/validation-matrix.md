@@ -1,3 +1,16 @@
+## FastThaiG2P optional adapter spike — 2026-11-02
+
+| Task | Status | Evidence / acceptance |
+|---|---|---|
+| Optional FastThaiG2P Python adapter | PARTIAL — implementation added | Lazy adapter preserves upstream IPA verbatim; pinned upstream commit `c4759eef7df03e11fcbb9aa83efe8cf21709fd2f`; optional extra requires Python >=3.11. Exact-head CI must pass adapter tests and wheel/install smoke. |
+| Same-input ClippyFirst comparison | PARTIAL — runner extended | Existing 42-item challenge runner now includes conservative ClippyFirst output and FastThaiG2P, plus thaiphon and optional Goruut. It distinguishes ClippyFirst abstentions from runtime errors and emits coverage, median/p95 latency, corpus hash, runtime metadata and pairwise agreement. Inspect exact branch CI artifact before marking verified. |
+| Phonological accuracy comparison | BLOCKED — no gold | All 42 challenge rows have null gold IPA and boundaries; no independently adjudicated Thai IPA records exist. Coverage, latency and engine agreement are not accuracy. Acceptance requires independent double-reviewer gold and adjudication. |
+| FastThaiG2P software license | DONE_VERIFIED — source inspection | Pinned upstream LICENSE is Apache-2.0; NOTICE attribution recorded. The vendored TLTK `_th2ipa.py` carries a separate BSD-3-Clause notice. |
+| FastThaiG2P data license/provenance | PARTIAL / BLOCKED | Upstream describes Wiktionary-derived, generated and manual IPA entries plus TLTK fallback data. Generated/manual and fallback data do not have a complete per-record/per-file license register in the inspected pinned tree. No upstream data assets were copied into ClippyFirst. |
+| Local execution | BLOCKED — network/DNS | `git clone` failed because this environment could not resolve github.com. No local pytest, lint, package install or benchmark pass is claimed. GitHub Actions on the spike branch is the verification path. |
+
+**Production decision:** FastThaiG2P remains optional and benchmark-only. No default runtime, browser, or production phonology behavior changes. Do not choose a winner until the independent-gold gate is met.
+
 ## Priority research continuation — 2026-11-02
 
 | Priority | Status | Work completed in this continuation | Remaining acceptance gate |
