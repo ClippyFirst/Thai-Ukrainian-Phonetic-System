@@ -6,6 +6,9 @@
 | Challenge abstention coordination | DONE_VERIFIED — per-record labels and both runtime paths verified | Extended `run_challenge_diagnostics.py` to label abstention clusters and separately report opt-in dictionary-word-segmented output without replacing the conservative endpoint. Exact-head artifact `thai-challenge-runtime-diagnostics` from run #41471961004 confirms 32/42 conservative outputs and 36/42 opt-in word-segmented outputs; four continuous-text probes now complete in the opt-in path. Six abstentions remain: three standalone special-vowel forms, ambiguous `ทราย`, and two malformed inputs. | Keep the six evidence-limited/expected abstentions fail-closed; do not interpret output coverage as accuracy or dictionary boundaries as gold. |
 | Source-backed special-orthography recovery | PARTIAL — source pinned, implementation and tests CI-verified; independent review pending | `ฤๅษี → รือ|สี` pinned to Thai Wiktionary oldid 1774048; `ทฤษฎี → ทฺริด-สะ-ดี` and /tʰrit̚˦˥.sa˨˩.diː˧/ pinned to en.wiktionary oldid 87195875. Exact `ทริด → ทริท` normalization does not generalize to arbitrary `ทร`. | Exact-head CI #41471961004 and source-registry checks passed. Independent expert review remains necessary before these entries count as gold. |
 
+
+**Exact-head refresh note:** the table's CI evidence verifies code head `55f2ef9966da065326873014e8066acc43b2a151`. The subsequent audit/matrix/handoff register refresh is on documentation head `e92c19ec7f54e65515af9cd981cbf4321284817f` and requires a fresh exact-head CI/Web Static run; no runtime code changed in that documentation-only refresh.
+
 ## Priority research continuation — 2026-11-02
 
 | Priority | Status | Work completed in this continuation | Remaining acceptance gate |
