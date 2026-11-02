@@ -2638,11 +2638,12 @@
     "web_static_result": "PASSED",
     "external_vistec_run": "41406424960",
     "external_vistec_result": "PASSED",
-    "commits_ahead_of_main": 170,
+    "commits_ahead_of_main": 173,
     "commits_behind_main": 0,
     "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
     "linguistic_accuracy": "NOT_MEASURED",
-    "note": "CI 41406087052 verifies implementation commit 964b493. CI 41406424727 verifies exact head 826fcdd including the additional microphone_id and interval-overlap regression tests."
+    "note": "CI 41406087052 verifies implementation commit 964b493. CI 41406424727 verifies exact head 826fcdd including the additional microphone_id and interval-overlap regression tests.",
+    "audit_documentation_head": "10be73a59475f17ff2de499e760e99eb42904290"
   },
   "audio_interval_overlap_refinement_2026_11_02": {
     "status": "DONE_VERIFIED_ENGINEERING",
