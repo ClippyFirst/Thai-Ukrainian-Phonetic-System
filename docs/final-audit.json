@@ -545,7 +545,7 @@
     }
   ],
   "latest_implementation_branch": "fix/benchmark-error-clusters-20261102 (PR #189 open draft)",
-  "latest_implementation_commit_pending_ci": "No runtime changes after verified code head 55f2ef9966da065326873014e8066acc43b2a151; latest docs checkpoint 2523002cd0a06c0b30efed6669ca4ba012cb3e10 passed CI 41474317754 and Web Static 41474317862; final open-PR/branch inventory update requires exact-head rerun.",
+  "latest_implementation_commit_pending_ci": "No runtime changes after verified code head 55f2ef9966da065326873014e8066acc43b2a151; documentation checkpoints through 8be5e89d1a9190eaa37c15dbe9340ac1242283e0 passed exact-head CI and Web Static. Current structured audit-register refresh is documentation-only.",
   "current_head_status_at_audit_refresh": "Code/workflow checkpoint b6dbec7928b106f0ab52e06af33a26635df75412 passed CI 40322960615 and Web static validation 40322959844. Documentation checkpoint e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff passed full CI 40323209539 and Web static validation 40323209471. This audit-register update creates a newer documentation HEAD and requires exact-head CI/static validation before the current branch HEAD is marked green.",
   "current_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
   "current_implementation_commit_before_audit_update": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
@@ -3024,13 +3024,13 @@
     "web_static_result": "PASSED",
     "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
     "linguistic_accuracy": "NOT_MEASURED",
-    "branch_ahead_of_main": 61,
+    "branch_ahead_of_main": 63,
     "branch_behind_main": 0,
-    "documentation_refresh": "OPEN_PR_AND_BRANCH_INVENTORY_UPDATED_AFTER_VERIFIED_DOCUMENTATION_CHECKPOINT; FINAL_EXACT_HEAD_CI_PENDING",
-    "documentation_checkpoint_head": "2523002cd0a06c0b30efed6669ca4ba012cb3e10",
-    "documentation_checkpoint_ci_run": 41474317754,
+    "documentation_refresh": "PASSED_FINAL_TEXT_LEXICON_LICENSE_REFRESH; CURRENT_STRUCTURED_AUDIT_REGISTER_REFRESH_IS_DOCUMENTATION_ONLY",
+    "documentation_checkpoint_head": "8be5e89d1a9190eaa37c15dbe9340ac1242283e0",
+    "documentation_checkpoint_ci_run": 41475777693,
     "documentation_checkpoint_ci_result": "PASSED_ALL_3_JOBS",
-    "documentation_checkpoint_web_static_run": 41474317862,
+    "documentation_checkpoint_web_static_run": 41475777686,
     "documentation_checkpoint_web_static_result": "PASSED"
   }
 }
