@@ -83,12 +83,19 @@ def candidate_clippyfirst() -> tuple[Callable[[str], str], dict[str, Any]]:
                 )
             ipa_syllables = []
             for syllable in syllables:
-                ipa = syllable.get("phonemic_ipa")
-                if not isinstance(ipa, str) or not ipa:
+                # Consume the same typed IPA boundary as the Ukrainian adapter.
+                typed_ipa = syllable.get("phonetic_result")
+                if not isinstance(typed_ipa, dict) or typed_ipa.get("status") != "SUPPORTED":
                     raise CandidateAbstention(
-                        f"ClippyFirst withheld phonemic IPA for token {token.get('input')!r}"
+                        f"ClippyFirst typed IPA is not supported for token {token.get('input')!r}"
                     )
-                ipa_syllables.append(ipa)
+                ipa = typed_ipa.get("phonemic_ipa")
+                tone = typed_ipa.get("tone_contour_ipa")
+                if not isinstance(ipa, str) or not ipa or not isinstance(tone, str) or not tone:
+                    raise CandidateAbstention(
+                        f"ClippyFirst withheld segmental IPA or tone for token {token.get('input')!r}"
+                    )
+                ipa_syllables.append(ipa + tone)
             ipa_words.append("/" + ".".join(ipa_syllables) + "/")
         if not ipa_words:
             raise CandidateAbstention("ClippyFirst produced no Thai IPA tokens")
