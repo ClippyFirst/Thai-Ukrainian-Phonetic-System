@@ -51,13 +51,13 @@ The upstream Apache-2.0 code license is not the only license question: the dicti
 
 ## First paired challenge result — 2026-11-02
 
-**Dedicated comparison CI: PASSED.** Dedicated workflow run [41435891320](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41435891320) completed successfully on branch head `c166365289e4ed9ea70bd9cd544c1b64fb3b9180`. The JSON artifact is [fastthaig2p-challenge-comparison](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41435891320/artifacts/13136482134), SHA-256 `e34007f19fbe0265781515e100b126d747fa24cf6a8649213554f3ce54c82b97`.
+**Dedicated comparison CI: PASSED.** Dedicated workflow run [41436294546](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41436294546) completed successfully on branch head `c166365289e4ed9ea70bd9cd544c1b64fb3b9180`. The JSON artifact is [fastthaig2p-challenge-comparison](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41435891320/artifacts/13136482134), SHA-256 `ced6502b38dde3a1bcb7bf2a0e3b50fb101c19522ebff6536f1815e3532ec752`.
 
 | Diagnostic | ClippyFirst | FastThaiG2P |
 |---|---:|---:|
 | Complete/non-empty outputs | 28/42 | 42/42 |
-| Median per-input time | 0.459 ms | 0.028 ms |
-| p95 per-input time | 1.768 ms | 1.734 ms |
+| Median per-input time | 0.448 ms | 0.028 ms |
+| p95 per-input time | 1.897 ms | 1.684 ms |
 
 FastThaiG2P processed 50 upstream tokens: 45 dictionary hits and 5 OOV rule-fallback tokens. There were 28 records where both systems emitted a complete result with equal syllable counts, covering 40 syllable pairs. Raw exact syllable-string agreement was 0/40 because FastThaiG2P includes Chao tone contours and uses a tie-bar convention that differs from ClippyFirst. After the explicitly limited segmental projection (remove Chao tone marks, tie bar and upstream fallback sentinel `8`, retain vowel length and other segmental symbols), 25/40 pairs matched (62.5%).
 
