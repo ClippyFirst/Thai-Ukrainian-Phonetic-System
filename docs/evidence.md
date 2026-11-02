@@ -45,6 +45,12 @@ Standard Thai cluster descriptions distinguish true clusters from false clusters
 - The Python and browser lexical-reading registries now include this exact override. Regression tests verify normalized spelling and the engine's derived IPA/Ukrainian output, while the evidence note keeps the source's actual claim limited to the lexical reading.
 
 
+## Source-pinned lexical challenge recoveries — 2026-11-02
+
+- **SRC-WIKTIONARY-TH-ฤๅษี** — Thai Wiktionary immutable revision 1774048: https://th.wiktionary.org/w/index.php?title=ฤๅษี&oldid=1774048 . The entry records the exact two-syllable reading **รือ-สี** and Standard Thai IPA /rɯː˧.siː˩˩˦/. This supports the exact word-level text-lexicon entry `ฤๅษี → รือ|สี`; it does not license a general rule for standalone ฤๅ or the distinct spelling ฤษี.
+- **SRC-WIKTIONARY-EN-TH-ทฤษฎี** — en.wiktionary immutable revision 87195875: https://en.wiktionary.org/w/index.php?title=ทฤษฎี&oldid=87195875 . The entry records **ทฺริด-สะ-ดี** and Standard Thai IPA /tʰrit̚˦˥.sa˨˩.diː˧/. The parser's exact `ทริด → ทริท` respelling resolves only the attested first syllable; it is not a productive `ทร` rule and must not affect homographs such as ทราย.
+- Both source records are registered in `data/benchmark/source-registry.tsv` for `LEXICAL_SEGMENTATION_REFERENCE` and `IPA_REFERENCE_ONLY` only. They are CC BY-SA 4.0 dictionary references, not independently adjudicated or acoustic gold. They are excluded from expert-accuracy claims.
+
 ## Sense-ambiguous ทราย reading — 2026-10-25
 
 - **SRC-ORST-CLUSTER-2011-THRAY-SENSE** — Royal Institute of Thailand Journal, “เรื่องยุ่ง ๆ เกี่ยวกับอักษรควบ”, vol. 36 no. 4 (Oct–Dec 2011), p. 556, official source: https://www.orst.go.th/FILEROOM/CABROYINWEB/DRAWER004/GENERAL/DATA0000/00000630.FLP/html/48/ .
