@@ -34,8 +34,8 @@ for (const id of ["thai-input", "engine-mode", "output-mode"]) {
 assert.match(html, /<textarea[^>]+lang="th"/);
 assert.match(html, /<section id="status" class="status" role="status" aria-live="polite"/);
 assert.match(html, /<section id="results"[^>]+aria-label="Результати" aria-live="off"/);
-assert.match(html, /<details[^>]*>[\\s\\S]*?<summary>/, "disclosure widgets need a native summary control");
-assert.match(systemHtml, /<details[^>]*>[\\s\\S]*?<summary>/);
+assert.match(html, /<details[^>]*>[\s\S]*?<summary>/, "disclosure widgets need a native summary control");
+assert.match(systemHtml, /<details[^>]*>[\s\S]*?<summary>/);
 
 // Dynamically generated content retains names, language metadata and safe text insertion.
 assert.match(app, /aria-label="Копіювати: /);
