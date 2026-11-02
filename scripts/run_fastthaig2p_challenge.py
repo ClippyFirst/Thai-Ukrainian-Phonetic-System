@@ -23,6 +23,7 @@ UPSTREAM_COMMIT = "4e82a291b4cf2876326744c6580121e9986ad354"
 _WORD_IPA = re.compile(r"/([^/]+)/")
 _TONE_MARKS = set("˥˦˧˨˩")
 _LENGTH_MARKS = set("ːˑ")
+_SEGMENTAL_IGNORABLE = _TONE_MARKS | {"͡", "8"}
 
 
 def load_challenge(path: Path) -> list[dict[str, Any]]:
@@ -56,6 +57,15 @@ def parse_external_ipa(raw: str) -> list[str]:
         if group:
             syllables.extend(part for part in group.split(".") if part)
     return syllables
+
+
+def segmental_projection(ipa: str) -> str:
+    """Remove only FastThaiG2P tone contour/sentinel and affricate tie-bar notation.
+
+    This diagnostic projection aligns broad segment strings across the two
+    engines; raw IPA is retained and tone is evaluated as a separate feature.
+    """
+    return "".join(ch for ch in ipa if ch not in _SEGMENTAL_IGNORABLE)
 
 
 def summarize_ipa(syllables: list[str]) -> dict[str, int]:
@@ -158,7 +168,7 @@ def run(input_path: Path = DEFAULT_INPUT) -> dict[str, Any]:
                 "elapsed_ms": round(external_ms, 6),
             },
             "same_syllable_count": len(clippy_ipa) == len(external_syllables),
-            "exact_syllable_match_scored": bool(comparable),
+            "raw_exact_syllable_match_scored": bool(comparable),\n            "segmental_projection_matches": (\n                [segmental_projection(a) == segmental_projection(b) for a, b in zip(clippy_ipa, external_syllables, strict=True)]\n                if comparable else None\n            ),
         })
 
     return {
@@ -198,7 +208,7 @@ def run(input_path: Path = DEFAULT_INPUT) -> dict[str, Any]:
         },
         "limitations": [
             "The challenge has no independent IPA, tone, length, or boundary gold; no accuracy claim is possible.",
-            "Exact syllable-string agreement is inter-engine agreement only, not correctness.",
+            "Raw exact syllable-string agreement is convention-sensitive; segmental projection removes only Chao tone marks, the tie bar and the upstream fallback sentinel 8. Both agreement values are inter-engine diagnostics, not correctness.",
             "ClippyFirst exposes phonemic IPA per syllable; FastThaiG2P emits slash-delimited IPA groups with Chao tone contours. Their conventions are not assumed equivalent.",
             "The report preserves FastThaiG2P raw IPA and does not feed it into the Ukrainian adapter.",
             "Dictionary-hit and OOV counts inspect private upstream fields pinned to the recorded commit and may need revision if the upstream API changes.",
