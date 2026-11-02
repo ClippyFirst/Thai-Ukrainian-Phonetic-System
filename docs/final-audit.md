@@ -1,3 +1,13 @@
+## FastThaiG2P integration spike — 2026-11-02
+
+- Dedicated branch: `research/fastthaig2p-adapter-spike-20261102`, based on main `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`.
+- Added a lazy optional adapter and a pinned `fastthaig2p` extra. No upstream FastThaiG2P code or dictionary data is vendored; default runtime imports remain unaffected.
+- Extended the existing external G2P runner to include ClippyFirst on the same 42 challenge prompts, distinguish conservative abstentions from runtime failures, and emit coverage/latency/runtime/corpus-hash/pairwise diagnostic metadata. Accuracy remains `NOT_MEASURED` because challenge gold is empty.
+- Added adapter and runner regression tests. Exact-head CI has not yet been inspected in this audit entry; mark implementation PARTIAL until CI and uploaded raw-output/summary artifacts are checked.
+- License review: FastThaiG2P upstream code LICENSE is Apache-2.0 with a separate NOTICE; the vendored TLTK `_th2ipa.py` carries BSD-3-Clause. Wiktionary-derived IPA is source data (NLP for Thai catalogue lists CC BY-SA 3.0); generated/manual IPA and TLTK fallback data lack complete item-level license/provenance statements in the inspected pinned repository. No dictionary, source dump or fallback data was copied into ClippyFirst.
+- Local clone and test execution remain BLOCKED by DNS resolution for github.com. No local test pass is claimed.
+- Decision: optional comparator only; no production engine replacement or accuracy ranking.
+
 ## 2026-11-01 — independent adjudication readiness and CCOST source reconciliation
 
 - **DONE_VERIFIED — paper-level CCOST schema extraction:** the LREC 2026 paper specifies intended TextGrid tiers ORT/KAN/KAS/MAU/MAS/TRN, X-SAMPA labels and tone suffixes _1=Mid, _2=Low, _3=Falling, _4=High, _5=Rising. MAU carries realized phonetic segments; MAS carries phonemic syllables; KAN/KAS are canonical forms.
