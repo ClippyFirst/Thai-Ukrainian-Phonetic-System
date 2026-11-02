@@ -96,6 +96,10 @@ class EvidenceRegistryTests(unittest.TestCase):
         expected = {
             "SRC-WIKTIONARY-TH-ฤๅษี": "https://th.wiktionary.org/w/index.php?title=ฤๅษี&oldid=1774048",
             "SRC-WIKTIONARY-EN-TH-ทฤษฎี": "https://en.wiktionary.org/w/index.php?title=ทฤษฎี&oldid=87195875",
+            "SRC-WIKTIONARY-TH-ประเทศ": "https://th.wiktionary.org/w/index.php?title=ประเทศ&oldid=5722200",
+            "SRC-WIKTIONARY-TH-เป็น": "https://th.wiktionary.org/w/index.php?title=เป็น&oldid=5770798",
+            "SRC-WIKTIONARY-TH-หนึ่ง": "https://th.wiktionary.org/w/index.php?title=หนึ่ง&oldid=5721517",
+            "SRC-WIKTIONARY-TH-ใน": "https://th.wiktionary.org/w/index.php?title=ใน&oldid=5759122",
         }
         for source_id, url in expected.items():
             with self.subTest(source_id=source_id):
