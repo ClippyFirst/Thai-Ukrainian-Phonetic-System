@@ -21,7 +21,8 @@ class ChallengeRuntimeDiagnosticsTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             path = self.write_jsonl(directory, [
                 {"id": "known", "input": "กา", "stratum": "test"},
-                {"id": "unknown", "input": "กฉ", "stratum": "test"},\n                {"id": "special-vowel", "input": "ฤๅ", "stratum": "ฤ-series"},
+                {"id": "unknown", "input": "กฉ", "stratum": "test"},
+                {"id": "special-vowel", "input": "ฤๅ", "stratum": "ฤ-series"},
             ])
             report = build_report(path)
 
@@ -31,7 +32,7 @@ class ChallengeRuntimeDiagnosticsTests(unittest.TestCase):
         self.assertEqual(
             report["summary"]["inputs_with_engine_output"]
             + report["summary"]["inputs_abstained_or_without_complete_output"],
-            2,
+            3,
         )
         self.assertNotIn("accuracy", report["summary"])
         records = {record["id"]: record for record in report["records"]}
