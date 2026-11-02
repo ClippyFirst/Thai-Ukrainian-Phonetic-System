@@ -304,7 +304,7 @@
     "rows": 351780,
     "vowel_rime_records": 41
   },
-  "latest_documentation_checkpoint": "docs/post-merge-site-release-closeout-20261102; current branch head is available from GitHub metadata.",
+  "latest_documentation_checkpoint": "research/global-timit-thai-source-review-20261102-clean; source metadata audit only; exact-head CI pending.",
   "text_only_checkpoint": {
     "branch": "research/thai-segmentation-gold-parity-verified-20261025",
     "parent_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
@@ -343,7 +343,8 @@
     "active_test_source": "Wisesight-1000 (CC0-1.0; 993 rows; test-only; not used for training or tuning)",
     "candidate_sources": [
       "LST20 (license/access review required; not bundled)",
-      "VISTEC-TP-TH-2021 (CC BY-SA 3.0 reported; upstream terms/attribution review required)"
+      "VISTEC-TP-TH-2021 (CC BY-SA 3.0 reported; upstream terms/attribution review required)",
+      "Global TIMIT Thai / THAIMIT (LDC2022S13; DARPABET forced-alignment candidate; LDC non-member agreement; non-commercial/no redistribution)"
     ],
     "ccost": "CC BY-NC-SA 4.0; TextGrid annotations inside 6.2 GB archive; not bundled or accessed in this run",
     "training_source": "UD Thai TUD at 67413969add552b7030184f16f24fa9f630913bc, CC BY-SA 4.0; source-document-disjoint 80/10/10 project split; model artifact attribution/share-alike obligations recorded"
@@ -520,6 +521,13 @@
       "status": "DONE_VERIFIED",
       "implementation": "PR #182 squash-merged as 65584d9; main CI 41420468842, Web Static 41420468939 and Pages deployment/published-content verification 41420468875 all passed. The updated service is live at GitHub Pages.",
       "acceptance": "Post-merge Pages build/deploy/published-content verification passed; main CI and Web Static passed."
+    },
+    {
+      "id": "CORP-GLOBAL-TIMIT-THAI-001",
+      "status": "PARTIAL",
+      "implementation": "Registered Global TIMIT Thai (LDC2022S13) after inspecting the LDC catalog, official README, 2018 GlobalTIMIT paper and Non-Member Agreement. The source provides 11.77h/50 speakers/6,000 utterances with word, phone and tone forced alignments; phone labels are DARPABET, not IPA. The paper reports proof-listening and final phone/alignment QA, but not independent dual labels or Thai-specific quantitative accuracy.",
+      "blocker": "Authorized data access and sample labels are unavailable in this session; Thai-specific phone/tone quality, DARPABET-to-IPA mapping and independent IAA are unverified. LDC Non-Member Agreement is non-commercial and prohibits redistribution outside the research group.",
+      "acceptance": "Obtain applicable written LDC authorization; inspect pinned phone/tone/TextGrid samples and DARPABET inventory; establish mapping and alignment quality; independently dual-review/adjudicate any rows used for phonetic evaluation. Do not use for public/commercial distribution without appropriate rights."
     }
   ],
   "latest_implementation_branch": "research/independent-adjudication-gates-20261101 (merged into main)",
@@ -2904,5 +2912,49 @@
     "linguistic_accuracy": "NOT_MEASURED",
     "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY"
   },
-  "latest_full_repository_head_pages_run": "41420468875"
+  "latest_full_repository_head_pages_run": "41420468875",
+  "global_timit_thai_source_review_2026_11_02": {
+    "status": "DONE_VERIFIED_SOURCE_METADATA_ONLY",
+    "catalog": "LDC2022S13",
+    "doi": "10.35111/vr5f-6m39",
+    "speakers": 50,
+    "utterances": 6000,
+    "duration_hours": 11.77,
+    "sample_rate_hz": 16000,
+    "annotation_layers": [
+      "orthographic transcript",
+      "word boundaries",
+      "phone boundaries",
+      "tone boundaries",
+      "Praat TextGrid"
+    ],
+    "phone_representation": "aligner-specific DARPABET; not IPA",
+    "alignment_method": "custom HTK forced aligner using corrected transcripts, SWATH tokenization, Mary R. Haas Thai Dictionary and approximately 1,000 added pronunciations",
+    "speaker_scope": "recruited in Bangkok, born/raised in Thailand, fluent Standard Thai; native Standard Thai status not required",
+    "independent_phone_tone_adjudication": "NOT_ESTABLISHED_BY_INSPECTED_CATALOG_README_AND_PAPER",
+    "inter_annotator_agreement": "NOT_REPORTED",
+    "sample_phone_tone_files": "NOT_INSPECTED_BINARY_FETCH_UNSUPPORTED",
+    "license": "LDC User Agreement for Non-Members",
+    "permitted_scope": "non-commercial linguistic education/research/technology development",
+    "redistribution": "PROHIBITED_OUTSIDE_USER_RESEARCH_GROUP",
+    "commercial_release": "LDC_FOR_PROFIT_MEMBERSHIP_AND_APPLICABLE_FEES_REQUIRED",
+    "assets_downloaded_or_bundled": false,
+    "task_ledger": {
+      "source_metadata_audit": "DONE_VERIFIED",
+      "authorized_acquisition_and_sample_inspection": "BLOCKED",
+      "independent_ipa_tone_gold": "BLOCKED",
+      "public_or_commercial_redistribution": "BLOCKED"
+    },
+    "acceptance": "Obtain and execute the applicable LDC agreement for the intended use; inspect pinned sample .phones/.tones/TextGrid; document DARPABET inventory/mapping and Thai-specific alignment quality; independently dual-review and adjudicate before any gold/accuracy claim.",
+    "signed_agreement_required": true,
+    "signed_agreement_submission": "email or fax to LDC",
+    "data_accuracy_warranty": "LDC disclaims warranties of accuracy/completeness",
+    "quality_control": "2018 GlobalTIMIT paper reports initial proof-listening and a final phone-sequence/alignment check for each completed collection.",
+    "independent_annotation": "TWO_INDEPENDENT_LABELS_PER_ITEM_NOT_ESTABLISHED",
+    "thai_specific_quantitative_accuracy": "NOT_REPORTED",
+    "mandarin_alignment_metric_caveat": "93.2% within 20ms reported for Mandarin only; not applicable to Thai",
+    "paper": "GlobalTIMIT_IS2018_submitted.pdf",
+    "paper_url": "https://catalog.ldc.upenn.edu/docs/LDC2022S13/GlobalTIMIT_IS2018_submitted.pdf",
+    "alignment_quality_control": "PROOF_LISTENING_AND_FINAL_PHONE_SEQUENCE_ALIGNMENT_CHECK_REPORTED"
+  }
 }
