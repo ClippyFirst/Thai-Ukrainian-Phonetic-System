@@ -304,7 +304,7 @@
     "rows": 351780,
     "vowel_rime_records": 41
   },
-  "latest_documentation_checkpoint": "PR #190 draft; code head 7ea89691 passed CI 41482464813 and Web Static 41482464764; prior documentation head a8d6dc27 passed CI 41483211761 and Web Static 41483211756; reconciled documentation head 098cca3d45acbae9ef190dd2965199c8ac9faa66 passed Web Static 41530092590 and Full CI 41530092680 (test, wheel-install-smoke, master-artifact).",
+  "latest_documentation_checkpoint": "PR #190 draft; current exact head 10599fbb45654dfe7f92a50ebf924c2992c667ef passed Web Static 41530977700 and Full CI 41530977728 (test, wheel-install-smoke, master-artifact); workflow API confirms status=completed, conclusion=success, head_sha exact.",
   "text_only_checkpoint": {
     "branch": "research/thai-segmentation-gold-parity-verified-20261025",
     "parent_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
@@ -351,7 +351,7 @@
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
   "latest_code_checkpoint": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
   "readiness": "engineering-verified research prototype; deployed on GitHub Pages; not release-ready for independent Thai segmentation, IPA or Ukrainian target accuracy",
-  "latest_verified_repository_head": "1431c565ff5c160da4944942d687bc30b2f8d0b2",
+  "latest_verified_repository_head": "10599fbb45654dfe7f92a50ebf924c2992c667ef",
   "task_ledger": [
     {
       "id": "SEG-TRAIN-001",
@@ -532,14 +532,14 @@
   "latest_implementation_commit_pending_ci": null,
   "current_head_status_at_audit_refresh": {
     "branch": "fix/accessibility-control-contrast-20261102",
-    "head": "098cca3d45acbae9ef190dd2965199c8ac9faa66",
+    "head": "10599fbb45654dfe7f92a50ebf924c2992c667ef",
     "base": "75c331f69aa3c8e5b4db3ccc5a6da85124600a01",
-    "commits_ahead_of_main": 14,
+    "commits_ahead_of_main": 15,
     "commits_behind_main": 0,
-    "web_static_run": 41530092590,
+    "web_static_run": 41530977700,
     "web_static_status": "PASS",
-    "ci_run": 41530092680,
-    "ci_status": "PASS — test, wheel-install-smoke, master-artifact",
+    "ci_run": 41530977728,
+    "ci_status": "PASS — workflow completed success; test, wheel-install-smoke, master-artifact",
     "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT"
   },
   "current_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
@@ -2927,7 +2927,7 @@
       "state": "open",
       "merged": false,
       "branch": "fix/accessibility-control-contrast-20261102",
-      "head": "098cca3d45acbae9ef190dd2965199c8ac9faa66",
+      "head": "10599fbb45654dfe7f92a50ebf924c2992c667ef",
       "scope": "textarea and output-selector visible border contrast; strictness slider excluded because its active range rule resets border to zero",
       "web_static_run": 41482464764,
       "full_ci_run": 41482464813,
@@ -2939,11 +2939,15 @@
       "prior_documentation_ci_status": "PASS",
       "prior_documentation_web_static_run": 41483211756,
       "prior_documentation_web_static_status": "PASS",
-      "latest_web_static_run": 41530092590,
+      "latest_web_static_run": 41530977700,
       "latest_web_static_status": "PASS",
-      "latest_ci_run": 41530092680,
-      "latest_ci_status": "PASS — test, wheel-install-smoke, master-artifact",
-      "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT"
+      "latest_ci_run": 41530977728,
+      "latest_ci_status": "PASS — workflow completed success; test, wheel-install-smoke, master-artifact",
+      "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
+      "exact_head_workflow_status": "completed",
+      "exact_head_workflow_conclusion": "success",
+      "commits_ahead_of_main": 15,
+      "commits_behind_main": 0
     }
   }
 }
