@@ -2991,6 +2991,28 @@
       "fastthaig2p": "42/42",
       "thaiphon": "42/42",
       "goruut": "26/42; 16 runtime no-output failures"
+    },
+    "latest_branch_head_before_closeout": "7d904b96b1790efeaa579b1552e2fbb41a5d2188",
+    "latest_optional_run": {
+      "run_id": 41432769499,
+      "status": "success",
+      "artifact_sha256": "54fa65b4dada15bcf79d466441896435cee3df83e67f71b5236260f8337866c5",
+      "branch_head": "7d904b96b1790efeaa579b1552e2fbb41a5d2188",
+      "rows": 210,
+      "corpus_sha256": "94d18b9f55c2be35d3d0b35811f53d306b9be6906ae4cc6ea2241d18ebadf6b8",
+      "accuracy_status": "NOT_MEASURED"
+    },
+    "latest_full_ci": {
+      "run_id": 41432085958,
+      "status": "success",
+      "code_head": "84ca5c39e82e75db594a4a21152572a083d238db",
+      "jobs": {
+        "test": "success",
+        "wheel_install_smoke": "success",
+        "master_artifact": "success"
+      },
+      "pytest": "326 passed; 1169 subtests passed",
+      "ruff": "passed"
     }
   }
 }
