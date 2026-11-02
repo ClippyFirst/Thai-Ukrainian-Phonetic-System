@@ -2227,3 +2227,12 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - The new 42-item challenge has no independent gold labels. Inter-engine string agreement, coverage and speed cannot establish correctness.
 - FastThaiG2P IPA uses Chao tone contours. The spike preserves raw output and does not pass it into typed `PhoneticResult` or the Ukrainian adapter. A feature-preserving converter and independent gold are still required.
 - At the time of this handoff update, exact-head workflow execution and the comparison artifact are pending. Do not mark the spike DONE_VERIFIED until CI passes.
+
+
+### FastThaiG2P spike — verified comparison checkpoint
+
+- Dedicated optional workflow run [41435891320](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41435891320) passed on `c166365289e4ed9ea70bd9cd544c1b64fb3b9180`; artifact [13136482134](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41435891320/artifacts/13136482134), SHA-256 `e34007f19fbe0265781515e100b126d747fa24cf6a8649213554f3ce54c82b97`.
+- Results on the 42-item challenge: ClippyFirst complete 28/42; FastThaiG2P non-empty 42/42; FastThaiG2P 45 dictionary tokens + 5 OOV fallback tokens; 28 comparable records, 40 syllable pairs; 25/40 segmental projection matches (62.5%); raw exact match 0/40. Median times 0.459 ms vs 0.028 ms; p95 1.768 ms vs 1.734 ms.
+- Coverage advantage is not a quality advantage: FastThaiG2P emitted outputs for invalid probes where ClippyFirst abstains. Inter-engine agreement is not accuracy; independent gold remains zero.
+- Full main CI run [41435891357](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41435891357) was still running at this checkpoint. Wait for all jobs before marking the whole PR verified.
+- Remaining: independently adjudicated Thai IPA/boundaries, lossless conversion to typed `PhoneticResult` including Chao tone contours, then tests through the existing Ukrainian adapter; row-level rights for FastThaiG2P dictionary data remain unresolved. No external IPA is passed to Ukrainian adaptation in this spike.
