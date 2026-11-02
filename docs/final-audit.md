@@ -1,3 +1,12 @@
+## 2026-11-02 — benchmark error-cluster review and targeted lexical recovery
+
+- **DONE_VERIFIED — baseline artifact inspection:** PR #186 FastThaiG2P workflow [41454481686](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41454481686), head `c02e10e89ac340b80b6ed83c0a991f89cf9cc3fe`; artifact SHA-256 `a166828e7a175af4759120d609ba8511c661db2845a25cab5fab1685c17b0da5`. Row-level labels are stored in `data/benchmark/fastthaig2p-error-triage-2026-11-02.tsv`.
+- **Benchmark diagnosis:** 28/42 conservative ClippyFirst inputs had complete output; FastThaiG2P returned 42/42. Of 40 paired syllable outputs, 11 apparent segmental mismatches are solely the unreleased-stop modifier `̚` present in the external surface-style IPA. A projection that removes only this modifier yields 36/40 segmental agreements; tone and vowel length remain intact. Four remaining differences (`กะ`, `บรรจุ`, `คอมพิวเตอร์`, `ครอบครัว`) are review candidates, not confirmed errors.
+- **DONE_VERIFIED — source provenance added:** pinned source rows for `ฤๅษี → รือ|สี` (Thai Wiktionary oldid 1774048) and `ทฤษฎี → ทฺริด-สะ-ดี` (en.wiktionary oldid 87195875). These are source-attested lexical readings, not independent gold.
+- **PARTIAL — runtime recovery:** added exact `ทริด → ทริท` respelling for the first syllable in `ทฤษฎี`, reintroduced source-backed `ฤๅษี` in the text lexicon while keeping `ฤษี` unresolved, and made existing parser readings `เตอร์/เทอร์` reachable through the text lexicon in both Python and browser engines. Regression tests added; exact-head CI pending.
+- **PARTIAL — benchmark coordination:** challenge diagnostics now classify abstention clusters and report the opt-in dictionary-word-segmented path separately from conservative analysis. The report must not be interpreted as word-boundary accuracy.
+- **BLOCKED — phonetic adjudication:** no independent Thai expert has confirmed glottal-stop conventions, vowel length, diphthong realization, or the candidate engines' readings. The challenge corpus remains NOT_ADJUDICATED; linguistic accuracy remains NOT_MEASURED.
+
 ## 2026-11-01 — independent adjudication readiness and CCOST source reconciliation
 
 - **DONE_VERIFIED — paper-level CCOST schema extraction:** the LREC 2026 paper specifies intended TextGrid tiers ORT/KAN/KAS/MAU/MAS/TRN, X-SAMPA labels and tone suffixes _1=Mid, _2=Low, _3=Falling, _4=High, _5=Rising. MAU carries realized phonetic segments; MAS carries phonemic syllables; KAN/KAS are canonical forms.
