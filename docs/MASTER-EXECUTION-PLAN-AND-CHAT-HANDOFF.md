@@ -2217,3 +2217,27 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - No release tag or package version was created. Linguistic accuracy remains `NOT_MEASURED`; the deployed site is an engineering-verified research prototype, not a linguistic-accuracy or WCAG-conformance release.
 
 **Next genuine work:** secure independent Thai and Ukrainian reviewers, resolve CCOST curator discrepancy, obtain immutable LOTUSDIS audio evidence, and complete hands-on accessibility testing. Do not invent gold labels, audio assets or accuracy scores to close these gates.
+
+
+## 2026-11-03 — Thai G2P literature and metric audit
+
+### Completed
+- Added `docs/research/thai-g2p-evaluation-literature-2026-11-03.md`, a source-graded synthesis of Thai G2P studies, tone phonology/acoustics, annotation reliability and project-specific validation recommendations.
+- Inspected the full text of Saychum et al. (2016) and Yamasaki (2022). Their dictionary/Wiktionary-derived reference labels, task definitions and metric denominators are now distinguished explicitly. Abstract-level evidence for other cited papers is labelled as such; no unsupported full-text claim is made.
+- Updated `docs/g2p-benchmark.md`, `docs/evidence.md` and `docs/validation-matrix.md` in place. The matrix marks the literature audit DONE_VERIFIED while keeping independent phonetic/segmentation/Ukrainian review BLOCKED.
+- No runtime/parser/IPA/Ukrainian rule changed: the literature does not adjudicate the four outstanding challenge discrepancies. The 42+6 prompts remain unadjudicated and accuracy remains NOT_MEASURED.
+
+### Research tools and saved synthesis
+- Consensus review: https://consensus.app/search/research-the-peer-reviewed-evidence-and-primary-sc/TPPdaWrzSWGIdPzNPruDdA/
+- Full saved research document in the Thai IPA Undermind workspace: https://app.undermind.ai/projects/49bbd978-a5a9-4cac-a7bb-a72848f50e10?path=/Research%20the%20peer-reviewed%20evidence%20and%20primary%20scholarly%20literature%20relevant%20to.md
+- Firecrawl balance was zero for this billing period at the time of review; no live browser/manual accessibility or large archive download was attempted. GitHub Actions remains the available repository verification channel.
+
+### Verification status
+- These are documentation-only changes. Exact-head CI, Web Static and any source/evidence validators must be rerun on the final branch head before marking this documentation checkpoint verified.
+- Existing verified runtime code head and prior exact-head CI remain unchanged. No local tests are claimed; the session remains connector-only.
+
+### Remaining acceptance blockers
+- Two qualified independent Standard Thai reviewers plus separate adjudication; two independent Ukrainian-native reviewers.
+- CCOST A–D curator clarification and actual archive/TextGrid inspection.
+- Immutable LOTUSDIS revision and real audio asset hashes/clean intervals.
+- Hands-on keyboard, screen-reader, zoom/reflow, mobile and assistive-technology testing.
