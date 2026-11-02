@@ -304,7 +304,7 @@
     "rows": 351780,
     "vowel_rime_records": 41
   },
-  "latest_documentation_checkpoint": "research/global-timit-thai-source-review-20261102-clean; source metadata audit only; exact-head CI pending.",
+  "latest_documentation_checkpoint": "research/global-timit-thai-source-review-20261102-clean; Global TIMIT source audit and source-use registry verification; implementation head 65abce5f00ddae1377a218f664420b5873981ffb passed Full CI 41459155226.",
   "text_only_checkpoint": {
     "branch": "research/thai-segmentation-gold-parity-verified-20261025",
     "parent_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
@@ -527,7 +527,7 @@
       "status": "PARTIAL",
       "implementation": "Registered Global TIMIT Thai (LDC2022S13) after inspecting the LDC catalog, official README, 2018 GlobalTIMIT paper and Non-Member Agreement. The source provides 11.77h/50 speakers/6,000 utterances with word, phone and tone forced alignments; phone labels are DARPABET, not IPA. The paper reports proof-listening and final phone/alignment QA, but not independent dual labels or Thai-specific quantitative accuracy.",
       "blocker": "Authorized data access and sample labels are unavailable in this session; Thai-specific phone/tone quality, DARPABET-to-IPA mapping and independent IAA are unverified. LDC Non-Member Agreement is non-commercial and prohibits redistribution outside the research group.",
-      "acceptance": "Obtain applicable written LDC authorization; inspect pinned phone/tone/TextGrid samples and DARPABET inventory; establish mapping and alignment quality; independently dual-review/adjudicate any rows used for phonetic evaluation. Do not use for public/commercial distribution without appropriate rights."
+      "acceptance": "Source metadata and fail-closed source-use registry exact-head CI 41459155226 passed on 65abce5f00ddae1377a218f664420b5873981ffb (321 pytest, 1,169 subtests, Ruff, wheel smoke, master artifact). Remaining acceptance: obtain and execute applicable LDC agreement; inspect pinned samples; document DARPABET mapping and Thai-specific alignment quality; independently dual-review/adjudicate before any gold/accuracy claim. No public/commercial use without appropriate rights."
     }
   ],
   "latest_implementation_branch": "research/independent-adjudication-gates-20261101 (merged into main)",
@@ -2962,6 +2962,19 @@
     ],
     "benchmark_gold_permissions": [],
     "evidence_registry_gate": "REJECTS_SOURCE_WHILE_BLOCKED",
-    "publication_of_derived_annotations": "REQUIRES_EXPLICIT_RIGHTS_REVIEW"
+    "publication_of_derived_annotations": "REQUIRES_EXPLICIT_RIGHTS_REVIEW",
+    "exact_head_verification": {
+      "commit": "65abce5f00ddae1377a218f664420b5873981ffb",
+      "ci_run": "41459155226",
+      "ci_result": "PASSED_ALL_3_JOBS",
+      "test_job": "PASSED",
+      "pytest_tests": 321,
+      "unittest_subtests": 1169,
+      "ruff": "PASSED",
+      "wheel_install_smoke": "PASSED",
+      "master_artifact": "PASSED_351780_ROWS_41_VOWEL_RECORDS",
+      "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
+      "accuracy": "NOT_MEASURED"
+    }
   }
 }

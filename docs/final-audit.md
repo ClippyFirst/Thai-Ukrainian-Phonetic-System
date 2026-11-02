@@ -1486,3 +1486,10 @@ The new test/tool code was committed on the PR branch and awaits exact-head CI c
 - Status: source discovery/metadata audit DONE_VERIFIED; authorized data acquisition, sample/label inspection, DARPABET mapping and independent review BLOCKED. This does not change linguistic_accuracy = NOT_MEASURED or repository readiness.
 
 - The separate IPA benchmark source-use registry also records Global TIMIT as `BLOCKED`; no broad phonemic/surface gold permissions are granted. The evidence-registry gate rejects audio-source use until authorized access is documented. This prevents a corpus-catalog entry from silently becoming a usable benchmark source.
+
+
+### Global TIMIT source-registry exact-head verification — 2026-11-02
+
+- Full CI [41459155226](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41459155226) passed on source/evidence implementation head `65abce5f00ddae1377a218f664420b5873981ffb`.
+- All three jobs passed: `test`, `wheel-install-smoke`, `master-artifact`. The test job reports Ruff clean, **321 pytest tests passed**, **1,169 unittest subtests passed**, evidence-registry validation, generated-artifact drift checks, browser/parity/UI/accessibility contracts, segmentation diagnostics and runtime diagnostics. Wheel-from-sdist isolated install smoke and the 351,780-row / 41-vowel master artifact check passed.
+- This is engineering verification of the source registry and fail-closed gate only. It does not grant access rights, validate the corpus's Thai phone labels, create independent gold or change accuracy from `NOT_MEASURED`. No local pytest/Ruff was run; GitHub Actions is the verification source.

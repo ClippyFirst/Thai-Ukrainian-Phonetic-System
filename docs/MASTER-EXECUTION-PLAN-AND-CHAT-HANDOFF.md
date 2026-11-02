@@ -2212,3 +2212,11 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Local test execution remains unavailable in the connector-only environment. Exact-head GitHub Actions is required before the source-registry update is marked engineering-verified.
 
 - Added the same source to `data/benchmark/source-registry.tsv` with `verification_status=BLOCKED`; only `ACOUSTIC_PHONETICS_RESEARCH` is listed, and IPA gold permissions are absent. Added a regression test proving the evidence-registry gate rejects it while blocked. Any later use requires signed LDC authorization, asset-level provenance and a separate review of rights to publish derived annotations.
+
+
+### Global TIMIT source-registry verification closeout
+
+- Source registry, benchmark source-use registry and regression tests passed exact-head Full CI [41459155226](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41459155226) on implementation commit `65abce5f00ddae1377a218f664420b5873981ffb`.
+- All three jobs passed: `test`, `wheel-install-smoke`, `master-artifact`; Ruff clean; 321 pytest tests and 1,169 unittest subtests passed; evidence registry validator rejected blocked Global TIMIT use as expected; wheel-install smoke and master artifact passed.
+- The CI result verifies the registry/test/documentation changes at that head only. No local test run is claimed. The final documentation-only closeout will receive its own exact-head CI run before handoff completion.
+- PR #188 remains a draft; no merge or production routing. Earlier 28-commit draft PR #187 was closed as superseded; its branch remains intact. The clean branch is based directly on main and carries one implementation commit plus this verification closeout.
