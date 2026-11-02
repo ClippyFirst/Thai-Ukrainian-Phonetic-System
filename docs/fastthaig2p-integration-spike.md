@@ -105,3 +105,11 @@ This is an engineering comparison only. Latency is from one 42-item run and is n
 - Final-head benchmark artifact SHA-256: `c93e2a97b635470dadbef3776009d0d181dc5fd0d9967a8b195bd3571c55bbb7`; 210 rows, 42 inputs × 5 profiles; corpus SHA-256 unchanged.
 - Final-head median/p95 ms: ClippyFirst phonemic 0.487/2.199; ClippyFirst broad-surface 0.465/1.791; FastThaiG2P 0.030/2.116; thaiphon 0.180/0.889; Goruut 0.512/0.674. Coverage and pairwise agreement are unchanged from the first valid run.
 - This verifies the optional adapter, report generation and engineering integration. It does **not** resolve independent-gold accuracy or item-level rights for upstream generated/manual/fallback data. No production runtime change was made.
+
+## Final closeout run — 2026-11-02
+
+- Latest branch head: `7d904b96b1790efeaa579b1552e2fbb41a5d2188` (documentation/audit closeout after code-bearing checkpoint `84ca5c39e82e75db594a4a21152572a083d238db`).
+- Optional workflow [41432769499](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41432769499) passed on the latest branch head; the pinned optional extra was installed and all five profiles returned rows/explicit abstentions.
+- Artifact SHA-256: `54fa65b4dada15bcf79d466441896435cee3df83e67f71b5236260f8337866c5`; 210 rows; corpus SHA-256 `94d18b9f55c2be35d3d0b35811f53d306b9be6906ae4cc6ea2241d18ebadf6b8`.
+- Latest single-run median/p95 ms: ClippyFirst phonemic 0.479/2.701; ClippyFirst broad-surface 0.469/1.635; FastThaiG2P 0.032/2.203; thaiphon 0.169/0.884; Goruut 0.492/0.610. Coverage and pairwise agreement remain unchanged.
+- Exact-head full CI on code-bearing checkpoint `84ca5c39e82e75db594a4a21152572a083d238db` passed all three jobs in [41432085958](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41432085958). A later documentation-only closeout commit is present on branch head `7d904b96b1790efeaa579b1552e2fbb41a5d2188`; CI run [41432769414](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41432769414) is a subsequent documentation-head rerun and may still be in progress.
