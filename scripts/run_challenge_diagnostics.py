@@ -162,6 +162,22 @@ def build_report(path: Path = DEFAULT_INPUT) -> dict[str, Any]:
                 for token in word_segmented_tokens
                 if token.get("kind") == "thai" and token.get("word_segmentation_evidence_grade")
             }),
+            "word_segmented_token_details": [
+                {
+                    "input": token.get("input"),
+                    "segmentation_status": token.get("segmentation_status"),
+                    "word_segmentation_status": token.get("word_segmentation_status"),
+                    "phonemic_ipa": [
+                        syllable.get("phonemic_ipa")
+                        for syllable in token.get("syllables", [])
+                    ],
+                    "ukrainian_outputs": [
+                        syllable.get("ukrainian_transliteration")
+                        for syllable in token.get("syllables", [])
+                    ],
+                }
+                for token in word_segmented_tokens if token.get("kind") == "thai"
+            ],
             "coordination_cluster": coordination_cluster,
         })
 
