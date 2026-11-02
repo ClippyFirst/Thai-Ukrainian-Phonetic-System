@@ -7,7 +7,7 @@
 | Source-backed special-orthography recovery | PARTIAL — source pinned, implementation and tests CI-verified; independent review pending | `ฤๅษี → รือ|สี` pinned to Thai Wiktionary oldid 1774048; `ทฤษฎี → ทฺริด-สะ-ดี` and /tʰrit̚˦˥.sa˨˩.diː˧/ pinned to en.wiktionary oldid 87195875. Exact `ทริด → ทริท` normalization does not generalize to arbitrary `ทร`. | Exact-head CI #41471961004 and source-registry checks passed. Independent expert review remains necessary before these entries count as gold. |
 
 
-**Exact-head refresh note:** the table's CI evidence verifies code head `55f2ef9966da065326873014e8066acc43b2a151`. The subsequent audit/matrix/handoff register refresh is on documentation head `e92c19ec7f54e65515af9cd981cbf4321284817f` and requires a fresh exact-head CI/Web Static run; no runtime code changed in that documentation-only refresh.
+**Exact-head verification note:** runtime/code changes are verified on `55f2ef9966da065326873014e8066acc43b2a151` (CI #41471961004; Web Static #41471960975). The subsequent audit/matrix/handoff documentation checkpoint `2523002cd0a06c0b30efed6669ca4ba012cb3e10` also passed full CI #41474317754 and Web Static #41474317862. The structured open-PR/branch inventory update in the current commit is documentation-only and requires its own exact-head rerun.
 
 ## Priority research continuation — 2026-11-02
 

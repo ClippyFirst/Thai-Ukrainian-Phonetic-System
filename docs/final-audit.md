@@ -14,7 +14,7 @@
 
 ## Documentation-head verification status — 2026-11-02
 
-The benchmark runtime/code evidence above is verified on `55f2ef9966da065326873014e8066acc43b2a151` (CI #41471961004 and Web Static #41471960975). The latest audit/matrix/handoff-only documentation refresh is at `e92c19ec7f54e65515af9cd981cbf4321284817f`; its exact-head CI and Web Static runs must complete before this refreshed documentation snapshot is considered verified. No runtime code changed after the verified code head.
+The benchmark runtime/code evidence above is verified on `55f2ef9966da065326873014e8066acc43b2a151` (CI #41471961004 and Web Static #41471960975). The subsequent audit/matrix/handoff-only documentation checkpoint `2523002cd0a06c0b30efed6669ca4ba012cb3e10` passed exact-head CI [41474317754](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41474317754) and Web Static [41474317862](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41474317862). The structured open-PR/branch inventory update in the current commit is documentation-only and requires its own exact-head rerun. No runtime code changed after the verified code head.
 
 ## 2026-11-01 — independent adjudication readiness and CCOST source reconciliation
 

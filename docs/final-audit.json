@@ -545,7 +545,7 @@
     }
   ],
   "latest_implementation_branch": "fix/benchmark-error-clusters-20261102 (PR #189 open draft)",
-  "latest_implementation_commit_pending_ci": "No runtime changes after verified code head 55f2ef9966da065326873014e8066acc43b2a151; audit/matrix/handoff/final-audit documentation refresh is at the current PR branch head and requires exact-head CI/Web Static rerun.",
+  "latest_implementation_commit_pending_ci": "No runtime changes after verified code head 55f2ef9966da065326873014e8066acc43b2a151; latest docs checkpoint 2523002cd0a06c0b30efed6669ca4ba012cb3e10 passed CI 41474317754 and Web Static 41474317862; final open-PR/branch inventory update requires exact-head rerun.",
   "current_head_status_at_audit_refresh": "Code/workflow checkpoint b6dbec7928b106f0ab52e06af33a26635df75412 passed CI 40322960615 and Web static validation 40322959844. Documentation checkpoint e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff passed full CI 40323209539 and Web static validation 40323209471. This audit-register update creates a newer documentation HEAD and requires exact-head CI/static validation before the current branch HEAD is marked green.",
   "current_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
   "current_implementation_commit_before_audit_update": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
@@ -2155,23 +2155,29 @@
     "latest_pr_head_ci_status": "See PR #169 metadata; previous exact-head run 41244614135 passed all three jobs."
   },
   "current_branch_inventory": {
-    "branch_refs": 16,
+    "branch_refs": 22,
     "prefix_counts": {
       "chore": 2,
       "ci": 1,
       "docs": 4,
-      "fix": 1,
+      "fix": 2,
       "main": 1,
       "refactor": 4,
-      "research": 1,
+      "research": 6,
       "test": 1,
       "work": 1
     },
     "as_of": "2026-11-02",
     "deletions": 0,
-    "note": "16 refs including the merged research branch, dedicated work branch, PR #181 historical branch and post-merge documentation closeout branch. No branch was deleted; historical refs remain pending an owner-approved retention policy."
+    "note": "22 current branch refs inspected through GitHub API. All are preserved; no branch was deleted. Five open draft PRs (#184, #185, #186, #188, #189) remain unmerged. #186 is based on #185; #184 is a separate FastThaiG2P adapter spike; #188 is a separate Global TIMIT source review."
   },
-  "open_prs_current": [],
+  "open_prs_current": [
+    "#189 — Triage G2P benchmark error clusters and recover attested lexical cases (draft; unmerged)",
+    "#188 — Register Global TIMIT Thai as restricted alignment candidate (draft; unmerged)",
+    "#186 — Add conservative typed FastThaiG2P IPA boundary (draft; unmerged; based on #185)",
+    "#185 — Add optional FastThaiG2P challenge comparison spike (draft; unmerged)",
+    "#184 — Add optional FastThaiG2P adapter and same-input comparison (draft; unmerged)"
+  ],
   "latest_pr_head_source": "PR #182 merged into main as 65584d9a3d3d64a8e520dbd32411bef4b0a3dd9e; no product PR remains open at this checkpoint.",
   "status_refresh_2026_10_31": {
     "main_sha": "8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8",
@@ -2690,7 +2696,11 @@
     "exact_regression_test_ci_result": "PASSED_ALL_3_JOBS"
   },
   "open_prs": [
-    "#189 — Triage G2P benchmark error clusters and recover attested lexical cases (draft; unmerged)"
+    "#189 — Triage G2P benchmark error clusters and recover attested lexical cases (draft; unmerged)",
+    "#188 — Register Global TIMIT Thai as restricted alignment candidate (draft; unmerged)",
+    "#186 — Add conservative typed FastThaiG2P IPA boundary (draft; unmerged; based on #185)",
+    "#185 — Add optional FastThaiG2P challenge comparison spike (draft; unmerged)",
+    "#184 — Add optional FastThaiG2P adapter and same-input comparison (draft; unmerged)"
   ],
   "audio_interval_overlap_code_checkpoint_2026_11_02": {
     "verified_code_head": "964b4930321e68c77ba5e956e1c0ecd12164ccfa",
@@ -3014,8 +3024,13 @@
     "web_static_result": "PASSED",
     "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
     "linguistic_accuracy": "NOT_MEASURED",
-    "branch_ahead_of_main": 60,
+    "branch_ahead_of_main": 61,
     "branch_behind_main": 0,
-    "documentation_refresh": "VALIDATION_MATRIX_AUDIT_HANDOFF_AND_STRUCTURED_AUDIT_UPDATED_AFTER_CODE_HEAD; EXACT_HEAD_CI_WEB_STATIC_PENDING_FOR_FINAL_DOCUMENTATION_HEAD"
+    "documentation_refresh": "OPEN_PR_AND_BRANCH_INVENTORY_UPDATED_AFTER_VERIFIED_DOCUMENTATION_CHECKPOINT; FINAL_EXACT_HEAD_CI_PENDING",
+    "documentation_checkpoint_head": "2523002cd0a06c0b30efed6669ca4ba012cb3e10",
+    "documentation_checkpoint_ci_run": 41474317754,
+    "documentation_checkpoint_ci_result": "PASSED_ALL_3_JOBS",
+    "documentation_checkpoint_web_static_run": 41474317862,
+    "documentation_checkpoint_web_static_result": "PASSED"
   }
 }
