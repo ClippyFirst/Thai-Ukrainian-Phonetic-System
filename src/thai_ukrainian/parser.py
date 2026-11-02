@@ -47,6 +47,8 @@ LEXICAL_READINGS={
     "ฤๅษี":"รือ|สี",
     "ฤษี":"รึ|สี",
     "ทฤษฎี":"ทริด|สะ|ดี",
+    # Exact phonetic respelling of the first syllable in ทฤษฎี; not a global ทร rule.
+    "ทริด":"ทริท",
     # Exact phonetic respelling of the first syllable in ทฤษฎี; this does not
     # generalize the ambiguous ทร spelling to other lexical forms.
     "ทริด":"ทริท",
