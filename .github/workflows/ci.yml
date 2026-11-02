@@ -49,6 +49,11 @@ jobs:
           if-no-files-found: error
       - run: python scripts/run_challenge_diagnostics.py --output /tmp/challenge-runtime-diagnostics.json
       - run: python -c "import json; r=json.load(open('/tmp/challenge-runtime-diagnostics.json',encoding='utf-8')); s=r['summary']; assert s['challenge_inputs']==42, s; assert s['inputs_with_engine_output']+s['inputs_abstained_or_without_complete_output']==42, s; assert r['evaluation_kind']=='runtime_diagnostic_not_accuracy_benchmark'; assert 'accuracy' not in s"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: thai-challenge-runtime-diagnostics
+          path: /tmp/challenge-runtime-diagnostics.json
+          if-no-files-found: error
       - run: node web/tests/ipa-ua.test.mjs
       - run: node web/tests/parity.test.mjs
       - run: node web/tests/ui-contract.test.mjs
