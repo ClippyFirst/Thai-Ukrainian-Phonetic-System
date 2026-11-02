@@ -197,6 +197,45 @@ class TextPipelineTests(unittest.TestCase):
                 if word == "เตอร์":
                     self.assertEqual(result.normalized, "เตอ")
 
+
+    def test_challenge_exact_lexical_readings_are_recovered_by_text_pipeline(self):
+        # Exact lexical readings already curated in parser.py must be reachable
+        # from the conservative text API; this does not enable general guessing.
+        expected = {
+            "เตอร์": ("tɤː", "mid"),
+            "เทอร์": ("tʰɤː", "mid"),
+        }
+        for word, (ipa, tone) in expected.items():
+            with self.subTest(word=word):
+                self.assertEqual(segment_thai_word(word), ((word,), "parser_lexical_reading"))
+                token = analyze_text(word)[0]
+                self.assertEqual(token["segmentation_status"], "parser_lexical_reading")
+                self.assertEqual(len(token["syllables"]), 1)
+                self.assertEqual(token["syllables"][0]["phonemic_ipa"], ipa)
+                self.assertEqual(token["syllables"][0]["tone"]["tone"], tone)
+
+    def test_source_attested_ruesi_compound_is_no_longer_unnecessarily_withheld(self):
+        # Thai Wiktionary oldid 1774048 records ฤๅษี = รือ-สี and
+        # /rɯː˧.siː˩˩˦/. Source-attested, not independent IPA gold.
+        self.assertEqual(segment_thai_word("ฤๅษี"), (("รือ", "สี"), "lexicon"))
+        token = analyze_text("ฤๅษี")[0]
+        self.assertEqual(token["segmentation_status"], "lexicon")
+        self.assertEqual([item["phonemic_ipa"] for item in token["syllables"]], ["rɯː", "siː"])
+        self.assertEqual([item["tone"]["tone"] for item in token["syllables"]], ["mid", "rising"])
+        self.assertTrue(all(item["ukrainian_transliteration"] for item in token["syllables"]))
+
+    def test_source_attested_thrit_syllable_resolves_only_exact_tฤษฎี_reading(self):
+        # en.wiktionary oldid 87195875 records ทฤษฎี = ทฺริด-สะ-ดี,
+        # IPA /tʰrit̚˦˥.sa˨˩.diː˧/. The lexical respelling is exact, not a
+        # productive rule for arbitrary ทร sequences.
+        token = analyze_text("ทฤษฎี")[0]
+        self.assertEqual(token["segmentation_status"], "lexicon")
+        self.assertEqual([item["phonemic_ipa"] for item in token["syllables"]], ["tʰrit", "sa", "diː"])
+        self.assertEqual([item["tone"]["tone"] for item in token["syllables"]], ["high", "low", "mid"])
+        self.assertEqual(analyze_syllable("ทริด").status, "analyzed")
+        self.assertEqual(analyze_syllable("ทริด").phonemic_ipa, "tʰrit")
+        self.assertEqual(analyze_syllable("ทราย").status, "analysis-dependent:special-orthography")
+
     def test_unlisted_rr_form_remains_unresolved(self):
         # The OBEC source gives lexical readings for specific words, but also
         # documents several readings and syllabifications for different words.
