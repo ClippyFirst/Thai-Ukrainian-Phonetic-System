@@ -304,7 +304,7 @@
     "rows": 351780,
     "vowel_rime_records": 41
   },
-  "latest_documentation_checkpoint": "docs/post-merge-site-release-closeout-20261102; current branch head is available from GitHub metadata.",
+  "latest_documentation_checkpoint": "PR #190 draft; current branch head after audit/handoff refresh is recorded in GitHub metadata. Code head 7ea89691fcb904612c80370721555f1452eed6e9 passed Web Static 41482464764 and CI 41482464813.",
   "text_only_checkpoint": {
     "branch": "research/thai-segmentation-gold-parity-verified-20261025",
     "parent_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
@@ -520,6 +520,12 @@
       "status": "DONE_VERIFIED",
       "implementation": "PR #182 squash-merged as 65584d9; main CI 41420468842, Web Static 41420468939 and Pages deployment/published-content verification 41420468875 all passed. The updated service is live at GitHub Pages.",
       "acceptance": "Post-merge Pages build/deploy/published-content verification passed; main CI and Web Static passed."
+    },
+    {
+      "id": "WCAG-CONTROL-CONTRAST-001",
+      "status": "DONE_VERIFIED — narrow source-level correction",
+      "implementation": "Textarea and output-selector borders changed from #9999a8 (2.81:1) to #767676 (4.54:1); static test extracts active CSS border declarations and enforces 3:1.",
+      "acceptance": "Exact-head Web Static 41482464764 and full CI 41482464813 passed. Manual WCAG 2.2 AA acceptance remains BLOCKED; range slider contrast was not covered."
     }
   ],
   "latest_implementation_branch": "research/independent-adjudication-gates-20261101 (merged into main)",
@@ -2904,5 +2910,18 @@
     "linguistic_accuracy": "NOT_MEASURED",
     "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY"
   },
-  "latest_full_repository_head_pages_run": "41420468875"
+  "latest_full_repository_head_pages_run": "41420468875",
+  "pr_reconciliation": {
+    "pr190": {
+      "state": "open",
+      "merged": false,
+      "branch": "fix/accessibility-control-contrast-20261102",
+      "head": "7ea89691fcb904612c80370721555f1452eed6e9",
+      "scope": "textarea and output-selector visible border contrast; strictness slider excluded because its active range rule resets border to zero",
+      "web_static_run": 41482464764,
+      "full_ci_run": 41482464813,
+      "full_ci_status": "PASS — test, wheel-install-smoke, master-artifact",
+      "manual_wcag_status": "BLOCKED — keyboard/screen-reader/zoom/mobile review not performed"
+    }
+  }
 }
