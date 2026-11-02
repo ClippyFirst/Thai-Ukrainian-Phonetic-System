@@ -1,4 +1,4 @@
-## Priority research continuation — 2026-11-02
+| FastThaiG2P typed IPA diagnostic boundary | PARTIAL — code added; exact-head CI pending | Per-syllable `PhoneticResult` diagnostics preserve word grouping, five canonical Chao tone contours, segment features, and explicit uncertainty. IPA layer fields remain unset; Ukrainian adapter withholds. Partial output and unsupported sentinel `8` are rejected. Draft stacked PR #186. | Exact-head CI and FastThaiG2P workflow must pass; then inspect artifact and tests. Promotion to phonemic/broad-surface IPA and Ukrainian output remains blocked on independent adjudication of source convention and segment/tone interpretation. |\n\n## Priority research continuation — 2026-11-02
 
 | Priority | Status | Work completed in this continuation | Remaining acceptance gate |
 |---|---|---|---|
