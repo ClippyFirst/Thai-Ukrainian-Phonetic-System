@@ -13,7 +13,7 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
-from thai_ukrainian.text import analyze_text
+from thai_ukrainian.text import analyze_text, analyze_text_with_word_segmentation
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_INPUT = ROOT / "data" / "benchmark" / "thai_g2p_challenge.jsonl"
@@ -44,13 +44,51 @@ def load_challenge(path: Path) -> list[dict[str, Any]]:
     return rows
 
 
+def _emits_complete_output(tokens: list[dict[str, Any]]) -> bool:
+    thai_tokens = [token for token in tokens if token.get("kind") == "thai"]
+    syllables = [syllable for token in thai_tokens for syllable in token.get("syllables", [])]
+    return bool(thai_tokens) and bool(syllables) and all(
+        bool(syllable.get("phonemic_ipa"))
+        and bool(syllable.get("ukrainian_transliteration"))
+        for syllable in syllables
+    ) and all(token.get("segmentation_status") != "unresolved" for token in thai_tokens)
+
+
+def _coordination_cluster(row: dict[str, Any], emitted: bool, syllables: list[dict[str, Any]],
+                          word_segmented_emitted: bool) -> str:
+    if emitted:
+        return "OUTPUT_AVAILABLE_NOT_GOLD"
+    statuses = {str(item.get("status")) for item in syllables}
+    if any(status.startswith("analysis-dependent:special-orthography") for status in statuses):
+        if row.get("stratum") in {"ฤ-series", "ฦ-series"}:
+            return "SPECIAL_VOWEL_NEEDS_LEXICAL_CONTEXT"
+        if "ทร" in row.get("input", ""):
+            return "CONTEXTUAL_THR_HOMOGRAPH_OR_CLUSTER"
+        if "รร" in row.get("input", ""):
+            return "CONTEXTUAL_RR_READING"
+        return "SPECIAL_ORTHOGRAPHY_NEEDS_LEXICAL_EVIDENCE"
+    if row.get("stratum") == "invalid-input":
+        return "EXPECTED_INVALID_OR_MALFORMED_ABSTENTION"
+    if word_segmented_emitted:
+        return "CONSERVATIVE_ENDPOINT_ABSTENTION_WORD_SEGMENTED_PATH_AVAILABLE"
+    if str(row.get("stratum", "")).startswith("article-style"):
+        return "CONTINUOUS_TEXT_WORD_BOUNDARY_GAP"
+    if row.get("stratum") == "loanword":
+        return "LOANWORD_LEXICAL_COVERAGE_GAP"
+    if row.get("stratum") == "false-cluster":
+        return "FALSE_CLUSTER_LEXICAL_EXCEPTION_GAP"
+    if row.get("stratum") == "rr-series":
+        return "RR_LEXICAL_READING_GAP"
+    return "UNRESOLVED_SEGMENTATION_OR_PHONOLOGY_REVIEW"
+
+
 def build_report(path: Path = DEFAULT_INPUT) -> dict[str, Any]:
     challenge = load_challenge(path)
     segmentation_counts: Counter[str] = Counter()
     analysis_counts: Counter[str] = Counter()
     details: list[dict[str, Any]] = []
     output_count = 0
-    abstained_count = 0
+    abstained_count = 0\n    word_segmented_output_count = 0
 
     for row in challenge:
         tokens = analyze_text(row["input"])
@@ -69,15 +107,24 @@ def build_report(path: Path = DEFAULT_INPUT) -> dict[str, Any]:
         for syllable in syllables:
             analysis_counts[str(syllable.get("status", "missing-status"))] += 1
 
-        emitted = bool(syllables) and all(
-            bool(syllable.get("phonemic_ipa"))
-            and bool(syllable.get("ukrainian_transliteration"))
-            for syllable in syllables
-        ) and all(token.get("segmentation_status") != "unresolved" for token in thai_tokens)
+        emitted = _emits_complete_output(tokens)
+        word_segmented_tokens = analyze_text_with_word_segmentation(row["input"])
+        word_segmented_syllables = [
+            syllable
+            for token in word_segmented_tokens
+            if token.get("kind") == "thai"
+            for syllable in token.get("syllables", [])
+        ]
+        word_segmented_emitted = _emits_complete_output(word_segmented_tokens)
+        if word_segmented_emitted:
+            word_segmented_output_count += 1
         if emitted:
             output_count += 1
         else:
             abstained_count += 1
+        coordination_cluster = _coordination_cluster(
+            row, emitted, syllables, word_segmented_emitted
+        )
 
         details.append({
             "id": row["id"],
@@ -97,6 +144,14 @@ def build_report(path: Path = DEFAULT_INPUT) -> dict[str, Any]:
             "ukrainian_outputs": [s.get("ukrainian_transliteration") for s in syllables],
             "warnings": [warning for token in tokens for warning in token.get("warnings", [])],
             "engine_output_emitted": emitted,
+            "word_segmented_output_emitted": word_segmented_emitted,
+            "word_segmented_token_count": sum(token.get("kind") == "thai" for token in word_segmented_tokens),
+            "word_segmented_syllable_count": len(word_segmented_syllables),
+            "word_segmented_statuses": [
+                token.get("word_segmentation_status")
+                for token in word_segmented_tokens if token.get("kind") == "thai"
+            ],
+            "coordination_cluster": coordination_cluster,
         })
 
     return {
@@ -108,6 +163,11 @@ def build_report(path: Path = DEFAULT_INPUT) -> dict[str, Any]:
             "challenge_inputs": len(challenge),
             "inputs_with_engine_output": output_count,
             "inputs_abstained_or_without_complete_output": abstained_count,
+            "inputs_with_word_segmented_output": word_segmented_output_count,
+            "inputs_without_word_segmented_output": len(challenge) - word_segmented_output_count,
+            "coordination_cluster_counts": dict(sorted(Counter(
+                record["coordination_cluster"] for record in details
+            ).items())),
             "segmentation_status_counts": dict(sorted(segmentation_counts.items())),
             "syllable_analysis_status_counts": dict(sorted(analysis_counts.items())),
         },
@@ -115,6 +175,8 @@ def build_report(path: Path = DEFAULT_INPUT) -> dict[str, Any]:
             "The challenge set has no independently adjudicated IPA or word-boundary gold.",
             "Output presence, parser status, and external-engine agreement are not correctness measures.",
             "Abstention is reported explicitly and is not counted as a pronunciation error.",
+            "The opt-in dictionary-word-segmented path is reported separately; it does not replace the conservative endpoint or prove word-boundary correctness.",
+            "coordination_cluster labels are workflow triage categories, not adjudicated error labels or accuracy outcomes.",
             "This hand-picked adversarial set is not a representative estimate of Thai coverage.",
         ],
         "records": details,
