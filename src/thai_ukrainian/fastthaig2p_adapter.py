@@ -42,6 +42,14 @@ class FastThaiG2POutput:
         return sum(path.path == "rule_fallback" for path in self.token_paths)
 
 
+def parse_ipa_output(raw: str) -> tuple[tuple[str, ...], tuple[str, ...], str]:
+    """Parse slash/dot IPA while retaining any non-IPA passthrough text."""
+    groups = tuple(match.group(1).strip() for match in _WORD_IPA.finditer(raw))
+    syllables = tuple(part for group in groups for part in group.split(".") if part)
+    passthrough = _WORD_IPA.sub("", raw).strip()
+    return groups, syllables, passthrough
+
+
 class FastThaiG2PAdapter:
     """Lazy optional wrapper around fastthaig2p.G2P at UPSTREAM_COMMIT."""
 
