@@ -1404,3 +1404,13 @@ The fix is deliberately limited to the existing abstention guard; no schema, run
 - Exact-head Web Static [41406424761](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41406424761) and external VISTEC segmentation evaluation [41406424960](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41406424960) also passed on the same head.
 - Provenance distinction: CI [41406087052](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41406087052) ran on implementation commit `964b4930321e68c77ba5e956e1c0ecd12164ccfa`. The additional regression tests for required `microphone_id`, file-level overlap with a clean selected interval, and rejection of an overlapping selected interval were committed in `826fcddad4d66471b1ba95f00c4cc5b5f430e237`; **41406424727 is the CI run that verifies those tests**.
 - This is **DONE_VERIFIED engineering**, not linguistic validation. No audio assets or expert annotations were added; Thai IPA/segmentation and Ukrainian practical transcription accuracy remain **NOT MEASURED**. The external evidence gates below remain open.
+
+
+## Thai G2P literature review — 2026-11-03
+
+| Task / acceptance criterion | State | Evidence / next acceptance |
+|---|---|---|
+| Audit published Thai G2P evaluation metrics and reference-label provenance | DONE_VERIFIED — literature review completed | Full text inspected for Saychum et al. (2016) and Yamasaki (2022); abstract-level evidence recorded separately for Rugchatjaroen et al. (2019), Morén & Zsiga (2006), Xu & Zhang (2024), Pons Bordería & Aliaga (2021), and Jitwiriyanont & Nantanukul (2026). See `docs/research/thai-g2p-evaluation-literature-2026-11-03.md`. This verifies the literature synthesis, not ClippyFirst accuracy. |
+| Keep literature-reported scores separate from this project's evidence | DONE_VERIFIED — reporting rule documented | Saychum's dictionary WER/PER and Yamasaki's primarily Wiktionary-derived 0.931 exact-sequence accuracy are not independent expert gold for this project. Current 42+6 prompts remain unadjudicated; no cross-study numeric comparison or runtime rule change is justified. |
+| Independently adjudicate remaining Thai phonology, segmentation and Ukrainian target outputs | BLOCKED — external reviewers required | Existing blind packets and protocols remain prepared; reviewer registry is empty. Acceptance: two qualified independent Thai reviewers plus adjudicator; separate two Ukrainian-native reviewers; frozen labels and disagreement/adjudication logs. |
+
