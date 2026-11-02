@@ -45,6 +45,8 @@ jobs:
       - run: node web/tests/ipa-ua.test.mjs
       - run: node web/tests/parity.test.mjs
       - run: node web/tests/ui-contract.test.mjs
+      - name: Check static accessibility contracts and selected WCAG AA contrast pairs
+        run: node web/tests/accessibility-contract.test.mjs
       - name: Benchmark browser Thai text segmentation latency
         run: node scripts/benchmark_web_segmentation.mjs
       - uses: actions/upload-artifact@v7
