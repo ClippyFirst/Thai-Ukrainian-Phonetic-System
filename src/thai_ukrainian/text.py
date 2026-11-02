@@ -108,10 +108,10 @@ def analyze_text(text: str):
 def analyze_text_with_word_segmentation(text: str):
     """Return lossless mixed-text tokens with explicit dictionary word boundaries.
 
-    This opt-in path is separate from the conservative legacy endpoint. It
-    records source character spans and unknown-cluster fallbacks; it does not
-    treat a dictionary word boundary as evidence that the word's syllables or
-    pronunciation are known.
+    This opt-in path is separate from the conservative legacy endpoint. Exact
+    text-lexicon entries take precedence; other runs use dictionary word
+    boundaries. It records source spans and unknown-cluster fallbacks, and
+    never treats a dictionary boundary alone as pronunciation evidence.
     """
     from .segmentation import dictionary_word_segmentation
 
