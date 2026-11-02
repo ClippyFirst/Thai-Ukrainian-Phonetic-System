@@ -58,10 +58,10 @@ def _coordination_cluster(row: dict[str, Any], emitted: bool, syllables: list[di
                           word_segmented_emitted: bool) -> str:
     if emitted:
         return "OUTPUT_AVAILABLE_NOT_GOLD"
+    if row.get("stratum") in {"ฤ-series", "ฦ-series"}:
+        return "SPECIAL_VOWEL_NEEDS_LEXICAL_CONTEXT"
     statuses = {str(item.get("status")) for item in syllables}
     if any(status.startswith("analysis-dependent:special-orthography") for status in statuses):
-        if row.get("stratum") in {"ฤ-series", "ฦ-series"}:
-            return "SPECIAL_VOWEL_NEEDS_LEXICAL_CONTEXT"
         if "ทร" in row.get("input", ""):
             return "CONTEXTUAL_THR_HOMOGRAPH_OR_CLUSTER"
         if "รร" in row.get("input", ""):
@@ -152,6 +152,16 @@ def build_report(path: Path = DEFAULT_INPUT) -> dict[str, Any]:
                 token.get("word_segmentation_status")
                 for token in word_segmented_tokens if token.get("kind") == "thai"
             ],
+            "word_segmented_methods": sorted({
+                str(token.get("word_segmentation_method"))
+                for token in word_segmented_tokens
+                if token.get("kind") == "thai" and token.get("word_segmentation_method")
+            }),
+            "word_segmented_evidence_grades": sorted({
+                str(token.get("word_segmentation_evidence_grade"))
+                for token in word_segmented_tokens
+                if token.get("kind") == "thai" and token.get("word_segmentation_evidence_grade")
+            }),
             "coordination_cluster": coordination_cluster,
         })
 
