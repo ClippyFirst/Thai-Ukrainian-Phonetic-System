@@ -1486,3 +1486,7 @@ The new test/tool code was committed on the PR branch and awaits exact-head CI c
 - Remaining blockers are unchanged: independent Thai and Ukrainian reviewers, CCOST A–D curator clarification and archive inspection, full immutable LOTUSDIS audio revision plus real hashed assets/intervals, and hands-on WCAG keyboard/screen-reader/device testing.
 
 **Final readiness:** the current browser service is deployed and engineering-verified. The repository remains a research prototype, not a linguistic-accuracy or WCAG-conformance release. Linguistic accuracy remains `NOT_MEASURED`.
+
+### FastThaiG2P workflow integration defect found and fixed — 2026-11-02
+
+The first optional run [41431032031](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41431032031) uploaded an artifact but did not produce the requested comparison: the workflow had not installed the local src-layout package, so both ClippyFirst and the adapter import failed. This run is explicitly excluded from comparison results. The workflow now installs the local package editable. ClippyFirst's candidate serialization was also corrected to use typed `PhoneticResult` and preserve its tone contour. Exact-head CI and a fresh optional workflow artifact remain pending; no accuracy or coverage conclusion is drawn from the failed attempt.
