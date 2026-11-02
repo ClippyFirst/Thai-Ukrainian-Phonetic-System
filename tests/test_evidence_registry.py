@@ -192,6 +192,25 @@ class EvidenceRegistryTests(unittest.TestCase):
                                             language="uk", required_role="UKRAINIAN_NATIVE_REVIEWER", row_id="ua-1")
 
 
+def test_global_timit_thai_is_blocked_until_authorized_and_not_approved_as_gold():
+    registry = load_source_registry(ROOT / "data/benchmark/source-registry.tsv")
+    source_id = "CORP-GLOBAL-TIMIT-THAI"
+    source = registry[source_id]
+    assert source["source_url"] == "https://catalog.ldc.upenn.edu/LDC2022S13"
+    assert source["license"] == "LDC User Agreement for Non-Members"
+    assert source["verification_status"] == "BLOCKED"
+    assert "ACOUSTIC_PHONETICS_RESEARCH" in source["allowed_uses"]
+    assert "BROAD_PHONEMIC_IPA_GOLD_INPUT" not in source["allowed_uses"]
+    assert "BROAD_SURFACE_IPA_GOLD_INPUT" not in source["allowed_uses"]
+    assert "no redistribution" in source["notes"]
+    assert "signed agreement" in source["notes"]
+    with unittest.TestCase().assertRaisesRegex(ValueError, "is blocked"):
+        validate_source_reference(
+            source_id, source["source_url"], source["license"],
+            "ACOUSTIC_PHONETICS_RESEARCH", registry, row_id="global-timit-audio",
+        )
+
+
 if __name__ == "__main__":
     unittest.main()
 

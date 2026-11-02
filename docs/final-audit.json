@@ -2945,7 +2945,7 @@
       "independent_ipa_tone_gold": "BLOCKED",
       "public_or_commercial_redistribution": "BLOCKED"
     },
-    "acceptance": "Obtain and execute the applicable LDC agreement for the intended use; inspect pinned sample .phones/.tones/TextGrid; document DARPABET inventory/mapping and Thai-specific alignment quality; independently dual-review and adjudicate before any gold/accuracy claim.",
+    "acceptance": "Obtain and execute the applicable LDC agreement for the intended use, including explicit permission for any derived annotation distribution; inspect pinned sample .phones/.tones/TextGrid; document DARPABET inventory/mapping and Thai-specific alignment quality; independently dual-review and adjudicate before any gold/accuracy claim.",
     "signed_agreement_required": true,
     "signed_agreement_submission": "email or fax to LDC",
     "data_accuracy_warranty": "LDC disclaims warranties of accuracy/completeness",
@@ -2955,6 +2955,13 @@
     "mandarin_alignment_metric_caveat": "93.2% within 20ms reported for Mandarin only; not applicable to Thai",
     "paper": "GlobalTIMIT_IS2018_submitted.pdf",
     "paper_url": "https://catalog.ldc.upenn.edu/docs/LDC2022S13/GlobalTIMIT_IS2018_submitted.pdf",
-    "alignment_quality_control": "PROOF_LISTENING_AND_FINAL_PHONE_SEQUENCE_ALIGNMENT_CHECK_REPORTED"
+    "alignment_quality_control": "PROOF_LISTENING_AND_FINAL_PHONE_SEQUENCE_ALIGNMENT_CHECK_REPORTED",
+    "benchmark_source_registry_status": "BLOCKED",
+    "benchmark_allowed_uses": [
+      "ACOUSTIC_PHONETICS_RESEARCH"
+    ],
+    "benchmark_gold_permissions": [],
+    "evidence_registry_gate": "REJECTS_SOURCE_WHILE_BLOCKED",
+    "publication_of_derived_annotations": "REQUIRES_EXPLICIT_RIGHTS_REVIEW"
   }
 }
