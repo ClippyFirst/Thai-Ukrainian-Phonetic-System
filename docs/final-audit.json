@@ -304,7 +304,7 @@
     "rows": 351780,
     "vowel_rime_records": 41
   },
-  "latest_documentation_checkpoint": "research/fastthaig2p-typed-ipa-boundary-20261102; exact head a5d7b6031109a837ae24abace057f1ebacbc8714; Full CI 41451373621 and optional workflow 41451373643 passed; artifact 13144194448 inspected.",
+  "latest_documentation_checkpoint": "research/fastthaig2p-typed-ipa-boundary-20261102; exact code head 9d7a4daa5587066cc7d0a789a0b6726715ffc2d6; Full CI 41453694574 and optional workflow 41453695157 passed; artifact 13145966654 inspected.",
   "text_only_checkpoint": {
     "branch": "research/thai-segmentation-gold-parity-verified-20261025",
     "parent_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
@@ -2987,19 +2987,19 @@
       "pull_request": 186,
       "draft": true,
       "base_branch": "research/fastthaig2p-integration-spike-20261102",
-      "verified_code_head": "a5d7b6031109a837ae24abace057f1ebacbc8714",
-      "full_ci_run": 41451373621,
+      "verified_code_head": "9d7a4daa5587066cc7d0a789a0b6726715ffc2d6",
+      "full_ci_run": 41453694574,
       "full_ci_result": "PASSED_ALL_3_JOBS",
       "ruff": "PASSED",
       "pytest": "330_PASSED",
       "unittest_subtests": 1169,
       "wheel_install_smoke": "PASSED",
       "master_artifact": "PASSED",
-      "optional_workflow_run": 41451373643,
+      "optional_workflow_run": 41453695157,
       "optional_workflow_result": "PASSED",
-      "artifact_id": 13144194448,
-      "artifact_archive_sha256": "11293b650664397e2fff3a721c2d1d2356c54e143ffe21c4a0187da15fc6ebef",
-      "artifact_json_sha256": "cffd5bf62f9bef8f35834adc585e7a4a05abd2051fa39165231e801a1996020b",
+      "artifact_id": 13145966654,
+      "artifact_archive_sha256": "a941efd17a66fef62f02174e5deb2713a4e4a590403a526207011c6b157027dd",
+      "artifact_json_sha256": "578725e2c37fe8d157381ec2a6e98f5f9a38d16759d47806b48fd48ead690924",
       "typed_syllables": 76,
       "uncertain_syllables": 75,
       "unsupported_syllables": 1,
@@ -3016,14 +3016,14 @@
       },
       "phonemic_or_surface_ipa_promotion": false,
       "ukrainian_production_routing": false,
-      "latest_documentation_head": "a5d7b6031109a837ae24abace057f1ebacbc8714",
-      "latest_documentation_ci_run": 41451373621,
+      "latest_documentation_head": "9d7a4daa5587066cc7d0a789a0b6726715ffc2d6",
+      "latest_documentation_ci_run": 41453694574,
       "latest_documentation_ci_result": "PASSED_ALL_3_JOBS",
-      "latest_optional_workflow_run": 41451373643,
+      "latest_optional_workflow_run": 41453695157,
       "latest_optional_workflow_result": "PASSED",
-      "latest_artifact_id": 13144194448,
-      "latest_artifact_archive_sha256": "11293b650664397e2fff3a721c2d1d2356c54e143ffe21c4a0187da15fc6ebef",
-      "latest_artifact_json_sha256": "cffd5bf62f9bef8f35834adc585e7a4a05abd2051fa39165231e801a1996020b",
+      "latest_artifact_id": 13145966654,
+      "latest_artifact_archive_sha256": "a941efd17a66fef62f02174e5deb2713a4e4a590403a526207011c6b157027dd",
+      "latest_artifact_json_sha256": "578725e2c37fe8d157381ec2a6e98f5f9a38d16759d47806b48fd48ead690924",
       "verified_metrics": {
         "challenge_inputs": 42,
         "clippyfirst_complete": 28,
@@ -3088,6 +3088,14 @@
       "Resolve item/file-level upstream dictionary and fallback data provenance and redistribution terms before copying or bundling"
     ],
     "competing_pr_184": "OPEN_UNMERGED; distinct broader multi-engine runner and alternate adapter pinned to c4759eef7df03e11fcbb9aa83efe8cf21709fd2f; exact-head full CI 41433264764 and optional workflow 41433264629 passed; left untouched for explicit consolidation decision",
-    "task_status": "DONE_VERIFIED_DIAGNOSTIC_ONLY; accuracy and data-rights gates remain blocked"
+    "task_status": "DONE_VERIFIED_DIAGNOSTIC_ONLY; accuracy and data-rights gates remain blocked",
+    "segmental_projection_unicode_tie_bar_fix": {
+      "status": "DONE_VERIFIED",
+      "code_change": "Comparison projection now removes both U+0361 and U+035C tie bars; raw IPA unchanged.",
+      "regression_test": "Test failed before fix on U+035C (1 failed, 10 passed) in optional workflow 41453571374; focused test passed after fix in optional workflow 41453695157.",
+      "exact_code_head": "9d7a4daa5587066cc7d0a789a0b6726715ffc2d6",
+      "full_ci_run": 41453694574,
+      "optional_workflow_run": 41453695157
+    }
   }
 }
