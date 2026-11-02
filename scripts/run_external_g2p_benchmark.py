@@ -407,7 +407,8 @@ def main() -> int:
         "gold_labeled_rows": sum(row.get("gold_phonemic_ipa") is not None for row in rows),
         "accuracy_status": "MEASURED" if any(row.get("gold_phonemic_ipa") is not None for row in rows) else "NOT_MEASURED",
         "raw_string_diagnostic_rows": sum(item["exact_raw_string_match_diagnostic_only"] is not None for item in outputs),
-        "errors": errors + per_input_failure_summaries + abstention_summaries,
+        "errors": errors + per_input_failure_summaries,
+        "abstentions": abstention_summaries,
         "interpretation": "All engines receive the same frozen input rows. Coverage, abstention and latency are engineering diagnostics; raw-string equality and inter-engine agreement are not accuracy. Gold is required for accuracy. No IPA normalization is applied for scoring.",
     }
     print(json.dumps(summary, ensure_ascii=False, indent=2))
