@@ -169,7 +169,7 @@ if (ambiguousThray.status !== "analysis-dependent:special-orthography" || ambigu
 console.log("Thai lexical regression passed");
 
 const textLexiconRegression = new Map([
-  ["ทฤษฎี","ทริด|สะ|ดี"], ["คอมพิวเตอร์","คอม|พิว|เตอร์"], ["โทรศัพท์","โท|ระ|สับ"],
+  ["ทฤษฎี","ทริด|สะ|ดี"], ["ฤๅษี","รือ|สี"], ["เตอร์","เตอร์"], ["เทอร์","เทอร์"], ["คอมพิวเตอร์","คอม|พิว|เตอร์"], ["โทรศัพท์","โท|ระ|สับ"],
   ["อยาก","หยาก"], ["ทราบ","ทราบ"], ["ทราย","ทราย"], ["ทรง","ทรง"], ["ทรัพย์","ทรัพย์"], ["แทรก","แทรก"]
 ]);
 for (const [input, expected] of textLexiconRegression) {
@@ -178,12 +178,11 @@ for (const [input, expected] of textLexiconRegression) {
     throw new Error("Text lexicon regression failed: " + input);
   }
 }
-const unsupportedRuesi = analyzeText("ฤๅษี");
-if (!unsupportedRuesi.length || unsupportedRuesi.some(token =>
-  token.segmentationStatus === "lexicon" ||
-  (token.syllables || []).some(syllable => syllable.phonemicIpa || syllable.ukrainian)
-)) {
-  throw new Error("Unattested ฤๅษี must not bypass special-orthography abstention: " + JSON.stringify(unsupportedRuesi));
+const sourceAttestedRuesi = analyzeText("ฤๅษี");
+if (sourceAttestedRuesi.length !== 1 || sourceAttestedRuesi[0].segmentationStatus !== "lexicon" ||
+    sourceAttestedRuesi[0].syllables.map(x => x.phonemicIpa).join("|") !== "rɯː|siː" ||
+    sourceAttestedRuesi[0].syllables.map(x => x.tone).join("|") !== "mid|rising") {
+  throw new Error("Source-attested ฤๅษี lexical reading failed: " + JSON.stringify(sourceAttestedRuesi));
 }
 console.log("Thai extended text lexicon regression passed");
 
