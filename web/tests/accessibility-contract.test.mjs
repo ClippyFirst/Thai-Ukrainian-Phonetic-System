@@ -42,7 +42,7 @@ assert.match(app, /aria-label="Копіювати: /);
 assert.match(app, /aria-live', 'polite'/);
 assert.match(app, /lang="th"/);
 assert.match(app, /lang="und-fonipa"/);
-assert.match(app, /function esc\(/);
+assert.match(app, /const esc =/);
 assert.match(app, /aria-labelledby=/);
 assert.match(app, /continuous-output-value/);
 
