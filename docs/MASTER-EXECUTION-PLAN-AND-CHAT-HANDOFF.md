@@ -2199,3 +2199,14 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - No release tag or package version was created. Linguistic accuracy remains `NOT_MEASURED`; the deployed site is an engineering-verified research prototype, not a linguistic-accuracy or WCAG-conformance release.
 
 **Next genuine work:** secure independent Thai and Ukrainian reviewers, resolve CCOST curator discrepancy, obtain immutable LOTUSDIS audio evidence, and complete hands-on accessibility testing. Do not invent gold labels, audio assets or accuracy scores to close these gates.
+
+
+## 2026-11-02 — Global TIMIT Thai alternative-source investigation
+
+- Rechecked current main (75c331f69aa3c8e5b4db3ccc5a6da85124600a01), open PR topology (#184/#185/#186), and the existing source registry before adding a source candidate. No production code path or existing PR was modified.
+- Inspected the primary [LDC catalog record LDC2022S13](https://catalog.ldc.upenn.edu/LDC2022S13), its [official README](https://catalog.ldc.upenn.edu/docs/LDC2022S13/README.txt), and the [LDC Non-Member User Agreement](https://catalog.ldc.upenn.edu/license/ldc-non-members-agreement.pdf).
+- Added CORP-GLOBAL-TIMIT-THAI to data/corpus_sources.csv, a regression test in tests/test_corpus_source_registry.py, and source/selection/validation/audit documentation. The source offers 11.77 hours, 50 speakers and 6,000 utterances with word, phone and tone forced alignments; phone labels are aligner-specific DARPABET, not IPA.
+- Critical limitation: the official README describes a custom HTK forced aligner using corrected transcripts, SWATH tokenization, the Mary R. Haas dictionary and ~1,000 added pronunciations. It does not establish independent manual phone/tone correction, double annotation, formal IAA or a DARPABET-to-IPA mapping. Do not call these labels gold or score accuracy from them without independent review.
+- LDC Non-Member Agreement is restrictive: non-commercial linguistic education/research/technology development only, no redistribution outside the research group; commercial product release requires LDC for-profit membership and applicable fees. No data, audio, labels or TextGrids were downloaded or copied. Catalog sample phone/tone files were not inspectable through the browser because the endpoints served binary content.
+- Ledger: source metadata/documentation review DONE_VERIFIED; data acquisition and label inspection BLOCKED on authorized access; independent IPA/tone/segmentation gold BLOCKED on qualified reviewers/adjudication; public/commercial reuse BLOCKED pending an applicable written license. Existing accuracy remains NOT_MEASURED.
+- Local test execution remains unavailable in the connector-only environment. Exact-head GitHub Actions is required before the source-registry update is marked engineering-verified.
