@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PR #182 is merged to main as 65584d9a3d3d64a8e520dbd32411bef4b0a3dd9e. Main CI 41420468842 passed all three jobs; Web Static 41420468939 passed; GitHub Pages 41420468875 successfully built, deployed and verified the published site at https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/. Six source-attested lexical IPA overrides are live in both runtimes through the typed IPA→Ukrainian adapter, with CC BY-SA 4.0 provenance documented separately from MIT software. Static audit found 0 exact duplicate test names/bodies and 0 parse errors. Independent Thai/Ukrainian reviewers, CCOST clarification/archive, LOTUSDIS audio evidence and manual WCAG testing remain blocked. Linguistic accuracy remains NOT_MEASURED; the site is an engineering-verified research prototype, not a linguistic-accuracy release.",
+  "status": "PR #189 remains open as a draft on fix/benchmark-error-clusters-20261102 (head 55f2ef9966da065326873014e8066acc43b2a151), 52 commits ahead of main and 0 behind at the latest comparison. Exact-head CI 41471961004 passed all three jobs; Web Static 41471960975 passed. Runtime challenge coverage is 32/42 conservative and 36/42 opt-in dictionary-word-segmented; these are coverage diagnostics, not accuracy. Independent Thai/Ukrainian review, CCOST archive/curator, LOTUSDIS audio and manual WCAG gates remain blocked. Main remains 75c331f69aa3c8e5b4db3ccc5a6da85124600a01; linguistic accuracy remains NOT_MEASURED.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -529,10 +529,23 @@
       "status": "DONE_VERIFIED",
       "implementation": "PR #182 squash-merged as 65584d9; main CI 41420468842, Web Static 41420468939 and Pages deployment/published-content verification 41420468875 all passed. The updated service is live at GitHub Pages.",
       "acceptance": "Post-merge Pages build/deploy/published-content verification passed; main CI and Web Static passed."
+    },
+    {
+      "id": "BENCH-RUNTIME-DIAG-2026-11-02",
+      "status": "DONE_VERIFIED_COVERAGE_ONLY",
+      "implementation": "Exact-head challenge diagnostic artifact inspected; 42 records reconcile to 32/42 conservative complete and 36/42 opt-in dictionary-word-segmented complete; six abstentions retained; no accuracy field emitted.",
+      "acceptance": "Keep abstentions fail-closed and retain NOT_ADJUDICATED gold status; coverage must never be reported as pronunciation accuracy."
+    },
+    {
+      "id": "BENCH-LEXICAL-RECOVERY-2026-11-02",
+      "status": "PARTIAL_ENGINEERING_VERIFIED",
+      "implementation": "Source-pinned lexical recoveries and Python/browser parity tests pass exact-head CI; all new Wiktionary references are licensed CC BY-SA 4.0 and restricted to lexical/IPA reference scope.",
+      "blocker": "Independent qualified Thai phonetic/segmentation adjudication unavailable.",
+      "acceptance": "Independent blind Thai reviewers adjudicate lexical reading, syllable boundaries, phonemic IPA, tone and length; disputed cases resolved before any accuracy claim."
     }
   ],
-  "latest_implementation_branch": "research/independent-adjudication-gates-20261101 (merged into main)",
-  "latest_implementation_commit_pending_ci": null,
+  "latest_implementation_branch": "fix/benchmark-error-clusters-20261102 (PR #189 open draft)",
+  "latest_implementation_commit_pending_ci": "55f2ef9966da065326873014e8066acc43b2a151 — exact-head CI passed; documentation refresh now requires rerun",
   "current_head_status_at_audit_refresh": "Code/workflow checkpoint b6dbec7928b106f0ab52e06af33a26635df75412 passed CI 40322960615 and Web static validation 40322959844. Documentation checkpoint e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff passed full CI 40323209539 and Web static validation 40323209471. This audit-register update creates a newer documentation HEAD and requires exact-head CI/static validation before the current branch HEAD is marked green.",
   "current_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
   "current_implementation_commit_before_audit_update": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
@@ -2676,7 +2689,9 @@
     "exact_regression_test_ci_run": "41406424727",
     "exact_regression_test_ci_result": "PASSED_ALL_3_JOBS"
   },
-  "open_prs": [],
+  "open_prs": [
+    "#189 — Triage G2P benchmark error clusters and recover attested lexical cases (draft; unmerged)"
+  ],
   "audio_interval_overlap_code_checkpoint_2026_11_02": {
     "verified_code_head": "964b4930321e68c77ba5e956e1c0ecd12164ccfa",
     "ci_run": "41406087052",
@@ -2931,8 +2946,26 @@
       "TH-G2P-029"
     ],
     "row_level_triage": "data/benchmark/fastthaig2p-error-triage-2026-11-02.tsv",
-    "status": "BASELINE_INSPECTED_RUNTIME_FIXES_PENDING_EXACT_HEAD_CI",
-    "gold_status": "NOT_ADJUDICATED"
+    "status": "RUNTIME_RECOVERY_EXACT_HEAD_CI_VERIFIED_INDEPENDENT_ADJUDICATION_PENDING",
+    "gold_status": "NOT_ADJUDICATED",
+    "recovery_branch": "fix/benchmark-error-clusters-20261102",
+    "recovery_head": "55f2ef9966da065326873014e8066acc43b2a151",
+    "recovery_pr": 189,
+    "exact_head_ci_run": 41471961004,
+    "exact_head_web_static_run": 41471960975,
+    "conservative_complete_outputs_after_fixes": "32/42",
+    "opt_in_word_segmented_complete_outputs_after_fixes": "36/42",
+    "abstained_or_incomplete_inputs_after_opt_in": "6/42",
+    "abstention_ids": [
+      "TH-G2P-030",
+      "TH-G2P-031",
+      "TH-G2P-032",
+      "TH-G2P-034",
+      "TH-G2P-035",
+      "TH-G2P-036"
+    ],
+    "diagnostic_artifact": "thai-challenge-runtime-diagnostics",
+    "diagnostic_kind": "RUNTIME_COVERAGE_NOT_ACCURACY"
   },
   "article_style_coverage": {
     "source_pinned_words": [
@@ -2947,8 +2980,41 @@
       "SRC-WIKTIONARY-TH-หนึ่ง",
       "SRC-WIKTIONARY-TH-ใน"
     ],
-    "status": "IMPLEMENTED_PENDING_EXACT_HEAD_CI",
+    "status": "EXACT_HEAD_CI_VERIFIED_OPT_IN_WORD_SEGMENTED_COVERAGE_36_OF_42",
     "evidence_grade": "SOURCE_ATTESTED_NOT_GOLD",
-    "intended_scope": "opt-in dictionary-word-segmented route and browser text segmentation; conservative Python endpoint remains fail-closed for continuous Thai runs"
+    "intended_scope": "opt-in dictionary-word-segmented route and browser text segmentation; conservative Python endpoint remains fail-closed for continuous Thai runs",
+    "exact_head": "55f2ef9966da065326873014e8066acc43b2a151",
+    "exact_head_ci_run": 41471961004,
+    "phrase_cases": [
+      "TH-G2P-038",
+      "TH-G2P-039",
+      "TH-G2P-040",
+      "TH-G2P-042"
+    ]
+  },
+  "latest_exact_head_verification_benchmark_error_clusters_2026_11_02": {
+    "branch": "fix/benchmark-error-clusters-20261102",
+    "pr": 189,
+    "code_head": "55f2ef9966da065326873014e8066acc43b2a151",
+    "ci_run": 41471961004,
+    "ci_result": "PASSED_ALL_3_JOBS",
+    "test_job": "PASSED",
+    "wheel_install_smoke": "PASSED",
+    "master_artifact": "PASSED",
+    "ruff": "PASSED",
+    "pytest": "326_PASSED_1185_SUBTESTS_PASSED",
+    "browser_ipa_ua": "PASSED",
+    "browser_parity": "29_FIXTURES_PASSED",
+    "ui_contract": "PASSED",
+    "accessibility_static_contracts": "PASSED",
+    "generated_artifact_drift": "PASSED",
+    "challenge_runtime_diagnostic": "32_OF_42_CONSERVATIVE_36_OF_42_OPT_IN_WORD_SEGMENTED",
+    "web_static_run": 41471960975,
+    "web_static_result": "PASSED",
+    "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
+    "linguistic_accuracy": "NOT_MEASURED",
+    "branch_ahead_of_main": 52,
+    "branch_behind_main": 0,
+    "documentation_refresh": "RECORDED_IN_VALIDATION_MATRIX_AUDIT_AND_HANDOFF; exact-head CI must rerun for updated documentation commit"
   }
 }
