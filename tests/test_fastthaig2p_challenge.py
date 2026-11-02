@@ -52,6 +52,7 @@ def test_ipa_feature_inventory_counts_distinct_features() -> None:
 
 def test_segmental_projection_removes_only_notation_differences() -> None:
     assert MODULE.segmental_projection("t͡ɕʰaː˥˩") == "tɕʰaː"
+    assert MODULE.segmental_projection("t͜ɕʰaː˥˩") == "tɕʰaː"
     assert MODULE.segmental_projection("kʰaː8˧") == "kʰaː"
 
 
