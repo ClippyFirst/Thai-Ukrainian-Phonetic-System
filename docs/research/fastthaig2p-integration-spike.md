@@ -47,3 +47,20 @@ The upstream Apache-2.0 code license is not the only license question: the dicti
 3. Test tone, vowel length, aspiration, unreleased stops, affricate tie bars, glottal stops, syllable and word boundaries, and OOV behavior.
 4. Route only the validated typed result through the existing IPA-to-Ukrainian adapter; never create a parallel Thai-grapheme-to-Ukrainian path.
 5. Recheck upstream commit, package hashes, notices and data provenance before any bundled distribution.
+
+
+## First paired challenge result — 2026-11-02
+
+<badge>CI passed</badge> Dedicated workflow run [41435891320](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41435891320) completed successfully on branch head `c166365289e4ed9ea70bd9cd544c1b64fb3b9180`. The JSON artifact is [fastthaig2p-challenge-comparison](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41435891320/artifacts/13136482134), SHA-256 `e34007f19fbe0265781515e100b126d747fa24cf6a8649213554f3ce54c82b97`.
+
+| Diagnostic | ClippyFirst | FastThaiG2P |
+|---|---:|---:|
+| Complete/non-empty outputs | 28/42 | 42/42 |
+| Median per-input time | 0.459 ms | 0.028 ms |
+| p95 per-input time | 1.768 ms | 1.734 ms |
+
+FastThaiG2P processed 50 upstream tokens: 45 dictionary hits and 5 OOV rule-fallback tokens. There were 28 records where both systems emitted a complete result with equal syllable counts, covering 40 syllable pairs. Raw exact syllable-string agreement was 0/40 because FastThaiG2P includes Chao tone contours and uses a tie-bar convention that differs from ClippyFirst. After the explicitly limited segmental projection (remove Chao tone marks, tie bar and upstream fallback sentinel `8`, retain vowel length and other segmental symbols), 25/40 pairs matched (62.5%).
+
+The projection mismatches include short/long vowel differences (`คอมพิวเตอร์`), glottal-stop differences (`กะ`, `บรรจุ`), coda unreleased-stop marks (`ศุกร์`, `สัตว์`, `กอล์ฟ`, `ทราบ`) and diphthong/length differences (`ครอบครัว`). These are review targets, not adjudicated errors. FastThaiG2P also emits non-empty output for both deliberately invalid-input probes and both `ฦ`-series probes where ClippyFirst abstains; more output is not necessarily more valid output.
+
+**Interpretation:** FastThaiG2P clearly has greater output coverage and a lower median runtime on this small diagnostic, while p95 is nearly the same. The 62.5% segmental inter-engine agreement does not identify which engine is correct. Since independent gold remains zero, the question “which is more accurate?” remains `NOT_MEASURED`. No Ukrainian output is generated from FastThaiG2P in this spike.
