@@ -1427,3 +1427,12 @@ Run [41431679913](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/
 | Goruut | 26/42 (61.9%) | 16 no-output failures | 0.496 / 0.690 |
 
 FastThaiG2P raw agreement: 12/28 (42.9%) with ClippyFirst phonemic, and 9/23 (39.1%) with ClippyFirst broad-surface. After slash and tone stripping (diagnostic only), agreement is 14/28 (50.0%) and 17/23 (73.9%) respectively. These are inter-engine agreement metrics, **not accuracy**. The challenge has zero adjudicated IPA gold rows; accuracy remains NOT_MEASURED. The invalid prompt `ข๊า` produced FastThaiG2P output `/kʰaː8˧/` while ClippyFirst abstained, demonstrating that 100% output coverage is not equivalent to validated output.
+
+## Exact-head verification — 2026-11-02
+
+- Final spike branch head at this checkpoint: `84ca5c39e82e75db594a4a21152572a083d238db`.
+- Exact-head main CI run [41432085958](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41432085958): all three jobs passed — `test`, `wheel-install-smoke`, `master-artifact`. Ruff reported “All checks passed”; pytest reported **326 passed, 1,169 subtests passed**. The complete existing repository checks, source/evidence validators, generated artifacts, browser tests, IPA adapter tests and wheel smoke completed successfully.
+- Exact-head optional comparator run [41432085960](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41432085960): passed. Its install step successfully used `pip install -e ".[fastthaig2p]"`, validating the pinned optional extra itself.
+- Final-head benchmark artifact SHA-256: `c93e2a97b635470dadbef3776009d0d181dc5fd0d9967a8b195bd3571c55bbb7`; 210 rows, 42 inputs × 5 profiles; corpus SHA-256 unchanged.
+- Final-head median/p95 ms: ClippyFirst phonemic 0.487/2.199; ClippyFirst broad-surface 0.465/1.791; FastThaiG2P 0.030/2.116; thaiphon 0.180/0.889; Goruut 0.512/0.674. Coverage and pairwise agreement are unchanged from the first valid run.
+- This verifies the optional adapter, report generation and engineering integration. It does **not** resolve independent-gold accuracy or item-level rights for upstream generated/manual/fallback data. No production runtime change was made.
