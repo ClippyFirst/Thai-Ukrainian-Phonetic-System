@@ -1,10 +1,13 @@
 import tempfile
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 from scripts.run_external_g2p_benchmark import (
     build_inter_engine_diagnostic,
     build_pairwise_engine_diagnostic,
+    CandidateAbstention,
+    candidate_clippyfirst,
     has_usable_output,
     load_rows,
     normalized_ipa,
@@ -110,6 +113,34 @@ class ExternalG2PBenchmarkHarnessTests(unittest.TestCase):
         self.assertEqual(report["goruut"]["empty_outputs_without_error"], 1)
         self.assertEqual(report["goruut"]["failure_examples"][0]["record_id"], "failed")
         self.assertEqual(report["thaiphon"]["successful_outputs"], 1)
+
+    def test_per_engine_summary_separates_abstentions_from_runtime_failures(self):
+        report = summarize_per_engine([
+            {"engine": "clippyfirst", "record_id": "ok", "raw_output": "/kaː˧/", "error": None, "outcome": "success", "elapsed_ms": 1.0},
+            {"engine": "clippyfirst", "record_id": "abstain", "raw_output": None, "error": "unsupported", "outcome": "abstain", "elapsed_ms": 0.5},
+            {"engine": "clippyfirst", "record_id": "error", "raw_output": None, "error": "crash", "outcome": "error", "elapsed_ms": 2.0},
+        ], ["clippyfirst"])
+        self.assertEqual(report["clippyfirst"]["successful_outputs"], 1)
+        self.assertEqual(report["clippyfirst"]["abstained_outputs"], 1)
+        self.assertEqual(report["clippyfirst"]["runtime_failures"], 1)
+        self.assertEqual(report["clippyfirst"]["coverage"], 1 / 3)
+        self.assertEqual(report["clippyfirst"]["latency_ms"]["median"], 1.0)
+
+    def test_clippyfirst_candidate_uses_conservative_ipa_and_abstains_on_unknown(self):
+        with patch("thai_ukrainian.text.analyze_text_with_word_segmentation", return_value=[
+            {"kind": "thai", "input": "กา", "segmentation_status": "lexicon",
+             "syllables": [{"phonemic_ipa": "kaː˧"}]}
+        ]):
+            transcribe, metadata = candidate_clippyfirst()
+            self.assertEqual(transcribe("กา"), "/kaː˧/")
+            self.assertEqual(metadata["configuration"]["phonemic_ipa"], True)
+
+        with patch("thai_ukrainian.text.analyze_text_with_word_segmentation", return_value=[
+            {"kind": "thai", "input": "ไม่รู้จัก", "segmentation_status": "unresolved", "syllables": []}
+        ]):
+            transcribe, _ = candidate_clippyfirst()
+            with self.assertRaises(CandidateAbstention):
+                transcribe("ไม่รู้จัก")
 
     def test_pairwise_diagnostic_separates_format_and_tone_mismatches(self):
         report = build_pairwise_engine_diagnostic([
