@@ -1,3 +1,18 @@
+# Continuation checkpoint — benchmark error clusters (2026-11-02)
+
+- **Repository:** `ClippyFirst/Thai-Ukrainian-Phonetic-System`; default branch `main`.
+- **Starting main:** `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`.
+- **Work branch:** `fix/benchmark-error-clusters-20261102`, created directly from that main commit.
+- **External comparison evidence:** PR #186 FastThaiG2P workflow [41454481686](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41454481686), head `c02e10e89ac340b80b6ed83c0a991f89cf9cc3fe`; artifact SHA-256 `a166828e7a175af4759120d609ba8511c661db2845a25cab5fab1685c17b0da5`. Coordination ledger: `data/benchmark/fastthaig2p-error-triage-2026-11-02.tsv`.
+- **Baseline:** 42 inputs; FastThaiG2P output 42/42; conservative ClippyFirst complete output 28/42. Eleven of 40 paired syllable comparisons differ only by surface unreleased-stop diacritic `̚`; removing only that modifier from the segmental projection yields 36/40 agreement. Four phonological candidates remain: `กะ`, `บรรจุ`, `คอมพิวเตอร์`, `ครอบครัว`. No candidate is gold.
+- **Changes:** source-pinned `ฤๅษี` lexical segmentation, exact `ทริด` respelling for `ทฤษฎี`, text-lexicon access for existing `เตอร์/เทอร์` parser readings in Python and browser, record-level challenge coordination clusters, and a separate opt-in word-segmented diagnostic track.
+- **Verification:** regression tests added; exact-head CI not yet run at this checkpoint. Local tests are not claimed. Next action is create PR, inspect exact-head CI and generated-artifact drift, repair failures, then refresh this checkpoint with final SHA and outcomes.
+- **Safety/evidence:** keep standalone `ฤๅ/ฦ/ฦๅ`, ambiguous `ทราย`, and malformed `ข๊า/กฉ` fail-closed. Do not add glottal stop, alter vowel length, or reinterpret diphthongs solely to match FastThaiG2P.
+- **Remaining gates:** independently qualified Thai review for the four candidate discrepancies; inspect the new word-segmented challenge artifact; retain independent Ukrainian-native review, CCOST TextGrid access/conformance, LOTUSDIS immutable audio evidence and manual WCAG review as separate blockers.
+- **Readiness:** engineering-verified research prototype; not release-ready for general linguistic-accuracy claims.
+
+---
+
 # Continuation checkpoint — repository structure cleanup (2026-11-01)
 
 - **Repository:** `ClippyFirst/Thai-Ukrainian-Phonetic-System`; default branch `main`.
