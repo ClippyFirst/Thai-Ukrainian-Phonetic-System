@@ -91,6 +91,38 @@ class EvidenceRegistryTests(unittest.TestCase):
                 "BROAD_SURFACE_IPA_GOLD_INPUT", registry, row_id="TH-SRC-IPA-007",
             )
 
+    def test_new_special_orthography_sources_are_lexical_references_not_gold(self):
+        registry = load_source_registry(ROOT / "data/benchmark/source-registry.tsv")
+        expected = {
+            "SRC-WIKTIONARY-TH-ฤๅษี": "https://th.wiktionary.org/w/index.php?title=ฤๅษี&oldid=1774048",
+            "SRC-WIKTIONARY-EN-TH-ทฤษฎี": "https://en.wiktionary.org/w/index.php?title=ทฤษฎี&oldid=87195875",
+        }
+        for source_id, url in expected.items():
+            with self.subTest(source_id=source_id):
+                source = registry[source_id]
+                self.assertEqual(source["source_url"], url)
+                self.assertEqual(source["license"], "CC-BY-SA-4.0")
+                self.assertEqual(source["verification_status"], "VERIFIED")
+                self.assertIn("not expert-adjudicated or acoustic gold", source["notes"])
+                validate_source_reference(
+                    source_id, url, "CC-BY-SA-4.0",
+                    "LEXICAL_SEGMENTATION_REFERENCE", registry, row_id=source_id,
+                )
+                validate_source_reference(
+                    source_id, url, "CC-BY-SA-4.0",
+                    "IPA_REFERENCE_ONLY", registry, row_id=source_id,
+                )
+                with self.assertRaisesRegex(ValueError, "not approved for BROAD_PHONEMIC_IPA_GOLD_INPUT"):
+                    validate_source_reference(
+                        source_id, url, "CC-BY-SA-4.0",
+                        "BROAD_PHONEMIC_IPA_GOLD_INPUT", registry, row_id=source_id,
+                    )
+                with self.assertRaisesRegex(ValueError, "not approved for BROAD_SURFACE_IPA_GOLD_INPUT"):
+                    validate_source_reference(
+                        source_id, url, "CC-BY-SA-4.0",
+                        "BROAD_SURFACE_IPA_GOLD_INPUT", registry, row_id=source_id,
+                    )
+
     def test_supplemental_user_regression_prompts_are_approved_only_as_blind_inputs(self):
         registry = load_source_registry(ROOT / "data/benchmark/source-registry.tsv")
         source_id = "CLIPPYFIRST-THAI-REGRESSION-ADDENDUM-20261101"
