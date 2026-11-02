@@ -47,3 +47,17 @@ def test_ipa_feature_inventory_counts_distinct_features() -> None:
 def test_segmental_projection_removes_only_notation_differences() -> None:
     assert MODULE.segmental_projection("t͡ɕʰaː˥˩") == "tɕʰaː"
     assert MODULE.segmental_projection("kʰaː8˧") == "kʰaː"
+
+
+def test_adapter_result_does_not_mark_passthrough_as_complete_ipa() -> None:
+    from thai_ukrainian.fastthaig2p_adapter import FastThaiG2POutput
+
+    result = FastThaiG2POutput(
+        input_text="word",
+        raw_ipa="/kaː˧/ ฦ",
+        word_groups=("kaː˧",),
+        syllable_ipa=("kaː˧",),
+        token_paths=(),
+        passthrough_text="ฦ",
+    )
+    assert not result.complete_ipa
