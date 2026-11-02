@@ -1,0 +1,65 @@
+# FastThaiG2P integration spike
+
+Status: **OPTIONAL_ADAPTER_IMPLEMENTED; SAME-CORPUS_RUNTIME_DIAGNOSTIC_PENDING_CI; ACCURACY_NOT_MEASURED**
+
+Date: 2026-11-02
+
+## Scope and non-goals
+
+This spike adds FastThaiG2P as an optional Python adapter and extends the existing external G2P runner to include the in-repository ClippyFirst engine on the same frozen 42-item challenge corpus. It does not add FastThaiG2P to the default runtime, browser bundle, or production request path. It does not make FastThaiG2P's IPA an authority or bypass the typed `PhoneticResult → Ukrainian adapter` boundary.
+
+The adapter returns the upstream string unchanged. It does not strip tone, length, tie bars, syllable dots, word boundaries, or slashes. A separate ClippyFirst candidate uses the conservative text endpoint and records unsupported/unresolved inputs as abstentions rather than guessing.
+
+## Reproducibility
+
+- Upstream: [awslabs/FastThaiG2P](https://github.com/awslabs/FastThaiG2P)
+- Pinned source commit: `c4759eef7df03e11fcbb9aa83efe8cf21709fd2f`
+- Upstream package version at that commit: `0.1.0`
+- Python: upstream requires Python 3.11 or newer.
+- Runtime dependency: `pythainlp>=5.3.4`; TTS extras (ONNX/PyTorch) are not installed or used.
+- Existing challenge: `data/benchmark/thai_g2p_challenge.jsonl`, 42 records, all phonemic/surface IPA gold fields null.
+- Existing workflow: `.github/workflows/optional-external-g2p.yml`; it remains opt-in/triggered by selected file changes and uploads raw outputs plus a JSON summary.
+
+## Layer-by-layer license and provenance register
+
+| Layer | Evidence inspected | License / provenance | Integration treatment |
+|---|---|---|---|
+| FastThaiG2P Python code | Pinned upstream `LICENSE` and `NOTICE` | Apache-2.0; NOTICE attributes Amazon.com, Inc. or affiliates | Optional dependency only; no upstream source copied into ClippyFirst. Preserve upstream license/NOTICE when redistributing that dependency. |
+| PyThaiNLP runtime | FastThaiG2P pinned `pyproject.toml` | PyThaiNLP software Apache-2.0; FastThaiG2P requires `pythainlp>=5.3.4` | Installed transitively by optional extra; no PyThaiNLP source copied. PyThaiNLP data/model assets are separately licensed and are not intentionally selected as the G2P dictionary. |
+| FastThaiG2P word list and IPA dictionary | Pinned README and `data/README.md` | 62,112 dictionary keys; merged from manual overrides, Wiktionary-derived entries (~13k) and generated entries (~49k). The README does not provide a complete per-record license/provenance manifest in the inspected tree. | Do not copy or bundle `dict.txt`, `ipa.json`, `ipa_metadata.json` or source dumps in this repository. Use only through the upstream optional package while the source terms remain attached to that package. |
+| Wiktionary-derived subset | Upstream README; NLP for Thai corpus catalogue | Wiktionary G2P source is listed as CC BY-SA 3.0 in the corpus catalogue; FastThaiG2P describes parsing a kaikki.org Thai dump but does not pin a per-row source manifest in its README. | Treat as share-alike source-derived data; do not claim the whole IPA dictionary is Apache-2.0 or independently gold. Exact row lineage remains incomplete. |
+| Generated IPA subset | Pinned upstream README and data README | Approximately 49k entries generated with Claude Opus 4.6 via Bedrock; no distinct dataset license or full row-level provenance/validation record was found in the inspected files. | Provenance/license BLOCKED for redistribution; do not copy or treat as independent gold. |
+| Manual overrides | Pinned upstream README and `data/sources/manual_overrides.json` | Upstream identifies these as hand-corrected entries; no separate data license/attribution statement found in inspected files. | Keep upstream; do not repackage or claim project authorship. |
+| TLTK fallback source code | Pinned `fastthaig2p/_th2ipa.py` header | Explicit BSD 3-Clause notice, copyright Dept. of Linguistics, Chulalongkorn University (2018). | It is vendored by FastThaiG2P, not copied into ClippyFirst. If redistributed separately, preserve BSD notice and disclaimer. |
+| TLTK fallback statistical/lexical data | Pinned `data/README.md` lists `sylseg.3g`, `thaisyl.dict`, `PhSTrigram.sts`, `thdict`, `sylform_var.pkl` | Described as vendored TLTK data; no separate per-file data license/provenance manifest was found in the inspected FastThaiG2P tree. TLTK software itself is BSD-3-Clause, but that alone does not establish every data file's rights. | Do not copy or redistribute these data files independently; retain as upstream package assets pending item-level confirmation. |
+| ClippyFirst adapter and benchmark glue | New repository files | Original project code under repository MIT license; no FastThaiG2P implementation or dictionary copied. | Lazy optional import; no default runtime dependency. |
+
+**License conclusion:** the FastThaiG2P software package itself is Apache-2.0 and can be consumed as an optional dependency alongside this MIT-licensed project. That conclusion does not relicense its dictionary, generated IPA, Wiktionary-derived records, or TLTK fallback data. The repository does not bundle those assets. The generated-data and fallback-data redistribution questions remain evidence-limited, not resolved.
+
+Primary upstream references:
+- https://github.com/awslabs/FastThaiG2P/tree/c4759eef7df03e11fcbb9aa83efe8cf21709fd2f
+- https://github.com/awslabs/FastThaiG2P/blob/c4759eef7df03e11fcbb9aa83efe8cf21709fd2f/LICENSE
+- https://github.com/awslabs/FastThaiG2P/blob/c4759eef7df03e11fcbb9aa83efe8cf21709fd2f/NOTICE
+- https://nlpforthai.com/tasks/g2p/
+- https://pypi.org/project/tltk/
+
+## Comparable evaluation contract
+
+All engines receive the exact same 42 source strings from the same JSONL corpus. The runner records raw outputs, version/commit/configuration, per-item elapsed time, initialization errors, per-input errors and conservative ClippyFirst abstentions. It reports per-engine coverage and latency diagnostics, plus pairwise raw-string/limited-format agreement.
+
+No IPA normalization is used for accuracy. Slash removal and tone-stripped comparisons remain diagnostic only. The runner does not score this challenge because it contains **zero independently adjudicated IPA gold rows**. Inter-engine agreement is not accuracy; a larger coverage count is not evidence of better pronunciation.
+
+ClippyFirst is measured using its existing conservative text-analysis path with dictionary word segmentation enabled. If any Thai token lacks a complete phonemic IPA result, that item is recorded as an abstention. The candidate does not create a grapheme-derived fallback or bypass the production IPA adapter.
+
+## Results
+
+The branch CI workflow is the execution source for the new same-corpus run. Until its artifact is inspected, results are **PENDING**. Local clone/test execution was unavailable in this session because the container could not resolve github.com. No test or benchmark pass is claimed here.
+
+Acceptance criteria:
+1. Optional adapter imports without FastThaiG2P installed; construction reports a clear optional-dependency error.
+2. Adapter preserves upstream IPA exactly and rejects non-string inputs/results.
+3. Same 42 records are passed to ClippyFirst, FastThaiG2P, thaiphon and (where its service starts) Goruut.
+4. ClippyFirst abstentions are distinct from runtime errors.
+5. Summary records coverage, median/p95 latency, pairwise agreement, corpus hash, Python/platform and engine pins.
+6. Accuracy stays `NOT_MEASURED` while the independent gold count is zero.
+7. CI runs adapter tests and uploads inspectable raw and summary artifacts.
