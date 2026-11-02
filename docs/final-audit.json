@@ -82,7 +82,12 @@
     "source_attested_ipa_reference_for_เพิ่ง",
     "public_independent_reviewer_outreach_shortlist",
     "six_item_blind_thai_regression_supplement",
-    "byte_identical_ccost_wordlist_integrity_and_order_audit"
+    "byte_identical_ccost_wordlist_integrity_and_order_audit",
+    "benchmark_error_cluster_triage_for_42_item_fastthaig2p_comparison",
+    "separate_conservative_and_dictionary_word_segmented_challenge_diagnostics",
+    "source_pinned_ruesi_ฤๅษี_text_lexicon_entry",
+    "source_pinned_thrit_ทฤษฎี_lexical_syllable_recovery",
+    "browser_python_parity_for_benchmark_lexical_recoveries"
   ],
   "not_claimed": [
     "complete_lexical_segmentation",
@@ -112,7 +117,7 @@
     "CCOST inter-annotator agreement",
     "acoustic phonetic accuracy"
   ],
-  "lexical_attestation": "Ten source-backed runtime text lexicon entries include ยูเครน, ตะวันออก, ยุโรป, ยุโรปตะวันออก and the sense-scoped compound ทะเลทราย, plus six active typed IPA overrides (เงิน, เดิน, ออก, ไกล, ใกล้, เพิ่ง). All overrides preserve pinned source provenance and SOURCE_ATTESTED_NOT_GOLD status; they are not independent expert/acoustic gold. Unsupported ฤๅษี/ฤษี text-lexicon syllabifications without source-registry evidence have been removed.",
+  "lexical_attestation": "Source-backed text lexicon includes the pinned two-syllable reading ฤๅษี → รือ|สี (Thai Wiktionary oldid 1774048) and the three-syllable reading ทฤษฎี → ทฺริด-สะ-ดี (en.wiktionary oldid 87195875). The first syllable ทฺริด is normalized only by an exact lexical respelling; no productive ทร rule is inferred. The distinct spelling ฤษี and standalone ฤๅ/ฦ/ฦๅ remain unresolved. Existing exact parser readings เตอร์ and เทอร์ are now reachable through the curated text lexicon. All source-attested readings remain NOT_GOLD; six typed IPA overrides preserve their separate provenance and NOT_GOLD status.",
   "corpus_attestation": "993 source-annotated Wisesight word-tokenization rows (CC0-1.0; test-only, never training/tuning); pinned UD Thai TUD source snapshots under CC BY-SA 4.0 for a research-only frequency-Viterbi experiment; zero independently adjudicated IPA/tone/vowel-length gold rows.",
   "word_boundary_benchmark": {
     "dataset": "PyThaiNLP/Wisesight word-tokenization labels",
@@ -139,7 +144,7 @@
     "includes_short_long_oe_contrast": true
   },
   "latest_verified_code_commit": "72a77cb42ad05c33274d70c4dcd9f20e07432b64",
-  "starting_branch_commit": "7e39fd4bc108386148c1e9a79d257d75babcc9aa",
+  "starting_branch_commit": "75c331f69aa3c8e5b4db3ccc5a6da85124600a01",
   "ci": {
     "latest_fully_successful_code_data_commit": "72a77cb42ad05c33274d70c4dcd9f20e07432b64",
     "latest_fully_successful_ci_run": 41239440616,
@@ -2904,5 +2909,25 @@
     "linguistic_accuracy": "NOT_MEASURED",
     "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY"
   },
-  "latest_full_repository_head_pages_run": "41420468875"
+  "latest_full_repository_head_pages_run": "41420468875",
+  "benchmark_error_triage": {
+    "baseline_workflow_run": 41454481686,
+    "baseline_branch": "research/fastthaig2p-typed-ipa-boundary-20261102",
+    "baseline_head": "c02e10e89ac340b80b6ed83c0a991f89cf9cc3fe",
+    "artifact_sha256": "a166828e7a175af4759120d609ba8511c661db2845a25cab5fab1685c17b0da5",
+    "challenge_inputs": 42,
+    "fastthaig2p_complete_outputs": 42,
+    "clippyfirst_conservative_complete_outputs_before_fixes": 28,
+    "paired_syllable_outputs": 40,
+    "segmental_agreement_after_ignoring_only_unreleased_coda_modifier": "36/40",
+    "candidate_discrepancies": [
+      "TH-G2P-002",
+      "TH-G2P-016",
+      "TH-G2P-026",
+      "TH-G2P-029"
+    ],
+    "row_level_triage": "data/benchmark/fastthaig2p-error-triage-2026-11-02.tsv",
+    "status": "BASELINE_INSPECTED_RUNTIME_FIXES_PENDING_EXACT_HEAD_CI",
+    "gold_status": "NOT_ADJUDICATED"
+  }
 }
