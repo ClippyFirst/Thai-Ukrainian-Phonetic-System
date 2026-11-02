@@ -2093,3 +2093,12 @@ This note supersedes the preceding documentation-only status. The branch now cha
 
 **Readiness:** engineering-verified research prototype; not release-ready for linguistic accuracy claims. Thai/segmentation accuracy remains `NOT_MEASURED`.
 
+
+
+## Audio-evidence granularity follow-up — 2026-11-02
+
+- **DONE_VERIFIED (engineering):** audio assets now retain a required exact `microphone_id` in addition to the normalized microphone category. This preserves the source-level LOTUSDIS `mic` value (the Hugging Face dataset card exposes `mic` as a string field, with values such as `con123`).
+- **DONE_VERIFIED (engineering):** whole-file `overlap_status` is descriptive metadata and no longer disqualifies an otherwise usable asset. Each Thai review row now carries `audio_interval_overlap_status`; any audio-backed phonetic claim requires the reviewed interval to be explicitly `NONE`. This allows a verified clean interval in a recording with overlap elsewhere, while still rejecting intervals marked `PRESENT` or `UNKNOWN`.
+- Added regression coverage for exact microphone ID requirement and interval-level overlap rejection; the valid narrow-IPA fixture exercises an asset whose whole-file overlap status is `PRESENT` while the selected interval is `NONE`.
+- The blind packet headers were updated without pre-filling any reviewer labels. The committed audio asset manifest remains header-only; no real asset, hash, reviewer, or annotation was fabricated.
+- Exact code-head verification: `964b4930321e68c77ba5e956e1c0ecd12164ccfa`; CI run [41406087052](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41406087052) passed all three jobs (Python/browser suite, wheel-install smoke, master artifact); Web Static [41406087069](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41406087069) and external VISTEC [41406087050](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41406087050) passed. This is engineering verification, not linguistic accuracy evidence.

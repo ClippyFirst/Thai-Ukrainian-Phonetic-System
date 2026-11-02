@@ -322,7 +322,7 @@ class AdjudicationPacketTests(unittest.TestCase):
                 audio_asset_registry={"recording-001": {
                     "asset_id": "recording-001", "source_id": "TEST-AUDIO",
                     "duration_seconds": "3.0", "verification_status": "VERIFIED",
-                    "overlap_status": "NONE",
+                    "overlap_status": "PRESENT",
                 }},
             )["records"], 1
         )

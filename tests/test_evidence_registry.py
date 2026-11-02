@@ -122,7 +122,7 @@ class EvidenceRegistryTests(unittest.TestCase):
                 "asset_id": "LOTUS-TEST-001", "source_id": "CORP-LOTUSDIS",
                 "dataset_revision": "45145d7", "asset_uri": "https://example.org/audio.wav",
                 "file_sha256": "a" * 64, "speaker_ref": "speaker-01",
-                "microphone": "NEAR_FIELD", "microphone_id": "con123", "overlap_status": "NONE",
+                "microphone": "NEAR_FIELD", "microphone_id": "con123", "overlap_status": "PRESENT",
                 "duration_seconds": "4.2", "verification_status": "VERIFIED",
                 "verified_by": "project-source-audit", "verified_at": "2026-11-01",
                 "notes": "Synthetic unit-test asset; no real recording.",
@@ -130,6 +130,12 @@ class EvidenceRegistryTests(unittest.TestCase):
             write_registry(path, fields, [row])
             assets = load_audio_asset_registry(path, sources)
             validate_audio_asset_reference("LOTUS-TEST-001", "CORP-LOTUSDIS", "0.2", "1.5", assets, row_id="review-1")
+            row_without_mic_id = dict(row)
+            row_without_mic_id["microphone_id"] = ""
+            write_registry(path, fields, [row_without_mic_id])
+            with self.assertRaisesRegex(ValueError, "microphone_id"):
+                load_audio_asset_registry(path, sources)
+            write_registry(path, fields, [row])
             with self.assertRaisesRegex(ValueError, "does not match audio_source_id"):
                 validate_audio_asset_reference("LOTUS-TEST-001", "CORP-CCOST", "0.2", "1.5", assets, row_id="review-1")
             with self.assertRaisesRegex(ValueError, "within the registered asset duration"):

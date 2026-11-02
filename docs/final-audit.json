@@ -2620,19 +2620,40 @@
     }
   },
   "latest_exact_head_verification_2026_11_02": {
-    "verified_code_head": "d2d3043b61710496f48851f232f69ba836c8e0bc",
-    "ci_run": "41356471529",
+    "verified_code_head": "964b4930321e68c77ba5e956e1c0ecd12164ccfa",
+    "ci_run": "41406087052",
     "ci_result": "PASSED_ALL_3_JOBS",
-    "web_static_run": "41356471455",
+    "python_test_suite": "PASSED",
+    "source_and_blind_packet_validators": "PASSED",
+    "wheel_install_smoke": "PASSED",
+    "master_artifact": "PASSED",
+    "web_static_run": "41406087069",
     "web_static_result": "PASSED",
-    "external_vistec_run": "41356471544",
+    "external_vistec_run": "41406087050",
     "external_vistec_result": "PASSED",
-    "regression_narrow_ipa_abstention": "INCLUDED_IN_FULL_PYTEST",
-    "red_test_observed": false,
-    "local_tests": "NOT_RUN_GITHUB_CLONE_FAILED_DNS",
+    "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
     "branch": "research/independent-adjudication-gates-20261101",
-    "commits_ahead_of_main": 165,
+    "commits_ahead_of_main": 170,
     "commits_behind_main": 0,
+    "linguistic_accuracy": "NOT_MEASURED"
+  },
+  "audio_interval_overlap_refinement_2026_11_02": {
+    "status": "DONE_VERIFIED_ENGINEERING",
+    "code_head": "964b4930321e68c77ba5e956e1c0ecd12164ccfa",
+    "changes": [
+      "required exact microphone_id alongside normalized microphone category",
+      "whole-file overlap_status separated from row-level audio_interval_overlap_status",
+      "audio-backed IPA requires the exact reviewed interval to be verified non-overlapping"
+    ],
+    "blind_packet_headers_updated": true,
+    "real_audio_assets_registered": 0,
+    "independent_reviewers_registered": 0,
+    "ci_run": "41406087052",
+    "ci_result": "PASSED_ALL_3_JOBS",
+    "web_static_run": "41406087069",
+    "web_static_result": "PASSED",
+    "external_vistec_run": "41406087050",
+    "external_vistec_result": "PASSED",
     "linguistic_accuracy": "NOT_MEASURED"
   }
 }
