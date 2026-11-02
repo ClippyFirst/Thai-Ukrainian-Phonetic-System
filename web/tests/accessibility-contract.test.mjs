@@ -54,11 +54,10 @@ assert.match(css, /@media\s*\(prefers-reduced-motion:\s*reduce\)/);
 
 
 // Native form-control boundaries are meaningful non-text UI components. Read
-// their border colors from the stylesheet itself rather than duplicating them
-// in this test, and enforce WCAG 1.4.11's 3:1 contrast threshold.
+// the two visible control borders from the stylesheet itself rather than
+// duplicating them in this test, and enforce WCAG 1.4.11's 3:1 threshold.
 const controlBorderRules = [
   ["textarea", /textarea\s*\{[^}]*?border:\s*\d+px\s+solid\s+(#[0-9a-f]{6})/i],
-  ["engine mode", /#engine-mode\s*\{[^}]*?border:\s*\d+px\s+solid\s+(#[0-9a-f]{6})/i],
   ["output mode", /#output-mode\s*\{[^}]*?border:\s*\d+px\s+solid\s+(#[0-9a-f]{6})/i]
 ];
 const controlBorders = controlBorderRules.map(([label, pattern]) => {
