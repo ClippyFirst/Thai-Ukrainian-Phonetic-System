@@ -525,8 +525,8 @@
     {
       "id": "CORP-GLOBAL-TIMIT-THAI-001",
       "status": "PARTIAL",
-      "implementation": "Registered Global TIMIT Thai (LDC2022S13) after inspecting the LDC catalog, official README and Non-Member Agreement. The source provides 11.77h/50 speakers/6,000 utterances with word, phone and tone forced alignments; phone labels are DARPABET, not IPA.",
-      "blocker": "Authorized data access and sample labels are unavailable in this session; the inspected documentation does not establish independent phone/tone adjudication or IAA. LDC Non-Member Agreement is non-commercial and prohibits redistribution outside the research group.",
+      "implementation": "Registered Global TIMIT Thai (LDC2022S13) after inspecting the LDC catalog, official README, 2018 GlobalTIMIT paper and Non-Member Agreement. The source provides 11.77h/50 speakers/6,000 utterances with word, phone and tone forced alignments; phone labels are DARPABET, not IPA. The paper reports proof-listening and final phone/alignment QA, but not independent dual labels or Thai-specific quantitative accuracy.",
+      "blocker": "Authorized data access and sample labels are unavailable in this session; Thai-specific phone/tone quality, DARPABET-to-IPA mapping and independent IAA are unverified. LDC Non-Member Agreement is non-commercial and prohibits redistribution outside the research group.",
       "acceptance": "Obtain applicable written LDC authorization; inspect pinned phone/tone/TextGrid samples and DARPABET inventory; establish mapping and alignment quality; independently dual-review/adjudicate any rows used for phonetic evaluation. Do not use for public/commercial distribution without appropriate rights."
     }
   ],
@@ -2932,7 +2932,7 @@
     "alignment_method": "custom HTK forced aligner using corrected transcripts, SWATH tokenization, Mary R. Haas Thai Dictionary and approximately 1,000 added pronunciations",
     "speaker_scope": "recruited in Bangkok, born/raised in Thailand, fluent Standard Thai; native Standard Thai status not required",
     "independent_phone_tone_adjudication": "NOT_ESTABLISHED_BY_INSPECTED_README",
-    "inter_annotator_agreement": "NOT_REPORTED_BY_INSPECTED_README",
+    "inter_annotator_agreement": "NOT_REPORTED",
     "sample_phone_tone_files": "NOT_INSPECTED_BINARY_FETCH_UNSUPPORTED",
     "license": "LDC User Agreement for Non-Members",
     "permitted_scope": "non-commercial linguistic education/research/technology development",
@@ -2945,9 +2945,15 @@
       "independent_ipa_tone_gold": "BLOCKED",
       "public_or_commercial_redistribution": "BLOCKED"
     },
-    "acceptance": "Obtain and execute the applicable LDC agreement for the intended use; inspect pinned sample .phones/.tones/TextGrid; document DARPABET inventory/mapping and aligner quality; independently dual-review and adjudicate before any gold/accuracy claim.",
+    "acceptance": "Obtain and execute the applicable LDC agreement for the intended use; inspect pinned sample .phones/.tones/TextGrid; document DARPABET inventory/mapping and Thai-specific alignment quality; independently dual-review and adjudicate before any gold/accuracy claim.",
     "signed_agreement_required": true,
     "signed_agreement_submission": "email or fax to LDC",
-    "data_accuracy_warranty": "LDC disclaims warranties of accuracy/completeness"
+    "data_accuracy_warranty": "LDC disclaims warranties of accuracy/completeness",
+    "quality_control": "2018 GlobalTIMIT paper reports initial proof-listening and a final phone-sequence/alignment check for each completed collection.",
+    "independent_annotation": "TWO_INDEPENDENT_LABELS_PER_ITEM_NOT_ESTABLISHED",
+    "thai_specific_quantitative_accuracy": "NOT_REPORTED",
+    "mandarin_alignment_metric_caveat": "93.2% within 20ms reported for Mandarin only; not applicable to Thai",
+    "paper": "GlobalTIMIT_IS2018_submitted.pdf",
+    "paper_url": "https://catalog.ldc.upenn.edu/docs/LDC2022S13/GlobalTIMIT_IS2018_submitted.pdf"
   }
 }
