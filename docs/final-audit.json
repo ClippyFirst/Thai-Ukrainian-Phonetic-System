@@ -523,10 +523,24 @@
     },
     {
       "id": "FASTTHAIG2P-SPIKE-2026-11-02",
-      "status": "PARTIAL",
-      "implementation": "Added lazy optional Python adapter pinned to awslabs/FastThaiG2P c4759eef7df03e11fcbb9aa83efe8cf21709fd2f; extended existing 42-row same-input runner with ClippyFirst conservative abstention semantics, coverage/latency/runtime metadata and pairwise diagnostics; added tests and license/provenance register. First optional run 41431032031 was inspected and excluded: only thaiphon/Goruut produced rows because the local package was not installed. Workflow now installs the project editable; ClippyFirst output uses typed PhoneticResult plus tone contour. Corrected optional run 41431293483 verified FastThaiG2P/ClippyFirst imports and a 42-row shared-input run; follow-up dual-profile run 41431679913 passed and artifact was inspected: ClippyFirst phonemic 28/42 coverage, broad-surface 23/42, FastThaiG2P 42/42, thaiphon 42/42, Goruut 26/42. Raw agreement with FastThaiG2P: 12/28 phonemic, 9/23 surface. Accuracy remains NOT_MEASURED.",
-      "blocker": "Latest branch head still requires exact-head full CI and fresh optional workflow artifact inspection after dual-profile changes. The first valid run's artifact is on the earlier branch head 7900a7cc2e38bc69763f38273c97f73c6ebee2be; no adjudicated gold exists. Local clone/tests remain DNS-blocked.",
-      "acceptance": "Latest branch head passes full CI, Ruff and wheel-install smoke; optional workflow runs both ClippyFirst typed IPA profiles plus FastThaiG2P on all 42 inputs; inspect artifacts and keep accuracy NOT_MEASURED until independent Thai IPA gold is adjudicated."
+      "status": "DONE_VERIFIED",
+      "implementation": "Added lazy optional Python adapter pinned to awslabs/FastThaiG2P c4759eef7df03e11fcbb9aa83efe8cf21709fd2f; extended existing 42-row same-input runner with ClippyFirst conservative abstention semantics, coverage/latency/runtime metadata and pairwise diagnostics; added tests and license/provenance register. First optional run 41431032031 was inspected and excluded: only thaiphon/Goruut produced rows because the local package was not installed. Workflow now installs the project editable; ClippyFirst output uses typed PhoneticResult plus tone contour. Corrected optional run 41431293483 verified FastThaiG2P/ClippyFirst imports and a 42-row shared-input run; follow-up dual-profile run 41431679913 passed and artifact was inspected: ClippyFirst phonemic 28/42 coverage, broad-surface 23/42, FastThaiG2P 42/42, thaiphon 42/42, Goruut 26/42. Raw agreement with FastThaiG2P: 12/28 phonemic, 9/23 surface. Accuracy remains NOT_MEASURED. Exact-head CI run 41432085958 passed all three jobs (test, wheel-install-smoke, master-artifact); Ruff passed; pytest 326 passed and 1,169 subtests passed. Exact-head optional workflow 41432085960 passed and artifact SHA-256 c93e2a97b635470dadbef3776009d0d181dc5fd0d9967a8b195bd3571c55bbb7 was inspected. Optional extra installation via pip install -e .[fastthaig2p] succeeded; 210 same-input outputs were generated across 5 profiles.",
+      "blocker": "The integration and engineering benchmark are verified. Remaining separate blockers: no independent adjudicated IPA gold (accuracy NOT_MEASURED), and incomplete item-level rights/provenance for upstream generated/manual IPA and TLTK fallback data if redistribution/production bundling is proposed.",
+      "acceptance": "DONE_VERIFIED for optional adapter, same-input diagnostic runner, tests, CI, optional dependency install and inspected artifact. Separate accuracy gate requires independent double-reviewer Thai IPA gold; separate redistribution gate requires upstream data license/provenance evidence."
+    },
+    {
+      "id": "FASTTHAIG2P-ACCURACY-2026-11-02",
+      "status": "BLOCKED",
+      "implementation": "Same-input comparison completed on 42 frozen challenge records; coverage, abstention, latency and pairwise agreement are measured.",
+      "blocker": "The challenge has zero independently adjudicated IPA gold rows; inter-engine agreement is not accuracy.",
+      "acceptance": "Populate independently reviewed and adjudicated phonemic IPA gold with source provenance and uncertainty policy, then run the evidence-gated IPA scorer on the same inputs."
+    },
+    {
+      "id": "FASTTHAIG2P-DATA-RIGHTS-2026-11-02",
+      "status": "BLOCKED",
+      "implementation": "Layer-by-layer software/data provenance register completed; no FastThaiG2P upstream data assets copied into ClippyFirst.",
+      "blocker": "Upstream generated/manual IPA and TLTK fallback data lack complete item-level license/provenance statements in the inspected pinned tree.",
+      "acceptance": "Obtain upstream rights/provenance clarification or restrict distribution to code-only optional use; do not redistribute upstream dictionaries/source dumps/fallback data without clearance."
     }
   ],
   "latest_implementation_branch": "research/independent-adjudication-gates-20261101 (merged into main)",
@@ -2920,9 +2934,19 @@
     "independent_gold_rows": 0,
     "accuracy_status": "NOT_MEASURED",
     "local_clone": "BLOCKED_DNS",
-    "exact_head_ci": "PENDING",
+    "exact_head_ci": {
+      "run_id": 41432085958,
+      "status": "success",
+      "jobs": {
+        "test": "success",
+        "wheel_install_smoke": "success",
+        "master_artifact": "success"
+      },
+      "pytest": "326 passed; 1169 subtests passed",
+      "ruff": "passed"
+    },
     "production_dependency": false,
-    "data_redistribution": "NOT_AUTHORIZED_BY_THIS_SPIKE",
+    "data_redistribution": "BLOCKED_PENDING_ITEM_LEVEL_PROVENANCE_AND_LICENSE",
     "first_optional_run": {
       "run_id": 41431032031,
       "artifact_sha256": "d06f6a87d177a61780b3d58fc0bc74087f657ce8e0548c67bee4b20cd7275e8b",
@@ -2950,6 +2974,23 @@
         "interpretation": "inter-engine agreement only, not accuracy"
       },
       "accuracy_status": "NOT_MEASURED"
+    },
+    "final_branch_head_before_closeout": "84ca5c39e82e75db594a4a21152572a083d238db",
+    "final_optional_run": {
+      "run_id": 41432085960,
+      "status": "success",
+      "artifact_sha256": "c93e2a97b635470dadbef3776009d0d181dc5fd0d9967a8b195bd3571c55bbb7",
+      "rows": 210,
+      "challenge_inputs": 42,
+      "profiles": 5,
+      "extra_install": "pip install -e .[fastthaig2p] passed"
+    },
+    "coverage": {
+      "clippyfirst_phonemic": "28/42; 14 abstentions",
+      "clippyfirst_surface": "23/42; 19 abstentions",
+      "fastthaig2p": "42/42",
+      "thaiphon": "42/42",
+      "goruut": "26/42; 16 runtime no-output failures"
     }
   }
 }
