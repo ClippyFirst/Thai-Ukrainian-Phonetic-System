@@ -116,7 +116,7 @@ class RepositoryStructureAuditTests(unittest.TestCase):
             report = build_report(root)
             candidates = report["test_overlap_review_candidates"]["exact_duplicate_names"]
             self.assertEqual(candidates[0]["test_name"], "test_same_contract")
-            self.assertIn("not grounds for deleting a test", " ".join(report["limitations"]))
+            self.assertIn("never grounds for deleting a test", " ".join(report["limitations"]))
 
 
 if __name__ == "__main__":
