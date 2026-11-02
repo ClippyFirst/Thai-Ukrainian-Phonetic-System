@@ -16,11 +16,8 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
-      - run: python -m pip install -e ".[dev]"
-      - name: Install pinned PyThaiNLP runtime
-        run: python -m pip install pythainlp==5.4.0
-      - name: Install pinned optional FastThaiG2P comparator without dependency drift
-        run: python -m pip install --no-deps "git+https://github.com/awslabs/FastThaiG2P.git@4e82a291b4cf2876326744c6580121e9986ad354"
+      - name: Install project and pinned optional FastThaiG2P extra
+        run: python -m pip install -e ".[dev,fastthaig2p]"
       - run: pytest -q tests/test_fastthaig2p_challenge.py
       - name: Run paired 42-item challenge comparison
         run: python scripts/run_fastthaig2p_challenge.py --output /tmp/fastthaig2p-challenge-comparison.json
