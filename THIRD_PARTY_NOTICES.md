@@ -33,3 +33,15 @@ The finite correction/abstention layer in `web/src/rtgs-reference.js` is maintai
 - Adaptation: selected dictionary IPA, tone and vowel-length fields are normalized into a tab-separated data registry and mirrored in the browser runtime. Each row retains its source ID, revision locator and license. These records are explicitly marked source-attested and not independently adjudicated or acoustic gold; the repository does not claim that dictionary transcription is an audio measurement.
 - The broader curated text-lexicon subset is documented separately in [`data/thai/TEXT-LEXICON-DATA-LICENSE.md`](data/thai/TEXT-LEXICON-DATA-LICENSE.md).
 - The MIT license applies to project software, not to these separately attributed data records. The CC BY-SA 4.0 terms continue to apply to the adapted Wiktionary-derived data.
+
+## Optional FastThaiG2P comparator dependency (not vendored)
+
+- Upstream: [awslabs/FastThaiG2P](https://github.com/awslabs/FastThaiG2P)
+- Pinned comparator commit: `c4759eef7df03e11fcbb9aa83efe8cf21709fd2f` (`fastthaig2p==0.1.0`).
+- Software license: Apache License 2.0; upstream NOTICE attributes Amazon.com, Inc. or its affiliates. The package is an optional Python dependency and is not copied into this repository or imported by the default runtime.
+- Runtime dependency: `pythainlp>=5.3.4`; FastThaiG2P requires Python >=3.11. The optional extra is pinned in `pyproject.toml`.
+- Data is not covered by a blanket software-license conclusion. Upstream describes a 62,112-word IPA dictionary merged from manual overrides, Wiktionary-derived records and approximately 49k generated records. The Wiktionary source is identified as CC BY-SA 3.0 by the NLP for Thai corpus catalogue; generated IPA has no distinct dataset license in the inspected pinned repository; manual overrides have no separate data-license statement there.
+- The fallback's vendored `fastthaig2p/_th2ipa.py` contains a BSD 3-Clause notice for Chulalongkorn University's Department of Linguistics. The fallback statistical/lexical data files are described as vendored TLTK data, but no per-file license/provenance manifest was found in the pinned repository.
+- ClippyFirst does not redistribute the upstream dictionary, IPA JSON, source dumps or fallback data. Do not copy these assets into this repository unless row/file-level rights and attribution are verified.
+
+See [the integration spike license register](docs/fastthaig2p-integration-spike.md) for inspected layers, sources and unresolved data questions.
