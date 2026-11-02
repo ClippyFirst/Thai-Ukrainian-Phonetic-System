@@ -1499,3 +1499,10 @@ The focused PR #185 spike compares FastThaiG2P with ClippyFirst on the same froz
 Artifact metrics: 42 challenge inputs; ClippyFirst complete IPA 28/42; FastThaiG2P complete IPA 42/42; 45 dictionary tokens and 5 OOV rule-fallback tokens; 28 comparable records / 40 syllable pairs; raw exact IPA match 0/40; limited segmental projection match 25/40 (62.5%). Median latency was 0.390 ms for ClippyFirst and 0.074 ms for FastThaiG2P; p95 was 1.894 ms and 1.754 ms respectively. These are single-run coverage, inter-engine and timing diagnostics only. There are no independent IPA gold labels, and FastThaiG2P produces outputs for deliberately invalid probes where ClippyFirst abstains. Accuracy remains `NOT_MEASURED`.
 
 A follow-up adds the declared optional dependency extra and changes the dedicated workflow to install it through `.[dev,fastthaig2p]`. That newer exact head is pending verification. The upstream dictionary/fallback data rights remain unresolved; no data is copied. Raw FastThaiG2P output is not normalized into typed `PhoneticResult` and is not sent through Ukrainian adaptation.
+
+
+## 2026-11-02 — FastThaiG2P typed boundary
+
+- Parent integration spike #185 exact-head full CI [41440724105](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41440724105) and optional comparator [41440724151](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41440724151) passed. The paired artifact was downloaded and inspected; its challenge has 42 rows and zero independently adjudicated IPA gold labels.
+- Added a conservative per-syllable typed diagnostic bridge in stacked draft PR #186. It preserves word grouping, Chao tone metadata and segment features; rejects partial output and unsupported sentinels; and withholds Ukrainian output because the source transcription has not been adjudicated as phonemic or broad-surface IPA.
+- The typed-boundary exact-head checks are pending. No accuracy, production promotion, or data redistribution clearance is claimed.
