@@ -248,3 +248,12 @@ The 2026-11-02 spike compares both ClippyFirst typed output layers separately: `
 - Gold: **0 independently adjudicated rows**. Accuracy status: `NOT_MEASURED`. No engine is ranked for pronunciation accuracy.
 
 This is an engineering comparison only. Latency is from one 42-item run and is not a stable performance benchmark; the challenge is intentionally adversarial and not a representative usage distribution. The new dual-profile runner's exact-head CI and fresh optional workflow run are still required after the latest branch updates.
+
+## Exact-head verification — 2026-11-02
+
+- Final spike branch head at this checkpoint: `84ca5c39e82e75db594a4a21152572a083d238db`.
+- Exact-head main CI run [41432085958](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41432085958): all three jobs passed — `test`, `wheel-install-smoke`, `master-artifact`. Ruff reported “All checks passed”; pytest reported **326 passed, 1,169 subtests passed**. The complete existing repository checks, source/evidence validators, generated artifacts, browser tests, IPA adapter tests and wheel smoke completed successfully.
+- Exact-head optional comparator run [41432085960](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41432085960): passed. Its install step successfully used `pip install -e ".[fastthaig2p]"`, validating the pinned optional extra itself.
+- Final-head benchmark artifact SHA-256: `c93e2a97b635470dadbef3776009d0d181dc5fd0d9967a8b195bd3571c55bbb7`; 210 rows, 42 inputs × 5 profiles; corpus SHA-256 unchanged.
+- Final-head median/p95 ms: ClippyFirst phonemic 0.487/2.199; ClippyFirst broad-surface 0.465/1.791; FastThaiG2P 0.030/2.116; thaiphon 0.180/0.889; Goruut 0.512/0.674. Coverage and pairwise agreement are unchanged from the first valid run.
+- This verifies the optional adapter, report generation and engineering integration. It does **not** resolve independent-gold accuracy or item-level rights for upstream generated/manual/fallback data. No production runtime change was made.
