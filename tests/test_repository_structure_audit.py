@@ -101,6 +101,12 @@ class RepositoryStructureAuditTests(unittest.TestCase):
             )
             self.assertEqual(report["summary"]["test_functions"], 2)
             self.assertEqual(report["summary"]["exact_duplicate_test_name_clusters"], 1)
+            self.assertEqual(report["summary"]["browser_test_files"], 1)
+            self.assertEqual(report["summary"]["browser_test_assertion_calls"], 1)
+            self.assertEqual(
+                report["browser_test_inventory"][0]["imports_local_modules"],
+                ["web/src/util.js"],
+            )
             self.assertEqual(report["parse_errors"], [])
 
     def test_test_name_overlap_is_only_a_review_candidate(self) -> None:
