@@ -4,6 +4,8 @@ on:
   pull_request:
     paths:
       - "scripts/run_fastthaig2p_challenge.py"
+      - "src/thai_ukrainian/fastthaig2p_adapter.py"
+      - "pyproject.toml"
       - "tests/test_fastthaig2p_challenge.py"
       - "data/benchmark/thai_g2p_challenge.jsonl"
       - ".github/workflows/fastthaig2p-spike.yml"
