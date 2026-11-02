@@ -1,3 +1,15 @@
+## 2026-11-02 — regression hardening and exact-head verification (PR #190)
+
+- **Verified code/test checkpoint:** `6b448579769ff28612fef89856c367666173fbce`; `main` base `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`; 20 commits ahead, 0 behind.
+- **Regression improvement:** `web/tests/accessibility-contract.test.mjs` now extracts each control's border and actual background from its CSS rule, rather than assuming white. It supports both 3- and 6-digit hexadecimal colors and reports the measured background with the ratio. This closes a concrete test blind spot if the declared control background changes.
+- **Exact-head Web Static:** [41532496615](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41532496615) completed successfully.
+- **Exact-head Full CI:** [41532496665](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41532496665) completed successfully; all three jobs passed: `test`, `wheel-install-smoke`, `master-artifact`. The `test` job completed all 56 steps, including Ruff, full Python suite, generators/drift checks, evidence packet validators, browser/reference/parity/UI/static accessibility checks, segmentation and IPA diagnostics, held-out TUD evaluation and artifact uploads.
+- Source-annotated Wisesight/TUD results and source-attested IPA records retain their documented evidence grades; CI success is not independent linguistic accuracy evidence.
+- **Next state:** this audit/handoff refresh is documentation-only and creates a new PR head; exact-head checks for that new head must complete before it is called fully verified.
+- PR #190 remains open, Draft and unmerged. `main` and separate research branches remain untouched. No local test/browser/screen-reader/device testing is claimed.
+
+---
+
 ## 2026-11-02 — exact-head CI completion (PR #190)
 
 - **Current PR head:** `10599fbb45654dfe7f92a50ebf924c2992c667ef`; base `main`: `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`; 15 commits ahead, 0 behind.
