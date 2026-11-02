@@ -8,6 +8,7 @@ from scripts.run_external_g2p_benchmark import (
     build_pairwise_engine_diagnostic,
     CandidateAbstention,
     candidate_clippyfirst,
+    candidate_clippyfirst_surface,
     has_usable_output,
     load_rows,
     normalized_ipa,
@@ -133,7 +134,7 @@ class ExternalG2PBenchmarkHarnessTests(unittest.TestCase):
         ]):
             transcribe, metadata = candidate_clippyfirst()
             self.assertEqual(transcribe("กา"), "/kaː˧/")
-            self.assertEqual(metadata["configuration"]["phonemic_ipa"], True)
+            self.assertEqual(metadata["configuration"]["ipa_field"], "phonemic_ipa")
 
         with patch("thai_ukrainian.text.analyze_text_with_word_segmentation", return_value=[
             {"kind": "thai", "input": "ไม่รู้จัก", "segmentation_status": "unresolved", "syllables": []}
@@ -141,6 +142,19 @@ class ExternalG2PBenchmarkHarnessTests(unittest.TestCase):
             transcribe, _ = candidate_clippyfirst()
             with self.assertRaises(CandidateAbstention):
                 transcribe("ไม่รู้จัก")
+
+    def test_clippyfirst_surface_profile_uses_surface_ipa_from_typed_result(self):
+        with patch("thai_ukrainian.text.analyze_text_with_word_segmentation", return_value=[
+            {"kind": "thai", "input": "กด", "segmentation_status": "lexicon",
+             "syllables": [{"phonetic_result": {
+                 "status": "SUPPORTED", "phonemic_ipa": "kot",
+                 "broad_surface_ipa": "kot̚", "tone_contour_ipa": "˨˩"
+             }}]}
+        ]):
+            transcribe, metadata = candidate_clippyfirst_surface()
+            self.assertEqual(transcribe("กด"), "/kot̚˨˩/")
+            self.assertEqual(metadata["configuration"]["ipa_field"], "broad_surface_ipa")
+            self.assertEqual(metadata["configuration"]["transcription_layer"], "BROAD_SURFACE")
 
     def test_pairwise_diagnostic_separates_format_and_tone_mismatches(self):
         report = build_pairwise_engine_diagnostic([
