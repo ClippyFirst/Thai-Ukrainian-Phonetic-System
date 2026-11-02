@@ -184,6 +184,11 @@ if (sourceAttestedRuesi.length !== 1 || sourceAttestedRuesi[0].segmentationStatu
     sourceAttestedRuesi[0].syllables.map(x => x.tone).join("|") !== "mid|rising") {
   throw new Error("Source-attested ฤๅษี lexical reading failed: " + JSON.stringify(sourceAttestedRuesi));
 }
+const unsupportedRuesiSpelling = analyzeText("ฤษี");
+if (unsupportedRuesiSpelling.length !== 1 || unsupportedRuesiSpelling[0].segmentationStatus !== "unresolved" ||
+    unsupportedRuesiSpelling[0].syllables.length !== 0) {
+  throw new Error("Unattested ฤษี must remain unresolved: " + JSON.stringify(unsupportedRuesiSpelling));
+}
 console.log("Thai extended text lexicon regression passed");
 
 const unicodeHazards = [
