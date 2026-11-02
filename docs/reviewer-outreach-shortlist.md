@@ -11,8 +11,8 @@ The Thai review requires two independent reviewers with demonstrated Standard Th
 | **Chutamanee Onsuwan, Ph.D.** | Thammasat faculty profile lists a PhD dissertation on temporal relations between consonants and vowels in Thai syllables; expertise includes laboratory phonetics, speech science and phonology; publications include Thai vowel duration and tone perception. | [Official Thammasat profile](https://arts.tu.ac.th/th/teacherlarts/cmukv6znk0052pm61l213msd6); use the faculty contact route. |
 | **Lena Maluleem, Ph.D.** | Kasetsart Department of Linguistics profile lists phonetics/phonology, prosody and experimental linguistics; published work includes Thai compound stress. | [Official Kasetsart profile](https://ling.human.ku.ac.th/index.php/lyna_cv/); public institutional email: `lena.m@ku.th`. |
 | **Rungpat Roengpitya** | Mahidol profile lists work on Standard Thai tones, cross-language perception of Japanese vowel-length contrasts, and perception of Thai word-final voiceless stops; the cited profile does not establish direct Thai vowel-length expertise. | [Official Mahidol profile](https://murex.mahidol.ac.th/en/persons/rungpat-roengpitya/); contact through the profile. |
-| **Sujinat Jitwiriyanont, Ph.D.** | Chulalongkorn profile lists phonetics and acoustic phonetics; co-author of the 2026 CCOST corpus paper. | [Official Chulalongkorn department profile](https://www.arts.chula.ac.th/ling/department-member.html). Disclose CCOST authorship if reviewing CCOST-derived labels. |
-| **Pittayawat Pittayaporn, Ph.D.** | Chulalongkorn profile lists phonology and Southeast Asian linguistics; relevant Thai phonology publications and co-author of CCOST. | [Official ChulaSEAL profile](https://www.arts.chula.ac.th/chulaseal/). Disclose CCOST authorship if reviewing CCOST-derived labels. |
+| **Sujinat Jitwiriyanont, Ph.D.** | Chulalongkorn profile lists phonetics and acoustic phonetics; co-author of the 2026 CCOST corpus paper. | Public institutional email: `Sujinat.J@chula.ac.th`; [official ChulaSEAL people page](https://www.arts.chula.ac.th/chulaseal/people/). Disclose CCOST authorship if reviewing CCOST-derived labels. |
+| **Pittayawat Pittayaporn, Ph.D.** | Chulalongkorn profile lists phonology and Southeast Asian linguistics; relevant Thai phonology publications and co-author/data curator of CCOST. | Public institutional email: `Pittayawat.P@chula.ac.th`; [official ChulaSEAL people page](https://www.arts.chula.ac.th/chulaseal/people/). Disclose CCOST authorship/curatorship if reviewing CCOST-derived labels. |
 
 **Suggested initial pair:** invite Chutamanee Onsuwan and Lena Maluleem or Rungpat Roengpitya, subject to confirmation that each can independently review Standard Thai phonemic IPA, lexical readings, word/syllable boundaries and tone. Do not presume native status from names or affiliation; ask each reviewer to state their Thai proficiency and dialect/standard competence.
 
@@ -49,3 +49,10 @@ The Ukrainian task is conditional on supplied source IPA. It needs at least two 
 ## Audio-source option for phonetic review
 
 The source registry now includes `CORP-LOTUSDIS` (CC BY-SA 4.0) as an audio/transcript source for fresh human phonetic annotation. It is not an IPA/toneme gold set. For any acoustic review, the project owner must first pin the exact dataset revision and asset, verify a clean near-field non-overlap segment, and record speaker pseudonym, microphone/channel, time interval and file hash. No LOTUSDIS audio has been downloaded, sampled or sent to reviewers in this run. See [phonetic corpus selection](phonetic-corpus-selection.md).
+
+
+## Contact-route verification — 2026-11-02
+
+Official ChulaSEAL faculty pages publish institutional email addresses for CCOST curators Pittayawat Pittayaporn (`Pittayawat.P@chula.ac.th`) and Sujinat Jitwiriyanont (`Sujinat.J@chula.ac.th`). These routes are suitable for a wordlist clarification request, not for claiming an independent review of their own CCOST material. See `docs/external-review-and-source-requests.md` for a prepared message.
+
+The shortlist remains **not contacted**. No outbound email facility was available in the execution environment; public contact details do not imply consent or availability.
