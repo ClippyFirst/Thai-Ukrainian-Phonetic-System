@@ -12,6 +12,7 @@ import difflib
 import hashlib
 import json
 import re
+import posixpath
 from collections import defaultdict
 from html.parser import HTMLParser
 from importlib.util import resolve_name
@@ -109,7 +110,7 @@ def _html_assets(path: Path) -> list[dict[str, str]]:
 def _resolve_js_import(source: Path, specifier: str, known: set[str]) -> str | None:
     if not specifier.startswith("."):
         return None
-    candidate = (source.parent / specifier).as_posix()
+    candidate = posixpath.normpath((source.parent / specifier).as_posix())
     options = [candidate, candidate + ".js", candidate + "/index.js"]
     return next((item for item in options if item in known), None)
 
