@@ -4,7 +4,7 @@
 
 ## Implementation contract
 
-The spike uses the upstream public Python API `fastthaig2p.G2P().convert(text)` and runs it against the same frozen 42-item challenge file as ClippyFirst. It records the untouched upstream string, slash-delimited word groups, dot-delimited syllables, dictionary-hit/OOV fallback counts, output coverage and per-engine wall-clock diagnostics.
+The spike exposes a lazy optional `FastThaiG2PAdapter` in `src/thai_ukrainian/fastthaig2p_adapter.py`, which wraps the upstream public Python API `fastthaig2p.G2P().convert(text)` and runs it against the same frozen 42-item challenge file as ClippyFirst. It records the untouched upstream string, slash-delimited word groups, dot-delimited syllables, dictionary-hit/OOV fallback counts, non-IPA passthrough text, complete-IPA coverage and per-engine wall-clock diagnostics. A response with any non-IPA passthrough is not counted as complete IPA.
 
 FastThaiG2P output is **not** silently promoted into ClippyFirst's typed `PhoneticResult`. The upstream output contains Chao tone contours while ClippyFirst exposes phonemic IPA and separate tone metadata. A convention-aware, feature-preserving conversion plus dedicated tests is required before the external output may enter the shared IPA-to-Ukrainian adapter. This spike therefore does not emit Ukrainian output from FastThaiG2P and does not alter the production path.
 
