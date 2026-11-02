@@ -1476,3 +1476,12 @@ The new test/tool code was committed on the PR branch and awaits exact-head CI c
 - Remaining blockers are unchanged: independent Thai and Ukrainian reviewers, CCOST A–D curator clarification and archive inspection, full immutable LOTUSDIS audio revision plus real hashed assets/intervals, and hands-on WCAG keyboard/screen-reader/device testing.
 
 **Final readiness:** the current browser service is deployed and engineering-verified. The repository remains a research prototype, not a linguistic-accuracy or WCAG-conformance release. Linguistic accuracy remains `NOT_MEASURED`.
+
+
+## FastThaiG2P integration spike — 2026-11-02
+
+An isolated optional Python comparator has been added on branch `research/fastthaig2p-integration-spike-20261102`. It uses pinned FastThaiG2P commit `4e82a291b4cf2876326744c6580121e9986ad354` and PyThaiNLP 5.4.0 in a dedicated workflow, evaluates the same 42 frozen challenge inputs, retains raw IPA, and reports dictionary/OOV path counts, coverage, inter-engine syllable-string agreement and timing diagnostics. This is not an accuracy benchmark: independent challenge gold remains zero.
+
+License layers recorded: FastThaiG2P software Apache-2.0; PyThaiNLP software Apache-2.0; FastThaiG2P's vendored TLTK parser file carries a BSD 3-Clause notice; ClippyFirst software MIT; current Wiktionary-derived ClippyFirst lexical IPA data CC BY-SA 4.0. FastThaiG2P's bundled dictionary mixes manual, Wiktionary-derived and LLM-generated entries, and its row-level data rights are not established. The external dictionary is not copied. The spike preserves raw Chao-tone IPA and does not adapt it to Ukrainian until a typed, feature-preserving conversion is specified.
+
+**Status at this audit edit:** implementation and workflow authored; exact-head CI, benchmark artifact, and runtime numbers pending. Do not mark the spike DONE_VERIFIED until the dedicated workflow succeeds.
