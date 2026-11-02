@@ -1522,3 +1522,11 @@ The declared optional dependency extra installs through `.[dev,fastthaig2p]`; ex
 - Branch head `9b5b972a6f03cd09eacc710bc1b2a86c92fb2364`: Full CI [41445055973](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41445055973) passed all three jobs; Ruff clean; 330 pytest tests and 1,169 subtests passed.
 - Optional workflow [41445055888](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41445055888) passed; artifact [13142640800](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41445055888/artifacts/13142640800) was inspected; JSON SHA-256 `cfbf884ede962df72a633a26df4ce0d3cff105d5c77bf511405db6a0a03f7af3`.
 - The typed bridge remains diagnostic-only; no IPA layer promotion, Ukrainian output, accuracy claim, merge, release or data redistribution clearance.
+
+
+## Latest FastThaiG2P exact-head verification — 2026-11-02
+
+- Current typed-boundary branch head `933878fb7c95f280068500ac57d390d98d2f1212` passed Full CI [41446645619](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41446645619): `test`, `wheel-install-smoke`, and `master-artifact` all successful.
+- Optional FastThaiG2P workflow [41446645450](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41446645450) passed; artifact [13142258280](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41446645450/artifacts/13142258280) was downloaded and inspected. ZIP SHA-256 `6f402120bb316bc6b19a4a27421a6e313b46274001abe9255f015572ece5df55`; JSON SHA-256 `7199c07a3708ca9517a5a78e8e1a06f80ae7dd221d4849c8f4bd36fac2ed339f`.
+- Current artifact confirms 42 challenge inputs; ClippyFirst complete 28/42; FastThaiG2P complete 42/42; 45 dictionary tokens; 5 OOV fallback tokens; 76 typed syllables (75 UNCERTAIN, one UNSUPPORTED); 76/76 Ukrainian results withheld; 0/40 raw exact matches and 25/40 segmental-projection matches. Accuracy remains `NOT_MEASURED` because no independent IPA gold exists.
+- This is exact-head engineering verification of a diagnostic-only adapter. No production routing, merge, release, accuracy claim, or third-party data redistribution clearance is implied.
