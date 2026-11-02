@@ -67,7 +67,9 @@ class CandidateAbstention(RuntimeError):
     """A candidate deliberately withholds a result for this input."""
 
 
-def candidate_clippyfirst() -> tuple[Callable[[str], str], dict[str, Any]]:
+def _candidate_clippyfirst_layer(
+    ipa_field: str, transcription_layer: str
+) -> tuple[Callable[[str], str], dict[str, Any]]:
     from thai_ukrainian.text import analyze_text_with_word_segmentation
 
     def transcribe(text: str) -> str:
@@ -89,11 +91,12 @@ def candidate_clippyfirst() -> tuple[Callable[[str], str], dict[str, Any]]:
                     raise CandidateAbstention(
                         f"ClippyFirst typed IPA is not supported for token {token.get('input')!r}"
                     )
-                ipa = typed_ipa.get("phonemic_ipa")
+                ipa = typed_ipa.get(ipa_field)
                 tone = typed_ipa.get("tone_contour_ipa")
                 if not isinstance(ipa, str) or not ipa or not isinstance(tone, str) or not tone:
                     raise CandidateAbstention(
-                        f"ClippyFirst withheld segmental IPA or tone for token {token.get('input')!r}"
+                        f"ClippyFirst withheld {transcription_layer} IPA or tone "
+                        f"for token {token.get('input')!r}"
                     )
                 ipa_syllables.append(ipa + tone)
             ipa_words.append("/" + ".".join(ipa_syllables) + "/")
@@ -106,13 +109,24 @@ def candidate_clippyfirst() -> tuple[Callable[[str], str], dict[str, Any]]:
         "version": "in-repository",
         "configuration": {
             "api": "analyze_text_with_word_segmentation",
-            "phonemic_ipa": True,
-            "typed_ipa_contract": "PhoneticResult (segmental IPA plus separate tone contour)",
-            "policy": "conservative; abstain unless every Thai token has complete IPA and tone",
+            "ipa_field": ipa_field,
+            "transcription_layer": transcription_layer,
+            "typed_ipa_contract": "PhoneticResult (selected IPA field plus separate tone contour)",
+            "policy": "conservative; abstain unless every Thai token has complete selected IPA and tone",
             "word_segmentation": "pinned ClippyFirst dictionary maximum matching",
         },
         "source_commit": "runtime-at-benchmark-commit",
     }
+
+
+def candidate_clippyfirst() -> tuple[Callable[[str], str], dict[str, Any]]:
+    """ClippyFirst phonemic IPA profile; tone remains a separate typed field."""
+    return _candidate_clippyfirst_layer("phonemic_ipa", "BROAD_PHONEMIC")
+
+
+def candidate_clippyfirst_surface() -> tuple[Callable[[str], str], dict[str, Any]]:
+    """ClippyFirst broad-surface IPA profile, closest to FastThaiG2P's IPA convention."""
+    return _candidate_clippyfirst_layer("broad_surface_ipa", "BROAD_SURFACE")
 
 
 def candidate_fastthaig2p() -> tuple[Callable[[str], str], dict[str, Any]]:
@@ -123,7 +137,8 @@ def candidate_fastthaig2p() -> tuple[Callable[[str], str], dict[str, Any]]:
 
 
 CANDIDATES = {
-    "clippyfirst": candidate_clippyfirst,
+    "clippyfirst_phonemic": candidate_clippyfirst,
+    "clippyfirst_surface": candidate_clippyfirst_surface,
     "thaiphon": candidate_thaiphon,
     "fastthaig2p": candidate_fastthaig2p,
 }
