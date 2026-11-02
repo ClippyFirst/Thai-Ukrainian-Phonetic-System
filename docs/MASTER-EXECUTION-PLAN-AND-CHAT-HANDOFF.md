@@ -1,3 +1,15 @@
+## 2026-11-02 — PR #190 exact documentation-head verification refresh
+
+- **Exact PR head:** `a8d6dc27c823f9f25c6ad403e3b272d4a1fe7a9e`; base `main` remains `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`. PR #190 remains open, draft and unmerged.
+- **Fresh exact-head CI:** [41483211761](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41483211761) completed with conclusion `success`.
+- **Fresh exact-head Web Static:** [41483211756](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41483211756) completed with conclusion `success`.
+- The previous checkpoint's statement that the final documentation-head CI was pending is superseded. The earlier code-head evidence remains valid; these newer runs verify the final documentation head.
+- **Scope unchanged:** source-level 3:1 checks cover the active textarea and output-selector borders only. The native range slider, keyboard-only use, screen readers, zoom/reflow and mobile/assistive-technology acceptance remain unverified. This is not a WCAG conformance claim.
+- **Research gates unchanged:** Thai independent phonetic/segmentation adjudication, Ukrainian-native target-form adjudication, CCOST archive inspection/curator clarification, and immutable LOTUSDIS audio asset/interval registration remain blocked or partial as recorded below.
+- **Execution limitation:** this continuation used the GitHub connector; no local checkout, browser automation, screen reader or physical-device session was available. No local test execution is claimed.
+
+---
+
 # Continuation checkpoint — control contrast correction (2026-11-02)
 
 - **Starting main:** `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`.
