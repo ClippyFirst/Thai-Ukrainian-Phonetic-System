@@ -137,9 +137,21 @@ def analyze_text_with_word_segmentation(text: str):
             })
             return
 
-        segmented = dictionary_word_segmentation(chunk)
+        if chunk in LEXICON:
+            words = (chunk,)
+            word_statuses = ("exact_text_lexicon",)
+            word_segmentation_method = "exact_text_lexicon"
+            word_segmentation_complete = True
+            word_segmentation_evidence_grade = "CURATED_TEXT_LEXICON"
+        else:
+            segmented = dictionary_word_segmentation(chunk)
+            words = segmented.tokens
+            word_statuses = segmented.token_statuses
+            word_segmentation_method = segmented.method
+            word_segmentation_complete = segmented.complete
+            word_segmentation_evidence_grade = segmented.evidence_grade
         local_offset = 0
-        for word, word_status in zip(segmented.tokens, segmented.token_statuses):
+        for word, word_status in zip(words, word_statuses):
             if word_status == "unknown_cluster_fallback":
                 item = {
                     "input": word,
@@ -156,9 +168,9 @@ def analyze_text_with_word_segmentation(text: str):
             item["source_span"] = [offset + local_offset, offset + local_offset + len(word)]
             item["source_run"] = chunk
             item["word_segmentation_status"] = word_status
-            item["word_segmentation_method"] = segmented.method
-            item["word_segmentation_complete"] = segmented.complete
-            item["word_segmentation_evidence_grade"] = segmented.evidence_grade
+            item["word_segmentation_method"] = word_segmentation_method
+            item["word_segmentation_complete"] = word_segmentation_complete
+            item["word_segmentation_evidence_grade"] = word_segmentation_evidence_grade
             result.append(item)
             local_offset += len(word)
         if local_offset != len(chunk):
