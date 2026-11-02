@@ -100,8 +100,10 @@ def run(input_path: Path = DEFAULT_INPUT) -> dict[str, Any]:
     external_oov_tokens = 0
     clippy_latencies = []
     external_latencies = []
-    exact_syllable_pairs = 0
-    exact_syllable_matches = 0
+    raw_exact_syllable_pairs = 0
+    raw_exact_syllable_matches = 0
+    segmental_pairs = 0
+    segmental_matches = 0
     comparable_records = 0
 
     for row in challenge:
@@ -141,9 +143,15 @@ def run(input_path: Path = DEFAULT_INPUT) -> dict[str, Any]:
         comparable = clippy_complete and external_complete and len(clippy_ipa) == len(external_syllables)
         if comparable:
             comparable_records += 1
-            exact_syllable_pairs += len(clippy_ipa)
-            exact_syllable_matches += sum(
+            raw_exact_syllable_pairs += len(clippy_ipa)
+            raw_exact_syllable_matches += sum(
                 a == b for a, b in zip(clippy_ipa, external_syllables, strict=True)
+            )
+            clippy_segmental = [segmental_projection(x) for x in clippy_ipa]
+            external_segmental = [segmental_projection(x) for x in external_syllables]
+            segmental_pairs += len(clippy_segmental)
+            segmental_matches += sum(
+                a == b for a, b in zip(clippy_segmental, external_segmental, strict=True)
             )
 
         records.append({
@@ -182,7 +190,7 @@ def run(input_path: Path = DEFAULT_INPUT) -> dict[str, Any]:
         "schema_version": "1.0",
         "report_type": "ENGINE_COMPARISON_DIAGNOSTIC_NOT_ACCURACY_BENCHMARK",
         "challenge": {
-            "path": str(input_path.relative_to(ROOT)),
+            "path": str(input_path),
             "record_count": len(challenge),
             "gold_status": "NO_INDEPENDENTLY_ADJUDICATED_IPA",
         },
@@ -199,10 +207,16 @@ def run(input_path: Path = DEFAULT_INPUT) -> dict[str, Any]:
             "fastthaig2p_dictionary_tokens": external_dictionary_tokens,
             "fastthaig2p_oov_rule_fallback_tokens": external_oov_tokens,
             "records_with_both_complete_and_equal_syllable_count": comparable_records,
-            "exact_syllable_string_matches_on_comparable_records": exact_syllable_matches,
-            "exact_syllable_string_pairs_compared": exact_syllable_pairs,
-            "exact_syllable_agreement_rate": (
-                exact_syllable_matches / exact_syllable_pairs if exact_syllable_pairs else None
+            "raw_exact_syllable_string_matches": raw_exact_syllable_matches,
+            "raw_exact_syllable_string_pairs_compared": raw_exact_syllable_pairs,
+            "raw_exact_syllable_agreement_rate": (
+                raw_exact_syllable_matches / raw_exact_syllable_pairs
+                if raw_exact_syllable_pairs else None
+            ),
+            "segmental_projection_matches": segmental_matches,
+            "segmental_projection_pairs_compared": segmental_pairs,
+            "segmental_projection_agreement_rate": (
+                segmental_matches / segmental_pairs if segmental_pairs else None
             ),
             "clippyfirst_latency_ms": {
                 "median": statistics.median(clippy_latencies),
