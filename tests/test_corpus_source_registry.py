@@ -86,5 +86,25 @@ class CorpusSourceRegistryTests(unittest.TestCase):
         self.assertIn("not bundled", lst20["notes"])
 
 
+    def test_global_timit_thai_is_restricted_forced_alignment_not_gold(self):
+        path = ROOT / "data" / "corpus_sources.csv"
+        with path.open("r", encoding="utf-8-sig", newline="") as stream:
+            rows = {row["source_id"]: row for row in csv.DictReader(stream)}
+        row = rows["CORP-GLOBAL-TIMIT-THAI"]
+        self.assertEqual(row["type"], "acoustic_speech_corpus")
+        self.assertIn("Standard Thai read speech", row["scope"])
+        self.assertIn("DARPABET, not IPA", row["annotation"])
+        self.assertIn("LDC User Agreement for Non-Members", row["license_or_access"])
+        self.assertIn("non-commercial", row["license_or_access"])
+        self.assertIn("no redistribution", row["license_or_access"])
+        for evidence in (
+            "11.77 hours", "50 speakers", "6,000 utterances",
+            "custom HTK aligner", "Mary R. Haas dictionary",
+            "not independently adjudicated", "commercial product release",
+            "not IPA gold", "No data or labels downloaded/bundled",
+        ):
+            self.assertIn(evidence, row["notes"])
+
+
 if __name__ == "__main__":
     unittest.main()
