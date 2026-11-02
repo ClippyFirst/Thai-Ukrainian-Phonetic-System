@@ -194,7 +194,7 @@ def build_report(root: Path = ROOT, revision: str | None = None) -> dict[str, An
             browser_test_inventory.append({
                 "file": relative,
                 "assertion_calls": len(re.findall(
-                    r"\\bassert(?:\\.(?:equal|deepEqual|match|doesNotMatch|ok|throws|rejects|strictEqual|notEqual))?\\s*\\(",
+                    r"\bassert(?:\.(?:equal|deepEqual|match|doesNotMatch|ok|throws|rejects|strictEqual|notEqual))?\s*\(",
                     source,
                 )),
                 "imports_local_modules": sorted(
