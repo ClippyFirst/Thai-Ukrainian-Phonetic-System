@@ -21,13 +21,13 @@ class ChallengeRuntimeDiagnosticsTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             path = self.write_jsonl(directory, [
                 {"id": "known", "input": "กา", "stratum": "test"},
-                {"id": "unknown", "input": "กฉ", "stratum": "test"},
+                {"id": "unknown", "input": "กฉ", "stratum": "test"},\n                {"id": "special-vowel", "input": "ฤๅ", "stratum": "ฤ-series"},
             ])
             report = build_report(path)
 
         self.assertEqual(report["evaluation_kind"], "runtime_diagnostic_not_accuracy_benchmark")
         self.assertEqual(report["gold_status"], "NOT_ADJUDICATED")
-        self.assertEqual(report["summary"]["challenge_inputs"], 2)
+        self.assertEqual(report["summary"]["challenge_inputs"], 3)
         self.assertEqual(
             report["summary"]["inputs_with_engine_output"]
             + report["summary"]["inputs_abstained_or_without_complete_output"],
@@ -44,6 +44,10 @@ class ChallengeRuntimeDiagnosticsTests(unittest.TestCase):
         )
         self.assertIn("word_segmented_output_emitted", records["unknown"])
         self.assertIn("coordination_cluster_counts", report["summary"])
+        self.assertEqual(
+            records["special-vowel"]["coordination_cluster"],
+            "SPECIAL_VOWEL_NEEDS_LEXICAL_CONTEXT",
+        )
         self.assertNotIn("accuracy", report["summary"])
 
     def test_empty_challenge_fails_closed(self):
