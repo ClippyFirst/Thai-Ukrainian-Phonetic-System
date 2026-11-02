@@ -88,7 +88,8 @@ def build_report(path: Path = DEFAULT_INPUT) -> dict[str, Any]:
     analysis_counts: Counter[str] = Counter()
     details: list[dict[str, Any]] = []
     output_count = 0
-    abstained_count = 0\n    word_segmented_output_count = 0
+    abstained_count = 0
+    word_segmented_output_count = 0
 
     for row in challenge:
         tokens = analyze_text(row["input"])
