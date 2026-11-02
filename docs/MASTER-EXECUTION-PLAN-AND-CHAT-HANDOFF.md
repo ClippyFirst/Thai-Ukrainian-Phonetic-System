@@ -2111,3 +2111,28 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Exact-head Web Static [41406424761](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41406424761) and external VISTEC segmentation evaluation [41406424960](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41406424960) also passed on the same head.
 - Provenance distinction: CI [41406087052](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41406087052) ran on implementation commit `964b4930321e68c77ba5e956e1c0ecd12164ccfa`. The additional regression tests for required `microphone_id`, file-level overlap with a clean selected interval, and rejection of an overlapping selected interval were committed in `826fcddad4d66471b1ba95f00c4cc5b5f430e237`; **41406424727 is the CI run that verifies those tests**.
 - This is **DONE_VERIFIED engineering**, not linguistic validation. No audio assets or expert annotations were added; Thai IPA/segmentation and Ukrainian practical transcription accuracy remain **NOT MEASURED**. The external evidence gates below remain open.
+
+
+## 2026-11-02 — priority research continuation handoff
+
+**Current focus:** user-prioritized independent Thai review, CCOST source reconciliation/archive inspection, LOTUSDIS asset pinning, WCAG 2.2 AA, and repository graph/test-overlap review.
+
+### Implemented engineering work (awaiting exact-head CI)
+- Added `web/tests/accessibility-contract.test.mjs` and wired it into main CI, Web Static and Pages. It checks static HTML/UI accessibility contracts and 12 selected contrast pairs; calculated minimum is approximately 5.71:1. This is not manual WCAG verification.
+- Added `scripts/audit_repository_structure.py` plus `tests/test_repository_structure_audit.py`. CI generates an inspectable static graph/test-inventory artifact. It includes Python/browser imports, HTML assets, workflow script references, dynamic-import review sites, and test-name overlap candidates. It deliberately does not delete tests or claim complete runtime call-graph coverage.
+- Updated `scripts/README.md` and `docs/architecture.md` to describe the new tooling and evidence boundaries.
+
+### Research/source findings
+- CCOST Zenodo v1.0 primary record: 206-item word list, official MD5 `e62f500d87b4ff8c6deb4c4595854d34`, 6.2 GB `C-COST.zip` with WAV/TextGrid. The LREC 2026 paper says each speaker read the 206-item list twice and 25 sentences three times. Existing A–D discrepancy remains: 206 unique per order, no duplicates, 208-item union; curator clarification still required.
+- LOTUSDIS HF dataset card: 16 kHz audio plus sentence/speaker_id/mic/duration, 120,245 train + 13,090 validation + 27,580 test rows, 13.2 GB. History shows upload prefix `45145d7`; full immutable dataset SHA was not resolved. The pinned CAI-NECTEC GitHub README revision `b6c7e81498a92003761ac856348d764c287ee02c` is documentation only. No asset URI/hash/speaker/interval was registered.
+- Reviewer shortlist exists, but no outreach or consent has occurred. Do not populate reviewer registries without verified qualification and independent submissions.
+
+### Remaining acceptance gates
+1. Two independent qualified Thai reviewers and a separate adjudicator; frozen labels and disagreement log.
+2. CCOST curator response or corrected A–D wordlist, then regenerate/freeze packet.
+3. Inspect actual CCOST archive and reconcile real TextGrid tiers/X-SAMPA with paper/manual.
+4. Pin full LOTUSDIS HF revision and one or more actual audio objects with SHA-256, speaker, mic, exact interval and overlap status.
+5. Hands-on keyboard, screen-reader, zoom/reflow and device testing with defect/fix/retest records.
+6. Inspect static graph artifact; resolve dynamic/runtime references and test-overlap candidates against semantic acceptance contracts. No test deletion without coverage-preservation evidence.
+
+**Evidence limits:** local network/DNS could not reach public hosts; the connector exposed GitHub source and web search metadata, not downloadable CCOST/HF audio bytes. Connected browser testing could not run because the Firecrawl account had no credits. No human review or manual AT test is claimed. Linguistic accuracy remains `NOT_MEASURED`.

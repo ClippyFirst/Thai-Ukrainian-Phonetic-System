@@ -2687,5 +2687,105 @@
     "commits_ahead_of_main": 170,
     "commits_behind_main": 0,
     "linguistic_accuracy": "NOT_MEASURED"
+  },
+  "priority_research_update_2026_11_02": {
+    "branch": "research/independent-adjudication-gates-20261101",
+    "source_head_before_documentation_commit": "be3429d3b8a27ec66f6abe4d835e0360534553d1",
+    "thai_independent_adjudication": {
+      "status": "BLOCKED_EXTERNAL_HUMAN_INPUT",
+      "blind_prompt_sets": [
+        42,
+        6
+      ],
+      "reviewer_shortlist_candidates": 5,
+      "reviewer_registry_rows": 0,
+      "adjudicated_rows": 0,
+      "acceptance": "two qualified independent Standard Thai reviewers, separate adjudicator, frozen labels and disagreement log"
+    },
+    "ccost_wordlist": {
+      "status": "BLOCKED_CURATOR_CLARIFICATION",
+      "zenodo_record": "10.5281/zenodo.17366698",
+      "expected_items_per_order": 206,
+      "md5": "e62f500d87b4ff8c6deb4c4595854d34",
+      "unique_items_per_order": 206,
+      "duplicates_per_order": 0,
+      "union_items": 208,
+      "orders_b_c_d_each_missing_and_extra_vs_a": 2,
+      "paper": "https://aclanthology.org/2026.lrec-1.247/",
+      "paper_cross_check": "each speaker read 206-item list twice; no explanation of A-D mismatch"
+    },
+    "ccost_textgrid_archive": {
+      "status": "BLOCKED_ARCHIVE_NOT_INSPECTED",
+      "archive": "C-COST.zip",
+      "published_size": "6.2 GB",
+      "expected_contents": [
+        "WAV",
+        "TextGrid"
+      ],
+      "acceptance": "inspect actual archive, hash files, enumerate tiers and X-SAMPA labels, reconcile paper/manual"
+    },
+    "lotusdis": {
+      "status": "PARTIAL_SOURCE_METADATA_ONLY",
+      "dataset": "nectec/LOTUSDIS",
+      "hf_upload_revision_prefix": "45145d7",
+      "full_hf_revision_sha": "NOT_RESOLVED",
+      "hf_card_fields": [
+        "audio@16000Hz",
+        "sentence",
+        "speaker_id",
+        "mic",
+        "duration"
+      ],
+      "split_rows": {
+        "train": 120245,
+        "validation": 13090,
+        "test": 27580,
+        "total": 160915
+      },
+      "dataset_size": "13.2 GB",
+      "documentation_repo_commit": "b6c7e81498a92003761ac856348d764c287ee02c",
+      "documentation_commit_is_audio_revision": false,
+      "audio_asset_rows": 0,
+      "acceptance": "resolve full HF revision and register actual immutable audio object URI/hash, speaker, mic, duration and clean interval"
+    },
+    "wcag_2_2_aa": {
+      "status": "PARTIAL_STATIC_CONTRACT_ONLY",
+      "test": "web/tests/accessibility-contract.test.mjs",
+      "wired_workflows": [
+        ".github/workflows/ci.yml",
+        ".github/workflows/web-static.yml",
+        ".github/workflows/pages.yml"
+      ],
+      "selected_contrast_pairs": 12,
+      "minimum_selected_contrast_ratio": 5.71,
+      "manual_keyboard_screen_reader_device_tests": "NOT_RUN",
+      "acceptance": "hands-on keyboard, screen-reader, zoom/reflow, mobile and AT testing with defects/fixes/retest"
+    },
+    "repository_graph_and_test_redundancy": {
+      "status": "PARTIAL_STATIC_AUDIT_IMPLEMENTED",
+      "script": "scripts/audit_repository_structure.py",
+      "tests": "tests/test_repository_structure_audit.py",
+      "ci_artifact": "repository-static-dependency-and-test-audit",
+      "includes": [
+        "Python import edges",
+        "browser ES-module edges",
+        "HTML assets",
+        "workflow script references",
+        "dynamic import review sites",
+        "test function inventory",
+        "exact/similar test-name candidates"
+      ],
+      "complete_runtime_call_graph": false,
+      "tests_deleted": 0,
+      "acceptance": "inspect artifact, resolve dynamic/runtime flows and review candidate overlaps against semantic contracts and coverage evidence"
+    },
+    "environment_limits": {
+      "local_network": "DNS resolution for public hosts unavailable",
+      "ccost_archive_download": "NOT_AVAILABLE",
+      "lotusdis_audio_download": "NOT_AVAILABLE",
+      "live_browser_manual_accessibility": "NOT_AVAILABLE_FIRECRAWL_CREDITS_EXHAUSTED",
+      "human_review": "NOT_AVAILABLE_NO_REVIEWERS_CONTACTED"
+    },
+    "linguistic_accuracy": "NOT_MEASURED"
   }
 }

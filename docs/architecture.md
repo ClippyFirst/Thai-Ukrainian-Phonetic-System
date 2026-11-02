@@ -36,6 +36,10 @@ It is not phonetic IPA, ISO 11940 transliteration, or an input to the primary IP
 
 Python and browser modules intentionally implement equivalent logic in separate runtimes; their parity is tested. Do not collapse these modules or move source data without first proving the generated/runtime contract and clean-install behavior.
 
+## Static dependency and test-overlap audit
+
+CI runs `scripts/audit_repository_structure.py` and publishes the `repository-static-dependency-and-test-audit` artifact. The report inventories static Python imports, browser ES-module imports, HTML script/stylesheet references, workflow script references, dynamic-import review sites, test functions and exact/similar test-name candidates. It is a reproducible static graph, not a complete runtime call graph: reflection, indirect calls, generated imports, runtime data flows and dynamically selected assets still require manual tracing. Similar test names are review prompts only; no test is removed without semantic acceptance-contract and coverage evidence.
+
 ## Evidence and release boundaries
 
 - Source-attested examples and source-annotated segmentation are not expert-adjudicated gold.
