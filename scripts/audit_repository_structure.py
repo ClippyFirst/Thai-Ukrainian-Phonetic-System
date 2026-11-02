@@ -30,8 +30,8 @@ DYNAMIC_JS = re.compile(r"\b(?:import\s*\(|require\s*\()")
 DYNAMIC_PYTHON_NAMES = {"__import__", "import_module", "spec_from_file_location"}
 
 
-def _python_module(path: Path) -> str | None:
-    relative = path.relative_to(ROOT).as_posix()
+def _python_module(path: Path, root: Path = ROOT) -> str | None:
+    relative = path.relative_to(root).as_posix()
     if not relative.endswith(".py"):
         return None
     if relative.startswith("src/"):
@@ -52,7 +52,9 @@ def _python_files(root: Path) -> list[Path]:
     )
 
 
-def _resolve_python_import(module: str, node: ast.AST, known: set[str]) -> set[str]:
+def _resolve_python_import(
+    module: str, node: ast.AST, known: set[str], *, is_package: bool = False
+) -> set[str]:
     targets: set[str] = set()
     if isinstance(node, ast.Import):
         for alias in node.names:
@@ -64,7 +66,7 @@ def _resolve_python_import(module: str, node: ast.AST, known: set[str]) -> set[s
         return targets
 
     if node.level:
-        package = module if module.endswith(".__init__") else module.rpartition(".")[0]
+        package = module if is_package else module.rpartition(".")[0]
         if not package:
             return targets
         relative = "." * node.level + (node.module or "")
@@ -112,12 +114,12 @@ def _resolve_js_import(source: Path, specifier: str, known: set[str]) -> str | N
     return next((item for item in options if item in known), None)
 
 
-def _test_inventory(path: Path, tree: ast.AST) -> list[dict[str, Any]]:
+def _test_inventory(path: Path, tree: ast.AST, root: Path = ROOT) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     for node in ast.walk(tree):
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and node.name.startswith("test_"):
             rows.append({
-                "file": path.relative_to(ROOT).as_posix(),
+                "file": path.relative_to(root).as_posix(),
                 "name": node.name,
                 "line": node.lineno,
                 "assert_statements": sum(isinstance(child, ast.Assert) for child in ast.walk(node)),
@@ -133,7 +135,7 @@ def build_report(root: Path = ROOT, revision: str | None = None) -> dict[str, An
         if path.is_file()
     )
     py_modules = {
-        _python_module(path): path for path in py_paths if _python_module(path)
+        _python_module(path, root): path for path in py_paths if _python_module(path, root)
     }
     known_py = set(py_modules)
     py_edges: set[tuple[str, str]] = set()
@@ -152,7 +154,9 @@ def build_report(root: Path = ROOT, revision: str | None = None) -> dict[str, An
 
         for node in ast.walk(tree):
             if isinstance(node, (ast.Import, ast.ImportFrom)):
-                for target in _resolve_python_import(module, node, known_py):
+                for target in _resolve_python_import(
+                    module, node, known_py, is_package=path.name == "__init__.py"
+                ):
                     if target != module:
                         py_edges.add((module, target))
                         if module.startswith("tests."):
@@ -171,7 +175,7 @@ def build_report(root: Path = ROOT, revision: str | None = None) -> dict[str, An
                     })
 
         if path.relative_to(root).as_posix().startswith("tests/"):
-            test_inventory.extend(_test_inventory(path, tree))
+            test_inventory.extend(_test_inventory(path, tree, root))
 
     js_paths = sorted((root / "web" / "src").glob("*.js"))
     known_js = {path.relative_to(root).as_posix() for path in js_paths}
