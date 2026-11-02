@@ -2620,22 +2620,29 @@
     }
   },
   "latest_exact_head_verification_2026_11_02": {
+    "branch": "research/independent-adjudication-gates-20261101",
     "verified_code_head": "964b4930321e68c77ba5e956e1c0ecd12164ccfa",
-    "ci_run": "41406087052",
+    "exact_test_and_documentation_head": "826fcddad4d66471b1ba95f00c4cc5b5f430e237",
+    "ci_run": "41406424727",
     "ci_result": "PASSED_ALL_3_JOBS",
-    "python_test_suite": "PASSED",
-    "source_and_blind_packet_validators": "PASSED",
+    "test_job": "PASSED",
     "wheel_install_smoke": "PASSED",
     "master_artifact": "PASSED",
-    "web_static_run": "41406087069",
+    "python_test_suite": "PASSED",
+    "lint": "PASSED",
+    "browser_tests_and_parity": "PASSED",
+    "source_and_blind_packet_validators": "PASSED",
+    "generated_artifact_drift_checks": "PASSED",
+    "runtime_diagnostics": "PASSED_WITH_EXPLICIT_NON_ACCURACY_STATUS",
+    "web_static_run": "41406424761",
     "web_static_result": "PASSED",
-    "external_vistec_run": "41406087050",
+    "external_vistec_run": "41406424960",
     "external_vistec_result": "PASSED",
-    "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
-    "branch": "research/independent-adjudication-gates-20261101",
     "commits_ahead_of_main": 170,
     "commits_behind_main": 0,
-    "linguistic_accuracy": "NOT_MEASURED"
+    "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
+    "linguistic_accuracy": "NOT_MEASURED",
+    "note": "CI 41406087052 verifies implementation commit 964b493. CI 41406424727 verifies exact head 826fcdd including the additional microphone_id and interval-overlap regression tests."
   },
   "audio_interval_overlap_refinement_2026_11_02": {
     "status": "DONE_VERIFIED_ENGINEERING",
@@ -2654,6 +2661,30 @@
     "web_static_result": "PASSED",
     "external_vistec_run": "41406087050",
     "external_vistec_result": "PASSED",
+    "linguistic_accuracy": "NOT_MEASURED",
+    "regression_tests_commit": "826fcddad4d66471b1ba95f00c4cc5b5f430e237",
+    "exact_regression_test_ci_run": "41406424727",
+    "exact_regression_test_ci_result": "PASSED_ALL_3_JOBS"
+  },
+  "open_prs": [
+    182
+  ],
+  "audio_interval_overlap_code_checkpoint_2026_11_02": {
+    "verified_code_head": "964b4930321e68c77ba5e956e1c0ecd12164ccfa",
+    "ci_run": "41406087052",
+    "ci_result": "PASSED_ALL_3_JOBS",
+    "python_test_suite": "PASSED",
+    "source_and_blind_packet_validators": "PASSED",
+    "wheel_install_smoke": "PASSED",
+    "master_artifact": "PASSED",
+    "web_static_run": "41406087069",
+    "web_static_result": "PASSED",
+    "external_vistec_run": "41406087050",
+    "external_vistec_result": "PASSED",
+    "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
+    "branch": "research/independent-adjudication-gates-20261101",
+    "commits_ahead_of_main": 170,
+    "commits_behind_main": 0,
     "linguistic_accuracy": "NOT_MEASURED"
   }
 }
