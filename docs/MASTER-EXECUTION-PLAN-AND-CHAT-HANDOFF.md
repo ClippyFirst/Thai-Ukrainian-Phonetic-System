@@ -1,3 +1,15 @@
+## 2026-11-02 — exact-head CI completion (PR #190)
+
+- **Current PR head:** `10599fbb45654dfe7f92a50ebf924c2992c667ef`; base `main`: `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`; 15 commits ahead, 0 behind.
+- **Full CI:** [41530977728](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41530977728) — GitHub Actions API confirms `status=completed`, `conclusion=success`, and exact `head_sha`. All three jobs passed: `test`, `wheel-install-smoke`, `master-artifact`.
+- **Web Static:** [41530977700](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41530977700) — completed successfully on this exact head.
+- The test job includes Ruff, full Python suite, browser/reference/parity/UI/accessibility checks, generated-artifact drift, source/reviewer packet validators, segmentation and IPA diagnostics, held-out TUD experiment, and artifact uploads. Diagnostic datasets remain source-annotated or source-attested, not expert gold; successful execution is not an accuracy claim.
+- **Repository state:** PR #190 remains open, Draft and unmerged. `main` is unchanged. Research PRs/branches remain untouched.
+- **Environment limitation:** connector-only verification; no local checkout, local tests, browser session, screen reader or physical-device testing is claimed.
+- **Remaining gates:** keyboard/screen-reader/zoom/reflow/mobile manual accessibility; independent Thai and Ukrainian adjudication; CCOST curator/archive evidence; immutable LOTUSDIS audio assets and clean intervals. Readiness remains an engineering-verified research prototype, not release-ready for linguistic accuracy or WCAG conformance.
+
+---
+
 ## 2026-11-02 — PR #190 exact documentation-head verification refresh
 
 - **Exact PR head:** `a8d6dc27c823f9f25c6ad403e3b272d4a1fe7a9e`; base `main` remains `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`. PR #190 remains open, draft and unmerged.
