@@ -1,3 +1,30 @@
+## FastThaiG2P integration spike — 2026-11-02
+
+### Starting point and branch
+- Starting main: `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`.
+- Dedicated branch: `research/fastthaig2p-adapter-spike-20261102`.
+- No existing branch was reused or overwritten. Open PR search returned no open product PRs at the start of this spike.
+
+### Implemented on the spike branch
+- Added `src/thai_ukrainian/adapters/fastthaig2p.py`, a lazy optional wrapper around the pinned FastThaiG2P `G2P.convert` API. It preserves raw IPA exactly and never converts IPA directly to Ukrainian.
+- Added a Python >=3.11 optional dependency extra pinned to upstream commit `c4759eef7df03e11fcbb9aa83efe8cf21709fd2f`.
+- Extended the existing external benchmark runner to include ClippyFirst on the exact same frozen challenge records. ClippyFirst uses the conservative dictionary-word-segmented text path and records unsupported/incomplete IPA as an explicit abstention. Added coverage, abstention/runtime-error separation, median/p95 latency, corpus SHA-256, Python/platform, engine pins and pairwise agreement.
+- Added adapter/runner tests and a layer-by-layer license/provenance register in `docs/fastthaig2p-integration-spike.md`; updated benchmark guide, third-party notices, validation matrix and audit notes.
+
+### Evidence and limits
+- The challenge corpus has 42 inputs and zero independently adjudicated IPA gold rows. The same-input run can measure output coverage, abstention, runtime failures, latency and inter-engine agreement only. Accuracy must remain `NOT_MEASURED`.
+- FastThaiG2P software LICENSE is Apache-2.0; upstream NOTICE attribution is preserved in the third-party register. Its vendored TLTK source file has BSD-3-Clause terms. The upstream dictionary merges Wiktionary-derived, generated and manual records; generated/manual data and TLTK fallback data do not have complete item-level provenance/license statements in the inspected pinned tree. No upstream data files were copied.
+- Container `git clone` failed because DNS could not resolve github.com. Local tests, lint, dependency installation and benchmark execution were not run. Exact branch GitHub Actions and artifacts are required before marking this spike DONE_VERIFIED.
+- No production dependency, browser adapter, public release or engine-selection decision was made.
+
+### Task ledger
+- Optional adapter implementation: PARTIAL pending exact-head CI.
+- Same-input benchmark/report implementation: PARTIAL pending exact-head workflow and artifact inspection.
+- FastThaiG2P code license inspection: DONE_VERIFIED.
+- Dictionary/fallback data redistribution clearance: BLOCKED pending upstream per-record/per-file provenance and license evidence; no data redistribution is in scope for this spike.
+- Accuracy ranking: BLOCKED pending independent Thai phonetic gold and adjudication.
+- Production replacement decision: DEFERRED until comparable independent-gold results demonstrate benefit without feature regressions.
+
 # Continuation checkpoint — repository structure cleanup (2026-11-01)
 
 - **Repository:** `ClippyFirst/Thai-Ukrainian-Phonetic-System`; default branch `main`.
