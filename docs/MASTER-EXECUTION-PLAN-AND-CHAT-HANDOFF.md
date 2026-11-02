@@ -2257,3 +2257,7 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Dedicated branch `research/fastthaig2p-typed-ipa-boundary-20261102`; stacked draft PR #186 targets the existing PR #185 branch to avoid duplicate changes.
 - Typed-boundary verification is pending exact-head CI and optional workflow. Local tests are not claimed; the environment used GitHub Actions for repository execution.
 - Accuracy ranking, promotion into Ukrainian output, and redistribution of FastThaiG2P dictionary/fallback data remain blocked by independent adjudication and item-level provenance/licensing evidence.
+
+
+- Follow-up exact-head optional workflow [41443066708](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41443066708) passed after the runner was extended to type-convert every complete challenge output and assert Ukrainian abstention for every syllable. Inspected artifact JSON SHA-256: `3343f71a4a90d28ba3dfd2c06511761f32c8264835f31bb7b13eb0f98c7c33a9`; 76 typed syllables, 75 UNCERTAIN, 1 UNSUPPORTED (sentinel `8`), and 76/76 Ukrainian results withheld. Five tone categories retained with counts mid 35, low 19, falling 11, rising 3, high 8.
+- Full repository CI run [41443066867](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41443066867) remains in progress; exact-head completion is still pending.
