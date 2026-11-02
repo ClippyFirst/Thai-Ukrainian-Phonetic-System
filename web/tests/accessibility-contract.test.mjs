@@ -104,6 +104,7 @@ console.log(JSON.stringify({
   static_documents: 2,
   unique_service_ids: ids.length,
   wcag_aa_text_contrast_pairs: palettePairs.length,
+  control_border_contrast: controlBorders,
   minimum_contrast_ratio: Math.min(...palettePairs.map(([foreground, background]) => contrast(foreground, background))),
   checked: [
     "document language and landmarks",
