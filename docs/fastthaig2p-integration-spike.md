@@ -63,3 +63,9 @@ Acceptance criteria:
 5. Summary records coverage, median/p95 latency, pairwise agreement, corpus hash, Python/platform and engine pins.
 6. Accuracy stays `NOT_MEASURED` while the independent gold count is zero.
 7. CI runs adapter tests and uploads inspectable raw and summary artifacts.
+
+## First optional CI attempt and correction — 2026-11-02
+
+Optional workflow run [41431032031](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41431032031) completed successfully at the job level and uploaded artifact `thai-external-g2p-smoke` (artifact SHA-256 `d06f6a87d177a61780b3d58fc0bc74087f657ce8e0548c67bee4b20cd7275e8b`). Artifact inspection found an integration-environment defect: the workflow installed the external comparators but did not install the local src-layout ClippyFirst package. Therefore both `clippyfirst` and the wrapper-based `fastthaig2p` candidates failed initialization with `ModuleNotFoundError: No module named 'thai_ukrainian'`; only thaiphon and Goruut produced rows. This run is **not** a valid ClippyFirst/FastThaiG2P comparison.
+
+The optional workflow was corrected to run `python -m pip install -e .` before installing the pinned comparators. A further correctness refinement routes ClippyFirst benchmark output through the typed `phonetic_result` object and appends its separate tone contour, rather than comparing segmental IPA without tone. The new PR-head workflow run must be inspected before reporting same-corpus coverage or latency. Accuracy remains NOT_MEASURED.
