@@ -8,20 +8,16 @@ from __future__ import annotations
 
 import argparse
 import json
-import re
-import statistics
 import time
 from pathlib import Path
 from typing import Any
 
 from thai_ukrainian.text import analyze_text
+from thai_ukrainian.fastthaig2p_adapter import FastThaiG2PAdapter, UPSTREAM_COMMIT
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_INPUT = ROOT / "data" / "benchmark" / "thai_g2p_challenge.jsonl"
 DEFAULT_OUTPUT = ROOT / "reports" / "fastthaig2p-challenge-comparison.json"
-UPSTREAM_COMMIT = "4e82a291b4cf2876326744c6580121e9986ad354"
-_WORD_IPA = re.compile(r"/([^/]+)/")
-_TONE_MARKS = set("˥˦˧˨˩")
 _LENGTH_MARKS = set("ːˑ")
 _SEGMENTAL_IGNORABLE = _TONE_MARKS | {"͡", "8"}
 
@@ -44,22 +40,6 @@ def load_challenge(path: Path) -> list[dict[str, Any]]:
     return rows
 
 
-def parse_external_ipa(raw: str) -> list[str]:
-    """Extract slash-delimited word groups and dot-delimited syllable strings.
-
-    Keep the upstream raw string separately. This parser is intentionally
-    lossless with respect to IPA symbols; it does not infer a ClippyFirst tone
-    category or silently rewrite the upstream transcription.
-    """
-    syllables: list[str] = []
-    for match in _WORD_IPA.finditer(raw):
-        group = match.group(1).strip()
-        if group:
-            syllables.extend(part for part in group.split(".") if part)
-    return syllables
-
-
-def segmental_projection(ipa: str) -> str:
     """Remove only FastThaiG2P tone contour/sentinel and affricate tie-bar notation.
 
     This diagnostic projection aligns broad segment strings across the two
@@ -82,17 +62,7 @@ def summarize_ipa(syllables: list[str]) -> dict[str, int]:
 
 
 def run(input_path: Path = DEFAULT_INPUT) -> dict[str, Any]:
-    try:
-        from fastthaig2p import G2P
-        from fastthaig2p.normalizer import normalize
-    except ImportError as exc:
-        raise RuntimeError(
-            "FastThaiG2P is optional; install the pinned upstream commit "
-            f"{UPSTREAM_COMMIT}"
-        ) from exc
-
-    challenge = load_challenge(input_path)
-    external = G2P()
+    external = FastThaiG2PAdapter()
     records = []
     clippy_output_count = 0
     external_output_count = 0
@@ -121,7 +91,18 @@ def run(input_path: Path = DEFAULT_INPUT) -> dict[str, Any]:
         )
         clippy_output_count += int(clippy_complete)
 
-        # Inspect the pinned upstream token/dictionary boundary to distinguish
+        started = time.perf_counter()
+        external_result = external.convert(row["input"])
+        external_ms = (time.perf_counter() - started) * 1000
+        external_latencies.append(external_ms)
+        raw = external_result.raw_ipa
+        external_syllables = list(external_result.syllable_ipa)
+        dict_hits = external_result.dictionary_hit_count
+        oov = external_result.oov_rule_fallback_count
+        external_dictionary_tokens += dict_hits
+        external_oov_tokens += oov
+        external_complete = external_result.complete_ipa
+        external_output_count += int(external_complete)
         # dictionary hits from rule-fallback tokens. This is a diagnostic only.
         normalized = normalize(row["input"])
         upstream_tokens = [
@@ -132,13 +113,6 @@ def run(input_path: Path = DEFAULT_INPUT) -> dict[str, Any]:
         external_dictionary_tokens += dict_hits
         external_oov_tokens += oov
 
-        started = time.perf_counter()
-        raw = external.convert(row["input"])
-        external_ms = (time.perf_counter() - started) * 1000
-        external_latencies.append(external_ms)
-        external_syllables = parse_external_ipa(raw)
-        external_complete = bool(external_syllables)
-        external_output_count += int(external_complete)
 
         comparable = clippy_complete and external_complete and len(clippy_ipa) == len(external_syllables)
         if comparable:
@@ -167,6 +141,11 @@ def run(input_path: Path = DEFAULT_INPUT) -> dict[str, Any]:
             },
             "fastthaig2p": {
                 "raw_ipa": raw,
+                "passthrough_text": external_result.passthrough_text,
+                "token_paths": [
+                    {"token": item.token, "path": item.path}
+                    for item in external_result.token_paths
+                ],
                 "complete_output": external_complete,
                 "syllable_ipa": external_syllables,
                 "upstream_token_count": len(upstream_tokens),
@@ -203,7 +182,7 @@ def run(input_path: Path = DEFAULT_INPUT) -> dict[str, Any]:
         "summary": {
             "challenge_inputs": len(challenge),
             "clippyfirst_complete_outputs": clippy_output_count,
-            "fastthaig2p_nonempty_outputs": external_output_count,
+            "fastthaig2p_complete_ipa_outputs": external_output_count,
             "fastthaig2p_dictionary_tokens": external_dictionary_tokens,
             "fastthaig2p_oov_rule_fallback_tokens": external_oov_tokens,
             "records_with_both_complete_and_equal_syllable_count": comparable_records,
@@ -231,7 +210,7 @@ def run(input_path: Path = DEFAULT_INPUT) -> dict[str, Any]:
             "The challenge has no independent IPA, tone, length, or boundary gold; no accuracy claim is possible.",
             "Raw exact syllable-string agreement is convention-sensitive; segmental projection removes only Chao tone marks, the tie bar and the upstream fallback sentinel 8. Both agreement values are inter-engine diagnostics, not correctness.",
             "ClippyFirst exposes phonemic IPA per syllable; FastThaiG2P emits slash-delimited IPA groups with Chao tone contours. Their conventions are not assumed equivalent.",
-            "The report preserves FastThaiG2P raw IPA and does not feed it into the Ukrainian adapter.",
+            "The report preserves FastThaiG2P raw IPA and non-IPA passthrough text; incomplete passthrough is not counted as complete IPA and no output is fed into the Ukrainian adapter.",
             "Dictionary-hit and OOV counts inspect private upstream fields pinned to the recorded commit and may need revision if the upstream API changes.",
             "Latency is measured in the same process but is not a controlled performance benchmark; initialization is excluded.",
             "The challenge set is adversarial and hand-picked, not a representative estimate of Thai coverage.",
