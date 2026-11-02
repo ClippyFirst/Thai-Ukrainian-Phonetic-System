@@ -1494,3 +1494,12 @@ The new test/tool code was committed on the PR branch and awaits exact-head CI c
 - Remaining blockers are unchanged: independent Thai and Ukrainian reviewers, CCOST A–D curator clarification and archive inspection, full immutable LOTUSDIS audio revision plus real hashed assets/intervals, and hands-on WCAG keyboard/screen-reader/device testing.
 
 **Final readiness:** the current browser service is deployed and engineering-verified. The repository remains a research prototype, not a linguistic-accuracy or WCAG-conformance release. Linguistic accuracy remains `NOT_MEASURED`.
+
+
+## Thai G2P literature and metric audit — 2026-11-03
+
+- **DONE_VERIFIED — literature synthesis:** added `docs/research/thai-g2p-evaluation-literature-2026-11-03.md`; Saychum et al. (2016) and Yamasaki (2022) full texts were inspected. The synthesis records the dictionary/Wiktionary provenance of their reference sets, distinguishes WER/PER/exact sequence accuracy, and identifies candidate coverage, tone, vowel length and linking-syllable errors as separate concerns.
+- **DONE_VERIFIED — evidence boundary:** the 2016 and 2022 published scores are not independent expert IPA gold for ClippyFirst. They are not compared numerically with the 42-item unadjudicated challenge. The project reports its own coverage and abstention separately; accuracy remains `NOT_MEASURED`.
+- **No runtime change:** no evidence in this review justifies changing the parser, tone, vowel-length, IPA or Ukrainian mapping rules. The four outstanding FastThaiG2P discrepancies still require independent adjudication.
+- **Research record:** Consensus synthesis https://consensus.app/search/research-the-peer-reviewed-evidence-and-primary-sc/TPPdaWrzSWGIdPzNPruDdA/ ; saved Undermind workspace document https://app.undermind.ai/projects/49bbd978-a5a9-4cac-a7bb-a72848f50e10?path=/Research%20the%20peer-reviewed%20evidence%20and%20primary%20scholarly%20literature%20relevant%20to.md .
+- **Verification pending:** this documentation-only checkpoint requires exact-head CI and Web Static. No local test execution is claimed.
