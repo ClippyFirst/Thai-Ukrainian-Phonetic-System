@@ -2690,7 +2690,7 @@
   },
   "priority_research_update_2026_11_02": {
     "branch": "research/independent-adjudication-gates-20261101",
-    "source_head_before_documentation_commit": "be3429d3b8a27ec66f6abe4d835e0360534553d1",
+    "source_head_before_documentation_commit": "bafbb74ee61488cb34338d0aced7c4a6a28c1561",
     "thai_independent_adjudication": {
       "status": "BLOCKED_EXTERNAL_HUMAN_INPUT",
       "blind_prompt_sets": [
@@ -2773,7 +2773,8 @@
         "workflow script references",
         "dynamic import review sites",
         "test function inventory",
-        "exact/similar test-name candidates"
+        "exact/similar test-name candidates",
+        "browser test file/import/assertion inventory"
       ],
       "complete_runtime_call_graph": false,
       "tests_deleted": 0,

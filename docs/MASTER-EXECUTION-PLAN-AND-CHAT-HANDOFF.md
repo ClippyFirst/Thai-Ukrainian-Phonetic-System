@@ -2119,7 +2119,7 @@ This note supersedes the preceding documentation-only status. The branch now cha
 
 ### Implemented engineering work (awaiting exact-head CI)
 - Added `web/tests/accessibility-contract.test.mjs` and wired it into main CI, Web Static and Pages. It checks static HTML/UI accessibility contracts and 12 selected contrast pairs; calculated minimum is approximately 5.71:1. This is not manual WCAG verification.
-- Added `scripts/audit_repository_structure.py` plus `tests/test_repository_structure_audit.py`. CI generates an inspectable static graph/test-inventory artifact. It includes Python/browser imports, HTML assets, workflow script references, dynamic-import review sites, and test-name overlap candidates. It deliberately does not delete tests or claim complete runtime call-graph coverage.
+- Added `scripts/audit_repository_structure.py` plus `tests/test_repository_structure_audit.py`. CI generates an inspectable static graph/test-inventory artifact. It includes Python/browser imports, HTML assets, workflow script references, dynamic-import review sites, and Python test-name overlap candidates plus browser test-file/import/assertion inventory. It deliberately does not delete tests or claim complete runtime call-graph coverage.
 - Updated `scripts/README.md` and `docs/architecture.md` to describe the new tooling and evidence boundaries.
 
 ### Research/source findings
