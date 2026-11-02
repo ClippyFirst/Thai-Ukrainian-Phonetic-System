@@ -43,5 +43,5 @@ The finite correction/abstention layer in `web/src/rtgs-reference.js` is maintai
 - Runtime dependency declared upstream: PyThaiNLP `>=5.3.4`; PyThaiNLP software is Apache-2.0.
 - Scope: installed only in the optional FastThaiG2P comparison workflow; not a core dependency and not enabled by default.
 - Data boundary: FastThaiG2P's dictionary is not copied into this repository. Upstream describes a mixture of manual overrides, Wiktionary-derived records and LLM-generated records; the data-level provenance/rights of all rows have not been independently established. The Apache-2.0 software license is not treated as blanket permission for all bundled dictionary data.
-- Fallback boundary: upstream identifies a vendored TLTK-derived parser. Its file-level license/notice must be confirmed from the exact upstream source before ClippyFirst copies or modifies that code.
+- Fallback boundary: upstream file `fastthaig2p/_th2ipa.py` carries a BSD 3-Clause notice and 2018 Chulalongkorn University copyright. The file is not copied into ClippyFirst; if it is ever copied or modified, preserve all three conditions and the disclaimer.
 - IPA boundary: upstream emits IPA with Chao tone contours. Raw output is preserved in benchmark reports; no unreviewed conversion into ClippyFirst typed IPA or Ukrainian output is performed.
