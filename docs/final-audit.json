@@ -545,7 +545,7 @@
     }
   ],
   "latest_implementation_branch": "fix/benchmark-error-clusters-20261102 (PR #189 open draft)",
-  "latest_implementation_commit_pending_ci": "55f2ef9966da065326873014e8066acc43b2a151 — exact-head CI passed; documentation refresh now requires rerun",
+  "latest_implementation_commit_pending_ci": "No runtime changes after verified code head 55f2ef9966da065326873014e8066acc43b2a151; audit/matrix/handoff/final-audit documentation refresh is at the current PR branch head and requires exact-head CI/Web Static rerun.",
   "current_head_status_at_audit_refresh": "Code/workflow checkpoint b6dbec7928b106f0ab52e06af33a26635df75412 passed CI 40322960615 and Web static validation 40322959844. Documentation checkpoint e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff passed full CI 40323209539 and Web static validation 40323209471. This audit-register update creates a newer documentation HEAD and requires exact-head CI/static validation before the current branch HEAD is marked green.",
   "current_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
   "current_implementation_commit_before_audit_update": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
@@ -2965,7 +2965,8 @@
       "TH-G2P-036"
     ],
     "diagnostic_artifact": "thai-challenge-runtime-diagnostics",
-    "diagnostic_kind": "RUNTIME_COVERAGE_NOT_ACCURACY"
+    "diagnostic_kind": "RUNTIME_COVERAGE_NOT_ACCURACY",
+    "documentation_status": "RUNTIME_CODE_VERIFIED_ON_55f2; DOCUMENTATION_REFRESH_REQUIRES_EXACT_HEAD_CI"
   },
   "article_style_coverage": {
     "source_pinned_words": [
@@ -3013,8 +3014,8 @@
     "web_static_result": "PASSED",
     "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
     "linguistic_accuracy": "NOT_MEASURED",
-    "branch_ahead_of_main": 52,
+    "branch_ahead_of_main": 60,
     "branch_behind_main": 0,
-    "documentation_refresh": "RECORDED_IN_VALIDATION_MATRIX_AUDIT_AND_HANDOFF; exact-head CI must rerun for updated documentation commit"
+    "documentation_refresh": "VALIDATION_MATRIX_AUDIT_HANDOFF_AND_STRUCTURED_AUDIT_UPDATED_AFTER_CODE_HEAD; EXACT_HEAD_CI_WEB_STATIC_PENDING_FOR_FINAL_DOCUMENTATION_HEAD"
   }
 }
