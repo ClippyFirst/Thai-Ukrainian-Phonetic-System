@@ -51,13 +51,13 @@ The upstream Apache-2.0 code license is not the only license question: the dicti
 
 ## First paired challenge result — 2026-11-02
 
-**Dedicated comparison CI: PASSED.** Dedicated workflow run [41437724444](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41437724444) completed successfully on branch head `c166365289e4ed9ea70bd9cd544c1b64fb3b9180`. The JSON artifact is [fastthaig2p-challenge-comparison](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41435891320/artifacts/13136482134), SHA-256 `544e319a3478857447bce31c70b582464f34d0302e22700903fcb2e130d8b8bb`.
+**Dedicated comparison CI: PASSED on the pre-extra code head.** Workflow run [41438311972](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41438311972) ran against code head `e924063176d2d7402d98555642e86c0ce4f72077`; its artifact is [fastthaig2p-challenge-comparison](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41438311972/artifacts/13138026677), archive SHA-256 `6ce3489280b56ad00a4e960a6e4ef66526ec110e5e5c88a797f907c879cf139c`. Full repository CI on that same code head passed all three jobs in [41438312216](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41438312216). A subsequent workflow-only change now installs the dependency via the declared optional extra; its exact-head verification is pending.
 
 | Diagnostic | ClippyFirst | FastThaiG2P |
 |---|---:|---:|
 | Complete/non-empty outputs | 28/42 | 42/42 |
-| Median per-input time | 0.448 ms | 0.028 ms |
-| p95 per-input time | 1.897 ms | 1.684 ms |
+| Median per-input time | 0.390 ms | 0.074 ms |
+| p95 per-input time | 1.894 ms | 1.754 ms |
 
 FastThaiG2P produced complete IPA for all 42 inputs with no non-IPA passthrough in this challenge. It processed 50 upstream tokens: 45 dictionary hits and 5 OOV rule-fallback tokens. There were 28 records where both systems emitted a complete result with equal syllable counts, covering 40 syllable pairs. Raw exact syllable-string agreement was 0/40 because FastThaiG2P includes Chao tone contours and uses a tie-bar convention that differs from ClippyFirst. After the explicitly limited segmental projection (remove Chao tone marks, tie bar and upstream fallback sentinel `8`, retain vowel length and other segmental symbols), 25/40 pairs matched (62.5%).
 
@@ -69,3 +69,8 @@ The projection mismatches include short/long vowel differences (`คอมพิ
 ## Additional data-rights caution
 
 The upstream `data/fallback/` trigram/rule assets are distinct from the BSD-3-Clause source-code notice on `fastthaig2p/_th2ipa.py`; their exact source provenance and data license have not yet been verified independently. Treat this fallback data layer as unresolved rather than assuming that the top-level Apache-2.0 software license clears every bundled asset. The comparison JSON also contains per-input IPA strings that may be sourced from FastThaiG2P's mixed dictionary. The CI artifact is a temporary research diagnostic, not a redistribution-cleared pronunciation dataset; do not republish or incorporate its IPA rows into project lexicons until row-level source provenance and applicable terms are resolved.
+
+
+## Optional-extra packaging correction — 2026-11-02
+
+The adapter is now declared as a real PEP 621 optional extra in `pyproject.toml`: `fastthaig2p` pins the upstream Git commit `4e82a291b4cf2876326744c6580121e9986ad354` and PyThaiNLP `5.4.0`. The dedicated workflow installs it through `python -m pip install -e ".[dev,fastthaig2p]"`, so the acceptance test exercises the user-facing install contract rather than a hand-assembled equivalent. The resulting exact-head CI and benchmark rerun are pending; prior metrics above remain tied to the prior code head and are not silently attributed to this packaging change.
