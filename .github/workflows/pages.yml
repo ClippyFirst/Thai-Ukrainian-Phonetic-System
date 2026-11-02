@@ -58,6 +58,8 @@ jobs:
         run: node web/tests/article-cleanup.test.mjs
       - name: Run UI contract and beta disclosure checks
         run: node web/tests/ui-contract.test.mjs
+      - name: Run static accessibility contract checks
+        run: node web/tests/accessibility-contract.test.mjs
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v6
       - name: Upload Pages artifact
