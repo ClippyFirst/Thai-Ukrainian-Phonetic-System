@@ -3,6 +3,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from .lexical_ipa import load_lexical_ipa_overrides
+from .parser import LEXICAL_READINGS
 
 from ._paths import THAI_DATA_ROOT
 
@@ -70,6 +71,11 @@ def segment_thai_word(word: str) -> tuple[tuple[str, ...], str]:
         return (word,), "lexical_ipa_override"
     if word in LEXICON:
         return LEXICON[word], "lexicon"
+    # Reuse an exact one-syllable lexical normalization already curated by
+    # the parser. This only recognizes listed forms; it is not word guessing.
+    lexical_reading = LEXICAL_READINGS.get(word)
+    if lexical_reading and "|" not in lexical_reading:
+        return (word,), "parser_lexical_reading"
     explicit = _segment_explicit(word)
     if explicit:
         return explicit, "explicit"
