@@ -1,7 +1,7 @@
 import unittest
 
 from thai_ukrainian.api import analyze_syllable
-from thai_ukrainian.text import analyze_text, segment_thai_word, tokenize_text
+from thai_ukrainian.text import analyze_text, analyze_text_with_word_segmentation, segment_thai_word, tokenize_text
 
 
 class TextPipelineTests(unittest.TestCase):
@@ -17,6 +17,47 @@ class TextPipelineTests(unittest.TestCase):
         self.assertEqual(segment_thai_word("ครอบครัว"), (("ครอบ", "ครัว"), "lexicon"))
         self.assertEqual(segment_thai_word("รถบัส"), (("รถ", "บัส"), "lexicon"))
         self.assertEqual(segment_thai_word("คอมพิวเตอร์"), (("คอม", "พิว", "เตอร์"), "lexicon"))
+
+    def test_source_attested_article_words_are_reachable_in_text_pipeline(self):
+        expected = {
+            "ประเทศ": (("ประ", "เทศ"), ["pra", "tʰeːt"], ["low", "falling"]),
+            "เป็น": (("เป็น",), ["pen"], ["mid"]),
+            "หนึ่ง": (("หนึ่ง",), ["nɯŋ"], ["low"]),
+            "ใน": (("ใน",), ["naj"], ["mid"]),
+        }
+        for word, (syllables, ipa, tones) in expected.items():
+            with self.subTest(word=word):
+                self.assertEqual(segment_thai_word(word), (syllables, "lexicon"))
+                token = analyze_text(word)[0]
+                self.assertEqual(token["segmentation_status"], "lexicon")
+                self.assertEqual([item["phonemic_ipa"] for item in token["syllables"]], ipa)
+                self.assertEqual([item["tone"]["tone"] for item in token["syllables"]], tones)
+
+    def test_opt_in_word_segmentation_uses_exact_lexicon_anchors(self):
+        token = analyze_text_with_word_segmentation("เตอร์")[0]
+        self.assertEqual(token["input"], "เตอร์")
+        self.assertEqual(token["word_segmentation_status"], "exact_text_lexicon")
+        self.assertEqual(token["word_segmentation_method"], "exact_text_lexicon")
+        self.assertEqual(token["word_segmentation_evidence_grade"], "CURATED_TEXT_LEXICON")
+        self.assertEqual(token["syllables"][0]["phonemic_ipa"], "tɤː")
+
+    def test_article_style_phrases_are_supported_by_opt_in_word_segmentation(self):
+        for text in (
+            "ประเทศยูเครน",
+            "ยูเครนเป็นประเทศหนึ่ง",
+            "เป็นประเทศหนึ่ง",
+            "ประเทศในยุโรปตะวันออก",
+        ):
+            with self.subTest(text=text):
+                tokens = analyze_text_with_word_segmentation(text)
+                thai_tokens = [token for token in tokens if token["kind"] == "thai"]
+                self.assertTrue(thai_tokens)
+                self.assertEqual("".join(token["input"] for token in tokens), text)
+                self.assertTrue(all(token["segmentation_status"] != "unresolved" for token in thai_tokens))
+                self.assertTrue(all(
+                    syllable["phonemic_ipa"] and syllable["ukrainian_transliteration"]
+                    for token in thai_tokens for syllable in token["syllables"]
+                ))
 
     def test_source_attested_ukraine_name_uses_two_syllable_lexicon(self):
         # en.wiktionary Thai entry oldid 88025965 attests /juː˧.kʰreːn˧/.
