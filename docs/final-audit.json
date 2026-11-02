@@ -2728,7 +2728,7 @@
       "status": "PARTIAL_SOURCE_METADATA_ONLY",
       "dataset": "nectec/LOTUSDIS",
       "hf_upload_revision_prefix": "45145d7",
-      "full_hf_revision_sha": "NOT_RESOLVED",
+      "full_hf_revision_sha": "NOT_RESOLVED_PUBLIC_UI_ONLY_PREFIX_45145d7",
       "hf_card_fields": [
         "audio@16000Hz",
         "sentence",
@@ -2759,7 +2759,9 @@
       "selected_contrast_pairs": 12,
       "minimum_selected_contrast_ratio": 5.71,
       "manual_keyboard_screen_reader_device_tests": "NOT_RUN",
-      "acceptance": "hands-on keyboard, screen-reader, zoom/reflow, mobile and AT testing with defects/fixes/retest"
+      "acceptance": "hands-on keyboard, screen-reader, zoom/reflow, mobile and AT testing with defects/fixes/retest",
+      "manual_protocol": "docs/external-review-and-source-requests.md",
+      "manual_tests_status": "NOT_RUN"
     },
     "repository_graph_and_test_redundancy": {
       "status": "PARTIAL_STATIC_AUDIT_IMPLEMENTED",
@@ -2774,7 +2776,8 @@
         "dynamic import review sites",
         "test function inventory",
         "exact/similar test-name candidates",
-        "browser test file/import/assertion inventory"
+        "browser test file/import/assertion inventory",
+        "exact Python test-function AST-body SHA-256 fingerprint clusters (manual review only)"
       ],
       "complete_runtime_call_graph": false,
       "tests_deleted": 0,
@@ -2785,8 +2788,33 @@
       "ccost_archive_download": "NOT_AVAILABLE",
       "lotusdis_audio_download": "NOT_AVAILABLE",
       "live_browser_manual_accessibility": "NOT_AVAILABLE_FIRECRAWL_CREDITS_EXHAUSTED",
-      "human_review": "NOT_AVAILABLE_NO_REVIEWERS_CONTACTED"
+      "human_review": "NOT_AVAILABLE_NO_REVIEWERS_CONTACTED",
+      "firecrawl_remaining_credits": 0,
+      "manual_accessibility_testing": "BLOCKED_NO_BROWSER_CREDITS_OR_LOCAL_AT_ENVIRONMENT"
     },
-    "linguistic_accuracy": "NOT_MEASURED"
+    "linguistic_accuracy": "NOT_MEASURED",
+    "outreach_readiness": {
+      "status": "PREPARED_NOT_SENT",
+      "thai_reviewer_candidates": [
+        "Chutamanee Onsuwan",
+        "Lena Maluleem",
+        "Rungpat Roengpitya"
+      ],
+      "ccost_curator_contacts": [
+        {
+          "name": "Pittayawat Pittayaporn",
+          "email": "Pittayawat.P@chula.ac.th",
+          "source": "https://www.arts.chula.ac.th/chulaseal/people/"
+        },
+        {
+          "name": "Sujinat Jitwiriyanont",
+          "email": "Sujinat.J@chula.ac.th",
+          "source": "https://www.arts.chula.ac.th/chulaseal/people/"
+        }
+      ],
+      "request_pack": "docs/external-review-and-source-requests.md",
+      "outbound_messages_sent": 0,
+      "reason": "No email or messaging connector available in execution context; public contact routes do not imply consent."
+    }
   }
 }

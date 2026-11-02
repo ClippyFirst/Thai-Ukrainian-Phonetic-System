@@ -47,3 +47,8 @@ CI runs `scripts/audit_repository_structure.py` and publishes the `repository-st
 - Structural combinatorial tables are not lexical inventories.
 - RTGS output and IPA-first phonetic output must remain separately labelled.
 - Engineering CI verifies software contracts, not independent linguistic accuracy or WCAG conformance.
+
+
+## Test overlap evidence
+
+The static audit reports Python test function names, exact AST-body SHA-256 fingerprints and similar-name clusters. These are candidate-generation aids only: the same body may be valid in different fixtures or modules, and different bodies may still test the same behavior. Review candidates against test intent, fixtures, failure modes, branch conditions and mutation/negative coverage before considering consolidation. No automated deletion or deduplication is performed.

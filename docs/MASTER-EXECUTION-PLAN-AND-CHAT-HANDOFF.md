@@ -2136,3 +2136,13 @@ This note supersedes the preceding documentation-only status. The branch now cha
 6. Inspect static graph artifact; resolve dynamic/runtime references and test-overlap candidates against semantic acceptance contracts. No test deletion without coverage-preservation evidence.
 
 **Evidence limits:** local network/DNS could not reach public hosts; the connector exposed GitHub source and web search metadata, not downloadable CCOST/HF audio bytes. Connected browser testing could not run because the Firecrawl account had no credits. No human review or manual AT test is claimed. Linguistic accuracy remains `NOT_MEASURED`.
+
+
+## 2026-11-02 follow-up — outreach pack, WCAG protocol and test-body fingerprints
+
+- Added `docs/external-review-and-source-requests.md`: copy-ready Thai reviewer invitation, CCOST A–D curator clarification and LOTUSDIS maintainer query; reviewer qualification/independence checklist; exact WCAG 2.2 AA hands-on matrix. **Prepared only; no messages sent.**
+- Updated `docs/reviewer-outreach-shortlist.md` with official ChulaSEAL contact routes for CCOST curators Pittayawat Pittayaporn and Sujinat Jitwiriyanont. These are source clarification contacts, not independent adjudicators for CCOST itself.
+- Extended `scripts/audit_repository_structure.py` to SHA-256 fingerprint normalized AST bodies of Python test functions and group exact body matches as manual-review candidates. Added a regression test for identical bodies; no tests deleted.
+- Public HF history continues to expose LOTUSDIS audio upload only as short commit prefix `45145d7`. The full revision, a real Parquet row/audio object, file hash and exact clean interval remain unverified.
+- Firecrawl credit check returned 0 remaining credits. Therefore no live browser interaction, viewport test or screen-reader test could be performed. The new WCAG checklist records precise acceptance steps and expected pass conditions, but the manual gate remains BLOCKED.
+- Exact-head workflows for `9dec219a97f47e4979de2baf1c23ee791cd657c9` remained queued; the later follow-up commits also need a new exact-head run. Do not mark this continuation's code verified until CI completes.
