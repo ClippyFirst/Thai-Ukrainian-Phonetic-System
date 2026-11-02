@@ -304,7 +304,7 @@
     "rows": 351780,
     "vowel_rime_records": 41
   },
-  "latest_documentation_checkpoint": "research/fastthaig2p-typed-ipa-boundary-20261102; exact-head Full CI 41443564407 and optional workflow 41443564296 passed.",
+  "latest_documentation_checkpoint": "research/fastthaig2p-typed-ipa-boundary-20261102; final head 9b5b972a6f03cd09eacc710bc1b2a86c92fb2364 verified by Full CI 41445055973 and optional workflow 41445055888.",
   "text_only_checkpoint": {
     "branch": "research/thai-segmentation-gold-parity-verified-20261025",
     "parent_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
@@ -525,7 +525,7 @@
       "id": "FASTTHAIG2P-TYPED-BOUNDARY-001",
       "status": "DONE_VERIFIED_DIAGNOSTIC_ONLY",
       "implementation": "PR #186 adds a per-syllable typed diagnostic conversion grouped by word, preserves five canonical Chao tone contours and supported segment features, rejects incomplete output and unknown sentinel 8, and leaves phonemic_ipa/broad_surface_ipa unset. The comparison runner exercises all 76 challenge syllables and asserts the Ukrainian adapter withholds all 76.",
-      "acceptance": "Exact-head Full CI 41443564407 passed all three jobs; Ruff clean; 330 pytest tests and 1169 subtests passed. Optional workflow 41443564296 passed; inspected artifact 13141465226 (JSON SHA-256 b3550284b891504c0329324b77ecf3eff208ec8b27c192d3a0c53af9ac6a379c)."
+      "acceptance": "Final exact-head Full CI 41445055973 passed all three jobs; Ruff clean; 330 pytest tests and 1169 subtests passed. Optional workflow 41445055888 passed; inspected artifact 13142640800 (JSON SHA-256 cfbf884ede962df72a633a26df4ce0d3cff105d5c77bf511405db6a0a03f7af3)."
     },
     {
       "id": "FASTTHAIG2P-ACCURACY-001",
@@ -2971,7 +2971,8 @@
     "upstream_commit": "4e82a291b4cf2876326744c6580121e9986ad354",
     "python_optional_extra": {
       "pythainlp": "5.4.0",
-      "fastthaig2g": "pinned Git commit"
+      "fastthaig2g": "pinned Git commit",
+      "fastthaig2p": "pinned Git commit"
     },
     "exact_parent_code_head": "a05afd184a7b546f522272df8d2ddc184e4e51c2",
     "parent_full_ci_run": 41440724105,
@@ -2987,18 +2988,18 @@
       "draft": true,
       "base_branch": "research/fastthaig2p-integration-spike-20261102",
       "verified_code_head": "bbc3eb36984a2b02ac1970e7b00c5b03e20316ba",
-      "full_ci_run": 41443564407,
+      "full_ci_run": 41445055973,
       "full_ci_result": "PASSED_ALL_3_JOBS",
       "ruff": "PASSED",
       "pytest": "330_PASSED",
       "unittest_subtests": 1169,
       "wheel_install_smoke": "PASSED",
       "master_artifact": "PASSED",
-      "optional_workflow_run": 41443564296,
+      "optional_workflow_run": 41445055888,
       "optional_workflow_result": "PASSED",
-      "artifact_id": 13141465226,
-      "artifact_archive_sha256": "6cba52760afa0b91a246f824d24e6ad71a34f647b0ee3602314683f656e9be70",
-      "artifact_json_sha256": "b3550284b891504c0329324b77ecf3eff208ec8b27c192d3a0c53af9ac6a379c",
+      "artifact_id": 13142640800,
+      "artifact_archive_sha256": "dc9f115f03add54e2cc4e6cd66447308a5b57a44750d1ee6f5e5b774a4cc77da",
+      "artifact_json_sha256": "cfbf884ede962df72a633a26df4ce0d3cff105d5c77bf511405db6a0a03f7af3",
       "typed_syllables": 76,
       "uncertain_syllables": 75,
       "unsupported_syllables": 1,
@@ -3014,7 +3015,10 @@
         "high": 8
       },
       "phonemic_or_surface_ipa_promotion": false,
-      "ukrainian_production_routing": false
+      "ukrainian_production_routing": false,
+      "latest_documentation_head": "9b5b972a6f03cd09eacc710bc1b2a86c92fb2364",
+      "latest_documentation_ci_run": 41445055973,
+      "latest_documentation_ci_result": "PASSED_ALL_3_JOBS"
     },
     "challenge": {
       "inputs": 42,
@@ -3031,12 +3035,12 @@
       "segmental_projection_matches": 25,
       "segmental_projection_agreement": 0.625,
       "latest_median_ms": {
-        "clippyfirst": 0.3364780000083556,
-        "fastthaig2p": 0.062317500010067306
+        "clippyfirst": 0.23638050000229782,
+        "fastthaig2p": 0.04469199999945772
       },
       "latest_p95_ms": {
-        "clippyfirst": 1.8724539999652734,
-        "fastthaig2p": 1.6645359999643006
+        "clippyfirst": 1.2010330000009617,
+        "fastthaig2p": 1.0834160000001702
       }
     },
     "accuracy": "NOT_MEASURED",
@@ -3056,6 +3060,7 @@
       "Adjudicate whether upstream dictionary and fallback outputs qualify as phonemic or broad-surface IPA before setting typed IPA layer fields or enabling Ukrainian output",
       "Resolve item/file-level upstream dictionary and fallback data provenance and redistribution terms before copying or bundling"
     ],
-    "competing_pr_184": "OPEN_UNMERGED; distinct broader multi-engine runner and alternate adapter pinned to c4759eef7df03e11fcbb9aa83efe8cf21709fd2f; exact-head full CI 41433264764 and optional workflow 41433264629 passed; left untouched for explicit consolidation decision"
+    "competing_pr_184": "OPEN_UNMERGED; distinct broader multi-engine runner and alternate adapter pinned to c4759eef7df03e11fcbb9aa83efe8cf21709fd2f; exact-head full CI 41433264764 and optional workflow 41433264629 passed; left untouched for explicit consolidation decision",
+    "task_status": "DONE_VERIFIED_DIAGNOSTIC_ONLY; accuracy and data-rights gates remain blocked"
   }
 }

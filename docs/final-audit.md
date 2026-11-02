@@ -1516,3 +1516,9 @@ The declared optional dependency extra installs through `.[dev,fastthaig2p]`; ex
 - Optional workflow [41443564296](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41443564296) passed. Artifact [13141465226](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41443564296/artifacts/13141465226) was downloaded and inspected; JSON SHA-256 `b3550284b891504c0329324b77ecf3eff208ec8b27c192d3a0c53af9ac6a379c`.
 - Typed diagnostic result: 76 syllables, 75 UNCERTAIN, one UNSUPPORTED (`8`), and 76/76 Ukrainian results withheld. No independently adjudicated gold exists; accuracy remains NOT_MEASURED.
 - PR #184, #185 and #186 remain open and draft; #186 is stacked on #185. No merge, release or deletion was performed.
+
+## Final documentation-head verification — 2026-11-02
+
+- Branch head `9b5b972a6f03cd09eacc710bc1b2a86c92fb2364`: Full CI [41445055973](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41445055973) passed all three jobs; Ruff clean; 330 pytest tests and 1,169 subtests passed.
+- Optional workflow [41445055888](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41445055888) passed; artifact [13142640800](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41445055888/artifacts/13142640800) was inspected; JSON SHA-256 `cfbf884ede962df72a633a26df4ce0d3cff105d5c77bf511405db6a0a03f7af3`.
+- The typed bridge remains diagnostic-only; no IPA layer promotion, Ukrainian output, accuracy claim, merge, release or data redistribution clearance.
