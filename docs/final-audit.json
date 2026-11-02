@@ -87,7 +87,11 @@
     "separate_conservative_and_dictionary_word_segmented_challenge_diagnostics",
     "source_pinned_ruesi_ฤๅษี_text_lexicon_entry",
     "source_pinned_thrit_ทฤษฎี_lexical_syllable_recovery",
-    "browser_python_parity_for_benchmark_lexical_recoveries"
+    "browser_python_parity_for_benchmark_lexical_recoveries",
+    "source_pinned_article_word_lexicon_for_continuous_text_challenge",
+    "exact_text_lexicon_anchor_in_opt_in_word_segmented_pipeline",
+    "row_level_word_segmented_token_details_in_challenge_diagnostic_artifact",
+    "browser_python_article_phrase_parity_regressions"
   ],
   "not_claimed": [
     "complete_lexical_segmentation",
@@ -117,7 +121,7 @@
     "CCOST inter-annotator agreement",
     "acoustic phonetic accuracy"
   ],
-  "lexical_attestation": "Source-backed text lexicon includes the pinned two-syllable reading ฤๅษี → รือ|สี (Thai Wiktionary oldid 1774048) and the three-syllable reading ทฤษฎี → ทฺริด-สะ-ดี (en.wiktionary oldid 87195875). The first syllable ทฺริด is normalized only by an exact lexical respelling; no productive ทร rule is inferred. The distinct spelling ฤษี and standalone ฤๅ/ฦ/ฦๅ remain unresolved. Existing exact parser readings เตอร์ and เทอร์ are now reachable through the curated text lexicon. All source-attested readings remain NOT_GOLD; six typed IPA overrides preserve their separate provenance and NOT_GOLD status.",
+  "lexical_attestation": "Source-backed text lexicon includes ฤๅษี → รือ|สี (Thai Wiktionary oldid 1774048), ทฤษฎี → ทฺริด-สะ-ดี (en.wiktionary oldid 87195875), ประเทศ → ประ|เทศ (oldid 5722200), เป็น (oldid 5770798), หนึ่ง (oldid 5721517), and ใน (oldid 5759122). The first syllable ทฺริด is normalized only by an exact lexical respelling; no productive ทร rule is inferred. The distinct spelling ฤษี and standalone ฤๅ/ฦ/ฦๅ remain unresolved. Existing parser readings เตอร์ and เทอร์ are reachable through the curated text lexicon. All source-attested readings remain NOT_GOLD; their source registry permissions exclude phonemic and surface gold input.",
   "corpus_attestation": "993 source-annotated Wisesight word-tokenization rows (CC0-1.0; test-only, never training/tuning); pinned UD Thai TUD source snapshots under CC BY-SA 4.0 for a research-only frequency-Viterbi experiment; zero independently adjudicated IPA/tone/vowel-length gold rows.",
   "word_boundary_benchmark": {
     "dataset": "PyThaiNLP/Wisesight word-tokenization labels",
@@ -2929,5 +2933,22 @@
     "row_level_triage": "data/benchmark/fastthaig2p-error-triage-2026-11-02.tsv",
     "status": "BASELINE_INSPECTED_RUNTIME_FIXES_PENDING_EXACT_HEAD_CI",
     "gold_status": "NOT_ADJUDICATED"
+  },
+  "article_style_coverage": {
+    "source_pinned_words": [
+      "ประเทศ",
+      "เป็น",
+      "หนึ่ง",
+      "ใน"
+    ],
+    "source_ids": [
+      "SRC-WIKTIONARY-TH-ประเทศ",
+      "SRC-WIKTIONARY-TH-เป็น",
+      "SRC-WIKTIONARY-TH-หนึ่ง",
+      "SRC-WIKTIONARY-TH-ใน"
+    ],
+    "status": "IMPLEMENTED_PENDING_EXACT_HEAD_CI",
+    "evidence_grade": "SOURCE_ATTESTED_NOT_GOLD",
+    "intended_scope": "opt-in dictionary-word-segmented route and browser text segmentation; conservative Python endpoint remains fail-closed for continuous Thai runs"
   }
 }
