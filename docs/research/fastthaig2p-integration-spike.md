@@ -64,3 +64,8 @@ FastThaiG2P processed 50 upstream tokens: 45 dictionary hits and 5 OOV rule-fall
 The projection mismatches include short/long vowel differences (`คอมพิวเตอร์`), glottal-stop differences (`กะ`, `บรรจุ`), coda unreleased-stop marks (`ศุกร์`, `สัตว์`, `กอล์ฟ`, `ทราบ`) and diphthong/length differences (`ครอบครัว`). These are review targets, not adjudicated errors. FastThaiG2P also emits non-empty output for both deliberately invalid-input probes and both `ฦ`-series probes where ClippyFirst abstains; more output is not necessarily more valid output.
 
 **Interpretation:** FastThaiG2P clearly has greater output coverage and a lower median runtime on this small diagnostic, while p95 is nearly the same. The 62.5% segmental inter-engine agreement does not identify which engine is correct. Since independent gold remains zero, the question “which is more accurate?” remains `NOT_MEASURED`. No Ukrainian output is generated from FastThaiG2P in this spike.
+
+
+## Additional data-rights caution
+
+The upstream `data/fallback/` trigram/rule assets are distinct from the BSD-3-Clause source-code notice on `fastthaig2p/_th2ipa.py`; their exact source provenance and data license have not yet been verified independently. Treat this fallback data layer as unresolved rather than assuming that the top-level Apache-2.0 software license clears every bundled asset. The comparison JSON also contains per-input IPA strings that may be sourced from FastThaiG2P's mixed dictionary. The CI artifact is a temporary research diagnostic, not a redistribution-cleared pronunciation dataset; do not republish or incorporate its IPA rows into project lexicons until row-level source provenance and applicable terms are resolved.
