@@ -124,10 +124,10 @@
       "license": "Apache-2.0 upstream software; dictionary data provenance/rights are mixed and not fully cleared; TLTK-derived fallback file-level notice requires verification",
       "verified_in_repo": true,
       "enabled_by_default": false,
-      "latest_run_id": 41435891320,
+      "latest_run_id": 41436294546,
       "execution_status": "42_ITEM_CHALLENGE_COMPARISON_PASSED_CI_INTER_ENGINE_DIAGNOSTIC_ONLY",
-      "latest_run_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41435891320",
-      "latest_artifact_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41435891320/artifacts/13136482134",
+      "latest_run_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41436294546",
+      "latest_artifact_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41436294546/artifacts/13135729478",
       "latest_artifact_zip_sha256": "a4688f082f9a6307fded825b96d7cd025c39869383a4483311707b2d7c2c53ab",
       "latest_smoke_summary": {
         "input_count": 42,
@@ -143,11 +143,15 @@
         "segmental_projection_agreement_rate": 0.625,
         "independent_gold_count": 0,
         "accuracy": null,
+        "clippyfirst_median_ms": 0.4477035,
+        "fastthaig2p_median_ms": 0.0275115,
+        "clippyfirst_p95_ms": 1.897114,
+        "fastthaig2p_p95_ms": 1.683554,
         "evaluation_kind": "INTER_ENGINE_AND_RUNTIME_DIAGNOSTIC_NOT_ACCURACY"
       },
       "upstream_commit": "4e82a291b4cf2876326744c6580121e9986ad354",
       "integration_note": "Optional Python comparator installed only in its dedicated workflow. Uses G2P.convert on the frozen 42-item challenge, preserves raw IPA, reports dictionary/OOV path counts and runtime diagnostics. No independent IPA gold; no accuracy claim; raw Chao-tone IPA is not yet normalized into typed PhoneticResult and is not passed to the Ukrainian adapter.",
-      "latest_artifact_sha256": "e34007f19fbe0265781515e100b126d747fa24cf6a8649213554f3ce54c82b97"
+      "latest_artifact_sha256": "ced6502b38dde3a1bcb7bf2a0e3b50fb101c19522ebff6536f1815e3532ec752"
     },
     {
       "id": "thaiphon",
