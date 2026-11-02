@@ -1498,14 +1498,21 @@ The focused PR #185 spike compares FastThaiG2P with ClippyFirst on the same froz
 
 Artifact metrics: 42 challenge inputs; ClippyFirst complete IPA 28/42; FastThaiG2P complete IPA 42/42; 45 dictionary tokens and 5 OOV rule-fallback tokens; 28 comparable records / 40 syllable pairs; raw exact IPA match 0/40; limited segmental projection match 25/40 (62.5%). Median latency was 0.390 ms for ClippyFirst and 0.074 ms for FastThaiG2P; p95 was 1.894 ms and 1.754 ms respectively. These are single-run coverage, inter-engine and timing diagnostics only. There are no independent IPA gold labels, and FastThaiG2P produces outputs for deliberately invalid probes where ClippyFirst abstains. Accuracy remains `NOT_MEASURED`.
 
-A follow-up adds the declared optional dependency extra and changes the dedicated workflow to install it through `.[dev,fastthaig2p]`. That newer exact head is pending verification. The upstream dictionary/fallback data rights remain unresolved; no data is copied. Raw FastThaiG2P output is not normalized into typed `PhoneticResult` and is not sent through Ukrainian adaptation.
+The declared optional dependency extra installs through `.[dev,fastthaig2p]`; exact-head Full CI 41443564407 and optional workflow 41443564296 passed. The upstream dictionary/fallback data rights remain unresolved; no data is copied. The new typed diagnostic conversion preserves syllable grouping, Chao contours and segment features, rejects unsupported symbols and deliberately withholds all Ukrainian output because source-layer semantics remain unadjudicated.
 
 
 ## 2026-11-02 — FastThaiG2P typed boundary
 
 - Parent integration spike #185 exact-head full CI [41440724105](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41440724105) and optional comparator [41440724151](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41440724151) passed. The paired artifact was downloaded and inspected; its challenge has 42 rows and zero independently adjudicated IPA gold labels.
 - Added a conservative per-syllable typed diagnostic bridge in stacked draft PR #186. It preserves word grouping, Chao tone metadata and segment features; rejects partial output and unsupported sentinels; and withholds Ukrainian output because the source transcription has not been adjudicated as phonemic or broad-surface IPA.
-- The typed-boundary exact-head checks are pending. No accuracy, production promotion, or data redistribution clearance is claimed.
+- Exact-head Full CI 41443564407 and optional workflow 41443564296 passed; artifact 13141465226 was inspected. The typed bridge is verified as diagnostic only. No accuracy, production promotion, or data redistribution clearance is claimed.
 
 
-- Follow-up typed challenge run [41443066708](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41443066708) passed; the artifact was inspected. All 76 typed syllables were withheld from Ukrainian output; 75 remain UNCERTAIN and one is UNSUPPORTED due to sentinel `8`. Full repository CI [41443066867](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41443066867) was still running at this checkpoint.
+- Final exact-head typed challenge run [41443564296](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41443564296) passed; artifact [13141465226](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41443564296/artifacts/13141465226) was inspected. All 76 typed syllables were withheld from Ukrainian output; 75 remain UNCERTAIN and one is UNSUPPORTED due to sentinel `8`. Full repository CI [41443564407](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41443564407) passed all three jobs, Ruff and 330 pytest tests plus 1,169 subtests.
+
+## Exact-head closeout — 2026-11-02
+
+- Typed-boundary branch head `bbc3eb36984a2b02ac1970e7b00c5b03e20316ba`: Full CI [41443564407](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41443564407) passed `test`, `wheel-install-smoke`, `master-artifact`; Ruff clean; 330 pytest tests and 1,169 subtests passed. Browser/parity, evidence validators, generated-artifact checks and diagnostic scripts passed.
+- Optional workflow [41443564296](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41443564296) passed. Artifact [13141465226](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41443564296/artifacts/13141465226) was downloaded and inspected; JSON SHA-256 `b3550284b891504c0329324b77ecf3eff208ec8b27c192d3a0c53af9ac6a379c`.
+- Typed diagnostic result: 76 syllables, 75 UNCERTAIN, one UNSUPPORTED (`8`), and 76/76 Ukrainian results withheld. No independently adjudicated gold exists; accuracy remains NOT_MEASURED.
+- PR #184, #185 and #186 remain open and draft; #186 is stacked on #185. No merge, release or deletion was performed.
