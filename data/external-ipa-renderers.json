@@ -119,23 +119,24 @@
       "name": "FastThaiG2P",
       "url": "https://github.com/awslabs/FastThaiG2P",
       "kind": "dictionary+rules G2P",
-      "status": "candidate",
+      "status": "experimental-comparator",
       "output": "IPA claimed; validate conventions, tone/length and generated dictionary subset Pinned smoke verified 36 outputs with no runtime errors; no gold labels.",
-      "license": "Verify repository and dataset licenses before runtime integration",
+      "license": "Apache-2.0 upstream software; dictionary data provenance/rights are mixed and not fully cleared; TLTK-derived fallback file-level notice requires verification",
       "verified_in_repo": false,
       "enabled_by_default": false,
-      "latest_run_id": 40123365441,
-      "execution_status": "SMOKE_VERIFIED_NOT_ACCURACY",
-      "latest_run_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40123365441",
-      "latest_artifact_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40123365441/artifacts/12571583780",
+      "latest_run_id": null,
+      "execution_status": "OPTIONAL_PINNED_CHALLENGE_COMPARISON_ADDED_CI_PENDING",
+      "latest_run_url": null,
+      "latest_artifact_url": null,
       "latest_artifact_zip_sha256": "a4688f082f9a6307fded825b96d7cd025c39869383a4483311707b2d7c2c53ab",
       "latest_smoke_summary": {
-        "input_count": 36,
-        "outputs": 36,
-        "runtime_errors": 0,
+        "input_count": 42,
         "independent_gold_count": 0,
-        "accuracy": null
-      }
+        "accuracy": null,
+        "evaluation_kind": "INTER_ENGINE_AND_RUNTIME_DIAGNOSTIC_NOT_ACCURACY"
+      },
+      "upstream_commit": "4e82a291b4cf2876326744c6580121e9986ad354",
+      "integration_note": "Optional Python comparator installed only in its dedicated workflow. Uses G2P.convert on the frozen 42-item challenge, preserves raw IPA, reports dictionary/OOV path counts and runtime diagnostics. No independent IPA gold; no accuracy claim; raw Chao-tone IPA is not yet normalized into typed PhoneticResult and is not passed to the Ukrainian adapter."
     },
     {
       "id": "thaiphon",
