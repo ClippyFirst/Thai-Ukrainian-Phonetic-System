@@ -2210,7 +2210,7 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Upstream is pinned to `awslabs/FastThaiG2P@4e82a291b4cf2876326744c6580121e9986ad354`; PyThaiNLP is pinned to 5.4.0 in the dedicated workflow.
 
 ### Added
-- `scripts/run_fastthaig2p_challenge.py`: paired run over the frozen 42-item `data/benchmark/thai_g2p_challenge.jsonl`; records ClippyFirst output, FastThaiG2P raw IPA, syllable strings, dictionary hits, OOV fallback counts, output coverage, feature inventory and same-process timing diagnostics.
+- `src/thai_ukrainian/fastthaig2p_adapter.py`: lazy optional Python adapter preserving raw IPA, word/syllable groups, dictionary-vs-fallback token paths and non-IPA passthrough. It is not a typed `PhoneticResult` and does not call the Ukrainian adapter.\n- `scripts/run_fastthaig2p_challenge.py`: paired run over the frozen 42-item `data/benchmark/thai_g2p_challenge.jsonl`; records ClippyFirst output, FastThaiG2P raw IPA, syllable strings, dictionary hits, OOV fallback counts, output coverage, feature inventory and same-process timing diagnostics.
 - `tests/test_fastthaig2p_challenge.py`: parser/feature-inventory unit tests.
 - `.github/workflows/fastthaig2p-spike.yml`: optional pull-request/manual workflow; installs pinned dependencies, runs tests and comparison, checks evidence grade/42-row denominator, uploads report artifact.
 - `docs/research/fastthaig2p-integration-spike.md`, external renderer registry/docs and third-party notices updated.
