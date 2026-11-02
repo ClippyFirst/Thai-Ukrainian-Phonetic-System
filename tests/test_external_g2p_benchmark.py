@@ -129,7 +129,7 @@ class ExternalG2PBenchmarkHarnessTests(unittest.TestCase):
     def test_clippyfirst_candidate_uses_conservative_ipa_and_abstains_on_unknown(self):
         with patch("thai_ukrainian.text.analyze_text_with_word_segmentation", return_value=[
             {"kind": "thai", "input": "กา", "segmentation_status": "lexicon",
-             "syllables": [{"phonemic_ipa": "kaː˧"}]}
+             "syllables": [{"phonetic_result": {"status": "SUPPORTED", "phonemic_ipa": "kaː", "tone_contour_ipa": "˧"}}]}
         ]):
             transcribe, metadata = candidate_clippyfirst()
             self.assertEqual(transcribe("กา"), "/kaː˧/")
