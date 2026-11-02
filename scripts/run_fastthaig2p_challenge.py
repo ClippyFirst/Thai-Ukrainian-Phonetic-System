@@ -16,6 +16,7 @@ from typing import Any
 
 from thai_ukrainian.fastthaig2p_adapter import FastThaiG2PAdapter, UPSTREAM_COMMIT
 from thai_ukrainian.text import analyze_text
+from thai_ukrainian.ukrainian_adaptation import adapt_phonetic_result
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_INPUT = ROOT / "data" / "benchmark" / "thai_g2p_challenge.jsonl"
@@ -79,6 +80,12 @@ def run(input_path: Path = DEFAULT_INPUT) -> dict[str, Any]:
     external_passthrough_count = 0
     external_dictionary_tokens = 0
     external_oov_tokens = 0
+    typed_syllable_count = 0
+    typed_uncertain_syllable_count = 0
+    typed_unsupported_syllable_count = 0
+    typed_ukrainian_withheld_count = 0
+    typed_unsupported_symbols: set[str] = set()
+    typed_tone_category_counts: dict[str, int] = {}
     clippy_latencies = []
     external_latencies = []
     raw_exact_syllable_pairs = 0
@@ -116,6 +123,24 @@ def run(input_path: Path = DEFAULT_INPUT) -> dict[str, Any]:
         external_syllables = list(external_result.syllable_ipa)
         external_nonempty = bool(raw.strip())
         external_complete = external_result.complete_ipa
+        typed_groups = external_result.to_phonetic_results() if external_complete else ()
+        typed_results = [item for group in typed_groups for item in group]
+        typed_syllable_count += len(typed_results)
+        typed_uncertain_syllable_count += sum(item.status == "UNCERTAIN" for item in typed_results)
+        typed_unsupported_syllable_count += sum(item.status == "UNSUPPORTED" for item in typed_results)
+        for item in typed_results:
+            if item.tone_category:
+                typed_tone_category_counts[item.tone_category] = (
+                    typed_tone_category_counts.get(item.tone_category, 0) + 1
+                )
+            typed_unsupported_symbols.update(
+                segment.ipa for segment in item.segments
+                if segment.certainty == "UNSUPPORTED"
+            )
+            adapted = adapt_phonetic_result(item)
+            if adapted["status"] != "withheld" or adapted["output"] is not None:
+                raise AssertionError("Unadjudicated FastThaiG2P output must not produce Ukrainian text")
+            typed_ukrainian_withheld_count += 1
         external_nonempty_count += int(external_nonempty)
         external_complete_count += int(external_complete)
         external_passthrough_count += int(bool(external_result.passthrough_text))
@@ -172,6 +197,23 @@ def run(input_path: Path = DEFAULT_INPUT) -> dict[str, Any]:
                 "oov_rule_fallback_count": oov,
                 "ipa_feature_inventory": summarize_ipa(external_syllables),
                 "elapsed_ms": round(external_ms, 6),
+                "typed_diagnostic": {
+                    "syllable_count": len(typed_results),
+                    "status_counts": {
+                        "UNCERTAIN": sum(item.status == "UNCERTAIN" for item in typed_results),
+                        "UNSUPPORTED": sum(item.status == "UNSUPPORTED" for item in typed_results),
+                    },
+                    "tone_categories": [item.tone_category for item in typed_results],
+                    "unsupported_symbols": sorted({
+                        segment.ipa for item in typed_results for segment in item.segments
+                        if segment.certainty == "UNSUPPORTED"
+                    }),
+                    "ukrainian_output_withheld": all(
+                        adapt_phonetic_result(item)["status"] == "withheld"
+                        and adapt_phonetic_result(item)["output"] is None
+                        for item in typed_results
+                    ),
+                },
             },
             "same_syllable_count": len(clippy_ipa) == len(external_syllables),
             "raw_exact_syllable_match_scored": bool(comparable),
@@ -197,6 +239,7 @@ def run(input_path: Path = DEFAULT_INPUT) -> dict[str, Any]:
             "upstream_commit": UPSTREAM_COMMIT,
             "adapter": "thai_ukrainian.fastthaig2p_adapter.FastThaiG2PAdapter",
             "api": "fastthaig2p.G2P.convert",
+            "typed_boundary": "one UNCERTAIN/UNSUPPORTED PhoneticResult per syllable; Ukrainian adapter must withhold",
             "license": "Apache-2.0 upstream software; dictionary and fallback data provenance assessed separately",
         },
         "summary": {
@@ -207,6 +250,12 @@ def run(input_path: Path = DEFAULT_INPUT) -> dict[str, Any]:
             "fastthaig2p_passthrough_outputs": external_passthrough_count,
             "fastthaig2p_dictionary_tokens": external_dictionary_tokens,
             "fastthaig2p_oov_rule_fallback_tokens": external_oov_tokens,
+            "fastthaig2p_typed_diagnostic_syllables": typed_syllable_count,
+            "fastthaig2p_typed_uncertain_syllables": typed_uncertain_syllable_count,
+            "fastthaig2p_typed_unsupported_syllables": typed_unsupported_syllable_count,
+            "fastthaig2p_ukrainian_withheld_syllables": typed_ukrainian_withheld_count,
+            "fastthaig2p_typed_unsupported_symbols": sorted(typed_unsupported_symbols),
+            "fastthaig2p_tone_category_counts": typed_tone_category_counts,
             "records_with_both_complete_and_equal_syllable_count": comparable_records,
             "raw_exact_syllable_string_matches": raw_exact_syllable_matches,
             "raw_exact_syllable_string_pairs_compared": raw_exact_syllable_pairs,
