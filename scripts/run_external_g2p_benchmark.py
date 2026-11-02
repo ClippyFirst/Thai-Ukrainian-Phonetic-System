@@ -107,7 +107,8 @@ def candidate_clippyfirst() -> tuple[Callable[[str], str], dict[str, Any]]:
         "configuration": {
             "api": "analyze_text_with_word_segmentation",
             "phonemic_ipa": True,
-            "policy": "conservative; abstain unless every Thai token has complete IPA",
+            "typed_ipa_contract": "PhoneticResult (segmental IPA plus separate tone contour)",
+            "policy": "conservative; abstain unless every Thai token has complete IPA and tone",
             "word_segmentation": "pinned ClippyFirst dictionary maximum matching",
         },
         "source_commit": "runtime-at-benchmark-commit",
