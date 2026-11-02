@@ -1503,3 +1503,12 @@ The new test/tool code was committed on the PR branch and awaits exact-head CI c
 - **No runtime change:** no evidence in this review justifies changing the parser, tone, vowel-length, IPA or Ukrainian mapping rules. The four outstanding FastThaiG2P discrepancies still require independent adjudication.
 - **Research record:** Consensus synthesis https://consensus.app/search/research-the-peer-reviewed-evidence-and-primary-sc/TPPdaWrzSWGIdPzNPruDdA/ ; saved Undermind workspace document https://app.undermind.ai/projects/49bbd978-a5a9-4cac-a7bb-a72848f50e10?path=/Research%20the%20peer-reviewed%20evidence%20and%20primary%20scholarly%20literature%20relevant%20to.md .
 - **Verification pending:** this documentation-only checkpoint requires exact-head CI and Web Static. No local test execution is claimed.
+
+
+## Literature review exact-head engineering verification — 2026-11-03
+
+- The literature/documentation checkpoint `450fe4b6527c8019ea7399218daf30222fe190e2` passed exact-head Full CI [41536529764](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41536529764) and Web Static [41536529768](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41536529768).
+- Full CI passed all three jobs: `test`, `wheel-install-smoke`, `master-artifact`. Ruff passed; pytest reported **326 passed, 1,185 subtests passed**. Evidence/source validators, blind Thai and Ukrainian packet validators, generated-artifact checks, IPA→Ukrainian adapter tests, 29 browser parity fixtures, UI/static accessibility checks, segmentation diagnostics and artifact generation all passed.
+- Wheel-install smoke built the sdist and wheel, installed the wheel in isolation and smoke-tested package data outside the checkout. Master-artifact validation passed.
+- This is engineering verification only. It does not establish Thai phonetic accuracy, Ukrainian preference validity, manual WCAG conformance or independent gold labels. Linguistic accuracy remains `NOT_MEASURED`.
+- The subsequent audit/matrix/handoff reconciliation is documentation-only and receives its own final exact-head CI/Web Static run; see the latest PR #189 conversation comment for the terminal branch-head result.
