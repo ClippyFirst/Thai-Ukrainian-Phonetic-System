@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Main remains cc398254c178171f74397aed556766e87356ab84. PR #182 research/independent-adjudication-gates-20261101 is 161 commits ahead and 0 behind main; exact code/test head 036fb2837c6e1df247e055df115d52c4b3c48b16 passed all three CI jobs (315 Python tests, 1169 subtests, Ruff, wheel-install smoke, master artifact), Web Static and external VISTEC evaluation. The all-mode adversarial suite covers 52 inputs across three profiles (156 combinations). Six unreferenced reported forms, including special-vowel ฤๅษี, are withheld in strict mode; เพิ่ง is a separate pinned source-attested NOT_GOLD override in both runtimes. The unsupported unsourced ฤๅษี→รือ|สี text-lexicon mapping was removed from Python and browser implementations. Seven source-attested IPA rows produce seven complete outputs; five are circular runtime/source rows and two are non-circular comparisons; no accuracy claim. Broad-surface IPA requires registered audio, asset, exact interval and source permission. LOTUSDIS is a verified CC BY-SA 4.0 supplementary source (114 aggregate device-hours, about 20 unique session hours, nine single-channel devices, overlap masks); no individual assets are pinned. CCOST wordlist preview reconstruction is byte-identical to the official MD5, but B/C/D each differ from A by two items (208-item union), so no scoreable packet was generated pending curator clarification. Reviewer registry remains empty; no Thai or Ukrainian expert submissions exist. Accuracy remains NOT_MEASURED; repository is engineering/research-infrastructure verified, not release-ready. No Vercel tools were used.",
+  "status": "Main remains cc398254c178171f74397aed556766e87356ab84. PR #182 code checkpoint c68580a490f89af1cf08224d5811429e74f8ef5b passed all three exact-head CI jobs (319 Python tests, 1169 subtests, Ruff, wheel-install smoke and master artifact), Web Static and external VISTEC evaluation. Static audit: 99 Python modules, 157 Python import edges, 9 browser modules, 7 browser test files, 319 test functions, 0 exact duplicate test names/bodies, 2 near-name candidates and 5 reviewed dynamic-import sites. The live Pages site is still the successful mainline deployment at 1431c565ff5c160da4944942d687bc30b2f8d0b2; PR #182 is not yet merged/deployed. Seven source-attested IPA rows include five circular runtime/source rows and two non-circular comparisons; no accuracy claim. Wisesight/VISTEC labels remain source-annotated, not expert gold. Thai and Ukrainian reviewer registries and audio asset registry remain empty. CCOST clarification/archive, LOTUSDIS audio pinning and manual WCAG testing remain blocked. Linguistic accuracy remains NOT_MEASURED; engineering-verified research prototype, not release-ready.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -304,7 +304,7 @@
     "rows": 351780,
     "vowel_rime_records": 41
   },
-  "latest_documentation_checkpoint": "536f03327f11d258a4e7638091797128754b6602",
+  "latest_documentation_checkpoint": "PR #182 documentation checkpoint in current branch; consult PR metadata for exact current SHA.",
   "text_only_checkpoint": {
     "branch": "research/thai-segmentation-gold-parity-verified-20261025",
     "parent_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
@@ -368,9 +368,9 @@
     },
     {
       "id": "WALK-LEX-001",
-      "status": "PARTIAL",
-      "implementation": "Exact-form /dɤːn˧/ source-pinned override routed through typed IPA→Ukrainian adapter in Python/browser; parser-only ambiguity retained; circular source agreement excluded",
-      "acceptance": "Exact-head Python/browser/diagnostic CI passes; still not independent IPA gold"
+      "status": "DONE_VERIFIED — six exact-form source-attested overrides, NOT_GOLD",
+      "implementation": "Six exact-form lexical IPA overrides (เงิน, เดิน, ออก, ไกล, ใกล้, เพิ่ง) preserve source provenance, segmental IPA, tone and vowel length through the typed IPA→Ukrainian adapter in Python/browser; surface IPA is not fabricated.",
+      "acceptance": "Exact-head CI 41418718922 passed Python/browser/parity/source-attested diagnostics; 7-row diagnostic includes 5 circular and 2 non-circular records, with no accuracy claim."
     },
     {
       "id": "BANCHU-IPA-001",
@@ -382,9 +382,9 @@
     {
       "id": "UA-TARGET-001",
       "status": "BLOCKED",
-      "implementation": "Six-row adjudication template and independent review protocol prepared; engine candidates remain non-gold",
+      "implementation": "Seven-row candidate-blind Ukrainian preference packet and independent review protocol prepared; engine candidates remain non-gold.",
       "blocker": "Two independent Ukrainian-native reviewers and agreed target-form criteria unavailable in this run",
-      "acceptance": "Blinded candidate judgments, criteria version, disagreement log, final adjudicated set"
+      "acceptance": "Two independent Ukrainian-native reviewers, agreed target-form criteria, blinded candidate judgments and disagreement log."
     },
     {
       "id": "SPECIAL-ORTHO-SCHEMA-001",
@@ -420,9 +420,9 @@
     {
       "id": "BRANCH-HYGIENE-001",
       "status": "PARTIAL",
-      "implementation": "Inventoried 183 branch refs: docs 57, feat 27, fix 27, research 25, audit 8, ux 7, chore 7, unprefixed 7, test 5, ci 2, copy 2, design 2, perf 2, and one each finalize/polish/site/ui/web. No historical branch was deleted.",
-      "blocker": "Historical refs may contain unique work; no owner-approved archive/delete policy exists, and the connected GitHub tool set exposes no branch-deletion action.",
-      "acceptance": "Review unique commits and obtain an explicit owner-approved retention policy before archiving/deleting any historical branch; then re-inventory and verify no unmerged unique work is lost."
+      "implementation": "Re-inventoried 15 current branch refs: chore 2, ci 1, docs 3, fix 1, main 1, refactor 4, research 1, test 1, work 1. PR #181 is closed unmerged and its adversarial changes are included in PR #182; 11 historical branch refs were left untouched.",
+      "blocker": "No owner-approved retention policy exists for deleting/archiving historical refs; no branch was deleted.",
+      "acceptance": "Retain branches until an explicit owner-approved retention policy exists; review unique commits before any archive/delete."
     },
     {
       "id": "LOCAL-CLONE-001",
@@ -504,10 +504,10 @@
     },
     {
       "id": "CCOST-WORDLIST-001",
-      "status": "PARTIAL",
-      "implementation": "Local blind-packet generator with synthetic tests; checks 206 rows/order, duplicate words, set differences and SHA-256/license manifest; output remains unadjudicated and is not committed.",
-      "blocker": "Actual Zenodo wordlist.csv could not be downloaded into the connector-only session; order-set concordance has not been established.",
-      "acceptance": "Run generator against exact Zenodo CSV; reconcile any duplicates/order differences; obtain two independent Thai broad-phonemic annotations and adjudication record."
+      "status": "BLOCKED_CURATOR_CLARIFICATION",
+      "implementation": "Exact Zenodo reconstruction is byte-identical by official MD5; 206 unique entries per A–D order, no duplicates, 208-item union because B/C/D each differ from A by two missing and two extra items; no scoreable packet committed.",
+      "blocker": "Curator/author clarification is required to resolve the A–D mismatch; no local or source-based normalization is justified.",
+      "acceptance": "Obtain authoritative explanation/correction/erratum, then regenerate and freeze a scoreable blind packet."
     },
     {
       "id": "IPA-SOURCE-LAYER-GATE-001",
@@ -587,7 +587,7 @@
       ]
     }
   },
-  "latest_implementation_commit_ci_verified": "536f03327f11d258a4e7638091797128754b6602",
+  "latest_implementation_commit_ci_verified": "c68580a490f89af1cf08224d5811429e74f8ef5b",
   "latest_documentation_head_ci_verified": "536f03327f11d258a4e7638091797128754b6602",
   "latest_documentation_head_ci_run": "41342132989",
   "latest_documentation_head_web_validation_run": "41342132990",
@@ -2084,9 +2084,9 @@
       167
     ]
   },
-  "latest_full_repository_head": "536f03327f11d258a4e7638091797128754b6602",
-  "latest_full_repository_head_ci_run": "41353088633",
-  "latest_full_repository_head_web_validation_run": "41353088642",
+  "latest_full_repository_head": "c68580a490f89af1cf08224d5811429e74f8ef5b",
+  "latest_full_repository_head_ci_run": "41418718922",
+  "latest_full_repository_head_web_validation_run": "41418718843",
   "latest_web_static_verified_code_commit": "536f03327f11d258a4e7638091797128754b6602",
   "latest_web_static_verified_code_run": "41342132990",
   "ccost_source_reconciliation_2026_10_31": {
@@ -2127,30 +2127,38 @@
     "latest_pr_head_ci_status": "See PR #169 metadata; previous exact-head run 41244614135 passed all three jobs."
   },
   "current_branch_inventory": {
-    "branch_refs": 12,
+    "branch_refs": 15,
     "prefix_counts": {
       "chore": 2,
       "ci": 1,
       "docs": 3,
       "fix": 1,
       "main": 1,
-      "refactor": 4
+      "refactor": 4,
+      "research": 1,
+      "test": 1,
+      "work": 1
     },
-    "as_of": "2026-11-01",
+    "as_of": "2026-11-02",
     "deletions": 0,
-    "note": "12 refs including this documentation continuation branch; 11 non-main refs. No branch deletion was performed."
+    "note": "15 refs including PR #182 research branch, closed-unmerged PR #181 branch, and this dedicated work branch. PR #181's adversarial changes are included in PR #182; no branch was deleted. Historical refs remain pending owner-approved retention policy."
   },
   "open_prs_current": [
     {
-      "number": 180,
-      "head": "See PR metadata; this file is committed by the same PR and intentionally avoids a self-staling SHA.",
+      "number": 182,
+      "head": "c68580a490f89af1cf08224d5811429e74f8ef5b",
+      "base": "cc398254c178171f74397aed556766e87356ab84",
       "status": "OPEN",
-      "exact_head_ci_run": null,
-      "ci_status": "Pending exact-head CI; consult PR metadata and Actions.",
-      "scope": "final repository-cleanup verification ledger"
+      "exact_head_ci_run": "41418718922",
+      "ci_status": "PASSED_ALL_3_JOBS",
+      "web_static_run": "41418718843",
+      "web_static_status": "PASSED",
+      "external_vistec_run": "41418718412",
+      "external_vistec_status": "PASSED",
+      "scope": "independent Thai/Ukrainian adjudication gates, source-attested lexical IPA runtime corrections, static audit, evidence registries, and website transparency update pending merge/deployment"
     }
   ],
-  "latest_pr_head_source": "PR #178 metadata; this file is committed by that PR, so its head SHA and exact-head run are intentionally not duplicated here.",
+  "latest_pr_head_source": "PR #182 metadata; current implementation code checkpoint c68580a490f89af1cf08224d5811429e74f8ef5b, exact-head CI/Web Static/VISTEC all passed.",
   "status_refresh_2026_10_31": {
     "main_sha": "8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8",
     "pr_169": {
@@ -2816,5 +2824,95 @@
       "outbound_messages_sent": 0,
       "reason": "No email or messaging connector available in execution context; public contact routes do not imply consent."
     }
+  },
+  "latest_exact_head_verification_2026_11_02_followup": {
+    "branch": "research/independent-adjudication-gates-20261101",
+    "verified_code_head": "c68580a490f89af1cf08224d5811429e74f8ef5b",
+    "ci_run": "41418718922",
+    "ci_result": "PASSED_ALL_3_JOBS",
+    "test_job": "PASSED",
+    "wheel_install_smoke": "PASSED",
+    "master_artifact": "PASSED",
+    "python_test_suite": "319_PASSED",
+    "unittest_subtests": 1169,
+    "lint": "PASSED",
+    "browser_tests_and_parity": "PASSED",
+    "source_and_blind_packet_validators": "PASSED",
+    "generated_artifact_drift_checks": "PASSED",
+    "runtime_diagnostics": "PASSED_WITH_EXPLICIT_NON_ACCURACY_STATUS",
+    "web_static_run": "41418718843",
+    "web_static_result": "PASSED",
+    "external_vistec_run": "41418718412",
+    "external_vistec_result": "PASSED",
+    "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
+    "linguistic_accuracy": "NOT_MEASURED"
+  },
+  "latest_site_release_readiness_2026_11_02": {
+    "starting_main_sha": "cc398254c178171f74397aed556766e87356ab84",
+    "implementation_branch": "research/independent-adjudication-gates-20261101",
+    "work_branch": "work/thai-site-release-readiness-20261102",
+    "pr": 182,
+    "verified_code_head": "c68580a490f89af1cf08224d5811429e74f8ef5b",
+    "commits_ahead_of_main": 199,
+    "commits_behind_main": 0,
+    "changed_files": 61,
+    "ci_run": "41418718922",
+    "ci_result": "PASSED_ALL_3_JOBS",
+    "python_tests": 319,
+    "unittest_subtests": 1169,
+    "web_static_run": "41418718843",
+    "web_static_result": "PASSED",
+    "external_vistec_run": "41418718412",
+    "external_vistec_result": "PASSED",
+    "static_audit": {
+      "python_modules": 99,
+      "python_import_edges": 157,
+      "browser_modules": 9,
+      "browser_test_files": 7,
+      "browser_test_assertion_calls": 391,
+      "browser_import_edges": 22,
+      "html_asset_edges": 3,
+      "workflow_script_references": 44,
+      "test_functions": 319,
+      "exact_duplicate_test_names": 0,
+      "exact_duplicate_test_bodies": 0,
+      "near_duplicate_name_candidates": 2,
+      "dynamic_import_sites": 5,
+      "parse_errors": 0
+    },
+    "source_attested_ipa": {
+      "records": 7,
+      "circular_runtime_source_rows": 5,
+      "non_circular_comparisons": 2,
+      "accuracy_claimed": false
+    },
+    "segmentation": {
+      "wisesight_rows": 993,
+      "wisesight_evidence": "SOURCE_ANNOTATED_NOT_EXPERT_ADJUDICATED",
+      "dictionary_boundary_f1": 0.8394713656387666,
+      "tud_boundary_f1": 0.7486234470545917,
+      "vistec_rows": 50000,
+      "vistec_evidence": "SOURCE_ANNOTATED_NOT_EXPERT_ADJUDICATED",
+      "vistec_dictionary_boundary_f1": 0.8283384604640367,
+      "vistec_tud_boundary_f1": 0.7530225550370759,
+      "tud_production_default": false,
+      "manual_review_rows": 66,
+      "manual_review_adjudicated": 0
+    },
+    "browser_latency_diagnostic": {
+      "input_codepoints": 500,
+      "median_ms": 5.538,
+      "p95_ms": 8.555,
+      "accuracy_claimed": false
+    },
+    "live_site": {
+      "url": "https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/",
+      "main_deployment_commit": "1431c565ff5c160da4944942d687bc30b2f8d0b2",
+      "pages_run": "41326865964",
+      "status": "LIVE_MAINLINE_PR182_NOT_YET_DEPLOYED"
+    },
+    "pr_merged": false,
+    "linguistic_accuracy": "NOT_MEASURED",
+    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY"
   }
 }

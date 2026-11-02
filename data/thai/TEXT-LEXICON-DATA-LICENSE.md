@@ -1,11 +1,14 @@
 # Text lexicon data provenance and license
 
-The repository's software is licensed separately from source-derived language data. The five rows added to `text_lexicon.tsv` on 2026-10-25 (ไกล, ใกล้, เดิน, กรรม, บรรจุ) are source-attested from the exact Thai Wiktionary revisions recorded in `text_lexicon_sources.csv`.
+The repository's software is licensed separately from source-derived language data. The original five rows added to `text_lexicon.tsv` on 2026-10-25 (ไกล, ใกล้, เดิน, กรรม, บรรจุ) remain source-attested from the exact Thai Wiktionary revisions recorded in `text_lexicon_sources.csv`. The current source registry has since grown; consult that TSV for the complete, row-level list of source revisions and claim scopes.
 
 Those source pages state Creative Commons Attribution-ShareAlike terms; their reused lexical segmentation/reading data is tracked here as **CC BY-SA 4.0**, with attribution to the Thai Wiktionary contributors and links to each exact revision. Keep these rows and their provenance together when copying or adapting the source-derived subset. Do not infer that the repository's MIT software license relicenses the source-derived rows.
 
 This is a small, deliberately curated set, not a bulk Wiktionary import. It supports lexical segmentation/normalization only; it is **not** independently adjudicated IPA gold, not proof that every downstream engine result is correct, and not a representative lexicon-coverage sample.
 
-The word เงิน is enabled only through `data/thai/lexical_ipa_overrides.tsv`, not as an ordinary graphemic syllable entry. Its pinned Thai Wiktionary revision 5759179 records short /ɤ/ in /ŋɤn/. The override preserves source provenance, short-vowel metadata and tone through the typed IPA → Ukrainian adapter boundary. This is dictionary-attested evidence, not independent phonetic gold; it must not be used to claim acoustic correctness or generalize to other words.
+The current runtime lexical-IPA registry contains six exact-form overrides: เงิน, เดิน, ออก (from the ตะวันออก compound entry), ไกล, ใกล้ and เพิ่ง. Each row in `data/thai/lexical_ipa_overrides.tsv` pins its source ID, exact Wiktionary revision URL, revision number and CC BY-SA 4.0 license. The Python and browser implementations route each source-attested segmental IPA, tone and vowel-length value through the same typed `PhoneticResult` → Ukrainian adapter boundary. These are dictionary-attested readings, not independent phonetic or acoustic gold; surface IPA is not fabricated where the source provides only a broad dictionary transcription. The six overrides do not establish general pronunciation rules or representative lexical coverage.
 
 Source data reviewed 2026-10-25. See `data/thai/text_lexicon_sources.csv` for exact revision locators.
+
+
+For attribution and a compact list of the current six override source pages, see [`THIRD_PARTY_NOTICES.md`](../../THIRD_PARTY_NOTICES.md). The MIT software license does not relicense these CC BY-SA 4.0 data records; preserve their attribution, revision locators and share-alike terms when redistributing or adapting them.

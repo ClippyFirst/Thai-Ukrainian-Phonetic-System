@@ -2146,3 +2146,36 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Public HF history continues to expose LOTUSDIS audio upload only as short commit prefix `45145d7`. The full revision, a real Parquet row/audio object, file hash and exact clean interval remain unverified.
 - Firecrawl credit check returned 0 remaining credits. Therefore no live browser interaction, viewport test or screen-reader test could be performed. The new WCAG checklist records precise acceptance steps and expected pass conditions, but the manual gate remains BLOCKED.
 - Exact-head workflows for `9dec219a97f47e4979de2baf1c23ee791cd657c9` remained queued; the later follow-up commits also need a new exact-head run. Do not mark this continuation's code verified until CI completes.
+
+
+## 2026-11-02 — exact-head engineering closeout and site continuation
+
+### Starting point and branches
+- Starting main: `cc398254c178171f74397aed556766e87356ab84`.
+- Work branch: `work/thai-site-release-readiness-20261102`, created from main and fast-forwarded to the existing research implementation branch to avoid reimplementing its work.
+- Existing PR branch: `research/independent-adjudication-gates-20261101`, PR #182, code checkpoint `c68580a490f89af1cf08224d5811429e74f8ef5b`; 199 commits ahead, 0 behind, 61 changed files. PR #182 remains open at this checkpoint.
+- PR #181 was closed unmerged. Its three-mode adversarial browser fix/test is present in PR #182; the old branch was not modified or deleted. Current branch inventory is 15 refs. No branch was deleted; historical branches remain until an owner-approved retention policy exists.
+
+### Implemented and verified
+- Fixed the repository-structure audit fixture newline bug and a real relative-import normalization bug. The audit now resolves `../src/util.js` correctly.
+- Reviewed static test-overlap findings. Changed the pipeline cluster test to call `analyze_syllable`; parser-level coverage remains in `test_core.py`. No test was removed. Two similar-name candidates were retained because they test different vowel/API behavior. Five dynamic-import sites were reviewed as intentional test harness imports.
+- Updated README, third-party notices, text-lexicon data-license note, system page, validation matrix, final audit and this handoff for the six exact-form Wiktionary-derived lexical IPA overrides and their separate CC BY-SA 4.0 provenance. The source-attested `เพิ่ง` reading is routed through the same typed IPA → Ukrainian adapter in Python and browser runtimes; it is not independent phonetic/acoustic gold.
+- Exact-head CI [41418718922](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41418718922): all three jobs passed; 319 Python tests and 1,169 subtests passed; Ruff, browser parity, source/blind-packet validators, generated artifact drift checks, diagnostics, static accessibility checks, wheel-install smoke and master-artifact verification passed.
+- Web Static [41418718843](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41418718843) and external VISTEC [41418718412](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41418718412) passed.
+- Static audit artifact: 99 Python modules, 157 Python import edges, 9 browser modules, 7 browser tests, 391 browser assertion calls, 22 browser import edges, 3 HTML asset edges, 44 workflow references, 319 test functions, zero exact duplicate names or bodies, two near-name candidates, five intentional dynamic-import sites, zero parse errors.
+- Wisesight 993-row and VISTEC 50,000-row metrics remain source-annotated, not expert-adjudicated. Dictionary segmentation F1: 0.8395 Wisesight / 0.8283 VISTEC. TUD research segmenter F1: 0.7486 / 0.7530; do not integrate it as production default. The 66-row manual review sample remains unadjudicated. Seven source-attested IPA records include five circular and two non-circular comparisons; no accuracy claim.
+- Browser segmentation latency diagnostic: 500 code points median 5.538 ms, p95 8.555 ms on Node 22; diagnostic only.
+
+### Site state
+- The currently live [GitHub Pages site](https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/) is the successful mainline deployment from commit `1431c565ff5c160da4944942d687bc30b2f8d0b2`, Pages run [41326865964](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41326865964).
+- PR #182's verified runtime is not yet on the site at this checkpoint. After its documentation-only update is exact-head verified, merge the existing PR with a squash merge (expected head guard), then wait for main CI and Pages deployment and verify the new published commit. Do not claim the PR version is live until Pages succeeds.
+
+### Remaining acceptance blockers
+1. Two qualified independent Standard Thai reviewers and a separate adjudicator; frozen labels and disagreement log.
+2. Two independent Ukrainian-native reviewers; candidate preference judgments and disagreement log.
+3. CCOST A–D curator clarification, then actual archive inspection, hashes, TextGrid tier/X-SAMPA inventory and protocol reconciliation.
+4. Resolve full immutable LOTUSDIS audio revision; register real audio objects, SHA-256, speaker/microphone, duration and clean interval-level overlap.
+5. Hands-on keyboard, screen-reader, zoom/reflow, mobile and assistive-technology testing; static WCAG checks are not conformance evidence.
+6. Full runtime call graph remains outside the static audit's claim; expand only if a concrete uncovered dynamic path warrants it.
+
+**Environment/evidence limits:** direct clone failed because DNS resolution for github.com was unavailable. Local pytest/npm were not run; exact GitHub Actions results above are authoritative. No reviewer outreach was sent, no audio asset was fabricated, and no accuracy result is claimed. Readiness remains an engineering-verified research prototype, not a linguistic-accuracy release.
