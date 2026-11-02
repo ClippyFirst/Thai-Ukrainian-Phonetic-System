@@ -2226,3 +2226,8 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - No release tag or package version was created. Linguistic accuracy remains `NOT_MEASURED`; the deployed site is an engineering-verified research prototype, not a linguistic-accuracy or WCAG-conformance release.
 
 **Next genuine work:** secure independent Thai and Ukrainian reviewers, resolve CCOST curator discrepancy, obtain immutable LOTUSDIS audio evidence, and complete hands-on accessibility testing. Do not invent gold labels, audio assets or accuracy scores to close these gates.
+
+### Evidence-driven correction after first optional workflow run
+
+- Optional run [41431032031](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41431032031) completed, but artifact inspection showed ClippyFirst and FastThaiG2P both failed import because the workflow had not installed the local src-layout project. The 42-row artifact therefore contained only thaiphon and Goruut rows and is not a valid requested comparison.
+- Fixed the optional workflow to install ClippyFirst editable before external engines. Fixed ClippyFirst candidate generation to consume typed `PhoneticResult` and append the separately stored tone contour. A new exact-head CI and optional benchmark run must pass and its artifact must be inspected before reporting any comparative metrics.
