@@ -18,7 +18,7 @@ def test_parse_external_ipa_preserves_syllable_symbols_and_boundaries() -> None:
 
 
 def test_parse_external_ipa_does_not_invent_syllables() -> None:
-    assert MODULE.parse_external_ipa("unparsed output") == []
+    assert parse_ipa_output("unparsed output") == ((), (), "unparsed output")
 
 
 def test_ipa_feature_inventory_counts_distinct_features() -> None:
@@ -37,3 +37,4 @@ def test_ipa_feature_inventory_counts_distinct_features() -> None:
 def test_segmental_projection_removes_only_notation_differences() -> None:
     assert MODULE.segmental_projection("t͡ɕʰaː˥˩") == "tɕʰaː"
     assert MODULE.segmental_projection("kʰaː8˧") == "kʰaː"
+\n\ndef test_parse_ipa_output_detects_fallback_passthrough():\n    groups, syllables, passthrough = parse_ipa_output("/kaː˧/ ฦ")\n    assert groups == ("kaː˧",)\n    assert syllables == ("kaː˧",)\n    assert passthrough == "ฦ"\n
