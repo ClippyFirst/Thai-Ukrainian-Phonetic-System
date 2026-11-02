@@ -207,9 +207,9 @@ class TextPipelineTests(unittest.TestCase):
         }
         for word, (ipa, tone) in expected.items():
             with self.subTest(word=word):
-                self.assertEqual(segment_thai_word(word), ((word,), "parser_lexical_reading"))
+                self.assertEqual(segment_thai_word(word), ((word,), "lexicon"))
                 token = analyze_text(word)[0]
-                self.assertEqual(token["segmentation_status"], "parser_lexical_reading")
+                self.assertEqual(token["segmentation_status"], "lexicon")
                 self.assertEqual(len(token["syllables"]), 1)
                 self.assertEqual(token["syllables"][0]["phonemic_ipa"], ipa)
                 self.assertEqual(token["syllables"][0]["tone"]["tone"], tone)
@@ -224,7 +224,7 @@ class TextPipelineTests(unittest.TestCase):
         self.assertEqual([item["tone"]["tone"] for item in token["syllables"]], ["mid", "rising"])
         self.assertTrue(all(item["ukrainian_transliteration"] for item in token["syllables"]))
 
-    def test_source_attested_thrit_syllable_resolves_only_exact_tฤษฎี_reading(self):
+    def test_source_attested_thrit_syllable_resolves_only_exact_word_reading(self):
         # en.wiktionary oldid 87195875 records ทฤษฎี = ทฺริด-สะ-ดี,
         # IPA /tʰrit̚˦˥.sa˨˩.diː˧/. The lexical respelling is exact, not a
         # productive rule for arbitrary ทร sequences.
