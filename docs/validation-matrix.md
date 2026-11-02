@@ -1413,3 +1413,17 @@ The fix is deliberately limited to the existing abstention guard; no schema, run
 - Artifact inspection found the local `src`-layout package was not installed in that optional workflow. Both ClippyFirst and the adapter-based FastThaiG2P candidate failed initialization with `ModuleNotFoundError: No module named 'thai_ukrainian'`. Only thaiphon and Goruut ran. This attempt is **INVALID_FOR_THE_REQUESTED_COMPARISON**, not a ClippyFirst/FastThaiG2P result.
 - Corrected the workflow to install the local project editable before running comparators. Also corrected ClippyFirst benchmark serialization to consume typed `PhoneticResult` and append its tone contour. The next exact-head optional workflow run and artifact inspection are required before reporting coverage/latency.
 - Accuracy remains NOT_MEASURED (0 adjudicated gold rows).
+
+### First valid FastThaiG2P same-input artifact — 2026-11-02
+
+Run [41431679913](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41431679913) completed successfully and uploaded artifact SHA-256 `ed6ed4a6e2eca2f87442d0c77062bfbe976a3d8bce763da0c6ffff4101e2dbd7` (210 raw rows, 42 inputs × 5 profiles; corpus SHA-256 `94d18b9f55c2be35d3d0b35811f53d306b9be6906ae4cc6ea2241d18ebadf6b8`).
+
+| Profile | Successful outputs | Abstentions / failures | Median / p95 ms |
+|---|---:|---:|---:|
+| ClippyFirst phonemic | 28/42 (66.7%) | 14 abstentions; 0 errors | 0.483 / 2.184 |
+| ClippyFirst broad-surface | 23/42 (54.8%) | 19 abstentions; 0 errors | 0.461 / 1.636 |
+| FastThaiG2P | 42/42 (100%) | 0 errors | 0.032 / 2.109 |
+| thaiphon 0.7.0 | 42/42 (100%) | 0 errors | 0.174 / 0.889 |
+| Goruut | 26/42 (61.9%) | 16 no-output failures | 0.496 / 0.690 |
+
+FastThaiG2P raw agreement: 12/28 (42.9%) with ClippyFirst phonemic, and 9/23 (39.1%) with ClippyFirst broad-surface. After slash and tone stripping (diagnostic only), agreement is 14/28 (50.0%) and 17/23 (73.9%) respectively. These are inter-engine agreement metrics, **not accuracy**. The challenge has zero adjudicated IPA gold rows; accuracy remains NOT_MEASURED. The invalid prompt `ข๊า` produced FastThaiG2P output `/kʰaː8˧/` while ClippyFirst abstained, demonstrating that 100% output coverage is not equivalent to validated output.
