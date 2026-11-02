@@ -115,14 +115,14 @@ class EvidenceRegistryTests(unittest.TestCase):
             path = Path(directory) / "assets.tsv"
             fields = [
                 "asset_id", "source_id", "dataset_revision", "asset_uri", "file_sha256",
-                "speaker_ref", "microphone", "overlap_status", "duration_seconds",
+                "speaker_ref", "microphone", "microphone_id", "overlap_status", "duration_seconds",
                 "verification_status", "verified_by", "verified_at", "notes",
             ]
             row = {
                 "asset_id": "LOTUS-TEST-001", "source_id": "CORP-LOTUSDIS",
                 "dataset_revision": "45145d7", "asset_uri": "https://example.org/audio.wav",
                 "file_sha256": "a" * 64, "speaker_ref": "speaker-01",
-                "microphone": "NEAR_FIELD", "overlap_status": "NONE",
+                "microphone": "NEAR_FIELD", "microphone_id": "con123", "overlap_status": "NONE",
                 "duration_seconds": "4.2", "verification_status": "VERIFIED",
                 "verified_by": "project-source-audit", "verified_at": "2026-11-01",
                 "notes": "Synthetic unit-test asset; no real recording.",
@@ -140,7 +140,7 @@ class EvidenceRegistryTests(unittest.TestCase):
             path = Path(directory) / "assets.tsv"
             write_registry(path, [
                 "asset_id", "source_id", "dataset_revision", "asset_uri", "file_sha256",
-                "speaker_ref", "microphone", "overlap_status", "duration_seconds",
+                "speaker_ref", "microphone", "microphone_id", "overlap_status", "duration_seconds",
                 "verification_status", "verified_by", "verified_at", "notes",
             ], [])
             sources = load_source_registry(ROOT / "data/benchmark/source-registry.tsv")
@@ -211,14 +211,14 @@ def test_audio_asset_revision_must_be_immutable_and_asset_uri_absolute():
         path = Path(directory) / "assets.tsv"
         fields = [
             "asset_id", "source_id", "dataset_revision", "asset_uri", "file_sha256",
-            "speaker_ref", "microphone", "overlap_status", "duration_seconds",
+            "speaker_ref", "microphone", "microphone_id", "overlap_status", "duration_seconds",
             "verification_status", "verified_by", "verified_at", "notes",
         ]
         base = {
             "asset_id": "LOTUS-TEST-002", "source_id": "CORP-LOTUSDIS",
             "dataset_revision": "main", "asset_uri": "https://example.org/audio.wav",
             "file_sha256": "b" * 64, "speaker_ref": "speaker-02",
-            "microphone": "NEAR_FIELD", "overlap_status": "NONE",
+            "microphone": "NEAR_FIELD", "microphone_id": "con123", "overlap_status": "NONE",
             "duration_seconds": "4.2", "verification_status": "VERIFIED",
             "verified_by": "project-source-audit", "verified_at": "2026-11-01",
             "notes": "Synthetic unit-test asset; no real recording.",

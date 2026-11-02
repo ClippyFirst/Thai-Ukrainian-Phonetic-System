@@ -23,7 +23,7 @@ FIELDS = [
     "tone_sequence", "vowel_length", "final_glottal", "transcription_level",
     "uncertainty", "abstention_reason", "reviewer_id", "reviewer_qualification_ref",
     "reviewed_at", "audio_source_id", "audio_asset_reference", "audio_time_start", "audio_time_end",
-    "source_notes",
+    "source_notes", "audio_interval_overlap_status",
 ]
 
 
@@ -306,7 +306,7 @@ class AdjudicationPacketTests(unittest.TestCase):
             "audio_source_id": "TEST-AUDIO",
             "audio_asset_reference": "recording-001",
             "audio_time_start": "1.20",
-            "audio_time_end": "1.85",
+            "audio_time_end": "1.85", "audio_interval_overlap_status": "NONE",
         })
         source_registry = {"TEST-AUDIO": {
             "source_url": "https://example.org/audio", "license": "CC0-1.0",
@@ -326,6 +326,17 @@ class AdjudicationPacketTests(unittest.TestCase):
                 }},
             )["records"], 1
         )
+        row["audio_interval_overlap_status"] = "PRESENT"
+        with self.assertRaisesRegex(ValueError, "annotated audio interval must be verified as non-overlapping"):
+            validate_review_packet(
+                [row], ["TH-G2P-001"], "TH-PH-01",
+                source_registry=source_registry,
+                audio_asset_registry={"recording-001": {
+                    "asset_id": "recording-001", "source_id": "TEST-AUDIO",
+                    "duration_seconds": "3.0", "verification_status": "VERIFIED",
+                    "overlap_status": "PRESENT",
+                }},
+            )
 
     def test_broad_surface_ipa_requires_registered_audio_and_surface_permission(self):
         row = completed_row("TH-G2P-001", "กา")
@@ -337,7 +348,7 @@ class AdjudicationPacketTests(unittest.TestCase):
             "audio_source_id": "TEST-AUDIO",
             "audio_asset_reference": "recording-001",
             "audio_time_start": "1.20",
-            "audio_time_end": "1.85",
+            "audio_time_end": "1.85", "audio_interval_overlap_status": "NONE",
         })
         source = {
             "source_url": "https://example.org/audio",
@@ -376,7 +387,7 @@ class AdjudicationPacketTests(unittest.TestCase):
             "audio_source_id": "TEST-AUDIO",
             "audio_asset_reference": "recording-001",
             "audio_time_start": "1.20",
-            "audio_time_end": "1.85",
+            "audio_time_end": "1.85", "audio_interval_overlap_status": "NONE",
         })
         source_registry = {"TEST-AUDIO": {
             "source_url": "https://example.org/audio", "license": "CC0-1.0",
@@ -400,7 +411,7 @@ class AdjudicationPacketTests(unittest.TestCase):
             "audio_source_id": "TEST-AUDIO",
             "audio_asset_reference": "not-in-manifest",
             "audio_time_start": "0.1",
-            "audio_time_end": "1.0",
+            "audio_time_end": "1.0", "audio_interval_overlap_status": "NONE",
         })
         source_registry = {"TEST-AUDIO": {
             "source_url": "https://example.org/audio", "license": "CC0-1.0",
@@ -427,7 +438,7 @@ class AdjudicationPacketTests(unittest.TestCase):
             "audio_source_id": "CORP-CCOST",
             "audio_asset_reference": "ccost_S01_WL_1.wav",
             "audio_time_start": "1.20",
-            "audio_time_end": "1.85",
+            "audio_time_end": "1.85", "audio_interval_overlap_status": "NONE",
         })
         source_registry = {"CORP-CCOST": {
             "source_url": "https://zenodo.org/records/17366698",

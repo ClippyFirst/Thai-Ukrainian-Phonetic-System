@@ -262,3 +262,8 @@ The official Zenodo preview was reconstructed byte-for-byte from its published t
 ## Surface-phonetic annotation requires audio provenance
 
 A reviewer may add `broad_surface_ipa` only when the row names a VERIFIED audio source, a VERIFIED asset from the audio manifest, and an exact in-bounds time interval. The source registry must separately authorize `BROAD_SURFACE_IPA_GOLD_INPUT` as well as `ACOUSTIC_PHONETICS_RESEARCH`. Text-only dictionaries and orthographic challenge prompts may support broad phonemic references, but cannot support surface phonetic labels. Narrow acoustic IPA has the same audio/asset/time requirement. A valid review packet is still not gold until the independent-review and adjudication requirements are satisfied.
+
+
+## Audio metadata granularity — 2026-11-02
+
+The audio manifest records both a normalized microphone category and the source's exact `microphone_id` (for LOTUSDIS, preserve the dataset `mic` value such as `con123`). Its `overlap_status` describes the registered asset as a whole and may be `NONE`, `PRESENT` or `UNKNOWN`. Each reviewed row separately records `audio_interval_overlap_status`; acoustic IPA evidence is accepted only when the exact annotated interval is verified as `NONE`. This permits a clean, time-bounded interval from a longer recording that contains overlap elsewhere, without treating the entire recording as overlap-free. The audio file still requires immutable revision, absolute URI, SHA-256, speaker pseudonym, duration and in-bounds interval. The interval-level status is an annotation claim to be independently checked, not an automatic property inferred from the source card.

@@ -13,7 +13,7 @@ SOURCE_FIELDS = ("source_id", "source_url", "license", "allowed_uses", "verifica
 REVIEWER_FIELDS = ("reviewer_id", "language", "roles", "qualification_ref", "verification_status", "verified_by", "verified_at", "scope", "notes")
 AUDIO_ASSET_FIELDS = (
     "asset_id", "source_id", "dataset_revision", "asset_uri", "file_sha256",
-    "speaker_ref", "microphone", "overlap_status", "duration_seconds",
+    "speaker_ref", "microphone", "microphone_id", "overlap_status", "duration_seconds",
     "verification_status", "verified_by", "verified_at", "notes",
 )
 AUDIO_MICROPHONES = {"NEAR_FIELD", "FAR_FIELD", "LAVALIER", "HEADSET", "OTHER", "UNKNOWN"}
@@ -93,7 +93,7 @@ def load_audio_asset_registry(
             raise ValueError(f"audio asset {ident!r} requires an absolute HTTP(S) asset_uri")
         required = (
             "source_id", "dataset_revision", "asset_uri", "file_sha256", "speaker_ref",
-            "microphone", "overlap_status", "duration_seconds", "notes",
+            "microphone", "microphone_id", "overlap_status", "duration_seconds", "notes",
         )
         missing = [field for field in required if not row[field]]
         if missing:
@@ -138,8 +138,6 @@ def validate_audio_asset_reference(
         raise ValueError(f"row {row_id!r} audio asset {asset_id!r} is blocked")
     if asset["source_id"] != source_id.strip():
         raise ValueError(f"row {row_id!r} audio asset source_id does not match audio_source_id")
-    if asset["overlap_status"] != "NONE":
-        raise ValueError(f"row {row_id!r} audio asset must be verified as non-overlapping")
     try:
         start_value, end_value = float(start), float(end)
         duration = float(asset["duration_seconds"])

@@ -17,7 +17,7 @@ PACKET_FIELDS = (
     "tone_sequence", "vowel_length", "final_glottal", "transcription_level",
     "uncertainty", "abstention_reason", "reviewer_id", "reviewer_qualification_ref",
     "reviewed_at", "audio_source_id", "audio_asset_reference", "audio_time_start", "audio_time_end",
-    "source_notes",
+    "source_notes", "audio_interval_overlap_status",
 )
 ANNOTATION_FIELDS = PACKET_FIELDS[2:]
 ORTHOGRAPHY_VALUES = {"VALID", "INVALID", "AMBIGUOUS", "UNKNOWN"}
@@ -265,7 +265,8 @@ def validate_review_packet(
             asset = (row.get("audio_asset_reference") or "").strip()
             start = (row.get("audio_time_start") or "").strip()
             end = (row.get("audio_time_end") or "").strip()
-            audio_fields = (audio_source_id, asset, start, end)
+            interval_overlap = (row.get("audio_interval_overlap_status") or "").strip()
+            audio_fields = (audio_source_id, asset, start, end, interval_overlap)
             surface_ipa = (row.get("broad_surface_ipa") or "").strip()
             if surface_ipa and not all(audio_fields):
                 raise ValueError(
@@ -276,6 +277,10 @@ def validate_review_packet(
                     raise ValueError(
                         f"audio source ID, asset reference and time interval must be supplied together: {ident}"
                     )
+                if interval_overlap not in {"NONE", "PRESENT", "UNKNOWN"}:
+                    raise ValueError(f"audio_interval_overlap_status must be NONE, PRESENT or UNKNOWN: {ident}")
+                if interval_overlap != "NONE":
+                    raise ValueError(f"annotated audio interval must be verified as non-overlapping: {ident}")
                 if source_registry is None:
                     raise ValueError(f"audio source registry is required when audio_source_id is supplied: {ident}")
                 audio_source = source_registry.get(audio_source_id)
