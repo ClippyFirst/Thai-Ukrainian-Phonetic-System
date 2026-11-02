@@ -77,3 +77,22 @@ FastThaiG2P's documented IPA convention includes unreleased final-stop diacritic
 - `clippyfirst_surface`: `broad_surface_ipa` + separate tone contour.
 
 FastThaiG2P remains its own upstream IPA convention; the broad-surface ClippyFirst profile is the closer representational comparison, not proof of identical phonetic scope. Both profiles preserve the typed adapter boundary and abstain when their selected IPA layer or tone is unavailable. The next optional workflow artifact will report both profiles side by side.
+
+## First valid same-input run — 2026-11-02
+
+- Optional workflow run: [41431679913](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41431679913), completed successfully.
+- Artifact: `thai-external-g2p-smoke`, SHA-256 `ed6ed4a6e2eca2f87442d0c77062bfbe976a3d8bce763da0c6ffff4101e2dbd7`; 210 raw rows = 42 inputs × 5 candidate profiles.
+- Frozen corpus SHA-256: `94d18b9f55c2be35d3d0b35811f53d306b9be6906ae4cc6ea2241d18ebadf6b8`; Python 3.12.15; Linux x86_64; checked-out PR merge commit `8276747a90cd3863dec6a44933efe5641025e28e` (workflow head branch commit `7900a7cc2e38bc69763f38273c97f73c6ebee2be)).
+- Coverage and latency (single diagnostic run; median/p95 ms):
+  - ClippyFirst phonemic: 28/42 (66.7%), 14 explicit abstentions, 0 runtime errors; 0.483 / 2.184.
+  - ClippyFirst broad-surface: 23/42 (54.8%), 19 explicit abstentions, 0 runtime errors; 0.461 / 1.636.
+  - FastThaiG2P: 42/42 (100%), 0 runtime errors; 0.032 / 2.109.
+  - thaiphon 0.7.0: 42/42 (100%), 0 runtime errors; 0.174 / 0.889.
+  - Goruut: 26/42 (61.9%), 16 per-input no-output failures; 0.496 / 0.690.
+- Pairwise agreement with FastThaiG2P:
+  - ClippyFirst phonemic: 12/28 raw exact (42.9%); 14/28 after slash and tone stripping (50.0%, diagnostic only).
+  - ClippyFirst broad-surface: 9/23 raw exact (39.1%); 17/23 after slash and tone stripping (73.9%, diagnostic only). This higher tone-stripped agreement indicates that tone differences account for a material share of disagreements; it is not an accuracy score.
+- Illustrative rows: `กา` and `กรรม` match exactly in ClippyFirst phonemic and FastThaiG2P (`/kaː˧/`, `/kam˧/`). For `บรรจุ`, ClippyFirst emits `/ban˧.tɕu˩/` while FastThaiG2P emits `/ban˧.t͡ɕuʔ˨˩/`; the latter matches the existing source-attested Wiktionary-derived IPA record more closely, but that record is not independent expert gold. For invalid challenge input `ข๊า`, FastThaiG2P returns `/kʰaː8˧/` (contains literal `8`), while conservative ClippyFirst abstains. Coverage therefore does not imply validity or correctness.
+- Gold: **0 independently adjudicated rows**. Accuracy status: `NOT_MEASURED`. No engine is ranked for pronunciation accuracy.
+
+This is an engineering comparison only. Latency is from one 42-item run and is not a stable performance benchmark; the challenge is intentionally adversarial and not a representative usage distribution. The new dual-profile runner's exact-head CI and fresh optional workflow run are still required after the latest branch updates.
