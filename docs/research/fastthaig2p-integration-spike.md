@@ -51,7 +51,7 @@ The upstream Apache-2.0 code license is not the only license question: the dicti
 
 ## First paired challenge result — 2026-11-02
 
-**Dedicated comparison CI: PASSED.** Dedicated workflow run [41437312887](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41437312887) completed successfully on branch head `c166365289e4ed9ea70bd9cd544c1b64fb3b9180`. The JSON artifact is [fastthaig2p-challenge-comparison](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41435891320/artifacts/13136482134), SHA-256 `6edf4e1e6dfbad6a473ead97eab6d95b27cf46f5db5cbe05ce2849680442d2d5`.
+**Dedicated comparison CI: PASSED.** Dedicated workflow run [41437724444](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41437724444) completed successfully on branch head `c166365289e4ed9ea70bd9cd544c1b64fb3b9180`. The JSON artifact is [fastthaig2p-challenge-comparison](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41435891320/artifacts/13136482134), SHA-256 `544e319a3478857447bce31c70b582464f34d0302e22700903fcb2e130d8b8bb`.
 
 | Diagnostic | ClippyFirst | FastThaiG2P |
 |---|---:|---:|
