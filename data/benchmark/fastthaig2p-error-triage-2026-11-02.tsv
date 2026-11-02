@@ -1,43 +1,43 @@
-challenge_id	thai_fragment	stratum	baseline_clippyfirst_status	clippyfirst_phonemic_ipa	fastthaig2p_ipa	coordination_cluster	disposition
-TH-G2P-001	กา	core-vowel-length	complete	kaː	kaː˧	NO_SEGMENTAL_DIFFERENCE_AFTER_LAYER_NORMALIZATION	Agreement is diagnostic only; not gold
-TH-G2P-002	กะ	core-vowel-length	complete	ka	kaʔ˨˩	SHORT_OPEN_GLOTTALIZATION	Needs independent convention/adjudication; do not auto-add glottal stop
-TH-G2P-003	ไกล	core-tone	complete	klaj	klaj˧	NO_SEGMENTAL_DIFFERENCE_AFTER_LAYER_NORMALIZATION	Agreement is diagnostic only; not gold
-TH-G2P-004	ใกล้	core-tone	complete	klaj	klaj˥˩	NO_SEGMENTAL_DIFFERENCE_AFTER_LAYER_NORMALIZATION	Agreement is diagnostic only; not gold
-TH-G2P-005	ไก่	core-tone	complete	kaj	kaj˨˩	NO_SEGMENTAL_DIFFERENCE_AFTER_LAYER_NORMALIZATION	Agreement is diagnostic only; not gold
-TH-G2P-006	จริง	false-cluster	complete	tɕiŋ	t͡ɕiŋ˧	NO_SEGMENTAL_DIFFERENCE_AFTER_LAYER_NORMALIZATION	Agreement is diagnostic only; not gold
-TH-G2P-007	สร้าง	false-cluster	complete	saːŋ	saːŋ˥˩	NO_SEGMENTAL_DIFFERENCE_AFTER_LAYER_NORMALIZATION	Agreement is diagnostic only; not gold
-TH-G2P-008	เศร้า	false-cluster	complete	saw	saw˥˩	NO_SEGMENTAL_DIFFERENCE_AFTER_LAYER_NORMALIZATION	Agreement is diagnostic only; not gold
-TH-G2P-009	จันทร์	silent-writing	complete	tɕan	t͡ɕan˧	NO_SEGMENTAL_DIFFERENCE_AFTER_LAYER_NORMALIZATION	Agreement is diagnostic only; not gold
-TH-G2P-010	ศุกร์	silent-writing	complete	suk	suk̚˨˩	UNRELEASED_CODA_MODIFIER_LAYER	Phonemic vs surface modifier only; normalize for segmental comparison, preserve raw
-TH-G2P-011	เสาร์	silent-writing	complete	saw	saw˩˩˦	NO_SEGMENTAL_DIFFERENCE_AFTER_LAYER_NORMALIZATION	Agreement is diagnostic only; not gold
-TH-G2P-012	สัตว์	silent-writing	complete	sat	sat̚˨˩	UNRELEASED_CODA_MODIFIER_LAYER	Phonemic vs surface modifier only; normalize for segmental comparison, preserve raw
-TH-G2P-013	ฟิล์ม	loanword	complete	fim	fim˧	NO_SEGMENTAL_DIFFERENCE_AFTER_LAYER_NORMALIZATION	Agreement is diagnostic only; not gold
-TH-G2P-014	ฤทธิ์	ฤ-series	complete	rit	rit̚˦˥	UNRELEASED_CODA_MODIFIER_LAYER	Phonemic vs surface modifier only; normalize for segmental comparison, preserve raw
-TH-G2P-015	ทฤษฎี	lexical-segmentation	partial_or_abstained	sa.diː	tʰrit̚˦˥.sa˨˩.diː˧	LEXICAL_COVERAGE_FIX_IN_BRANCH	Implemented on fix branch; exact-head CI pending
-TH-G2P-016	คอมพิวเตอร์	lexical-segmentation	complete	kʰɔːm.pʰiw.tɤː	kʰɔm˧.pʰiw˧.tɤː˥˩	VOWEL_LENGTH	Needs independent lexical/acoustic adjudication
-TH-G2P-017	โทรศัพท์	lexical-segmentation	complete	tʰoː.ra.sap	tʰoː˧.ra˦˥.sap̚˨˩	UNRELEASED_CODA_MODIFIER_LAYER	Phonemic vs surface modifier only; normalize for segmental comparison, preserve raw
-TH-G2P-018	ฤๅษี	ฤ-series	partial_or_abstained		rɯː˧.siː˩˩˦	LEXICAL_COVERAGE_FIX_IN_BRANCH	Implemented on fix branch; exact-head CI pending
-TH-G2P-019	เงิน	vowel-length	complete	ŋɤn	ŋɤn˧	NO_SEGMENTAL_DIFFERENCE_AFTER_LAYER_NORMALIZATION	Agreement is diagnostic only; not gold
-TH-G2P-020	เดิน	vowel-length	complete	dɤːn	dɤːn˧	NO_SEGMENTAL_DIFFERENCE_AFTER_LAYER_NORMALIZATION	Agreement is diagnostic only; not gold
-TH-G2P-021	เตอร์	loanword	partial_or_abstained		tɤː˥˩	LEXICAL_COVERAGE_FIX_IN_BRANCH	Implemented on fix branch; exact-head CI pending
-TH-G2P-022	เทอร์	loanword	partial_or_abstained		tʰɤː˧	LEXICAL_COVERAGE_FIX_IN_BRANCH	Implemented on fix branch; exact-head CI pending
-TH-G2P-023	ยนต์	silent-writing	complete	jon	jon˧	NO_SEGMENTAL_DIFFERENCE_AFTER_LAYER_NORMALIZATION	Agreement is diagnostic only; not gold
-TH-G2P-024	ไซต์	loanword	complete	saj	saj˧	NO_SEGMENTAL_DIFFERENCE_AFTER_LAYER_NORMALIZATION	Agreement is diagnostic only; not gold
-TH-G2P-025	กอล์ฟ	loanword	complete	kɔːp	kɔːp̚˦˥	UNRELEASED_CODA_MODIFIER_LAYER	Phonemic vs surface modifier only; normalize for segmental comparison, preserve raw
-TH-G2P-026	ครอบครัว	lexical-segmentation	complete	kʰrɔːp.kʰruaːw	kʰrɔːp̚˥˩.kʰrua̯˧	DIPHTHONG_REALIZATION	Needs independent phonetic-layer adjudication
-TH-G2P-027	รถบัส	lexical-segmentation	complete	rot.bat	rot̚˦˥.bat̚˦˥	UNRELEASED_CODA_MODIFIER_LAYER	Phonemic vs surface modifier only; normalize for segmental comparison, preserve raw
-TH-G2P-028	กรรม	รร-series	complete	kam	kam˧	NO_SEGMENTAL_DIFFERENCE_AFTER_LAYER_NORMALIZATION	Agreement is diagnostic only; not gold
-TH-G2P-029	บรรจุ	รร-series	complete	ban.tɕu	ban˧.t͡ɕuʔ˨˩	SHORT_OPEN_GLOTTALIZATION	Needs independent convention/adjudication; do not auto-add glottal stop
-TH-G2P-030	ฤๅ	ฤ-series	partial_or_abstained		rɯː˧	SPECIAL_VOWEL_NEEDS_WORD_LEVEL_EVIDENCE	Keep fail-closed; seek lexical/source adjudication
-TH-G2P-031	ฦ	ฦ-series	partial_or_abstained		lɔː˧	SPECIAL_VOWEL_NEEDS_WORD_LEVEL_EVIDENCE	Keep fail-closed; seek lexical/source adjudication
-TH-G2P-032	ฦๅ	ฦ-series	partial_or_abstained		lɯː˧	SPECIAL_VOWEL_NEEDS_WORD_LEVEL_EVIDENCE	Keep fail-closed; seek lexical/source adjudication
-TH-G2P-033	ทราบ	ทร-series	complete	saːp	saːp̚˥˩	UNRELEASED_CODA_MODIFIER_LAYER	Phonemic vs surface modifier only; normalize for segmental comparison, preserve raw
-TH-G2P-034	ทราย	ทร-series	partial_or_abstained		saːj˧	THR_SENSE_AMBIGUITY	Keep isolated form unresolved; require semantic context
-TH-G2P-035	ข๊า	invalid-input	partial_or_abstained		kʰaː8˧	EXPECTED_INVALID_INPUT_ABSTENTION	Correct fail-closed behavior; not a pronunciation error
-TH-G2P-036	กฉ	invalid-input	partial_or_abstained		kɔː˧.t͡ɕʰɔː˩˩˦	EXPECTED_INVALID_INPUT_ABSTENTION	Correct fail-closed behavior; not a pronunciation error
-TH-G2P-037	ยูเครน	article-style-proper-name	complete	juː.kʰreːn	juː˧.kʰreːn˧	NO_SEGMENTAL_DIFFERENCE_AFTER_LAYER_NORMALIZATION	Agreement is diagnostic only; not gold
-TH-G2P-038	ประเทศยูเครน	article-style-compound	partial_or_abstained		pra˨˩.tʰeːt̚˥˩.juː˧.kʰreːn˧	CONTINUOUS_TEXT_WORD_BOUNDARY	Compare opt-in dictionary-word-segmented path separately
-TH-G2P-039	ยูเครนเป็นประเทศหนึ่ง	article-style-continuous-text	partial_or_abstained		juː˧.kʰreːn˧.pen˧.pra˨˩.tʰeːt̚˥˩.nɯŋ˨˩	CONTINUOUS_TEXT_WORD_BOUNDARY	Compare opt-in dictionary-word-segmented path separately
-TH-G2P-040	เป็นประเทศหนึ่ง	article-style-phrase	partial_or_abstained		pen˧.pra˨˩.tʰeːt̚˥˩.nɯŋ˨˩	CONTINUOUS_TEXT_WORD_BOUNDARY	Compare opt-in dictionary-word-segmented path separately
-TH-G2P-041	ยุโรปตะวันออก	article-style-place-name	complete	ju.roːp.ta.wan.ʔɔːk	ju˦˥.roːp̚˨˩.ta˨˩.wan˧.ʔɔːk̚˨˩	UNRELEASED_CODA_MODIFIER_LAYER	Phonemic vs surface modifier only; normalize for segmental comparison, preserve raw
-TH-G2P-042	ประเทศในยุโรปตะวันออก	article-style-continuous-text	partial_or_abstained		pra˨˩.tʰeːt̚˥˩.naj˧.ju˦˥.roːp̚˨˩.ta˨˩.wan˧.ʔɔːk̚˨˩	CONTINUOUS_TEXT_WORD_BOUNDARY	Compare opt-in dictionary-word-segmented path separately
+challenge_id	thai_fragment	stratum	baseline_clippyfirst_status	clippyfirst_phonemic_ipa	fastthaig2p_ipa	coordination_cluster	disposition	secondary_cluster
+TH-G2P-001	กา	core-vowel-length	complete	kaː	kaː˧	NO_SEGMENTAL_DIFFERENCE_AFTER_LAYER_NORMALIZATION	Agreement is diagnostic only; not gold	
+TH-G2P-002	กะ	core-vowel-length	complete	ka	kaʔ˨˩	SHORT_OPEN_GLOTTALIZATION	Needs independent convention/adjudication; do not auto-add glottal stop	
+TH-G2P-003	ไกล	core-tone	complete	klaj	klaj˧	NO_SEGMENTAL_DIFFERENCE_AFTER_LAYER_NORMALIZATION	Agreement is diagnostic only; not gold	
+TH-G2P-004	ใกล้	core-tone	complete	klaj	klaj˥˩	NO_SEGMENTAL_DIFFERENCE_AFTER_LAYER_NORMALIZATION	Agreement is diagnostic only; not gold	
+TH-G2P-005	ไก่	core-tone	complete	kaj	kaj˨˩	NO_SEGMENTAL_DIFFERENCE_AFTER_LAYER_NORMALIZATION	Agreement is diagnostic only; not gold	
+TH-G2P-006	จริง	false-cluster	complete	tɕiŋ	t͡ɕiŋ˧	NO_SEGMENTAL_DIFFERENCE_AFTER_LAYER_NORMALIZATION	Agreement is diagnostic only; not gold	
+TH-G2P-007	สร้าง	false-cluster	complete	saːŋ	saːŋ˥˩	NO_SEGMENTAL_DIFFERENCE_AFTER_LAYER_NORMALIZATION	Agreement is diagnostic only; not gold	
+TH-G2P-008	เศร้า	false-cluster	complete	saw	saw˥˩	NO_SEGMENTAL_DIFFERENCE_AFTER_LAYER_NORMALIZATION	Agreement is diagnostic only; not gold	
+TH-G2P-009	จันทร์	silent-writing	complete	tɕan	t͡ɕan˧	NO_SEGMENTAL_DIFFERENCE_AFTER_LAYER_NORMALIZATION	Agreement is diagnostic only; not gold	
+TH-G2P-010	ศุกร์	silent-writing	complete	suk	suk̚˨˩	UNRELEASED_CODA_MODIFIER_LAYER	Phonemic vs surface modifier only; normalize for segmental comparison, preserve raw	
+TH-G2P-011	เสาร์	silent-writing	complete	saw	saw˩˩˦	NO_SEGMENTAL_DIFFERENCE_AFTER_LAYER_NORMALIZATION	Agreement is diagnostic only; not gold	
+TH-G2P-012	สัตว์	silent-writing	complete	sat	sat̚˨˩	UNRELEASED_CODA_MODIFIER_LAYER	Phonemic vs surface modifier only; normalize for segmental comparison, preserve raw	
+TH-G2P-013	ฟิล์ม	loanword	complete	fim	fim˧	NO_SEGMENTAL_DIFFERENCE_AFTER_LAYER_NORMALIZATION	Agreement is diagnostic only; not gold	
+TH-G2P-014	ฤทธิ์	ฤ-series	complete	rit	rit̚˦˥	UNRELEASED_CODA_MODIFIER_LAYER	Phonemic vs surface modifier only; normalize for segmental comparison, preserve raw	
+TH-G2P-015	ทฤษฎี	lexical-segmentation	partial_or_abstained	sa.diː	tʰrit̚˦˥.sa˨˩.diː˧	LEXICAL_COVERAGE_FIX_IN_BRANCH	Implemented on fix branch; exact-head CI pending	
+TH-G2P-016	คอมพิวเตอร์	lexical-segmentation	complete	kʰɔːm.pʰiw.tɤː	kʰɔm˧.pʰiw˧.tɤː˥˩	VOWEL_LENGTH	Needs independent lexical/acoustic adjudication	
+TH-G2P-017	โทรศัพท์	lexical-segmentation	complete	tʰoː.ra.sap	tʰoː˧.ra˦˥.sap̚˨˩	UNRELEASED_CODA_MODIFIER_LAYER	Phonemic vs surface modifier only; normalize for segmental comparison, preserve raw	
+TH-G2P-018	ฤๅษี	ฤ-series	partial_or_abstained		rɯː˧.siː˩˩˦	LEXICAL_COVERAGE_FIX_IN_BRANCH	Implemented on fix branch; exact-head CI pending	
+TH-G2P-019	เงิน	vowel-length	complete	ŋɤn	ŋɤn˧	NO_SEGMENTAL_DIFFERENCE_AFTER_LAYER_NORMALIZATION	Agreement is diagnostic only; not gold	
+TH-G2P-020	เดิน	vowel-length	complete	dɤːn	dɤːn˧	NO_SEGMENTAL_DIFFERENCE_AFTER_LAYER_NORMALIZATION	Agreement is diagnostic only; not gold	
+TH-G2P-021	เตอร์	loanword	partial_or_abstained		tɤː˥˩	LEXICAL_COVERAGE_FIX_IN_BRANCH	Implemented on fix branch; exact-head CI pending	
+TH-G2P-022	เทอร์	loanword	partial_or_abstained		tʰɤː˧	LEXICAL_COVERAGE_FIX_IN_BRANCH	Implemented on fix branch; exact-head CI pending	
+TH-G2P-023	ยนต์	silent-writing	complete	jon	jon˧	NO_SEGMENTAL_DIFFERENCE_AFTER_LAYER_NORMALIZATION	Agreement is diagnostic only; not gold	
+TH-G2P-024	ไซต์	loanword	complete	saj	saj˧	NO_SEGMENTAL_DIFFERENCE_AFTER_LAYER_NORMALIZATION	Agreement is diagnostic only; not gold	
+TH-G2P-025	กอล์ฟ	loanword	complete	kɔːp	kɔːp̚˦˥	UNRELEASED_CODA_MODIFIER_LAYER	Phonemic vs surface modifier only; normalize for segmental comparison, preserve raw	
+TH-G2P-026	ครอบครัว	lexical-segmentation	complete	kʰrɔːp.kʰruaːw	kʰrɔːp̚˥˩.kʰrua̯˧	DIPHTHONG_REALIZATION	Needs independent phonetic-layer adjudication	UNRELEASED_CODA_MODIFIER_LAYER
+TH-G2P-027	รถบัส	lexical-segmentation	complete	rot.bat	rot̚˦˥.bat̚˦˥	UNRELEASED_CODA_MODIFIER_LAYER	Phonemic vs surface modifier only; normalize for segmental comparison, preserve raw	
+TH-G2P-028	กรรม	รร-series	complete	kam	kam˧	NO_SEGMENTAL_DIFFERENCE_AFTER_LAYER_NORMALIZATION	Agreement is diagnostic only; not gold	
+TH-G2P-029	บรรจุ	รร-series	complete	ban.tɕu	ban˧.t͡ɕuʔ˨˩	SHORT_OPEN_GLOTTALIZATION	Needs independent convention/adjudication; do not auto-add glottal stop	
+TH-G2P-030	ฤๅ	ฤ-series	partial_or_abstained		rɯː˧	SPECIAL_VOWEL_NEEDS_WORD_LEVEL_EVIDENCE	Keep fail-closed; seek lexical/source adjudication	
+TH-G2P-031	ฦ	ฦ-series	partial_or_abstained		lɔː˧	SPECIAL_VOWEL_NEEDS_WORD_LEVEL_EVIDENCE	Keep fail-closed; seek lexical/source adjudication	
+TH-G2P-032	ฦๅ	ฦ-series	partial_or_abstained		lɯː˧	SPECIAL_VOWEL_NEEDS_WORD_LEVEL_EVIDENCE	Keep fail-closed; seek lexical/source adjudication	
+TH-G2P-033	ทราบ	ทร-series	complete	saːp	saːp̚˥˩	UNRELEASED_CODA_MODIFIER_LAYER	Phonemic vs surface modifier only; normalize for segmental comparison, preserve raw	
+TH-G2P-034	ทราย	ทร-series	partial_or_abstained		saːj˧	THR_SENSE_AMBIGUITY	Keep isolated form unresolved; require semantic context	
+TH-G2P-035	ข๊า	invalid-input	partial_or_abstained		kʰaː8˧	EXPECTED_INVALID_INPUT_ABSTENTION	Correct fail-closed behavior; not a pronunciation error	
+TH-G2P-036	กฉ	invalid-input	partial_or_abstained		kɔː˧.t͡ɕʰɔː˩˩˦	EXPECTED_INVALID_INPUT_ABSTENTION	Correct fail-closed behavior; not a pronunciation error	
+TH-G2P-037	ยูเครน	article-style-proper-name	complete	juː.kʰreːn	juː˧.kʰreːn˧	NO_SEGMENTAL_DIFFERENCE_AFTER_LAYER_NORMALIZATION	Agreement is diagnostic only; not gold	
+TH-G2P-038	ประเทศยูเครน	article-style-compound	partial_or_abstained		pra˨˩.tʰeːt̚˥˩.juː˧.kʰreːn˧	CONTINUOUS_TEXT_WORD_BOUNDARY	Compare opt-in dictionary-word-segmented path separately	
+TH-G2P-039	ยูเครนเป็นประเทศหนึ่ง	article-style-continuous-text	partial_or_abstained		juː˧.kʰreːn˧.pen˧.pra˨˩.tʰeːt̚˥˩.nɯŋ˨˩	CONTINUOUS_TEXT_WORD_BOUNDARY	Compare opt-in dictionary-word-segmented path separately	
+TH-G2P-040	เป็นประเทศหนึ่ง	article-style-phrase	partial_or_abstained		pen˧.pra˨˩.tʰeːt̚˥˩.nɯŋ˨˩	CONTINUOUS_TEXT_WORD_BOUNDARY	Compare opt-in dictionary-word-segmented path separately	
+TH-G2P-041	ยุโรปตะวันออก	article-style-place-name	complete	ju.roːp.ta.wan.ʔɔːk	ju˦˥.roːp̚˨˩.ta˨˩.wan˧.ʔɔːk̚˨˩	UNRELEASED_CODA_MODIFIER_LAYER	Phonemic vs surface modifier only; normalize for segmental comparison, preserve raw	
+TH-G2P-042	ประเทศในยุโรปตะวันออก	article-style-continuous-text	partial_or_abstained		pra˨˩.tʰeːt̚˥˩.naj˧.ju˦˥.roːp̚˨˩.ta˨˩.wan˧.ʔɔːk̚˨˩	CONTINUOUS_TEXT_WORD_BOUNDARY	Compare opt-in dictionary-word-segmented path separately	
