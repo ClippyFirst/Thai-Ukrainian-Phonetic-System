@@ -100,8 +100,8 @@ class CorpusSourceRegistryTests(unittest.TestCase):
         for evidence in (
             "11.77 hours", "50 speakers", "6,000 utterances",
             "custom HTK aligner", "Mary R. Haas dictionary",
-            "not independently adjudicated", "commercial product release",
-            "not IPA gold", "No data or labels downloaded/bundled",
+            "not independently adjudicated", "commercial product release", "signed copy",
+            "disclaims warranties", "not IPA gold", "No data or labels downloaded/bundled",
         ):
             self.assertIn(evidence, row["notes"])
 
