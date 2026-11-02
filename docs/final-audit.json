@@ -2904,5 +2904,62 @@
     "linguistic_accuracy": "NOT_MEASURED",
     "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY"
   },
-  "latest_full_repository_head_pages_run": "41420468875"
+  "latest_full_repository_head_pages_run": "41420468875",
+  "fastthaig2p_spike": {
+    "status": "PARTIAL_PR_OPEN; COMPARISON_DIAGNOSTIC_VERIFIED_ON_PREVIOUS_CODE_HEAD; OPTIONAL_EXTRA_EXACT_HEAD_CI_PENDING",
+    "branch": "research/fastthaig2p-integration-spike-20261102",
+    "pull_request": 185,
+    "upstream_commit": "4e82a291b4cf2876326744c6580121e9986ad354",
+    "python_optional_extra": {
+      "pythainlp": "5.4.0",
+      "fastthaig2p": "pinned Git commit"
+    },
+    "previous_verified_code_head": "e924063176d2d7402d98555642e86c0ce4f72077",
+    "comparison_workflow_run": 41438311972,
+    "comparison_artifact_id": 13138026677,
+    "comparison_artifact_archive_sha256": "6ce3489280b56ad00a4e960a6e4ef66526ec110e5e5c88a797f907c879cf139c",
+    "full_ci_run": 41438312216,
+    "challenge": {
+      "inputs": 42,
+      "independently_adjudicated_ipa_gold": 0
+    },
+    "metrics": {
+      "clippyfirst_complete_ipa": 28,
+      "fastthaig2p_complete_ipa": 42,
+      "fastthaig2p_dictionary_tokens": 45,
+      "fastthaig2p_oov_rule_fallback_tokens": 5,
+      "comparable_records": 28,
+      "syllable_pairs": 40,
+      "raw_exact_ipa_matches": 0,
+      "segmental_projection_matches": 25,
+      "segmental_projection_agreement": 0.625,
+      "median_ms": {
+        "clippyfirst": 0.3902375,
+        "fastthaig2p": 0.0735315
+      },
+      "p95_ms": {
+        "clippyfirst": 1.894123,
+        "fastthaig2p": 1.75382
+      }
+    },
+    "accuracy": "NOT_MEASURED",
+    "production_enabled": false,
+    "typed_ipa_conversion": "NOT_IMPLEMENTED",
+    "ukrainian_adapter_routing": false,
+    "license_boundaries": {
+      "fastthaig2g_code": "Apache-2.0",
+      "pythainlp_software": "Apache-2.0",
+      "vendored_tltk_source_file": "BSD-3-Clause",
+      "clippyfirst_code": "MIT",
+      "existing_wiktionary_derived_ipa": "CC BY-SA 4.0",
+      "upstream_dictionary_and_fallback_data": "ROW_FILE_LEVEL_PROVENANCE_UNRESOLVED; NOT_COPIED"
+    },
+    "acceptance_blockers": [
+      "Run full CI and dedicated comparator on latest optional-extra branch head",
+      "Obtain independently adjudicated Thai IPA, tone, vowel-length and boundary gold",
+      "Implement and test feature-preserving Chao-tone-to-typed-PhoneticResult conversion before Ukrainian adapter routing",
+      "Resolve upstream dictionary and fallback data provenance and redistribution terms before copying or bundling"
+    ],
+    "competing_pr_184": "OPEN_UNMERGED; distinct broader multi-engine runner and alternate adapter; left untouched to avoid blind merge/duplicate adapter"
+  }
 }
