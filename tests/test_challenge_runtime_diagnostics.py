@@ -44,6 +44,8 @@ class ChallengeRuntimeDiagnosticsTests(unittest.TestCase):
             "UNRESOLVED_SEGMENTATION_OR_PHONOLOGY_REVIEW",
         )
         self.assertIn("word_segmented_output_emitted", records["unknown"])
+        self.assertIn("word_segmented_token_details", records["unknown"])
+        self.assertIsInstance(records["unknown"]["word_segmented_token_details"], list)
         self.assertIn("coordination_cluster_counts", report["summary"])
         self.assertEqual(
             records["special-vowel"]["coordination_cluster"],
