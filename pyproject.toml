@@ -12,6 +12,7 @@ license = {text = "MIT"}
 [project.optional-dependencies]
 excel = ["openpyxl>=3.1.5"]
 dev = ["ruff==0.17.3", "pytest==9.2.0"]
+fastthaig2p = ["fastthaig2p @ git+https://github.com/awslabs/FastThaiG2P.git@c4759eef7df03e11fcbb9aa83efe8cf21709fd2f ; python_version >= '3.11'"]
 
 [project.scripts]
 thai-ua = "thai_ukrainian.cli:main"
