@@ -11,6 +11,11 @@
 - **Readiness:** engineering-verified research prototype; not release-ready for linguistic-accuracy or WCAG-conformance claims.
 
 
+
+## Documentation-head verification status — 2026-11-02
+
+The benchmark runtime/code evidence above is verified on `55f2ef9966da065326873014e8066acc43b2a151` (CI #41471961004 and Web Static #41471960975). The latest audit/matrix/handoff-only documentation refresh is at `e92c19ec7f54e65515af9cd981cbf4321284817f`; its exact-head CI and Web Static runs must complete before this refreshed documentation snapshot is considered verified. No runtime code changed after the verified code head.
+
 ## 2026-11-01 — independent adjudication readiness and CCOST source reconciliation
 
 - **DONE_VERIFIED — paper-level CCOST schema extraction:** the LREC 2026 paper specifies intended TextGrid tiers ORT/KAN/KAS/MAU/MAS/TRN, X-SAMPA labels and tone suffixes _1=Mid, _2=Low, _3=Falling, _4=High, _5=Rising. MAU carries realized phonetic segments; MAS carries phonemic syllables; KAN/KAS are canonical forms.
