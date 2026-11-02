@@ -2179,3 +2179,23 @@ This note supersedes the preceding documentation-only status. The branch now cha
 6. Full runtime call graph remains outside the static audit's claim; expand only if a concrete uncovered dynamic path warrants it.
 
 **Environment/evidence limits:** direct clone failed because DNS resolution for github.com was unavailable. Local pytest/npm were not run; exact GitHub Actions results above are authoritative. No reviewer outreach was sent, no audio asset was fabricated, and no accuracy result is claimed. Readiness remains an engineering-verified research prototype, not a linguistic-accuracy release.
+
+
+## Post-merge handoff — 2026-11-02
+
+### Final implementation and publication
+- PR #182 was squash-merged to main as `65584d9a3d3d64a8e520dbd32411bef4b0a3dd9e`.
+- Main CI run [41420468842](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41420468842): all three jobs passed. Web Static [41420468939](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41420468939): passed. GitHub Pages [41420468875](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41420468875): build, deployment and published-content verification passed.
+- Live site: [https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/](https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/). The published version includes the current browser engine, six source-attested lexical IPA overrides, shared typed IPA → Ukrainian adapter, source/license disclosures, system page updates and adversarial browser tests.
+- Exact code-head verification before merge: 319 Python tests, 1,169 subtests, Ruff, wheel-install smoke, master-artifact verification, generated-data drift, source and blind-packet validation, browser parity, static accessibility contracts and runtime diagnostics all passed. Mainline CI repeated these checks after merge.
+- Static repository audit: 99 Python modules, 157 Python import edges, 9 browser modules, 7 browser test files, 391 browser assertion calls, 22 browser import edges, 3 HTML asset edges, 44 workflow script references, 319 test functions, zero exact duplicate names/bodies, two near-name candidates, five intentional dynamic-import sites and zero parse errors.
+- Source-annotated segmentation diagnostics: dictionary boundary F1 0.8395 on Wisesight (993 rows) and 0.8283 on VISTEC (50,000 rows); TUD research segmenter 0.7486 and 0.7530. These are not expert gold; TUD is not production default. The 66-row manual review sample remains unadjudicated.
+- Source-attested IPA diagnostic has 7 rows (5 circular, 2 non-circular comparisons); it is not an accuracy score. The six runtime overrides are dictionary evidence, not independent expert/acoustic gold.
+
+### Current state and blockers
+- Current branch inventory: 16 refs. PR #182 merged; PR #181 closed unmerged and its adversarial changes were reused in #182. No historical branches were deleted. The post-merge documentation branch is `docs/post-merge-site-release-closeout-20261102`.
+- Reviewer registry and audio asset registry remain empty. Independent Thai and Ukrainian review is still blocked on qualified reviewers. CCOST A–D requires curator clarification before archive-derived labels can be trusted. LOTUSDIS still needs a full immutable source revision and actual hashed audio assets/clean intervals. Hands-on WCAG testing remains unperformed.
+- Local clone was unavailable because the execution container could not resolve github.com; local pytest/npm were not run. GitHub Actions is the authoritative test evidence for this session.
+- No release tag or package version was created. Linguistic accuracy remains `NOT_MEASURED`; the deployed site is an engineering-verified research prototype, not a linguistic-accuracy or WCAG-conformance release.
+
+**Next genuine work:** secure independent Thai and Ukrainian reviewers, resolve CCOST curator discrepancy, obtain immutable LOTUSDIS audio evidence, and complete hands-on accessibility testing. Do not invent gold labels, audio assets or accuracy scores to close these gates.

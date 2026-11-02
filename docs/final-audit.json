@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Main remains cc398254c178171f74397aed556766e87356ab84. PR #182 code checkpoint c68580a490f89af1cf08224d5811429e74f8ef5b passed all three exact-head CI jobs (319 Python tests, 1169 subtests, Ruff, wheel-install smoke and master artifact), Web Static and external VISTEC evaluation. Static audit: 99 Python modules, 157 Python import edges, 9 browser modules, 7 browser test files, 319 test functions, 0 exact duplicate test names/bodies, 2 near-name candidates and 5 reviewed dynamic-import sites. The live Pages site is still the successful mainline deployment at 1431c565ff5c160da4944942d687bc30b2f8d0b2; PR #182 is not yet merged/deployed. Seven source-attested IPA rows include five circular runtime/source rows and two non-circular comparisons; no accuracy claim. Wisesight/VISTEC labels remain source-annotated, not expert gold. Thai and Ukrainian reviewer registries and audio asset registry remain empty. CCOST clarification/archive, LOTUSDIS audio pinning and manual WCAG testing remain blocked. Linguistic accuracy remains NOT_MEASURED; engineering-verified research prototype, not release-ready.",
+  "status": "PR #182 is merged to main as 65584d9a3d3d64a8e520dbd32411bef4b0a3dd9e. Main CI 41420468842 passed all three jobs; Web Static 41420468939 passed; GitHub Pages 41420468875 successfully built, deployed and verified the published site at https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/. Six source-attested lexical IPA overrides are live in both runtimes through the typed IPA→Ukrainian adapter, with CC BY-SA 4.0 provenance documented separately from MIT software. Static audit found 0 exact duplicate test names/bodies and 0 parse errors. Independent Thai/Ukrainian reviewers, CCOST clarification/archive, LOTUSDIS audio evidence and manual WCAG testing remain blocked. Linguistic accuracy remains NOT_MEASURED; the site is an engineering-verified research prototype, not a linguistic-accuracy release.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -304,7 +304,7 @@
     "rows": 351780,
     "vowel_rime_records": 41
   },
-  "latest_documentation_checkpoint": "Current PR #182 documentation checkpoint; consult PR metadata for exact SHA to avoid a self-staling pointer.",
+  "latest_documentation_checkpoint": "docs/post-merge-site-release-closeout-20261102; current branch head is available from GitHub metadata.",
   "text_only_checkpoint": {
     "branch": "research/thai-segmentation-gold-parity-verified-20261025",
     "parent_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
@@ -350,7 +350,7 @@
   },
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
   "latest_code_checkpoint": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
-  "readiness": "engineering-verified research prototype; not release-ready for independent Thai segmentation, IPA or Ukrainian target accuracy",
+  "readiness": "engineering-verified research prototype; deployed on GitHub Pages; not release-ready for independent Thai segmentation, IPA or Ukrainian target accuracy",
   "latest_verified_repository_head": "1431c565ff5c160da4944942d687bc30b2f8d0b2",
   "task_ledger": [
     {
@@ -420,7 +420,7 @@
     {
       "id": "BRANCH-HYGIENE-001",
       "status": "PARTIAL",
-      "implementation": "Re-inventoried 15 current branch refs: chore 2, ci 1, docs 3, fix 1, main 1, refactor 4, research 1, test 1, work 1. PR #181 is closed unmerged and its adversarial changes are included in PR #182; 11 historical branch refs were left untouched.",
+      "implementation": "Re-inventoried 16 current branch refs: chore 2, ci 1, docs 4, fix 1, main 1, refactor 4, research 1, test 1, work 1. PR #181 is closed unmerged and its adversarial changes are included in merged PR #182; historical refs and the dedicated work branch remain untouched.",
       "blocker": "No owner-approved retention policy exists for deleting/archiving historical refs; no branch was deleted.",
       "acceptance": "Retain branches until an explicit owner-approved retention policy exists; review unique commits before any archive/delete."
     },
@@ -514,9 +514,15 @@
       "status": "DONE_VERIFIED",
       "implementation": "benchmark_ipa.py requires BROAD_PHONEMIC_IPA_GOLD_INPUT or BROAD_SURFACE_IPA_GOLD_INPUT according to transcription_level; text-only challenge and CCOST wordlist sources authorize only broad phonemic input.",
       "acceptance": "Exact-head CI 41341792448 passed 296 Python tests and 1168 subtests; source misuse regression rejects text-only broad-surface scoring."
+    },
+    {
+      "id": "WEB-RELEASE-001",
+      "status": "DONE_VERIFIED",
+      "implementation": "PR #182 squash-merged as 65584d9; main CI 41420468842, Web Static 41420468939 and Pages deployment/published-content verification 41420468875 all passed. The updated service is live at GitHub Pages.",
+      "acceptance": "Post-merge Pages build/deploy/published-content verification passed; main CI and Web Static passed."
     }
   ],
-  "latest_implementation_branch": "research/independent-adjudication-gates-20261101",
+  "latest_implementation_branch": "research/independent-adjudication-gates-20261101 (merged into main)",
   "latest_implementation_commit_pending_ci": null,
   "current_head_status_at_audit_refresh": "Code/workflow checkpoint b6dbec7928b106f0ab52e06af33a26635df75412 passed CI 40322960615 and Web static validation 40322959844. Documentation checkpoint e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff passed full CI 40323209539 and Web static validation 40323209471. This audit-register update creates a newer documentation HEAD and requires exact-head CI/static validation before the current branch HEAD is marked green.",
   "current_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
@@ -2084,9 +2090,9 @@
       167
     ]
   },
-  "latest_full_repository_head": "c68580a490f89af1cf08224d5811429e74f8ef5b",
-  "latest_full_repository_head_ci_run": "41418718922",
-  "latest_full_repository_head_web_validation_run": "41418718843",
+  "latest_full_repository_head": "65584d9a3d3d64a8e520dbd32411bef4b0a3dd9e",
+  "latest_full_repository_head_ci_run": "41420468842",
+  "latest_full_repository_head_web_validation_run": "41420468939",
   "latest_web_static_verified_code_commit": "536f03327f11d258a4e7638091797128754b6602",
   "latest_web_static_verified_code_run": "41342132990",
   "ccost_source_reconciliation_2026_10_31": {
@@ -2127,11 +2133,11 @@
     "latest_pr_head_ci_status": "See PR #169 metadata; previous exact-head run 41244614135 passed all three jobs."
   },
   "current_branch_inventory": {
-    "branch_refs": 15,
+    "branch_refs": 16,
     "prefix_counts": {
       "chore": 2,
       "ci": 1,
-      "docs": 3,
+      "docs": 4,
       "fix": 1,
       "main": 1,
       "refactor": 4,
@@ -2141,26 +2147,10 @@
     },
     "as_of": "2026-11-02",
     "deletions": 0,
-    "note": "15 refs including PR #182 research branch, closed-unmerged PR #181 branch, and this dedicated work branch. PR #181's adversarial changes are included in PR #182; no branch was deleted. Historical refs remain pending owner-approved retention policy."
+    "note": "16 refs including the merged research branch, dedicated work branch, PR #181 historical branch and post-merge documentation closeout branch. No branch was deleted; historical refs remain pending an owner-approved retention policy."
   },
-  "open_prs_current": [
-    {
-      "number": 182,
-      "head": "See PR metadata; this file is committed by the same PR and intentionally avoids a self-staling SHA.",
-      "base": "cc398254c178171f74397aed556766e87356ab84",
-      "status": "OPEN",
-      "exact_head_ci_run": "41418718922",
-      "ci_status": "PASSED_ALL_3_JOBS",
-      "web_static_run": "41418718843",
-      "web_static_status": "PASSED",
-      "external_vistec_run": "41418718412",
-      "external_vistec_status": "PASSED",
-      "scope": "independent Thai/Ukrainian adjudication gates, source-attested lexical IPA runtime corrections, static audit, evidence registries, and website transparency update pending merge/deployment",
-      "verified_code_head": "c68580a490f89af1cf08224d5811429e74f8ef5b",
-      "documentation_checkpoint": "current PR head; see PR metadata"
-    }
-  ],
-  "latest_pr_head_source": "PR #182 metadata; current implementation code checkpoint c68580a490f89af1cf08224d5811429e74f8ef5b, exact-head CI/Web Static/VISTEC all passed.",
+  "open_prs_current": [],
+  "latest_pr_head_source": "PR #182 merged into main as 65584d9a3d3d64a8e520dbd32411bef4b0a3dd9e; no product PR remains open at this checkpoint.",
   "status_refresh_2026_10_31": {
     "main_sha": "8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8",
     "pr_169": {
@@ -2677,9 +2667,7 @@
     "exact_regression_test_ci_run": "41406424727",
     "exact_regression_test_ci_result": "PASSED_ALL_3_JOBS"
   },
-  "open_prs": [
-    182
-  ],
+  "open_prs": [],
   "audio_interval_overlap_code_checkpoint_2026_11_02": {
     "verified_code_head": "964b4930321e68c77ba5e956e1c0ecd12164ccfa",
     "ci_run": "41406087052",
@@ -2851,21 +2839,25 @@
   },
   "latest_site_release_readiness_2026_11_02": {
     "starting_main_sha": "cc398254c178171f74397aed556766e87356ab84",
+    "merged_pr": 182,
+    "merge_commit_sha": "65584d9a3d3d64a8e520dbd32411bef4b0a3dd9e",
     "implementation_branch": "research/independent-adjudication-gates-20261101",
     "work_branch": "work/thai-site-release-readiness-20261102",
-    "pr": 182,
+    "documentation_closeout_branch": "docs/post-merge-site-release-closeout-20261102",
     "verified_code_head": "c68580a490f89af1cf08224d5811429e74f8ef5b",
-    "commits_ahead_of_main": 199,
-    "commits_behind_main": 0,
-    "changed_files": 61,
-    "ci_run": "41418718922",
-    "ci_result": "PASSED_ALL_3_JOBS",
+    "pre_merge_ci_run": "41419933628",
+    "pre_merge_ci_result": "PASSED_ALL_3_JOBS",
+    "main_ci_run": "41420468842",
+    "main_ci_result": "PASSED_ALL_3_JOBS",
+    "main_web_static_run": "41420468939",
+    "main_web_static_result": "PASSED",
+    "pages_run": "41420468875",
+    "pages_result": "PASSED_BUILD_DEPLOY_AND_PUBLISHED_CONTENT_VERIFICATION",
+    "site_url": "https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/",
+    "site_deployment_commit": "65584d9a3d3d64a8e520dbd32411bef4b0a3dd9e",
+    "site_status": "LIVE_UPDATED_VERSION",
     "python_tests": 319,
     "unittest_subtests": 1169,
-    "web_static_run": "41418718843",
-    "web_static_result": "PASSED",
-    "external_vistec_run": "41418718412",
-    "external_vistec_result": "PASSED",
     "static_audit": {
       "python_modules": 99,
       "python_import_edges": 157,
@@ -2907,14 +2899,10 @@
       "p95_ms": 8.555,
       "accuracy_claimed": false
     },
-    "live_site": {
-      "url": "https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/",
-      "main_deployment_commit": "1431c565ff5c160da4944942d687bc30b2f8d0b2",
-      "pages_run": "41326865964",
-      "status": "LIVE_MAINLINE_PR182_NOT_YET_DEPLOYED"
-    },
-    "pr_merged": false,
+    "pr_merged": true,
+    "open_prs": 0,
     "linguistic_accuracy": "NOT_MEASURED",
     "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY"
-  }
+  },
+  "latest_full_repository_head_pages_run": "41420468875"
 }

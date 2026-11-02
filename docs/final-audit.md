@@ -1463,3 +1463,16 @@ The new test/tool code was committed on the PR branch and awaits exact-head CI c
 - Remaining genuine blockers: two independent qualified Thai reviewers plus separate adjudication; two independent Ukrainian-native reviewers; CCOST A–D curator clarification and actual TextGrid archive inspection; full immutable LOTUSDIS audio revision and real hashed audio assets/clean intervals; manual WCAG keyboard/screen-reader/device testing. The local clone attempt failed because the execution container could not resolve github.com; local tests are therefore NOT_RUN, while GitHub Actions is the verification source.
 
 **Readiness:** engineering-verified research prototype. Not release-ready for independent Thai IPA/segmentation or Ukrainian target accuracy, and not WCAG-conformance certified. Linguistic accuracy remains `NOT_MEASURED`.
+
+
+## Post-merge site deployment closeout — 2026-11-02
+
+- PR #182 was squash-merged into main as `65584d9a3d3d64a8e520dbd32411bef4b0a3dd9e`.
+- Main CI [41420468842](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41420468842): all three jobs passed. Web Static [41420468939](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41420468939): passed. Pages Deployment [41420468875](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41420468875): build, deploy and published-content verification passed.
+- The current live service is [GitHub Pages](https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/) at the merged code commit above. The published-content verification step checked the deployed plain-language service and browser assets; the system page and app bundle are part of the deployment.
+- The deployed runtime includes six exact-form source-attested lexical IPA overrides in both Python and browser, routed through the typed IPA → Ukrainian adapter. The seven-row source-attested diagnostic remains explicitly non-gold (five circular and two non-circular comparisons). Third-party notices and the text-lexicon data-license note now separate CC BY-SA 4.0 data from MIT software.
+- Mainline verification after merge repeats the 319-test / 1,169-subtest suite, wheel-install smoke, generated master artifact, source/blind-packet validators, browser parity and static accessibility contracts. The Pages workflow additionally passed its published-content check.
+- PR #181 remains closed unmerged; its all-mode adversarial browser changes are included in PR #182. The branch inventory is 16 refs after adding the post-merge documentation closeout branch. No branch was deleted or force-pushed.
+- Remaining blockers are unchanged: independent Thai and Ukrainian reviewers, CCOST A–D curator clarification and archive inspection, full immutable LOTUSDIS audio revision plus real hashed assets/intervals, and hands-on WCAG keyboard/screen-reader/device testing.
+
+**Final readiness:** the current browser service is deployed and engineering-verified. The repository remains a research prototype, not a linguistic-accuracy or WCAG-conformance release. Linguistic accuracy remains `NOT_MEASURED`.
