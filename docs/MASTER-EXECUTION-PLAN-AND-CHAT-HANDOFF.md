@@ -2199,3 +2199,31 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - No release tag or package version was created. Linguistic accuracy remains `NOT_MEASURED`; the deployed site is an engineering-verified research prototype, not a linguistic-accuracy or WCAG-conformance release.
 
 **Next genuine work:** secure independent Thai and Ukrainian reviewers, resolve CCOST curator discrepancy, obtain immutable LOTUSDIS audio evidence, and complete hands-on accessibility testing. Do not invent gold labels, audio assets or accuracy scores to close these gates.
+
+
+
+## Optional FastThaiG2P integration spike — 2026-11-02
+
+### Scope and branch
+- Dedicated branch: `research/fastthaig2p-integration-spike-20261102`, based on main `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`.
+- FastThaiG2P is an optional research comparator only; it is not enabled in the core package, browser runtime, or production engine.
+- Upstream is pinned to `awslabs/FastThaiG2P@4e82a291b4cf2876326744c6580121e9986ad354`; PyThaiNLP is pinned to 5.4.0 in the dedicated workflow.
+
+### Added
+- `scripts/run_fastthaig2p_challenge.py`: paired run over the frozen 42-item `data/benchmark/thai_g2p_challenge.jsonl`; records ClippyFirst output, FastThaiG2P raw IPA, syllable strings, dictionary hits, OOV fallback counts, output coverage, feature inventory and same-process timing diagnostics.
+- `tests/test_fastthaig2p_challenge.py`: parser/feature-inventory unit tests.
+- `.github/workflows/fastthaig2p-spike.yml`: optional pull-request/manual workflow; installs pinned dependencies, runs tests and comparison, checks evidence grade/42-row denominator, uploads report artifact.
+- `docs/research/fastthaig2p-integration-spike.md`, external renderer registry/docs and third-party notices updated.
+
+### License/provenance findings
+- FastThaiG2P code: Apache-2.0.
+- PyThaiNLP runtime dependency: Apache-2.0 software.
+- Vendored upstream `fastthaig2p/_th2ipa.py`: BSD 3-Clause notice, copyright 2018 Dept. of Linguistics, Chulalongkorn University.
+- FastThaiG2P dictionary: upstream describes a mix of manual overrides, approximately 13k Wiktionary-derived and approximately 49k LLM-generated IPA entries. Rights/provenance are not established row-by-row; dictionary is not copied into ClippyFirst.
+- ClippyFirst code remains MIT; current Wiktionary-derived lexical IPA data remains separately CC BY-SA 4.0.
+
+### Evidence and limits
+- Existing 36-input smoke result (36 outputs, zero runtime errors) is retained as historical execution evidence, not accuracy.
+- The new 42-item challenge has no independent gold labels. Inter-engine string agreement, coverage and speed cannot establish correctness.
+- FastThaiG2P IPA uses Chao tone contours. The spike preserves raw output and does not pass it into typed `PhoneticResult` or the Ukrainian adapter. A feature-preserving converter and independent gold are still required.
+- At the time of this handoff update, exact-head workflow execution and the comparison artifact are pending. Do not mark the spike DONE_VERIFIED until CI passes.
