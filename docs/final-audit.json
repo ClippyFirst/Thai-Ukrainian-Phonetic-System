@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PR #189 remains open as a draft on fix/benchmark-error-clusters-20261102 (head 55f2ef9966da065326873014e8066acc43b2a151), 52 commits ahead of main and 0 behind at the latest comparison. Exact-head CI 41471961004 passed all three jobs; Web Static 41471960975 passed. Runtime challenge coverage is 32/42 conservative and 36/42 opt-in dictionary-word-segmented; these are coverage diagnostics, not accuracy. Independent Thai/Ukrainian review, CCOST archive/curator, LOTUSDIS audio and manual WCAG gates remain blocked. Main remains 75c331f69aa3c8e5b4db3ccc5a6da85124600a01; linguistic accuracy remains NOT_MEASURED.",
+  "status": "PR #189 remains open as a draft on fix/benchmark-error-clusters-20261102. Runtime code head 55f2ef9966da065326873014e8066acc43b2a151 is exact-head CI verified; the 2026-11-03 literature/documentation continuation is recorded in latest_literature_evidence_2026_11_03 and awaits exact-head CI. Main remains unchanged; independent linguistic accuracy remains NOT_MEASURED.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -3032,5 +3032,34 @@
     "documentation_checkpoint_ci_result": "PASSED_ALL_3_JOBS",
     "documentation_checkpoint_web_static_run": 41475777686,
     "documentation_checkpoint_web_static_result": "PASSED"
+  },
+  "latest_literature_evidence_2026_11_03": {
+    "branch": "fix/benchmark-error-clusters-20261102",
+    "pull_request": 189,
+    "literature_review": "docs/research/thai-g2p-evaluation-literature-2026-11-03.md",
+    "literature_review_status": "DONE_VERIFIED",
+    "full_texts_inspected": [
+      "Saychum et al. 2016 DOI 10.21437/Interspeech.2016-621",
+      "Yamasaki 2022 DOI 10.18653/v1/2022.naacl-main.315"
+    ],
+    "abstract_level_sources": [
+      "Rugchatjaroen et al. 2019 DOI 10.1016/j.specom.2018.12.003",
+      "Morén & Zsiga 2006 DOI 10.1007/s11049-004-5454-y",
+      "Xu & Zhang 2024 DOI 10.1121/10.0032356",
+      "Pons Bordería & Aliaga 2021 DOI 10.22363/2687-0088-2021-25-2-478-506",
+      "Jitwiriyanont & Nantanukul 2026 DOI 10.1080/17549507.2026.2651739"
+    ],
+    "key_findings": [
+      "Published dictionary/Wiktionary-derived WER/PER/exact-sequence scores are not independent expert gold for ClippyFirst.",
+      "Yamasaki 0.931 measures exact phoneme-symbol sequence match; candidate coverage is 17720/18066.",
+      "Saychum reports separate exact-match WER, tone-ignored WER, PER, vowel-length and tone ambiguity diagnostics."
+    ],
+    "runtime_changes": "NONE",
+    "project_accuracy": "NOT_MEASURED",
+    "independent_review": "BLOCKED_EXTERNAL_REVIEWERS",
+    "exact_head_verification": "PENDING_DOCUMENTATION_ONLY_CHECKPOINT",
+    "latest_document_commit_before_json": "276d70f2b60f90b12652a8ae0e382e6e954b85bc",
+    "consensus_thread": "https://consensus.app/search/research-the-peer-reviewed-evidence-and-primary-sc/TPPdaWrzSWGIdPzNPruDdA/",
+    "undermind_document": "https://app.undermind.ai/projects/49bbd978-a5a9-4cac-a7bb-a72848f50e10?path=/Research%20the%20peer-reviewed%20evidence%20and%20primary%20scholarly%20literature%20relevant%20to.md"
   }
 }
