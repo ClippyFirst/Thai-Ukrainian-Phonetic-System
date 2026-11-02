@@ -1,3 +1,16 @@
+## 2026-11-02 — visible form-control contrast follow-up (PR #190)
+
+- **DONE_VERIFIED — active control-boundary correction:** changed the visible border on the Thai textarea and output selector from `#9999a8` (2.81:1 against white) to `#767676` (4.54:1). The latter is the W3C Understanding SC 1.4.11 page's example passing text-input border.
+- **DONE_VERIFIED — regression gate:** `web/tests/accessibility-contract.test.mjs` reads the active CSS border declarations for those two controls and checks at least 3:1 contrast. Exact-head Web Static [41482464764](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41482464764) passed and logged 4.54:1 for both controls.
+- **DONE_VERIFIED — exact-head CI:** [41482464813](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41482464813) passed all three jobs: `test`, `wheel-install-smoke`, and `master-artifact`. Ruff passed; pytest reported 319 tests and 1,169 subtests; generated-artifact drift, evidence/reviewer packet validators, Python/browser parity, diagnostics, isolated wheel install and master artifact validation passed.
+- **Scope limitation:** the strictness slider is deliberately excluded from the static border check because its later `#engine-mode[type="range"]` rule resets `border: 0`. Its native track/thumb contrast still needs browser-level testing. This change does not establish WCAG 2.2 AA conformance.
+- **PR:** [#190](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/190), draft, branch `fix/accessibility-control-contrast-20261102`, exact code head `7ea89691fcb904612c80370721555f1452eed6e9`. Main remains unchanged.
+- **Manual acceptance remains BLOCKED:** keyboard-only, screen-reader, zoom/reflow, mobile and assistive-technology testing still require a human test session and recorded evidence.
+
+Reference: https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast
+
+---
+
 ## Priority research continuation — 2026-11-02
 
 | Priority | Status | Work completed in this continuation | Remaining acceptance gate |
