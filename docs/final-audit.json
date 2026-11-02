@@ -304,7 +304,7 @@
     "rows": 351780,
     "vowel_rime_records": 41
   },
-  "latest_documentation_checkpoint": "PR #182 documentation checkpoint in current branch; consult PR metadata for exact current SHA.",
+  "latest_documentation_checkpoint": "Current PR #182 documentation checkpoint; consult PR metadata for exact SHA to avoid a self-staling pointer.",
   "text_only_checkpoint": {
     "branch": "research/thai-segmentation-gold-parity-verified-20261025",
     "parent_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
@@ -2146,7 +2146,7 @@
   "open_prs_current": [
     {
       "number": 182,
-      "head": "c68580a490f89af1cf08224d5811429e74f8ef5b",
+      "head": "See PR metadata; this file is committed by the same PR and intentionally avoids a self-staling SHA.",
       "base": "cc398254c178171f74397aed556766e87356ab84",
       "status": "OPEN",
       "exact_head_ci_run": "41418718922",
@@ -2155,7 +2155,9 @@
       "web_static_status": "PASSED",
       "external_vistec_run": "41418718412",
       "external_vistec_status": "PASSED",
-      "scope": "independent Thai/Ukrainian adjudication gates, source-attested lexical IPA runtime corrections, static audit, evidence registries, and website transparency update pending merge/deployment"
+      "scope": "independent Thai/Ukrainian adjudication gates, source-attested lexical IPA runtime corrections, static audit, evidence registries, and website transparency update pending merge/deployment",
+      "verified_code_head": "c68580a490f89af1cf08224d5811429e74f8ef5b",
+      "documentation_checkpoint": "current PR head; see PR metadata"
     }
   ],
   "latest_pr_head_source": "PR #182 metadata; current implementation code checkpoint c68580a490f89af1cf08224d5811429e74f8ef5b, exact-head CI/Web Static/VISTEC all passed.",
