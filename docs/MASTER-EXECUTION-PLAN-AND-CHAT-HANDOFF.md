@@ -2241,3 +2241,11 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - CCOST A–D curator clarification and actual archive/TextGrid inspection.
 - Immutable LOTUSDIS revision and real audio asset hashes/clean intervals.
 - Hands-on keyboard, screen-reader, zoom/reflow, mobile and assistive-technology testing.
+
+
+### Literature checkpoint verification — 2026-11-03
+
+- Exact checkpoint `450fe4b6527c8019ea7399218daf30222fe190e2` passed Full CI [41536529764](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41536529764) and Web Static [41536529768](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41536529768).
+- All three Full CI jobs passed: `test`, `wheel-install-smoke`, `master-artifact`. Ruff passed; pytest 326 passed / 1,185 subtests passed. Evidence/source validators, blind packets, generated-artifact checks, IPA-UA adapter, browser parity (29 fixtures), UI/accessibility static checks, segmentation diagnostics and artifact generation passed. Isolated wheel install and master artifact passed.
+- This does not change the evidence status: Thai/segmentation/Ukrainian accuracy remains NOT_MEASURED; independent reviewers, CCOST archive/curator, LOTUSDIS audio provenance and manual accessibility remain blockers.
+- The audit, matrix and handoff reconciliation after this checkpoint is documentation-only and is being verified on its own final head. No local test execution is claimed.
