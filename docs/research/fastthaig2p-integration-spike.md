@@ -86,3 +86,13 @@ The adapter is now declared as a real PEP 621 optional extra in `pyproject.toml`
 - The converter refuses partial/passthrough output, checks flattened syllables against word groups, and marks unknown codepoints (including the fallback sentinel `8`) unsupported.
 - Neither `phonemic_ipa` nor `broad_surface_ipa` is populated. The source does not prove the IPA layer, and no expert gold exists; status is `UNCERTAIN` or `UNSUPPORTED`. The Ukrainian adapter is tested to withhold output in both cases.
 - Exact-head CI and the optional comparison workflow are pending for this continuation. Local execution is not claimed.
+
+
+### Typed-boundary challenge execution — 2026-11-02
+
+- The comparison runner now passes every complete FastThaiG2P syllable through `to_phonetic_results()`, checks the existing Ukrainian adapter withholds every result, and records typed status/tone diagnostics in the artifact.
+- Optional workflow [41443066708](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41443066708) passed on code head `77706c54b85940144da1c5dcb18de24505655fa8`; all steps passed, including typed conversion of the challenge and the evidence-grade/withholding assertions.
+- The new artifact [fastthaig2p-challenge-comparison](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41443066708/artifacts/13139564596) was downloaded and inspected. JSON SHA-256 `3343f71a4a90d28ba3dfd2c06511761f32c8264835f31bb7b13eb0f98c7c33a9`; archive digest `9368db8555ec7102a131dd5aa85a43a30cc494cfbc7dde4eee2ad74207fcde83`.
+- Typed diagnostics: 76 syllables; 75 `UNCERTAIN`, 1 `UNSUPPORTED`; all 76 were withheld by the Ukrainian adapter. The unsupported codepoint was the upstream fallback sentinel `8`. Five canonical tone categories were preserved: mid 35, low 19, falling 11, rising 3, high 8.
+- The report still shows 42/42 complete FastThaiG2P outputs, 28/42 complete ClippyFirst outputs, 0/40 raw exact matches and 25/40 segmental-projection matches. Median/p95 ms in this run: ClippyFirst 0.435/2.209; FastThaiG2P 0.078/2.038. These remain one-run coverage/agreement/latency diagnostics, not accuracy.
+- Full repository CI run [41443066867](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41443066867) is still running at the time of this note; do not mark the continuation DONE_VERIFIED until it completes successfully.
