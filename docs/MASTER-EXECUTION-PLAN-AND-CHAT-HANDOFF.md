@@ -2231,3 +2231,12 @@ This note supersedes the preceding documentation-only status. The branch now cha
 
 - Optional run [41431032031](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41431032031) completed, but artifact inspection showed ClippyFirst and FastThaiG2P both failed import because the workflow had not installed the local src-layout project. The 42-row artifact therefore contained only thaiphon and Goruut rows and is not a valid requested comparison.
 - Fixed the optional workflow to install ClippyFirst editable before external engines. Fixed ClippyFirst candidate generation to consume typed `PhoneticResult` and append the separately stored tone contour. A new exact-head CI and optional benchmark run must pass and its artifact must be inspected before reporting any comparative metrics.
+
+### First valid same-input FastThaiG2P run — 2026-11-02
+
+- Optional workflow [41431679913](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41431679913) passed; artifact SHA-256 `ed6ed4a6e2eca2f87442d0c77062bfbe976a3d8bce763da0c6ffff4101e2dbd7`; 210 rows across 42 frozen inputs and five profiles.
+- ClippyFirst phonemic 28/42 (14 abstentions); broad-surface 23/42 (19 abstentions); FastThaiG2P 42/42; thaiphon 42/42; Goruut 26/42 (16 no-output failures).
+- FastThaiG2P raw exact agreement: 12/28 against ClippyFirst phonemic and 9/23 against ClippyFirst broad-surface. Tone-stripped diagnostic agreement: 14/28 and 17/23 respectively. This is inter-engine agreement only, not accuracy.
+- Median/p95 latency in this single CI run: ClippyFirst phonemic 0.483/2.184 ms; broad-surface 0.461/1.636 ms; FastThaiG2P 0.032/2.109 ms; thaiphon 0.174/0.889 ms; Goruut 0.496/0.690 ms. Do not generalize these 42-item timings.
+- The invalid challenge string `ข๊า` received FastThaiG2P output `/kʰaː8˧/` while ClippyFirst abstained. FastThaiG2P's higher coverage must not be read as correctness.
+- Independent adjudicated IPA gold remains 0; accuracy remains NOT_MEASURED. No production winner selected.
