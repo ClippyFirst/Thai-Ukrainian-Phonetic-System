@@ -285,14 +285,13 @@ class TextPipelineTests(unittest.TestCase):
                 self.assertEqual(segment_thai_word(word), segmentation)
 
 
-    def test_unattested_ruesi_word_does_not_bypass_special_orthography_abstention(self):
-        # The former text-lexicon split ฤๅษี -> รือ|สี had no source-registry
-        # entry. Do not let an unsupported syllabification bypass the special-
-        # vowel analysis and manufacture a confirmed two-syllable reading.
-        syllables, status = segment_thai_word("ฤๅษี")
-        self.assertEqual(syllables, ("ฤๅษี",))
+    def test_unattested_legacy_ruesi_spelling_remains_unresolved(self):
+        # The source-backed ฤๅษี form is listed in text_lexicon_sources.csv;
+        # do not transfer that reading to the distinct, unattested ฤษี spelling.
+        syllables, status = segment_thai_word("ฤษี")
+        self.assertEqual(syllables, ("ฤษี",))
         self.assertEqual(status, "unresolved")
-        token = analyze_text("ฤๅษี")[0]
+        token = analyze_text("ฤษี")[0]
         self.assertEqual(token["segmentation_status"], "unresolved")
         self.assertEqual(token["syllables"], [])
         self.assertTrue(any("IPA and Ukrainian output are withheld" in w for w in token["warnings"]))
