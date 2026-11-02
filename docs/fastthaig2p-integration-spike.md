@@ -69,3 +69,11 @@ Acceptance criteria:
 Optional workflow run [41431032031](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41431032031) completed successfully at the job level and uploaded artifact `thai-external-g2p-smoke` (artifact SHA-256 `d06f6a87d177a61780b3d58fc0bc74087f657ce8e0548c67bee4b20cd7275e8b`). Artifact inspection found an integration-environment defect: the workflow installed the external comparators but did not install the local src-layout ClippyFirst package. Therefore both `clippyfirst` and the wrapper-based `fastthaig2p` candidates failed initialization with `ModuleNotFoundError: No module named 'thai_ukrainian'`; only thaiphon and Goruut produced rows. This run is **not** a valid ClippyFirst/FastThaiG2P comparison.
 
 The optional workflow was corrected to run `python -m pip install -e .` before installing the pinned comparators. A further correctness refinement routes ClippyFirst benchmark output through the typed `phonetic_result` object and appends its separate tone contour, rather than comparing segmental IPA without tone. The new PR-head workflow run must be inspected before reporting same-corpus coverage or latency. Accuracy remains NOT_MEASURED.
+
+## Transcription-layer comparability refinement — 2026-11-02
+
+FastThaiG2P's documented IPA convention includes unreleased final-stop diacritics (`̚`), while ClippyFirst explicitly separates phonemic IPA from conservative broad-surface IPA. To avoid conflating a layer mismatch with an error, the runner now emits two ClippyFirst profiles from the same typed `PhoneticResult`:
+- `clippyfirst_phonemic`: `phonemic_ipa` + separate tone contour;
+- `clippyfirst_surface`: `broad_surface_ipa` + separate tone contour.
+
+FastThaiG2P remains its own upstream IPA convention; the broad-surface ClippyFirst profile is the closer representational comparison, not proof of identical phonetic scope. Both profiles preserve the typed adapter boundary and abstain when their selected IPA layer or tone is unavailable. The next optional workflow artifact will report both profiles side by side.
