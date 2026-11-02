@@ -167,6 +167,8 @@ def build_report(path: Path = DEFAULT_INPUT) -> dict[str, Any]:
                     "input": token.get("input"),
                     "segmentation_status": token.get("segmentation_status"),
                     "word_segmentation_status": token.get("word_segmentation_status"),
+                    "word_segmentation_method": token.get("word_segmentation_method"),
+                    "word_segmentation_evidence_grade": token.get("word_segmentation_evidence_grade"),
                     "phonemic_ipa": [
                         syllable.get("phonemic_ipa")
                         for syllable in token.get("syllables", [])
