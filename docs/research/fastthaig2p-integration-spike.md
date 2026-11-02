@@ -6,7 +6,7 @@
 
 The spike exposes a lazy optional `FastThaiG2PAdapter` in `src/thai_ukrainian/fastthaig2p_adapter.py`, which wraps the upstream public Python API `fastthaig2p.G2P().convert(text)` and runs it against the same frozen 42-item challenge file as ClippyFirst. It records the untouched upstream string, slash-delimited word groups, dot-delimited syllables, dictionary-hit/OOV fallback counts, non-IPA passthrough text, complete-IPA coverage and per-engine wall-clock diagnostics. A response with any non-IPA passthrough is not counted as complete IPA.
 
-FastThaiG2P output is **not** silently promoted into ClippyFirst's typed `PhoneticResult`. The upstream output contains Chao tone contours while ClippyFirst exposes phonemic IPA and separate tone metadata. A convention-aware, feature-preserving conversion plus dedicated tests is required before the external output may enter the shared IPA-to-Ukrainian adapter. This spike therefore does not emit Ukrainian output from FastThaiG2P and does not alter the production path.
+FastThaiG2P output is **not** promoted into ClippyFirst's phonemic or broad-surface IPA fields. The typed-boundary continuation adds `FastThaiG2POutput.to_phonetic_results()`, returning one `PhoneticResult` per syllable while retaining upstream word grouping. It extracts the five documented Chao contours into separate tone metadata, preserves segmental length/aspiration/unreleased-stop/affricate/glide features in typed segments, and rejects partial passthrough or unsupported fallback sentinels. Because the upstream convention does not establish whether the mixed dictionary/fallback outputs are phonemic or broad-surface IPA, both IPA-layer string fields remain unset and supported segments are marked `UNCERTAIN`. The existing Ukrainian adapter therefore withholds output. This is a diagnostic typed bridge, not production promotion.
 
 Run in a clean Python 3.11+ environment:
 
@@ -74,3 +74,15 @@ The upstream `data/fallback/` trigram/rule assets are distinct from the BSD-3-Cl
 ## Optional-extra packaging correction — 2026-11-02
 
 The adapter is now declared as a real PEP 621 optional extra in `pyproject.toml`: `fastthaig2p` pins the upstream Git commit `4e82a291b4cf2876326744c6580121e9986ad354` and PyThaiNLP `5.4.0`. The dedicated workflow installs it through `python -m pip install -e ".[dev,fastthaig2p]"`, so the acceptance test exercises the user-facing install contract rather than a hand-assembled equivalent. The resulting exact-head CI and benchmark rerun are pending; prior metrics above remain tied to the prior code head and are not silently attributed to this packaging change.
+
+
+## Typed diagnostic bridge continuation — 2026-11-02
+
+- Dedicated branch: `research/fastthaig2p-typed-ipa-boundary-20261102`, descended from the existing spike head `a05afd184a7b546f522272df8d2ddc184e4e51c2`.
+- Draft stacked PR: [#186](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/186), targeting the existing spike branch so it does not duplicate PR #185's implementation.
+- Added per-syllable typed diagnostics grouped by FastThaiG2P word groups. The raw upstream result remains unchanged on `FastThaiG2POutput`.
+- Exact canonical Chao contours `˧`, `˨˩`, `˥˩`, `˦˥`, `˩˩˦` map to mid, low, falling, high and rising metadata respectively; the original contour string is retained.
+- Segmental symbols are parsed with the repository's existing IPA inventory. Affricate tie bars are normalized only for the typed segment inventory; raw IPA remains untouched.
+- The converter refuses partial/passthrough output, checks flattened syllables against word groups, and marks unknown codepoints (including the fallback sentinel `8`) unsupported.
+- Neither `phonemic_ipa` nor `broad_surface_ipa` is populated. The source does not prove the IPA layer, and no expert gold exists; status is `UNCERTAIN` or `UNSUPPORTED`. The Ukrainian adapter is tested to withhold output in both cases.
+- Exact-head CI and the optional comparison workflow are pending for this continuation. Local execution is not claimed.
