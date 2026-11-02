@@ -2945,6 +2945,9 @@
       "independent_ipa_tone_gold": "BLOCKED",
       "public_or_commercial_redistribution": "BLOCKED"
     },
-    "acceptance": "Obtain written authorization for intended use; inspect pinned sample .phones/.tones/TextGrid; document DARPABET inventory/mapping and aligner quality; independently dual-review and adjudicate before any gold/accuracy claim."
+    "acceptance": "Obtain and execute the applicable LDC agreement for the intended use; inspect pinned sample .phones/.tones/TextGrid; document DARPABET inventory/mapping and aligner quality; independently dual-review and adjudicate before any gold/accuracy claim.",
+    "signed_agreement_required": true,
+    "signed_agreement_submission": "email or fax to LDC",
+    "data_accuracy_warranty": "LDC disclaims warranties of accuracy/completeness"
   }
 }
