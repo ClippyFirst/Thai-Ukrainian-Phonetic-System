@@ -239,3 +239,15 @@ python scripts/validate_adjudication_packet.py --mode blind \
 The generator verifies 206 rows in each A-D column, reports duplicates and order-set differences, creates a deterministic union of distinct Thai prompts, and writes a SHA-256/license manifest. If the four order sets differ or any order repeats a word, the manifest status is `SOURCE_ORDER_DISCREPANCY_REQUIRES_RECONCILIATION`; do not freeze or score that packet until the source list discrepancy is explained. A concordant set still produces only an unadjudicated, broad-phonemic reviewer packet. The blind TSV has no engine output or prefilled labels. Generated outputs remain local and inherit CC BY-NC-SA 4.0 terms.
 
 The source-specific scorer gate now distinguishes `BROAD_PHONEMIC_IPA_GOLD_INPUT` from `BROAD_SURFACE_IPA_GOLD_INPUT`. The project-authored challenge and CCOST wordlist can support only independently reviewed broad phonemic labels. The full CCOST annotation archive remains BLOCKED for both IPA layers until actual TextGrid files and X-SAMPA labels are inspected and mapped. This prevents a text-only wordlist from being used as surface-phonetic evidence.
+
+
+## Literature-based metric interpretation — 2026-11-03
+
+A source-checked synthesis of Thai G2P papers, evaluation units, annotation provenance, tone phonetics and recommended project gates is maintained in [Thai G2P evaluation literature review](research/thai-g2p-evaluation-literature-2026-11-03.md).
+
+Important comparability constraints:
+
+- Saychum et al. (2016) report exact-match WER, tone-ignored WER and PER as different measures on a dictionary-derived test set; their own error analysis identifies vowel-length and tone ambiguity as separate failure modes. These scores are not independent expert IPA gold for this project.
+- Yamasaki (2022) reports 0.931 exact sequence accuracy on a primarily Wiktionary-derived dataset; candidate coverage was 17,720/18,066. The figure is neither tone-specific nor boundary-specific accuracy, and its reference labels do not constitute a uniformly independent expert set.
+- Published WER/PER/accuracy numbers must not be compared with this repository's 42-item unadjudicated challenge coverage. Report coverage/abstention, segmentation, phonemic IPA, tone, length, surface realization and Ukrainian adaptation separately.
+- No runtime rule is changed on the basis of these cross-study results. Independent adjudication remains the acceptance gate for the four unresolved phonological discrepancies.
