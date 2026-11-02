@@ -123,6 +123,9 @@ def _test_inventory(path: Path, tree: ast.AST, root: Path = ROOT) -> list[dict[s
                 "name": node.name,
                 "line": node.lineno,
                 "assert_statements": sum(isinstance(child, ast.Assert) for child in ast.walk(node)),
+                "body_sha256": hashlib.sha256(
+                    ast.dump(ast.Module(body=node.body, type_ignores=[]), include_attributes=False).encode("utf-8")
+                ).hexdigest(),
             })
     return rows
 
@@ -234,6 +237,13 @@ def build_report(root: Path = ROOT, revision: str | None = None) -> dict[str, An
         {"test_name": name, "instances": rows}
         for name, rows in sorted(by_name.items()) if len(rows) > 1
     ]
+    by_body: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for item in test_inventory:
+        by_body[item["body_sha256"]].append(item)
+    exact_body_clusters = [
+        {"body_sha256": digest, "instances": rows}
+        for digest, rows in sorted(by_body.items()) if len(rows) > 1
+    ]
     near_name_candidates: list[dict[str, Any]] = []
     names = sorted(by_name)
     for index, left in enumerate(names):
@@ -262,6 +272,7 @@ def build_report(root: Path = ROOT, revision: str | None = None) -> dict[str, An
             "workflow_script_references": len(workflow_refs),
             "test_functions": len(test_inventory),
             "exact_duplicate_test_name_clusters": len(exact_name_clusters),
+            "exact_duplicate_test_body_clusters": len(exact_body_clusters),
             "near_duplicate_name_candidates": len(near_name_candidates),
             "dynamic_import_sites": len(dynamic_sites),
             "parse_errors": len(parse_errors),
@@ -283,6 +294,7 @@ def build_report(root: Path = ROOT, revision: str | None = None) -> dict[str, An
         },
         "test_overlap_review_candidates": {
             "exact_duplicate_names": exact_name_clusters,
+            "exact_duplicate_bodies_manual_review_only": exact_body_clusters,
             "similar_names_only_not_proof_of_redundancy": near_name_candidates,
         },
         "dynamic_import_review_sites": dynamic_sites,
