@@ -8,7 +8,12 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts" / "evaluate_segmentation.py"
-GOLD_FIELDS = ["id", "text", "gold_tokens_json", "gold_status", "source_id", "license", "split"]
+GOLD_FIELDS = [
+    "id", "text", "gold_tokens_json", "gold_status", "source_id", "license", "split",
+    "source_url", "segmentation_layer", "reviewer_a_id", "reviewer_b_id", "reviewer_a_qualification_ref",
+    "reviewer_b_qualification_ref", "reviewer_a_tokens_json", "reviewer_b_tokens_json",
+    "adjudicator_id", "adjudicator_qualification_ref", "adjudication_outcome", "adjudication_record_id", "adjudication_notes",
+]
 PRED_FIELDS = ["id", "engine", "predicted_tokens_json", "status", "version"]
 
 
@@ -24,10 +29,27 @@ class SegmentationBenchmarkTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             gold, predictions, output = root / "gold.tsv", root / "pred.tsv", root / "report.json"
+            sources, reviewers = root / "sources.tsv", root / "reviewers.tsv"
             write_tsv(gold, GOLD_FIELDS, gold_rows)
             write_tsv(predictions, PRED_FIELDS, pred_rows)
+            write_tsv(sources,
+                ["source_id", "source_url", "license", "allowed_uses", "verification_status", "verified_by", "verified_at", "notes"],
+                [{"source_id": "TEST-SEG-CORP", "source_url": "https://example.org/record", "license": "CC0-1.0",
+                  "allowed_uses": "WORD_SEGMENTATION_GOLD_INPUT;WORD_SEGMENTATION_DIAGNOSTIC",
+                  "verification_status": "VERIFIED", "verified_by": "test", "verified_at": "2026-11-01",
+                  "notes": "Unit-test fixture source."}],
+            )
+            write_tsv(reviewers,
+                ["reviewer_id", "language", "roles", "qualification_ref", "verification_status", "verified_by", "verified_at", "scope", "notes"],
+                [
+                    {"reviewer_id": "TH-PH-01", "language": "th", "roles": "THAI_LINGUIST", "qualification_ref": "qualification:TH-PH-01", "verification_status": "VERIFIED", "verified_by": "test", "verified_at": "2026-11-01", "scope": "Thai word segmentation", "notes": "Unit-test fixture only."},
+                    {"reviewer_id": "TH-PH-02", "language": "th", "roles": "THAI_LINGUIST", "qualification_ref": "qualification:TH-PH-02", "verification_status": "VERIFIED", "verified_by": "test", "verified_at": "2026-11-01", "scope": "Thai word segmentation", "notes": "Unit-test fixture only."},
+                    {"reviewer_id": "TH-ADJ-01", "language": "th", "roles": "THAI_LINGUIST_ADJUDICATOR", "qualification_ref": "qualification:TH-ADJ-01", "verification_status": "VERIFIED", "verified_by": "test", "verified_at": "2026-11-01", "scope": "Thai segmentation adjudication", "notes": "Unit-test fixture only."},
+                ],
+            )
             result = subprocess.run(
-                [sys.executable, str(SCRIPT), "--gold", str(gold), "--predictions", str(predictions), "--output", str(output)],
+                [sys.executable, str(SCRIPT), "--gold", str(gold), "--predictions", str(predictions),
+                 "--output", str(output), "--source-registry", str(sources), "--reviewer-registry", str(reviewers)],
                 cwd=ROOT, text=True, capture_output=True, check=False,
             )
             self.assertEqual(result.returncode, expected, result.stderr)
@@ -37,10 +59,23 @@ class SegmentationBenchmarkTests(unittest.TestCase):
 
     @staticmethod
     def gold(row_id="g1", text="ภาษาไทย", tokens=None, **overrides):
+        tokens = tokens if tokens is not None else ["ภาษา", "ไทย"]
         row = {
-            "id": row_id, "text": text, "gold_tokens_json": json.dumps(tokens if tokens is not None else ["ภาษา", "ไทย"], ensure_ascii=False),
-            "gold_status": "ADJUDICATED", "source_id": "fixture#1", "license": "CC0-1.0", "split": "test",
+            "id": row_id, "text": text, "gold_tokens_json": json.dumps(tokens, ensure_ascii=False),
+            "gold_status": "ADJUDICATED", "source_id": "TEST-SEG-CORP", "license": "CC0-1.0",
+            "split": "test", "source_url": "https://example.org/record",
+            "segmentation_layer": "WORD",
+            "reviewer_a_id": "TH-PH-01", "reviewer_b_id": "TH-PH-02",
+            "reviewer_a_qualification_ref": "qualification:TH-PH-01",
+            "reviewer_b_qualification_ref": "qualification:TH-PH-02",
+            "reviewer_a_tokens_json": json.dumps(tokens, ensure_ascii=False),
+            "reviewer_b_tokens_json": json.dumps(tokens, ensure_ascii=False),
+            "adjudicator_id": "TH-ADJ-01", "adjudicator_qualification_ref": "qualification:TH-ADJ-01", "adjudication_outcome": "AGREEMENT",
+            "adjudication_record_id": "SEG-ADJ-001", "adjudication_notes": "Independent labels agree.",
         }
+        if overrides.get("gold_status", "ADJUDICATED") != "ADJUDICATED":
+            for field in GOLD_FIELDS[7:]:
+                row[field] = ""
         row.update(overrides)
         return row
 
@@ -138,11 +173,43 @@ class SegmentationBenchmarkTests(unittest.TestCase):
         self.assertEqual(report["gold"]["status"], "NOT_MEASURED")
         self.assertIsNone(report["engines"]["test-engine"]["exact_sequence_rate"])
 
+
+    def test_adjudicated_segmentation_requires_two_distinct_reviewers_and_raw_labels(self):
+        row = self.gold()
+        row["reviewer_b_id"] = row["reviewer_a_id"]
+        self.assertIn("two distinct reviewers", self.run_benchmark([row], [], expected=1))
+        row = self.gold()
+        row["reviewer_a_tokens_json"] = ""
+        self.assertIn("reviewer_a_tokens_json", self.run_benchmark([row], [], expected=1))
+
+    def test_consensus_gold_must_match_both_independent_tokenizations(self):
+        row = self.gold()
+        row["reviewer_b_tokens_json"] = json.dumps(["ภา", "ษาไทย"], ensure_ascii=False)
+        self.assertIn("AGREEMENT requires matching reviewer tokenizations", self.run_benchmark([row], [], expected=1))
+        row = self.gold()
+        row["gold_tokens_json"] = json.dumps(["ภา", "ษาไทย"], ensure_ascii=False)
+        self.assertIn("gold tokens must equal the agreed reviewer tokenization", self.run_benchmark([row], [], expected=1))
+
+    def test_resolved_disagreement_requires_different_labels_and_audit_note(self):
+        row = self.gold(adjudication_outcome="RESOLVED_DISAGREEMENT")
+        self.assertIn("RESOLVED_DISAGREEMENT requires differing reviewer tokenizations", self.run_benchmark([row], [], expected=1))
+        row = self.gold(adjudication_outcome="RESOLVED_DISAGREEMENT")
+        row["reviewer_b_tokens_json"] = json.dumps(["ภา", "ษาไทย"], ensure_ascii=False)
+        row["adjudication_notes"] = ""
+        self.assertIn("adjudication_notes", self.run_benchmark([row], [], expected=1))
+
     def test_adjudicated_rows_require_provenance_and_valid_concatenation(self):
         bad_source = self.gold(source_id="")
         self.assertIn("requires source_id", self.run_benchmark([bad_source], [], expected=1))
         bad_tokens = self.gold(tokens=["ภาษา", "ไท"])
         self.assertIn("does not concatenate", self.run_benchmark([bad_tokens], [], expected=1))
+
+
+    def test_word_and_syllable_gold_cannot_be_mixed_in_one_report(self):
+        word = self.gold()
+        syllable = self.gold(row_id="g2", segmentation_layer="SYLLABLE")
+        stderr = self.run_benchmark([word, syllable], [], expected=1)
+        self.assertIn("do not mix WORD and SYLLABLE", stderr)
 
     def test_unicode_is_not_silently_normalized_away(self):
         # Decomposed input is NFC-normalized, but token boundaries must still cover the same text.
@@ -154,7 +221,7 @@ class SegmentationBenchmarkTests(unittest.TestCase):
 
 
     def test_source_annotated_rows_are_scored_with_explicit_nonexpert_status(self):
-        gold = self.gold(gold_status="SOURCE_ANNOTATED", source_id="wisesight1000#1", license="CC0-1.0")
+        gold = self.gold(gold_status="SOURCE_ANNOTATED", source_id="TEST-SEG-CORP", license="CC0-1.0")
         report = self.run_benchmark([gold], [self.prediction()])
         self.assertEqual(report["gold"]["rows_source_annotated"], 1)
         self.assertEqual(report["gold"]["rows_adjudicated"], 0)

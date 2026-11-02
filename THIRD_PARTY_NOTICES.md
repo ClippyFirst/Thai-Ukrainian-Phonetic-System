@@ -17,3 +17,19 @@ Copyright 2016-2026 PyThaiNLP Project. The copied/ported algorithm is provided u
 ## ClippyFirst RTGS correction data
 
 The finite correction/abstention layer in `web/src/rtgs-reference.js` is maintained by ClippyFirst and is not copied from PyThaiNLP. The word-level RTGS forms and source scope are documented in `docs/research/thai-romanization-integration.md`; the preposed-vowel and lexical exception handling is separately identified. The PyThaiNLP algorithm port remains under the Apache-2.0 notice above.
+
+
+## Thai Wiktionary-derived lexical IPA records
+
+- Upstream source: Thai Wiktionary contributors; the compound entry for **ตะวันออก** is taken from English Wiktionary.
+- License: [Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/).
+- Pinned source revisions used by the current runtime override registry (`data/thai/lexical_ipa_overrides.tsv`):
+  - [เงิน — revision 5759179](https://th.wiktionary.org/w/index.php?title=เงิน&oldid=5759179)
+  - [เดิน — revision 1908803](https://th.wiktionary.org/w/index.php?title=เดิน&oldid=1908803)
+  - [ตะวันออก — revision 86398986](https://en.wiktionary.org/w/index.php?title=ตะวันออก&oldid=86398986) (the syllable-level record for **ออก** is derived from this compound entry)
+  - [ไกล — revision 5688545](https://th.wiktionary.org/w/index.php?title=ไกล&oldid=5688545)
+  - [ใกล้ — revision 5721860](https://th.wiktionary.org/w/index.php?title=ใกล้&oldid=5721860)
+  - [เพิ่ง — revision 1885200](https://th.wiktionary.org/w/index.php?title=เพิ่ง&oldid=1885200)
+- Adaptation: selected dictionary IPA, tone and vowel-length fields are normalized into a tab-separated data registry and mirrored in the browser runtime. Each row retains its source ID, revision locator and license. These records are explicitly marked source-attested and not independently adjudicated or acoustic gold; the repository does not claim that dictionary transcription is an audio measurement.
+- The broader curated text-lexicon subset is documented separately in [`data/thai/TEXT-LEXICON-DATA-LICENSE.md`](data/thai/TEXT-LEXICON-DATA-LICENSE.md).
+- The MIT license applies to project software, not to these separately attributed data records. The CC BY-SA 4.0 terms continue to apply to the adapted Wiktionary-derived data.

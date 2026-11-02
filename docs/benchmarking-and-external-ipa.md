@@ -12,14 +12,14 @@ External engines are comparators or optional upstream IPA providers only. Preser
 
 The standard-library-only harness is scripts/benchmark_ipa.py. It reads tab-separated files:
 
-- Gold columns: id, text, gold_ipa, gold_status, profile, source_id.
+- Gold columns: id, text, gold_ipa, gold_status, profile, source_id, source_url, license, transcription_level, reviewer_a_id, reviewer_b_id, reviewer_a_qualification_ref, reviewer_b_qualification_ref, reviewer_a_ipa, reviewer_b_ipa, adjudicator_id, adjudication_outcome, adjudication_record_id, adjudication_notes.
 - Prediction columns: id, engine, raw_output, ipa, status, version.
 
 Run from the repository root:
 
 python scripts/benchmark_ipa.py --gold data/benchmark/gold.tsv --predictions data/benchmark/predictions.tsv --output reports/ipa-benchmark.json
 
-Only rows with gold_status=ADJUDICATED and non-empty gold IPA enter the denominator. For each engine, every eligible gold row is counted: an absent prediction row or empty IPA is a miss and remains in the denominator. The report provides strict NFC exact match, missing-prediction rate, and code-point Levenshtein CER. NFC and outer whitespace trim are the only normalizations: tone, vowel length, diacritics, and syllable separators remain significant. Code-point CER is a diagnostic, not a feature-weighted phonetic metric. A header-only gold file correctly yields NOT_MEASURED, not a fabricated zero or 100% score. An engine with no predictions for eligible gold rows is not scored; once an engine appears in the prediction file, omitted eligible IDs count as missing.
+Only rows with gold_status=ADJUDICATED and non-empty gold IPA enter the denominator. Each such row must contain two distinct reviewer IDs, both original IPA labels, adjudicator, outcome, record ID, source URL/license and transcription layer. Consensus rows must match both original reviewer labels; resolved-disagreement rows preserve distinct original labels and a written rationale. One run cannot mix BROAD_PHONEMIC and BROAD_SURFACE references. For each engine, every eligible gold row is counted: an absent prediction row or empty IPA is a miss and remains in the denominator. The report provides strict NFC exact match, missing-prediction rate, and code-point Levenshtein CER. NFC and outer whitespace trim are the only normalizations: tone, vowel length, diacritics, and syllable separators remain significant. Code-point CER is a diagnostic, not a feature-weighted phonetic metric. A header-only gold file correctly yields NOT_MEASURED, not a fabricated zero or 100% score. An engine with no predictions for eligible gold rows is not scored; once an engine appears in the prediction file, omitted eligible IDs count as missing.
 
 Stratify gold cases by syllable shape, consonant class/series, vowel type and length, coda, tone/prosody where applicable, morphology, lexical/loanword status, and uncertainty. Report the denominator and source/profile per row. Avoid training/test leakage and use a held-out set for any tuning.
 
@@ -44,7 +44,7 @@ These are research leads, not verified availability claims. Before executing a c
 
 ## Current evidence status
 
-- Harness baseline: executed successfully in prior main CI. Additional fail-closed validation now requires every ADJUDICATED row to have non-empty IPA, source_id and profile; PR #35 adds regression tests for these gates and must pass CI on its final head.
+- Harness baseline: the scorer enforces double-review provenance, consensus/disagreement consistency, one transcription layer per run and per-profile metrics. The committed gold registry remains header-only until real independent annotations exist.
 - Adjudicated language-specific gold rows: not yet established by this document.
 - Candidate engine availability, version, licenses, and language-specific output quality: unverified until recorded as run evidence.
 - Release status: research prototype; no accuracy claim is authorized by this registry.
@@ -183,3 +183,13 @@ Two source-pinned lexical overrides were added for `ไกล` and `ใกล้
 - Post-merge CI run [40592864584](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/40592864584) had its `test` job pass; its separate `master-artifact` job was still running at audit time. The exact-head PR CI above passed both jobs, and the Pages build independently generated the master table and passed its Python/browser checks.
 - PR #101 was closed as a duplicate of #104; PR #104 was closed/deferred because its separate research-only morphology overlay was based on an older main and had not been reconciled against the deployed head. Both source branches are preserved. Reopen/port that feature only after rebasing, exact-head CI and browser parity, and keeping morphology outside practical phonetic output.
 - Readiness: engineering and deployment checks are verified; the project remains a research prototype, not release-ready for accuracy claims, pending independent IPA gold and Ukrainian target-form adjudication.
+
+
+## Independent adjudication update — 2026-11-01
+
+The 42-item Thai reviewer packet omits source IPA, engine output, stratum and probe metadata. Word and syllable boundaries must reconstruct the input; tone, vowel length and final glottal status are captured per syllable. A separate adjudicated segmentation registry supports WORD and SYLLABLE layers and enforces two independent tokenizations before scoring.
+
+The seven-item Ukrainian preference sheet is candidate-blind. It uses source-attested dictionary IPA and therefore measures only Ukrainian preference conditional on that input. It cannot serve as IPA gold or end-to-end accuracy evidence. The 42 challenge prompts and six source-attested references remain diagnostic material, not expert labels.
+
+
+The primary 42-item Thai reviewer packet accepts BROAD_PHONEMIC as the scored layer; optional broad surface IPA is recorded separately. NARROW_ACOUSTIC requires audio/time evidence and is not a substitute for the phonemic gold target. The scorer's layer gate is applied before calculating any metric.

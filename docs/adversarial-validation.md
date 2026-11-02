@@ -39,3 +39,29 @@ These probes target failure modes that can silently produce plausible but wrong 
 Standard Thai descriptions restrict complex onsets; the parser therefore refuses to manufacture a complex onset from arbitrary adjacent consonants. See the cited phonetic/orthographic sources in the project evidence registry.
 
 These probes do not establish empirical accuracy. A corpus benchmark still requires an external, named and versioned gold resource.
+
+
+## Three-profile fallback regression — 2026-11-01
+
+The regression from the reported 1/3 output is now included in the main research branch and runs in CI after generating the browser word dictionary. Ten hand-written mixed Thai/mixed-script cases plus the 42 frozen challenge inputs are exercised across strict, soft and super-soft profiles (52 inputs × 3 profiles = 156 profile/input combinations). Six focused forms receive additional strict/super-soft checks: six unreferenced forms must be withheld in strict mode, while `เพิ่ง` uses a pinned source-attested one-syllable override with short /ɤ/, falling tone and explicit NOT_GOLD provenance. The suite also checks positive use of the heuristic fallback, all source-attested lexical controls, exact IPA→Ukrainian adapter equality and RTGS numeric passthrough. These remain runtime/evidence-contract tests, not independent pronunciation gold.
+
+A structurally provisional orthographic fallback no longer carries computed tone, tone contour or surface IPA into the result as if confirmed. Segmental IPA remains a provisional candidate and continues through the existing IPA adapter. This is a conservative uncertainty fix, not a claim that the fallback IPA is correct Thai pronunciation.
+
+Exact push CI [41337529189](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41337529189) passed all three jobs; Web Static [41337815975](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41337815975) passed. PR #181's implementation/test/CI changes were ported into PR #182 and #181 was closed as superseded; its branch was retained.
+
+## Exact-head verification — 2026-11-01
+
+- Code/test head: `6412f34accdd913d8d4ad0525a5b3bf89d50f56a`.
+- The browser test reported 52 corpus inputs and 156 profile/input combinations; the focused `เพิ่ง` source-attested override and five strict-abstention forms also passed.
+- Full CI [41352166930](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41352166930) passed all three jobs: 314 Python tests, 1169 subtests, Ruff, wheel-install smoke and master-artifact validation.
+- Web Static [41352166906](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41352166906) and external VISTEC segmentation evaluation [41352166908](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41352166908) passed.
+- Source-attested diagnostic: 7 records, 7 complete engine outputs, 5 circular rows excluded, 2 non-circular comparisons; no accuracy claim.
+- Local tests were not run in this connector-only session. These CI results verify software and reproducibility, not expert pronunciation accuracy.
+
+## Exact-head verification after special-orthography correction — 2026-11-01
+
+- Code/test head `036fb2837c6e1df247e055df115d52c4b3c48b16`.
+- Full CI [41353088633](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41353088633) passed all three jobs: 315 Python tests, 1169 subtests, Ruff, wheel-install smoke and master-artifact validation.
+- Web Static [41353088642](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41353088642) and external VISTEC segmentation evaluation [41353088643](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41353088643) passed.
+- The browser suite reports 52 inputs × 3 profiles = 156 combinations; strict-mode abstention now explicitly includes `ฤๅษี`. The unsupported text-lexicon split has been removed.
+- Source-attested IPA diagnostic remains 7 rows / 7 complete outputs / 5 circular / 2 non-circular, with no accuracy claim.

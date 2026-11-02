@@ -1,3 +1,17 @@
+## 2026-11-01 — independent adjudication readiness and CCOST source reconciliation
+
+- **DONE_VERIFIED — paper-level CCOST schema extraction:** the LREC 2026 paper specifies intended TextGrid tiers ORT/KAN/KAS/MAU/MAS/TRN, X-SAMPA labels and tone suffixes _1=Mid, _2=Low, _3=Falling, _4=High, _5=Rising. MAU carries realized phonetic segments; MAS carries phonemic syllables; KAN/KAS are canonical forms.
+- **Important limitation:** the paper says trained native Thai research assistants manually corrected alignment and verified tone/segmental accuracy, with senior spot checks, but explicitly reports no formal inter-annotator agreement measures. The actual released 6.2 GB TextGrid archive and full X-SAMPA inventory remain uninspected; CCOST remains blocked for scoring until those files are reconciled.
+- **DONE_VERIFIED — expert-gold source wiring:** the 42-item project challenge is pinned as input provenance for broad-phonemic expert labels. A source-specific scorer gate prevents text-only challenge/wordlist sources from being used for broad-surface IPA.
+- **PARTIAL — controlled CCOST wordlist generator:** added `scripts/build_ccost_wordlist_review_packet.py` and synthetic regression tests. It reads a researcher-supplied Zenodo `wordlist.csv`, audits four A-D orders for duplicates and set differences, emits a local blind prompt packet and records input SHA-256/license metadata. It does not create IPA or gold labels and does not commit derived CCOST data. The actual source CSV could not be downloaded into this session. Exact-head CI passes the generator's synthetic tests.
+- **Ukrainian target review protocol:** seven candidate-blind preference prompts remain conditional on source-attested IPA. Criteria distinguish common words from proper names, separate tone from Ukrainian letters, require blind independent first-pass judgments and preserve variants/disagreement. Holovach (2022) is used only for the proper-name/loanword distinction, not as a Thai-specific standard.
+- **BLOCKED — human submissions:** reviewer registry remains empty; no Thai expert or Ukrainian-native review is claimed. Independent Thai IPA/segmentation and Ukrainian preference counts remain zero; accuracy remains NOT_MEASURED.
+- **Exact final-head verification:** `536f03327f11d258a4e7638091797128754b6602`; CI [41342132989](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41342132989) passed all three jobs. Ruff passed; pytest reported 296 passed / 1168 subtests; browser/IPA/RTGS/diagnostic checks, wheel-install smoke and master-artifact validation passed. Web Static [41342132990](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41342132990) and external VISTEC evaluation [41342132985](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41342132985) passed. Earlier failed runs exposed and fixed CSV quoting and are not counted as passes. Local tests were not run in this connector-only session.
+- **No corpus redistribution:** CCOST WAV/TextGrid and generated wordlist packets are not committed. CC BY-NC-SA 4.0 non-commercial/share-alike terms remain applicable.
+- **No Vercel tools or services used.**
+
+---
+
 ## 2026-11-01 — end-to-end repository structure and technical-debt closeout
 
 - **DONE_VERIFIED — documentation ownership:** PRs #171 and #172 added the documentation map and reconciled the architecture guide with the actual IPA-first pipeline, including the distinction between primary typed-IPA Ukrainian adaptation, secondary feature-space candidates and the independent RTGS route.
@@ -10,7 +24,7 @@
 - **Current main snapshot:** `1e0c2b3432a49178c6f00fbfb631a0258a7cc6fc`; PR #178 is the sole open PR and contains this documentation closeout. Post-merge main CI [41325122025](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41325122025) passed all three jobs (`test`, `wheel-install-smoke`, `master-artifact`); Pages [41325122035](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41325122035) passed `build` and `deploy`.
 - **Remaining internal debt:** complete import/call/reference graph and dynamic-entry-point review; broader duplicate test/fixture review; and a safe archive plan for the very large chronological handoff/audit/matrix documents. These remain PARTIAL or DEFERRED, not complete.
 - **Branch hygiene:** 9 non-main refs existed before this documentation branch was created; no branch was deleted. Retention requires commit-level provenance review and owner-approved policy. Branch listing reports `protected=false`; main protection remains an owner decision.
-- **External acceptance gates:** independent Thai phonology/segmentation/IPA adjudication, independent Ukrainian-native target-form adjudication, CCOST released TextGrid/method reconciliation, and human browser/device/WCAG 2.2 AA review remain outstanding.
+- **External acceptance gates:** independent Thai phonology/segmentation/IPA adjudication, independent Ukrainian-native target-form adjudication, actual CCOST TextGrid conformance/X-SAMPA inventory inspection, and human browser/device/WCAG 2.2 AA review remain outstanding. The LREC 2026 paper-level tier map is now documented; it does not replace archive inspection or independent review.
 - **Local tests:** not run in this connector-only environment. All pass claims above are from the cited GitHub Actions runs.
 - **Readiness:** engineering-verified research prototype; not release-ready for general linguistic-accuracy or accessibility-conformance claims.
 
@@ -1224,3 +1238,228 @@ The first run with the new coverage tests completed master-table generation and 
 - **BLOCKED / evidence-limited:** independent Thai IPA/segmentation and Ukrainian target-form adjudication, CCOST released TextGrid schema/method reconciliation, and manual browser/device/WCAG 2.2 AA review.
 - Local tests were not run in the connector-only environment. CI evidence is exact-head and post-merge GitHub Actions evidence only.
 - **Readiness:** engineering-verified research prototype; not release-ready for general linguistic-accuracy or accessibility-conformance claims.
+
+
+## Independent adjudication infrastructure — 2026-11-01
+
+- Added a 42-item Thai phonetic review packet bound to the frozen challenge set. The reviewer sheet omits engine output, source-dictionary IPA, stratum and probe metadata. It captures lexical reading, word and syllable boundaries, phonemic IPA, tone category, vowel length, final glottal status, uncertainty and provenance.
+- Added validators for blank packets, completed Thai reviewer copies and independent reviewer pairs. Non-abstaining rows must reconstruct the exact Thai input from word/syllable boundaries; tone, vowel-length and glottal arrays must align one-to-one with syllables. Narrow acoustic labels require authorized audio and time intervals.
+- Added a six-row Ukrainian-native preference packet with engine candidates removed. Each source IPA is explicitly `SOURCE_ATTESTED_NOT_GOLD`; resulting preference is conditional on that supplied IPA, not an end-to-end accuracy judgment. Individual and paired review validation preserves qualification references, criteria version, rationale and abstention.
+- Strengthened IPA scoring: an `ADJUDICATED` row now requires two distinct reviewers, both original IPA labels, adjudicator/outcome/record, source URL/license and one transcription layer. Consensus must equal the raw reviewer labels. Phonemic and surface IPA cannot be mixed; profile metrics are reported separately.
+- Added an empty expert segmentation gold registry. The segmentation scorer requires two independent tokenizations, explicit WORD/SYLLABLE layer, distinct reviewers, adjudication record and provenance before any row can be counted as expert gold. Existing Wisesight rows remain source-annotated.
+- **Evidence boundary:** no external reviewer submissions were available in this run. Thai IPA gold count remains zero; independent segmentation gold count remains zero; Ukrainian preference submissions remain zero. Accuracy remains NOT MEASURED.
+- **External source:** CCOST is the strongest current licensed acoustic candidate, but its 6.2 GB CC BY-NC-SA 4.0 archive is not bundled. Released TextGrid tier schema and label inventory still require direct inspection before import. See [LREC 2026 CCOST paper](https://aclanthology.org/2026.lrec-1.247/) and [Zenodo record](https://zenodo.org/records/17366698).
+- Code checkpoint: `af0d10d81f9f8cb2bbce97c35af414fc2f8613db`; base main `cc398254c178171f74397aed556766e87356ab84`. Exact-head CI pending. Local tests were not run because this session had connector-only repository access. No Vercel service/tool was used.
+
+
+## Three-mode fallback fix and independent adjudication gates — verified 2026-11-01
+
+- Ported the fallback correction, 10-case × 3-profile adversarial browser test and CI generation-order fix from draft PR #181. The super-soft orthographic fallback no longer carries computed tone/tone contour/surface IPA as established output; provisional segmental IPA remains the adapter input.
+- Added candidate-blind 42-row Thai reviewer packet and validators for template, individual review and paired review. Reviews are bound to frozen challenge text; word/syllable/IPA boundaries align; per-syllable tone, vowel length and final glottal labels align; abstention contains no guessed IPA.
+- Added six-row candidate-blind Ukrainian-native preference packet, source-bound individual/pair validation and explicit conditional-not-gold status.
+- IPA gold scorer requires two distinct reviewers, both raw IPA labels and qualification references, adjudicator/outcome/record, source URL/license and transcription level. Consensus must match raw labels; phonemic/surface layers cannot mix; metrics are profile-stratified.
+- Segmentation scorer requires two distinct reviewers, both raw tokenizations and qualification references, adjudicator/outcome/record, source URL/license and explicit WORD/SYLLABLE layer. Gold rows must reconstruct source text; consensus matches both reviewers; one report cannot mix layers.
+- Exact code checkpoint a4de40b6479b217b24aed98a26bdade23e6e1dab passed full push CI 41337529189 (test, wheel-install-smoke, master-artifact). Web Static 41337815975 passed on docs-only closeout commit ce8d4b0450d67e465f76f140dde3b27ca45e313f.
+- PR #182 is the combined review. PR #181 was closed as superseded; its source branch was retained. No branch deletion or force push.
+- No expert submissions exist: Thai IPA gold 0, segmentation gold 0, Ukrainian review submissions 0. Accuracy remains NOT MEASURED.
+- CCOST remains a licensed candidate, not an imported corpus. Its 6.2 GB CC BY-NC-SA 4.0 archive is not bundled; exact released TextGrid tier mapping remains an external evidence/access blocker.
+- No local tests were run in the connector-only environment. No Vercel service/tool was used.
+
+
+## Evidence registry and expert-provenance gate — 2026-11-01
+
+- **Finding:** prior review packets only required a non-empty qualification-reference string. Gold scorers checked that source URL/license fields were non-empty but did not require an exact registered source, permitted use, verified language or reviewer role. This left a provenance/qualification gap: plausible-looking strings could be mistaken for verified evidence.
+- **FIXED:** added `src/thai_ukrainian/evidence_registry.py`, a source registry and a pseudonymous reviewer-qualification registry. Source ID, exact URL, exact license, permitted use and verification status are checked. Reviewer ID, language, role, qualification reference and verification state are checked.
+- **FIXED:** Thai and Ukrainian review validators now enforce registry-backed qualification references; IPA and segmentation scorers require two verified reviewers plus a distinct verified adjudicator. A dictionary source or blocked acoustic source cannot be silently promoted to IPA gold.
+- **FIXED:** CI validates the registry schemas. Added unit tests for empty reviewer state, blocked CCOST use, source URL/license mismatch, wrong reviewer language/role, unregistered/incorrect qualification references and non-verified reviewer rejection.
+- **Current evidence boundary:** production reviewer registry is empty; no external expert submissions exist. No gold count or accuracy claim changes. Synthetic reviewer identities exist only inside unit tests.
+- **Source decisions:** Wisesight/VISTEC are segmentation diagnostics and eligible text inputs for fresh human re-annotation, not expert gold by themselves; Wiktionary is IPA-reference-only; Thai G2P v4 has Wiktionary source overlap; CCOST remains blocked from IPA scoring pending exact TextGrid tier/label/notation mapping. No CCOST media or TextGrid is copied into the repository.
+- **Readiness:** this improves the integrity of future evidence ingestion; it does not complete independent Thai or Ukrainian linguistic adjudication. The project remains an engineering research prototype; phonetic accuracy remains NOT MEASURED.
+
+
+## 2026-11-01 — source-attested เพิ่ง regression reference
+
+- Verified the Thai Wiktionary revision 1885200 for `เพิ่ง`: the entry gives one-syllable `/pʰɤŋ˥˩/` and explicitly describes the vowel as short. This is a direct source-attested counterexample to the heuristic output `pʰɤː ŋa` seen in the user's mode-1/3 test.
+- Added `SRC-WIKTIONARY-TH-เพิ่ง` and `TH-SRC-IPA-007` as `SOURCE_ATTESTED_NOT_GOLD`. A later follow-up activates the same pinned dictionary reading through the existing typed lexical-IPA override mechanism, preserving its non-gold warning and withholding surface IPA.
+- Expanded the Ukrainian-native candidate-blind preference packet and engine-candidate registry from six to seven source-attested IPA examples. The generated adapter candidate `п'енг` is explicitly not a preference gold form.
+- Added tests for the exact source/license/allowed-use gate and the generated candidate row. The seven-item preference sheet remains blocked on actual Ukrainian-native reviews; the Thai IPA remains blocked on independent expert adjudication.
+
+
+## Reviewer recruitment research — 2026-11-01
+
+- Added `docs/reviewer-outreach-shortlist.md` with potential Thai phonetics/phonology and Ukrainian practical-transcription reviewers, based on public university profiles and peer-reviewed work. It records no outreach, consent, availability, verified native status or qualification; the reviewer registry remains empty.
+- CCOST's official Zenodo wordlist preview exposes 206 data rows in columns A-D; metadata reports 9.7 kB and MD5 `e62f500d87b4ff8c6deb4c4595854d34`. The initial metadata-only check was superseded by the subsequent exact-source reconstruction documented below: the preview bytes were reconstructed with BOM/CRLF and matched the official MD5; SHA-256 and the A-D set discrepancy are recorded in the later exact-source audit section.
+
+
+## Supplemental Thai blind review packet — 2026-11-01
+
+- Preserved the original 42-item challenge as an immutable source and added a separately pinned six-item blind review supplement for the exact user-reported problem areas: `วันนี้`, `เห็น` in context, `เพิ่ง`, `อะไรบ้าง`, `อธิบาย` and `ฤๅษี` in context.
+- The supplemental packet contains only prompt text; IPA/tone/length/boundary gold fields remain null or blank. The blind reviewer sheet excludes engine output, probe labels and the separate source-attested `เพิ่ง` IPA to avoid anchoring.
+- Exact source record is `CLIPPYFIRST-THAI-REGRESSION-ADDENDUM-20261101`, pinned to commit `8ae6e3ef1225a3e8b542371a4b3b26e29becf2a2`. Automated tests verify all six rows, 21 TSV columns, no prefilled labels and permitted source use.
+- This makes the problem cases ready for independent Thai review; it does not create expert labels or establish accuracy. Reviewer registry remains empty.
+
+
+## CCOST wordlist exact-source audit — 2026-11-01
+
+- Reconstructed the published Zenodo `wordlist.csv` from its complete preview, including UTF-8 BOM and CRLF line endings. Reconstructed bytes match the official Zenodo MD5 `e62f500d87b4ff8c6deb4c4595854d34`; SHA-256 is `e3836f6204c674a8d972dfd49de369eea7856ca6f00d520aafcd62f4e7273223`.
+- Executed the CCOST wordlist audit/packet-generation logic on those exact bytes. Each A-D order has 206 rows, 206 unique words and zero duplicates. However, B/C/D each differ from A by two missing and two extra items; the union has 208 unique prompts.
+- The generator correctly returns `SOURCE_ORDER_DISCREPANCY_REQUIRES_RECONCILIATION`, `scoreable=false`, and emits local-only 208-row packets. No CCOST-derived data or output packets were committed.
+- **BLOCKED — curator clarification:** do not freeze the 208-prompt packet until the CCOST authors/data curator confirm whether the two substitutions are intentional stimulus differences or source-file errors, or publish a corrected wordlist/erratum. CC BY-NC-SA 4.0 remains applicable.
+- This resolves wordlist access and source-integrity uncertainty, but not the independent Thai reviewer requirement or the 6.2 GB audio/TextGrid archive conformance review.
+
+
+## Narrow-acoustic annotation contract correction — 2026-11-01
+
+- **FIXED:** the Thai review schema previously allowed a narrow acoustic label to be entered in the `phonemic_ipa` field, which is reserved for broad phonemic IPA. Audio provenance alone did not make that field semantically correct.
+- Added a distinct `narrow_ipa` field. A `NARROW_ACOUSTIC` review now requires square-bracketed narrow IPA, one-to-one syllable alignment, and an authorized audio asset plus a positive time interval. The broad phonemic label remains separately recorded.
+- Broad phonemic reviews must not populate the narrow field. The IPA gold scorer continues to score only its declared broad phonemic or broad surface layers; narrow acoustic labels are retained as a separate evidence layer and are not silently mixed into that score.
+- Added tests for missing narrow IPA, missing audio provenance and syllable-count mismatch. CI now validates both the original 42-item blind packet and the six-item supplemental regression packet.
+- A CI failure on the latest pre-fix head was a faulty workflow invariant: it counted a non-circular but withheld row as independently comparable. The report logic was already correct; the workflow now applies the same completeness condition as the report and a unit test locks that denominator semantics.
+
+
+## Acoustic-source permission gate — 2026-11-01
+
+- Added `audio_source_id` to the Thai review packet. Narrow acoustic labels now require a source registry entry that is VERIFIED, has an exact registered URL/license, and explicitly permits `ACOUSTIC_PHONETICS_RESEARCH`, in addition to the bracketed `narrow_ipa`, asset ID and positive interval.
+- The CLI loads the canonical source registry for completed reviews and reviewer pairs. A blocked source such as current CCOST cannot be used for narrow acoustic review until its archive/tier/label mapping and permitted scope are verified.
+- Added unit tests for unregistered audio, allowed registered test audio, and rejection of blocked CCOST. This is a provenance gate; it does not validate the phonetic correctness of the narrow IPA.
+
+
+## Alternative licensed audio source — LOTUSDIS (2026-11-01)
+
+- Added `CORP-LOTUSDIS` to the source registry as a verified CC BY-SA 4.0 audio/transcript source for fresh expert re-annotation. The official dataset card lists 160,915 rows / approx. 13.2 GB; the project README describes approx. 114 hours and 86 participants, with utterance transcripts and TextGrid.
+- **Evidence boundary:** LOTUSDIS does not provide phonemic IPA or tone gold. Its existing annotations are transcript/alignment material; new phonetic labels must come from independent qualified Thai reviewers. LOTUSDIS uses nine separately recorded single-channel microphone devices; its approximately 114 aggregate channel-hours correspond to about 20 hours of unique session time. Device placement ranges from near- to far-field and overlap masks are provided; sample selection must inspect the exact device and time interval rather than infer clean speech from a channel label. Standard Thai representativeness is not established at source level.
+- No LOTUSDIS media were downloaded or copied. Exact dataset revision, asset ID, speaker pseudonym, microphone/channel, non-overlap status, interval and file hash remain required before freezing any acoustic sample. Derivative annotation data must preserve CC BY-SA attribution/share-alike.
+- Corrected the Rungpat Roengpitya shortlist description: the public profile supports Standard Thai tone research and cross-language Japanese vowel-length perception, not a direct claim of Thai vowel-length expertise.
+- Common Voice Thai v27.0 was not selected for redistributed review packets because its data card forbids re-hosting/re-sharing despite CC0; it also supplies no phone/toneme IPA gold.
+
+
+## File-level audio asset manifest — 2026-11-01
+
+- Added header-only `data/benchmark/audio-assets.tsv` with source ID, dataset revision, asset URI, SHA-256, speaker pseudonym, microphone/channel, overlap state, duration and verification provenance.
+- Audio-backed Thai review rows now require a matching VERIFIED asset record, matching source ID, non-overlap status and a positive time interval bounded by the registered asset duration. This applies to broad phonemic audio references and narrow acoustic labels.
+- Added tests for valid asset provenance, source mismatch, out-of-range intervals, unregistered asset IDs and an intentionally empty manifest.
+- **Evidence boundary:** no real LOTUSDIS audio asset has been selected or registered. The infrastructure is ready; acoustic review remains blocked until an asset is pinned. No media was downloaded or bundled.
+
+
+- Tightened the audio asset manifest further: mutable dataset aliases (`main`, `master`, `latest`, `default`, `head`) and non-absolute asset URIs are rejected. Each asset must be pinned to a specific revision and URI before it can be used.
+
+
+## Corpus registry schema repair — 2026-11-01
+
+- The corpus source CSV contained an unquoted TUD metadata field with commas, producing extra columns on CSV parsing. Quoted the comma-containing fields and added a regression test for exact seven-column schema, complete rows and unique source IDs.
+
+## Source-attested correction for the reported `เพิ่ง` failure — 2026-11-01
+
+- The pinned Thai Wiktionary revision 1885200 explicitly gives one syllable, short vowel and Standard Thai IPA `/pʰɤŋ˥˩/`. This is dictionary evidence, not independent phonetic adjudication or acoustic gold.
+- Activated the existing source-attested lexical IPA override in both Python and browser engines: segmental IPA `pʰɤŋ`, short vowel, falling tone `˥˩`, with no surface-phonetic IPA claim. The Ukrainian result is still produced by the IPA adapter and is marked `SOURCE_ATTESTED_NOT_GOLD`.
+- The all-mode regression now verifies the exact result in strict, soft and super-soft modes. Strict mode continues to abstain for the six other unreferenced forms, including special-vowel `ฤๅษี`.
+- The source-attested diagnostic now excludes five circular rows (the same dictionary sources feed runtime overrides) and leaves two non-circular, complete comparisons. It remains a diagnostic, not a benchmark accuracy score.
+- The ten hand-written adversarial inputs plus the 42 frozen challenge inputs are exercised in all three profiles: 156 profile/input combinations, plus focused strict/super-soft guards.
+
+## Exact-head verification closeout — 2026-11-01
+
+- Final code/test head `6412f34accdd913d8d4ad0525a5b3bf89d50f56a` passed CI [41352166930](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41352166930): all three jobs; 314 Python tests, 1169 subtests, Ruff, wheel-install smoke and master artifact.
+- Web Static [41352166906](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41352166906) and external VISTEC segmentation evaluation [41352166908](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41352166908) passed on the same head.
+- The source-attested diagnostic is seven complete outputs, five circular rows excluded, two non-circular comparisons; it remains explicitly NOT_GOLD and makes no accuracy claim.
+- The connector-only environment did not permit a local clone/test run. No local test result is claimed.
+
+## Unsupported `ฤๅษี` segmentation removed — 2026-11-01
+
+- The Python text lexicon contained `ฤๅษี → รือ|สี` without a matching source-registry record. The browser lexicon also contained that split and an additional unsourced `ฤษี → รึ|สี` entry.
+- Both unreferenced browser entries and the Python `ฤๅษี` entry have been removed. This restores the special-vowel analysis-dependent path rather than silently converting the word into two structurally parsed syllables.
+- Strict mode now withholds IPA and Ukrainian output for `ฤๅษี`; soft/super-soft results remain explicitly provisional. Python text-pipeline, browser parity and all-mode adversarial tests cover the behavior.
+
+## Final code/test checkpoint — special-orthography abstention — 2026-11-01
+
+- Removed the unreferenced `ฤๅษี → รือ|สี` text-lexicon entry from Python and browser engines (and browser-only `ฤษี → รึ|สี`). Strict mode now withholds IPA/Ukrainian output for `ฤๅษี`; it remains in the blind Thai review packet.
+- CI [41353088633](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41353088633) passed all three jobs: 315 Python tests, 1169 subtests, Ruff, wheel-install smoke and master artifact.
+- Web Static [41353088642](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41353088642) and VISTEC [41353088643](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41353088643) passed.
+- The six unreferenced user-regression forms are now guarded in strict mode; `เพิ่ง` is separately covered by a pinned dictionary override marked NOT_GOLD.
+- No expert annotations have been received. Linguistic accuracy remains NOT_MEASURED.
+
+
+## Follow-up review — narrow IPA must also be absent on abstention — 2026-11-02
+
+- A review of `validate_review_packet` found that `uncertainty=ABSTAIN` rejected `phonemic_ipa` and `broad_surface_ipa`, but did not reject `narrow_ipa`. This allowed a narrow acoustic IPA label to bypass the audio-provenance path on an abstained row.
+- Added regression test `test_abstention_cannot_include_narrow_ipa_without_audio_evidence` in test-first commit `2852b47a3c07eabc2512e686d56673dbe9e0ad50`.
+- Added the minimal guard in `src/thai_ukrainian/adjudication.py` in implementation commit `e22c686128d0f65dbd078713d4d4428d24a09f62`. All three IPA fields are now covered by the existing abstention check; no other annotation fields or runtime behavior changed.
+- Exact-head CI [41356275693](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41356275693) was still running at the master-table generation step at the time of this audit refresh. Web Static [41356275500](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41356275500) passed; VISTEC [41356275512](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41356275512) was still running.
+- The test-only workflow did not provide an observed RED result: its push run was cancelled during workflow transition, and its PR run was cancelled before the Python suite began when the implementation commit advanced the head. The test precedes the implementation in branch history, but RED is **NOT VERIFIED**.
+- No local tests were run. The environment had no repository checkout and `git clone` failed because `github.com` could not be resolved.
+- This follow-up is **PARTIAL** pending successful exact-head CI. It does not change the existing evidence boundary: no independent expert submissions; Thai phonetic accuracy remains **NOT MEASURED**.
+
+## 2026-11-02 — seven acceptance gates and repository continuation
+
+| Direction | State | Evidence / exact closure criterion |
+|---|---|---|
+| Thai IPA and segmentation | BLOCKED | Blind 42-item challenge and six-item regression supplement are prepared and validators are present, but reviewer qualification registry is header-only and there are zero adjudicated rows. Close only after two qualified independent Thai reviewers submit frozen annotations, an adjudicator records every disagreement/resolution, and segmentation labels are independently reviewed. Acoustic/narrow claims additionally require authorized, asset-pinned recordings and exact intervals. |
+| Ukrainian practical transcription | BLOCKED | Seven candidate-blind, source-attested preference prompts are prepared; there are zero reviewer submissions and no verified Ukrainian reviewer records. Close only after two independent Ukrainian-native reviewers submit original preferences under frozen criteria and disagreements/adjudication are recorded. This remains separate from Thai IPA correctness. |
+| CCOST wordlist | BLOCKED | Reconstructed source matches official MD5; each A–D order has 206 unique rows, but B/C/D each differ from A by two missing and two extra items (208-item union). Do not freeze a derived packet. Close only with written curator/author clarification or an official corrected wordlist/erratum. |
+| CCOST TextGrid | BLOCKED | Paper-level tier map is documented, but the released 6.2 GB archive, actual TextGrid tier structure and complete X-SAMPA label inventory have not been inspected. Close only after inspecting the actual archive, confirming tier names and item-level provenance, enumerating all observed labels, and mapping each label to an explicit phonetic/phonemic layer. |
+| LOTUSDIS | PARTIAL | Source card/repository and CC BY-SA 4.0 provenance are registered; the source is suitable only as audio/transcript input for new human annotation, not existing IPA gold. Asset registry is header-only. Close only after immutable dataset revision, concrete asset IDs/URIs, SHA-256 hashes, speaker pseudonyms, microphone/channel, overlap status, duration and exact intervals are verified and recorded. Preserve attribution/share-alike; no unverified assets are used. |
+| WCAG 2.2 AA | BLOCKED | Automated browser/UI checks are not manual accessibility evidence. Close only with recorded keyboard-only, screen-reader, viewport/device and assistive-technology review, defects, fixes and retest evidence against WCAG 2.2 AA. |
+| Dependency/reference graph | PARTIAL | Module ownership and script entry points are documented, but no complete import/call/reference graph or dynamic-entry-point analysis exists. A clean local checkout is unavailable in this session: `git clone` failed because `github.com` could not resolve. Close only after full static import/call/reference extraction plus manual review of CLI, browser, generated, plugin/dynamic and data-driven entry points. |
+| Test redundancy | PARTIAL | Two immediately repeated UI assertions were removed in PR #170; this is not a repository-wide redundancy review. Close only after mapping tests to acceptance contracts/layers, identifying overlapping fixtures/assertions, and demonstrating no acceptance-coverage loss through targeted mutation/negative tests or equivalent evidence. |
+| Branch protection | TODO — owner decision | Branch protection is an owner-controlled repository policy. Close only after the owner chooses required status checks, review count, stale-review dismissal and bypass policy, then configures and verifies the ruleset. No settings were changed. |
+
+**Exact engineering verification:** commit `d2d3043b61710496f48851f232f69ba836c8e0bc` has successful CI run [41356471529](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41356471529) (all three jobs, including full Python pytest, wheel-install smoke and master-artifact validation), Web Static [41356471455](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41356471455), and external VISTEC [41356471544](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41356471544). This verifies the software state only; it does not close any external/manual gate or establish linguistic accuracy. The narrow-IPA-on-ABSTAIN regression is included in this exact-head full Python suite. A CI-observed RED run for that regression was not obtained.
+
+**PR and branch state:** PR #182 remains open and unmerged; compare against `main` reports 165 commits ahead and 0 behind, with merge base `cc398254c178171f74397aed556766e87356ab84`. No PR reviews or inline review threads were returned by the current connector query. The latest open-PR search returned #182 as the only result. No branch deletion, force-push, merge, or repository-setting change was made.
+
+**Environment limitation:** repository-wide local graph generation, full test-overlap analysis, local test execution, and actual CCOST archive inspection were not possible through the connector-only session. A direct clone attempt failed with DNS resolution for `github.com`; no local test result is claimed. Source/license constraints remain active: CCOST is CC BY-NC-SA 4.0 and LOTUSDIS is CC BY-SA 4.0. Research intent does not waive these terms.
+
+**Readiness:** engineering-verified research prototype; not release-ready for linguistic accuracy claims. Thai/segmentation accuracy remains `NOT_MEASURED`.
+
+
+
+## Audio-evidence granularity follow-up — 2026-11-02
+
+- **DONE_VERIFIED (engineering):** audio assets now retain a required exact `microphone_id` in addition to the normalized microphone category. This preserves the source-level LOTUSDIS `mic` value (the Hugging Face dataset card exposes `mic` as a string field, with values such as `con123`).
+- **DONE_VERIFIED (engineering):** whole-file `overlap_status` is descriptive metadata and no longer disqualifies an otherwise usable asset. Each Thai review row now carries `audio_interval_overlap_status`; any audio-backed phonetic claim requires the reviewed interval to be explicitly `NONE`. This allows a verified clean interval in a recording with overlap elsewhere, while still rejecting intervals marked `PRESENT` or `UNKNOWN`.
+- Added regression coverage for exact microphone ID requirement and interval-level overlap rejection; the valid narrow-IPA fixture exercises an asset whose whole-file overlap status is `PRESENT` while the selected interval is `NONE`.
+- The blind packet headers were updated without pre-filling any reviewer labels. The committed audio asset manifest remains header-only; no real asset, hash, reviewer, or annotation was fabricated.
+- Exact code-head verification: `964b4930321e68c77ba5e956e1c0ecd12164ccfa`; CI run [41406087052](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41406087052) passed all three jobs (Python/browser suite, wheel-install smoke, master artifact); Web Static [41406087069](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41406087069) and external VISTEC [41406087050](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41406087050) passed. This is engineering verification, not linguistic accuracy evidence.
+
+
+## Exact-head verification closeout — 2026-11-02 (supersedes pending status above)
+
+- The earlier note that CI was still running at master-table generation is superseded by the completed exact-head run: CI [41406424727](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41406424727) completed **successfully** on `826fcddad4d66471b1ba95f00c4cc5b5f430e237`.
+- All three jobs passed: `test`, `wheel-install-smoke`, and `master-artifact`. The test job completed lint, browser/reference and parity checks, generated-artifact drift checks, source/blind-packet validators, the full Python suite, runtime diagnostics, source-attested IPA diagnostic, segmentation diagnostics, and Ukrainian candidate build check. The wheel was built from the sdist, installed in isolation, and smoke-tested outside the checkout.
+- Exact-head Web Static [41406424761](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41406424761) and external VISTEC segmentation evaluation [41406424960](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41406424960) also passed on the same head.
+- Provenance distinction: CI [41406087052](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41406087052) ran on implementation commit `964b4930321e68c77ba5e956e1c0ecd12164ccfa`. The additional regression tests for required `microphone_id`, file-level overlap with a clean selected interval, and rejection of an overlapping selected interval were committed in `826fcddad4d66471b1ba95f00c4cc5b5f430e237`; **41406424727 is the CI run that verifies those tests**.
+- This is **DONE_VERIFIED engineering**, not linguistic validation. No audio assets or expert annotations were added; Thai IPA/segmentation and Ukrainian practical transcription accuracy remain **NOT MEASURED**. The external evidence gates below remain open.
+
+
+## Priority research continuation — 2026-11-02
+
+- **Thai independent adjudication — BLOCKED:** rechecked the existing 42+6 blind prompts, protocol and five-person public institutional shortlist. No one has been contacted or registered; no independent Thai labels exist. Acceptance remains two qualified independent reviewers plus separate adjudication and a disagreement log.
+- **CCOST wordlist — BLOCKED:** Zenodo v1.0 still states 206 items; the byte-identical reconstructed CSV has 206 unique items per A–D order, no duplicates, but a 208-item union because B/C/D each differ from A by two missing and two extra items. The LREC 2026 paper independently states the 206-item list was read twice per speaker. This reinforces the need for curator clarification; it does not explain the discrepancy.
+- **CCOST TextGrid — BLOCKED:** primary Zenodo metadata lists the 6.2 GB WAV/TextGrid archive. The paper/manual describe the intended tiers, but no archive bytes, actual tier inventory or complete X-SAMPA inventory were inspected in this continuation.
+- **LOTUSDIS — PARTIAL:** the official HF card exposes 16 kHz audio, transcript, speaker, mic and duration fields, with 160,915 rows across train/validation/test and 13.2 GB total. Its history page shows the dataset-upload prefix `45145d7`; the full immutable revision was not resolved. The separate CAI-NECTEC README pin `b6c7e81498a92003761ac856348d764c287ee02c` is a documentation revision, not the HF audio snapshot. `audio-assets.tsv` remains header-only; no file hash or interval was invented.
+- **WCAG — PARTIAL:** a static accessibility contract suite was added and connected to CI, Web Static and Pages. It checks key semantics and 12 selected WCAG AA text-contrast pairs (minimum approximately 5.71:1). This is not a manual accessibility audit. Keyboard-only, screen-reader, browser zoom/reflow, mobile and assistive-technology tests remain open.
+- **Architecture/test redundancy — PARTIAL:** a standard-library static audit now emits Python import edges, browser module edges, HTML assets, workflow script references, dynamic-import review sites, Python test-function inventory, browser test-file/import/assertion inventory and duplicate/similar-name candidates as a CI artifact. It is not a complete runtime call graph. No tests were removed; candidates require semantic review and coverage-preservation evidence.
+
+The new test/tool code was committed on the PR branch and awaits exact-head CI confirmation. No local checkout was available; the direct network environment could not resolve public hosts, and the connected browser service was unavailable due to its credit limit. No claim is made that a dataset archive, audio shard, or screen reader was exercised. Linguistic accuracy remains **NOT_MEASURED**.
+
+
+## Follow-up execution — outreach readiness and overlap analysis
+
+- **Thai reviewer recruitment:** rechecked official Thammasat and Kasetsart profiles for Chutamanee Onsuwan and Lena Maluleem, and the Mahidol profile for Rungpat Roengpitya. Official institutional profiles support relevant Thai phonetics/phonology expertise but do not establish consent, availability, native status, independence or qualification for every field. A copy-ready blind-review invitation and qualification checklist are now in `docs/external-review-and-source-requests.md`. No email/messaging connector is available here; no outreach was sent.
+- **CCOST curator contact:** official ChulaSEAL people page publishes Pittayawat Pittayaporn (`Pittayawat.P@chula.ac.th`) and Sujinat Jitwiriyanont (`Sujinat.J@chula.ac.th`) as institutional contacts. A four-question A–D clarification request is prepared. These authors/curators must not be counted as independent reviewers of their own corpus.
+- **LOTUSDIS immutable revision:** public HF history still displays only prefix `45145d7`; full revision SHA remains unresolved. The public data tree enumerates Parquet shards, but no audio row/object bytes or immutable row-level provenance were retrieved. `audio-assets.tsv` remains header-only.
+- **WCAG manual test protocol:** added an exact hands-on test matrix covering keyboard, focus order/visibility/obscuration, target size, 320 CSS px reflow, text spacing, non-text contrast, errors, labels, accessible name/role/value and live status announcements. It is a protocol, not a completed test. Firecrawl balance was verified as zero; no live browser or assistive technology test could run.
+- **Test redundancy audit:** extended the static graph tool to compute exact AST-body SHA-256 fingerprints for Python test functions. Identical function bodies are only candidates for manual review, not grounds for deletion. Added fixture coverage for exact-body clusters and browser test inventory. Exact-head CI remains queued, so these changes are not yet marked verified.
+
+
+## Exact-head engineering closeout and deployment boundary — 2026-11-02
+
+- Code checkpoint `c68580a490f89af1cf08224d5811429e74f8ef5b` on PR #182 passed exact-head CI [41418718922](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41418718922), all three jobs. The full Python suite reports 319 passed and 1,169 subtests passed. Ruff, browser/reference and parity tests, generated-artifact drift checks, source and blind-packet validators, runtime diagnostics, static accessibility contracts, segmentation diagnostics, and the master artifact all passed. Wheel-install smoke built an sdist/wheel, installed it in isolation and checked packaged data outside the checkout.
+- Exact-head Web Static [41418718843](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41418718843) and external VISTEC [41418718412](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41418718412) passed. VISTEC evaluation covered 50,000 source-annotated rows with dictionary boundary F1 0.8283 and TUD 0.7530; no expert-adjudicated rows were present, and no accuracy claim is made.
+- Root-cause fixes in this continuation: (1) repaired a test fixture that wrote literal backslash-n sequences instead of JavaScript line breaks; (2) normalized parent-relative browser imports with `posixpath.normpath`, so the static dependency graph resolves imports such as `../src/util.js`; (3) changed the pipeline-level cluster test to exercise `analyze_syllable` instead of duplicating parser-only coverage. No tests were deleted.
+- The static audit artifact reports 99 Python modules, 157 Python import edges, 9 browser modules, 7 browser test files, 391 browser assertion calls, 22 browser import edges, 3 HTML asset edges, 44 workflow script references, 319 test functions, 0 exact duplicate test names/bodies, 2 similar-name candidates and 5 reviewed dynamic-import sites; 0 parse errors. The two similar-name candidates remain because they cover different vowel/API behavior. All five dynamic imports are deliberate test harness loading sites, not unreviewed runtime plugins.
+- Source-attested IPA diagnostics cover 7 dictionary records (5 circular runtime/source rows, 2 non-circular comparisons) and make no accuracy claim. Wisesight 993-row and VISTEC 50,000-row segmentation metrics are source-annotation diagnostics, not expert gold. The dictionary baseline outperforms the TUD research segmenter on both datasets; TUD remains research-only. The 66-row manual segmentation review sample is prepared but not human-adjudicated.
+- Current site: [GitHub Pages](https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/) remains on the successful mainline deployment commit `1431c565ff5c160da4944942d687bc30b2f8d0b2` (Pages run [41326865964](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41326865964)). PR #182 is still open; the verified PR runtime has not yet been deployed. Merge and a successful post-merge Pages run are required to publish it.
+- PR #181 was closed unmerged, but its all-mode adversarial browser changes are included in PR #182; its branch was left untouched. The current branch inventory is 15 refs. No user branches were deleted; historical refs are retained pending an owner-approved retention policy.
+- Remaining genuine blockers: two independent qualified Thai reviewers plus separate adjudication; two independent Ukrainian-native reviewers; CCOST A–D curator clarification and actual TextGrid archive inspection; full immutable LOTUSDIS audio revision and real hashed audio assets/clean intervals; manual WCAG keyboard/screen-reader/device testing. The local clone attempt failed because the execution container could not resolve github.com; local tests are therefore NOT_RUN, while GitHub Actions is the verification source.
+
+**Readiness:** engineering-verified research prototype. Not release-ready for independent Thai IPA/segmentation or Ukrainian target accuracy, and not WCAG-conformance certified. Linguistic accuracy remains `NOT_MEASURED`.

@@ -170,13 +170,20 @@ console.log("Thai lexical regression passed");
 
 const textLexiconRegression = new Map([
   ["ทฤษฎี","ทริด|สะ|ดี"], ["คอมพิวเตอร์","คอม|พิว|เตอร์"], ["โทรศัพท์","โท|ระ|สับ"],
-  ["อยาก","หยาก"], ["ฤๅษี","รือ|สี"], ["ทราบ","ทราบ"], ["ทราย","ทราย"], ["ทรง","ทรง"], ["ทรัพย์","ทรัพย์"], ["แทรก","แทรก"]
+  ["อยาก","หยาก"], ["ทราบ","ทราบ"], ["ทราย","ทราย"], ["ทรง","ทรง"], ["ทรัพย์","ทรัพย์"], ["แทรก","แทรก"]
 ]);
 for (const [input, expected] of textLexiconRegression) {
   const token = analyzeText(input)[0];
   if (!token || token.segmentationStatus !== "lexicon" || token.syllables.map(x => x.input).join("|") !== expected) {
     throw new Error("Text lexicon regression failed: " + input);
   }
+}
+const unsupportedRuesi = analyzeText("ฤๅษี");
+if (!unsupportedRuesi.length || unsupportedRuesi.some(token =>
+  token.segmentationStatus === "lexicon" ||
+  (token.syllables || []).some(syllable => syllable.phonemicIpa || syllable.ukrainian)
+)) {
+  throw new Error("Unattested ฤๅษี must not bypass special-orthography abstention: " + JSON.stringify(unsupportedRuesi));
 }
 console.log("Thai extended text lexicon regression passed");
 

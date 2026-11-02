@@ -27,6 +27,32 @@ def segmental_only(ipa: str) -> str:
     return TONE_MARKS.sub("", value)
 
 
+def summarize_results(results: list[dict]) -> dict:
+    """Summarize complete, withheld and non-circular comparisons without mixing denominators."""
+    total = len(results)
+    complete = sum(record["engine_segmental_ipa"] is not None for record in results)
+    withheld = sum(record["engine_segmental_ipa"] is None for record in results)
+    circular = sum(bool(record["circular_source_override"]) for record in results)
+    comparable = sum(
+        not record["circular_source_override"] and record["engine_segmental_ipa"] is not None
+        for record in results
+    )
+    if complete + withheld != total:
+        raise AssertionError("complete and withheld records must partition the source sample")
+    if comparable > complete:
+        raise AssertionError("independently comparable records cannot exceed complete outputs")
+    return {
+        "source_records": total,
+        "complete_engine_outputs": complete,
+        "withheld_or_incomplete": withheld,
+        "segmental_agreements": sum(record["segmental_match"] is True for record in results),
+        "tone_agreements": sum(record["tone_match"] is True for record in results),
+        "source_override_circular_count": circular,
+        "independently_comparable_records": comparable,
+        "accuracy_claimed": False,
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, default=Path("/tmp/source-attested-ipa-diagnostic.json"))
@@ -93,16 +119,7 @@ def main() -> int:
             "circular_source_override": circular_override,
         })
 
-    summary = {
-        "source_records": len(rows),
-        "complete_engine_outputs": sum(record["engine_segmental_ipa"] is not None for record in results),
-        "withheld_or_incomplete": sum(record["engine_segmental_ipa"] is None for record in results),
-        "segmental_agreements": sum(record["segmental_match"] is True for record in results),
-        "tone_agreements": sum(record["tone_match"] is True for record in results),
-        "source_override_circular_count": sum(record["circular_source_override"] for record in results),
-        "independently_comparable_records": sum(not record["circular_source_override"] and record["engine_segmental_ipa"] is not None for record in results),
-        "accuracy_claimed": False,
-    }
+    summary = summarize_results(results)
     report = {
         "schema_version": "1.0",
         "source_evidence_grade": SOURCE_GRADE,

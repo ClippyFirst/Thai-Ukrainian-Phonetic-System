@@ -10,8 +10,12 @@ class SourceAttestedIpaRegistryTests(unittest.TestCase):
         path = ROOT / "data" / "benchmark" / "source-attested-ipa.tsv"
         with path.open("r", encoding="utf-8-sig", newline="") as stream:
             rows = list(csv.DictReader(stream, delimiter="\t"))
-        self.assertEqual(len(rows), 6)
-        self.assertEqual(len({row["id"] for row in rows}), 6)
+        self.assertEqual(len(rows), 7)
+        self.assertEqual(len({row["id"] for row in rows}), 7)
+        phoeng = next(row for row in rows if row["thai"] == "เพิ่ง")
+        self.assertEqual(phoeng["phonemic_ipa"], "/pʰɤŋ˥˩/")
+        self.assertEqual(phoeng["source_revision"], "1885200")
+        self.assertIn("short vowel", phoeng["vowel_length_note"])
         for row in rows:
             with self.subTest(record=row["id"]):
                 self.assertTrue(row["thai"])
@@ -79,7 +83,7 @@ class SourceAttestedIpaRegistryTests(unittest.TestCase):
         path = ROOT / "data" / "thai" / "lexical_ipa_overrides.tsv"
         with path.open("r", encoding="utf-8-sig", newline="") as stream:
             overrides = list(csv.DictReader(stream, delimiter="\t"))
-        self.assertEqual([row["word"] for row in overrides], ["เงิน", "เดิน", "ออก", "ไกล", "ใกล้"])
+        self.assertEqual([row["word"] for row in overrides], ["เงิน", "เดิน", "ออก", "ไกล", "ใกล้", "เพิ่ง"])
         row = overrides[0]
         self.assertEqual(row["segmental_ipa"], "ŋɤn")
         self.assertEqual(row["tone_category"], "mid")

@@ -9,7 +9,7 @@ from thai_ukrainian.orthography import detect_vowel
 class PipelineTests(unittest.TestCase):
     def test_long_open_live(self):
         a=parse_syllable("กา"); self.assertEqual(a.live_dead,"live"); self.assertEqual(a.vowel_length,"long")
-    def test_cluster_not_coda(self): self.assertIsNone(parse_syllable("กรา").coda)
+    def test_cluster_not_coda(self): self.assertIsNone(analyze_syllable("กรา").coda)
     def test_final_n_live(self):
         a=parse_syllable("กาน"); self.assertEqual(a.coda,"น"); self.assertEqual(a.live_dead,"live")
     def test_tone(self):

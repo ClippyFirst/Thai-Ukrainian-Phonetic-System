@@ -1,68 +1,153 @@
 #!/usr/bin/env python3
-"""Evidence-gated IPA benchmark; standard library only.
-
-Gold TSV: id, text, gold_ipa, gold_status, profile, source_id
-Prediction TSV: id, engine, raw_output, ipa, status, version
-Only ADJUDICATED, non-empty gold IPA rows enter the denominator.
-"""
+"""Evidence-gated IPA benchmark; only independently double-reviewed gold is scored."""
 from __future__ import annotations
-import argparse, csv, json, unicodedata
+
+import argparse
+import csv
+import json
+import unicodedata
 from collections import defaultdict
 from pathlib import Path
 
-GOLD_FIELDS = ["id", "text", "gold_ipa", "gold_status", "profile", "source_id"]
+from thai_ukrainian.evidence_registry import (
+    load_reviewer_registry, load_source_registry,
+    validate_reviewer_reference, validate_source_reference,
+)
+
+GOLD_FIELDS = [
+    "id", "text", "gold_ipa", "gold_status", "profile", "source_id", "source_url",
+    "license", "transcription_level", "reviewer_a_id", "reviewer_b_id",
+    "reviewer_a_qualification_ref", "reviewer_b_qualification_ref",
+    "reviewer_a_ipa", "reviewer_b_ipa", "adjudicator_id", "adjudicator_qualification_ref",
+    "adjudication_outcome",
+    "adjudication_record_id", "adjudication_notes",
+]
 PRED_FIELDS = ["id", "engine", "raw_output", "ipa", "status", "version"]
+TRANSCRIPTION_LEVELS = {"BROAD_PHONEMIC", "BROAD_SURFACE"}
+ADJUDICATION_OUTCOMES = {"AGREEMENT", "RESOLVED_DISAGREEMENT"}
+
 
 def read_tsv(path: Path, required: list[str]) -> list[dict[str, str]]:
-    with path.open("r", encoding="utf-8-sig", newline="") as f:
-        reader = csv.DictReader(f, delimiter="\t")
+    with path.open("r", encoding="utf-8-sig", newline="") as stream:
+        reader = csv.DictReader(stream, delimiter="\t")
         missing = set(required) - set(reader.fieldnames or [])
         if missing:
             raise ValueError(f"{path}: missing columns: {', '.join(sorted(missing))}")
-        rows = list(reader)
-    return [{k: (v or "") for k, v in row.items()} for row in rows]
+        return [{key: (value or "") for key, value in row.items()} for row in reader]
 
-def norm(s: str) -> str:
-    return unicodedata.normalize("NFC", s.strip())
+
+def norm(value: str) -> str:
+    return unicodedata.normalize("NFC", value.strip())
+
 
 def distance(a: str, b: str) -> int:
-    # Levenshtein distance over Unicode code points, not IPA feature classes.
-    prev = list(range(len(b) + 1))
-    for i, ca in enumerate(a, 1):
-        cur = [i]
-        for j, cb in enumerate(b, 1):
-            cur.append(min(cur[-1] + 1, prev[j] + 1, prev[j-1] + (ca != cb)))
-        prev = cur
-    return prev[-1]
+    """Levenshtein distance over Unicode code points, not IPA feature classes."""
+    previous = list(range(len(b) + 1))
+    for i, char_a in enumerate(a, 1):
+        current = [i]
+        for j, char_b in enumerate(b, 1):
+            current.append(min(
+                current[-1] + 1,
+                previous[j] + 1,
+                previous[j - 1] + (char_a != char_b),
+            ))
+        previous = current
+    return previous[-1]
+
+
+def validate_gold_row(
+    row: dict[str, str],
+    source_registry: dict[str, dict[str, str]] | None = None,
+    reviewer_registry: dict[str, dict[str, str]] | None = None,
+) -> None:
+    ident = row["id"]
+    if not norm(row["gold_ipa"]):
+        raise ValueError(f"ADJUDICATED gold row {ident!r} requires non-empty gold_ipa")
+    required = (
+        "source_id", "source_url", "license", "profile", "transcription_level",
+        "reviewer_a_id", "reviewer_b_id", "reviewer_a_qualification_ref",
+        "reviewer_b_qualification_ref", "reviewer_a_ipa", "reviewer_b_ipa",
+        "adjudicator_id", "adjudication_outcome", "adjudication_record_id",
+        "adjudication_notes",
+    )
+    missing = [field for field in required if not row[field].strip()]
+    if missing:
+        raise ValueError(
+            f"ADJUDICATED gold row {ident!r} requires provenance: {', '.join(missing)}"
+        )
+    if row["reviewer_a_id"].strip() == row["reviewer_b_id"].strip():
+        raise ValueError(f"ADJUDICATED gold row {ident!r} requires two distinct reviewers")
+    if row["adjudicator_id"].strip() in {row["reviewer_a_id"].strip(), row["reviewer_b_id"].strip()}:
+        raise ValueError(f"ADJUDICATED gold row {ident!r} requires an independent adjudicator")
+    if row["transcription_level"] not in TRANSCRIPTION_LEVELS:
+        raise ValueError(f"ADJUDICATED gold row {ident!r} has unsupported transcription_level")
+    source_use = {
+        "BROAD_PHONEMIC": "BROAD_PHONEMIC_IPA_GOLD_INPUT",
+        "BROAD_SURFACE": "BROAD_SURFACE_IPA_GOLD_INPUT",
+    }[row["transcription_level"]]
+    if source_registry is not None:
+        validate_source_reference(row["source_id"], row["source_url"], row["license"],
+                                  source_use, source_registry, row_id=ident)
+    if reviewer_registry is not None:
+        validate_reviewer_reference(row["reviewer_a_id"], row["reviewer_a_qualification_ref"], reviewer_registry,
+                                    language="th", required_role="THAI_PHONETICIAN", row_id=ident)
+        validate_reviewer_reference(row["reviewer_b_id"], row["reviewer_b_qualification_ref"], reviewer_registry,
+                                    language="th", required_role="THAI_PHONETICIAN", row_id=ident)
+        validate_reviewer_reference(row["adjudicator_id"], row["adjudicator_qualification_ref"], reviewer_registry,
+                                    language="th", required_role="THAI_PHONETICIAN_ADJUDICATOR", row_id=ident)
+    outcome = row["adjudication_outcome"]
+    if outcome not in ADJUDICATION_OUTCOMES:
+        raise ValueError(f"ADJUDICATED gold row {ident!r} has invalid adjudication_outcome")
+    labels_agree = norm(row["reviewer_a_ipa"]) == norm(row["reviewer_b_ipa"])
+    if outcome == "AGREEMENT" and not labels_agree:
+        raise ValueError(f"ADJUDICATED gold row {ident!r}: AGREEMENT requires matching reviewer IPA")
+    if outcome == "AGREEMENT" and norm(row["gold_ipa"]) != norm(row["reviewer_a_ipa"]):
+        raise ValueError(f"ADJUDICATED gold row {ident!r}: gold_ipa must equal the agreed reviewer IPA")
+    if outcome == "RESOLVED_DISAGREEMENT" and labels_agree:
+        raise ValueError(
+            f"ADJUDICATED gold row {ident!r}: RESOLVED_DISAGREEMENT requires differing reviewer IPA"
+        )
+
 
 def main() -> int:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--gold", type=Path, required=True)
-    ap.add_argument("--predictions", type=Path, required=True)
-    ap.add_argument("--output", type=Path, default=Path("benchmark-report.json"))
-    args = ap.parse_args()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--gold", type=Path, required=True)
+    parser.add_argument("--predictions", type=Path, required=True)
+    parser.add_argument("--output", type=Path, default=Path("benchmark-report.json"))
+    parser.add_argument("--source-registry", type=Path, default=Path("data/benchmark/source-registry.tsv"))
+    parser.add_argument("--reviewer-registry", type=Path, default=Path("data/benchmark/reviewer-qualifications.tsv"))
+    args = parser.parse_args()
+    source_registry = load_source_registry(args.source_registry)
+    reviewer_registry = load_reviewer_registry(args.reviewer_registry)
     gold_rows = read_tsv(args.gold, GOLD_FIELDS)
-    pred_rows = read_tsv(args.predictions, PRED_FIELDS)
-    gold = {}
+    prediction_rows = read_tsv(args.predictions, PRED_FIELDS)
+    gold: dict[str, dict[str, str]] = {}
     for row in gold_rows:
         if not row["id"] or row["id"] in gold:
             raise ValueError(f"gold IDs must be non-empty and unique: {row['id']!r}")
         gold[row["id"]] = row
-    # An ADJUDICATED label must be auditable. Fail closed instead of silently
-    # excluding malformed gold rows and accidentally changing the denominator.
+    eligible = {
+        ident: row for ident, row in gold.items()
+        if row["gold_status"] == "ADJUDICATED" and norm(row["gold_ipa"])
+    }
+    # Reject mixed target layers before row-level source validation so the
+    # caller receives the benchmark-design error, not a misleading source error.
+    candidate_levels = {row["transcription_level"] for row in eligible.values()}
+    if len(candidate_levels) > 1:
+        raise ValueError(
+            "one benchmark run must use one transcription_level; run phonemic and surface IPA separately"
+        )
     for row in gold_rows:
         if row["gold_status"] == "ADJUDICATED":
-            if not norm(row["gold_ipa"]):
-                raise ValueError(f"ADJUDICATED gold row {row['id']!r} requires non-empty gold_ipa")
-            if not row["source_id"].strip():
-                raise ValueError(f"ADJUDICATED gold row {row['id']!r} requires source_id")
-            if not row["profile"].strip():
-                raise ValueError(f"ADJUDICATED gold row {row['id']!r} requires profile")
-    eligible = {k: v for k, v in gold.items()
-                if v["gold_status"] == "ADJUDICATED" and norm(v["gold_ipa"])}
-    predictions = defaultdict(dict)
+            validate_gold_row(row, source_registry, reviewer_registry)
+    transcription_levels = {row["transcription_level"] for row in eligible.values()}
+    if len(transcription_levels) > 1:
+        raise ValueError(
+            "one benchmark run must use one transcription_level; run phonemic and surface IPA separately"
+        )
+    predictions: dict[str, dict[str, dict[str, str]]] = defaultdict(dict)
     unknown_ids = []
-    for row in pred_rows:
+    for row in prediction_rows:
         if not row["engine"] or not row["id"]:
             raise ValueError("prediction engine and id must be non-empty")
         engine = row["engine"]
@@ -72,59 +157,97 @@ def main() -> int:
         if row["id"] not in gold:
             unknown_ids.append({"engine": engine, "id": row["id"]})
     report = {
-        "schema_version": "1.0",
+        "schema_version": "1.1",
         "method": {
-            "gold_gate": "gold_status == ADJUDICATED and non-empty gold_ipa",
+            "gold_gate": (
+                "ADJUDICATED, non-empty IPA, two distinct verified Thai-phonetician reviewers, "
+                "a distinct verified Thai-phonetician adjudicator, exact source/license registry match, "
+                "outcome, transcription level and adjudication record"
+            ),
             "normalization": "Unicode NFC plus outer whitespace trim only",
             "exact_match": "strict full-string IPA match; tone, length and syllable separators remain significant",
             "cer": "Levenshtein over Unicode code points; not articulatory/feature-weighted",
-            "missing_predictions": "every eligible gold row is in each engine's denominator; absent/empty IPA counts as a missing prediction and incurs reference-length edit cost",
-            "accuracy_claim": "descriptive only for the supplied adjudicated rows; no generalization claim",
+            "missing_predictions": "every eligible gold row is in each engine's denominator; absent/empty IPA counts as missing",
+            "accuracy_claim": "descriptive only for supplied independently reviewed rows; no generalization claim",
         },
-        "gold": {"rows_total": len(gold), "rows_adjudicated": len(eligible),
-                 "accuracy_status": "MEASURED_ON_ADJUDICATED_SUBSET" if eligible else "NOT_MEASURED"},
+        "evidence_registries": {
+            "source_records": len(source_registry),
+            "verified_reviewer_records": sum(row["verification_status"] == "VERIFIED" for row in reviewer_registry.values()),
+        },
+        "gold": {
+            "transcription_level": next(iter(transcription_levels), None),
+            "rows_total": len(gold),
+            "rows_adjudicated": len(eligible),
+            "accuracy_status": "MEASURED_ON_ADJUDICATED_SUBSET" if eligible else "NOT_MEASURED",
+        },
         "unknown_prediction_ids": unknown_ids,
         "engines": {},
     }
     for engine in sorted(predictions):
         rows = []
-        for ident, g in eligible.items():
-            pred = predictions[engine].get(ident)
-            ref = norm(g["gold_ipa"])
-            p = norm(pred["ipa"]) if pred else ""
+        for ident, reference in eligible.items():
+            prediction = predictions[engine].get(ident)
+            ref = norm(reference["gold_ipa"])
+            predicted = norm(prediction["ipa"]) if prediction else ""
             rows.append({
-                "id": ident, "profile": g["profile"],
-                "exact_match": bool(p) and p == ref,
-                "missing_prediction": not bool(p),
-                "prediction_row_present": pred is not None,
-                "edit_distance": distance(ref, p) if p else len(ref),
+                "id": ident,
+                "profile": reference["profile"],
+                "transcription_level": reference["transcription_level"],
+                "exact_match": bool(predicted) and predicted == ref,
+                "missing_prediction": not bool(predicted),
+                "prediction_row_present": prediction is not None,
+                "edit_distance": distance(ref, predicted) if predicted else len(ref),
                 "reference_codepoints": len(ref),
-                "raw_output_present": bool(pred and pred["raw_output"]),
-                "status": pred["status"] if pred else "MISSING_ROW",
-                "version": pred["version"] if pred else "",
+                "raw_output_present": bool(prediction and prediction["raw_output"]),
+                "status": prediction["status"] if prediction else "MISSING_ROW",
+                "version": prediction["version"] if prediction else "",
             })
-        n = len(rows)
-        edits = sum(r["edit_distance"] for r in rows)
-        chars = sum(r["reference_codepoints"] for r in rows)
+        count = len(rows)
+        edits = sum(row["edit_distance"] for row in rows)
+        codepoints = sum(row["reference_codepoints"] for row in rows)
+        by_profile = {}
+        for profile in sorted({row["profile"] for row in rows}):
+            group = [row for row in rows if row["profile"] == profile]
+            group_count = len(group)
+            group_edits = sum(row["edit_distance"] for row in group)
+            group_codepoints = sum(row["reference_codepoints"] for row in group)
+            by_profile[profile] = {
+                "n": group_count,
+                "exact_matches": sum(row["exact_match"] for row in group),
+                "exact_match_rate": sum(row["exact_match"] for row in group) / group_count if group_count else None,
+                "missing_predictions": sum(row["missing_prediction"] for row in group),
+                "codepoint_cer": group_edits / group_codepoints if group_codepoints else None,
+            }
         report["engines"][engine] = {
-            "n_adjudicated_gold_rows": n,
-            "exact_matches": sum(r["exact_match"] for r in rows),
-            "exact_match_rate": sum(r["exact_match"] for r in rows) / n if n else None,
-            "missing_predictions": sum(r["missing_prediction"] for r in rows),
-            "missing_prediction_rate": sum(r["missing_prediction"] for r in rows) / n if n else None,
-            "codepoint_cer": edits / chars if chars else None,
-            "profiles": sorted({r["profile"] for r in rows if r["profile"]}),
-            "versions": sorted({r["version"] for r in predictions[engine].values() if r["version"]}),
+            "by_profile": by_profile,
+            "n_adjudicated_gold_rows": count,
+            "exact_matches": sum(row["exact_match"] for row in rows),
+            "exact_match_rate": sum(row["exact_match"] for row in rows) / count if count else None,
+            "missing_predictions": sum(row["missing_prediction"] for row in rows),
+            "missing_prediction_rate": sum(row["missing_prediction"] for row in rows) / count if count else None,
+            "codepoint_cer": edits / codepoints if codepoints else None,
+            "profiles": sorted({row["profile"] for row in rows if row["profile"]}),
+            "transcription_levels": sorted({row["transcription_level"] for row in rows}),
+            "versions": sorted({row["version"] for row in predictions[engine].values() if row["version"]}),
             "rows": rows,
-            "status": "SCORED" if n else "NOT_MEASURED_NO_ADJUDICATED_GOLD",
+            "status": "SCORED" if count else "NOT_MEASURED_NO_ADJUDICATED_GOLD",
         }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps({"output": str(args.output), "gold_adjudicated": len(eligible),
-                      "engines": {k: {"n": v["n_adjudicated_gold_rows"], "status": v["status"],
-                                      "missing": v["missing_predictions"]}
-                                  for k, v in report["engines"].items()}}, ensure_ascii=False))
+    print(json.dumps({
+        "output": str(args.output),
+        "gold_adjudicated": len(eligible),
+        "engines": {
+            key: {
+                "n": value["n_adjudicated_gold_rows"],
+                "status": value["status"],
+                "missing": value["missing_predictions"],
+            }
+            for key, value in report["engines"].items()
+        },
+    }, ensure_ascii=False))
     return 0
+
 
 if __name__ == "__main__":
     raise SystemExit(main())

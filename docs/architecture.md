@@ -36,6 +36,10 @@ It is not phonetic IPA, ISO 11940 transliteration, or an input to the primary IP
 
 Python and browser modules intentionally implement equivalent logic in separate runtimes; their parity is tested. Do not collapse these modules or move source data without first proving the generated/runtime contract and clean-install behavior.
 
+## Static dependency and test-overlap audit
+
+CI runs `scripts/audit_repository_structure.py` and publishes the `repository-static-dependency-and-test-audit` artifact. The report inventories static Python imports, browser ES-module imports, HTML script/stylesheet references, workflow script references, dynamic-import review sites, Python test functions, browser test files/imports/assertion counts and exact/similar Python test-name candidates. It is a reproducible static graph, not a complete runtime call graph: reflection, indirect calls, generated imports, runtime data flows and dynamically selected assets still require manual tracing. Similar test names are review prompts only; no test is removed without semantic acceptance-contract and coverage evidence.
+
 ## Evidence and release boundaries
 
 - Source-attested examples and source-annotated segmentation are not expert-adjudicated gold.
@@ -43,3 +47,8 @@ Python and browser modules intentionally implement equivalent logic in separate 
 - Structural combinatorial tables are not lexical inventories.
 - RTGS output and IPA-first phonetic output must remain separately labelled.
 - Engineering CI verifies software contracts, not independent linguistic accuracy or WCAG conformance.
+
+
+## Test overlap evidence
+
+The static audit reports Python test function names, exact AST-body SHA-256 fingerprints and similar-name clusters. These are candidate-generation aids only: the same body may be valid in different fixtures or modules, and different bodies may still test the same behavior. Review candidates against test intent, fixtures, failure modes, branch conditions and mutation/negative coverage before considering consolidation. No automated deletion or deduplication is performed.

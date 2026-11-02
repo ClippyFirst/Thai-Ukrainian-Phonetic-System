@@ -29,7 +29,7 @@ This page is the navigation layer for the repository. It distinguishes the maint
 - `web/src/` — browser implementation; parity with Python is a release gate.
 - `data/thai/` — runtime Thai registries and their provenance/license notices.
 - `data/ua_target_vectors.csv` — Ukrainian target feature inventory.
-- `data/benchmark/` — benchmark inputs, adjudication templates and diagnostic run records; evidence grades remain explicit.
+- `data/benchmark/` — benchmark inputs, blind Thai and Ukrainian reviewer packets, adjudication-gold registries and diagnostic run records; evidence grades remain explicit.
 - `schemas/` — machine-readable contracts.
 - [`scripts/README.md`](../scripts/README.md) — script inventory, ownership, input/output contracts and evidence boundaries.
 - `tests/` and `web/tests/` — Python and browser regression suites.
@@ -57,4 +57,12 @@ This page is the navigation layer for the repository. It distinguishes the maint
 
 ## Repository verification snapshot — 2026-11-01
 
-Final cleanup main snapshot: `1431c565ff5c160da4944942d687bc30b2f8d0b2`. Post-merge CI [41326865977](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41326865977) passed `test`, `wheel-install-smoke` and `master-artifact`; Pages [41326865964](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41326865964) passed `build` and `deploy`. This engineering verification is not a claim of independent linguistic gold or WCAG conformance.
+Current main snapshot: `cc398254c178171f74397aed556766e87356ab84`. Last recorded full main CI [41326865977](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41326865977) and Pages [41326865964](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41326865964) passed on the preceding main code checkpoint `1431c565ff5c160da4944942d687bc30b2f8d0b2`; those runs are not represented as testing the later documentation-only main commit. Research branch `research/independent-adjudication-gates-20261101` continues in PR #182; consult the live PR head for its current ahead count and exact-head checks. PR #181 was closed as superseded after its engine/test/CI changes were ported into combined PR #182; its source branch remains intact. This engineering verification is not a claim of independent linguistic gold or WCAG conformance.
+
+
+Research continuation closeout: PR [#182](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/182) is open from `research/independent-adjudication-gates-20261101`; PR #181 was closed as superseded after its engine/test/CI changes were ported. The #181 source branch remains intact. Exact code-head CI [41337529189](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41337529189) and Web Static [41337815975](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41337815975) passed. This is engineering verification, not independent linguistic accuracy.
+
+
+## 2026-11-02 — follow-up validator review
+
+PR #182 remains open on `research/independent-adjudication-gates-20261101`. A narrow-IPA-on-abstention guard was added after a test-first review: the new regression test is in commit `2852b47`, and the one-line implementation is in `e22c686`. Web Static passed on the implementation head; full CI and VISTEC were still running at the time of this snapshot. The test-only CI run was cancelled before the Python suite, so a red result is not claimed. See the newest continuation checkpoint and validation matrix for exact evidence and remaining blockers.
