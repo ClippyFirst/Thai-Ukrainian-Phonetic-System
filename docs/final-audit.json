@@ -3057,9 +3057,18 @@
     "runtime_changes": "NONE",
     "project_accuracy": "NOT_MEASURED",
     "independent_review": "BLOCKED_EXTERNAL_REVIEWERS",
-    "exact_head_verification": "PENDING_DOCUMENTATION_ONLY_CHECKPOINT",
+    "exact_head_verification": "PASSED_ON_450FE4B6527C8019EA7399218DAF30222FE190E2",
     "latest_document_commit_before_json": "276d70f2b60f90b12652a8ae0e382e6e954b85bc",
     "consensus_thread": "https://consensus.app/search/research-the-peer-reviewed-evidence-and-primary-sc/TPPdaWrzSWGIdPzNPruDdA/",
-    "undermind_document": "https://app.undermind.ai/projects/49bbd978-a5a9-4cac-a7bb-a72848f50e10?path=/Research%20the%20peer-reviewed%20evidence%20and%20primary%20scholarly%20literature%20relevant%20to.md"
+    "undermind_document": "https://app.undermind.ai/projects/49bbd978-a5a9-4cac-a7bb-a72848f50e10?path=/Research%20the%20peer-reviewed%20evidence%20and%20primary%20scholarly%20literature%20relevant%20to.md",
+    "ci_run": 41536529764,
+    "ci_result": "PASSED_ALL_3_JOBS",
+    "web_static_run": 41536529768,
+    "web_static_result": "PASSED",
+    "python_test_suite": "326_PASSED_1185_SUBTESTS_PASSED",
+    "ruff": "PASSED",
+    "wheel_install_smoke": "PASSED",
+    "master_artifact": "PASSED",
+    "current_audit_documentation_update": "DOCUMENTATION_ONLY_FOLLOWUP_REQUIRES_FINAL_EXACT_HEAD_CI"
   }
 }
