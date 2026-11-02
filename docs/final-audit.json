@@ -304,7 +304,7 @@
     "rows": 351780,
     "vowel_rime_records": 41
   },
-  "latest_documentation_checkpoint": "PR #190 draft; code head 7ea89691 passed CI 41482464813 and Web Static 41482464764; prior documentation head a8d6dc27 passed CI 41483211761 and Web Static 41483211756; current reconciled documentation head 7316f4a94af8ffe21bba11ab4ade11b7f0187999 has Web Static 41529842089 PASS and CI 41529841951 IN_PROGRESS at this checkpoint.",
+  "latest_documentation_checkpoint": "PR #190 draft; code head 7ea89691 passed CI 41482464813 and Web Static 41482464764; prior documentation head a8d6dc27 passed CI 41483211761 and Web Static 41483211756; reconciled documentation head 098cca3d45acbae9ef190dd2965199c8ac9faa66 passed Web Static 41530092590 and Full CI 41530092680 (test, wheel-install-smoke, master-artifact).",
   "text_only_checkpoint": {
     "branch": "research/thai-segmentation-gold-parity-verified-20261025",
     "parent_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
@@ -532,14 +532,14 @@
   "latest_implementation_commit_pending_ci": null,
   "current_head_status_at_audit_refresh": {
     "branch": "fix/accessibility-control-contrast-20261102",
-    "head": "7316f4a94af8ffe21bba11ab4ade11b7f0187999",
+    "head": "098cca3d45acbae9ef190dd2965199c8ac9faa66",
     "base": "75c331f69aa3c8e5b4db3ccc5a6da85124600a01",
-    "commits_ahead_of_main": 13,
+    "commits_ahead_of_main": 14,
     "commits_behind_main": 0,
-    "web_static_run": 41529842089,
+    "web_static_run": 41530092590,
     "web_static_status": "PASS",
-    "ci_run": 41529841951,
-    "ci_status": "IN_PROGRESS",
+    "ci_run": 41530092680,
+    "ci_status": "PASS — test, wheel-install-smoke, master-artifact",
     "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT"
   },
   "current_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
@@ -2927,7 +2927,7 @@
       "state": "open",
       "merged": false,
       "branch": "fix/accessibility-control-contrast-20261102",
-      "head": "7316f4a94af8ffe21bba11ab4ade11b7f0187999",
+      "head": "098cca3d45acbae9ef190dd2965199c8ac9faa66",
       "scope": "textarea and output-selector visible border contrast; strictness slider excluded because its active range rule resets border to zero",
       "web_static_run": 41482464764,
       "full_ci_run": 41482464813,
@@ -2939,10 +2939,10 @@
       "prior_documentation_ci_status": "PASS",
       "prior_documentation_web_static_run": 41483211756,
       "prior_documentation_web_static_status": "PASS",
-      "latest_web_static_run": 41529842089,
+      "latest_web_static_run": 41530092590,
       "latest_web_static_status": "PASS",
-      "latest_ci_run": 41529841951,
-      "latest_ci_status": "IN_PROGRESS_AT_AUDIT_REFRESH",
+      "latest_ci_run": 41530092680,
+      "latest_ci_status": "PASS — test, wheel-install-smoke, master-artifact",
       "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT"
     }
   }
