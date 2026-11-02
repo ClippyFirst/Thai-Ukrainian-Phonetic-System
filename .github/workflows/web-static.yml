@@ -48,6 +48,8 @@ jobs:
           grep -q 'focus-visible' web/src/styles.css
           grep -q 'Content-Security-Policy' web/index.html
           grep -q 'Content-Security-Policy' web/system.html
+      - name: Run static accessibility contract suite
+        run: node web/tests/accessibility-contract.test.mjs
       - name: Check no remote runtime dependency
         run: |
           ! grep -E '(<script[^>]+src="https?://|<link[^>]+href="https?://)' web/index.html web/system.html
