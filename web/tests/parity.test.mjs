@@ -189,6 +189,21 @@ if (unsupportedRuesiSpelling.length !== 1 || unsupportedRuesiSpelling[0].segment
     unsupportedRuesiSpelling[0].syllables.length !== 0) {
   throw new Error("Unattested ฤษี must remain unresolved: " + JSON.stringify(unsupportedRuesiSpelling));
 }
+for (const phrase of [
+  "ประเทศยูเครน",
+  "ยูเครนเป็นประเทศหนึ่ง",
+  "เป็นประเทศหนึ่ง",
+  "ประเทศในยุโรปตะวันออก",
+]) {
+  const tokens = analyzeText(phrase).filter(token => token.kind === "thai");
+  if (!tokens.length || tokens.some(token =>
+    token.segmentationStatus === "unresolved" ||
+    !token.syllables?.length ||
+    token.syllables.some(syllable => !syllable.phonemicIpa || !syllable.ukrainian)
+  )) {
+    throw new Error("Source-backed article phrase did not reach complete IPA → Ukrainian output: " + phrase + " " + JSON.stringify(tokens));
+  }
+}
 console.log("Thai extended text lexicon regression passed");
 
 const unicodeHazards = [
