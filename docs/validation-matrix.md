@@ -1406,3 +1406,10 @@ The fix is deliberately limited to the existing abstention guard; no schema, run
 - Exact-head Web Static [41406424761](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41406424761) and external VISTEC segmentation evaluation [41406424960](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41406424960) also passed on the same head.
 - Provenance distinction: CI [41406087052](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41406087052) ran on implementation commit `964b4930321e68c77ba5e956e1c0ecd12164ccfa`. The additional regression tests for required `microphone_id`, file-level overlap with a clean selected interval, and rejection of an overlapping selected interval were committed in `826fcddad4d66471b1ba95f00c4cc5b5f430e237`; **41406424727 is the CI run that verifies those tests**.
 - This is **DONE_VERIFIED engineering**, not linguistic validation. No audio assets or expert annotations were added; Thai IPA/segmentation and Ukrainian practical transcription accuracy remain **NOT MEASURED**. The external evidence gates below remain open.
+
+### First FastThaiG2P workflow result — 2026-11-02
+
+- Optional run [41431032031](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41431032031) completed and uploaded artifact SHA-256 `d06f6a87d177a61780b3d58fc0bc74087f657ce8e0548c67bee4b20cd7275e8b`.
+- Artifact inspection found the local `src`-layout package was not installed in that optional workflow. Both ClippyFirst and the adapter-based FastThaiG2P candidate failed initialization with `ModuleNotFoundError: No module named 'thai_ukrainian'`. Only thaiphon and Goruut ran. This attempt is **INVALID_FOR_THE_REQUESTED_COMPARISON**, not a ClippyFirst/FastThaiG2P result.
+- Corrected the workflow to install the local project editable before running comparators. Also corrected ClippyFirst benchmark serialization to consume typed `PhoneticResult` and append its tone contour. The next exact-head optional workflow run and artifact inspection are required before reporting coverage/latency.
+- Accuracy remains NOT_MEASURED (0 adjudicated gold rows).
