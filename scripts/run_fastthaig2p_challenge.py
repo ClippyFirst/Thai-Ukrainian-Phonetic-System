@@ -23,7 +23,7 @@ DEFAULT_INPUT = ROOT / "data" / "benchmark" / "thai_g2p_challenge.jsonl"
 DEFAULT_OUTPUT = ROOT / "reports" / "fastthaig2p-challenge-comparison.json"
 _TONE_MARKS = set("˥˦˧˨˩")
 _LENGTH_MARKS = set("ːˑ")
-_SEGMENTAL_IGNORABLE = _TONE_MARKS | {"͡", "8"}
+_SEGMENTAL_IGNORABLE = _TONE_MARKS | {"͡", "͜", "8"}
 
 
 def load_challenge(path: Path) -> list[dict[str, Any]]:
