@@ -73,9 +73,9 @@ class RepositoryStructureAuditTests(unittest.TestCase):
                 "export const value = 1;\n", encoding="utf-8"
             )
             (root / "web" / "tests" / "contract.test.mjs").write_text(
-                "import assert from 'node:assert/strict';\\n"
-                "import { value } from '../src/util.js';\\n"
-                "assert.equal(value, 1);\\n",
+                "import assert from 'node:assert/strict';\n"
+                "import { value } from '../src/util.js';\n"
+                "assert.equal(value, 1);\n",
                 encoding="utf-8",
             )
             (root / "web" / "index.html").write_text(
