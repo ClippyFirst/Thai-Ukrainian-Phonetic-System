@@ -40,6 +40,13 @@ jobs:
         run: python scripts/validate_ukrainian_preference_packet.py data/benchmark/ukrainian-target-preference-blind.tsv
       - name: Run the complete Python test suite (pytest functions and unittest classes)
         run: python -m pytest -q -ra
+      - name: Build the static dependency graph and test-overlap inventory
+        run: python scripts/audit_repository_structure.py --output /tmp/repository-structure-audit.json --revision "$GITHUB_SHA"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: repository-static-dependency-and-test-audit
+          path: /tmp/repository-structure-audit.json
+          if-no-files-found: error
       - run: python scripts/run_challenge_diagnostics.py --output /tmp/challenge-runtime-diagnostics.json
       - run: python -c "import json; r=json.load(open('/tmp/challenge-runtime-diagnostics.json',encoding='utf-8')); s=r['summary']; assert s['challenge_inputs']==42, s; assert s['inputs_with_engine_output']+s['inputs_abstained_or_without_complete_output']==42, s; assert r['evaluation_kind']=='runtime_diagnostic_not_accuracy_benchmark'; assert 'accuracy' not in s"
       - run: node web/tests/ipa-ua.test.mjs
