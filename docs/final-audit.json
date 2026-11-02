@@ -520,6 +520,13 @@
       "status": "DONE_VERIFIED",
       "implementation": "PR #182 squash-merged as 65584d9; main CI 41420468842, Web Static 41420468939 and Pages deployment/published-content verification 41420468875 all passed. The updated service is live at GitHub Pages.",
       "acceptance": "Post-merge Pages build/deploy/published-content verification passed; main CI and Web Static passed."
+    },
+    {
+      "id": "FASTTHAIG2P-SPIKE-2026-11-02",
+      "status": "PARTIAL",
+      "implementation": "Added lazy optional Python adapter pinned to awslabs/FastThaiG2P c4759eef7df03e11fcbb9aa83efe8cf21709fd2f; extended existing 42-row same-input runner with ClippyFirst conservative abstention semantics, coverage/latency/runtime metadata and pairwise diagnostics; added tests and license/provenance register.",
+      "blocker": "Exact-head CI and artifacts pending; local clone/tests blocked by DNS. Accuracy is NOT_MEASURED because all 42 challenge IPA gold fields are null. Upstream generated/manual IPA and TLTK fallback data lack complete item-level license/provenance in inspected tree.",
+      "acceptance": "Exact-head GitHub Actions passes adapter/runner tests, Ruff and package smoke; inspect 42-row raw output and summary artifact. Keep accuracy NOT_MEASURED until independent double-reviewer Thai IPA gold and adjudication exist."
     }
   ],
   "latest_implementation_branch": "research/independent-adjudication-gates-20261101 (merged into main)",
@@ -2904,5 +2911,17 @@
     "linguistic_accuracy": "NOT_MEASURED",
     "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY"
   },
-  "latest_full_repository_head_pages_run": "41420468875"
+  "latest_full_repository_head_pages_run": "41420468875",
+  "fastthaig2p_spike_2026_11_02": {
+    "branch": "research/fastthaig2p-adapter-spike-20261102",
+    "starting_main": "75c331f69aa3c8e5b4db3ccc5a6da85124600a01",
+    "upstream_commit": "c4759eef7df03e11fcbb9aa83efe8cf21709fd2f",
+    "corpus_rows": 42,
+    "independent_gold_rows": 0,
+    "accuracy_status": "NOT_MEASURED",
+    "local_clone": "BLOCKED_DNS",
+    "exact_head_ci": "PENDING",
+    "production_dependency": false,
+    "data_redistribution": "NOT_AUTHORIZED_BY_THIS_SPIKE"
+  }
 }
