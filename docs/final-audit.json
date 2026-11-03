@@ -2693,10 +2693,74 @@
       "state": "OPEN",
       "draft": true,
       "merged": false,
-      "base": "main",
-      "base_sha": "75c331f69aa3c8e5b4db3ccc5a6da85124600a01",
       "head_branch": "fix/thai-spacing-vowel-cluster-parity-20261103",
-      "verified_code_test_sha": "2b0503099b9d482ae8106fc924039f619c54a957"
+      "head_sha": "b6c9deab84525fe65dbd95cc84c3b4fe63483c8f",
+      "verified_code_test_sha": "2b0503099b9d482ae8106fc924039f619c54a957",
+      "ci": 41726180498,
+      "external_vistec": 41726181625
+    },
+    {
+      "number": 190,
+      "title": "fix(web): meet non-text contrast for form controls",
+      "state": "OPEN",
+      "draft": true,
+      "merged": false,
+      "head_sha": "fc116507e18c2d6624dad18e38d719cb3a606ec0",
+      "ci": 41533064781,
+      "web_static": 41533064664,
+      "disposition": "left_untouched_manual_wcag_review_open"
+    },
+    {
+      "number": 189,
+      "title": "Triage G2P benchmark error clusters and recover attested lexical cases",
+      "state": "OPEN",
+      "draft": true,
+      "merged": false,
+      "head_sha": "9b088cf05ceab7e1c758b75688bb624c115ce341",
+      "ci": 41715667897,
+      "web_static": 41715667842,
+      "external_vistec": 41715667903,
+      "disposition": "left_untouched_independent_linguistic_evidence_open"
+    },
+    {
+      "number": 188,
+      "title": "research: register Global TIMIT Thai as restricted alignment candidate",
+      "state": "OPEN",
+      "draft": true,
+      "merged": false,
+      "head_sha": "00374b252cdd3693faf26fdfc1b033e8fdec48e0",
+      "ci": 41460030159,
+      "disposition": "left_untouched_metadata_only_not_phonetic_gold"
+    },
+    {
+      "number": 186,
+      "title": "research: add conservative typed FastThaiG2P IPA boundary",
+      "state": "OPEN",
+      "draft": true,
+      "merged": false,
+      "head_sha": "c02e10e89ac340b80b6ed83c0a991f89cf9cc3fe",
+      "base_branch": "research/fastthaig2p-integration-spike-20261102",
+      "disposition": "left_untouched_research_spike"
+    },
+    {
+      "number": 185,
+      "title": "research: add optional FastThaiG2P challenge comparison spike",
+      "state": "OPEN",
+      "draft": true,
+      "merged": false,
+      "head_sha": "a05afd184a7b546f522272df8d2ddc184e4e51c2",
+      "disposition": "left_untouched_research_spike"
+    },
+    {
+      "number": 184,
+      "title": "feat: add optional FastThaiG2P adapter and same-input comparison",
+      "state": "OPEN",
+      "draft": true,
+      "merged": false,
+      "head_sha": "ddbd57745eee2f86a80e149e2153f2fd107fa205",
+      "ci": 41660040598,
+      "optional_smoke": 41660040574,
+      "disposition": "left_untouched_research_spike"
     }
   ],
   "audio_interval_overlap_code_checkpoint_2026_11_02": {
@@ -2987,6 +3051,15 @@
       "CCOST A–D curator clarification and actual TextGrid archive inspection",
       "Immutable LOTUSDIS revision plus real hashed audio assets and clean reviewed intervals",
       "Hands-on WCAG keyboard, screen-reader, zoom/reflow and device testing"
-    ]
+    ],
+    "other_open_prs_left_untouched": [
+      188,
+      189,
+      190,
+      184,
+      185,
+      186
+    ],
+    "open_pr_count": 7
   }
 }
