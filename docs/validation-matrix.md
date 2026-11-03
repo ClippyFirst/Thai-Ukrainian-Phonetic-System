@@ -1418,3 +1418,17 @@ The fix is deliberately limited to the existing abstention guard; no schema, run
 **Exact-head engineering evidence:** literature checkpoint `450fe4b6527c8019ea7399218daf30222fe190e2` passed Full CI [41536529764](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41536529764) and Web Static [41536529768](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41536529768). Full CI passed `test`, `wheel-install-smoke` and `master-artifact`; pytest 326 passed / 1,185 subtests passed; Ruff, source/blind-packet validators, generators/drift, Python/browser IPA-UA parity, UI/accessibility static checks and segmentation diagnostics passed. This verifies the software/documentation checkpoint, not linguistic accuracy. The subsequent documentation reconciliation requires final exact-head CI.
 
 **Final documentation checkpoint:** `7391688c4c19b295f701812e8d6336bcf6abeb02` passed exact-head Full CI [41537375617](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41537375617) and Web Static [41537375633](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41537375633), including all three Full CI jobs. The structured audit update following that checkpoint is documentation-only and receives its own exact-head run.
+
+
+## Development methodology review — 2026-11-03
+
+| Item | State | Evidence / acceptance |
+|---|---|---|
+| Review Superpowers TDD and code-review workflow | DONE_VERIFIED — source reviewed | Inspected upstream `test-driven-development` and `requesting-code-review`; adopt red/green/refactor, expected failure verification and independent review. No skill copied. |
+| Review Matt Pocock primary-source research workflow | DONE_VERIFIED — source reviewed | Inspected `skills/engineering/research/SKILL.md`; adopt primary-source traceability and durable notes. Do not adopt its unguarded nested-agent delegation or treat its "primary source" test as sufficient without manual source-quality verification. |
+| Review Ponytail minimal-change workflow | DONE_VERIFIED — source reviewed | Inspected `skills/ponytail/SKILL.md`, `AGENTS.md`, README; adopt dataflow-first reading, reuse and minimum complete diff; never remove trust-boundary validation, error handling or accessibility. No benchmark claims imported. |
+| Vendor/install upstream skills or dependencies | DEFERRED — unnecessary | No runtime skill host installation requested; no code dependency justified. All three upstream repositories declare MIT, but no code was copied. |
+| Correct audit JSON vs PR head drift | DONE_VERIFIED — documentation corrected; final CI pending | Prior PR head 9135187 / 80 ahead / CI 41539140734 and Web Static 41539140594 passed. Structured audit had stale ba71 / 79 ahead values. Current JSON now records the 913 checkpoint and this documentation batch; final exact-head verification required. |
+| Academic citation/style checks | PARTIAL — manual correction applied | Academic Writing Toolkit flagged volume/year parentheticals as false-positive citations and did not accept supplied reading-note schema. Reworded volume/year metadata; manual DOI/bibliography inspection retained. British spelling suggestions not applied without a repo-wide style decision. |
+
+**Current documentation checkpoint:** this matrix and the canonical audit/handoff were updated after code checkpoint 913518797bb2eb1e42bc77a7b6fb797ec7b85420. Exact-head CI and Web Static for the resulting documentation commit are required before marking the current docs batch DONE_VERIFIED.
