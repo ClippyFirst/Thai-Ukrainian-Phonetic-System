@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PR #189 remains open as Draft on fix/benchmark-error-clusters-20261102. Latest verified runtime/workflow commit 69d56b52b7f687948cac4250e4c7eb98e86ab67f is 136 commits ahead of main and 0 behind; Full CI 41711547837 passed all three jobs, Web Static 41711547920 passed, External VISTEC 41711547913 passed. Follow-up ac603c4ae96bf6ffbc8f2edb095b4f2375d57ce5 is docstring-only. Main unchanged; linguistic accuracy remains NOT_MEASURED.",
+  "status": "PR #189 remains open as Draft on fix/benchmark-error-clusters-20261102. Exact verified branch HEAD d9958db0e877944e5a75183c053681cdbdd525dc is 144 commits ahead of main and 0 behind. Full CI 41714533758 passed all three jobs; Web Static 41714533792 passed; External VISTEC 41714533797 passed. The latest source change after runtime checkpoint 69d56b52b7f687948cac4250e4c7eb98e86ab67f is docstring-only; remaining commits are audit/research documentation. Linguistic accuracy remains NOT_MEASURED.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -360,13 +360,13 @@
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
   "latest_code_checkpoint": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
   "readiness": "engineering-verified research prototype; deployed on GitHub Pages; not release-ready for independent Thai segmentation, IPA or Ukrainian target accuracy",
-  "latest_verified_repository_head": "69d56b52b7f687948cac4250e4c7eb98e86ab67f",
+  "latest_verified_repository_head": "d9958db0e877944e5a75183c053681cdbdd525dc",
   "task_ledger": [
     {
       "id": "SEG-TRAIN-001",
       "status": "PARTIAL",
       "implementation": "TUD frequency-Viterbi research trainer, source-blob verification, source-document-disjoint split, dev-only penalty selection, held-out TUD test and Wisesight-only report; CI/artifacts configured",
-      "acceptance": "Same-row full-text Wisesight comparison verified: TUD precision 0.6080, recall 0.9739, F1 0.7486, exact sequence 0.1198, 8,722 false splits; dictionary baseline F1 0.8395, exact sequence 0.1934. Do NOT integrate TUD as production default. Human error review, predeclared acceptance thresholds and independent licensed-domain evaluation remain required."
+      "acceptance": "Same-row full-text Wisesight comparison verified on 993 source-annotated rows: dictionary max-match precision 0.833461, recall 0.861061, F1 0.847036, exact sequence 204/993 (20.54%), 2,390 false splits and 1,930 false merges. TUD unigram Viterbi F1 0.748623, exact sequence 119/993 (11.98%), 8,722 false splits and 363 false merges. Zero expert-adjudicated rows: these are source-label diagnostics only. Do NOT integrate TUD as production default. Human error review, predeclared acceptance thresholds and independent licensed-domain evaluation remain required."
     },
     {
       "id": "IPA-GOLD-001",
@@ -3406,5 +3406,68 @@
     "all_statuses": "SUCCESS",
     "runtime_changes_in_documentation_batch": "NONE",
     "note": "This JSON-only hash-provenance correction is a subsequent documentation-only commit; exact-head Actions checks are tracked on the branch."
+  },
+  "latest_exact_branch_head_verification_2026_11_03": {
+    "branch": "fix/benchmark-error-clusters-20261102",
+    "pr": 189,
+    "exact_head": "d9958db0e877944e5a75183c053681cdbdd525dc",
+    "ahead_of_main": 144,
+    "behind_main": 0,
+    "base_main": "75c331f69aa3c8e5b4db3ccc5a6da85124600a01",
+    "full_ci_run": 41714533758,
+    "full_ci_result": "PASSED_ALL_3_JOBS",
+    "full_ci_jobs": [
+      "test",
+      "wheel-install-smoke",
+      "master-artifact"
+    ],
+    "web_static_run": 41714533792,
+    "web_static_result": "PASSED",
+    "external_vistec_run": 41714533797,
+    "external_vistec_result": "PASSED",
+    "superseded_push_ci_run": 41714525970,
+    "superseded_push_ci_result": "CANCELLED; PR exact-head CI above passed",
+    "latest_runtime_workflow_checkpoint": "69d56b52b7f687948cac4250e4c7eb98e86ab67f",
+    "docstring_only_followup": "ac603c4ae96bf6ffbc8f2edb095b4f2375d57ce5",
+    "source_changes_after_runtime_checkpoint": "DOCSTRING_ONLY",
+    "audit_hash_policy": "Unavailable inner artifact SHA-256 values are null; only verified archive SHA-256 values are retained.",
+    "wisesight": {
+      "rows": 993,
+      "source_annotated_rows": 993,
+      "expert_adjudicated_rows": 0,
+      "dictionary_max_match": {
+        "precision": 0.833461,
+        "recall": 0.861061,
+        "f1": 0.847036,
+        "exact_sequences": 204,
+        "false_splits": 2390,
+        "false_merges": 1930
+      },
+      "tud_unigram_viterbi": {
+        "precision": 0.608,
+        "recall": 0.973868,
+        "f1": 0.748623,
+        "exact_sequences": 119,
+        "false_splits": 8722,
+        "false_merges": 363
+      },
+      "evidence_grade": "SOURCE_ANNOTATED_NOT_EXPERT_ADJUDICATED"
+    },
+    "vistec": {
+      "rows": 50000,
+      "expert_adjudicated_rows": 0,
+      "evidence_grade": "SOURCE_ANNOTATED_NOT_EXPERT_ADJUDICATED"
+    },
+    "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
+    "linguistic_accuracy": "NOT_MEASURED",
+    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY",
+    "remaining_external_gates": [
+      "independent Thai segmentation/phonetic reviewers and adjudication",
+      "independent Ukrainian-native target-form review",
+      "CCOST A-D curator clarification and lawful TextGrid/archive inspection",
+      "immutable LOTUSDIS audio objects, hashes and clean-interval provenance",
+      "hands-on keyboard, screen-reader, zoom/reflow and mobile accessibility review"
+    ],
+    "note": "Exact-head results are not inherited by the documentation-only reconciliation commit created from this verified head; that new commit requires its own exact-head CI."
   }
 }
