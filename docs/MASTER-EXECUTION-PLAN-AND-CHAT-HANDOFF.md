@@ -2280,3 +2280,12 @@ No runtime behavior changed. Keep phonetic accuracy `NOT_MEASURED`; external Tha
 - All three Full CI jobs passed. Ruff passed; pytest 326 passed / 1,185 subtests passed. Source/reviewer and blind packet validators, generated-artifact drift, challenge diagnostics, IPA→Ukrainian adapter, 29 browser parity fixtures, UI/accessibility static checks, segmentation diagnostics, isolated wheel install and master artifact passed.
 - Lexicon structural inspection: 117 unique well-formed text-lexicon rows; 19 unique row-level source words; six lexical IPA override rows. These checks do not validate pronunciations.
 - No runtime behavior changed. Exact linguistic accuracy remains NOT_MEASURED; human reviewers, CCOST archive/curator, immutable LOTUSDIS audio and hands-on accessibility remain the genuine blockers.
+
+
+## Terminal exact-head verification — 2026-11-03
+
+- Branch `fix/benchmark-error-clusters-20261102`, PR #189 remains open as Draft; exact branch head `2d9423beb4fc3c991ee63b586f8699b05b8c25e2` is **91 commits ahead of main, 0 behind** (compare against main `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`). Main was not changed.
+- Exact-head Full CI [41605956008](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41605956008) completed successfully; all three jobs passed: `test`, `wheel-install-smoke`, and `master-artifact`. Exact-head Web Static [41605956074](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41605956074) passed.
+- The test job passed Ruff; pytest **326 passed, 1,185 subtests passed**; source/reviewer and blind-packet validators; generated-artifact drift and master-table registry checks; runtime challenge diagnostics; IPA→Ukrainian adapter; browser parity (**29 fixtures**); UI/accessibility static contracts; segmentation diagnostics; and held-out TUD evaluation. The isolated wheel-install smoke and master-artifact validation passed.
+- This is engineering verification only. Challenge coverage remains 32/42 conservative and 36/42 opt-in word-segmented; those are not accuracy scores. Linguistic accuracy remains `NOT_MEASURED`; no independent Thai/Ukrainian gold is claimed. Local tests were not run in the connector-only environment.
+- The exact-head result supersedes earlier notes that the final structured-register refresh was pending. PR #189 has no submitted reviews or inline review threads as of this check. Separate research/accessibility PRs and branches were left intact; no branch was deleted, merged or force-pushed.
