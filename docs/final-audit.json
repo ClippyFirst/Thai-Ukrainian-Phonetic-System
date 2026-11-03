@@ -646,7 +646,7 @@
     "verified_ci_run": 41711547837,
     "web_static_validation_run": 41711547920,
     "artifact_id": "13267889956",
-    "artifact_sha256": "005c18ba366fc692193db7f6557b052ff7f940dea3274ec168f6a93f0df7e66b",
+    "artifact_sha256": null,
     "metrics": {
       "rows": 993,
       "expert_adjudicated_rows": 0,
@@ -667,7 +667,7 @@
     "comparative_artifact_name": "thai-segmentation-comparative-error-review",
     "comparison_policy": "Both dictionary max-match and TUD Viterbi evaluated on identical 993 pinned Wisesight source-annotated rows; non-Thai runs copied unchanged; report is triage, not adjudication.",
     "comparative_artifact_id": "13267884921",
-    "comparative_artifact_sha256": "8005cc91939ea06b852c1717fee9fb72d370709e74267b8f99636a6476d30775",
+    "comparative_artifact_sha256": null,
     "comparative_metrics": {
       "rows": 993,
       "source_annotated_rows": 993,
@@ -698,7 +698,9 @@
     "production_decision": "DO_NOT_INTEGRATE_TUD_AS_PRODUCTION_DEFAULT",
     "production_decision_basis": "On identical full-text Wisesight rows, TUD has lower boundary F1 (0.748623 vs 0.847036), lower exact-sequence rate (11.98% vs 20.54%) and 8,722 false splits vs 2,390 for dictionary max-match. Labels remain source-annotated; human review and independent-domain evaluation remain required.",
     "artifact_archive_sha256": "479c0aaf88c714fc8d890078c84349facc8a154b008d24ec30897a7fb4f20b70",
-    "comparative_artifact_archive_sha256": "f1120dbd3c48554f0da5658c0b479dbe7e64b5da23b398d36051d1a225d7f2cc"
+    "comparative_artifact_archive_sha256": "f1120dbd3c48554f0da5658c0b479dbe7e64b5da23b398d36051d1a225d7f2cc",
+    "artifact_hash_note": "Current GitHub Actions artifact archive digest is recorded separately in artifact_archive_sha256. The hash of the inner JSON file was not retrieved; do not reuse the previous artifact's file hash.",
+    "comparative_artifact_hash_note": "Current GitHub Actions artifact archive digest is recorded separately in comparative_artifact_archive_sha256. The hash of the inner JSON file was not retrieved; do not reuse the previous artifact's file hash."
   },
   "current_checkpoint": {
     "date": "2026-10-26",
@@ -3393,5 +3395,16 @@
     ],
     "implementation_decision": "Retain dictionary max-match as conservative default; do not promote TUD or introduce a neural segmenter without independently adjudicated, licensed, domain-stratified segmentation gold.",
     "runtime_changes_from_literature_review": "NONE"
+  },
+  "latest_documentation_refresh_2026_11_03": {
+    "verified_checkpoint": "4ee0c881ae35ebbdb2f5fd3737bf6dcf30bfd918",
+    "branch_ahead_of_main": 143,
+    "branch_behind_main": 0,
+    "full_ci_run": 41713605140,
+    "web_static_run": 41713604974,
+    "external_vistec_run": 41713605326,
+    "all_statuses": "SUCCESS",
+    "runtime_changes_in_documentation_batch": "NONE",
+    "note": "This JSON-only hash-provenance correction is a subsequent documentation-only commit; exact-head Actions checks are tracked on the branch."
   }
 }
