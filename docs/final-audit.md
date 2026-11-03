@@ -1539,3 +1539,11 @@ The Thai G2P literature note was checked for citation consistency, paragraph log
 The structured audit had drifted: it named `ba71f63c...` and 79 commits ahead while PR #189's branch-head record already named `913518797...` and 80 commits ahead. The register is reconciled in the current documentation batch. The 913518797 checkpoint's exact-head Full CI [41539140734](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41539140734) passed all three jobs and Web Static [41539140594](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41539140594) passed. This new audit/methodology documentation batch requires exact-head verification on its final commit.
 
 No runtime/parser/IPA/Ukrainian behavior changed. Linguistic accuracy remains `NOT_MEASURED`; external reviewers, CCOST archive/curator, LOTUSDIS audio assets and manual accessibility remain blocked.
+
+
+## Exact-head verification of the methodology/audit reconciliation — 2026-11-03
+
+- Documentation checkpoint `0416fd332382b804b76ab0242ea8ff0b415062ce` passed Full CI [41603648158](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41603648158) and Web Static [41603648119](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41603648119).
+- Full CI passed all three jobs: `test`, `wheel-install-smoke`, `master-artifact`. Ruff passed; pytest: **326 passed, 1,185 subtests passed**. Evidence and blind-packet validators, generators/drift, runtime diagnostics, IPA→Ukrainian adapter, 29 browser parity fixtures, UI/accessibility static checks, segmentation error analysis, isolated wheel install and master artifact passed.
+- The curated text lexicon contains 117 unique, well-formed rows with no duplicate keys; the row-level source registry has 19 distinct source words; the lexical IPA override table has six entries. These are structural checks, not linguistic accuracy evidence.
+- This checkpoint verifies engineering/documentation only. Linguistic accuracy remains `NOT_MEASURED`; local tests remain `NOT_RUN_CONNECTOR_ONLY`.
