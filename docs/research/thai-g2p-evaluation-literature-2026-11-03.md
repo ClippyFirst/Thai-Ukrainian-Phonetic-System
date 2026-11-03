@@ -44,7 +44,7 @@ Full-text findings:
 
 ### Rugchatjaroen et al. (2019): two-stage joint-sequence Thai G2P
 
-A. Rugchatjaroen et al., “Efficient two-stage processing for joint sequence model-based Thai grapheme-to-phoneme conversion,” *Speech Communication* 106 (2019), 105–111. [DOI: 10.1016/j.specom.2018.12.003](https://doi.org/10.1016/j.specom.2018.12.003).
+A. Rugchatjaroen et al., “Efficient two-stage processing for joint sequence model-based Thai grapheme-to-phoneme conversion,” *Speech Communication*, volume 106, 2019, pp. 105–111. [DOI: 10.1016/j.specom.2018.12.003](https://doi.org/10.1016/j.specom.2018.12.003).
 
 The abstract describes a two-stage CRF system: pseudo-syllable segmentation plus character-function prediction, followed by graphone-based G2P. It reports **9.94% overall WER** and says the dictionary covers over 70% of Thai word usage. The full experimental-label provenance and metric definitions were not independently re-inspected in this pass; treat these as published system results, not as independently adjudicated accuracy for this project.
 
@@ -54,17 +54,17 @@ The abstract describes a two-stage CRF system: pseudo-syllable segmentation plus
 
 ### Lexical categories are not fixed surface contours
 
-Morén and Zsiga, “The Lexical and Post-Lexical Phonology of Thai Tones,” *Natural Language & Linguistic Theory* 24 (2006), 113–178. [DOI: 10.1007/s11049-004-5454-y](https://doi.org/10.1007/s11049-004-5454-y).
+Morén and Zsiga, “The Lexical and Post-Lexical Phonology of Thai Tones,” *Natural Language & Linguistic Theory*, volume 24, 2006, pp. 113–178. [DOI: 10.1007/s11049-004-5454-y](https://doi.org/10.1007/s11049-004-5454-y).
 
 The paper's abstract reports an acoustic argument for the mora as Thai's tone-bearing unit and discusses non-final phrasal-position contour simplification. It explicitly supports separating phonological categories from phonetic realization. This supports retaining lexical tone category in the phonological result while treating measured pitch contours as context-dependent surface evidence.
 
-Xu and Zhang, “A cross-linguistic review of citation tone production studies: Methodology and recommendations,” *Journal of the Acoustical Society of America* 156 (2024), 2538–2565. [DOI: 10.1121/10.0032356](https://doi.org/10.1121/10.0032356).
+Xu and Zhang, “A cross-linguistic review of citation tone production studies: Methodology and recommendations,” *Journal of the Acoustical Society of America*, volume 156, 2024, pp. 2538–2565. [DOI: 10.1121/10.0032356](https://doi.org/10.1121/10.0032356).
 
 This review identifies variation in speaker sampling, carrier phrases, F0 extraction and reporting conventions. It is a methodological source for any future acoustic tone study; it is not itself a Thai G2P gold set.
 
 ## Dataset design and annotation reliability
 
-Pons Bordería and Aliaga, “Inter-annotator agreement in spoken language annotation: Applying uα-family coefficients to discourse segmentation,” *Russian Journal of Linguistics* 25 (2021), 478–506. [DOI: 10.22363/2687-0088-2021-25-2-478-506](https://doi.org/10.22363/2687-0088-2021-25-2-478-506).
+Pons Bordería and Aliaga, “Inter-annotator agreement in spoken language annotation: Applying uα-family coefficients to discourse segmentation,” *Russian Journal of Linguistics*, volume 25, 2021, pp. 478–506. [DOI: 10.22363/2687-0088-2021-25-2-478-506](https://doi.org/10.22363/2687-0088-2021-25-2-478-506).
 
 The paper discusses unitized alpha coefficients for segmentation and labelling. For this project, boundary agreement and categorical label agreement should be reported separately; a boundary-aware reliability measure is more suitable for interval segmentation than treating each character position as an independent nominal label. The chosen coefficient and unitization protocol must be fixed before scoring.
 
