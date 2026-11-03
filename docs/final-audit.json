@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PR #189 remains open as Draft on fix/benchmark-error-clusters-20261102. Latest verified branch checkpoint ba71f63c0d8805b4a0bb32f6661c5d31aa574de5 is 79 commits ahead of main and 0 behind; exact-head Full CI 41537992632 passed all three jobs and Web Static 41537992665 passed. The current structured audit refresh is documentation-only and receives its own exact-head CI.",
+  "status": "PR #189 remains open as Draft on fix/benchmark-error-clusters-20261102. The 2026-11-03 literature and engineering-methodology documentation continuation is on this branch; latest pre-audit-refresh head 7ba7433a3cbe545c89c796412a33e4cb1b0fa769 is 81 commits ahead of main and 0 behind. Prior exact-head Full CI 41539140734 passed all three jobs and Web Static 41539140594 passed on 913518797bb2eb1e42bc77a7b6fb797ec7b85420. Current documentation reconciliation awaits its own exact-head verification. Main unchanged; linguistic accuracy remains NOT_MEASURED.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -3057,21 +3057,75 @@
     "runtime_changes": "NONE",
     "project_accuracy": "NOT_MEASURED",
     "independent_review": "BLOCKED_EXTERNAL_REVIEWERS",
-    "exact_head_verification": "PASSED_ON_BA71F63C0D8805B4A0BB32F6661C5D31AA574DE5",
-    "latest_document_commit_before_json": "276d70f2b60f90b12652a8ae0e382e6e954b85bc",
+    "exact_head_verification": "PRIOR_CHECKPOINT_913518797BB2EB1E42BC77A7B6FB797EC7B85420_PASSED; CURRENT_DOC_REFRESH_PENDING",
+    "latest_document_commit_before_json": "7ba7433a3cbe545c89c796412a33e4cb1b0fa769",
     "consensus_thread": "https://consensus.app/search/research-the-peer-reviewed-evidence-and-primary-sc/TPPdaWrzSWGIdPzNPruDdA/",
     "undermind_document": "https://app.undermind.ai/projects/49bbd978-a5a9-4cac-a7bb-a72848f50e10?path=/Research%20the%20peer-reviewed%20evidence%20and%20primary%20scholarly%20literature%20relevant%20to.md",
-    "ci_run": 41537992632,
+    "ci_run": 41539140734,
     "ci_result": "PASSED_ALL_3_JOBS",
-    "web_static_run": 41537992665,
+    "web_static_run": 41539140594,
     "web_static_result": "PASSED",
     "python_test_suite": "326_PASSED_1185_SUBTESTS_PASSED",
     "ruff": "PASSED",
     "wheel_install_smoke": "PASSED",
     "master_artifact": "PASSED",
-    "current_audit_documentation_update": "PASSED_EXACT_HEAD_CI_41537992632_AND_WEB_STATIC_41537992665",
-    "branch_ahead_of_main": 79,
+    "current_audit_documentation_update": "PENDING_EXACT_HEAD_CI_AFTER_2026_11_03_WORKFLOW_REVIEW",
+    "branch_ahead_of_main": 81,
     "branch_behind_main": 0,
     "audit_json_refresh_commit": "THIS_UPDATE_DOCUMENTATION_ONLY_REQUIRES_ITS_OWN_EXACT_HEAD_CI"
+  },
+  "development_methodology_review_2026_11_03": {
+    "status": "DONE_REVIEWED_APPLIED_SELECTIVELY",
+    "sources": {
+      "superpowers": {
+        "url": "https://github.com/obra/superpowers",
+        "license": "MIT",
+        "reviewed_files": [
+          "skills/test-driven-development/SKILL.md",
+          "skills/requesting-code-review/SKILL.md"
+        ],
+        "reviewed_commits": [
+          "46838cc9e893c06259e3bdad0fc2425b36242f15",
+          "68d338a58ecdd8b77bfbb519b781ef223dbbb842"
+        ]
+      },
+      "matt_pocock_skills": {
+        "url": "https://github.com/mattpocock/skills",
+        "license": "MIT",
+        "reviewed_file": "skills/engineering/research/SKILL.md",
+        "reviewed_commit": "ffc9eb89849cc4cf74962ce93d786ffd17c6a5dc"
+      },
+      "ponytail": {
+        "url": "https://github.com/DietrichGebert/ponytail",
+        "license": "MIT",
+        "reviewed_files": [
+          "skills/ponytail/SKILL.md",
+          "AGENTS.md",
+          "README.md"
+        ],
+        "reviewed_commits": [
+          "d64edd32265ba21cbf5270158f04e97d96925f27",
+          "ee5d6f1d6c1e4ff197a41d3ff43fa6597dbc81d4"
+        ]
+      }
+    },
+    "adopted": [
+      "TDD red-green-refactor and verify the test fails for the expected reason before code changes",
+      "review the complete affected dataflow and callers, not only the diff",
+      "reuse repository interfaces and prefer the smallest complete change",
+      "research claims traced to primary sources and evidence scope stated explicitly",
+      "record verification and skipped/manual checks honestly"
+    ],
+    "not_adopted": [
+      "No skills or code vendored; no new dependencies or agent runtime installed",
+      "No automatic background-agent fan-out; this host does not expose safe independent subagents and mattpocock research docs describe unguarded nested delegation as a known failure mode",
+      "No token/LOC benchmark targets imported from Ponytail; its self-reported benchmark is not a project quality metric"
+    ],
+    "academic_toolkit_review": {
+      "citation_audit": "NOT_CLEAN; tool flagged author-year/volume formatting and source-note parser mismatches; manual inspection distinguished real bibliography links from false positives",
+      "paragraph_logic": "2 short one-sentence implication paragraphs retained intentionally as local takeaways",
+      "british_english": "3 US spellings flagged; no global style conversion applied because repository English style has not been standardized and one hit is a proper publication title"
+    },
+    "runtime_changes": "NONE"
   }
 }
