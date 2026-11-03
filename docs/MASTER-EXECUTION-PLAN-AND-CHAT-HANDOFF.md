@@ -2255,3 +2255,20 @@ This note supersedes the preceding documentation-only status. The branch now cha
 
 - The audit/matrix/handoff checkpoint `7391688c4c19b295f701812e8d6336bcf6abeb02` passed exact-head Full CI [41537375617](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41537375617) and Web Static [41537375633](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41537375633). All three Full CI jobs passed.
 - The structured audit reconciliation after that checkpoint is documentation-only and is being verified on its own final head. The terminal branch-head result will be recorded in PR #189's conversation; no runtime changes are included in this documentation batch.
+
+
+### Development methodology and scholarly-writing review — 2026-11-03
+
+The three requested upstream projects were inspected at source level and applied selectively:
+
+- **Superpowers:** TDD red/green/refactor, prove a test fails for the expected reason, minimal implementation, then verification; substantial changes receive a separate review pass.
+- **Matt Pocock skills:** research claims should point to the primary source that owns them and live in a durable cited note. The upstream research skill's own docs warn about unguarded nested delegation and weak source gating; do not spawn nested research agents or accept a source merely because it is labelled primary.
+- **Ponytail:** read the touched code and end-to-end dataflow, reuse existing interfaces, prefer the smallest complete change, and never cut validation, error handling, security or accessibility. Do not use its self-reported LOC/cost/time figures as a quality target for this linguistic system.
+
+All three upstream repositories declare MIT. No skill, hook, dependency or code was copied or installed. The connector-only host does not expose independent subagents, so the work was executed inline with repository CI as verification; no claim of parallel review is made.
+
+Academic Writing Toolkit was used for citation consistency, paragraph logic and conservative British-English checks. It flagged ambiguous journal volume/year parentheticals; those were reformatted. Its citation-note parser did not accept the supplied note format, so citation audit is **not** claimed as passed. Two concise implication paragraphs remain intentional. US spelling suggestions were not applied globally because project style is not formally set and one suggestion was in a proper publication title.
+
+The structured audit had stale values (`ba71f63c...`, 79 commits ahead) while PR #189's latest branch record was `913518797...`, 80 commits ahead. The audit JSON is reconciled in this documentation batch. The previous 913 checkpoint passed exact-head Full CI [41539140734](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41539140734) and Web Static [41539140594](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41539140594). Current docs changes require their own final exact-head run.
+
+No runtime behavior changed. Keep phonetic accuracy `NOT_MEASURED`; external Thai/Ukrainian adjudication, CCOST archive and curator evidence, LOTUSDIS immutable audio assets and manual accessibility remain the genuine acceptance blockers.
