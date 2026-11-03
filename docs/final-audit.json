@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PR #189 remains open as Draft on fix/benchmark-error-clusters-20261102. Latest verified checkpoint 2ec6393655f7d4f58d7b840abd194bf4d0b07efe was 95 commits ahead of main and 0 behind; exact-head Full CI 41610404742 passed all three jobs and Web Static 41610404753 passed. This audit-register reconciliation is documentation-only and requires its own exact-head verification. Main unchanged; linguistic accuracy remains NOT_MEASURED.",
+  "status": "PR #189 remains open as Draft on fix/benchmark-error-clusters-20261102. Verified code head 94eaadb5bda2318dfa864eee7dae1b3715b70374 is 108 commits ahead of main and 0 behind; Full CI 41641516453 passed all three jobs and Web Static 41641516658 passed. A documentation-only audit/matrix/handoff refresh follows and requires its own exact-head verification. Main unchanged; linguistic accuracy remains NOT_MEASURED.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -542,14 +542,20 @@
       "implementation": "Source-pinned lexical recoveries and Python/browser parity tests pass exact-head CI; all new Wiktionary references are licensed CC BY-SA 4.0 and restricted to lexical/IPA reference scope.",
       "blocker": "Independent qualified Thai phonetic/segmentation adjudication unavailable.",
       "acceptance": "Independent blind Thai reviewers adjudicate lexical reading, syllable boundaries, phonemic IPA, tone and length; disputed cases resolved before any accuracy claim."
+    },
+    {
+      "id": "DIAG-COMPLETE-OUTPUT-001",
+      "status": "DONE_VERIFIED",
+      "implementation": "Regression test proves that a resolved Thai token with an empty syllable list cannot be counted as complete. Test-first RED was observed on 8492d2478425a88f24827d8547c96a26d9559ac9; minimal guard implemented on 94eaadb5bda2318dfa864eee7dae1b3715b70374.",
+      "acceptance": "Exact-head Full CI 41641516453 passed test/wheel-install-smoke/master-artifact; Web Static 41641516658 passed; 327 pytest tests and 1,185 subtests passed; Ruff and 29 browser parity fixtures passed. Diagnostic-only change; no linguistic accuracy claim."
     }
   ],
   "latest_implementation_branch": "fix/benchmark-error-clusters-20261102 (PR #189 open draft)",
-  "latest_implementation_commit_pending_ci": "No runtime changes after verified code head 55f2ef9966da065326873014e8066acc43b2a151; documentation checkpoints through 8be5e89d1a9190eaa37c15dbe9340ac1242283e0 passed exact-head CI and Web Static. Current structured audit-register refresh is documentation-only.",
+  "latest_implementation_commit_pending_ci": "Runtime code head 94eaadb5bda2318dfa864eee7dae1b3715b70374 is exact-head verified by Full CI 41641516453 and Web Static 41641516658. The subsequent audit/matrix/handoff update is documentation-only and awaits its own exact-head verification.",
   "current_head_status_at_audit_refresh": "Code/workflow checkpoint b6dbec7928b106f0ab52e06af33a26635df75412 passed CI 40322960615 and Web static validation 40322959844. Documentation checkpoint e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff passed full CI 40323209539 and Web static validation 40323209471. This audit-register update creates a newer documentation HEAD and requires exact-head CI/static validation before the current branch HEAD is marked green.",
-  "current_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
-  "current_implementation_commit_before_audit_update": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
-  "latest_documentation_checkpoint_before_audit": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
+  "current_implementation_branch": "fix/benchmark-error-clusters-20261102",
+  "current_implementation_commit_before_audit_update": "94eaadb5bda2318dfa864eee7dae1b3715b70374",
+  "latest_documentation_checkpoint_before_audit": "94eaadb5bda2318dfa864eee7dae1b3715b70374",
   "audit_note": "Exact-head special-orthography schema and IPA-boundary repair verified on cb775d6156f62392fa2d0f4bcf8d1aa30d219530. CI 40315032771 passed 180 Python tests, generated-data drift, master artifact (351,780 rows / 41 rime records), Node IPA→UA, 28 browser parity fixtures, UI contract, challenge/Wisesight/source-attested IPA diagnostics, candidate-registry check, TUD training/evaluation and artifact uploads. Web static validation 40315032788 passed. This is software/reproducibility evidence, not independent pronunciation gold.",
   "dictionary_max_match_baseline": {
     "corpus": "Wisesight-1000",
@@ -615,12 +621,12 @@
       ]
     }
   },
-  "latest_implementation_commit_ci_verified": "c68580a490f89af1cf08224d5811429e74f8ef5b",
+  "latest_implementation_commit_ci_verified": "94eaadb5bda2318dfa864eee7dae1b3715b70374",
   "latest_documentation_head_ci_verified": "536f03327f11d258a4e7638091797128754b6602",
   "latest_documentation_head_ci_run": "41342132989",
   "latest_documentation_head_web_validation_run": "41342132990",
-  "latest_implementation_ci_run": "41353088633",
-  "latest_implementation_web_validation_run": "41353088642",
+  "latest_implementation_ci_run": "41641516453",
+  "latest_implementation_web_validation_run": "41641516658",
   "segmentation_error_review": {
     "script": "scripts/analyze_segmentation_errors.py",
     "test": "tests/test_segmentation_error_analysis.py",
@@ -2167,12 +2173,13 @@
       "test": 1,
       "work": 1
     },
-    "as_of": "2026-11-02",
+    "as_of": "2026-11-03",
     "deletions": 0,
-    "note": "22 current branch refs inspected through GitHub API. All are preserved; no branch was deleted. Five open draft PRs (#184, #185, #186, #188, #189) remain unmerged. #186 is based on #185; #184 is a separate FastThaiG2P adapter spike; #188 is a separate Global TIMIT source review."
+    "note": "22 current refs inspected. No branch deleted. Six open draft PRs: #184, #185, #186, #188, #189 and #190. #186 remains stacked on #185; #184 is a separate FastThaiG2P adapter; #188 overlaps shared source registry/audit paths; #190 is an independent accessibility contrast fix."
   },
   "open_prs_current": [
     "#189 — Triage G2P benchmark error clusters and recover attested lexical cases (draft; unmerged)",
+    "#190 — Fix non-text contrast for form controls (draft; unmerged; independent accessibility change)",
     "#188 — Register Global TIMIT Thai as restricted alignment candidate (draft; unmerged)",
     "#186 — Add conservative typed FastThaiG2P IPA boundary (draft; unmerged; based on #185)",
     "#185 — Add optional FastThaiG2P challenge comparison spike (draft; unmerged)",
@@ -3122,9 +3129,9 @@
       "No token/LOC benchmark targets imported from Ponytail; its self-reported benchmark is not a project quality metric"
     ],
     "academic_toolkit_review": {
-      "citation_audit": "NOT_CLEAN; tool flagged author-year/volume formatting and source-note parser mismatches; manual inspection distinguished real bibliography links from false positives",
-      "paragraph_logic": "2 short one-sentence implication paragraphs retained intentionally as local takeaways",
-      "british_english": "3 US spellings flagged; no global style conversion applied because repository English style has not been standardized and one hit is a proper publication title"
+      "citation_audit": "NOT_CLEAN; current Harvard audit still reports Yamasaki and Rugchatjaroen Source-note mismatches despite template-compatible Source lines; manual DOI/bibliography links inspected; do not claim an automated pass.",
+      "paragraph_logic": "2 short one-sentence 'Full-text findings' labels flagged; retained as intentional section cues, not prose defects.",
+      "british_english": "1 flag: 'Modeling' in an exact published title; retained verbatim. No global English-style conversion."
     },
     "runtime_changes": "NONE"
   },
@@ -3150,31 +3157,52 @@
     "wheel_install_smoke": "PASSED",
     "master_artifact": "PASSED",
     "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
-    "linguistic_accuracy": "NOT_MEASURED"
+    "linguistic_accuracy": "NOT_MEASURED",
+    "subsequent_documentation_update": "PENDING_EXACT_HEAD_CI_WEB_STATIC"
   },
   "latest_exact_head_verification_2026_11_03": {
     "branch": "fix/benchmark-error-clusters-20261102",
     "pr": 189,
-    "head": "2ec6393655f7d4f58d7b840abd194bf4d0b07efe",
-    "ahead_of_main": 95,
+    "head": "94eaadb5bda2318dfa864eee7dae1b3715b70374",
+    "ahead_of_main": 108,
     "behind_main": 0,
-    "full_ci_run": 41610404742,
+    "full_ci_run": 41641516453,
     "full_ci_result": "PASSED_ALL_3_JOBS",
     "jobs": [
       "test",
       "wheel-install-smoke",
       "master-artifact"
     ],
-    "web_static_run": 41610404753,
+    "web_static_run": 41641516658,
     "web_static_result": "PASSED",
-    "pytest": "326_PASSED_1185_SUBTESTS_PASSED",
+    "pytest": "327_PASSED_1185_SUBTESTS_PASSED",
     "ruff": "PASSED",
     "browser_parity_fixtures": 29,
+    "generated_artifact_drift": "PASSED",
+    "source_reviewer_and_blind_packet_validators": "PASSED",
+    "ipa_ukrainian_adapter": "PASSED",
+    "wheel_install_smoke": "PASSED",
+    "master_artifact": "PASSED",
     "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
     "linguistic_accuracy": "NOT_MEASURED",
     "main_changed": false,
     "pr_state": "OPEN_DRAFT",
     "submitted_reviews": 0,
     "inline_review_threads": 0
+  },
+  "diagnostic_complete_output_guard_2026_11_03": {
+    "status": "DONE_VERIFIED",
+    "test_commit": "8492d2478425a88f24827d8547c96a26d9559ac9",
+    "expected_red_ci_run": 41640676532,
+    "expected_red_result": "NEW_REGRESSION_FAILED_AS_EXPECTED; 326_PASSED; 1185_SUBTESTS_PASSED",
+    "fix_commit": "94eaadb5bda2318dfa864eee7dae1b3715b70374",
+    "rule": "Every Thai token must contain a non-empty syllable list before the text is counted as complete.",
+    "full_ci_run": 41641516453,
+    "full_ci_result": "PASSED_ALL_3_JOBS",
+    "web_static_run": 41641516658,
+    "web_static_result": "PASSED",
+    "pytest": "327_PASSED_1185_SUBTESTS_PASSED",
+    "ruff": "PASSED",
+    "runtime_scope": "DIAGNOSTIC_ONLY_NO_PARSER_IPA_UKRAINIAN_OR_PUBLIC_API_CHANGE"
   }
 }
