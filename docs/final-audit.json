@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PR #189 remains open as Draft on fix/benchmark-error-clusters-20261102. Latest fully verified branch checkpoint 3d35220511180b8725664b48f50fd2e7f1583aee is 89 commits ahead of main and 0 behind. Exact-head Full CI 41604491026 passed all three jobs and Web Static 41604491097 passed. This includes the final audit JSON refresh and the methodology/literature documentation reconciliation. Main unchanged; linguistic accuracy remains NOT_MEASURED.",
+  "status": "PR #189 remains open as Draft on fix/benchmark-error-clusters-20261102. Last fully verified pre-register checkpoint bdc8a2fb2a0bf04e562d1851bb14589887bb533b is 90 commits ahead of main and 0 behind; exact-head Full CI 41605187604 passed all three jobs and Web Static 41605187373 passed. This final structured-register refresh is documentation-only; its own exact-head CI is pending. Main unchanged; linguistic accuracy remains NOT_MEASURED.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -3057,22 +3057,22 @@
     "runtime_changes": "NONE",
     "project_accuracy": "NOT_MEASURED",
     "independent_review": "BLOCKED_EXTERNAL_REVIEWERS",
-    "exact_head_verification": "PASSED_ON_3D35220511180B8725664B48F50FD2E7F1583AEE",
+    "exact_head_verification": "PASSED_ON_BDC8A2FB2A0BF04E562D1851BB14589887BB533B; FINAL_REGISTER_REFRESH_PENDING",
     "latest_document_commit_before_json": "f0dc77f364b099afb3dfaef7f86551c346141062",
     "consensus_thread": "https://consensus.app/search/research-the-peer-reviewed-evidence-and-primary-sc/TPPdaWrzSWGIdPzNPruDdA/",
     "undermind_document": "https://app.undermind.ai/projects/49bbd978-a5a9-4cac-a7bb-a72848f50e10?path=/Research%20the%20peer-reviewed%20evidence%20and%20primary%20scholarly%20literature%20relevant%20to.md",
-    "ci_run": 41604491026,
+    "ci_run": 41605187604,
     "ci_result": "PASSED_ALL_3_JOBS",
-    "web_static_run": 41604491097,
+    "web_static_run": 41605187373,
     "web_static_result": "PASSED",
     "python_test_suite": "326_PASSED_1185_SUBTESTS_PASSED",
     "ruff": "PASSED",
     "wheel_install_smoke": "PASSED",
     "master_artifact": "PASSED",
-    "current_audit_documentation_update": "PASSED_EXACT_HEAD_CI_41604491026_AND_WEB_STATIC_41604491097",
-    "branch_ahead_of_main": 89,
+    "current_audit_documentation_update": "PRE_REGISTER_CHECKPOINT_PASSED; THIS_FINAL_REGISTER_REFRESH_REQUIRES_ITS_OWN_EXACT_HEAD_CI",
+    "branch_ahead_of_main": 90,
     "branch_behind_main": 0,
-    "audit_json_refresh_commit": "3d35220511180b8725664b48f50fd2e7f1583aee"
+    "audit_json_refresh_commit": "BDC8A2FB2A0BF04E562D1851BB14589887BB533B"
   },
   "development_methodology_review_2026_11_03": {
     "status": "DONE_REVIEWED_APPLIED_SELECTIVELY",
@@ -3129,10 +3129,10 @@
     "runtime_changes": "NONE"
   },
   "latest_documentation_batch_verification_2026_11_03": {
-    "head": "3d35220511180b8725664b48f50fd2e7f1583aee",
-    "full_ci_run": 41604491026,
+    "head": "bdc8a2fb2a0bf04e562d1851bb14589887bb533b",
+    "full_ci_run": 41605187604,
     "full_ci": "PASSED_ALL_3_JOBS",
-    "web_static_run": 41604491097,
+    "web_static_run": 41605187373,
     "web_static": "PASSED",
     "pytest": "326_PASSED_1185_SUBTESTS_PASSED",
     "ruff": "PASSED",
