@@ -52,9 +52,6 @@ class ThaiWordSegmentationTests(unittest.TestCase):
         self.assertEqual(result.evidence_grade, "DICTIONARY_SEGMENTATION_NOT_PRONUNCIATION_GOLD")
 
 
-if __name__ == "__main__":
-    unittest.main()
-
     def test_thai_postposed_vowel_letters_stay_with_their_orthographic_base(self):
         from thai_ukrainian.segmentation import _grapheme_spans
 
@@ -70,3 +67,7 @@ if __name__ == "__main__":
         for text, spans in expected.items():
             with self.subTest(text=text):
                 self.assertEqual(_grapheme_spans(text), spans)
+
+
+if __name__ == "__main__":
+    unittest.main()
