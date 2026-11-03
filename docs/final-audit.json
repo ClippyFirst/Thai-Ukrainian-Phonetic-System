@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PR #182 is merged to main as 65584d9a3d3d64a8e520dbd32411bef4b0a3dd9e. Main CI 41420468842 passed all three jobs; Web Static 41420468939 passed; GitHub Pages 41420468875 successfully built, deployed and verified the published site at https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/. Six source-attested lexical IPA overrides are live in both runtimes through the typed IPA→Ukrainian adapter, with CC BY-SA 4.0 provenance documented separately from MIT software. Static audit found 0 exact duplicate test names/bodies and 0 parse errors. Independent Thai/Ukrainian reviewers, CCOST clarification/archive, LOTUSDIS audio evidence and manual WCAG testing remain blocked. Linguistic accuracy remains NOT_MEASURED; the site is an engineering-verified research prototype, not a linguistic-accuracy release.",
+  "status": "PR #191 contains the Thai spacing-vowel matching-boundary parity fix. Exact code/test head 2b0503099b9d482ae8106fc924039f619c54a957 passed CI 41726180498 (all 3 jobs; 322 Python tests and 1,174 subtests) and external VISTEC run 41726181625. PR remains open Draft, unmerged. Independent Thai/Ukrainian review, CCOST archive/curator evidence, LOTUSDIS immutable audio assets and hands-on WCAG testing remain blockers. Linguistic accuracy remains NOT_MEASURED; readiness remains an engineering-verified research prototype.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -138,12 +138,12 @@
     "status": "SOURCE_ATTESTED_NOT_GOLD",
     "includes_short_long_oe_contrast": true
   },
-  "latest_verified_code_commit": "72a77cb42ad05c33274d70c4dcd9f20e07432b64",
+  "latest_verified_code_commit": "2b0503099b9d482ae8106fc924039f619c54a957",
   "starting_branch_commit": "7e39fd4bc108386148c1e9a79d257d75babcc9aa",
   "ci": {
-    "latest_fully_successful_code_data_commit": "72a77cb42ad05c33274d70c4dcd9f20e07432b64",
-    "latest_fully_successful_ci_run": 41239440616,
-    "python_tests": 251,
+    "latest_fully_successful_code_data_commit": "2b0503099b9d482ae8106fc924039f619c54a957",
+    "latest_fully_successful_ci_run": 41726180498,
+    "python_tests": 322,
     "generated_data_drift": "PASS — run 41239440616",
     "master_artifact": "PASS — run 41239440616: 3,086,353 bytes; SHA-256 74f40079c2bae8a4f875fa8e2c860ac8a202bbb1bd8e4ae72d834f48d93adc09; independently downloaded and asserted 351780 rows / 41 vowel-rime records.",
     "node_ipa_ua_parity_ui_tests": "PASS — run 41239440616: 29 Python/browser parity fixtures; RTGS/IPA-UA and UI contract checks passed.",
@@ -171,9 +171,9 @@
     "latest_fully_successful_documentation_web_validation_run": 41239420395,
     "latest_documentation_head_ci_run": 41240389404,
     "latest_documentation_head_web_validation_run": 41229435706,
-    "latest_implementation_ci_run": 41229435682,
+    "latest_implementation_ci_run": 41726180498,
     "latest_implementation_web_validation_run": 41229435706,
-    "latest_implementation_commit_ci_verified": "1b1480c5a79b6dd38dc8b916d52ad599e38a9748",
+    "latest_implementation_commit_ci_verified": "2b0503099b9d482ae8106fc924039f619c54a957",
     "latest_fully_successful_web_static_validation_run": 40322959844,
     "comparative_error_review_status": "DONE_VERIFIED — report, tests and CI artifact passed on code checkpoint b6dbec7928b106f0ab52e06af33a26635df75412",
     "comparative_error_review_script": "scripts/compare_segmentation_error_review.py",
@@ -193,7 +193,7 @@
       "54e1db86cf3882f025f00ede86d86e7efb3909e2",
       "b6dbec7928b106f0ab52e06af33a26635df75412"
     ],
-    "current_audit_head_ci_status": "PASS — PR #155 exact-head CI 41143491570 and post-merge main CI 41143907732 passed all three jobs.",
+    "current_audit_head_ci_status": "PASS — PR #191 code/test head 2b0503099b9d482ae8106fc924039f619c54a957: CI 41726180498 all three jobs passed; 322 Python tests and 1,174 subtests. External VISTEC 41726181625 passed on the same head; source annotations are not expert gold.",
     "comparative_error_review_metrics": {
       "rows": 993,
       "source_annotated_rows": 993,
@@ -287,7 +287,7 @@
       "reason": "No owner-approved archive/delete policy; historical refs preserved."
     },
     "latest_checkpoint_note": "PR #168 audit closeout merged as 8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8. Exact-head CI 41240389404 and post-merge main CI 41240699017 passed; 251 pytest tests, 1164 subtests, Ruff, 29 parity fixtures, generated-data drift, wheel-install smoke and 351780-row/41-rime artifact verification passed. Independent Thai/UA adjudication and manual accessibility gates remain open.",
-    "python_subtests": 1164
+    "python_subtests": 1174
   },
   "challenge_runtime": {
     "challenge_inputs": 36,
@@ -349,7 +349,7 @@
     "training_source": "UD Thai TUD at 67413969add552b7030184f16f24fa9f630913bc, CC BY-SA 4.0; source-document-disjoint 80/10/10 project split; model artifact attribution/share-alike obligations recorded"
   },
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
-  "latest_code_checkpoint": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
+  "latest_code_checkpoint": "2b0503099b9d482ae8106fc924039f619c54a957",
   "readiness": "engineering-verified research prototype; deployed on GitHub Pages; not release-ready for independent Thai segmentation, IPA or Ukrainian target accuracy",
   "latest_verified_repository_head": "1431c565ff5c160da4944942d687bc30b2f8d0b2",
   "task_ledger": [
@@ -520,13 +520,32 @@
       "status": "DONE_VERIFIED",
       "implementation": "PR #182 squash-merged as 65584d9; main CI 41420468842, Web Static 41420468939 and Pages deployment/published-content verification 41420468875 all passed. The updated service is live at GitHub Pages.",
       "acceptance": "Post-merge Pages build/deploy/published-content verification passed; main CI and Web Static passed."
+    },
+    {
+      "id": "THAI-CLUSTER-PARITY-001",
+      "status": "DONE_VERIFIED",
+      "implementation": "Python dictionary segmentation now treats Thai postposed spacing vowels U+0E30/U+0E32/U+0E33 as continuation of the preceding base cluster for dictionary-match endpoint safety, aligned with browser matching. Regression tests exercise the public dictionary_word_segmentation API using controlled trie fixtures. No pronunciation, phonology, IPA, tone, Ukrainian mapping, dictionary or corpus changes.",
+      "evidence": {
+        "test_first_red_commit": "6a56a949b7d876da4d040d262313eb9719868f1f",
+        "implementation_commit": "8d02d8ffe32330fb6c181219d8fc8c7236f7b176",
+        "final_code_test_commit": "2b0503099b9d482ae8106fc924039f619c54a957",
+        "ci_run": 41726180498,
+        "ci_result": "PASSED_ALL_3_JOBS",
+        "python_tests": 322,
+        "python_subtests": 1174,
+        "external_vistec_run": 41726181625,
+        "external_vistec_result": "PASSED",
+        "docs_closeout_branch_head_before_json_refresh": "68da73a057db7c53cf05bbfb9d7265f7ec41e4fb"
+      },
+      "limitation": "Matching-boundary policy only; not full Unicode grapheme segmentation or syllabification. VISTEC has 50,000 source-annotated rows and zero expert-adjudicated rows; metrics are not independent accuracy evidence.",
+      "acceptance": "Exact-head CI, wheel-install smoke, master-artifact and external VISTEC evaluation pass; public-interface regression tests prevent dictionary matches ending inside base-plus-vowel clusters."
     }
   ],
-  "latest_implementation_branch": "research/independent-adjudication-gates-20261101 (merged into main)",
+  "latest_implementation_branch": "fix/thai-spacing-vowel-cluster-parity-20261103",
   "latest_implementation_commit_pending_ci": null,
   "current_head_status_at_audit_refresh": "Code/workflow checkpoint b6dbec7928b106f0ab52e06af33a26635df75412 passed CI 40322960615 and Web static validation 40322959844. Documentation checkpoint e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff passed full CI 40323209539 and Web static validation 40323209471. This audit-register update creates a newer documentation HEAD and requires exact-head CI/static validation before the current branch HEAD is marked green.",
-  "current_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
-  "current_implementation_commit_before_audit_update": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
+  "current_implementation_branch": "fix/thai-spacing-vowel-cluster-parity-20261103",
+  "current_implementation_commit_before_audit_update": "2b0503099b9d482ae8106fc924039f619c54a957",
   "latest_documentation_checkpoint_before_audit": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
   "audit_note": "Exact-head special-orthography schema and IPA-boundary repair verified on cb775d6156f62392fa2d0f4bcf8d1aa30d219530. CI 40315032771 passed 180 Python tests, generated-data drift, master artifact (351,780 rows / 41 rime records), Node IPA→UA, 28 browser parity fixtures, UI contract, challenge/Wisesight/source-attested IPA diagnostics, candidate-registry check, TUD training/evaluation and artifact uploads. Web static validation 40315032788 passed. This is software/reproducibility evidence, not independent pronunciation gold.",
   "dictionary_max_match_baseline": {
@@ -2667,7 +2686,19 @@
     "exact_regression_test_ci_run": "41406424727",
     "exact_regression_test_ci_result": "PASSED_ALL_3_JOBS"
   },
-  "open_prs": [],
+  "open_prs": [
+    {
+      "number": 191,
+      "title": "fix(segmentation): align Thai spacing-vowel cluster boundaries",
+      "state": "OPEN",
+      "draft": true,
+      "merged": false,
+      "base": "main",
+      "base_sha": "75c331f69aa3c8e5b4db3ccc5a6da85124600a01",
+      "head_branch": "fix/thai-spacing-vowel-cluster-parity-20261103",
+      "verified_code_test_sha": "2b0503099b9d482ae8106fc924039f619c54a957"
+    }
+  ],
   "audio_interval_overlap_code_checkpoint_2026_11_02": {
     "verified_code_head": "964b4930321e68c77ba5e956e1c0ecd12164ccfa",
     "ci_run": "41406087052",
@@ -2904,5 +2935,58 @@
     "linguistic_accuracy": "NOT_MEASURED",
     "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY"
   },
-  "latest_full_repository_head_pages_run": "41420468875"
+  "latest_full_repository_head_pages_run": "41420468875",
+  "latest_implementation_commit": "2b0503099b9d482ae8106fc924039f619c54a957",
+  "latest_thai_spacing_vowel_parity_2026_11_03": {
+    "branch": "fix/thai-spacing-vowel-cluster-parity-20261103",
+    "base_branch": "main",
+    "starting_main_sha": "75c331f69aa3c8e5b4db3ccc5a6da85124600a01",
+    "verified_code_test_sha": "2b0503099b9d482ae8106fc924039f619c54a957",
+    "exact_head_ci_run": 41726180498,
+    "exact_head_ci_result": "PASSED_ALL_3_JOBS",
+    "python_tests": 322,
+    "python_subtests": 1174,
+    "wheel_install_smoke": "PASSED",
+    "master_artifact": "PASSED",
+    "external_vistec_run": 41726181625,
+    "external_vistec_result": "PASSED",
+    "vistec_source_commit": "215a7dc3d384f20eb56af1cbc41fb32b7f8df57c",
+    "vistec_csv_blob_sha1": "edfcb85907a604c5e30643065ac4975862a0fe90",
+    "vistec_rows": 50000,
+    "vistec_expert_adjudicated_rows": 0,
+    "vistec_dictionary_boundary_f1": 0.8327666325382598,
+    "vistec_dictionary_exact_sequences": 77,
+    "vistec_tud_boundary_f1": 0.7530225550370759,
+    "vistec_tud_exact_sequences": 16,
+    "wisesight_rows": 993,
+    "wisesight_expert_adjudicated_rows": 0,
+    "wisesight_exact_sequences": 204,
+    "pr_number": 191,
+    "pr_state": "OPEN_DRAFT_NOT_MERGED",
+    "ahead_by_at_verified_checkpoint": 9,
+    "behind_by_at_verified_checkpoint": 0,
+    "files_changed": [
+      ".github/workflows/ci.yml",
+      "src/thai_ukrainian/segmentation.py",
+      "tests/test_segmentation_error_analysis.py",
+      "tests/test_thai_cluster_boundaries.py",
+      "docs/validation-matrix.md",
+      "docs/final-audit.md",
+      "docs/MASTER-EXECUTION-PLAN-AND-CHAT-HANDOFF.md",
+      "docs/final-audit.json"
+    ],
+    "caveats": [
+      "VISTEC/Wisesight labels are source-annotated, not expert-adjudicated.",
+      "No pronunciation, IPA, tone or Ukrainian target accuracy is claimed.",
+      "Local tests were not run because the connector-only execution environment could not resolve github.com.",
+      "PR intentionally remains Draft and unmerged."
+    ],
+    "external_blockers": [
+      "Independent qualified Thai review/adjudication",
+      "Independent Ukrainian-native target-form review",
+      "CCOST A–D curator clarification and actual TextGrid archive inspection",
+      "Immutable LOTUSDIS revision plus real hashed audio assets and clean reviewed intervals",
+      "Hands-on WCAG keyboard, screen-reader, zoom/reflow and device testing"
+    ]
+  }
 }
