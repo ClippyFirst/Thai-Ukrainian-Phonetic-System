@@ -47,7 +47,7 @@ def load_challenge(path: Path) -> list[dict[str, Any]]:
 def _emits_complete_output(tokens: list[dict[str, Any]]) -> bool:
     thai_tokens = [token for token in tokens if token.get("kind") == "thai"]
     syllables = [syllable for token in thai_tokens for syllable in token.get("syllables", [])]
-    return bool(thai_tokens) and bool(syllables) and all(
+    return bool(thai_tokens) and all(token.get("syllables") for token in thai_tokens) and bool(syllables) and all(
         bool(syllable.get("phonemic_ipa"))
         and bool(syllable.get("ukrainian_transliteration"))
         for syllable in syllables
