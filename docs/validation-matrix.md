@@ -1,3 +1,28 @@
+## Current branch reconciliation — 2026-11-03 (Thai orthographic cluster boundary fix)
+
+- Repository: ClippyFirst/Thai-Ukrainian-Phonetic-System. Default branch main remains at 75c331f69aa3c8e5b4db3ccc5a6da85124600a01; this continuation did not modify main.
+- Work branch: fix/benchmark-error-clusters-20261102; Draft PR #189 remains open. Latest verified runtime/workflow checkpoint: 69d56b52b7f687948cac4250e4c7eb98e86ab67f; follow-up ac603c4ae96bf6ffbc8f2edb095b4f2375d57ce5 only clarifies the segmentation function docstring. This register refresh does not change runtime behaviour.
+- Exact-head verification of the runtime/workflow state: Full CI 41711547837 passed all three jobs; Web Static 41711547920 passed; External VISTEC 41711547913 passed. The docstring-only follow-up and this documentation refresh are separately checked by the branch's exact-head Actions runs.
+- Full suite: Ruff All checks passed; pytest 328 passed, 1,192 subtests passed. Generated-table drift, 351,780-row master artifact, source/reviewer and blind-packet validators, 42-input runtime diagnostics, IPA-to-Ukrainian adapter, Python/browser parity, UI/accessibility contracts, browser latency diagnostic, Wisesight segmentation diagnostics, source-attested IPA checks, TUD held-out diagnostics, manual-review sample checks, and isolated wheel installation all passed.
+- Wisesight-1000: 993 CC0-1.0 test rows, all source-annotated and 0 expert-adjudicated. Dictionary max-match: boundary F1 0.847036, precision 0.833461, recall 0.861061, 2,390 false splits, 1,930 false merges, 204/993 exact token sequences (20.54%). TUD unigram Viterbi on the same rows: F1 0.748623, 8,722 false splits, 363 false merges, 119/993 exact sequences. Diagnostic comparison against source labels, not independent accuracy.
+- VISTEC: 50,000 immutable source-annotated rows, 0 expert-adjudicated. Dictionary max-match boundary F1 0.832767 (77/50,000 exact sequences); TUD Viterbi F1 0.753023 (16/50,000). This is source-label evaluation, not expert gold. Preserve upstream README's 49,997-sample versus pinned CSV's 50,000-row discrepancy.
+- The fix aligns Python segmentation with the browser engine for Thai postposed vowel letters U+0E30, U+0E32 and U+0E33. Regression tests cover กะ, กา, กำ, เกะ, ก่า, เก่า and the coda-boundary control กาก. No dependency or new segmentation model was added.
+- Research review: four full texts were inspected for Thai segmentation/G2P evidence. Orthographic syllables can constrain candidate word boundaries but do not determine lexical words; segmentation is context-sensitive; domain shift and OOV vocabulary matter. TUD remains research-only; dictionary max-match remains the conservative default.
+- Current engineering state remains an engineering-verified research prototype, not release-ready for independent linguistic accuracy. Remaining external gates: independent Thai segmentation/IPA reviewers and adjudication, independent Ukrainian-native target judgments, CCOST A-D curator clarification and lawful TextGrid/archive inspection, immutable LOTUSDIS audio provenance, and hands-on keyboard/screen-reader/zoom/reflow/mobile accessibility review.
+
+---
+
+## 2026-11-03 — Thai orthographic cluster-boundary correction and evidence refresh
+
+| Work item | Status | Evidence | Remaining acceptance |
+|---|---|---|---|
+| Python Thai postposed-vowel cluster boundaries | DONE_VERIFIED | TDD RED on dd58b9adc3a92d40a54e3d26d661ce28ebcb7c7d: seven new boundary subtests failed for the expected split. Minimal fix commits dc9c292a213f7e38a20e10ae3f3730ecf34d408f and fb564db7fe9988b9a5885ed9cd4ceb1a5436654b add U+0E30/U+0E32/U+0E33 to cluster continuations and update all uses. Tests cover กะ, กา, กำ, เกะ, ก่า, เก่า and กาก. | No further runtime acceptance; broader syllabification is a separate linguistic task. |
+| Wisesight diagnostic snapshot and CI evidence gate | DONE_VERIFIED — source-annotation diagnostic only | Dictionary exact sequences increased from 192 to 204/993; boundary F1 0.847036, precision 0.833461, recall 0.861061, 2,390 false splits and 1,930 false merges. Test snapshot and CI assertion both updated to 204. Full CI 41711547837 passed. | 993 labels remain source-annotated, 0 independently adjudicated; do not call this accuracy. |
+| Same-row dictionary vs TUD comparison | DONE_VERIFIED — diagnostic only | Same 993 Wisesight rows: dictionary F1 0.847036 / 204 exact; TUD F1 0.748623 / 119 exact. Both error classes and provenance gates passed; comparative artifact 13267884921. | Keep TUD research-only; human review and independent segmentation gold remain required. |
+| External VISTEC evaluation | DONE_VERIFIED — source-annotation diagnostic only | Run 41711547913 passed; 50,000 pinned rows; dictionary F1 0.832767 / 77 exact, TUD F1 0.753023 / 16 exact; artifact 13267463783. | 0 expert-adjudicated rows; preserve README 49,997 vs CSV 50,000 discrepancy. |
+| Thai segmentation literature review | DONE_VERIFIED — research synthesis | Full-text reads of Boo20, Cho20, Lim21 and Yam22 plus Aroonmanakun 2007; see docs/research/thai-g2p-evaluation-literature-2026-11-03.md. | LST20 and VISTEC labels are not independent gold; license/annotation gates remain. |
+| Third-party engineering-method review | DONE_VERIFIED — process guidance only | Pinned Superpowers, Matt Pocock skills and Ponytail README/TDD/implementation/review revisions inspected. Applied TDD, vertical-slice testing, minimal diffs and review of the changed call path. | No third-party skill code or dependency imported. |
+
 ## Current branch reconciliation — 2026-11-03 (authoritative checkpoint)
 
 - Repository: `ClippyFirst/Thai-Ukrainian-Phonetic-System`; base `main` remains `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`.
