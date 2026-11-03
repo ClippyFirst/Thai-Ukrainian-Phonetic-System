@@ -8,7 +8,7 @@
 - **PR/branch state:** PR #189 remains Draft/open, 108 ahead and 0 behind main. #184/#185/#186 remain distinct FastThaiG2P research branches; #188 remains a separate restricted-source PR with shared registry/audit paths; #190 remains a separate accessibility contrast PR. No PR was merged and main was not changed.
 - **Remaining evidence blockers:** independent Thai phonetic/segmentation adjudication; independent Ukrainian-native target-form review; CCOST A–D curator clarification and actual TextGrid tier inspection; immutable LOTUSDIS audio revision/object/hash/clean interval; hands-on WCAG keyboard/screen-reader/zoom/reflow/mobile review. Linguistic accuracy remains `NOT_MEASURED`; full WCAG conformance is not claimed.
 - **Local execution:** not performed; this session used the GitHub connector and GitHub Actions. Exact-head CI is the verification evidence.
-- **Documentation checkpoint:** this audit/matrix/handoff refresh is documentation-only and requires exact-head CI/Web Static before the current documentation SHA can be called verified.
+- **Documentation checkpoint:** the documentation-only checkpoint `27300590d598f22505f61e147bc0e591d390e3b5` passed exact-head Full CI [41642479329](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41642479329) and Web Static [41642479264](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41642479264). This register closeout is documentation-only.
 
 ---
 

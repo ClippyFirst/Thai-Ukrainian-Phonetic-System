@@ -12,7 +12,7 @@
 
 **External evidence blockers remain:** two independently qualified Thai phonetic/segmentation reviewers plus adjudicator; independent Ukrainian-native target-form review; CCOST A–D curator clarification and actual released TextGrid tier inspection; immutable LOTUSDIS audio object/revision/hash/clean interval; hands-on keyboard, screen-reader, zoom/reflow, mobile and assistive-technology WCAG review. Linguistic accuracy remains `NOT_MEASURED`; accessibility conformance remains unclaimed.
 
-**Documentation note:** this checkpoint is added to the existing matrix, audit and handoff in place. The resulting documentation-only commit requires its own exact-head CI/Web Static run; the verified code-head evidence above does not silently transfer to a later SHA.
+**Documentation verification:** this documentation-only checkpoint at `27300590d598f22505f61e147bc0e591d390e3b5` was exact-head verified: Full CI [41642479329](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41642479329) passed all three jobs and Web Static [41642479264](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41642479264) passed. Ruff, 327 pytest tests, 1,185 subtests, 29 browser parity fixtures, wheel install and master artifact passed. This follow-up register closeout is documentation-only.
 
 ---
 
