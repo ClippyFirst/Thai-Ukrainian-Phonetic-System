@@ -3235,29 +3235,28 @@
   "latest_documentation_head_verification_2026_11_03": {
     "branch": "fix/benchmark-error-clusters-20261102",
     "pr": 189,
-    "head": "3831230c1cf43fae48259b2b2a93c9634ad1e30c",
+    "head": "7ba27004ba5dc9e60fd1f9c57a686b90cf490ae9",
     "base": "75c331f69aa3c8e5b4db3ccc5a6da85124600a01",
-    "ahead_of_main": 125,
+    "ahead_of_main": 129,
     "behind_main": 0,
-    "full_ci_run": 41654235310,
+    "full_ci_run": 41656371625,
     "full_ci": "PASSED_ALL_3_JOBS",
     "full_ci_jobs": [
       "test",
       "wheel-install-smoke",
       "master-artifact"
     ],
-    "web_static_run": 41654235435,
+    "web_static_run": 41656371599,
     "web_static": "PASSED",
     "ruff": "PASSED",
+    "pytest": "327_PASSED_1185_SUBTESTS_PASSED",
     "generated_artifact_drift": "PASSED",
     "source_reviewer_and_blind_packet_validators": "PASSED",
-    "python_test_suite": "PASSED",
     "challenge_runtime_diagnostic": "PASSED_42_INPUTS_NOT_ACCURACY",
     "ipa_ukrainian_adapter": "PASSED",
     "browser_parity_fixtures": 29,
     "ui_accessibility_static_contracts": "PASSED_STATIC_ONLY",
-    "segmentation_diagnostics": "PASSED",
-    "source_attested_ipa_evidence_grade": "PASSED",
+    "segmentation_diagnostics_and_error_review": "PASSED",
     "held_out_tud_evaluation": "PASSED",
     "wheel_install_smoke": "PASSED",
     "master_artifact": "PASSED",
@@ -3265,13 +3264,14 @@
     "linguistic_accuracy": "NOT_MEASURED",
     "main_changed": false,
     "pr_state": "OPEN_DRAFT",
+    "review_comment_id": 5758597272,
     "remaining_external_gates": [
-      "independent Thai phonetic and segmentation adjudication",
-      "independent Ukrainian-native target-form adjudication",
-      "CCOST curator clarification and original TextGrid archive inspection",
-      "immutable LOTUSDIS audio objects, hashes and provenance",
+      "two qualified independent Thai reviewers and adjudicator for phonetic/segmentation gold",
+      "two independent Ukrainian-native reviewers and adjudicator",
+      "CCOST A-D curator clarification and actual TextGrid/X-SAMPA archive inspection",
+      "immutable LOTUSDIS revision and verified audio asset hashes/interval metadata",
       "hands-on keyboard, screen-reader, zoom/reflow and mobile accessibility testing"
     ],
-    "note": "Exact-head CI and Web Static were verified on this documentation checkpoint. This is engineering verification only; no accuracy or WCAG conformance claim is made."
+    "note": "Exact-head Full CI and Web Static passed on the recorded branch head. This is engineering verification only; source-attested lexicon entries and source-annotated segmentation diagnostics are not independent gold."
   }
 }
