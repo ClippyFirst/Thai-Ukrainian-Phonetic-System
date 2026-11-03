@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PR #189 remains open as Draft on fix/benchmark-error-clusters-20261102. Verified code head 94eaadb5bda2318dfa864eee7dae1b3715b70374 is 108 commits ahead of main and 0 behind; Full CI 41641516453 and Web Static 41641516658 passed. Documentation checkpoint 27300590d598f22505f61e147bc0e591d390e3b5 is 109 ahead/0 behind and passed Full CI 41642479329 (3/3 jobs) and Web Static 41642479264. Main unchanged; linguistic accuracy remains NOT_MEASURED.",
+  "status": "PR #189 remains open as Draft on fix/benchmark-error-clusters-20261102. Current exact-tip checkpoint e7ebb28e64afd5ec70fc136a12d6723ccebdd59e is 110 commits ahead of main and 0 behind; Full CI 41643230493 passed all three jobs and Web Static 41643230575 passed. Main unchanged; linguistic accuracy remains NOT_MEASURED.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -147,7 +147,7 @@
     "status": "SOURCE_ATTESTED_NOT_GOLD",
     "includes_short_long_oe_contrast": true
   },
-  "latest_verified_code_commit": "72a77cb42ad05c33274d70c4dcd9f20e07432b64",
+  "latest_verified_code_commit": "e7ebb28e64afd5ec70fc136a12d6723ccebdd59e",
   "starting_branch_commit": "75c331f69aa3c8e5b4db3ccc5a6da85124600a01",
   "ci": {
     "latest_fully_successful_code_data_commit": "72a77cb42ad05c33274d70c4dcd9f20e07432b64",
@@ -360,7 +360,7 @@
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
   "latest_code_checkpoint": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
   "readiness": "engineering-verified research prototype; deployed on GitHub Pages; not release-ready for independent Thai segmentation, IPA or Ukrainian target accuracy",
-  "latest_verified_repository_head": "1431c565ff5c160da4944942d687bc30b2f8d0b2",
+  "latest_verified_repository_head": "e7ebb28e64afd5ec70fc136a12d6723ccebdd59e",
   "task_ledger": [
     {
       "id": "SEG-TRAIN-001",
@@ -554,8 +554,8 @@
   "latest_implementation_commit_pending_ci": "Runtime code head 94eaadb5bda2318dfa864eee7dae1b3715b70374 is exact-head verified by Full CI 41641516453 and Web Static 41641516658. The subsequent audit/matrix/handoff update is documentation-only and awaits its own exact-head verification.",
   "current_head_status_at_audit_refresh": "Code/workflow checkpoint b6dbec7928b106f0ab52e06af33a26635df75412 passed CI 40322960615 and Web static validation 40322959844. Documentation checkpoint e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff passed full CI 40323209539 and Web static validation 40323209471. This audit-register update creates a newer documentation HEAD and requires exact-head CI/static validation before the current branch HEAD is marked green.",
   "current_implementation_branch": "fix/benchmark-error-clusters-20261102",
-  "current_implementation_commit_before_audit_update": "94eaadb5bda2318dfa864eee7dae1b3715b70374",
-  "latest_documentation_checkpoint_before_audit": "27300590d598f22505f61e147bc0e591d390e3b5",
+  "current_implementation_commit_before_audit_update": "e7ebb28e64afd5ec70fc136a12d6723ccebdd59e",
+  "latest_documentation_checkpoint_before_audit": "e7ebb28e64afd5ec70fc136a12d6723ccebdd59e",
   "audit_note": "Exact-head special-orthography schema and IPA-boundary repair verified on cb775d6156f62392fa2d0f4bcf8d1aa30d219530. CI 40315032771 passed 180 Python tests, generated-data drift, master artifact (351,780 rows / 41 rime records), Node IPA→UA, 28 browser parity fixtures, UI contract, challenge/Wisesight/source-attested IPA diagnostics, candidate-registry check, TUD training/evaluation and artifact uploads. Web static validation 40315032788 passed. This is software/reproducibility evidence, not independent pronunciation gold.",
   "dictionary_max_match_baseline": {
     "corpus": "Wisesight-1000",
@@ -621,12 +621,12 @@
       ]
     }
   },
-  "latest_implementation_commit_ci_verified": "94eaadb5bda2318dfa864eee7dae1b3715b70374",
-  "latest_documentation_head_ci_verified": "27300590d598f22505f61e147bc0e591d390e3b5",
-  "latest_documentation_head_ci_run": "41642479329",
-  "latest_documentation_head_web_validation_run": "41642479264",
-  "latest_implementation_ci_run": "41641516453",
-  "latest_implementation_web_validation_run": "41641516658",
+  "latest_implementation_commit_ci_verified": "e7ebb28e64afd5ec70fc136a12d6723ccebdd59e",
+  "latest_documentation_head_ci_verified": "e7ebb28e64afd5ec70fc136a12d6723ccebdd59e",
+  "latest_documentation_head_ci_run": "41643230493",
+  "latest_documentation_head_web_validation_run": "41643230575",
+  "latest_implementation_ci_run": "41643230493",
+  "latest_implementation_web_validation_run": "41643230575",
   "segmentation_error_review": {
     "script": "scripts/analyze_segmentation_errors.py",
     "test": "tests/test_segmentation_error_analysis.py",
@@ -3136,10 +3136,10 @@
     "runtime_changes": "NONE"
   },
   "latest_documentation_batch_verification_2026_11_03": {
-    "head": "27300590d598f22505f61e147bc0e591d390e3b5",
-    "full_ci_run": 41642479329,
+    "head": "e7ebb28e64afd5ec70fc136a12d6723ccebdd59e",
+    "full_ci_run": 41643230493,
     "full_ci": "PASSED_ALL_3_JOBS",
-    "web_static_run": 41642479264,
+    "web_static_run": 41643230575,
     "web_static": "PASSED",
     "jobs": [
       "test",
@@ -3163,17 +3163,17 @@
   "latest_exact_head_verification_2026_11_03": {
     "branch": "fix/benchmark-error-clusters-20261102",
     "pr": 189,
-    "head": "27300590d598f22505f61e147bc0e591d390e3b5",
-    "ahead_of_main": 109,
+    "head": "e7ebb28e64afd5ec70fc136a12d6723ccebdd59e",
+    "ahead_of_main": 110,
     "behind_main": 0,
-    "full_ci_run": 41642479329,
+    "full_ci_run": 41643230493,
     "full_ci_result": "PASSED_ALL_3_JOBS",
     "jobs": [
       "test",
       "wheel-install-smoke",
       "master-artifact"
     ],
-    "web_static_run": 41642479264,
+    "web_static_run": 41643230575,
     "web_static_result": "PASSED",
     "pytest": "327_PASSED_1185_SUBTESTS_PASSED",
     "ruff": "PASSED",
@@ -3186,9 +3186,7 @@
     "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
     "linguistic_accuracy": "NOT_MEASURED",
     "main_changed": false,
-    "pr_state": "OPEN_DRAFT",
-    "submitted_reviews": 0,
-    "inline_review_threads": 0
+    "pr_state": "OPEN_DRAFT"
   },
   "diagnostic_complete_output_guard_2026_11_03": {
     "status": "DONE_VERIFIED",
