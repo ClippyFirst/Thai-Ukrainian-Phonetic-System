@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PR #189 remains open as Draft on fix/benchmark-error-clusters-20261102. The 2026-11-03 literature and engineering-methodology documentation continuation is on this branch; latest pre-audit-refresh head 7ba7433a3cbe545c89c796412a33e4cb1b0fa769 is 81 commits ahead of main and 0 behind. Prior exact-head Full CI 41539140734 passed all three jobs and Web Static 41539140594 passed on 913518797bb2eb1e42bc77a7b6fb797ec7b85420. Current documentation reconciliation awaits its own exact-head verification. Main unchanged; linguistic accuracy remains NOT_MEASURED.",
+  "status": "PR #189 remains open as Draft on fix/benchmark-error-clusters-20261102. Current documentation continuation before the final structured-audit commit is f0dc77f364b099afb3dfaef7f86551c346141062, 88 commits ahead of main and 0 behind. Prior exact-head Full CI 41603648158 passed all three jobs and Web Static 41603648119 passed on 0416fd332382b804b76ab0242ea8ff0b415062ce. The final structured-audit commit is documentation-only and receives its own exact-head CI. Main unchanged; linguistic accuracy remains NOT_MEASURED.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -3057,20 +3057,20 @@
     "runtime_changes": "NONE",
     "project_accuracy": "NOT_MEASURED",
     "independent_review": "BLOCKED_EXTERNAL_REVIEWERS",
-    "exact_head_verification": "PRIOR_CHECKPOINT_913518797BB2EB1E42BC77A7B6FB797EC7B85420_PASSED; CURRENT_DOC_REFRESH_PENDING",
-    "latest_document_commit_before_json": "7ba7433a3cbe545c89c796412a33e4cb1b0fa769",
+    "exact_head_verification": "PASSED_ON_0416FD332382B804B76AB0242EA8FF0B415062CE; FINAL_AUDIT_JSON_REFRESH_PENDING",
+    "latest_document_commit_before_json": "f0dc77f364b099afb3dfaef7f86551c346141062",
     "consensus_thread": "https://consensus.app/search/research-the-peer-reviewed-evidence-and-primary-sc/TPPdaWrzSWGIdPzNPruDdA/",
     "undermind_document": "https://app.undermind.ai/projects/49bbd978-a5a9-4cac-a7bb-a72848f50e10?path=/Research%20the%20peer-reviewed%20evidence%20and%20primary%20scholarly%20literature%20relevant%20to.md",
-    "ci_run": 41539140734,
+    "ci_run": 41603648158,
     "ci_result": "PASSED_ALL_3_JOBS",
-    "web_static_run": 41539140594,
+    "web_static_run": 41603648119,
     "web_static_result": "PASSED",
     "python_test_suite": "326_PASSED_1185_SUBTESTS_PASSED",
     "ruff": "PASSED",
     "wheel_install_smoke": "PASSED",
     "master_artifact": "PASSED",
-    "current_audit_documentation_update": "PENDING_EXACT_HEAD_CI_AFTER_2026_11_03_WORKFLOW_REVIEW",
-    "branch_ahead_of_main": 81,
+    "current_audit_documentation_update": "PRIOR_DOCS_EXACT_HEAD_CI_PASSED; THIS_JSON_REFRESH_REQUIRES_ITS_OWN_EXACT_HEAD_CI",
+    "branch_ahead_of_main": 88,
     "branch_behind_main": 0,
     "audit_json_refresh_commit": "THIS_UPDATE_DOCUMENTATION_ONLY_REQUIRES_ITS_OWN_EXACT_HEAD_CI"
   },
@@ -3127,5 +3127,23 @@
       "british_english": "3 US spellings flagged; no global style conversion applied because repository English style has not been standardized and one hit is a proper publication title"
     },
     "runtime_changes": "NONE"
+  },
+  "latest_documentation_batch_verification_2026_11_03": {
+    "head": "0416fd332382b804b76ab0242ea8ff0b415062ce",
+    "full_ci_run": 41603648158,
+    "full_ci": "PASSED_ALL_3_JOBS",
+    "web_static_run": 41603648119,
+    "web_static": "PASSED",
+    "pytest": "326_PASSED_1185_SUBTESTS_PASSED",
+    "ruff": "PASSED",
+    "lexicon_rows": 117,
+    "lexicon_unique": 117,
+    "lexicon_duplicates": 0,
+    "lexicon_malformed": 0,
+    "source_registry_rows": 19,
+    "source_registry_duplicate_words": 0,
+    "lexical_ipa_override_rows": 6,
+    "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
+    "linguistic_accuracy": "NOT_MEASURED"
   }
 }
