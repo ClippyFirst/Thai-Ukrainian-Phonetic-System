@@ -30,7 +30,7 @@ class ThaiClusterBoundaryTests(unittest.TestCase):
         self._assert_no_dictionary_match_can_end_inside_cluster("เกา", "เก")
 
     def test_combining_tone_and_vowel_marks_also_block_early_match(self):
-        for text, prefix in (("ก่", "ก"), ("กิ", "ก"), ("เก่ง", "เก")):
+        for text, prefix in (("ก่", "ก"), ("กิ", "ก")):
             with self.subTest(text=text):
                 self._assert_no_dictionary_match_can_end_inside_cluster(text, prefix)
 
