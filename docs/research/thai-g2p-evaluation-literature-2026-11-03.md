@@ -2,7 +2,7 @@
 
 **Reviewed:** 2026-11-03  
 **Scope:** Standard Thai G2P, phonological/phonetic reference quality, segmentation, and downstream Ukrainian adaptation.  
-**Status:** literature synthesis; no new project accuracy result and no runtime behavior change.
+**Status:** literature synthesis; no new project accuracy result and no runtime behaviour change.
 
 ## Executive finding
 
@@ -21,7 +21,7 @@ Full-text findings:
 - The pronunciation dictionary contains **103,265 unique words**, **19,601 unique pseudo-syllable (PS) segments**, including **14,479 unique isolatable syllables**.
 - The held-out evaluation set contains **87,329 dictionary words** not used for training. The paper does not explicitly state the training-word count; 15,936 is only the arithmetic remainder if those sets partition the full dictionary.
 - The method first segments text into PS units and assigns character functions, then aligns graphemes and phonemes into graphones for a second CRF. PS units are not simply guaranteed to equal spoken syllables: linking syllables may have phonemes not overtly represented in the graphemes.
-- The paper reports **13.67% exact-match word error rate (WER)** and **3.91% WER when tone errors are ignored** for its best JSM2 setting. It separately reports phone error rate (PER): **1.54%** for the five-gram JSM2 setting and **6.68%** for the baseline. These are different metrics and must not be conflated.
+- The abstract reports **13.66% exact-match word error rate (WER)**, while the conclusion and Figure 4 report **13.67%**; the paper gives **3.91% WER when tone errors are ignored** for the 5-gram JSM2 setting. It separately reports phone error rate (PER): **1.54%** for 5-gram JSM2 and **6.68%** for the baseline. Preserve the 13.66/13.67 discrepancy; WER and PER are different metrics and must not be conflated.
 - Table 4 reports high error rates for the targeted **vowel-length distortion (60.03%)** and **tone ambiguity (43.79%)** problem categories, compared with **linking syllables (1.80%)** for JSM2.
 - Reference pronunciations are described as coming from a large pronunciation dictionary. The paper does not report an independent expert-adjudication protocol or inter-annotator agreement.
 
@@ -87,7 +87,7 @@ The following are project recommendations derived from the studies above; they a
    - tone-category accuracy and confusion matrix;
    - vowel-length accuracy;
    - phonemic-vs-surface compatibility and release/aspiration distinctions;
-   - coverage, abstention, invalid-input handling and OOV behavior;
+   - coverage, abstention, invalid-input handling and OOV behaviour;
    - Ukrainian adaptation agreement on a frozen, independently checked IPA input.
 6. **Prevent source leakage.** Exclude same-source lexical overrides from independent agreement calculations. Mark Wiktionary-derived or model-derived labels as source-attested/diagnostic, not expert gold. Never use agreement between two engines as the gold reference.
 7. **Report denominators and uncertainty.** Publish item counts per stratum, emitted/abstained counts, missing labels, reviewer agreement and adjudication rates. Keep all prompts in the denominator for coverage; do not silently score only easy emitted cases. If inferential scores are reported, use item/speaker-aware uncertainty estimates and disclose the sampling frame.
