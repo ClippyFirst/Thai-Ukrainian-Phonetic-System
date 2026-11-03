@@ -3231,5 +3231,47 @@
     "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
     "linguistic_accuracy": "NOT_MEASURED",
     "note": "Exact-head workflow results supersede the earlier pending-CI entry; no results are transferred from an older commit."
+  },
+  "latest_documentation_head_verification_2026_11_03": {
+    "branch": "fix/benchmark-error-clusters-20261102",
+    "pr": 189,
+    "head": "3831230c1cf43fae48259b2b2a93c9634ad1e30c",
+    "base": "75c331f69aa3c8e5b4db3ccc5a6da85124600a01",
+    "ahead_of_main": 125,
+    "behind_main": 0,
+    "full_ci_run": 41654235310,
+    "full_ci": "PASSED_ALL_3_JOBS",
+    "full_ci_jobs": [
+      "test",
+      "wheel-install-smoke",
+      "master-artifact"
+    ],
+    "web_static_run": 41654235435,
+    "web_static": "PASSED",
+    "ruff": "PASSED",
+    "generated_artifact_drift": "PASSED",
+    "source_reviewer_and_blind_packet_validators": "PASSED",
+    "python_test_suite": "PASSED",
+    "challenge_runtime_diagnostic": "PASSED_42_INPUTS_NOT_ACCURACY",
+    "ipa_ukrainian_adapter": "PASSED",
+    "browser_parity_fixtures": 29,
+    "ui_accessibility_static_contracts": "PASSED_STATIC_ONLY",
+    "segmentation_diagnostics": "PASSED",
+    "source_attested_ipa_evidence_grade": "PASSED",
+    "held_out_tud_evaluation": "PASSED",
+    "wheel_install_smoke": "PASSED",
+    "master_artifact": "PASSED",
+    "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
+    "linguistic_accuracy": "NOT_MEASURED",
+    "main_changed": false,
+    "pr_state": "OPEN_DRAFT",
+    "remaining_external_gates": [
+      "independent Thai phonetic and segmentation adjudication",
+      "independent Ukrainian-native target-form adjudication",
+      "CCOST curator clarification and original TextGrid archive inspection",
+      "immutable LOTUSDIS audio objects, hashes and provenance",
+      "hands-on keyboard, screen-reader, zoom/reflow and mobile accessibility testing"
+    ],
+    "note": "Exact-head CI and Web Static were verified on this documentation checkpoint. This is engineering verification only; no accuracy or WCAG conformance claim is made."
   }
 }
