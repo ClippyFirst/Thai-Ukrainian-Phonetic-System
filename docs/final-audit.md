@@ -1518,3 +1518,24 @@ The new test/tool code was committed on the PR branch and awaits exact-head CI c
 
 - The reconciled audit/matrix/handoff checkpoint `7391688c4c19b295f701812e8d6336bcf6abeb02` passed exact-head Full CI [41537375617](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41537375617) and Web Static [41537375633](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41537375633). Full CI completed all three jobs successfully: `test`, `wheel-install-smoke`, and `master-artifact`.
 - The final structured audit update in the current commit is documentation-only; exact-head verification is rerun for that resulting commit. The terminal branch-head result will be recorded in PR #189's conversation so no further documentation-only commit is needed after verification.
+
+
+## Engineering-methodology and academic-writing review — 2026-11-03
+
+Reviewed the three requested upstream repositories at source level rather than copying them wholesale:
+
+- [obra/superpowers](https://github.com/obra/superpowers): inspected the TDD and requesting-code-review skills. Adopted the red/green/refactor discipline, expected-failure verification, and a separate review pass for substantial changes.
+- [mattpocock/skills](https://github.com/mattpocock/skills): inspected the primary-source research skill. Adopted claim-to-primary-source traceability and durable cited research notes. Its own documentation also identifies unguarded nested-agent delegation and weak source-quality gating as known limitations; those patterns are not adopted.
+- [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail): inspected the current Ponytail skill, AGENTS.md and README. Adopted read-the-real-dataflow-first, reuse existing code, minimum complete diff, and never cut validation/error handling/accessibility. Its LOC/cost/time benchmark claims are not treated as transferable quality targets for this repository.
+
+All three upstream repositories declare MIT. No upstream skill, code, dependency, hook or runtime was installed or vendored. No architecture changes follow from this review.
+
+### Academic-writing toolkit checks
+
+The Thai G2P literature note was checked for citation consistency, paragraph logic and British English. The citation checker produced false-positive author-year matches for journal volume/year forms such as `106 (2019)`, `24 (2006)`, `156 (2024)`, and `25 (2021)`; these references were reformatted to make volume and year explicit without ambiguous parentheses. The checker also expects a specific reading-note source-line schema and did not accept the temporary source-note format, so its citation result is **not marked as a clean pass**. DOI links and bibliography were manually retained and inspected. Two short one-sentence implication paragraphs were retained intentionally as takeaway paragraphs. Three US-spelling suggestions were not globally applied because the repository has no declared British-English style and one match was part of a publication title.
+
+### Audit-register correction
+
+The structured audit had drifted: it named `ba71f63c...` and 79 commits ahead while PR #189's branch-head record already named `913518797...` and 80 commits ahead. The register is reconciled in the current documentation batch. The 913518797 checkpoint's exact-head Full CI [41539140734](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41539140734) passed all three jobs and Web Static [41539140594](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41539140594) passed. This new audit/methodology documentation batch requires exact-head verification on its final commit.
+
+No runtime/parser/IPA/Ukrainian behavior changed. Linguistic accuracy remains `NOT_MEASURED`; external reviewers, CCOST archive/curator, LOTUSDIS audio assets and manual accessibility remain blocked.
