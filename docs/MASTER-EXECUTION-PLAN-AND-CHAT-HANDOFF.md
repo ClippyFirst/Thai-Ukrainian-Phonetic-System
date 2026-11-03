@@ -1,3 +1,24 @@
+## Current branch reconciliation — 2026-11-03 (Thai orthographic cluster boundary fix)
+
+- Repository: ClippyFirst/Thai-Ukrainian-Phonetic-System. Default branch main remains at 75c331f69aa3c8e5b4db3ccc5a6da85124600a01; this continuation did not modify main.
+- Work branch: fix/benchmark-error-clusters-20261102; Draft PR #189 remains open. Latest verified runtime/workflow checkpoint: 69d56b52b7f687948cac4250e4c7eb98e86ab67f; follow-up ac603c4ae96bf6ffbc8f2edb095b4f2375d57ce5 only clarifies the segmentation function docstring. This register refresh does not change runtime behaviour.
+- Exact-head verification of the runtime/workflow state: Full CI 41711547837 passed all three jobs; Web Static 41711547920 passed; External VISTEC 41711547913 passed. The docstring-only follow-up and this documentation refresh are separately checked by the branch's exact-head Actions runs.
+- Full suite: Ruff All checks passed; pytest 328 passed, 1,192 subtests passed. Generated-table drift, 351,780-row master artifact, source/reviewer and blind-packet validators, 42-input runtime diagnostics, IPA-to-Ukrainian adapter, Python/browser parity, UI/accessibility contracts, browser latency diagnostic, Wisesight segmentation diagnostics, source-attested IPA checks, TUD held-out diagnostics, manual-review sample checks, and isolated wheel installation all passed.
+- Wisesight-1000: 993 CC0-1.0 test rows, all source-annotated and 0 expert-adjudicated. Dictionary max-match: boundary F1 0.847036, precision 0.833461, recall 0.861061, 2,390 false splits, 1,930 false merges, 204/993 exact token sequences (20.54%). TUD unigram Viterbi on the same rows: F1 0.748623, 8,722 false splits, 363 false merges, 119/993 exact sequences. Diagnostic comparison against source labels, not independent accuracy.
+- VISTEC: 50,000 immutable source-annotated rows, 0 expert-adjudicated. Dictionary max-match boundary F1 0.832767 (77/50,000 exact sequences); TUD Viterbi F1 0.753023 (16/50,000). This is source-label evaluation, not expert gold. Preserve upstream README's 49,997-sample versus pinned CSV's 50,000-row discrepancy.
+- The fix aligns Python segmentation with the browser engine for Thai postposed vowel letters U+0E30, U+0E32 and U+0E33. Regression tests cover กะ, กา, กำ, เกะ, ก่า, เก่า and the coda-boundary control กาก. No dependency or new segmentation model was added.
+- Research review: four full texts were inspected for Thai segmentation/G2P evidence. Orthographic syllables can constrain candidate word boundaries but do not determine lexical words; segmentation is context-sensitive; domain shift and OOV vocabulary matter. TUD remains research-only; dictionary max-match remains the conservative default.
+- Current engineering state remains an engineering-verified research prototype, not release-ready for independent linguistic accuracy. Remaining external gates: independent Thai segmentation/IPA reviewers and adjudication, independent Ukrainian-native target judgments, CCOST A-D curator clarification and lawful TextGrid/archive inspection, immutable LOTUSDIS audio provenance, and hands-on keyboard/screen-reader/zoom/reflow/mobile accessibility review.
+
+---
+
+### Methodology references checked at pinned upstream revisions
+
+- obra/superpowers: README c5bb59fdaf17ba154e803c549cd71a73ef36c24b; TDD skill 46838cc9e893c06259e3bdad0fc2425b36242f15.
+- mattpocock/skills: README f7038f139299985eea6c3e18398dbafb379a0010; TDD skill 01eadaa34e7c9a63a67d6dc3cce1cc81b0e49985; implementation skill bd49e472984c7b99aac40286fdae749bb955a842.
+- DietrichGebert/ponytail: README ff6a92573ef6412495055d979cff1d7464e1fa65; core skill d64edd32265ba21cbf5270158f04e97d96925f27; review skill a50e3ac6ded6fccc9edae34ce37877bbce11e3fa.
+- Applied selectively: observed RED before implementation, corrected test-discovery errors rather than counting inert tests, used one minimal implementation slice, reviewed all continuation-set call sites, and ran the full project verification. No skill source or dependency was copied.
+
 ## Current branch reconciliation — 2026-11-03 (authoritative checkpoint)
 
 - Repository: `ClippyFirst/Thai-Ukrainian-Phonetic-System`; base `main` remains `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`.
