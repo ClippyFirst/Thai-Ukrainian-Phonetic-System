@@ -2272,3 +2272,11 @@ Academic Writing Toolkit was used for citation consistency, paragraph logic and 
 The structured audit had stale values (`ba71f63c...`, 79 commits ahead) while PR #189's latest branch record was `913518797...`, 80 commits ahead. The audit JSON is reconciled in this documentation batch. The previous 913 checkpoint passed exact-head Full CI [41539140734](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41539140734) and Web Static [41539140594](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41539140594). Current docs changes require their own final exact-head run.
 
 No runtime behavior changed. Keep phonetic accuracy `NOT_MEASURED`; external Thai/Ukrainian adjudication, CCOST archive and curator evidence, LOTUSDIS immutable audio assets and manual accessibility remain the genuine acceptance blockers.
+
+
+### Exact-head verification of this documentation batch — 2026-11-03
+
+- Checkpoint `0416fd332382b804b76ab0242ea8ff0b415062ce` passed Full CI [41603648158](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41603648158) and Web Static [41603648119](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41603648119).
+- All three Full CI jobs passed. Ruff passed; pytest 326 passed / 1,185 subtests passed. Source/reviewer and blind packet validators, generated-artifact drift, challenge diagnostics, IPA→Ukrainian adapter, 29 browser parity fixtures, UI/accessibility static checks, segmentation diagnostics, isolated wheel install and master artifact passed.
+- Lexicon structural inspection: 117 unique well-formed text-lexicon rows; 19 unique row-level source words; six lexical IPA override rows. These checks do not validate pronunciations.
+- No runtime behavior changed. Exact linguistic accuracy remains NOT_MEASURED; human reviewers, CCOST archive/curator, immutable LOTUSDIS audio and hands-on accessibility remain the genuine blockers.
