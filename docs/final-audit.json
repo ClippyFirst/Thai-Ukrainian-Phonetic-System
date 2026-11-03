@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PR #189 remains open as Draft on fix/benchmark-error-clusters-20261102. Current exact branch head 2d9423beb4fc3c991ee63b586f8699b05b8c25e2 is 91 commits ahead of main and 0 behind; exact-head Full CI 41605956008 passed all three jobs and Web Static 41605956074 passed. Structured audit and handoff now reconcile this terminal exact-head evidence. Main unchanged; linguistic accuracy remains NOT_MEASURED.",
+  "status": "PR #189 remains open as Draft on fix/benchmark-error-clusters-20261102. Latest verified checkpoint 2ec6393655f7d4f58d7b840abd194bf4d0b07efe was 95 commits ahead of main and 0 behind; exact-head Full CI 41610404742 passed all three jobs and Web Static 41610404753 passed. This audit-register reconciliation is documentation-only and requires its own exact-head verification. Main unchanged; linguistic accuracy remains NOT_MEASURED.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -3129,11 +3129,16 @@
     "runtime_changes": "NONE"
   },
   "latest_documentation_batch_verification_2026_11_03": {
-    "head": "2d9423beb4fc3c991ee63b586f8699b05b8c25e2",
-    "full_ci_run": 41605956008,
+    "head": "2ec6393655f7d4f58d7b840abd194bf4d0b07efe",
+    "full_ci_run": 41610404742,
     "full_ci": "PASSED_ALL_3_JOBS",
-    "web_static_run": 41605956074,
+    "web_static_run": 41610404753,
     "web_static": "PASSED",
+    "jobs": [
+      "test",
+      "wheel-install-smoke",
+      "master-artifact"
+    ],
     "pytest": "326_PASSED_1185_SUBTESTS_PASSED",
     "ruff": "PASSED",
     "source_and_blind_packet_validators": "PASSED",
@@ -3150,17 +3155,17 @@
   "latest_exact_head_verification_2026_11_03": {
     "branch": "fix/benchmark-error-clusters-20261102",
     "pr": 189,
-    "head": "2d9423beb4fc3c991ee63b586f8699b05b8c25e2",
-    "ahead_of_main": 91,
+    "head": "2ec6393655f7d4f58d7b840abd194bf4d0b07efe",
+    "ahead_of_main": 95,
     "behind_main": 0,
-    "full_ci_run": 41605956008,
+    "full_ci_run": 41610404742,
     "full_ci_result": "PASSED_ALL_3_JOBS",
     "jobs": [
       "test",
       "wheel-install-smoke",
       "master-artifact"
     ],
-    "web_static_run": 41605956074,
+    "web_static_run": 41610404753,
     "web_static_result": "PASSED",
     "pytest": "326_PASSED_1185_SUBTESTS_PASSED",
     "ruff": "PASSED",
