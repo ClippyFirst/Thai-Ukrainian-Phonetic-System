@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PR #189 remains open as Draft on fix/benchmark-error-clusters-20261102. Current exact branch HEAD fba3e63deeda6e61565e0444dc4685f248dbb763 is 116 commits ahead of main and 0 behind. Exact-head Full CI 41646388428 passed all three jobs; Web Static 41646388317 passed. Main unchanged; linguistic accuracy remains NOT_MEASURED.",
+  "status": "PR #189 remains open as Draft on fix/benchmark-error-clusters-20261102. Latest verified runtime/workflow commit 69d56b52b7f687948cac4250e4c7eb98e86ab67f is 136 commits ahead of main and 0 behind; Full CI 41711547837 passed all three jobs, Web Static 41711547920 passed, External VISTEC 41711547913 passed. Follow-up ac603c4ae96bf6ffbc8f2edb095b4f2375d57ce5 is docstring-only. Main unchanged; linguistic accuracy remains NOT_MEASURED.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -147,7 +147,7 @@
     "status": "SOURCE_ATTESTED_NOT_GOLD",
     "includes_short_long_oe_contrast": true
   },
-  "latest_verified_code_commit": "e7ebb28e64afd5ec70fc136a12d6723ccebdd59e",
+  "latest_verified_code_commit": "69d56b52b7f687948cac4250e4c7eb98e86ab67f",
   "starting_branch_commit": "75c331f69aa3c8e5b4db3ccc5a6da85124600a01",
   "ci": {
     "latest_fully_successful_code_data_commit": "72a77cb42ad05c33274d70c4dcd9f20e07432b64",
@@ -211,13 +211,13 @@
       "split": "test",
       "same_rows_for_both_engines": true,
       "dictionary_max_match": {
-        "boundary_precision": 0.8222866611433306,
-        "boundary_recall": 0.8573896767691311,
-        "boundary_f1": 0.8394713656387666,
-        "false_splits": 2574,
-        "false_merges": 1981,
-        "exact_sequences": 192,
-        "exact_sequence_rate": 0.1933534743202417
+        "boundary_precision": 0.8334610828513692,
+        "boundary_recall": 0.861061118709956,
+        "boundary_f1": 0.847036328871893,
+        "false_splits": 2390,
+        "false_merges": 1930,
+        "exact_sequences": 204,
+        "exact_sequence_rate": 0.2054380664652568
       },
       "tud_unigram_viterbi": {
         "boundary_precision": 0.608,
@@ -228,7 +228,7 @@
         "exact_sequences": 119,
         "exact_sequence_rate": 0.11983887210473314
       },
-      "caveat": "Full-text same-row metrics; not directly comparable to earlier filtered Thai-only TUD metrics; source annotation, not independent expert gold."
+      "caveat": "Full-text same-row metrics on source-annotated labels; zero expert-adjudicated rows; diagnostic only."
     },
     "pr_reconciliation": {
       "pr68": {
@@ -360,7 +360,7 @@
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
   "latest_code_checkpoint": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
   "readiness": "engineering-verified research prototype; deployed on GitHub Pages; not release-ready for independent Thai segmentation, IPA or Ukrainian target accuracy",
-  "latest_verified_repository_head": "e7ebb28e64afd5ec70fc136a12d6723ccebdd59e",
+  "latest_verified_repository_head": "69d56b52b7f687948cac4250e4c7eb98e86ab67f",
   "task_ledger": [
     {
       "id": "SEG-TRAIN-001",
@@ -561,14 +561,15 @@
     "corpus": "Wisesight-1000",
     "rows": 993,
     "status": "SOURCE_ANNOTATED_NOT_EXPERT_ADJUDICATED",
-    "prediction_coverage": 1,
-    "boundary_precision": 0.8222866611433306,
-    "boundary_recall": 0.8573896767691311,
-    "boundary_f1": 0.8394713656387666,
-    "exact_sequence_rate": 0.1933534743202417,
+    "boundary_precision": 0.8334610828513692,
+    "boundary_recall": 0.861061118709956,
+    "boundary_f1": 0.847036328871893,
+    "exact_sequences": 204,
+    "exact_sequence_rate": 0.2054380664652568,
     "used_for_training": false,
     "role": "opt-in diagnostic baseline; not production-quality evidence",
-    "artifact_id": "12648264783"
+    "artifact_id": "13267889956",
+    "artifact_archive_sha256": "479c0aaf88c714fc8d890078c84349facc8a154b008d24ec30897a7fb4f20b70"
   },
   "tud_research_segmenter": {
     "model_id": "clippyfirst-tud-unigram-viterbi-v1",
@@ -621,12 +622,12 @@
       ]
     }
   },
-  "latest_implementation_commit_ci_verified": "e7ebb28e64afd5ec70fc136a12d6723ccebdd59e",
+  "latest_implementation_commit_ci_verified": "69d56b52b7f687948cac4250e4c7eb98e86ab67f",
   "latest_documentation_head_ci_verified": "e7ebb28e64afd5ec70fc136a12d6723ccebdd59e",
   "latest_documentation_head_ci_run": "41643230493",
   "latest_documentation_head_web_validation_run": "41643230575",
-  "latest_implementation_ci_run": "41643230493",
-  "latest_implementation_web_validation_run": "41643230575",
+  "latest_implementation_ci_run": "41711547837",
+  "latest_implementation_web_validation_run": "41711547920",
   "segmentation_error_review": {
     "script": "scripts/analyze_segmentation_errors.py",
     "test": "tests/test_segmentation_error_analysis.py",
@@ -637,35 +638,35 @@
     "output_artifact": "thai-segmentation-error-review",
     "purpose": "deterministic false-split/false-merge triage examples and boundary metrics",
     "acceptance_boundary": "diagnostic only; does not mark every disagreement as an engine error and does not qualify as independent gold",
-    "implementation_commit": "bec1b7027f34a4f70f0b6f9fdc415ef43343eab9",
+    "implementation_commit": "fb564db7fe9988b9a5885ed9cd4ceb1a5436654b",
     "exact_head_ci_status": "PASS for dictionary-only triage report on prior verified code checkpoint; comparative report pending",
-    "test_commit": "aba6832eb97cb4b84f2e62fa058fa963cfb34803",
-    "ci_workflow_commit": "c189cdb9209d85780c3baeb1df23800101840b16",
-    "exact_sequence_contract": "192/993 full token-array matches on the pinned Wisesight/dictionary baseline; token iterable is normalized to a list so the metric matches the benchmark scorer",
-    "verified_ci_run": 40320450844,
-    "web_static_validation_run": 40320450587,
-    "artifact_id": "12648833301",
+    "test_commit": "dd58b9adc3a92d40a54e3d26d661ce28ebcb7c7d",
+    "ci_workflow_commit": "69d56b52b7f687948cac4250e4c7eb98e86ab67f",
+    "exact_sequence_contract": "204/993 full token-array matches after Thai postposed-vowel cluster correction; source-annotated diagnostic, not adjudicated gold.",
+    "verified_ci_run": 41711547837,
+    "web_static_validation_run": 41711547920,
+    "artifact_id": "13267889956",
     "artifact_sha256": "005c18ba366fc692193db7f6557b052ff7f940dea3274ec168f6a93f0df7e66b",
     "metrics": {
       "rows": 993,
       "expert_adjudicated_rows": 0,
       "gold_boundaries": 13891,
-      "predicted_boundaries": 14484,
-      "true_positive_boundaries": 11910,
-      "false_splits": 2574,
-      "false_merges": 1981,
-      "boundary_precision": 0.8222866611433306,
-      "boundary_recall": 0.8573896767691311,
-      "boundary_f1": 0.8394713656387666,
-      "exact_sequence_matches": 192,
-      "exact_sequence_rate": 0.1933534743202417
+      "predicted_boundaries": 14351,
+      "true_positive_boundaries": 11961,
+      "false_splits": 2390,
+      "false_merges": 1930,
+      "boundary_precision": 0.8334610828513692,
+      "boundary_recall": 0.861061118709956,
+      "boundary_f1": 0.847036328871893,
+      "exact_sequence_matches": 204,
+      "exact_sequence_rate": 0.2054380664652568
     },
-    "comparative_report_status": "DONE_VERIFIED — exact-head CI report/evidence assertions and artifact upload passed on code checkpoint b6dbec7928b106f0ab52e06af33a26635df75412",
+    "comparative_report_status": "DONE_VERIFIED — exact-head CI 41711547837 passed same-row dictionary/TUD metrics, evidence-grade checks, manual-review packet checks and artifact upload.",
     "comparative_script": "scripts/compare_segmentation_error_review.py",
     "comparative_test": "tests/test_comparative_segmentation_error_review.py",
     "comparative_artifact_name": "thai-segmentation-comparative-error-review",
     "comparison_policy": "Both dictionary max-match and TUD Viterbi evaluated on identical 993 pinned Wisesight source-annotated rows; non-Thai runs copied unchanged; report is triage, not adjudication.",
-    "comparative_artifact_id": "12649094231",
+    "comparative_artifact_id": "13267884921",
     "comparative_artifact_sha256": "8005cc91939ea06b852c1717fee9fb72d370709e74267b8f99636a6476d30775",
     "comparative_metrics": {
       "rows": 993,
@@ -675,13 +676,13 @@
       "split": "test",
       "same_rows_for_both_engines": true,
       "dictionary_max_match": {
-        "boundary_precision": 0.8222866611433306,
-        "boundary_recall": 0.8573896767691311,
-        "boundary_f1": 0.8394713656387666,
-        "false_splits": 2574,
-        "false_merges": 1981,
-        "exact_sequences": 192,
-        "exact_sequence_rate": 0.1933534743202417
+        "boundary_precision": 0.8334610828513692,
+        "boundary_recall": 0.861061118709956,
+        "boundary_f1": 0.847036328871893,
+        "false_splits": 2390,
+        "false_merges": 1930,
+        "exact_sequences": 204,
+        "exact_sequence_rate": 0.2054380664652568
       },
       "tud_unigram_viterbi": {
         "boundary_precision": 0.608,
@@ -692,10 +693,12 @@
         "exact_sequences": 119,
         "exact_sequence_rate": 0.11983887210473314
       },
-      "caveat": "Full-text same-row metrics; not directly comparable to earlier filtered Thai-only TUD metrics; source annotation, not independent expert gold."
+      "caveat": "Full-text same-row metrics on source-annotated labels; zero expert-adjudicated rows; diagnostic only."
     },
     "production_decision": "DO_NOT_INTEGRATE_TUD_AS_PRODUCTION_DEFAULT",
-    "production_decision_basis": "On identical full-text Wisesight rows, TUD has lower boundary F1 (0.748623 vs 0.839471), lower exact-sequence rate (11.98% vs 19.34%) and 8,722 false splits vs 2,574 for dictionary max-match. Labels are source-annotated; human review and independent-domain evaluation remain required."
+    "production_decision_basis": "On identical full-text Wisesight rows, TUD has lower boundary F1 (0.748623 vs 0.847036), lower exact-sequence rate (11.98% vs 20.54%) and 8,722 false splits vs 2,390 for dictionary max-match. Labels remain source-annotated; human review and independent-domain evaluation remain required.",
+    "artifact_archive_sha256": "479c0aaf88c714fc8d890078c84349facc8a154b008d24ec30897a7fb4f20b70",
+    "comparative_artifact_archive_sha256": "f1120dbd3c48554f0da5658c0b479dbe7e64b5da23b398d36051d1a225d7f2cc"
   },
   "current_checkpoint": {
     "date": "2026-10-26",
@@ -741,8 +744,8 @@
     "segmentation_comparison": {
       "rows": 993,
       "evidence_grade": "SOURCE_ANNOTATED_NOT_EXPERT_ADJUDICATED",
-      "dictionary_boundary_f1": 0.8394713656387666,
-      "dictionary_exact_sequences": 192,
+      "dictionary_boundary_f1": 0.847036328871893,
+      "dictionary_exact_sequences": 204,
       "tud_boundary_f1": 0.7486234470545917,
       "tud_exact_sequences": 119,
       "decision": "DO_NOT_INTEGRATE_TUD_AS_PRODUCTION_DEFAULT"
@@ -3273,5 +3276,122 @@
       "hands-on keyboard, screen-reader, zoom/reflow and mobile accessibility testing"
     ],
     "note": "Exact-head Full CI and Web Static passed on the recorded branch head. This is engineering verification only; source-attested lexicon entries and source-annotated segmentation diagnostics are not independent gold."
+  },
+  "latest_exact_head_verification_thai_cluster_boundaries_2026_11_03": {
+    "branch": "fix/benchmark-error-clusters-20261102",
+    "verified_runtime_workflow_head": "69d56b52b7f687948cac4250e4c7eb98e86ab67f",
+    "followup_docstring_commit": "ac603c4ae96bf6ffbc8f2edb095b4f2375d57ce5",
+    "full_ci_run": 41711547837,
+    "web_static_run": 41711547920,
+    "external_vistec_run": 41711547913,
+    "branch_ahead_of_main": 136,
+    "branch_behind_main": 0,
+    "pytest": "328 passed, 1192 subtests passed",
+    "ruff": "All checks passed",
+    "wisesight": {
+      "rows": 993,
+      "source_annotated_rows": 993,
+      "expert_adjudicated_rows": 0,
+      "license": "CC0-1.0",
+      "split": "test",
+      "same_rows_for_both_engines": true,
+      "dictionary_max_match": {
+        "boundary_precision": 0.8334610828513692,
+        "boundary_recall": 0.861061118709956,
+        "boundary_f1": 0.847036328871893,
+        "false_splits": 2390,
+        "false_merges": 1930,
+        "exact_sequences": 204,
+        "exact_sequence_rate": 0.2054380664652568
+      },
+      "tud_unigram_viterbi": {
+        "boundary_precision": 0.608,
+        "boundary_recall": 0.9738679720682456,
+        "boundary_f1": 0.7486234470545917,
+        "false_splits": 8722,
+        "false_merges": 363,
+        "exact_sequences": 119,
+        "exact_sequence_rate": 0.11983887210473314
+      },
+      "caveat": "Full-text same-row metrics on source-annotated labels; zero expert-adjudicated rows; diagnostic only."
+    },
+    "vistec": {
+      "rows": 50000,
+      "evidence_grade": "SOURCE_ANNOTATED_NOT_EXPERT_ADJUDICATED",
+      "expert_adjudicated_rows": 0,
+      "dictionary_max_match": {
+        "boundary_precision": 0.7742908952303185,
+        "boundary_recall": 0.9007962660325631,
+        "boundary_f1": 0.8327666325382598,
+        "exact_sequences": 77,
+        "exact_sequence_rate": 0.00154,
+        "coverage": 1
+      },
+      "tud_unigram_viterbi": {
+        "boundary_precision": 0.6064011335968544,
+        "boundary_recall": 0.9931576338081688,
+        "boundary_f1": 0.7530225550370759,
+        "exact_sequences": 16,
+        "exact_sequence_rate": 0.00032,
+        "coverage": 1
+      },
+      "artifact_id": "13267463783",
+      "artifact_archive_sha256": "fb5b8d961c7701e84743f8bb2e123740ad3cd45633b6fb81f4f34d88c7de2a6c",
+      "upstream_readme_rows": 49997,
+      "pinned_csv_rows": 50000
+    },
+    "artifacts": {
+      "wisesight_error_review": {
+        "id": "13267889956",
+        "archive_sha256": "479c0aaf88c714fc8d890078c84349facc8a154b008d24ec30897a7fb4f20b70"
+      },
+      "wisesight_comparative": {
+        "id": "13267884921",
+        "archive_sha256": "f1120dbd3c48554f0da5658c0b479dbe7e64b5da23b398d36051d1a225d7f2cc"
+      },
+      "vistec": {
+        "id": "13267463783",
+        "archive_sha256": "fb5b8d961c7701e84743f8bb2e123740ad3cd45633b6fb81f4f34d88c7de2a6c"
+      }
+    }
+  },
+  "methodology_sources_2026_11_03": {
+    "obra/superpowers": {
+      "readme": "c5bb59fdaf17ba154e803c549cd71a73ef36c24b",
+      "tdd_skill": "46838cc9e893c06259e3bdad0fc2425b36242f15",
+      "applied": "RED-GREEN-REFACTOR; verify the regression fails for the intended reason; full-suite verification."
+    },
+    "mattpocock/skills": {
+      "readme": "f7038f139299985eea6c3e18398dbafb379a0010",
+      "tdd_skill": "01eadaa34e7c9a63a67d6dc3cce1cc81b0e49985",
+      "implement_skill": "bd49e472984c7b99aac40286fdae749bb955a842",
+      "applied": "Small vertical slice; behavior-focused regression at the cluster-boundary contract; full test suite."
+    },
+    "DietrichGebert/ponytail": {
+      "readme": "ff6a92573ef6412495055d979cff1d7464e1fa65",
+      "core_skill": "d64edd32265ba21cbf5270158f04e97d96925f27",
+      "review_skill": "a50e3ac6ded6fccc9edae34ce37877bbce11e3fa",
+      "applied": "Smallest complete change; review changed call path and diagnostics; no new dependency or speculative model."
+    },
+    "copied_code": false,
+    "new_runtime_dependencies": false
+  },
+  "thai_lexical_segmentation_literature_2026_11_03": {
+    "status": "DONE_VERIFIED_RESEARCH_SYNTHESIS",
+    "papers_full_text_inspected": [
+      "Boo20",
+      "Cho20",
+      "Lim21",
+      "Yam22"
+    ],
+    "additional_reference": "Aroonmanakun 2007",
+    "findings": [
+      "Orthographic syllable boundaries can constrain candidate word boundaries but do not determine lexical words.",
+      "LST20 segmentation is context-sensitive; the inspected paper does not report a complete independent annotator/adjudication/IAA protocol or specify a dataset license.",
+      "Lim21 reports domain effects and 13.65% test OOV in VISTEC; this is vocabulary-coverage risk, not a measured max-match failure rate.",
+      "Yam22 0.931 is Wiktionary-derived mixed-source exact-entry accuracy, not independent expert IPA gold."
+    ],
+    "implementation_decision": "Retain dictionary max-match as conservative default; do not promote TUD or introduce a neural segmenter without independently adjudicated, licensed, domain-stratified segmentation gold.",
+    "runtime_changes_from_literature_review": "NONE"
   }
 }
