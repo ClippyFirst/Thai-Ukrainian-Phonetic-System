@@ -55,8 +55,8 @@ def _grapheme_spans(text: str) -> tuple[tuple[int, int], ...]:
 
     Preposed vowels are grouped with the following consonant. Postposed
     vowel letters and combining marks stay with their base so dictionary
-    matching never splits a visible orthographic cluster. This is a boundary-
-    Unicode grapheme-break implementation.
+    matching never splits a visible orthographic cluster. This is a
+    boundary-safety approximation, not a full Unicode grapheme-break implementation.
     """
     spans: list[tuple[int, int]] = []
     index = 0
