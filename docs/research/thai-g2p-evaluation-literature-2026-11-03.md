@@ -101,6 +101,43 @@ The following are project recommendations derived from the studies above; they a
 - LOTUSDIS remains a candidate audio source for fresh human annotation only after immutable revision and asset-level provenance are established.
 - The project remains an engineering-verified research prototype; phonetic accuracy remains **NOT_MEASURED**.
 
+## Addendum — Thai word segmentation and orthographic syllables (2026-11-03)
+
+### Orthographic syllables constrain words but do not determine them
+
+Chormai et al. (2020) formulate Thai word segmentation around orthographic syllables: word boundaries are a subset of orthographic-syllable boundaries. Their syllable CRF was trained on 2.56 million TNC syllables and reported 98.54% syllable-level F1 on its test split. Word-level F1 was 95.60% on BEST-2010, 86.43% on Wisesight-1000 and 79.89% on TNHC. The out-of-domain drop matters more to this project than the headline in-domain score. The paper's orthographic syllables are not equivalent to phonological syllables, and syllable boundaries alone do not decide lexical segmentation. A syllable-constrained candidate lattice is a plausible future experiment, not a validated replacement for the current conservative segmenter. [Cho20]
+
+### Segmentation conventions are context-sensitive
+
+Boonkwan et al.'s LST20 annotation guideline (2020) segments free morphemes where possible but allows compounds that express a new semantic concept to remain together. It includes context-sensitive alternatives, including มีอายุ as a compound versus มี + อายุ, and specific rules for reduplication, names, loanwords, prefixes, connectors and punctuation. The inspected paper does not report annotator counts, a general adjudication procedure or inter-annotator agreement. It states that the corpus is publicly available but does not specify a reuse license. LST20 should not be treated as plug-and-play independent gold until the current terms and annotation convention are verified. [Boo20]
+
+Aroonmanakun (2007) discusses the ambiguity of Thai word and sentence segmentation, especially compounds, and distinguishes simple words, true compounds and other compositional sequences. This reinforces that dictionary longest-match is a useful deterministic baseline, not a universal linguistic standard. [Aro07]
+
+### OOV and domain shift
+
+Limkonchotiwat et al. (2021) evaluate Thai segmentation across four domains. Their VISTEC-TP-TH-2021 data description gives 49,997 Twitter samples and 3.39 million words; the paper reports a 13.65% test OOV rate. The work compares character-level and word-level F1 and evaluates domain adaptation and multi-domain ensembles. It does not directly measure dictionary maximum-matching error, so OOV is evidence of vocabulary coverage risk, not a max-match failure rate. The inspected paper does not state a dataset license; a GitHub URL is not permission to reuse. [Lim21]
+
+### G2P scores are not directly comparable independent gold
+
+Rugchatjaroen et al. (2019) use two-stage CRF processing: pseudo-syllable segmentation and character-function prediction, followed by joint graphone sequence modelling. Its reported WER is tied to its dictionary, representation and scorer and cannot be compared directly with this repository's IPA inventory and metrics. [Rug19]
+
+Yamasaki (2022) reports 0.931 exact-entry accuracy under phoneme-symbol edit distance on a 10-fold split of 18,066 Wiktionary-derived entries. Reference pronunciations mix Wiktionary data, unique orthographic-rule candidates and unresolved forms supplied by two Thai-fluent workers. The paper does not report a full blind multi-expert adjudication protocol or an explicit tone/vowel-length normalization policy. Candidate coverage is 17,720/18,066 (about 98.1%). This score is not independent expert IPA gold. [Yam22]
+
+### Project decision
+
+- Keep orthographic segmentation separate from phonology/IPA; a dictionary boundary does not authorize a pronunciation.
+- Keep dictionary max-match as the deterministic baseline and candidate generator. Preserve unknown clusters and abstain rather than guessing.
+- Do not promote TUD or a new neural segmenter to production default without a licensed, independently adjudicated, domain-stratified segmentation set.
+- Report segmentation convention, domain, split, license, source revision, annotator protocol and evidence grade with every benchmark.
+- For IPA gold, require independent Thai phonetic transcription, blind adjudication, explicit phonemic/surface, tone and length policies, and source/audio provenance. Ukrainian target-form review remains a separate candidate-blind evaluation.
+
+### References added
+
+- [Boo20] Boonkwan et al. (2020), The Annotation Guideline of LST20 Corpus. https://arxiv.org/abs/2008.05055
+- [Cho20] Chormai et al. (2020), Syllable-based Neural Thai Word Segmentation. https://doi.org/10.18653/v1/2020.coling-main.407
+- [Lim21] Limkonchotiwat et al. (2021), Handling Cross- and Out-of-Domain Samples in Thai Word Segmentation. https://doi.org/10.18653/v1/2021.findings-acl.86
+- [Aro07] Aroonmanakun (2007), Thoughts on word and sentence segmentation in Thai. https://doi.org/10.58837/chula.res.2007.92
+
 ## Bibliography
 
 - Jitwiriyanont, S. & Nantanukul, K. (2026). [10.1080/17549507.2026.2651739](https://doi.org/10.1080/17549507.2026.2651739).
