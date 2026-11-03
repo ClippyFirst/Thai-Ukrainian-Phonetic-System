@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PR #189 remains open as Draft on fix/benchmark-error-clusters-20261102. Last fully verified pre-register checkpoint bdc8a2fb2a0bf04e562d1851bb14589887bb533b is 90 commits ahead of main and 0 behind; exact-head Full CI 41605187604 passed all three jobs and Web Static 41605187373 passed. This final structured-register refresh is documentation-only; its own exact-head CI is pending. Main unchanged; linguistic accuracy remains NOT_MEASURED.",
+  "status": "PR #189 remains open as Draft on fix/benchmark-error-clusters-20261102. Current exact branch head 2d9423beb4fc3c991ee63b586f8699b05b8c25e2 is 91 commits ahead of main and 0 behind; exact-head Full CI 41605956008 passed all three jobs and Web Static 41605956074 passed. Structured audit and handoff now reconcile this terminal exact-head evidence. Main unchanged; linguistic accuracy remains NOT_MEASURED.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -3129,16 +3129,47 @@
     "runtime_changes": "NONE"
   },
   "latest_documentation_batch_verification_2026_11_03": {
-    "head": "bdc8a2fb2a0bf04e562d1851bb14589887bb533b",
-    "full_ci_run": 41605187604,
+    "head": "2d9423beb4fc3c991ee63b586f8699b05b8c25e2",
+    "full_ci_run": 41605956008,
     "full_ci": "PASSED_ALL_3_JOBS",
-    "web_static_run": 41605187373,
+    "web_static_run": 41605956074,
     "web_static": "PASSED",
     "pytest": "326_PASSED_1185_SUBTESTS_PASSED",
     "ruff": "PASSED",
+    "source_and_blind_packet_validators": "PASSED",
+    "generated_artifact_drift": "PASSED",
+    "ipa_ukrainian_adapter": "PASSED",
+    "browser_parity": "29_FIXTURES_PASSED",
+    "ui_accessibility_static_contracts": "PASSED",
+    "segmentation_diagnostics": "PASSED",
     "wheel_install_smoke": "PASSED",
     "master_artifact": "PASSED",
     "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
     "linguistic_accuracy": "NOT_MEASURED"
+  },
+  "latest_exact_head_verification_2026_11_03": {
+    "branch": "fix/benchmark-error-clusters-20261102",
+    "pr": 189,
+    "head": "2d9423beb4fc3c991ee63b586f8699b05b8c25e2",
+    "ahead_of_main": 91,
+    "behind_main": 0,
+    "full_ci_run": 41605956008,
+    "full_ci_result": "PASSED_ALL_3_JOBS",
+    "jobs": [
+      "test",
+      "wheel-install-smoke",
+      "master-artifact"
+    ],
+    "web_static_run": 41605956074,
+    "web_static_result": "PASSED",
+    "pytest": "326_PASSED_1185_SUBTESTS_PASSED",
+    "ruff": "PASSED",
+    "browser_parity_fixtures": 29,
+    "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
+    "linguistic_accuracy": "NOT_MEASURED",
+    "main_changed": false,
+    "pr_state": "OPEN_DRAFT",
+    "submitted_reviews": 0,
+    "inline_review_threads": 0
   }
 }
