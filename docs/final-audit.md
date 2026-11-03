@@ -1,3 +1,15 @@
+## Current branch reconciliation — 2026-11-03 (authoritative checkpoint)
+
+- Repository: `ClippyFirst/Thai-Ukrainian-Phonetic-System`; base `main` remains `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`.
+- Current branch: `fix/benchmark-error-clusters-20261102`; current verified tip before this documentation-only reconciliation: `e7ebb28e64afd5ec70fc136a12d6723ccebdd59e`. GitHub compare reports **110 commits ahead, 0 behind** main.
+- PR [#189](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/189) remains open as Draft; no merge, force-push, main update, or release was performed.
+- Exact-tip Full CI [41643230493](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41643230493) completed successfully: `test`, `wheel-install-smoke`, and `master-artifact` all passed. The test job log confirms Ruff **All checks passed**, pytest **327 passed / 1,185 subtests passed**, and Python/browser parity **29 fixtures passed**. Generated-artifact drift, source/reviewer/blind-packet validators, runtime and segmentation diagnostics, IPA→Ukrainian adapter, isolated wheel install, and master artifact validation passed. Web Static [41643230575](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41643230575) passed.
+- This supersedes older branch-head counts and pending-verification notes in the historical entries below. Older SHA/run references are retained as historical evidence, not current status.
+- Local tests were not run in the connector-only environment. Linguistic accuracy remains `NOT_MEASURED`; independent Thai phonetic/segmentation adjudication, independent Ukrainian-native target review, CCOST release-archive/tier reconciliation, LOTUSDIS immutable audio evidence, and hands-on WCAG review remain external acceptance gates.
+- Readiness: **engineering-verified research prototype**, not release-ready for linguistic-accuracy or full WCAG 2.2 AA claims.
+
+---
+
 ## 2026-11-03 — per-token diagnostic completeness guard and current branch verification
 
 - **DONE_VERIFIED — diagnostic correctness:** a test-first regression was added for a text containing two Thai tokens, one with a valid complete syllable and one with an empty syllable list. Before the fix, exact-head CI [41640676532](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41640676532) failed the new assertion because `_emits_complete_output` incorrectly returned `True`; 326 other tests and 1,185 subtests passed.
