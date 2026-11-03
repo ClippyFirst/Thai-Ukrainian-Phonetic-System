@@ -69,11 +69,11 @@ def _grapheme_spans(text: str) -> tuple[tuple[int, int], ...]:
                 index += 1
         elif char in _THAI_CONSONANTS:
             index += 1
-            while index < len(text) and text[index] in _THAI_COMBINING_MARKS:
+            while index < len(text) and text[index] in _THAI_CLUSTER_CONTINUATIONS:
                 index += 1
         else:
             index += 1
-            while index < len(text) and text[index] in _THAI_COMBINING_MARKS:
+            while index < len(text) and text[index] in _THAI_CLUSTER_CONTINUATIONS:
                 index += 1
         spans.append((start, index))
     return tuple(spans)
