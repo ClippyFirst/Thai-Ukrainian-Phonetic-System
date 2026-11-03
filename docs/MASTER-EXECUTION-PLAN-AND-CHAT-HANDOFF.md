@@ -2284,8 +2284,11 @@ No runtime behavior changed. Keep phonetic accuracy `NOT_MEASURED`; external Tha
 
 ## Terminal exact-head verification — 2026-11-03
 
-- Branch `fix/benchmark-error-clusters-20261102`, PR #189 remains open as Draft; exact branch head `2d9423beb4fc3c991ee63b586f8699b05b8c25e2` is **91 commits ahead of main, 0 behind** (compare against main `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`). Main was not changed.
-- Exact-head Full CI [41605956008](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41605956008) completed successfully; all three jobs passed: `test`, `wheel-install-smoke`, and `master-artifact`. Exact-head Web Static [41605956074](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41605956074) passed.
+- Branch `fix/benchmark-error-clusters-20261102`, PR #189 remains open as Draft; exact branch head `2ec6393655f7d4f58d7b840abd194bf4d0b07efe` is **95 commits ahead of main, 0 behind** (compare against main `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`). Main was not changed.
+- Exact-head Full CI [41610404742](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41610404742) completed successfully; all three jobs passed: `test`, `wheel-install-smoke`, and `master-artifact`. Exact-head Web Static [41610404753](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41610404753) passed.
 - The test job passed Ruff; pytest **326 passed, 1,185 subtests passed**; source/reviewer and blind-packet validators; generated-artifact drift and master-table registry checks; runtime challenge diagnostics; IPA→Ukrainian adapter; browser parity (**29 fixtures**); UI/accessibility static contracts; segmentation diagnostics; and held-out TUD evaluation. The isolated wheel-install smoke and master-artifact validation passed.
 - This is engineering verification only. Challenge coverage remains 32/42 conservative and 36/42 opt-in word-segmented; those are not accuracy scores. Linguistic accuracy remains `NOT_MEASURED`; no independent Thai/Ukrainian gold is claimed. Local tests were not run in the connector-only environment.
 - The exact-head result supersedes earlier notes that the final structured-register refresh was pending. PR #189 has no submitted reviews or inline review threads as of this check. Separate research/accessibility PRs and branches were left intact; no branch was deleted, merged or force-pushed.
+
+
+**Register follow-up:** this terminal section records the last fully verified checkpoint. A subsequent documentation-only reconciliation of the structured audit, matrix, handoff and narrative audit is being committed; its new branch head must receive its own exact-head CI and Web Static checks. No runtime behavior changes in that follow-up.
