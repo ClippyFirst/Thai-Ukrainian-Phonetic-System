@@ -7,6 +7,9 @@ on:
       - "scripts/run_external_g2p_benchmark.py"
       - "scripts/probe_goruut_repeatability.py"
       - "data/benchmark/thai_g2p_challenge.jsonl"
+      - "src/thai_ukrainian/adapters/**"
+      - "tests/test_fastthaig2p_adapter.py"
+      - "pyproject.toml"
       - ".github/workflows/optional-external-g2p.yml"
   pull_request:
     paths:
