@@ -1447,3 +1447,11 @@ The fix is deliberately limited to the existing abstention guard; no schema, run
 
 
 **Register follow-up:** this terminal section records the last fully verified checkpoint. A subsequent documentation-only reconciliation of the structured audit, matrix, handoff and narrative audit is being committed; its new branch head must receive its own exact-head CI and Web Static checks. No runtime behavior changes in that follow-up.
+
+
+
+## Full-text literature audit follow-up — 2026-11-03
+
+The Thai G2P literature synthesis was checked against primary full texts for Saychum et al. (2016) and Yamasaki (2022), and against the publisher abstract for Rugchatjaroen et al. (2019). Saychum's abstract reports 13.66% exact-match WER, while its conclusion and Figure 4 report 13.67%; 3.91% tone-ignored WER and 1.54% 5-gram JSM2 PER remain separate metrics. This discrepancy is now recorded rather than silently selecting one value. Yamasaki's 18,066 Wiktionary-derived entries, two Thai-fluent workers for unresolved entries, 17,720/18,066 candidate coverage, 10-fold evaluation and 0.931 zero-difference accuracy were verified from the ACL Anthology PDF. Rugchatjaroen's 9.94% WER and dictionary coverage above 70% are verified from the publisher abstract only; the full experimental label provenance remains unverified because the publisher full text returned 403.
+
+Academic Writing Toolkit checks: two project-authored US spellings ("behavior") were corrected to British English ("behaviour"); "Modeling" was retained in the exact published title. The two short-paragraph flags correspond to "Full-text findings:" labels, not prose defects, and were not expanded artificially. No new accuracy result or runtime change is claimed. The prior exact-head CI evidence does not cover this documentation-only follow-up; new exact-head CI/Web Static verification is required.
