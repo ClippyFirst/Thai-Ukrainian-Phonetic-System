@@ -3163,18 +3163,18 @@
   "latest_exact_head_verification_2026_11_03": {
     "branch": "fix/benchmark-error-clusters-20261102",
     "pr": 189,
-    "head": "fba3e63deeda6e61565e0444dc4685f248dbb763",
-    "ahead_of_main": 116,
+    "head": "3f5bbbbff4b40899eb273333ec0c06a028d862fd",
+    "ahead_of_main": 121,
     "behind_main": 0,
-    "full_ci_run": 41646388428,
+    "full_ci_run": 41651609638,
     "full_ci_result": "PASSED_ALL_3_JOBS",
+    "web_static_run": 41651609695,
+    "web_static_result": "PASSED",
     "jobs": [
       "test",
       "wheel-install-smoke",
       "master-artifact"
     ],
-    "web_static_run": 41646388317,
-    "web_static_result": "PASSED",
     "pytest": "327_PASSED_1185_SUBTESTS_PASSED",
     "ruff": "PASSED",
     "generated_artifact_drift": "PASSED",
@@ -3187,13 +3187,18 @@
     "held_out_tud_evaluation": "PASSED",
     "wheel_install_smoke": "PASSED",
     "master_artifact": "PASSED",
+    "setuptools_spdx_metadata": "VERIFIED_NO_LICENSE_TABLE_DEPRECATION",
     "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
     "linguistic_accuracy": "NOT_MEASURED",
     "main_changed": false,
     "pr_state": "OPEN_DRAFT",
-    "review_submissions": 0,
-    "inline_review_threads": 0,
-    "runtime_changes_since_e7_checkpoint": "NONE_DOCUMENTATION_ONLY"
+    "remaining_external_gates": [
+      "independent Thai phonetic and segmentation adjudication",
+      "independent Ukrainian-native target-form adjudication",
+      "CCOST curator clarification and original TextGrid archive inspection",
+      "immutable LOTUSDIS audio objects, hashes and provenance",
+      "hands-on keyboard, screen-reader, zoom/reflow and mobile accessibility testing"
+    ]
   },
   "diagnostic_complete_output_guard_2026_11_03": {
     "status": "DONE_VERIFIED",
