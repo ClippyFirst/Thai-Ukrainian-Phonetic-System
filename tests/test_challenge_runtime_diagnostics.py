@@ -53,6 +53,28 @@ class ChallengeRuntimeDiagnosticsTests(unittest.TestCase):
         )
         self.assertNotIn("accuracy", report["summary"])
 
+    def test_complete_output_requires_syllables_for_every_thai_token(self):
+        from scripts.run_challenge_diagnostics import _emits_complete_output
+
+        complete_syllable = {
+            "phonemic_ipa": "kaː",
+            "ukrainian_transliteration": "каа",
+        }
+        tokens = [
+            {
+                "kind": "thai",
+                "segmentation_status": "resolved",
+                "syllables": [complete_syllable],
+            },
+            {
+                "kind": "thai",
+                "segmentation_status": "resolved",
+                "syllables": [],
+            },
+        ]
+
+        self.assertFalse(_emits_complete_output(tokens))
+
     def test_empty_challenge_fails_closed(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "empty.jsonl"
