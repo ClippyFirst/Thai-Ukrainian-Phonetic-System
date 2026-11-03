@@ -3014,5 +3014,45 @@
       "pytest": "326 passed; 1169 subtests passed",
       "ruff": "passed"
     }
+  },
+  "optional_g2p_trigger_hardening_2026_11_03": {
+    "branch": "research/fastthaig2p-adapter-spike-20261102",
+    "pr": 184,
+    "commits": [
+      "a73b07850baf95ffce2ef025f46afd3ebf1cf0ef",
+      "4e60ad2be4cfb89333ee30865888830eb4666fed"
+    ],
+    "exact_head": "4e60ad2be4cfb89333ee30865888830eb4666fed",
+    "added_paths": [
+      "src/thai_ukrainian/adapters/**",
+      "tests/test_fastthaig2p_adapter.py",
+      "pyproject.toml"
+    ],
+    "full_ci_run": 41658864126,
+    "full_ci": "PASSED_ALL_3_JOBS",
+    "pytest": "327_PASSED_1169_SUBTESTS",
+    "ruff": "PASSED",
+    "browser_parity_fixtures": 29,
+    "optional_workflow_run": 41658864210,
+    "optional_workflow": "PASSED",
+    "optional_artifact_rows": 210,
+    "optional_artifact_prompts": 42,
+    "optional_engines": [
+      "clippyfirst_phonemic",
+      "clippyfirst_surface",
+      "fastthaig2p",
+      "goruut",
+      "thaiphon"
+    ],
+    "artifact_zip_sha256": "cd5c681ed01bbda73a5abf9f681ac4386b3191e0567ca85ca5fab66c7d822a71",
+    "fastthaig2p_outputs": "42/42",
+    "clippyfirst_phonemic_outputs": "28/42",
+    "clippyfirst_surface_outputs": "23/42",
+    "goruut_no_output_failures": 16,
+    "gold_labeled_rows": 0,
+    "accuracy_status": "NOT_MEASURED",
+    "runtime_or_linguistic_changes": "NONE",
+    "pr_state": "OPEN_DRAFT",
+    "note": "Coverage, abstention, runtime, latency and inter-engine agreement are diagnostics only, not accuracy."
   }
 }
