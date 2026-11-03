@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PR #189 remains open as Draft on fix/benchmark-error-clusters-20261102. Latest fully verified checkpoint before the current documentation-only reconciliation: e7ebb28e64afd5ec70fc136a12d6723ccebdd59e (110 commits ahead of main, 0 behind; Full CI 41643230493 passed all three jobs; Web Static 41643230575 passed). Current branch tip f5320f087051fa32a5d12f5e6f7cead389c89a21 is 114 ahead/0 behind and contains only four documentation-file reconciliations; exact-head CI/Web Static for this newer tip are not yet confirmed. Main unchanged; linguistic accuracy remains NOT_MEASURED.",
+  "status": "PR #189 remains open as Draft on fix/benchmark-error-clusters-20261102. Latest fully verified checkpoint before the current documentation-only reconciliation: e7ebb28e64afd5ec70fc136a12d6723ccebdd59e (110 commits ahead of main, 0 behind; Full CI 41643230493 passed all three jobs; Web Static 41643230575 passed). The subsequent audit/handoff reconciliation contains documentation-only changes; exact-head CI/Web Static for the current branch tip remain pending and are not inferred from the earlier pass. Main unchanged; linguistic accuracy remains NOT_MEASURED.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -3204,11 +3204,9 @@
     "runtime_scope": "DIAGNOSTIC_ONLY_NO_PARSER_IPA_UKRAINIAN_OR_PUBLIC_API_CHANGE"
   },
   "latest_documentation_reconciliation_pending": {
-    "head": "f5320f087051fa32a5d12f5e6f7cead389c89a21",
-    "ahead_of_main": 114,
-    "behind_main": 0,
+    "status": "PENDING_EXACT_HEAD_CI_AND_WEB_STATIC",
     "scope": "FOUR_DOCUMENTATION_FILES_ONLY",
-    "exact_head_full_ci": "PENDING",
-    "exact_head_web_static": "PENDING"
+    "runtime_changes": "NONE",
+    "evidence_boundary": "The passing 41643230493 / 41643230575 runs apply to e7ebb28e64afd5ec70fc136a12d6723ccebdd59e only; do not transfer them to later documentation commits."
   }
 }
