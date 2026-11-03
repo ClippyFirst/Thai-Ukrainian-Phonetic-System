@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PR #189 remains open as Draft on fix/benchmark-error-clusters-20261102. Latest fully verified checkpoint before the current documentation-only reconciliation: e7ebb28e64afd5ec70fc136a12d6723ccebdd59e (110 commits ahead of main, 0 behind; Full CI 41643230493 passed all three jobs; Web Static 41643230575 passed). The subsequent audit/handoff reconciliation contains documentation-only changes; exact-head CI/Web Static for the current branch tip remain pending and are not inferred from the earlier pass. Main unchanged; linguistic accuracy remains NOT_MEASURED.",
+  "status": "PR #189 remains open as Draft on fix/benchmark-error-clusters-20261102. Current exact branch HEAD fba3e63deeda6e61565e0444dc4685f248dbb763 is 116 commits ahead of main and 0 behind. Exact-head Full CI 41646388428 passed all three jobs; Web Static 41646388317 passed. Main unchanged; linguistic accuracy remains NOT_MEASURED.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -152,7 +152,7 @@
   "ci": {
     "latest_fully_successful_code_data_commit": "72a77cb42ad05c33274d70c4dcd9f20e07432b64",
     "latest_fully_successful_ci_run": 41239440616,
-    "python_tests": 251,
+    "python_tests": "327_PASSED_1185_SUBTESTS_PASSED",
     "generated_data_drift": "PASS — run 41239440616",
     "master_artifact": "PASS — run 41239440616: 3,086,353 bytes; SHA-256 74f40079c2bae8a4f875fa8e2c860ac8a202bbb1bd8e4ae72d834f48d93adc09; independently downloaded and asserted 351780 rows / 41 vowel-rime records.",
     "node_ipa_ua_parity_ui_tests": "PASS — run 41239440616: 29 Python/browser parity fixtures; RTGS/IPA-UA and UI contract checks passed.",
@@ -168,16 +168,16 @@
       41239440643
     ],
     "current_head_status_at_audit_refresh": "PR #162 merged as 1b1480c5a79b6dd38dc8b916d52ad599e38a9748. Exact-head CI 41229053598 and post-merge main CI 41229435682 passed all three jobs; Pages build/deploy verification 41229435706 passed. Pytest executed 251 tests and 1164 subtests. Typed IPA secondary-candidate routing and source orthographic metadata preservation are verified.",
-    "latest_full_repository_head": "1b1480c5a79b6dd38dc8b916d52ad599e38a9748",
-    "latest_full_repository_head_ci_run": 41229435682,
-    "latest_full_repository_head_web_validation_run": 41229435706,
+    "latest_full_repository_head": "fba3e63deeda6e61565e0444dc4685f248dbb763",
+    "latest_full_repository_head_ci_run": 41646388428,
+    "latest_full_repository_head_web_validation_run": 41646388317,
     "latest_web_static_verified_code_commit": "1ed4c7aa30759fd8d31136e46d7490bf9b2c5e8b",
     "latest_web_static_verified_code_run": 40286893366,
     "latest_verified_commit_note": "PR #162 code checkpoint 1b1480c5a79b6dd38dc8b916d52ad599e38a9748 passed exact-head CI 41229053598, post-merge main CI 41229435682 and Pages verification 41229435706. 251 Python tests and 1164 subtests passed. External expert linguistic and manual accessibility evidence remains outstanding.",
     "latest_verified_code_commit_note": "Latest runtime implementation checkpoint 1b1480c5a79b6dd38dc8b916d52ad599e38a9748 routes secondary candidates through supported typed IPA and preserves original orthographic role across lexical rewrites. Post-merge CI 41229435682 passed all three jobs; Pages verification 41229435706 passed. No expert-gold or general linguistic-accuracy claim is made.",
-    "latest_fully_successful_documentation_commit": "8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8",
-    "latest_fully_successful_documentation_ci_run": 41240699017,
-    "latest_fully_successful_documentation_web_validation_run": 41239420395,
+    "latest_fully_successful_documentation_commit": "fba3e63deeda6e61565e0444dc4685f248dbb763",
+    "latest_fully_successful_documentation_ci_run": 41646388428,
+    "latest_fully_successful_documentation_web_validation_run": 41646388317,
     "latest_documentation_head_ci_run": 41240389404,
     "latest_documentation_head_web_validation_run": 41229435706,
     "latest_implementation_ci_run": 41229435682,
@@ -295,7 +295,7 @@
       "status": "PARTIAL",
       "reason": "No owner-approved archive/delete policy; historical refs preserved."
     },
-    "latest_checkpoint_note": "PR #168 audit closeout merged as 8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8. Exact-head CI 41240389404 and post-merge main CI 41240699017 passed; 251 pytest tests, 1164 subtests, Ruff, 29 parity fixtures, generated-data drift, wheel-install smoke and 351780-row/41-rime artifact verification passed. Independent Thai/UA adjudication and manual accessibility gates remain open.",
+    "latest_checkpoint_note": "PR #189 exact branch head fba3e63deeda6e61565e0444dc4685f248dbb763 (116 ahead, 0 behind) passed exact-head Full CI 41646388428 and Web Static 41646388317 on 2026-11-03. Full CI: Ruff, 327 pytest tests, 1,185 subtests, validators, generated-artifact checks, diagnostics, IPA-UA adapter, 29 browser parity fixtures, wheel install and master artifact all passed. Linguistic accuracy remains NOT_MEASURED; independent Thai/Ukrainian adjudication and manual accessibility remain open.",
     "python_subtests": 1164
   },
   "challenge_runtime": {
@@ -3163,30 +3163,37 @@
   "latest_exact_head_verification_2026_11_03": {
     "branch": "fix/benchmark-error-clusters-20261102",
     "pr": 189,
-    "head": "e7ebb28e64afd5ec70fc136a12d6723ccebdd59e",
-    "ahead_of_main": 110,
+    "head": "fba3e63deeda6e61565e0444dc4685f248dbb763",
+    "ahead_of_main": 116,
     "behind_main": 0,
-    "full_ci_run": 41643230493,
+    "full_ci_run": 41646388428,
     "full_ci_result": "PASSED_ALL_3_JOBS",
     "jobs": [
       "test",
       "wheel-install-smoke",
       "master-artifact"
     ],
-    "web_static_run": 41643230575,
+    "web_static_run": 41646388317,
     "web_static_result": "PASSED",
     "pytest": "327_PASSED_1185_SUBTESTS_PASSED",
     "ruff": "PASSED",
-    "browser_parity_fixtures": 29,
     "generated_artifact_drift": "PASSED",
     "source_reviewer_and_blind_packet_validators": "PASSED",
+    "challenge_runtime_diagnostic": "PASSED_42_INPUTS_NOT_ACCURACY",
     "ipa_ukrainian_adapter": "PASSED",
+    "browser_parity_fixtures": 29,
+    "ui_accessibility_static_contracts": "PASSED",
+    "segmentation_diagnostics": "PASSED",
+    "held_out_tud_evaluation": "PASSED",
     "wheel_install_smoke": "PASSED",
     "master_artifact": "PASSED",
     "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
     "linguistic_accuracy": "NOT_MEASURED",
     "main_changed": false,
-    "pr_state": "OPEN_DRAFT"
+    "pr_state": "OPEN_DRAFT",
+    "review_submissions": 0,
+    "inline_review_threads": 0,
+    "runtime_changes_since_e7_checkpoint": "NONE_DOCUMENTATION_ONLY"
   },
   "diagnostic_complete_output_guard_2026_11_03": {
     "status": "DONE_VERIFIED",
@@ -3203,10 +3210,21 @@
     "ruff": "PASSED",
     "runtime_scope": "DIAGNOSTIC_ONLY_NO_PARSER_IPA_UKRAINIAN_OR_PUBLIC_API_CHANGE"
   },
-  "latest_documentation_reconciliation_pending": {
-    "status": "PENDING_EXACT_HEAD_CI_AND_WEB_STATIC",
-    "scope": "FOUR_DOCUMENTATION_FILES_ONLY",
+  "latest_documentation_reconciliation_verification_2026_11_03": {
+    "head": "fba3e63deeda6e61565e0444dc4685f248dbb763",
+    "ahead_of_main": 116,
+    "behind_main": 0,
+    "full_ci_run": 41646388428,
+    "full_ci": "PASSED_ALL_3_JOBS",
+    "web_static_run": 41646388317,
+    "web_static": "PASSED",
+    "scope": "FOUR_EXISTING_AUDIT_AND_HANDOFF_FILES_ONLY",
     "runtime_changes": "NONE",
-    "evidence_boundary": "The passing 41643230493 / 41643230575 runs apply to e7ebb28e64afd5ec70fc136a12d6723ccebdd59e only; do not transfer them to later documentation commits."
+    "pytest": "327_PASSED_1185_SUBTESTS_PASSED",
+    "ruff": "PASSED",
+    "browser_parity": "29_FIXTURES_PASSED",
+    "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
+    "linguistic_accuracy": "NOT_MEASURED",
+    "note": "Exact-head workflow results supersede the earlier pending-CI entry; no results are transferred from an older commit."
   }
 }
