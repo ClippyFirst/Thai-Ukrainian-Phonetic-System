@@ -1,3 +1,46 @@
+## Current checkpoint — 2026-11-03: Thai orthographic cluster-boundary fix
+
+Python segmentation previously treated Thai spacing vowel letters U+0E30 SARA A, U+0E32 SARA AA and U+0E33 SARA AM as independent cluster starts/ends. The browser implementation already treated these as continuations. The mismatch could permit dictionary max-match to end after an onset consonant and before its postposed vowel. The correction adds these three letters to the Python cluster-continuation set, renames the set to reflect that it includes spacing vowel letters as well as combining marks, and updates all three continuation loops. It does not infer pronunciation or change the IPA-to-Ukrainian adapter.
+
+TDD evidence: a correctly discovered regression test first failed on the seven expected cluster-span cases. The code fix then exposed one stale variable reference in the first implementation attempt; the follow-up commit updated all remaining references. The resulting 993-row diagnostic improved from 192 to 204 exact token arrays. The test snapshot and CI evidence-grade gate were both updated to 204; the diagnostic remains explicitly source-annotated, not expert-adjudicated.
+
+Verified runtime/workflow checkpoint: 69d56b52b7f687948cac4250e4c7eb98e86ab67f passed Full CI 41711547837 (test, wheel-install-smoke, master-artifact), Web Static 41711547920 and External VISTEC 41711547913. Ruff passed; pytest reported 328 passed and 1,192 subtests passed. The subsequent source docstring clarification ac603c4ae96bf6ffbc8f2edb095b4f2375d57ce5 changes no runtime logic. This documentation refresh does not change runtime code.
+
+### Diagnostic outcomes (not independent accuracy)
+
+| Dataset | Engine | Rows | Boundary precision | Boundary recall | Boundary F1 | Exact sequences | Expert-adjudicated rows |
+|---|---|---:|---:|---:|---:|---:|---:|
+| Wisesight-1000 | Dictionary max-match | 993 | 0.833461 | 0.861061 | 0.847036 | 204/993 (20.54%) | 0 |
+| Wisesight-1000 | TUD unigram Viterbi | 993 | 0.608000 | 0.973868 | 0.748623 | 119/993 (11.98%) | 0 |
+| VISTEC TP-TH 2021 | Dictionary max-match | 50,000 | 0.774291 | 0.900796 | 0.832767 | 77/50,000 (0.154%) | 0 |
+| VISTEC TP-TH 2021 | TUD unigram Viterbi | 50,000 | 0.606401 | 0.993158 | 0.753023 | 16/50,000 (0.032%) | 0 |
+
+Wisesight dictionary error-review artifact: 13267889956; same-row comparative artifact: 13267884921; VISTEC artifact: 13267463783. The VISTEC upstream README reports 49,997 samples while the immutable pinned CSV and evaluator contain 50,000 rows; both facts remain visible. TUD remains research-only and is not promoted to production default.
+
+### Research and process implications
+
+Full-text literature review confirms that orthographic syllables may constrain candidate word boundaries but do not define lexical word boundaries; Thai compound segmentation is context- and convention-sensitive; and domain shift/OOV vocabulary materially affect segmentation. LST20's published guideline does not provide a full inter-annotator agreement/adjudication protocol in the inspected paper, and no dataset license was specified there. Published G2P scores sourced from dictionaries/Wiktionary are not independent phonetic gold. A neural segmenter is therefore not introduced without an independently adjudicated, licensed, domain-stratified segmentation set.
+
+The implementation process followed the useful parts of the supplied engineering references: test-first RED verified on the intended failure, minimal GREEN correction, full-suite verification, and review of the changed call path. No third-party skill implementation or dependency was copied.
+
+### Remaining gates
+
+- Independent Thai word/syllable segmentation and IPA reviewers, adjudication logs, and authorized source/audio evidence.
+- Independent Ukrainian-native target-form review.
+- CCOST A-D curator clarification and lawful inspection of the actual TextGrid/audio archive and tier conventions.
+- Immutable LOTUSDIS revision, audio asset hashes and interval metadata.
+- Hands-on keyboard, screen-reader, zoom/reflow and mobile accessibility review.
+- Do not report linguistic accuracy until the above evidence gates are satisfied.
+
+---
+
+### Methodology references checked at pinned upstream revisions
+
+- obra/superpowers: README c5bb59fdaf17ba154e803c549cd71a73ef36c24b; TDD skill 46838cc9e893c06259e3bdad0fc2425b36242f15.
+- mattpocock/skills: README f7038f139299985eea6c3e18398dbafb379a0010; TDD skill 01eadaa34e7c9a63a67d6dc3cce1cc81b0e49985; implementation skill bd49e472984c7b99aac40286fdae749bb955a842.
+- DietrichGebert/ponytail: README ff6a92573ef6412495055d979cff1d7464e1fa65; core skill d64edd32265ba21cbf5270158f04e97d96925f27; review skill a50e3ac6ded6fccc9edae34ce37877bbce11e3fa.
+- Applied selectively: observed RED before implementation, corrected test-discovery errors rather than counting inert tests, used one minimal implementation slice, reviewed all continuation-set call sites, and ran the full project verification. No skill source or dependency was copied.
+
 ## Current branch reconciliation — 2026-11-03 (authoritative checkpoint)
 
 - Repository: `ClippyFirst/Thai-Ukrainian-Phonetic-System`; base `main` remains `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`.
