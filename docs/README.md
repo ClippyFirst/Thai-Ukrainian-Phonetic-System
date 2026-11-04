@@ -2,6 +2,10 @@
 
 This page is the navigation layer for the repository. It distinguishes the maintained product contract from research evidence and the chronological execution record.
 
+## Latest repository audit
+
+The [2026-11-04 repository audit](repository-audit-2026-11-04.md) records the live main SHA, branch/PR state, CI evidence, code/data/docs ownership, adopted engineering practices and external blockers. It is the current structural-audit snapshot; older dated entries below remain historical.
+
 ## Start here
 
 1. [Project overview and user-facing capabilities](../README.md)
