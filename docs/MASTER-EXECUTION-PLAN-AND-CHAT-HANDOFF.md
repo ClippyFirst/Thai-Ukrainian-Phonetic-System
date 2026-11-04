@@ -2227,3 +2227,12 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Ported the relevant UI contrast change from PR #190: textarea border `#767676` and a source-derived WCAG 1.4.11 ≥3:1 test. PR #190 remains open and untouched.
 - PR #184–#186 remain open Draft and untouched; PR #193 is a separate main-based integration. PR #188, #189, #191 and #192 are also left untouched as independent source-research, reference-engine, segmentation or corpus-manifest scopes.
 - Release blockers remain: no linked Vercel project (GitHub Pages is static-only); bundled FastThaiG2P data terms/attribution not fully cleared; independent Thai phonetic and Ukrainian-native adjudication outstanding. No external deployment project/settings changed; no merge or production cutover performed.
+
+
+### Final audit refresh — 2026-11-04
+
+- Targeted FastThaiG2P site workflow is **PASS** at code commit `2c0164751eab32f3992348b4450d350175becb05`, run `41810981343` (pinned install, Ruff, 9 Python tests including real Bangkok smoke, UI contract, accessibility and IPA-UA regression).
+- Web Static is **PASS** at `b1472aa564596c073475cb10ed994506535869f8`, run `41810746926` (current web UI/CSS, generated dictionary, parity fixtures, static accessibility and no external runtime dependency).
+- Full repository CI run `41811334224` is in progress on pre-final-audit docs checkpoint `dc9f9205b90d94989faa4eb423717835c6236e4b`. Wheel-install smoke passed; the test job is still executing `generate_master_table.py`; no failing step is recorded. The current audit/handoff changes are documentation-only and require a fresh exact-head CI run.
+- Latest code decision remains: FastThaiG2P only on the target website, Ukrainian adaptation marked provisional; no production deployment, no merge, and no changes to external Vercel settings.
+- Remaining blockers: no Vercel project linked; FastThaiG2P bundled dictionary/fallback data terms and attribution not fully cleared; independent Thai phonetic and Ukrainian-native adjudication unavailable.
