@@ -11,7 +11,7 @@
 | Legacy browser G2P/RTGS on homepage | DONE_VERIFIED — removed from live execution path | The new homepage client calls only same-origin `/api/analyze`; old browser engine and RTGS modules remain preserved as research/reference assets, not fallback engines. Dedicated site workflow and full CI UI contract passed. | Deployed preview still must prove that API and static UI are served together. Do not merge while the current Pages workflow would publish a static-only site without the Python API. |
 | Independent linguistic validation | BLOCKED — human evidence | External FastThaiG2P IPA remains unclassified as phonemic vs broad-surface; Ukrainian output is explicitly provisional. | Independent qualified Standard Thai phonetic/segmentation review and Ukrainian-native target-form review, with frozen labels and disagreement resolution. Accuracy remains `NOT_MEASURED`. |
 
-**Release posture:** PR #193 remains open Draft. GitHub reports `mergeable=false`; no merge was attempted. The branch was 69 commits ahead at the c133 code-verification checkpoint; after documentation/audit reconciliation it is now 85 commits ahead and 0 behind the recorded `main` base (final documentation head `6ce6662ecb6e672b2a6ac25ffb34475bab5fc750`). The implementation and exact-head automated checks are verified, but preview hosting, bundled-data rights, human linguistic review and manual accessibility remain open. The existing GitHub Pages deployment is unchanged.
+**Release posture:** PR #193 remains open Draft. GitHub reports `mergeable=false`; no merge was attempted. The branch was 69 commits ahead at the c133 code-verification checkpoint; after documentation/audit reconciliation it is now 91 commits ahead and 0 behind the recorded `main` base (final documentation head `6ce6662ecb6e672b2a6ac25ffb34475bab5fc750`). The implementation and exact-head automated checks are verified, but preview hosting, bundled-data rights, human linguistic review and manual accessibility remain open. The existing GitHub Pages deployment is unchanged.
 
 ---
 
@@ -1419,3 +1419,6 @@ The fix is deliberately limited to the existing abstention guard; no schema, run
 | Vercel preview deployment | BLOCKED — owner-connected project absent | No Vercel project is linked to this repository. Acceptance remains a real preview with homepage/system page/assets, `/api/health`, successful and failing `/api/analyze`, same-origin CSP, cold-start and bundle-size checks. Do not change GitHub Pages or production routing before this passes. |
 
 Source: https://vercel-docs.vercel.sh/changelog/fastapi-frontends-and-static-files-served-from-the-cdn (2026-09-10). This platform capability removes a deployment-architecture uncertainty; it does not count as a deployed-preview test.
+
+
+**Final documentation refresh note — 2026-11-04:** this matrix and the existing integration/audit/handoff records now include the Vercel static-CDN platform clarification. The final commit is intentionally tracked in PR metadata to avoid a self-referential SHA. Exact-head CI for this documentation-only refresh remains to be inspected; no pass is inferred from the earlier code checkpoint.
