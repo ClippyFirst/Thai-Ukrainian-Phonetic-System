@@ -21,26 +21,11 @@ jobs:
       - name: Install project and pinned optional FastThaiG2P extra
         run: python -m pip install -e ".[dev,fastthaig2p]"
       - run: pytest -q tests/test_fastthaig2p_challenge.py
-      - name: Run paired challenge-set comparison
+      - name: Run paired 42-item challenge comparison
         run: python scripts/run_fastthaig2p_challenge.py --output /tmp/fastthaig2p-challenge-comparison.json
       - name: Enforce report evidence grade and denominator
         run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-
-          challenge = Path("data/benchmark/thai_g2p_challenge.jsonl")
-          expected_count = sum(1 for line in challenge.read_text(encoding="utf-8").splitlines() if line.strip())
-          report = json.loads(Path("/tmp/fastthaig2p-challenge-comparison.json").read_text(encoding="utf-8"))
-          summary = report["summary"]
-          assert report["report_type"] == "ENGINE_COMPARISON_DIAGNOSTIC_NOT_ACCURACY_BENCHMARK"
-          assert report["challenge"]["record_count"] == expected_count
-          assert report["challenge"]["gold_status"] == "NO_INDEPENDENTLY_ADJUDICATED_IPA"
-          assert summary["challenge_inputs"] == expected_count
-          assert summary["fastthaig2p_typed_diagnostic_syllables"] > 0
-          assert summary["fastthaig2p_ukrainian_provisional_syllables"] + summary["fastthaig2p_ukrainian_withheld_syllables"] == summary["fastthaig2p_typed_diagnostic_syllables"]
-          assert "accuracy" not in summary
-          PY
+          python -c "import json; r=json.load(open('/tmp/fastthaig2p-challenge-comparison.json',encoding='utf-8')); s=r['summary']; assert r['report_type']=='ENGINE_COMPARISON_DIAGNOSTIC_NOT_ACCURACY_BENCHMARK'; assert r['challenge']['record_count']==42; assert r['challenge']['gold_status']=='NO_INDEPENDENTLY_ADJUDICATED_IPA'; assert s['challenge_inputs']==42; assert s['fastthaig2p_typed_diagnostic_syllables']>0; assert s['fastthaig2p_ukrainian_provisional_syllables']+s['fastthaig2p_ukrainian_withheld_syllables']==s['fastthaig2p_typed_diagnostic_syllables']; assert 'accuracy' not in s"
       - uses: actions/upload-artifact@v7
         with:
           name: fastthaig2p-challenge-comparison
