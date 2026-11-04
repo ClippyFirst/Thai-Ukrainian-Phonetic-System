@@ -11,7 +11,7 @@
 | Legacy browser G2P/RTGS on homepage | DONE_VERIFIED — removed from live execution path | The new homepage client calls only same-origin `/api/analyze`; old browser engine and RTGS modules remain preserved as research/reference assets, not fallback engines. Dedicated site workflow and full CI UI contract passed. | Deployed preview still must prove that API and static UI are served together. Do not merge while the current Pages workflow would publish a static-only site without the Python API. |
 | Independent linguistic validation | BLOCKED — human evidence | External FastThaiG2P IPA remains unclassified as phonemic vs broad-surface; Ukrainian output is explicitly provisional. | Independent qualified Standard Thai phonetic/segmentation review and Ukrainian-native target-form review, with frozen labels and disagreement resolution. Accuracy remains `NOT_MEASURED`. |
 
-**Release posture:** PR #193 remains open Draft. GitHub reports `mergeable=false`; no merge was attempted. The branch was 69 commits ahead at the c133 code-verification checkpoint; after documentation/audit reconciliation it is now 91 commits ahead and 0 behind the recorded `main` base (final documentation head `6ce6662ecb6e672b2a6ac25ffb34475bab5fc750`). The implementation and exact-head automated checks are verified, but preview hosting, bundled-data rights, human linguistic review and manual accessibility remain open. The existing GitHub Pages deployment is unchanged.
+**Release posture:** PR #193 remains open Draft. GitHub reports `mergeable=false`; no merge was attempted. The branch is 93 commits ahead and 0 behind `main` at the `e0a3e062d5607adde60d496a33a07340a308b75f` audit checkpoint. The last fully verified code head remains `c133dee9c66ed08df60d20ba0e170fab6c2c7300` (full CI run `41811988701`); four additional regression cases now exercise upstream-documented unreleased codas, non-syllabic diphthongs, tied affricates and tone contours, but no CI run/status is currently visible for the new commit, so those cases are PARTIAL—not verified. The final current branch head is recorded in PR metadata. Preview hosting, bundled-data rights, human linguistic review and manual accessibility remain open. The existing GitHub Pages deployment is unchanged.
 
 ---
 
@@ -1422,3 +1422,10 @@ Source: https://vercel-docs.vercel.sh/changelog/fastapi-frontends-and-static-fil
 
 
 **Final documentation refresh note — 2026-11-04:** this matrix and the existing integration/audit/handoff records now include the Vercel static-CDN platform clarification. The final commit is intentionally tracked in PR metadata to avoid a self-referential SHA. Exact-head CI for this documentation-only refresh remains to be inspected; no pass is inferred from the earlier code checkpoint.
+
+
+## FastThaiG2P IPA convention regression coverage — 2026-11-04
+
+- Added four parametrized adapter regressions using IPA forms published in the pinned upstream project's README: `dɔːk̚˨˩` (unreleased coda + length), `bia̯˥˩` (non-syllabic diphthong marker), `t͡ɕut̚˨˩` (tied affricate + unreleased coda), and `pɤː˧` (long vowel + mid tone). Expected Ukrainian candidates are assertions of the existing project adapter, not linguistic gold labels.
+- The tests verify that these forms remain explicitly `PROVISIONAL`, preserve a separate tone contour, and pass through the existing IPA→Ukrainian adapter. They do not reclassify FastThaiG2P IPA as phonemic/surface gold.
+- **PARTIAL — verification:** test source is committed at `e0a3e062d5607adde60d496a33a07340a308b75f`; the connected GitHub interface returned no workflow runs and no status checks for this commit. The connector-only environment cannot run the repository locally. Acceptance: run `tests/test_fastthaig2p_adapter.py` and the dedicated FastThaiG2P workflow on the exact current head, then run full CI.
