@@ -572,7 +572,7 @@
   "current_head_status_at_audit_refresh": "Exact final branch head c133dee9c66ed08df60d20ba0e170fab6c2c7300 passed Full CI 41811988701 (test, wheel-install-smoke, master-artifact all successful; 323 passed, 1 skipped, 1169 subtests). The one skip is FastAPI API tests in generic dev CI; dedicated site/API workflow 41810981343 passed all 9 targeted Python tests including real Bangkok smoke. Web Static 41810746926 passed. No application/runtime code changed after the targeted site/API code checkpoint 2c0164751eab32f3992348b4450d350175becb05. Hosting, bundled-data rights, independent linguistic review and manual accessibility remain blocked.",
   "current_implementation_branch": "feat/fastthaig2p-site-api-20261104",
   "current_implementation_commit_before_audit_update": "c133dee9c66ed08df60d20ba0e170fab6c2c7300",
-  "latest_documentation_checkpoint_before_audit": "c133dee9c66ed08df60d20ba0e170fab6c2c7300",
+  "latest_documentation_checkpoint_before_audit": "973c130842fa14a7522e40ad944ad05b4fcdb612",
   "audit_note": "Exact-head special-orthography schema and IPA-boundary repair verified on cb775d6156f62392fa2d0f4bcf8d1aa30d219530. CI 40315032771 passed 180 Python tests, generated-data drift, master artifact (351,780 rows / 41 rime records), Node IPA→UA, 28 browser parity fixtures, UI contract, challenge/Wisesight/source-attested IPA diagnostics, candidate-registry check, TUD training/evaluation and artifact uploads. Web static validation 40315032788 passed. This is software/reproducibility evidence, not independent pronunciation gold.",
   "dictionary_max_match_baseline": {
     "corpus": "Wisesight-1000",
@@ -3114,7 +3114,6 @@
     }
   },
   "fastthaig2p_final_verification_2026_11_04": {
-    "final_branch_head": "c133dee9c66ed08df60d20ba0e170fab6c2c7300",
     "full_ci_run": 41811988701,
     "full_ci_jobs": {
       "test": "success",
@@ -3148,6 +3147,10 @@
     "manual_accessibility_review": "PARTIAL",
     "pr_state": "OPEN_DRAFT",
     "github_mergeable": false,
-    "production_deployed": false
+    "production_deployed": false,
+    "code_commit_with_full_ci": "c133dee9c66ed08df60d20ba0e170fab6c2c7300",
+    "documentation_head_before_structured_audit_refresh": "973c130842fa14a7522e40ad944ad05b4fcdb612",
+    "documentation_only_changes_after_full_ci": true,
+    "note": "The full CI run verifies code commit c133dee9c66ed08df60d20ba0e170fab6c2c7300. Subsequent commits update only audit/matrix/handoff/agent guidance; the GitHub connector in this session cannot dispatch a new workflow run. No runtime code changed."
   }
 }
