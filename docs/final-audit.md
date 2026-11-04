@@ -1701,3 +1701,12 @@ The test workflow uploaded the current diagnostic and master artifacts (includin
 - **Not a linguistic-accuracy result:** the 42-item challenge remains unadjudicated. No accuracy metric is asserted.
 - **Source gates unchanged:** Global TIMIT Thai is BLOCKED pending LDC written authorization; LOTUSDIS audio evidence is PARTIAL pending retrieved WAV bytes, recomputed SHA-256, interval and overlap/channel review. Both remain non-gold inputs.
 - **Release gates unchanged:** FastThaiG2P upstream data rights and external deployment verification, independent Thai/Ukrainian review, and hands-on keyboard/screen-reader/device accessibility remain outstanding. Readiness remains ENGINEERING_INTEGRATION_IN_PROGRESS_NOT_RELEASE_READY.
+
+
+## Final verification closeout — 2026-11-04
+
+**Integration status: DONE_VERIFIED.** Consolidated PR #199 merged to main as `eed8c09648bc1b9be19345d1e6763798b3bf90bd`; Pages workflow correction PR #200 merged as final main `324632e59b6da68ece1c40c90dd3e4f4e1287447`.
+
+Exact consolidated-head checks on `10914fc9b656252e130e20d9fbafae8faf38d488` all passed: CI (test, wheel install, master artifact), Web Static, FastThaiG2P site API, optional external G2P smoke, FastThaiG2P integration spike, and external VISTEC evaluation. PR #200 CI (test, wheel install, master artifact) passed. Final-main Pages validation [41898680278](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41898680278) passed; deployment was skipped by the explicit Vercel-preview gate, preserving the existing Pages publication. The earlier post-merge Pages failure (missing pytest and stale static-deployment assumptions) is resolved by PR #200.
+
+**Remaining BLOCKED/PARTIAL items are evidence and deployment gates, not merge conflicts:** Global TIMIT Thai requires LDC written authorization; LOTUSDIS audio requires actual WAV bytes, SHA-256 and interval/overlap verification; FastThaiG2P data rights and Vercel preview remain unresolved; independent Thai/Ukrainian review and hands-on accessibility testing remain outstanding. Linguistic accuracy remains NOT_MEASURED. Final readiness is ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY.

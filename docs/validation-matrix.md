@@ -1581,3 +1581,20 @@ The test workflow uploaded the current diagnostic and master artifacts (includin
 | Independent phonetic validation | BLOCKED | Qualified independent Thai/Ukrainian reviewers and acoustic gold |
 
 DONE_VERIFIED for the consolidated batch requires all checks on the final PR #199 head. Individual PR-head CI and base-main CI are supporting evidence only.
+
+
+## Final consolidated status — 2026-11-04
+
+| Workstream | Final status | Evidence / remaining blocker |
+|---|---|---|
+| Thai spacing-vowel segmentation (#191) | DONE_VERIFIED | Present in starting main; regression coverage passed in consolidated CI |
+| G2P challenge triage and lexical recoveries (#189) | DONE_VERIFIED (engineering) | Consolidated CI, generated master artifact and evidence registries passed |
+| Global TIMIT Thai source audit (#188) | DONE_VERIFIED as restricted-source audit; data use BLOCKED | Source/rights limits registered and validated; LDC authorization remains absent |
+| LOTUSDIS immutable snapshot (#192) | Metadata DONE_VERIFIED; audio PARTIAL | Shard manifest and stable row locator present; WAV bytes/hash/interval/overlap review remain missing |
+| FastThaiG2P adapters and typed IPA (#184–186) | DONE_VERIFIED (engineering) | Typed boundary, challenge workflow, optional smoke and integration checks passed |
+| FastThaiG2P site API/runtime (#193) | DONE_VERIFIED (engineering); production deployment BLOCKED | Site API tests passed; no rights-cleared Vercel preview yet |
+| Non-text contrast/accessibility (#190) | Static DONE_VERIFIED; manual PARTIAL | Static contract and selected contrast checks passed; keyboard/screen-reader/device checks remain |
+| Final main Pages workflow | DONE_VERIFIED (validation only) | Run 41898680278 succeeded; deploy intentionally skipped pending Vercel preview gate |
+| Independent linguistic validation | BLOCKED | Independent Thai/Ukrainian reviewers and acoustic gold are not available |
+
+**Final engineering integration:** DONE_VERIFIED on main `324632e59b6da68ece1c40c90dd3e4f4e1287447`. **Release readiness:** NOT READY; linguistic accuracy remains NOT_MEASURED and the rights/deployment/reviewer blockers above remain open.
