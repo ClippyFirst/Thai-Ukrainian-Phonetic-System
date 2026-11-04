@@ -110,7 +110,7 @@ async function run() {
 document.querySelectorAll('[data-example]').forEach(button => button.addEventListener('click', () => {
   input.value = button.dataset.example;
   input.focus();
-  run();
+  return run();
 }));
 
 document.getElementById('clear').addEventListener('click', () => {
