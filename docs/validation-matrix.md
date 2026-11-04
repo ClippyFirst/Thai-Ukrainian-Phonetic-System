@@ -1421,7 +1421,7 @@ The fix is deliberately limited to the existing abstention guard; no schema, run
 Source: https://vercel-docs.vercel.sh/changelog/fastapi-frontends-and-static-files-served-from-the-cdn (2026-09-10). This platform capability removes a deployment-architecture uncertainty; it does not count as a deployed-preview test.
 
 
-**Final documentation refresh note — 2026-11-04:** this matrix and the existing integration/audit/handoff records now include the Vercel static-CDN platform clarification. The final commit is intentionally tracked in PR metadata to avoid a self-referential SHA. Exact-head CI for this documentation-only refresh remains to be inspected; no pass is inferred from the earlier code checkpoint.
+**Final continuation note — 2026-11-04:** the Vercel static-CDN platform clarification is recorded above. The regression-test addition is committed at `e0a3e062d5607adde60d496a33a07340a308b75f`; subsequent audit/handoff updates are documentation-only. The branch's latest HEAD and ahead/behind count are tracked in PR #193 metadata. The GitHub connector currently reports no workflow runs or status checks for the latest head, and no local checkout is available; therefore the newly added tests remain PARTIAL pending exact-head site/API and full CI. No pass is inferred from earlier checkpoints.
 
 
 ## FastThaiG2P IPA convention regression coverage — 2026-11-04
