@@ -2270,3 +2270,10 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - **Next genuine gates:** owner connects a Vercel project and supplies preview evidence; upstream bundled-data terms/attribution are cleared; independent Thai and Ukrainian reviewers provide frozen labels; manual accessibility testing is completed. Until then, PR #193 stays Draft and the deployed Pages site stays unchanged.
 - **Local execution:** not performed in this GitHub-connector-only session. All pass claims above are from the cited GitHub Actions logs.
 - **Readiness:** engineering-verified integration prototype, not production-ready and not a linguistic-accuracy release.
+
+
+### Follow-up data-license source reconciliation — 2026-11-04
+
+- FastThaiG2P's pinned data README identifies its Wiktionary/kaikki subset, but does not identify the exact dump revision or record-level attribution. Wiktionary entry text is under CC BY-SA 4.0; a separate PyThaiNLP Thai G2P corpus declares CC BY-SA 3.0, but there is no evidence that it is the exact dataset used by FastThaiG2P.
+- TLTK fallback source review found: `_th2ipa.py` header says TLTK 1.3.8 and carries BSD-3-Clause; PyPI says TLTK has used BSD-3-Clause since 1.2.2; current `attapol/tltk` root LICENSE contains LGPL-3 text while `setup.py` declares BSD-3-Clause. FastThaiG2P does not pin the exact TLTK revision for each bundled fallback data asset. This mismatch must be resolved with the upstream maintainer; no license conclusion is inferred from the package classifier alone.
+- The ~49k generated IPA and manual overrides also lack a complete data-specific license/provenance statement. Apache-2.0 covers the FastThaiG2P software, not automatically all these data assets. Production data-rights gate remains BLOCKED; no upstream data was copied into this repository.
