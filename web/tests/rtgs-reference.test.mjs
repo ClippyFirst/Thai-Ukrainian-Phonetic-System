@@ -134,11 +134,10 @@ const source = await readFile(new URL("../src/rtgs-reference.js", import.meta.ur
 assert.doesNotMatch(source, /adaptIpaToUkrainian|ipa-ua/);
 assert.doesNotMatch(source, /fetch\s*\(|XMLHttpRequest/);
 const app = await readFile(new URL("../src/app.js", import.meta.url), "utf8");
-assert.ok(app.includes("renderRtgsTokens(tokens)"));
-assert.ok(app.includes("АУДИТ IPA → УКРАЇНСЬКА"));
-assert.doesNotMatch(app, /adaptIpaToUkrainian\(source\)/, "the main app must not expose a duplicate standalone IPA input path");
-assert.ok(app.includes("Довідковий запис латиницею"));
-assert.ok(app.includes("renderRtgsUkrainianTokens(tokens)"));
+assert.ok(app.includes("fetch('/api/analyze'"), "the public app must use the FastThaiG2P API");
+assert.doesNotMatch(app, /renderRtgsTokens|renderRtgsUkrainianTokens|RTGS/);
+assert.doesNotMatch(app, /analyzeText|analyze\(/, "the browser must not execute a second G2P engine");
+assert.doesNotMatch(app, /adaptIpaToUkrainian\(source\)/, "the browser must not expose a parallel IPA input path");
 assert.doesNotMatch(source, /adaptRtgsToUkrainian|ipa-ua/, "RTGS source module remains independent of the IPA adapter");
 // The published method matrices must stay executable specifications: every
 // displayed RTGS → Ukrainian value is checked against the actual adapter.

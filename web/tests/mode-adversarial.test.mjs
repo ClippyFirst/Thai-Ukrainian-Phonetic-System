@@ -133,7 +133,7 @@ assert(fallbackCount > 0, "corpus must exercise the orthography-derived fallback
 
 // These forms caused visibly malformed output in the reported run. Strict mode
 // must abstain unless a reviewed lexical pronunciation is available.
-for (const word of ["วันนี้", "เห็น", "อะไร", "บ้าง", "อธิบาย", "ฤๅษี"]) {
+for (const word of ["วันนี้", "เห็น", "อะไร", "บ้าง", "อธิบาย", "ฤษี"]) {
   const strictTokens = analyzeText(word, { mode: "strict" }).filter(token => token.kind === "thai");
   assert(strictTokens.length > 0, `strict mode lost Thai input: ${word}`);
   for (const token of strictTokens) {
@@ -146,6 +146,11 @@ for (const word of ["วันนี้", "เห็น", "อะไร", "บ�
   assert(heuristicTokens.length > 0 && heuristicTokens.every(token => token.syllables.length > 0),
     `heuristic mode must preserve a visibly provisional result for ${word}`);
 }
+
+const attestedRuesi = analyzeText("ฤๅษี", { mode: "strict" }).filter(token => token.kind === "thai");
+assert.equal(attestedRuesi.length, 1, "source-attested ฤๅษี must remain one reviewed lexical token");
+assert.deepEqual(attestedRuesi[0].syllables.map(syllable => syllable.phonemicIpa), ["rɯː", "siː"]);
+assert.deepEqual(attestedRuesi[0].syllables.map(syllable => syllable.ukrainian), ["ри", "сі"]);
 
 console.log(JSON.stringify({
   result: "PASS",

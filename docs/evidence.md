@@ -45,6 +45,23 @@ Standard Thai cluster descriptions distinguish true clusters from false clusters
 - The Python and browser lexical-reading registries now include this exact override. Regression tests verify normalized spelling and the engine's derived IPA/Ukrainian output, while the evidence note keeps the source's actual claim limited to the lexical reading.
 
 
+## Source-pinned lexical challenge recoveries — 2026-11-02
+
+- **SRC-WIKTIONARY-TH-ฤๅษี** — Thai Wiktionary immutable revision 1774048: https://th.wiktionary.org/w/index.php?title=ฤๅษี&oldid=1774048 . The entry records the exact two-syllable reading **รือ-สี** and Standard Thai IPA /rɯː˧.siː˩˩˦/. This supports the exact word-level text-lexicon entry `ฤๅษี → รือ|สี`; it does not license a general rule for standalone ฤๅ or the distinct spelling ฤษี.
+- **SRC-WIKTIONARY-EN-TH-ทฤษฎี** — en.wiktionary immutable revision 87195875: https://en.wiktionary.org/w/index.php?title=ทฤษฎี&oldid=87195875 . The entry records **ทฺริด-สะ-ดี** and Standard Thai IPA /tʰrit̚˦˥.sa˨˩.diː˧/. The parser's exact `ทริด → ทริท` respelling resolves only the attested first syllable; it is not a productive `ทร` rule and must not affect homographs such as ทราย.
+- Both source records are registered in `data/benchmark/source-registry.tsv` for `LEXICAL_SEGMENTATION_REFERENCE` and `IPA_REFERENCE_ONLY` only. They are CC BY-SA 4.0 dictionary references, not independently adjudicated or acoustic gold. They are excluded from expert-accuracy claims.
+
+## Article-style challenge lexical coverage — 2026-11-02
+
+The opt-in dictionary-word-segmented challenge path exposed four common words whose boundaries were found but whose pronunciations were absent from the text lexicon. The following immutable Thai Wiktionary revisions support exact lexical entries:
+
+- **ประเทศ → ประ|เทศ**, /pra˨˩.tʰeːt̚˥˩/: [oldid 5722200](https://th.wiktionary.org/w/index.php?title=ประเทศ&oldid=5722200).
+- **เป็น → เป็น**, /pen˧/: [oldid 5770798](https://th.wiktionary.org/w/index.php?title=เป็น&oldid=5770798).
+- **หนึ่ง → หนึ่ง**, /nɯŋ˨˩/: [oldid 5721517](https://th.wiktionary.org/w/index.php?title=หนึ่ง&oldid=5721517).
+- **ใน → ใน**, /naj˧/: [oldid 5759122](https://th.wiktionary.org/w/index.php?title=ใน&oldid=5759122).
+
+These CC BY-SA 4.0 sources are registered for `LEXICAL_SEGMENTATION_REFERENCE` and `IPA_REFERENCE_ONLY`. They support lexical segmentation and source-attested readings, not expert-adjudicated or acoustic gold. Their IPA layer distinguishes phonemic segment content from surface coda release notation.
+
 ## Sense-ambiguous ทราย reading — 2026-10-25
 
 - **SRC-ORST-CLUSTER-2011-THRAY-SENSE** — Royal Institute of Thailand Journal, “เรื่องยุ่ง ๆ เกี่ยวกับอักษรควบ”, vol. 36 no. 4 (Oct–Dec 2011), p. 556, official source: https://www.orst.go.th/FILEROOM/CABROYINWEB/DRAWER004/GENERAL/DATA0000/00000630.FLP/html/48/ .
@@ -143,3 +160,13 @@ The CCOST source record is pinned to [Zenodo DOI 10.5281/zenodo.17366698](https:
 - Registry integrity check also found and fixed an existing malformed `data/corpus_sources.csv` row: the TUD record's comma-containing metadata had not been quoted. A regression test now checks the exact seven-column schema and unique source IDs.
 
 - **SRC-WIKTIONARY-TH-เพิ่ง (oldid 1885200)** — Standard Thai dictionary entry gives one syllable and `/pʰɤŋ˥˩/`, with short-vowel notation. The engine uses this only as a pinned source-attested lexical override; it is not independent phonetic gold and does not authorize a surface-IPA claim.
+
+
+## Thai G2P evaluation literature — 2026-11-03
+
+- **Saychum et al. (2016), Interspeech**, DOI [10.21437/Interspeech.2016-621](https://doi.org/10.21437/Interspeech.2016-621): full text inspected. The dictionary contains 103,265 words; held-out test contains 87,329 dictionary words. The paper reports distinct exact-match WER, tone-ignored WER and PER metrics, and separate error rates for vowel-length distortion, tone ambiguity and linking syllables. Pronunciation references are dictionary-derived; no independent expert-adjudication or IAA protocol is reported.
+- **Yamasaki (2022), NAACL**, DOI [10.18653/v1/2022.naacl-main.315](https://doi.org/10.18653/v1/2022.naacl-main.315): full text inspected. The 18,066-entry Thai set is primarily Wiktionary-derived, with some worker-supplied additions; independent transcription and IAA are not described. The reported 0.931 is exact sequence accuracy; 17,720/18,066 references occur in the generated candidate set. It is not separate tone, length or boundary accuracy.
+- **Rugchatjaroen et al. (2019), Speech Communication**, DOI [10.1016/j.specom.2018.12.003](https://doi.org/10.1016/j.specom.2018.12.003): abstract-level review supports the two-stage pseudo-syllable/graphone G2P precedent and 9.94% reported WER; full label provenance was not re-inspected in this pass.
+- **Morén & Zsiga (2006)**, DOI [10.1007/s11049-004-5454-y](https://doi.org/10.1007/s11049-004-5454-y), supports keeping lexical tone phonology separate from context-sensitive post-lexical realization. **Xu & Zhang (2024)**, DOI [10.1121/10.0032356](https://doi.org/10.1121/10.0032356), reviews methodological variation in citation-tone acoustic studies.
+- **Pons Bordería & Aliaga (2021)**, DOI [10.22363/2687-0088-2021-25-2-478-506](https://doi.org/10.22363/2687-0088-2021-25-2-478-506), discusses unitized alpha-family agreement for segmentation and labelling. **Jitwiriyanont & Nantanukul (2026)**, DOI [10.1080/17549507.2026.2651739](https://doi.org/10.1080/17549507.2026.2651739), warns that existing Thai clinical wordlists can underrepresent clusters, trills and polysyllabic words.
+- The claim-by-claim interpretation, exact metric definitions, limitations and project recommendations are recorded in [the literature review](research/thai-g2p-evaluation-literature-2026-11-03.md). These publications inform methodology; none supplies independent gold labels for the current ClippyFirst challenge.

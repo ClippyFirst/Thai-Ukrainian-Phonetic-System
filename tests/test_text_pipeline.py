@@ -1,7 +1,7 @@
 import unittest
 
 from thai_ukrainian.api import analyze_syllable
-from thai_ukrainian.text import analyze_text, segment_thai_word, tokenize_text
+from thai_ukrainian.text import analyze_text, analyze_text_with_word_segmentation, segment_thai_word, tokenize_text
 
 
 class TextPipelineTests(unittest.TestCase):
@@ -17,6 +17,47 @@ class TextPipelineTests(unittest.TestCase):
         self.assertEqual(segment_thai_word("ครอบครัว"), (("ครอบ", "ครัว"), "lexicon"))
         self.assertEqual(segment_thai_word("รถบัส"), (("รถ", "บัส"), "lexicon"))
         self.assertEqual(segment_thai_word("คอมพิวเตอร์"), (("คอม", "พิว", "เตอร์"), "lexicon"))
+
+    def test_source_attested_article_words_are_reachable_in_text_pipeline(self):
+        expected = {
+            "ประเทศ": (("ประ", "เทศ"), ["pra", "tʰeːt"], ["low", "falling"]),
+            "เป็น": (("เป็น",), ["pen"], ["mid"]),
+            "หนึ่ง": (("หนึ่ง",), ["nɯŋ"], ["low"]),
+            "ใน": (("ใน",), ["naj"], ["mid"]),
+        }
+        for word, (syllables, ipa, tones) in expected.items():
+            with self.subTest(word=word):
+                self.assertEqual(segment_thai_word(word), (syllables, "lexicon"))
+                token = analyze_text(word)[0]
+                self.assertEqual(token["segmentation_status"], "lexicon")
+                self.assertEqual([item["phonemic_ipa"] for item in token["syllables"]], ipa)
+                self.assertEqual([item["tone"]["tone"] for item in token["syllables"]], tones)
+
+    def test_opt_in_word_segmentation_uses_exact_lexicon_anchors(self):
+        token = analyze_text_with_word_segmentation("เตอร์")[0]
+        self.assertEqual(token["input"], "เตอร์")
+        self.assertEqual(token["word_segmentation_status"], "exact_text_lexicon")
+        self.assertEqual(token["word_segmentation_method"], "exact_text_lexicon")
+        self.assertEqual(token["word_segmentation_evidence_grade"], "CURATED_TEXT_LEXICON")
+        self.assertEqual(token["syllables"][0]["phonemic_ipa"], "tɤː")
+
+    def test_article_style_phrases_are_supported_by_opt_in_word_segmentation(self):
+        for text in (
+            "ประเทศยูเครน",
+            "ยูเครนเป็นประเทศหนึ่ง",
+            "เป็นประเทศหนึ่ง",
+            "ประเทศในยุโรปตะวันออก",
+        ):
+            with self.subTest(text=text):
+                tokens = analyze_text_with_word_segmentation(text)
+                thai_tokens = [token for token in tokens if token["kind"] == "thai"]
+                self.assertTrue(thai_tokens)
+                self.assertEqual("".join(token["input"] for token in tokens), text)
+                self.assertTrue(all(token["segmentation_status"] != "unresolved" for token in thai_tokens))
+                self.assertTrue(all(
+                    syllable["phonemic_ipa"] and syllable["ukrainian_transliteration"]
+                    for token in thai_tokens for syllable in token["syllables"]
+                ))
 
     def test_source_attested_ukraine_name_uses_two_syllable_lexicon(self):
         # en.wiktionary Thai entry oldid 88025965 attests /juː˧.kʰreːn˧/.
@@ -197,6 +238,45 @@ class TextPipelineTests(unittest.TestCase):
                 if word == "เตอร์":
                     self.assertEqual(result.normalized, "เตอ")
 
+
+    def test_challenge_exact_lexical_readings_are_recovered_by_text_pipeline(self):
+        # Exact lexical readings already curated in parser.py must be reachable
+        # from the conservative text API; this does not enable general guessing.
+        expected = {
+            "เตอร์": ("tɤː", "mid"),
+            "เทอร์": ("tʰɤː", "mid"),
+        }
+        for word, (ipa, tone) in expected.items():
+            with self.subTest(word=word):
+                self.assertEqual(segment_thai_word(word), ((word,), "lexicon"))
+                token = analyze_text(word)[0]
+                self.assertEqual(token["segmentation_status"], "lexicon")
+                self.assertEqual(len(token["syllables"]), 1)
+                self.assertEqual(token["syllables"][0]["phonemic_ipa"], ipa)
+                self.assertEqual(token["syllables"][0]["tone"]["tone"], tone)
+
+    def test_source_attested_ruesi_compound_is_no_longer_unnecessarily_withheld(self):
+        # Thai Wiktionary oldid 1774048 records ฤๅษี = รือ-สี and
+        # /rɯː˧.siː˩˩˦/. Source-attested, not independent IPA gold.
+        self.assertEqual(segment_thai_word("ฤๅษี"), (("รือ", "สี"), "lexicon"))
+        token = analyze_text("ฤๅษี")[0]
+        self.assertEqual(token["segmentation_status"], "lexicon")
+        self.assertEqual([item["phonemic_ipa"] for item in token["syllables"]], ["rɯː", "siː"])
+        self.assertEqual([item["tone"]["tone"] for item in token["syllables"]], ["mid", "rising"])
+        self.assertTrue(all(item["ukrainian_transliteration"] for item in token["syllables"]))
+
+    def test_source_attested_thrit_syllable_resolves_only_exact_word_reading(self):
+        # en.wiktionary oldid 87195875 records ทฤษฎี = ทฺริด-สะ-ดี,
+        # IPA /tʰrit̚˦˥.sa˨˩.diː˧/. The lexical respelling is exact, not a
+        # productive rule for arbitrary ทร sequences.
+        token = analyze_text("ทฤษฎี")[0]
+        self.assertEqual(token["segmentation_status"], "lexicon")
+        self.assertEqual([item["phonemic_ipa"] for item in token["syllables"]], ["tʰrit", "sa", "diː"])
+        self.assertEqual([item["tone"]["tone"] for item in token["syllables"]], ["high", "low", "mid"])
+        self.assertEqual(analyze_syllable("ทริด").status, "analyzed")
+        self.assertEqual(analyze_syllable("ทริด").phonemic_ipa, "tʰrit")
+        self.assertEqual(analyze_syllable("ทราย").status, "analysis-dependent:special-orthography")
+
     def test_unlisted_rr_form_remains_unresolved(self):
         # The OBEC source gives lexical readings for specific words, but also
         # documents several readings and syllabifications for different words.
@@ -246,14 +326,13 @@ class TextPipelineTests(unittest.TestCase):
                 self.assertEqual(segment_thai_word(word), segmentation)
 
 
-    def test_unattested_ruesi_word_does_not_bypass_special_orthography_abstention(self):
-        # The former text-lexicon split ฤๅษี -> รือ|สี had no source-registry
-        # entry. Do not let an unsupported syllabification bypass the special-
-        # vowel analysis and manufacture a confirmed two-syllable reading.
-        syllables, status = segment_thai_word("ฤๅษี")
-        self.assertEqual(syllables, ("ฤๅษี",))
+    def test_unattested_legacy_ruesi_spelling_remains_unresolved(self):
+        # The source-backed ฤๅษี form is listed in text_lexicon_sources.csv;
+        # do not transfer that reading to the distinct, unattested ฤษี spelling.
+        syllables, status = segment_thai_word("ฤษี")
+        self.assertEqual(syllables, ("ฤษี",))
         self.assertEqual(status, "unresolved")
-        token = analyze_text("ฤๅษี")[0]
+        token = analyze_text("ฤษี")[0]
         self.assertEqual(token["segmentation_status"], "unresolved")
         self.assertEqual(token["syllables"], [])
         self.assertTrue(any("IPA and Ukrainian output are withheld" in w for w in token["warnings"]))

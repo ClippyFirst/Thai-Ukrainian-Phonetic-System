@@ -47,6 +47,8 @@ LEXICAL_READINGS={
     "ฤๅษี":"รือ|สี",
     "ฤษี":"รึ|สี",
     "ทฤษฎี":"ทริด|สะ|ดี",
+    # Exact phonetic respelling of the first syllable in ทฤษฎี; not a global ทร rule.
+    "ทริด":"ทริท",
     "อย่า":"หย่า",
     "อยู่":"หยู่",
     "อย่าง":"หย่าง",

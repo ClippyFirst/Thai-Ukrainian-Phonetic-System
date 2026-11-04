@@ -40,6 +40,8 @@ class SegmentationErrorAnalysisTests(unittest.TestCase):
         self.assertGreater(report["metrics"]["false_merge_count"], 0)
         self.assertEqual(len(report["false_split_examples"]), 3)
         self.assertEqual(len(report["false_merge_examples"]), 3)
+        # Correct Thai postposed-vowel clustering recovers 12 additional exact
+        # source-annotated sequences; this remains diagnostic, not adjudicated gold.
         self.assertEqual(report["metrics"]["exact_sequence_count"], 204)
         self.assertAlmostEqual(report["metrics"]["exact_sequence_rate"], 204 / 993)
         self.assertIn("not independently expert-adjudicated", " ".join(report["method"]["caveats"]))

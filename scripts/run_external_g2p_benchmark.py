@@ -8,8 +8,12 @@ with independently adjudicated gold_phonemic_ipa values.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import importlib.metadata
 import json
+import platform
+import statistics
+import subprocess
 import sys
 import time
 import urllib.error
@@ -59,22 +63,82 @@ def candidate_thaiphon() -> tuple[Callable[[str], str], dict[str, Any]]:
     )
 
 
-def candidate_fastthaig2p() -> tuple[Callable[[str], str], dict[str, Any]]:
-    from fastthaig2p import G2P
+class CandidateAbstention(RuntimeError):
+    """A candidate deliberately withholds a result for this input."""
 
-    engine = G2P()
-    return (
-        engine.convert,
-        {
-            "package": "FastThaiG2P",
-            "version": package_version("fastthaig2p"),
-            "configuration": {"api": "G2P.convert", "default_dictionary_and_fallback": True},
-            "source_commit": "c4759eef7df03e11fcbb9aa83efe8cf21709fd2f",
+
+def _candidate_clippyfirst_layer(
+    ipa_field: str, transcription_layer: str
+) -> tuple[Callable[[str], str], dict[str, Any]]:
+    from thai_ukrainian.text import analyze_text_with_word_segmentation
+
+    def transcribe(text: str) -> str:
+        tokens = analyze_text_with_word_segmentation(text)
+        ipa_words: list[str] = []
+        for token in tokens:
+            if token.get("kind") != "thai":
+                continue
+            syllables = token.get("syllables") or []
+            if token.get("segmentation_status") == "unresolved" or not syllables:
+                raise CandidateAbstention(
+                    f"conservative ClippyFirst abstention for token {token.get('input')!r}"
+                )
+            ipa_syllables = []
+            for syllable in syllables:
+                # Consume the same typed IPA boundary as the Ukrainian adapter.
+                typed_ipa = syllable.get("phonetic_result")
+                if not isinstance(typed_ipa, dict) or typed_ipa.get("status") != "SUPPORTED":
+                    raise CandidateAbstention(
+                        f"ClippyFirst typed IPA is not supported for token {token.get('input')!r}"
+                    )
+                ipa = typed_ipa.get(ipa_field)
+                tone = typed_ipa.get("tone_contour_ipa")
+                if not isinstance(ipa, str) or not ipa or not isinstance(tone, str) or not tone:
+                    raise CandidateAbstention(
+                        f"ClippyFirst withheld {transcription_layer} IPA or tone "
+                        f"for token {token.get('input')!r}"
+                    )
+                ipa_syllables.append(ipa + tone)
+            ipa_words.append("/" + ".".join(ipa_syllables) + "/")
+        if not ipa_words:
+            raise CandidateAbstention("ClippyFirst produced no Thai IPA tokens")
+        return " ".join(ipa_words)
+
+    return transcribe, {
+        "package": "ClippyFirst",
+        "version": "in-repository",
+        "configuration": {
+            "api": "analyze_text_with_word_segmentation",
+            "ipa_field": ipa_field,
+            "transcription_layer": transcription_layer,
+            "typed_ipa_contract": "PhoneticResult (selected IPA field plus separate tone contour)",
+            "policy": "conservative; abstain unless every Thai token has complete selected IPA and tone",
+            "word_segmentation": "pinned ClippyFirst dictionary maximum matching",
         },
-    )
+        "source_commit": "runtime-at-benchmark-commit",
+    }
+
+
+def candidate_clippyfirst() -> tuple[Callable[[str], str], dict[str, Any]]:
+    """ClippyFirst phonemic IPA profile; tone remains a separate typed field."""
+    return _candidate_clippyfirst_layer("phonemic_ipa", "BROAD_PHONEMIC")
+
+
+def candidate_clippyfirst_surface() -> tuple[Callable[[str], str], dict[str, Any]]:
+    """ClippyFirst broad-surface IPA profile, closest to FastThaiG2P's IPA convention."""
+    return _candidate_clippyfirst_layer("broad_surface_ipa", "BROAD_SURFACE")
+
+
+def candidate_fastthaig2p() -> tuple[Callable[[str], str], dict[str, Any]]:
+    from thai_ukrainian.adapters.fastthaig2p import FastThaiG2PAdapter
+
+    adapter = FastThaiG2PAdapter()
+    return adapter.convert, adapter.metadata()
 
 
 CANDIDATES = {
+    "clippyfirst_phonemic": candidate_clippyfirst,
+    "clippyfirst_surface": candidate_clippyfirst_surface,
     "thaiphon": candidate_thaiphon,
     "fastthaig2p": candidate_fastthaig2p,
 }
@@ -232,19 +296,48 @@ def build_pairwise_engine_diagnostic(outputs: list[dict[str, Any]]) -> list[dict
             })
     return report
 
+def _percentile(values: list[float], percentile: float) -> float | None:
+    if not values:
+        return None
+    ordered = sorted(values)
+    index = max(0, min(len(ordered) - 1, int((len(ordered) * percentile + 0.999999)) - 1))
+    return round(ordered[index], 3)
+
+
 def summarize_per_engine(outputs: list[dict[str, Any]], selected: list[str]) -> dict[str, Any]:
     summary: dict[str, Any] = {}
     for name in selected:
         engine_rows = [item for item in outputs if item["engine"] == name]
-        failed = [item for item in engine_rows if item.get("error") is not None]
+        failed = [item for item in engine_rows if item.get("outcome", "error" if item.get("error") else "success") == "error"]
+        abstained = [item for item in engine_rows if item.get("outcome") == "abstain"]
+        successful = sum(has_usable_output(item) for item in engine_rows)
+        latencies = [float(item["elapsed_ms"]) for item in engine_rows if isinstance(item.get("elapsed_ms"), (int, float))]
         summary[name] = {
             "output_rows": len(engine_rows),
-            "successful_outputs": sum(has_usable_output(item) for item in engine_rows),
+            "successful_outputs": successful,
+            "coverage": successful / len(engine_rows) if engine_rows else None,
+            "abstained_outputs": len(abstained),
+            "runtime_failures": len(failed),
             "failed_outputs": len(failed),
             "empty_outputs_without_error": sum(item.get("error") is None and (not isinstance(item.get("raw_output"), str) or not item["raw_output"].strip()) for item in engine_rows),
+            "latency_ms": {
+                "median": round(statistics.median(latencies), 3) if latencies else None,
+                "p95": _percentile(latencies, 0.95),
+                "n": len(latencies),
+            },
             "failure_examples": [{"record_id": item.get("record_id"), "input": item.get("input"), "error": item.get("error")} for item in failed[:5]],
+            "abstention_examples": [{"record_id": item.get("record_id"), "input": item.get("input"), "reason": item.get("error")} for item in abstained[:5]],
         }
     return summary
+
+
+def repository_revision() -> str | None:
+    try:
+        return subprocess.run(
+            ["git", "rev-parse", "HEAD"], check=True, capture_output=True, text=True
+        ).stdout.strip()
+    except (OSError, subprocess.CalledProcessError):
+        return None
 
 
 def main() -> int:
@@ -274,12 +367,18 @@ def main() -> int:
 
         for row in rows:
             started = time.perf_counter()
+            outcome = "success"
             try:
                 raw = transcribe(row["input"])
                 error = None
+            except CandidateAbstention as exc:
+                raw = None
+                error = f"{type(exc).__name__}: {exc}"
+                outcome = "abstain"
             except Exception as exc:  # retain failure rows instead of silently dropping them
                 raw = None
                 error = f"{type(exc).__name__}: {exc}"
+                outcome = "error"
             elapsed_ms = round((time.perf_counter() - started) * 1000, 3)
             gold = normalized_ipa(row.get("gold_phonemic_ipa"))
             candidate = normalized_ipa(raw)
@@ -291,6 +390,7 @@ def main() -> int:
                 "engine_metadata": metadata,
                 "raw_output": raw,
                 "elapsed_ms": elapsed_ms,
+                "outcome": outcome,
                 "error": error,
                 "gold_status": row.get("lexical_attestation_status", "not_adjudicated"),
                 "exact_raw_string_match_diagnostic_only": (candidate == gold) if gold is not None and candidate is not None else None,
@@ -304,13 +404,24 @@ def main() -> int:
     inter_engine_diagnostic = build_inter_engine_diagnostic(outputs)
     per_engine = summarize_per_engine(outputs, selected)
     per_input_failure_summaries = [
-        f"{name}: {details['failed_outputs']} per-input failures"
+        f"{name}: {details['runtime_failures']} per-input runtime failures"
         for name, details in per_engine.items()
-        if details["failed_outputs"]
+        if details["runtime_failures"]
     ]
+    abstention_summaries = [
+        f"{name}: {details['abstained_outputs']} conservative abstentions"
+        for name, details in per_engine.items()
+        if details["abstained_outputs"]
+    ]
+    corpus_bytes = args.input.read_bytes()
     summary = {
+        "report_type": "SAME_INPUT_G2P_COMPARISON_DIAGNOSTIC_NOT_ACCURACY",
         "input": str(args.input),
+        "corpus_sha256": hashlib.sha256(corpus_bytes).hexdigest(),
+        "repository_commit": repository_revision() or __import__("os").environ.get("GITHUB_SHA"),
+        "runtime": {"python": sys.version, "platform": platform.platform()},
         "inter_engine_diagnostic": inter_engine_diagnostic,
+        "pairwise_engine_diagnostic": build_pairwise_engine_diagnostic(outputs),
         "output": str(args.output),
         "candidate_rows": len(rows),
         "engines_requested": selected,
@@ -318,9 +429,11 @@ def main() -> int:
         "output_rows": len(outputs),
         "per_engine": per_engine,
         "gold_labeled_rows": sum(row.get("gold_phonemic_ipa") is not None for row in rows),
+        "accuracy_status": "NOT_MEASURED_BY_THIS_SMOKE_RUNNER; use benchmark_ipa.py only after the independent adjudication gate",
         "raw_string_diagnostic_rows": sum(item["exact_raw_string_match_diagnostic_only"] is not None for item in outputs),
         "errors": errors + per_input_failure_summaries,
-        "interpretation": "Raw candidate outputs only. Per-engine failures and empty outputs are explicit. Raw-string equality and inter-engine agreement are diagnostic, not accuracy: candidate IPA conventions and segmentation differ. Adjudicate gold, document engine-specific normalization, then score features separately.",
+        "abstentions": abstention_summaries,
+        "interpretation": "All engines receive the same frozen input rows. Coverage, abstention and latency are engineering diagnostics; raw-string equality and inter-engine agreement are not accuracy. Gold is required for accuracy. No IPA normalization is applied for scoring.",
     }
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     successful_outputs = sum(has_usable_output(item) for item in outputs)

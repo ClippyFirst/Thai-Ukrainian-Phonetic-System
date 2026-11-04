@@ -22,22 +22,58 @@ class ChallengeRuntimeDiagnosticsTests(unittest.TestCase):
             path = self.write_jsonl(directory, [
                 {"id": "known", "input": "กา", "stratum": "test"},
                 {"id": "unknown", "input": "กฉ", "stratum": "test"},
+                {"id": "special-vowel", "input": "ฤๅ", "stratum": "ฤ-series"},
             ])
             report = build_report(path)
 
         self.assertEqual(report["evaluation_kind"], "runtime_diagnostic_not_accuracy_benchmark")
         self.assertEqual(report["gold_status"], "NOT_ADJUDICATED")
-        self.assertEqual(report["summary"]["challenge_inputs"], 2)
+        self.assertEqual(report["summary"]["challenge_inputs"], 3)
         self.assertEqual(
             report["summary"]["inputs_with_engine_output"]
             + report["summary"]["inputs_abstained_or_without_complete_output"],
-            2,
+            3,
         )
         self.assertNotIn("accuracy", report["summary"])
         records = {record["id"]: record for record in report["records"]}
         self.assertEqual(records["unknown"]["segmentation_status"], "unresolved")
         self.assertFalse(records["unknown"]["engine_output_emitted"])
         self.assertTrue(records["unknown"]["warnings"])
+        self.assertEqual(
+            records["unknown"]["coordination_cluster"],
+            "UNRESOLVED_SEGMENTATION_OR_PHONOLOGY_REVIEW",
+        )
+        self.assertIn("word_segmented_output_emitted", records["unknown"])
+        self.assertIn("word_segmented_token_details", records["unknown"])
+        self.assertIsInstance(records["unknown"]["word_segmented_token_details"], list)
+        self.assertIn("coordination_cluster_counts", report["summary"])
+        self.assertEqual(
+            records["special-vowel"]["coordination_cluster"],
+            "SPECIAL_VOWEL_NEEDS_LEXICAL_CONTEXT",
+        )
+        self.assertNotIn("accuracy", report["summary"])
+
+    def test_complete_output_requires_syllables_for_every_thai_token(self):
+        from scripts.run_challenge_diagnostics import _emits_complete_output
+
+        complete_syllable = {
+            "phonemic_ipa": "kaː",
+            "ukrainian_transliteration": "каа",
+        }
+        tokens = [
+            {
+                "kind": "thai",
+                "segmentation_status": "resolved",
+                "syllables": [complete_syllable],
+            },
+            {
+                "kind": "thai",
+                "segmentation_status": "resolved",
+                "syllables": [],
+            },
+        ]
+
+        self.assertFalse(_emits_complete_output(tokens))
 
     def test_empty_challenge_fails_closed(self):
         with tempfile.TemporaryDirectory() as directory:
