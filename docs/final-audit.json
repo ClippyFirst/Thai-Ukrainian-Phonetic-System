@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PR #191 current branch head 8665c07d71f61e89de60654491207e1798a14bfd passed exact-head CI 41728579416 (all three jobs; 322 Python tests, 1,174 subtests, Ruff, parity, wheel install and master artifact) and external VISTEC 41728579532. The PR remains open Draft and unmerged. Linguistic accuracy remains NOT_MEASURED; the repository remains an engineering-verified research prototype.",
+  "status": "PR #191's verified code/test checkpoint 8665c07d71f61e89de60654491207e1798a14bfd passed exact-head CI 41728579416 and VISTEC 41728579532. The documentation closeout HEAD 61e4567ab074e767547369087e8f7483985deb8d also passed exact-head CI 41794235177 (all three jobs) and VISTEC 41794234815. PR remains open Draft and unmerged. Linguistic accuracy remains NOT_MEASURED; engineering-verified research prototype only.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -304,7 +304,7 @@
     "rows": 351780,
     "vowel_rime_records": 41
   },
-  "latest_documentation_checkpoint": "8665c07d71f61e89de60654491207e1798a14bfd (pre-closeout checkpoint; this commit adds a documentation-only exact-head reconciliation)",
+  "latest_documentation_checkpoint": "61e4567ab074e767547369087e8f7483985deb8d; documentation-only reconciliation passed exact-head CI 41794235177 and VISTEC 41794234815.",
   "text_only_checkpoint": {
     "branch": "research/thai-segmentation-gold-parity-verified-20261025",
     "parent_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
@@ -613,8 +613,8 @@
     }
   },
   "latest_implementation_commit_ci_verified": "8665c07d71f61e89de60654491207e1798a14bfd",
-  "latest_documentation_head_ci_verified": "536f03327f11d258a4e7638091797128754b6602",
-  "latest_documentation_head_ci_run": "41342132989",
+  "latest_documentation_head_ci_verified": "61e4567ab074e767547369087e8f7483985deb8d",
+  "latest_documentation_head_ci_run": 41794235177,
   "latest_documentation_head_web_validation_run": "41342132990",
   "latest_implementation_ci_run": "41353088633",
   "latest_implementation_web_validation_run": "41353088642",
@@ -2176,10 +2176,10 @@
       "draft": true,
       "merged": false,
       "head_branch": "fix/thai-spacing-vowel-cluster-parity-20261103",
-      "head_sha": "8665c07d71f61e89de60654491207e1798a14bfd",
+      "head_sha": "61e4567ab074e767547369087e8f7483985deb8d",
       "verified_code_test_sha": "8665c07d71f61e89de60654491207e1798a14bfd",
-      "ci": 41728579416,
-      "external_vistec": 41728579532,
+      "ci": 41794235177,
+      "external_vistec": 41794234815,
       "base": "main",
       "base_sha": "75c331f69aa3c8e5b4db3ccc5a6da85124600a01"
     },
@@ -2772,10 +2772,10 @@
       "draft": true,
       "merged": false,
       "head_branch": "fix/thai-spacing-vowel-cluster-parity-20261103",
-      "head_sha": "8665c07d71f61e89de60654491207e1798a14bfd",
+      "head_sha": "61e4567ab074e767547369087e8f7483985deb8d",
       "verified_code_test_sha": "8665c07d71f61e89de60654491207e1798a14bfd",
-      "ci": 41728579416,
-      "external_vistec": 41728579532,
+      "ci": 41794235177,
+      "external_vistec": 41794234815,
       "base": "main",
       "base_sha": "75c331f69aa3c8e5b4db3ccc5a6da85124600a01"
     },
@@ -3153,10 +3153,10 @@
     "branch": "fix/thai-spacing-vowel-cluster-parity-20261103",
     "base_branch": "main",
     "base_sha": "75c331f69aa3c8e5b4db3ccc5a6da85124600a01",
-    "head_sha": "8665c07d71f61e89de60654491207e1798a14bfd",
-    "ahead_by": 17,
+    "head_sha": "61e4567ab074e767547369087e8f7483985deb8d",
+    "ahead_by": 18,
     "behind_by": 0,
-    "ci_run": 41728579416,
+    "ci_run": 41794235177,
     "ci_result": "PASSED_ALL_3_JOBS",
     "python_tests": 322,
     "python_subtests": 1174,
@@ -3164,12 +3164,24 @@
     "parity_fixtures": 29,
     "wheel_install_smoke": "PASSED",
     "master_artifact": "PASSED",
-    "vistec_run": 41728579532,
+    "vistec_run": 41794234815,
     "vistec_result": "PASSED",
     "vistec_rows": 50000,
     "vistec_expert_adjudicated_rows": 0,
+    "vistec_dictionary_boundary_f1": 0.8327666325382598,
+    "vistec_dictionary_precision": 0.7742908952303185,
+    "vistec_dictionary_recall": 0.9007962660325631,
+    "vistec_dictionary_exact_sequences": 77,
+    "vistec_tud_boundary_f1": 0.7530225550370759,
+    "vistec_tud_precision": 0.6064011335968544,
+    "vistec_tud_recall": 0.9931576338081688,
+    "vistec_tud_exact_sequences": 16,
     "linguistic_accuracy": "NOT_MEASURED",
     "pr_number": 191,
-    "pr_state": "OPEN_DRAFT_NOT_MERGED"
-  }
+    "pr_state": "OPEN_DRAFT_NOT_MERGED",
+    "note": "This is the last exact-head-verified PR commit before this structured audit JSON's documentation-only refresh; see live PR metadata for the current HEAD."
+  },
+  "latest_documentation_head_ci_result": "PASSED_ALL_3_JOBS",
+  "latest_documentation_head_vistec_run": 41794234815,
+  "latest_documentation_head_vistec_result": "PASSED"
 }
