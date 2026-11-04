@@ -2292,3 +2292,12 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - **Source:** https://vercel-docs.vercel.sh/changelog/fastapi-frontends-and-static-files-served-from-the-cdn (2026-09-10).
 - **Code verification remains:** Full CI passed on runtime/code checkpoint `c133dee9c66ed08df60d20ba0e170fab6c2c7300`; later edits in this continuation are documentation-only. Exact-head checks for the documentation refresh must be inspected before claiming the refreshed branch fully verified.
 - **No external changes:** no Vercel project, deployment, domain, or repository setting was created or modified.
+
+
+## Continuation checkpoint — FastThaiG2P IPA convention regression tests (2026-11-04)
+
+- Current branch at this checkpoint: `feat/fastthaig2p-site-api-20261104`, commit `e0a3e062d5607adde60d496a33a07340a308b75f`, 93 commits ahead and 0 behind `main` (`75c331f69aa3c8e5b4db3ccc5a6da85124600a01`). PR #193 remains open Draft and GitHub still reports `mergeable=false`.
+- Added four parameterized regression cases based on upstream-documented IPA forms: `dɔːk̚˨˩`, `bia̯˥˩`, `t͡ɕut̚˨˩`, and `pɤː˧`. These exercise unreleased codas, non-syllabic diphthong notation, tied affricates, length and tone metadata through the provisional IPA adapter. Expected UA forms are project mapping regression expectations, not linguistic gold.
+- The new test module imports `pytest` explicitly. The code was reviewed from the committed file, but not executed locally.
+- **Verification BLOCKED:** `fetch_commit_workflow_runs` and combined commit status both returned empty arrays for the new commit. No GitHub Actions run is evidenced for this API-created commit, and the connector exposes no workflow-dispatch action. Acceptance: execute `tests/test_fastthaig2p_adapter.py`, the dedicated site/API workflow and full CI on the exact current head. Do not claim a pass.
+- External blockers remain: Vercel project/preview; upstream dictionary/fallback data rights; independent Thai and Ukrainian review; manual WCAG review. No external settings, project, deployment, or production routing were changed.
