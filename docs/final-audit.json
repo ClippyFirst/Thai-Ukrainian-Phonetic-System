@@ -541,8 +541,8 @@
     {
       "id": "FASTTHAIG2P-DATA-LICENSE-001",
       "status": "BLOCKED",
-      "implementation": "Pinned upstream software at 4e82a291b4cf2876326744c6580121e9986ad354; inspected upstream LICENSE, NOTICE, data/README.md, pyproject.toml and vendored _th2ipa.py notice. No dictionary/fallback data copied into this repository.",
-      "blocker": "Upstream Apache-2.0 software license does not comprehensively clear mixed manual, Wiktionary/kaikki, generated IPA and vendored fallback data; data README gives no single complete data license.",
+      "implementation": "Pinned upstream software at 4e82a291b4cf2876326744c6580121e9986ad354; inspected upstream LICENSE, NOTICE, data/README.md, pyproject.toml and vendored _th2ipa.py notice. No dictionary/fallback data copied into this repository. Additional evidence: TLTK project description states BSD-3-Clause since 1.2.2 and lists 1.3.8 (2021-04-23); this narrows the vendored parser's package-level license ambiguity.",
+      "blocker": "Upstream Apache-2.0 software license does not comprehensively clear mixed manual, Wiktionary/kaikki, generated IPA and vendored fallback data; data README gives no single complete data license. PyPI labels its license metadata unverified; the exact TLTK source archive/commit and file-level mapping of all vendored fallback data remain unpinned. Wiktionary/kaikki, generated IPA and manual override rights remain separately unresolved.",
       "acceptance": "Inspect exact pinned wheel/data assets; determine each source's terms and required attribution/share-alike; record the legal/provenance review before public production deployment."
     },
     {
@@ -3081,7 +3081,8 @@
     "latest_head_combined_statuses": [],
     "new_adapter_regression_tests": "PARTIAL_NOT_VERIFIED",
     "latest_exact_head_ci": "NO_RUNS_OR_STATUSES_REPORTED",
-    "upstream_correction_regression": "PARTIAL_NOT_VERIFIED"
+    "upstream_correction_regression": "PARTIAL_NOT_VERIFIED",
+    "data_rights_tltk": "NARROWED_NOT_CLEARED"
   },
   "pr_reconciliation": {
     "pr184": {
@@ -3236,6 +3237,22 @@
       "test_file": "tests/test_fastthaig2p_site_api.py",
       "status": "PARTIAL_NOT_VERIFIED",
       "evidence_boundary": "upstream merged correction; not independent expert gold"
+    },
+    "tltk_license_refinement": {
+      "package": "TLTK 1.3.8",
+      "release_date": "2021-04-23",
+      "public_declaration": "New BSD / BSD-3-Clause since TLTK 1.2.2",
+      "evidence": [
+        "https://pypi.org/project/tltk/",
+        "https://github.com/attapol/tltk"
+      ],
+      "caveats": [
+        "PyPI license metadata is marked unverified",
+        "repository currently exposes LGPL-3.0 and BSD-3-Clause license files",
+        "FastThaiG2P does not pin the exact TLTK source archive/commit for each vendored fallback data file"
+      ],
+      "disposition": "NARROWED_NOT_CLEARED",
+      "overall_fastthaig2p_data_rights": "BLOCKED_WIKTIONARY_GENERATED_MANUAL_AND_FALLBACK_DATA_PROVENANCE"
     }
   }
 }

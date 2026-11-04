@@ -1549,3 +1549,11 @@ The new test/tool code was committed on the PR branch and awaits exact-head CI c
 - The regression also checks that segmental external IPA remains `sua̯n`, the Chao contour `˩˩˦` is retained separately and categorized as rising, and the typed result remains explicitly PROVISIONAL. This upstream-maintainer-accepted correction is useful source evidence, but it is not an independent expert-gold dataset.
 - **Status: PARTIAL / NOT VERIFIED.** The test is committed but no workflow run or status is currently available for the branch head. It must pass in the dedicated site/API workflow and full exact-head CI before DONE_VERIFIED.
 
+
+
+## TLTK fallback-license evidence refinement — 2026-11-04
+
+- Additional primary/package evidence narrows, but does not close, the TLTK part of the FastThaiG2P data-rights review. The TLTK project description states that the package license changed to New BSD (BSD-3-Clause) from version 1.2.2; it lists TLTK 1.3.8 as released 23 April 2021. PyPI's current project metadata also displays BSD-3-Clause. Sources: [PyPI project description and release history](https://pypi.org/project/tltk/) and [TLTK repository](https://github.com/attapol/tltk).
+- PyPI explicitly labels its license metadata as **unverified**; the repository currently exposes both LGPL-3.0 and BSD-3-Clause license files, while its setup metadata says BSD-3-Clause. FastThaiG2P's vendored `_th2ipa.py` header identifies TLTK 1.3.8 and BSD-3-Clause, but the exact source commit/archive and file-by-file mapping for all six vendored fallback data assets have not been established.
+- **Revised assessment:** BSD-3-Clause is the best-supported package-level declaration for TLTK 1.3.8 and the vendored parser source, so this is no longer accurately described as an entirely unresolved package-license claim. However, do not infer that every copied model/data file is independently cleared solely from the package metadata. The FastThaiG2P production data-rights gate remains **BLOCKED** because the larger runtime dictionary still mixes Wiktionary/kaikki-derived entries, generated IPA, manual overrides and fallback assets without a complete asset-level rights/attribution manifest. Exact upstream source revisions and data-specific terms are still required.
+
