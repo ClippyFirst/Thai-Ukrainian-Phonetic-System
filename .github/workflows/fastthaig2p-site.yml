@@ -1,6 +1,21 @@
 name: FastThaiG2P site API
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - "src/index.py"
+      - "src/thai_ukrainian/fastthaig2p_adapter.py"
+      - "src/thai_ukrainian/phonetic_result.py"
+      - "src/thai_ukrainian/ukrainian_adaptation.py"
+      - "tests/test_fastthaig2p_*.py"
+      - "web/index.html"
+      - "web/src/app.js"
+      - "web/tests/ui-contract.test.mjs"
+      - "web/tests/accessibility-contract.test.mjs"
+      - "web/tests/ipa-ua.test.mjs"
+      - "pyproject.toml"
+      - "requirements.txt"
+      - ".github/workflows/fastthaig2p-site.yml"
   pull_request:
     paths:
       - "src/index.py"
