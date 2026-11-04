@@ -1,38 +1,38 @@
 # Web service architecture
 
-## Data flow
+## Production site runtime
 
-Thai input → browser adapter → generated research runtime → graphemic analysis → syllable/phonology/tone → broad IPA → surface IPA → Ukrainian candidates → practical orthography → presentation model → Service UI.
+The website uses **FastThaiG2P as its sole Thai pronunciation/G2P engine**. The browser does not run the ClippyFirst grapheme-to-phonology engine, RTGS renderer, heuristic fallback, or a second pronunciation engine.
 
-The System page consumes documentation metadata only and contains no conversion rules.
+Data flow:
 
-## Source of truth
+`Thai text → same-origin FastAPI endpoint → pinned FastThaiG2P → raw external IPA → typed external-IPA boundary → existing IPA → Ukrainian adapter → provisional Ukrainian practical spelling → browser presentation`.
 
-Authoritative registries remain under data/thai and the Python package. Browser artefacts are generated. A generated manifest should record source version/commit, generator version, source hashes and generated hashes.
+The FastThaiG2P output is retained as raw IPA. Because its mixed dictionary/OOV output has not been independently adjudicated as phonemic or broad-surface IPA, it is represented in `PhoneticResult.external_ipa`; it is never mislabeled as either canonical IPA layer. The Ukrainian adapter may consume this field only when the typed result is explicitly `PROVISIONAL`. Unknown symbols and incomplete/passthrough output remain fail-closed.
 
-## Runtime policy
+The Ukrainian result is explicitly provisional, not expert-validated and not an official Ukrainian transcription standard. Tone and vowel length remain separately visible in IPA/metadata and may be neutralized in Ukrainian practical spelling.
 
-Preferred: compile the deterministic research rules into a browser-safe runtime. A fallback backend adapter is acceptable only if fully documented; it must not be presented as static offline equivalence.
+## API and hosting
 
-## Structured result contract
+- `src/index.py` exports the FastAPI application and serves `web/` static assets.
+- `POST /api/analyze` accepts JSON `{"text":"..." }` and returns the pinned FastThaiG2P IPA, provisional Ukrainian output, word/syllable groups, tone, length, provenance and warnings.
+- `GET /api/health` identifies the active engine.
+- `requirements.txt` pins FastAPI, PyThaiNLP and FastThaiG2P at an immutable upstream commit.
+- The browser calls only same-origin `/api/analyze`; CSP allows same-origin connections only.
 
-A result may contain: input; Thai decomposition; tone; phonemic IPA; conservative surface IPA; Ukrainian feature candidates; Ukrainian orthographic candidates; selected candidate; warnings; evidence/status metadata.
+The GitHub Pages deployment is static-only and cannot execute this Python API. The new combined FastAPI/static application must be deployed to a Python-capable host (the implementation targets Vercel's Python runtime) before this branch can replace the currently published GitHub Pages site. No Vercel project is currently linked to this repository; project creation/connection and production-domain cutover remain external deployment actions and are not performed by this code change.
 
-Statuses include analyzed, invalid:tone-combination, unresolved, unsupported and analysis-dependent families.
+## Failure policy
 
-Presentation never infers missing linguistic data.
-
-## Pages and deployment
-
-/ — Service
-/system.html — System
-
-Primary deployment target: GitHub Pages/static hosting, only after browser/reference parity is demonstrated.
+- No fallback to the previous browser engine, RTGS, orthographic heuristics or another G2P provider.
+- Incomplete upstream IPA returns an explicit API error; the UI shows the error instead of inventing a partial Ukrainian string.
+- Unsupported IPA symbols withhold the affected Ukrainian candidate.
+- Every displayed Ukrainian result carries a provisional warning and pinned engine provenance.
 
 ## QA
 
-Automated: build, unit tests, browser smoke tests, Python↔browser parity, accessibility assertions and deterministic generated-artifact checks.
+Automated: pinned upstream smoke test, typed external-IPA tests, provisional IPA→Ukrainian adapter tests, API contract tests, UI fail-closed tests, static accessibility checks and the repository's existing Python/browser regression suite.
 
-Manual: desktop/mobile, keyboard-only, result announcement, unresolved input, copy controls and System-page readability.
+Manual: desktop/mobile, keyboard-only, screen-reader result announcements, API failure, unsupported IPA, cold-start latency, and hosting/deployment verification.
 
-UI quality cannot upgrade an analysis-dependent rule into an empirical fact.
+UI quality cannot upgrade an unadjudicated external IPA result into phonetic gold.
