@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compare FastThaiG2P with ClippyFirst on the frozen 42-item Thai challenge.
+"""Compare FastThaiG2P with ClippyFirst on the versioned Thai diagnostic challenge set.
 
 This is an output/coverage diagnostic, not an accuracy benchmark: the challenge
 currently has no independently adjudicated IPA labels.
@@ -39,8 +39,8 @@ def load_challenge(path: Path) -> list[dict[str, Any]]:
             raise ValueError(f"{path}:{line_no}: duplicate id or missing input")
         seen.add(row["id"])
         rows.append(row)
-    if len(rows) != 42:
-        raise ValueError(f"expected frozen 42-item challenge, found {len(rows)}")
+    if not rows:
+        raise ValueError("challenge set is empty; refusing to emit a vacuous comparison")
     return rows
 
 
