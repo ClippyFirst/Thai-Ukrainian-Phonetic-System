@@ -43,8 +43,12 @@ class FastThaiG2POutput:
 
     @property
     def complete_ipa(self) -> bool:
-        """True only when all non-whitespace output is slash-delimited IPA."""
-        return bool(self.syllable_ipa) and not self.passthrough_text
+        """Require slash-delimited IPA and one source-token path per output word."""
+        return (
+            bool(self.syllable_ipa)
+            and not self.passthrough_text
+            and len(self.token_paths) == len(self.word_groups)
+        )
 
     @property
     def dictionary_hit_count(self) -> int:
@@ -65,7 +69,7 @@ class FastThaiG2POutput:
         unverified external transcription.
         """
         if not self.complete_ipa:
-            raise ValueError("Cannot type-convert incomplete IPA with passthrough text")
+            raise ValueError("Cannot type-convert incomplete IPA or misaligned token paths")
         flattened = tuple(
             syllable
             for group in self.word_groups
