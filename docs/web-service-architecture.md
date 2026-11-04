@@ -1,5 +1,9 @@
 # Web service architecture
 
+## Target site runtime (Draft PR #193)
+
+This architecture is implemented on a development branch and is not deployed to the live GitHub Pages site. The current main deployment remains unchanged until a Python-capable host is connected and a preview is verified.
+
 ## Production site runtime
 
 The website uses **FastThaiG2P as its sole Thai pronunciation/G2P engine**. The browser does not run the ClippyFirst grapheme-to-phonology engine, RTGS renderer, heuristic fallback, or a second pronunciation engine.
