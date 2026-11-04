@@ -2199,3 +2199,20 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - No release tag or package version was created. Linguistic accuracy remains `NOT_MEASURED`; the deployed site is an engineering-verified research prototype, not a linguistic-accuracy or WCAG-conformance release.
 
 **Next genuine work:** secure independent Thai and Ukrainian reviewers, resolve CCOST curator discrepancy, obtain immutable LOTUSDIS audio evidence, and complete hands-on accessibility testing. Do not invent gold labels, audio assets or accuracy scores to close these gates.
+
+
+---
+
+## 2026-11-04 — FastThaiG2P-only website continuation
+
+- **Starting main:** `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`.
+- **Work branch:** `feat/fastthaig2p-site-api-20261104`.
+- **PR:** #193, open Draft; latest commit at this handoff update: `6476a38c912b367c853455b46b352d26b43d4e9d` (audit documentation refresh; exact-head CI still pending).
+- **User decision:** website shows the Ukrainian practical candidate derived from FastThaiG2P IPA, clearly marked provisional and not expert-validated.
+- **Implementation:** pinned FastThaiG2P adapter; separate unclassified `external_ipa` typed field; `PROVISIONAL` IPA→Ukrainian adaptation path; FastAPI endpoint; same-origin frontend API client; no fallback to previous JS engine or RTGS. The browser still displays raw IPA, Ukrainian candidate, tone/length and provenance.
+- **Preserved:** existing Thai reference engine, lexical data, RTGS research renderer, parity fixtures, challenge benchmark and research PRs #184–#186 remain in repository/branches. #184–#186 were not modified or closed. PRs #188–#192 also remain untouched.
+- **CI started:** dedicated FastThaiG2P site workflow `41809928792`, Web Static `41809928814`, Full CI `41809928926`; exact-head results must be refreshed after the latest documentation commit. Local test execution was unavailable in the connector-only environment.
+- **BLOCKED — deployment:** GitHub Pages is static-only; the linked Vercel account has no project connected to this repository. Do not merge or replace the current Pages site until an owner-connected Vercel preview serves both UI and Python API and passes smoke checks. No external Vercel project/settings were changed.
+- **BLOCKED — data licensing:** FastThaiG2P software is pinned, but dictionary/fallback data provenance and terms are not fully cleared. Inspect exact bundled data and record license/attribution before public production deployment.
+- **PARTIAL — linguistic validity:** external IPA layer remains unclassified; the Ukrainian candidate is provisional. Independent Thai and Ukrainian-native adjudication remains outstanding; accuracy is `NOT_MEASURED`.
+- **Next acceptance steps:** finish exact-head CI and fix failures; verify API behavior against real pinned engine outputs; resolve package data licensing; connect a Vercel project and test a preview; perform manual browser/accessibility checks; only then plan a production domain cutover. No production release is authorized by this branch.
