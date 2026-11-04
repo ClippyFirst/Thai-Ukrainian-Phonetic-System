@@ -283,3 +283,38 @@ def test_lotusdis_shard_manifest_pins_all_objects_without_claiming_local_hash_ve
         assert row["shard_last_commit"] in {
             "fc3221eccf788250d9b87da16759c3e37aec2223", revision
         }
+
+def test_partial_lotusdis_row_locator_is_recorded_but_cannot_be_used_for_annotation():
+    sources = load_source_registry(ROOT / "data/benchmark/source-registry.tsv")
+    with tempfile.TemporaryDirectory() as directory:
+        path = Path(directory) / "assets.tsv"
+        fields = [
+            "asset_id", "source_id", "dataset_revision", "asset_uri", "file_sha256",
+            "speaker_ref", "microphone", "microphone_id", "overlap_status", "duration_seconds",
+            "verification_status", "verified_by", "verified_at", "notes",
+        ]
+        row = {
+            "asset_id": "LOTUSDIS-TRAIN-000000-AUDIO",
+            "source_id": "CORP-LOTUSDIS",
+            "dataset_revision": "45145d7ca2286498a31958b35628ab3c1969f808",
+            "asset_uri": "https://datasets-server.huggingface.co/rows?dataset=nectec%2FLOTUSDIS&config=default&split=train&offset=0&length=1&revision=45145d7ca2286498a31958b35628ab3c1969f808",
+            "file_sha256": "",
+            "speaker_ref": "M01",
+            "microphone": "UNKNOWN",
+            "microphone_id": "con123",
+            "overlap_status": "UNKNOWN",
+            "duration_seconds": "2.59",
+            "verification_status": "PARTIAL",
+            "verified_by": "automated-source-inspection",
+            "verified_at": "2026-11-04",
+            "notes": "Stable revision-pinned row locator only; the returned signed audio URL expired or could not be downloaded. No WAV bytes, SHA-256, waveform, overlap review or clean interval is verified.",
+        }
+        write_registry(path, fields, [row])
+        assets = load_audio_asset_registry(path, sources)
+        assert assets[row["asset_id"]]["verification_status"] == "PARTIAL"
+        assert assets[row["asset_id"]]["file_sha256"] == ""
+        with unittest.TestCase().assertRaisesRegex(ValueError, "not VERIFIED"):
+            validate_audio_asset_reference(
+                row["asset_id"], "CORP-LOTUSDIS", "0.2", "1.5", assets,
+                row_id="partial-lotus-review",
+            )
