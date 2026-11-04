@@ -81,6 +81,8 @@ const ipaAppSource = fs.readFileSync(new URL("../src/app.js", import.meta.url), 
 assert(!ipaPanelHtml.includes('id="ipa-input"'));
 assert(!ipaPanelHtml.includes('id="ipa-adapt"'));
 assert(!ipaPanelHtml.includes('id="ipa-adapter-result"'));
-assert(ipaAppSource.includes("АУДИТ IPA → УКРАЇНСЬКА"));
-assert(!ipaAppSource.includes("adaptIpaToUkrainian(source)"));
+assert(ipaAppSource.includes("fetch('/api/analyze'"));
+assert(ipaAppSource.includes("result.raw_ipa"));
+assert(ipaAppSource.includes("result.ukrainian"));
+assert(!ipaAppSource.includes("analyzeText"), "the browser must not run a parallel local G2P engine");
 console.log("Homepage uses the main IPA-first pipeline; no duplicate IPA input mode");

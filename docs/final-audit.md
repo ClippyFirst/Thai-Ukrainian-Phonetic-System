@@ -1,3 +1,104 @@
+## Latest exact-head reconciliation — 2026-11-03 (PR #189)
+
+- Current branch HEAD `d9958db0e877944e5a75183c053681cdbdd525dc`; compare against `main`: **144 commits ahead, 0 behind**. Base `main` remains `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`. PR [#189](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/189) remains open as Draft.
+- Exact-head Full CI [41714533758](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41714533758) completed successfully; all three jobs passed: `test`, `wheel-install-smoke`, and `master-artifact`. Exact-head Web Static [41714533792](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41714533792) passed. External VISTEC segmentation evaluation [41714533797](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41714533797) passed.
+- The superseded push-triggered CI run [41714525970](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41714525970) was cancelled; the PR-triggered exact-HEAD run above passed.
+- Relative to runtime/workflow checkpoint `69d56b52b7f687948cac4250e4c7eb98e86ab67f`, the only source-file follow-up is docstring-only commit `ac603c4ae96bf6ffbc8f2edb095b4f2375d57ce5`; other follow-ups are audit/research documentation. No parser, IPA, Ukrainian-adaptation, segmentation behavior or public API change is introduced by this reconciliation.
+- The latest audit correction deliberately sets unavailable internal artifact SHA-256 values to `null`; only independently verified archive SHA-256 values remain recorded. Do not infer an inner JSON hash from a ZIP hash.
+- Wisesight (993 rows) and VISTEC (50,000 rows) remain source-annotated diagnostics with **0 expert-adjudicated rows**. Dictionary max-match Wisesight boundary F1 is **0.847036** with **204/993** exact sequences; TUD is **0.748623** with **119/993**. These are source-label diagnostics, not independent accuracy. Linguistic accuracy remains `NOT_MEASURED`.
+- Remaining acceptance gates: independent Thai segmentation/phonetic reviewers and adjudication; independent Ukrainian-native target-form review; CCOST A–D curator clarification and lawful TextGrid/archive inspection; immutable LOTUSDIS audio objects, hashes and clean-interval provenance; hands-on keyboard, screen-reader, zoom/reflow and mobile accessibility review.
+- Local tests were not run in this connector-only environment. Exact-head GitHub Actions are the available verification evidence. Readiness remains **engineering-verified research prototype**, not release-ready for linguistic accuracy or full WCAG 2.2 AA claims.
+- This reconciliation is based on exact-head CI/Web Static/VISTEC results for `d9958db0e877944e5a75183c053681cdbdd525dc`. The documentation-only reconciliation commit created from it requires its own exact-head CI; no result is inherited automatically.
+
+---
+
+## Current checkpoint — 2026-11-03: Thai orthographic cluster-boundary fix
+
+Python segmentation previously treated Thai spacing vowel letters U+0E30 SARA A, U+0E32 SARA AA and U+0E33 SARA AM as independent cluster starts/ends. The browser implementation already treated these as continuations. The mismatch could permit dictionary max-match to end after an onset consonant and before its postposed vowel. The correction adds these three letters to the Python cluster-continuation set, renames the set to reflect that it includes spacing vowel letters as well as combining marks, and updates all three continuation loops. It does not infer pronunciation or change the IPA-to-Ukrainian adapter.
+
+TDD evidence: a correctly discovered regression test first failed on the seven expected cluster-span cases. The code fix then exposed one stale variable reference in the first implementation attempt; the follow-up commit updated all remaining references. The resulting 993-row diagnostic improved from 192 to 204 exact token arrays. The test snapshot and CI evidence-grade gate were both updated to 204; the diagnostic remains explicitly source-annotated, not expert-adjudicated.
+
+Verified runtime/workflow checkpoint: 69d56b52b7f687948cac4250e4c7eb98e86ab67f passed Full CI 41711547837 (test, wheel-install-smoke, master-artifact), Web Static 41711547920 and External VISTEC 41711547913. Ruff passed; pytest reported 328 passed and 1,192 subtests passed. The subsequent source docstring clarification ac603c4ae96bf6ffbc8f2edb095b4f2375d57ce5 changes no runtime logic. This documentation refresh does not change runtime code.
+
+### Diagnostic outcomes (not independent accuracy)
+
+| Dataset | Engine | Rows | Boundary precision | Boundary recall | Boundary F1 | Exact sequences | Expert-adjudicated rows |
+|---|---|---:|---:|---:|---:|---:|---:|
+| Wisesight-1000 | Dictionary max-match | 993 | 0.833461 | 0.861061 | 0.847036 | 204/993 (20.54%) | 0 |
+| Wisesight-1000 | TUD unigram Viterbi | 993 | 0.608000 | 0.973868 | 0.748623 | 119/993 (11.98%) | 0 |
+| VISTEC TP-TH 2021 | Dictionary max-match | 50,000 | 0.774291 | 0.900796 | 0.832767 | 77/50,000 (0.154%) | 0 |
+| VISTEC TP-TH 2021 | TUD unigram Viterbi | 50,000 | 0.606401 | 0.993158 | 0.753023 | 16/50,000 (0.032%) | 0 |
+
+Wisesight dictionary error-review artifact: 13267889956; same-row comparative artifact: 13267884921; VISTEC artifact: 13267463783. The VISTEC upstream README reports 49,997 samples while the immutable pinned CSV and evaluator contain 50,000 rows; both facts remain visible. TUD remains research-only and is not promoted to production default.
+
+### Research and process implications
+
+Full-text literature review confirms that orthographic syllables may constrain candidate word boundaries but do not define lexical word boundaries; Thai compound segmentation is context- and convention-sensitive; and domain shift/OOV vocabulary materially affect segmentation. LST20's published guideline does not provide a full inter-annotator agreement/adjudication protocol in the inspected paper, and no dataset license was specified there. Published G2P scores sourced from dictionaries/Wiktionary are not independent phonetic gold. A neural segmenter is therefore not introduced without an independently adjudicated, licensed, domain-stratified segmentation set.
+
+The implementation process followed the useful parts of the supplied engineering references: test-first RED verified on the intended failure, minimal GREEN correction, full-suite verification, and review of the changed call path. No third-party skill implementation or dependency was copied.
+
+### Remaining gates
+
+- Independent Thai word/syllable segmentation and IPA reviewers, adjudication logs, and authorized source/audio evidence.
+- Independent Ukrainian-native target-form review.
+- CCOST A-D curator clarification and lawful inspection of the actual TextGrid/audio archive and tier conventions.
+- Immutable LOTUSDIS revision, audio asset hashes and interval metadata.
+- Hands-on keyboard, screen-reader, zoom/reflow and mobile accessibility review.
+- Do not report linguistic accuracy until the above evidence gates are satisfied.
+
+---
+
+### Methodology references checked at pinned upstream revisions
+
+- obra/superpowers: README c5bb59fdaf17ba154e803c549cd71a73ef36c24b; TDD skill 46838cc9e893c06259e3bdad0fc2425b36242f15.
+- mattpocock/skills: README f7038f139299985eea6c3e18398dbafb379a0010; TDD skill 01eadaa34e7c9a63a67d6dc3cce1cc81b0e49985; implementation skill bd49e472984c7b99aac40286fdae749bb955a842.
+- DietrichGebert/ponytail: README ff6a92573ef6412495055d979cff1d7464e1fa65; core skill d64edd32265ba21cbf5270158f04e97d96925f27; review skill a50e3ac6ded6fccc9edae34ce37877bbce11e3fa.
+- Applied selectively: observed RED before implementation, corrected test-discovery errors rather than counting inert tests, used one minimal implementation slice, reviewed all continuation-set call sites, and ran the full project verification. No skill source or dependency was copied.
+
+## Current branch reconciliation — 2026-11-03 (authoritative checkpoint)
+
+- Repository: `ClippyFirst/Thai-Ukrainian-Phonetic-System`; base `main` remains `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`.
+- Current branch: `fix/benchmark-error-clusters-20261102`; current verified tip before this documentation-only reconciliation: `e7ebb28e64afd5ec70fc136a12d6723ccebdd59e`. GitHub compare reports **110 commits ahead, 0 behind** main.
+- PR [#189](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/189) remains open as Draft; no merge, force-push, main update, or release was performed.
+- Exact-tip Full CI [41643230493](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41643230493) completed successfully: `test`, `wheel-install-smoke`, and `master-artifact` all passed. The test job log confirms Ruff **All checks passed**, pytest **327 passed / 1,185 subtests passed**, and Python/browser parity **29 fixtures passed**. Generated-artifact drift, source/reviewer/blind-packet validators, runtime and segmentation diagnostics, IPA→Ukrainian adapter, isolated wheel install, and master artifact validation passed. Web Static [41643230575](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41643230575) passed.
+- This supersedes older branch-head counts and pending-verification notes in the historical entries below. Older SHA/run references are retained as historical evidence, not current status.
+- Local tests were not run in the connector-only environment. Linguistic accuracy remains `NOT_MEASURED`; independent Thai phonetic/segmentation adjudication, independent Ukrainian-native target review, CCOST release-archive/tier reconciliation, LOTUSDIS immutable audio evidence, and hands-on WCAG review remain external acceptance gates.
+- Readiness: **engineering-verified research prototype**, not release-ready for linguistic-accuracy or full WCAG 2.2 AA claims.
+
+---
+
+## 2026-11-03 — per-token diagnostic completeness guard and current branch verification
+
+- **DONE_VERIFIED — diagnostic correctness:** a test-first regression was added for a text containing two Thai tokens, one with a valid complete syllable and one with an empty syllable list. Before the fix, exact-head CI [41640676532](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41640676532) failed the new assertion because `_emits_complete_output` incorrectly returned `True`; 326 other tests and 1,185 subtests passed.
+- **DONE_VERIFIED — minimal correction:** commit `94eaadb5bda2318dfa864eee7dae1b3715b70374` now requires every Thai token to contain at least one syllable before the report marks the text as complete. No parser, IPA, Ukrainian adaptation, browser or public API behaviour changed.
+- **DONE_VERIFIED — exact code-head CI:** Full CI [41641516453](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41641516453) passed all three jobs (`test`, `wheel-install-smoke`, `master-artifact`); Web Static [41641516658](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41641516658) passed. Ruff passed; pytest **327 passed, 1,185 subtests passed**; browser parity 29/29 passed; generated-artifact drift, evidence registries and blind packets, IPA→Ukrainian adapter, diagnostics, isolated wheel installation and master artifact passed.
+- **PARTIAL — Academic Writing Toolkit:** British-English checker flagged “Modeling” only because it is an exact published title; retained. Two paragraph-logic flags correspond to intentionally short “Full-text findings” labels. Harvard citation audit still flags Yamasaki/Rugchatjaroen Source-note matches; manual DOI/bibliography inspection was performed. Do not claim automated citation consistency passed.
+- **DONE_REVIEWED_APPLIED_SELECTIVELY — external engineering practices:** Superpowers, Matt Pocock skills and Ponytail were reviewed for TDD, verification, test seams, dataflow-first review and minimal complete diffs. No external code, hooks, skills or dependencies were installed/copied. No independent subagent review was available.
+- **PR/branch state:** PR #189 remains Draft/open, 108 ahead and 0 behind main. #184/#185/#186 remain distinct FastThaiG2P research branches; #188 remains a separate restricted-source PR with shared registry/audit paths; #190 remains a separate accessibility contrast PR. No PR was merged and main was not changed.
+- **Remaining evidence blockers:** independent Thai phonetic/segmentation adjudication; independent Ukrainian-native target-form review; CCOST A–D curator clarification and actual TextGrid tier inspection; immutable LOTUSDIS audio revision/object/hash/clean interval; hands-on WCAG keyboard/screen-reader/zoom/reflow/mobile review. Linguistic accuracy remains `NOT_MEASURED`; full WCAG conformance is not claimed.
+- **Local execution:** not performed; this session used the GitHub connector and GitHub Actions. Exact-head CI is the verification evidence.
+- **Documentation checkpoint:** the documentation-only checkpoint `27300590d598f22505f61e147bc0e591d390e3b5` passed exact-head Full CI [41642479329](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41642479329) and Web Static [41642479264](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41642479264). This register closeout is documentation-only.
+
+---
+
+## 2026-11-02 — benchmark error-cluster recovery and exact-head verification
+
+- **DONE_VERIFIED — baseline artifact inspection:** PR #186 FastThaiG2P workflow [41454481686](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41454481686), head `c02e10e89ac340b80b6ed83c0a991f89cf9cc3fe`; artifact SHA-256 `a166828e7a175af4759120d609ba8511c661db2845a25cab5fab1685c17b0da5`. Row-level labels are in `data/benchmark/fastthaig2p-error-triage-2026-11-02.tsv`.
+- **DONE_VERIFIED — exact-head engineering checks:** PR #189 head `55f2ef9966da065326873014e8066acc43b2a151`; CI [41471961004](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41471961004) passed `test`, `wheel-install-smoke`, and `master-artifact`; Web Static [41471960975](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41471960975) passed. Ruff passed; pytest reported **326 passed, 1,185 subtests passed**; browser IPA/UA, parity (29 fixtures), UI, accessibility-contract and latency diagnostics passed; generated-artifact drift checks passed; isolated wheel installation and master artifact validation passed.
+- **DONE_VERIFIED — runtime recovery:** source-pinned `ฤๅษี` and `ทฤษฎี` cases and exact text-lexicon access for `เตอร์/เทอร์` were verified in Python/browser parity. Four article-style phrases now emit complete output on the opt-in dictionary-word-segmented path.
+- **Runtime coverage (not accuracy):** the exact-head artifact `thai-challenge-runtime-diagnostics` from run #41471961004 records **32/42** complete conservative outputs and **36/42** complete opt-in word-segmented outputs. Six inputs remain without complete output: standalone `ฤๅ`, `ฦ`, `ฦๅ`; ambiguous `ทราย`; malformed `ข๊า`, `กฉ`. These abstentions remain fail-closed. The diagnostic explicitly states that coverage, segmentation and external-engine agreement are not correctness measures.
+- **Baseline comparison caveat:** the separate FastThaiG2P comparison had 28/42 conservative ClippyFirst outputs before the fixes. Eleven of 40 paired differences involved only the surface unreleased-stop modifier `̚`; segmental projection agreement was 36/40 after removing only that modifier, with tone and vowel length retained. Four candidate discrepancies (`กะ`, `บรรจุ`, `คอมพิวเตอร์`, `ครอบครัว`) remain unadjudicated, not confirmed engine errors.
+- **BLOCKED — independent phonetic adjudication:** no qualified independent Thai expert has confirmed glottal-stop conventions, vowel length, diphthong realization, or the source-attested lexical entries. Challenge gold remains `NOT_ADJUDICATED`; linguistic accuracy remains `NOT_MEASURED`.
+- **Branch state:** PR #189 remains an open draft, branch `fix/benchmark-error-clusters-20261102`, 52 commits ahead and 0 behind `main` at the comparison checkpoint. Main remains unchanged at `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`. Local tests were not run in this connector-only session; all pass claims above refer to exact-head GitHub Actions.
+- **Remaining acceptance gates:** independent Thai phonetics/segmentation review; independent Ukrainian-native target-form review; CCOST A–D curator clarification and actual TextGrid archive/tier inspection; immutable LOTUSDIS audio asset/hash/clean-interval registration; hands-on keyboard, screen-reader, zoom/reflow and mobile WCAG review.
+- **Readiness:** engineering-verified research prototype; not release-ready for linguistic-accuracy or WCAG-conformance claims.
+
+
+
+## Documentation-head verification status — 2026-11-02
+
+The benchmark runtime/code evidence above is verified on `55f2ef9966da065326873014e8066acc43b2a151` (CI #41471961004 and Web Static #41471960975). The subsequent documentation checkpoints passed exact-head verification: audit/matrix/handoff #41474317754 and Web Static #41474317862; structured open-PR/branch inventory #41475098304 and Web Static #41475098261; text-lexicon license note #41475777693 and Web Static #41475777686. No runtime code changed after the verified code head. The current audit-register refresh is documentation-only and receives a final exact-head rerun.
+
 ## 2026-11-01 — independent adjudication readiness and CCOST source reconciliation
 
 - **DONE_VERIFIED — paper-level CCOST schema extraction:** the LREC 2026 paper specifies intended TextGrid tiers ORT/KAN/KAS/MAU/MAS/TRN, X-SAMPA labels and tone suffixes _1=Mid, _2=Low, _3=Falling, _4=High, _5=Rising. MAU carries realized phonetic segments; MAS carries phonemic syllables; KAN/KAS are canonical forms.
@@ -1478,41 +1579,125 @@ The new test/tool code was committed on the PR branch and awaits exact-head CI c
 **Final readiness:** the current browser service is deployed and engineering-verified. The repository remains a research prototype, not a linguistic-accuracy or WCAG-conformance release. Linguistic accuracy remains `NOT_MEASURED`.
 
 
-## Thai spacing-vowel matching-boundary parity — 2026-11-03
+## Thai G2P literature and metric audit — 2026-11-03
 
-- **DONE_VERIFIED (engineering):** Python `_grapheme_spans` now keeps Thai postposed spacing vowels U+0E30 `ะ`, U+0E32 `า`, and U+0E33 `ำ` with the preceding base cluster for dictionary-match endpoint safety, matching the browser boundary policy. This is deliberately not a complete Unicode grapheme-break algorithm and does not assert syllable boundaries.
-- **TDD evidence:** test-only commit `6a56a949b7d876da4d040d262313eb9719868f1f` produced the expected RED (4 focused regression checks failed; 321 existing tests and 1,172 subtests passed). The implementation is `8d02d8ffe32330fb6c181219d8fc8c7236f7b176`. Two stale Wisesight exact-sequence assertions were corrected from 192 to the already-recorded 204/993 baseline; neither diagnostic code nor source rows were changed. Final PR head: `ffcba32adc024e9e5bb6ebd45a3c63939c295f6a`.
-- **Exact-head CI:** [run 41725099609](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41725099609) passed all three jobs: `test`, `wheel-install-smoke`, and `master-artifact`. The full Python suite reported **322 passed, 1,175 subtests passed**; Ruff passed; generated-data drift and master-artifact checks passed; browser tests, IPA → Ukrainian adapter tests, 29 web/Python parity fixtures, segmentation/tokenizer regressions, source/reviewer packet validators, runtime diagnostics and UI uncertainty/accessibility contracts passed. Wheel install smoke passed.
-- **External VISTEC exact-head evaluation:** [run 41725099402](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41725099402) passed on the same head. Pinned source: OSKut commit `215a7dc3d384f20eb56af1cbc41fb32b7f8df57c`; CSV blob SHA-1 `edfcb85907a604c5e30643065ac4975862a0fe90`; CC-BY-SA-3.0. Across 50,000 source-annotated rows (zero expert-adjudicated): dictionary max-match boundary F1 **0.832767**, precision 0.774291, recall 0.900796, 77 exact sequences; TUD unigram Viterbi F1 **0.753023**, precision 0.606401, recall 0.993158, 16 exact sequences. These remain source-annotation diagnostics, not independent gold accuracy. TUD remains research-only.
-- **Scope preserved:** no corpus/dictionary/pronunciation/phonology/IPA/tone/Ukrainian-adaptation changes. The Wisesight diagnostic is 993 source-annotated rows, zero expert-adjudicated; exact-sequence baseline 204/993. No accuracy claim is made.
-- **PR state:** [PR #191](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/191) remains open and Draft, based on main `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`; not merged. No merge or release action was taken.
-- **Remaining external blockers:** independent qualified Thai review/adjudication; independent Ukrainian-native target-form review; CCOST A–D curator clarification and actual archive/TextGrid inspection; immutable LOTUSDIS revision plus real hashed audio assets and clean reviewed intervals; hands-on WCAG keyboard/screen-reader/device testing. Linguistic accuracy remains `NOT_MEASURED`; readiness remains engineering-verified research prototype, not a linguistic-accuracy or WCAG-conformance release.
+- **DONE_VERIFIED — literature synthesis:** added `docs/research/thai-g2p-evaluation-literature-2026-11-03.md`; Saychum et al. (2016) and Yamasaki (2022) full texts were inspected. The synthesis records the dictionary/Wiktionary provenance of their reference sets, distinguishes WER/PER/exact sequence accuracy, and identifies candidate coverage, tone, vowel length and linking-syllable errors as separate concerns.
+- **DONE_VERIFIED — evidence boundary:** the 2016 and 2022 published scores are not independent expert IPA gold for ClippyFirst. They are not compared numerically with the 42-item unadjudicated challenge. The project reports its own coverage and abstention separately; accuracy remains `NOT_MEASURED`.
+- **No runtime change:** no evidence in this review justifies changing the parser, tone, vowel-length, IPA or Ukrainian mapping rules. The four outstanding FastThaiG2P discrepancies still require independent adjudication.
+- **Research record:** Consensus synthesis https://consensus.app/search/research-the-peer-reviewed-evidence-and-primary-sc/TPPdaWrzSWGIdPzNPruDdA/ ; saved Undermind workspace document https://app.undermind.ai/projects/49bbd978-a5a9-4cac-a7bb-a72848f50e10?path=/Research%20the%20peer-reviewed%20evidence%20and%20primary%20scholarly%20literature%20relevant%20to.md .
+- **Verification pending:** this documentation-only checkpoint requires exact-head CI and Web Static. No local test execution is claimed.
 
 
-## Final public-interface regression verification — 2026-11-03
+## Literature review exact-head engineering verification — 2026-11-03
 
-- Regression tests were tightened after review to exercise the public `dictionary_word_segmentation` contract with controlled dictionary-trie fixtures. They now assert that dictionary matches cannot terminate inside `กะ`, `กา`, `กำ`, `เกา`, or the existing combining-mark clusters; they do not assert private `_grapheme_spans` internals.
-- Final code/test commit: `2b0503099b9d482ae8106fc924039f619c54a957`. Exact-head CI [41726180498](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41726180498) passed all three jobs: `test`, `wheel-install-smoke`, and `master-artifact`. Full Python suite: **322 passed, 1,174 subtests passed**. Ruff, browser/reference and adversarial tests, RTGS parity, generated-artifact drift, source/reviewer and blind-packet validators, diagnostics, IPA → Ukrainian adapter, 29 web/Python parity fixtures, UI uncertainty/accessibility contracts, wheel smoke and master-artifact validation all passed.
-- Exact-head external VISTEC evaluation [41726181625](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41726181625) also passed on `2b0503099b9d482ae8106fc924039f619c54a957`. Its 50,000-row source-annotated evidence and metrics are recorded above; zero rows were expert-adjudicated, so these are not accuracy validation.
-- Branch is 9 commits ahead of main and 0 behind at this checkpoint; PR #191 remains Draft/open and unmerged. The three documentation closeout commits precede this test-only refinement; documentation must continue to identify the verified code/test SHA rather than implying that source-annotation metrics are gold accuracy.
-
-
-## Open PR reconciliation — 2026-11-03
-
-- **PR #191** — this branch's Thai spacing-vowel boundary parity fix; exact code/test head `2b0503099b9d482ae8106fc924039f619c54a957` passed CI [41726180498](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41726180498) and external VISTEC [41726181625](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41726181625). Latest documentation closeout head `b6c9deab84525fe65dbd95cc84c3b4fe63483c8f` passed CI [41727521575](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41727521575) and VISTEC [41727521581](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41727521581). Remains Draft/open/unmerged.
-- **PR #189** — benchmark error triage and source-attested lexical recoveries; exact head `9b088cf05ceab7e1c758b75688bb624c115ce341`; CI [41715667897](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41715667897), Web Static [41715667842](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41715667842), and VISTEC [41715667903](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41715667903) passed. Left untouched because independent linguistic evidence gates remain open.
-- **PR #190** — form-control non-text contrast; exact head `fc116507e18c2d6624dad18e38d719cb3a606ec0`; CI [41533064781](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41533064781) and Web Static [41533064664](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41533064664) passed. Left untouched because hands-on WCAG keyboard/screen-reader/device review is still outstanding.
-- **PR #188** — Global TIMIT Thai restricted alignment-candidate metadata; CI [41460030159](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41460030159) passed. Left untouched; metadata registration is not phonetic gold and does not authorize a production G2P change.
-- **PRs #184–#186** — FastThaiG2P adapter/integration research spikes; their recorded CI and optional smoke workflows passed on their respective heads. They remain separate research branches; #186 is based on #185, not main. Left untouched pending evidence, dependency, licensing and architecture review; no production default or merge inferred from smoke success.
-- All seven open PRs remain Draft. No unrelated PR, branch, mainline setting or release was modified. Historical and research branches were preserved.
+- The literature/documentation checkpoint `450fe4b6527c8019ea7399218daf30222fe190e2` passed exact-head Full CI [41536529764](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41536529764) and Web Static [41536529768](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41536529768).
+- Full CI passed all three jobs: `test`, `wheel-install-smoke`, `master-artifact`. Ruff passed; pytest reported **326 passed, 1,185 subtests passed**. Evidence/source validators, blind Thai and Ukrainian packet validators, generated-artifact checks, IPA→Ukrainian adapter tests, 29 browser parity fixtures, UI/static accessibility checks, segmentation diagnostics and artifact generation all passed.
+- Wheel-install smoke built the sdist and wheel, installed the wheel in isolation and smoke-tested package data outside the checkout. Master-artifact validation passed.
+- This is engineering verification only. It does not establish Thai phonetic accuracy, Ukrainian preference validity, manual WCAG conformance or independent gold labels. Linguistic accuracy remains `NOT_MEASURED`.
+- The subsequent audit/matrix/handoff reconciliation is documentation-only and receives its own final exact-head CI/Web Static run; see the latest PR #189 conversation comment for the terminal branch-head result.
 
 
-## Exact-head verification and repository reconciliation — 2026-11-04
+## Final literature documentation checkpoint — 2026-11-03
 
-- **Current branch/HEAD:** `fix/thai-spacing-vowel-cluster-parity-20261103` at `8665c07d71f61e89de60654491207e1798a14bfd`; base `main` at `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`; compare confirms **17 commits ahead, 0 behind**. The PR is still open, Draft and unmerged.
-- **Exact-head Full CI:** [run 41728579416](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41728579416) completed successfully on `8665c07d71f61e89de60654491207e1798a14bfd`; all three jobs passed: `test`, `wheel-install-smoke`, and `master-artifact`. The test job passed Ruff, **322 Python tests and 1,174 subtests**, 29 Python/browser parity fixtures, browser/reference and adversarial checks, generated-artifact drift, source/reviewer/blind-packet validators, IPA → Ukrainian adapter checks, segmentation/runtime diagnostics, static UI/accessibility contracts, and the dependency/test-overlap inventory. The isolated wheel install and generated master artifact checks passed.
-- **Exact-head external VISTEC:** [run 41728579532](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41728579532) completed successfully on the same HEAD. It evaluated 50,000 source-annotated rows (zero expert-adjudicated): dictionary max-match boundary F1 **0.832767**, precision **0.774291**, recall **0.900796**, 77 exact sequences; TUD unigram Viterbi F1 **0.753023**, precision **0.606401**, recall **0.993158**, 16 exact sequences. These are comparisons against the supplied source annotations, **not independent gold accuracy**; TUD remains research-only.
-- **Wisesight evidence boundary:** the 993-row set is source-annotated with zero expert-adjudicated rows; the exact-sequence diagnostic baseline is 204/993. The CI assertion was refreshed to match the existing diagnostic output; diagnostic code and source data were not changed.
-- **Scope:** the code change remains confined to Python dictionary matching-boundary safety for Thai postposed spacing vowels `ะ`, `า`, `ำ`; public-interface regressions exercise `dictionary_word_segmentation`. No pronunciation, phonology, IPA, tone, Ukrainian adaptation, corpus or dictionary data changed. This is not full Unicode grapheme breaking or syllabification.
-- **PR/branch inventory:** seven open PRs remain Draft. PRs #184–#186 (FastThaiG2P research), #188 (Global TIMIT metadata), #189 (lexical/error-triage evidence) and #190 (control contrast) were inspected and left untouched. Current GitHub branch API inventory contains **24 refs**; no branch was deleted, force-pushed or rewritten.
-- **Readiness and blockers:** engineering verification is complete for this exact branch head. Independent qualified Thai review/adjudication; independent Ukrainian-native review; CCOST A–D curator clarification and actual TextGrid archive inspection; immutable LOTUSDIS revision plus real hashed audio assets and clean reviewed intervals; and hands-on WCAG keyboard/screen-reader/zoom/reflow/device testing remain open. Linguistic accuracy remains `NOT_MEASURED`; this is still an engineering-verified research prototype, not a linguistic-accuracy or WCAG-conformance release. Local tests were not run in the connector-only environment; GitHub Actions is the recorded verification source.
+- The reconciled audit/matrix/handoff checkpoint `7391688c4c19b295f701812e8d6336bcf6abeb02` passed exact-head Full CI [41537375617](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41537375617) and Web Static [41537375633](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41537375633). Full CI completed all three jobs successfully: `test`, `wheel-install-smoke`, and `master-artifact`.
+- The final structured audit update in the current commit is documentation-only; exact-head verification is rerun for that resulting commit. The terminal branch-head result will be recorded in PR #189's conversation so no further documentation-only commit is needed after verification.
+
+
+## Engineering-methodology and academic-writing review — 2026-11-03
+
+Reviewed the three requested upstream repositories at source level rather than copying them wholesale:
+
+- [obra/superpowers](https://github.com/obra/superpowers): inspected the TDD and requesting-code-review skills. Adopted the red/green/refactor discipline, expected-failure verification, and a separate review pass for substantial changes.
+- [mattpocock/skills](https://github.com/mattpocock/skills): inspected the primary-source research skill. Adopted claim-to-primary-source traceability and durable cited research notes. Its own documentation also identifies unguarded nested-agent delegation and weak source-quality gating as known limitations; those patterns are not adopted.
+- [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail): inspected the current Ponytail skill, AGENTS.md and README. Adopted read-the-real-dataflow-first, reuse existing code, minimum complete diff, and never cut validation/error handling/accessibility. Its LOC/cost/time benchmark claims are not treated as transferable quality targets for this repository.
+
+All three upstream repositories declare MIT. No upstream skill, code, dependency, hook or runtime was installed or vendored. No architecture changes follow from this review.
+
+### Academic-writing toolkit checks
+
+The Thai G2P literature note was checked for citation consistency, paragraph logic and British English. The citation checker produced false-positive author-year matches for journal volume/year forms such as `106 (2019)`, `24 (2006)`, `156 (2024)`, and `25 (2021)`; these references were reformatted to make volume and year explicit without ambiguous parentheses. The checker also expects a specific reading-note source-line schema and did not accept the temporary source-note format, so its citation result is **not marked as a clean pass**. DOI links and bibliography were manually retained and inspected. Two short one-sentence implication paragraphs were retained intentionally as takeaway paragraphs. Three US-spelling suggestions were not globally applied because the repository has no declared British-English style and one match was part of a publication title.
+
+### Audit-register correction
+
+The structured audit had drifted: it named `ba71f63c...` and 79 commits ahead while PR #189's branch-head record already named `913518797...` and 80 commits ahead. The register is reconciled in the current documentation batch. The 913518797 checkpoint's exact-head Full CI [41539140734](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41539140734) passed all three jobs and Web Static [41539140594](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41539140594) passed. This new audit/methodology documentation batch requires exact-head verification on its final commit.
+
+No runtime/parser/IPA/Ukrainian behavior changed. Linguistic accuracy remains `NOT_MEASURED`; external reviewers, CCOST archive/curator, LOTUSDIS audio assets and manual accessibility remain blocked.
+
+
+## Exact-head verification of the methodology/audit reconciliation — 2026-11-03
+
+- Documentation checkpoint `0416fd332382b804b76ab0242ea8ff0b415062ce` passed Full CI [41603648158](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41603648158) and Web Static [41603648119](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41603648119).
+- Full CI passed all three jobs: `test`, `wheel-install-smoke`, `master-artifact`. Ruff passed; pytest: **326 passed, 1,185 subtests passed**. Evidence and blind-packet validators, generators/drift, runtime diagnostics, IPA→Ukrainian adapter, 29 browser parity fixtures, UI/accessibility static checks, segmentation error analysis, isolated wheel install and master artifact passed.
+- The curated text lexicon contains 117 unique, well-formed rows with no duplicate keys; the row-level source registry has 19 distinct source words; the lexical IPA override table has six entries. These are structural checks, not linguistic accuracy evidence.
+- This checkpoint verifies engineering/documentation only. Linguistic accuracy remains `NOT_MEASURED`; local tests remain `NOT_RUN_CONNECTOR_ONLY`.
+
+
+## Terminal exact-head verification — 2026-11-03
+
+- Branch `fix/benchmark-error-clusters-20261102`, PR #189 remains open as Draft; exact branch head `2ec6393655f7d4f58d7b840abd194bf4d0b07efe` is **95 commits ahead of main, 0 behind** (compare against main `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`). Main was not changed.
+- Exact-head Full CI [41610404742](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41610404742) completed successfully; all three jobs passed: `test`, `wheel-install-smoke`, and `master-artifact`. Exact-head Web Static [41610404753](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41610404753) passed.
+- The test job passed Ruff; pytest **326 passed, 1,185 subtests passed**; source/reviewer and blind-packet validators; generated-artifact drift and master-table registry checks; runtime challenge diagnostics; IPA→Ukrainian adapter; browser parity (**29 fixtures**); UI/accessibility static contracts; segmentation diagnostics; and held-out TUD evaluation. The isolated wheel-install smoke and master-artifact validation passed.
+- This is engineering verification only. Challenge coverage remains 32/42 conservative and 36/42 opt-in word-segmented; those are not accuracy scores. Linguistic accuracy remains `NOT_MEASURED`; no independent Thai/Ukrainian gold is claimed. Local tests were not run in the connector-only environment.
+- The exact-head result supersedes earlier notes that the final structured-register refresh was pending. PR #189 has no submitted reviews or inline review threads as of this check. Separate research/accessibility PRs and branches were left intact; no branch was deleted, merged or force-pushed.
+
+
+**Register follow-up:** this terminal section records the last fully verified checkpoint. A subsequent documentation-only reconciliation of the structured audit, matrix, handoff and narrative audit is being committed; its new branch head must receive its own exact-head CI and Web Static checks. No runtime behavior changes in that follow-up.
+
+
+
+## Full-text literature audit follow-up — 2026-11-03
+
+The Thai G2P literature synthesis was checked against primary full texts for Saychum et al. (2016) and Yamasaki (2022), and against the publisher abstract for Rugchatjaroen et al. (2019). Saychum's abstract reports 13.66% exact-match WER, while its conclusion and Figure 4 report 13.67%; 3.91% tone-ignored WER and 1.54% 5-gram JSM2 PER remain separate metrics. This discrepancy is now recorded rather than silently selecting one value. Yamasaki's 18,066 Wiktionary-derived entries, two Thai-fluent workers for unresolved entries, 17,720/18,066 candidate coverage, 10-fold evaluation and 0.931 zero-difference accuracy were verified from the ACL Anthology PDF. Rugchatjaroen's 9.94% WER and dictionary coverage above 70% are verified from the publisher abstract only; the full experimental label provenance remains unverified because the publisher full text returned 403.
+
+Academic Writing Toolkit checks: two project-authored US spellings ("behavior") were corrected to British English ("behaviour"); "Modeling" was retained in the exact published title. The two short-paragraph flags correspond to "Full-text findings:" labels, not prose defects, and were not expanded artificially. No new accuracy result or runtime change is claimed. Exact-head CI at `fdc66473f183f3b1d4072aabccebd69d99e6f255` passed after this literature update: [CI 41627403379](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41627403379) (`test`, `wheel-install-smoke`, `master-artifact`) and [Web Static 41627403409](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41627403409). The handoff/matrix/audit reconciliation that follows is documentation-only and changes no runtime or tests.
+
+
+## Exact-head verification update — 2026-11-03 (supersedes pending notes above)
+
+The previous handoff entries correctly marked the post-`e7ebb28e64afd5ec70fc136a12d6723ccebdd59e` documentation-only reconciliation as awaiting CI. That wait is now resolved: the exact current branch HEAD `fba3e63deeda6e61565e0444dc4685f248dbb763` (116 commits ahead of `main`, 0 behind; main `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`) passed both required workflows:
+
+- Full CI [41646388428](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41646388428): all three jobs passed — `test`, `wheel-install-smoke`, and `master-artifact`. The test job reports Ruff passed; pytest **327 passed, 1,185 subtests passed**; generated-artifact drift, source/reviewer and blind-packet validators, challenge diagnostics (42 inputs; diagnostic only, not accuracy), IPA→Ukrainian adapter, 29-fixture Python/browser parity, UI/accessibility static contracts, Wisesight and dictionary segmentation diagnostics, source-attested IPA diagnostic, held-out TUD evaluation and evidence-grade checks passed. The isolated source-distribution/wheel build and install smoke passed; master artifact validation passed.
+- Web Static [41646388317](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41646388317): static validation, browser dictionary generation, JavaScript syntax, required pages, accessibility contract and no-remote-runtime-dependency checks passed.
+
+The test workflow uploaded the current diagnostic and master artifacts (including the Thai challenge runtime diagnostic, segmentation review artifacts and master table). This is engineering verification, not independent linguistic or WCAG conformance evidence. Linguistic accuracy remains `NOT_MEASURED`; source-annotated Wisesight rows remain unadjudicated; hands-on accessibility and external reviewer/corpus provenance gates remain open. Local tests were not run in this connector-only environment. PR #189 remains open Draft; no review submissions or inline review threads were present. No merge, force-push, main update, branch deletion or release was performed.
+
+
+## Exact-head verification — packaging metadata correction — 2026-11-03
+
+- Code head: `3f5bbbbff4b40899eb273333ec0c06a028d862fd` (**121 commits ahead of main, 0 behind**; main remains `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`). Branch `fix/benchmark-error-clusters-20261102`; PR #189 remains open as Draft.
+- Replaced deprecated PEP 621 license-table metadata with SPDX string `license = "MIT"` and raised the declared build-system floor to `setuptools>=77`, the minimum supporting that form. No runtime dependency or linguistic behavior changed.
+- Exact-head Full CI [41651609638](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41651609638) completed successfully: `test`, `wheel-install-smoke`, and `master-artifact` all passed. Exact-head Web Static [41651609695](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41651609695) passed.
+- Test job: Ruff passed; pytest **327 passed, 1,185 subtests passed**; generated-artifact drift, source/reviewer and blind-packet validators, challenge diagnostics, IPA→Ukrainian adapter, 29-fixture Python/browser parity, UI/accessibility static contracts, segmentation diagnostics/error review, held-out TUD evaluation and evidence-grade checks passed. Wheel job built sdist and wheel, installed the wheel in an isolated environment and smoke-tested packaged data. Master artifact validation passed.
+- Build logs show no `SetuptoolsDeprecationWarning` for the former license-table form. A generic pip root-user warning remains informational and unrelated to project metadata.
+- This is engineering/packaging verification, not independent linguistic or WCAG conformance evidence. Accuracy remains `NOT_MEASURED`; Thai and Ukrainian expert adjudication, CCOST curator/TextGrid evidence, immutable LOTUSDIS audio provenance, and hands-on accessibility review remain blockers. Local tests were not run in the connector-only environment.
+
+
+## Exact-head verification — documentation reconciliation — 2026-11-03
+
+- Exact branch HEAD: `3831230c1cf43fae48259b2b2a93c9634ad1e30c`; compare against `main` `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`: **125 ahead, 0 behind**.
+- Full CI [41654235310](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41654235310) completed successfully. All three jobs passed: `test`, `wheel-install-smoke`, and `master-artifact`.
+- Web Static [41654235435](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41654235435) completed successfully.
+- The test job's recorded successful steps include Ruff, generated-artifact drift and master-table registry checks, source/reviewer and blind-packet validators, complete Python tests, 42-input runtime diagnostics explicitly guarded against accuracy claims, IPA→Ukrainian adapter, 29-fixture Python/browser parity, UI/accessibility static contracts, segmentation diagnostics, source-attested IPA evidence-grade checks, and held-out TUD evaluation. The wheel-install and master-artifact jobs also passed.
+- This closes the exact-head engineering verification gap for the documentation checkpoint. It does not establish independent Thai/Ukrainian linguistic accuracy or WCAG 2.2 AA conformance. Linguistic accuracy remains `NOT_MEASURED`; Thai and Ukrainian expert adjudication, CCOST curator/TextGrid evidence, immutable LOTUSDIS audio provenance, and hands-on accessibility testing remain open. Local tests were not run in the connector-only environment.
+- PR #189 remains open Draft; no review submissions or inline review threads were present at this check. `main` was not changed; no merge, force-push, branch deletion, or release was performed.
+
+
+## Session verification reconciliation — 2026-11-03
+
+- Current PR #189 branch head before this documentation-only update: `7ba27004ba5dc9e60fd1f9c57a686b90cf490ae9`; current `main`: `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`; GitHub compare reports 129 commits ahead, 0 behind.
+- Exact-head Full CI [41656371625](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41656371625) completed successfully on `7ba27004ba5dc9e60fd1f9c57a686b90cf490ae9`; all jobs passed: `test`, `wheel-install-smoke`, `master-artifact`. The test job reports Ruff clean, pytest **327 passed, 1,185 subtests passed**, generated-artifact drift and master-table checks, evidence/blind-packet validators, 42-input runtime diagnostics explicitly labelled non-accuracy, IPA→Ukrainian checks, 29-fixture Python/browser parity, static UI/accessibility checks, segmentation diagnostics/error review, held-out TUD evaluation, and evidence-grade assertions passed. Exact-head Web Static [41656371599](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41656371599) also passed.
+- Engineering review comment [5758597272](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/189#pullrequestreview-5758597272) records the source/provenance and fail-closed review. PR #189 remains Draft and unmerged; no runtime changes were made in this reconciliation. `main` was not changed.
+- The lexical recovery remains evidence-limited: pinned Wiktionary revisions support lexical segmentation/reading entries, but are CC BY-SA 4.0 source-attested references, not independent Thai expert or acoustic gold. Runtime coverage is not accuracy. Linguistic accuracy remains `NOT_MEASURED`.
+- Related open drafts remain separate: #190 (narrow source-level form-control contrast correction; manual WCAG testing still blocked), #188 (restricted Global TIMIT Thai source review), and #184–#186 (optional FastThaiG2P research/typed diagnostic work; not production promotion). They are not merged or silently consolidated because their scopes, evidence gates and overlapping audit/source-registry changes differ.
+- Remaining acceptance gates: two qualified independent Thai reviewers plus adjudication for IPA/tones/length/segmentation; two independent Ukrainian-native reviewers and adjudication; CCOST A–D curator clarification and actual TextGrid/X-SAMPA archive inspection; immutable LOTUSDIS audio revision and asset hashes/interval metadata; hands-on keyboard, screen-reader, zoom/reflow and mobile accessibility testing. Global TIMIT remains restricted and is not IPA gold.
+- Environment boundary: connector-only GitHub access; no local checkout or local pytest/browser/device run is claimed. No audio assets, gold labels, accuracy scores, releases, force-pushes or branch deletions were created.
+
+
+## Consolidated integration audit — 2026-11-04 (PR #199)
+
+- **Integration status: PARTIAL_PENDING_COMBINED_CI.** PR #199 consolidates 71 changed files from the FastThaiG2P adapter/site, challenge triage, evidence registry, source audits, LOTUSDIS metadata, accessibility and browser parity workstreams on top of main after #191.
+- The first combined Web Static run exposed an obsolete `engine-mode` accessibility assertion after the UI switched to the FastThaiG2P-only interface. The integration branch now uses the matching site accessibility contract and the Web Static check passed on the revised head.
+- Combined FastThaiG2P checks exposed incomplete test fixtures (missing token paths), then a stale assertion that expected every unadjudicated external IPA result to be withheld. Fixtures now supply the required provenance paths; the shared adapter contract is explicit: supported segment mapping may produce a `PROVISIONAL` Ukrainian adaptation, while incomplete IPA, passthrough and unsupported symbols are withheld. The challenge diagnostic reports provisional and withheld counts separately; its workflow gate requires their sum to equal the typed-syllable denominator.
+- **Not a linguistic-accuracy result:** the 42-item challenge remains unadjudicated. No accuracy metric is asserted.
+- **Source gates unchanged:** Global TIMIT Thai is BLOCKED pending LDC written authorization; LOTUSDIS audio evidence is PARTIAL pending retrieved WAV bytes, recomputed SHA-256, interval and overlap/channel review. Both remain non-gold inputs.
+- **Release gates unchanged:** FastThaiG2P upstream data rights and external deployment verification, independent Thai/Ukrainian review, and hands-on keyboard/screen-reader/device accessibility remain outstanding. Readiness remains ENGINEERING_INTEGRATION_IN_PROGRESS_NOT_RELEASE_READY.

@@ -22,6 +22,28 @@ This document evaluates candidate external engines for use as *comparators*, not
 6. Use independently adjudicated references. Wiktionary-derived references cannot count as independent evidence for an engine whose dictionary or reported benchmark includes Wiktionary-derived records.
 7. Publish false positives as well as successful cases. No engine output is treated as gold merely because it is fluent or phonotactically plausible.
 
+## 2026-11-02 — challenge error clusters and recovery work
+
+The pinned FastThaiG2P challenge comparison was produced by PR #186 workflow [41454481686](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41454481686), branch head `c02e10e89ac340b80b6ed83c0a991f89cf9cc3fe`. Artifact `fastthaig2p-challenge-comparison` has SHA-256 `a166828e7a175af4759120d609ba8511c661db2845a25cab5fab1685c17b0da5`. The row-level coordination ledger is [`data/benchmark/fastthaig2p-error-triage-2026-11-02.tsv`](../data/benchmark/fastthaig2p-error-triage-2026-11-02.tsv).
+
+### Baseline findings
+
+- 42 challenge inputs; FastThaiG2P returned output for 42/42.
+- The conservative ClippyFirst text endpoint emitted complete IPA-derived Ukrainian output for 28/42; 14 inputs were partial or withheld.
+- There were 40 paired syllable outputs across the 28 completed inputs. The comparison artifact reports 25/40 segmental-projection matches before accounting for unreleased-stop notation.
+- Manual row-level inspection identifies 11/40 pairs where the only segmental projection difference is the phonetic unreleased-stop diacritic `̚` (e.g. `t` vs `t̚`). Removing only this surface modifier for the *segmental projection* raises agreement to 36/40. Raw strings and the modifier distinction remain preserved; tone and vowel length are not removed. This is a phonemic-vs-surface layer mismatch, not eleven proven engine errors.
+- Four remaining segmental differences require adjudication: `กะ` (short-open glottalization), `บรรจุ` (short-open/glottal coda convention), `คอมพิวเตอร์` (first-syllable vowel length), and `ครอบครัว` (diphthong realization). Neither engine is treated as gold.
+- Baseline incomplete cases: `ทฤษฎี`, `ฤๅษี`, `เตอร์`, `เทอร์`, the special vowel forms `ฤๅ/ฦ/ฦๅ`, sense-ambiguous `ทราย`, malformed `ข๊า/กฉ`, and four continuous-text probes. The TSV distinguishes expected fail-closed behavior from candidate coverage gaps.
+
+### Engine changes on the current fix branch
+
+- Added the source-pinned lexical syllabification `ฤๅษี → รือ|สี` (Thai Wiktionary revision 1774048). The distinct spelling `ฤษี` remains unresolved.
+- Added an exact phonetic respelling for the first syllable of `ทฤษฎี` (`ทริด → ทริท`) using the source-pinned word reading and IPA in en.wiktionary revision 87195875. This is an exact lexical exception, not a productive rule for arbitrary `ทร`.
+- Exposed the already-curated exact lexical syllable forms `เตอร์` and `เทอร์` in the Python and browser text lexicons, so the text endpoint can reach existing parser readings.
+- Expanded the challenge diagnostic to report the conservative endpoint and the opt-in dictionary-word-segmented endpoint separately, and to attach a coordination cluster to each record. The latter does not replace conservative output or certify boundary correctness.
+
+The four recovery changes are on branch `fix/benchmark-error-clusters-20261102` and remain pending exact-head CI at the time of this entry. This comparison is a hand-picked diagnostic, not a representative accuracy benchmark. No independent Thai expert labels exist yet; all agreement and source-attested readings remain non-gold evidence.
+
 ## Candidate screening
 
 | Candidate | Code / runtime | IPA and structure | Data/model considerations | Screening decision |
@@ -217,3 +239,15 @@ python scripts/validate_adjudication_packet.py --mode blind \
 The generator verifies 206 rows in each A-D column, reports duplicates and order-set differences, creates a deterministic union of distinct Thai prompts, and writes a SHA-256/license manifest. If the four order sets differ or any order repeats a word, the manifest status is `SOURCE_ORDER_DISCREPANCY_REQUIRES_RECONCILIATION`; do not freeze or score that packet until the source list discrepancy is explained. A concordant set still produces only an unadjudicated, broad-phonemic reviewer packet. The blind TSV has no engine output or prefilled labels. Generated outputs remain local and inherit CC BY-NC-SA 4.0 terms.
 
 The source-specific scorer gate now distinguishes `BROAD_PHONEMIC_IPA_GOLD_INPUT` from `BROAD_SURFACE_IPA_GOLD_INPUT`. The project-authored challenge and CCOST wordlist can support only independently reviewed broad phonemic labels. The full CCOST annotation archive remains BLOCKED for both IPA layers until actual TextGrid files and X-SAMPA labels are inspected and mapped. This prevents a text-only wordlist from being used as surface-phonetic evidence.
+
+
+## Literature-based metric interpretation — 2026-11-03
+
+A source-checked synthesis of Thai G2P papers, evaluation units, annotation provenance, tone phonetics and recommended project gates is maintained in [Thai G2P evaluation literature review](research/thai-g2p-evaluation-literature-2026-11-03.md).
+
+Important comparability constraints:
+
+- Saychum et al. (2016) report exact-match WER, tone-ignored WER and PER as different measures on a dictionary-derived test set; their own error analysis identifies vowel-length and tone ambiguity as separate failure modes. These scores are not independent expert IPA gold for this project.
+- Yamasaki (2022) reports 0.931 exact sequence accuracy on a primarily Wiktionary-derived dataset; candidate coverage was 17,720/18,066. The figure is neither tone-specific nor boundary-specific accuracy, and its reference labels do not constitute a uniformly independent expert set.
+- Published WER/PER/accuracy numbers must not be compared with this repository's 42-item unadjudicated challenge coverage. Report coverage/abstention, segmentation, phonemic IPA, tone, length, surface realization and Ukrainian adaptation separately.
+- No runtime rule is changed on the basis of these cross-study results. Independent adjudication remains the acceptance gate for the four unresolved phonological discrepancies.

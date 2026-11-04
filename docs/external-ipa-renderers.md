@@ -97,3 +97,10 @@ These resources are relevant to the UI's display of the source writing system; t
 ## IPA display fallback implementation (2026-10-24)
 
 Where this repository has a browser UI, IPA output is styled with a local-font fallback stack prioritizing Charis SIL, Doulos SIL, and DejaVu Sans, with OpenType combining-mark features enabled. This is a display-layer preference only: no font files are bundled or fetched remotely, font availability depends on the host, and it does not enable any external G2P candidate or change IPA values. Browser screenshot/glyph-coverage verification remains outstanding. The Sinhala repository currently has no browser UI; see `docs/ipa-display-rendering.md` for its documented future UI contract.
+
+
+## FastThaiG2P spike status — 2026-11-02
+
+FastThaiG2P now has an isolated optional Python challenge comparator. See [the integration spike report contract](research/fastthaig2p-integration-spike.md), `scripts/run_fastthaig2p_challenge.py`, and the dedicated `.github/workflows/fastthaig2p-spike.yml` workflow. It runs the frozen 42-item challenge, retains raw upstream IPA, counts dictionary hits and OOV fallback tokens, and compares output availability and diagnostics with ClippyFirst. It does not change the production engine, add a core dependency, or emit Ukrainian output from external IPA.
+
+The upstream code is Apache-2.0 at pinned commit `4e82a291b4cf2876326744c6580121e9986ad354`; PyThaiNLP is a separately declared Apache-2.0 software dependency. Dictionary data provenance is mixed (manual, Wiktionary-derived and LLM-generated) and has not been cleared row-by-row. The TLTK-derived fallback file's exact notice still requires confirmation before any code is copied. No independently adjudicated challenge IPA exists, so this is not an accuracy benchmark.

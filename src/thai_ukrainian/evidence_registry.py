@@ -29,8 +29,14 @@ def _read_registry(path: Path, fields: tuple[str, ...], label: str) -> list[dict
         return [{key: (value or "").strip() for key, value in row.items()} for row in reader]
 
 
-def _validate_verification(row: Mapping[str, str], label: str, ident: str) -> None:
-    if row["verification_status"] not in {"VERIFIED", "BLOCKED"}:
+def _validate_verification(
+    row: Mapping[str, str],
+    label: str,
+    ident: str,
+    *,
+    allowed_statuses: frozenset[str] = frozenset({"VERIFIED", "BLOCKED"}),
+) -> None:
+    if row["verification_status"] not in allowed_statuses:
         raise ValueError(f"{label} {ident!r} has invalid verification_status")
     if not row["verified_by"]:
         raise ValueError(f"{label} {ident!r} requires verified_by")
@@ -92,14 +98,16 @@ def load_audio_asset_registry(
         if asset_uri.scheme not in {"http", "https"} or not asset_uri.netloc:
             raise ValueError(f"audio asset {ident!r} requires an absolute HTTP(S) asset_uri")
         required = (
-            "source_id", "dataset_revision", "asset_uri", "file_sha256", "speaker_ref",
+            "source_id", "dataset_revision", "asset_uri", "speaker_ref",
             "microphone", "microphone_id", "overlap_status", "duration_seconds", "notes",
         )
         missing = [field for field in required if not row[field]]
+        if row["verification_status"] == "VERIFIED" and not row["file_sha256"]:
+            missing.append("file_sha256")
         if missing:
             raise ValueError(f"audio asset {ident!r} requires {', '.join(missing)}")
-        if not re.fullmatch(r"[0-9a-fA-F]{64}", row["file_sha256"]):
-            raise ValueError(f"audio asset {ident!r} requires a 64-character SHA-256")
+        if row["file_sha256"] and not re.fullmatch(r"[0-9a-fA-F]{64}", row["file_sha256"]):
+            raise ValueError(f"audio asset {ident!r} requires a 64-character SHA-256 when a hash is supplied")
         if row["microphone"] not in AUDIO_MICROPHONES:
             raise ValueError(f"audio asset {ident!r} has invalid microphone category")
         if row["overlap_status"] not in AUDIO_OVERLAP_STATES:
@@ -117,7 +125,12 @@ def load_audio_asset_registry(
             row["source_id"], source["source_url"], source["license"],
             "ACOUSTIC_PHONETICS_RESEARCH", source_registry, row_id=ident,
         )
-        _validate_verification(row, "audio asset", ident)
+        _validate_verification(
+            row,
+            "audio asset",
+            ident,
+            allowed_statuses=frozenset({"VERIFIED", "PARTIAL", "BLOCKED"}),
+        )
         result[ident] = row
     return result
 
@@ -135,7 +148,10 @@ def validate_audio_asset_reference(
     if asset is None:
         raise ValueError(f"row {row_id!r} uses unregistered audio asset {asset_id!r}")
     if asset["verification_status"] != "VERIFIED":
-        raise ValueError(f"row {row_id!r} audio asset {asset_id!r} is blocked")
+        raise ValueError(
+            f"row {row_id!r} audio asset {asset_id!r} is not VERIFIED "
+            f"(status={asset['verification_status']!r})"
+        )
     if asset["source_id"] != source_id.strip():
         raise ValueError(f"row {row_id!r} audio asset source_id does not match audio_source_id")
     try:

@@ -59,9 +59,11 @@ def _segment_ipa(ipa: str | None, provenance: tuple[str, ...]) -> list[PhoneticS
 class PhoneticResult:
     """Typed contract between Thai phonology and downstream language adapters.
 
-    phonemic_ipa is the adapter input. broad_surface_ipa is a separate,
-    conservative surface representation. Tone remains metadata rather than
-    being appended to the segmental IPA string.
+    phonemic_ipa is the canonical adapter input for supported internal results.
+    broad_surface_ipa is a separate conservative surface representation.
+    external_ipa preserves third-party IPA whose layer is not adjudicated; it
+    may be adapted only when status is explicitly PROVISIONAL. Tone remains
+    metadata rather than being appended to the segmental IPA string.
     """
 
     phonemic_ipa: str | None
@@ -75,6 +77,9 @@ class PhoneticResult:
     status: str = "SUPPORTED"
     provenance: tuple[str, ...] = ()
     uncertainty: tuple[str, ...] = ()
+    # External IPA whose phonemic-vs-surface layer has not been adjudicated.
+    # It is never silently copied into either canonical IPA layer.
+    external_ipa: str | None = None
 
     @classmethod
     def from_syllable_analysis(cls, analysis: "SyllableAnalysis") -> "PhoneticResult":
@@ -115,6 +120,7 @@ class PhoneticResult:
         return {
             "phonemic_ipa": self.phonemic_ipa,
             "broad_surface_ipa": self.broad_surface_ipa,
+            "external_ipa": self.external_ipa,
             "segments": [
                 {
                     "ipa": s.ipa, "kind": s.kind, "surface_ipa": s.surface_ipa,

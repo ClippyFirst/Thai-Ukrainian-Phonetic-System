@@ -18,12 +18,16 @@ _MANIFEST_PATH = THAI_DATA_ROOT / "word-segmentation-dictionary-source.json"
 _EXPECTED_ENTRIES = 60963
 _END = object()
 _PREPOSED_VOWELS = frozenset("เแโใไ")
-_POSTPOSED_VOWELS = frozenset("ะาำ")
 _THAI_CONSONANTS = frozenset(chr(codepoint) for codepoint in range(0x0E01, 0x0E2F))
-_THAI_COMBINING_MARKS = frozenset(
+# Thai spacing vowel letters U+0E30/U+0E32/U+0E33 are not Unicode
+# combining marks, but must stay with the preceding base for safe matching.
+_THAI_CLUSTER_CONTINUATIONS = frozenset(
     chr(codepoint)
     for codepoint in (
+        0x0E30,
         0x0E31,
+        0x0E32,
+        0x0E33,
         *range(0x0E34, 0x0E3B),
         *range(0x0E47, 0x0E4F),
     )
@@ -49,11 +53,10 @@ def _is_thai_block_only(value: str) -> bool:
 def _grapheme_spans(text: str) -> tuple[tuple[int, int], ...]:
     """Return conservative Thai character-cluster spans.
 
-    Preposed vowels are grouped with the following consonant. Combining marks
-    and the postposed spacing-vowel letters ะ, า and ำ are kept with their
-    preceding base cluster for dictionary-match boundary safety. This is a
-    project matching policy, not a full Unicode grapheme-break implementation
-    or a claim about syllable boundaries.
+    Preposed vowels are grouped with the following consonant. Postposed
+    vowel letters and combining marks stay with their base so dictionary
+    matching never splits a visible orthographic cluster. This is a
+    boundary-safety approximation, not a full Unicode grapheme-break implementation.
     """
     spans: list[tuple[int, int]] = []
     index = 0
@@ -62,15 +65,15 @@ def _grapheme_spans(text: str) -> tuple[tuple[int, int], ...]:
         char = text[index]
         if char in _PREPOSED_VOWELS and index + 1 < len(text) and text[index + 1] in _THAI_CONSONANTS:
             index += 2
-            while index < len(text) and text[index] in (_THAI_COMBINING_MARKS | _POSTPOSED_VOWELS):
+            while index < len(text) and text[index] in _THAI_CLUSTER_CONTINUATIONS:
                 index += 1
         elif char in _THAI_CONSONANTS:
             index += 1
-            while index < len(text) and text[index] in (_THAI_COMBINING_MARKS | _POSTPOSED_VOWELS):
+            while index < len(text) and text[index] in _THAI_CLUSTER_CONTINUATIONS:
                 index += 1
         else:
             index += 1
-            while index < len(text) and text[index] in (_THAI_COMBINING_MARKS | _POSTPOSED_VOWELS):
+            while index < len(text) and text[index] in _THAI_CLUSTER_CONTINUATIONS:
                 index += 1
         spans.append((start, index))
     return tuple(spans)

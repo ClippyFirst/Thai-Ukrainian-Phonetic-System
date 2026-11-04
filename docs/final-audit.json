@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PR #191's verified code/test checkpoint 8665c07d71f61e89de60654491207e1798a14bfd passed exact-head CI 41728579416 and VISTEC 41728579532. The documentation closeout HEAD 61e4567ab074e767547369087e8f7483985deb8d also passed exact-head CI 41794235177 (all three jobs) and VISTEC 41794234815. PR remains open Draft and unmerged. Linguistic accuracy remains NOT_MEASURED; engineering-verified research prototype only.",
+  "status": "PR #189 remains open as Draft on fix/benchmark-error-clusters-20261102. Exact verified branch HEAD d9958db0e877944e5a75183c053681cdbdd525dc is 144 commits ahead of main and 0 behind. Full CI 41714533758 passed all three jobs; Web Static 41714533792 passed; External VISTEC 41714533797 passed. The latest source change after runtime checkpoint 69d56b52b7f687948cac4250e4c7eb98e86ab67f is docstring-only; remaining commits are audit/research documentation. Linguistic accuracy remains NOT_MEASURED.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -82,7 +82,16 @@
     "source_attested_ipa_reference_for_เพิ่ง",
     "public_independent_reviewer_outreach_shortlist",
     "six_item_blind_thai_regression_supplement",
-    "byte_identical_ccost_wordlist_integrity_and_order_audit"
+    "byte_identical_ccost_wordlist_integrity_and_order_audit",
+    "benchmark_error_cluster_triage_for_42_item_fastthaig2p_comparison",
+    "separate_conservative_and_dictionary_word_segmented_challenge_diagnostics",
+    "source_pinned_ruesi_ฤๅษี_text_lexicon_entry",
+    "source_pinned_thrit_ทฤษฎี_lexical_syllable_recovery",
+    "browser_python_parity_for_benchmark_lexical_recoveries",
+    "source_pinned_article_word_lexicon_for_continuous_text_challenge",
+    "exact_text_lexicon_anchor_in_opt_in_word_segmented_pipeline",
+    "row_level_word_segmented_token_details_in_challenge_diagnostic_artifact",
+    "browser_python_article_phrase_parity_regressions"
   ],
   "not_claimed": [
     "complete_lexical_segmentation",
@@ -112,7 +121,7 @@
     "CCOST inter-annotator agreement",
     "acoustic phonetic accuracy"
   ],
-  "lexical_attestation": "Ten source-backed runtime text lexicon entries include ยูเครน, ตะวันออก, ยุโรป, ยุโรปตะวันออก and the sense-scoped compound ทะเลทราย, plus six active typed IPA overrides (เงิน, เดิน, ออก, ไกล, ใกล้, เพิ่ง). All overrides preserve pinned source provenance and SOURCE_ATTESTED_NOT_GOLD status; they are not independent expert/acoustic gold. Unsupported ฤๅษี/ฤษี text-lexicon syllabifications without source-registry evidence have been removed.",
+  "lexical_attestation": "Source-backed text lexicon includes ฤๅษี → รือ|สี (Thai Wiktionary oldid 1774048), ทฤษฎี → ทฺริด-สะ-ดี (en.wiktionary oldid 87195875), ประเทศ → ประ|เทศ (oldid 5722200), เป็น (oldid 5770798), หนึ่ง (oldid 5721517), and ใน (oldid 5759122). The first syllable ทฺริด is normalized only by an exact lexical respelling; no productive ทร rule is inferred. The distinct spelling ฤษี and standalone ฤๅ/ฦ/ฦๅ remain unresolved. Existing parser readings เตอร์ and เทอร์ are reachable through the curated text lexicon. All source-attested readings remain NOT_GOLD; their source registry permissions exclude phonemic and surface gold input.",
   "corpus_attestation": "993 source-annotated Wisesight word-tokenization rows (CC0-1.0; test-only, never training/tuning); pinned UD Thai TUD source snapshots under CC BY-SA 4.0 for a research-only frequency-Viterbi experiment; zero independently adjudicated IPA/tone/vowel-length gold rows.",
   "word_boundary_benchmark": {
     "dataset": "PyThaiNLP/Wisesight word-tokenization labels",
@@ -138,12 +147,12 @@
     "status": "SOURCE_ATTESTED_NOT_GOLD",
     "includes_short_long_oe_contrast": true
   },
-  "latest_verified_code_commit": "8665c07d71f61e89de60654491207e1798a14bfd",
-  "starting_branch_commit": "7e39fd4bc108386148c1e9a79d257d75babcc9aa",
+  "latest_verified_code_commit": "69d56b52b7f687948cac4250e4c7eb98e86ab67f",
+  "starting_branch_commit": "75c331f69aa3c8e5b4db3ccc5a6da85124600a01",
   "ci": {
-    "latest_fully_successful_code_data_commit": "2b0503099b9d482ae8106fc924039f619c54a957",
-    "latest_fully_successful_ci_run": 41726180498,
-    "python_tests": 322,
+    "latest_fully_successful_code_data_commit": "72a77cb42ad05c33274d70c4dcd9f20e07432b64",
+    "latest_fully_successful_ci_run": 41239440616,
+    "python_tests": "327_PASSED_1185_SUBTESTS_PASSED",
     "generated_data_drift": "PASS — run 41239440616",
     "master_artifact": "PASS — run 41239440616: 3,086,353 bytes; SHA-256 74f40079c2bae8a4f875fa8e2c860ac8a202bbb1bd8e4ae72d834f48d93adc09; independently downloaded and asserted 351780 rows / 41 vowel-rime records.",
     "node_ipa_ua_parity_ui_tests": "PASS — run 41239440616: 29 Python/browser parity fixtures; RTGS/IPA-UA and UI contract checks passed.",
@@ -159,21 +168,21 @@
       41239440643
     ],
     "current_head_status_at_audit_refresh": "PR #162 merged as 1b1480c5a79b6dd38dc8b916d52ad599e38a9748. Exact-head CI 41229053598 and post-merge main CI 41229435682 passed all three jobs; Pages build/deploy verification 41229435706 passed. Pytest executed 251 tests and 1164 subtests. Typed IPA secondary-candidate routing and source orthographic metadata preservation are verified.",
-    "latest_full_repository_head": "1b1480c5a79b6dd38dc8b916d52ad599e38a9748",
-    "latest_full_repository_head_ci_run": 41229435682,
-    "latest_full_repository_head_web_validation_run": 41229435706,
+    "latest_full_repository_head": "fba3e63deeda6e61565e0444dc4685f248dbb763",
+    "latest_full_repository_head_ci_run": 41646388428,
+    "latest_full_repository_head_web_validation_run": 41646388317,
     "latest_web_static_verified_code_commit": "1ed4c7aa30759fd8d31136e46d7490bf9b2c5e8b",
     "latest_web_static_verified_code_run": 40286893366,
     "latest_verified_commit_note": "PR #162 code checkpoint 1b1480c5a79b6dd38dc8b916d52ad599e38a9748 passed exact-head CI 41229053598, post-merge main CI 41229435682 and Pages verification 41229435706. 251 Python tests and 1164 subtests passed. External expert linguistic and manual accessibility evidence remains outstanding.",
     "latest_verified_code_commit_note": "Latest runtime implementation checkpoint 1b1480c5a79b6dd38dc8b916d52ad599e38a9748 routes secondary candidates through supported typed IPA and preserves original orthographic role across lexical rewrites. Post-merge CI 41229435682 passed all three jobs; Pages verification 41229435706 passed. No expert-gold or general linguistic-accuracy claim is made.",
-    "latest_fully_successful_documentation_commit": "8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8",
-    "latest_fully_successful_documentation_ci_run": 41240699017,
-    "latest_fully_successful_documentation_web_validation_run": 41239420395,
+    "latest_fully_successful_documentation_commit": "fba3e63deeda6e61565e0444dc4685f248dbb763",
+    "latest_fully_successful_documentation_ci_run": 41646388428,
+    "latest_fully_successful_documentation_web_validation_run": 41646388317,
     "latest_documentation_head_ci_run": 41240389404,
     "latest_documentation_head_web_validation_run": 41229435706,
-    "latest_implementation_ci_run": 41726180498,
+    "latest_implementation_ci_run": 41229435682,
     "latest_implementation_web_validation_run": 41229435706,
-    "latest_implementation_commit_ci_verified": "2b0503099b9d482ae8106fc924039f619c54a957",
+    "latest_implementation_commit_ci_verified": "1b1480c5a79b6dd38dc8b916d52ad599e38a9748",
     "latest_fully_successful_web_static_validation_run": 40322959844,
     "comparative_error_review_status": "DONE_VERIFIED — report, tests and CI artifact passed on code checkpoint b6dbec7928b106f0ab52e06af33a26635df75412",
     "comparative_error_review_script": "scripts/compare_segmentation_error_review.py",
@@ -193,7 +202,7 @@
       "54e1db86cf3882f025f00ede86d86e7efb3909e2",
       "b6dbec7928b106f0ab52e06af33a26635df75412"
     ],
-    "current_audit_head_ci_status": "PASS — PR #191 code/test head 2b0503099b9d482ae8106fc924039f619c54a957: CI 41726180498 all three jobs passed; 322 Python tests and 1,174 subtests. External VISTEC 41726181625 passed on the same head; source annotations are not expert gold.",
+    "current_audit_head_ci_status": "PASS — PR #155 exact-head CI 41143491570 and post-merge main CI 41143907732 passed all three jobs.",
     "comparative_error_review_metrics": {
       "rows": 993,
       "source_annotated_rows": 993,
@@ -202,13 +211,13 @@
       "split": "test",
       "same_rows_for_both_engines": true,
       "dictionary_max_match": {
-        "boundary_precision": 0.8222866611433306,
-        "boundary_recall": 0.8573896767691311,
-        "boundary_f1": 0.8394713656387666,
-        "false_splits": 2574,
-        "false_merges": 1981,
-        "exact_sequences": 192,
-        "exact_sequence_rate": 0.1933534743202417
+        "boundary_precision": 0.8334610828513692,
+        "boundary_recall": 0.861061118709956,
+        "boundary_f1": 0.847036328871893,
+        "false_splits": 2390,
+        "false_merges": 1930,
+        "exact_sequences": 204,
+        "exact_sequence_rate": 0.2054380664652568
       },
       "tud_unigram_viterbi": {
         "boundary_precision": 0.608,
@@ -219,7 +228,7 @@
         "exact_sequences": 119,
         "exact_sequence_rate": 0.11983887210473314
       },
-      "caveat": "Full-text same-row metrics; not directly comparable to earlier filtered Thai-only TUD metrics; source annotation, not independent expert gold."
+      "caveat": "Full-text same-row metrics on source-annotated labels; zero expert-adjudicated rows; diagnostic only."
     },
     "pr_reconciliation": {
       "pr68": {
@@ -286,8 +295,8 @@
       "status": "PARTIAL",
       "reason": "No owner-approved archive/delete policy; historical refs preserved."
     },
-    "latest_checkpoint_note": "PR #168 audit closeout merged as 8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8. Exact-head CI 41240389404 and post-merge main CI 41240699017 passed; 251 pytest tests, 1164 subtests, Ruff, 29 parity fixtures, generated-data drift, wheel-install smoke and 351780-row/41-rime artifact verification passed. Independent Thai/UA adjudication and manual accessibility gates remain open.",
-    "python_subtests": 1174
+    "latest_checkpoint_note": "PR #189 exact branch head fba3e63deeda6e61565e0444dc4685f248dbb763 (116 ahead, 0 behind) passed exact-head Full CI 41646388428 and Web Static 41646388317 on 2026-11-03. Full CI: Ruff, 327 pytest tests, 1,185 subtests, validators, generated-artifact checks, diagnostics, IPA-UA adapter, 29 browser parity fixtures, wheel install and master artifact all passed. Linguistic accuracy remains NOT_MEASURED; independent Thai/Ukrainian adjudication and manual accessibility remain open.",
+    "python_subtests": 1164
   },
   "challenge_runtime": {
     "challenge_inputs": 36,
@@ -304,7 +313,7 @@
     "rows": 351780,
     "vowel_rime_records": 41
   },
-  "latest_documentation_checkpoint": "61e4567ab074e767547369087e8f7483985deb8d; documentation-only reconciliation passed exact-head CI 41794235177 and VISTEC 41794234815.",
+  "latest_documentation_checkpoint": "docs/post-merge-site-release-closeout-20261102; current branch head is available from GitHub metadata.",
   "text_only_checkpoint": {
     "branch": "research/thai-segmentation-gold-parity-verified-20261025",
     "parent_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
@@ -349,15 +358,15 @@
     "training_source": "UD Thai TUD at 67413969add552b7030184f16f24fa9f630913bc, CC BY-SA 4.0; source-document-disjoint 80/10/10 project split; model artifact attribution/share-alike obligations recorded"
   },
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
-  "latest_code_checkpoint": "8665c07d71f61e89de60654491207e1798a14bfd",
+  "latest_code_checkpoint": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
   "readiness": "engineering-verified research prototype; deployed on GitHub Pages; not release-ready for independent Thai segmentation, IPA or Ukrainian target accuracy",
-  "latest_verified_repository_head": "75c331f69aa3c8e5b4db3ccc5a6da85124600a01",
+  "latest_verified_repository_head": "d9958db0e877944e5a75183c053681cdbdd525dc",
   "task_ledger": [
     {
       "id": "SEG-TRAIN-001",
       "status": "PARTIAL",
       "implementation": "TUD frequency-Viterbi research trainer, source-blob verification, source-document-disjoint split, dev-only penalty selection, held-out TUD test and Wisesight-only report; CI/artifacts configured",
-      "acceptance": "Same-row full-text Wisesight comparison verified: TUD precision 0.6080, recall 0.9739, F1 0.7486, exact sequence 0.1198, 8,722 false splits; dictionary baseline F1 0.8395, exact sequence 0.1934. Do NOT integrate TUD as production default. Human error review, predeclared acceptance thresholds and independent licensed-domain evaluation remain required."
+      "acceptance": "Same-row full-text Wisesight comparison verified on 993 source-annotated rows: dictionary max-match precision 0.833461, recall 0.861061, F1 0.847036, exact sequence 204/993 (20.54%), 2,390 false splits and 1,930 false merges. TUD unigram Viterbi F1 0.748623, exact sequence 119/993 (11.98%), 8,722 false splits and 363 false merges. Zero expert-adjudicated rows: these are source-label diagnostics only. Do NOT integrate TUD as production default. Human error review, predeclared acceptance thresholds and independent licensed-domain evaluation remain required."
     },
     {
       "id": "IPA-GOLD-001",
@@ -522,44 +531,45 @@
       "acceptance": "Post-merge Pages build/deploy/published-content verification passed; main CI and Web Static passed."
     },
     {
-      "id": "THAI-CLUSTER-PARITY-001",
+      "id": "BENCH-RUNTIME-DIAG-2026-11-02",
+      "status": "DONE_VERIFIED_COVERAGE_ONLY",
+      "implementation": "Exact-head challenge diagnostic artifact inspected; 42 records reconcile to 32/42 conservative complete and 36/42 opt-in dictionary-word-segmented complete; six abstentions retained; no accuracy field emitted.",
+      "acceptance": "Keep abstentions fail-closed and retain NOT_ADJUDICATED gold status; coverage must never be reported as pronunciation accuracy."
+    },
+    {
+      "id": "BENCH-LEXICAL-RECOVERY-2026-11-02",
+      "status": "PARTIAL_ENGINEERING_VERIFIED",
+      "implementation": "Source-pinned lexical recoveries and Python/browser parity tests pass exact-head CI; all new Wiktionary references are licensed CC BY-SA 4.0 and restricted to lexical/IPA reference scope.",
+      "blocker": "Independent qualified Thai phonetic/segmentation adjudication unavailable.",
+      "acceptance": "Independent blind Thai reviewers adjudicate lexical reading, syllable boundaries, phonemic IPA, tone and length; disputed cases resolved before any accuracy claim."
+    },
+    {
+      "id": "DIAG-COMPLETE-OUTPUT-001",
       "status": "DONE_VERIFIED",
-      "implementation": "Python dictionary segmentation now treats Thai postposed spacing vowels U+0E30/U+0E32/U+0E33 as continuation of the preceding base cluster for dictionary-match endpoint safety, aligned with browser matching. Regression tests exercise the public dictionary_word_segmentation API using controlled trie fixtures. No pronunciation, phonology, IPA, tone, Ukrainian mapping, dictionary or corpus changes.",
-      "evidence": {
-        "test_first_red_commit": "6a56a949b7d876da4d040d262313eb9719868f1f",
-        "implementation_commit": "8d02d8ffe32330fb6c181219d8fc8c7236f7b176",
-        "final_code_test_commit": "2b0503099b9d482ae8106fc924039f619c54a957",
-        "ci_run": 41726180498,
-        "ci_result": "PASSED_ALL_3_JOBS",
-        "python_tests": 322,
-        "python_subtests": 1174,
-        "external_vistec_run": 41726181625,
-        "external_vistec_result": "PASSED",
-        "docs_closeout_branch_head_before_json_refresh": "68da73a057db7c53cf05bbfb9d7265f7ec41e4fb"
-      },
-      "limitation": "Matching-boundary policy only; not full Unicode grapheme segmentation or syllabification. VISTEC has 50,000 source-annotated rows and zero expert-adjudicated rows; metrics are not independent accuracy evidence.",
-      "acceptance": "Exact-head CI, wheel-install smoke, master-artifact and external VISTEC evaluation pass; public-interface regression tests prevent dictionary matches ending inside base-plus-vowel clusters."
+      "implementation": "Regression test proves that a resolved Thai token with an empty syllable list cannot be counted as complete. Test-first RED was observed on 8492d2478425a88f24827d8547c96a26d9559ac9; minimal guard implemented on 94eaadb5bda2318dfa864eee7dae1b3715b70374.",
+      "acceptance": "Exact-head Full CI 41641516453 passed test/wheel-install-smoke/master-artifact; Web Static 41641516658 passed; 327 pytest tests and 1,185 subtests passed; Ruff and 29 browser parity fixtures passed. Diagnostic-only change; no linguistic accuracy claim."
     }
   ],
-  "latest_implementation_branch": "fix/thai-spacing-vowel-cluster-parity-20261103",
-  "latest_implementation_commit_pending_ci": null,
+  "latest_implementation_branch": "fix/benchmark-error-clusters-20261102 (PR #189 open draft)",
+  "latest_implementation_commit_pending_ci": "Runtime code head 94eaadb5bda2318dfa864eee7dae1b3715b70374 is exact-head verified by Full CI 41641516453 and Web Static 41641516658. The subsequent audit/matrix/handoff update is documentation-only and awaits its own exact-head verification.",
   "current_head_status_at_audit_refresh": "Code/workflow checkpoint b6dbec7928b106f0ab52e06af33a26635df75412 passed CI 40322960615 and Web static validation 40322959844. Documentation checkpoint e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff passed full CI 40323209539 and Web static validation 40323209471. This audit-register update creates a newer documentation HEAD and requires exact-head CI/static validation before the current branch HEAD is marked green.",
-  "current_implementation_branch": "fix/thai-spacing-vowel-cluster-parity-20261103",
-  "current_implementation_commit_before_audit_update": "2b0503099b9d482ae8106fc924039f619c54a957",
-  "latest_documentation_checkpoint_before_audit": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
+  "current_implementation_branch": "fix/benchmark-error-clusters-20261102",
+  "current_implementation_commit_before_audit_update": "e7ebb28e64afd5ec70fc136a12d6723ccebdd59e",
+  "latest_documentation_checkpoint_before_audit": "e7ebb28e64afd5ec70fc136a12d6723ccebdd59e",
   "audit_note": "Exact-head special-orthography schema and IPA-boundary repair verified on cb775d6156f62392fa2d0f4bcf8d1aa30d219530. CI 40315032771 passed 180 Python tests, generated-data drift, master artifact (351,780 rows / 41 rime records), Node IPA→UA, 28 browser parity fixtures, UI contract, challenge/Wisesight/source-attested IPA diagnostics, candidate-registry check, TUD training/evaluation and artifact uploads. Web static validation 40315032788 passed. This is software/reproducibility evidence, not independent pronunciation gold.",
   "dictionary_max_match_baseline": {
     "corpus": "Wisesight-1000",
     "rows": 993,
     "status": "SOURCE_ANNOTATED_NOT_EXPERT_ADJUDICATED",
-    "prediction_coverage": 1,
-    "boundary_precision": 0.8222866611433306,
-    "boundary_recall": 0.8573896767691311,
-    "boundary_f1": 0.8394713656387666,
-    "exact_sequence_rate": 0.1933534743202417,
+    "boundary_precision": 0.8334610828513692,
+    "boundary_recall": 0.861061118709956,
+    "boundary_f1": 0.847036328871893,
+    "exact_sequences": 204,
+    "exact_sequence_rate": 0.2054380664652568,
     "used_for_training": false,
     "role": "opt-in diagnostic baseline; not production-quality evidence",
-    "artifact_id": "12648264783"
+    "artifact_id": "13267889956",
+    "artifact_archive_sha256": "479c0aaf88c714fc8d890078c84349facc8a154b008d24ec30897a7fb4f20b70"
   },
   "tud_research_segmenter": {
     "model_id": "clippyfirst-tud-unigram-viterbi-v1",
@@ -612,12 +622,12 @@
       ]
     }
   },
-  "latest_implementation_commit_ci_verified": "8665c07d71f61e89de60654491207e1798a14bfd",
-  "latest_documentation_head_ci_verified": "61e4567ab074e767547369087e8f7483985deb8d",
-  "latest_documentation_head_ci_run": 41794235177,
-  "latest_documentation_head_web_validation_run": "41342132990",
-  "latest_implementation_ci_run": "41353088633",
-  "latest_implementation_web_validation_run": "41353088642",
+  "latest_implementation_commit_ci_verified": "69d56b52b7f687948cac4250e4c7eb98e86ab67f",
+  "latest_documentation_head_ci_verified": "e7ebb28e64afd5ec70fc136a12d6723ccebdd59e",
+  "latest_documentation_head_ci_run": "41643230493",
+  "latest_documentation_head_web_validation_run": "41643230575",
+  "latest_implementation_ci_run": "41711547837",
+  "latest_implementation_web_validation_run": "41711547920",
   "segmentation_error_review": {
     "script": "scripts/analyze_segmentation_errors.py",
     "test": "tests/test_segmentation_error_analysis.py",
@@ -628,36 +638,36 @@
     "output_artifact": "thai-segmentation-error-review",
     "purpose": "deterministic false-split/false-merge triage examples and boundary metrics",
     "acceptance_boundary": "diagnostic only; does not mark every disagreement as an engine error and does not qualify as independent gold",
-    "implementation_commit": "bec1b7027f34a4f70f0b6f9fdc415ef43343eab9",
+    "implementation_commit": "fb564db7fe9988b9a5885ed9cd4ceb1a5436654b",
     "exact_head_ci_status": "PASS for dictionary-only triage report on prior verified code checkpoint; comparative report pending",
-    "test_commit": "aba6832eb97cb4b84f2e62fa058fa963cfb34803",
-    "ci_workflow_commit": "c189cdb9209d85780c3baeb1df23800101840b16",
-    "exact_sequence_contract": "192/993 full token-array matches on the pinned Wisesight/dictionary baseline; token iterable is normalized to a list so the metric matches the benchmark scorer",
-    "verified_ci_run": 40320450844,
-    "web_static_validation_run": 40320450587,
-    "artifact_id": "12648833301",
-    "artifact_sha256": "005c18ba366fc692193db7f6557b052ff7f940dea3274ec168f6a93f0df7e66b",
+    "test_commit": "dd58b9adc3a92d40a54e3d26d661ce28ebcb7c7d",
+    "ci_workflow_commit": "69d56b52b7f687948cac4250e4c7eb98e86ab67f",
+    "exact_sequence_contract": "204/993 full token-array matches after Thai postposed-vowel cluster correction; source-annotated diagnostic, not adjudicated gold.",
+    "verified_ci_run": 41711547837,
+    "web_static_validation_run": 41711547920,
+    "artifact_id": "13267889956",
+    "artifact_sha256": null,
     "metrics": {
       "rows": 993,
       "expert_adjudicated_rows": 0,
       "gold_boundaries": 13891,
-      "predicted_boundaries": 14484,
-      "true_positive_boundaries": 11910,
-      "false_splits": 2574,
-      "false_merges": 1981,
-      "boundary_precision": 0.8222866611433306,
-      "boundary_recall": 0.8573896767691311,
-      "boundary_f1": 0.8394713656387666,
-      "exact_sequence_matches": 192,
-      "exact_sequence_rate": 0.1933534743202417
+      "predicted_boundaries": 14351,
+      "true_positive_boundaries": 11961,
+      "false_splits": 2390,
+      "false_merges": 1930,
+      "boundary_precision": 0.8334610828513692,
+      "boundary_recall": 0.861061118709956,
+      "boundary_f1": 0.847036328871893,
+      "exact_sequence_matches": 204,
+      "exact_sequence_rate": 0.2054380664652568
     },
-    "comparative_report_status": "DONE_VERIFIED — exact-head CI report/evidence assertions and artifact upload passed on code checkpoint b6dbec7928b106f0ab52e06af33a26635df75412",
+    "comparative_report_status": "DONE_VERIFIED — exact-head CI 41711547837 passed same-row dictionary/TUD metrics, evidence-grade checks, manual-review packet checks and artifact upload.",
     "comparative_script": "scripts/compare_segmentation_error_review.py",
     "comparative_test": "tests/test_comparative_segmentation_error_review.py",
     "comparative_artifact_name": "thai-segmentation-comparative-error-review",
     "comparison_policy": "Both dictionary max-match and TUD Viterbi evaluated on identical 993 pinned Wisesight source-annotated rows; non-Thai runs copied unchanged; report is triage, not adjudication.",
-    "comparative_artifact_id": "12649094231",
-    "comparative_artifact_sha256": "8005cc91939ea06b852c1717fee9fb72d370709e74267b8f99636a6476d30775",
+    "comparative_artifact_id": "13267884921",
+    "comparative_artifact_sha256": null,
     "comparative_metrics": {
       "rows": 993,
       "source_annotated_rows": 993,
@@ -666,13 +676,13 @@
       "split": "test",
       "same_rows_for_both_engines": true,
       "dictionary_max_match": {
-        "boundary_precision": 0.8222866611433306,
-        "boundary_recall": 0.8573896767691311,
-        "boundary_f1": 0.8394713656387666,
-        "false_splits": 2574,
-        "false_merges": 1981,
-        "exact_sequences": 192,
-        "exact_sequence_rate": 0.1933534743202417
+        "boundary_precision": 0.8334610828513692,
+        "boundary_recall": 0.861061118709956,
+        "boundary_f1": 0.847036328871893,
+        "false_splits": 2390,
+        "false_merges": 1930,
+        "exact_sequences": 204,
+        "exact_sequence_rate": 0.2054380664652568
       },
       "tud_unigram_viterbi": {
         "boundary_precision": 0.608,
@@ -683,10 +693,14 @@
         "exact_sequences": 119,
         "exact_sequence_rate": 0.11983887210473314
       },
-      "caveat": "Full-text same-row metrics; not directly comparable to earlier filtered Thai-only TUD metrics; source annotation, not independent expert gold."
+      "caveat": "Full-text same-row metrics on source-annotated labels; zero expert-adjudicated rows; diagnostic only."
     },
     "production_decision": "DO_NOT_INTEGRATE_TUD_AS_PRODUCTION_DEFAULT",
-    "production_decision_basis": "On identical full-text Wisesight rows, TUD has lower boundary F1 (0.748623 vs 0.839471), lower exact-sequence rate (11.98% vs 19.34%) and 8,722 false splits vs 2,574 for dictionary max-match. Labels are source-annotated; human review and independent-domain evaluation remain required."
+    "production_decision_basis": "On identical full-text Wisesight rows, TUD has lower boundary F1 (0.748623 vs 0.847036), lower exact-sequence rate (11.98% vs 20.54%) and 8,722 false splits vs 2,390 for dictionary max-match. Labels remain source-annotated; human review and independent-domain evaluation remain required.",
+    "artifact_archive_sha256": "479c0aaf88c714fc8d890078c84349facc8a154b008d24ec30897a7fb4f20b70",
+    "comparative_artifact_archive_sha256": "f1120dbd3c48554f0da5658c0b479dbe7e64b5da23b398d36051d1a225d7f2cc",
+    "artifact_hash_note": "Current GitHub Actions artifact archive digest is recorded separately in artifact_archive_sha256. The hash of the inner JSON file was not retrieved; do not reuse the previous artifact's file hash.",
+    "comparative_artifact_hash_note": "Current GitHub Actions artifact archive digest is recorded separately in comparative_artifact_archive_sha256. The hash of the inner JSON file was not retrieved; do not reuse the previous artifact's file hash."
   },
   "current_checkpoint": {
     "date": "2026-10-26",
@@ -732,8 +746,8 @@
     "segmentation_comparison": {
       "rows": 993,
       "evidence_grade": "SOURCE_ANNOTATED_NOT_EXPERT_ADJUDICATED",
-      "dictionary_boundary_f1": 0.8394713656387666,
-      "dictionary_exact_sequences": 192,
+      "dictionary_boundary_f1": 0.847036328871893,
+      "dictionary_exact_sequences": 204,
       "tud_boundary_f1": 0.7486234470545917,
       "tud_exact_sequences": 119,
       "decision": "DO_NOT_INTEGRATE_TUD_AS_PRODUCTION_DEFAULT"
@@ -2152,102 +2166,31 @@
     "latest_pr_head_ci_status": "See PR #169 metadata; previous exact-head run 41244614135 passed all three jobs."
   },
   "current_branch_inventory": {
-    "branch_refs": 24,
+    "branch_refs": 22,
     "prefix_counts": {
       "chore": 2,
       "ci": 1,
       "docs": 4,
-      "fix": 4,
+      "fix": 2,
       "main": 1,
       "refactor": 4,
       "research": 6,
       "test": 1,
       "work": 1
     },
-    "as_of": "2026-11-04",
+    "as_of": "2026-11-03",
     "deletions": 0,
-    "note": "24 refs verified through the GitHub branches API. All historical and research branches preserved; no deletion or force-push."
+    "note": "22 current refs inspected. No branch deleted. Six open draft PRs: #184, #185, #186, #188, #189 and #190. #186 remains stacked on #185; #184 is a separate FastThaiG2P adapter; #188 overlaps shared source registry/audit paths; #190 is an independent accessibility contrast fix."
   },
   "open_prs_current": [
-    {
-      "number": 191,
-      "title": "fix(segmentation): align Thai spacing-vowel cluster boundaries",
-      "state": "OPEN",
-      "draft": true,
-      "merged": false,
-      "head_branch": "fix/thai-spacing-vowel-cluster-parity-20261103",
-      "head_sha": "61e4567ab074e767547369087e8f7483985deb8d",
-      "verified_code_test_sha": "8665c07d71f61e89de60654491207e1798a14bfd",
-      "ci": 41794235177,
-      "external_vistec": 41794234815,
-      "base": "main",
-      "base_sha": "75c331f69aa3c8e5b4db3ccc5a6da85124600a01"
-    },
-    {
-      "number": 190,
-      "title": "fix(web): meet non-text contrast for form controls",
-      "state": "OPEN",
-      "draft": true,
-      "merged": false,
-      "head_sha": "fc116507e18c2d6624dad18e38d719cb3a606ec0",
-      "ci": 41533064781,
-      "web_static": 41533064664,
-      "disposition": "left_untouched_manual_wcag_review_open"
-    },
-    {
-      "number": 189,
-      "title": "Triage G2P benchmark error clusters and recover attested lexical cases",
-      "state": "OPEN",
-      "draft": true,
-      "merged": false,
-      "head_sha": "9b088cf05ceab7e1c758b75688bb624c115ce341",
-      "ci": 41715667897,
-      "web_static": 41715667842,
-      "external_vistec": 41715667903,
-      "disposition": "left_untouched_independent_linguistic_evidence_open"
-    },
-    {
-      "number": 188,
-      "title": "research: register Global TIMIT Thai as restricted alignment candidate",
-      "state": "OPEN",
-      "draft": true,
-      "merged": false,
-      "head_sha": "00374b252cdd3693faf26fdfc1b033e8fdec48e0",
-      "ci": 41460030159,
-      "disposition": "left_untouched_metadata_only_not_phonetic_gold"
-    },
-    {
-      "number": 186,
-      "title": "research: add conservative typed FastThaiG2P IPA boundary",
-      "state": "OPEN",
-      "draft": true,
-      "merged": false,
-      "head_sha": "c02e10e89ac340b80b6ed83c0a991f89cf9cc3fe",
-      "base_branch": "research/fastthaig2p-integration-spike-20261102",
-      "disposition": "left_untouched_research_spike"
-    },
-    {
-      "number": 185,
-      "title": "research: add optional FastThaiG2P challenge comparison spike",
-      "state": "OPEN",
-      "draft": true,
-      "merged": false,
-      "head_sha": "a05afd184a7b546f522272df8d2ddc184e4e51c2",
-      "disposition": "left_untouched_research_spike"
-    },
-    {
-      "number": 184,
-      "title": "feat: add optional FastThaiG2P adapter and same-input comparison",
-      "state": "OPEN",
-      "draft": true,
-      "merged": false,
-      "head_sha": "ddbd57745eee2f86a80e149e2153f2fd107fa205",
-      "ci": 41660040598,
-      "optional_smoke": 41660040574,
-      "disposition": "left_untouched_research_spike"
-    }
+    "#189 — Triage G2P benchmark error clusters and recover attested lexical cases (draft; unmerged)",
+    "#190 — Fix non-text contrast for form controls (draft; unmerged; independent accessibility change)",
+    "#188 — Register Global TIMIT Thai as restricted alignment candidate (draft; unmerged)",
+    "#186 — Add conservative typed FastThaiG2P IPA boundary (draft; unmerged; based on #185)",
+    "#185 — Add optional FastThaiG2P challenge comparison spike (draft; unmerged)",
+    "#184 — Add optional FastThaiG2P adapter and same-input comparison (draft; unmerged)"
   ],
-  "latest_pr_head_source": "PR #191 metadata: 8665c07d71f61e89de60654491207e1798a14bfd; exact-head CI 41728579416 and external VISTEC 41728579532 both succeeded.",
+  "latest_pr_head_source": "PR #182 merged into main as 65584d9a3d3d64a8e520dbd32411bef4b0a3dd9e; no product PR remains open at this checkpoint.",
   "status_refresh_2026_10_31": {
     "main_sha": "8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8",
     "pr_169": {
@@ -2765,83 +2708,11 @@
     "exact_regression_test_ci_result": "PASSED_ALL_3_JOBS"
   },
   "open_prs": [
-    {
-      "number": 191,
-      "title": "fix(segmentation): align Thai spacing-vowel cluster boundaries",
-      "state": "OPEN",
-      "draft": true,
-      "merged": false,
-      "head_branch": "fix/thai-spacing-vowel-cluster-parity-20261103",
-      "head_sha": "61e4567ab074e767547369087e8f7483985deb8d",
-      "verified_code_test_sha": "8665c07d71f61e89de60654491207e1798a14bfd",
-      "ci": 41794235177,
-      "external_vistec": 41794234815,
-      "base": "main",
-      "base_sha": "75c331f69aa3c8e5b4db3ccc5a6da85124600a01"
-    },
-    {
-      "number": 190,
-      "title": "fix(web): meet non-text contrast for form controls",
-      "state": "OPEN",
-      "draft": true,
-      "merged": false,
-      "head_sha": "fc116507e18c2d6624dad18e38d719cb3a606ec0",
-      "ci": 41533064781,
-      "web_static": 41533064664,
-      "disposition": "left_untouched_manual_wcag_review_open"
-    },
-    {
-      "number": 189,
-      "title": "Triage G2P benchmark error clusters and recover attested lexical cases",
-      "state": "OPEN",
-      "draft": true,
-      "merged": false,
-      "head_sha": "9b088cf05ceab7e1c758b75688bb624c115ce341",
-      "ci": 41715667897,
-      "web_static": 41715667842,
-      "external_vistec": 41715667903,
-      "disposition": "left_untouched_independent_linguistic_evidence_open"
-    },
-    {
-      "number": 188,
-      "title": "research: register Global TIMIT Thai as restricted alignment candidate",
-      "state": "OPEN",
-      "draft": true,
-      "merged": false,
-      "head_sha": "00374b252cdd3693faf26fdfc1b033e8fdec48e0",
-      "ci": 41460030159,
-      "disposition": "left_untouched_metadata_only_not_phonetic_gold"
-    },
-    {
-      "number": 186,
-      "title": "research: add conservative typed FastThaiG2P IPA boundary",
-      "state": "OPEN",
-      "draft": true,
-      "merged": false,
-      "head_sha": "c02e10e89ac340b80b6ed83c0a991f89cf9cc3fe",
-      "base_branch": "research/fastthaig2p-integration-spike-20261102",
-      "disposition": "left_untouched_research_spike"
-    },
-    {
-      "number": 185,
-      "title": "research: add optional FastThaiG2P challenge comparison spike",
-      "state": "OPEN",
-      "draft": true,
-      "merged": false,
-      "head_sha": "a05afd184a7b546f522272df8d2ddc184e4e51c2",
-      "disposition": "left_untouched_research_spike"
-    },
-    {
-      "number": 184,
-      "title": "feat: add optional FastThaiG2P adapter and same-input comparison",
-      "state": "OPEN",
-      "draft": true,
-      "merged": false,
-      "head_sha": "ddbd57745eee2f86a80e149e2153f2fd107fa205",
-      "ci": 41660040598,
-      "optional_smoke": 41660040574,
-      "disposition": "left_untouched_research_spike"
-    }
+    "#189 — Triage G2P benchmark error clusters and recover attested lexical cases (draft; unmerged)",
+    "#188 — Register Global TIMIT Thai as restricted alignment candidate (draft; unmerged)",
+    "#186 — Add conservative typed FastThaiG2P IPA boundary (draft; unmerged; based on #185)",
+    "#185 — Add optional FastThaiG2P challenge comparison spike (draft; unmerged)",
+    "#184 — Add optional FastThaiG2P adapter and same-input comparison (draft; unmerged)"
   ],
   "audio_interval_overlap_code_checkpoint_2026_11_02": {
     "verified_code_head": "964b4930321e68c77ba5e956e1c0ecd12164ccfa",
@@ -3080,108 +2951,547 @@
     "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY"
   },
   "latest_full_repository_head_pages_run": "41420468875",
-  "latest_implementation_commit": "8665c07d71f61e89de60654491207e1798a14bfd",
-  "latest_thai_spacing_vowel_parity_2026_11_03": {
-    "branch": "fix/thai-spacing-vowel-cluster-parity-20261103",
-    "base_branch": "main",
-    "starting_main_sha": "75c331f69aa3c8e5b4db3ccc5a6da85124600a01",
-    "verified_code_test_sha": "8665c07d71f61e89de60654491207e1798a14bfd",
-    "exact_head_ci_run": 41728579416,
-    "exact_head_ci_result": "PASSED_ALL_3_JOBS",
-    "python_tests": 322,
-    "python_subtests": 1174,
+  "benchmark_error_triage": {
+    "baseline_workflow_run": 41454481686,
+    "baseline_branch": "research/fastthaig2p-typed-ipa-boundary-20261102",
+    "baseline_head": "c02e10e89ac340b80b6ed83c0a991f89cf9cc3fe",
+    "artifact_sha256": "a166828e7a175af4759120d609ba8511c661db2845a25cab5fab1685c17b0da5",
+    "challenge_inputs": 42,
+    "fastthaig2p_complete_outputs": 42,
+    "clippyfirst_conservative_complete_outputs_before_fixes": 28,
+    "paired_syllable_outputs": 40,
+    "segmental_agreement_after_ignoring_only_unreleased_coda_modifier": "36/40",
+    "candidate_discrepancies": [
+      "TH-G2P-002",
+      "TH-G2P-016",
+      "TH-G2P-026",
+      "TH-G2P-029"
+    ],
+    "row_level_triage": "data/benchmark/fastthaig2p-error-triage-2026-11-02.tsv",
+    "status": "RUNTIME_RECOVERY_EXACT_HEAD_CI_VERIFIED_INDEPENDENT_ADJUDICATION_PENDING",
+    "gold_status": "NOT_ADJUDICATED",
+    "recovery_branch": "fix/benchmark-error-clusters-20261102",
+    "recovery_head": "55f2ef9966da065326873014e8066acc43b2a151",
+    "recovery_pr": 189,
+    "exact_head_ci_run": 41471961004,
+    "exact_head_web_static_run": 41471960975,
+    "conservative_complete_outputs_after_fixes": "32/42",
+    "opt_in_word_segmented_complete_outputs_after_fixes": "36/42",
+    "abstained_or_incomplete_inputs_after_opt_in": "6/42",
+    "abstention_ids": [
+      "TH-G2P-030",
+      "TH-G2P-031",
+      "TH-G2P-032",
+      "TH-G2P-034",
+      "TH-G2P-035",
+      "TH-G2P-036"
+    ],
+    "diagnostic_artifact": "thai-challenge-runtime-diagnostics",
+    "diagnostic_kind": "RUNTIME_COVERAGE_NOT_ACCURACY",
+    "documentation_status": "RUNTIME_CODE_VERIFIED_ON_55f2; DOCUMENTATION_REFRESH_REQUIRES_EXACT_HEAD_CI"
+  },
+  "article_style_coverage": {
+    "source_pinned_words": [
+      "ประเทศ",
+      "เป็น",
+      "หนึ่ง",
+      "ใน"
+    ],
+    "source_ids": [
+      "SRC-WIKTIONARY-TH-ประเทศ",
+      "SRC-WIKTIONARY-TH-เป็น",
+      "SRC-WIKTIONARY-TH-หนึ่ง",
+      "SRC-WIKTIONARY-TH-ใน"
+    ],
+    "status": "EXACT_HEAD_CI_VERIFIED_OPT_IN_WORD_SEGMENTED_COVERAGE_36_OF_42",
+    "evidence_grade": "SOURCE_ATTESTED_NOT_GOLD",
+    "intended_scope": "opt-in dictionary-word-segmented route and browser text segmentation; conservative Python endpoint remains fail-closed for continuous Thai runs",
+    "exact_head": "55f2ef9966da065326873014e8066acc43b2a151",
+    "exact_head_ci_run": 41471961004,
+    "phrase_cases": [
+      "TH-G2P-038",
+      "TH-G2P-039",
+      "TH-G2P-040",
+      "TH-G2P-042"
+    ]
+  },
+  "latest_exact_head_verification_benchmark_error_clusters_2026_11_02": {
+    "branch": "fix/benchmark-error-clusters-20261102",
+    "pr": 189,
+    "code_head": "55f2ef9966da065326873014e8066acc43b2a151",
+    "ci_run": 41471961004,
+    "ci_result": "PASSED_ALL_3_JOBS",
+    "test_job": "PASSED",
     "wheel_install_smoke": "PASSED",
     "master_artifact": "PASSED",
-    "external_vistec_run": 41728579532,
+    "ruff": "PASSED",
+    "pytest": "326_PASSED_1185_SUBTESTS_PASSED",
+    "browser_ipa_ua": "PASSED",
+    "browser_parity": "29_FIXTURES_PASSED",
+    "ui_contract": "PASSED",
+    "accessibility_static_contracts": "PASSED",
+    "generated_artifact_drift": "PASSED",
+    "challenge_runtime_diagnostic": "32_OF_42_CONSERVATIVE_36_OF_42_OPT_IN_WORD_SEGMENTED",
+    "web_static_run": 41471960975,
+    "web_static_result": "PASSED",
+    "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
+    "linguistic_accuracy": "NOT_MEASURED",
+    "branch_ahead_of_main": 63,
+    "branch_behind_main": 0,
+    "documentation_refresh": "PASSED_FINAL_TEXT_LEXICON_LICENSE_REFRESH; CURRENT_STRUCTURED_AUDIT_REGISTER_REFRESH_IS_DOCUMENTATION_ONLY",
+    "documentation_checkpoint_head": "8be5e89d1a9190eaa37c15dbe9340ac1242283e0",
+    "documentation_checkpoint_ci_run": 41475777693,
+    "documentation_checkpoint_ci_result": "PASSED_ALL_3_JOBS",
+    "documentation_checkpoint_web_static_run": 41475777686,
+    "documentation_checkpoint_web_static_result": "PASSED"
+  },
+  "latest_literature_evidence_2026_11_03": {
+    "branch": "fix/benchmark-error-clusters-20261102",
+    "pull_request": 189,
+    "literature_review": "docs/research/thai-g2p-evaluation-literature-2026-11-03.md",
+    "literature_review_status": "DONE_VERIFIED",
+    "full_texts_inspected": [
+      "Saychum et al. 2016 DOI 10.21437/Interspeech.2016-621",
+      "Yamasaki 2022 DOI 10.18653/v1/2022.naacl-main.315"
+    ],
+    "abstract_level_sources": [
+      "Rugchatjaroen et al. 2019 DOI 10.1016/j.specom.2018.12.003",
+      "Morén & Zsiga 2006 DOI 10.1007/s11049-004-5454-y",
+      "Xu & Zhang 2024 DOI 10.1121/10.0032356",
+      "Pons Bordería & Aliaga 2021 DOI 10.22363/2687-0088-2021-25-2-478-506",
+      "Jitwiriyanont & Nantanukul 2026 DOI 10.1080/17549507.2026.2651739"
+    ],
+    "key_findings": [
+      "Published dictionary/Wiktionary-derived WER/PER/exact-sequence scores are not independent expert gold for ClippyFirst.",
+      "Yamasaki 0.931 measures exact phoneme-symbol sequence match; candidate coverage is 17720/18066.",
+      "Saychum reports separate exact-match WER, tone-ignored WER, PER, vowel-length and tone ambiguity diagnostics."
+    ],
+    "runtime_changes": "NONE",
+    "project_accuracy": "NOT_MEASURED",
+    "independent_review": "BLOCKED_EXTERNAL_REVIEWERS",
+    "exact_head_verification": "PASSED_ON_BDC8A2FB2A0BF04E562D1851BB14589887BB533B; FINAL_REGISTER_REFRESH_PENDING",
+    "latest_document_commit_before_json": "f0dc77f364b099afb3dfaef7f86551c346141062",
+    "consensus_thread": "https://consensus.app/search/research-the-peer-reviewed-evidence-and-primary-sc/TPPdaWrzSWGIdPzNPruDdA/",
+    "undermind_document": "https://app.undermind.ai/projects/49bbd978-a5a9-4cac-a7bb-a72848f50e10?path=/Research%20the%20peer-reviewed%20evidence%20and%20primary%20scholarly%20literature%20relevant%20to.md",
+    "ci_run": 41605187604,
+    "ci_result": "PASSED_ALL_3_JOBS",
+    "web_static_run": 41605187373,
+    "web_static_result": "PASSED",
+    "python_test_suite": "326_PASSED_1185_SUBTESTS_PASSED",
+    "ruff": "PASSED",
+    "wheel_install_smoke": "PASSED",
+    "master_artifact": "PASSED",
+    "current_audit_documentation_update": "PRE_REGISTER_CHECKPOINT_PASSED; THIS_FINAL_REGISTER_REFRESH_REQUIRES_ITS_OWN_EXACT_HEAD_CI",
+    "branch_ahead_of_main": 90,
+    "branch_behind_main": 0,
+    "audit_json_refresh_commit": "BDC8A2FB2A0BF04E562D1851BB14589887BB533B"
+  },
+  "development_methodology_review_2026_11_03": {
+    "status": "DONE_REVIEWED_APPLIED_SELECTIVELY",
+    "sources": {
+      "superpowers": {
+        "url": "https://github.com/obra/superpowers",
+        "license": "MIT",
+        "reviewed_files": [
+          "skills/test-driven-development/SKILL.md",
+          "skills/requesting-code-review/SKILL.md"
+        ],
+        "reviewed_commits": [
+          "46838cc9e893c06259e3bdad0fc2425b36242f15",
+          "68d338a58ecdd8b77bfbb519b781ef223dbbb842"
+        ]
+      },
+      "matt_pocock_skills": {
+        "url": "https://github.com/mattpocock/skills",
+        "license": "MIT",
+        "reviewed_file": "skills/engineering/research/SKILL.md",
+        "reviewed_commit": "ffc9eb89849cc4cf74962ce93d786ffd17c6a5dc"
+      },
+      "ponytail": {
+        "url": "https://github.com/DietrichGebert/ponytail",
+        "license": "MIT",
+        "reviewed_files": [
+          "skills/ponytail/SKILL.md",
+          "AGENTS.md",
+          "README.md"
+        ],
+        "reviewed_commits": [
+          "d64edd32265ba21cbf5270158f04e97d96925f27",
+          "ee5d6f1d6c1e4ff197a41d3ff43fa6597dbc81d4"
+        ]
+      }
+    },
+    "adopted": [
+      "TDD red-green-refactor and verify the test fails for the expected reason before code changes",
+      "review the complete affected dataflow and callers, not only the diff",
+      "reuse repository interfaces and prefer the smallest complete change",
+      "research claims traced to primary sources and evidence scope stated explicitly",
+      "record verification and skipped/manual checks honestly"
+    ],
+    "not_adopted": [
+      "No skills or code vendored; no new dependencies or agent runtime installed",
+      "No automatic background-agent fan-out; this host does not expose safe independent subagents and mattpocock research docs describe unguarded nested delegation as a known failure mode",
+      "No token/LOC benchmark targets imported from Ponytail; its self-reported benchmark is not a project quality metric"
+    ],
+    "academic_toolkit_review": {
+      "citation_audit": "NOT_CLEAN; current Harvard audit still reports Yamasaki and Rugchatjaroen Source-note mismatches despite template-compatible Source lines; manual DOI/bibliography links inspected; do not claim an automated pass.",
+      "paragraph_logic": "2 short one-sentence 'Full-text findings' labels flagged; retained as intentional section cues, not prose defects.",
+      "british_english": "1 flag: 'Modeling' in an exact published title; retained verbatim. No global English-style conversion."
+    },
+    "runtime_changes": "NONE"
+  },
+  "latest_documentation_batch_verification_2026_11_03": {
+    "head": "e7ebb28e64afd5ec70fc136a12d6723ccebdd59e",
+    "full_ci_run": 41643230493,
+    "full_ci": "PASSED_ALL_3_JOBS",
+    "web_static_run": 41643230575,
+    "web_static": "PASSED",
+    "jobs": [
+      "test",
+      "wheel-install-smoke",
+      "master-artifact"
+    ],
+    "pytest": "327_PASSED_1185_SUBTESTS_PASSED",
+    "ruff": "PASSED",
+    "source_and_blind_packet_validators": "PASSED",
+    "generated_artifact_drift": "PASSED",
+    "ipa_ukrainian_adapter": "PASSED",
+    "browser_parity": "29_FIXTURES_PASSED",
+    "ui_accessibility_static_contracts": "PASSED",
+    "segmentation_diagnostics": "PASSED",
+    "wheel_install_smoke": "PASSED",
+    "master_artifact": "PASSED",
+    "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
+    "linguistic_accuracy": "NOT_MEASURED",
+    "runtime_changes_after_code_head": "NONE_DOCUMENTATION_ONLY"
+  },
+  "latest_exact_head_verification_2026_11_03": {
+    "branch": "fix/benchmark-error-clusters-20261102",
+    "pr": 189,
+    "head": "3f5bbbbff4b40899eb273333ec0c06a028d862fd",
+    "ahead_of_main": 121,
+    "behind_main": 0,
+    "full_ci_run": 41651609638,
+    "full_ci_result": "PASSED_ALL_3_JOBS",
+    "web_static_run": 41651609695,
+    "web_static_result": "PASSED",
+    "jobs": [
+      "test",
+      "wheel-install-smoke",
+      "master-artifact"
+    ],
+    "pytest": "327_PASSED_1185_SUBTESTS_PASSED",
+    "ruff": "PASSED",
+    "generated_artifact_drift": "PASSED",
+    "source_reviewer_and_blind_packet_validators": "PASSED",
+    "challenge_runtime_diagnostic": "PASSED_42_INPUTS_NOT_ACCURACY",
+    "ipa_ukrainian_adapter": "PASSED",
+    "browser_parity_fixtures": 29,
+    "ui_accessibility_static_contracts": "PASSED",
+    "segmentation_diagnostics": "PASSED",
+    "held_out_tud_evaluation": "PASSED",
+    "wheel_install_smoke": "PASSED",
+    "master_artifact": "PASSED",
+    "setuptools_spdx_metadata": "VERIFIED_NO_LICENSE_TABLE_DEPRECATION",
+    "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
+    "linguistic_accuracy": "NOT_MEASURED",
+    "main_changed": false,
+    "pr_state": "OPEN_DRAFT",
+    "remaining_external_gates": [
+      "independent Thai phonetic and segmentation adjudication",
+      "independent Ukrainian-native target-form adjudication",
+      "CCOST curator clarification and original TextGrid archive inspection",
+      "immutable LOTUSDIS audio objects, hashes and provenance",
+      "hands-on keyboard, screen-reader, zoom/reflow and mobile accessibility testing"
+    ]
+  },
+  "diagnostic_complete_output_guard_2026_11_03": {
+    "status": "DONE_VERIFIED",
+    "test_commit": "8492d2478425a88f24827d8547c96a26d9559ac9",
+    "expected_red_ci_run": 41640676532,
+    "expected_red_result": "NEW_REGRESSION_FAILED_AS_EXPECTED; 326_PASSED; 1185_SUBTESTS_PASSED",
+    "fix_commit": "94eaadb5bda2318dfa864eee7dae1b3715b70374",
+    "rule": "Every Thai token must contain a non-empty syllable list before the text is counted as complete.",
+    "full_ci_run": 41641516453,
+    "full_ci_result": "PASSED_ALL_3_JOBS",
+    "web_static_run": 41641516658,
+    "web_static_result": "PASSED",
+    "pytest": "327_PASSED_1185_SUBTESTS_PASSED",
+    "ruff": "PASSED",
+    "runtime_scope": "DIAGNOSTIC_ONLY_NO_PARSER_IPA_UKRAINIAN_OR_PUBLIC_API_CHANGE"
+  },
+  "latest_documentation_reconciliation_verification_2026_11_03": {
+    "head": "fba3e63deeda6e61565e0444dc4685f248dbb763",
+    "ahead_of_main": 116,
+    "behind_main": 0,
+    "full_ci_run": 41646388428,
+    "full_ci": "PASSED_ALL_3_JOBS",
+    "web_static_run": 41646388317,
+    "web_static": "PASSED",
+    "scope": "FOUR_EXISTING_AUDIT_AND_HANDOFF_FILES_ONLY",
+    "runtime_changes": "NONE",
+    "pytest": "327_PASSED_1185_SUBTESTS_PASSED",
+    "ruff": "PASSED",
+    "browser_parity": "29_FIXTURES_PASSED",
+    "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
+    "linguistic_accuracy": "NOT_MEASURED",
+    "note": "Exact-head workflow results supersede the earlier pending-CI entry; no results are transferred from an older commit."
+  },
+  "latest_documentation_head_verification_2026_11_03": {
+    "branch": "fix/benchmark-error-clusters-20261102",
+    "pr": 189,
+    "head": "7ba27004ba5dc9e60fd1f9c57a686b90cf490ae9",
+    "base": "75c331f69aa3c8e5b4db3ccc5a6da85124600a01",
+    "ahead_of_main": 129,
+    "behind_main": 0,
+    "full_ci_run": 41656371625,
+    "full_ci": "PASSED_ALL_3_JOBS",
+    "full_ci_jobs": [
+      "test",
+      "wheel-install-smoke",
+      "master-artifact"
+    ],
+    "web_static_run": 41656371599,
+    "web_static": "PASSED",
+    "ruff": "PASSED",
+    "pytest": "327_PASSED_1185_SUBTESTS_PASSED",
+    "generated_artifact_drift": "PASSED",
+    "source_reviewer_and_blind_packet_validators": "PASSED",
+    "challenge_runtime_diagnostic": "PASSED_42_INPUTS_NOT_ACCURACY",
+    "ipa_ukrainian_adapter": "PASSED",
+    "browser_parity_fixtures": 29,
+    "ui_accessibility_static_contracts": "PASSED_STATIC_ONLY",
+    "segmentation_diagnostics_and_error_review": "PASSED",
+    "held_out_tud_evaluation": "PASSED",
+    "wheel_install_smoke": "PASSED",
+    "master_artifact": "PASSED",
+    "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
+    "linguistic_accuracy": "NOT_MEASURED",
+    "main_changed": false,
+    "pr_state": "OPEN_DRAFT",
+    "review_comment_id": 5758597272,
+    "remaining_external_gates": [
+      "two qualified independent Thai reviewers and adjudicator for phonetic/segmentation gold",
+      "two independent Ukrainian-native reviewers and adjudicator",
+      "CCOST A-D curator clarification and actual TextGrid/X-SAMPA archive inspection",
+      "immutable LOTUSDIS revision and verified audio asset hashes/interval metadata",
+      "hands-on keyboard, screen-reader, zoom/reflow and mobile accessibility testing"
+    ],
+    "note": "Exact-head Full CI and Web Static passed on the recorded branch head. This is engineering verification only; source-attested lexicon entries and source-annotated segmentation diagnostics are not independent gold."
+  },
+  "latest_exact_head_verification_thai_cluster_boundaries_2026_11_03": {
+    "branch": "fix/benchmark-error-clusters-20261102",
+    "verified_runtime_workflow_head": "69d56b52b7f687948cac4250e4c7eb98e86ab67f",
+    "followup_docstring_commit": "ac603c4ae96bf6ffbc8f2edb095b4f2375d57ce5",
+    "full_ci_run": 41711547837,
+    "web_static_run": 41711547920,
+    "external_vistec_run": 41711547913,
+    "branch_ahead_of_main": 136,
+    "branch_behind_main": 0,
+    "pytest": "328 passed, 1192 subtests passed",
+    "ruff": "All checks passed",
+    "wisesight": {
+      "rows": 993,
+      "source_annotated_rows": 993,
+      "expert_adjudicated_rows": 0,
+      "license": "CC0-1.0",
+      "split": "test",
+      "same_rows_for_both_engines": true,
+      "dictionary_max_match": {
+        "boundary_precision": 0.8334610828513692,
+        "boundary_recall": 0.861061118709956,
+        "boundary_f1": 0.847036328871893,
+        "false_splits": 2390,
+        "false_merges": 1930,
+        "exact_sequences": 204,
+        "exact_sequence_rate": 0.2054380664652568
+      },
+      "tud_unigram_viterbi": {
+        "boundary_precision": 0.608,
+        "boundary_recall": 0.9738679720682456,
+        "boundary_f1": 0.7486234470545917,
+        "false_splits": 8722,
+        "false_merges": 363,
+        "exact_sequences": 119,
+        "exact_sequence_rate": 0.11983887210473314
+      },
+      "caveat": "Full-text same-row metrics on source-annotated labels; zero expert-adjudicated rows; diagnostic only."
+    },
+    "vistec": {
+      "rows": 50000,
+      "evidence_grade": "SOURCE_ANNOTATED_NOT_EXPERT_ADJUDICATED",
+      "expert_adjudicated_rows": 0,
+      "dictionary_max_match": {
+        "boundary_precision": 0.7742908952303185,
+        "boundary_recall": 0.9007962660325631,
+        "boundary_f1": 0.8327666325382598,
+        "exact_sequences": 77,
+        "exact_sequence_rate": 0.00154,
+        "coverage": 1
+      },
+      "tud_unigram_viterbi": {
+        "boundary_precision": 0.6064011335968544,
+        "boundary_recall": 0.9931576338081688,
+        "boundary_f1": 0.7530225550370759,
+        "exact_sequences": 16,
+        "exact_sequence_rate": 0.00032,
+        "coverage": 1
+      },
+      "artifact_id": "13267463783",
+      "artifact_archive_sha256": "fb5b8d961c7701e84743f8bb2e123740ad3cd45633b6fb81f4f34d88c7de2a6c",
+      "upstream_readme_rows": 49997,
+      "pinned_csv_rows": 50000
+    },
+    "artifacts": {
+      "wisesight_error_review": {
+        "id": "13267889956",
+        "archive_sha256": "479c0aaf88c714fc8d890078c84349facc8a154b008d24ec30897a7fb4f20b70"
+      },
+      "wisesight_comparative": {
+        "id": "13267884921",
+        "archive_sha256": "f1120dbd3c48554f0da5658c0b479dbe7e64b5da23b398d36051d1a225d7f2cc"
+      },
+      "vistec": {
+        "id": "13267463783",
+        "archive_sha256": "fb5b8d961c7701e84743f8bb2e123740ad3cd45633b6fb81f4f34d88c7de2a6c"
+      }
+    }
+  },
+  "methodology_sources_2026_11_03": {
+    "obra/superpowers": {
+      "readme": "c5bb59fdaf17ba154e803c549cd71a73ef36c24b",
+      "tdd_skill": "46838cc9e893c06259e3bdad0fc2425b36242f15",
+      "applied": "RED-GREEN-REFACTOR; verify the regression fails for the intended reason; full-suite verification."
+    },
+    "mattpocock/skills": {
+      "readme": "f7038f139299985eea6c3e18398dbafb379a0010",
+      "tdd_skill": "01eadaa34e7c9a63a67d6dc3cce1cc81b0e49985",
+      "implement_skill": "bd49e472984c7b99aac40286fdae749bb955a842",
+      "applied": "Small vertical slice; behavior-focused regression at the cluster-boundary contract; full test suite."
+    },
+    "DietrichGebert/ponytail": {
+      "readme": "ff6a92573ef6412495055d979cff1d7464e1fa65",
+      "core_skill": "d64edd32265ba21cbf5270158f04e97d96925f27",
+      "review_skill": "a50e3ac6ded6fccc9edae34ce37877bbce11e3fa",
+      "applied": "Smallest complete change; review changed call path and diagnostics; no new dependency or speculative model."
+    },
+    "copied_code": false,
+    "new_runtime_dependencies": false
+  },
+  "thai_lexical_segmentation_literature_2026_11_03": {
+    "status": "DONE_VERIFIED_RESEARCH_SYNTHESIS",
+    "papers_full_text_inspected": [
+      "Boo20",
+      "Cho20",
+      "Lim21",
+      "Yam22"
+    ],
+    "additional_reference": "Aroonmanakun 2007",
+    "findings": [
+      "Orthographic syllable boundaries can constrain candidate word boundaries but do not determine lexical words.",
+      "LST20 segmentation is context-sensitive; the inspected paper does not report a complete independent annotator/adjudication/IAA protocol or specify a dataset license.",
+      "Lim21 reports domain effects and 13.65% test OOV in VISTEC; this is vocabulary-coverage risk, not a measured max-match failure rate.",
+      "Yam22 0.931 is Wiktionary-derived mixed-source exact-entry accuracy, not independent expert IPA gold."
+    ],
+    "implementation_decision": "Retain dictionary max-match as conservative default; do not promote TUD or introduce a neural segmenter without independently adjudicated, licensed, domain-stratified segmentation gold.",
+    "runtime_changes_from_literature_review": "NONE"
+  },
+  "latest_documentation_refresh_2026_11_03": {
+    "verified_checkpoint": "4ee0c881ae35ebbdb2f5fd3737bf6dcf30bfd918",
+    "branch_ahead_of_main": 143,
+    "branch_behind_main": 0,
+    "full_ci_run": 41713605140,
+    "web_static_run": 41713604974,
+    "external_vistec_run": 41713605326,
+    "all_statuses": "SUCCESS",
+    "runtime_changes_in_documentation_batch": "NONE",
+    "note": "This JSON-only hash-provenance correction is a subsequent documentation-only commit; exact-head Actions checks are tracked on the branch."
+  },
+  "latest_exact_branch_head_verification_2026_11_03": {
+    "branch": "fix/benchmark-error-clusters-20261102",
+    "pr": 189,
+    "exact_head": "d9958db0e877944e5a75183c053681cdbdd525dc",
+    "ahead_of_main": 144,
+    "behind_main": 0,
+    "base_main": "75c331f69aa3c8e5b4db3ccc5a6da85124600a01",
+    "full_ci_run": 41714533758,
+    "full_ci_result": "PASSED_ALL_3_JOBS",
+    "full_ci_jobs": [
+      "test",
+      "wheel-install-smoke",
+      "master-artifact"
+    ],
+    "web_static_run": 41714533792,
+    "web_static_result": "PASSED",
+    "external_vistec_run": 41714533797,
     "external_vistec_result": "PASSED",
-    "vistec_source_commit": "67413969add552b7030184f16f24fa9f630913bc",
-    "vistec_csv_blob_sha1": "edfcb85907a604c5e30643065ac4975862a0fe90",
-    "vistec_rows": 50000,
-    "vistec_expert_adjudicated_rows": 0,
-    "vistec_dictionary_boundary_f1": 0.8327666325382598,
-    "vistec_dictionary_exact_sequences": 77,
-    "vistec_tud_boundary_f1": 0.7530225550370759,
-    "vistec_tud_exact_sequences": 16,
-    "wisesight_rows": 993,
-    "wisesight_expert_adjudicated_rows": 0,
-    "wisesight_exact_sequences": 204,
-    "pr_number": 191,
-    "pr_state": "OPEN_DRAFT_NOT_MERGED",
-    "ahead_by_at_verified_checkpoint": 17,
-    "behind_by_at_verified_checkpoint": 0,
-    "files_changed": [
-      ".github/workflows/ci.yml",
-      "src/thai_ukrainian/segmentation.py",
-      "tests/test_segmentation_error_analysis.py",
-      "tests/test_thai_cluster_boundaries.py",
-      "docs/validation-matrix.md",
-      "docs/final-audit.md",
-      "docs/MASTER-EXECUTION-PLAN-AND-CHAT-HANDOFF.md",
-      "docs/final-audit.json"
+    "superseded_push_ci_run": 41714525970,
+    "superseded_push_ci_result": "CANCELLED; PR exact-head CI above passed",
+    "latest_runtime_workflow_checkpoint": "69d56b52b7f687948cac4250e4c7eb98e86ab67f",
+    "docstring_only_followup": "ac603c4ae96bf6ffbc8f2edb095b4f2375d57ce5",
+    "source_changes_after_runtime_checkpoint": "DOCSTRING_ONLY",
+    "audit_hash_policy": "Unavailable inner artifact SHA-256 values are null; only verified archive SHA-256 values are retained.",
+    "wisesight": {
+      "rows": 993,
+      "source_annotated_rows": 993,
+      "expert_adjudicated_rows": 0,
+      "dictionary_max_match": {
+        "precision": 0.833461,
+        "recall": 0.861061,
+        "f1": 0.847036,
+        "exact_sequences": 204,
+        "false_splits": 2390,
+        "false_merges": 1930
+      },
+      "tud_unigram_viterbi": {
+        "precision": 0.608,
+        "recall": 0.973868,
+        "f1": 0.748623,
+        "exact_sequences": 119,
+        "false_splits": 8722,
+        "false_merges": 363
+      },
+      "evidence_grade": "SOURCE_ANNOTATED_NOT_EXPERT_ADJUDICATED"
+    },
+    "vistec": {
+      "rows": 50000,
+      "expert_adjudicated_rows": 0,
+      "evidence_grade": "SOURCE_ANNOTATED_NOT_EXPERT_ADJUDICATED"
+    },
+    "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
+    "linguistic_accuracy": "NOT_MEASURED",
+    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY",
+    "remaining_external_gates": [
+      "independent Thai segmentation/phonetic reviewers and adjudication",
+      "independent Ukrainian-native target-form review",
+      "CCOST A-D curator clarification and lawful TextGrid/archive inspection",
+      "immutable LOTUSDIS audio objects, hashes and clean-interval provenance",
+      "hands-on keyboard, screen-reader, zoom/reflow and mobile accessibility review"
     ],
-    "caveats": [
-      "VISTEC/Wisesight labels are source-annotated, not expert-adjudicated.",
-      "No pronunciation, IPA, tone or Ukrainian target accuracy is claimed.",
-      "Local tests were not run because the connector-only execution environment could not resolve github.com.",
-      "PR intentionally remains Draft and unmerged."
-    ],
-    "external_blockers": [
-      "Independent qualified Thai review/adjudication",
-      "Independent Ukrainian-native target-form review",
-      "CCOST A–D curator clarification and actual TextGrid archive inspection",
-      "Immutable LOTUSDIS revision plus real hashed audio assets and clean reviewed intervals",
-      "Hands-on WCAG keyboard, screen-reader, zoom/reflow and device testing"
-    ],
-    "other_open_prs_left_untouched": [
+    "note": "Exact-head results are not inherited by the documentation-only reconciliation commit created from this verified head; that new commit requires its own exact-head CI."
+  },
+  "integration_reconciliation_2026_11_04": {
+    "status": "PARTIAL_PENDING_FINAL_COMBINED_CI",
+    "base_main": "e46fae335a1eee0051ca0ce5ead262959514c39c",
+    "integration_pr": 199,
+    "integration_branch": "integration/all-pr-work-2026-11-04-v7",
+    "integrated_workstreams": [
+      184,
+      185,
+      186,
       188,
       189,
       190,
-      184,
-      185,
-      186
+      192,
+      193
     ],
-    "open_pr_count": 7,
-    "vistec_dictionary_precision": 0.7742908952303185,
-    "vistec_dictionary_recall": 0.9007962660325631,
-    "vistec_tud_precision": 0.6064011335968544,
-    "vistec_tud_recall": 0.9931576338081688,
-    "branch_head_sha": "8665c07d71f61e89de60654491207e1798a14bfd",
-    "exact_head_test_result": "322 passed, 1,174 subtests passed",
-    "local_test_status": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT"
-  },
-  "latest_exact_head_verification_2026_11_04": {
-    "branch": "fix/thai-spacing-vowel-cluster-parity-20261103",
-    "base_branch": "main",
-    "base_sha": "75c331f69aa3c8e5b4db3ccc5a6da85124600a01",
-    "head_sha": "61e4567ab074e767547369087e8f7483985deb8d",
-    "ahead_by": 18,
-    "behind_by": 0,
-    "ci_run": 41794235177,
-    "ci_result": "PASSED_ALL_3_JOBS",
-    "python_tests": 322,
-    "python_subtests": 1174,
-    "ruff": "PASSED",
-    "parity_fixtures": 29,
-    "wheel_install_smoke": "PASSED",
-    "master_artifact": "PASSED",
-    "vistec_run": 41794234815,
-    "vistec_result": "PASSED",
-    "vistec_rows": 50000,
-    "vistec_expert_adjudicated_rows": 0,
-    "vistec_dictionary_boundary_f1": 0.8327666325382598,
-    "vistec_dictionary_precision": 0.7742908952303185,
-    "vistec_dictionary_recall": 0.9007962660325631,
-    "vistec_dictionary_exact_sequences": 77,
-    "vistec_tud_boundary_f1": 0.7530225550370759,
-    "vistec_tud_precision": 0.6064011335968544,
-    "vistec_tud_recall": 0.9931576338081688,
-    "vistec_tud_exact_sequences": 16,
-    "linguistic_accuracy": "NOT_MEASURED",
-    "pr_number": 191,
-    "pr_state": "OPEN_DRAFT_NOT_MERGED",
-    "note": "This is the last exact-head-verified PR commit before this structured audit JSON's documentation-only refresh; see live PR metadata for the current HEAD."
-  },
-  "latest_documentation_head_ci_result": "PASSED_ALL_3_JOBS",
-  "latest_documentation_head_vistec_run": 41794234815,
-  "latest_documentation_head_vistec_result": "PASSED"
+    "retained_main_pr": 191,
+    "notes": [
+      "The FastThaiG2P adapter keeps external IPA separate from phonemic_ipa and broad_surface_ipa; typed external output is PROVISIONAL, never gold.",
+      "The Ukrainian adapter may produce explicitly provisional text only for complete supported segments; incomplete IPA, passthrough and unsupported symbols are withheld.",
+      "Global TIMIT Thai remains BLOCKED pending LDC authorization.",
+      "LOTUSDIS audio evidence remains PARTIAL; actual WAV bytes, recomputed SHA-256, interval and overlap/channel verification are missing.",
+      "Linguistic accuracy remains NOT_MEASURED; no release readiness claim."
+    ]
+  }
 }

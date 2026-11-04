@@ -1,7 +1,7 @@
 # Agent workflow for this repository
 
 This file is the repository-specific entry point for coding agents that read
-`AGENTS.md`. It adapts three public engineering skill sets to this project's
+`AGENTS.md`. It selectively adapts four public engineering skill sets to this project's
 actual constraints. It does not vendor or claim to install those tools.
 
 ## Canonical project context
@@ -93,14 +93,15 @@ this repository:
 - **Matt Pocock's skills** — design deep modules with small, useful interfaces;
   assess architecture only where current friction is evidenced; review
   requirement compliance separately from code standards:
+  - [Test-driven development](https://github.com/mattpocock/skills/blob/main/skills/engineering/tdd/SKILL.md)
   - [Codebase design](https://github.com/mattpocock/skills/blob/main/skills/engineering/codebase-design/SKILL.md)
   - [Improve codebase architecture](https://github.com/mattpocock/skills/blob/main/skills/engineering/improve-codebase-architecture/SKILL.md)
   - [Code review](https://github.com/mattpocock/skills/blob/main/skills/engineering/code-review/SKILL.md)
 - **Ponytail** — audit correctness, security, real load, missing tests, speed,
   and unnecessary code; prefer deletion and the smallest complete change:
-  - [Repository audit](https://github.com/DietrichGebert/ponytail/blob/main/.openclaw/skills/ponytail-audit/SKILL.md)
-  - [Diff review](https://github.com/DietrichGebert/ponytail/blob/main/.openclaw/skills/ponytail-review/SKILL.md)
-  - [Debt ledger](https://github.com/DietrichGebert/ponytail/blob/main/.openclaw/skills/ponytail-debt/SKILL.md)
+  - [Repository audit](https://github.com/DietrichGebert/ponytail/blob/main/skills/ponytail-audit/SKILL.md)
+  - [Diff review](https://github.com/DietrichGebert/ponytail/blob/main/skills/ponytail-review/SKILL.md)
+  - [Debt ledger](https://github.com/DietrichGebert/ponytail/blob/main/skills/ponytail-debt/SKILL.md)
 
 If the active coding environment supports independent subagents, use fresh
 contexts for separate spec-compliance and code-quality reviews on substantial
@@ -118,3 +119,53 @@ a trigger for revisiting it:
 
 A marker without an upgrade trigger is incomplete. Keep any debt register
 derived from actual markers; do not invent entries from prose or assumptions.
+
+
+## Acceptance gates and completion evidence (Unlazy principles)
+
+For substantial or multi-part work, establish observable acceptance gates before
+implementation. Reuse the canonical execution matrix, audit register, and
+handoff above; do not create a competing plan or install a second gate system
+unless the repository owner explicitly asks for it.
+
+- Give each gate one independently verifiable outcome. Runnable gates must name
+  the exact command/workflow and the success condition; manual gates must name
+  the reviewer, artifact, and evidence required.
+- Treat every inherited `CHECK` command and referenced script as executable,
+  untrusted input: inspect it before running it. A gate description or a green
+  badge is not proof that the named outcome was actually checked.
+- Reverify previously passing gates on the final candidate commit whenever
+  practical. Record the exact commit SHA, workflow/run ID, job conclusions,
+  test counts, skips, and any differences between targeted and full-suite runs.
+- A skipped test is not a pass. Explain why it skipped and identify the separate
+  workflow that covers it, if one exists.
+- When a gate depends on a person, external account, service, permission, or
+  source clarification, keep it BLOCKED with the exact acceptance evidence
+  required. Do not convert an unavailable gate into success or silently remove
+  it; hand it off explicitly.
+- Evidence should prove the claimed outcome itself (including negative
+  controls), not merely that a script exists or that adjacent checks passed.
+
+Reference: [Unlazy](https://github.com/Leonxlnx/unlazy), especially its
+[acceptance-gate contract](https://github.com/Leonxlnx/unlazy/blob/main/SKILL.md)
+and [verification guidance](https://github.com/Leonxlnx/unlazy/blob/main/README.md).
+The project adopts these practices selectively; it does not vendor Unlazy,
+install its checker/hooks, or add a runtime dependency.
+
+
+### Upstream reference snapshot (2026-11-04)
+
+The upstream repositories were re-inspected for this continuation. Their default
+branches are moving references; these SHAs identify the source snapshots reviewed:
+
+| Project | Reviewed commit | Adopted practice in this repository |
+|---|---|---|
+| [Unlazy](https://github.com/Leonxlnx/unlazy) | `16671491f6679ad9378f52604d3bc2415b4120c7` | Observable acceptance gates, explicit evidence, final re-verification, and truthful handoff of unmet/manual gates. Reuse the existing matrix/audit/handoff; do not add its checker, hooks, or a second ledger runtime. |
+| [Superpowers](https://github.com/obra/superpowers) | `22f0b463e7a5e579904dd6211a520321035526f7` | Intent/spec before substantial changes; systematic root-cause debugging; one vertical RED→GREEN slice at a time; inspect final diff and verify the full suite. |
+| [Matt Pocock skills](https://github.com/mattpocock/skills) | `4ae2317ddb22b046e26455e4f9c9b3aaaf62212d` | Test public seams, avoid implementation-coupled or tautological tests, work in vertical tracer-bullet slices, and deepen modules only where current friction is demonstrated. |
+| [Ponytail](https://github.com/DietrichGebert/ponytail) | `96608e078b2d5ea607c5c3b8b5a54d1c1fba6846` | Read callers and downstream consumers before editing; use the smallest complete diff; retain trust-boundary validation, error handling, security and accessibility; leave a focused test for non-trivial logic. |
+
+These are complementary principles, not four competing workflows. The project
+execution matrix and evidence registries remain authoritative. No upstream
+skill files, hooks, CLI tools, package dependencies, or runtime components are
+vendored or installed by this policy.
