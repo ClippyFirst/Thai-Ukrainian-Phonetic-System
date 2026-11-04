@@ -1476,3 +1476,18 @@ The new test/tool code was committed on the PR branch and awaits exact-head CI c
 - Remaining blockers are unchanged: independent Thai and Ukrainian reviewers, CCOST A–D curator clarification and archive inspection, full immutable LOTUSDIS audio revision plus real hashed assets/intervals, and hands-on WCAG keyboard/screen-reader/device testing.
 
 **Final readiness:** the current browser service is deployed and engineering-verified. The repository remains a research prototype, not a linguistic-accuracy or WCAG-conformance release. Linguistic accuracy remains `NOT_MEASURED`.
+
+
+## 2026-11-04 — FastThaiG2P-only website integration (PR #193)
+
+- **User decision:** use option 1 — show a Ukrainian practical candidate from FastThaiG2P IPA, explicitly marked provisional and not expert-validated.
+- **Implementation branch:** `feat/fastthaig2p-site-api-20261104`, based on current main `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`. PR #193 is open as Draft; no merge or production deployment.
+- **Runtime changes:** added the pinned FastThaiG2P adapter at upstream commit `4e82a291b4cf2876326744c6580121e9986ad354`; separate `PhoneticResult.external_ipa`; explicit `PROVISIONAL` status; IPA→Ukrainian adapter path returning `provisional`; FastAPI `src/index.py`; pinned `requirements.txt`; same-origin browser API client; incomplete output fails closed without old-engine fallback.
+- **UI changes:** removed live strictness/RTGS engine controls and old local G2P invocation from the homepage; displays FastThaiG2P IPA, Ukrainian candidate, tone/length and provenance; discloses API processing and provisional status. Legacy browser modules remain as research/reference code but are not called by the new homepage app.
+- **Docs:** added `docs/fastthaig2p-site-integration.md`; updated README, documentation index, web architecture, public system page and validation matrix.
+- **Verification at audit update:** PR head after matrix update is pending a fresh exact-head CI cycle. Dedicated FastThaiG2P site workflow run `41809928792`, Web Static PR run `41809928814`, and Full CI PR run `41809928926` were started; their final results must be recorded after completion. Local tests were not run in the connector-only environment.
+- **BLOCKED — hosting:** GitHub Pages cannot execute the new Python API. The connected Vercel account currently has no project linked to this repository. No project was created or settings changed. Acceptance: owner-connected Vercel project, preview deployment, successful `/api/health` and `/api/analyze`, browser smoke/CSP checks, then explicit production cutover.
+- **BLOCKED — upstream data rights:** Apache-2.0 applies to upstream software but does not by itself clear mixed dictionary/fallback data. Acceptance: inspect exact pinned data assets and record provenance, applicable terms and attribution/share-alike requirements before public production deployment. No upstream dictionary/fallback data was copied.
+- **PARTIAL — linguistic evidence:** Ukrainian adaptation is intentionally provisional; FastThaiG2P IPA remains unclassified as phonemic vs broad-surface. Independent qualified Thai review and Ukrainian-native review are not available. Accuracy remains `NOT_MEASURED`.
+- **PR reconciliation:** #184, #185 and #186 remain open Draft and untouched. PR #193 ports the pinned typed adapter into a new branch based on main; it does not merge, close or retarget those research PRs. PRs #188–#192 remain untouched.
+- **Readiness:** research/engineering integration prototype only; not production-ready and not a linguistic-accuracy release. Do not merge PR #193 while the GitHub Pages workflow would publish a static client without its API.
