@@ -2243,3 +2243,9 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Full CI run `41811334224` (docs checkpoint `dc9f9205b90d94989faa4eb423717835c6236e4b`) completed the Python/browser suite: **322 passed, 1 skipped, 1 failed, 1,169 subtests**; wheel-install smoke passed.
 - The only failure was an outdated security/display contract test still asserting `esc(shown)` and the previous browser-engine fields after the UI moved to API response fields. Updated `tests/test_ipa_display_contract.py` to assert escaping of each rendered FastThaiG2P API field and absence of the old local-engine fields.
 - Fix commit: `8b489f3bdaed96f3b3e8a2b93bff23152c4b0deb`. Exact-head full CI run `41811706426` was pending when this note was prepared; the final documentation-only commits after the fix require a fresh exact-head run.
+
+
+### Exact final-head CI handoff — 2026-11-04
+
+- Full CI run `41811706426` was cancelled by subsequent documentation-only updates. Final branch head at this note: `c8e9fc6607891f82fc2c939db3afbe8af655e2f6`; full CI run `41811887890` is pending. No source/runtime code changed after the test fix `8b489f3bdaed96f3b3e8a2b93bff23152c4b0deb`.
+- Previous full suite: 322 passed, 1 skipped, 1 failed, 1,169 subtests; the only failure was the stale IPA display contract assertion, now updated. Targeted FastThaiG2P site workflow and Web Static remain green.
