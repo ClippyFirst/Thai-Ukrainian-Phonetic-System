@@ -81,8 +81,9 @@ def run(input_path: Path = DEFAULT_INPUT) -> dict[str, Any]:
     external_dictionary_tokens = 0
     external_oov_tokens = 0
     typed_syllable_count = 0
-    typed_uncertain_syllable_count = 0
+    typed_provisional_syllable_count = 0
     typed_unsupported_syllable_count = 0
+    typed_ukrainian_provisional_count = 0
     typed_ukrainian_withheld_count = 0
     typed_unsupported_symbols: set[str] = set()
     typed_tone_category_counts: dict[str, int] = {}
@@ -126,7 +127,7 @@ def run(input_path: Path = DEFAULT_INPUT) -> dict[str, Any]:
         typed_groups = external_result.to_phonetic_results() if external_complete else ()
         typed_results = [item for group in typed_groups for item in group]
         typed_syllable_count += len(typed_results)
-        typed_uncertain_syllable_count += sum(item.status == "UNCERTAIN" for item in typed_results)
+        typed_provisional_syllable_count += sum(item.status == "PROVISIONAL" for item in typed_results)
         typed_unsupported_syllable_count += sum(item.status == "UNSUPPORTED" for item in typed_results)
         for item in typed_results:
             if item.tone_category:
@@ -138,9 +139,12 @@ def run(input_path: Path = DEFAULT_INPUT) -> dict[str, Any]:
                 if segment.certainty == "UNSUPPORTED"
             )
             adapted = adapt_phonetic_result(item)
-            if adapted["status"] != "withheld" or adapted["output"] is not None:
-                raise AssertionError("Unadjudicated FastThaiG2P output must not produce Ukrainian text")
-            typed_ukrainian_withheld_count += 1
+            if adapted["status"] == "provisional" and adapted["output"] is not None:
+                typed_ukrainian_provisional_count += 1
+            elif adapted["status"] == "withheld" and adapted["output"] is None:
+                typed_ukrainian_withheld_count += 1
+            else:
+                raise AssertionError("External IPA adaptation must be explicitly provisional or withheld")
         external_nonempty_count += int(external_nonempty)
         external_complete_count += int(external_complete)
         external_passthrough_count += int(bool(external_result.passthrough_text))
@@ -200,7 +204,7 @@ def run(input_path: Path = DEFAULT_INPUT) -> dict[str, Any]:
                 "typed_diagnostic": {
                     "syllable_count": len(typed_results),
                     "status_counts": {
-                        "UNCERTAIN": sum(item.status == "UNCERTAIN" for item in typed_results),
+                        "UNCERTAIN": sum(item.status == "PROVISIONAL" for item in typed_results),
                         "UNSUPPORTED": sum(item.status == "UNSUPPORTED" for item in typed_results),
                     },
                     "tone_categories": [item.tone_category for item in typed_results],
@@ -251,8 +255,9 @@ def run(input_path: Path = DEFAULT_INPUT) -> dict[str, Any]:
             "fastthaig2p_dictionary_tokens": external_dictionary_tokens,
             "fastthaig2p_oov_rule_fallback_tokens": external_oov_tokens,
             "fastthaig2p_typed_diagnostic_syllables": typed_syllable_count,
-            "fastthaig2p_typed_uncertain_syllables": typed_uncertain_syllable_count,
+            "fastthaig2p_typed_uncertain_syllables": typed_provisional_syllable_count,
             "fastthaig2p_typed_unsupported_syllables": typed_unsupported_syllable_count,
+            "fastthaig2p_ukrainian_provisional_syllables": typed_ukrainian_provisional_count,
             "fastthaig2p_ukrainian_withheld_syllables": typed_ukrainian_withheld_count,
             "fastthaig2p_typed_unsupported_symbols": sorted(typed_unsupported_symbols),
             "fastthaig2p_tone_category_counts": typed_tone_category_counts,
