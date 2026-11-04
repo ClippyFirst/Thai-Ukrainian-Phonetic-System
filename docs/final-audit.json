@@ -3469,5 +3469,29 @@
       "hands-on keyboard, screen-reader, zoom/reflow and mobile accessibility review"
     ],
     "note": "Exact-head results are not inherited by the documentation-only reconciliation commit created from this verified head; that new commit requires its own exact-head CI."
+  },
+  "integration_reconciliation_2026_11_04": {
+    "status": "PARTIAL_PENDING_FINAL_COMBINED_CI",
+    "base_main": "e46fae335a1eee0051ca0ce5ead262959514c39c",
+    "integration_pr": 199,
+    "integration_branch": "integration/all-pr-work-2026-11-04-v7",
+    "integrated_workstreams": [
+      184,
+      185,
+      186,
+      188,
+      189,
+      190,
+      192,
+      193
+    ],
+    "retained_main_pr": 191,
+    "notes": [
+      "The FastThaiG2P adapter keeps external IPA separate from phonemic_ipa and broad_surface_ipa; typed external output is PROVISIONAL, never gold.",
+      "The Ukrainian adapter may produce explicitly provisional text only for complete supported segments; incomplete IPA, passthrough and unsupported symbols are withheld.",
+      "Global TIMIT Thai remains BLOCKED pending LDC authorization.",
+      "LOTUSDIS audio evidence remains PARTIAL; actual WAV bytes, recomputed SHA-256, interval and overlap/channel verification are missing.",
+      "Linguistic accuracy remains NOT_MEASURED; no release readiness claim."
+    ]
   }
 }
