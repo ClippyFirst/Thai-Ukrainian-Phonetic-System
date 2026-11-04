@@ -74,3 +74,10 @@ def test_pinned_fastthaig2p_engine_returns_complete_bangkok_ipa() -> None:
     assert output.word_groups
     assert output.syllable_ipa
     assert all(result.external_ipa for group in output.to_phonetic_results() for result in group)
+
+def test_fastapi_app_registers_same_origin_api_and_static_routes() -> None:
+    routes = {route.path for route in site_api.app.routes}
+
+    assert "/api/health" in routes
+    assert "/api/analyze" in routes
+    assert "/" in routes
