@@ -3254,5 +3254,62 @@
       "disposition": "NARROWED_NOT_CLEARED",
       "overall_fastthaig2p_data_rights": "BLOCKED_WIKTIONARY_GENERATED_MANUAL_AND_FALLBACK_DATA_PROVENANCE"
     }
+  },
+  "latest_fastthaig2p_site_verification_2026_11_04": {
+    "repository": "ClippyFirst/Thai-Ukrainian-Phonetic-System",
+    "default_branch": "main",
+    "base_commit": "75c331f69aa3c8e5b4db3ccc5a6da85124600a01",
+    "branch": "feat/fastthaig2p-site-api-20261104",
+    "pull_request": 193,
+    "verified_code_test_commit": "2281dc2c5723046ecabda2fd3edae8814359f6fd",
+    "ahead_of_main": 108,
+    "behind_main": 0,
+    "dedicated_site_workflow": {
+      "run": 41870803957,
+      "conclusion": "success",
+      "python_tests": "16 passed",
+      "ruff": "passed",
+      "ui_contract": "passed",
+      "accessibility_contract": "passed",
+      "ipa_ukrainian_regression": "passed"
+    },
+    "full_repository_ci": {
+      "run": 41870804066,
+      "conclusion": "success",
+      "jobs": {
+        "test": "success",
+        "wheel_install_smoke": "success",
+        "master_artifact": "success"
+      },
+      "pytest": "327 passed, 1 skipped, 1169 subtests passed",
+      "ruff": "passed",
+      "browser_parity_fixtures": 29,
+      "skip": "tests/test_fastthaig2p_site_api.py skipped in generic [dev] environment because FastAPI is optional; executed by dedicated workflow"
+    },
+    "api_input_regressions": [
+      "whitespace-only input rejected with HTTP 400 before engine invocation",
+      "request schema rejects input longer than 2000 characters"
+    ],
+    "failed_diagnostic_run": {
+      "run": 41870498964,
+      "conclusion": "failure",
+      "root_cause": "test fixture used literal backslash escape characters instead of whitespace",
+      "corrected_in_commit": "2281dc2c5723046ecabda2fd3edae8814359f6fd"
+    },
+    "vercel_project_query": {
+      "repository": "ClippyFirst/Thai-Ukrainian-Phonetic-System",
+      "projects_found": 0,
+      "disposition": "BLOCKED_OWNER_MUST_CONNECT_OR_CREATE_PROJECT"
+    },
+    "external_gates": [
+      "FASTTHAIG2P_BUNDLED_DATA_RIGHTS",
+      "INDEPENDENT_THAI_PHONETIC_AND_SEGMENTATION_REVIEW",
+      "INDEPENDENT_UKRAINIAN_NATIVE_REVIEW",
+      "MANUAL_WCAG_2_2_AA_DEVICE_REVIEW",
+      "LOTUSDIS_AUDIO_BYTES_SHA256_AND_CLEAN_INTERVAL"
+    ],
+    "local_tests": "NOT_RUN_NO_LOCAL_CHECKOUT",
+    "merge_or_deploy_performed": false,
+    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_PRODUCTION_READY"
   }
 }
