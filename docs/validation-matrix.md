@@ -1565,3 +1565,19 @@ The test workflow uploaded the current diagnostic and master artifacts (includin
 - Related open drafts remain separate: #190 (narrow source-level form-control contrast correction; manual WCAG testing still blocked), #188 (restricted Global TIMIT Thai source review), and #184–#186 (optional FastThaiG2P research/typed diagnostic work; not production promotion). They are not merged or silently consolidated because their scopes, evidence gates and overlapping audit/source-registry changes differ.
 - Remaining acceptance gates: two qualified independent Thai reviewers plus adjudication for IPA/tones/length/segmentation; two independent Ukrainian-native reviewers and adjudication; CCOST A–D curator clarification and actual TextGrid/X-SAMPA archive inspection; immutable LOTUSDIS audio revision and asset hashes/interval metadata; hands-on keyboard, screen-reader, zoom/reflow and mobile accessibility testing. Global TIMIT remains restricted and is not IPA gold.
 - Environment boundary: connector-only GitHub access; no local checkout or local pytest/browser/device run is claimed. No audio assets, gold labels, accuracy scores, releases, force-pushes or branch deletions were created.
+
+
+## 2026-11-04 consolidated integration gate — PR #199
+
+| Workstream | State | Remaining acceptance gate |
+|---|---|---|
+| Thai spacing-vowel segmentation (#191) | DONE_VERIFIED on base main | Preserve Python/browser parity in combined CI |
+| G2P challenge triage and lexical recoveries (#189) | PARTIAL pending combined CI | Run generated-artifact, test and source-registry gates on final head |
+| Global TIMIT Thai (#188) | BLOCKED | Written LDC authorization; not gold and no download before rights |
+| LOTUSDIS metadata (#192) | Metadata DONE_VERIFIED; audio PARTIAL | Actual WAV bytes, recomputed SHA-256, interval and overlap/channel review |
+| FastThaiG2P adapters/typed IPA (#184–186) | PARTIAL pending combined CI | Preserve provenance, uncertainty and fail-closed unsupported output |
+| FastThaiG2P site API/runtime (#193) | PARTIAL | Resolve upstream data rights and verify deployment preview |
+| Accessibility contrast (#190) | Static check passed on revised head | Hands-on keyboard, screen-reader and device testing |
+| Independent phonetic validation | BLOCKED | Qualified independent Thai/Ukrainian reviewers and acoustic gold |
+
+DONE_VERIFIED for the consolidated batch requires all checks on the final PR #199 head. Individual PR-head CI and base-main CI are supporting evidence only.
