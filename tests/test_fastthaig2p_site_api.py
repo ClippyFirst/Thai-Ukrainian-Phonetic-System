@@ -62,6 +62,26 @@ def test_api_refuses_partial_external_output_without_fallback() -> None:
     assert "іншим рушієм" in caught.value.detail["message"]
 
 
+def test_api_logs_but_redacts_unexpected_engine_errors(caplog: pytest.LogCaptureFixture) -> None:
+    class FailingFastThaiG2P:
+        def convert(self, text: str) -> FastThaiG2POutput:
+            raise ValueError("secret-internal-engine-detail")
+
+    site_api._engine = FailingFastThaiG2P()
+
+    with caplog.at_level("ERROR", logger=site_api.__name__):
+        with pytest.raises(HTTPException) as caught:
+            site_api.analyze(site_api.AnalyzeRequest(text="กา"))
+
+    assert caught.value.status_code == 500
+    assert caught.value.detail == {
+        "code": "analysis_failed",
+        "message": "Внутрішня помилка сервісу. Спробуйте пізніше.",
+    }
+    assert "secret-internal-engine-detail" not in str(caught.value.detail)
+    assert "secret-internal-engine-detail" in caplog.text
+
+
 def test_api_health_identifies_the_single_engine() -> None:
     assert site_api.health() == {"status": "ok", "engine": "FastThaiG2P"}
 
