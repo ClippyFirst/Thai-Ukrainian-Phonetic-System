@@ -3471,11 +3471,13 @@
     "note": "Exact-head results are not inherited by the documentation-only reconciliation commit created from this verified head; that new commit requires its own exact-head CI."
   },
   "integration_reconciliation_2026_11_04": {
-    "status": "PARTIAL_PENDING_FINAL_COMBINED_CI",
-    "base_main": "e46fae335a1eee0051ca0ce5ead262959514c39c",
-    "integration_pr": 199,
-    "integration_branch": "integration/all-pr-work-2026-11-04-v7",
-    "integrated_workstreams": [
+    "status": "DONE_VERIFIED_ENGINEERING_INTEGRATION",
+    "main_sha": "324632e59b6da68ece1c40c90dd3e4f4e1287447",
+    "consolidation_pr": 199,
+    "consolidation_merge_sha": "eed8c09648bc1b9be19345d1e6763798b3bf90bd",
+    "pages_workflow_fix_pr": 200,
+    "final_main_validation_run": 41898680278,
+    "contributing_prs": [
       184,
       185,
       186,
@@ -3485,13 +3487,31 @@
       192,
       193
     ],
-    "retained_main_pr": 191,
-    "notes": [
-      "The FastThaiG2P adapter keeps external IPA separate from phonemic_ipa and broad_surface_ipa; typed external output is PROVISIONAL, never gold.",
-      "The Ukrainian adapter may produce explicitly provisional text only for complete supported segments; incomplete IPA, passthrough and unsupported symbols are withheld.",
-      "Global TIMIT Thai remains BLOCKED pending LDC authorization.",
-      "LOTUSDIS audio evidence remains PARTIAL; actual WAV bytes, recomputed SHA-256, interval and overlap/channel verification are missing.",
-      "Linguistic accuracy remains NOT_MEASURED; no release readiness claim."
-    ]
+    "already_merged_before_run": [
+      191
+    ],
+    "combined_head": "10914fc9b656252e130e20d9fbafae8faf38d488",
+    "combined_checks": {
+      "ci_test": true,
+      "wheel_install_smoke": true,
+      "master_artifact": true,
+      "web_static": true,
+      "fastthaig2p_site_api": true,
+      "optional_external_g2p_smoke": true,
+      "fastthaig2p_integration_spike": true,
+      "external_vistec_evaluation": true,
+      "pages_validation_on_final_main": true,
+      "pages_deploy": "SKIPPED_PENDING_RIGHTS_CLEARED_VERCEL_PREVIEW"
+    },
+    "remaining_gates": {
+      "global_timit_thai": "BLOCKED_LDC_WRITTEN_AUTHORIZATION_REQUIRED",
+      "lotusdis_audio": "PARTIAL_BYTES_SHA256_INTERVAL_AND_OVERLAP_REVIEW_REQUIRED",
+      "fastthaig2p_data_rights": "BLOCKED_SOURCE_LEVEL_RIGHTS_AND_ATTRIBUTION_REVIEW_REQUIRED",
+      "vercel_preview": "BLOCKED_PROJECT_NOT_CONNECTED_OR_PREVIEW_NOT_VERIFIED",
+      "independent_thai_ukrainian_review": "BLOCKED",
+      "hands_on_accessibility": "PARTIAL"
+    },
+    "linguistic_accuracy": "NOT_MEASURED",
+    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY"
   }
 }
