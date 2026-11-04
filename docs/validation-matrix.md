@@ -1,3 +1,21 @@
+## 2026-11-04 — PR #193 exact-current-HEAD verification and upstream-practice reconciliation
+
+| Task | Status | Evidence | Remaining acceptance |
+|---|---|---|---|
+| PR #193 current branch head | DONE_VERIFIED | HEAD `10140505649c04d03a40706b85f444176b29691d`; 111 ahead / 0 behind `main` (`75c331f69aa3c8e5b4db3ccc5a6da85124600a01`). PR #193 is OPEN Draft; GitHub reports `mergeable=true`. | Keep Draft and do not merge/deploy while external release gates remain open. |
+| Full repository CI on exact current HEAD | DONE_VERIFIED | [CI run 41876675582](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41876675582): `test`, `wheel-install-smoke`, and `master-artifact` all SUCCESS. Ruff passed; pytest **327 passed, 1 skipped, 1,169 subtests passed**; 29 Python/browser parity fixtures passed; generated-artifact drift and isolated wheel install passed. | The single skip is `tests/test_fastthaig2p_site_api.py` because FastAPI is optional in generic `[dev]`; the dedicated site/API workflow below installs FastAPI and runs it. |
+| FastThaiG2P site/API on exact current HEAD | DONE_VERIFIED | [Dedicated run 41876675750](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41876675750): Ruff passed; **16 targeted Python tests passed**; FastThaiG2P-only UI contract, static accessibility contract, and IPA→Ukrainian regression passed. | This verifies implementation contracts, not independent Thai phonetic gold or Ukrainian-native preferences. |
+| Web Static on exact current HEAD | DONE_VERIFIED | [Web Static run 41876675844](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41876675844): `validate` job SUCCESS, including JavaScript syntax, required pages, static accessibility and no-remote-runtime-dependency checks. | Manual keyboard, screen-reader, zoom/reflow, touch-target and device testing remains BLOCKED. |
+| Four upstream engineering references | DONE_VERIFIED — selective policy reconciliation | Re-inspected Unlazy `1667149…`, Superpowers `22f0b46…`, Matt Pocock skills `4ae2317…`, and Ponytail `96608e0…`; corrected stale Ponytail skill paths and documented their distinct, non-duplicative practices in `AGENTS.md`. | No tools, hooks, packages or parallel workflow were installed; existing repository execution matrix remains canonical. |
+| FastThaiG2P bundled data rights | BLOCKED overall | TLTK 1.3.8 package-level BSD-3 evidence remains PARTIAL; exact fallback asset hashes/source mapping, Wiktionary/kaikki snapshot attribution, generated IPA terms and manual override terms remain unresolved. | Obtain source-specific provenance and rights/attribution for every bundled data component before public production deployment. |
+| Vercel preview | BLOCKED | Current connected Vercel context returns team `Dreamteam` (Hobby) with no linked projects. | Owner must authorize/link or create the project; preview must verify UI/assets, `/api/health`, successful/failing `/api/analyze`, CSP, cold starts and bundle size. |
+| Independent linguistic and manual accessibility validation | BLOCKED | No qualified Thai adjudication, independent Ukrainian-native preference review, or manual WCAG 2.2 AA device review is evidenced. | Obtain two Thai reviewers plus adjudicator, Ukrainian-native review, and documented manual accessibility results. |
+| LOTUSDIS audio evidence (separate PR #192) | PARTIAL — unchanged separate branch | Manifest/row locator remains verified on its own branch; no WAV bytes, per-audio SHA-256 or independently reviewed clean interval are claimed. | Obtain actual audio bytes, hash, waveform/channel/overlap review and clean interval before promotion. |
+
+**Current posture:** exact-current-HEAD engineering checks are green. PR #193 remains OPEN Draft and unmerged. Main and the deployed GitHub Pages site remain unchanged. The project remains an engineering-verified research prototype, not production-ready and not validated for linguistic accuracy.
+
+---
+
 ## 2026-11-04 — Latest verified PR #193 checkpoint and PR #192 reconciliation
 
 | Task | Status | Evidence | Remaining acceptance |
