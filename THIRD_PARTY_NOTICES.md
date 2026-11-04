@@ -48,3 +48,12 @@ The finite correction/abstention layer in `web/src/rtgs-reference.js` is maintai
 - Production gate: do not publicly deploy the FastThaiG2P endpoint until the exact pinned package's bundled data assets and applicable terms/attribution have been inspected and recorded in the integration audit.
 
 This notice records software attribution and an explicit unresolved data-rights gate; it is not a claim that all upstream bundled data has been cleared for redistribution or commercial use.
+
+
+### FastThaiG2P data-license clarification (2026-11-04)
+
+The pinned FastThaiG2P data README attributes its Wiktionary-derived IPA subset to a kaikki.org Thai Wiktionary dump. Wiktionary entry text is published under CC BY-SA 4.0; the exact dump revision and attribution mapping used for this 13k subset have not been supplied. A distinct PyThaiNLP Thai G2P Wiktionary corpus declares CC BY-SA 3.0, but it has not been established as the exact FastThaiG2P source and must not be substituted for that missing provenance.
+
+FastThaiG2P's vendored TLTK `_th2ipa.py` identifies version 1.3.8 and carries a BSD-3-Clause notice. PyPI describes TLTK as BSD-3-Clause since 1.2.2, but the current TLTK repository root LICENSE contains LGPL-3 text while its `setup.py` declares BSD-3-Clause. FastThaiG2P does not pin the exact TLTK revision for each fallback data asset. Treat the fallback-data license as unresolved pending an upstream source/revision and terms clarification.
+
+The ~49k LLM-generated IPA records and manual overrides also lack a complete data-specific license/provenance statement in the pinned FastThaiG2P data README. The Apache-2.0 software license does not, by itself, clear these separate data assets. No FastThaiG2P dictionary or fallback data is copied into this repository.
