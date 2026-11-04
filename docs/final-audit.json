@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PR #189 remains open as Draft on fix/benchmark-error-clusters-20261102. Exact verified branch HEAD d9958db0e877944e5a75183c053681cdbdd525dc is 144 commits ahead of main and 0 behind. Full CI 41714533758 passed all three jobs; Web Static 41714533792 passed; External VISTEC 41714533797 passed. The latest source change after runtime checkpoint 69d56b52b7f687948cac4250e4c7eb98e86ab67f is docstring-only; remaining commits are audit/research documentation. Linguistic accuracy remains NOT_MEASURED.",
+  "status": "Consolidated Thai integration PR #199 and follow-up PRs #200–#203 are merged. Current main before this documentation refresh is a65b0d24ccb4f1eb2720d800a17578d552f067a2; exact-head CI 41901296995 passed test, wheel-install-smoke and master-artifact. No open PRs remain. Linguistic accuracy remains NOT_MEASURED; research prototype, not release-ready.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -359,7 +359,7 @@
   },
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
   "latest_code_checkpoint": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
-  "readiness": "engineering-verified research prototype; deployed on GitHub Pages; not release-ready for independent Thai segmentation, IPA or Ukrainian target accuracy",
+  "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY",
   "latest_verified_repository_head": "d9958db0e877944e5a75183c053681cdbdd525dc",
   "task_ledger": [
     {
@@ -3472,7 +3472,7 @@
   },
   "integration_reconciliation_2026_11_04": {
     "status": "DONE_VERIFIED_ENGINEERING_INTEGRATION",
-    "main_sha": "5b2f65e9745bf396a37fd8775504256bb1e193cc",
+    "main_sha": "a65b0d24ccb4f1eb2720d800a17578d552f067a2",
     "consolidation_pr": 199,
     "consolidation_merge_sha": "eed8c09648bc1b9be19345d1e6763798b3bf90bd",
     "pages_workflow_fix_pr": 200,
@@ -3516,6 +3516,13 @@
     "evidence_registry_coverage_followup_pr": 202,
     "evidence_registry_coverage_commit": "5b2f65e9745bf396a37fd8775504256bb1e193cc",
     "evidence_registry_coverage_ci_run": 41899981649,
-    "evidence_registry_coverage_ci_status": "PASS_TEST_WHEEL_INSTALL_SMOKE_MASTER_ARTIFACT"
+    "evidence_registry_coverage_ci_status": "PASS_TEST_WHEEL_INSTALL_SMOKE_MASTER_ARTIFACT",
+    "latest_documentation_closeout_pr": 203,
+    "latest_documentation_closeout_sha": "a65b0d24ccb4f1eb2720d800a17578d552f067a2",
+    "latest_main_ci_run": 41901296995,
+    "latest_main_ci_status": "PASS_TEST_WHEEL_INSTALL_SMOKE_MASTER_ARTIFACT",
+    "open_pull_requests": 0,
+    "engineering_integration": "DONE_VERIFIED",
+    "release_ready": false
   }
 }
