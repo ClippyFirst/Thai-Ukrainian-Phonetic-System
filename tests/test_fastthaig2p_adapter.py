@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from thai_ukrainian.fastthaig2p_adapter import FastThaiG2POutput
+from thai_ukrainian.fastthaig2p_adapter import FastThaiG2POutput, FastThaiG2PTokenPath
 from thai_ukrainian.ukrainian_adaptation import adapt_phonetic_result
 
 
@@ -12,9 +12,25 @@ def _output(syllable: str) -> FastThaiG2POutput:
         raw_ipa=f"/{syllable}/",
         word_groups=(syllable,),
         syllable_ipa=(syllable,),
+        token_paths=(FastThaiG2PTokenPath(token="กา", path="dictionary"),),
+        passthrough_text="",
+    )
+
+
+def test_complete_ipa_requires_source_token_alignment() -> None:
+    output = _output("kʰaː˧")
+    misaligned = FastThaiG2POutput(
+        input_text=output.input_text,
+        raw_ipa=output.raw_ipa,
+        word_groups=output.word_groups,
+        syllable_ipa=output.syllable_ipa,
         token_paths=(),
         passthrough_text="",
     )
+
+    assert not misaligned.complete_ipa
+    with pytest.raises(ValueError, match="misaligned token paths"):
+        misaligned.to_phonetic_results()
 
 
 def test_external_ipa_is_not_mislabelled_as_phonemic_or_surface_ipa() -> None:
