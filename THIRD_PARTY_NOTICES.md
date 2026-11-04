@@ -33,3 +33,16 @@ The finite correction/abstention layer in `web/src/rtgs-reference.js` is maintai
 - Adaptation: selected dictionary IPA, tone and vowel-length fields are normalized into a tab-separated data registry and mirrored in the browser runtime. Each row retains its source ID, revision locator and license. These records are explicitly marked source-attested and not independently adjudicated or acoustic gold; the repository does not claim that dictionary transcription is an audio measurement.
 - The broader curated text-lexicon subset is documented separately in [`data/thai/TEXT-LEXICON-DATA-LICENSE.md`](data/thai/TEXT-LEXICON-DATA-LICENSE.md).
 - The MIT license applies to project software, not to these separately attributed data records. The CC BY-SA 4.0 terms continue to apply to the adapted Wiktionary-derived data.
+
+## FastThaiG2P website runtime dependency
+
+- Upstream project: [awslabs/FastThaiG2P](https://github.com/awslabs/FastThaiG2P)
+- Pinned upstream commit: `4e82a291b4cf2876326744c6580121e9986ad354`
+- Upstream software license: Apache License 2.0; preserve upstream copyright, license and NOTICE files as applicable.
+- Runtime dependency: PyThaiNLP `5.4.0`, software license Apache-2.0.
+- Upstream fallback parser `_th2ipa.py`: upstream identifies a BSD 3-Clause notice and 2018 Chulalongkorn University copyright. The upstream package is installed as a dependency; this repository does not copy that source file.
+- Dictionary/data limitation: upstream describes a mixed IPA dictionary with manual overrides, Wiktionary-derived records and LLM-generated entries. The upstream software license does not by itself establish rights for every bundled data record. Exact data-file provenance, attribution and share-alike obligations remain under review.
+- ClippyFirst integration: `src/thai_ukrainian/fastthaig2p_adapter.py` calls the pinned package; no upstream dictionary or fallback dataset is copied into this repository.
+- Production gate: do not publicly deploy the FastThaiG2P endpoint until the exact pinned package's bundled data assets and applicable terms/attribution have been inspected and recorded in the integration audit.
+
+This notice records software attribution and an explicit unresolved data-rights gate; it is not a claim that all upstream bundled data has been cleared for redistribution or commercial use.
