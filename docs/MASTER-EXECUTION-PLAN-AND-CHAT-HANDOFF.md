@@ -2216,3 +2216,14 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - **BLOCKED — data licensing:** FastThaiG2P software is pinned, but dictionary/fallback data provenance and terms are not fully cleared. Inspect exact bundled data and record license/attribution before public production deployment.
 - **PARTIAL — linguistic validity:** external IPA layer remains unclassified; the Ukrainian candidate is provisional. Independent Thai and Ukrainian-native adjudication remains outstanding; accuracy is `NOT_MEASURED`.
 - **Next acceptance steps:** finish exact-head CI and fix failures; verify API behavior against real pinned engine outputs; resolve package data licensing; connect a Vercel project and test a preview; perform manual browser/accessibility checks; only then plan a production domain cutover. No production release is authorized by this branch.
+
+
+### Follow-up verification and PR reconciliation — 2026-11-04
+
+- Latest handoff/audit checkpoint before this note: `18d5ce54f8eaa0b37c35b58bc84ac067336651c9`; implementation branch remains `feat/fastthaig2p-site-api-20261104`, PR #193 Draft.
+- Dedicated FastThaiG2P site workflow passed at code commit `2c0164751eab32f3992348b4450d350175becb05`, run `41810981343`. It installed the exact pinned package, generated the legacy reference dictionary needed by the IPA regression test, passed Ruff, all 9 targeted Python tests, FastThaiG2P-only UI contract, static accessibility contract and IPA→Ukrainian regression.
+- Web Static passed at `b1472aa564596c073475cb10ed994506535869f8`, run `41810746926`. This includes the current web pages/CSS/app and the WCAG input-border contrast fix.
+- Full repository CI at `ff2cd1bdcce71a1e5929e235a7ead382f19cf491`, run `41811013724`, was pending at this checkpoint. Refresh the result after this handoff commit; do not report it as passed until completed.
+- Ported the relevant UI contrast change from PR #190: textarea border `#767676` and a source-derived WCAG 1.4.11 ≥3:1 test. PR #190 remains open and untouched.
+- PR #184–#186 remain open Draft and untouched; PR #193 is a separate main-based integration. PR #188, #189, #191 and #192 are also left untouched as independent source-research, reference-engine, segmentation or corpus-manifest scopes.
+- Release blockers remain: no linked Vercel project (GitHub Pages is static-only); bundled FastThaiG2P data terms/attribution not fully cleared; independent Thai phonetic and Ukrainian-native adjudication outstanding. No external deployment project/settings changed; no merge or production cutover performed.
