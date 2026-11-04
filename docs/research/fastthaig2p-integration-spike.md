@@ -115,3 +115,8 @@ The adapter is now declared as a real PEP 621 optional extra in `pyproject.toml`
 ## Segmental comparison notation normalization — 2026-11-02
 
 The diagnostic segmental projection removes both Unicode affricate tie-bar spellings used by external IPA strings: U+0361 (`͡`) and U+035C (`͜`). This normalization is limited to the comparison projection; the raw FastThaiG2P IPA remains unchanged. A regression test demonstrated that U+035C was previously retained and caused a false segmental mismatch; the comparison helper now treats both spellings consistently. This is not a phonetic adjudication and does not alter the 42-item gold status (`NO_INDEPENDENTLY_ADJUDICATED_IPA`).
+
+
+## 2026-11-04 reconciliation: typed external IPA and provisional adaptation
+
+The site-integration continuation extends the typed result contract with an explicit `PROVISIONAL` status and a separate `external_ipa` field. This is distinct from the earlier research-only adapter snapshot above, which used `UNCERTAIN` and withheld every Ukrainian result. The consolidated runtime permits Ukrainian adaptation only when the result is explicitly `PROVISIONAL` and all segmental symbols are supported; the adaptation is labeled provisional and does not populate phonemic or broad-surface IPA. Incomplete IPA, passthrough text, and unsupported symbols remain withheld. The challenge diagnostic now reports provisional and withheld syllables separately, and CI checks that their sum equals the typed diagnostic denominator. No accuracy or independent-gold claim is made.
