@@ -80,4 +80,4 @@ def test_fastapi_app_registers_same_origin_api_and_static_routes() -> None:
 
     assert "/api/health" in routes
     assert "/api/analyze" in routes
-    assert "/" in routes
+    assert "" in routes, "the root static mount is registered at the empty path"
