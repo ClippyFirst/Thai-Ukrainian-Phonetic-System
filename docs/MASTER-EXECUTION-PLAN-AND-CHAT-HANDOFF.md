@@ -1,23 +1,21 @@
-# Continuation checkpoint — exact-current-HEAD verification (2026-11-04)
+# Continuation checkpoint — implementation verified, documentation HEAD pending CI (2026-11-04)
 
 - **Repository:** `ClippyFirst/Thai-Ukrainian-Phonetic-System`.
 - **Main:** `75c331f69aa3c8e5b4db3ccc5a6da85124600a01` (unchanged).
 - **Working branch / PR:** `feat/fastthaig2p-site-api-20261104`, [PR #193](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/193), OPEN Draft, mergeable=true.
-- **Current HEAD:** `10140505649c04d03a40706b85f444176b29691d`; 111 ahead / 0 behind main.
-- **Exact-head full CI:** [41876675582](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41876675582), all three jobs SUCCESS. Ruff passed; pytest 327 passed, 1 skipped, 1,169 subtests passed; 29 Python/browser parity fixtures passed; wheel-install smoke and master-artifact validation passed. Generic `[dev]` skips `tests/test_fastthaig2p_site_api.py` because FastAPI is optional.
-- **Exact-head site/API:** [41876675750](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41876675750), SUCCESS; Ruff and 16 targeted Python tests passed; FastThaiG2P-only UI, accessibility and IPA→Ukrainian contract checks passed.
+- **Latest verified implementation checkpoint:** `10140505649c04d03a40706b85f444176b29691d`, 111 ahead / 0 behind main.
+- **Exact-head full CI at implementation checkpoint:** [41876675582](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41876675582), all 3 jobs SUCCESS; Ruff passed; pytest 327 passed, 1 skipped, 1,169 subtests passed; 29 Python/browser parity fixtures; generated-artifact checks and isolated wheel install passed. The one generic `[dev]` skip is the FastAPI site API test module, covered by the dedicated workflow.
+- **Exact-head FastThaiG2P site/API:** [41876675750](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41876675750), SUCCESS; Ruff and 16 targeted Python tests passed; FastThaiG2P-only UI, accessibility and IPA→Ukrainian contracts passed.
 - **Exact-head Web Static:** [41876675844](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41876675844), SUCCESS.
-- **Latest commit nature:** `1014050…` is a documentation/notice-only commit after the verified implementation/test checkpoint. The exact-current-head workflows above now independently verify it; do not repeat the previous “CI queued / unverified” handoff.
-- **Four upstream references:** reviewed current default-branch snapshots for Unlazy, Superpowers, Matt Pocock skills and Ponytail; `AGENTS.md` now records SHAs and selectively adopted practices. No external skill framework or runtime dependency was installed.
-- **Still BLOCKED:** (1) Vercel preview — current connected Vercel context has no linked projects; owner authorization required to create/link one; (2) FastThaiG2P bundled-data rights — Wiktionary/kaikki, generated IPA, manual overrides and exact TLTK fallback asset mapping; (3) independent Thai IPA/segmentation and Ukrainian-native review; (4) manual WCAG 2.2 AA keyboard/screen-reader/device review.
+- **Current documentation-only branch head:** `9d6762db5fc396c5c949aefbe0ca71569dbac4ee`. Commits after `1014050…` update `AGENTS.md`, matrix/audit/handoff/JSON and PR metadata only; no runtime, test, workflow or browser source changed. These docs commits have **no exact-head workflow runs**. The GitHub connector file-update commits did not trigger Actions; the connected GitHub tool surface has no workflow-dispatch action. Do not report the current docs HEAD as CI-verified. Re-run full CI on this final documentation HEAD before merge.
+- **Four upstream references:** re-inspected Unlazy, Superpowers, Matt Pocock skills and Ponytail; `AGENTS.md` records exact upstream snapshot SHAs and selective principles. No external framework, checker, hook, CLI or runtime dependency was installed.
+- **Still BLOCKED:** (1) Vercel preview — Vercel team `Dreamteam` (Hobby) has zero linked projects; owner authorization required; (2) FastThaiG2P bundled-data rights — Wiktionary/kaikki, generated IPA, manual overrides and exact TLTK fallback asset mapping; (3) independent Thai IPA/segmentation and Ukrainian-native review; (4) manual WCAG 2.2 AA keyboard/screen-reader/device review.
 - **Separate PR #192:** LOTUSDIS manifest/row locator remains on its own branch. Actual WAV bytes, per-audio SHA-256 and reviewed clean interval remain absent; do not promote audio evidence.
 - **PR reconciliation:** #192 and #193 share four canonical docs. If either merges first, reconcile the shared matrix/audit/JSON/handoff rather than merging blindly. PRs #184–#191 remain untouched.
 - **Not performed:** no merge, deployment, production-route change, Vercel project creation, branch deletion or force-push. GitHub Pages remains unchanged.
-- **Local verification:** no local checkout is available through the connector-only session; no local tests are claimed.
+- **Local verification:** no local checkout is available through this connector-only session; no local tests are claimed.
 
-**Next genuine steps:** owner connects/creates a Vercel project and authorizes preview; upstream maintainers/source providers clarify bundled-data rights; qualified human reviewers complete linguistic and accessibility gates. Keep PR #193 Draft until the applicable acceptance evidence exists.
-
----
+**Next steps:** re-run full CI on the final docs head; owner authorizes/connects Vercel preview; source maintainers clarify bundled-data rights; qualified reviewers complete linguistic and accessibility gates. Keep PR #193 Draft until applicable acceptance evidence exists.
 
 # Continuation checkpoint — repository structure cleanup (2026-11-01)
 
