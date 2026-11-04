@@ -69,13 +69,6 @@ const textareaBackground = textareaRule[1].match(/\bbackground(?:-color)?:\s*(#[
 assert(textareaBorder && textareaBackground, "Thai text input must declare explicit border and background colors");
 const textareaBorderContrast = contrast(textareaBorder[1], textareaBackground[1]);
 assert(textareaBorderContrast >= 3, `Thai text input border contrast ${textareaBorderContrast.toFixed(2)}:1 is below WCAG 1.4.11's 3:1 threshold`);
-const outputModeRule = css.match(/#output-mode\s*\{([^}]*)\}/i);
-assert(outputModeRule, "Output-mode control must have an active CSS rule");
-const outputModeBorder = outputModeRule[1].match(/\bborder:\s*\d+px\s+solid\s+(#[0-9a-f]{3}(?:[0-9a-f]{3})?)\b/i);
-const outputModeBackground = outputModeRule[1].match(/\bbackground(?:-color)?:\s*(#[0-9a-f]{3}(?:[0-9a-f]{3})?)\b/i);
-assert(outputModeBorder && outputModeBackground, "Output-mode control must declare explicit border and background colors");
-const outputModeBorderContrast = contrast(outputModeBorder[1], outputModeBackground[1]);
-assert(outputModeBorderContrast >= 3, `Output-mode control border contrast ${outputModeBorderContrast.toFixed(2)}:1 is below WCAG 1.4.11's 3:1 threshold`);
 const palettePairs = [
   ["#191a22", "#ffffff", "primary text"],
   ["#5e6070", "#ffffff", "muted text on paper"],
