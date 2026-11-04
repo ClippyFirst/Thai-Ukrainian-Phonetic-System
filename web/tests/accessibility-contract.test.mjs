@@ -51,7 +51,9 @@ assert.match(css, /@media\s*\(prefers-reduced-motion:\s*reduce\)/);
 // Check the actual palette pairs used by the stylesheet against WCAG AA's 4.5:1
 // normal-text threshold. This is a source-level check, not a browser contrast audit.
 function luminance(hex) {
-  const rgb = hex.replace("#", "").match(/[0-9a-f]{2}/gi).map(value => parseInt(value, 16) / 255);
+  const raw = hex.replace("#", "");
+  const expanded = raw.length === 3 ? [...raw].map(value => value + value).join("") : raw;
+  const rgb = expanded.match(/[0-9a-f]{2}/gi).map(value => parseInt(value, 16) / 255);
   const linear = rgb.map(value => value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4);
   return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2];
 }
