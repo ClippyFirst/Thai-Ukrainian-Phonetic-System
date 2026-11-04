@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Audit branch 41ef3f1e3a3e23f216ee16e6d3cfbb4244b00722 (9 commits ahead, 0 behind main) passed exact-head CI run 41921113154. PR #210 remains open and unmerged. Linguistic accuracy NOT_MEASURED; zero independently adjudicated IPA gold rows; research prototype, not release-ready.",
+  "status": "Documentation audit branch: source-code checkpoint 41ef3f1e3a3e23f216ee16e6d3cfbb4244b00722 passed exact-head CI 41921113154; subsequent documentation checkpoint 6eb07a67aae3317d775401d6f7efdf34e1235b39 is under exact-head CI run 41923015472. PR #210 open, not merged. Linguistic accuracy NOT_MEASURED; zero independently adjudicated IPA gold rows; engineering-verified research prototype, not release-ready.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -3542,7 +3542,7 @@
     ],
     "pr_merge_status": "OPEN_NOT_MERGED"
   },
-  "live_reconciliation_2026_11_05": {
+  "source_code_verification_checkpoint_2026_11_05": {
     "branch": "docs/repository-audit-2026-11-04",
     "head": "41ef3f1e3a3e23f216ee16e6d3cfbb4244b00722",
     "ahead_of_main": 9,
@@ -3556,6 +3556,37 @@
     "linguistic_accuracy": "NOT_MEASURED",
     "independently_adjudicated_ipa_gold_rows": 0,
     "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY",
+    "blockers": {
+      "thai_independent_phonetic_and_segmentation_review": "BLOCKED",
+      "ukrainian_native_target_review": "BLOCKED",
+      "global_timit_thai_ldc_written_permission": "BLOCKED",
+      "lotusdis_wav_sha256_intervals": "PARTIAL",
+      "fastthaig2p_bundled_data_rights": "BLOCKED",
+      "fastthaig2p_python_host_preview": "BLOCKED",
+      "manual_accessibility_review": "PARTIAL",
+      "ccost_textgrid_and_tier_mapping": "BLOCKED_CC_BY_NC_SA_4_0"
+    },
+    "main_changed": false,
+    "branch_deleted": false,
+    "force_push": false,
+    "release_published": false
+  },
+  "latest_documentation_checkpoint_2026_11_05": {
+    "branch": "docs/repository-audit-2026-11-04",
+    "head_before_machine_register_refresh": "6eb07a67aae3317d775401d6f7efdf34e1235b39",
+    "compare_ahead_of_main": 18,
+    "compare_behind_main": 0,
+    "exact_head_ci_run": 41923015472,
+    "exact_head_ci_status": "IN_PROGRESS_AT_REGISTER_REFRESH",
+    "wheel_install_smoke": "PASSED",
+    "test_job": "IN_PROGRESS",
+    "pr": 210,
+    "pr_state": "OPEN_NOT_MERGED",
+    "reviews": 0,
+    "inline_review_threads": 0,
+    "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
+    "linguistic_accuracy": "NOT_MEASURED",
+    "independently_adjudicated_ipa_gold_rows": 0,
     "blockers": {
       "thai_independent_phonetic_and_segmentation_review": "BLOCKED",
       "ukrainian_native_target_review": "BLOCKED",
