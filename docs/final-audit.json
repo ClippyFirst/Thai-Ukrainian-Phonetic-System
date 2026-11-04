@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PR #182 is merged to main as 65584d9a3d3d64a8e520dbd32411bef4b0a3dd9e. Main CI 41420468842 passed all three jobs; Web Static 41420468939 passed; GitHub Pages 41420468875 successfully built, deployed and verified the published site at https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/. Six source-attested lexical IPA overrides are live in both runtimes through the typed IPA→Ukrainian adapter, with CC BY-SA 4.0 provenance documented separately from MIT software. Static audit found 0 exact duplicate test names/bodies and 0 parse errors. Independent Thai/Ukrainian reviewers, CCOST clarification/archive, LOTUSDIS audio evidence and manual WCAG testing remain blocked. Linguistic accuracy remains NOT_MEASURED; the site is an engineering-verified research prototype, not a linguistic-accuracy release.",
+  "status": "PR #182 is merged to main as 65584d9a3d3d64a8e520dbd32411bef4b0a3dd9e. Main CI 41420468842 passed all three jobs; Web Static 41420468939 passed; GitHub Pages 41420468875 successfully built, deployed and verified the published site at https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/. Six source-attested lexical IPA overrides are live in both runtimes through the typed IPA→Ukrainian adapter, with CC BY-SA 4.0 provenance documented separately from MIT software. Static audit found 0 exact duplicate test names/bodies and 0 parse errors. Independent Thai/Ukrainian reviewers, CCOST clarification/archive, LOTUSDIS audio evidence and manual WCAG testing remain blocked. Linguistic accuracy remains NOT_MEASURED; the site is an engineering-verified research prototype, not a linguistic-accuracy release.\n\n2026-11-04: Draft PR #193 implements a FastThaiG2P-only website/API path with explicitly provisional Ukrainian adaptation. Targeted FastThaiG2P site workflow passed at code commit 2c0164751eab32f3992348b4450d350175becb05; Web Static passed at b1472aa564596c073475cb10ed994506535869f8. Full repository CI for the later documentation checkpoint is pending; hosting and upstream bundled-data rights remain blocked. Main remains unchanged and the new site is not deployed.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -287,7 +287,10 @@
       "reason": "No owner-approved archive/delete policy; historical refs preserved."
     },
     "latest_checkpoint_note": "PR #168 audit closeout merged as 8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8. Exact-head CI 41240389404 and post-merge main CI 41240699017 passed; 251 pytest tests, 1164 subtests, Ruff, 29 parity fixtures, generated-data drift, wheel-install smoke and 351780-row/41-rime artifact verification passed. Independent Thai/UA adjudication and manual accessibility gates remain open.",
-    "python_subtests": 1164
+    "python_subtests": 1164,
+    "fastthaig2p_site_workflow": "PASS — run 41810981343 at code commit 2c0164751eab32f3992348b4450d350175becb05: pinned install, Ruff, 9 targeted Python tests including real Bangkok smoke, UI contract, accessibility and IPA-UA regression.",
+    "fastthaig2p_web_static": "PASS — run 41810746926 at code commit b1472aa564596c073475cb10ed994506535869f8: JS syntax, generated browser dictionary, parity fixtures, required pages, static accessibility and remote-runtime-dependency check.",
+    "fastthaig2p_full_repository_ci": "PENDING — run 41811110550 was running on prior docs checkpoint c9938b48c2488df332c1fb3dc22315f3516a75ce; re-run/check exact final branch head after audit JSON update."
   },
   "challenge_runtime": {
     "challenge_inputs": 36,
@@ -350,7 +353,7 @@
   },
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
   "latest_code_checkpoint": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
-  "readiness": "engineering-verified research prototype; deployed on GitHub Pages; not release-ready for independent Thai segmentation, IPA or Ukrainian target accuracy",
+  "readiness": "Main remains an engineering-verified research prototype on GitHub Pages. Draft PR #193 is a partial FastThaiG2P-only site/API integration; it is not production-ready until a Python host is connected, bundled-data rights are reviewed, and independent phonetic review is completed.",
   "latest_verified_repository_head": "1431c565ff5c160da4944942d687bc30b2f8d0b2",
   "task_ledger": [
     {
@@ -520,14 +523,56 @@
       "status": "DONE_VERIFIED",
       "implementation": "PR #182 squash-merged as 65584d9; main CI 41420468842, Web Static 41420468939 and Pages deployment/published-content verification 41420468875 all passed. The updated service is live at GitHub Pages.",
       "acceptance": "Post-merge Pages build/deploy/published-content verification passed; main CI and Web Static passed."
+    },
+    {
+      "id": "WEB-FASTTHAIG2P-001",
+      "status": "PARTIAL",
+      "implementation": "Draft PR #193 adds pinned FastThaiG2P adapter/API, separate unclassified external_ipa field, explicit PROVISIONAL IPA→Ukrainian adaptation, same-origin browser UI and no-fallback behavior. Dedicated site workflow passed at 2c0164751eab32f3992348b4450d350175becb05; Web Static passed at b1472aa564596c073475cb10ed994506535869f8.",
+      "blocker": "The new UI/API path is not deployed; current main/GitHub Pages remains static-only.",
+      "acceptance": "Full repository CI on the final branch head; deployed Python-capable preview serving UI and API at one origin; API, CSP, cold-start and manual accessibility checks."
+    },
+    {
+      "id": "WEB-FASTTHAIG2P-DEPLOY-001",
+      "status": "BLOCKED",
+      "implementation": "FastAPI app in src/index.py serves web/ and exposes /api/health and /api/analyze. Vercel Git deployment context returned no linked project.",
+      "blocker": "No Vercel project is connected to this repository; creating/connecting a project and changing the public domain are external account actions not performed here.",
+      "acceptance": "Owner-connected Vercel project, successful preview, /api/health and /api/analyze smoke tests, then explicit production cutover. Do not merge PR #193 while Pages would publish an API-less static client."
+    },
+    {
+      "id": "FASTTHAIG2P-DATA-LICENSE-001",
+      "status": "BLOCKED",
+      "implementation": "Pinned upstream software at 4e82a291b4cf2876326744c6580121e9986ad354; inspected upstream LICENSE, NOTICE, data/README.md, pyproject.toml and vendored _th2ipa.py notice. No dictionary/fallback data copied into this repository.",
+      "blocker": "Upstream Apache-2.0 software license does not comprehensively clear mixed manual, Wiktionary/kaikki, generated IPA and vendored fallback data; data README gives no single complete data license.",
+      "acceptance": "Inspect exact pinned wheel/data assets; determine each source's terms and required attribution/share-alike; record the legal/provenance review before public production deployment."
+    },
+    {
+      "id": "FASTTHAIG2P-IPA-UA-ADJUDICATION-001",
+      "status": "BLOCKED",
+      "implementation": "Unclassified external IPA is stored separately; only PROVISIONAL results can flow through the existing IPA→Ukrainian adapter. UI clearly discloses uncertainty and retains tone/length metadata.",
+      "blocker": "No independent Thai phonetic adjudication of FastThaiG2P IPA layer and no Ukrainian-native target review.",
+      "acceptance": "Qualified reviewers adjudicate representative dictionary/OOV cases, phonemic-vs-surface interpretation, tone/length and Ukrainian rendering; accuracy remains NOT_MEASURED until then."
+    },
+    {
+      "id": "WEB-INPUT-CONTRAST-001",
+      "status": "DONE_VERIFIED",
+      "implementation": "Ported PR #190's relevant textarea border improvement (#767676) and source-derived WCAG 1.4.11 contrast test. Dedicated accessibility contract passed in FastThaiG2P workflow 41810981343; Web Static passed in 41810746926.",
+      "blocker": null,
+      "acceptance": "Source-level textarea border contrast >=3:1 is verified; manual screen-reader/device/reflow review remains a separate site release gate."
+    },
+    {
+      "id": "FASTTHAIG2P-PR-RECONCILIATION-001",
+      "status": "DONE_VERIFIED",
+      "implementation": "Inspected all open PRs #184–#193 and recent closed/merged PRs. Ported #186/#185 FastThaiG2P typed adapter/dependency work and the relevant #190 contrast fix into a new main-based branch. Preserved all original PR branches and their Draft states.",
+      "blocker": null,
+      "acceptance": "No existing PR merged, closed, retargeted or force-pushed. Independent #188, #189, #191 and #192 scopes remain open and untouched."
     }
   ],
-  "latest_implementation_branch": "research/independent-adjudication-gates-20261101 (merged into main)",
-  "latest_implementation_commit_pending_ci": null,
-  "current_head_status_at_audit_refresh": "Code/workflow checkpoint b6dbec7928b106f0ab52e06af33a26635df75412 passed CI 40322960615 and Web static validation 40322959844. Documentation checkpoint e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff passed full CI 40323209539 and Web static validation 40323209471. This audit-register update creates a newer documentation HEAD and requires exact-head CI/static validation before the current branch HEAD is marked green.",
-  "current_implementation_branch": "research/thai-segmentation-gold-parity-verified-20261025",
-  "current_implementation_commit_before_audit_update": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
-  "latest_documentation_checkpoint_before_audit": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
+  "latest_implementation_branch": "feat/fastthaig2p-site-api-20261104 (PR #193 OPEN Draft; not deployed)",
+  "latest_implementation_commit_pending_ci": "5f204304418146951ee2dc080787d4233be86dda",
+  "current_head_status_at_audit_refresh": "Targeted FastThaiG2P site workflow PASS at code commit 2c0164751eab32f3992348b4450d350175becb05 (run 41810981343). Web Static PASS at b1472aa564596c073475cb10ed994506535869f8 (run 41810746926). Full repository CI run 41811110550 was still running on prior documentation checkpoint c9938b48c2488df332c1fb3dc22315f3516a75ce; this audit update creates a newer docs-only head requiring a fresh exact-head CI check.",
+  "current_implementation_branch": "feat/fastthaig2p-site-api-20261104",
+  "current_implementation_commit_before_audit_update": "5f204304418146951ee2dc080787d4233be86dda",
+  "latest_documentation_checkpoint_before_audit": "5f204304418146951ee2dc080787d4233be86dda",
   "audit_note": "Exact-head special-orthography schema and IPA-boundary repair verified on cb775d6156f62392fa2d0f4bcf8d1aa30d219530. CI 40315032771 passed 180 Python tests, generated-data drift, master artifact (351,780 rows / 41 rime records), Node IPA→UA, 28 browser parity fixtures, UI contract, challenge/Wisesight/source-attested IPA diagnostics, candidate-registry check, TUD training/evaluation and artifact uploads. Web static validation 40315032788 passed. This is software/reproducibility evidence, not independent pronunciation gold.",
   "dictionary_max_match_baseline": {
     "corpus": "Wisesight-1000",
@@ -2667,7 +2712,80 @@
     "exact_regression_test_ci_run": "41406424727",
     "exact_regression_test_ci_result": "PASSED_ALL_3_JOBS"
   },
-  "open_prs": [],
+  "open_prs": [
+    {
+      "number": 193,
+      "title": "feat(web): use FastThaiG2P as the sole site pronunciation engine",
+      "state": "OPEN",
+      "draft": true,
+      "branch": "feat/fastthaig2p-site-api-20261104",
+      "base": "main"
+    },
+    {
+      "number": 192,
+      "title": "research: pin LOTUSDIS immutable snapshot and shard metadata",
+      "state": "OPEN",
+      "draft": true,
+      "branch": "research/lotusdis-immutable-manifest-20261104",
+      "base": "main"
+    },
+    {
+      "number": 191,
+      "title": "fix(segmentation): align Thai spacing-vowel cluster boundaries",
+      "state": "OPEN",
+      "draft": true,
+      "branch": "fix/thai-spacing-vowel-cluster-parity-20261103",
+      "base": "main"
+    },
+    {
+      "number": 190,
+      "title": "fix(web): meet non-text contrast for form controls",
+      "state": "OPEN",
+      "draft": true,
+      "branch": "fix/accessibility-control-contrast-20261102",
+      "base": "main"
+    },
+    {
+      "number": 189,
+      "title": "Triage G2P benchmark error clusters and recover attested lexical cases",
+      "state": "OPEN",
+      "draft": true,
+      "branch": "fix/benchmark-error-clusters-20261102",
+      "base": "main"
+    },
+    {
+      "number": 188,
+      "title": "research: register Global TIMIT Thai as restricted alignment candidate",
+      "state": "OPEN",
+      "draft": true,
+      "branch": "research/global-timit-thai-source-review-20261102-clean",
+      "base": "main"
+    },
+    {
+      "number": 186,
+      "title": "research: add conservative typed FastThaiG2P IPA boundary",
+      "state": "OPEN",
+      "draft": true,
+      "branch": "research/fastthaig2p-typed-ipa-boundary-20261102",
+      "base": "research/fastthaig2p-integration-spike-20261102"
+    },
+    {
+      "number": 185,
+      "title": "research: add optional FastThaiG2P challenge comparison spike",
+      "state": "OPEN",
+      "draft": true,
+      "branch": "research/fastthaig2p-integration-spike-20261102",
+      "base": "main"
+    },
+    {
+      "number": 184,
+      "title": "feat: add optional FastThaiG2P adapter and same-input comparison",
+      "state": "OPEN",
+      "draft": true,
+      "branch": "research/fastthaig2p-adapter-spike-20261102",
+      "base": "main"
+    }
+  ],
   "audio_interval_overlap_code_checkpoint_2026_11_02": {
     "verified_code_head": "964b4930321e68c77ba5e956e1c0ecd12164ccfa",
     "ci_run": "41406087052",
@@ -2904,5 +3022,85 @@
     "linguistic_accuracy": "NOT_MEASURED",
     "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY"
   },
-  "latest_full_repository_head_pages_run": "41420468875"
+  "latest_full_repository_head_pages_run": "41420468875",
+  "latest_fastthaig2p_site_integration": {
+    "status": "PARTIAL",
+    "pull_request": 193,
+    "draft": true,
+    "base_branch": "main",
+    "base_commit": "75c331f69aa3c8e5b4db3ccc5a6da85124600a01",
+    "branch": "feat/fastthaig2p-site-api-20261104",
+    "docs_checkpoint_before_audit_json_update": "5f204304418146951ee2dc080787d4233be86dda",
+    "upstream_engine": "FastThaiG2P",
+    "upstream_commit": "4e82a291b4cf2876326744c6580121e9986ad354",
+    "output_policy": "provisional Ukrainian practical adaptation from unclassified external IPA; no phonemic/broad-surface relabeling",
+    "api": "FastAPI src/index.py; POST /api/analyze; GET /api/health; same-origin static web/ serving",
+    "fallback_policy": "No old browser G2P, RTGS or orthographic fallback; incomplete external IPA returns an explicit error",
+    "targeted_workflow": {
+      "status": "PASS",
+      "run": 41810981343,
+      "code_commit": "2c0164751eab32f3992348b4450d350175becb05"
+    },
+    "web_static": {
+      "status": "PASS",
+      "run": 41810746926,
+      "code_commit": "b1472aa564596c073475cb10ed994506535869f8"
+    },
+    "full_repository_ci": {
+      "status": "PENDING",
+      "run": 41811110550,
+      "head": "c9938b48c2488df332c1fb3dc22315f3516a75ce"
+    },
+    "deployment": {
+      "status": "BLOCKED",
+      "reason": "No linked Vercel project; GitHub Pages cannot execute Python API"
+    },
+    "data_rights": {
+      "status": "BLOCKED",
+      "reason": "Bundled dictionary/fallback data terms and attribution not fully cleared"
+    },
+    "linguistic_review": {
+      "status": "BLOCKED",
+      "reason": "Independent Thai phonetic and Ukrainian-native adjudication unavailable; accuracy NOT_MEASURED"
+    },
+    "production_deployed": false
+  },
+  "pr_reconciliation": {
+    "pr184": {
+      "state": "OPEN_DRAFT_UNTOUCHED",
+      "reason": "Older FastThaiG2P spike retained for comparison; newer pinned typed adapter ported in PR #193."
+    },
+    "pr185": {
+      "state": "OPEN_DRAFT_UNTOUCHED",
+      "reason": "Pinned FastThaiG2P dependency/challenge spike ported in PR #193."
+    },
+    "pr186": {
+      "state": "OPEN_DRAFT_UNTOUCHED",
+      "reason": "Typed external-IPA boundary ported and extended provisionally in PR #193."
+    },
+    "pr188": {
+      "state": "OPEN_DRAFT_UNTOUCHED",
+      "reason": "Restricted corpus-source registry work is independent of site runtime."
+    },
+    "pr189": {
+      "state": "OPEN_DRAFT_UNTOUCHED",
+      "reason": "Reference-engine benchmark error triage is independent of FastThaiG2P site runtime."
+    },
+    "pr190": {
+      "state": "OPEN_DRAFT_UNTOUCHED_RELEVANT_CHANGE_PORTED",
+      "reason": "Textarea contrast fix and source-level test ported into PR #193."
+    },
+    "pr191": {
+      "state": "OPEN_DRAFT_UNTOUCHED",
+      "reason": "Reference-engine segmentation boundary fix is outside the FastThaiG2P website path; remains relevant to CLI/reference engine."
+    },
+    "pr192": {
+      "state": "OPEN_DRAFT_UNTOUCHED",
+      "reason": "LOTUSDIS immutable source manifest is independent research work."
+    },
+    "pr193": {
+      "state": "OPEN_DRAFT",
+      "reason": "Main-based FastThaiG2P-only site/API integration; deployment and data-rights gates remain."
+    }
+  }
 }
