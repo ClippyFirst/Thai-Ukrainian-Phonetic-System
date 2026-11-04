@@ -91,7 +91,7 @@ def test_typed_results_preserve_word_syllable_tone_and_length_metadata() -> None
     assert first.tone_contour_ipa == "˨˩"
     assert first.phonemic_ipa is None
     assert first.broad_surface_ipa is None
-    assert first.status == "UNCERTAIN"
+    assert first.status == "PROVISIONAL"
     assert second.segments[-1].ipa == "t̚"
     assert third.vowel_length == "long"
     assert third.tone_category == "mid"
@@ -147,7 +147,7 @@ def test_uncertain_external_ipa_never_enters_ukrainian_adapter() -> None:
     typed = result.to_phonetic_results()[0][0]
     adapted = adapt_phonetic_result(typed)
 
-    assert typed.status == "UNCERTAIN"
+    assert typed.status == "PROVISIONAL"
     assert typed.phonemic_ipa is None
     assert adapted["status"] == "withheld"
     assert adapted["output"] is None
