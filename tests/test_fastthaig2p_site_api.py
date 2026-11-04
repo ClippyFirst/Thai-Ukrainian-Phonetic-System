@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 import index as site_api  # noqa: E402
-from thai_ukrainian.fastthaig2p_adapter import FastThaiG2POutput  # noqa: E402
+from thai_ukrainian.fastthaig2p_adapter import FastThaiG2POutput, FastThaiG2PTokenPath  # noqa: E402
 
 
 class FakeFastThaiG2P:
@@ -30,7 +30,7 @@ def _output(*, passthrough: str = "") -> FastThaiG2POutput:
         raw_ipa="/kʰaː˧/",
         word_groups=("kʰaː˧",),
         syllable_ipa=("kʰaː˧",),
-        token_paths=(),
+        token_paths=(FastThaiG2PTokenPath(token="กา", path="dictionary"),),
         passthrough_text=passthrough,
     )
 
@@ -46,6 +46,7 @@ def test_api_uses_only_fastthaig2p_and_returns_provisional_ua() -> None:
     assert result["status"] == "provisional"
     assert result["raw_ipa"] == "/kʰaː˧/"
     assert result["ukrainian"] == "к'а"
+    assert result["words"][0]["thai"] == "กา"
     assert result["words"][0]["syllables"][0]["adaptation_status"] == "provisional"
     assert result["words"][0]["syllables"][0]["ipa"] == "kʰaː"
 
