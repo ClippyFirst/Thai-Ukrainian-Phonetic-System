@@ -99,6 +99,5 @@ class ChallengeRuntimeDiagnosticsTests(unittest.TestCase):
                 load_challenge(path)
 
 
-
 if __name__ == "__main__":
     unittest.main()
