@@ -127,6 +127,11 @@ class EvidenceRegistryTests(unittest.TestCase):
                 "verified_by": "project-source-audit", "verified_at": "2026-11-01",
                 "notes": "Synthetic unit-test asset; no real recording.",
             }
+            row_without_hash = dict(row)
+            row_without_hash["file_sha256"] = ""
+            write_registry(path, fields, [row_without_hash])
+            with self.assertRaisesRegex(ValueError, "file_sha256"):
+                load_audio_asset_registry(path, sources)
             write_registry(path, fields, [row])
             assets = load_audio_asset_registry(path, sources)
             validate_audio_asset_reference("LOTUS-TEST-001", "CORP-LOTUSDIS", "0.2", "1.5", assets, row_id="review-1")
@@ -209,12 +214,26 @@ def test_lotusdis_is_registered_only_as_an_audio_source_for_fresh_human_annotati
     assert "wav.zip" in source["notes"] and "textgrid.zip" in source["notes"]
     assert "no archive bytes or TextGrid tiers were inspected" in source["notes"]
     assert "not independently recomputed" in source["notes"]
+    assert "revision-pinned row locator" in source["notes"]
+    assert "temporary signed cached-assets URL" in source["notes"]
 
 
-def test_committed_audio_asset_registry_is_valid_but_has_no_selected_assets():
+def test_committed_audio_asset_registry_records_partial_locator_but_not_verified():
     sources = load_source_registry(ROOT / "data/benchmark/source-registry.tsv")
     assets = load_audio_asset_registry(ROOT / "data/benchmark/audio-assets.tsv", sources)
-    assert assets == {}
+    asset_id = "LOTUSDIS-TRAIN-000000-AUDIO"
+    assert set(assets) == {asset_id}
+    asset = assets[asset_id]
+    assert asset["verification_status"] == "PARTIAL"
+    assert asset["speaker_ref"] == "M01"
+    assert asset["microphone_id"] == "con123"
+    assert asset["duration_seconds"] == "2.59"
+    assert asset["file_sha256"] == ""
+    with unittest.TestCase().assertRaisesRegex(ValueError, "not VERIFIED"):
+        validate_audio_asset_reference(
+            asset_id, "CORP-LOTUSDIS", "0.2", "1.5", assets,
+            row_id="committed-partial-lotus",
+        )
 
 
 def test_audio_asset_revision_must_be_immutable_and_asset_uri_absolute():
