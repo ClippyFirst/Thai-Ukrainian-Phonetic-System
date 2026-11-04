@@ -49,3 +49,27 @@ def test_external_ipa_is_visible_in_typed_result_serialization() -> None:
     result = _output("kʰaː˧").to_phonetic_results()[0][0]
 
     assert result.as_dict()["external_ipa"] == "kʰaː"
+
+
+@pytest.mark.parametrize(
+    ("syllable", "expected_ukrainian"),
+    [
+        # Published FastThaiG2P examples cover unreleased codas, non-syllabic
+        # diphthong markers, Chao tones, and tied affricates.
+        ("dɔːk̚˨˩", "док"),
+        ("bia̯˥˩", "біа"),
+        ("t͡ɕut̚˨˩", "чут"),
+        ("pɤː˧", "пе"),
+    ],
+)
+def test_upstream_documented_ipa_conventions_reach_ukrainian_adapter(
+    syllable: str, expected_ukrainian: str
+) -> None:
+    result = _output(syllable).to_phonetic_results()[0][0]
+
+    assert result.status == "PROVISIONAL"
+    assert result.external_ipa
+    assert result.tone_contour_ipa
+    adapted = adapt_phonetic_result(result)
+    assert adapted["status"] == "provisional"
+    assert adapted["output"] == expected_ukrainian
