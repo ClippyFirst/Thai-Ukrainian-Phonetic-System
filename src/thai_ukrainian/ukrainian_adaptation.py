@@ -73,8 +73,9 @@ def _normalize_ipa_input(source_ipa: str) -> tuple[str, list[str], dict[str, boo
 
 def adapt_phonetic_result(result: PhoneticResult) -> dict:
     """Adapt only typed phonemic IPA; fail closed on unsupported IPA symbols."""
-    source_ipa = result.phonemic_ipa
-    if result.status != "SUPPORTED" or not source_ipa:
+    provisional = result.status == "PROVISIONAL" and bool(result.external_ipa)
+    source_ipa = result.external_ipa if provisional else result.phonemic_ipa
+    if (result.status != "SUPPORTED" and not provisional) or not source_ipa:
         return {
             "status": "withheld", "source_ipa": source_ipa, "output": None,
             "rules_applied": [], "input_notes": [],
@@ -149,17 +150,24 @@ def adapt_phonetic_result(result: PhoneticResult) -> dict:
         neutralized.append("stress is not encoded by this project adaptation")
     if notation["length"]:
         neutralized.append("vowel length")
+    warnings = [
+        "Project-defined practical adaptation; not an official Ukrainian standard. "
+        "Verify lexical reading and target-language convention independently."
+    ]
+    if provisional:
+        warnings.append(
+            "PROVISIONAL: FastThaiG2P IPA has not been independently adjudicated as "
+            "phonemic or broad-surface IPA; this Ukrainian rendering is an unvalidated candidate."
+        )
     return {
-        "status": "adapted", "source_ipa": source_ipa, "normalized_ipa": ipa,
+        "status": "provisional" if provisional else "adapted",
+        "source_ipa": source_ipa, "normalized_ipa": ipa,
         "output": "".join(output),
         "rules_applied": list(dict.fromkeys(rules)),
         "neutralized_features": list(dict.fromkeys(neutralized)),
         "input_notes": input_notes,
         "tone_separate": True,
-        "warnings": [
-            "Project-defined practical adaptation; not an official Ukrainian standard. "
-            "Verify lexical reading and target-language convention independently."
-        ],
+        "warnings": warnings,
     }
 
 
