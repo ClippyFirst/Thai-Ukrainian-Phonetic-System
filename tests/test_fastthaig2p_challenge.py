@@ -135,7 +135,7 @@ def test_unknown_fallback_sentinel_is_not_promoted_to_ipa_or_ukrainian() -> None
     assert adapted["output"] is None
 
 
-def test_uncertain_external_ipa_never_enters_ukrainian_adapter() -> None:
+def test_unadjudicated_external_ipa_is_explicitly_provisional_in_ukrainian_adapter() -> None:
     result = FastThaiG2POutput(
         input_text="",
         raw_ipa="/kʰaː˥˩/",
@@ -149,8 +149,8 @@ def test_uncertain_external_ipa_never_enters_ukrainian_adapter() -> None:
 
     assert typed.status == "PROVISIONAL"
     assert typed.phonemic_ipa is None
-    assert adapted["status"] == "withheld"
-    assert adapted["output"] is None
+    assert adapted["status"] == "provisional"
+    assert adapted["output"] is not None
 
 
 def test_partial_ipa_is_rejected_by_typed_conversion() -> None:
