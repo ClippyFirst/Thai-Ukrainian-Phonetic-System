@@ -2249,3 +2249,24 @@ This note supersedes the preceding documentation-only status. The branch now cha
 
 - Full CI run `41811706426` was cancelled by subsequent documentation-only updates. Final branch head at this note: `c8e9fc6607891f82fc2c939db3afbe8af655e2f6`; full CI run `41811887890` is pending. No source/runtime code changed after the test fix `8b489f3bdaed96f3b3e8a2b93bff23152c4b0deb`.
 - Previous full suite: 322 passed, 1 skipped, 1 failed, 1,169 subtests; the only failure was the stale IPA display contract assertion, now updated. Targeted FastThaiG2P site workflow and Web Static remain green.
+
+
+---
+
+## 2026-11-04 — final FastThaiG2P verification and blocker reconciliation
+
+- **Starting main:** `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`.
+- **Branch:** `feat/fastthaig2p-site-api-20261104`.
+- **Final verified commit:** `c133dee9c66ed08df60d20ba0e170fab6c2c7300`; PR #193 remains open Draft.
+- **DONE_VERIFIED — full exact-head CI:** run [41811988701](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41811988701) checked out the exact SHA above (verified in job logs). All three jobs passed: `test`, `wheel-install-smoke`, `master-artifact`. Ruff passed; pytest **323 passed, 1 skipped, 1,169 subtests passed**; browser parity (29 fixtures), UI, generated data, master artifact and isolated wheel smoke passed.
+- **Skip qualification:** `tests/test_fastthaig2p_site_api.py` is skipped in generic `[dev]` CI because FastAPI is not installed there. The dedicated site workflow [41810981343](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41810981343) at code checkpoint `2c0164751eab32f3992348b4450d350175becb05` installs `[dev,fastthaig2p]` and passed all 9 targeted Python tests, including FastAPI endpoint tests and the pinned real Bangkok smoke. A commit comparison confirms no runtime/application code changed from that tested code checkpoint to final `c133dee9c66ed08df60d20ba0e170fab6c2c7300`; the later code change was limited to the stale security/display contract test, plus docs.
+- **DONE_VERIFIED — Web Static:** [41810746926](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41810746926) passed on `b1472aa564596c073475cb10ed994506535869f8`; no web runtime files changed afterward.
+- **Preserved:** prior Thai reference engine, lexical datasets, RTGS research renderer, parity/benchmark infrastructure, and PRs #184–#192 remain intact. PR #190's textarea contrast change was ported into #193; #190 itself remains untouched. PR #189's lexical-recovery branch remains a separate research scope and was not merged into the FastThaiG2P-only site path. No unrelated branch was deleted or force-pushed.
+- **PR review state:** #193 is still Draft and GitHub currently reports `mergeable=false`; compare reports 69 commits ahead and 0 behind the recorded main base. No merge was attempted; the mergeability flag is not treated as resolved.
+- **BLOCKED — hosting:** Vercel project search for this repository returns zero projects. Vercel documentation confirms Python runtime support and recognizes `src/index.py` as a FastAPI entrypoint. The combined static UI/API still needs an owner-connected preview and live smoke checks. GitHub Pages remains static-only; do not merge or change production domain until the preview works.
+- **BLOCKED — upstream data rights:** exact pinned FastThaiG2P LICENSE/NOTICE/data README/pyproject and vendored TLTK file were inspected. Software is Apache-2.0; the data README describes mixed manual, Wiktionary/kaikki, LLM-generated and TLTK fallback assets without one comprehensive data-license grant. `_th2ipa.py` carries a BSD-3-Clause notice. Keep the production data-rights gate open pending explicit source-by-source rights/attribution; no bundled upstream dictionary/fallback files were copied.
+- **BLOCKED — independent linguistic evidence:** no independent Thai phonetic/segmentation adjudication or Ukrainian-native target-form review has been supplied. External IPA remains unclassified; Ukrainian output remains provisional; accuracy `NOT_MEASURED`.
+- **PARTIAL — accessibility:** static UI/accessibility and source contrast tests pass; manual keyboard, screen-reader, zoom/reflow, mobile and device review remains required.
+- **Next genuine gates:** owner connects a Vercel project and supplies preview evidence; upstream bundled-data terms/attribution are cleared; independent Thai and Ukrainian reviewers provide frozen labels; manual accessibility testing is completed. Until then, PR #193 stays Draft and the deployed Pages site stays unchanged.
+- **Local execution:** not performed in this GitHub-connector-only session. All pass claims above are from the cited GitHub Actions logs.
+- **Readiness:** engineering-verified integration prototype, not production-ready and not a linguistic-accuracy release.
