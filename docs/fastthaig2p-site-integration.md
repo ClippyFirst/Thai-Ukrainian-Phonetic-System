@@ -135,3 +135,17 @@ The TLTK portion of the fallback-data audit was refined against the exact packag
 - TLTK's README describes dictionary/model assets compiled from multiple sources (including TNC/BEST); package-level BSD-3 metadata does not establish whether any individual fallback asset carries separate corpus restrictions.
 
 **Disposition:** TLTK fallback is now `PARTIAL_PACKAGE_LEVEL_BSD3`, not `BLOCKED_NO_PACKAGE_LICENSE_EVIDENCE`; it is not fully cleared for redistribution until exact sdist contents, asset hashes and source/corpus terms are mapped. The overall FastThaiG2P data-rights gate remains BLOCKED by the Wiktionary/kaikki subset, generated IPA, manual overrides and remaining fallback provenance.
+
+
+## Exact-head verification refresh — 2026-11-04
+
+The complete repository CI now passes on exact PR HEAD `79108cecb0580bc9ee6e99b68987fd1d01fa7681`:
+- [Full CI 41882664041](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41882664041): all three jobs passed; Ruff passed; 327 pytest tests passed, 1 skipped, 1,169 subtests passed; 29 browser parity fixtures; generated-artifact drift, evidence validators, research diagnostics, wheel install and master artifact passed.
+- [FastThaiG2P site/API 41882664211](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41882664211): 16 targeted Python tests and UI/accessibility/IPA-UA contracts passed.
+- [Web Static 41882664209](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41882664209): passed.
+
+The one generic pytest skip is the API test module because FastAPI is an optional extra; the dedicated workflow installs it and runs that module. A follow-up code commit `2d707f68d734d953af52e41bce49ada197741546` adds token-path/word-group alignment validation and corrects the adapter docstring. Its exact-head CI is pending, so the above successful runs verify `79108ce…`, not the newer follow-up.
+
+The upstream pinned implementation was inspected directly: `G2P.convert` normalizes the input, tokenizes it, then emits one slash-delimited IPA group per non-whitespace token in order. The project adapter obtains provenance from the same pinned normalizer/tokenizer. The follow-up guard rejects any count mismatch rather than attaching a Thai token path to the wrong IPA word.
+
+**Readiness remains research prototype:** CI proves software contracts, not Thai phonetic accuracy. Preview hosting, complete bundled-data rights, independent Thai/Ukrainian review and manual WCAG 2.2 AA remain acceptance gates.
