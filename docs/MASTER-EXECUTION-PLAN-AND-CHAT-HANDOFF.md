@@ -1,37 +1,22 @@
-# Continuation checkpoint — implementation verified, documentation HEAD pending CI (2026-11-04)
+# Continuation checkpoint — exact-head CI passed; alignment guard follow-up pending (2026-11-04)
 
 - **Repository:** `ClippyFirst/Thai-Ukrainian-Phonetic-System`.
-- **Main:** `75c331f69aa3c8e5b4db3ccc5a6da85124600a01` (unchanged).
-- **Working branch / PR:** `feat/fastthaig2p-site-api-20261104`, [PR #193](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/193), OPEN Draft, mergeable=true.
-- **Latest verified implementation checkpoint:** `10140505649c04d03a40706b85f444176b29691d`, 111 ahead / 0 behind main.
-- **Exact-head full CI at implementation checkpoint:** [41876675582](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41876675582), all 3 jobs SUCCESS; Ruff passed; pytest 327 passed, 1 skipped, 1,169 subtests passed; 29 Python/browser parity fixtures; generated-artifact checks and isolated wheel install passed. The one generic `[dev]` skip is the FastAPI site API test module, covered by the dedicated workflow.
-- **Exact-head FastThaiG2P site/API:** [41876675750](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41876675750), SUCCESS; Ruff and 16 targeted Python tests passed; FastThaiG2P-only UI, accessibility and IPA→Ukrainian contracts passed.
-- **Exact-head Web Static:** [41876675844](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41876675844), SUCCESS.
-- **Current documentation-only branch head:** use the live PR #193 head metadata; all commits after `1014050…` are documentation-only and have no exact-head Actions run. Commits after `1014050…` update `AGENTS.md`, matrix/audit/handoff/JSON and PR metadata only; no runtime, test, workflow or browser source changed. These docs commits have **no exact-head workflow runs**. The GitHub connector file-update commits did not trigger Actions; the connected GitHub tool surface has no workflow-dispatch action. Do not report the current docs HEAD as CI-verified. Re-run full CI on this final documentation HEAD before merge.
-- **Four upstream references:** re-inspected Unlazy, Superpowers, Matt Pocock skills and Ponytail; `AGENTS.md` records exact upstream snapshot SHAs and selective principles. No external framework, checker, hook, CLI or runtime dependency was installed.
-- **Still BLOCKED:** (1) Vercel preview — Vercel team `Dreamteam` (Hobby) has zero linked projects; owner authorization required; (2) FastThaiG2P bundled-data rights — Wiktionary/kaikki, generated IPA, manual overrides and exact TLTK fallback asset mapping; (3) independent Thai IPA/segmentation and Ukrainian-native review; (4) manual WCAG 2.2 AA keyboard/screen-reader/device review.
-- **Separate PR #192:** LOTUSDIS manifest/row locator remains on its own branch. Actual WAV bytes, per-audio SHA-256 and reviewed clean interval remain absent; do not promote audio evidence.
-- **PR reconciliation:** #192 and #193 share four canonical docs. If either merges first, reconcile the shared matrix/audit/JSON/handoff rather than merging blindly. PRs #184–#191 remain untouched.
-- **Not performed:** no merge, deployment, production-route change, Vercel project creation, branch deletion or force-push. GitHub Pages remains unchanged.
-- **Local verification:** no local checkout is available through this connector-only session; no local tests are claimed.
+- **Main:** `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`, unchanged.
+- **Working branch / PR:** `feat/fastthaig2p-site-api-20261104`, [PR #193](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/193), OPEN Draft.
+- **Exact-head fully verified checkpoint:** `79108cecb0580bc9ee6e99b68987fd1d01fa7681`; full CI [41882664041](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41882664041) SUCCESS, all 3 jobs. Ruff passed; pytest 327 passed / 1 skipped / 1,169 subtests; 29 browser parity fixtures; validators, generated-artifact drift, research diagnostics, wheel smoke and master artifact passed.
+- **Dedicated site/API:** [41882664211](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41882664211) SUCCESS; 16 targeted Python tests, Ruff, UI, accessibility and IPA→Ukrainian contracts passed.
+- **Web Static:** [41882664209](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41882664209) SUCCESS.
+- The generic CI's one skip is the FastAPI API module because FastAPI is optional in `[dev]`; dedicated workflow installed it and ran all targeted tests.
+- **Current follow-up code HEAD:** `2d707f68d734d953af52e41bce49ada197741546`. Adds a fail-closed guard requiring one tokenizer provenance path per IPA word and corrects the FastThaiG2P adapter docstring to say PROVISIONAL. Exact-head full/dedicated workflows are pending; do not mark this follow-up verified until they finish.
+- **Upstream engineering references:** Unlazy, Superpowers, Matt Pocock skills and Ponytail selectively reconciled in `AGENTS.md`; no external skill package, hook, CLI or runtime dependency installed.
+- **BLOCKED:** Vercel preview (team has no linked project; owner authorization required); FastThaiG2P bundled-data rights (Wiktionary/kaikki attribution, generated IPA, manual overrides, TLTK asset mapping); independent Thai phonetic/segmentation review; Ukrainian-native review; manual WCAG 2.2 AA review.
+- **PARTIAL separate PR #192:** LOTUSDIS 24-shard metadata and row locator pinned; actual WAV bytes, audio SHA-256 and reviewed clean interval absent.
+- **PR reconciliation:** PRs #184–#191 remain separate; #192 remains separate. PR #192 and #193 overlap in four canonical documents; reconcile matrix, audit Markdown/JSON and handoff if either merges first. Do not merge blindly.
+- **Not performed:** no merge, deployment, production routing change, Vercel project creation, branch deletion or force-push. GitHub Pages and `main` remain unchanged.
+- **Local execution:** no local checkout in connector-only environment; no local tests claimed.
 
-**Next steps:** re-run full CI on the final docs head; owner authorizes/connects Vercel preview; source maintainers clarify bundled-data rights; qualified reviewers complete linguistic and accessibility gates. Keep PR #193 Draft until applicable acceptance evidence exists.
+**Next steps:** verify current follow-up HEAD with full CI and dedicated FastThaiG2P workflow; then continue with owner-authorized preview and external data-rights, linguistic and accessibility acceptance gates. Keep PR #193 Draft and do not deploy.
 
-# Continuation checkpoint — repository structure cleanup (2026-11-01)
-
-- **Repository:** `ClippyFirst/Thai-Ukrainian-Phonetic-System`; default branch `main`.
-- **Starting main:** `85ced007f6fab7572a78380553ebfe42ccb18e07`, the squash merge of PR #171.
-- **PR #171:** documentation/navigation guide merged after exact-head CI [41310072386](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41310072386) passed all three jobs: `test`, `wheel-install-smoke`, `master-artifact`.
-- **Work branch:** `chore/architecture-ownership-20261101`, created from the above main SHA.
-- **Changes on this branch:** architecture guide corrected to match the actual typed-IPA primary route; module ownership map added; repository guide verification snapshot refreshed; validation matrix and audit/handoff checkpoints updated. The generated `docs/final-audit.json` was deliberately left untouched; its owning generator must be identified before refreshing it.
-- **Code review findings:** Python and browser modules have intentional cross-runtime parity responsibilities. The Python package has separable parsing, phonology, adaptation, text, batch, CLI and server layers; no import cycle or proven dead module was established by the inspected import surfaces. `text.py` and `segmentation.py` are separate contracts (reviewed text-lexicon segmentation vs dictionary-boundary diagnostics), not safe candidates for blind consolidation.
-- **Not changed:** runtime behavior, linguistic registries, source datasets, generated artifacts, packaging hooks, and workflow commands. No evidence-backed code refactor was sufficiently established in this pass to justify behavior risk.
-- **Task status:** documentation navigation and architecture ownership map are implemented; full repository debt inventory remains PARTIAL. Remaining work: complete caller/reference graph, script and generator overlap audit, test redundancy review, generated artifact ownership verification, then focused TDD refactors.
-- **Local test limitation:** no local checkout/runtime is available through the connected GitHub-only workflow; no local tests are claimed. Exact-head GitHub Actions is the verification source.
-- **External release blockers:** qualified independent Thai phonetic/segmentation adjudication, independent Ukrainian-native target-form adjudication, and manual browser/device/WCAG 2.2 AA review.
-- **Readiness:** engineering-verified research prototype; not release-ready for general linguistic-accuracy claims.
-
----
 
 ## 2026-11-01 — CCOST manual review and exact-head CI closeout
 
