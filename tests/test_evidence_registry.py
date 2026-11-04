@@ -258,7 +258,7 @@ def test_corpus_sources_csv_has_exact_columns_and_unique_source_ids():
 def test_lotusdis_shard_manifest_pins_all_objects_without_claiming_local_hash_verification():
     path = ROOT / "data" / "benchmark" / "lotusdis-parquet-shards.tsv"
     with path.open(encoding="utf-8", newline="") as stream:
-        reader = csv.DictReader(stream, delimiter="\\t")
+        reader = csv.DictReader(stream, delimiter="\t")
         assert reader.fieldnames == [
             "dataset_revision", "shard_path", "size_bytes", "hub_lfs_sha256",
             "git_blob_sha1", "xet_hash", "shard_last_commit",
