@@ -99,5 +99,16 @@ class ChallengeRuntimeDiagnosticsTests(unittest.TestCase):
                 load_challenge(path)
 
 
+    def test_bangkok_full_name_is_unadjudicated_diagnostic_only(self):
+        rows = load_challenge(Path(__file__).resolve().parents[1] / "data" / "benchmark" / "thai_g2p_challenge.jsonl")
+        record = next(row for row in rows if row["id"] == "TH-G2P-043")
+        self.assertEqual(record["input"], "กรุงเทพมหานคร")
+        self.assertEqual(record["probe"], "proper-name-pronunciation")
+        self.assertEqual(record["orthography_validity"], "not_adjudicated")
+        self.assertIsNone(record["gold_phonemic_ipa"])
+        self.assertIsNone(record["gold_broad_surface_ipa"])
+        self.assertEqual(record["references"], [])
+
+
 if __name__ == "__main__":
     unittest.main()
