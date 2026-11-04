@@ -63,3 +63,13 @@ def test_api_refuses_partial_external_output_without_fallback() -> None:
 
 def test_api_health_identifies_the_single_engine() -> None:
     assert site_api.health() == {"status": "ok", "engine": "FastThaiG2P"}
+
+def test_pinned_fastthaig2p_engine_returns_complete_bangkok_ipa() -> None:
+    from thai_ukrainian.fastthaig2p_adapter import FastThaiG2PAdapter
+
+    output = FastThaiG2PAdapter().convert("กรุงเทพมหานคร")
+
+    assert output.complete_ipa
+    assert output.word_groups
+    assert output.syllable_ipa
+    assert all(result.external_ipa for group in output.to_phonetic_results() for result in group)
