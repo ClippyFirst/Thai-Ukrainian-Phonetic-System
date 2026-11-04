@@ -337,3 +337,48 @@ def test_partial_lotusdis_row_locator_is_recorded_but_cannot_be_used_for_annotat
                 row["asset_id"], "CORP-LOTUSDIS", "0.2", "1.5", assets,
                 row_id="partial-lotus-review",
             )
+
+
+class ConsolidatedEvidenceRegistryTests(unittest.TestCase):
+    def test_global_timit_thai_is_blocked_until_authorized_and_not_approved_as_gold(self):
+        registry = load_source_registry(ROOT / "data/benchmark/source-registry.tsv")
+        source_id = "CORP-GLOBAL-TIMIT-THAI"
+        source = registry[source_id]
+        self.assertEqual(source["source_url"], "https://catalog.ldc.upenn.edu/LDC2022S13")
+        self.assertEqual(source["license"], "LDC User Agreement for Non-Members")
+        self.assertEqual(source["verification_status"], "BLOCKED")
+        self.assertIn("ACOUSTIC_PHONETICS_RESEARCH", source["allowed_uses"])
+        self.assertNotIn("BROAD_PHONEMIC_IPA_GOLD_INPUT", source["allowed_uses"])
+        self.assertNotIn("BROAD_SURFACE_IPA_GOLD_INPUT", source["allowed_uses"])
+        self.assertIn("no redistribution", source["notes"])
+        self.assertIn("signed agreement", source["notes"])
+        with self.assertRaisesRegex(ValueError, "is blocked"):
+            validate_source_reference(
+                source_id, source["source_url"], source["license"],
+                "ACOUSTIC_PHONETICS_RESEARCH", registry, row_id="global-timit-audio",
+            )
+
+    def test_new_special_orthography_sources_are_lexical_references_not_gold(self):
+        registry = load_source_registry(ROOT / "data/benchmark/source-registry.tsv")
+        expected = {
+            "SRC-WIKTIONARY-TH-ฤๅษี": "https://th.wiktionary.org/w/index.php?title=ฤๅษี&oldid=1774048",
+            "SRC-WIKTIONARY-EN-TH-ทฤษฎี": "https://en.wiktionary.org/w/index.php?title=ทฤษฎี&oldid=87195875",
+            "SRC-WIKTIONARY-TH-ประเทศ": "https://th.wiktionary.org/w/index.php?title=ประเทศ&oldid=5722200",
+            "SRC-WIKTIONARY-TH-เป็น": "https://th.wiktionary.org/w/index.php?title=เป็น&oldid=5770798",
+            "SRC-WIKTIONARY-TH-หนึ่ง": "https://th.wiktionary.org/w/index.php?title=หนึ่ง&oldid=5721517",
+            "SRC-WIKTIONARY-TH-ใน": "https://th.wiktionary.org/w/index.php?title=ใน&oldid=5759122",
+        }
+        for source_id, url in expected.items():
+            with self.subTest(source_id=source_id):
+                source = registry[source_id]
+                self.assertEqual(source["source_url"], url)
+                self.assertEqual(source["license"], "CC-BY-SA-4.0")
+                self.assertEqual(source["verification_status"], "VERIFIED")
+                self.assertIn("not expert-adjudicated or acoustic gold", source["notes"])
+                validate_source_reference(source_id, url, "CC-BY-SA-4.0", "LEXICAL_SEGMENTATION_REFERENCE", registry, row_id=source_id)
+                validate_source_reference(source_id, url, "CC-BY-SA-4.0", "IPA_REFERENCE_ONLY", registry, row_id=source_id)
+                with self.assertRaisesRegex(ValueError, "not approved for BROAD_PHONEMIC_IPA_GOLD_INPUT"):
+                    validate_source_reference(source_id, url, "CC-BY-SA-4.0", "BROAD_PHONEMIC_IPA_GOLD_INPUT", registry, row_id=source_id)
+                with self.assertRaisesRegex(ValueError, "not approved for BROAD_SURFACE_IPA_GOLD_INPUT"):
+                    validate_source_reference(source_id, url, "CC-BY-SA-4.0", "BROAD_SURFACE_IPA_GOLD_INPUT", registry, row_id=source_id)
+
