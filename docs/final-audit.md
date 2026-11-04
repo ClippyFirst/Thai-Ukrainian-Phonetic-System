@@ -1506,3 +1506,6 @@ The new test/tool code was committed on the PR branch and awaits exact-head CI c
 - **PARTIAL — accessibility:** static contract and contrast checks pass; keyboard, screen-reader, zoom/reflow, mobile and assistive-technology review remains unperformed.
 - **PR state:** #193 remains open Draft; GitHub API reports `mergeable=false`. No merge, force-push, release, or external deployment changes were made.
 - **Readiness:** exact-head engineering integration is verified; the site is not deployed and is not release-ready for production or linguistic-accuracy claims.
+
+
+- **Additional data-rights finding — 2026-11-04:** Wiktionary entry text is CC BY-SA 4.0, while the exact kaikki snapshot/revision and row attribution for FastThaiG2P's ~13k subset are not documented. TLTK 1.3.8 source header and PyPI metadata indicate BSD-3-Clause, but the current TLTK repository root LICENSE contains LGPL-3 text while setup.py declares BSD-3-Clause; FastThaiG2P does not pin the exact TLTK revision for each fallback data file. The generated IPA and manual overrides also lack complete data-specific terms. This strengthens, rather than closes, the production data-rights BLOCKER. Do not infer that the unrelated PyThaiNLP CC BY-SA 3.0 corpus is the exact FastThaiG2P input.
