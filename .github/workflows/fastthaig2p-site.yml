@@ -1,0 +1,41 @@
+name: FastThaiG2P site API
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "src/index.py"
+      - "src/thai_ukrainian/fastthaig2p_adapter.py"
+      - "src/thai_ukrainian/phonetic_result.py"
+      - "src/thai_ukrainian/ukrainian_adaptation.py"
+      - "tests/test_fastthaig2p_*.py"
+      - "web/index.html"
+      - "web/src/app.js"
+      - "web/tests/ui-contract.test.mjs"
+      - "web/tests/accessibility-contract.test.mjs"
+      - "web/tests/ipa-ua.test.mjs"
+      - "pyproject.toml"
+      - "requirements.txt"
+      - ".github/workflows/fastthaig2p-site.yml"
+jobs:
+  site-api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Install project and pinned FastThaiG2P site dependencies
+        run: python -m pip install -e ".[dev,fastthaig2p]"
+      - name: Lint changed Python runtime and tests
+        run: ruff check src tests
+      - name: Test typed external IPA and provisional Ukrainian adaptation
+        run: python -m pytest -q tests/test_fastthaig2p_adapter.py tests/test_fastthaig2p_site_api.py
+      - name: Test FastThaiG2P-only browser client
+        run: node web/tests/ui-contract.test.mjs
+      - name: Test public UI accessibility contract
+        run: node web/tests/accessibility-contract.test.mjs
+      - name: Test existing IPA adaptation contract remains intact
+        run: node web/tests/ipa-ua.test.mjs
