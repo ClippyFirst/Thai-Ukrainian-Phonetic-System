@@ -3073,7 +3073,14 @@
     },
     "production_deployed": false,
     "final_audit_handoff_checkpoint": "9767377a09828780d6c9a7ab3b1bc7b7ca13f368",
-    "final_json_update_pending_ci": true
+    "final_json_update_pending_ci": true,
+    "latest_branch_head": "b1173c1e48d17f0d84acb3c59b1191b8df63404a",
+    "branch_ahead_of_main": 103,
+    "branch_behind_main": 0,
+    "latest_head_workflow_runs": [],
+    "latest_head_combined_statuses": [],
+    "new_adapter_regression_tests": "PARTIAL_NOT_VERIFIED",
+    "latest_exact_head_ci": "NO_RUNS_OR_STATUSES_REPORTED"
   },
   "pr_reconciliation": {
     "pr184": {
@@ -3161,7 +3168,7 @@
       "status": "BLOCKED pending upstream source/revision and terms clarification"
     },
     "latest_branch_head_before_handoff_refresh": "dea460aff3140379a4194eb32b7e49412093bce0",
-    "branch_ahead_of_main": 82,
+    "branch_ahead_of_main": 103,
     "branch_behind_main": 0,
     "docs_only_delta_after_code_ci": [
       "AGENTS.md",
@@ -3171,6 +3178,52 @@
       "docs/final-audit.json",
       "docs/final-audit.md",
       "docs/validation-matrix.md"
-    ]
+    ],
+    "latest_branch_head": "b1173c1e48d17f0d84acb3c59b1191b8df63404a",
+    "latest_head_full_ci": "NOT_VERIFIED_NO_RUN_REPORTED",
+    "new_adapter_regression_tests": "PARTIAL_NOT_VERIFIED",
+    "latest_head_workflow_runs": [],
+    "latest_head_combined_statuses": []
+  },
+  "live_fastthaig2p_reconciliation_2026_11_04": {
+    "repository": "ClippyFirst/Thai-Ukrainian-Phonetic-System",
+    "default_branch": "main",
+    "base_commit": "75c331f69aa3c8e5b4db3ccc5a6da85124600a01",
+    "branch": "feat/fastthaig2p-site-api-20261104",
+    "pull_request": 193,
+    "pull_request_state": "OPEN_DRAFT",
+    "mergeable": false,
+    "head_commit": "b1173c1e48d17f0d84acb3c59b1191b8df63404a",
+    "ahead_of_main": 103,
+    "behind_main": 0,
+    "exact_head_workflow_runs": [],
+    "exact_head_combined_statuses": [],
+    "new_adapter_regressions": "PARTIAL_NOT_VERIFIED",
+    "prior_full_ci": {
+      "run": 41811988701,
+      "commit": "c133dee9c66ed08df60d20ba0e170fab6c2c7300",
+      "scope": "prior code checkpoint only"
+    },
+    "prior_targeted_site_ci": {
+      "run": 41810981343,
+      "commit": "2c0164751eab32f3992348b4450d350175becb05",
+      "scope": "prior code checkpoint only"
+    },
+    "prior_web_static": {
+      "run": 41810746926,
+      "commit": "b1472aa564596c073475cb10ed994506535869f8",
+      "scope": "prior web checkpoint only"
+    },
+    "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
+    "workflow_dispatch": "UNAVAILABLE_IN_CONNECTED_GITHUB_TOOL_SURFACE",
+    "external_gates": [
+      "VERCEL_PREVIEW",
+      "FASTTHAIG2P_DATA_RIGHTS",
+      "INDEPENDENT_THAI_REVIEW",
+      "INDEPENDENT_UKRAINIAN_REVIEW",
+      "MANUAL_WCAG_DEVICE_REVIEW",
+      "LOTUSDIS_AUDIO_BYTES_HASH_INTERVAL"
+    ],
+    "merge_or_deploy_performed": false
   }
 }
