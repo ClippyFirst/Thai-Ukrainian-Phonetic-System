@@ -2236,3 +2236,10 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Full repository CI run `41811334224` is in progress on pre-final-audit docs checkpoint `dc9f9205b90d94989faa4eb423717835c6236e4b`. Wheel-install smoke passed; the test job is still executing `generate_master_table.py`; no failing step is recorded. The current audit/handoff changes are documentation-only and require a fresh exact-head CI run.
 - Latest code decision remains: FastThaiG2P only on the target website, Ukrainian adaptation marked provisional; no production deployment, no merge, and no changes to external Vercel settings.
 - Remaining blockers: no Vercel project linked; FastThaiG2P bundled dictionary/fallback data terms and attribution not fully cleared; independent Thai phonetic and Ukrainian-native adjudication unavailable.
+
+
+### Full-suite regression correction — 2026-11-04
+
+- Full CI run `41811334224` (docs checkpoint `dc9f9205b90d94989faa4eb423717835c6236e4b`) completed the Python/browser suite: **322 passed, 1 skipped, 1 failed, 1,169 subtests**; wheel-install smoke passed.
+- The only failure was an outdated security/display contract test still asserting `esc(shown)` and the previous browser-engine fields after the UI moved to API response fields. Updated `tests/test_ipa_display_contract.py` to assert escaping of each rendered FastThaiG2P API field and absence of the old local-engine fields.
+- Fix commit: `8b489f3bdaed96f3b3e8a2b93bff23152c4b0deb`. Exact-head full CI run `41811706426` was pending when this note was prepared; the final documentation-only commits after the fix require a fresh exact-head run.
