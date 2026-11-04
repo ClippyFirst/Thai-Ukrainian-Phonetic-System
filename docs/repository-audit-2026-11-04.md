@@ -121,3 +121,28 @@ The connected Undermind workspace contains a completed Thai phonology audit and 
 The audited base commit `56fba86b4b8be2fe4e67284355e9928108527387` passed Full CI run [41918227400](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41918227400), Pages workflow [41918227410](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41918227410), Web Static [41918227382](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41918227382), and Site API [41918227381](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41918227381). No local test run is claimed.
 
 The inspected audit-branch head passed its exact-head Full CI. Any subsequent documentation commit requires a fresh exact-head run before merge; no merge is claimed here. Readiness remains **engineering-verified research prototype**, not release-ready for linguistic accuracy, production deployment or full WCAG 2.2 AA claims.
+
+
+## Live reconciliation — 2026-11-05
+
+- Branch: `docs/repository-audit-2026-11-04`; verified head: `41ef3f1e3a3e23f216ee16e6d3cfbb4244b00722`. GitHub compare against `main` reports **9 commits ahead, 0 behind** (base `56fba86b4b8be2fe4e67284355e9928108527387`).
+- PR [#210](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/210) remains **OPEN / NOT MERGED**. No merge, force-push, branch deletion, release or change to `main` is claimed.
+- Exact-head GitHub Actions CI run [41921113154](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41921113154) for `41ef3f1e3a3e23f216ee16e6d3cfbb4244b00722` completed **success**. This is GitHub-hosted CI evidence; no local test run is claimed.
+- Readiness remains **engineering-verified research prototype**. Linguistic accuracy is **NOT_MEASURED**; there are still **zero independently adjudicated IPA gold rows**.
+
+### External evidence and rights gates — current status
+
+| Gate | Status | What is required to change status |
+|---|---|---|
+| Independent Standard Thai phonetic/segmentation expertise | BLOCKED | Qualified independent Thai reviewers, blind first-pass annotations, documented adjudication and inter-annotator agreement; no engine-derived labels counted as gold. |
+| Independent Ukrainian-native target review | BLOCKED | Independent native-speaker review of target forms and a recorded adjudication outcome, separate from Thai IPA review. |
+| Global TIMIT Thai | BLOCKED | Written authorization from LDC covering the intended access, processing, evaluation and any redistribution; until then, do not download, process, publish or redistribute restricted Thai material. |
+| LOTUSDIS audio | PARTIAL | Obtain the actual authorized WAV assets; verify each file's SHA-256 from bytes; pin source/version; verify speaker/channel, clean intervals, overlap and alignment against the annotation records. Metadata or archive hashes alone do not satisfy this. |
+| FastThaiG2P bundled-data rights | BLOCKED | Source-by-source license/terms and attribution review demonstrating that redistribution and intended use are permitted. Keep data excluded from production bundles until cleared. |
+| FastThaiG2P Python-host preview | BLOCKED | Deploy to a Python-capable preview host and record a reproducible live smoke/contract test against the deployed URL; a static Pages pass or API unit test is not a hosted preview. |
+| Manual accessibility review | PARTIAL | Record keyboard-only, screen-reader, zoom/reflow and mobile checks against the active UI, including browser/AT versions, steps, outcomes and defects. Automated checks are not conformance evidence. |
+| CCOST TextGrid and tier mapping | BLOCKED | Obtain lawful access to the actual archive/TextGrid files, inspect real tiers and X-SAMPA/IPA conventions, map tiers explicitly, and document curator clarification. CC BY-NC-SA 4.0 applies; do not treat the data as unrestricted or redistribute outside its terms. |
+
+### Evidence policy
+
+Do not mark any gate DONE_VERIFIED because a registry entry, schema, blank reviewer packet, model output, source annotation, static check or documentation paragraph exists. Keep CCOST under CC BY-NC-SA 4.0 restrictions; keep Global TIMIT Thai unused pending written LDC permission. Keep LOTUSDIS PARTIAL until actual WAV bytes and per-file hashes/interval evidence are verified. Keep FastThaiG2P production data and preview gates separate. Do not create or report independent IPA gold rows until the blinded expert adjudication has actually happened.
