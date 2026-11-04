@@ -2370,3 +2370,14 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - **Remaining release blockers:** owner-connected Vercel preview (zero projects linked), source-by-source FastThaiG2P data rights, independent Thai phonetic/segmentation review, Ukrainian-native review, and manual WCAG 2.2 AA/device checks.
 - **Local tests:** not run; exact GitHub Actions evidence above. No deployment, external project-setting change or production routing change.
 - **Readiness:** engineering-verified research prototype; not production-ready and not validated for linguistic accuracy.
+
+
+---
+
+## 2026-11-04 — final handoff reconciliation
+
+- **PR #193 latest verified checkpoint:** `5d7107cc14fc98caccca07ac6bcef1028d8a1699`, 110 ahead / 0 behind. Full CI [41875416246](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41875416246), dedicated site [41875416046](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41875416046), and Web Static [41875416176](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41875416176) all SUCCESS. The full suite reports 327 passed, 1 skipped, 1,169 subtests; the dedicated suite reports 16 targeted Python tests passed.
+- **PR #192 was modified separately:** current docs head `8ae1a832caa09605070eafcd35540c9489219e2b`, 9 ahead / 0 behind; exact-head CI [41874377777](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41874377777) SUCCESS, 321 tests and 1,169 subtests. The branch records one LOTUSDIS row locator as PARTIAL and implements a safe partial-evidence state; it still lacks WAV bytes, audio SHA-256, overlap review and clean interval.
+- **PR #192 / #193 shared files:** both branches update `docs/validation-matrix.md`, `docs/final-audit.md`, `docs/final-audit.json`, and `docs/MASTER-EXECUTION-PLAN-AND-CHAT-HANDOFF.md`. Their substantive code/data files are disjoint. Reconcile these four documents if either PR merges first. PRs #184–#191 were left untouched; #192 was modified on its own branch; #193 remains separate. No merge was performed.
+- **TLTK fallback rights:** package-level BSD-3 evidence for 1.3.8 is now stronger (PyPI metadata, setup.py, MANIFEST.in, LICENSE.txt), but exact sdist contents and per-file mapping remain unverified; root LGPL-3 LICENSE and multi-source corpus provenance remain caveats. Classify this subcomponent PARTIAL; keep the overall FastThaiG2P data-rights gate BLOCKED.
+- **Readiness:** engineering-verified research prototype, not production-ready and not independently linguistically validated. Vercel project/preview, human linguistic review, manual accessibility review, FastThaiG2P data rights and LOTUSDIS audio bytes/hash/interval remain open.

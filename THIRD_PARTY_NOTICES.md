@@ -54,6 +54,18 @@ This notice records software attribution and an explicit unresolved data-rights 
 
 The pinned FastThaiG2P data README attributes its Wiktionary-derived IPA subset to a kaikki.org Thai Wiktionary dump. Wiktionary entry text is published under CC BY-SA 4.0; the exact dump revision and attribution mapping used for this 13k subset have not been supplied. A distinct PyThaiNLP Thai G2P Wiktionary corpus declares CC BY-SA 3.0, but it has not been established as the exact FastThaiG2P source and must not be substituted for that missing provenance.
 
-FastThaiG2P's vendored TLTK `_th2ipa.py` identifies version 1.3.8 and carries a BSD-3-Clause notice. PyPI describes TLTK as BSD-3-Clause since 1.2.2, but the current TLTK repository root LICENSE contains LGPL-3 text while its `setup.py` declares BSD-3-Clause. FastThaiG2P does not pin the exact TLTK revision for each fallback data asset. Treat the fallback-data license as unresolved pending an upstream source/revision and terms clarification.
+FastThaiG2P's vendored TLTK `_th2ipa.py` identifies version 1.3.8 and carries a BSD-3-Clause notice. Exact PyPI 1.3.8 metadata declares BSD-3-Clause, records release date 2021-04-23 and sdist SHA-256 `f803e9f2e3e16b1f8abba4da4889f6b94bd706c5c519e2be8382178446da4159`; its description says the package license changed to New BSD from 1.2.2 and describes commercial use. TLTK `setup.py` declares BSD-3-Clause and lists fallback data files; `MANIFEST.in` includes `LICENSE.txt`, which is BSD-3-Clause. The repository root also contains an LGPL-3 `LICENSE`, PyPI's JSON has no `license_files` metadata, and the exact 1.3.8 sdist bytes were not inspected. Several fallback filenames correspond to TLTK package data, but no per-file hash/source mapping or third-party corpus clearance is complete. **Disposition: PARTIAL package-level BSD-3 evidence; fallback asset rights remain unresolved pending exact sdist/file and corpus-term review.**
 
 The ~49k LLM-generated IPA records and manual overrides also lack a complete data-specific license/provenance statement in the pinned FastThaiG2P data README. The Apache-2.0 software license does not, by itself, clear these separate data assets. No FastThaiG2P dictionary or fallback data is copied into this repository.
+
+
+### TLTK 1.3.8 package-level evidence (2026-11-04)
+
+Primary package/source references:
+- [PyPI TLTK 1.3.8 release metadata](https://pypi.org/pypi/tltk/1.3.8/json) — BSD-3-Clause, source archive SHA-256 `f803e9f2e3e16b1f8abba4da4889f6b94bd706c5c519e2be8382178446da4159`, uploaded 2021-04-23.
+- [TLTK README](https://github.com/attapol/tltk/blob/master/README.rst) — says the package license changed to New BSD (BSD-3-Clause) from 1.2.2 and describes commercial use.
+- [TLTK setup.py](https://github.com/attapol/tltk/blob/master/setup.py) — declares BSD-3-Clause and enumerates package data files.
+- [TLTK MANIFEST.in](https://github.com/attapol/tltk/blob/master/MANIFEST.in) — explicitly includes `LICENSE.txt`.
+- [TLTK LICENSE.txt](https://github.com/attapol/tltk/blob/master/LICENSE.txt) — BSD-3-Clause; [repository LICENSE](https://github.com/attapol/tltk/blob/master/LICENSE) is LGPL-3.
+
+The package-level evidence narrows the license ambiguity, but the exact 1.3.8 sdist contents and byte-level mapping to each FastThaiG2P fallback asset were not retrieved/verified. Do not treat this as blanket asset-level clearance.
