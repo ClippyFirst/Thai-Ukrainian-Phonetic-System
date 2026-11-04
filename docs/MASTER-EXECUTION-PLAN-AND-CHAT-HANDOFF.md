@@ -2321,3 +2321,11 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - Exact-head CI acceptance remains open. The GitHub connector provides no workflow-dispatch action, and no local checkout/test runtime is available; no artificial commit was made merely to trigger CI. The exact-head test suite, dedicated site workflow and full CI must run before marking these four cases DONE_VERIFIED.
 - External gates remain: Vercel project/preview, upstream data rights, independent Thai and Ukrainian reviewers, and manual accessibility review. PR #192's immutable LOTUSDIS revision and 24-shard manifest are verified on its own branch; its audio asset registry remains header-only and no acoustic evidence is claimed.
 
+
+
+## Upstream pronunciation correction regression — 2026-11-04
+
+- Added a real-engine smoke regression for Thai `สวน` to `tests/test_fastthaig2p_site_api.py`. The expected raw output `/sua̯n˩˩˦/` is grounded in upstream FastThaiG2P PR [#3](https://github.com/awslabs/FastThaiG2P/pull/3), merged as the exact pinned commit `4e82a291b4cf2876326744c6580121e9986ad354`. The upstream change replaces the incorrect `/sa˨˩.wa˦˥.na˦˥/` output with the single-syllable diphthong form.
+- The regression also checks that segmental external IPA remains `sua̯n`, the Chao contour `˩˩˦` is retained separately and categorized as rising, and the typed result remains explicitly PROVISIONAL. This upstream-maintainer-accepted correction is useful source evidence, but it is not an independent expert-gold dataset.
+- **Status: PARTIAL / NOT VERIFIED.** The test is committed but no workflow run or status is currently available for the branch head. It must pass in the dedicated site/API workflow and full exact-head CI before DONE_VERIFIED.
+

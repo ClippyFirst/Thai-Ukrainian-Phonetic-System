@@ -109,3 +109,8 @@ A newer Vercel platform change resolves the earlier uncertainty about whether th
 Primary platform reference: https://vercel-docs.vercel.sh/changelog/fastapi-frontends-and-static-files-served-from-the-cdn (2026-09-10). The older FastAPI deployment page still recommends `public/**` for generic static assets; the newer dated changelog specifically documents the FastAPI `StaticFiles` promotion behavior and is the more directly applicable source.
 
 **Updated disposition:** static-asset architecture is platform-supported; it is no longer an independent design blocker. The hosting gate remains BLOCKED only because no Vercel project is connected and no preview deployment exists. Preview acceptance still requires checking the homepage, `/system.html`, all referenced JS/CSS/assets, `/api/health`, successful and failing `/api/analyze`, same-origin CSP, cold starts and the final function bundle size. Keep GitHub Pages unchanged until those live checks pass.
+
+
+## Upstream lexical correction regression
+
+The pinned FastThaiG2P commit is the merge commit of upstream [PR #3](https://github.com/awslabs/FastThaiG2P/pull/3), which corrected the dictionary IPA for `สวน` from the erroneous three-syllable `/sa˨˩.wa˦˥.na˦˥/` to `/sua̯n˩˩˦/`. A real-engine test now protects this exact pinned output and verifies that the adapter retains segmental IPA, the rising Chao tone contour and its explicitly provisional status. The PR's maintainer acceptance is source evidence for the upstream correction, not independent expert adjudication or general accuracy evidence. The new test remains unverified until exact-head CI runs.

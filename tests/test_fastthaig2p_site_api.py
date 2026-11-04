@@ -81,3 +81,19 @@ def test_fastapi_app_registers_same_origin_api_and_static_routes() -> None:
     assert "/api/health" in routes
     assert "/api/analyze" in routes
     assert "" in routes, "the root static mount is registered at the empty path"
+
+
+def test_pinned_fastthaig2p_contains_merged_suan_ipa_correction() -> None:
+    """Protect the upstream-merged correction for สวน against regression."""
+    from thai_ukrainian.fastthaig2p_adapter import FastThaiG2PAdapter
+
+    output = FastThaiG2PAdapter().convert("สวน")
+
+    # Upstream PR #3 was merged as the exact FastThaiG2P pin used by this site.
+    # It replaces the incorrect three-syllable "sawana" form with /sua̯n˩˩˦/.
+    assert output.raw_ipa == "/sua̯n˩˩˦/"
+    typed = output.to_phonetic_results()[0][0]
+    assert typed.external_ipa == "sua̯n"
+    assert typed.tone_contour_ipa == "˩˩˦"
+    assert typed.tone_category == "rising"
+    assert typed.status == "PROVISIONAL"
