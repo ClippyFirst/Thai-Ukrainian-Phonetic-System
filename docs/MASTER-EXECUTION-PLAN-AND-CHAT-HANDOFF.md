@@ -2450,4 +2450,4 @@ The test workflow uploaded the current diagnostic and master artifacts (includin
 - Expanded the supplemental blind-packet regression to require exact coverage of all seven supplemental records.
 - The original frozen 42-item challenge and its 42-item blind packet remain unchanged. No denominator, original challenge input, or prior benchmark result was modified.
 - The related accessibility correction strengthens the output-mode control border to `#767676` and enforces the WCAG 1.4.11 3:1 non-text contrast threshold in the static accessibility test. This is a source-level check, not manual WCAG conformance.
-- Verification is pending on PR #207; do not claim the change is merged or CI-complete until exact-head checks pass.
+- PR #207 merged as `6137fe27c6c610ff193731c45dc0ec4f503608f3`. Exact PR-head `validate` and `site-api` checks passed; the post-merge exact-main CI test/build and Pages workflows were still running at this checkpoint. The merged PR does not change the original 42-item benchmark or claim linguistic accuracy.
