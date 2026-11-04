@@ -2948,6 +2948,14 @@
     "media_committed": false,
     "allowed_use": "AUDIO_TRANSCRIPT_INPUT_FOR_FRESH_INDEPENDENT_HUMAN_ANNOTATION_ONLY",
     "accuracy_claimed": false,
-    "remaining_acceptance": "Download authorized sample audio; independently recompute WAV SHA-256; verify stable revision-bound object identity, waveform/channel and interval boundaries; document overlap; obtain independent phonetic annotations. Do not treat transcript as IPA gold."
+    "remaining_acceptance": "Download authorized sample audio; independently recompute WAV SHA-256; verify stable revision-bound object identity, waveform/channel and interval boundaries; document overlap; obtain independent phonetic annotations. Do not treat transcript as IPA gold.",
+    "split_rows": {
+      "train": 120245,
+      "validation": 13090,
+      "test": 27580,
+      "total": 160915
+    },
+    "dataset_viewer_size_source": "https://datasets-server.huggingface.co/size?dataset=nectec/LOTUSDIS&config=default&split=train",
+    "dataset_columns": 5
   }
 }
