@@ -59,6 +59,14 @@ function contrast(foreground, background) {
   const values = [luminance(foreground), luminance(background)].sort((a, b) => b - a);
   return (values[0] + 0.05) / (values[1] + 0.05);
 }
+
+const textareaRule = css.match(/textarea\\s*\\{([^}]*)\\}/i);
+assert(textareaRule, "Thai text input must have an active CSS rule");
+const textareaBorder = textareaRule[1].match(/\\bborder:\\s*\\d+px\\s+solid\\s+(#[0-9a-f]{3}(?:[0-9a-f]{3})?)\\b/i);
+const textareaBackground = textareaRule[1].match(/\\bbackground(?:-color)?:\\s*(#[0-9a-f]{3}(?:[0-9a-f]{3})?)\\b/i);
+assert(textareaBorder && textareaBackground, "Thai text input must declare explicit border and background colors");
+const textareaBorderContrast = contrast(textareaBorder[1], textareaBackground[1]);
+assert(textareaBorderContrast >= 3, `Thai text input border contrast ${textareaBorderContrast.toFixed(2)}:1 is below WCAG 1.4.11's 3:1 threshold`);
 const palettePairs = [
   ["#191a22", "#ffffff", "primary text"],
   ["#5e6070", "#ffffff", "muted text on paper"],
