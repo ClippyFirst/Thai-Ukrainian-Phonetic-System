@@ -104,7 +104,7 @@ def test_api_rejects_whitespace_only_input_before_calling_engine() -> None:
     site_api._engine = engine
 
     with pytest.raises(HTTPException) as caught:
-        site_api.analyze(site_api.AnalyzeRequest(text=" \\t\\n "))
+        site_api.analyze(site_api.AnalyzeRequest(text="   "))
 
     assert caught.value.status_code == 400
     assert engine.seen == []
