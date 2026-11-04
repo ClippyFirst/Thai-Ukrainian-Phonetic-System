@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PR #182 is merged to main as 65584d9a3d3d64a8e520dbd32411bef4b0a3dd9e. Main CI 41420468842 passed all three jobs; Web Static 41420468939 passed; GitHub Pages 41420468875 successfully built, deployed and verified the published site at https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/. Six source-attested lexical IPA overrides are live in both runtimes through the typed IPA→Ukrainian adapter, with CC BY-SA 4.0 provenance documented separately from MIT software. Static audit found 0 exact duplicate test names/bodies and 0 parse errors. Independent Thai/Ukrainian reviewers, CCOST clarification/archive, LOTUSDIS audio evidence and manual WCAG testing remain blocked. Linguistic accuracy remains NOT_MEASURED; the site is an engineering-verified research prototype, not a linguistic-accuracy release.\n\n2026-11-04: Draft PR #193 implements a FastThaiG2P-only website/API path with explicitly provisional Ukrainian adaptation. Targeted FastThaiG2P site workflow passed at code commit 2c0164751eab32f3992348b4450d350175becb05; Web Static passed at b1472aa564596c073475cb10ed994506535869f8. Full repository CI for the later documentation checkpoint is pending; hosting and upstream bundled-data rights remain blocked. Main remains unchanged and the new site is not deployed.\n\n2026-11-04 final PR #193 verification: exact branch head c133dee9c66ed08df60d20ba0e170fab6c2c7300 passed Full CI run 41811988701 (all 3 jobs); pytest 323 passed, 1 skipped, 1169 subtests. The skip is FastAPI API tests in the generic dev environment; dedicated FastThaiG2P site workflow 41810981343 passed all 9 targeted Python tests including API and Bangkok smoke. Web Static 41810746926 passed. Hosting and upstream data rights remain blocked; PR #193 remains Draft and main is unchanged.\n\n2026-11-04 hosting clarification: Vercel's 2026-09-10 changelog confirms FastAPI StaticFiles mounts are promoted to the CDN at build time, supporting the existing root mount in src/index.py; a public/ migration is not indicated. This resolves the static-asset architecture uncertainty, not the hosting blocker. No Vercel project is linked and no preview has been deployed. The live preview still must verify UI/assets, /api/health, successful and failing /api/analyze, CSP, cold starts and bundle size. GitHub Pages and production routing remain unchanged. Source: https://vercel-docs.vercel.sh/changelog/fastapi-frontends-and-static-files-served-from-the-cdn.\n\n2026-11-04: Added four parameterized FastThaiG2P IPA convention regression cases (unreleased coda, non-syllabic diphthong, tied affricate, vowel length/tone) to tests/test_fastthaig2p_adapter.py. They assert current provisional adapter behavior, not expert gold. Commit e0a3e062d5607adde60d496a33a07340a308b75f has no reported GitHub workflow runs or status checks; no local tests were run. Test status remains PARTIAL pending exact-head dedicated and full CI.\n\nLatest continuation audit note: branch head after documentation reconciliation is tracked in PR #193 metadata; the four new adapter regression cases are committed at e0a3e062d5607adde60d496a33a07340a308b75f. No workflow runs/status checks were reported for the latest documentation head either; the new cases remain PARTIAL pending an exact-head site/API and full CI run.\n\n2026-11-04 PR #192 reconciliation: exact LOTUSDIS revision 45145d7ca2286498a31958b35628ab3c1969f808 and 24-shard manifest (17 train, 3 validation, 4 test; 13,180,732,521 bytes) are DONE_VERIFIED on separate Draft PR #192 at e4c811f1fb45a8eaa464a2e93d12b934559b2010; exact-head CI 41798876911 passed all three jobs. Asset-level audio evidence remains PARTIAL: no downloaded WAV bytes/hash, stable audio URI, waveform/channel/overlap review, clean interval or human annotation.\n\n2026-11-04 exact-current-HEAD closeout: PR #193 HEAD 10140505649c04d03a40706b85f444176b29691d (111 ahead / 0 behind; OPEN Draft; mergeable=true) passed full CI 41876675582 (3/3 jobs; Ruff; 327 passed, 1 skipped, 1169 subtests; 29 browser parity fixtures), dedicated FastThaiG2P site/API 41876675750 (16 targeted tests and UI/accessibility/IPA-UA contracts), and Web Static 41876675844. The one generic dev skip is the FastAPI site API module, covered by the dedicated workflow. External deployment, bundled-data rights, independent linguistic and manual accessibility gates remain blocked. No merge/deploy; main and Pages unchanged.\n\nDocumentation-head boundary (2026-11-04): exact-head workflows 41876675582 / 41876675750 / 41876675844 verify implementation checkpoint 10140505649c04d03a40706b85f444176b29691d. Subsequent documentation-only changes produced current branch head 9d6762db5fc396c5c949aefbe0ca71569dbac4ee; no runtime/test/workflow/browser source changed, but no Actions run exists for that final docs head. Keep the code checkpoint DONE_VERIFIED and the current documentation head PARTIAL pending fresh full CI.\n\nFinal documentation-head pointer: read the current SHA from PR #193 metadata. The exact verified implementation checkpoint remains 10140505649c04d03a40706b85f444176b29691d; subsequent changes are documentation-only and not exact-head CI-verified.",
+  "status": "PR #182 is merged to main as 65584d9a3d3d64a8e520dbd32411bef4b0a3dd9e. Main CI 41420468842 passed all three jobs; Web Static 41420468939 passed; GitHub Pages 41420468875 successfully built, deployed and verified the published site at https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/. Six source-attested lexical IPA overrides are live in both runtimes through the typed IPA→Ukrainian adapter, with CC BY-SA 4.0 provenance documented separately from MIT software. Static audit found 0 exact duplicate test names/bodies and 0 parse errors. Independent Thai/Ukrainian reviewers, CCOST clarification/archive, LOTUSDIS audio evidence and manual WCAG testing remain blocked. Linguistic accuracy remains NOT_MEASURED; the site is an engineering-verified research prototype, not a linguistic-accuracy release.\n\n2026-11-04: Draft PR #193 implements a FastThaiG2P-only website/API path with explicitly provisional Ukrainian adaptation. Targeted FastThaiG2P site workflow passed at code commit 2c0164751eab32f3992348b4450d350175becb05; Web Static passed at b1472aa564596c073475cb10ed994506535869f8. Full repository CI for the later documentation checkpoint is pending; hosting and upstream bundled-data rights remain blocked. Main remains unchanged and the new site is not deployed.\n\n2026-11-04 final PR #193 verification: exact branch head c133dee9c66ed08df60d20ba0e170fab6c2c7300 passed Full CI run 41811988701 (all 3 jobs); pytest 323 passed, 1 skipped, 1169 subtests. The skip is FastAPI API tests in the generic dev environment; dedicated FastThaiG2P site workflow 41810981343 passed all 9 targeted Python tests including API and Bangkok smoke. Web Static 41810746926 passed. Hosting and upstream data rights remain blocked; PR #193 remains Draft and main is unchanged.\n\n2026-11-04 hosting clarification: Vercel's 2026-09-10 changelog confirms FastAPI StaticFiles mounts are promoted to the CDN at build time, supporting the existing root mount in src/index.py; a public/ migration is not indicated. This resolves the static-asset architecture uncertainty, not the hosting blocker. No Vercel project is linked and no preview has been deployed. The live preview still must verify UI/assets, /api/health, successful and failing /api/analyze, CSP, cold starts and bundle size. GitHub Pages and production routing remain unchanged. Source: https://vercel-docs.vercel.sh/changelog/fastapi-frontends-and-static-files-served-from-the-cdn.\n\n2026-11-04: Added four parameterized FastThaiG2P IPA convention regression cases (unreleased coda, non-syllabic diphthong, tied affricate, vowel length/tone) to tests/test_fastthaig2p_adapter.py. They assert current provisional adapter behavior, not expert gold. Commit e0a3e062d5607adde60d496a33a07340a308b75f has no reported GitHub workflow runs or status checks; no local tests were run. Test status remains PARTIAL pending exact-head dedicated and full CI.\n\nLatest continuation audit note: branch head after documentation reconciliation is tracked in PR #193 metadata; the four new adapter regression cases are committed at e0a3e062d5607adde60d496a33a07340a308b75f. No workflow runs/status checks were reported for the latest documentation head either; the new cases remain PARTIAL pending an exact-head site/API and full CI run.\n\n2026-11-04 PR #192 reconciliation: exact LOTUSDIS revision 45145d7ca2286498a31958b35628ab3c1969f808 and 24-shard manifest (17 train, 3 validation, 4 test; 13,180,732,521 bytes) are DONE_VERIFIED on separate Draft PR #192 at e4c811f1fb45a8eaa464a2e93d12b934559b2010; exact-head CI 41798876911 passed all three jobs. Asset-level audio evidence remains PARTIAL: no downloaded WAV bytes/hash, stable audio URI, waveform/channel/overlap review, clean interval or human annotation.\n\n2026-11-04 exact-current-HEAD closeout: PR #193 HEAD 10140505649c04d03a40706b85f444176b29691d (111 ahead / 0 behind; OPEN Draft; mergeable=true) passed full CI 41876675582 (3/3 jobs; Ruff; 327 passed, 1 skipped, 1169 subtests; 29 browser parity fixtures), dedicated FastThaiG2P site/API 41876675750 (16 targeted tests and UI/accessibility/IPA-UA contracts), and Web Static 41876675844. The one generic dev skip is the FastAPI site API module, covered by the dedicated workflow. External deployment, bundled-data rights, independent linguistic and manual accessibility gates remain blocked. No merge/deploy; main and Pages unchanged.\n\nDocumentation-head boundary (2026-11-04): exact-head workflows 41876675582 / 41876675750 / 41876675844 verify implementation checkpoint 10140505649c04d03a40706b85f444176b29691d. Subsequent documentation-only changes produced current branch head 9d6762db5fc396c5c949aefbe0ca71569dbac4ee; no runtime/test/workflow/browser source changed, but no Actions run exists for that final docs head. Keep the code checkpoint DONE_VERIFIED and the current documentation head PARTIAL pending fresh full CI.\n\nFinal documentation-head pointer: read the current SHA from PR #193 metadata. The exact verified implementation checkpoint remains 10140505649c04d03a40706b85f444176b29691d; subsequent changes are documentation-only and not exact-head CI-verified.\n\n2026-11-04 exact-head refresh: PR #193 commit 79108cecb0580bc9ee6e99b68987fd1d01fa7681 passed full CI 41882664041 (3/3 jobs; Ruff; 327 passed, 1 skipped, 1169 subtests; 29 browser parity fixtures; evidence validators, generated-artifact drift, diagnostics, wheel smoke and master artifact), dedicated site/API 41882664211 (16 targeted tests), and Web Static 41882664209. Follow-up 2d707f68d734d953af52e41bce49ada197741546 adds token-path/word-group alignment fail-closed validation and corrects a stale PROVISIONAL docstring; its exact-head CI remains pending.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -353,7 +353,7 @@
   },
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
   "latest_code_checkpoint": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
-  "readiness": "Engineering-verified research prototype. FastThaiG2P implementation checkpoint 10140505649c04d03a40706b85f444176b29691d passed exact-head CI; current documentation-only head 9d6762db5fc396c5c949aefbe0ca71569dbac4ee has no exact-head CI run. Not production-ready until documentation-head CI, owner-authorized hosting, bundled-data rights and independent linguistic/accessibility acceptance are complete.",
+  "readiness": "Engineering-verified research prototype. PR #193 implementation checkpoint 79108cecb0580bc9ee6e99b68987fd1d01fa7681 passed exact-head full/site/Web Static CI. Current follow-up 2d707f68d734d953af52e41bce49ada197741546 awaits exact-head CI. Not production-ready pending Vercel preview, bundled-data rights, independent linguistic adjudication and manual accessibility.",
   "latest_verified_repository_head": "1431c565ff5c160da4944942d687bc30b2f8d0b2",
   "task_ledger": [
     {
@@ -526,10 +526,10 @@
     },
     {
       "id": "WEB-FASTTHAIG2P-001",
-      "status": "PARTIAL",
-      "implementation": "Draft PR #193 adds pinned FastThaiG2P adapter/API, separate unclassified external_ipa field, explicit PROVISIONAL IPA→Ukrainian adaptation, same-origin browser UI and no-fallback behavior. Dedicated site workflow passed at 2c0164751eab32f3992348b4450d350175becb05; Web Static passed at b1472aa564596c073475cb10ed994506535869f8.",
-      "blocker": "The new UI/API path is not deployed; current main/GitHub Pages remains static-only.",
-      "acceptance": "Full repository CI on the final branch head; deployed Python-capable preview serving UI and API at one origin; API, CSP, cold-start and manual accessibility checks."
+      "status": "DONE_VERIFIED",
+      "implementation": "FastThaiG2P-only pinned adapter/API, external_ipa typed boundary, explicit PROVISIONAL IPA→Ukrainian adaptation, same-origin browser UI and no-fallback behavior. Exact-head full CI 41882664041, dedicated site/API 41882664211 (16 targeted tests), and Web Static 41882664209 all passed on 79108cecb0580bc9ee6e99b68987fd1d01fa7681.",
+      "blocker": "No code blocker at verified checkpoint; current follow-up commit 2d707f68d734d953af52e41bce49ada197741546 adds token-provenance alignment guard and awaits exact-head CI. Deployment is tracked separately.",
+      "acceptance": "DONE for implementation and automated contracts on the verified checkpoint; keep deployment, data-rights, human linguistic and manual accessibility gates separate."
     },
     {
       "id": "WEB-FASTTHAIG2P-DEPLOY-001",
@@ -565,14 +565,21 @@
       "implementation": "Inspected all open PRs #184–#193 and recent closed/merged PRs. Ported #186/#185 FastThaiG2P typed adapter/dependency work and the relevant #190 contrast fix into a new main-based branch. Preserved all original PR branches and their Draft states.",
       "blocker": null,
       "acceptance": "No existing PR merged, closed, retargeted or force-pushed. Independent #188, #189, #191 and #192 scopes remain open and untouched."
+    },
+    {
+      "id": "FASTTHAIG2P-TOKEN-ALIGNMENT-001",
+      "status": "PARTIAL",
+      "implementation": "Follow-up 2d707f68d734d953af52e41bce49ada197741546 requires token_paths count to equal IPA word groups before complete_ipa is true; a fail-closed regression covers mismatched alignment. It also corrects a stale docstring that incorrectly said PROVISIONAL external IPA was withheld.",
+      "blocker": "Exact-head full CI and dedicated FastThaiG2P workflow for the follow-up commit have not yet been observed.",
+      "acceptance": "Both exact-head workflows pass on the current PR head; then mark DONE_VERIFIED."
     }
   ],
   "latest_implementation_branch": "feat/fastthaig2p-site-api-20261104 (PR #193 OPEN Draft; mergeable=true; not deployed)",
-  "latest_implementation_commit_pending_ci": null,
-  "current_head_status_at_audit_refresh": "Implementation checkpoint 10140505649c04d03a40706b85f444176b29691d passed exact-head full CI 41876675582 (all 3 jobs; Ruff; 327 passed, 1 skipped, 1169 subtests; 29 browser parity fixtures), dedicated FastThaiG2P 41876675750 (16 targeted tests and UI/accessibility/IPA-UA contracts), and Web Static 41876675844. Subsequent branch commits are documentation-only (AGENTS.md and canonical audit/matrix/handoff files); no runtime, test, workflow or browser source changed. The live PR #193 head is the authoritative current documentation SHA; no Actions workflow run exists for the current docs-only head. Current docs head is PARTIAL pending fresh full CI.",
+  "latest_implementation_commit_pending_ci": "2d707f68d734d953af52e41bce49ada197741546",
+  "current_head_status_at_audit_refresh": "PR #193 exact HEAD 79108cecb0580bc9ee6e99b68987fd1d01fa7681 passed full CI 41882664041 (all three jobs; Ruff; 327 passed, 1 skipped, 1169 subtests; 29 browser parity fixtures; source/reviewer/blind-packet validators; generated-artifact drift; research diagnostics; wheel-install smoke; master artifact), dedicated FastThaiG2P 41882664211 (16 targeted Python tests plus UI/accessibility/IPA-UA contracts), and Web Static 41882664209. Follow-up code commit 2d707f68d734d953af52e41bce49ada197741546 corrects the adapter docstring and requires token-path/word-group alignment with a fail-closed regression; exact-head CI for that newer commit is pending.",
   "current_implementation_branch": "feat/fastthaig2p-site-api-20261104",
-  "current_implementation_commit_before_audit_update": "LIVE_PR_193_HEAD_READ_FROM_GITHUB_METADATA",
-  "latest_documentation_checkpoint_before_audit": "d0c6e072015a94508634d58d6936f6030102de0d",
+  "current_implementation_commit_before_audit_update": "2d707f68d734d953af52e41bce49ada197741546",
+  "latest_documentation_checkpoint_before_audit": "2d707f68d734d953af52e41bce49ada197741546",
   "audit_note": "Exact-head special-orthography schema and IPA-boundary repair verified on cb775d6156f62392fa2d0f4bcf8d1aa30d219530. CI 40315032771 passed 180 Python tests, generated-data drift, master artifact (351,780 rows / 41 rime records), Node IPA→UA, 28 browser parity fixtures, UI contract, challenge/Wisesight/source-attested IPA diagnostics, candidate-registry check, TUD training/evaluation and artifact uploads. Web static validation 40315032788 passed. This is software/reproducibility evidence, not independent pronunciation gold.",
   "dictionary_max_match_baseline": {
     "corpus": "Wisesight-1000",
@@ -638,12 +645,12 @@
       ]
     }
   },
-  "latest_implementation_commit_ci_verified": "10140505649c04d03a40706b85f444176b29691d",
-  "latest_documentation_head_ci_verified": "10140505649c04d03a40706b85f444176b29691d",
-  "latest_documentation_head_ci_run": 41876675582,
-  "latest_documentation_head_web_validation_run": 41810746926,
-  "latest_implementation_ci_run": 41876675582,
-  "latest_implementation_web_validation_run": 41876675844,
+  "latest_implementation_commit_ci_verified": "79108cecb0580bc9ee6e99b68987fd1d01fa7681",
+  "latest_documentation_head_ci_verified": "79108cecb0580bc9ee6e99b68987fd1d01fa7681",
+  "latest_documentation_head_ci_run": 41882664041,
+  "latest_documentation_head_web_validation_run": 41882664209,
+  "latest_implementation_ci_run": 41882664041,
+  "latest_implementation_web_validation_run": 41882664209,
   "segmentation_error_review": {
     "script": "scripts/analyze_segmentation_errors.py",
     "test": "tests/test_segmentation_error_analysis.py",
@@ -3024,65 +3031,71 @@
   },
   "latest_full_repository_head_pages_run": "41420468875",
   "latest_fastthaig2p_site_integration": {
-    "status": "PARTIAL",
+    "status": "DONE_VERIFIED_IMPLEMENTATION_PENDING_FOLLOWUP_CI",
     "pull_request": 193,
     "draft": true,
     "base_branch": "main",
     "base_commit": "75c331f69aa3c8e5b4db3ccc5a6da85124600a01",
     "branch": "feat/fastthaig2p-site-api-20261104",
-    "docs_checkpoint_before_audit_json_update": "c8e9fc6607891f82fc2c939db3afbe8af655e2f6",
+    "verified_head": "79108cecb0580bc9ee6e99b68987fd1d01fa7681",
+    "followup_head": "2d707f68d734d953af52e41bce49ada197741546",
     "upstream_engine": "FastThaiG2P",
     "upstream_commit": "4e82a291b4cf2876326744c6580121e9986ad354",
     "output_policy": "provisional Ukrainian practical adaptation from unclassified external IPA; no phonemic/broad-surface relabeling",
     "api": "FastAPI src/index.py; POST /api/analyze; GET /api/health; same-origin static web/ serving",
-    "fallback_policy": "No old browser G2P, RTGS or orthographic fallback; incomplete external IPA returns an explicit error",
-    "targeted_workflow": {
-      "status": "PASS",
-      "run": 41810981343,
-      "code_commit": "2c0164751eab32f3992348b4450d350175becb05"
+    "fallback_policy": "No old browser G2P, RTGS or orthographic fallback; incomplete external IPA or token-path alignment returns an explicit error",
+    "exact_head_ci": {
+      "full_repository": {
+        "run": 41882664041,
+        "result": "SUCCESS",
+        "jobs": {
+          "test": "success",
+          "wheel_install_smoke": "success",
+          "master_artifact": "success"
+        },
+        "ruff": "PASS",
+        "pytest": {
+          "passed": 327,
+          "skipped": 1,
+          "subtests": 1169
+        },
+        "browser_parity_fixtures": 29,
+        "generated_artifact_drift": "PASS",
+        "research_diagnostics": "PASS",
+        "evidence_validators": "PASS"
+      },
+      "dedicated_site_api": {
+        "run": 41882664211,
+        "result": "SUCCESS",
+        "targeted_python_tests": 16,
+        "ruff": "PASS",
+        "ui_contract": "PASS",
+        "accessibility_contract": "PASS",
+        "ipa_ukrainian_contract": "PASS"
+      },
+      "web_static": {
+        "run": 41882664209,
+        "result": "SUCCESS"
+      }
     },
-    "web_static": {
-      "status": "PASS",
-      "run": 41810746926,
-      "code_commit": "b1472aa564596c073475cb10ed994506535869f8"
-    },
-    "full_repository_ci": {
-      "status": "PENDING",
-      "prior_run": 41811334224,
-      "prior_head": "dc9f9205b90d94989faa4eb423717835c6236e4b",
-      "prior_result": "322 passed, 1 skipped, 1 failed, 1169 subtests; wheel-install smoke passed",
-      "prior_failure": "tests/test_ipa_display_contract.py expected old esc(shown) field",
-      "fix_commit": "8b489f3bdaed96f3b3e8a2b93bff23152c4b0deb",
-      "cancelled_run": 41811706426,
-      "final_head": "c8e9fc6607891f82fc2c939db3afbe8af655e2f6",
-      "final_run": 41811887890,
-      "final_run_status": "PENDING",
-      "note": "Source/runtime code has not changed since fix commit; final audit/handoff updates after this checkpoint are documentation-only and require a fresh exact-head run."
+    "followup_alignment_guard": {
+      "commit": "2d707f68d734d953af52e41bce49ada197741546",
+      "status": "PARTIAL_PENDING_EXACT_HEAD_CI"
     },
     "deployment": {
       "status": "BLOCKED",
-      "reason": "No linked Vercel project; GitHub Pages cannot execute Python API"
+      "reason": "No Vercel project linked; GitHub Pages cannot execute Python API"
     },
     "data_rights": {
       "status": "BLOCKED",
-      "reason": "Bundled dictionary/fallback data terms and attribution not fully cleared"
+      "reason": "Mixed upstream dictionary and fallback data rights/provenance not fully cleared"
     },
     "linguistic_review": {
       "status": "BLOCKED",
       "reason": "Independent Thai phonetic and Ukrainian-native adjudication unavailable; accuracy NOT_MEASURED"
     },
     "production_deployed": false,
-    "final_audit_handoff_checkpoint": "9767377a09828780d6c9a7ab3b1bc7b7ca13f368",
-    "final_json_update_pending_ci": true,
-    "latest_branch_head": "b1173c1e48d17f0d84acb3c59b1191b8df63404a",
-    "branch_ahead_of_main": 103,
-    "branch_behind_main": 0,
-    "latest_head_workflow_runs": [],
-    "latest_head_combined_statuses": [],
-    "new_adapter_regression_tests": "PARTIAL_NOT_VERIFIED",
-    "latest_exact_head_ci": "NO_RUNS_OR_STATUSES_REPORTED",
-    "upstream_correction_regression": "PARTIAL_NOT_VERIFIED",
-    "data_rights_tltk": "NARROWED_NOT_CLEARED"
+    "merge_or_deploy_performed": false
   },
   "pr_reconciliation": {
     "pr184": {
@@ -3196,15 +3209,15 @@
     "pull_request": 193,
     "pull_request_state": "OPEN_DRAFT",
     "mergeable": true,
-    "head_commit": "LIVE_PR_193_HEAD_READ_FROM_GITHUB_METADATA",
-    "ahead_of_main": 116,
+    "head_commit": "2d707f68d734d953af52e41bce49ada197741546",
+    "ahead_of_main": 127,
     "behind_main": 0,
     "exact_head_workflow_runs": [
-      41876675582,
-      41876675750,
-      41876675844
+      41882664041,
+      41882664211,
+      41882664209
     ],
-    "exact_head_ci": "IMPLEMENTATION_CHECKPOINT_1014050_SUCCESS; CURRENT_DOCS_HEAD_NOT_VERIFIED",
+    "exact_head_ci": "Verified checkpoint 79108cecb0580bc9ee6e99b68987fd1d01fa7681 PASSED full, dedicated site/API and Web Static workflows; current follow-up 2d707f68d734d953af52e41bce49ada197741546 is pending exact-head CI.",
     "new_adapter_regressions": "DONE_VERIFIED_BY_EXACT_HEAD_DEDICATED_AND_FULL_CI",
     "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
     "external_gates": [
@@ -3241,7 +3254,7 @@
       "disposition": "NARROWED_NOT_CLEARED",
       "overall_fastthaig2p_data_rights": "BLOCKED_WIKTIONARY_GENERATED_MANUAL_AND_FALLBACK_DATA_PROVENANCE"
     },
-    "documentation_head_ci": "NOT_VERIFIED_NO_WORKFLOW_RUN"
+    "documentation_head_ci": "PASS_FOR_VERIFIED_CHECKPOINT_79108CE"
   },
   "latest_fastthaig2p_site_verification_2026_11_04": {
     "repository": "ClippyFirst/Thai-Ukrainian-Phonetic-System",
@@ -3249,13 +3262,11 @@
     "base_commit": "75c331f69aa3c8e5b4db3ccc5a6da85124600a01",
     "branch": "feat/fastthaig2p-site-api-20261104",
     "pull_request": 193,
-    "head_commit": "10140505649c04d03a40706b85f444176b29691d",
-    "ahead_of_main": 111,
-    "behind_main": 0,
+    "verified_head": "79108cecb0580bc9ee6e99b68987fd1d01fa7681",
+    "current_followup_head": "2d707f68d734d953af52e41bce49ada197741546",
     "pull_request_state": "OPEN_DRAFT",
-    "mergeable": true,
     "full_repository_ci": {
-      "run": 41876675582,
+      "run": 41882664041,
       "conclusion": "success",
       "jobs": {
         "test": "success",
@@ -3272,10 +3283,12 @@
       },
       "browser_parity_fixtures": 29,
       "generated_artifact_drift": "passed",
+      "evidence_validators": "passed",
+      "research_diagnostics": "passed",
       "wheel_install_smoke": "passed"
     },
     "dedicated_site_api": {
-      "run": 41876675750,
+      "run": 41882664211,
       "conclusion": "success",
       "ruff": "passed",
       "targeted_python_tests": 16,
@@ -3284,12 +3297,13 @@
       "ipa_ukrainian_regression": "passed"
     },
     "web_static": {
-      "run": 41876675844,
-      "conclusion": "success",
-      "required_pages": "passed",
-      "javascript_syntax": "passed",
-      "static_accessibility": "passed",
-      "no_remote_runtime_dependency": "passed"
+      "run": 41882664209,
+      "conclusion": "success"
+    },
+    "followup_alignment_guard": {
+      "commit": "2d707f68d734d953af52e41bce49ada197741546",
+      "change": "complete_ipa requires one tokenizer path per IPA word; fail-closed mismatch regression; corrected PROVISIONAL docstring",
+      "ci_status": "PENDING"
     },
     "local_tests": "NOT_RUN_NO_LOCAL_CHECKOUT_CONNECTOR_ONLY_ENVIRONMENT",
     "vercel_project_context": {
@@ -3307,16 +3321,7 @@
     ],
     "merge_or_deploy_performed": false,
     "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_PRODUCTION_READY",
-    "previous_verified_code_test_checkpoint": "2281dc2c5723046ecabda2fd3edae8814359f6fd",
-    "exact_head_ci_runs": {
-      "full": 41876675582,
-      "dedicated_site_api": 41876675750,
-      "web_static": 41876675844
-    },
-    "current_documentation_head": "LIVE_PR_193_HEAD_READ_FROM_GITHUB_METADATA",
-    "latest_verified_implementation_checkpoint": "10140505649c04d03a40706b85f444176b29691d",
-    "documentation_head_ci_status": "NOT_VERIFIED_NO_WORKFLOW_RUN",
-    "ahead_of_main_at_verified_checkpoint": 111,
-    "current_documentation_head_before_this_refresh": "d0c6e072015a94508634d58d6936f6030102de0d"
+    "ahead_of_main": 125,
+    "behind_main": 0
   }
 }
