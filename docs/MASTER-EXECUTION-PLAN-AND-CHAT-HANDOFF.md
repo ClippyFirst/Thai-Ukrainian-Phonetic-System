@@ -2443,3 +2443,11 @@ The test workflow uploaded the current diagnostic and master artifacts (includin
 - **Remaining blockers are not merge conflicts:** Global TIMIT Thai remains BLOCKED pending written LDC authorization; LOTUSDIS audio remains PARTIAL pending actual WAV bytes, independently computed SHA-256 and waveform/interval/overlap review; FastThaiG2P bundled-data rights and Vercel preview remain unresolved; independent Thai/Ukrainian linguistic review and hands-on accessibility testing remain outstanding. Linguistic accuracy remains `NOT_MEASURED`.
 - **Readiness:** DONE_VERIFIED for engineering integration; still an engineering-verified research prototype, not a linguistic-accuracy or production release. No release/tag, project-license change, dataset redistribution or production deployment was made.
 
+## Bangkok full-name supplemental diagnostic — 2026-11-04
+
+- Added `TH-G2P-SUP-007` (`กรุงเทพมหานคร`) to `data/benchmark/thai_g2p_supplemental_challenge.jsonl` and the matching blank row to `data/benchmark/ipa-adjudication-supplemental-blind.tsv`.
+- The new candidate is explicitly unadjudicated: all gold IPA/tone/length/boundary fields remain null, references remain empty, and the reviewer packet contains no prefilled labels. It must not be treated as an IPA label, accuracy result, or source-attested lexical reading.
+- Expanded the supplemental blind-packet regression to require exact coverage of all seven supplemental records.
+- The original frozen 42-item challenge and its 42-item blind packet remain unchanged. No denominator, original challenge input, or prior benchmark result was modified.
+- The related accessibility correction strengthens the output-mode control border to `#767676` and enforces the WCAG 1.4.11 3:1 non-text contrast threshold in the static accessibility test. This is a source-level check, not manual WCAG conformance.
+- Verification is pending on PR #207; do not claim the change is merged or CI-complete until exact-head checks pass.
