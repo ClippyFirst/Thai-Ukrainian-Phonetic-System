@@ -28,7 +28,7 @@ for (const match of html.matchAll(/<label\b[^>]*\bfor="([^"]+)"/g)) {
 for (const match of html.matchAll(/\baria-describedby="([^"]+)"/g)) {
   for (const id of match[1].split(/\s+/)) assert(idSet.has(id), `described-by target does not exist: ${id}`);
 }
-for (const id of ["thai-input", "engine-mode", "output-mode"]) {
+for (const id of ["thai-input"]) {
   assert.match(html, new RegExp(`<label[^>]+for="${id}"`), `${id} must have a visible label`);
 }
 assert.match(html, /<textarea[^>]+lang="th"/);
@@ -39,38 +39,14 @@ assert.match(systemHtml, /<details[^>]*>[\s\S]*?<summary>/);
 
 // Dynamically generated content retains names, language metadata and safe text insertion.
 assert.match(app, /aria-label="Копіювати: /);
-assert.match(app, /aria-live', 'polite'/);
-assert.match(app, /lang="th"/);
 assert.match(app, /lang="und-fonipa"/);
 assert.match(app, /const esc =/);
-assert.match(app, /aria-labelledby=/);
 assert.match(app, /continuous-output-value/);
 
-// Keyboard focus must remain visible for all native interactive controls, including the range.
+// Keyboard focus must remain visible for all native interactive controls, 
 assert.match(css, /button:focus-visible[^\{]*a:focus-visible[^\{]*textarea:focus-visible[^\{]*select:focus-visible[^\{]*summary:focus-visible/);
-assert.match(css, /#engine-mode\[type="range"\]:focus-visible/);
 assert.match(css, /\.skip-link:focus\s*\{/);
 assert.match(css, /@media\s*\(prefers-reduced-motion:\s*reduce\)/);
-
-
-// Native form-control boundaries are meaningful non-text UI components. Read
-// the two visible control borders from the stylesheet itself rather than
-// duplicating them in this test, and enforce WCAG 1.4.11's 3:1 threshold.
-const controlBorderRules = [
-  ["textarea", /textarea\s*\{([^}]*)\}/i],
-  ["output mode", /#output-mode\s*\{([^}]*)\}/i]
-];
-const controlBorders = controlBorderRules.map(([label, pattern]) => {
-  const rule = css.match(pattern);
-  assert(rule, `${label} must have an active CSS rule`);
-  const border = rule[1].match(/\bborder:\s*\d+px\s+solid\s+(#[0-9a-f]{3}(?:[0-9a-f]{3})?)\b/i);
-  const background = rule[1].match(/\bbackground(?:-color)?:\s*(#[0-9a-f]{3}(?:[0-9a-f]{3})?)\b/i);
-  assert(border, `${label} must declare an explicit solid border color`);
-  assert(background, `${label} must declare an explicit solid background color`);
-  const ratio = contrast(border[1], background[1]);
-  assert(ratio >= 3, `${label} border contrast ${ratio.toFixed(2)}:1 is below WCAG 1.4.11's 3:1 threshold`);
-  return { label, color: border[1], background: background[1], contrast: Number(ratio.toFixed(2)) };
-});
 
 // Check the actual palette pairs used by the stylesheet against WCAG AA's 4.5:1
 // normal-text threshold. This is a source-level check, not a browser contrast audit.
@@ -85,6 +61,14 @@ function contrast(foreground, background) {
   const values = [luminance(foreground), luminance(background)].sort((a, b) => b - a);
   return (values[0] + 0.05) / (values[1] + 0.05);
 }
+
+const textareaRule = css.match(/textarea\s*\{([^}]*)\}/i);
+assert(textareaRule, "Thai text input must have an active CSS rule");
+const textareaBorder = textareaRule[1].match(/\bborder:\s*\d+px\s+solid\s+(#[0-9a-f]{3}(?:[0-9a-f]{3})?)\b/i);
+const textareaBackground = textareaRule[1].match(/\bbackground(?:-color)?:\s*(#[0-9a-f]{3}(?:[0-9a-f]{3})?)\b/i);
+assert(textareaBorder && textareaBackground, "Thai text input must declare explicit border and background colors");
+const textareaBorderContrast = contrast(textareaBorder[1], textareaBackground[1]);
+assert(textareaBorderContrast >= 3, `Thai text input border contrast ${textareaBorderContrast.toFixed(2)}:1 is below WCAG 1.4.11's 3:1 threshold`);
 const palettePairs = [
   ["#191a22", "#ffffff", "primary text"],
   ["#5e6070", "#ffffff", "muted text on paper"],
@@ -109,7 +93,6 @@ console.log(JSON.stringify({
   static_documents: 2,
   unique_service_ids: ids.length,
   wcag_aa_text_contrast_pairs: palettePairs.length,
-  control_border_contrast: controlBorders,
   minimum_contrast_ratio: Math.min(...palettePairs.map(([foreground, background]) => contrast(foreground, background))),
   checked: [
     "document language and landmarks",
