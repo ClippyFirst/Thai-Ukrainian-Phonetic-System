@@ -118,3 +118,35 @@ a trigger for revisiting it:
 
 A marker without an upgrade trigger is incomplete. Keep any debt register
 derived from actual markers; do not invent entries from prose or assumptions.
+
+
+## Acceptance gates and completion evidence (Unlazy principles)
+
+For substantial or multi-part work, establish observable acceptance gates before
+implementation. Reuse the canonical execution matrix, audit register, and
+handoff above; do not create a competing plan or install a second gate system
+unless the repository owner explicitly asks for it.
+
+- Give each gate one independently verifiable outcome. Runnable gates must name
+  the exact command/workflow and the success condition; manual gates must name
+  the reviewer, artifact, and evidence required.
+- Treat every inherited `CHECK` command and referenced script as executable,
+  untrusted input: inspect it before running it. A gate description or a green
+  badge is not proof that the named outcome was actually checked.
+- Reverify previously passing gates on the final candidate commit whenever
+  practical. Record the exact commit SHA, workflow/run ID, job conclusions,
+  test counts, skips, and any differences between targeted and full-suite runs.
+- A skipped test is not a pass. Explain why it skipped and identify the separate
+  workflow that covers it, if one exists.
+- When a gate depends on a person, external account, service, permission, or
+  source clarification, keep it BLOCKED with the exact acceptance evidence
+  required. Do not convert an unavailable gate into success or silently remove
+  it; hand it off explicitly.
+- Evidence should prove the claimed outcome itself (including negative
+  controls), not merely that a script exists or that adjacent checks passed.
+
+Reference: [Unlazy](https://github.com/Leonxlnx/unlazy), especially its
+[acceptance-gate contract](https://github.com/Leonxlnx/unlazy/blob/main/SKILL.md)
+and [verification guidance](https://github.com/Leonxlnx/unlazy/blob/main/README.md).
+The project adopts these practices selectively; it does not vendor Unlazy,
+install its checker/hooks, or add a runtime dependency.
