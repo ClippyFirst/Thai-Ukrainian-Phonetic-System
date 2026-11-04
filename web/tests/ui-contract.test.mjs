@@ -64,7 +64,7 @@ await analyze.click();
 assert.equal(output.hidden, false);
 assert.match(output.innerHTML, /Попередній результат FastThaiG2P/);
 assert.match(output.innerHTML, /Українськими літерами/);
-assert.match(output.innerHTML, /п'рік/);
+assert.match(output.innerHTML, /п&#39;рік/);
 assert.match(output.innerHTML, /IPA FastThaiG2P/);
 assert.match(output.innerHTML, /pʰrík/);
 assert.match(output.innerHTML, /не підтверджено/);
