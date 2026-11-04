@@ -126,6 +126,6 @@ analyzeButton.addEventListener('click', run);
 input.addEventListener('keydown', event => {
   if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
     event.preventDefault();
-    run();
+    return run();
   }
 });
