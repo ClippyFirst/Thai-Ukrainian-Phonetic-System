@@ -1609,3 +1609,20 @@ DONE_VERIFIED for the consolidated batch requires all checks on the final PR #19
 | Consolidated evidence registry | DONE_VERIFIED | PR #202 CI run 41899981649: full test, wheel-install-smoke and master-artifact all passed |
 
 Latest main at this checkpoint: `5b2f65e9745bf396a37fd8775504256bb1e193cc`.
+
+
+## Final integration status — 2026-11-04
+
+| Workstream | Status | Evidence / remaining gate |
+|---|---|---|
+| Thai spacing-vowel segmentation (#191) | DONE_VERIFIED | Already on main before consolidated integration; combined CI passed |
+| Lexical/G2P challenge recovery (#189) | DONE_VERIFIED (engineering) | Runtime diagnostics, source-pinned entries, Python/browser parity and combined CI passed; no accuracy claim |
+| Global TIMIT Thai (#188) | DONE_VERIFIED as restricted-source audit; data use BLOCKED | Source and rights limits registered; written LDC authorization still required |
+| LOTUSDIS (#192) | Metadata DONE_VERIFIED; audio PARTIAL | Immutable shard manifest and row locator present; audio bytes/hash/interval/overlap review missing |
+| FastThaiG2P adapters and typed IPA (#184–186) | DONE_VERIFIED (engineering) | Optional adapter, typed boundary, comparison and integration checks passed; external data rights remain unresolved |
+| FastThaiG2P site API/runtime (#193) | DONE_VERIFIED (engineering); production deployment BLOCKED | Site API checks passed; Vercel preview and data rights not cleared; Pages deployment gate intentionally skipped |
+| Non-text contrast/accessibility (#190) | Static DONE_VERIFIED; manual PARTIAL | Static contrast/accessibility checks passed; hands-on keyboard/screen-reader/device review outstanding |
+| Post-merge regression/audit (#200–203) | DONE_VERIFIED | Pages gate, audit, evidence registry tests and docs closeout merged |
+| Open pull requests | NONE | GitHub open-PR query returned an empty list |
+
+**Final main before this doc refresh:** `a65b0d24ccb4f1eb2720d800a17578d552f067a2`; exact-head CI [41901296995](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41901296995) passed test, wheel-install-smoke and master-artifact. Engineering integration is DONE_VERIFIED; release readiness remains NOT READY and linguistic accuracy remains NOT_MEASURED.
