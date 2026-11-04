@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Current main 56fba86b4b8be2fe4e67284355e9928108527387 passed Full CI, Pages, Web Static and FastThaiG2P Site API workflows (runs 41918227400, 41918227410, 41918227382, 41918227381). Current live branch inventory has only main and no open PRs. Documentation audit 2026-11-04 is recorded in docs/repository-audit-2026-11-04.md. Linguistic accuracy remains NOT_MEASURED; research prototype, not release-ready.",
+  "status": "Current main 56fba86b4b8be2fe4e67284355e9928108527387 passed Full CI, Pages, Web Static and FastThaiG2P Site API workflows (runs 41918227400, 41918227410, 41918227382, 41918227381). Live inventory: branches main and docs/repository-audit-2026-11-04; one open PR #210. The inspected PR head 4b3e58a7c714e1f0a517ebf39299f974b5cf5998 passed exact-head Full CI run 41919548444. Linguistic accuracy remains NOT_MEASURED; research prototype, not release-ready.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -313,7 +313,7 @@
     "rows": 351780,
     "vowel_rime_records": 41
   },
-  "latest_documentation_checkpoint": "56fba86b4b8be2fe4e67284355e9928108527387",
+  "latest_documentation_checkpoint": "docs/repository-audit-2026-11-04 (PR #210; inspected head 4b3e58a7c714e1f0a517ebf39299f974b5cf5998 passed CI run 41919548444)",
   "text_only_checkpoint": {
     "branch": "research/thai-segmentation-gold-parity-verified-20261025",
     "parent_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
@@ -2169,12 +2169,15 @@
     "audited_at": "2026-11-04",
     "default_branch": "main",
     "branches": [
-      "main"
+      "main",
+      "docs/repository-audit-2026-11-04"
     ],
-    "non_main_branches": 0,
-    "open_pull_requests": 0
+    "non_main_branches": 1,
+    "open_pull_requests": 1
   },
-  "open_prs_current": 0,
+  "open_prs_current": [
+    "#210 — docs: audit repository structure and refresh canonical status (open; inspected head CI passed)"
+  ],
   "latest_pr_head_source": "PR #182 merged into main as 65584d9a3d3d64a8e520dbd32411bef4b0a3dd9e; no product PR remains open at this checkpoint.",
   "status_refresh_2026_10_31": {
     "main_sha": "8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8",
@@ -2692,7 +2695,9 @@
     "exact_regression_test_ci_run": "41406424727",
     "exact_regression_test_ci_result": "PASSED_ALL_3_JOBS"
   },
-  "open_prs": 0,
+  "open_prs": [
+    "#210 — docs: audit repository structure and refresh canonical status (open; inspected head CI passed)"
+  ],
   "audio_interval_overlap_code_checkpoint_2026_11_02": {
     "verified_code_head": "964b4930321e68c77ba5e956e1c0ecd12164ccfa",
     "ci_run": "41406087052",
@@ -3516,13 +3521,25 @@
     "site_api_run": 41918227381,
     "site_api_status": "PASS",
     "branches": [
-      "main"
+      "main",
+      "docs/repository-audit-2026-11-04"
     ],
-    "open_pull_requests": 0,
+    "open_pull_requests": 1,
     "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
     "architecture_reorganization": "NOT_REQUIRED_EXISTING_STRUCTURE_HAS_CLEAR_OWNERSHIP",
     "readme_fastthaig2p_status": "INTEGRATED_API_VERIFIED_PRODUCTION_DEPLOYMENT_BLOCKED_PENDING_DATA_RIGHTS_AND_VERIFIED_PREVIEW",
     "linguistic_accuracy": "NOT_MEASURED",
-    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY"
+    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY",
+    "audit_branch": "docs/repository-audit-2026-11-04",
+    "audit_pr": 210,
+    "audit_pr_inspected_head": "4b3e58a7c714e1f0a517ebf39299f974b5cf5998",
+    "audit_branch_ci_run": 41919548444,
+    "audit_branch_ci_status": "PASS",
+    "audit_branch_ci_jobs": [
+      "test",
+      "wheel-install-smoke",
+      "master-artifact"
+    ],
+    "pr_merge_status": "OPEN_NOT_MERGED"
   }
 }

@@ -16,8 +16,9 @@ The highest-priority documentation defect was stale repository state: older top 
 
 - Default branch: `main`.
 - Audited base commit: `56fba86b4b8be2fe4e67284355e9928108527387`.
-- Branch inventory: exactly one branch, `main`; no historical or working branches were returned by the live branches endpoint.
-- Open pull requests: zero.
+- Live branch inventory: two branches — `main` and `docs/repository-audit-2026-11-04`. The latter is the dedicated documentation/audit branch for this work; no unrelated branch was deleted.
+- Open pull requests: one — [PR #210](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/210), this audit branch, 7 commits ahead and 0 behind `main` at the inspected checkpoint. The PR remains open; no merge is claimed.
+- Exact-head Full CI for the inspected PR head `4b3e58a7c714e1f0a517ebf39299f974b5cf5998` passed [run 41919548444](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41919548444): `test`, `wheel-install-smoke`, and `master-artifact` all completed successfully. This is separate from the base-main runs listed below.
 - Latest full CI on the audited base: [run 41918227400](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41918227400), completed **success**.
 - GitHub Pages workflow on the audited base: [run 41918227410](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41918227410), completed **success**. This is the Pages workflow result; it must not be misrepresented as proof that the separately gated FastThaiG2P production deployment or its Vercel preview has been approved.
 - Web static validation [run 41918227382](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41918227382) and FastThaiG2P site API [run 41918227381](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41918227381) succeeded.
@@ -83,11 +84,11 @@ These are not structural defects and cannot be closed by reorganizing files or r
 | Work item | Status | Evidence / acceptance |
 |---|---|---|
 | Inspect latest default branch, tree, instructions, package metadata and CI | DONE_VERIFIED | Live GitHub tree and source files at `56fba86...`; current CI run succeeded |
-| Reconcile live branches and open PRs | DONE_VERIFIED | Branch endpoint returned only `main`; open PR endpoint returned empty list |
+| Reconcile live branches and open PRs | DONE_VERIFIED | Live branch endpoint returned `main` and this audit branch; PR search returned only open PR #210 |
 | Review documentation and code/data/test ownership | DONE_VERIFIED | `AGENTS.md`, docs index, architecture, scripts guide, CI and recursive tree inspected |
 | Preserve existing architecture and documentation system | DONE_VERIFIED | Existing ownership map is internally coherent; no competing plan created |
-| Correct README FastThaiG2P deployment status | DONE_VERIFIED after this audit PR merges | README wording updated to distinguish merged integration from gated production deployment |
-| Record current audit and exact GitHub state in canonical registers | DONE_VERIFIED after this audit PR merges and exact-head checks pass | This report, matrix, audit register and handoff update |
+| Correct README FastThaiG2P deployment status | PARTIAL until PR #210 merges | Wording is updated on this branch; `main` remains unchanged until merge |
+| Record current audit and exact GitHub state in canonical registers | PARTIAL until follow-up exact-head CI and PR merge | This report, matrix, audit register and handoff update; inspected predecessor head passed run 41919548444 |
 | Independent Thai/Ukrainian adjudication | BLOCKED | Qualified independent reviewers and completed blinded adjudication packets |
 | Global TIMIT Thai authorization | BLOCKED | Written LDC authorization defining allowed access/use/redistribution |
 | LOTUSDIS audio evidence | PARTIAL | Immutable audio bytes, SHA-256, source revision and clean interval/overlap review |
@@ -115,4 +116,4 @@ No upstream skill files, runtime dependencies, hooks or workflows were copied in
 
 The audited base commit `56fba86b4b8be2fe4e67284355e9928108527387` passed Full CI run [41918227400](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41918227400), Pages workflow [41918227410](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41918227410), Web Static [41918227382](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41918227382), and Site API [41918227381](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41918227381). No local test run is claimed.
 
-The documentation-only audit branch must pass its own exact-head CI and static checks before merge. Readiness remains **engineering-verified research prototype**, not release-ready for linguistic accuracy, production deployment or full WCAG 2.2 AA claims.
+The inspected audit-branch head passed its exact-head Full CI. Any subsequent documentation commit requires a fresh exact-head run before merge; no merge is claimed here. Readiness remains **engineering-verified research prototype**, not release-ready for linguistic accuracy, production deployment or full WCAG 2.2 AA claims.

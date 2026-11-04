@@ -1,9 +1,10 @@
 ## Current repository audit — 2026-11-04
 
 - Exact audited `main`: `56fba86b4b8be2fe4e67284355e9928108527387`; full CI [41918227400](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41918227400), Pages [41918227410](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41918227410), Web Static [41918227382](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41918227382), and Site API [41918227381](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41918227381) all succeeded.
-- Live GitHub inventory at audit time: one branch (`main`), zero open PRs. No user branches were deleted.
+- Live GitHub inventory: two branches (`main`, `docs/repository-audit-2026-11-04`) and one open PR (#210). The audit branch is 7 commits ahead and 0 behind main at the inspected checkpoint; no branch was deleted.
+- Exact-head Full CI for PR #210's inspected head `4b3e58a7c714e1f0a517ebf39299f974b5cf5998` passed [run 41919548444](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41919548444), including `test`, `wheel-install-smoke`, and `master-artifact`. A later documentation commit requires its own run.
 - Structural review: existing `AGENTS.md`, documentation index, architecture map, script inventory, schemas, provenance/license registries, generated-artifact ownership and Python/browser tests form a coherent system. No wholesale directory move or duplicate plan is warranted.
-- Documentation defect corrected in this audit branch: README previously described FastThaiG2P integration as Draft PR #193. It is merged and API-verified; production deployment remains separately gated on bundled-data rights and a verified Python-host preview.
+- README FastThaiG2P wording is corrected on the audit branch: integration/API are merged and CI-verified; production deployment remains gated on bundled-data rights and a verified Python-host preview.
 - Full findings, code/data ownership map, task ledger, upstream-methodology review and exact blockers: [repository audit 2026-11-04](repository-audit-2026-11-04.md).
 - This is a source-tree/GitHub audit. No local checkout or local test execution is claimed. Engineering verification does not establish independent linguistic accuracy or WCAG conformance.
 
