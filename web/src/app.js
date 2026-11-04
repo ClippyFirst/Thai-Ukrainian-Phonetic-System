@@ -16,8 +16,10 @@ function renderSyllable(syllable) {
   const warnings = (syllable.warnings || []).map(warning =>
     '<p class="warning">' + esc(warning) + '</p>'
   ).join('');
+  const toneNames = { mid: 'середній', low: 'низький', falling: 'низхідний', high: 'високий', rising: 'висхідний' };
+  const lengthNames = { short: 'короткий', long: 'довгий' };
   const tone = syllable.tone && syllable.tone_ipa
-    ? esc(syllable.tone) + ' · <span lang="und-fonipa">' + esc(syllable.tone_ipa) + '</span>'
+    ? esc(toneNames[syllable.tone] || syllable.tone) + ' · <span lang="und-fonipa">' + esc(syllable.tone_ipa) + '</span>'
     : 'Не визначено';
   return '<section class="syllable-result">' +
     '<div class="result-title">IPA: <span class="ipa-output" lang="und-fonipa">' +
@@ -29,13 +31,13 @@ function renderSyllable(syllable) {
         esc(syllable.ukrainian || '—') + '</div>' + (syllable.ukrainian ? copyButton('український запис', syllable.ukrainian) : '') + '</div>' +
       '<div class="data"><span class="label">Тон</span><div class="value">' + tone + '</div></div>' +
       '<div class="data"><span class="label">Довгота голосного</span><div class="value">' +
-        esc(syllable.vowel_length || 'Не визначено') + '</div></div>' +
+        esc(lengthNames[syllable.vowel_length] || syllable.vowel_length || 'Не визначено') + '</div></div>' +
     '</div>' + warnings + '</section>';
 }
 
 function renderResult(result) {
   const words = (result.words || []).map((word, index) =>
-    '<article class="result-card"><h3 class="result-title">Слово ' + (index + 1) + '</h3>' +
+    '<article class="result-card"><h3 class="result-title">Слово ' + (index + 1) + (word.thai ? ' · <span lang="th">' + esc(word.thai) + '</span>' : '') + '</h3>' +
     '<div class="value ipa-output" lang="und-fonipa">' + esc(word.fastthaig2p_ipa) + '</div>' +
     '<div class="value">' + esc(word.ukrainian) + '</div>' +
     (word.syllables || []).map(renderSyllable).join('') + '</article>'
