@@ -94,11 +94,11 @@ The immutable Hub revision for the 14 October 2025 audio upload is now resolved 
 
 Dear LOTUSDIS maintainers,
 
-We are preparing a small, research-only human phonetic annotation sample from the public `nectec/LOTUSDIS` dataset. Before selecting any audio, could you confirm the full immutable dataset revision corresponding to the 14 October 2025 audio upload (the Hub history currently displays prefix `45145d7`) and clarify how the `audio`, `speaker_id`, `mic` and `duration` fields map to original recording/session identifiers?
+We are preparing a small, research-only human phonetic annotation sample from the public `nectec/LOTUSDIS` dataset. We resolved the 14 October 2025 audio-upload revision as `45145d7ca2286498a31958b35628ab3c1969f808` using the Hugging Face Hub commits API and recorded the Hub-reported metadata for all 24 Parquet shards. Could you confirm that this is the intended immutable snapshot and clarify how the `audio`, `speaker_id`, `mic` and `duration` fields map to original recording/session identifiers?
 
-We intend to select only a clean near-field single-speaker interval and retain the exact revision, Parquet shard/row identity, object hash, speaker pseudonym, microphone/channel and interval timestamps. We will not treat transcripts as phonetic gold.
+The dataset viewer exposes temporary signed audio URLs for rows, but our environment could not retrieve the audio bytes. We therefore have not registered an audio asset or claimed a per-WAV hash. Could you point us to a stable revision-pinned audio-object URI or canonical manifest, and clarify whether the row index plus Parquet shard is a stable identifier for an audio item?
 
-If there is a canonical manifest or stable per-recording audio URI scheme, please point us to it.
+We intend to select only a clean near-field single-speaker interval and retain the exact revision, Parquet shard/row identity, independently computed audio-object hash, speaker pseudonym, microphone/channel and interval timestamps. We will not treat transcripts as phonetic gold.
 
 Best regards,
 [Project contact]
