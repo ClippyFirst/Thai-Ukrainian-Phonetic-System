@@ -3159,6 +3159,18 @@
       "generated_ipa": "~49k LLM-generated IPA; no complete data-specific license statement in pinned data README",
       "manual_overrides": "no complete data-specific license/provenance statement in pinned data README",
       "status": "BLOCKED pending upstream source/revision and terms clarification"
-    }
+    },
+    "latest_branch_head_before_handoff_refresh": "dea460aff3140379a4194eb32b7e49412093bce0",
+    "branch_ahead_of_main": 82,
+    "branch_behind_main": 0,
+    "docs_only_delta_after_code_ci": [
+      "AGENTS.md",
+      "THIRD_PARTY_NOTICES.md",
+      "docs/MASTER-EXECUTION-PLAN-AND-CHAT-HANDOFF.md",
+      "docs/fastthaig2p-site-integration.md",
+      "docs/final-audit.json",
+      "docs/final-audit.md",
+      "docs/validation-matrix.md"
+    ]
   }
 }
