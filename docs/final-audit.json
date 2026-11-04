@@ -2956,6 +2956,14 @@
       "total": 160915
     },
     "dataset_viewer_size_source": "https://datasets-server.huggingface.co/size?dataset=nectec/LOTUSDIS&config=default&split=train",
-    "dataset_columns": 5
+    "dataset_columns": 5,
+    "official_archive_links": {
+      "wav_zip": "https://drive.google.com/file/d/1ofw99Y5W1p8f1DSaIbJkS0xWtuTI2Hrc/view",
+      "textgrid_zip": "https://drive.google.com/file/d/14fMv_X_8sGDPGbnU-hpJ85Mug43AHlgO/view",
+      "retrieval_status": "BLOCKED_GOOGLE_DRIVE_SIGN_IN_OR_AUTOMATED_ACCESS",
+      "bytes_downloaded": false,
+      "textgrid_tiers_inspected": false,
+      "audio_to_parquet_row_mapping_verified": false
+    }
   }
 }

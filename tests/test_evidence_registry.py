@@ -206,6 +206,8 @@ def test_lotusdis_is_registered_only_as_an_audio_source_for_fresh_human_annotati
     assert "45145d7ca2286498a31958b35628ab3c1969f808" in source["notes"]
     assert "13,180,732,521 bytes" in source["notes"]
     assert "120,245 train, 13,090 validation and 27,580 test rows" in source["notes"]
+    assert "wav.zip" in source["notes"] and "textgrid.zip" in source["notes"]
+    assert "no archive bytes or TextGrid tiers were inspected" in source["notes"]
     assert "not independently recomputed" in source["notes"]
 
 

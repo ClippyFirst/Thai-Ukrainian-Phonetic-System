@@ -88,6 +88,8 @@ The immutable Hub revision for the 14 October 2025 audio upload is now resolved 
 
 **Hash evidence boundary:** the LFS SHA-256 values are copied from Hugging Face's repository tree metadata. The Parquet bytes were not downloaded, so those values are provider-reported object digests, not locally recomputed checksums. The dataset viewer's first-row preview confirms the schema (`audio` at 16 kHz, `sentence`, `speaker_id`, `mic`, `duration`) and one sample metadata record (train row 0: speaker `M01`, microphone `con123`, duration 2.59 s). Its temporary signed audio URL could not be retrieved as bytes in this execution environment. Accordingly, `data/benchmark/audio-assets.tsv` remains header-only: no individual WAV hash, stable audio asset URI, clean interval, or overlap status has been registered. This is source/snapshot provenance progress, not acoustic validation.
 
+The official dataset card also links the full-session WAV archive [wav.zip](https://drive.google.com/file/d/1ofw99Y5W1p8f1DSaIbJkS0xWtuTI2Hrc/view) and TextGrid archive [textgrid.zip](https://drive.google.com/file/d/14fMv_X_8sGDPGbnU-hpJ85Mug43AHlgO/view). Both Google Drive links resolve, but the file pages require sign-in/automated retrieval is blocked in this environment. The archives have not been downloaded or inspected; do not infer tier contents or audio-to-row alignment from filenames alone.
+
 **Copy-ready request to dataset maintainer**
 
 **Subject:** LOTUSDIS: immutable dataset revision and audio row provenance for phonetic annotation
@@ -141,5 +143,5 @@ For each criterion and page, record: `test_id`, commit SHA, URL, date/time, test
 
 - No email/messaging connector is available in this execution context; no outbound invitation or curator request has been sent. This file is a prepared request pack, not evidence of contact.
 - Firecrawl has `0` remaining credits in the current billing period, so live browser interaction and manual screen-reader testing could not be performed.
-- No CCOST 6.2 GB archive bytes have been inspected. LOTUSDIS is now pinned to an immutable Hub revision and its 24 Parquet shard metadata is recorded, but the Parquet/audio bytes were not downloaded; provider-reported LFS hashes were not independently recomputed, and no individual WAV hash or clean interval is registered.
+- No CCOST 6.2 GB archive bytes have been inspected. LOTUSDIS is pinned to an immutable Hub revision and its 24 Parquet shard metadata is recorded. Its official WAV/TextGrid Drive archive links are known, but access is blocked; neither those archives nor Parquet/audio bytes were downloaded. Provider-reported LFS hashes were not independently recomputed, and no individual WAV hash or clean interval is registered.
 - No reviewer may be registered as verified and no annotation may be fabricated to make the evaluation gate pass.
