@@ -44,6 +44,8 @@ jobs:
           node-version: 22
       - name: Install project and pinned FastThaiG2P site dependencies
         run: python -m pip install -e ".[dev,fastthaig2p]"
+      - name: Generate browser dictionary for reference-engine regression tests
+        run: python scripts/generate_web_word_dictionary.py
       - name: Lint changed Python runtime and tests
         run: ruff check src tests
       - name: Test typed external IPA and provisional Ukrainian adaptation
