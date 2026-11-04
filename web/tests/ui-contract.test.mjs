@@ -33,6 +33,7 @@ const response = {
   raw_ipa: "/pʰrík/",
   ukrainian: "п'рік",
   words: [{
+    thai: "พริก",
     fastthaig2p_ipa: "pʰrík",
     ukrainian: "п'рік",
     syllables: [{
@@ -66,7 +67,10 @@ assert.match(output.innerHTML, /Попередній результат FastThai
 assert.match(output.innerHTML, /Українськими літерами/);
 assert.match(output.innerHTML, /п&#39;рік/);
 assert.match(output.innerHTML, /IPA FastThaiG2P/);
+assert.match(output.innerHTML, /високий/);
+assert.match(output.innerHTML, /короткий/);
 assert.match(output.innerHTML, /pʰrík/);
+assert.match(output.innerHTML, /lang="th">พริก/);
 assert.match(output.innerHTML, /експертно підтверджено/);
 assert.match(output.innerHTML, /upstream commit/);
 assert.equal(status.className, "status notice");
