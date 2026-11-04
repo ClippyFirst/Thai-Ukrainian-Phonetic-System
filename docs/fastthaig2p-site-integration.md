@@ -92,3 +92,12 @@ serves the complete `web/` UI and assets alongside `/api/health` and
 `/api/analyze`, with same-origin CSP, correct errors and acceptable cold
 starts. Until that preview exists, the static GitHub Pages deployment must
 remain unchanged.
+
+
+## Additional source-license findings — 2026-11-04
+
+The Wiktionary portion needs its own source-level treatment. FastThaiG2P's pinned data README identifies `sources/wiktionary_ipa.json` as roughly 13k entries parsed from a kaikki.org Thai Wiktionary dump. Wiktionary's published copyright terms state that entry text is available under CC BY-SA 4.0. A separate PyThaiNLP Thai G2P Wiktionary corpus declares CC BY-SA 3.0, but the available evidence does not establish that this separate corpus is the exact source file used by FastThaiG2P; do not substitute its license/version as provenance for the pinned package. The exact kaikki snapshot/revision and record-level attribution are still required.
+
+The TLTK fallback has a similar source-identification gap. The vendored `_th2ipa.py` header identifies TLTK 1.3.8 and carries a BSD-3-Clause notice; PyPI's TLTK project history says the package license changed to BSD-3-Clause from 1.2.2 and describes commercial use. However, the current `attapol/tltk` repository root `LICENSE` contains LGPL-3 text while its `setup.py` declares BSD-3-Clause. FastThaiG2P does not pin the precise TLTK source revision for each bundled fallback data file. This conflicting repository/package evidence is not sufficient to make a definitive asset-by-asset conclusion.
+
+**Updated disposition:** the TLTK code notice is identified, but fallback data rights remain unresolved until the upstream maintainer identifies the exact TLTK version/revision and confirms the terms covering the shipped data files. The Wiktionary subset needs its exact source snapshot and attribution. The generated IPA and manual overrides also need an explicit data-rights statement.
