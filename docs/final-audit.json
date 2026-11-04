@@ -3564,7 +3564,7 @@
       "fastthaig2p_bundled_data_rights": "BLOCKED",
       "fastthaig2p_python_host_preview": "BLOCKED",
       "manual_accessibility_review": "PARTIAL",
-      "ccost_textgrid_and_tier_mapping": "BLOCKED_CC_BY_NC_SA_4_0"
+      "ccost_textgrid_and_tier_mapping": "PARTIAL_PUBLISHED_TIER_MAP_VERIFIED_ARCHIVE_UNINSPECTED_CC_BY_NC_SA_4_0"
     },
     "main_changed": false,
     "branch_deleted": false,
@@ -3595,11 +3595,47 @@
       "fastthaig2p_bundled_data_rights": "BLOCKED",
       "fastthaig2p_python_host_preview": "BLOCKED",
       "manual_accessibility_review": "PARTIAL",
-      "ccost_textgrid_and_tier_mapping": "BLOCKED_CC_BY_NC_SA_4_0"
+      "ccost_textgrid_and_tier_mapping": "PARTIAL_PUBLISHED_TIER_MAP_VERIFIED_ARCHIVE_UNINSPECTED_CC_BY_NC_SA_4_0"
     },
     "main_changed": false,
     "branch_deleted": false,
     "force_push": false,
     "release_published": false
+  },
+  "ccost_lrec_2026_tier_reconciliation": {
+    "status": "PARTIAL_PUBLISHED_TIER_MAP_VERIFIED_ARCHIVE_UNINSPECTED",
+    "paper": "Pittayaporn et al. 2026 LREC 2026",
+    "paper_url": "https://aclanthology.org/2026.lrec-1.247.pdf",
+    "zenodo_record": "https://zenodo.org/records/17366698",
+    "tiers": {
+      "ORT": "orthographic word",
+      "KAN": "canonical word pronunciation",
+      "KAS": "canonical syllabified pronunciation",
+      "MAU": "phonetic segment",
+      "MAS": "phonemic syllable",
+      "TRN": "orthographic utterance transcript"
+    },
+    "phonetic_alphabet": "X-SAMPA",
+    "tone_suffixes": {
+      "_1": "Mid",
+      "_2": "Low",
+      "_3": "Falling",
+      "_4": "High",
+      "_5": "Rising"
+    },
+    "manual_correction": "trained native Thai research assistants",
+    "formal_inter_annotator_agreement": "NOT_COLLECTED",
+    "archive_size": "6.2 GB",
+    "actual_archive_textgrid_inspected": false,
+    "manual_pdf_inspected": false,
+    "license": "CC BY-NC-SA 4.0",
+    "next_acceptance": "Inspect actual authorized TextGrid files and manual, verify tier instances/intervals and reconcile with published map; preserve CC BY-NC-SA 4.0 restrictions."
+  },
+  "fastthaig2p_rights_reconciliation": {
+    "code_license": "Apache-2.0",
+    "data_sources": "manual overrides; Wiktionary-derived entries; approximately 49k generated IPA entries; vendored tltk fallback assets",
+    "data_rights": "BLOCKED_SOURCE_LEVEL_REVIEW_REQUIRED",
+    "source_readme": "https://github.com/awslabs/FastThaiG2P/blob/main/data/README.md",
+    "reason": "Apache-2.0 code license does not by itself establish redistribution rights for all bundled data and vendored assets."
   }
 }
