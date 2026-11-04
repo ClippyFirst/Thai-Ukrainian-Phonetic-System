@@ -203,6 +203,9 @@ def test_lotusdis_is_registered_only_as_an_audio_source_for_fresh_human_annotati
     assert source["verification_status"] == "VERIFIED"
     assert "ACOUSTIC_PHONETICS_RESEARCH" in source["allowed_uses"]
     assert "not IPA/phone/toneme gold" in source["notes"]
+    assert "45145d7ca2286498a31958b35628ab3c1969f808" in source["notes"]
+    assert "13,180,732,521 bytes" in source["notes"]
+    assert "not independently recomputed" in source["notes"]
 
 
 def test_committed_audio_asset_registry_is_valid_but_has_no_selected_assets():
@@ -250,3 +253,30 @@ def test_corpus_sources_csv_has_exact_columns_and_unique_source_ids():
     assert all(None not in row and all(value is not None for value in row.values()) for row in rows)
     source_ids = [row["source_id"] for row in rows]
     assert len(source_ids) == len(set(source_ids))
+
+
+def test_lotusdis_shard_manifest_pins_all_objects_without_claiming_local_hash_verification():
+    path = ROOT / "data" / "benchmark" / "lotusdis-parquet-shards.tsv"
+    with path.open(encoding="utf-8", newline="") as stream:
+        reader = csv.DictReader(stream, delimiter="\\t")
+        assert reader.fieldnames == [
+            "dataset_revision", "shard_path", "size_bytes", "hub_lfs_sha256",
+            "git_blob_sha1", "xet_hash", "shard_last_commit",
+        ]
+        rows = list(reader)
+    assert len(rows) == 24
+    revision = "45145d7ca2286498a31958b35628ab3c1969f808"
+    assert {row["dataset_revision"] for row in rows} == {revision}
+    assert len({row["shard_path"] for row in rows}) == 24
+    assert sum(int(row["size_bytes"]) for row in rows) == 13_180_732_521
+    assert sum("/train-" in row["shard_path"] for row in rows) == 17
+    assert sum("/validation-" in row["shard_path"] for row in rows) == 3
+    assert sum("/test-" in row["shard_path"] for row in rows) == 4
+    for row in rows:
+        assert len(row["hub_lfs_sha256"]) == 64
+        assert all(char in "0123456789abcdef" for char in row["hub_lfs_sha256"])
+        assert len(row["git_blob_sha1"]) == 40
+        assert len(row["xet_hash"]) == 64
+        assert row["shard_last_commit"] in {
+            "fc3221eccf788250d9b87da16759c3e37aec2223", revision
+        }

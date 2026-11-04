@@ -1476,3 +1476,12 @@ The new test/tool code was committed on the PR branch and awaits exact-head CI c
 - Remaining blockers are unchanged: independent Thai and Ukrainian reviewers, CCOST A–D curator clarification and archive inspection, full immutable LOTUSDIS audio revision plus real hashed assets/intervals, and hands-on WCAG keyboard/screen-reader/device testing.
 
 **Final readiness:** the current browser service is deployed and engineering-verified. The repository remains a research prototype, not a linguistic-accuracy or WCAG-conformance release. Linguistic accuracy remains `NOT_MEASURED`.
+
+
+## LOTUSDIS immutable snapshot and shard manifest — 2026-11-04
+
+- **DONE_VERIFIED (source metadata):** resolved the full Hugging Face dataset revision `45145d7ca2286498a31958b35628ab3c1969f808` corresponding to the 14 October 2025 audio upload.
+- **DONE_VERIFIED (manifest metadata):** enumerated all 24 Parquet shards at that revision: 17 train, 3 validation and 4 test; aggregate size 13,180,732,521 bytes. The new `data/benchmark/lotusdis-parquet-shards.tsv` records each shard path, byte size, Hub LFS SHA-256, Git blob SHA-1, Xet hash and last-writing commit.
+- **Evidence limitation:** LFS SHA-256 values come from Hub API metadata. Parquet objects were not downloaded and digests were not independently recomputed. The dataset viewer confirms the 16 kHz audio feature and the sentence/speaker/mic/duration columns; one row preview exposes speaker M01, mic con123 and 2.59 seconds, but its temporary signed audio URL could not be retrieved as bytes.
+- **Still PARTIAL/BLOCKED:** no individual WAV hash or stable per-audio URI; no verified asset row in `audio-assets.tsv`; no waveform inspection, channel isolation, overlap assessment, clean interval, or independent phonetic annotation. LOTUSDIS remains an audio/transcript source for fresh human annotation only, never existing IPA gold.
+- **License:** CC BY-SA 4.0; no audio or Parquet media is committed or redistributed. Attribution/share-alike obligations remain applicable.

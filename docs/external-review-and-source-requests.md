@@ -84,7 +84,9 @@ Best regards,
 
 ## 3. LOTUSDIS data-provider clarification request
 
-The public Hugging Face history page shows the audio dataset upload as commit prefix `45145d7`, but the web-rendered history does not expose the full immutable object revision. The full revision SHA and actual Parquet row payloads must be resolved from the Hub API or a downloaded snapshot before registering an audio asset.
+The immutable Hub revision for the 14 October 2025 audio upload is now resolved from the official Hugging Face commits API: `45145d7ca2286498a31958b35628ab3c1969f808`. At that revision, the Hub tree API enumerates 24 Parquet shards (17 train, 3 validation, 4 test; 13,180,732,521 bytes total). Per-shard sizes, LFS SHA-256 values, Git blob SHA-1 values, Xet hashes and the commit that last wrote each shard are recorded in `data/benchmark/lotusdis-parquet-shards.tsv`.
+
+**Hash evidence boundary:** the LFS SHA-256 values are copied from Hugging Face's repository tree metadata. The Parquet bytes were not downloaded, so those values are provider-reported object digests, not locally recomputed checksums. The dataset viewer's first-row preview confirms the schema (`audio` at 16 kHz, `sentence`, `speaker_id`, `mic`, `duration`) and one sample metadata record (train row 0: speaker `M01`, microphone `con123`, duration 2.59 s). Its temporary signed audio URL could not be retrieved as bytes in this execution environment. Accordingly, `data/benchmark/audio-assets.tsv` remains header-only: no individual WAV hash, stable audio asset URI, clean interval, or overlap status has been registered. This is source/snapshot provenance progress, not acoustic validation.
 
 **Copy-ready request to dataset maintainer**
 
@@ -139,5 +141,5 @@ For each criterion and page, record: `test_id`, commit SHA, URL, date/time, test
 
 - No email/messaging connector is available in this execution context; no outbound invitation or curator request has been sent. This file is a prepared request pack, not evidence of contact.
 - Firecrawl has `0` remaining credits in the current billing period, so live browser interaction and manual screen-reader testing could not be performed.
-- No CCOST 6.2 GB archive bytes or LOTUSDIS Parquet/audio bytes are available in the current working environment. Public metadata alone cannot establish TextGrid tier conformance, exact row content, file hashes or clean intervals.
+- No CCOST 6.2 GB archive bytes have been inspected. LOTUSDIS is now pinned to an immutable Hub revision and its 24 Parquet shard metadata is recorded, but the Parquet/audio bytes were not downloaded; provider-reported LFS hashes were not independently recomputed, and no individual WAV hash or clean interval is registered.
 - No reviewer may be registered as verified and no annotation may be fabricated to make the evaluation gate pass.

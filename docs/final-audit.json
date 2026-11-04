@@ -2904,5 +2904,50 @@
     "linguistic_accuracy": "NOT_MEASURED",
     "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY"
   },
-  "latest_full_repository_head_pages_run": "41420468875"
+  "latest_full_repository_head_pages_run": "41420468875",
+  "lotusdis_immutable_snapshot_audit_2026_11_04": {
+    "status": "DONE_VERIFIED_SOURCE_METADATA_PARTIAL_AUDIO_ASSET_EVIDENCE",
+    "dataset": "nectec/LOTUSDIS",
+    "license": "CC-BY-SA-4.0",
+    "immutable_revision": "45145d7ca2286498a31958b35628ab3c1969f808",
+    "revision_date": "2025-10-14T04:05:37Z",
+    "revision_source": "https://huggingface.co/api/datasets/nectec/LOTUSDIS/commits/main",
+    "shard_manifest": "data/benchmark/lotusdis-parquet-shards.tsv",
+    "shard_manifest_source": "https://huggingface.co/api/datasets/nectec/LOTUSDIS/tree/45145d7ca2286498a31958b35628ab3c1969f808/data?recursive=true&expand=true",
+    "shard_count": 24,
+    "split_shards": {
+      "train": 17,
+      "validation": 3,
+      "test": 4
+    },
+    "total_shard_bytes": 13180732521,
+    "shard_digest_status": "HUB_METADATA_ONLY_NOT_INDEPENDENTLY_RECOMPUTED",
+    "dataset_viewer_schema": {
+      "audio_sampling_rate_hz": 16000,
+      "columns": [
+        "audio",
+        "sentence",
+        "speaker_id",
+        "mic",
+        "duration"
+      ]
+    },
+    "first_row_metadata_preview": {
+      "split": "train",
+      "row_index": 0,
+      "speaker_id": "M01",
+      "microphone_id": "con123",
+      "duration_seconds": 2.59
+    },
+    "first_row_audio_bytes_downloaded": false,
+    "audio_asset_registry_rows": 0,
+    "individual_wav_sha256_verified": 0,
+    "clean_intervals_verified": 0,
+    "overlap_adjudications": 0,
+    "local_parquet_downloaded": false,
+    "media_committed": false,
+    "allowed_use": "AUDIO_TRANSCRIPT_INPUT_FOR_FRESH_INDEPENDENT_HUMAN_ANNOTATION_ONLY",
+    "accuracy_claimed": false,
+    "remaining_acceptance": "Download authorized sample audio; independently recompute WAV SHA-256; verify stable revision-bound object identity, waveform/channel and interval boundaries; document overlap; obtain independent phonetic annotations. Do not treat transcript as IPA gold."
+  }
 }
