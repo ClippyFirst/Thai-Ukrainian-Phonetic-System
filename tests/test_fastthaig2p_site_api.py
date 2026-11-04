@@ -4,6 +4,7 @@ import sys
 from pathlib import Path
 
 import pytest
+pytest.importorskip("fastapi")
 from fastapi import HTTPException
 
 ROOT = Path(__file__).resolve().parents[1]
