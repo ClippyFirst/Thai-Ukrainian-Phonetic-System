@@ -2210,3 +2210,19 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - **Evidence limitation:** LFS SHA-256 values come from Hub API metadata. Parquet objects were not downloaded and digests were not independently recomputed. The dataset viewer confirms the 16 kHz audio feature and the sentence/speaker/mic/duration columns; one row preview exposes speaker M01, mic con123 and 2.59 seconds, but its temporary signed audio URL could not be retrieved as bytes.
 - **Still PARTIAL/BLOCKED:** no individual WAV hash or stable per-audio URI; no verified asset row in `audio-assets.tsv`; no waveform inspection, channel isolation, overlap assessment, clean interval, or independent phonetic annotation. LOTUSDIS remains an audio/transcript source for fresh human annotation only, never existing IPA gold.
 - **License:** CC BY-SA 4.0; no audio or Parquet media is committed or redistributed. Attribution/share-alike obligations remain applicable.
+
+
+---
+
+## 2026-11-04 — LOTUSDIS partial audio locator and evidence-registry gate
+
+- **Repository/base:** `ClippyFirst/Thai-Ukrainian-Phonetic-System`; `main` remains `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`.
+- **PR #192:** branch `research/lotusdis-immutable-manifest-20261104`; verified implementation/test checkpoint `3f2f03ee265aef3ef0106aa5472aa081c6376652`, 8 commits ahead / 0 behind `main`; PR remains OPEN Draft and unmerged.
+- **New asset registry row:** `LOTUSDIS-TRAIN-000000-AUDIO`, immutable revision `45145d7ca2286498a31958b35628ab3c1969f808`, stable row locator for train offset 0 / row 0. Dataset API reports 16 kHz audio/wav, speaker pseudonym M01, mic ID con123, duration 2.59 s. The API's signed WAV URL is temporary and was not retrievable as bytes.
+- **Evidence gate change:** the registry now permits `PARTIAL` rows with no WAV hash; `VERIFIED` still requires SHA-256. The interval-reference validator rejects `PARTIAL` and `BLOCKED` rows. The new row uses microphone category UNKNOWN and overlap UNKNOWN; no assumptions are made from `con123`.
+- **Exact-head CI:** [41873454590](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41873454590) SUCCESS; all three jobs passed. Ruff passed; 321 Python tests and 1,169 subtests passed; wheel-install smoke and master-artifact passed.
+- **TDD failure record:** initial regression run [41872588412](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41872588412) failed as expected because the existing loader required a file SHA-256 for all rows. The implementation now models partial provenance explicitly, and the final exact-head CI passed.
+- **Not claimed:** no WAV bytes, individual SHA-256, waveform/channel review, overlap status, clean interval, TextGrid tiers or phonetic labels. No media copied or redistributed. The 24-shard Parquet LFS digests remain provider-reported metadata, not independently recomputed.
+- **Next blocker:** obtain authorized audio bytes or a stable direct object URI, hash and inspect the file, then select and adjudicate a clean non-overlapping interval. PR #192 remains separate from PR #193; neither was merged.
+- **Local tests:** not run; verification comes from the exact-head GitHub Actions run above.
+- **Readiness:** research/engineering prototype; no linguistic accuracy claim.

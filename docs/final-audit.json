@@ -2940,7 +2940,7 @@
       "duration_seconds": 2.59
     },
     "first_row_audio_bytes_downloaded": false,
-    "audio_asset_registry_rows": 0,
+    "audio_asset_registry_rows": 1,
     "individual_wav_sha256_verified": 0,
     "clean_intervals_verified": 0,
     "overlap_adjudications": 0,
@@ -2948,7 +2948,7 @@
     "media_committed": false,
     "allowed_use": "AUDIO_TRANSCRIPT_INPUT_FOR_FRESH_INDEPENDENT_HUMAN_ANNOTATION_ONLY",
     "accuracy_claimed": false,
-    "remaining_acceptance": "Download authorized sample audio; independently recompute WAV SHA-256; verify stable revision-bound object identity, waveform/channel and interval boundaries; document overlap; obtain independent phonetic annotations. Do not treat transcript as IPA gold.",
+    "remaining_acceptance": "Obtain authorized WAV bytes or stable direct object URI; independently compute SHA-256; inspect waveform/channel and overlap; establish clean interval; only then promote this row to VERIFIED. Do not use PARTIAL row for annotation or scoring.",
     "split_rows": {
       "train": 120245,
       "validation": 13090,
@@ -2964,6 +2964,61 @@
       "bytes_downloaded": false,
       "textgrid_tiers_inspected": false,
       "audio_to_parquet_row_mapping_verified": false
+    },
+    "partial_audio_asset_rows": 1,
+    "verified_audio_asset_rows": 0,
+    "row_locator": {
+      "asset_id": "LOTUSDIS-TRAIN-000000-AUDIO",
+      "status": "PARTIAL",
+      "uri": "https://datasets-server.huggingface.co/rows?dataset=nectec%2FLOTUSDIS&config=default&split=train&offset=0&length=1&revision=45145d7ca2286498a31958b35628ab3c1969f808",
+      "split": "train",
+      "row_index": 0,
+      "speaker_id": "M01",
+      "microphone_id": "con123",
+      "duration_seconds": 2.59,
+      "audio_sampling_rate_hz": 16000,
+      "audio_type": "audio/wav",
+      "signed_audio_url": "TEMPORARY_NOT_RETAINED",
+      "bytes_downloaded": false,
+      "file_sha256": null,
+      "overlap_status": "UNKNOWN",
+      "clean_interval": null
+    },
+    "audio_asset_registry_validation": {
+      "partial_rows_allowed_without_hash": true,
+      "verified_rows_require_sha256": true,
+      "interval_reference_requires_status": "VERIFIED",
+      "exact_head_ci_run": "41873454590",
+      "python_tests": 321,
+      "unittest_subtests": 1169,
+      "result": "PASSED_ALL_3_JOBS"
     }
+  },
+  "latest_lotusdis_partial_asset_registry_2026_11_04": {
+    "branch": "research/lotusdis-immutable-manifest-20261104",
+    "pull_request": 192,
+    "verified_code_test_commit": "3f2f03ee265aef3ef0106aa5472aa081c6376652",
+    "ahead_of_main": 8,
+    "behind_main": 0,
+    "exact_head_ci_run": 41873454590,
+    "exact_head_ci_result": "SUCCESS_ALL_3_JOBS",
+    "python_tests": 321,
+    "unittest_subtests": 1169,
+    "ruff": "PASS",
+    "wheel_install_smoke": "PASS",
+    "master_artifact": "PASS",
+    "partial_asset_id": "LOTUSDIS-TRAIN-000000-AUDIO",
+    "partial_asset_status": "PARTIAL",
+    "partial_asset_sha256": null,
+    "partial_asset_interval_usable": false,
+    "regression": "PARTIAL_ROWS_LOAD_WITHOUT_HASH_BUT_CANNOT_BE_USED_AS_VERIFIED_AUDIO_INTERVALS",
+    "previous_red_run": {
+      "run": 41872588412,
+      "result": "FAIL_EXPECTED",
+      "cause": "old registry required file_sha256 for every audio row"
+    },
+    "bytes_downloaded": false,
+    "media_committed": false,
+    "readiness": "PARTIAL_RESEARCH_EVIDENCE_NOT_AUDIO_GOLD"
   }
 }
