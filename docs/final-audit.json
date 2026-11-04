@@ -290,7 +290,7 @@
     "python_subtests": 1164,
     "fastthaig2p_site_workflow": "PASS — run 41810981343 at code commit 2c0164751eab32f3992348b4450d350175becb05: pinned install, Ruff, 9 targeted Python tests including real Bangkok smoke, UI contract, accessibility and IPA-UA regression.",
     "fastthaig2p_web_static": "PASS — run 41810746926 at code commit b1472aa564596c073475cb10ed994506535869f8: JS syntax, generated browser dictionary, parity fixtures, required pages, static accessibility and remote-runtime-dependency check.",
-    "fastthaig2p_full_repository_ci": "IN_PROGRESS — run 41811334224 on docs checkpoint dc9f9205b90d94989faa4eb423717835c6236e4b; wheel-install smoke passed; full test job still at generate_master_table.py; no failure recorded. Subsequent audit-only commits require an exact-head rerun."
+    "fastthaig2p_full_repository_ci": "PENDING — prior run 41811334224 had 322 passed, 1 skipped, 1 failed (stale tests/test_ipa_display_contract.py expectation), fixed in 8b489f3bdaed96f3b3e8a2b93bff23152c4b0deb; exact-head run 41811706426 pending; audit-only commits after fix require another exact-head run."
   },
   "challenge_runtime": {
     "challenge_inputs": 36,
@@ -568,11 +568,11 @@
     }
   ],
   "latest_implementation_branch": "feat/fastthaig2p-site-api-20261104 (PR #193 OPEN Draft; not deployed)",
-  "latest_implementation_commit_pending_ci": "c33e3ff636ee896c15b531264b62ce3488a86d81",
-  "current_head_status_at_audit_refresh": "Dedicated FastThaiG2P site workflow PASS at code commit 2c0164751eab32f3992348b4450d350175becb05 (run 41810981343). Web Static PASS at b1472aa564596c073475cb10ed994506535869f8 (run 41810746926). Full repository CI run 41811334224 is in progress on documentation checkpoint dc9f9205b90d94989faa4eb423717835c6236e4b: wheel-install smoke passed; test job is still in generate_master_table.py; no failure recorded. Final audit/handoff updates after this checkpoint are documentation-only and require a fresh exact-head CI run.",
+  "latest_implementation_commit_pending_ci": "8b489f3bdaed96f3b3e8a2b93bff23152c4b0deb",
+  "current_head_status_at_audit_refresh": "Dedicated FastThaiG2P site workflow PASS at 2c0164751eab32f3992348b4450d350175becb05 (run 41810981343); Web Static PASS at b1472aa564596c073475cb10ed994506535869f8 (run 41810746926). Full CI run 41811334224 at dc9f9205b90d94989faa4eb423717835c6236e4b: 322 passed, 1 skipped, 1 failed, 1169 subtests; wheel-install smoke passed. The sole failure was a stale tests/test_ipa_display_contract.py assertion for the previous browser UI; fixed in 8b489f3bdaed96f3b3e8a2b93bff23152c4b0deb. Exact-head CI run 41811706426 pending on the fix commit; this final audit JSON update creates a newer docs-only head requiring a fresh exact-head run.",
   "current_implementation_branch": "feat/fastthaig2p-site-api-20261104",
-  "current_implementation_commit_before_audit_update": "dc9f9205b90d94989faa4eb423717835c6236e4b",
-  "latest_documentation_checkpoint_before_audit": "dc9f9205b90d94989faa4eb423717835c6236e4b",
+  "current_implementation_commit_before_audit_update": "9720a91d6bc71cf215d9f77093fa77fcba6b54fc",
+  "latest_documentation_checkpoint_before_audit": "9720a91d6bc71cf215d9f77093fa77fcba6b54fc",
   "audit_note": "Exact-head special-orthography schema and IPA-boundary repair verified on cb775d6156f62392fa2d0f4bcf8d1aa30d219530. CI 40315032771 passed 180 Python tests, generated-data drift, master artifact (351,780 rows / 41 rime records), Node IPA→UA, 28 browser parity fixtures, UI contract, challenge/Wisesight/source-attested IPA diagnostics, candidate-registry check, TUD training/evaluation and artifact uploads. Web static validation 40315032788 passed. This is software/reproducibility evidence, not independent pronunciation gold.",
   "dictionary_max_match_baseline": {
     "corpus": "Wisesight-1000",
@@ -3030,7 +3030,7 @@
     "base_branch": "main",
     "base_commit": "75c331f69aa3c8e5b4db3ccc5a6da85124600a01",
     "branch": "feat/fastthaig2p-site-api-20261104",
-    "docs_checkpoint_before_audit_json_update": "dc9f9205b90d94989faa4eb423717835c6236e4b",
+    "docs_checkpoint_before_audit_json_update": "9720a91d6bc71cf215d9f77093fa77fcba6b54fc",
     "upstream_engine": "FastThaiG2P",
     "upstream_commit": "4e82a291b4cf2876326744c6580121e9986ad354",
     "output_policy": "provisional Ukrainian practical adaptation from unclassified external IPA; no phonemic/broad-surface relabeling",
@@ -3047,13 +3047,15 @@
       "code_commit": "b1472aa564596c073475cb10ed994506535869f8"
     },
     "full_repository_ci": {
-      "status": "IN_PROGRESS",
-      "run": 41811334224,
-      "head": "dc9f9205b90d94989faa4eb423717835c6236e4b",
-      "wheel_install_smoke": "PASS",
-      "test_job": "IN_PROGRESS — generate_master_table.py",
-      "failure_recorded": false,
-      "note": "Final audit/handoff/JSON refresh commits after this checkpoint are documentation-only and require a fresh exact-head CI run."
+      "status": "PENDING",
+      "prior_run": 41811334224,
+      "prior_head": "dc9f9205b90d94989faa4eb423717835c6236e4b",
+      "prior_result": "322 passed, 1 skipped, 1 failed, 1169 subtests; wheel-install smoke passed",
+      "prior_failure": "tests/test_ipa_display_contract.py expected old esc(shown) field",
+      "fix_commit": "8b489f3bdaed96f3b3e8a2b93bff23152c4b0deb",
+      "fix_run": 41811706426,
+      "fix_run_status": "PENDING",
+      "note": "Final audit/handoff/JSON changes after the fix commit are documentation-only and require a fresh exact-head CI run."
     },
     "deployment": {
       "status": "BLOCKED",
@@ -3068,7 +3070,7 @@
       "reason": "Independent Thai phonetic and Ukrainian-native adjudication unavailable; accuracy NOT_MEASURED"
     },
     "production_deployed": false,
-    "final_audit_handoff_checkpoint": "c33e3ff636ee896c15b531264b62ce3488a86d81",
+    "final_audit_handoff_checkpoint": "9720a91d6bc71cf215d9f77093fa77fcba6b54fc",
     "final_json_update_pending_ci": true
   },
   "pr_reconciliation": {
