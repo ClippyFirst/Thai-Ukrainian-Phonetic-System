@@ -1,3 +1,20 @@
+## 2026-11-04 — exact-current-HEAD CI and upstream engineering practice review
+
+- **DONE_VERIFIED — current PR #193 HEAD:** `10140505649c04d03a40706b85f444176b29691d`, 111 commits ahead / 0 behind main. PR #193 remains OPEN Draft; GitHub reports mergeable=true.
+- **DONE_VERIFIED — exact-head full CI:** run [41876675582](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41876675582), all three jobs successful. Ruff passed; pytest 327 passed, 1 skipped, 1,169 subtests passed; 29 Python/browser parity fixtures passed; generated-artifact checks and isolated wheel-install smoke passed. The one skip is the FastAPI site API test module in generic `[dev]`, because FastAPI is optional there.
+- **DONE_VERIFIED — exact-head FastThaiG2P workflow:** run [41876675750](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41876675750), dedicated job successful; Ruff passed and all 16 targeted Python tests passed, including real pinned-engine smoke and API behavior; FastThaiG2P-only UI, static accessibility and IPA→Ukrainian contracts passed.
+- **DONE_VERIFIED — exact-head Web Static:** run [41876675844](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41876675844), validation job successful, including required pages, JS syntax, accessibility contracts and no remote runtime dependency.
+- **DONE_VERIFIED — four upstream practice references re-inspected:** Unlazy `16671491f6679ad9378f52604d3bc2415b4120c7`, Superpowers `22f0b463e7a5e579904dd6211a520321035526f7`, Matt Pocock skills `4ae2317ddb22b046e26455e4f9c9b3aaaf62212d`, Ponytail `96608e078b2d5ea607c5c3b8b5a54d1c1fba6846`. Updated `AGENTS.md` to correct stale Ponytail paths and map the practices to the existing workflow. No upstream tool, hook, runtime dependency or competing ledger was installed.
+- **BLOCKED — Vercel preview:** current connected Vercel context reports the Hobby team `Dreamteam` and no linked projects. Project creation/linking remains an owner-authorized external action; no project or deployment was created.
+- **BLOCKED — linguistic validation, data rights, manual WCAG:** these gates remain exactly as scoped in the matrix. Green CI does not clear dictionary provenance or substitute for qualified human review.
+- **PARTIAL — LOTUSDIS audio:** PR #192 remains separate; manifest evidence does not establish WAV bytes, audio hashes or a clean interval.
+- **Environment limitation:** no local checkout is exposed in this connector-only session, so no local pytest/Ruff/build command is claimed. Exact-head GitHub Actions is the verification evidence.
+- **Branch/release safety:** no merge, deployment, production routing change, branch deletion, force-push or external Vercel setting change was performed.
+
+**Readiness:** engineering-verified research prototype; not production-ready and not validated for linguistic accuracy or manual WCAG 2.2 AA conformance.
+
+---
+
 ## 2026-11-01 — independent adjudication readiness and CCOST source reconciliation
 
 - **DONE_VERIFIED — paper-level CCOST schema extraction:** the LREC 2026 paper specifies intended TextGrid tiers ORT/KAN/KAS/MAU/MAS/TRN, X-SAMPA labels and tone suffixes _1=Mid, _2=Low, _3=Falling, _4=High, _5=Rising. MAU carries realized phonetic segments; MAS carries phonemic syllables; KAN/KAS are canonical forms.
