@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Consolidated Thai integration PR #199 and follow-up PRs #200–#203 are merged. Current main before this documentation refresh is a65b0d24ccb4f1eb2720d800a17578d552f067a2; exact-head CI 41901296995 passed test, wheel-install-smoke and master-artifact. No open PRs remain. Linguistic accuracy remains NOT_MEASURED; research prototype, not release-ready.",
+  "status": "Current main 56fba86b4b8be2fe4e67284355e9928108527387 passed Full CI, Pages, Web Static and FastThaiG2P Site API workflows (runs 41918227400, 41918227410, 41918227382, 41918227381). Current live branch inventory has only main and no open PRs. Documentation audit 2026-11-04 is recorded in docs/repository-audit-2026-11-04.md. Linguistic accuracy remains NOT_MEASURED; research prototype, not release-ready.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -313,7 +313,7 @@
     "rows": 351780,
     "vowel_rime_records": 41
   },
-  "latest_documentation_checkpoint": "docs/post-merge-site-release-closeout-20261102; current branch head is available from GitHub metadata.",
+  "latest_documentation_checkpoint": "56fba86b4b8be2fe4e67284355e9928108527387",
   "text_only_checkpoint": {
     "branch": "research/thai-segmentation-gold-parity-verified-20261025",
     "parent_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
@@ -2123,9 +2123,9 @@
       167
     ]
   },
-  "latest_full_repository_head": "65584d9a3d3d64a8e520dbd32411bef4b0a3dd9e",
-  "latest_full_repository_head_ci_run": "41420468842",
-  "latest_full_repository_head_web_validation_run": "41420468939",
+  "latest_full_repository_head": "56fba86b4b8be2fe4e67284355e9928108527387",
+  "latest_full_repository_head_ci_run": 41918227400,
+  "latest_full_repository_head_web_validation_run": 41918227382,
   "latest_web_static_verified_code_commit": "536f03327f11d258a4e7638091797128754b6602",
   "latest_web_static_verified_code_run": "41342132990",
   "ccost_source_reconciliation_2026_10_31": {
@@ -2166,30 +2166,15 @@
     "latest_pr_head_ci_status": "See PR #169 metadata; previous exact-head run 41244614135 passed all three jobs."
   },
   "current_branch_inventory": {
-    "branch_refs": 22,
-    "prefix_counts": {
-      "chore": 2,
-      "ci": 1,
-      "docs": 4,
-      "fix": 2,
-      "main": 1,
-      "refactor": 4,
-      "research": 6,
-      "test": 1,
-      "work": 1
-    },
-    "as_of": "2026-11-03",
-    "deletions": 0,
-    "note": "22 current refs inspected. No branch deleted. Six open draft PRs: #184, #185, #186, #188, #189 and #190. #186 remains stacked on #185; #184 is a separate FastThaiG2P adapter; #188 overlaps shared source registry/audit paths; #190 is an independent accessibility contrast fix."
+    "audited_at": "2026-11-04",
+    "default_branch": "main",
+    "branches": [
+      "main"
+    ],
+    "non_main_branches": 0,
+    "open_pull_requests": 0
   },
-  "open_prs_current": [
-    "#189 — Triage G2P benchmark error clusters and recover attested lexical cases (draft; unmerged)",
-    "#190 — Fix non-text contrast for form controls (draft; unmerged; independent accessibility change)",
-    "#188 — Register Global TIMIT Thai as restricted alignment candidate (draft; unmerged)",
-    "#186 — Add conservative typed FastThaiG2P IPA boundary (draft; unmerged; based on #185)",
-    "#185 — Add optional FastThaiG2P challenge comparison spike (draft; unmerged)",
-    "#184 — Add optional FastThaiG2P adapter and same-input comparison (draft; unmerged)"
-  ],
+  "open_prs_current": 0,
   "latest_pr_head_source": "PR #182 merged into main as 65584d9a3d3d64a8e520dbd32411bef4b0a3dd9e; no product PR remains open at this checkpoint.",
   "status_refresh_2026_10_31": {
     "main_sha": "8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8",
@@ -2707,13 +2692,7 @@
     "exact_regression_test_ci_run": "41406424727",
     "exact_regression_test_ci_result": "PASSED_ALL_3_JOBS"
   },
-  "open_prs": [
-    "#189 — Triage G2P benchmark error clusters and recover attested lexical cases (draft; unmerged)",
-    "#188 — Register Global TIMIT Thai as restricted alignment candidate (draft; unmerged)",
-    "#186 — Add conservative typed FastThaiG2P IPA boundary (draft; unmerged; based on #185)",
-    "#185 — Add optional FastThaiG2P challenge comparison spike (draft; unmerged)",
-    "#184 — Add optional FastThaiG2P adapter and same-input comparison (draft; unmerged)"
-  ],
+  "open_prs": 0,
   "audio_interval_overlap_code_checkpoint_2026_11_02": {
     "verified_code_head": "964b4930321e68c77ba5e956e1c0ecd12164ccfa",
     "ci_run": "41406087052",
@@ -3524,5 +3503,26 @@
     "open_pull_requests": 0,
     "engineering_integration": "DONE_VERIFIED",
     "release_ready": false
+  },
+  "repository_audit_2026_11_04": {
+    "audited_main": "56fba86b4b8be2fe4e67284355e9928108527387",
+    "audit_document": "docs/repository-audit-2026-11-04.md",
+    "full_ci_run": 41918227400,
+    "full_ci_status": "PASS",
+    "pages_run": 41918227410,
+    "pages_status": "PASS",
+    "web_static_run": 41918227382,
+    "web_static_status": "PASS",
+    "site_api_run": 41918227381,
+    "site_api_status": "PASS",
+    "branches": [
+      "main"
+    ],
+    "open_pull_requests": 0,
+    "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
+    "architecture_reorganization": "NOT_REQUIRED_EXISTING_STRUCTURE_HAS_CLEAR_OWNERSHIP",
+    "readme_fastthaig2p_status": "INTEGRATED_API_VERIFIED_PRODUCTION_DEPLOYMENT_BLOCKED_PENDING_DATA_RIGHTS_AND_VERIFIED_PREVIEW",
+    "linguistic_accuracy": "NOT_MEASURED",
+    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY"
   }
 }
