@@ -3151,6 +3151,14 @@
     "code_commit_with_full_ci": "c133dee9c66ed08df60d20ba0e170fab6c2c7300",
     "documentation_head_before_structured_audit_refresh": "973c130842fa14a7522e40ad944ad05b4fcdb612",
     "documentation_only_changes_after_full_ci": true,
-    "note": "The full CI run verifies code commit c133dee9c66ed08df60d20ba0e170fab6c2c7300. Subsequent commits update only audit/matrix/handoff/agent guidance; the GitHub connector in this session cannot dispatch a new workflow run. No runtime code changed."
+    "note": "The full CI run verifies code commit c133dee9c66ed08df60d20ba0e170fab6c2c7300. Subsequent commits update only audit/matrix/handoff/agent guidance; the GitHub connector in this session cannot dispatch a new workflow run. No runtime code changed. Additional source-level review found unresolved TLTK repository LICENSE vs setup.py metadata discrepancy and missing exact Wiktionary dump revision/record attribution; the data-rights blocker remains open.",
+    "data_rights_findings": {
+      "wiktionary_subset": "FastThaiG2P data README says ~13k entries from kaikki.org/Wiktionary; Wiktionary text CC BY-SA 4.0; exact dump revision/record attribution missing",
+      "separate_pythainlp_corpus": "CC BY-SA 3.0, but not established as the exact FastThaiG2P source",
+      "tltk_fallback": "_th2ipa.py header identifies TLTK 1.3.8 and BSD-3; PyPI metadata says BSD-3 since 1.2.2; current TLTK root LICENSE contains LGPL-3 while setup.py says BSD-3; FastThaiG2P does not pin fallback data revision",
+      "generated_ipa": "~49k LLM-generated IPA; no complete data-specific license statement in pinned data README",
+      "manual_overrides": "no complete data-specific license/provenance statement in pinned data README",
+      "status": "BLOCKED pending upstream source/revision and terms clarification"
+    }
   }
 }
