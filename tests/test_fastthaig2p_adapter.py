@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import pytest
+
 from thai_ukrainian.fastthaig2p_adapter import FastThaiG2POutput
 from thai_ukrainian.ukrainian_adaptation import adapt_phonetic_result
 
