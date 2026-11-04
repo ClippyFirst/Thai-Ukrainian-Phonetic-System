@@ -67,12 +67,12 @@ class AdjudicationPacketTests(unittest.TestCase):
         ) as stream:
             blind = list(csv.DictReader(stream, delimiter="\t"))
         result = validate_blind_packet(blind, challenge)
-        self.assertEqual(result["records"], 6)
+        self.assertEqual(result["records"], 7)
         self.assertEqual(result["labels_prefilled"], 0)
         self.assertEqual(
             {row["thai"] for row in blind},
             {"วันนี้", "ฉันเห็นสัตว์ในฟิล์มเรื่องหนึ่ง", "อย่าเพิ่งเศร้า",
-             "อะไรบ้าง", "อธิบายทฤษฎี", "ฤๅษีอธิบายทฤษฎีเรื่องเสียงไทยอย่างไร"},
+             "อะไรบ้าง", "อธิบายทฤษฎี", "ฤๅษีอธิบายทฤษฎีเรื่องเสียงไทยอย่างไร", "กรุงเทพมหานคร"},
         )
         self.assertTrue(all(row["gold_phonemic_ipa"] is None for row in challenge))
         self.assertTrue(all(row["gold_word_boundaries"] is None for row in challenge))
