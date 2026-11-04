@@ -72,7 +72,7 @@ def _normalize_ipa_input(source_ipa: str) -> tuple[str, list[str], dict[str, boo
 
 
 def adapt_phonetic_result(result: PhoneticResult) -> dict:
-    """Adapt only typed phonemic IPA; fail closed on unsupported IPA symbols."""
+    """Adapt typed phonemic IPA or explicitly provisional external IPA; fail closed on unsupported symbols."""
     provisional = result.status == "PROVISIONAL" and bool(result.external_ipa)
     source_ipa = result.external_ipa if provisional else result.phonemic_ipa
     if (result.status != "SUPPORTED" and not provisional) or not source_ipa:
