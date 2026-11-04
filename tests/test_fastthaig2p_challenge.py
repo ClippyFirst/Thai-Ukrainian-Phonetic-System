@@ -7,9 +7,14 @@ import pytest
 
 from thai_ukrainian.fastthaig2p_adapter import (
     FastThaiG2POutput,
+    FastThaiG2PTokenPath,
     parse_ipa_output,
 )
 from thai_ukrainian.ukrainian_adaptation import adapt_phonetic_result
+
+def _token_paths(count: int):
+    return tuple(FastThaiG2PTokenPath(token=f"token-{index}", path="dictionary") for index in range(count))
+
 
 SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "run_fastthaig2p_challenge.py"
 SPEC = importlib.util.spec_from_file_location("fastthaig2p_challenge", SCRIPT)
@@ -74,7 +79,7 @@ def test_typed_results_preserve_word_syllable_tone_and_length_metadata() -> None
         raw_ipa="/sa˨˩.wat̚˨˩.diː˧/ /kʰrap̚˦˥/",
         word_groups=("sa˨˩.wat̚˨˩.diː˧", "kʰrap̚˦˥"),
         syllable_ipa=("sa˨˩", "wat̚˨˩", "diː˧", "kʰrap̚˦˥"),
-        token_paths=(),
+        token_paths=_token_paths(2),
         passthrough_text="",
     )
 
@@ -100,7 +105,7 @@ def test_typed_results_keep_affricate_and_diphthong_features() -> None:
         raw_ipa="/t͡ɕʰaː˧/ /bia̯˥˩/",
         word_groups=("t͡ɕʰaː˧", "bia̯˥˩"),
         syllable_ipa=("t͡ɕʰaː˧", "bia̯˥˩"),
-        token_paths=(),
+        token_paths=_token_paths(2),
         passthrough_text="",
     )
 
@@ -117,7 +122,7 @@ def test_unknown_fallback_sentinel_is_not_promoted_to_ipa_or_ukrainian() -> None
         raw_ipa="/kʰaː8˧/",
         word_groups=("kʰaː8˧",),
         syllable_ipa=("kʰaː8˧",),
-        token_paths=(),
+        token_paths=_token_paths(1),
         passthrough_text="",
     )
     typed = result.to_phonetic_results()[0][0]
@@ -136,7 +141,7 @@ def test_uncertain_external_ipa_never_enters_ukrainian_adapter() -> None:
         raw_ipa="/kʰaː˥˩/",
         word_groups=("kʰaː˥˩",),
         syllable_ipa=("kʰaː˥˩",),
-        token_paths=(),
+        token_paths=_token_paths(1),
         passthrough_text="",
     )
     typed = result.to_phonetic_results()[0][0]
