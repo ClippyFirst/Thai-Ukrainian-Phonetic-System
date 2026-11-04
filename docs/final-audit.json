@@ -3310,6 +3310,40 @@
     ],
     "local_tests": "NOT_RUN_NO_LOCAL_CHECKOUT",
     "merge_or_deploy_performed": false,
-    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_PRODUCTION_READY"
+    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_PRODUCTION_READY",
+    "latest_documentation_head": "32b8c3ed76a8bc65f7f35b5b632f96c40e7e1492",
+    "latest_documentation_head_ahead_of_main": 109,
+    "latest_exact_head_ci": {
+      "run": 41872842338,
+      "conclusion": "success",
+      "jobs": {
+        "test": "success",
+        "wheel_install_smoke": "success",
+        "master_artifact": "success"
+      },
+      "pytest": "327 passed, 1 skipped, 1169 subtests passed",
+      "ruff": "passed",
+      "browser_parity_fixtures": 29
+    },
+    "latest_exact_head_dedicated_site_workflow": {
+      "run": 41872842606,
+      "conclusion": "success",
+      "python_tests": "16 passed",
+      "ruff": "passed",
+      "ui_contract": "passed",
+      "accessibility_contract": "passed",
+      "ipa_ukrainian_regression": "passed"
+    },
+    "latest_exact_head_web_static": {
+      "run": 41872842363,
+      "conclusion": "success"
+    },
+    "shared_document_overlap_with_pr192": [
+      "docs/validation-matrix.md",
+      "docs/final-audit.md",
+      "docs/final-audit.json",
+      "docs/MASTER-EXECUTION-PLAN-AND-CHAT-HANDOFF.md"
+    ],
+    "shared_document_overlap_disposition": "BOTH_PRS_REMAIN_DRAFT_RECONCILE_THE_FOUR_DOCS_IF_EITHER_MERGES_FIRST"
   }
 }

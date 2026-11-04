@@ -2354,3 +2354,19 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - **Other PRs/branches:** PRs #184–#192 remain open Draft and were not merged, closed, rebased, or modified. #184/#185/#186 remain research predecessors; #192 remains the separate LOTUSDIS manifest branch. No user branch was deleted.
 - **Local tests:** not run; the connected environment has no local repository checkout. All pass claims above are from the exact GitHub Actions runs.
 - **Next genuine blocker:** owner-connected Vercel preview and external human/data-rights evidence. The site integration is engineering-verified, but not production-ready and not validated for linguistic accuracy.
+
+
+---
+
+## 2026-11-04 — PR #193 exact-head closeout and PR #192 overlap
+
+- **Repository/base:** `ClippyFirst/Thai-Ukrainian-Phonetic-System`; `main` remains `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`.
+- **PR #193 current verified checkpoint:** `32b8c3ed76a8bc65f7f35b5b632f96c40e7e1492`, 109 ahead / 0 behind; PR remains OPEN Draft, unmerged. GitHub reports `mergeable=true`, `mergeable_state=clean`.
+- **Exact-head full CI:** [41872842338](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41872842338) SUCCESS; all three jobs passed. Ruff passed; 327 Python tests, 1 skipped, 1,169 subtests; 29 browser parity fixtures passed.
+- **Exact-head FastThaiG2P site workflow:** [41872842606](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41872842606) SUCCESS; 16 targeted Python tests, Ruff, UI contract, static accessibility contract and IPA→Ukrainian regression passed.
+- **Exact-head Web Static:** [41872842363](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41872842363) SUCCESS.
+- **Verified code/test checkpoint:** `2281dc2c5723046ecabda2fd3edae8814359f6fd`; commit `32b8` only updated audit/handoff docs. No runtime/test changes occurred after the verified code/test checkpoint.
+- **PR #192 overlap:** both PRs update four canonical documents (`validation-matrix.md`, `final-audit.md`, `final-audit.json`, and `MASTER-EXECUTION-PLAN-AND-CHAT-HANDOFF.md`). Their substantive code/data files are disjoint. Keep both Draft; if one merges first, reconcile those four docs before merging the other. No merge or port of PR #192's LOTUSDIS files into #193 was performed.
+- **Remaining release blockers:** owner-connected Vercel preview (zero projects linked), source-by-source FastThaiG2P data rights, independent Thai phonetic/segmentation review, Ukrainian-native review, and manual WCAG 2.2 AA/device checks.
+- **Local tests:** not run; exact GitHub Actions evidence above. No deployment, external project-setting change or production routing change.
+- **Readiness:** engineering-verified research prototype; not production-ready and not validated for linguistic accuracy.

@@ -1,3 +1,17 @@
+## 2026-11-04 — PR #193 exact documentation-head verification and branch reconciliation
+
+| Task | Status | Evidence | Remaining acceptance |
+|---|---|---|---|
+| Exact current PR #193 HEAD | DONE_VERIFIED | Documentation checkpoint `32b8c3ed76a8bc65f7f35b5b632f96c40e7e1492`, 109 ahead / 0 behind `main`; full CI [41872842338](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41872842338) passed all three jobs; dedicated FastThaiG2P workflow [41872842606](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41872842606) passed; Web Static [41872842363](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41872842363) passed. | No source/runtime/test changes occurred after the verified code/test checkpoint `2281dc2c5723046ecabda2fd3edae8814359f6fd`; the 32b8 commit only reconciled canonical docs. |
+| FastThaiG2P API and typed IPA regression suite | DONE_VERIFIED | Exact PR-head dedicated workflow: Ruff passed; 16 targeted Python tests passed; FastThaiG2P-only UI contract, static accessibility contract and IPA→Ukrainian regression passed. | Independent linguistic gold remains external. |
+| Full repository exact-head CI | DONE_VERIFIED | Exact PR-head full CI: Ruff passed; pytest 327 passed, 1 skipped, 1,169 subtests passed; 29 browser parity fixtures passed; `test`, `wheel-install-smoke`, `master-artifact` all passed. The one generic `[dev]` skip is the FastAPI test file; dedicated workflow installs FastAPI and runs it. | No local tests claimed; connector-only environment has no local checkout. |
+| Shared canonical-doc overlap with PR #192 | PARTIAL — merge-order risk identified | PR #192 and #193 both modify `docs/validation-matrix.md`, `docs/final-audit.md`, `docs/final-audit.json`, and `docs/MASTER-EXECUTION-PLAN-AND-CHAT-HANDOFF.md`. Their runtime/data changes do not overlap: #192 changes evidence-registry/LOTUSDIS files; #193 changes FastThaiG2P site/API files. | Keep both Draft. If either merges first, reconcile these four shared docs before merging the other; do not merge blindly. |
+| Deployment and linguistic gates | BLOCKED | Vercel project query returned zero projects; data-rights, independent Thai/Ukrainian review and manual accessibility remain open. | Owner-connected preview and external evidence required. |
+
+**Posture:** PR #193 remains OPEN Draft, unmerged and cleanly mergeable at the verified checkpoint. `main` remains `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`. No deployment, merge or external project-setting change was made.
+
+---
+
 ## 2026-11-04 — FastThaiG2P exact-head CI and API guard verification
 
 | Task | Status | Verified evidence | Remaining acceptance |

@@ -113,7 +113,7 @@ Primary platform reference: https://vercel-docs.vercel.sh/changelog/fastapi-fron
 
 ## Upstream lexical correction regression
 
-The pinned FastThaiG2P commit is the merge commit of upstream [PR #3](https://github.com/awslabs/FastThaiG2P/pull/3), which corrected the dictionary IPA for `สวน` from the erroneous three-syllable `/sa˨˩.wa˦˥.na˦˥/` to `/sua̯n˩˩˦/`. A real-engine test now protects this exact pinned output and verifies that the adapter retains segmental IPA, the rising Chao tone contour and its explicitly provisional status. The PR's maintainer acceptance is source evidence for the upstream correction, not independent expert adjudication or general accuracy evidence. The new test remains unverified until exact-head CI runs.
+The pinned FastThaiG2P commit is the merge commit of upstream [PR #3](https://github.com/awslabs/FastThaiG2P/pull/3), which corrected the dictionary IPA for `สวน` from the erroneous three-syllable `/sa˨˩.wa˦˥.na˦˥/` to `/sua̯n˩˩˦/`. A real-engine test now protects this exact pinned output and verifies that the adapter retains segmental IPA, the rising Chao tone contour and its explicitly provisional status. The PR's maintainer acceptance is source evidence for the upstream correction, not independent expert adjudication or general accuracy evidence. The real-engine regression passed in dedicated workflow [41872842606](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41872842606) on exact PR documentation head `32b8c3ed76a8bc65f7f35b5b632f96c40e7e1492`; the workflow also passed all 16 targeted Python tests, Ruff, the FastThaiG2P-only UI contract, static accessibility contract and IPA→Ukrainian regression.
 
 
 ## TLTK fallback-license evidence refinement — 2026-11-04
