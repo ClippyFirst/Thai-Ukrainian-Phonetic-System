@@ -24,9 +24,11 @@ This is not an accuracy claim. The 42-item challenge contains no independently a
 
 ## License and provenance gate
 
-The pinned upstream software declares Apache-2.0. That does not automatically settle the rights and attribution for all dictionary/fallback data shipped inside the package. Upstream documentation describes a mixed dictionary containing manual overrides, Wiktionary-derived entries and LLM-generated entries; the fallback parser also carries its own BSD-3-Clause notice.
+The pinned upstream repository includes an Apache-2.0 software LICENSE and an Amazon NOTICE. Its own `data/README.md` says the runtime dictionary is 62k words, with IPA merged from manual overrides, approximately 13k Wiktionary/kaikki entries and approximately 49k LLM-generated entries (Claude Opus 4.6 via Bedrock). The generated source file is gitignored upstream. The same README identifies fallback G2P data as vendored from TLTK; the vendored `_th2ipa.py` source carries a BSD-3-Clause notice and 2018 Chulalongkorn University copyright.
 
-Before public production deployment, verify the exact pinned package's bundled data files, provenance, applicable terms and attribution/share-alike obligations. Do not copy its dictionary or fallback data into this repository. This integration pins and installs the upstream package as a dependency; it does not claim that all bundled data is independently cleared for redistribution or commercial use.
+The upstream package build force-includes `data/dict.txt`, `data/ipa.json` and `data/fallback/` into the installed wheel. Its data README does not give a separate comprehensive license statement for all these runtime data assets. The software Apache-2.0 license and the TLTK source notice do not automatically resolve the rights/attribution of the manual, Wiktionary-derived, generated IPA and fallback data.
+
+Before public production deployment, inspect the exact pinned wheel and bundled files, determine applicable terms for each source and record attribution/share-alike obligations. Do not copy its dictionary or fallback data into this repository. This integration pins and installs the upstream package as a dependency; it does not claim that all bundled data is independently cleared for redistribution or commercial use.
 
 ## Deployment gate
 
