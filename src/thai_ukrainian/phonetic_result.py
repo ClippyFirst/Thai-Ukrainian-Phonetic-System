@@ -75,6 +75,9 @@ class PhoneticResult:
     status: str = "SUPPORTED"
     provenance: tuple[str, ...] = ()
     uncertainty: tuple[str, ...] = ()
+    # External IPA whose phonemic-vs-surface layer has not been adjudicated.
+    # It is never silently copied into either canonical IPA layer.
+    external_ipa: str | None = None
 
     @classmethod
     def from_syllable_analysis(cls, analysis: "SyllableAnalysis") -> "PhoneticResult":
@@ -115,6 +118,7 @@ class PhoneticResult:
         return {
             "phonemic_ipa": self.phonemic_ipa,
             "broad_surface_ipa": self.broad_surface_ipa,
+            "external_ipa": self.external_ipa,
             "segments": [
                 {
                     "ipa": s.ipa, "kind": s.kind, "surface_ipa": s.surface_ipa,
