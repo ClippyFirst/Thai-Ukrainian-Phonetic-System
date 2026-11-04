@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "PR #182 is merged to main as 65584d9a3d3d64a8e520dbd32411bef4b0a3dd9e. Main CI 41420468842 passed all three jobs; Web Static 41420468939 passed; GitHub Pages 41420468875 successfully built, deployed and verified the published site at https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/. Six source-attested lexical IPA overrides are live in both runtimes through the typed IPA→Ukrainian adapter, with CC BY-SA 4.0 provenance documented separately from MIT software. Static audit found 0 exact duplicate test names/bodies and 0 parse errors. Independent Thai/Ukrainian reviewers, CCOST clarification/archive, LOTUSDIS audio evidence and manual WCAG testing remain blocked. Linguistic accuracy remains NOT_MEASURED; the site is an engineering-verified research prototype, not a linguistic-accuracy release.\n\n2026-11-04: Draft PR #193 implements a FastThaiG2P-only website/API path with explicitly provisional Ukrainian adaptation. Targeted FastThaiG2P site workflow passed at code commit 2c0164751eab32f3992348b4450d350175becb05; Web Static passed at b1472aa564596c073475cb10ed994506535869f8. Full repository CI for the later documentation checkpoint is pending; hosting and upstream bundled-data rights remain blocked. Main remains unchanged and the new site is not deployed.",
+  "status": "PR #182 is merged to main as 65584d9a3d3d64a8e520dbd32411bef4b0a3dd9e. Main CI 41420468842 passed all three jobs; Web Static 41420468939 passed; GitHub Pages 41420468875 successfully built, deployed and verified the published site at https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/. Six source-attested lexical IPA overrides are live in both runtimes through the typed IPA→Ukrainian adapter, with CC BY-SA 4.0 provenance documented separately from MIT software. Static audit found 0 exact duplicate test names/bodies and 0 parse errors. Independent Thai/Ukrainian reviewers, CCOST clarification/archive, LOTUSDIS audio evidence and manual WCAG testing remain blocked. Linguistic accuracy remains NOT_MEASURED; the site is an engineering-verified research prototype, not a linguistic-accuracy release.\n\n2026-11-04: Draft PR #193 implements a FastThaiG2P-only website/API path with explicitly provisional Ukrainian adaptation. Targeted FastThaiG2P site workflow passed at code commit 2c0164751eab32f3992348b4450d350175becb05; Web Static passed at b1472aa564596c073475cb10ed994506535869f8. Full repository CI for the later documentation checkpoint is pending; hosting and upstream bundled-data rights remain blocked. Main remains unchanged and the new site is not deployed.\n\n2026-11-04 final PR #193 verification: exact branch head c133dee9c66ed08df60d20ba0e170fab6c2c7300 passed Full CI run 41811988701 (all 3 jobs); pytest 323 passed, 1 skipped, 1169 subtests. The skip is FastAPI API tests in the generic dev environment; dedicated FastThaiG2P site workflow 41810981343 passed all 9 targeted Python tests including API and Bangkok smoke. Web Static 41810746926 passed. Hosting and upstream data rights remain blocked; PR #193 remains Draft and main is unchanged.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -290,7 +290,7 @@
     "python_subtests": 1164,
     "fastthaig2p_site_workflow": "PASS — run 41810981343 at code commit 2c0164751eab32f3992348b4450d350175becb05: pinned install, Ruff, 9 targeted Python tests including real Bangkok smoke, UI contract, accessibility and IPA-UA regression.",
     "fastthaig2p_web_static": "PASS — run 41810746926 at code commit b1472aa564596c073475cb10ed994506535869f8: JS syntax, generated browser dictionary, parity fixtures, required pages, static accessibility and remote-runtime-dependency check.",
-    "fastthaig2p_full_repository_ci": "PENDING — final branch head c8e9fc6607891f82fc2c939db3afbe8af655e2f6, run 41811887890. Prior run 41811334224: 322 passed, 1 skipped, 1 failed; sole stale IPA display assertion fixed in 8b489f3bdaed96f3b3e8a2b93bff23152c4b0deb. Source/runtime code unchanged after fix; audit/handoff updates are documentation-only."
+    "fastthaig2p_full_repository_ci": "PASS — exact final PR #193 branch head c133dee9c66ed08df60d20ba0e170fab6c2c7300, run 41811988701; all 3 jobs passed. Ruff PASS; pytest 323 passed, 1 skipped, 1169 subtests; 29 browser parity fixtures and UI contract passed; wheel-install smoke and master-artifact passed. The skipped module is tests/test_fastthaig2p_site_api.py because FastAPI is not installed in generic [dev] CI; dedicated site workflow 41810981343 passed all 9 targeted Python tests including API and real Bangkok smoke."
   },
   "challenge_runtime": {
     "challenge_inputs": 36,
@@ -567,12 +567,12 @@
       "acceptance": "No existing PR merged, closed, retargeted or force-pushed. Independent #188, #189, #191 and #192 scopes remain open and untouched."
     }
   ],
-  "latest_implementation_branch": "feat/fastthaig2p-site-api-20261104 (PR #193 OPEN Draft; not deployed)",
-  "latest_implementation_commit_pending_ci": "8b489f3bdaed96f3b3e8a2b93bff23152c4b0deb",
-  "current_head_status_at_audit_refresh": "Dedicated FastThaiG2P site workflow PASS at 2c0164751eab32f3992348b4450d350175becb05 (run 41810981343); Web Static PASS at b1472aa564596c073475cb10ed994506535869f8 (run 41810746926). Full CI run 41811334224 at dc9f9205b90d94989faa4eb423717835c6236e4b completed with 322 passed, 1 skipped, 1 failed, 1169 subtests; only failure was stale tests/test_ipa_display_contract.py expectation, fixed in 8b489f3bdaed96f3b3e8a2b93bff23152c4b0deb. Exact-head run 41811706426 was cancelled by subsequent docs-only commits. Final branch head c8e9fc6607891f82fc2c939db3afbe8af655e2f6 has full CI run 41811887890 pending; source/runtime code has not changed since the fix.",
+  "latest_implementation_branch": "feat/fastthaig2p-site-api-20261104 (PR #193 OPEN Draft; not deployed; GitHub mergeable=false)",
+  "latest_implementation_commit_pending_ci": null,
+  "current_head_status_at_audit_refresh": "Exact final branch head c133dee9c66ed08df60d20ba0e170fab6c2c7300 passed Full CI 41811988701 (test, wheel-install-smoke, master-artifact all successful; 323 passed, 1 skipped, 1169 subtests). The one skip is FastAPI API tests in generic dev CI; dedicated site/API workflow 41810981343 passed all 9 targeted Python tests including real Bangkok smoke. Web Static 41810746926 passed. No application/runtime code changed after the targeted site/API code checkpoint 2c0164751eab32f3992348b4450d350175becb05. Hosting, bundled-data rights, independent linguistic review and manual accessibility remain blocked.",
   "current_implementation_branch": "feat/fastthaig2p-site-api-20261104",
-  "current_implementation_commit_before_audit_update": "c8e9fc6607891f82fc2c939db3afbe8af655e2f6",
-  "latest_documentation_checkpoint_before_audit": "c8e9fc6607891f82fc2c939db3afbe8af655e2f6",
+  "current_implementation_commit_before_audit_update": "c133dee9c66ed08df60d20ba0e170fab6c2c7300",
+  "latest_documentation_checkpoint_before_audit": "c133dee9c66ed08df60d20ba0e170fab6c2c7300",
   "audit_note": "Exact-head special-orthography schema and IPA-boundary repair verified on cb775d6156f62392fa2d0f4bcf8d1aa30d219530. CI 40315032771 passed 180 Python tests, generated-data drift, master artifact (351,780 rows / 41 rime records), Node IPA→UA, 28 browser parity fixtures, UI contract, challenge/Wisesight/source-attested IPA diagnostics, candidate-registry check, TUD training/evaluation and artifact uploads. Web static validation 40315032788 passed. This is software/reproducibility evidence, not independent pronunciation gold.",
   "dictionary_max_match_baseline": {
     "corpus": "Wisesight-1000",
@@ -638,12 +638,12 @@
       ]
     }
   },
-  "latest_implementation_commit_ci_verified": "c68580a490f89af1cf08224d5811429e74f8ef5b",
-  "latest_documentation_head_ci_verified": "536f03327f11d258a4e7638091797128754b6602",
-  "latest_documentation_head_ci_run": "41342132989",
-  "latest_documentation_head_web_validation_run": "41342132990",
-  "latest_implementation_ci_run": "41353088633",
-  "latest_implementation_web_validation_run": "41353088642",
+  "latest_implementation_commit_ci_verified": "c133dee9c66ed08df60d20ba0e170fab6c2c7300",
+  "latest_documentation_head_ci_verified": "c133dee9c66ed08df60d20ba0e170fab6c2c7300",
+  "latest_documentation_head_ci_run": 41811988701,
+  "latest_documentation_head_web_validation_run": 41810746926,
+  "latest_implementation_ci_run": 41811988701,
+  "latest_implementation_web_validation_run": 41810746926,
   "segmentation_error_review": {
     "script": "scripts/analyze_segmentation_errors.py",
     "test": "tests/test_segmentation_error_analysis.py",
@@ -3112,5 +3112,42 @@
       "state": "OPEN_DRAFT",
       "reason": "Main-based FastThaiG2P-only site/API integration; deployment and data-rights gates remain."
     }
+  },
+  "fastthaig2p_final_verification_2026_11_04": {
+    "final_branch_head": "c133dee9c66ed08df60d20ba0e170fab6c2c7300",
+    "full_ci_run": 41811988701,
+    "full_ci_jobs": {
+      "test": "success",
+      "wheel-install-smoke": "success",
+      "master-artifact": "success"
+    },
+    "pytest": {
+      "passed": 323,
+      "skipped": 1,
+      "subtests": 1169,
+      "skipped_module": "tests/test_fastthaig2p_site_api.py",
+      "reason": "FastAPI not installed in generic [dev] environment"
+    },
+    "targeted_site_workflow": {
+      "run": 41810981343,
+      "code_commit": "2c0164751eab32f3992348b4450d350175becb05",
+      "result": "PASS",
+      "targeted_python_tests": 9,
+      "includes": "FastAPI API contract and pinned Bangkok smoke"
+    },
+    "web_static": {
+      "run": 41810746926,
+      "code_commit": "b1472aa564596c073475cb10ed994506535869f8",
+      "result": "PASS"
+    },
+    "final_code_delta_from_targeted_site_commit": "No application/runtime source changes; audit/docs and tests/test_ipa_display_contract.py only",
+    "vercel_projects_for_repository": 0,
+    "deployment_status": "BLOCKED",
+    "bundled_data_rights_status": "BLOCKED",
+    "independent_thai_and_ukrainian_review": "BLOCKED",
+    "manual_accessibility_review": "PARTIAL",
+    "pr_state": "OPEN_DRAFT",
+    "github_mergeable": false,
+    "production_deployed": false
   }
 }
