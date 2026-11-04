@@ -97,3 +97,21 @@ def test_pinned_fastthaig2p_contains_merged_suan_ipa_correction() -> None:
     assert typed.tone_contour_ipa == "˩˩˦"
     assert typed.tone_category == "rising"
     assert typed.status == "PROVISIONAL"
+
+
+def test_api_rejects_whitespace_only_input_before_calling_engine() -> None:
+    engine = FakeFastThaiG2P(_output())
+    site_api._engine = engine
+
+    with pytest.raises(HTTPException) as caught:
+        site_api.analyze(site_api.AnalyzeRequest(text=" \\t\\n "))
+
+    assert caught.value.status_code == 400
+    assert engine.seen == []
+
+
+def test_api_request_schema_rejects_input_over_2000_characters() -> None:
+    from pydantic import ValidationError
+
+    with pytest.raises(ValidationError):
+        site_api.AnalyzeRequest(text="ก" * 2001)
