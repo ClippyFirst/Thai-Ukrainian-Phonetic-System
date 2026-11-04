@@ -146,3 +146,21 @@ The inspected audit-branch head passed its exact-head Full CI. Any subsequent do
 ### Evidence policy
 
 Do not mark any gate DONE_VERIFIED because a registry entry, schema, blank reviewer packet, model output, source annotation, static check or documentation paragraph exists. Keep CCOST under CC BY-NC-SA 4.0 restrictions; keep Global TIMIT Thai unused pending written LDC permission. Keep LOTUSDIS PARTIAL until actual WAV bytes and per-file hashes/interval evidence are verified. Keep FastThaiG2P production data and preview gates separate. Do not create or report independent IPA gold rows until the blinded expert adjudication has actually happened.
+
+
+## Research and corpus-rights reconciliation — 2026-11-05
+
+### CCOST: tier schema documented; archive inspection remains open
+
+The LREC 2026 paper now provides an inspectable published tier map: `ORT` = orthographic word; `KAN` = canonical word pronunciation; `KAS` = canonical syllabified pronunciation; `MAU` = phonetic segment; `MAS` = phonemic syllable; `TRN` = orthographic utterance transcript. Phonemic and phonetic representations use X-SAMPA; tone suffixes `_1`–`_5` map to Mid, Low, Falling, High and Rising respectively. The paper describes MAUS processing and subsequent manual correction by trained native Thai research assistants, including phonetic variants on MAU and removal of misread lexical items from MAS. See [Pittayaporn et al., LREC 2026, §3.3–3.4](https://aclanthology.org/2026.lrec-1.247.pdf) and [the official Zenodo record](https://zenodo.org/records/17366698).
+
+This closes the *published tier-map discovery* subtask, not the actual archive inspection. The Zenodo record identifies a 6.2 GB `C-COST.zip` containing WAV and TextGrid files and a separate `CCOST_manual.pdf`; the manual and archive could not be fetched/inspected in this session. Therefore status is **PARTIAL**: published tier names/conventions are known, but actual TextGrid files, real tier instances, interval alignment, and any discrepancies between archive and paper remain unverified. The dataset is CC BY-NC-SA 4.0; no commercial reuse or redistribution beyond those terms is implied. The paper explicitly reports that no formal inter-annotator agreement measures were collected (§8), so CCOST annotations must not be described as a measured-IAA gold set.
+
+### FastThaiG2P: source-level rights remain unresolved
+
+The upstream [FastThaiG2P repository](https://github.com/awslabs/FastThaiG2P) declares Apache-2.0 for its project code. Its [data README](https://github.com/awslabs/FastThaiG2P/blob/main/data/README.md) distinguishes the runtime dictionary and IPA map from source files: the map combines manual overrides, approximately 13k Wiktionary-derived entries and approximately 49k generated entries; the upstream README attributes the latter to Claude Opus 4.6. It also identifies vendored `tltk` fallback assets. An Apache-2.0 code license does **not** establish redistribution rights for every upstream dictionary entry, generated output, source dump, or vendored data asset. Keep the project's FastThaiG2P bundled-data gate **BLOCKED** until each asset's provenance, upstream license/terms, attribution and redistribution rights are reviewed independently. Keep the Python-host preview as a separate **BLOCKED** deployment gate.
+
+### Primary references
+
+- Pittayaporn, Pittayawat, Cathryn Yang, Sujinat Jitwiriyanont & James Kirby (2026). *The Chulalongkorn Corpus of Spoken Thai (CCOST).* LREC 2026, pp. 3154–3160. [PDF](https://aclanthology.org/2026.lrec-1.247.pdf), [Zenodo dataset record](https://zenodo.org/records/17366698).
+- [FastThaiG2P upstream README](https://github.com/awslabs/FastThaiG2P), [data README](https://github.com/awslabs/FastThaiG2P/blob/main/data/README.md), [Apache-2.0 code license](https://github.com/awslabs/FastThaiG2P/blob/main/LICENSE).
