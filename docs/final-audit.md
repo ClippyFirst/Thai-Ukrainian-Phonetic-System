@@ -1509,3 +1509,9 @@ The new test/tool code was committed on the PR branch and awaits exact-head CI c
 
 
 - **Additional data-rights finding — 2026-11-04:** Wiktionary entry text is CC BY-SA 4.0, while the exact kaikki snapshot/revision and row attribution for FastThaiG2P's ~13k subset are not documented. TLTK 1.3.8 source header and PyPI metadata indicate BSD-3-Clause, but the current TLTK repository root LICENSE contains LGPL-3 text while setup.py declares BSD-3-Clause; FastThaiG2P does not pin the exact TLTK revision for each fallback data file. The generated IPA and manual overrides also lack complete data-specific terms. This strengthens, rather than closes, the production data-rights BLOCKER. Do not infer that the unrelated PyThaiNLP CC BY-SA 3.0 corpus is the exact FastThaiG2P input.
+
+## Vercel hosting evidence update — 2026-11-04
+
+- **DONE_VERIFIED — platform architecture:** Vercel's 2026-09-10 changelog confirms that FastAPI frontends and `StaticFiles` mounts are promoted to the CDN at build time. This directly supports the existing root `StaticFiles(directory=WEB_DIR, html=True)` mount in `src/index.py`; moving the frontend to `public/` is not currently evidence-based or required.
+- **BLOCKED — live preview:** the connected Vercel account has no project linked to this repository. Platform documentation is not a deployment test. A preview must verify the homepage, system page, JS/CSS/assets, `/api/health`, both successful and failing `/api/analyze`, same-origin CSP, cold starts and bundle size. GitHub Pages and production routing remain unchanged.
+- **Source:** https://vercel-docs.vercel.sh/changelog/fastapi-frontends-and-static-files-served-from-the-cdn (2026-09-10).
