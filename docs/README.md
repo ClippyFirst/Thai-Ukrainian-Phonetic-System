@@ -20,7 +20,7 @@ This page is the navigation layer for the repository. It distinguishes the maint
 | Ukrainian output | [Target layer](ukrainian-target-layer.md), [transcription methodology](ukrainian-transcription-methodology.md), [correspondence matrices](ukrainian-correspondence-matrices.md) | IPA adaptation and practical orthography |
 | RTGS | [RTGS reference/parity research](research/rtgs-parity-corpus.json), [external renderer registry](external-ipa-renderers.md) | Separate romanization route; never an IPA substitute |
 | Data and licenses | [Evidence registry](evidence.md), [corpus validation](corpus-validation.md), `data/corpus_sources.csv`, dataset-specific license notices | Provenance, permitted use and evidence grades |
-| Interfaces | [CLI and batch API](cli-batch-api.md), [web architecture](web-service-architecture.md), [web requirements](web-service-requirements.md) | Supported interfaces and deployment boundaries |
+| Interfaces | [CLI and batch API](cli-batch-api.md), [web architecture](web-service-architecture.md), [web requirements](web-service-requirements.md), [FastThaiG2P site integration](fastthaig2p-site-integration.md) | Supported interfaces, single website G2P engine and deployment boundaries |
 | Research protocol | [Research protocol](research-protocol.md), [independent adjudication](independent-adjudication-protocol.md) | Reproducible evaluation and human-review gates |
 
 ## Code and data layout
