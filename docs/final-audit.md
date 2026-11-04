@@ -1515,3 +1515,10 @@ The new test/tool code was committed on the PR branch and awaits exact-head CI c
 - **DONE_VERIFIED — platform architecture:** Vercel's 2026-09-10 changelog confirms that FastAPI frontends and `StaticFiles` mounts are promoted to the CDN at build time. This directly supports the existing root `StaticFiles(directory=WEB_DIR, html=True)` mount in `src/index.py`; moving the frontend to `public/` is not currently evidence-based or required.
 - **BLOCKED — live preview:** the connected Vercel account has no project linked to this repository. Platform documentation is not a deployment test. A preview must verify the homepage, system page, JS/CSS/assets, `/api/health`, both successful and failing `/api/analyze`, same-origin CSP, cold starts and bundle size. GitHub Pages and production routing remain unchanged.
 - **Source:** https://vercel-docs.vercel.sh/changelog/fastapi-frontends-and-static-files-served-from-the-cdn (2026-09-10).
+
+
+## 2026-11-04 — FastThaiG2P documented IPA convention coverage
+
+- Added four parameterized regressions for the pinned upstream README's published IPA conventions: unreleased stop codas (`̚`), non-syllabic diphthong marker (`̯`), tied affricates (`t͡ɕ`) and Chao tone contours, routed through `PhoneticResult.external_ipa` and the provisional IPA→Ukrainian adapter.
+- The expected Ukrainian strings are regression expectations for the project's current mapping, not expert-validated target forms or phonetic gold.
+- **PARTIAL — verification pending:** commit `e0a3e062d5607adde60d496a33a07340a308b75f` contains the tests. GitHub connector status/workflow queries returned empty results for that commit, and no local checkout is available. Do not mark the tests verified until the dedicated site/API and full CI workflows pass on the exact head.
