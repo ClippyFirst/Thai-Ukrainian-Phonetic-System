@@ -1,3 +1,17 @@
+## Website engine migration — 2026-11-04
+
+| Task | Status | Implementation/evidence | Acceptance gate / blocker |
+|---|---|---|---|
+| FastThaiG2P-only website runtime | PARTIAL — PR #193 Draft; exact-head checks pending | Added pinned adapter, separate `external_ipa` typed field, explicit `PROVISIONAL` IPA→Ukrainian path, FastAPI `/api/analyze`, same-origin browser client, no-fallback error path, and user-facing disclosure. Branch `feat/fastthaig2p-site-api-20261104`; current code head recorded in PR #193. | Dedicated FastThaiG2P site workflow, full repository CI and Web Static must pass on the final exact head; deployed preview must prove API and static UI work together. |
+| FastThaiG2P API hosting | BLOCKED — deployment target not connected | `src/index.py` is a FastAPI entrypoint and serves `web/`; GitHub Pages remains static-only. Vercel account inspection found no project linked to this repository. | Connect/create a Vercel project through the owner's account, deploy a preview, verify `/api/health`, `/api/analyze`, static assets, CSP and cold-start behavior; only then plan domain cutover. No external project/settings were changed. |
+| FastThaiG2P bundled data licensing | BLOCKED — provenance/terms incomplete | Software pin is immutable and upstream code declares Apache-2.0; upstream dictionary includes mixed manual, Wiktionary-derived and generated entries, and fallback code has separate notice. No data files were copied into this repository. | Inspect the exact pinned wheel/repository data files and upstream terms; record row/data provenance, applicable license and required attribution/share-alike obligations before public production deployment. |
+| Provisional Ukrainian adaptation | PARTIAL — explicitly labelled, not gold | `PhoneticResult.external_ipa` prevents unclassified IPA from being mislabeled phonemic or broad-surface; only `PROVISIONAL` typed results may flow through the existing IPA adapter. | Independent Thai phonetic review and Ukrainian-native target review are still required before accuracy or normative claims. Linguistic accuracy remains NOT_MEASURED. |
+| Legacy browser G2P/RTGS use on site | DONE_IN_BRANCH — removed from homepage execution path | New `web/src/app.js` calls only `/api/analyze`; old browser engine/RTGS modules remain in repository for reference/tests, not as fallback. | Verify exact-head UI tests and deployed preview. Do not merge while the current GitHub Pages workflow would publish a frontend without its Python API. |
+
+**Release posture:** PR #193 is deliberately Draft. The existing live GitHub Pages deployment remains unchanged. This branch is not yet deployable/releasable until the hosting and data-license gates close.
+
+---
+
 ## Priority research continuation — 2026-11-02
 
 | Priority | Status | Work completed in this continuation | Remaining acceptance gate |
