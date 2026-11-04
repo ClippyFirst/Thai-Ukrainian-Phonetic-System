@@ -49,3 +49,46 @@ node web/tests/ipa-ua.test.mjs
 ```
 
 The dedicated GitHub Actions workflow runs the pinned upstream smoke test and these targeted checks. Local execution in a connector-only environment is not claimed.
+
+
+## Exact pinned upstream artifact review — 2026-11-04
+
+The upstream repository was inspected at the exact runtime pin
+`4e82a291b4cf2876326744c6580121e9986ad354`, not only at its moving default
+branch:
+
+- `LICENSE` is Apache License 2.0.
+- `NOTICE` states: Copyright Amazon.com, Inc. or its affiliates.
+- `data/README.md` says the runtime `dict.txt` and `ipa.json` comprise a
+  62k-word dictionary; the merged IPA source is manual overrides, roughly 13k
+  Wiktionary/kaikki entries and roughly 49k LLM-generated entries. The
+  generated source JSON is gitignored upstream, but its merged output is
+  included in the runtime `ipa.json`.
+- The same data README identifies the fallback data directory as vendored
+  from TLTK. The pinned `pyproject.toml` force-includes `data/dict.txt`,
+  `data/ipa.json` and `data/fallback/` in the wheel.
+- The pinned `fastthaig2p/_th2ipa.py` contains a BSD 3-Clause notice and
+  2018 Chulalongkorn University copyright.
+- The data README does not state one comprehensive license grant covering
+  every runtime dictionary, generated IPA and fallback data asset. The
+  software Apache-2.0 license and the vendored source-file BSD notice do not
+  resolve the provenance/rights of every bundled data record.
+
+**Disposition:** the data-rights gate remains BLOCKED. Obtain explicit
+source-by-source rights and required attribution/share-alike terms before
+production use. No dictionary, IPA JSON or fallback data was copied into this
+repository.
+
+## Vercel feasibility check — 2026-11-04
+
+Official Vercel documentation confirms that its Python runtime supports
+FastAPI and explicitly recognizes `src/index.py` as an application
+entrypoint. The connected Vercel account currently has zero projects linked
+to this repository. This verifies framework/entrypoint feasibility, not a
+successful deployment.
+
+The preview must still verify that the current FastAPI `StaticFiles` mount
+serves the complete `web/` UI and assets alongside `/api/health` and
+`/api/analyze`, with same-origin CSP, correct errors and acceptable cold
+starts. Until that preview exists, the static GitHub Pages deployment must
+remain unchanged.
