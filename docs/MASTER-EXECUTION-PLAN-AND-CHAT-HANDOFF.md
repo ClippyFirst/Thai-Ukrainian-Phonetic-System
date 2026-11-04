@@ -1,3 +1,14 @@
+## Current repository audit — 2026-11-04
+
+- Exact audited `main`: `56fba86b4b8be2fe4e67284355e9928108527387`; full CI [41918227400](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41918227400), Pages [41918227410](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41918227410), Web Static [41918227382](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41918227382), and Site API [41918227381](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41918227381) all succeeded.
+- Live GitHub inventory at audit time: one branch (`main`), zero open PRs. No user branches were deleted.
+- Structural review: existing `AGENTS.md`, documentation index, architecture map, script inventory, schemas, provenance/license registries, generated-artifact ownership and Python/browser tests form a coherent system. No wholesale directory move or duplicate plan is warranted.
+- Documentation defect corrected in this audit branch: README previously described FastThaiG2P integration as Draft PR #193. It is merged and API-verified; production deployment remains separately gated on bundled-data rights and a verified Python-host preview.
+- Full findings, code/data ownership map, task ledger, upstream-methodology review and exact blockers: [repository audit 2026-11-04](repository-audit-2026-11-04.md).
+- This is a source-tree/GitHub audit. No local checkout or local test execution is claimed. Engineering verification does not establish independent linguistic accuracy or WCAG conformance.
+
+---
+
 ## Latest exact-head reconciliation — 2026-11-03 (PR #189)
 
 - Current branch HEAD `d9958db0e877944e5a75183c053681cdbdd525dc`; compare against `main`: **144 commits ahead, 0 behind**. Base `main` remains `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`. PR [#189](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/189) remains open as Draft.
