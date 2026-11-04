@@ -3472,7 +3472,7 @@
   },
   "integration_reconciliation_2026_11_04": {
     "status": "DONE_VERIFIED_ENGINEERING_INTEGRATION",
-    "main_sha": "324632e59b6da68ece1c40c90dd3e4f4e1287447",
+    "main_sha": "5b2f65e9745bf396a37fd8775504256bb1e193cc",
     "consolidation_pr": 199,
     "consolidation_merge_sha": "eed8c09648bc1b9be19345d1e6763798b3bf90bd",
     "pages_workflow_fix_pr": 200,
@@ -3512,6 +3512,10 @@
       "hands_on_accessibility": "PARTIAL"
     },
     "linguistic_accuracy": "NOT_MEASURED",
-    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY"
+    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY",
+    "evidence_registry_coverage_followup_pr": 202,
+    "evidence_registry_coverage_commit": "5b2f65e9745bf396a37fd8775504256bb1e193cc",
+    "evidence_registry_coverage_ci_run": 41899981649,
+    "evidence_registry_coverage_ci_status": "PASS_TEST_WHEEL_INSTALL_SMOKE_MASTER_ARTIFACT"
   }
 }

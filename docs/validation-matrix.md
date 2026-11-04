@@ -1598,3 +1598,14 @@ DONE_VERIFIED for the consolidated batch requires all checks on the final PR #19
 | Independent linguistic validation | BLOCKED | Independent Thai/Ukrainian reviewers and acoustic gold are not available |
 
 **Final engineering integration:** DONE_VERIFIED on main `324632e59b6da68ece1c40c90dd3e4f4e1287447`. **Release readiness:** NOT READY; linguistic accuracy remains NOT_MEASURED and the rights/deployment/reviewer blockers above remain open.
+
+
+## Evidence registry regression closeout — 2026-11-04
+
+| Item | Status | Verification |
+|---|---|---|
+| Six source-attested lexical references (#189) | DONE_VERIFIED — registry + regression tests | Exact URL, CC-BY-SA-4.0, allowed lexical/IPA-reference use and disallowed gold use are tested |
+| Global TIMIT Thai restricted source (#188) | DONE_VERIFIED — audit + regression test; data use remains BLOCKED | LDC URL, non-member agreement, restricted allowed-use and blocked gold-use assertions are tested |
+| Consolidated evidence registry | DONE_VERIFIED | PR #202 CI run 41899981649: full test, wheel-install-smoke and master-artifact all passed |
+
+Latest main at this checkpoint: `5b2f65e9745bf396a37fd8775504256bb1e193cc`.
