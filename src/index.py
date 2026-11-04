@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 import sys
 from pathlib import Path
 from typing import Any
@@ -14,6 +15,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from thai_ukrainian.fastthaig2p_adapter import FastThaiG2PAdapter  # noqa: E402
 from thai_ukrainian.ukrainian_adaptation import adapt_phonetic_result  # noqa: E402
 
+logger = logging.getLogger(__name__)
 WEB_DIR = ROOT / "web"
 app = FastAPI(title="Thai → Ukrainian · FastThaiG2P", version="0.1.0")
 _engine: FastThaiG2PAdapter | None = None
@@ -117,8 +119,15 @@ def analyze(request: AnalyzeRequest) -> dict[str, Any]:
         return analyze_with_fastthaig2p(request.text)
     except HTTPException:
         raise
-    except (TypeError, ValueError) as exc:
-        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except Exception as exc:
+        logger.exception("Unhandled exception while processing FastThaiG2P API request")
+        raise HTTPException(
+            status_code=500,
+            detail={
+                "code": "analysis_failed",
+                "message": "Внутрішня помилка сервісу. Спробуйте пізніше.",
+            },
+        ) from exc
 
 
 app.mount("/", StaticFiles(directory=WEB_DIR, html=True), name="web")
