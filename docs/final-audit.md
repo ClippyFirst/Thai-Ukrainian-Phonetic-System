@@ -1756,7 +1756,7 @@ PR #202 restores explicit regression coverage for all six lexical-reference sour
 | FastThaiG2P bundled-data rights | BLOCKED | Source-by-source license/terms and attribution review demonstrating that redistribution and intended use are permitted. Keep data excluded from production bundles until cleared. |
 | FastThaiG2P Python-host preview | BLOCKED | Deploy to a Python-capable preview host and record a reproducible live smoke/contract test against the deployed URL; a static Pages pass or API unit test is not a hosted preview. |
 | Manual accessibility review | PARTIAL | Record keyboard-only, screen-reader, zoom/reflow and mobile checks against the active UI, including browser/AT versions, steps, outcomes and defects. Automated checks are not conformance evidence. |
-| CCOST TextGrid and tier mapping | BLOCKED | Obtain lawful access to the actual archive/TextGrid files, inspect real tiers and X-SAMPA/IPA conventions, map tiers explicitly, and document curator clarification. CC BY-NC-SA 4.0 applies; do not treat the data as unrestricted or redistribute outside its terms. |
+| CCOST TextGrid and tier mapping | PARTIAL | Published LREC 2026 paper verifies ORT/KAN/KAS/MAU/MAS/TRN, X-SAMPA and tone suffix mapping; actual 6.2 GB archive/TextGrid files and manual remain uninspected. Complete file-level tier/interval verification and document discrepancies. CC BY-NC-SA 4.0 applies; no unrestricted redistribution. No formal IAA was collected in the paper. |
 
 ### Evidence policy
 
