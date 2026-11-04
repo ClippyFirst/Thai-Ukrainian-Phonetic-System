@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Current main 56fba86b4b8be2fe4e67284355e9928108527387 passed Full CI, Pages, Web Static and FastThaiG2P Site API workflows (runs 41918227400, 41918227410, 41918227382, 41918227381). Live inventory: branches main and docs/repository-audit-2026-11-04; one open PR #210. The inspected PR head 4b3e58a7c714e1f0a517ebf39299f974b5cf5998 passed exact-head Full CI run 41919548444. Linguistic accuracy remains NOT_MEASURED; research prototype, not release-ready.",
+  "status": "Audit branch 41ef3f1e3a3e23f216ee16e6d3cfbb4244b00722 (9 commits ahead, 0 behind main) passed exact-head CI run 41921113154. PR #210 remains open and unmerged. Linguistic accuracy NOT_MEASURED; zero independently adjudicated IPA gold rows; research prototype, not release-ready.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -3541,5 +3541,34 @@
       "master-artifact"
     ],
     "pr_merge_status": "OPEN_NOT_MERGED"
+  },
+  "live_reconciliation_2026_11_05": {
+    "branch": "docs/repository-audit-2026-11-04",
+    "head": "41ef3f1e3a3e23f216ee16e6d3cfbb4244b00722",
+    "ahead_of_main": 9,
+    "behind_main": 0,
+    "base_main": "56fba86b4b8be2fe4e67284355e9928108527387",
+    "pr": 210,
+    "pr_state": "OPEN_NOT_MERGED",
+    "exact_head_ci_run": 41921113154,
+    "exact_head_ci_status": "SUCCESS",
+    "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
+    "linguistic_accuracy": "NOT_MEASURED",
+    "independently_adjudicated_ipa_gold_rows": 0,
+    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY",
+    "blockers": {
+      "thai_independent_phonetic_and_segmentation_review": "BLOCKED",
+      "ukrainian_native_target_review": "BLOCKED",
+      "global_timit_thai_ldc_written_permission": "BLOCKED",
+      "lotusdis_wav_sha256_intervals": "PARTIAL",
+      "fastthaig2p_bundled_data_rights": "BLOCKED",
+      "fastthaig2p_python_host_preview": "BLOCKED",
+      "manual_accessibility_review": "PARTIAL",
+      "ccost_textgrid_and_tier_mapping": "BLOCKED_CC_BY_NC_SA_4_0"
+    },
+    "main_changed": false,
+    "branch_deleted": false,
+    "force_push": false,
+    "release_published": false
   }
 }
