@@ -49,7 +49,7 @@ def analyze_with_fastthaig2p(text: str) -> dict[str, Any]:
 
     words: list[dict[str, Any]] = []
     ukrainian_words: list[str] = []
-    for word_ipa, typed_syllables in zip(output.word_groups, typed_groups):
+    for word_index, (word_ipa, typed_syllables) in enumerate(zip(output.word_groups, typed_groups)):
         raw_syllables = tuple(part for part in word_ipa.split(".") if part)
         if len(raw_syllables) != len(typed_syllables):
             raise HTTPException(status_code=502, detail="FastThaiG2P returned inconsistent syllable groups.")
@@ -76,7 +76,9 @@ def analyze_with_fastthaig2p(text: str) -> dict[str, Any]:
                 ukrainian_parts.append(adapted["output"])
         ukrainian_word = "".join(ukrainian_parts)
         ukrainian_words.append(ukrainian_word)
+        thai_token = output.token_paths[word_index].token if word_index < len(output.token_paths) else None
         words.append({
+            "thai": thai_token,
             "fastthaig2p_ipa": word_ipa,
             "ukrainian": ukrainian_word,
             "syllables": syllables,
