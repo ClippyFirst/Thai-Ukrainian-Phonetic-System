@@ -2284,3 +2284,11 @@ This note supersedes the preceding documentation-only status. The branch now cha
 - At the start of this final handoff refresh, PR #193 head was `dea460aff3140379a4194eb32b7e49412093bce0`; compare against `main` reported 82 commits ahead and 0 behind. This includes documentation-only follow-up commits after the runtime/code CI checkpoint `c133dee9c66ed08df60d20ba0e170fab6c2c7300`.
 - The seven-file diff from `c133dee` to `dea460` contains only `AGENTS.md`, `THIRD_PARTY_NOTICES.md`, and documentation files; no application/runtime source or test implementation changed. The exact code CI and dedicated FastThaiG2P API workflow results remain valid for the code under review. The generic suite's one FastAPI skip remains separately covered by the dedicated site workflow.
 - Current PR #193 remains OPEN Draft; GitHub reports `mergeable=false`. No merge, branch deletion, force-push, production deployment, or external Vercel configuration change was performed.
+
+## 2026-11-04 — Vercel static hosting evidence update
+
+- **DONE_VERIFIED — platform capability:** Vercel's 2026-09-10 changelog confirms FastAPI `StaticFiles` mounts are promoted to the CDN at build time. The current `src/index.py` root mount is therefore compatible with the documented hosting model; a speculative move to `public/` is not required.
+- **BLOCKED — preview deployment:** the linked Vercel account still has no project for this repository. Documentation cannot substitute for a live preview. The owner-connected preview must verify homepage/system page/assets, `/api/health`, successful and failing `/api/analyze`, same-origin CSP, cold starts and bundle size. Keep GitHub Pages and production routing unchanged until then.
+- **Source:** https://vercel-docs.vercel.sh/changelog/fastapi-frontends-and-static-files-served-from-the-cdn (2026-09-10).
+- **Code verification remains:** Full CI passed on runtime/code checkpoint `c133dee9c66ed08df60d20ba0e170fab6c2c7300`; later edits in this continuation are documentation-only. Exact-head checks for the documentation refresh must be inspected before claiming the refreshed branch fully verified.
+- **No external changes:** no Vercel project, deployment, domain, or repository setting was created or modified.
