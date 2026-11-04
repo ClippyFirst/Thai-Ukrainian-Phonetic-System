@@ -18,7 +18,7 @@ The typed `PhoneticResult` is that adapter boundary. It carries phonemic IPA, co
 
 **Acceptance rule:** test the whole chain `Thai input → IPA intermediate → Ukrainian output`, including tests proving that changing/withholding the IPA result changes/withholds the Ukrainian result accordingly. Python and browser implementations must obey the same boundary and pass cross-runtime parity checks.
 
-The public website now uses the pinned FastThaiG2P Python engine through a same-origin FastAPI endpoint; the browser is a presentation client and does not run a second G2P engine. The old JavaScript engine and RTGS renderer remain in the repository as research/reference code and regression fixtures, but they are not called by the live website. See [FastThaiG2P website integration](docs/fastthaig2p-site-integration.md). The new API requires Python-capable hosting; GitHub Pages alone cannot serve it.
+The FastThaiG2P website integration is implemented in Draft PR #193 but is not deployed yet. In that target runtime, the site uses the pinned FastThaiG2P Python engine through a same-origin FastAPI endpoint; the browser is a presentation client and does not run a second G2P engine. The old JavaScript engine and RTGS renderer remain in the repository as research/reference code and regression fixtures, but are not part of the new homepage execution path. The current main/GitHub Pages site remains unchanged until a Python-capable host is connected and a preview is verified. See [FastThaiG2P website integration](docs/fastthaig2p-site-integration.md).
 
 ## Thai → Ukrainian methodology table
 
