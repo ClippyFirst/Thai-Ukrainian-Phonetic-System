@@ -1,19 +1,17 @@
-## 2026-11-04 — exact-current-HEAD CI and upstream engineering practice review
+## 2026-11-04 — exact-head implementation verification and documentation-only closeout
 
-- **DONE_VERIFIED — current PR #193 HEAD:** `10140505649c04d03a40706b85f444176b29691d`, 111 commits ahead / 0 behind main. PR #193 remains OPEN Draft; GitHub reports mergeable=true.
-- **DONE_VERIFIED — exact-head full CI:** run [41876675582](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41876675582), all three jobs successful. Ruff passed; pytest 327 passed, 1 skipped, 1,169 subtests passed; 29 Python/browser parity fixtures passed; generated-artifact checks and isolated wheel-install smoke passed. The one skip is the FastAPI site API test module in generic `[dev]`, because FastAPI is optional there.
-- **DONE_VERIFIED — exact-head FastThaiG2P workflow:** run [41876675750](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41876675750), dedicated job successful; Ruff passed and all 16 targeted Python tests passed, including real pinned-engine smoke and API behavior; FastThaiG2P-only UI, static accessibility and IPA→Ukrainian contracts passed.
-- **DONE_VERIFIED — exact-head Web Static:** run [41876675844](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41876675844), validation job successful, including required pages, JS syntax, accessibility contracts and no remote runtime dependency.
-- **DONE_VERIFIED — four upstream practice references re-inspected:** Unlazy `16671491f6679ad9378f52604d3bc2415b4120c7`, Superpowers `22f0b463e7a5e579904dd6211a520321035526f7`, Matt Pocock skills `4ae2317ddb22b046e26455e4f9c9b3aaaf62212d`, Ponytail `96608e078b2d5ea607c5c3b8b5a54d1c1fba6846`. Updated `AGENTS.md` to correct stale Ponytail paths and map the practices to the existing workflow. No upstream tool, hook, runtime dependency or competing ledger was installed.
-- **BLOCKED — Vercel preview:** current connected Vercel context reports the Hobby team `Dreamteam` and no linked projects. Project creation/linking remains an owner-authorized external action; no project or deployment was created.
-- **BLOCKED — linguistic validation, data rights, manual WCAG:** these gates remain exactly as scoped in the matrix. Green CI does not clear dictionary provenance or substitute for qualified human review.
+- **DONE_VERIFIED — PR #193 implementation checkpoint:** `10140505649c04d03a40706b85f444176b29691d`. Full CI [41876675582](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41876675582) passed all three jobs; Ruff passed; pytest 327 passed, 1 skipped, 1,169 subtests passed; 29 Python/browser parity fixtures passed; generated-artifact drift and isolated wheel-install smoke passed.
+- **DONE_VERIFIED — dedicated FastThaiG2P checkpoint:** [41876675750](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41876675750) passed Ruff, all 16 targeted Python tests, FastThaiG2P-only UI, static accessibility and IPA→Ukrainian regression contracts.
+- **DONE_VERIFIED — Web Static checkpoint:** [41876675844](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41876675844) passed required-page, JS syntax, static accessibility and no-remote-runtime-dependency checks.
+- **Verification boundary:** the current branch head after documentation-only closeout is `9d6762db5fc396c5c949aefbe0ca71569dbac4ee`. It changes only agent guidance, audit/matrix/handoff documentation and PR metadata; no runtime, test, workflow or browser source changed after `1014050…`. No workflow run exists for `9d6762d…`; the GitHub connector's file-update operation did not trigger Actions and no workflow-dispatch action is available. Therefore the code checkpoint is DONE_VERIFIED, while the latest documentation head remains PARTIAL pending a fresh full CI run.
+- **DONE_VERIFIED — four upstream practices reconciled selectively:** Unlazy `16671491f6679ad9378f52604d3bc2415b4120c7`, Superpowers `22f0b463e7a5e579904dd6211a520321035526f7`, Matt Pocock skills `4ae2317ddb22b046e26455e4f9c9b3aaaf62212d`, Ponytail `96608e078b2d5ea607c5c3b8b5a54d1c1fba6846`. Updated `AGENTS.md`, corrected stale Ponytail paths and documented what is adopted vs not installed.
+- **BLOCKED — Vercel preview:** connected Vercel context reports the Hobby team `Dreamteam` with no linked projects. Project creation/linking remains an owner-authorized action; no project or deployment was created.
+- **BLOCKED — data rights, independent linguistic review, manual WCAG:** unchanged. Green CI does not clear upstream bundled dictionary/data provenance or replace qualified human review.
 - **PARTIAL — LOTUSDIS audio:** PR #192 remains separate; manifest evidence does not establish WAV bytes, audio hashes or a clean interval.
-- **Environment limitation:** no local checkout is exposed in this connector-only session, so no local pytest/Ruff/build command is claimed. Exact-head GitHub Actions is the verification evidence.
+- **Environment limitation:** no local checkout is exposed in this connector-only session; no local pytest/Ruff/build command is claimed.
 - **Branch/release safety:** no merge, deployment, production routing change, branch deletion, force-push or external Vercel setting change was performed.
 
-**Readiness:** engineering-verified research prototype; not production-ready and not validated for linguistic accuracy or manual WCAG 2.2 AA conformance.
-
----
+**Readiness:** engineering-verified research prototype; current implementation checkpoint is CI-verified, but the final documentation HEAD needs a fresh CI run. Not production-ready and not validated for linguistic accuracy or manual WCAG 2.2 AA conformance.
 
 ## 2026-11-01 — independent adjudication readiness and CCOST source reconciliation
 
