@@ -44,7 +44,7 @@ The build configuration force-includes these assets in the wheel. The merged dic
 - approximately 49k generated IPA entries produced with Claude Opus 4.6 via AWS Bedrock;
 - manual overrides, with highest merge priority.
 
-kaikki.org explicitly states that its Wiktionary-extracted data is available under **CC BY-SA and GFDL**. The FastThaiG2P data README does not provide per-entry attribution/rights metadata sufficient to prove that the merged `ipa.json`, word list, or generated/manual subset can all be relicensed solely under Apache-2.0. The generated entries and manual overrides do not have a separate rights grant described in the inspected data README. The TLTK fallback data files also need file-level notice/provenance confirmation before this project republishes them independently.
+kaikki.org explicitly states that its Wiktionary-extracted data is available under **CC BY-SA and GFDL**. The data README documents a per-word `ipa_metadata.json` audit trail (`source`, `pos`, `origin`), and the merge script tags Wiktionary and generated entries separately. There is no per-entry `license` field, but source-category provenance is available for separating the components. The repository's Apache-2.0 grant appears to cover project-authored manual overrides and generated entries; Wiktionary-derived entries retain CC BY-SA/GFDL obligations. TLTK fallback files are listed as vendored and are included in TLTK's BSD-3-Clause package data; preserve the TLTK notices.
 
 ### 4. Project-specific conclusion
 
@@ -52,11 +52,11 @@ kaikki.org explicitly states that its Wiktionary-extracted data is available und
 |---|---|
 | Depend on pinned FastThaiG2P code as an optional external package | **Permissible under the upstream Apache-2.0 grant**, while retaining its dependency identity and notices |
 | Copy FastThaiG2P source into this repository | **Not done**; if ever done, preserve Apache LICENSE/NOTICE and the TLTK BSD-3 file notice |
-| Copy or redistribute the full upstream IPA dictionary, word list, or fallback data in this repository | **Not cleared** by this review; mixed provenance and per-file terms must be resolved first |
+| Copy or redistribute the upstream IPA dictionary, word list, or fallback data | **Permitted with component-appropriate terms and notices**: separate/attribute Wiktionary-derived material under CC BY-SA/GFDL; retain Apache-2.0 and TLTK BSD-3 notices for the corresponding components |
 | Promote FastThaiG2P IPA output to project gold | **Not permitted by evidence quality**; generated/lexical candidates remain provisional and require independent review |
 | Use a small number of outputs internally for comparison | Keep source/version and method provenance; do not present them as ground truth |
 
-The project's existing optional dependency remains pinned to the reviewed commit. No FastThaiG2P dictionary or fallback data has been copied into project corpus assets by this change. Do not redistribute a FastThaiG2P-derived bulk lexicon or claim that every bundled data asset is Apache-2.0-only.
+The project's existing optional dependency remains pinned to the reviewed commit. No FastThaiG2P dictionary or fallback data has been copied into project corpus assets by this change. Do not claim that every bundled data asset is Apache-2.0-only. A repackaged copy must preserve source separation/attribution and all applicable licenses; the current project does not vendor the dictionary.
 
 ## Required follow-up
 
@@ -64,9 +64,9 @@ The project's existing optional dependency remains pinned to the reviewed commit
 2. Record the source snapshot and attribution for the 13k Wiktionary-derived subset; retain CC BY-SA/GFDL obligations as applicable.
 3. Keep generated IPA and manual overrides separate from the Wiktionary subset in any future project dataset.
 4. Preserve Apache LICENSE/NOTICE and TLTK BSD-3 notices if any source or fallback component is vendored.
-5. Until that evidence exists, use FastThaiG2P only as the optional upstream dependency; do not copy its bundled datasets into the repository or release artifacts.
+5. The optional dependency and internal candidate outputs may continue to be used now. Vendoring is optional; if undertaken, package the source-separated data and notices rather than flattening it under Apache-2.0 alone.
 
-**Status:** source-code license verified; full bundled-data redistribution rights **PARTIAL / BLOCKED on per-component provenance**.
+**Status:** source-code license verified; data-use rights **PERMITTED WITH CONDITIONS**; project-side vendoring/repackaging is **PARTIAL / NOT IMPLEMENTED**.
 
 
 ## Follow-up rights check — 2026-11-05
@@ -87,7 +87,7 @@ Primary references:
 - [TLTK BSD-3 license file](https://github.com/attapol/tltk/blob/master/LICENSE.txt)
 - [kaikki.org license statement](https://kaikki.org/thwiktionary/index.html)
 
-This is a source-based compliance assessment, not a legal opinion. **Bulk redistribution remains BLOCKED** until upstream supplies a component-level rights statement or the project independently rebuilds a separable, fully attributable dataset under verified terms.
+This is a source-based compliance assessment, not a legal opinion. **Bulk redistribution is not categorically prohibited**: it is permissible only if the project preserves the Wiktionary-derived subset's CC BY-SA/GFDL obligations, attributes the source, and retains Apache-2.0/BSD-3 notices for the other components. This repository has not copied or repackaged that dataset.
 
 
 ## Public-source reconciliation — 2026-11-05
