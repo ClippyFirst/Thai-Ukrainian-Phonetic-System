@@ -95,7 +95,11 @@ class CCOSTAnnotation:
         return tuple(results)
 
 def _quoted_field(block:str,field:str)->str:
-    match=re.search(rf'(?ms)^\s*{re.escape(field)}\s*=\s*"((?:[^"]|"")*)"\s*    if match is None: raise TextGridFormatError(f"missing quoted TextGrid field {field!r}")
+    match=re.search(
+        rf'(?ms)^\\s*{re.escape(field)}\\s*=\\s*"((?:[^"]|"")*)"\\s*$',
+        block,
+    )
+    if match is None: raise TextGridFormatError(f"missing quoted TextGrid field {field!r}")
     return match.group(1).replace('""','"')
 
 def _number_field(block:str,field:str)->float:
