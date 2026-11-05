@@ -13,12 +13,15 @@ CCOST_TIER_DESCRIPTIONS={"ORT":"orthographic word","ORT-MAU":"orthographic word 
 "KAN":"canonical word pronunciation","KAN-MAU":"canonical word pronunciation (release-aligned tier)",
 "KAS":"canonical syllabified pronunciation","KAS-MAU":"canonical syllabified pronunciation (release-aligned tier)",
 "MAU":"phonetic segment","MAS":"phonemic syllable","TRN":"orthographic utterance transcript"}
-CCOST_NONPHONETIC_LABELS=frozenset({"<p :>","<p:>","<nib>","<usb>","<notProcessedChunk>"})
-
 def is_ccost_nonphonetic_label(label:str)->bool:
-    """Identify opaque annotation/control markers, not phonetic segments."""
+    """Return true only when a label consists entirely of opaque angle-bracket tags.
+
+    Mixed tag-plus-transcript labels are not discarded: they remain unsupported
+    inputs until their release-specific annotation semantics are reviewed.
+    """
     value=label.strip()
-    return value in CCOST_NONPHONETIC_LABELS or (value.startswith("<") and value.endswith(">"))
+    tags=re.findall(r"<[^<>]+>",value)
+    return bool(tags) and "".join(tags)==value
 
 class TextGridFormatError(ValueError):
     """Raised when a Praat long-text TextGrid cannot be parsed safely."""
