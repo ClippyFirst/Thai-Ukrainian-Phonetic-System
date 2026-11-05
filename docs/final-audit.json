@@ -4517,8 +4517,8 @@
     "pages_workflow_status": "SUCCESS",
     "pyodide_compat_run": 42098395877,
     "pyodide_compat_status": "SUCCESS",
-    "main_ci_run": 42098395810,
-    "main_ci_status_at_update": "RUNNING",
+    "main_ci_run": 42099035122,
+    "main_ci_status_at_update": "SUCCESS",
     "initial_post_deploy_failure": "Dataset archive fetch used site-root path; bundle output is under /vendor/datasets",
     "corrected_post_deploy_dataset_hash_check": "PASS",
     "owner_research_project_publication_approval": true,
@@ -4529,7 +4529,8 @@
     "independent_ipa_gold_rows": 0,
     "linguistic_accuracy": "NOT_MEASURED",
     "production_cutover": false,
-    "beta_publication": true
+    "beta_publication": true,
+    "main_ci_head": "f0d41996e854185bd6bd92f0ffa8f6b83e71f777"
   },
   "ui_ux_redesign_2026_11_05": {
     "status": "IMPLEMENTED_EXACT_HEAD_CI_VERIFIED_PR_OPEN_NOT_DEPLOYED",
@@ -4580,6 +4581,14 @@
     "linguistic_accuracy": "NOT_MEASURED",
     "independent_ipa_gold_rows": 0,
     "live_pages_still_main": true,
-    "production_cutover": false
+    "production_cutover": false,
+    "documentation_refresh_head": "56c17a87c0c229ffdfa8dc524f5cf60a6fb8eb79",
+    "documentation_refresh_ci": {
+      "full_ci": 42116529009,
+      "web_static": 42116528990,
+      "site_api": 42116529020,
+      "pyodide_compat": 42116529563,
+      "all": "SUCCESS"
+    }
   }
 }
