@@ -1815,3 +1815,17 @@ The new worklist uses stable event-group IDs and includes exact raw labels, tier
 | Audio/acoustic surface validation | DEFERRED / OUT OF SCOPE | User-prioritized scope is TextGrid text only. No audio member is read. Do not claim acoustic tone contour, duration, speaker-specific allophony or surface realization accuracy. |
 
 The all-tier worklist counts are deliberately distinct from the phonetic-tier-only inspector counts. Preserve both denominators and scope labels in future reports. The exact-head CI and artifact inspection remain outstanding; code presence alone is not verification.
+
+
+## Independent Thai expert panel — public-source screening (2026-11-05)
+
+Public qualification evidence now supports a plausible, uncontacted panel:
+- Chutamanee Onsuwan, Ph.D. — Thai temporal phonetics; laboratory phonetics, speech science and phonology (Thammasat official profile).
+- Phanintra Teeranon, Ph.D. — peer-reviewed acoustic/perceptual studies of Standard Thai tones (University of Phayao public CV and publications).
+- Rungpat Roengpitya — peer-reviewed acoustic studies of Thai tones, vowel length and fricatives (Mahidol profile and proceedings).
+
+Proposed role split: Onsuwan + Teeranon as independent first-pass reviewers; Roengpitya as separate adjudicator. Public bibliographic evidence shows none is a CCOST paper author. This is only a candidate panel: verify current qualifications, Standard Thai competence, IPA/X-SAMPA familiarity, independence/conflicts, availability, consent and permission to retain qualification evidence before adding anyone to the reviewer registry.
+
+Lena Maluleem remains a qualified phonetics/prosody candidate, but her public publication and doctoral-supervision record links her to CCOST author Pittayawat Pittayaporn. Treat this as a potential conflict for independent CCOST review; do not count her as independent without a documented assessment.
+
+The reviewer registry remains empty. No one has been contacted, appointed or consented. Independent IPA gold rows remain 0.
