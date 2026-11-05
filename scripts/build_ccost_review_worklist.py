@@ -199,7 +199,7 @@ def build_worklist(paths: list[Path]) -> dict[str, Any]:
                                 convert_xsampa_label(label)
                             except XSampaConversionError:
                                 phonetic_failures[tier.name] += 1
-                                if re.search(r"_8(?=$|[\\s.])", label):
+                                if re.search(r"_8(?=$|[\s.])", label):
                                     issue_types.append("UNDOCUMENTED_CCOST_TONE_SUFFIX_8")
                                 else:
                                     issue_types.append("OTHER_UNSUPPORTED_XSAMPA")
