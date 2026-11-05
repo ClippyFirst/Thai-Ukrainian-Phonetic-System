@@ -22,6 +22,12 @@ class XSampaAdapterTests(unittest.TestCase):
                 converted=convert_xsampa_label("a_"+number)
                 self.assertEqual(converted.syllables[0].tone_category,category)
 
+    def test_generic_maus_tone_suffix_outside_ccost_mapping_fails_closed(self):
+        # BAS permits numeric tone suffixes _1.._9 generically, but CCOST's
+        # published paper maps only _1.._5. Do not invent a category for _8.
+        with self.assertRaises(XSampaConversionError):
+            convert_xsampa_label("a_8")
+
     def test_published_ccost_figure2_kas_example(self):
         converted=convert_xsampa_label("n a:_3 . c a_2")
         self.assertEqual(converted.ipa,"naː.ca")
