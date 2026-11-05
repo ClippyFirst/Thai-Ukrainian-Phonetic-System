@@ -127,6 +127,9 @@ kbd { padding: 2px 5px; border: 1px solid var(--line); background: var(--wash); 
 .method-note { display: grid; grid-template-columns: minmax(220px, .65fr) minmax(0, 1.35fr); gap: 28px 64px; padding: 48px 0 58px; border-top: 1px solid var(--line); }
 .method-heading h2 { max-width: 340px; margin: 0; font-size: clamp(1.6rem, 3vw, 2.1rem); line-height: 1.18; letter-spacing: -.03em; }
 .method-copy p { margin: 0 0 12px; color: var(--muted); font-size: .94rem; line-height: 1.75; }
+.method-details { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--line); }
+.method-details summary { display: flex; align-items: center; min-height: 44px; color: var(--blue); font-weight: 800; cursor: pointer; }
+.method-details p { margin: 8px 0; color: var(--muted); font-size: .88rem; line-height: 1.65; }
 .method-links { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 20px; }
 .method-links a { display: inline-flex; align-items: center; gap: 7px; min-height: 44px; font-size: .86rem; font-weight: 800; }
 
