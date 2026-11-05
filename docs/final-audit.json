@@ -4418,7 +4418,8 @@
         "version": "1.1.7",
         "license": "GPLv3"
       },
-      "license_scope_status": "AMBIGUOUS_FILE_LEVEL_SCOPE_REVIEW_REQUIRED"
+      "license_scope_status": "AMBIGUOUS_FILE_LEVEL_SCOPE_REVIEW_REQUIRED",
+      "data_source_setup_license": "BSD-3-Clause"
     },
     "transparent_dataset_archive": {
       "path": "vendor/datasets/fastthaig2p-wiktionary-derived.zip",
