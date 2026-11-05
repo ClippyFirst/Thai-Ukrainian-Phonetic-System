@@ -78,7 +78,8 @@ jobs:
             --pyodide-dist node_modules/pyodide \
             --wheels build/pyodide-wheels \
             --output web/vendor \
-            --rights-manifest data/third_party/fastthaig2p-browser-bundle.json \\\n            --notices-dir web/licenses
+            --rights-manifest data/third_party/fastthaig2p-browser-bundle.json \\\n            \
+            --notices-dir web/licenses
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v6
       - name: Upload Pages artifact
