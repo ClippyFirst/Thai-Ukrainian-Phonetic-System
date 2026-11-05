@@ -192,7 +192,9 @@ def main() -> None:
         "runtime_file_count": len(runtime_records),
         "runtime_bytes": sum(item["size_bytes"] for item in runtime_records),
         "notice_count": len(notice_records),
-        "notice_bytes": sum(item["size_bytes"] for item in notice_records),\n        "dataset_count": len(dataset_records),\n        "dataset_bytes": sum(item["size_bytes"] for item in dataset_records),
+        "notice_bytes": sum(item["size_bytes"] for item in notice_records),
+        "dataset_count": len(dataset_records),
+        "dataset_bytes": sum(item["size_bytes"] for item in dataset_records),
         "redistribution_approved": bundle_manifest["redistribution_approved"],
     }, ensure_ascii=False, indent=2))
 
