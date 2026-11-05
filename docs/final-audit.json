@@ -369,7 +369,7 @@
   },
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
   "latest_code_checkpoint": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
-  "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY",
+  "readiness": "BETA_CANDIDATE_ENGINEERING_VERIFIED_PUBLIC_DEPLOYMENT_NOT_YET_VERIFIED",
   "latest_verified_repository_head": "d9958db0e877944e5a75183c053681cdbdd525dc",
   "task_ledger": [
     {
@@ -4308,5 +4308,28 @@
     "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
     "audio_scope": "DEFERRED_OUT_OF_SCOPE_BY_OWNER",
     "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY"
+  },
+  "owner_approved_beta_scope_2026_11_05": {
+    "decision": "BETA_RELEASE",
+    "thai_external_review": "DEFERRED_NOT_A_BETA_ACCEPTANCE_GATE",
+    "ukrainian_native_target_review": "DEFERRED_NOT_A_BETA_ACCEPTANCE_GATE",
+    "audio_and_acoustic_validation": "DEFERRED_OUT_OF_SCOPE",
+    "manual_accessibility_certification": "DEFERRED_AS_CERTIFICATION_GATE; source_review_recorded; browser_manual_checks_unverified",
+    "unknown_ccost_labels": "PARTIAL_FAIL_CLOSED; no guessed mappings",
+    "fastthaig2p_vendoring": "DEFERRED; pinned optional dependency retained; no bulk redistribution",
+    "reference_repository": "https://github.com/mfwarren/entrepreneur-claude-skills",
+    "reference_use": "SOP, product-feedback, decision-framework and landing-page communication patterns; no dedicated accessibility skill listed; no files copied",
+    "canonical_scope_document": "docs/beta-release-scope.md",
+    "beta_engineering_readiness": "BETA_CANDIDATE_ENGINEERING_VERIFIED",
+    "public_deployment_readiness": "NOT_YET_VERIFIED",
+    "last_verified_code_head": "5a7f6888420009e288f6b43332bd0dd4b560fddd",
+    "last_verified_full_ci": "42042740322",
+    "last_verified_site_api": "42042740326",
+    "last_verified_optional_external_g2p_smoke": "42042740524",
+    "documentation_head_at_decision_update": "89140c822042762ee524e1bc96202bfbda09e7f4",
+    "final_documentation_head_ci": "PENDING_AT_TIME_OF_UPDATE",
+    "release_tag_created": false,
+    "production_cutover": false,
+    "main_merged": false
   }
 }
