@@ -1,3 +1,34 @@
+# Continuation checkpoint — owner-supplied TextGrid archives — 2026-11-05
+
+## Current repository state
+
+- Work branch: `docs/repository-audit-2026-11-04`; PR #210 remains open/unmerged against `main`. No merge, force-push, branch deletion, release or `main` modification.
+- User supplied `CCOST textgrid.zip` and `nectecLOTUSDIS textgrid.zip`. They are committed on this branch. CI inspected only `.TextGrid` members; no audio was read, extracted, hashed or copied.
+- CCOST: 488/488 TextGrid files parse; observed tiers `ORT-MAU`, `KAN-MAU`, `KAS-MAU`, `MAU`, `MAS`, `TRN`. The `-MAU` aliases are provisional. LOTUSDIS: 90/90 files parse; each has one recording-named transcript tier, with no observed phone/phoneme/toneme/IPA tier.
+- `scripts/export_textgrid_text.py` exports only explicitly selected orthographic tiers to local provenance-rich JSONL. It preserves raw text and interval bounds, records CC BY-NC-SA 4.0 or CC BY-SA 4.0 source attribution, and labels every record `SOURCE_ANNOTATED_NOT_GOLD`. The exporter does not read audio or commit extracted corpus rows.
+- CCOST X-SAMPA conversion is still PARTIAL. The LREC paper specifies `_1`–`_5`; observed `_8` labels and Unicode IPA-looking forms remain unsupported pending evidence. Only tag-only angle-bracket labels are treated as opaque markers; mixed tag-plus-text labels are not discarded.
+- Exact-head CI [42011279020](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42011279020) passed on the initial complete inventory implementation: 383 passed, 1 skipped, 1,206 subtests; Ruff, wheel-install smoke and master-artifact passed. The latest strict-marker/exporter follow-up CI is pending.
+- Independent IPA gold rows: 0. Linguistic accuracy: `NOT_MEASURED`. This remains an engineering research prototype, not a linguistically validated release.
+
+## Immediate continuation
+
+1. Wait for the current exact-head CI to finish. It must pass Ruff, full pytest, archive inspection, the local JSONL export assertions, wheel-install smoke and master-artifact.
+2. If the export-count assertion fails, inspect actual selected-tier counts; do not alter the expected counts or silently drop labels without source evidence.
+3. Update `docs/corpus-textgrid-inventory-2026-11-05.md` with the corrected marker report and final exact-head run. Keep source labels out of gold.
+4. Continue reviewing unsupported CCOST labels against the paper/manual and the prepared curator clarification request. Do not guess `_8`, `r/`, Unicode IPA variants or mixed tag/transcript labels.
+5. Preserve LOTUSDIS as orthographic transcript context only. Global TIMIT and all audio acquisition/acoustic tasks remain excluded/out of scope.
+
+## Outstanding blockers
+
+- CCOST release semantics: curator confirmation of `-MAU` aliases, `_8`, IPA-looking variants and tag meanings.
+- Phonetic evidence: two independent qualified Thai reviewers and a separate adjudicator; current gold rows remain zero.
+- Ukrainian target evidence: independent Ukrainian-native review.
+- Accessibility: hands-on keyboard, screen-reader, zoom/reflow and mobile testing.
+- Local execution: unavailable in connector-only environment; GitHub Actions is the verification source.
+
+Historical checkpoints below are retained for traceability; this section is the current state of the branch.
+
+---
 ## Exact-head verification and current source scope — 2026-11-05
 
 - Branch: `docs/repository-audit-2026-11-04`; implementation checkpoint `f8e19499c056afeb2b2532887d2887812472664d`; exact-head CI [41992116524](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41992116524) passed all jobs: 376 Python tests passed, 1 optional FastAPI test skipped, 1,206 subtests passed; Ruff, wheel-install smoke and master-artifact passed.
