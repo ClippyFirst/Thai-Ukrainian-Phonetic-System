@@ -55,11 +55,18 @@ def main() -> None:
     parser.add_argument("--wheels", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--rights-manifest", type=Path, required=True)
+    parser.add_argument("--notices-dir", type=Path, required=True)
     args = parser.parse_args()
 
     rights = json.loads(args.rights_manifest.read_text(encoding="utf-8"))
     if args.purpose == "pages" and rights.get("redistribution_approved") is not True:
         raise SystemExit("Refusing public Pages bundle: third-party redistribution is not approved in the rights manifest.")
+
+    if not args.notices_dir.is_dir():
+        raise SystemExit(f"Third-party notices directory not found: {args.notices_dir}")
+    notice_paths = sorted(path for path in args.notices_dir.rglob("*") if path.is_file())
+    if not notice_paths:
+        raise SystemExit("No third-party license/NOTICE files were supplied")
 
     if not args.pyodide_dist.is_dir():
         raise SystemExit(f"Pyodide distribution directory not found: {args.pyodide_dist}")
@@ -81,6 +88,16 @@ def main() -> None:
     found = {item["package"] for item in wheel_records}
     if found != EXPECTED:
         raise SystemExit(f"Unexpected browser wheel set: expected {sorted(EXPECTED)}, found {sorted(found)}")
+    fastthaig2p_wheel = next(path for path in wheel_paths if wheel_metadata(path)[0] == "fastthaig2p")
+    with zipfile.ZipFile(fastthaig2p_wheel) as archive:
+        required_data_notices = {
+            "fastthaig2p/data/browser-data-provenance.json",
+            "fastthaig2p/data/WIKTIONARY-ATTRIBUTION.md",
+        }
+        missing_notices = required_data_notices - set(archive.namelist())
+        if missing_notices:
+            raise SystemExit(f"FastThaiG2P wheel is missing embedded data attribution: {sorted(missing_notices)}")
+
     for item in wheel_records:
         expected_version = EXPECTED_VERSIONS[item["package"]]
         if item["version"] != expected_version:
@@ -111,6 +128,12 @@ def main() -> None:
                 "size_bytes": path.stat().st_size,
             })
 
+    notice_records = [{
+        "path": path.relative_to(args.notices_dir.parent).as_posix(),
+        "sha256": sha256(path),
+        "size_bytes": path.stat().st_size,
+    } for path in notice_paths]
+
     bundle_manifest = {
         "schema_version": 1,
         "purpose": "ephemeral-ci" if args.purpose == "ci" else "public-pages",
@@ -118,6 +141,7 @@ def main() -> None:
         "pyodide": pyodide_record,
         "wheels": wheel_records,
         "runtime_files": runtime_records,
+        "notices": notice_records,
     }
     (args.output / "bundle-manifest.json").write_text(
         json.dumps(bundle_manifest, ensure_ascii=False, indent=2) + "\n",
@@ -129,6 +153,8 @@ def main() -> None:
         "wheel_bytes": sum(item["size_bytes"] for item in wheel_records),
         "runtime_file_count": len(runtime_records),
         "runtime_bytes": sum(item["size_bytes"] for item in runtime_records),
+        "notice_count": len(notice_records),
+        "notice_bytes": sum(item["size_bytes"] for item in notice_records),
         "redistribution_approved": bundle_manifest["redistribution_approved"],
     }, ensure_ascii=False, indent=2))
 
