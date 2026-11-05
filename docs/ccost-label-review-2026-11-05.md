@@ -164,7 +164,7 @@ The latest worklist CI gate asserts the following independently:
 - `_8`: 868 tier-level conversion failures; 397 exact file/interval groups; 438 file/interval/raw-label events; 22 distinct raw strings; 119 source files.
 - All phonetic conversion failures: 1,450 tier-level occurrences. This includes `_8` and other unsupported forms; it is not a count of unique speech events.
 - `<notProcessedChunk>`: 142 documented MAUS processing-failure intervals, kept separate from unknown symbols.
-- Unresolved marker labels across **all tiers**: 821 intervals, with appearances `<P>` 821, `<Fail>` 24, `<P:>` 4, and `<:p>` 22. These are worklist all-tier counts. The earlier inspector counted `<P>` 394 and `<Fail>` 16 in phonetic tiers only; the two reports have different scope and are not contradictory.
+- Unresolved marker labels across **all tiers**: 821 intervals containing at least one marker; 871 total marker appearances. Per-marker interval counts are `<P>` 771, `<Fail>` 24, `<P:>` 4, `<:p>` 22; appearance counts are `<P>` 821, `<Fail>` 24, `<P:>` 4, `<:p>` 22. These are worklist all-tier counts. The earlier inspector counted `<P>` 394 and `<Fail>` 16 in phonetic tiers only; the two reports have different scope and are not contradictory.
 
 The worklist preserves exact raw strings, file/tier/time provenance, overlapping labels from other tiers, adjacent same-tier context, and blank reviewer/adjudicator fields. The artifact is published as `ccost-label-adjudication-worklist` by the PR CI workflow. Its generator and tests are **PARTIAL_PENDING_EXACT_HEAD_CI** until the exact latest PR-head run succeeds and the uploaded artifact is inspected. Do not mark the worklist verified based only on the presence of code or a workflow step.
 
