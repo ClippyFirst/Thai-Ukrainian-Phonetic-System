@@ -4187,5 +4187,44 @@
       "current": "Latest exact-head Full CI is being rerun after correcting the generic MAUS versus CCOST tone-scheme distinction; no local tests were run."
     },
     "denominator_note": "Earlier inspector marker counts <P>=394 and <Fail>=16 are phonetic-tier-only; the worklist scans all tiers, so its counts are not directly comparable."
+  },
+  "thai_expert_candidate_panel_2026_11_05": {
+    "status": "PUBLIC_QUALIFICATION_SCREENING_ONLY_NOT_CONTACTED_NOT_APPOINTED",
+    "proposed_first_pass_reviewers": [
+      {
+        "name": "Chutamanee Onsuwan, Ph.D.",
+        "institution": "Thammasat University",
+        "evidence": "Official profile documents PhD on temporal relations between consonants and vowels in Thai syllables; laboratory phonetics, speech science and phonology.",
+        "url": "https://arts.tu.ac.th/th/teacherlarts/cmukv6znk0052pm61l213msd6",
+        "role": "first_pass_candidate"
+      },
+      {
+        "name": "Phanintra Teeranon, Ph.D.",
+        "institution": "University of Phayao",
+        "evidence": "Public CV and peer-reviewed acoustic/perceptual studies of Standard Thai tones.",
+        "url": "https://so03.tci-thaijo.org/index.php/JLC/article/view/240495",
+        "role": "first_pass_candidate"
+      }
+    ],
+    "proposed_adjudicator": {
+      "name": "Rungpat Roengpitya",
+      "institution": "Mahidol University",
+      "evidence": "Mahidol profile and peer-reviewed acoustic work on Thai tones, vowel length and fricatives.",
+      "url": "https://murex.mahidol.ac.th/en/persons/rungpat-roengpitya/",
+      "role": "separate_adjudicator_candidate"
+    },
+    "conflict_risk_alternate": {
+      "name": "Lena Maluleem, Ph.D.",
+      "institution": "Kasetsart University",
+      "evidence": "Phonetics/phonology and prosody credentials; public coauthorship and doctoral-supervision link to CCOST author Pittayawat Pittayaporn.",
+      "url": "https://ling.human.ku.ac.th/index.php/lyna_cv/",
+      "status": "DO_NOT_COUNT_AS_INDEPENDENT_CCOST_REVIEWER_UNLESS_CONFLICT_ASSESSED"
+    },
+    "registry": "data/benchmark/reviewer-qualifications.tsv remains header-only",
+    "contacted": false,
+    "appointed": false,
+    "consented": false,
+    "independent_ipa_gold_rows": 0,
+    "acceptance": "Verify identity, current qualifications, Standard Thai competence, IPA/X-SAMPA familiarity, independence/conflicts, availability, consent and permission to retain evidence; obtain two frozen blind first-pass submissions and a separate adjudication record."
   }
 }
