@@ -240,7 +240,7 @@ The latest work adds an evidence-preserving path for the three outstanding CCOST
 
 - `scripts/build_ccost_review_worklist.py` builds a blind contextual worklist from TextGrid members only. The CI workflow publishes TSV + JSON provenance as `ccost-label-adjudication-worklist`.
 - The worklist captures all unsupported X-SAMPA labels and the four unresolved marker spellings across interval tiers, preserves source labels/times, adds cross-tier and adjacent context, and keeps expert decision fields blank.
-- `_8`: 868 tier-level occurrences, 397 exact interval groups, 438 file/interval/raw-label events, 22 distinct strings, 119 files. `_8` is invalid/out-of-range under the published five-tone convention; intended corrections remain unknown.
+- `_8`: 868 tier-level occurrences, 397 exact interval groups, 438 file/interval/raw-label events, 22 distinct strings, 119 files. Generic BAS/MAUS syntax permits `_1`–`_9`; the CCOST paper maps only `_1`–`_5`. `_8` is unmapped in the published CCOST convention; its corpus-specific meaning remains unknown.
 - Markers `<P>`, `<P:>`, `<:p>`, `<Fail>` remain unresolved. Prior inventory counts are 394, 4, 22, 16 appearances. No normalization or semantic inference is implemented.
 - Public institutional evidence is recorded for potential reviewers Onsuwan, Maluleem and Roengpitya. No one has been contacted, appointed, or verified in the reviewer registry.
 - No expert adjudication has occurred. Independent IPA gold rows remain 0; accuracy remains NOT_MEASURED.
@@ -262,7 +262,7 @@ The exact-head CI workflow asserts these values and publishes `ccost-label-adjud
 
 The three owner-prioritized tasks remain accurately separated:
 1. `<P>`, `<P:>`, `<:p>`, `<Fail>` semantic definitions: **BLOCKED**; no public source establishes them.
-2. `_8` original-value recovery: **BLOCKED**; out-of-range classification is established, but no replacement is inferred.
+2. `_8` original-value recovery: **BLOCKED**; generic MAUS syntax permits `_1`–`_9`, but CCOST-specific meaning is unresolved; no replacement is inferred.
 3. Independent Thai expert review/adjudication: **BLOCKED**; no reviewer has been contacted/appointed, no independent annotations exist, and independent IPA gold rows remain 0.
 
 The repository remains an engineering-verified research prototype, not linguistically release-ready. Audio/acoustic validation is deferred/out of scope for this text-only workstream.
