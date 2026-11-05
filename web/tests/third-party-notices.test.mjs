@@ -5,6 +5,7 @@ const notices = readFileSync("web/third-party-notices.html", "utf8");
 const homepage = readFileSync("web/index.html", "utf8");
 const system = readFileSync("web/system.html", "utf8");
 const builder = readFileSync("scripts/build_pyodide_bundle.py", "utf8");
+const ccBySa = readFileSync("web/licenses/CC-BY-SA-4.0.txt", "utf8");
 
 assert.match(notices, /<html lang="uk">/);
 assert.match(notices, /<a class="skip-link" href="#main-content">/);
