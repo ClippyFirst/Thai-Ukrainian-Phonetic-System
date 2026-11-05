@@ -54,6 +54,9 @@ async function initializeRuntime(requestId) {
       throw new Error(`Не вдалося завантажити локальний компонент ${asset.filename} (${response.status}).`);
     }
     const buffer = await response.arrayBuffer();
+    if (buffer.byteLength !== asset.size_bytes) {
+      throw new Error(`Розмір локального компонента ${asset.filename} не збігається з маніфестом.`);
+    }
     const digest = await crypto.subtle.digest("SHA-256", buffer);
     const actualHash = [...new Uint8Array(digest)]
       .map(value => value.toString(16).padStart(2, "0"))
