@@ -70,7 +70,7 @@ def inspect(paths: list[Path], sample_limit: int = 5) -> dict:
                     "kind": tier.kind,
                     "interval_count": len(tier.intervals),
                     "nonempty_labels": len(labels),
-                    "samples": labels[:sample_limit],
+                    "samples": labels[:sample_limit] if tier.name in CCOST_PHONETIC_TIERS else [],
                 }
                 if tier.name in CCOST_PHONETIC_TIERS:
                     for interval in tier.intervals:
