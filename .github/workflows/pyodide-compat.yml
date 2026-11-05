@@ -122,20 +122,26 @@ jobs:
               provenance = json.loads(archive.read("browser-data-provenance.json"))
               assert provenance["retained_entries"] == 13144
           PY
-      - name: Verify public Pages bundle is refused without rights approval
+      - name: Verify owner-approved public Pages bundle builds
         run: |
-          if python scripts/build_pyodide_bundle.py \
+          python scripts/build_pyodide_bundle.py \
             --purpose pages \
             --pyodide-dist node_modules/pyodide \
             --wheels build/pyodide-wheels \
             --output build/pages-bundle \
             --rights-manifest data/third_party/fastthaig2p-browser-bundle.json \
-            --notices-dir web/licenses; then
-            echo "Public bundle unexpectedly passed without rights approval" >&2
-            exit 1
-          fi
-          test ! -e build/pages-bundle
-          echo "Public Pages bundle correctly remains gated"
+            --notices-dir web/licenses
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          manifest = json.loads(Path("build/pages-bundle/bundle-manifest.json").read_text())
+          assert manifest["purpose"] == "public-pages"
+          assert manifest["redistribution_approved"] is True
+          assert len(manifest["wheels"]) == 4
+          assert len(manifest["notices"]) >= 10
+          assert any(item["path"] == "datasets/fastthaig2p-wiktionary-derived.zip" for item in manifest["datasets"])
+          PY
+          echo "Owner-approved public Pages bundle built and manifest verified"
       - name: Install headless Chromium
         run: npx playwright install --with-deps chromium
       - name: Test the real same-origin Pyodide worker in Chromium
