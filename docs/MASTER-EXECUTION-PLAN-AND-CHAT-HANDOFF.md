@@ -2698,3 +2698,19 @@ This worklist supports text-based review of canonical/phonemic labels. It cannot
 - Acceptance to proceed from candidate to public beta: exact-head CI on the final candidate; verified Python-capable hosting preview with same-origin API; published feedback path; dependency/corpus notices; beta warnings; known limitations and manual accessibility gaps disclosed. No release tag, production cutover or merge is performed here.
 
 Canonical scope and checklist: docs/beta-release-scope.md.
+
+
+
+## Handoff — GitHub Pages-only FastThaiG2P port (2026-11-05)
+
+- Owner decision: host and run the website only on GitHub Pages. Use the browser/WASM port of FastThaiG2P through Pyodide; do not use Vercel, a remote API host, CDN runtime files, or a separate JavaScript phonology engine.
+- Branch: `docs/repository-audit-2026-11-04`; PR #210 remains open/unmerged; `main` unchanged.
+- Runtime checkpoint `80adb489105e6f2b447fb07331bfdf0c09c888b3` passed Pyodide parity, source filtering, TLTK asset verification and Chromium cold/warm worker smoke in run 42085653176. Web Static 42085653505, Site API 42085653055 and optional external smoke 42085652951 also passed on that checkpoint.
+- Filtered dictionary counts: 13,144 Wiktionary IPA entries retained; 48,957 generated entries excluded; manual/unknown entries excluded by policy; one metadata/runtime IPA mismatch (`สวน`) is reported without modifying the runtime value.
+- TLTK fallback: all six assets verified. Five match source bytes exactly; `sylform_var.pkl` matches bzip2 decompression of TLTK `sylform_var.pklz`. Keep BSD-3-Clause and root LGPL-3.0 notices until final file-level license-scope review.
+- Runtime notices: ten license/NOTICE files staged. The bundle now also generates a transparent CC BY-SA 4.0 ZIP of the filtered Wiktionary-derived IPA map and tokenizer dictionary. New archive packaging and deploy-time hash checks were added after checkpoint 80adb; rerun exact-head CI before treating these changes as verified.
+- Public deployment gate: `redistribution_approved=false`; do not change the repository variable, merge, or deploy until final TLTK license-scope review and explicit owner approval. After authorization, deploy only through the existing Pages workflow from `main`, then verify runtime manifest, every notice hash, dataset ZIP hash and actual browser interaction.
+- Full CI run 42085653265 was cancelled by subsequent pushes; not a pass. The next genuine engineering task is exact-head CI on the updated dataset bundle and Pages workflow.
+- Linguistic status unchanged: independent IPA gold 0; accuracy `NOT_MEASURED`; Ukrainian forms provisional. Thai/Ukrainian external reviews and audio/acoustic validation remain deferred for beta.
+
+Canonical documents: `docs/beta-release-scope.md`, `docs/fastthaig2p-pyodide-port.md`, `docs/fastthaig2p-data-provenance.md`, `data/third_party/fastthaig2p-browser-bundle.json`.
