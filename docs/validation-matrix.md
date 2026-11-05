@@ -20,7 +20,7 @@
 | Praat long-text parser | DONE_VERIFIED for supplied files | 578/578 supplied files parse; other TextGrid encodings remain unsupported |
 | CCOST `-MAU` tier mapping | PARTIAL | Observed release names mapped provisionally; curator/manual confirmation needed |
 | CCOST X-SAMPA → IPA | PARTIAL | Declared subset only; unknown labels fail closed; no accuracy claim |
-| TextGrid transcript JSONL exporter | PARTIAL — CI PENDING | Exact-head export-count and metadata validation pending |
+| TextGrid transcript JSONL exporter | DONE_VERIFIED for supplied archives | Exact-head CI exported 178,377 rows (CCOST 145,434; LOTUSDIS 32,943); provenance/license/evidence-grade and no-audio-field assertions passed; output remains temporary and uncommitted |
 | LOTUSDIS transcript context | DONE_VERIFIED for supplied sample | 90 TextGrid files; not phonetic gold or full-dataset coverage |
 | Independent phonetic IPA gold | BLOCKED | Two qualified independent Thai reviewers plus separate adjudication |
 | Independent Ukrainian target-form review | BLOCKED | Qualified Ukrainian-native review and adjudication |
