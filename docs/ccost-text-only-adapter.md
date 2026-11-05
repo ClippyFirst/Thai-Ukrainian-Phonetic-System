@@ -32,6 +32,8 @@ src/thai_ukrainian/adapters/xsampa.py is a strict X-SAMPA → IPA converter. It:
 - preserves aspiration, length, syllabicity, non-syllabicity and the explicitly supported diacritics;
 - interprets CCOST numeric _1–_5 suffixes as tone metadata, not as standard X-SAMPA tone symbols;
 - retains original raw label, per-syllable X-SAMPA, IPA, tone number and tone category;
+- normalizes IPA to canonical NFD so combining phonetic diacritics remain explicit;
+- treats spaces as token separators only (not inferred syllable boundaries); explicit periods and CCOST tone suffixes close syllables;
 - raises XSampaConversionError for unknown symbols, malformed suffixes, non-ASCII input and unsupported notation; no best-effort substitution.
 
 The symbol map is a declared subset of the standard X-SAMPA inventory, not an assertion that all listed symbols occur in CCOST. Mapping is grounded in Wells's X-SAMPA scheme and the [eSpeak-NG X-SAMPA reference table](https://github.com/espeak-ng/espeak-ng/blob/master/docs/phonemes/xsampa.md). The implementation intentionally omits ambiguous/context-dependent modifiers until the CCOST manual and real tier labels establish their meaning. Before using the adapter on the corpus, inspect actual MAU, MAS, KAS and KAN labels and extend the map only with source/manual evidence and tests.
