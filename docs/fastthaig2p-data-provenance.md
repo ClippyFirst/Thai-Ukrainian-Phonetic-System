@@ -86,10 +86,10 @@ Manual and model-generated records are excluded from the browser wheel. The pinn
 The pinned FastThaiG2P README and data README say the OOV fallback is vendored from TLTK.
 
 - FastThaiG2P's vendored `fastthaig2p/_th2ipa.py` header identifies **TLTK version 1.3.8** and includes a BSD-3-Clause notice. This is evidence for that vendored parser file, not a blanket license for every fallback asset.
-- The pinned TLTK repository snapshot at commit `0cef4bcfbdd675f589783dd4134b87b9bb9fbb93` has `setup.py` version **1.9.1**, a root `LICENSE` under LGPL-3.0, and a separate `LICENSE.txt` with BSD-style three-clause terms. Its checked-in `PKG-INFO` is stale: version 1.1.7 / GPLv3. The exact license scope for the copied assets is therefore not established by one unambiguous package version.
+- The pinned TLTK repository snapshot at commit `0cef4bcfbdd675f589783dd4134b87b9bb9fbb93` has `setup.py` version **1.9.1** and package license metadata **BSD-3-Clause**, a root `LICENSE` under LGPL-3.0, and a separate `LICENSE.txt` with BSD-style three-clause terms. Its checked-in `PKG-INFO` is stale: version 1.1.7 / GPLv3. The exact license scope for the copied assets is therefore not established by one unambiguous package version.
 - Five of the six fallback data files are byte-identical to the matching files in the pinned TLTK repository snapshot.
 - The sixth file, FastThaiG2P's `sylform_var.pkl`, is byte-identical to `bz2.decompress(TLTK/tltk/sylform_var.pklz)`. The exact transform is reproduced and asserted by `scripts/verify_tltk_fallback_provenance.py`.
-- The verifier hashes the pinned `setup.py`, root `LICENSE`, module `LICENSE.txt`, and stale `PKG-INFO` so the conflicting evidence is inspectable and reproducible. It does not decide which license legally governs each data asset.
+- The verifier asserts the setup.py BSD-3-Clause metadata and hashes the pinned `setup.py`, root `LICENSE`, module `LICENSE.txt`, and stale `PKG-INFO` so the conflicting evidence is inspectable and reproducible. It does not decide which license legally governs each data asset.
 
 Sources:
 - https://pypi.org/project/tltk/1.3.8/
