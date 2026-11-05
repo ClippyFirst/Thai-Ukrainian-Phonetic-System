@@ -53,6 +53,9 @@ jobs:
           python scripts/slim_pythainlp_wheel.py build/pyodide-wheels/pythainlp-5.4.0-py3-none-any.whl
           git clone https://github.com/awslabs/FastThaiG2P.git build/FastThaiG2P
           git -C build/FastThaiG2P checkout 4e82a291b4cf2876326744c6580121e9986ad354
+          git clone https://github.com/attapol/tltk.git build/TLTK
+          git -C build/TLTK checkout 0cef4bcfbdd675f589783dd4134b87b9bb9fbb93
+          python scripts/verify_tltk_fallback_provenance.py --fastthaig2p build/FastThaiG2P --tltk build/TLTK --report build/tltk-fallback-provenance.json
           python scripts/prepare_fastthaig2p_browser_source.py --source build/FastThaiG2P --report build/fastthaig2p-data-provenance.json
           python -m pip wheel --no-deps --wheel-dir build/pyodide-wheels ./build/FastThaiG2P
           python - <<'PY'
