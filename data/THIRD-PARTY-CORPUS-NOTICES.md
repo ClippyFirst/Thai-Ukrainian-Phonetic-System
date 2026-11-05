@@ -28,3 +28,13 @@ The corpus archives below retain their own source licenses. They are not relicen
 - CCOST's non-commercial restriction must be respected. Do not use CCOST-derived content commercially without separate permission.
 - Do not infer audio absence from an extensionless ZIP member. The current exporter is safe because it reads only members whose suffix is `.TextGrid`.
 - Do not describe either corpus's source annotations as independent expert gold. Any evaluation gold requires the project's independent blinded review and adjudication protocol.
+
+
+## FastThaiG2P — optional software dependency
+
+- Upstream: [awslabs/FastThaiG2P](https://github.com/awslabs/FastThaiG2P), pinned by this project to commit `4e82a291b4cf2876326744c6580121e9986ad354` in `pyproject.toml`.
+- Upstream source code license: **Apache-2.0**. The upstream `NOTICE` attributes copyright to Amazon.com, Inc. or its affiliates. Retain the full license and relevant NOTICE if redistributing covered code.
+- Vendored `fastthaig2p/_th2ipa.py` contains a separate **3-clause BSD** notice for the TLTK-derived parser, copyright Dept. of Linguistics, Chulalongkorn University (2018). Preserve its file-level copyright, conditions, and disclaimer if copied.
+- **Bundled data is mixed provenance:** upstream documents a merged 62k dictionary containing Wiktionary/kaikki-derived entries, model-generated entries, and manual overrides, plus TLTK fallback data. kaikki.org states Wiktionary-derived data is available under CC BY-SA and GFDL. The upstream data README does not provide complete per-entry or per-file rights for every generated/manual/fallback asset.
+- This repository uses FastThaiG2P as an optional external dependency and does not copy its dictionary or fallback data into project corpus assets. The full bundled-data redistribution rights are **not cleared** by the Apache-2.0 source license alone. Do not bulk-copy or redistribute those assets until component-level provenance and terms are confirmed.
+- Detailed review: [FastThaiG2P license and bundled-data review](../docs/fastthaig2p-license-review-2026-11-05.md).
