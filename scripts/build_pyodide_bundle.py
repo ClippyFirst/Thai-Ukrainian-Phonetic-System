@@ -153,6 +153,19 @@ def main() -> None:
             dataset_archive.writestr(archive_name, wheel_archive.read(source_name))
         dataset_archive.write(args.notices_dir / "CC-BY-SA-4.0.txt", "CC-BY-SA-4.0.txt")
 
+    with zipfile.ZipFile(dataset_path) as dataset_check:
+        if dataset_check.testzip() is not None:
+            raise SystemExit("Filtered dataset ZIP failed its CRC integrity check")
+        expected_members = {
+            "dict.txt",
+            "ipa.json",
+            "browser-data-provenance.json",
+            "WIKTIONARY-ATTRIBUTION.md",
+            "CC-BY-SA-4.0.txt",
+        }
+        if set(dataset_check.namelist()) != expected_members:
+            raise SystemExit("Filtered dataset ZIP has an unexpected member set")
+
     dataset_records = [{
         "path": dataset_path.relative_to(args.output).as_posix(),
         "sha256": sha256(dataset_path),
