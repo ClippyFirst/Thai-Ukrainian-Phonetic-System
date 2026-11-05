@@ -96,7 +96,7 @@ class CCOSTAnnotation:
 
 def _quoted_field(block:str,field:str)->str:
     match=re.search(
-        rf'(?ms)^\\s*{re.escape(field)}\\s*=\\s*"((?:[^"]|"")*)"\\s*$',
+        rf'(?ms)^\s*{re.escape(field)}\s*=\s*"((?:[^"]|"")*)"\s*$',
         block,
     )
     if match is None: raise TextGridFormatError(f"missing quoted TextGrid field {field!r}")
