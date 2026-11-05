@@ -34,8 +34,9 @@ jobs:
           mkdir -p build/pyodide-wheels
           python -m pip wheel --no-deps --wheel-dir build/pyodide-wheels .
           python -m pip download --no-deps --only-binary=:all: --dest build/pyodide-wheels pythainlp==5.4.0
+          python -m pip download --no-deps --only-binary=:all: --dest build/pyodide-wheels tzdata==2026.6
           python -m pip wheel --no-deps --wheel-dir build/pyodide-wheels "fastthaig2p @ git+https://github.com/awslabs/FastThaiG2P.git@4e82a291b4cf2876326744c6580121e9986ad354"
-          test "$(find build/pyodide-wheels -maxdepth 1 -name '*.whl' | wc -l)" -eq 3
+          test "$(find build/pyodide-wheels -maxdepth 1 -name '*.whl' | wc -l)" -eq 4
           sha256sum build/pyodide-wheels/*.whl
           du -h build/pyodide-wheels/*.whl
       - name: Generate CPython reference and verify upstream pin
@@ -49,8 +50,8 @@ jobs:
           assert payload["upstream_commit"] == "4e82a291b4cf2876326744c6580121e9986ad354"
           assert len(payload["cases"]) == 4
           garden = next(case for case in payload["cases"] if case["input"] == "สวน")
-          assert garden["raw_ipa"] == "/sua̯n˩˩˦/"
-          assert garden["complete_ipa"] is True
+          assert garden["result"]["status_code"] == 200
+          assert garden["result"]["body"]["raw_ipa"] == "/sua̯n˩˩˦/"
           PY
       - name: Install pinned Pyodide runtime
         run: npm install --no-save --no-package-lock pyodide@0.29.5
