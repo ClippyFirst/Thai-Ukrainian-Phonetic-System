@@ -29,6 +29,9 @@ DIACRITICS = {
     "_>":"ʼ","_d":"̪","_a":"̺","_m":"̻","_+":"̟","_-":"̠",'_"':"̈",
     "_r":"̝","_t":"̤","_k":"̰","_G":"ˠ","_?\\":"ˤ","_O":"̹","_c":"̜",
 }
+# CCOST paper maps five Thai toneme labels (_1.._5). BAS MAUS syntax is broader
+# and permits numeric tone suffixes _1.._9; this adapter deliberately maps only
+# the CCOST-published five and fails closed for the others.
 _TONES={"1":"mid","2":"low","3":"falling","4":"high","5":"rising"}
 _SYMBOLS=tuple(sorted(XSAMPA_TO_IPA,key=lambda x:(-len(x),x)))
 _DIACRITICS=tuple(sorted(DIACRITICS,key=lambda x:(-len(x),x)))
@@ -46,7 +49,7 @@ class XSampaLabel:
     raw: str
     syllables: tuple[XSampaSyllable,...]
     notation: str="X-SAMPA"
-    tone_scheme: str="CCOST numeric suffix (_1.._5)"
+    tone_scheme: str="CCOST paper mapping (_1.._5); generic MAUS syntax _1.._9"
     @property
     def ipa(self)->str:
         return ".".join(item.ipa for item in self.syllables)
