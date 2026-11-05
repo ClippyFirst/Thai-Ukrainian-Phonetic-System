@@ -34,6 +34,8 @@ def verify(fast_root: Path, tltk_root: Path) -> dict:
     package_metadata = (tltk_root / "PKG-INFO").read_text(encoding="utf-8")
     if "version='1.9.1'" not in setup_source:
         raise SystemExit("Pinned TLTK repository setup.py version changed")
+    if "license='BSD-3-Clause'" not in setup_source or "License :: OSI Approved :: BSD License" not in setup_source:
+        raise SystemExit("Pinned TLTK repository setup.py license metadata changed")
     if "GNU LESSER GENERAL PUBLIC LICENSE" not in repository_license:
         raise SystemExit("Pinned TLTK repository LICENSE no longer identifies LGPL-3.0")
     if "Redistribution and use in source and binary forms" not in module_license:
@@ -63,6 +65,7 @@ def verify(fast_root: Path, tltk_root: Path) -> dict:
         "fastthaig2p_vendored_parser_header_version": "1.3.8",
         "fastthaig2p_vendored_parser_header_license": "BSD-3-Clause",
         "pinned_tltk_repository_setup_version": "1.9.1",
+        "pinned_tltk_repository_setup_license": "BSD-3-Clause",
         "pinned_tltk_repository_root_license": "LGPL-3.0",
         "pinned_tltk_module_license_txt": "BSD-3-Clause-style notice",
         "pinned_tltk_pkg_info": {
