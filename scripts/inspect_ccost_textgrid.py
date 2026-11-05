@@ -144,13 +144,25 @@ def inspect(paths: list[Path], sample_limit: int = 5) -> dict:
                     Path(info.filename).suffix.lower() or "[no extension]" for info in members
                 )
                 total_textgrid_bytes = sum(info.file_size for info in textgrid_infos)
+                non_textgrid_infos = [
+                    info for info in members
+                    if Path(info.filename).suffix.lower() not in TEXTGRID_SUFFIXES
+                ]
                 archive_report.update({
                     "members_total": len(members),
                     "textgrid_member_count": len(textgrid_infos),
                     "textgrid_uncompressed_bytes": total_textgrid_bytes,
                     "textgrid_members": [info.filename for info in textgrid_infos],
                     "extension_counts": dict(sorted(extension_counts.items())),
-                    "non_textgrid_members_skipped": len(members) - len(textgrid_infos),
+                    "non_textgrid_members_skipped": len(non_textgrid_infos),
+                    "non_textgrid_member_metadata": [
+                        {
+                            "name": info.filename,
+                            "uncompressed_bytes": info.file_size,
+                            "compressed_bytes": info.compress_size,
+                        }
+                        for info in non_textgrid_infos
+                    ],
                     "audio_members_skipped": sum(
                         Path(info.filename).suffix.lower() in AUDIO_SUFFIXES for info in members
                     ),
