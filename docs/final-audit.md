@@ -1992,3 +1992,14 @@ This does not change linguistic evidence: independent IPA gold remains 0; accura
 - The public rights manifest remains `redistribution_approved=false`; no Pages deployment, merge, main mutation, release tag, or repository variable change was performed. Current mainline Pages site is not evidence that the new Pyodide runtime is deployed.
 - Linguistic status unchanged: independent IPA gold 0; accuracy `NOT_MEASURED`; Ukrainian practical forms provisional. External Thai/Ukrainian reviews and audio/acoustic validation remain deferred from the owner-approved beta scope.
 
+
+
+## 2026-11-05 — PR #210 merged; GitHub Pages beta live
+
+PR #210 was squash-merged into `main` as `c5618d8adfdfd0a12415fc083e5f5a518ae4c5c1`. The owner explicitly authorized public GitHub Pages publication for this research project; the rights manifest records the scope. Third-party license terms remain in force, and the deployment carries all required notices. The unresolved TLTK file-level BSD-3-Clause vs LGPL-3.0 applicability remains disclosed rather than silently adjudicated.
+
+The first Pages deployment [42097237901](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42097237901) deployed but its post-deploy test failed because the dataset path was checked at the site root instead of under `/vendor/`. The builder output is `web/vendor/datasets/...`, so the check was corrected in commit `d672dd0fb721cbe6600d28fe900600ea297416c3`. The corrected [Pages run 42098396098](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42098396098) completed SUCCESS. Its live smoke verified the index, worker/style/system files, no API/CDN path, Pyodide manifest and pinned wheel versions, dataset ZIP size and SHA-256, all ten license-notice files and hashes, third-party attribution, and Pyodide runtime assets.
+
+[Pyodide compatibility run 42098395877](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42098395877) also completed SUCCESS, including CPython/Pyodide parity and real Chromium worker execution. Main CI [42098395810](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42098395810) had passed the Python test suite and wheel-install smoke but was still running the supplied TextGrid archive inspection at the time of this note; its final result must be checked before claiming complete CI success.
+
+**Current status:** public beta is deployed at https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/ . Deployment and live bundle integrity are DONE_VERIFIED. Deployed performance and manual accessibility checks remain TODO/DEFERRED. Linguistic accuracy remains NOT_MEASURED (zero independent IPA gold rows); external Thai/Ukrainian expert audits and audio/acoustic validation remain deferred by owner decision.

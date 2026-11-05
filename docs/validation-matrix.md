@@ -1954,3 +1954,22 @@ Canonical implementation and rights records: `docs/fastthaig2p-pyodide-port.md`,
 
 Exact-head verification: `ba22872679869371e92ab9ad511db4ed74627da2`; workflows Pyodide 42090379707, Site API 42090379612, Web Static 42090379866, optional external smoke 42090379819, Full CI 42090379627 all SUCCESS. PR #210 remains open/unmerged; main unchanged. Public deployment has not occurred.
 
+
+
+## Current publication status — 2026-11-05 (supersedes earlier deployment blockers)
+
+| Work item | Status | Evidence / acceptance |
+|---|---|---|
+| Owner authorization for research-project publication | DONE_VERIFIED | Recorded in the browser bundle rights manifest on the PR branch and merged to main; authorization does not waive third-party terms. |
+| PR #210 integration | DONE_VERIFIED | Squash merge `c5618d8adfdfd0a12415fc083e5f5a518ae4c5c1`. |
+| GitHub Pages build and deployment | DONE_VERIFIED | [Run 42098396098 SUCCESS](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42098396098). |
+| Post-deploy live content/worker contract | DONE_VERIFIED | Run 42098396098 checked page copy, worker JS, styles, system page, no API/CDN path, Pyodide manifest and runtime. |
+| Dataset ZIP path and integrity | DONE_VERIFIED | Smoke corrected to `/vendor/{dataset.path}`; exact size and SHA-256 passed in run 42098396098. |
+| Third-party notices and attribution | DONE_VERIFIED | Ten required notices fetched live and checked by size/SHA-256; third-party page attribution checks passed in run 42098396098. |
+| Pyodide runtime and browser parity | DONE_VERIFIED | [Run 42098395877 SUCCESS](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42098395877), including real Chromium same-origin worker smoke. |
+| Main CI | PARTIAL / RUNNING AT CHECKPOINT | [Run 42098395810](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42098395810); Python suite and wheel-install smoke passed, supplied TextGrid archive inspection was still running. Refresh before release claims. |
+| TLTK file-level license scope | PARTIAL / DISCLOSED | Both LGPL-3.0 and BSD-3-Clause notices preserved; owner approved research-project publication, but this does not resolve the ambiguity or alter third-party obligations. |
+| Deployed performance and manual accessibility | TODO / DEFERRED | Measure cold-start/repeat latency, memory/mobile performance; manual keyboard, screen-reader, zoom/reflow and forced-colors checks remain unverified. No WCAG conformance claim. |
+| Linguistic accuracy | PARTIAL / NOT MEASURED | Independent IPA gold = 0; Ukrainian forms provisional. External Thai/Ukrainian expert audits and acoustic validation are deferred from beta scope. |
+
+Live beta: https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/ .

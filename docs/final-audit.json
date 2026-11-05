@@ -4321,16 +4321,16 @@
     "reference_use": "SOP, product-feedback, decision-framework and landing-page communication patterns; no dedicated accessibility skill listed; no files copied",
     "canonical_scope_document": "docs/beta-release-scope.md",
     "beta_engineering_readiness": "BETA_CANDIDATE_ENGINEERING_VERIFIED",
-    "public_deployment_readiness": "NOT_YET_VERIFIED",
-    "last_verified_code_head": "08bad62278a7bf6ee787ccf9d4f1b45d3d6b8562",
+    "public_deployment_readiness": "DEPLOYED_AND_LIVE_SMOKE_VERIFIED",
+    "last_verified_code_head": "d672dd0fb721cbe6600d28fe900600ea297416c3",
     "last_verified_full_ci": "42042740322",
     "last_verified_site_api": "42042740326",
     "last_verified_optional_external_g2p_smoke": 42085652951,
     "documentation_head_at_decision_update": "PENDING_FINAL_DOC_COMMIT",
-    "final_documentation_head_ci": "PENDING_FINAL_HEAD_FULL_CI",
+    "final_documentation_head_ci": "PENDING_DOCUMENTATION_COMMIT_CI",
     "release_tag_created": false,
     "production_cutover": false,
-    "main_merged": false,
+    "main_merged": true,
     "feedback_path": "IMPLEMENTED_GITHUB_ISSUE_FORM",
     "feedback_template": ".github/ISSUE_TEMPLATE/beta-feedback.yml",
     "feedback_links": [
@@ -4348,7 +4348,7 @@
     "starting_branch_checkpoint": "7a2ab7434791971243dd18f80c8e3b4c70e8c2b6",
     "branch": "docs/repository-audit-2026-11-04",
     "pr": 210,
-    "pr_state": "OPEN_NOT_MERGED",
+    "pr_state": "MERGED",
     "pyodide_version": "0.29.5",
     "upstream_fastthaig2p_commit": "4e82a291b4cf2876326744c6580121e9986ad354",
     "python_service": "src/thai_ukrainian/fastthaig2p_service.py",
@@ -4382,15 +4382,15 @@
     },
     "integrity": "SAME_ORIGIN_MANIFEST; PINNED_PACKAGE_VERSIONS; SHA256_WHEEL_VERIFICATION",
     "exact_head_pyodide_run": 42065750203,
-    "public_redistribution_approved": false,
-    "rights_blocker": "OWNER_APPROVAL_AND_FINAL_TLTK_BSD_VS_REPOSITORY_LGPL_SCOPE_REVIEW",
-    "pages_deploy_guard": "FASTTHAIG2P_PYODIDE_BUNDLE_READY_AND_RIGHTS_MANIFEST",
-    "pages_publication": "BLOCKED_PENDING_OWNER_APPROVAL_AND_FINAL_TLTK_LICENSE_SCOPE_REVIEW",
+    "public_redistribution_approved": true,
+    "rights_blocker": "OWNER_APPROVAL_RESOLVED_FOR_RESEARCH_PROJECT; TLTK_FILE_LEVEL_LICENSE_SCOPE_REMAINS_DISCLOSED_AMBIGUOUS",
+    "pages_deploy_guard": "OWNER_APPROVED_RIGHTS_MANIFEST",
+    "pages_publication": "LIVE_GITHUB_PAGES_DEPLOYMENT_AND_POST_DEPLOY_HASH_SMOKE_VERIFIED",
     "actual_pages_performance": "NOT_MEASURED",
     "independent_ipa_gold_rows": 0,
     "linguistic_accuracy": "NOT_MEASURED",
-    "main_merged": false,
-    "production_cutover": false,
+    "main_merged": true,
+    "production_cutover": true,
     "source_filtered_dictionary": {
       "retained_wiktionary_entries": 13144,
       "excluded_generated_entries": 48957,
@@ -4434,66 +4434,98 @@
       "status": "DONE_VERIFIED_IN_CI_42086644531",
       "size_bytes": 194745,
       "live_pages_hash_check": "NOT_RUN_DEPLOYMENT_NOT_AUTHORIZED"
+    },
+    "deployed_url": "https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/",
+    "first_deploy_run": {
+      "run_id": 42097237901,
+      "status": "DEPLOYED_POST_DEPLOY_SMOKE_FAILED",
+      "cause": "Dataset archive smoke check omitted /vendor prefix"
+    },
+    "deploy_fix_commit": "d672dd0fb721cbe6600d28fe900600ea297416c3",
+    "pages_deploy_run": {
+      "run_id": 42098396098,
+      "status": "SUCCESS",
+      "post_deploy_contract": "PASS",
+      "dataset_zip_size_sha256": "PASS",
+      "ten_notice_hashes": "PASS",
+      "pyodide_runtime_assets": "PASS"
+    },
+    "pyodide_compat_run": {
+      "run_id": 42098395877,
+      "status": "SUCCESS",
+      "cpython_pyodide_parity": "PASS",
+      "chromium_worker_smoke": "PASS"
+    },
+    "main_ci_run": {
+      "run_id": 42098395810,
+      "status": "RUNNING_AT_AUDIT_UPDATE",
+      "python_test_suite": "PASS",
+      "wheel_install_smoke": "PASS",
+      "textgrid_archive_inspection": "IN_PROGRESS"
     }
   },
   "github_pages_port_latest_exact_head": {
-    "verified_code_checkpoint": "ba22872679869371e92ab9ad511db4ed74627da2",
+    "deployed_commit": "d672dd0fb721cbe6600d28fe900600ea297416c3",
+    "pr_210": "MERGED_AS_c5618d8adfdfd0a12415fc083e5f5a518ae4c5c1",
+    "deployed_url": "https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/",
+    "first_deploy_run": {
+      "run_id": 42097237901,
+      "status": "DEPLOYED_POST_DEPLOY_SMOKE_FAILED",
+      "cause": "Dataset ZIP fetch path omitted /vendor"
+    },
+    "deploy_fix_commit": "d672dd0fb721cbe6600d28fe900600ea297416c3",
     "workflows": {
-      "pyodide_compatibility": {
-        "run_id": 42090379707,
-        "status": "SUCCESS"
-      },
-      "site_api": {
-        "run_id": 42090379612,
-        "status": "SUCCESS"
-      },
-      "web_static": {
-        "run_id": 42090379866,
-        "status": "SUCCESS"
-      },
-      "optional_external_g2p_smoke": {
-        "run_id": 42090379819,
-        "status": "SUCCESS"
-      },
-      "full_ci": {
-        "run_id": 42090379627,
+      "pages_deployment": {
+        "run_id": 42098396098,
         "status": "SUCCESS",
-        "jobs": {
-          "test": "SUCCESS",
-          "wheel_install_smoke": "SUCCESS",
-          "master_artifact": "SUCCESS"
-        }
+        "post_deploy_live_smoke": "SUCCESS"
+      },
+      "pyodide_compatibility": {
+        "run_id": 42098395877,
+        "status": "SUCCESS"
+      },
+      "main_ci": {
+        "run_id": 42098395810,
+        "status": "RUNNING_AT_AUDIT_UPDATE",
+        "python_tests": "SUCCESS",
+        "wheel_install_smoke": "SUCCESS",
+        "textgrid_archive_inspection": "IN_PROGRESS"
       }
     },
-    "verified": {
-      "retained_wiktionary_entries": 13144,
-      "excluded_generated_entries": 48957,
-      "manual_and_unknown_sources": "FAIL_CLOSED",
-      "runtime_metadata_ipa_mismatch_count": 1,
-      "mismatch_example": "สวน",
-      "cpython_pyodide_parity_inputs": 4,
-      "chromium_worker_cold_and_warm": true,
-      "browser_no_api_requests": true,
-      "browser_no_cdn_requests": true,
-      "third_party_notice_files": 10,
-      "public_bundle_refused_without_rights_approval": true
+    "live_verified": {
+      "page_content": true,
+      "same_origin_worker_assets": true,
+      "no_remote_api_or_cdn": true,
+      "pyodide_manifest_and_pinned_wheels": true,
+      "dataset_zip_size_and_sha256": true,
+      "ten_license_notice_hashes": true,
+      "third_party_attribution": true,
+      "pyodide_runtime_assets": true
     },
-    "tltk_fallback": {
-      "verified_assets": 6,
-      "byte_identical_assets": 5,
-      "exact_bzip2_decompression_assets": 1,
-      "license_scope": "PARTIAL_AMBIGUOUS_BSD_3_VS_LGPL_3",
-      "preserve_both_notices": true
-    },
-    "public_pages": {
-      "redistribution_approved": false,
-      "deployment": "BLOCKED_PENDING_OWNER_APPROVAL_AND_TLTK_FILE_LEVEL_LICENSE_REVIEW",
-      "live_performance": "NOT_MEASURED",
-      "main_merged": false,
-      "production_cutover": false
-    },
-    "pr_210": "OPEN_UNMERGED",
+    "owner_approval": "RESEARCH_PROJECT_PUBLICATION_APPROVED_2026-11-05",
+    "tltk_license_scope": "PARTIAL_AMBIGUOUS_BSD_3_VS_LGPL_3_BOTH_NOTICES_PRESERVED",
+    "independent_ipa_gold_rows": 0,
     "linguistic_accuracy": "NOT_MEASURED",
-    "independent_ipa_gold_rows": 0
+    "actual_pages_performance": "NOT_MEASURED"
+  },
+  "publication_status_2026_11_05": {
+    "deployed_url": "https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/",
+    "merge_commit": "c5618d8adfdfd0a12415fc083e5f5a518ae4c5c1",
+    "deploy_fix_commit": "d672dd0fb721cbe6600d28fe900600ea297416c3",
+    "pages_workflow_run": 42098396098,
+    "pages_workflow_status": "SUCCESS",
+    "pyodide_compat_run": 42098395877,
+    "pyodide_compat_status": "SUCCESS",
+    "main_ci_run": 42098395810,
+    "main_ci_status_at_update": "RUNNING",
+    "initial_post_deploy_failure": "Dataset archive fetch used site-root path; bundle output is under /vendor/datasets",
+    "corrected_post_deploy_dataset_hash_check": "PASS",
+    "owner_research_project_publication_approval": true,
+    "third_party_license_terms_waived": false,
+    "tltk_file_level_license_scope": "AMBIGUOUS; LGPL-3.0 AND BSD-3-Clause NOTICES PRESERVED",
+    "performance_benchmark": "NOT_MEASURED",
+    "manual_accessibility_review": "DEFERRED_UNVERIFIED",
+    "independent_ipa_gold_rows": 0,
+    "linguistic_accuracy": "NOT_MEASURED"
   }
 }
