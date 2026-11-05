@@ -68,7 +68,7 @@ jobs:
           path: web
 
   deploy:
-    if: ${{ vars.FASTTHAIG2P_VERCEL_PREVIEW_VERIFIED == 'true' }}
+    if: ${{ github.ref == 'refs/heads/main' && vars.FASTTHAIG2P_PYODIDE_BUNDLE_READY == 'true' }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
