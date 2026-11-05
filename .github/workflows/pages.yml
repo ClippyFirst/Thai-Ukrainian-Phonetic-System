@@ -157,6 +157,12 @@ jobs:
               "tzdata": "2026.6",
           }
           assert {wheel["package"]: wheel["version"] for wheel in manifest["wheels"]} == expected_versions
+          datasets = {item["path"]: item for item in manifest["datasets"]}
+          assert "datasets/fastthaig2p-wiktionary-derived.zip" in datasets
+          dataset = datasets["datasets/fastthaig2p-wiktionary-derived.zip"]
+          dataset_bytes = urlopen(f"{os.environ['PAGE_URL'].rstrip('/')}/{dataset['path']}").read()
+          assert len(dataset_bytes) == dataset["size_bytes"]
+          assert hashlib.sha256(dataset_bytes).hexdigest() == dataset["sha256"]
           required_notices = {
               "licenses/Apache-2.0-FastThaiG2P.txt",
               "licenses/NOTICE-FastThaiG2P.txt",
