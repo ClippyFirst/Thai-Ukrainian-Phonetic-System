@@ -89,6 +89,8 @@ jobs:
           assert summary["tone_suffix_8_unique_raw_label_events"] == 438, summary
           assert summary["tone_suffix_8_distinct_raw_strings"] == 22, summary
           assert summary["tone_suffix_8_files"] == 119, summary
+          assert summary["tone_suffix_8_groups_with_exact_interval_mapped_tone_counterpart"] == 14, summary
+          assert summary["tone_suffix_8_exact_interval_mapped_tone_counterparts_by_tier_suffix"] == {"KAN-MAU:3": 1, "MAS:2": 4, "MAS:3": 4, "MAU:2": 7}, summary
           assert summary["phonetic_failure_occurrences"] == 1450, summary
           assert summary["documented_maus_failure_marker_occurrences"] == 142, summary
           assert summary["documented_maus_failure_marker_interval_count"] == 142, summary
