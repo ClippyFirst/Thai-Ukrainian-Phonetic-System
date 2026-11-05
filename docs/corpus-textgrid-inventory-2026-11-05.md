@@ -66,6 +66,16 @@ CI executed:
 
 Verified output: **178,377 records** — 145,434 CCOST (`ORT-MAU` + `TRN`) and 32,943 LOTUSDIS transcript intervals. The JSONL is temporary in CI/local output and is not committed as derived corpus data. No audio is read; no gold is promoted.
 
+CI publishes the downloadable artifact [`textgrid-text-only-jsonl`](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42015757949). It contains the two JSONL files, a valid JSON SHA-256 manifest, and `data/THIRD-PARTY-CORPUS-NOTICES.md`:
+
+| Artifact member | Records | Bytes | SHA-256 |
+|---|---:|---:|---|
+| `ccost-orthographic.jsonl` | 145,434 | 118,942,033 | `673f384e89d2f507b631fb8ecdabb7f364b6ea5cac3b259c32d986b45bb34303` |
+| `lotusdis-transcripts.jsonl` | 32,943 | 29,764,700 | `7144e51d193ee07bc31e36c7fcf7532cba419b593e56237dad0c2666370594cf` |
+| `textgrid-text-only-manifest.json` | — | 333 | `1c0a07e01b4e37f4877620d4e339a2732de17f99efb2bd279a5da8e663bdea3d` |
+| `THIRD-PARTY-CORPUS-NOTICES.md` | — | 3,378 | `e44a87d6c83acfd34d30377d14b14cd8aa05580a309ba1775af594da55f28991` |
+
+Manifest validation passed in CI before upload. The artifact is a reproducible text-only export, not an independent reference/gold corpus; CCOST's non-commercial ShareAlike and LOTUSDIS's ShareAlike terms travel with it.
 ## Exact-head verification
 
 On implementation checkpoint `1dc252c517343fd6277badaa1625c095bd3a63d9`: [CI run 42014178666](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42014178666) passed all jobs.
