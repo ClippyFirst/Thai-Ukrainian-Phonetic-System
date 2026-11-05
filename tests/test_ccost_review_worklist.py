@@ -102,6 +102,17 @@ class CCOSTReviewWorklistTests(unittest.TestCase):
         self.assertEqual(report["archives"][0]["audio_members_skipped"], 1)
         self.assertEqual(report["summary"]["audio_members_read"], 0)
 
+    def test_suffix_is_detected_when_followed_by_coda_without_space(self):
+        fixture = TEXTGRID.replace('text = "? a_8"', 'text = "nia_8p"', 1)
+        with tempfile.TemporaryDirectory() as directory:
+            archive_path = Path(directory) / "ccost.zip"
+            with zipfile.ZipFile(archive_path, "w") as archive:
+                archive.writestr("labels/sample.TextGrid", fixture)
+            report = build_worklist([archive_path])
+
+        row = next(row for row in report["records"] if row["raw_label"] == "nia_8p")
+        self.assertIn("UNDOCUMENTED_CCOST_TONE_SUFFIX_8", row["issue_types"])
+
     def test_finds_unresolved_markers_in_non_phonetic_tiers(self):
         with tempfile.TemporaryDirectory() as directory:
             archive_path = Path(directory) / "ccost.zip"
