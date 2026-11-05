@@ -72,6 +72,19 @@ jobs:
             --wheels build/pyodide-wheels \
             --output web/vendor \
             --rights-manifest data/third_party/fastthaig2p-browser-bundle.json
+      - name: Verify public Pages bundle is refused without rights approval
+        run: |
+          if python scripts/build_pyodide_bundle.py \
+            --purpose pages \
+            --pyodide-dist node_modules/pyodide \
+            --wheels build/pyodide-wheels \
+            --output build/pages-bundle \
+            --rights-manifest data/third_party/fastthaig2p-browser-bundle.json; then
+            echo "Public bundle unexpectedly passed without rights approval" >&2
+            exit 1
+          fi
+          test ! -e build/pages-bundle
+          echo "Public Pages bundle correctly remains gated"
       - name: Install headless Chromium
         run: npx playwright install --with-deps chromium
       - name: Test the real same-origin Pyodide worker in Chromium
