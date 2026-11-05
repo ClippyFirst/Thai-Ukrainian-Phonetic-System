@@ -1956,3 +1956,26 @@ Unresolved marker semantics, intended _8 recovery and human adjudication remain 
 - Acceptance to proceed from candidate to public beta: exact-head CI on the final candidate; verified Python-capable hosting preview with same-origin API; published feedback path; dependency/corpus notices; beta warnings; known limitations and manual accessibility gaps disclosed. No release tag, production cutover or merge is performed here.
 
 Canonical scope and checklist: docs/beta-release-scope.md.
+
+
+
+## 2026-11-05 — GitHub Pages-only browser port reconciliation
+
+The owner selected GitHub Pages as the sole hosting target and selected a browser/WASM port of FastThaiG2P. This supersedes historical references in this audit to a Vercel preview or a Python-capable external host. The browser worker runs the shared Python service in self-hosted Pyodide 0.29.5; no browser request sends Thai input to a remote API or CDN.
+
+At exact runtime checkpoint `80adb489105e6f2b447fb07331bfdf0c09c888b3`:
+- [Pyodide compatibility, source filtering, TLTK verification and Chromium worker — 42085653176](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42085653176): SUCCESS.
+- [Web static validation — 42085653505](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42085653505): SUCCESS.
+- [Site API reference wrapper — 42085653055](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42085653055): SUCCESS.
+- [Optional external G2P smoke — 42085652951](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42085652951): SUCCESS.
+- Full CI 42085653265 was cancelled by subsequent pushes; it is not a pass.
+
+The filtered browser dictionary contains 13,144 Wiktionary-labelled IPA entries and excludes 48,957 model-generated entries; manual/unknown labels are excluded by policy. The tokenizer list is reduced to the retained IPA keys. One stale metadata IPA value for `สวน` is recorded without changing the runtime IPA. The OOV fallback remains active.
+
+All six TLTK fallback asset transformations are now independently reproducible: five assets are byte-identical to the pinned TLTK source; FastThaiG2P's `sylform_var.pkl` is byte-identical to bzip2 decompression of TLTK's `sylform_var.pklz`. The verifier `scripts/verify_tltk_fallback_provenance.py` ran successfully in 42085653176. The TLTK parser header identifies version 1.3.8 and BSD-3-Clause; the source repository also contains a root LGPL-3.0 notice. Both notices remain in the bundle while final license scope is reviewed.
+
+A transparent dataset ZIP is now generated from the filtered wheel and includes `dict.txt`, `ipa.json`, machine-readable provenance, attribution, and the CC BY-SA 4.0 notice. The public notices page links to the archive and to the Wiktionary dual-license source information. The latest ZIP packaging and deploy-time hash checks were added after the verified checkpoint and require exact-head CI.
+
+**Current release state:** engineering port substantially verified; public Pages redistribution remains BLOCKED because `redistribution_approved=false`, final TLTK license-scope review and explicit owner approval are outstanding, and no merge/deploy has occurred. The Pages build and deploy job remain fail-closed. Do not describe the new Pyodide runtime as live.
+
+This does not change linguistic evidence: independent IPA gold remains 0; accuracy remains `NOT_MEASURED`; Ukrainian practical forms remain provisional. Thai/Ukrainian expert review and audio/acoustic work remain deferred from the owner-approved beta scope.
