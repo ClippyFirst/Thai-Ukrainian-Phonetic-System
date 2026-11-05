@@ -13,7 +13,7 @@ This is a usable, evidence-labelled beta of a research-oriented Thai-to-Ukrainia
 - Do not claim independent linguistic accuracy. Current independent IPA gold remains 0 and accuracy remains NOT_MEASURED.
 - No audio acquisition, audio processing, acoustic validation, or narrow connected-speech claims. These remain outside the text-only beta scope.
 - CCOST/LOTUSDIS annotations remain source-annotated data, not independent gold. Corpus use remains subject to each source's terms and attribution.
-- Build the browser runtime from the pinned FastThaiG2P wheel and Pyodide in CI; self-host all runtime assets on GitHub Pages. Public redistribution remains gated on the exact wheel-member provenance and attribution manifest. The CI-only bundle is ephemeral and is not published.
+- Build a source-filtered browser wheel from the pinned FastThaiG2P commit and Pyodide in CI; self-host all runtime assets on GitHub Pages. The build excludes model-generated/unknown IPA records, retains only per-entry Wiktionary/manual records, and preserves the upstream OOV fallback. Public redistribution remains gated on attribution, TLTK fallback release mapping and dependency notices. The CI-only bundle is ephemeral and is not published.
 
 ## Owner-approved beta gate changes
 
@@ -25,7 +25,7 @@ This is a usable, evidence-labelled beta of a research-oriented Thai-to-Ukrainia
 | Manual accessibility certification | DEFERRED as a certification gate | Source-level and automated checks remain required; unresolved manual checks must be disclosed, not described as passed. |
 | CCOST unknown labels (_8, <P>, <P:>, <:p>, <Fail>) | PARTIAL / fail-closed | Keep raw values and abstain; beta may proceed without inventing semantics. |
 | CCOST controlled-wordlist discrepancy | DEFERRED unless it affects a shipped runtime path | Do not promote unresolved research rows into runtime data. |
-| FastThaiG2P browser runtime bundle | PARTIAL / PUBLICATION GATE | Pyodide parity and same-origin worker are being verified. Pages build refuses public redistribution until `data/third_party/fastthaig2p-browser-bundle.json` records evidence-backed approval. |
+| FastThaiG2P browser runtime bundle | PARTIAL / PUBLICATION GATE | Pyodide parity and Chromium worker smoke passed on checkpoint `8ff38629c5`; source-filtered wheel and exact version/hash checks are under exact-head CI. Pages build refuses public redistribution until `data/third_party/fastthaig2p-browser-bundle.json` records evidence-backed approval. |
 
 DEFERRED is a scope decision, not a pass. Reopen a deferred item before any claim of linguistic validation, official-standard status, corpus accuracy, or acoustic fidelity.
 
@@ -87,10 +87,12 @@ No third-party skill files are copied into this repository.
 - [ ] Manual accessibility limitations are disclosed; no unsupported WCAG conformance claim is made.
 - [ ] Release notes identify known linguistic and corpus limitations.
 
-## GitHub Pages-only hosting decision (2026-11-05)
+## GitHub Pages-only hosting decision and port status (2026-11-05)
 
-The owner selected a browser/WASM port of the existing FastThaiG2P engine. GitHub Pages is the sole hosting target; Vercel, remote API hosting and JavaScript engine replacement are out of scope. The Pyodide compatibility/parity spike and its current status are tracked in [FastThaiG2P Pyodide port](fastthaig2p-pyodide-port.md). Do not enable Pages deployment of the new runtime bundle until the browser parity, bundle, and asset-rights gates pass.
+The owner selected a browser/WASM port of the existing FastThaiG2P engine. GitHub Pages is the sole hosting target; Vercel, remote API hosting and JavaScript engine replacement are out of scope. The port uses the shared Python service inside Pyodide 0.29.5 and a same-origin Web Worker. At checkpoint `8ff38629c5`, CPython/Pyodide parity passed four inputs and a real Chromium cold/warm worker smoke passed without API or CDN requests.
 
-## Current readiness statement
+The browser build now filters the pinned upstream runtime dictionary using `ipa_metadata.json`: retain `wiktionary` and `manual` source labels, exclude generated/unknown records, and reduce `dict.txt` to the retained IPA keys. The OOV fallback remains enabled. Exact-head verification of this source-filtered wheel is pending; see [FastThaiG2P data provenance](fastthaig2p-data-provenance.md) and [Pyodide port status](fastthaig2p-pyodide-port.md).
 
-**BETA_CANDIDATE_ENGINEERING_VERIFIED; PUBLIC_DEPLOYMENT_NOT_YET_VERIFIED.** The Pyodide 0.29.5 shared-service parity gate has passed four inputs; the real-browser worker smoke and latest full CI are still being verified. This is software-runtime evidence, not linguistic validation and not proof that the public Pages runtime bundle is cleared for redistribution. No release tag or production cutover is made by this document.
+**Public deployment remains blocked.** `redistribution_approved=false`; Wiktionary/Kaikki attribution and share-alike publication notices, exact TLTK fallback release mapping, and complete third-party license notices remain to be verified. The Pages builder and deploy job both fail closed unless the rights manifest and explicit repository variable approve publication. Do not enable that variable or claim the new runtime is live until those gates pass.
+
+**Readiness:** `BETA_CANDIDATE_ENGINEERING_VERIFIED; PUBLIC_DEPLOYMENT_NOT_YET_VERIFIED`. This is software-runtime evidence, not linguistic validation. Independent IPA gold remains 0, accuracy remains `NOT_MEASURED`, and Ukrainian forms remain provisional. No release tag, merge, main-branch change or production cutover was made.
