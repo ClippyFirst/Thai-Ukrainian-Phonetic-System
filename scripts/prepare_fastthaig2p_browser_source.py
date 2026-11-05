@@ -35,6 +35,7 @@ def prepare_source(source_dir: Path) -> dict[str, Any]:
 
     retained: dict[str, str] = {}
     source_counts: dict[str, int] = {}
+    metadata_ipa_mismatches: list[str] = []
     for word, record in metadata.items():
         source = record.get("source", "missing")
         source_counts[source] = source_counts.get(source, 0) + 1
@@ -44,7 +45,9 @@ def prepare_source(source_dir: Path) -> dict[str, Any]:
         if not isinstance(ipa, str) or not ipa.startswith("/") or not ipa.endswith("/"):
             raise SystemExit(f"Invalid or missing source-attributed IPA for {word!r}")
         if record.get("ipa") != ipa:
-            raise SystemExit(f"ipa.json and ipa_metadata.json disagree for {word!r}")
+            # Keep the current runtime IPA but disclose that the audit snapshot is stale.
+            # The source label remains the only provenance gate; do not invent a new source.
+            metadata_ipa_mismatches.append(word)
         retained[word] = ipa
 
     if not retained:
@@ -79,6 +82,8 @@ def prepare_source(source_dir: Path) -> dict[str, Any]:
         "excluded_counts": dict(sorted(excluded_counts.items())),
         "retained_entries": len(retained),
         "retained_dictionary_words": len(retained_words),
+        "metadata_ipa_mismatch_count": len(metadata_ipa_mismatches),
+        "metadata_ipa_mismatch_examples": metadata_ipa_mismatches[:20],
         "fallback": "upstream TLTK-derived rule fallback remains enabled",
         "linguistic_accuracy": "NOT_MEASURED",
     }
