@@ -145,6 +145,38 @@ second line with ""quoted"" text"
     def test_short_textgrid_is_not_guessed(self):
         with self.assertRaises(TextGridFormatError): parse_textgrid_long('File type = "ooTextFile short"')
 
+    def test_inspector_separates_documented_not_processed_chunk_marker(self):
+        import tempfile
+        import zipfile
+        from pathlib import Path
+        from scripts.inspect_ccost_textgrid import inspect
+
+        textgrid = """File type = "ooTextFile"
+Object class = "TextGrid"
+xmin = 0
+xmax = 1
+item []:
+    item [1]:
+        class = "IntervalTier"
+        name = "MAU"
+        xmin = 0
+        xmax = 1
+        intervals: size = 1
+        intervals [1]:
+            xmin = 0
+            xmax = 1
+            text = "<notProcessedChunk>"
+"""
+        with tempfile.TemporaryDirectory() as directory:
+            archive_path = Path(directory) / "fixture.zip"
+            with zipfile.ZipFile(archive_path, "w") as archive:
+                archive.writestr("labels/sample.TextGrid", textgrid)
+            report = inspect([archive_path])
+
+        self.assertEqual(report["failures"], [])
+        self.assertEqual(report["processing_failure_marker_counts_by_tier"], {"MAU": 1})
+        self.assertEqual(report["processing_failure_markers"][0]["raw_label"], "<notProcessedChunk>")
+
     def test_zip_inspection_reads_textgrid_member_and_skips_audio(self):
         import tempfile
         import zipfile

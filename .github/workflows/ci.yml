@@ -89,7 +89,10 @@ jobs:
           assert summary["tone_suffix_8_unique_raw_label_events"] == 438, summary
           assert summary["tone_suffix_8_distinct_raw_strings"] == 22, summary
           assert summary["tone_suffix_8_files"] == 119, summary
-          assert summary["phonetic_failure_occurrences"] == 1592, summary
+          assert summary["phonetic_failure_occurrences"] == 1450, summary
+          assert summary["documented_maus_failure_marker_occurrences"] == 142, summary
+          assert summary["documented_maus_failure_marker_interval_count"] == 142, summary
+          assert summary["documented_maus_failure_markers"] == {"<notProcessedChunk>": 142}, summary
           assert summary["unresolved_marker_interval_count"] == 821, summary
           assert summary["markers"] == {"<P>": 821, "<Fail>": 24, "<P:>": 4, "<:p>": 22}, summary
           assert summary["audio_members_read"] == 0, summary

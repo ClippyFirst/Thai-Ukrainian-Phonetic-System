@@ -26,6 +26,7 @@ from thai_ukrainian.adapters.ccost import (
 from thai_ukrainian.adapters.xsampa import XSampaConversionError, convert_xsampa_label
 
 UNRESOLVED_MARKERS = ("<P>", "<P:>", "<:p>", "<Fail>")
+DOCUMENTED_MAUS_FAILURE_MARKERS = ("<notProcessedChunk>",)
 AUDIO_SUFFIXES = {".wav", ".wave", ".mp3", ".flac", ".ogg", ".m4a", ".aiff", ".aif"}
 MAX_TEXTGRID_MEMBER_BYTES = 8 * 1024 * 1024
 MAX_ARCHIVE_TEXTGRID_BYTES = 1024 * 1024 * 1024
@@ -55,6 +56,7 @@ CSV_FIELDS = (
     "raw_label",
     "issue_types",
     "markers",
+    "known_failure_markers",
     "overlap_context",
     "neighbor_context",
     *ANNOTATION_FIELDS,
@@ -68,6 +70,10 @@ def _stable_id(*parts: str) -> str:
 
 def _marker_counts(label: str) -> dict[str, int]:
     return {marker: label.count(marker) for marker in UNRESOLVED_MARKERS if marker in label}
+
+
+def _known_failure_counts(label: str) -> dict[str, int]:
+    return {marker: label.count(marker) for marker in DOCUMENTED_MAUS_FAILURE_MARKERS if marker in label}
 
 
 def _interval_payload(tier: str, interval: TextGridInterval, relation: str) -> dict[str, Any]:
@@ -128,6 +134,7 @@ def build_worklist(paths: list[Path]) -> dict[str, Any]:
     records: list[dict[str, Any]] = []
     archives: list[dict[str, Any]] = []
     marker_appearances: Counter[str] = Counter()
+    known_failure_appearances: Counter[str] = Counter()
     phonetic_failures: Counter[str] = Counter()
     source_files = 0
 
@@ -174,13 +181,19 @@ def build_worklist(paths: list[Path]) -> dict[str, Any]:
                         if not label:
                             continue
                         markers = _marker_counts(label)
-                        marker_appearances.update({
-                            marker: count for marker, count in markers.items()
-                        })
+                        known_failure_markers = _known_failure_counts(label)
+                        marker_appearances.update(markers)
+                        known_failure_appearances.update(known_failure_markers)
                         issue_types: list[str] = []
                         if markers:
                             issue_types.append("UNRESOLVED_MARKER")
-                        if tier.name in CCOST_PHONETIC_TIERS and not is_ccost_nonphonetic_label(label):
+                        if known_failure_markers:
+                            issue_types.append("DOCUMENTED_MAUS_PROCESSING_FAILURE")
+                        if (
+                            tier.name in CCOST_PHONETIC_TIERS
+                            and not is_ccost_nonphonetic_label(label)
+                            and label not in DOCUMENTED_MAUS_FAILURE_MARKERS
+                        ):
                             try:
                                 convert_xsampa_label(label)
                             except XSampaConversionError:
@@ -206,6 +219,7 @@ def build_worklist(paths: list[Path]) -> dict[str, Any]:
                             "raw_label": label,
                             "issue_types": issue_types,
                             "markers": markers,
+                            "known_failure_markers": known_failure_markers,
                             "overlap_context": overlap,
                             "neighbor_context": neighbors,
                             **{field: "" for field in ANNOTATION_FIELDS},
@@ -221,6 +235,7 @@ def build_worklist(paths: list[Path]) -> dict[str, Any]:
         (row["source_file"], row["start"], row["end"], row["raw_label"]) for row in tone_rows
     }
     marker_rows = [row for row in records if "UNRESOLVED_MARKER" in row["issue_types"]]
+    known_failure_rows = [row for row in records if "DOCUMENTED_MAUS_PROCESSING_FAILURE" in row["issue_types"]]
     marker_interval_counts: Counter[str] = Counter()
     for row in marker_rows:
         marker_interval_counts.update(row["markers"].keys())
@@ -234,6 +249,9 @@ def build_worklist(paths: list[Path]) -> dict[str, Any]:
         "tone_suffix_8_distinct_raw_strings": len({row["raw_label"] for row in tone_rows}),
         "tone_suffix_8_files": len({row["source_file"] for row in tone_rows}),
         "phonetic_failure_occurrences": sum(phonetic_failures.values()),
+        "documented_maus_failure_marker_occurrences": sum(known_failure_appearances.values()),
+        "documented_maus_failure_marker_interval_count": len(known_failure_rows),
+        "documented_maus_failure_markers": dict(sorted(known_failure_appearances.items())),
         "unresolved_marker_interval_count": len(marker_rows),
         "marker_interval_counts": dict(sorted(marker_interval_counts.items())),
         "unresolved_marker_appearances": sum(marker_appearances.values()),
@@ -264,7 +282,7 @@ def _write_tsv(path: Path, records: list[dict[str, Any]]) -> None:
             output = dict(row)
             for field in ("issue_types",):
                 output[field] = ";".join(output[field])
-            for field in ("markers", "overlap_context", "neighbor_context"):
+            for field in ("markers", "known_failure_markers", "overlap_context", "neighbor_context"):
                 output[field] = json.dumps(output[field], ensure_ascii=False, separators=(",", ":"))
             writer.writerow(output)
 

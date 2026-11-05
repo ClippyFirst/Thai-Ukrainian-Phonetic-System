@@ -69,6 +69,16 @@ item []:
             xmin = 0
             xmax = 2
             text = "ภาษาไทย"
+    item [6]:
+        class = "IntervalTier"
+        name = "MAU"
+        xmin = 0
+        xmax = 2
+        intervals: size = 1
+        intervals [1]:
+            xmin = 0
+            xmax = 1
+            text = "<notProcessedChunk>"
 """
 
 
@@ -107,6 +117,20 @@ class CCOSTReviewWorklistTests(unittest.TestCase):
         self.assertEqual(report["summary"]["markers"]["<Fail>"], 1)
         self.assertEqual(report["summary"]["marker_interval_counts"]["<P>"], 1)
         self.assertEqual(report["summary"]["marker_interval_counts"]["<Fail>"], 1)
+
+    def test_classifies_not_processed_chunk_as_documented_maus_failure(self):
+        with tempfile.TemporaryDirectory() as directory:
+            archive_path = Path(directory) / "ccost.zip"
+            with zipfile.ZipFile(archive_path, "w") as archive:
+                archive.writestr("labels/sample.TextGrid", TEXTGRID)
+            report = build_worklist([archive_path])
+
+        row = next(row for row in report["records"] if row["raw_label"] == "<notProcessedChunk>")
+        self.assertIn("DOCUMENTED_MAUS_PROCESSING_FAILURE", row["issue_types"])
+        self.assertNotIn("OTHER_UNSUPPORTED_XSAMPA", row["issue_types"])
+        self.assertEqual(row["known_failure_markers"], {"<notProcessedChunk>": 1})
+        self.assertEqual(report["summary"]["documented_maus_failure_marker_occurrences"], 1)
+        self.assertEqual(report["summary"]["documented_maus_failure_marker_interval_count"], 1)
 
     def test_keeps_source_labels_and_blank_expert_decision_fields(self):
         with tempfile.TemporaryDirectory() as directory:

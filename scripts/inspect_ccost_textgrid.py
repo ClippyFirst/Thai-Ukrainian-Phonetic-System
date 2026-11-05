@@ -53,6 +53,8 @@ def _textgrid_structure_diagnostic(text: str) -> dict:
 def inspect(paths: list[Path], sample_limit: int = 5) -> dict:
     files: list[dict] = []
     failures: list[dict] = []
+    processing_failure_markers: list[dict] = []
+    processing_failure_counts: Counter[str] = Counter()
     archives: list[dict] = []
     tier_counts: Counter[str] = Counter()
     converted_counts: Counter[str] = Counter()
@@ -79,6 +81,16 @@ def inspect(paths: list[Path], sample_limit: int = 5) -> dict:
                             continue
                         if is_ccost_nonphonetic_label(label):
                             marker_counts[(tier.name, label)] += 1
+                            continue
+                        if label == "<notProcessedChunk>":
+                            processing_failure_counts[tier.name] += 1
+                            processing_failure_markers.append({
+                                "file": name,
+                                "tier": tier.name,
+                                "interval": [interval.xmin, interval.xmax],
+                                "raw_label": label,
+                                "meaning": "MAUS dummy segment for a chunk that could not be processed",
+                            })
                             continue
                         try:
                             convert_xsampa_label(label)
@@ -203,7 +215,7 @@ def inspect(paths: list[Path], sample_limit: int = 5) -> dict:
         archives.append(archive_report)
 
     return {
-        "schema_version": "1.2",
+        "schema_version": "1.3",
         "source": "researcher-supplied TextGrid text; non-TextGrid ZIP members were not read",
         "files_inspected": len(files),
         "files": files,
@@ -214,6 +226,8 @@ def inspect(paths: list[Path], sample_limit: int = 5) -> dict:
             f"{tier}:{label}": count
             for (tier, label), count in sorted(marker_counts.items())
         },
+        "processing_failure_markers": processing_failure_markers,
+        "processing_failure_marker_counts_by_tier": dict(sorted(processing_failure_counts.items())),
         "failures": failures,
         "limitations": [
             "TextGrid labels are source annotations, not independent project gold.",
