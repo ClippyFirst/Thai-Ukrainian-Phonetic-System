@@ -3,7 +3,7 @@
   "target": "GitHub Pages static browser bundle",
   "owner_decision": "FASTTHAIG2P_PYODIDE_BROWSER_PORT",
   "redistribution_approved": false,
-  "status": "PARTIAL_PUBLICATION_OWNER_APPROVAL_AND_PICKLE_TRANSFORM_EVIDENCE_PENDING",
+  "status": "PARTIAL_OWNER_REDISTRIBUTION_APPROVAL_AND_FINAL_LICENSE_SCOPE_REVIEW_PENDING",
   "packages": [
     {
       "name": "thai-ukrainian-phonetic-system",
@@ -58,10 +58,14 @@
           "asset_mapping": {
             "identical_git_blob_matches": 5,
             "total_assets": 6,
-            "transformed_pickle": "FastThaiG2P sylform_var.pkl differs in size/format from TLTK sylform_var.pklz; exact transformation not independently reproduced"
+            "transformed_pickle": "Verified: bz2.decompress(TLTK tltk/sylform_var.pklz) is byte-identical to FastThaiG2P data/fallback/sylform_var.pkl",
+            "verification_script": "scripts/verify_tltk_fallback_provenance.py",
+            "tltk_file_last_change_commit": "0cef4bcfbdd675f589783dd4134b87b9bb9fbb93",
+            "ci_run": 42085653176,
+            "verified_assets": 6
           },
           "repository_notice_conflict": "TLTK repository contains a separate root LGPL-3.0 LICENSE and older GPLv3 PKG-INFO; both relevant source notices retained in web/licenses/",
-          "status": "PARTIAL — BSD-3 evidence strong; exact pickle transformation pending"
+          "status": "DONE_VERIFIED_SOURCE_AND_TRANSFORMATION; LICENSE_SCOPE_REVIEW_RETAINED"
         }
       },
       "status": "SOFTWARE_LICENSE_IDENTIFIED_DATA_REDISTRIBUTION_NOT_CLEARED"
@@ -86,17 +90,17 @@
     }
   ],
   "publication_gate": [
-    "Complete or explicitly accept the remaining TLTK sylform_var.pkl source transformation evidence and preserve the BSD-3/other applicable TLTK notices.",
-    "Keep the Wiktionary-derived dataset under CC BY-SA 4.0 with Wiktionary/Kaikki attribution; generated, manual and unknown-source records remain excluded.",
-    "Retain all ten notice files and the exact SHA-256 manifest; the build and Chromium worker already verify the bundle and notices set.",
+    "Retain Wiktionary/Kaikki attribution, modification disclosure and the filtered CC BY-SA 4.0 dataset in the public bundle; include the dual-license source notice link.",
+    "Retain both the TLTK 1.3.8 BSD-3-Clause notice and the TLTK repository LGPL-3.0 notice until release-specific file-level scope is unambiguous.",
+    "Retain all ten notice files and exact SHA-256 manifest; verify the public bundle and notices after Pages deployment.",
     "Owner must explicitly approve public redistribution by changing redistribution_approved only after reviewing the source/notice evidence.",
     "Deploy only from main through the GitHub Pages workflow; do not use a separate API host or CDN."
   ],
   "notes": [
-    "Pyodide parity and the actual same-origin Chromium worker passed in CI run 42073702543; four Thai inputs were compared with the same CPython service.",
-    "The ephemeral CI bundle contains 4 wheels (7,823,799 bytes), 14 Pyodide runtime files (12,610,023 bytes), and 10 license/NOTICE files (57,389 bytes).",
-    "PyThaiNLP 5.4.0 was slimmed from 67,689,272 to 3,648,217 uncompressed member bytes by removing 37 unused corpus assets (64,041,055 bytes).",
-    "CI refuses public Pages packaging while redistribution_approved is false; this is a verified negative gate, not a deployment.",
-    "No linguistic accuracy or independent IPA gold claim follows from this manifest."
+    "Pyodide parity, filtered dictionary source counts, actual same-origin Chromium worker smoke, and TLTK fallback asset transformations passed in CI run 42085653176.",
+    "The filtered wheel retains 13,144 Wiktionary IPA records, excludes 48,957 generated records, excludes manual/unknown records by policy, and records one stale metadata value for สวน without altering the current runtime IPA.",
+    "All six TLTK fallback assets are now source/transform verified: five byte-identical; sylform_var.pkl is the exact bzip2 decompression of the TLTK 1.3.8 source asset.",
+    "The exact scope of the LGPL-3.0 root repository notice versus the BSD-3.0 TLTK 1.3.8 package/file notices remains disclosed and requires final rights review; both notices are bundled.",
+    "Public redistribution remains disabled until owner sign-off; no Pages deploy, main merge, release tag, or repository setting change was made."
   ]
 }
