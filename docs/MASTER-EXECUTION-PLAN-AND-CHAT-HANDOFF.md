@@ -2668,3 +2668,19 @@ This worklist supports text-based review of canonical/phonemic labels. It cannot
 - Audio source: Zenodo C-COST.zip is 6.2 GB, WAV+TextGrid, CC BY-NC-SA 4.0. No audio downloaded. Need opt-in selective per-recording retrieval and confirmation of non-commercial scope; don't fetch full archive in routine CI.
 - Candidate panel now has official public evidence: Chutamanee Onsuwan (Thammasat), Phanintra Teeranon (University of Phayao; phanintra.te@up.ac.th), Rungpat Roengpitya (Mahidol; rungpat.roe@mahidol.ac.th). Proposed first-pass: Onsuwan + Teeranon; separate adjudicator: Roengpitya. No contact/consent/appointment or conflict declarations; reviewer registry empty.
 - Marker semantics and actual expert adjudication remain BLOCKED. Independent IPA gold rows 0; linguistic accuracy NOT_MEASURED.
+
+
+---
+
+## Owner-approved beta scope update — 2026-11-05
+
+- The owner has selected a **beta release** rather than a linguistically validated release. Two independent Thai reviewers plus adjudicator, and independent Ukrainian-native target-form review, are **DEFERRED** and are not beta acceptance gates. Do not represent these items as completed.
+- Audio acquisition and acoustic/narrow-phonetic validation remain **DEFERRED / OUT OF SCOPE**. No audio is required for this beta.
+- Unknown CCOST labels and tone suffix _8 remain **PARTIAL / fail-closed**. Preserve raw labels and abstain; beta scope does not authorize guessed mappings.
+- Manual accessibility certification is **DEFERRED as a certification gate**, not passed. Static source review is recorded in docs/beta-release-scope.md; browser keyboard, screen-reader, zoom/reflow, forced-colors and device checks remain unverified. Do not claim WCAG conformance.
+- FastThaiG2P vendoring remains deferred; the pinned optional dependency path is retained. Do not redistribute mixed assets without component-level attribution/notices.
+- The mfwarren/entrepreneur-claude-skills repository is used only for relevant operational patterns (SOP, product feedback, decision-making and landing-page communication). It contains no dedicated accessibility skill; WCAG criteria remain the accessibility basis. No third-party skill files were copied.
+- Beta engineering readiness is **BETA_CANDIDATE_ENGINEERING_VERIFIED; PUBLIC_DEPLOYMENT_NOT_YET_VERIFIED**. The previous exact-head code CI on 5a7f6888420009e288f6b43332bd0dd4b560fddd passed Full CI, Site API and optional external G2P smoke. The subsequent documentation-only commits have not yet been verified by their own exact-head CI at the time of this note.
+- Acceptance to proceed from candidate to public beta: exact-head CI on the final candidate; verified Python-capable hosting preview with same-origin API; published feedback path; dependency/corpus notices; beta warnings; known limitations and manual accessibility gaps disclosed. No release tag, production cutover or merge is performed here.
+
+Canonical scope and checklist: docs/beta-release-scope.md.
