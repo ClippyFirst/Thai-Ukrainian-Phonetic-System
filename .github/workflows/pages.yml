@@ -126,15 +126,43 @@ jobs:
               && grep -Fq 'не надсилається на API або зовнішній сервер' /tmp/deployed-system.html \
               && curl --fail --silent --show-error "$PAGE_URL/vendor/bundle-manifest.json" -o /tmp/bundle-manifest.json \
               && python - <<'PY'
+          import hashlib
           import json
+          import os
           from pathlib import Path
+          from urllib.request import urlopen
+
           manifest = json.loads(Path("/tmp/bundle-manifest.json").read_text())
           assert manifest["purpose"] == "public-pages"
           assert manifest["redistribution_approved"] is True
           assert manifest["pyodide"]["version"] == "0.29.5"
-          assert {wheel["package"] for wheel in manifest["wheels"]} == {
-              "fastthaig2p", "pythainlp", "thai-ukrainian-phonetic-system", "tzdata"
+          expected_versions = {
+              "fastthaig2p": "0.1.0",
+              "pythainlp": "5.4.0",
+              "thai-ukrainian-phonetic-system": "0.6.1",
+              "tzdata": "2026.6",
           }
+          assert {wheel["package"]: wheel["version"] for wheel in manifest["wheels"]} == expected_versions
+          required_notices = {
+              "licenses/Apache-2.0-FastThaiG2P.txt",
+              "licenses/NOTICE-FastThaiG2P.txt",
+              "licenses/Apache-2.0-PyThaiNLP.txt",
+              "licenses/PyThaiNLP-corpus-license.md",
+              "licenses/MPL-2.0-Pyodide.txt",
+              "licenses/Apache-2.0-tzdata.txt",
+              "licenses/BSD-3-Clause-TLTK.txt",
+              "licenses/LGPL-3.0-TLTK-repository-license.txt",
+              "licenses/CC-BY-SA-4.0.txt",
+          }
+          notices = {item["path"]: item for item in manifest["notices"]}
+          assert required_notices <= notices.keys()
+          base = os.environ["PAGE_URL"].rstrip("/")
+          for path, item in notices.items():
+              data = urlopen(f"{base}/{path}").read()
+              assert len(data) == item["size_bytes"], path
+              assert hashlib.sha256(data).hexdigest() == item["sha256"], path
+          page = urlopen(f"{base}/third-party-notices.html").read().decode("utf-8")
+          assert "Wiktionary" in page and "CC BY-SA 4.0" in page and "BSD-3-Clause" in page
           PY
             then
               for asset in pyodide.mjs pyodide.asm.js pyodide.asm.wasm python_stdlib.zip; do
