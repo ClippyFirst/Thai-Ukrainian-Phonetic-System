@@ -4,7 +4,7 @@ This page is the navigation layer for the repository. It distinguishes the maint
 
 ## Latest repository audit
 
-**Current corpus decision (2026-11-05):** Global TIMIT is excluded by owner decision. CCOST is the primary phonetic-text candidate; FastThaiG2P/Wiktionary is a provenance-separated supporting source; LOTUSDIS is optional orthographic context. See the [text-only corpus review](research/corpus-text-only-fastthaig2p-2026-11-05.md), the [CCOST label/marker review](ccost-label-review-2026-11-05.md), the [FastThaiG2P component-level license review](fastthaig2p-license-review-2026-11-05.md), and current [validation matrix](validation-matrix.md).
+**Current corpus decision (2026-11-05):** Global TIMIT is excluded by owner decision. CCOST is the primary phonetic-text candidate; FastThaiG2P/Wiktionary is a provenance-separated supporting source; LOTUSDIS is optional orthographic context. See the [text-only corpus review](research/corpus-text-only-fastthaig2p-2026-11-05.md), the [CCOST label/marker review](ccost-label-review-2026-11-05.md), the [FastThaiG2P component-level license review](fastthaig2p-license-review-2026-11-05.md), [external curator clarification requests](external-review-and-source-requests.md), and current [validation matrix](validation-matrix.md).
 
 The [2026-11-04 repository audit](repository-audit-2026-11-04.md) records the live main SHA, branch/PR state, CI evidence, code/data/docs ownership, adopted engineering practices and external blockers. It is the current structural-audit snapshot; older dated entries below remain historical.
 
