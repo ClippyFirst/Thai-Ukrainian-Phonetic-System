@@ -258,7 +258,7 @@ Inventory denominators:
 - Earlier inspector counts `<P>` 394 and `<Fail>` 16 were limited to declared phonetic tiers; do not compare them as if the scope were identical.
 - `<notProcessedChunk>`: 142 documented MAUS processing-failure intervals, not phonetic labels.
 
-The exact-head CI workflow asserts these values and publishes `ccost-label-adjudication-worklist`. The latest exact-head Full CI was cancelled by subsequent pushes; this batch remains **PARTIAL pending a successful exact-head run and artifact inspection**. No local tests are claimed.
+The exact-head CI workflow asserts these values and publishes `ccost-label-adjudication-worklist`. Full CI run 42034879862 passed all jobs on implementation checkpoint 47db8ac988836014663a435e08e2afe470342fe8. Artifact 13418750385 was downloaded and inspected: 1,975 rows, all 11 expert fields blank, audio_members_read=0, all 868 `_8` occurrences retained including `nia_8p`. Generator, tests and artifact are DONE_VERIFIED on that checkpoint. A subsequent workflow-only commit adds per-marker interval/appearance assertions and is pending exact-head CI. No local tests are claimed.
 
 The three owner-prioritized tasks remain accurately separated:
 1. `<P>`, `<P:>`, `<:p>`, `<Fail>` semantic definitions: **BLOCKED**; no public source establishes them.
