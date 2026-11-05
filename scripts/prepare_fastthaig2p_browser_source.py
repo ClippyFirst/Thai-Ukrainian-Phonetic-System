@@ -74,7 +74,7 @@ def prepare_source(source_dir: Path) -> dict[str, Any]:
         source: count for source, count in source_counts.items()
         if source not in ALLOWED_SOURCES
     }
-    return {
+    report = {
         "upstream_commit": "4e82a291b4cf2876326744c6580121e9986ad354",
         "policy": "retain source=wiktionary or source=manual; exclude generated and unknown",
         "source_counts_before_filter": dict(sorted(source_counts.items())),
@@ -86,7 +86,51 @@ def prepare_source(source_dir: Path) -> dict[str, Any]:
         "metadata_ipa_mismatch_examples": metadata_ipa_mismatches[:20],
         "fallback": "upstream TLTK-derived rule fallback remains enabled",
         "linguistic_accuracy": "NOT_MEASURED",
+        "dataset_license": "CC-BY-SA-4.0",
+        "dataset_attribution": [
+            "Wiktionary contributors",
+            "Kaikki.org / Wiktextract"
+        ],
     }
+
+    provenance_path = data_dir / "browser-data-provenance.json"
+    provenance_path.write_text(
+        json.dumps(report, ensure_ascii=False, indent=2) + "\\n",
+        encoding="utf-8",
+    )
+    attribution_path = data_dir / "WIKTIONARY-ATTRIBUTION.md"
+    attribution_path.write_text(
+        "# FastThaiG2P filtered Wiktionary data attribution\\n\\n"
+        "This browser wheel contains a filtered, modified subset of Thai IPA records "
+        "from Wiktionary via Kaikki.org. Attribution: Wiktionary contributors; "
+        "Kaikki.org / Wiktextract.\\n\\n"
+        "Changes made for this build: records without a per-entry wiktionary "
+        "source label were excluded; model-generated entries were excluded; the "
+        "tokenizer wordlist was reduced to the retained IPA keys; the original "
+        "runtime IPA string is preserved when the audit snapshot's IPA value differs "
+        "(see browser-data-provenance.json).\\n\\n"
+        "The derived Wiktionary data is made available under "
+        "[Creative Commons Attribution-ShareAlike 4.0 International]"
+        "(https://creativecommons.org/licenses/by-sa/4.0/). "
+        "Source and license information: https://kaikki.org/thwiktionary/index.html "
+        "and https://en.wiktionary.org/wiki/Wiktionary:Copyrights.\\n",
+        encoding="utf-8",
+    )
+
+    project_file = source_dir / "pyproject.toml"
+    project_text = project_file.read_text(encoding="utf-8")
+    fallback_include = '"data/fallback" = "fastthaig2p/data/fallback"'
+    if fallback_include not in project_text:
+        raise SystemExit("FastThaiG2P wheel include configuration changed; refusing to omit provenance notices")
+    project_text = project_text.replace(
+        fallback_include,
+        fallback_include + '\\n'
+        '"data/browser-data-provenance.json" = "fastthaig2p/data/browser-data-provenance.json"\\n'
+        '"data/WIKTIONARY-ATTRIBUTION.md" = "fastthaig2p/data/WIKTIONARY-ATTRIBUTION.md"',
+        1,
+    )
+    project_file.write_text(project_text, encoding="utf-8")
+    return report
 
 
 def main() -> None:
