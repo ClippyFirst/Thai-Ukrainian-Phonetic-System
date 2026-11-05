@@ -4390,7 +4390,7 @@
     "independent_ipa_gold_rows": 0,
     "linguistic_accuracy": "NOT_MEASURED",
     "main_merged": true,
-    "production_cutover": true,
+    "production_cutover": false,
     "source_filtered_dictionary": {
       "retained_wiktionary_entries": 13144,
       "excluded_generated_entries": 48957,
@@ -4462,7 +4462,8 @@
       "python_test_suite": "PASS",
       "wheel_install_smoke": "PASS",
       "textgrid_archive_inspection": "IN_PROGRESS"
-    }
+    },
+    "beta_publication": true
   },
   "github_pages_port_latest_exact_head": {
     "deployed_commit": "d672dd0fb721cbe6600d28fe900600ea297416c3",
@@ -4526,6 +4527,8 @@
     "performance_benchmark": "NOT_MEASURED",
     "manual_accessibility_review": "DEFERRED_UNVERIFIED",
     "independent_ipa_gold_rows": 0,
-    "linguistic_accuracy": "NOT_MEASURED"
+    "linguistic_accuracy": "NOT_MEASURED",
+    "production_cutover": false,
+    "beta_publication": true
   }
 }
