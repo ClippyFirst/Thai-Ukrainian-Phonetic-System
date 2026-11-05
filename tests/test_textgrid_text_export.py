@@ -1,4 +1,3 @@
-import json
 import tempfile
 import unittest
 import zipfile
@@ -72,6 +71,12 @@ class TextGridTextExportTests(unittest.TestCase):
         ccost_row = next(row for row in records if row["tier"] == "ORT-MAU")
         self.assertEqual(ccost_row["text"], "ภาษาไทย")
         self.assertEqual(ccost_row["license"], "CC-BY-NC-SA-4.0")
+        self.assertEqual(ccost_row["source_id"], "CORP-CCOST")
+        self.assertEqual(ccost_row["annotation_role"], "orthographic_word")
+        self.assertEqual(
+            ccost_row["source_archive_git_blob_sha1"],
+            "3b1e3978c2b3a232dce4fdcfd137bb572ce5467f",
+        )
         self.assertEqual(ccost_row["evidence_grade"], "SOURCE_ANNOTATED_NOT_GOLD")
         self.assertEqual(ccost_row["start"], 0)
         self.assertEqual(ccost_row["end"], 1)
