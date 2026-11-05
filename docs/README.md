@@ -8,6 +8,10 @@ This page is the navigation layer for the repository. It distinguishes the maint
 
 The [2026-11-04 repository audit](repository-audit-2026-11-04.md) records the live main SHA, branch/PR state, CI evidence, code/data/docs ownership, adopted engineering practices and external blockers. It is the current structural-audit snapshot; older dated entries below remain historical.
 
+## Beta release
+
+The owner-approved beta scope, known limitations, accessibility source review, and operational release checklist are maintained in [Beta release scope](beta-release-scope.md). Thai/Ukrainian external linguistic review and acoustic validation are deferred for beta; this does not establish linguistic accuracy or WCAG conformance.
+
 ## Start here
 
 1. [Project overview and user-facing capabilities](../README.md)
