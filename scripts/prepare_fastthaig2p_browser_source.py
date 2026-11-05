@@ -3,8 +3,8 @@
 
 The upstream runtime ipa.json merges Wiktionary, manually supplied and
 model-generated entries. This build step keeps only entries whose upstream
-ipa_metadata.json source is Wiktionary or manual. Model-generated entries
-are excluded from the public browser wheel because their redistribution
+ipa_metadata.json source is Wiktionary. Model-generated, manual and unknown-source
+entries are excluded from the public browser wheel because their redistribution
 provenance is not established. The custom tokenizer dictionary is reduced
 to exactly the retained IPA keys; OOV words continue through the upstream
 rule-based fallback.
