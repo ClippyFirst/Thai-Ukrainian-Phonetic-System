@@ -48,7 +48,7 @@ assert.match(html, /id="input-count"/);
 assert.match(html, /aria-describedby="input-hint input-count"/);
 assert.match(css, /\.hero-grid\s*\{/);
 assert.match(css, /\.input-count\s*\{/);
-assert.match(css, /\.examples button[^\{]*min-height:\s*44px/);
+assert.match(css, /\.examples button\s*\{[^}]*min-height:\s*44px/);
 assert.match(html, /<section id="status" class="status" role="status" aria-live="polite"/);
 assert.match(html, /<section id="results"[^>]+aria-label="Результати" aria-live="off"/);
 assert.match(html, /<details[^>]*>[\s\S]*?<summary>/, "disclosure widgets need a native summary control");
