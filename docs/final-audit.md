@@ -1884,3 +1884,16 @@ Public institutional/publication evidence supports an uncontacted candidate pane
 Lena Maluleem has relevant phonetics/phonology and prosody credentials, but her public coauthorship and doctoral-supervision link to CCOST author Pittayawat Pittayaporn is a potential conflict for independent CCOST review. She is not assigned to the proposed independent panel unless the conflict is assessed and disclosed.
 
 This is qualification screening only. No contact, consent, appointment, identity verification or conflict declaration exists; reviewer registry remains empty. Independent IPA gold rows remain 0; linguistic accuracy remains NOT_MEASURED.
+
+
+## Exact-head CCOST continuation — 2026-11-05
+
+The exact-head CI run 42036060620 passed all three jobs on ebd1f0a55b2987c40725659b1524d26ad21abc0c. The test job reports 394 passed, 1 skipped, 1,211 subtests passed, Ruff passed, and 29 parity fixtures passed. The CCOST blind worklist artifact (13418563592) was downloaded and inspected: 1,975 rows, 488 TextGrid files, all 11 expert fields blank, audio_members_read=0.
+
+All-tier marker inventory: 871 literal appearances, 821 tier-interval rows, 398 exact file+interval groups. Unique groups by marker: <P> 375, <P:> 4, <:p> 11, <Fail> 8. The same <:p> interval appears in MAU and MAS; the same <Fail> interval appears in ORT-MAU, KAN-MAU and KAS-MAU. This duplication is useful for review but does not establish meaning.
+
+_8 remains unmapped in the published CCOST five-tone mapping, but it is **not invalid generic MAUS syntax**: BAS permits _1–_9. A new exact-interval scan identifies 14 of 397 _8 groups with a mapped _1–_5 label in another phonetic tier (MAU _2 7; MAS _2 4; MAS _3 4; KAN-MAU _3 1). These are candidates for expert inspection, not automatic corrections.
+
+The official [Zenodo CCOST record](https://zenodo.org/records/17366698) lists a 6.2 GB WAV+TextGrid archive under CC BY-NC-SA 4.0. Audio was not downloaded. Selective retrieval is technically desirable for acoustic adjudication but remains blocked by current container network/DNS limitations and the need to confirm non-commercial project scope. Do not fetch the full archive in routine CI.
+
+Unresolved marker semantics and actual expert adjudication remain BLOCKED. No reviewer has been contacted or appointed; the reviewer registry is empty; independent IPA gold rows remain 0; linguistic accuracy remains NOT_MEASURED.
