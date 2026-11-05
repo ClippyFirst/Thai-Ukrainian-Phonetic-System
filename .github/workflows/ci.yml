@@ -97,7 +97,12 @@ jobs:
           assert summary["markers"] == {"<P>": 821, "<Fail>": 24, "<P:>": 4, "<:p>": 22}, summary
           assert summary["audio_members_read"] == 0, summary
           assert len(rows) == summary["records"], (len(rows), summary)
-          assert all(not row["proposed_xsampa"] and not row["adjudicator_decision"] for row in rows)
+          annotation_fields = [
+              "reviewer_id", "reviewer_qualification_ref", "reviewed_at", "decision",
+              "proposed_xsampa", "evidence_note", "confidence", "abstain_reason",
+              "adjudicator_id", "adjudicator_decision", "adjudicator_note",
+          ]
+          assert all(not row[field] for row in rows for field in annotation_fields)
           print(json.dumps({"review_records": len(rows), "summary": summary}, ensure_ascii=False, indent=2))
           PY
       - uses: actions/upload-artifact@v7
