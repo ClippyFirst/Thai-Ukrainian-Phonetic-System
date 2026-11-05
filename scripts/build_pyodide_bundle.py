@@ -12,6 +12,12 @@ from email.parser import Parser
 
 
 EXPECTED = {"fastthaig2p", "pythainlp", "thai-ukrainian-phonetic-system", "tzdata"}
+EXPECTED_VERSIONS = {
+    "fastthaig2p": "0.1.0",
+    "pythainlp": "5.4.0",
+    "thai-ukrainian-phonetic-system": "0.6.1",
+    "tzdata": "2026.6",
+}
 PYODIDE_VERSION = "0.29.5"
 
 
@@ -75,6 +81,12 @@ def main() -> None:
     found = {item["package"] for item in wheel_records}
     if found != EXPECTED:
         raise SystemExit(f"Unexpected browser wheel set: expected {sorted(EXPECTED)}, found {sorted(found)}")
+    for item in wheel_records:
+        expected_version = EXPECTED_VERSIONS[item["package"]]
+        if item["version"] != expected_version:
+            raise SystemExit(
+                f"Unexpected {item['package']} version: expected {expected_version}, found {item['version']}"
+            )
 
     pyodide_record = {
         "version": PYODIDE_VERSION,
