@@ -74,6 +74,20 @@ jobs:
               ],
           }, ensure_ascii=False, indent=2))
           PY
+      - name: Export selected orthographic TextGrid intervals without audio
+        run: |
+          python scripts/export_textgrid_text.py "CCOST textgrid.zip" "nectecLOTUSDIS textgrid.zip" --tier ORT-MAU --tier TRN --tier-prefix Hijack_ --output /tmp/textgrid-orthographic-text.jsonl
+          python - <<'PY'
+          import collections, json
+          rows = [json.loads(line) for line in open('/tmp/textgrid-orthographic-text.jsonl', encoding='utf-8')]
+          sources = collections.Counter(row['source'] for row in rows)
+          assert len(rows) == 178377, len(rows)
+          assert sources == {'CCOST': 145434, 'LOTUSDIS': 32943}, sources
+          assert all(row['evidence_grade'] == 'SOURCE_ANNOTATED_NOT_GOLD' for row in rows)
+          assert all(row['license'] in {'CC-BY-NC-SA-4.0', 'CC-BY-SA-4.0'} for row in rows)
+          assert all('audio' not in row for row in rows)
+          print(json.dumps({'records': len(rows), 'by_source': sources, 'audio_read': False, 'gold_promoted': False}))
+          PY
       - uses: actions/upload-artifact@v7
         with:
           name: textgrid-archive-inspection
