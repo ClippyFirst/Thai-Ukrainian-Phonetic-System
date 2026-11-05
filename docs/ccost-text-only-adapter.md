@@ -56,19 +56,25 @@ The symbol map is a declared subset of the standard X-SAMPA inventory, not an as
 
 src/thai_ukrainian/adapters/ccost.py reads Praat **long-text** TextGrid files and preserves tier name, interval boundaries and label text. It never accesses the paired audio. It maps KAN/KAS/MAS into provisional phonemic PhoneticResult values and preserves MAU as phone-level surface IPA that cannot directly drive syllable-level Ukrainian adaptation. Source annotations are not independently adjudicated gold.
 
-## Run against curator-supplied files
+## Run against the supplied files
 
-After obtaining and locally storing only TextGrid text files under the CC BY-NC-SA 4.0 terms:
+The owner-supplied `CCOST textgrid.zip` is already present on this branch. Inspect its actual release tiers and labels with:
 
-    python scripts/inspect_ccost_textgrid.py /path/to/textgrids --output /tmp/ccost-textgrid-report.json
+    python scripts/inspect_ccost_textgrid.py "CCOST textgrid.zip" --output /tmp/ccost-textgrid-report.json
 
-The script reports tier names, interval counts, a small sample of labels, successful conversion counts and unsupported labels. It does not bundle source files or output a gold dataset. If the archive uses Praat short-text or binary TextGrid, this parser will fail closed; add a separately tested reader only after confirming the actual encoding.
+To export orthographic word and utterance intervals only:
+
+    python scripts/export_textgrid_text.py "CCOST textgrid.zip" --tier ORT-MAU --tier TRN --output /tmp/ccost-orthographic-text.jsonl
+
+The inspector and exporter read only `.TextGrid` members; no WAV is required. The JSONL exporter preserves raw labels, interval bounds, source/tier, license, attribution and `SOURCE_ANNOTATED_NOT_GOLD`. Do not commit the generated data by default.
 
 ## Verification and acceptance gates
 
-- Automated tests cover standard X-SAMPA multi-character tokens, Thai-relevant symbols, aspiration, vowel length, tone suffixes, syllable boundaries, unknown-symbol rejection, TextGrid tier extraction and the IPA → Ukrainian provisional adapter.
-- CI can verify converter behavior on synthetic fixtures. It cannot establish compatibility with actual CCOST TextGrids until a lawful text-only sample is obtained and inspected.
-- Before promoting any corpus record: pin Zenodo version and source file hash; record tier and interval; preserve raw X-SAMPA; convert deterministically; retain tone/length/boundaries; independently review a stratified sample; keep source annotations separate from adjudicated gold.
+- Exact-head CI parsed all 488 supplied CCOST TextGrids and all 90 supplied LOTUSDIS TextGrids. The 488 CCOST file count matches the recording-file total in LREC 2026 Table 1.
+- The supplied release uses `ORT-MAU`, `KAN-MAU`, `KAS-MAU`, `MAU`, `MAS`, `TRN`. The `-MAU` aliases are provisional project mappings; curator confirmation remains desirable.
+- The declared X-SAMPA subset converts deterministically, but 1,014 phonetic-tier labels remain unsupported. `_8`, Unicode IPA-looking forms, unusual sequences and mixed tag-plus-text labels fail closed; do not infer mappings.
+- Exact-head CI [42014178666](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42014178666) passed: 385 Python tests passed, 1 skipped, 1,206 subtests; Ruff, wheel-install smoke, master-artifact, archive inspection and 178,377-record orthographic export assertions passed.
+- Before promoting any corpus record: pin the source version and file identity; record tier and interval; preserve raw source labels; convert deterministically; retain tone/length/boundaries; independently review a stratified sample; keep source annotations separate from adjudicated gold.
 - MAU phone intervals must not be treated as a phonemic syllable. MAS is the phonemic syllable tier. KAS is canonical syllabified pronunciation. KAN is canonical word pronunciation. Do not merge them without an explicit alignment contract.
 
-**Current status:** implementation is testable; actual CCOST TextGrid compatibility remains BLOCKED on access to text-only files / curator confirmation. Linguistic accuracy remains NOT_MEASURED; no CCOST IPA rows have been imported or promoted to gold.
+**Current status:** TextGrid structure and text-only export are DONE_VERIFIED for supplied files. CCOST `-MAU` semantics and X-SAMPA coverage remain PARTIAL pending source/curator evidence. Independent phonetic gold remains BLOCKED; linguistic accuracy remains `NOT_MEASURED`; no CCOST IPA rows have been promoted to gold.
