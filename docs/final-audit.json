@@ -4037,7 +4037,7 @@
     "evidence_artifact": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42018381197/artifacts/13410038957"
   },
   "fastthaig2p_license_review_2026_11_05": {
-    "status": "PARTIAL",
+    "status": "PARTIAL_BLOCKED",
     "report": "docs/fastthaig2p-license-review-2026-11-05.md",
     "pinned_commit": "4e82a291b4cf2876326744c6580121e9986ad354",
     "source_code_license": "Apache-2.0",
@@ -4045,6 +4045,65 @@
     "vendored_tltk_parser_license": "BSD-3-Clause",
     "bundled_data": "Mixed provenance: Wiktionary/kaikki CC BY-SA and GFDL, generated IPA, manual overrides, and TLTK fallback data.",
     "redistribution": "BLOCKED pending component-level provenance and license confirmation",
-    "project_action": "Keep as optional external dependency; no bundled dictionary or fallback data vendored."
+    "project_action": "Keep as optional external dependency; do not bulk redistribute the bundled dictionary or fallback data.",
+    "notice": "Amazon.com, Inc. or its affiliates",
+    "vendored_parser_license": "BSD-3-Clause",
+    "tltk_package_license": "BSD-3-Clause from upstream TLTK 1.2.2 onward",
+    "bundled_dictionary_rights": "NO_SINGLE_BLANKET_LICENSE_FOUND",
+    "data_components": [
+      "Wiktionary/kaikki-derived IPA (~13k; CC BY-SA and GFDL)",
+      "generated IPA (~49k; Claude Opus 4.6; no separate data license statement in inspected README)",
+      "manual overrides (rights/provenance not separately stated)",
+      "TLTK fallback data (package-level BSD statement exists, but each bundled data file's provenance/rights not itemized)"
+    ]
+  },
+  "ccost_curator_contact_2026_11_05": {
+    "status": "PARTIAL_NOT_SENT",
+    "public_contacts": {
+      "Pittayawat_Pittayaporn": "pittiyawat.p@chula.ac.th",
+      "Sujinat_Jitwiriyanont": "sujinat.j@chula.ac.th",
+      "Cathryn_Yang": "cathryn_yang@sil.org",
+      "James_Kirby": "jkirby@phonetik.uni-muenchen.de"
+    },
+    "request_document": "docs/external-review-and-source-requests.md",
+    "request_status": "PREPARED_NOT_SENT",
+    "reason": "No email-sending connector available in this session; no curator response received.",
+    "questions": [
+      "ORT-MAU/KAN-MAU/KAS-MAU suffix semantics",
+      "_8 values",
+      "case-sensitive MAUS/BAS marker variants",
+      "mixed marker/text labels",
+      "slash and Unicode-looking labels"
+    ]
+  },
+  "ccost_primary_paper_reconciliation_2026_11_05": {
+    "status": "PARTIAL",
+    "source": "https://aclanthology.org/2026.lrec-1.247.pdf",
+    "confirmed_tiers": {
+      "ORT": "orthographic word",
+      "KAN": "canonical word pronunciation",
+      "KAS": "canonical syllabified pronunciation",
+      "MAU": "phonetic segment",
+      "MAS": "phonemic syllable",
+      "TRN": "orthographic utterance transcript"
+    },
+    "phonetic_encoding": "X-SAMPA",
+    "documented_tones": {
+      "_1": "Mid",
+      "_2": "Low",
+      "_3": "Falling",
+      "_4": "High",
+      "_5": "Rising"
+    },
+    "unresolved": [
+      "ORT-MAU/KAN-MAU/KAS-MAU suffix semantics",
+      "_8",
+      "<P>",
+      "<P:>",
+      "<:p>",
+      "<Fail>",
+      "<notProcessedChunk>",
+      "mixed labels"
+    ]
   }
 }
