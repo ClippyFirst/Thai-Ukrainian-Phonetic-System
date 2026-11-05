@@ -167,3 +167,11 @@ footer a:hover{text-decoration:underline;text-underline-offset:3px}
 @media(max-width:420px){.strictness-scale{font-size:.66rem;gap:4px}}
 
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* Preserve boundaries and visible focus in Windows High Contrast / forced-colors modes. */
+@media(forced-colors:active){
+  :focus-visible{outline:2px solid Highlight;outline-offset:3px}
+  .beta-notice,.workbench,.result-card,.continuous-output,.status.error,.status.notice{border:1px solid CanvasText}
+  .primary{border:1px solid ButtonText}
+  .status-dot{background:CanvasText}
+}
