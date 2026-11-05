@@ -56,3 +56,21 @@ The source registry now includes `CORP-LOTUSDIS` (CC BY-SA 4.0) as an audio/tran
 Official ChulaSEAL faculty pages publish institutional email addresses for CCOST curators Pittayawat Pittayaporn (`Pittayawat.P@chula.ac.th`) and Sujinat Jitwiriyanont (`Sujinat.J@chula.ac.th`). These routes are suitable for a wordlist clarification request, not for claiming an independent review of their own CCOST material. See `docs/external-review-and-source-requests.md` for a prepared message.
 
 The shortlist remains **not contacted**. No outbound email facility was available in the execution environment; public contact details do not imply consent or availability.
+
+## Thai expert qualification evidence refresh — 2026-11-05
+
+The following candidates have current, publicly accessible institutional evidence relevant to the specific CCOST review. This improves qualification screening; it does **not** establish availability, consent, native-speaker status, conflict-free independence, or a completed review.
+
+| Candidate | Publicly documented evidence | Potential role (unconfirmed) |
+|---|---|---|
+| **Chutamanee Onsuwan, Ph.D.** | Thammasat's official profile lists a Ph.D. dissertation on temporal relations between consonants and vowels in Thai syllables and expertise in laboratory phonetics, speech science and phonology; the profile also lists work on Thai vowel duration and tone perception. [Official profile](https://arts.tu.ac.th/th/teacherlarts/cmukv6znk0052pm61l213msd6) | First-pass reviewer for segmental, syllabic and phonetic interpretation |
+| **Lena Maluleem, Ph.D.** | Kasetsart's official profile lists a Ph.D. in linguistics and research interests in phonetics/phonology, prosody and experimental linguistics; publications include Thai compound stress. [Official profile](https://ling.human.ku.ac.th/index.php/lyna_cv/) | Independent first-pass reviewer, subject to confirmation of Standard Thai IPA scope |
+| **Rungpat Roengpitya** | Mahidol's official profile lists research on variation and quantification of Standard Thai tones, lexical tone awareness, Thai vowel-length perception and word-final stops. [Official profile](https://murex.mahidol.ac.th/en/persons/rungpat-roengpitya/) | Separate adjudicator or alternate reviewer, subject to confirmation of scope and independence |
+
+A reasonable *proposed* panel is Onsuwan + Maluleem for blind first-pass annotation and Roengpitya as separate adjudicator. Do not record this as an appointment. Before use, verify each person's current role, Standard Thai competence, IPA/X-SAMPA familiarity, conflict statement, availability and permission to record qualification evidence. Keep reviewer registry rows empty until that verification is performed.
+
+**Conflict boundary:** Pittayawat Pittayaporn and Sujinat Jitwiriyanont are CCOST paper authors/data curators. They may be useful for source-format clarification, but should not be counted as independent first-pass reviewers or the independent adjudicator for CCOST labels without a documented, defensible conflict assessment.
+
+**Review scope boundary:** the supplied worklist supports text-based review of canonical/phonemic labels, marker semantics and cross-tier consistency. It does not support acoustic adjudication of surface tone contours, timing, or allophonic realization because audio is deliberately not opened or distributed in this project scope.
+
+No contact has been made. No email has been sent. No reviewer has agreed to participate.
