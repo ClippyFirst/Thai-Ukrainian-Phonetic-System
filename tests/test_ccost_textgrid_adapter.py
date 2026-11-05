@@ -95,16 +95,27 @@ class CCOSTTextGridAdapterTests(unittest.TestCase):
                 TextGridInterval(0, 0.1, "<p:>"),
                 TextGridInterval(0.1, 0.2, "<nib>"),
                 TextGridInterval(0.2, 0.3, "<usb>"),
-                TextGridInterval(0.3, 0.4, "<notProcessedChunk>"),
-                TextGridInterval(0.4, 1.0, "k_h a_3"),
+                TextGridInterval(0.3, 1.0, "k_h a_3"),
             )),))
         annotations = convert_ccost_tier(grid, "MAS")
         self.assertEqual(len(annotations), 1)
         self.assertEqual(annotations[0].ipa, "kʰa")
         self.assertTrue(is_ccost_nonphonetic_label("<p:>"))
         self.assertTrue(is_ccost_nonphonetic_label("<nib>"))
-        self.assertTrue(is_ccost_nonphonetic_label("<usb><P>"))
+        self.assertTrue(is_ccost_nonphonetic_label("<usb><nib>"))
+        self.assertFalse(is_ccost_nonphonetic_label("<usb><P>"))
+        self.assertFalse(is_ccost_nonphonetic_label("<notProcessedChunk>"))
+        self.assertFalse(is_ccost_nonphonetic_label("<Fail>"))
         self.assertFalse(is_ccost_nonphonetic_label("<nib>ข้อความ<P>"))
+
+    def test_undocumented_tag_only_labels_fail_closed(self):
+        for marker in ("<notProcessedChunk>", "<Fail>", "<P>", "<P:>", "<:p>"):
+            grid = TextGrid(0, 1.0, (TextGridTier(
+                "MAS", "IntervalTier", 0, 1.0,
+                intervals=(TextGridInterval(0, 1.0, marker),)),))
+            with self.subTest(marker=marker):
+                with self.assertRaises(XSampaConversionError):
+                    convert_ccost_tier(grid, "MAS")
 
     def test_unpublished_tone_number_8_remains_fail_closed(self):
         with self.assertRaises(XSampaConversionError):
