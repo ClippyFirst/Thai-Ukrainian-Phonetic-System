@@ -153,7 +153,6 @@ def convert_ccost_tier(textgrid:TextGrid,tier_name:str)->tuple[CCOSTAnnotation,.
         if not label or is_ccost_nonphonetic_label(label): continue
         converted.append(CCOSTAnnotation(tier_name,interval.xmin,interval.xmax,convert_xsampa_label(label)))
     return tuple(converted)
-,block)
     if match is None: raise TextGridFormatError(f"missing quoted TextGrid field {field!r}")
     return match.group(1).replace('""','"')
 
