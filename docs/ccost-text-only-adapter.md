@@ -91,3 +91,6 @@ Key corrections and confirmed findings:
 - The observed `ORT-MAU`, `KAN-MAU`, and `KAS-MAU` tier names are real, but their `-MAU` alias semantics remain provisional until confirmed by the corpus curator.
 - Unicode IPA-looking forms are not accepted as IPA by appearance alone. Mixed marker-plus-phone/text labels remain raw and fail-closed.
 - No parser mapping was broadened and no unsupported label was guessed. The adapter remains PARTIAL; source annotations are not gold.
+
+
+The marker predicate is now evidence-gated: only `<p:>`, `<nib>`, and `<usb>` are skipped as documented non-phonetic MAUS markers. Unknown tag-only values such as `<Fail>`, `<P>`, `<P:>`, `<:p>`, and `<notProcessedChunk>` are no longer silently classified as harmless markers; they fail closed. See [the full label review](ccost-label-review-2026-11-05.md).
