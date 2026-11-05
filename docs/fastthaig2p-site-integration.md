@@ -1,5 +1,7 @@
 # FastThaiG2P website integration
 
+> **Historical plan (2026-11-04), superseded by the owner decision on 2026-11-05.** Current target is GitHub Pages only, with FastThaiG2P running in a Pyodide Web Worker. Do not follow the Vercel deployment instructions below. See [FastThaiG2P Pyodide port](fastthaig2p-pyodide-port.md).
+
 **Decision (2026-11-04):** the public website uses FastThaiG2P as its single pronunciation engine. The site displays a Ukrainian practical rendering from FastThaiG2P's IPA, but labels that rendering as provisional until independent phonetic and Ukrainian-native review is complete.
 
 ## Runtime contract
