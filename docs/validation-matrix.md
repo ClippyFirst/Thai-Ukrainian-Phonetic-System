@@ -1,3 +1,15 @@
+## GitHub Pages / Pyodide continuation — 2026-11-05
+
+Owner decision: keep FastThaiG2P and port it to browser/WASM; GitHub Pages only. Vercel, remote API and JS-engine replacement are out of scope. Canonical plan: [fastthaig2p-pyodide-port.md](fastthaig2p-pyodide-port.md).
+
+- Runtime spike: Pyodide 0.29.5, FastThaiG2P commit `4e82a291b4cf2876326744c6580121e9986ad354`, PyThaiNLP 5.4.0, project wheel. Shared CPython/Pyodide fixture generator and CI gate added.
+- First two attempts failed in the Node harness before parity: missing explicit `indexURL`, then a `file://` path passed to a filesystem-path parameter. Current runner uses an absolute filesystem path and installs only verified pure-Python wheels by extraction, avoiding micropip/CDN. Latest run [42062255591](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42062255591) is IN_PROGRESS; do not claim compatibility until it passes.
+- Wheel sizes observed: FastThaiG2P 6.9 MiB, PyThaiNLP 21 MiB, project 376 KiB. Inspect PyThaiNLP wheel contents and optimize before setting a browser download budget.
+- Pages deploy guard now uses `FASTTHAIG2P_PYODIDE_BUNDLE_READY`, not the obsolete Vercel variable. No repository setting was changed and no deployment occurred.
+- Task ledger: architecture DONE_VERIFIED; Pyodide compatibility PARTIAL; exact parity TODO; browser worker TODO; self-hosted runtime build TODO; performance TODO; data attribution manifest PARTIAL/conditional; public Pages deploy TODO. Independent IPA gold 0; accuracy NOT_MEASURED.
+
+---
+
 ## Current verified checkpoint — 2026-11-05 (text-only scope)
 
 - Branch `docs/repository-audit-2026-11-04`, HEAD `2ce66a5ace012675c0d9fea06aca5ae962003092`; base `main` HEAD `56fba86b4b8be2fe4e67284355e9928108527387`. PR [#210](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/210) is OPEN, mergeable, and not merged. No mainline mutation, branch deletion, force-push, or release.
