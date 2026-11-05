@@ -76,8 +76,8 @@ The exact pinned files were re-opened through the GitHub connector. This confirm
 - The full top-level FastThaiG2P LICENSE is Apache-2.0; NOTICE attributes copyright to Amazon.com, Inc. or its affiliates.
 - The vendored _th2ipa.py file carries a complete BSD-3-Clause notice for the TLTK-derived parser.
 - The upstream data README explicitly says the runtime wheel force-includes dict.txt, ipa.json, and data/fallback/. It describes ipa.json as a merge of Wiktionary and generated IPA; source priorities are manual overrides, Wiktionary, then generated entries.
-- TLTK's own repository states that its package has used BSD-3-Clause since version 1.2.2, and its repository carries both BSD and LGPL license files. This supports the BSD notice on the copied parser source, but it does **not** by itself establish a separate, file-by-file grant for every TLTK-derived fallback data asset shipped by FastThaiG2P.
-- The upstream README attributes about 13k IPA entries to kaikki/Wiktionary and about 49k to Claude Opus 4.6. kaikki states Wiktionary-extracted material is under CC BY-SA and GFDL. No complete attribution/rights ledger for each entry in the merged runtime dictionary is published in the inspected snapshot.
+- TLTK's `setup.py` declares `BSD-3-Clause` and explicitly packages the fallback files (`sylrule.lts`, `thaisyl.dict`, `PhSTrigram.sts`, `sylseg.3g`, `sylform_var.pklz`, `thdict`); `LICENSE.txt` contains the corresponding BSD-3-Clause terms. Five FastThaiG2P fallback files have byte-identical Git blob hashes to the matching TLTK files; `sylform_var.pkl` is the uncompressed counterpart of TLTK's `.pklz` file (byte equivalence not checked). TLTK's repository also contains a separate LGPL-3.0 `LICENSE`, so the exact package/file scope should be kept visible rather than asserting that every repository file has one uniform license. The package metadata, `LICENSE.txt`, packaged-file list, and FastThaiG2P's own BSD header provide strong support for BSD-3-Clause coverage of the vendored fallback/parser components.
+- The upstream README attributes about 13k IPA entries to kaikki/Wiktionary and about 49k to Claude Opus 4.6, with manual overrides as the highest-priority layer. The data README says `ipa_metadata.json` records a per-word `source`, `pos`, and `origin`; the merge script tags entries as `wiktionary` or `generated` and records the model for generated entries. This is useful source-category provenance, although the metadata schema has no explicit license field. kaikki states Wiktionary-extracted material is under CC BY-SA and GFDL. The upstream repository's Apache-2.0 grant appears to cover its own manual/generated project files absent a contrary file-specific notice; it does not erase the upstream Wiktionary terms for the extracted subset.
 
 **Answer to the whole-dictionary question:** No single blanket license or complete rights statement for the entire bundled dictionary was found. It is not accurate to say that all 62k entries and all fallback data are simply Apache-2.0. The Wiktionary-derived portion carries upstream share-alike/attribution terms; the generated/manual portions and TLTK fallback assets need explicit provenance/rights clarification. The Apache-2.0 code license does not settle those data questions.
 
@@ -88,3 +88,23 @@ Primary references:
 - [kaikki.org license statement](https://kaikki.org/thwiktionary/index.html)
 
 This is a source-based compliance assessment, not a legal opinion. **Bulk redistribution remains BLOCKED** until upstream supplies a component-level rights statement or the project independently rebuilds a separable, fully attributable dataset under verified terms.
+
+
+## Public-source reconciliation — 2026-11-05
+
+A deeper GitHub inspection refines (but does not reverse) the previous finding:
+
+- FastThaiG2P `data/README.md` explicitly documents `ipa_metadata.json` as `{ipa, source, pos, origin, ...}` per word. `scripts/merge_ipa.py` records `source: wiktionary` or `source: generated` and stores `model: claude-opus-4.6` for generated entries. This means the upstream data has source-category audit metadata; the earlier wording that implied no per-entry source tracking was too broad. It still has no explicit per-entry license field.
+- The upstream project has a top-level Apache-2.0 LICENSE and no separate restrictive license notice for its own manual overrides or generated entries. The best-supported reading is that those project-authored/generated assets are offered under the repository's Apache-2.0 grant. Do not claim that the Wiktionary-derived subset is thereby relicensed: its upstream CC BY-SA/GFDL terms remain relevant.
+- The FastThaiG2P fallback data README says the files are vendored from TLTK. TLTK `setup.py` declares BSD-3-Clause and packages the same fallback assets; `LICENSE.txt` contains BSD-3-Clause. Five matching assets have identical Git blob hashes. The TLTK repository also contains a separate LGPL-3.0 `LICENSE`, so retain both upstream notices and avoid flattening the entire TLTK repository to one license.
+- The paper itself is marked CC BY-NC-SA 4.0 on its public preprint page; that is the paper's license and must not be confused with the GitHub source-code license or treated as an automatic data license for the package.
+
+**Operational decision:** using the pinned FastThaiG2P package as the project's optional external dependency, and using a limited number of its outputs internally as clearly labelled candidates, is allowed by the evidence currently available. This project already does so without copying the bundled dictionary into its own corpus. The unresolved issue is narrower: redistributing a copied/merged 62k dictionary as a standalone project asset requires preserving the Wiktionary-derived subset's attribution/ShareAlike obligations and making the component split and applicable notices explicit. That is a packaging/rights-evidence task, not a reason to disable the optional dependency or reject all use.
+
+Primary source additions:
+- [FastThaiG2P data README](https://github.com/awslabs/FastThaiG2P/blob/4e82a291b4cf2876326744c6580121e9986ad354/data/README.md)
+- [FastThaiG2P merge script](https://github.com/awslabs/FastThaiG2P/blob/4e82a291b4cf2876326744c6580121e9986ad354/scripts/merge_ipa.py)
+- [TLTK setup.py](https://github.com/attapol/tltk/blob/master/setup.py)
+- [TLTK BSD license](https://github.com/attapol/tltk/blob/master/LICENSE.txt)
+- [TLTK LGPL license](https://github.com/attapol/tltk/blob/master/LICENSE)
+- [FastThaiG2P paper/preprint page](https://arxiv.org/abs/2608.12814).
