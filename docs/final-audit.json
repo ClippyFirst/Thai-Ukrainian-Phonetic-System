@@ -4326,10 +4326,16 @@
     "last_verified_full_ci": "42042740322",
     "last_verified_site_api": "42042740326",
     "last_verified_optional_external_g2p_smoke": "42042740524",
-    "documentation_head_at_decision_update": "89140c822042762ee524e1bc96202bfbda09e7f4",
-    "final_documentation_head_ci": "PENDING_AT_TIME_OF_UPDATE",
+    "documentation_head_at_decision_update": "PENDING_FINAL_BRANCH_HEAD",
+    "final_documentation_head_ci": "PENDING_EXACT_HEAD_CI",
     "release_tag_created": false,
     "production_cutover": false,
-    "main_merged": false
+    "main_merged": false,
+    "feedback_path": "IMPLEMENTED_GITHUB_ISSUE_FORM",
+    "feedback_template": ".github/ISSUE_TEMPLATE/beta-feedback.yml",
+    "feedback_links": [
+      "web/index.html",
+      "web/system.html"
+    ]
   }
 }
