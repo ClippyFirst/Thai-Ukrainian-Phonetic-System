@@ -48,6 +48,8 @@ const response = {
 };
 let requests = [];
 let nextWorkerMessage = { type: "result", result: response };
+let deferNextWorkerMessage = false;
+let deferredWorkerResponse;
 let workerInstance;
 class FakeWorker {
   constructor(url, options) {
@@ -60,7 +62,12 @@ class FakeWorker {
   postMessage(message) {
     requests.push(message);
     const responseMessage = { ...nextWorkerMessage, requestId: message.requestId };
-    queueMicrotask(() => this.listeners.message?.({ data: responseMessage }));
+    if (deferNextWorkerMessage) {
+      deferNextWorkerMessage = false;
+      deferredWorkerResponse = () => this.listeners.message?.({ data: responseMessage });
+    } else {
+      queueMicrotask(() => this.listeners.message?.({ data: responseMessage }));
+    }
   }
   terminate() {}
 }
@@ -134,6 +141,20 @@ await analyze.click();
 assert.equal(status.className, "status error");
 assert.match(status.textContent, /FastThaiG2P не зміг повернути повний IPA/);
 assert.equal(output.hidden, true, "an incomplete upstream result must not fall back to the old engine");
+
+// A response for an input that changed while analysis was running must never render.
+input.value = "พริก";
+deferNextWorkerMessage = true;
+const staleRun = analyze.click();
+assert.equal(analyze.disabled, true, "analysis action is locked while the worker is running");
+input.value = "กา";
+input.listeners.input();
+assert.equal(output.hidden, true, "editing input invalidates prior output immediately");
+deferredWorkerResponse();
+await staleRun;
+assert.equal(output.hidden, true, "a stale worker response must not render");
+assert.match(status.textContent, /Текст змінився під час аналізу/);
+assert.equal(analyze.disabled, false, "analysis action unlocks after the stale response is discarded");
 
 clear.click();
 assert.equal(input.value, "");
