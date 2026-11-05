@@ -49,7 +49,8 @@ try {
     { timeout: 30000 }
   );
   const secondResult = await page.locator("#results").innerText();
-  assert.match(secondResult, /กรุงเทพมหานคร/);
+  assert.match(secondResult, /kruŋ/);
+  assert.match(secondResult, /крунгт/);
   assert.match(secondResult, /IPA FastThaiG2P/);
 
   assert.equal(requests.some(url => url.includes("/api/analyze")), false);
