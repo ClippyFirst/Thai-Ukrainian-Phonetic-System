@@ -93,6 +93,36 @@ jobs:
           name: textgrid-archive-inspection
           path: /tmp/textgrid-archive-inspection.json
           if-no-files-found: error
+      - name: Export orthographic TextGrid intervals as provenance-rich JSONL (no audio)
+        run: |
+          python scripts/export_textgrid_text.py "CCOST textgrid.zip" --tier ORT-MAU --tier TRN --output /tmp/ccost-orthographic.jsonl
+          python scripts/export_textgrid_text.py "nectecLOTUSDIS textgrid.zip" --tier-prefix Hijack_ --output /tmp/lotusdis-transcripts.jsonl
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          files = [Path("/tmp/ccost-orthographic.jsonl"), Path("/tmp/lotusdis-transcripts.jsonl")]
+          manifest = {}
+          for path in files:
+              payload = path.read_bytes()
+              manifest[path.name] = {
+                  "records": sum(1 for line in payload.splitlines() if line.strip()),
+                  "bytes": len(payload),
+                  "sha256": hashlib.sha256(payload).hexdigest(),
+              }
+          Path("/tmp/textgrid-text-only-manifest.json").write_text(
+              json.dumps(manifest, ensure_ascii=False, indent=2) + "\\n",
+              encoding="utf-8",
+          )
+          print(json.dumps(manifest, ensure_ascii=False, indent=2))
+          PY
+      - uses: actions/upload-artifact@v7
+        with:
+          name: textgrid-text-only-jsonl
+          path: |
+            /tmp/ccost-orthographic.jsonl
+            /tmp/lotusdis-transcripts.jsonl
+            /tmp/textgrid-text-only-manifest.json
+          if-no-files-found: error
       - name: Build the static dependency graph and test-overlap inventory
         run: python scripts/audit_repository_structure.py --output /tmp/repository-structure-audit.json --revision "$GITHUB_SHA"
       - uses: actions/upload-artifact@v7
