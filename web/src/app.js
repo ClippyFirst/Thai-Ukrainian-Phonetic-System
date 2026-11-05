@@ -99,7 +99,7 @@ function renderSyllable(syllable) {
 
 function renderResult(result) {
   const words = (result.words || []).map((word, index) =>
-    '<article class="word-card"><h4>Слово ' + (index + 1) + (word.thai ? ' · <span lang="th">' + esc(word.thai) + '</span>' : '') + '</h4>' +
+    '<article class="word-card"><h3 class="word-heading">Слово ' + (index + 1) + (word.thai ? ' · <span lang="th">' + esc(word.thai) + '</span>' : '') + '</h3>' +
     '<p class="word-ipa ipa-output" lang="und-fonipa">' + esc(word.fastthaig2p_ipa) + '</p>' +
     '<p class="word-ua">' + esc(word.ukrainian) + '</p>' +
     (word.syllables || []).map(renderSyllable).join('') + '</article>'
