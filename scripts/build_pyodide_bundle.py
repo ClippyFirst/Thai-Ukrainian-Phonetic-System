@@ -138,6 +138,17 @@ def main() -> None:
             "fastthaig2p/data/browser-data-provenance.json": "browser-data-provenance.json",
             "fastthaig2p/data/WIKTIONARY-ATTRIBUTION.md": "WIKTIONARY-ATTRIBUTION.md",
         }
+        ipa_data = json.loads(wheel_archive.read("fastthaig2p/data/ipa.json"))
+        dictionary_words = wheel_archive.read("fastthaig2p/data/dict.txt").decode("utf-8").splitlines()
+        provenance = json.loads(wheel_archive.read("fastthaig2p/data/browser-data-provenance.json"))
+        if dictionary_words != list(ipa_data):
+            raise SystemExit("Filtered dataset archive refused: tokenizer word order/keys differ from IPA map")
+        if provenance.get("retained_entries") != len(ipa_data) or provenance.get("retained_dictionary_words") != len(dictionary_words):
+            raise SystemExit("Filtered dataset archive refused: provenance counts do not match runtime data")
+        if provenance.get("retained_counts") != {"wiktionary": len(ipa_data)}:
+            raise SystemExit("Filtered dataset archive refused: retained source labels are not Wiktionary-only")
+        if provenance.get("excluded_counts", {}).get("generated", 0) <= 0:
+            raise SystemExit("Filtered dataset archive refused: generated source exclusion is not evidenced")
         for source_name, archive_name in dataset_members.items():
             dataset_archive.writestr(archive_name, wheel_archive.read(source_name))
         dataset_archive.write(args.notices_dir / "CC-BY-SA-4.0.txt", "CC-BY-SA-4.0.txt")
