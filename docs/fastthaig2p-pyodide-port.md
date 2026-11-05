@@ -1,6 +1,6 @@
 ## Verified browser runtime checkpoint — 2026-11-05
 
-<badge>DONE_VERIFIED</badge> **Pyodide parity and real-browser worker smoke passed** in dedicated workflow [42065502645](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42065502645), branch checkpoint `c42b0eef`.
+**DONE_VERIFIED** **Pyodide parity and real-browser worker smoke passed** in dedicated workflow [42065502645](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42065502645), branch checkpoint `c42b0eef`.
 
 - Pyodide 0.29.5 ran the shared Python service and matched CPython JSON for four Thai inputs, including `สวน → /sua̯n˩˩˦/`.
 - Chromium loaded the actual module Web Worker, Pyodide runtime, wheel manifest and wheel assets from one same-origin static server; first/cold analysis and a second/warm analysis passed.
