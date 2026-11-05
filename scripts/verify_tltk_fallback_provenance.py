@@ -70,6 +70,12 @@ def verify(fast_root: Path, tltk_root: Path) -> dict:
             "license": "GPLv3",
             "status": "STALE_METADATA_RELATIVE_TO_SETUP_PY_1_9_1",
         },
+        "pinned_tltk_evidence_sha256": {
+            "setup_py": digest(setup_source.encode("utf-8")),
+            "root_license": digest(repository_license.encode("utf-8")),
+            "module_license_txt": digest(module_license.encode("utf-8")),
+            "pkg_info": digest(package_metadata.encode("utf-8")),
+        },
         "license_scope": "AMBIGUOUS_RETAIN_BOTH_LGPL_AND_BSD_NOTICES_PENDING_FILE_LEVEL_REVIEW",
         "assets": records,
         "verified_assets": len(records),
