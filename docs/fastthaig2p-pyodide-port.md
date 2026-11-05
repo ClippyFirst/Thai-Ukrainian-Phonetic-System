@@ -89,7 +89,8 @@ No deployment, main-branch change, merge, release tag or repository setting chan
 | PyThaiNLP footprint | 37 unused corpus assets removed; required CC0 lists retained | DONE_VERIFIED |
 | Source filtering | Generated/manual/unknown IPA excluded; 13,144 Wiktionary entries retained | DONE_VERIFIED |
 | TLTK fallback asset provenance | TLTK 1.3.8 parser header; 5 byte-identical files + 1 exact bzip2 decompression | DONE_VERIFIED — run 42085653176 |
-| TLTK license scope | BSD-3-Clause release/header evidence and separate root LGPL-3.0 repository notice | PARTIAL — both notices retained pending final file-level scope review |\n| Public redistribution | Owner rights flag remains false | BLOCKED — explicit owner approval and final license-scope review pending |
+| TLTK license scope | BSD-3-Clause release/header evidence and separate root LGPL-3.0 repository notice | PARTIAL — both notices retained pending final file-level scope review |
+| Public redistribution | Owner rights flag remains false | BLOCKED — explicit owner approval and final license-scope review pending |
 | Public Pages deployment | Exact merged main commit deployed and live-smoked | BLOCKED — no merge or deployment |
 | Performance | Actual Pages transfer/cold-start and mobile timing | TODO — requires public deployment |
 
