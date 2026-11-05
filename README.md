@@ -109,7 +109,7 @@ The browser input now has a conservative preprocessing step for recognizable Wik
 
 ## Beta release status
 
-The owner-approved next milestone is a **clearly labelled beta**. External Thai phonetics review and Ukrainian-native target-form review are deferred and are not beta acceptance gates. The public UI must continue to label Ukrainian output as provisional; independent IPA gold remains empty and linguistic accuracy is **NOT_MEASURED**. This is not an official Ukrainian standard or an empirically validated benchmark. Audio/acoustic work remains out of scope. The public website cutover remains gated on a verified FastThaiG2P browser/WASM port, runtime-data redistribution manifest and GitHub Pages live deployment checks. See [beta release scope](docs/beta-release-scope.md) for the acceptance checklist and known accessibility verification limits.
+The owner-approved next milestone is a **clearly labelled beta**. External Thai phonetics review and Ukrainian-native target-form review are deferred and are not beta acceptance gates. The public UI must continue to label Ukrainian output as provisional; independent IPA gold remains empty and linguistic accuracy is **NOT_MEASURED**. This is not an official Ukrainian standard or an empirically validated benchmark. Audio/acoustic work remains out of scope. The FastThaiG2P browser/WASM port is implemented and CI-verified; public cutover remains gated on explicit runtime-data redistribution approval, final TLTK license-scope review and GitHub Pages live deployment checks. See [beta release scope](docs/beta-release-scope.md) for the acceptance checklist and known accessibility verification limits.
 
 ## Current release status
 
