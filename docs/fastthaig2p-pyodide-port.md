@@ -17,15 +17,15 @@ Owner decision (2026-11-05): retain FastThaiG2P and run it in the browser. GitHu
 - G2P, normalizer, tokenizer wrapper and vendored TLTK fallback are Python code; fallback describes itself as standard-library-only.
 - PyThaiNLP 5.4.0 is the current native dependency. Exact-wheel compatibility under Pyodide must be tested, not assumed.
 - Upstream data includes a 62k-word dictionary, IPA lookup data and about 19 MB fallback data.
-- Initial spike pins stable Pyodide 0.29.5 (CPython 3.13).
-- Added scripts/fastthaig2p_pyodide_parity.py, web/tests/fastthaig2p-pyodide.test.mjs and .github/workflows/pyodide-compat.yml. The workflow builds exact wheels, creates a CPython reference, runs the same adapter in Pyodide and compares four Thai inputs, including the upstream garden-word correction.
-- Initial run 42061102029 was queued at first poll; no pass is claimed.
+- Initial spike pins stable Pyodide 0.29.5 (CPython 3.13). The PyThaiNLP 5.4.0 wheel is about 21 MiB, FastThaiG2P about 6.9 MiB and the project wheel about 376 KiB; inspect PyThaiNLP package contents before setting browser download budgets.
+- Added scripts/fastthaig2p_pyodide_parity.py, web/tests/fastthaig2p-pyodide.test.mjs and .github/workflows/pyodide-compat.yml. The workflow builds exact wheels, creates a CPython reference, installs verified pure-Python wheels into Pyodide's local site-packages without micropip/CDN access, runs the same adapter and compares four Thai inputs, including the upstream garden-word correction.
+- Initial run [42061102029](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42061102029) built all wheels and passed native fixture generation, but failed during Pyodide Node bootstrap. Follow-up [42061814086](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42061814086) identified an invalid `file://` indexURL path. The runner now uses an absolute filesystem path. The latest runner avoids micropip entirely to prevent CDN access; its result is pending.
 
 ## Redistribution gate
 
 Browser execution is technically plausible; public redistribution of the complete runtime bundle is not yet cleared. The upstream inventory identifies manual overrides, roughly 13k Wiktionary/kaikki-derived entries, roughly 49k generated IPA entries and TLTK fallback files. Existing audit evidence does not establish file-by-file rights and attribution for every runtime asset. Serving these assets from Pages makes them directly downloadable. A software license does not automatically clear bundled data.
 
-Before public Pages distribution: inspect the exact wheel and hashes; map every dictionary/fallback asset to source, version, terms and notices; resolve Wiktionary/kaikki and generated IPA rights; include applicable Pyodide MPL-2.0, PyThaiNLP Apache-2.0, FastThaiG2P and TLTK BSD-3-Clause notices; generate a version/hash/size/license manifest; fail the Pages build if that manifest is missing or hashes differ. Ephemeral CI wheels are not public deployment or license clearance.
+Existing audit classification: FastThaiG2P use is permitted; redistribution is conditional, not categorically prohibited. Keep Wiktionary-derived rows separately attributable under CC BY-SA/GFDL and retain applicable Apache-2.0/BSD-3 notices. Before public Pages distribution: inspect the exact wheel and hashes; map every dictionary/fallback asset to source, version, terms and notices; resolve the remaining generated/manual/fallback asset mapping; include applicable Pyodide MPL-2.0, PyThaiNLP Apache-2.0, FastThaiG2P and TLTK BSD-3-Clause notices; generate a version/hash/size/license manifest; fail the Pages build if that manifest is missing or hashes differ. Ephemeral CI wheels are not public deployment or license clearance.
 
 ## Acceptance ledger
 
@@ -37,7 +37,7 @@ Before public Pages distribution: inspect the exact wheel and hashes; map every 
 | Browser | Worker integration and responsive UI | TODO |
 | Hosting | All runtime assets on Pages; no API host/text upload | TODO |
 | Performance | Bundle size and cold/warm timings recorded | TODO |
-| Licensing | Per-file redistribution/attribution manifest | BLOCKED |
+| Licensing | Per-file redistribution/attribution manifest | PARTIAL / PUBLICATION GATE — conditional attribution and asset mapping required |
 | Privacy | UI states input is processed locally | TODO |
 | Deployment | Exact merged main commit passes Pages live smoke | TODO |
 
