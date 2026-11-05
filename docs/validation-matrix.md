@@ -1722,3 +1722,20 @@ Do not mark any gate DONE_VERIFIED because a registry entry, schema, blank revie
 | FastThaiG2P Python-host preview | BLOCKED | Separate deployment gate; unrelated to text-data reuse. | Verify live Python-capable preview independently if the web deployment remains in scope. |
 
 **Scope correction:** LOTUSDIS audio bytes, per-file WAV hashes, waveform overlap and audio interval verification are no longer acceptance tasks for this text-only research objective. Preserve any historical audio-oriented audit entries as history, but treat them as DEFERRED/OUT OF SCOPE rather than blockers. No audio was downloaded in this review.
+
+
+## Source-level follow-up — CCOST labels and FastThaiG2P rights (2026-11-05)
+
+| Task | Status | Evidence / next acceptance |
+|---|---|---|
+| Inspect 488 CCOST TextGrids | DONE_VERIFIED | Run 42018381197; 488/488 parsed, text-only |
+| Inventory CCOST failure occurrences | DONE_VERIFIED | 1,014 occurrences / 116 unique raw labels, classified in `docs/ccost-label-review-2026-11-05.md` |
+| Confirm `<p:>`, `<usb>`, `<nib>` semantics | DONE_VERIFIED | CCOST LREC 2026 §3.3 and BAS Partitur Format |
+| Classify `<P>`, `<P:>`, `<:p>`, `<Fail>`, `<notProcessedChunk>` | BLOCKED | No corpus-specific definition located; curator response required |
+| Resolve `_8` (868 occurrences) | BLOCKED | CCOST paper documents only `_1`–`_5`; do not infer a sixth tone |
+| Confirm `-MAU` aliases | BLOCKED | Exact names observed; semantic mapping not defined by paper/manual |
+| FastThaiG2P source-code license | DONE_VERIFIED | Exact pinned commit contains Apache-2.0 LICENSE and Amazon NOTICE; TLTK parser retains BSD-3 notice |
+| FastThaiG2P bundled-data redistribution | BLOCKED | Wiktionary/kaikki subset has CC BY-SA/GFDL; generated/manual/TLTK fallback asset rights need per-component evidence |
+| Promote CCOST/FastThaiG2P candidates to gold | BLOCKED | Independent Thai review and adjudication still required; gold rows remain 0 |
+
+The current X-SAMPA converter remains a declared partial subset. These findings do not promote any source label or FastThaiG2P output to independent IPA gold.
