@@ -1,3 +1,9 @@
+## Post-merge status correction — 2026-11-06
+
+PR [#211](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/211) is **MERGED**, not open. `main` is at `476cb6ed0e4421ab02bb564ff232c99b6c19e008`. The PR-head Full CI, Web Static, Site API and Pyodide compatibility runs all passed on `8200255df8d7c2cfb4f8aa30d218785e9a625b08`. Post-merge Pages workflow [42120159047](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42120159047) was still running when this correction was recorded; deployed-page verification is **BLOCKED/PENDING**, not passed. The remaining human accessibility, visual, clipboard and mobile-performance gates are unchanged. See the current [handoff](MASTER-EXECUTION-PLAN-AND-CHAT-HANDOFF.md).
+
+---
+
 ## Current audit checkpoint — 2026-11-05
 
 This review covers the public browser UX, service documentation, repository navigation and exact-head verification. It does not change the phonetic engine or research evidence.
