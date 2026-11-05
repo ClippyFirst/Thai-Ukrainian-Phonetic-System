@@ -63,8 +63,8 @@ assert.match(app, /<h3 class="word-heading">/);
 assert.match(app, /<h4 class="result-title">/);
 const sampleButtonRule = css.match(/\.examples button\s*\{([^}]*)\}/);
 const copyButtonRule = css.match(/\.copy\s*\{([^}]*)\}/)
-assert(sampleButtonRule && /border:\\s*1px solid #767676/.test(sampleButtonRule[1]), "sample button boundary must have visible contrast");
-assert(copyButtonRule && /border:\\s*1px solid #767676/.test(copyButtonRule[1]), "copy button boundary must have visible contrast");
+assert(sampleButtonRule && /border:\s*1px solid #767676/.test(sampleButtonRule[1]), "sample button boundary must have visible contrast");
+assert(copyButtonRule && /border:\s*1px solid #767676/.test(copyButtonRule[1]), "copy button boundary must have visible contrast");
 
 // Keyboard focus must remain visible for all native interactive controls, 
 assert.match(css, /:focus-visible\s*\{/);
