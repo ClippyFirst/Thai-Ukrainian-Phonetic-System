@@ -1,5 +1,6 @@
 import unittest
-from thai_ukrainian.adapters.ccost import (TextGridFormatError, TextGrid, TextGridInterval, TextGridTier, convert_ccost_tier, parse_textgrid_long)
+from thai_ukrainian.adapters.ccost import (TextGridFormatError, TextGrid, TextGridInterval, TextGridTier, convert_ccost_tier, is_ccost_nonphonetic_label, parse_textgrid_long)
+from thai_ukrainian.adapters.xsampa import XSampaConversionError, convert_xsampa_label
 from thai_ukrainian.ukrainian_adaptation import adapt_phonetic_result
 
 TEXTGRID = """File type = "ooTextFile"
@@ -77,6 +78,36 @@ class CCOSTTextGridAdapterTests(unittest.TestCase):
     def test_orthographic_tier_is_not_accepted_as_xsampa(self):
         grid=parse_textgrid_long(TEXTGRID)
         with self.assertRaisesRegex(ValueError,"not a declared"): convert_ccost_tier(grid,"ORT")
+    def test_released_maus_tier_aliases_are_phonetic_inputs(self):
+        for tier_name, label in (("KAN-MAU", "n a_3"), ("KAS-MAU", "n a_3")):
+            grid = TextGrid(0, 1.0, (TextGridTier(
+                tier_name, "IntervalTier", 0, 1.0,
+                intervals=(TextGridInterval(0, 1.0, label),)),))
+            result = convert_ccost_tier(grid, tier_name)[0].to_phonetic_results()[0]
+            self.assertEqual(result.phonemic_ipa, "na")
+            self.assertEqual(result.tone_category, "falling")
+            self.assertEqual(result.status, "PROVISIONAL")
+
+    def test_known_maus_markers_are_not_converted_as_xsampa(self):
+        grid = TextGrid(0, 1.0, (TextGridTier(
+            "MAS", "IntervalTier", 0, 1.0,
+            intervals=(
+                TextGridInterval(0, 0.1, "<p:>"),
+                TextGridInterval(0.1, 0.2, "<nib>"),
+                TextGridInterval(0.2, 0.3, "<usb>"),
+                TextGridInterval(0.3, 0.4, "<notProcessedChunk>"),
+                TextGridInterval(0.4, 1.0, "k_h a_3"),
+            )),))
+        annotations = convert_ccost_tier(grid, "MAS")
+        self.assertEqual(len(annotations), 1)
+        self.assertEqual(annotations[0].ipa, "kʰa")
+        self.assertTrue(is_ccost_nonphonetic_label("<p:>"))
+        self.assertTrue(is_ccost_nonphonetic_label("<nib>"))
+
+    def test_unpublished_tone_number_8_remains_fail_closed(self):
+        with self.assertRaises(XSampaConversionError):
+            convert_xsampa_label("a_8")
+
     def test_short_textgrid_is_not_guessed(self):
         with self.assertRaises(TextGridFormatError): parse_textgrid_long('File type = "ooTextFile short"')
 
