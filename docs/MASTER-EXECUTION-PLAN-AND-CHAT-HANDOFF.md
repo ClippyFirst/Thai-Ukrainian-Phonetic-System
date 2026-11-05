@@ -1,3 +1,17 @@
+## Owner decision — GitHub Pages-only FastThaiG2P browser port (2026-11-05)
+
+- Keep the existing pinned FastThaiG2P engine; port execution to Pyodide in a browser module Web Worker. GitHub Pages is the only hosting target. Do not create Vercel/remote API hosting or replace FastThaiG2P with the legacy JavaScript research engine.
+- The FastAPI site API remains the CPython reference/test oracle only; GitHub Pages cannot run it. User-entered Thai text must remain local to the browser.
+- Canonical implementation and acceptance ledger: `docs/fastthaig2p-pyodide-port.md`. The current status is also recorded at the top of `docs/validation-matrix.md` and in `docs/final-audit.md`.
+- Added `scripts/fastthaig2p_pyodide_parity.py` and `web/tests/fastthaig2p-pyodide.test.mjs`. Existing CI now builds the pinned project, PyThaiNLP 5.4.0 and FastThaiG2P wheels and compares adapter output between CPython and Pyodide 0.29.5.
+- Early compatibility attempts failed before parity because the Node loader received an invalid `file://` index path. The runner now passes an absolute filesystem path and installs verified pure-Python wheels by extracting them into local site-packages, avoiding micropip/CDN access. Latest run [42062255591](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42062255591) was IN_PROGRESS at last poll; no pass is claimed.
+- Observed wheel sizes: FastThaiG2P 6.9 MiB, PyThaiNLP 21 MiB, project 376 KiB. Inspect PyThaiNLP's package contents and optimize download footprint after compatibility passes.
+- Redistribution is conditional: separately attribute Wiktionary-derived rows under CC BY-SA/GFDL and retain applicable Apache-2.0/BSD-3 notices. Exact bundled wheel-member/source mapping remains PARTIAL; complete an inspectable manifest before publishing the bundle.
+- Pages deployment uses guard `FASTTHAIG2P_PYODIDE_BUNDLE_READY`, currently not enabled. No setting was changed, no deployment occurred, and PR #210 remains open/unmerged.
+- Task ledger: architecture DONE_VERIFIED; Pyodide compatibility PARTIAL; parity, browser worker, Pages self-hosted runtime and performance TODO; asset attribution manifest PARTIAL; public Pages deployment TODO. Independent IPA gold 0; accuracy NOT_MEASURED.
+
+---
+
 ## Current verified checkpoint — 2026-11-05 (text-only scope)
 
 - Branch `docs/repository-audit-2026-11-04`, HEAD `2ce66a5ace012675c0d9fea06aca5ae962003092`; base `main` HEAD `56fba86b4b8be2fe4e67284355e9928108527387`. PR [#210](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/210) is OPEN, mergeable, and not merged. No mainline mutation, branch deletion, force-push, or release.
