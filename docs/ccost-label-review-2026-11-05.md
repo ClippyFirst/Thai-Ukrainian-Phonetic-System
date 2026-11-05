@@ -93,3 +93,8 @@ Only tag-only labels made exclusively of a documented marker may be classified a
 | Promote converted labels to IPA gold | BLOCKED | Independent Thai review and adjudication still required |
 
 **Do not promote any of these 1,014 occurrences to IPA or phoneme output.** The current adapter remains a conservative, partial candidate converter; source annotations are not independent gold and linguistic accuracy remains `NOT_MEASURED`.
+
+
+## Adapter behavior change
+
+The converter previously treated any tag-only angle-bracket string as a non-phonetic marker. That was too permissive: tag shape alone does not establish semantics. The adapter now skips only the three source-documented markers `<p:>`, `<nib>`, and `<usb>`. Unknown tag-only labels (`<Fail>`, `<P>`, `<P:>`, `<:p>`, `<notProcessedChunk>`) now raise the normal unsupported-label error instead of being silently omitted. Mixed tag-plus-text labels continue to fail closed. Regression tests cover this distinction.
