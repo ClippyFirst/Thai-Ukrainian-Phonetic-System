@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "CCOST text-only X-SAMPA/TextGrid adapter and published Figure 2 regression fixtures added on docs/repository-audit-2026-11-04; exact-head CI pending. Global TIMIT excluded by owner. LOTUSDIS audio out of scope. No CCOST archive/audio downloaded; TextGrid-only acquisition blocked pending curator response. Independent IPA gold rows 0; linguistic accuracy NOT_MEASURED.",
+  "status": "Exact-head CI passed on docs/repository-audit-2026-11-04 at f8e19499c056afeb2b2532887d2887812472664d: 376 passed, 1 skipped, 1,206 subtests; Ruff, wheel-install smoke and master-artifact passed. Dedicated FastThaiG2P site API and optional external smoke benchmark passed. Global TIMIT excluded; LOTUSDIS text-only optional; audio out of scope. CCOST TextGrid-only acquisition remains blocked pending curator export/confirmation; no CCOST archive or audio downloaded. Independent IPA gold rows 0; linguistic accuracy NOT_MEASURED.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -376,9 +376,9 @@
     {
       "id": "IPA-GOLD-001",
       "status": "BLOCKED",
-      "implementation": "Independent adjudication template and transcription-level protocol prepared; no CCOST recordings/TextGrid accessed",
-      "blocker": "Qualified independent Thai phonetician and authorized audio/TextGrid access required",
-      "acceptance": "Independent dual labels, agreed broad/surface protocol, acoustic references where claimed, disagreement log"
+      "implementation": "Independent broad-phonemic adjudication protocol and blank review templates prepared; no CCOST TextGrid sample or independent IPA rows imported.",
+      "blocker": "TextGrid-only CCOST sample/export is not yet available; two qualified Thai phonetics reviewers and a separate adjudicator have not been engaged. Audio/narrow acoustic validation is explicitly OUT OF SCOPE.",
+      "acceptance": "Two independent qualified reviewers label broad phonemic IPA, syllable boundaries, tone and vowel length from a pinned text-only sample; record abstentions and disagreements; adjudicator resolves differences. Do not claim acoustic/narrow surface validation."
     },
     {
       "id": "WALK-LEX-001",
@@ -610,8 +610,8 @@
     {
       "id": "CORP-CCOST-XSAMPA-001",
       "status": "PARTIAL",
-      "implementation": "Strict X-SAMPA→IPA converter with CCOST _1.._5 tone suffixes, raw-label retention, syllable boundaries and fail-closed unknown symbols; synthetic tests added.",
-      "acceptance": "Run exact-head CI, inspect actual released MAU/MAS/KAS/KAN labels and TextGrid encoding, then extend mapping only from manual/source evidence."
+      "implementation": "Strict X-SAMPA→IPA converter with CCOST _1.._5 tone suffixes, raw-label retention, explicit syllable boundaries, canonical NFD output and fail-closed unknown symbols; synthetic and published Figure 2 regression tests; exact-head CI passed.",
+      "acceptance": "Obtain a lawful TextGrid-only sample, inspect actual MAU/MAS/KAS/KAN labels and encoding, then extend mapping only from manual/source evidence. Current converter coverage is a tested subset, not complete CCOST conformance."
     },
     {
       "id": "CORP-CCOST-TEXTGRID-001",
@@ -2258,9 +2258,23 @@
     "non_main_branches": 1,
     "open_pull_requests": 1
   },
-  "open_prs_current": [
-    "#210 — docs: audit repository structure and refresh canonical status (open; inspected head CI passed)"
-  ],
+  "open_prs_current": {
+    "only_open_pr": [
+      210
+    ],
+    "merged_prs": [
+      199
+    ],
+    "closed_unmerged_prs": [
+      184,
+      185,
+      186,
+      188,
+      190,
+      193
+    ],
+    "note": "PR #193 was closed unmerged; the integration is present on main through PR #199, merged 2026-11-04. PR #210 remains open; no merge performed."
+  },
   "latest_pr_head_source": "PR #182 merged into main as 65584d9a3d3d64a8e520dbd32411bef4b0a3dd9e; no product PR remains open at this checkpoint.",
   "status_refresh_2026_10_31": {
     "main_sha": "8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8",
@@ -3860,6 +3874,17 @@
         "ca_2"
       ],
       "status": "PUBLISHED_FIGURE_REGRESSION_ONLY; not a downloaded corpus TextGrid"
+    },
+    "exact_head_ci": {
+      "commit": "f8e19499c056afeb2b2532887d2887812472664d",
+      "run": 41992116524,
+      "conclusion": "success",
+      "python_tests": "376 passed, 1 skipped, 1,206 subtests passed",
+      "ruff": "passed",
+      "wheel_install_smoke": "passed",
+      "master_artifact": "passed",
+      "dedicated_site_api": "passed",
+      "optional_external_g2p_smoke": "passed"
     }
   },
   "scope_decisions_2026_11_05": {
@@ -3868,5 +3893,33 @@
     "lotusdis_text": "OPTIONAL_ORTHOGRAPHIC_CONTEXT",
     "ccost": "PRIMARY_PHONETIC_TEXT_CANDIDATE",
     "audio": "OUT_OF_SCOPE"
+  },
+  "latest_exact_head_verification_2026_11_05": {
+    "branch": "docs/repository-audit-2026-11-04",
+    "commit": "f8e19499c056afeb2b2532887d2887812472664d",
+    "base": "56fba86b4b8be2fe4e67284355e9928108527387",
+    "ahead": 55,
+    "behind": 0,
+    "ci_run": 41992116524,
+    "ci_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41992116524",
+    "ci_conclusion": "success",
+    "jobs": {
+      "wheel_install_smoke": "success",
+      "test": "success",
+      "master_artifact": "success"
+    },
+    "tests": {
+      "python_passed": 376,
+      "python_skipped": 1,
+      "subtests_passed": 1206,
+      "ruff": "passed",
+      "browser_python_parity_fixtures": 29
+    },
+    "dedicated_site_api_run": 41992116526,
+    "dedicated_site_api_conclusion": "success",
+    "optional_external_g2p_smoke_run": 41992116614,
+    "optional_external_g2p_smoke_conclusion": "success",
+    "skip_reason": "tests/test_fastthaig2p_site_api.py skipped in generic dev environment because FastAPI is optional; dedicated site-api workflow installed FastAPI and passed.",
+    "local_tests": "not run; connector-only GitHub session"
   }
 }
