@@ -1,14 +1,12 @@
 import assert from "node:assert/strict";
 import { readFileSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
-import { pathToFileURL } from "node:url";
 import { loadPyodide } from "pyodide";
 
 const wheelDir = resolve(process.argv[2] || "build/pyodide-wheels");
 const expectedPath = resolve(process.argv[3] || "build/fastthaig2p-native.json");
-const wheels = readdirSync(wheelDir).filter(name => name.endsWith(".whl"))
-  .map(name => pathToFileURL(resolve(wheelDir, name)).href);
-assert.equal(wheels.length, 3, `Expected exactly three pinned wheels, found ${wheels.length}`);
+const wheelNames = readdirSync(wheelDir).filter(name => name.endsWith(".whl")).sort();
+assert.equal(wheelNames.length, 3, `Expected exactly three pinned wheels, found ${wheelNames.length}`);
 
 const indexURL = resolve("node_modules/pyodide") + "/";
 let pyodide;
@@ -18,11 +16,33 @@ try {
   console.error("Pyodide initialisation failed:", error?.stack || error);
   process.exit(1);
 }
-await pyodide.loadPackage("micropip");
-pyodide.globals.set("WHEEL_URLS", pyodide.toPy(wheels));
+
+pyodide.FS.mkdirTree("/wheels");
+for (const name of wheelNames) {
+  pyodide.FS.writeFile(`/wheels/${name}`, readFileSync(resolve(wheelDir, name)));
+}
+pyodide.globals.set("WHEEL_NAMES", pyodide.toPy(wheelNames));
 await pyodide.runPythonAsync(`
-import micropip
-await micropip.install(WHEEL_URLS, deps=False)
+import sysconfig
+import zipfile
+from pathlib import Path, PurePosixPath
+
+site_packages = Path(sysconfig.get_paths()["purelib"])
+for filename in WHEEL_NAMES:
+    wheel_path = Path("/wheels") / filename
+    with zipfile.ZipFile(wheel_path) as wheel:
+        metadata = next(
+            (name for name in wheel.namelist() if name.endswith(".dist-info/WHEEL")),
+            None,
+        )
+        assert metadata is not None, filename
+        wheel_metadata = wheel.read(metadata).decode("utf-8")
+        assert "Root-Is-Purelib: true" in wheel_metadata, filename
+        assert "Tag: py3-none-any" in wheel_metadata, filename
+        for member_name in wheel.namelist():
+            member = PurePosixPath(member_name)
+            assert not member.is_absolute() and ".." not in member.parts, member_name
+        wheel.extractall(site_packages)
 `);
 
 const pythonSource = readFileSync(resolve("scripts/fastthaig2p_pyodide_parity.py"), "utf8");
