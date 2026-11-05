@@ -40,10 +40,10 @@ class CorpusSourceRegistryTests(unittest.TestCase):
         self.assertIn("manual correction by trained native Thai research assistants", notes)
         self.assertIn("no formal inter-annotator agreement measures", notes)
         self.assertIn("CCOST_manual.pdf inspected 2026-11-01", notes)
-        self.assertIn("LREC 2026 paper specifies intended tiers ORT", notes)
+        self.assertIn("Observed tiers: ORT-MAU", notes)
         self.assertIn("X-SAMPA", notes)
         self.assertIn("tone numerals _1=Mid, _2=Low, _3=Falling, _4=High, _5=Rising", notes)
-        self.assertIn("actual release labels remain partly unsupported", notes)
+        self.assertIn("unsupported labels remain fail-closed", notes)
 
     def test_segmentation_sources_preserve_license_and_usage_gates(self):
         path = ROOT / "data" / "corpus_sources.csv"
