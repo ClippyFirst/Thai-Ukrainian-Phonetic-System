@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import zipfile
 from collections import Counter
 from pathlib import Path
@@ -21,6 +22,32 @@ AUDIO_SUFFIXES = {".wav", ".wave", ".mp3", ".flac", ".ogg", ".m4a", ".aiff", ".a
 MAX_TEXTGRID_MEMBER_BYTES = 8 * 1024 * 1024
 MAX_ARCHIVE_TEXTGRID_BYTES = 1024 * 1024 * 1024
 MAX_COMPRESSION_RATIO = 1000
+
+
+def _textgrid_structure_diagnostic(text: str) -> dict:
+    """Summarize malformed interval structure without exposing transcript content."""
+    interval_blocks = re.findall(
+        r"(?ms)^\\s*intervals\\s+\\[\\d+\\]\\s*:\\s*(.*?)(?=^\\s*(?:intervals\\s+\\[\\d+\\]|item\\s+\\[\\d+\\])|\\Z)",
+        text,
+    )
+    missing_text = [
+        block for block in interval_blocks
+        if not re.search(r"(?m)^\\s*text\\s*=", block)
+    ]
+    first_fields = []
+    if missing_text:
+        first_fields = [
+            line.split("=", 1)[0].strip()
+            for line in missing_text[0].splitlines()
+            if "=" in line
+        ]
+    return {
+        "tier_names": re.findall(r'(?m)^\\s*name\\s*=\\s*"([^"]*)"', text),
+        "tier_classes": re.findall(r'(?m)^\\s*class\\s*=\\s*"([^"]*)"', text),
+        "interval_blocks": len(interval_blocks),
+        "interval_blocks_without_text": len(missing_text),
+        "first_missing_interval_fields": first_fields,
+    }
 
 
 def inspect(paths: list[Path], sample_limit: int = 5) -> dict:
@@ -66,7 +93,13 @@ def inspect(paths: list[Path], sample_limit: int = 5) -> dict:
                             })
             files.append(entry)
         except (UnicodeError, ValueError) as exc:
-            failures.append({"file": name, "error": f"{type(exc).__name__}: {exc}"})
+            failure = {"file": name, "error": f"{type(exc).__name__}: {exc}"}
+            if isinstance(exc, ValueError) and "missing quoted TextGrid field 'text'" in str(exc):
+                try:
+                    failure["structure"] = _textgrid_structure_diagnostic(raw.decode("utf-8-sig"))
+                except UnicodeError:
+                    pass
+            failures.append(failure)
 
     for path in sorted(paths):
         if path.is_dir():
