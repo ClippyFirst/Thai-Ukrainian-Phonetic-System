@@ -22,7 +22,7 @@ All 488 files parsed. The release uses six non-empty tier names:
 | `MAS` | 195,288 | Phonemic syllable tier |
 | `TRN` | 12,090 | Orthographic utterance transcript |
 
-The suffix `-MAU` is confirmed as part of the supplied file's tier names, but neither the paper nor the inspected RA manual defines its exact semantics. The three aliases therefore remain a project mapping, not a curator-confirmed equivalence. Preserve the raw tier names and do not normalize them destructively.
+The paper defines MAU as the phonetic segment tier, MAS as the phonemic syllable tier, KAN as canonical word pronunciation, KAS as canonical syllabified pronunciation, ORT as orthographic word, and TRN as orthographic utterance transcript. It also states that phonemic and phonetic representations use X-SAMPA. However, the paper's published tier list names ORT, KAN, and KAS without the appended -MAU suffix found in the supplied release (ORT-MAU, KAN-MAU, KAS-MAU). The base tier roles are documented; the reason for the suffix, whether these are export aliases or distinct tiers, and whether they are strictly equivalent to ORT/KAN/KAS remain unconfirmed. Preserve the raw names and do not normalize destructively.
 
 ## Exact failure inventory
 
@@ -73,6 +73,7 @@ Only tag-only labels made exclusively of a documented marker may be classified a
 ## What is and is not IPA
 
 - The paper says the phonemic and phonetic tiers use **X-SAMPA**, not IPA. A successful conversion is a derived IPA candidate, with provenance, not a source IPA annotation.
+- The paper explicitly defines MAU as the phonetic segment tier and MAS as the phonemic syllable tier; this clarifies the base tier names but does not explain the added -MAU suffix on ORT-MAU, KAN-MAU, and KAS-MAU.
 - `ORT-MAU` and `TRN` are orthographic/text tiers. Their Thai-script content is not IPA.
 - `MAU` is phone-level; `MAS` is phonemic/syllabic. They must not be conflated.
 - Unicode IPA-looking characters in failed labels are not automatically passed through as IPA. The label may be mixed, corrupted, or use another convention.
@@ -98,3 +99,18 @@ Only tag-only labels made exclusively of a documented marker may be classified a
 ## Adapter behavior change
 
 The converter previously treated any tag-only angle-bracket string as a non-phonetic marker. That was too permissive: tag shape alone does not establish semantics. The adapter now skips only the three source-documented markers `<p:>`, `<nib>`, and `<usb>`. Unknown tag-only labels (`<Fail>`, `<P>`, `<P:>`, `<:p>`, `<notProcessedChunk>`) now raise the normal unsupported-label error instead of being silently omitted. Mixed tag-plus-text labels continue to fail closed. Regression tests cover this distinction.
+
+
+## Primary-paper clarification (2026-11-05)
+
+A closer reading of the published LREC 2026 paper, §3.3–3.4, resolves part—but not all—of the tier question:
+
+- MAU = phonetic segment tier; phonetic variants are annotated there.
+- MAS = phonemic syllable tier.
+- KAN = canonical word pronunciation.
+- KAS = canonical syllabified pronunciation.
+- ORT = orthographic word; TRN = orthographic utterance transcript.
+- The paper explicitly says phonemic and phonetic representations use X-SAMPA.
+- The paper documents only _1 Mid, _2 Low, _3 Falling, _4 High, _5 Rising.
+
+The paper does **not** define why the release's ORT-MAU, KAN-MAU, and KAS-MAU names carry -MAU, nor does it document _8 or the unresolved tag spellings. These remain questions for the named data curators. The base meaning of MAU is no longer unknown; the suffix/alias relationship remains unresolved.
