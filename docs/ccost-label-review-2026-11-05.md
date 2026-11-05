@@ -30,7 +30,7 @@ The inspector recorded **1,014 failed conversion occurrences**, representing **1
 
 | Failure class | Occurrences | Distinct raw strings | Interpretation / action |
 |---|---:|---:|---|
-| Undocumented `_8` sequence | 868 | 22 | Not among CCOST's documented `_1`–`_5` tone suffixes. Do not call it a sixth tone or map it to IPA. |
+| Out-of-range tone suffix `_8` | 868 | 22 | BAS supports only tone suffixes `_1`–`_5`; `_8` is invalid/out of range under the documented convention. Its intended correction is unknown; do not call it a sixth tone or map it to IPA. |
 | Slash/alternative notation | 58 | 27 | Includes frequent `r/` (23 occurrences) and compound strings. Meaning unresolved; do not rewrite slash as a phoneme or boundary. |
 | MAUS marker mixed with phonetic/text material | 26 | 20 | Preserve entire raw label. Do not strip marker and convert the remainder automatically. |
 | Non-ASCII phonetic-looking sequences | 17 | 9 | Includes `ɹ`, `ɾ`, `tʃ`, `ʔ`, `nˠ`, and a combining ring. They resemble IPA, but are not self-authenticating IPA fields. |
@@ -77,7 +77,7 @@ Only tag-only labels made exclusively of a documented marker may be classified a
 - `ORT-MAU` and `TRN` are orthographic/text tiers. Their Thai-script content is not IPA.
 - `MAU` is phone-level; `MAS` is phonemic/syllabic. They must not be conflated.
 - Unicode IPA-looking characters in failed labels are not automatically passed through as IPA. The label may be mixed, corrupted, or use another convention.
-- The only source-documented tone suffixes are `_1` Mid, `_2` Low, `_3` Falling, `_4` High, and `_5` Rising. `_8` stays unresolved.
+- The only supported BAS tone suffixes are `_1`–`_5`; the CCOST paper maps these to Mid, Low, Falling, High, and Rising. `_8` is outside the supported range and is therefore an invalid/unrecognized suffix, not a sixth tone. The intended repair (if any) remains unknown.
 - `<notProcessedChunk>` is a documented MAUS processing-failure placeholder, not a phonetic value. No phonetic value is guessed for `<P>`, `<Fail>`, `<:p>`, `<P:>`, slash forms, or truncated labels.
 
 ## Acceptance and status
@@ -89,7 +89,7 @@ Only tag-only labels made exclusively of a documented marker may be classified a
 | Classify documented MAUS markers and chunk failure label | DONE_VERIFIED | CCOST paper + BAS FAQ: `<p:>`, `<usb>`, `<nib>`, `<notProcessedChunk>` |
 | Separate orthography, markers, and X-SAMPA candidates | DONE_VERIFIED for the inventory | Source roles documented; mixed forms remain unsupported |
 | Explain `-MAU` tier suffixes | DONE_VERIFIED | BAS tutorial explicitly defines ORT-MAU, KAN-MAU and KAS-MAU |
-| Resolve 868 `_8` occurrences | BLOCKED | No source definition; curator/manual clarification required |
+| Classify 868 `_8` occurrences as out-of-range suffixes | DONE_VERIFIED | BAS tutorial limits tone suffixes to `_1`–`_5`; intended correction remains unresolved and fail-closed |
 | Resolve remaining 146 failed occurrences | PARTIAL/BLOCKED | 116 raw strings inventoried; specialist/curator review required |
 | Promote converted labels to IPA gold | BLOCKED | Independent Thai review and adjudication still required |
 
@@ -124,3 +124,8 @@ Sources: [BAS WebServices tutorial](https://clarin.phonetik.uni-muenchen.de/BASW
 
 
 The public CCOST annotation manual was also checked directly from the Zenodo record. It describes the production workflow and MAUS pipeline but does not define `_8` or the four unresolved tag spellings. No public definition for those labels was found in the corpus paper, manual, BAS documentation, or the GitHub searches performed for this review.
+
+
+### `_8` resolution — BAS tone inventory
+
+The BAS WebServices tutorial's glossary states that tone support is limited to five stages and encodes them with `_1` through `_5`. The CCOST paper supplies the language-specific mapping for those five suffixes. Therefore every observed `_8` sequence is classifiable as an **out-of-range/invalid tone suffix under the documented BAS convention**. This resolves the question of whether `_8` is a legitimate sixth tone: it is not. It does **not** reveal which valid tone (if any) was intended in the source. Keep all 868 occurrences fail-closed; no repair or IPA conversion is justified.
