@@ -1,7 +1,7 @@
 ## Public-source research follow-up — 2026-11-05
 
 - **CCOST `-MAU` tiers: DONE_VERIFIED.** BAS documentation explicitly defines `ORT-MAU`, `KAN-MAU`, and `KAS-MAU`; the old curator blocker for suffix semantics is closed.
-- **`<notProcessedChunk>`: DONE_VERIFIED.** BAS FAQ says MAUS inserts this dummy segment when a chunk cannot be processed. It denotes an alignment/processing failure, not a speech phone. `<P>`, `<P:>`, `<:p>`, and `<Fail>` remain unresolved. `_8` is classified as an out-of-range suffix because BAS supports only `_1`–`_5`; its intended correction remains unknown.
+- **`<notProcessedChunk>`: DONE_VERIFIED.** BAS FAQ says MAUS inserts this dummy segment when a chunk cannot be processed. It denotes an alignment/processing failure, not a speech phone. `<P>`, `<P:>`, `<:p>`, and `<Fail>` remain unresolved. Generic BAS/MAUS tone syntax permits `_1`–`_9`; the CCOST paper maps `_1`–`_5` only. `_8` is syntactically possible in MAUS but unmapped in the published CCOST scheme; its CCOST-specific meaning remains unknown.
 - **FastThaiG2P use: PERMITTED.** Keep the pinned Apache-2.0 optional dependency and internal candidate comparisons. Source metadata records source categories; generated/manual assets appear covered by the upstream Apache grant; Wiktionary-derived entries retain CC BY-SA/GFDL terms; TLTK fallback data has BSD-3 package evidence, with a separate LGPL file also present upstream. Bulk redistribution is permitted with source separation and license notices (CC BY-SA/GFDL for Wiktionary-derived entries; Apache-2.0/BSD-3 for corresponding other components); this repository has not vendored the dataset.
 - **Contact:** no email was sent; the owner asked to use public internet/GitHub research instead.
 - Evidence and details are in `docs/ccost-label-review-2026-11-05.md`, `docs/fastthaig2p-license-review-2026-11-05.md`, and `docs/validation-matrix.md`.
@@ -1848,7 +1848,7 @@ The user clarified that the project needs only orthographic text and phonetic te
 
 ## 2026-11-05 evidence follow-up
 
-The primary CCOST paper now resolves base tier semantics (MAU phone-level, MAS phonemic syllable, KAN canonical word pronunciation, KAS canonical syllabified pronunciation, ORT orthographic word, TRN utterance transcript) and confirms X-SAMPA plus tone suffixes _1–_5. It does not explain the supplied ORT-MAU/KAN-MAU/KAS-MAU suffixes or _8. Curator clarification remains required.
+The primary CCOST paper now resolves base tier semantics (MAU phone-level, MAS phonemic syllable, KAN canonical word pronunciation, KAS canonical syllabified pronunciation, ORT orthographic word, TRN utterance transcript) and confirms X-SAMPA plus tone suffixes _1–_5. It does not explain the supplied ORT-MAU/KAN-MAU/KAS-MAU suffixes or _8. Generic MAUS syntax allows _1–_9, while the CCOST paper maps only _1–_5; CCOST-specific meaning of _8 remains unresolved.
 
 FastThaiG2P's pinned source-code license (Apache-2.0), NOTICE (Amazon attribution), and vendored parser's BSD-3-Clause file header are verified. The full bundled dictionary/fallback rights are **not** established under a single blanket license: upstream identifies Wiktionary/kaikki CC BY-SA/GFDL content, model-generated entries, manual overrides, and TLTK fallback data without a complete per-entry/per-file rights ledger. Keep the optional dependency external; bulk redistribution is blocked.
 
@@ -1858,7 +1858,7 @@ The CCOST request has been prepared with public author/curator email addresses a
 
 A focused worklist generator and regression suite were added for the three open CCOST workstreams. The CI workflow now builds a blind TSV and JSON manifest from CCOST TextGrid members only and uploads them as the `ccost-label-adjudication-worklist` artifact. Each row retains the raw source label, tier, source file, exact interval, overlapping labels from other tiers, adjacent same-tier context and blank expert/adjudicator fields. Audio members are not opened.
 
-The 868 `_8` appearances are **868 tier-level occurrences**, not independent tokens. Grouping yields 397 exact file/interval groups and 438 file/interval/raw-label events across 119 files. The 22 raw strings remain unchanged. `_8` is DONE_VERIFIED as out-of-range under the documented `_1`–`_5` tone scheme; the intended replacement is BLOCKED pending expert review.
+The 868 `_8` appearances are **868 tier-level occurrences**, not independent tokens. Grouping yields 397 exact file/interval groups and 438 file/interval/raw-label events across 119 files. The 22 raw strings remain unchanged. `_8` is BLOCKED for CCOST-specific interpretation: generic MAUS syntax permits `_1`–`_9`, but the paper maps only `_1`–`_5`; no meaning or replacement is inferred.
 
 The four unresolved markers remain BLOCKED: `<P>` (394 appearances), `<P:>` (4), `<:p>` (22), and `<Fail>` (16). Their case-sensitive raw forms are preserved. The worklist provides context but does not establish their semantics.
 
