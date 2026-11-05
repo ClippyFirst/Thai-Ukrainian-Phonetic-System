@@ -78,6 +78,8 @@ input.value = "พริก";
 await analyze.click();
 assert.equal(output.hidden, false);
 assert.match(output.innerHTML, /Попередній результат FastThaiG2P/);
+assert.match(output.innerHTML, /result-feature-grid/);
+assert.match(output.innerHTML, /class="continuous-output ua-continuous"/);
 assert.match(output.innerHTML, /Українськими літерами/);
 assert.match(output.innerHTML, /п&#39;рік/);
 assert.match(output.innerHTML, /IPA FastThaiG2P/);
@@ -99,9 +101,10 @@ assert.doesNotMatch(await (await import("node:fs/promises")).readFile(new URL(".
 for (const example of examples) {
   await example.click();
   assert.equal(input.value, example.dataset.example);
-  assert.equal(output.hidden, false);
+  assert.equal(output.hidden, false, "choosing an example must not erase the previous result");
+  assert.equal(requests.length, 1, "choosing an example must not trigger analysis automatically");
 }
-assert.equal(requests.length, 1 + examples.length);
+assert.equal(requests.length, 1);
 
 let prevented = false;
 input.value = "พริก";
@@ -110,7 +113,7 @@ await input.listeners.keydown({
   preventDefault() { prevented = true; }
 });
 assert.equal(prevented, true);
-assert.equal(requests.length, 2 + examples.length);
+assert.equal(requests.length, 2);
 
 input.value = "";
 await analyze.click();
