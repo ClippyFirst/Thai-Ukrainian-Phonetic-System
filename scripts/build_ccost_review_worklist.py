@@ -235,8 +235,7 @@ def build_worklist(paths: list[Path]) -> dict[str, Any]:
     tone_label_events = {
         (row["source_file"], row["start"], row["end"], row["raw_label"]) for row in tone_rows
     }
-    exact_interval_tone_counterparts: Counter[str] = Counter()
-    exact_interval_tone_counterpart_groups: set[str] = set()
+    exact_interval_tone_counterpart_rows: set[tuple[str, str, str]] = set()
     mapped_tone_pattern = re.compile(r"_(1|2|3|4|5)(?![0-9])")
     for row in tone_rows:
         for item in row["overlap_context"]:
@@ -246,11 +245,16 @@ def build_worklist(paths: list[Path]) -> dict[str, Any]:
                 and isinstance(item.get("label"), str)
                 and "_8" not in item["label"]
             ):
-                suffixes = set(mapped_tone_pattern.findall(item["label"]))
-                if suffixes:
-                    exact_interval_tone_counterpart_groups.add(row["event_group_id"])
-                    for suffix in suffixes:
-                        exact_interval_tone_counterparts[f"{item['tier']}:{suffix}"] += 1
+                for suffix in set(mapped_tone_pattern.findall(item["label"])):
+                    exact_interval_tone_counterpart_rows.add(
+                        (row["event_group_id"], item["tier"], suffix)
+                    )
+    exact_interval_tone_counterpart_groups = {
+        group_id for group_id, _, _ in exact_interval_tone_counterpart_rows
+    }
+    exact_interval_tone_counterparts: Counter[str] = Counter(
+        f"{tier}:{suffix}" for _, tier, suffix in exact_interval_tone_counterpart_rows
+    )
     marker_rows = [row for row in records if "UNRESOLVED_MARKER" in row["issue_types"]]
     known_failure_rows = [row for row in records if "DOCUMENTED_MAUS_PROCESSING_FAILURE" in row["issue_types"]]
     marker_interval_counts: Counter[str] = Counter()
