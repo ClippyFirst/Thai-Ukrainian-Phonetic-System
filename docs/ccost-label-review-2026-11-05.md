@@ -6,7 +6,7 @@ This review covers the owner-supplied `CCOST textgrid.zip` only. The inspection 
 
 Primary sources:
 - [CCOST LREC 2026 paper, §3.3–3.4](https://aclanthology.org/2026.lrec-1.247/): explicitly identifies X-SAMPA for phonemic/phonetic representations; defines only tone suffixes `_1`–`_5`; says disfluencies are marked `<usb>` and pauses `<p:>`; describes phonetic variants at MAU level.
-- [CCOST Zenodo record and manual](https://zenodo.org/records/17366698): CC BY-NC-SA 4.0 and release documentation. The downloadable RA manual is a workflow guide; it does not provide a complete phonetic-symbol dictionary for every observed label.
+- [CCOST Zenodo record and manual](https://zenodo.org/records/17366698): CC BY-NC-SA 4.0 and release documentation. I extracted/search-inspected the public `CCOST_manual.pdf`: it documents the RA workflow and the CHUNKPREP → G2P → MAUS → PHO2SYL pipeline, but is not a phonetic-symbol key; the extracted text contains no `_8` or definitions for `<P>`, `<P:>`, `<:p>`, or `<Fail>`.
 - [BAS Partitur Format, MAU tier](https://www.phonetik.uni-muenchen.de/Bas/BasFormatseng.html): defines generic MAU labels `<nib>` (non-speech event), `<p:>` (pause), and `<usb>` (speaker event that cannot be classified, e.g. unintelligible words). The CCOST paper is the corpus-specific source for its X-SAMPA and tone conventions.
 
 ## Observed release tier names
@@ -121,3 +121,6 @@ The paper does **not** define why the release's ORT-MAU, KAN-MAU, and KAS-MAU na
 The BAS WebServices tutorial defines the exact tier labels present in this release: `ORT-MAU` (tokenized word segmentation based on MAUS), `KAN-MAU` (canonical word pronunciation encoded in X-SAMPA), and `KAS-MAU` (phonological syllable segmentation based on G2P). This resolves the `-MAU` suffix question without curator input. The BAS FAQ also explains `notProcessedChunk`: MAUS inserts a very short dummy segment when one or more chunks cannot be processed; likely causes include transcript/signal mismatch or a chunk too short for its expected phone sequence. Therefore `<notProcessedChunk>` is a processing/alignment failure marker, not a phonetic segment. It should be classified separately from the unresolved `<P>`, `<P:>`, `<:p>`, and `<Fail>` spellings.
 
 Sources: [BAS WebServices tutorial](https://clarin.phonetik.uni-muenchen.de/BASWebServices/help/tutorial) · [BAS FAQ: chunkNotProcessed / notProcessedChunk](https://clarin.phonetik.uni-muenchen.de/BASWebServices/help/help_examples).
+
+
+The public CCOST annotation manual was also checked directly from the Zenodo record. It describes the production workflow and MAUS pipeline but does not define `_8` or the four unresolved tag spellings. No public definition for those labels was found in the corpus paper, manual, BAS documentation, or the GitHub searches performed for this review.
