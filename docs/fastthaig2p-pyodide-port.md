@@ -1,3 +1,36 @@
+## Verified browser runtime checkpoint — 2026-11-05
+
+<badge>DONE_VERIFIED</badge> **Pyodide parity and real-browser worker smoke passed** in dedicated workflow [42065502645](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42065502645), branch checkpoint `c42b0eef`.
+
+- Pyodide 0.29.5 ran the shared Python service and matched CPython JSON for four Thai inputs, including `สวน → /sua̯n˩˩˦/`.
+- Chromium loaded the actual module Web Worker, Pyodide runtime, wheel manifest and wheel assets from one same-origin static server; first/cold analysis and a second/warm analysis passed.
+- Browser test confirmed zero `/api/analyze` requests and zero CDN requests. Thai input stays in the browser.
+- The transport-neutral `thai_ukrainian.fastthaig2p_service` is shared by the FastAPI wrapper and the browser worker; the two runtimes do not implement separate G2P or IPA→Ukrainian paths.
+- PyThaiNLP 5.4.0 is trimmed to the Python modules plus `words_th.txt`, `stopwords_th.txt` and `corpus_license.md`. The retained word and stopword lists are CC0-1.0. The trim removed 37 unused corpus assets / 64,041,055 uncompressed bytes: source wheel members 67,689,272 bytes; retained members 3,648,217 bytes.
+- Staged wheel total: 8,673,701 bytes. Pyodide runtime files: 12,610,023 bytes. Raw bundle total: 21,283,724 bytes (~20.3 MiB), before HTTP compression. Actual GitHub Pages transfer/cold-start timings and mobile-device performance remain unmeasured.
+- PyThaiNLP imports `ZoneInfo('Asia/Bangkok')`; pinned `tzdata==2026.6` is required in the browser bundle.
+- The bundle builder emits per-wheel SHA-256 and version records. The worker checks the manifest, pinned versions and wheel hashes before installing pure-Python wheels locally; no micropip or CDN package installation is used.
+
+**Public deployment remains blocked.** `data/third_party/fastthaig2p-browser-bundle.json` deliberately has `redistribution_approved: false`. The pinned FastThaiG2P runtime wheel contains a merged IPA lookup without per-record provenance, and fallback asset mapping is incomplete. The Pages workflow refuses a public bundle while this flag is false; `FASTTHAIG2P_PYODIDE_BUNDLE_READY` is not enabled. The browser test uses ephemeral CI assets only.
+
+### Updated acceptance ledger
+
+| Area | Acceptance criterion | Status |
+|---|---|---|
+| Runtime | Pinned pure-Python wheels import/run in Pyodide 0.29.5 | DONE_VERIFIED |
+| Parity | Complete shared service JSON matches CPython for four inputs | DONE_VERIFIED |
+| Browser | Actual module worker, cold and warm analysis in Chromium | DONE_VERIFIED |
+| Privacy | No Thai-input API or CDN request | DONE_VERIFIED |
+| PyThaiNLP footprint | Retain only needed Python source and CC0 word/stopword data | DONE_VERIFIED |
+| Hosting build | Same-origin Pyodide runtime and wheels staged by Pages build | PARTIAL — CI staging verified; public Pages build not run |
+| Performance | Real Pages cold/warm timing and mobile measurement | TODO |
+| Licensing | FastThaiG2P per-record and fallback provenance/attribution manifest | PARTIAL — public redistribution not cleared |
+| Deployment | Main Pages deploy and live published-site smoke | BLOCKED — rights manifest false and bundle-ready variable not enabled |
+
+Independent IPA gold remains 0; linguistic accuracy remains NOT_MEASURED; Ukrainian practical forms remain provisional. This is runtime compatibility evidence, not linguistic validation.
+
+---
+
 # FastThaiG2P browser/WASM port
 
 Owner decision (2026-11-05): retain FastThaiG2P and run it in the browser. GitHub Pages is the only hosting target. Do not replace the engine with the JavaScript research engine or introduce a separate API host.
