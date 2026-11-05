@@ -11,7 +11,6 @@ import argparse
 import csv
 import hashlib
 import json
-import re
 import zipfile
 from collections import Counter
 from pathlib import Path
@@ -199,7 +198,7 @@ def build_worklist(paths: list[Path]) -> dict[str, Any]:
                                 convert_xsampa_label(label)
                             except XSampaConversionError:
                                 phonetic_failures[tier.name] += 1
-                                if re.search(r"_8(?=$|[\s.])", label):
+                                if "_8" in label:
                                     issue_types.append("UNDOCUMENTED_CCOST_TONE_SUFFIX_8")
                                 else:
                                     issue_types.append("OTHER_UNSUPPORTED_XSAMPA")
