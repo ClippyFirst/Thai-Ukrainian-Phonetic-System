@@ -32,6 +32,24 @@ The repository retains a separate RTGS → Ukrainian research renderer and its c
 
 The public website has one G2P engine: FastThaiG2P. It shows the engine's IPA and a provisional Ukrainian practical adaptation. If FastThaiG2P returns incomplete IPA or unsupported symbols, the site reports the limitation and does not switch to the repository's research/reference engine, RTGS, or an orthographic heuristic. The Python CLI and research scripts continue to expose the project's internal reference engine for development and evaluation; this does not make it a website fallback.
 
+## Supplied text-only corpora
+
+The repository branch also contains owner-supplied CCOST and LOTUSDIS Praat TextGrid exports. Their roles, exact archive hashes, observed tiers, licenses, and evidence limits are documented in the [TextGrid inventory](docs/corpus-textgrid-inventory-2026-11-05.md) and [third-party corpus notices](data/THIRD-PARTY-CORPUS-NOTICES.md).
+
+- **CCOST** is the primary phonetic-text candidate. Its observed `ORT-MAU`, `KAN-MAU`, `KAS-MAU`, `MAU`, `MAS`, and `TRN` tiers are parsed; phonetic conversion remains partial.
+- **LOTUSDIS** is orthographic conversational transcript context only; the supplied TextGrids contain no observed phonetic tiers.
+- Neither source annotation is independent gold. Current independent IPA gold remains zero and linguistic accuracy is `NOT_MEASURED`.
+- The exporter reads only `.TextGrid` members, preserves source/time/license provenance, and marks each row `SOURCE_ANNOTATED_NOT_GOLD`. It does not read or export audio.
+
+To recreate the text-only JSONL locally after installing the project dependencies:
+
+```bash
+python scripts/export_textgrid_text.py "CCOST textgrid.zip" "nectecLOTUSDIS textgrid.zip" \
+  --tier ORT-MAU --tier TRN --tier-prefix Hijack_ \
+  --output textgrid-orthographic-text.jsonl
+```
+
+The command produces a local JSONL file; CI separately publishes an artifact containing CCOST and LOTUSDIS JSONL files plus a SHA-256 manifest. Observe the corpus-specific terms before redistributing or using extracted text; in particular, CCOST is non-commercial CC BY-NC-SA 4.0. See the [source-specific notices](data/THIRD-PARTY-CORPUS-NOTICES.md).
 ## Scope
 
 Primary scope: contemporary Standard Thai with a Bangkok/central-standard reference where the evidence permits.
