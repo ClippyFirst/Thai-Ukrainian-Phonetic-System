@@ -4152,10 +4152,17 @@
       "file_interval_raw_label_events": 438,
       "distinct_raw_strings": 22,
       "files": 119,
-      "classification": "UNMAPPED_IN_CCOST_PAPER_MAPPING; GENERIC_BAS_MAUS_SYNTAX_PERMITS_1_TO_9",
+      "classification": "UNMAPPED_IN_CCOST_PUBLISHED_FIVE_TONE_MAPPING; GENERIC_MAUS_SYNTAX_PERMITS_1_TO_9",
       "intended_original_values": "UNKNOWN; no repair inferred",
       "generic_maus_syntax": "_1.._9 permitted by BAS FAQ; _0 disallowed",
-      "ccost_paper_mapping": "_1.._5 only: Mid, Low, Falling, High, Rising"
+      "ccost_paper_mapping": "_1.._5 only: Mid, Low, Falling, High, Rising",
+      "exact_interval_mapped_counterpart_groups": 14,
+      "exact_interval_mapped_counterparts_by_tier_suffix": {
+        "KAN-MAU:3": 1,
+        "MAS:2": 4,
+        "MAS:3": 4,
+        "MAU:2": 7
+      }
     },
     "markers_all_tiers": {
       "unresolved_interval_count": 821,
@@ -4172,6 +4179,13 @@
         "<Fail>": 24,
         "<P:>": 4,
         "<:p>": 22
+      },
+      "unique_exact_file_interval_groups": 398,
+      "unique_groups_by_marker": {
+        "<P>": 375,
+        "<P:>": 4,
+        "<:p>": 11,
+        "<Fail>": 8
       }
     },
     "documented_maus_failure": {
@@ -4183,7 +4197,7 @@
     "phonetic_conversion_failures": 1450,
     "expert_fields": "BLANK",
     "expert_review": "BLOCKED; no reviewers contacted/appointed, no independent annotations, no adjudication; independent IPA gold rows remain 0",
-    "acoustic_validation": "DEFERRED_OUT_OF_SCOPE_TEXTGRID_ONLY",
+    "acoustic_validation": "BLOCKED_PENDING_SELECTIVE_AUDIO_ACCESS_AND_NONCOMMERCIAL_SCOPE_CONFIRMATION; Zenodo C-COST.zip is 6.2GB WAV+TextGrid under CC-BY-NC-SA-4.0; no audio downloaded",
     "acceptance": {
       "required": [
         "exact-head Full CI PASS",
@@ -4191,32 +4205,29 @@
         "verify asserted counts and all reviewer/adjudicator fields blank",
         "Preserve distinction between generic MAUS suffix syntax (_1.._9) and CCOST paper's five mapped Thai tonemes (_1.._5)"
       ],
-      "current": "Implementation checkpoint 47db8ac passed exact-head Full CI and its worklist artifact was downloaded and inspected. A later workflow-only commit adds marker interval/appearance assertions and awaits its exact-head CI."
+      "current": "Exact-head Full CI run 42036060620 passed all three jobs on ebd1f0a55b2987c40725659b1524d26ad21abc0; artifact 13418563592 downloaded and inspected; next batch adds marker-group and exact-tone-counterpart assertions."
     },
     "denominator_note": "Earlier inspector marker counts <P>=394 and <Fail>=16 are phonetic-tier-only; the worklist scans all tiers, so its counts are not directly comparable.",
     "exact_head_ci": {
-      "sha": "47db8ac988836014663a435e08e2afe470342fe8",
-      "run": 42034879862,
+      "sha": "ebd1f0a55b2987c40725659b1524d26ad21abc0c",
+      "run": 42036060620,
       "conclusion": "success",
       "jobs": {
         "test": "success",
         "wheel_install_smoke": "success",
         "master_artifact": "success"
       },
-      "pytest": "393 passed, 1 skipped, 1211 subtests passed",
+      "pytest": "394 passed, 1 skipped, 1211 subtests passed",
       "ruff": "passed",
-      "dedicated_site_api_run": 42034879897,
-      "external_g2p_smoke_run": 42034879856
+      "web_python_parity": "29 fixtures passed"
     },
     "artifact_verification": {
-      "artifact_id": 13418750385,
+      "artifact_id": 13418563592,
       "name": "ccost-label-adjudication-worklist",
-      "sha256": "36481e5df9dcf64a80c483a7ddbad484d8a26e3a22e2de5922495adf1c4ccb56",
       "records": 1975,
       "source_textgrid_files": 488,
       "all_11_reviewer_and_adjudicator_fields_blank": true,
-      "audio_members_read": 0,
-      "attached_coda_regression": "nia_8p present and classified as UNDOCUMENTED_CCOST_TONE_SUFFIX_8"
+      "audio_members_read": 0
     }
   },
   "thai_expert_candidate_panel_2026_11_05": {
