@@ -2486,3 +2486,16 @@ The test workflow uploaded the current diagnostic and master artifacts (includin
 ### Evidence policy
 
 Do not mark any gate DONE_VERIFIED because a registry entry, schema, blank reviewer packet, model output, source annotation, static check or documentation paragraph exists. Keep CCOST under CC BY-NC-SA 4.0 restrictions; keep Global TIMIT Thai unused pending written LDC permission. Keep LOTUSDIS PARTIAL until actual WAV bytes and per-file hashes/interval evidence are verified. Keep FastThaiG2P production data and preview gates separate. Do not create or report independent IPA gold rows until the blinded expert adjudication has actually happened.
+
+
+## 2026-11-05 — text-only corpus and FastThaiG2P rights continuation
+
+User scope clarified: **text and phonetic transcription only; no audio files are needed**. Use the detailed research note at docs/research/corpus-text-only-fastthaig2p-2026-11-05.md.
+
+Current decisions:
+- Global TIMIT Thai: phone/word/tone/TextGrid TXT assets are relevant. A signed LDC non-member agreement permits internal non-commercial research and limited publication excerpts; it does not permit bulk public redistribution. Ask LDC for text-only access and whether a small derived test subset can be published. Audio is not needed.
+- LOTUSDIS: CC BY-SA 4.0 transcript rows can be considered for conversational vocabulary/orthographic robustness. The paper describes utterance-level orthographic transcripts, speaker labels and overlap tags, not phone/IPA tiers. Mark audio hashes/intervals DEFERRED / OUT OF SCOPE for this user objective.
+- CCOST: strongest phonetic-text source. Published tiers MAU (phonetic segments) and MAS (phonemic syllables), plus ORT/KAN/KAS/TRN; X-SAMPA with five tone suffixes. CC BY-NC-SA 4.0 is compatible with stated non-commercial research if attribution and ShareAlike are followed. Request TextGrid-only export and manual; do not download WAV. No formal IAA; independently review a subset.
+- FastThaiG2P: Apache-2.0 code + NOTICE is reusable; Wiktionary subset has CC BY-SA 3.0; generated IPA remains provisional, not gold; TLTK fallback data awaits exact license mapping. Upstream README's purported 34/17 gold files currently return 404; accessible tests are smoke tests.
+- No audio was downloaded; no corpus labels were added to runtime data. The exact-head CI for this documentation batch must be checked after the commit; do not inherit previous CI status.
+

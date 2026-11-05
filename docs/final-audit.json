@@ -548,6 +548,34 @@
       "status": "DONE_VERIFIED",
       "implementation": "Regression test proves that a resolved Thai token with an empty syllable list cannot be counted as complete. Test-first RED was observed on 8492d2478425a88f24827d8547c96a26d9559ac9; minimal guard implemented on 94eaadb5bda2318dfa864eee7dae1b3715b70374.",
       "acceptance": "Exact-head Full CI 41641516453 passed test/wheel-install-smoke/master-artifact; Web Static 41641516658 passed; 327 pytest tests and 1,185 subtests passed; Ruff and 29 browser parity fixtures passed. Diagnostic-only change; no linguistic accuracy claim."
+    },
+    {
+      "id": "GLOBAL-TIMIT-TEXT-ONLY-001",
+      "status": "BLOCKED",
+      "implementation": "Verified LDC2022S13 provides separate Word, Phones, Tones and TextGrid TXT assets; audio is not required for the planned text-only comparison.",
+      "blocker": "No signed LDC non-member agreement or access has been obtained; standard agreement forbids bulk redistribution outside the named research group.",
+      "acceptance": "Obtain text-only access and applicable fee; use internally for non-commercial research; seek separate written permission before publishing any machine-readable derived phonetic subset."
+    },
+    {
+      "id": "LOTUSDIS-TEXT-ONLY-001",
+      "status": "PARTIAL",
+      "implementation": "Verified CC BY-SA 4.0 and public text fields sentence/speaker_id/mic/duration; paper documents utterance-level transcripts, speaker labels and overlap tags, but no phone/IPA tier.",
+      "blocker": "No file-level TextGrid tier inspection; phonetic annotation is not established by the paper or public viewer.",
+      "acceptance": "Use optionally for conversational lexical/orthographic robustness with attribution and ShareAlike; inspect TextGrid only if word-level text alignment is useful; do not treat as IPA gold. Audio work is out of scope."
+    },
+    {
+      "id": "CCOST-TEXTGRID-ONLY-001",
+      "status": "PARTIAL",
+      "implementation": "Published MAU phonetic-segment and MAS phonemic-syllable tiers, X-SAMPA notation and five tone suffixes verified from LREC 2026 paper.",
+      "blocker": "No TextGrid-only export/manual obtained; actual file-level tier instances/intervals uninspected; no formal IAA was collected.",
+      "acceptance": "Request TextGrid-only export/manual, inspect actual tiers and intervals, document X-SAMPA-to-IPA conversion, independently review a stratified subset; use CC BY-NC-SA 4.0 with attribution and ShareAlike."
+    },
+    {
+      "id": "FASTTHAIG2P-SELECTIVE-REUSE-001",
+      "status": "PARTIAL",
+      "implementation": "Apache-2.0 code reuse path and CC BY-SA 3.0 Wiktionary subset identified; generated IPA is provisional; vendored TLTK data license mapping remains unresolved.",
+      "blocker": "Per-file TLTK data licensing and generated/manual IPA provenance/rights are not fully established.",
+      "acceptance": "Vendor only code with Apache NOTICE and only the isolated Wiktionary subset with CC BY-SA 3.0 attribution/share-alike; obtain TLTK asset-specific license clarification before fallback-data redistribution; keep generated outputs out of gold."
     }
   ],
   "latest_implementation_branch": "fix/benchmark-error-clusters-20261102 (PR #189 open draft)",
@@ -3633,9 +3661,89 @@
   },
   "fastthaig2p_rights_reconciliation": {
     "code_license": "Apache-2.0",
-    "data_sources": "manual overrides; Wiktionary-derived entries; approximately 49k generated IPA entries; vendored tltk fallback assets",
-    "data_rights": "BLOCKED_SOURCE_LEVEL_REVIEW_REQUIRED",
+    "code_reuse": "REUSABLE_WITH_APACHE_LICENSE_NOTICE_AND_MODIFICATION_NOTICES_RETAINED",
+    "wiktionary_data_license": "CC BY-SA 3.0",
+    "wiktionary_subset": "ABOUT_13K_ENTRIES_SOURCE_FILE_SEPARATE_REUSE_POSSIBLE_WITH_ATTRIBUTION_AND_SHAREALIKE",
+    "generated_ipa": "ABOUT_49K_CLAUDE_OPUS_4_6_ENTRIES_MERGED_IN_RUNTIME_MAP; PROVISIONAL_NOT_GOLD; PROMPT_VALIDATION_500_WORDS_78_8_PERCENT_EXACT_1_8_PERCENT_FATAL_UNDER_UPSTREAM_CLASSIFICATION",
+    "manual_overrides": "PROVENANCE_AND_REVIEWER_CREDENTIALS_NOT_ESTABLISHED",
+    "tltk_code": "VENDORED_TH2IPA_SOURCE_HAS_BSD_3_CLAUSE_NOTICE",
+    "tltk_data": "BLOCKED_FILE_LEVEL_LICENSE_CLARIFICATION_REQUIRED; UPSTREAM_LICENSE_INDICATORS_CONFLICT",
+    "claimed_gold_files": "tests/ground_truth_ipa.json_AND_tests/blind_test_ipa.json_RETURN_404_ON_CURRENT_MAIN",
+    "data_rights": "PARTIAL_SELECTIVE_REUSE_PATH_IDENTIFIED",
     "source_readme": "https://github.com/awslabs/FastThaiG2P/blob/main/data/README.md",
-    "reason": "Apache-2.0 code license does not by itself establish redistribution rights for all bundled data and vendored assets."
+    "wiktionary_source": "https://github.com/PyThaiNLP/thai-g2p-wiktionary-corpus",
+    "tltk_license_sources": [
+      "https://github.com/attapol/tltk/blob/master/LICENSE",
+      "https://github.com/attapol/tltk/blob/master/LICENSE.txt",
+      "https://github.com/attapol/tltk/blob/master/setup.py",
+      "https://pypi.org/project/tltk/"
+    ],
+    "reason": "Apache-2.0 covers FastThaiG2P code, not every bundled source dataset; Wiktionary-derived data can be reused under its own CC BY-SA 3.0 terms, generated entries remain provisional, and TLTK data assets need file-level license mapping."
+  },
+  "text_only_corpus_rights_review_2026_11_05": {
+    "scope": "TEXT_AND_PHONETIC_ANNOTATIONS_ONLY_NO_AUDIO",
+    "global_timit_thai": {
+      "status": "BLOCKED_FOR_ACCESS",
+      "catalog": "https://catalog.ldc.upenn.edu/LDC2022S13",
+      "catalog_id": "LDC2022S13",
+      "relevant_assets": [
+        "Word TXT",
+        "Phones TXT",
+        "Tones TXT",
+        "TextGrid TXT"
+      ],
+      "license": "LDC User Agreement for Non-Members",
+      "allowed_use": "Internal non-commercial linguistic education, research and technology development after signed agreement; limited excerpts in research reports",
+      "redistribution": "BULK_REDISTRIBUTION_OUTSIDE_NAMED_RESEARCH_GROUP_NOT_PERMITTED_WITH_STANDARD_AGREEMENT",
+      "audio_required": false,
+      "next_acceptance": "Ask LDC for text-only access, applicable fee, and separate permission for any small public derived phonetic test subset."
+    },
+    "lotusdis": {
+      "status": "PARTIAL_TEXT_TRANSCRIPTS_NO_PHONE_LEVEL_LABELS_ESTABLISHED",
+      "dataset": "https://huggingface.co/datasets/nectec/LOTUSDIS",
+      "paper": "https://arxiv.org/abs/2509.18722",
+      "license": "CC BY-SA 4.0",
+      "available_text_fields": [
+        "sentence",
+        "speaker_id",
+        "mic",
+        "duration"
+      ],
+      "paper_annotation": "utterance-level orthographic transcripts, speaker labels, overlap tags; no phone/IPA tier described",
+      "useful_for": [
+        "conversational vocabulary",
+        "code-switching",
+        "disfluency",
+        "orthographic robustness"
+      ],
+      "audio_required": false,
+      "audio_hash_work": "DEFERRED_OUT_OF_SCOPE"
+    },
+    "ccost": {
+      "status": "PARTIAL_PUBLISHED_PHONE_TIER_MAP_TEXTGRID_EXPORT_PENDING",
+      "paper": "https://aclanthology.org/2026.lrec-1.247.pdf",
+      "zenodo": "https://zenodo.org/records/17366698",
+      "license": "CC BY-NC-SA 4.0",
+      "tiers": {
+        "ORT": "orthographic word",
+        "KAN": "canonical word pronunciation",
+        "KAS": "canonical syllabified pronunciation",
+        "MAU": "phonetic segment",
+        "MAS": "phonemic syllable",
+        "TRN": "orthographic utterance transcript"
+      },
+      "phonetic_alphabet": "X-SAMPA",
+      "tone_suffixes": {
+        "_1": "Mid",
+        "_2": "Low",
+        "_3": "Falling",
+        "_4": "High",
+        "_5": "Rising"
+      },
+      "formal_inter_annotator_agreement": "NOT_COLLECTED",
+      "audio_required": false,
+      "next_acceptance": "Request TextGrid-only export/manual, inspect actual tier instances and intervals, independently review a stratified subset."
+    },
+    "recommendation": "Prioritize CCOST TextGrid-only; then Global TIMIT text-only under LDC agreement; LOTUSDIS optional for orthographic/conversational text; selective FastThaiG2P code and Wiktionary data reuse."
   }
 }

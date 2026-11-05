@@ -1761,3 +1761,14 @@ PR #202 restores explicit regression coverage for all six lexical-reference sour
 ### Evidence policy
 
 Do not mark any gate DONE_VERIFIED because a registry entry, schema, blank reviewer packet, model output, source annotation, static check or documentation paragraph exists. Keep CCOST under CC BY-NC-SA 4.0 restrictions; keep Global TIMIT Thai unused pending written LDC permission. Keep LOTUSDIS PARTIAL until actual WAV bytes and per-file hashes/interval evidence are verified. Keep FastThaiG2P production data and preview gates separate. Do not create or report independent IPA gold rows until the blinded expert adjudication has actually happened.
+
+
+## Text-only corpus and FastThaiG2P rights review — 2026-11-05
+
+The user clarified that the project needs only orthographic text and phonetic text labels, not audio. The dedicated research note is [Text-only Thai corpus and FastThaiG2P rights review](research/corpus-text-only-fastthaig2p-2026-11-05.md).
+
+- **Global TIMIT Thai (LDC2022S13):** the catalog exposes Word, Phones, Tones and TextGrid TXT samples. The standard non-member agreement permits non-commercial research and limited excerpts in reports, but not bulk public redistribution. Access is feasible after signing the agreement and checking fees; public release of full extracted labels needs separate LDC permission. Do not acquire audio.
+- **LOTUSDIS:** public text rows are available under CC BY-SA 4.0 and include utterance text, speaker, microphone and duration. The paper describes utterance-level orthographic transcripts, speaker labels and overlap tags, not phone/IPA tiers. Keep it optional for conversational vocabulary and orthographic robustness; it is not phonetic gold. Audio hashes/intervals are DEFERRED / OUT OF SCOPE.
+- **CCOST:** published TextGrid tiers include MAU phonetic segments and MAS phonemic syllables, plus ORT/KAN/KAS/TRN; labels use X-SAMPA and five tone suffixes. CC BY-NC-SA 4.0 appears compatible with the stated non-commercial public-interest research if attribution and ShareAlike are followed. Prefer requesting TextGrid-only files and manual; do not download WAV. No formal IAA was collected, so independent review of a subset is still required.
+- **FastThaiG2P:** Apache-2.0 code can be reused with NOTICE. Its Wiktionary-derived IPA subset has a CC BY-SA 3.0 reuse path. Do not blindly copy the merged 62k dictionary: it combines that subset with ~49k LLM-generated entries and manual overrides. TLTK fallback code has a BSD-3 notice, but vendored TLTK data files need file-level license clarification because upstream exposes conflicting license indicators. The data README's 34-row/17-row gold test files return 404 on current upstream main; accessible tests are smoke tests, not a phonetic benchmark. Keep generated IPA provisional.
+- **No runtime corpus rows or phonetic labels were added. No audio was downloaded.** The full source-by-source analysis and links are in the linked research note.

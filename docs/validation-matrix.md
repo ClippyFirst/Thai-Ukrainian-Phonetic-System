@@ -1661,3 +1661,16 @@ Latest main at this checkpoint: `5b2f65e9745bf396a37fd8775504256bb1e193cc`.
 ### Evidence policy
 
 Do not mark any gate DONE_VERIFIED because a registry entry, schema, blank reviewer packet, model output, source annotation, static check or documentation paragraph exists. Keep CCOST under CC BY-NC-SA 4.0 restrictions; keep Global TIMIT Thai unused pending written LDC permission. Keep LOTUSDIS PARTIAL until actual WAV bytes and per-file hashes/interval evidence are verified. Keep FastThaiG2P production data and preview gates separate. Do not create or report independent IPA gold rows until the blinded expert adjudication has actually happened.
+
+
+## Text-only corpus and FastThaiG2P rights review — 2026-11-05
+
+| Work item | Status | Evidence / decision | Next acceptance |
+|---|---|---|---|
+| Global TIMIT Thai text-only phones/tones | BLOCKED_FOR_ACCESS | LDC2022S13 provides Word/Phones/Tones/TextGrid TXT; non-member agreement allows non-commercial research and limited publication excerpts but forbids bulk redistribution outside the research group. Audio is not required for our intended text-only use. | Obtain signed non-member agreement and fee/access details; ask LDC whether a small derived phonetic test subset may be published. Do not publish full extracted labels. |
+| LOTUSDIS text-only transcripts | PARTIAL | CC BY-SA 4.0; public Hugging Face rows expose sentence, speaker, mic and duration. Paper documents utterance-level transcripts, speaker labels and overlap tags, not phone/IPA tiers. Audio/hash work is DEFERRED / OUT OF SCOPE. | Keep optional for conversational vocabulary and orthographic robustness; inspect TextGrid only if word-level text alignment would materially help. Do not count as phonetic gold. |
+| CCOST text-only phonetic annotations | PARTIAL | LREC 2026 publishes ORT/KAN/KAS/MAU/MAS/TRN tiers, X-SAMPA and tone suffixes; CC BY-NC-SA 4.0 is compatible with stated non-commercial research subject to attribution and ShareAlike. No formal IAA was collected. | Request TextGrid-only export/manual; inspect actual tiers and intervals; independently review a stratified subset. No WAV required. |
+| FastThaiG2P code and data | PARTIAL | Apache-2.0 code reusable with NOTICE; Wiktionary IPA subset is CC BY-SA 3.0; merged 62k map includes generated IPA; TLTK fallback data has unresolved file-level license mapping. Upstream's cited 34/17 gold files return 404. | Reuse code selectively; isolate Wiktionary subset with attribution/ShareAlike; keep generated IPA provisional; obtain TLTK file-level license clarification before bundling. |
+| FastThaiG2P Python-host preview | BLOCKED | Separate deployment gate; unrelated to text-data reuse. | Verify live Python-capable preview independently if the web deployment remains in scope. |
+
+**Scope correction:** LOTUSDIS audio bytes, per-file WAV hashes, waveform overlap and audio interval verification are no longer acceptance tasks for this text-only research objective. Preserve any historical audio-oriented audit entries as history, but treat them as DEFERRED/OUT OF SCOPE rather than blockers. No audio was downloaded in this review.
