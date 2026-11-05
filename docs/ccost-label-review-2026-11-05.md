@@ -15,14 +15,14 @@ All 488 files parsed. The release uses six non-empty tier names:
 
 | Observed tier | Non-empty labels | Interpretation |
 |---|---:|---|
-| `ORT-MAU` | 133,344 | Orthographic tier; mapping to published ORT is provisional |
-| `KAN-MAU` | 133,338 | Canonical word-pronunciation tier; mapping to published KAN is provisional |
-| `KAS-MAU` | 133,340 | Canonical syllabified-pronunciation tier; mapping to published KAS is provisional |
+| `ORT-MAU` | 133,344 | Tokenized orthographic word segmentation based on MAUS (BAS definition) |
+| `KAN-MAU` | 133,338 | Canonical word pronunciation in X-SAMPA, aligned through MAUS (BAS definition) |
+| `KAS-MAU` | 133,340 | Phonological syllable segmentation based on G2P, aligned through MAUS (BAS definition) |
 | `MAU` | 445,723 | Phone-level phonetic segmentation |
 | `MAS` | 195,288 | Phonemic syllable tier |
 | `TRN` | 12,090 | Orthographic utterance transcript |
 
-The paper defines MAU as the phonetic segment tier, MAS as the phonemic syllable tier, KAN as canonical word pronunciation, KAS as canonical syllabified pronunciation, ORT as orthographic word, and TRN as orthographic utterance transcript. It also states that phonemic and phonetic representations use X-SAMPA. However, the paper's published tier list names ORT, KAN, and KAS without the appended -MAU suffix found in the supplied release (ORT-MAU, KAN-MAU, KAS-MAU). The base tier roles are documented; the reason for the suffix, whether these are export aliases or distinct tiers, and whether they are strictly equivalent to ORT/KAN/KAS remain unconfirmed. Preserve the raw names and do not normalize destructively.
+The CCOST paper defines the base annotation roles and X-SAMPA convention. The BAS WebServices tutorial independently defines the exact suffixed tier names found in this release: `ORT-MAU` is tokenized word segmentation based on MAUS; `KAN-MAU` is the same with canonical pronunciation encoded in X-SAMPA; `KAS-MAU` is phonological syllable segmentation based on G2P. Thus the `-MAU` suffix identifies the MAUS-based output layer/workflow, not an unexplained corpus-specific phonetic symbol. The suffix semantics are now **DONE_VERIFIED** from the BAS documentation. Keep the literal tier names in raw records; map their roles explicitly rather than destructively renaming them to `ORT`/`KAN`/`KAS`.
 
 ## Exact failure inventory
 
@@ -61,7 +61,7 @@ The inspector counted **89,929 marker appearances across tier labels**. These ar
 | `<usb>` | 7,252 | Speaker-produced but unclassifiable event; CCOST paper uses it for disfluencies (CCOST paper and BAS) |
 | `<nib>` | 4,260 | Non-speech event/noise (BAS) |
 | `<P>` | 394 | **Unresolved**; uppercase form is not interchangeable with `<p:>` |
-| `<notProcessedChunk>` | 142 | **Unresolved**; do not assume it is a phonetic segment or a harmless control marker |
+| `<notProcessedChunk>` | 142 | MAUS dummy failure segment inserted when a chunk could not be processed; alignment/processing failure, not a speech phone (BAS FAQ) |
 | `<:p>` | 22 | **Unresolved variant**; not normalized to `<p:>` without evidence |
 | `<Fail>` | 16 | **Unresolved**; no failure semantics inferred |
 | `<P:>` | 4 | **Unresolved**; case-sensitive distinct marker |
@@ -73,12 +73,12 @@ Only tag-only labels made exclusively of a documented marker may be classified a
 ## What is and is not IPA
 
 - The paper says the phonemic and phonetic tiers use **X-SAMPA**, not IPA. A successful conversion is a derived IPA candidate, with provenance, not a source IPA annotation.
-- The paper explicitly defines MAU as the phonetic segment tier and MAS as the phonemic syllable tier; this clarifies the base tier names but does not explain the added -MAU suffix on ORT-MAU, KAN-MAU, and KAS-MAU.
+- BAS documentation explicitly defines `ORT-MAU`, `KAN-MAU`, and `KAS-MAU`; their suffix semantics are now resolved. MAU remains the phone-level phonetic segmentation tier; MAS remains the phonemic syllable tier.
 - `ORT-MAU` and `TRN` are orthographic/text tiers. Their Thai-script content is not IPA.
 - `MAU` is phone-level; `MAS` is phonemic/syllabic. They must not be conflated.
 - Unicode IPA-looking characters in failed labels are not automatically passed through as IPA. The label may be mixed, corrupted, or use another convention.
 - The only source-documented tone suffixes are `_1` Mid, `_2` Low, `_3` Falling, `_4` High, and `_5` Rising. `_8` stays unresolved.
-- No phonetic value is guessed for `<P>`, `<Fail>`, `<notProcessedChunk>`, `<:p>`, `<P:>`, slash forms, or truncated labels.
+- `<notProcessedChunk>` is a documented MAUS processing-failure placeholder, not a phonetic value. No phonetic value is guessed for `<P>`, `<Fail>`, `<:p>`, `<P:>`, slash forms, or truncated labels.
 
 ## Acceptance and status
 
@@ -86,9 +86,9 @@ Only tag-only labels made exclusively of a documented marker may be classified a
 |---|---|---|
 | Inspect 488 CCOST TextGrids | DONE_VERIFIED | CI parsed all 488 long-text files |
 | Inventory observed tier names and counts | DONE_VERIFIED | Counts above; raw tier names preserved |
-| Classify documented MAUS markers | DONE_VERIFIED | CCOST paper + BAS format definitions |
+| Classify documented MAUS markers and chunk failure label | DONE_VERIFIED | CCOST paper + BAS FAQ: `<p:>`, `<usb>`, `<nib>`, `<notProcessedChunk>` |
 | Separate orthography, markers, and X-SAMPA candidates | DONE_VERIFIED for the inventory | Source roles documented; mixed forms remain unsupported |
-| Explain every `-MAU` alias | BLOCKED | Requires corpus curator confirmation |
+| Explain `-MAU` tier suffixes | DONE_VERIFIED | BAS tutorial explicitly defines ORT-MAU, KAN-MAU and KAS-MAU |
 | Resolve 868 `_8` occurrences | BLOCKED | No source definition; curator/manual clarification required |
 | Resolve remaining 146 failed occurrences | PARTIAL/BLOCKED | 116 raw strings inventoried; specialist/curator review required |
 | Promote converted labels to IPA gold | BLOCKED | Independent Thai review and adjudication still required |
@@ -114,3 +114,10 @@ A closer reading of the published LREC 2026 paper, §3.3–3.4, resolves part—
 - The paper documents only _1 Mid, _2 Low, _3 Falling, _4 High, _5 Rising.
 
 The paper does **not** define why the release's ORT-MAU, KAN-MAU, and KAS-MAU names carry -MAU, nor does it document _8 or the unresolved tag spellings. These remain questions for the named data curators. The base meaning of MAU is no longer unknown; the suffix/alias relationship remains unresolved.
+
+
+## BAS cross-check — 2026-11-05
+
+The BAS WebServices tutorial defines the exact tier labels present in this release: `ORT-MAU` (tokenized word segmentation based on MAUS), `KAN-MAU` (canonical word pronunciation encoded in X-SAMPA), and `KAS-MAU` (phonological syllable segmentation based on G2P). This resolves the `-MAU` suffix question without curator input. The BAS FAQ also explains `notProcessedChunk`: MAUS inserts a very short dummy segment when one or more chunks cannot be processed; likely causes include transcript/signal mismatch or a chunk too short for its expected phone sequence. Therefore `<notProcessedChunk>` is a processing/alignment failure marker, not a phonetic segment. It should be classified separately from the unresolved `<P>`, `<P:>`, `<:p>`, and `<Fail>` spellings.
+
+Sources: [BAS WebServices tutorial](https://clarin.phonetik.uni-muenchen.de/BASWebServices/help/tutorial) · [BAS FAQ: chunkNotProcessed / notProcessedChunk](https://clarin.phonetik.uni-muenchen.de/BASWebServices/help/help_examples).
