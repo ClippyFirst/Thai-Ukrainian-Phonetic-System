@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Як FastThaiG2P перетворює тайський текст на IPA та попередній український практичний запис.">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
 <title>Тайська українською — як це працює</title>
-<link rel="stylesheet" href="src/styles.css?v=20261104-fastthaig2p-1">
+<link rel="stylesheet" href="src/styles.css?v=20261105-pyodide-worker-1">
 </head>
 <body>
 <a class="skip-link" href="#main-content">Перейти до основного вмісту</a>
@@ -19,11 +19,11 @@
 <section class="hero">
 <p class="eyebrow">ЯК ЦЕ ПРАЦЮЄ</p>
 <h1>Як сервіс читає тайський текст</h1>
-<p class="lede">Сервіс надсилає введений текст до FastThaiG2P, отримує IPA, а потім пропонує її попередній практичний запис українськими літерами. Це не переклад: значення слова не змінюється.</p>
+<p class="lede">Сервіс запускає закріплений FastThaiG2P у браузері через Pyodide, отримує IPA, а потім пропонує її попередній практичний запис українськими літерами. Це не переклад: значення слова не змінюється.</p>
 </section>
 <section class="evidence">
 <p class="eyebrow">ОДИН РУШІЙ</p><h2>FastThaiG2P → IPA → український кандидат</h2>
-<p><strong>FastThaiG2P</strong> — єдиний рушій, який визначає тайську вимову на сайті. Браузер не запускає паралельний локальний G2P, RTGS або орфографічний резервний алгоритм. Якщо рушій не повертає повний IPA, сервіс показує помилку, а не підміняє результат іншим методом.</p>
+<p><strong>FastThaiG2P</strong> — єдиний рушій, який визначає тайську вимову на сайті. Браузер запускає той самий Python-рушій FastThaiG2P у Web Worker через Pyodide. Старий JavaScript/RTGS-дослідницький код не використовується як альтернативний рушій. Якщо FastThaiG2P не повертає повний IPA, сервіс показує помилку, а не підміняє результат іншим методом.</p>
 <p><strong>IPA</strong> — проміжний запис звуків. Сервіс зберігає сирий результат FastThaiG2P, зокрема межі складів, тонові позначки та довготу голосних. Оскільки зовнішній IPA ще не підтверджено незалежними фахівцями як фонемний або широкий поверхневий, його не позначають жодним із цих статусів.</p>
 <p><strong>Український запис</strong> — попередня практична адаптація отриманої IPA за наявними правилами проєкту. Це кандидат для читання, а не гарантовано правильна вимова чи офіційний стандарт.</p>
 </section>
@@ -37,8 +37,8 @@
 <p>Тони й довгота показуються в IPA та метаданих, але не повністю відтворюються українськими літерами. Через це два записи не можуть бути тотожними.</p>
 </section>
 <div class="system-grid">
-<article><p class="eyebrow">01</p><h2>Введення тексту</h2><p>Тайський текст надсилається до API цього сайту для обробки. Не вводьте конфіденційні дані.</p></article>
-<article><p class="eyebrow">02</p><h2>FastThaiG2P</h2><p>Закріплена версія FastThaiG2P визначає словникове читання або застосовує власний механізм для невідомих слів. Інший рушій не підключається.</p></article>
+<article><p class="eyebrow">01</p><h2>Введення тексту</h2><p>Текст передається з інтерфейсу до локального Web Worker у цьому браузері. Він не надсилається на API або зовнішній сервер.</p></article>
+<article><p class="eyebrow">02</p><h2>FastThaiG2P</h2><p>Pyodide запускає закріплену Python-версію FastThaiG2P із локально завантаженими wheel-пакетами, словником і fallback-даними. Інший G2P-рушій не підключається.</p></article>
 <article><p class="eyebrow">03</p><h2>IPA → українська</h2><p>IPA проходить через окремий адаптер. Невідомі символи не вгадуються; для підтримуваних фрагментів український результат позначається як попередній.</p></article>
 <article><p class="eyebrow">04</p><h2>Обмеження</h2><p>Якщо IPA неповна або містить непідтримувані звуки, сервіс повідомляє про це й утримується від непідтвердженого результату.</p></article>
 </div>
@@ -63,8 +63,8 @@
 <section class="evidence research-status">
 <p class="eyebrow">СТАН ПРОЄКТУ</p><h2>Що вже перевірено</h2>
 <div class="system-grid">
-<article><p class="eyebrow">АВТОМАТИЧНІ ТЕСТИ</p><h3>Робота програми</h3><p>Перевіряються типізований IPA-контракт, попередня українська адаптація, API та поведінка інтерфейсу без fallback. <a href="https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/workflows/ci.yml" rel="noopener noreferrer">Переглянути перевірки →</a></p></article>
-<article><p class="eyebrow">САЙТ</p><h3>Розгортання</h3><p>Python API потребує хостингу, який підтримує FastAPI. Поточна GitHub Pages публікація є статичною й не може виконувати цей API; міграція ще не завершена.</p></article>
+<article><p class="eyebrow">АВТОМАТИЧНІ ТЕСТИ</p><h3>Робота програми</h3><p>Перевіряються типізований IPA-контракт, спільний CPython/Pyodide результат, попередня українська адаптація, Web Worker і fail-closed поведінка без fallback. <a href="https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/workflows/ci.yml" rel="noopener noreferrer">Переглянути перевірки →</a></p></article>
+<article><p class="eyebrow">САЙТ</p><h3>Розгортання</h3><p>GitHub Pages є єдиним хостингом. Статичний сайт не запускає FastAPI, тому обробка переноситься в Pyodide Web Worker. Браузерний parity smoke вже проходить на чотирьох прикладах, але self-hosted runtime bundle, браузерна перевірка, атрибуційний manifest і live deployment ще не завершені.</p></article>
 <article><p class="eyebrow">42 ВХОДИ</p><h3>Порівняльний набір</h3><p>Є фіксований діагностичний набір для порівняння рушіїв, але він не має незалежно adjudicated IPA gold і не вимірює точність.</p></article>
 <article><p class="eyebrow">ЩЕ НЕ ВИМІРЯНО</p><h3>Точність вимови</h3><p>Загальна точність FastThaiG2P та української адаптації не встановлена незалежними фахівцями.</p></article>
 </div>
