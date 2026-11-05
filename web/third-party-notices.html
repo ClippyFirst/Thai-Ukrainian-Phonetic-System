@@ -10,15 +10,15 @@
 <body>
 <a class="skip-link" href="#main-content">Перейти до основного вмісту</a>
 <header class="site-header">
-  <p class="eyebrow">ВІДКРИТИЙ ПРОЄКТ</p>
-  <h1>Правові повідомлення та джерела даних</h1>
-  <p>Ліцензії програмних компонентів і походження словникових даних, які плануються для браузерної версії сервісу.</p>
-  <nav aria-label="Основна навігація">
-    <a href="./">До сервісу</a>
-    <a href="system.html">Як працює сервіс</a>
-  </nav>
+  <a class="brand" href="./" aria-label="Тайська → українська">ТАЙСЬКА <span>→</span> УКРАЇНСЬКА</a>
+  <nav aria-label="Основна навігація"><a href="./">Сервіс</a><a href="system.html">Як це працює</a><a class="active" href="third-party-notices.html">Правові повідомлення</a></nav>
 </header>
-<main id="main-content" tabindex="-1">
+<main class="container system" id="main-content" tabindex="-1">
+  <section class="hero">
+    <p class="eyebrow">ВІДКРИТИЙ ПРОЄКТ</p>
+    <h1>Правові повідомлення та джерела даних</h1>
+    <p class="lede">Ліцензії програмних компонентів і походження словникових даних, які плануються для браузерної версії сервісу.</p>
+  </section>
   <section>
     <h2>Словникові дані FastThaiG2P</h2>
     <p>Браузерний build залишає лише IPA-записи з per-entry позначкою джерела Wiktionary. Модельно згенеровані, вручну додані та записи без підтвердженого джерела не включаються. Список слів скорочено до ключів цих IPA-записів. OOV fallback FastThaiG2P залишається окремим компонентом.</p>
@@ -41,7 +41,7 @@
   </section>
   <section>
     <h2>TLTK-derived fallback</h2>
-    <p>FastThaiG2P вказує, що його OOV fallback походить із Thai Language Toolkit (TLTK). Вендорений файл коду містить заголовок TLTK version 1.3.8 і BSD-3-Clause notice. П'ять із шести перевірених fallback-файлів мають ідентичні Git blob SHA з файлами в репозиторії TLTK; pickle-файл збережений у розпакованому вигляді.</p>
+    <p>FastThaiG2P вказує, що його OOV fallback походить із Thai Language Toolkit (TLTK). Вендорений файл коду містить заголовок TLTK version 1.3.8 і BSD-3-Clause notice. П’ять із шести перевірених fallback-файлів мають ідентичні Git blob SHA з файлами в репозиторії TLTK; для шостого файла розмір і формат відрізняються, точне перетворення ще не підтверджено.</p>
     <p>Публічна сторінка PyPI для TLTK 1.3.8 вказує BSD-3-Clause. Репозиторій TLTK водночас містить окремий кореневий LGPL-3.0 LICENSE; цей файл також збережено у каталозі повідомлень як історичний evidence. Точне співвідношення root LICENSE до релізу 1.3.8 ще підлягає остаточній перевірці, тому публічний bundle залишається gated.</p>
     <ul>
       <li><a href="licenses/BSD-3-Clause-TLTK.txt">BSD-3-Clause — TLTK</a></li>
