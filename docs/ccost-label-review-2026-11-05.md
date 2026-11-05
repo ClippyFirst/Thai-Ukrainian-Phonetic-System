@@ -30,7 +30,7 @@ The inspector recorded **1,014 failed conversion occurrences**, representing **1
 
 | Failure class | Occurrences | Distinct raw strings | Interpretation / action |
 |---|---:|---:|---|
-| Out-of-range tone suffix `_8` | 868 | 22 | BAS supports only tone suffixes `_1`–`_5`; `_8` is invalid/out of range under the documented convention. Its intended correction is unknown; do not call it a sixth tone or map it to IPA. |
+| Unmapped CCOST tone suffix `_8` | 868 | 22 | The CCOST paper maps `_1`–`_5`; general BAS/MAUS syntax permits numeric tone suffixes `_1`–`_9`. `_8` is syntactically possible in MAUS but has no published CCOST category mapping in the paper. Its corpus-specific meaning is unresolved; do not map it to IPA. |
 | Slash/alternative notation | 58 | 27 | Includes frequent `r/` (23 occurrences) and compound strings. Meaning unresolved; do not rewrite slash as a phoneme or boundary. |
 | MAUS marker mixed with phonetic/text material | 26 | 20 | Preserve entire raw label. Do not strip marker and convert the remainder automatically. |
 | Non-ASCII phonetic-looking sequences | 17 | 9 | Includes `ɹ`, `ɾ`, `tʃ`, `ʔ`, `nˠ`, and a combining ring. They resemble IPA, but are not self-authenticating IPA fields. |
@@ -77,7 +77,7 @@ Only tag-only labels made exclusively of a documented marker may be classified a
 - `ORT-MAU` and `TRN` are orthographic/text tiers. Their Thai-script content is not IPA.
 - `MAU` is phone-level; `MAS` is phonemic/syllabic. They must not be conflated.
 - Unicode IPA-looking characters in failed labels are not automatically passed through as IPA. The label may be mixed, corrupted, or use another convention.
-- The only supported BAS tone suffixes are `_1`–`_5`; the CCOST paper maps these to Mid, Low, Falling, High, and Rising. `_8` is outside the supported range and is therefore an invalid/unrecognized suffix, not a sixth tone. The intended repair (if any) remains unknown.
+- The CCOST paper maps five toneme categories to `_1`–`_5` (Mid, Low, Falling, High, Rising). General BAS/MAUS documentation separately permits tone suffix numbers `_1`–`_9`. Therefore `_8` is syntactically allowed by generic MAUS notation but is not mapped to a CCOST category in the paper. Its meaning in these CCOST labels is unresolved; do not call it a sixth Thai tone or infer a replacement.
 - `<notProcessedChunk>` is a documented MAUS processing-failure placeholder, not a phonetic value. No phonetic value is guessed for `<P>`, `<Fail>`, `<:p>`, `<P:>`, slash forms, or truncated labels.
 
 ## Acceptance and status
@@ -89,7 +89,7 @@ Only tag-only labels made exclusively of a documented marker may be classified a
 | Classify documented MAUS markers and chunk failure label | DONE_VERIFIED | CCOST paper + BAS FAQ: `<p:>`, `<usb>`, `<nib>`, `<notProcessedChunk>` |
 | Separate orthography, markers, and X-SAMPA candidates | DONE_VERIFIED for the inventory | Source roles documented; mixed forms remain unsupported |
 | Explain `-MAU` tier suffixes | DONE_VERIFIED | BAS tutorial explicitly defines ORT-MAU, KAN-MAU and KAS-MAU |
-| Classify 868 `_8` occurrences as out-of-range suffixes | DONE_VERIFIED | BAS tutorial limits tone suffixes to `_1`–`_5`; intended correction remains unresolved and fail-closed |
+| Establish `_8` meaning in CCOST | BLOCKED | CCOST paper documents five mappings `_1`–`_5`; generic BAS/MAUS syntax allows `_1`–`_9`. `_8` has no established CCOST category mapping. Preserve and abstain pending source-specific evidence. |
 | Resolve remaining 146 failed occurrences | PARTIAL/BLOCKED | 116 raw strings inventoried; specialist/curator review required |
 | Promote converted labels to IPA gold | BLOCKED | Independent Thai review and adjudication still required |
 
@@ -128,7 +128,7 @@ The public CCOST annotation manual was also checked directly from the Zenodo rec
 
 ### `_8` resolution — BAS tone inventory
 
-The BAS WebServices tutorial's glossary states that tone support is limited to five stages and encodes them with `_1` through `_5`. The CCOST paper supplies the language-specific mapping for those five suffixes. Therefore every observed `_8` sequence is classifiable as an **out-of-range/invalid tone suffix under the documented BAS convention**. This resolves the question of whether `_8` is a legitimate sixth tone: it is not. It does **not** reveal which valid tone (if any) was intended in the source. Keep all 868 occurrences fail-closed; no repair or IPA conversion is justified.
+The BAS WebServices FAQ states that generic MAUS tone notation uses numeric suffixes `_1`–`_9` attached to the syllable nucleus (and explicitly excludes `_0`). This is a generic syntax rule, not a language-specific tone inventory. The CCOST paper documents five Thai toneme mappings `_1`–`_5` (Mid, Low, Falling, High, Rising), but does not define `_8`. Thus `_8` is **not invalid under generic MAUS syntax**, yet it is **unmapped in the published CCOST convention**. It may be a corpus-specific code, annotation anomaly, or another use; the available evidence does not decide. Keep all 868 occurrences fail-closed and do not replace or convert them until their CCOST-specific meaning is established.
 
 ## Contextual review worklist — 2026-11-05
 
@@ -152,7 +152,7 @@ The four unresolved markers have a separate interval inventory. The previous who
 
 - Text-only/canonical/phonemic label consistency can be reviewed from the supplied Thai orthographic and aligned TextGrid tiers.
 - No audio is opened or supplied. The worklist cannot establish acoustic surface-tone contours, speaker-specific allophony, duration, or exact acoustic realization.
-- A valid correction must cite positive cross-tier or source-convention evidence. `_8` being out of range does not identify which valid suffix was intended.
+- A valid correction must cite positive cross-tier or source-convention evidence. The generic MAUS suffix range does not identify the CCOST-specific meaning of `_8`.
 - Review status remains BLOCKED until two qualified independent Thai reviewers submit blind packets and a separate adjudicator records decisions. Reviewer candidates and public qualification evidence are listed in `reviewer-outreach-shortlist.md`; no one has been contacted or appointed.
 
 
@@ -168,4 +168,4 @@ The latest worklist CI gate asserts the following independently:
 
 The worklist preserves exact raw strings, file/tier/time provenance, overlapping labels from other tiers, adjacent same-tier context, and blank reviewer/adjudicator fields. The artifact is published as `ccost-label-adjudication-worklist` by the PR CI workflow. Its generator and tests are **PARTIAL_PENDING_EXACT_HEAD_CI** until the exact latest PR-head run succeeds and the uploaded artifact is inspected. Do not mark the worklist verified based only on the presence of code or a workflow step.
 
-No semantic interpretation is inferred for `<P>`, `<P:>`, `<:p>`, or `<Fail>`. The counts identify review targets, not meanings. `_8` remains out-of-range under the documented five-tone convention; intended original values remain unknown.
+No semantic interpretation is inferred for `<P>`, `<P:>`, `<:p>`, or `<Fail>`. The counts identify review targets, not meanings. `_8` is syntactically permitted by generic MAUS tone notation but unmapped in the CCOST paper's five-category scheme; its CCOST-specific meaning remains unknown.
