@@ -8,7 +8,7 @@ const builder = readFileSync("scripts/build_pyodide_bundle.py", "utf8");
 
 assert.match(notices, /<html lang="uk">/);
 assert.match(notices, /<a class="skip-link" href="#main-content">/);
-assert.match(notices, /<main id="main-content"/);
+assert.match(notices, /<main[^>]*id="main-content"/);
 assert.match(notices, /Wiktionary contributors/);
 assert.match(notices, /Kaikki\.org \/ Wiktextract/);
 assert.match(notices, /CC BY-SA 4\.0/);
