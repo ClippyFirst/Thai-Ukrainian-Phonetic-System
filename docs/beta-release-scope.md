@@ -25,7 +25,7 @@ This is a usable, evidence-labelled beta of a research-oriented Thai-to-Ukrainia
 | Manual accessibility certification | DEFERRED as a certification gate | Source-level and automated checks remain required; unresolved manual checks must be disclosed, not described as passed. |
 | CCOST unknown labels (_8, <P>, <P:>, <:p>, <Fail>) | PARTIAL / fail-closed | Keep raw values and abstain; beta may proceed without inventing semantics. |
 | CCOST controlled-wordlist discrepancy | DEFERRED unless it affects a shipped runtime path | Do not promote unresolved research rows into runtime data. |
-| FastThaiG2P browser runtime bundle | DONE_VERIFIED / PUBLICATION GATE | Source-filtered wheel, four-case CPython/Pyodide parity, real Chromium worker, six TLTK fallback transformations, ten notices, and transparent dataset ZIP passed CI run `42085653176`; final-head CI is rerun after the latest dataset packaging changes. Public Pages redistribution remains disabled pending owner approval and final TLTK license-scope review. |
+| FastThaiG2P browser runtime bundle | DONE_VERIFIED / PUBLICATION GATE | Exact-head Pyodide run `42090379707`, Web Static `42090379866`, Site API `42090379612`, optional external smoke `42090379819`, and Full CI `42090379627` all passed on `ba22872679869371e92ab9ad511db4ed74627da2`. Public Pages redistribution remains disabled pending explicit owner approval and final TLTK file-level license-scope review. |
 
 DEFERRED is a scope decision, not a pass. Reopen a deferred item before any claim of linguistic validation, official-standard status, corpus accuracy, or acoustic fidelity.
 
@@ -74,15 +74,15 @@ No third-party skill files are copied into this repository.
 
 ## Beta release checklist
 
-- [ ] Exact-head Full CI passes on the candidate commit.
-- [ ] Dedicated FastThaiG2P Site API workflow passes.
-- [ ] Optional external G2P smoke passes, or its unavailability is explicitly recorded.
-- [ ] Python/browser parity and generated-artifact drift gates pass.
+- [x] Exact-head Full CI passes on the candidate commit (run `42090379627`; latest documentation follow-up is undergoing a fresh exact-head run).
+- [x] Dedicated FastThaiG2P Site API workflow passes (run `42090379612`).
+- [x] Optional external G2P smoke passes (run `42090379819`).
+- [x] Python/browser parity and generated-artifact drift gates pass (Full CI run `42090379627`; Pyodide run `42090379707`).
 - [x] Dependency pins, license notices and corpus attribution are present.
 - [x] Beta UI clearly states provisional status, privacy caution, and unsupported-input behavior.
 - [x] A feedback path and a simple issue-triage procedure are published: website footer links to the GitHub Beta feedback form at .github/ISSUE_TEMPLATE/beta-feedback.yml; it asks for minimal reproduction context and explicitly prohibits personal/confidential data and audio.
 - [x] FastThaiG2P Pyodide browser port passes exact CPython parity and real Chromium cold/warm worker smoke without API/CDN requests (CI `42085653176`); live Pages deployment remains gated.
-- [ ] Runtime bundle redistribution/attribution manifest is verified before public Pages deployment.
+- [ ] Runtime bundle redistribution/attribution manifest receives explicit publication approval; source filtering, dataset archive, notices and hashes are verified, but TLTK file-level license scope remains ambiguous and `redistribution_approved=false`.
 - [ ] Pyodide cold-start, warm-run and bundle-size budgets are measured on desktop and mobile.
 - [x] Manual accessibility limitations are disclosed; no unsupported WCAG conformance claim is made.
 - [x] Release notes identify known linguistic and corpus limitations.
