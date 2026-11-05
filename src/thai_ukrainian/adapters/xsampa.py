@@ -82,7 +82,7 @@ def _convert_segmental(value:str)->str:
         if symbol is None:
             raise XSampaConversionError(f"unsupported X-SAMPA sequence at offset {index}: {value[index:]!r}")
         output.append(XSAMPA_TO_IPA[symbol]); index+=len(symbol); has_segment=True
-    return unicodedata.normalize("NFC","".join(output))
+    return unicodedata.normalize("NFD","".join(output))
 
 def convert_xsampa_label(label:str)->XSampaLabel:
     """Convert a CCOST label; numeric tone suffixes close the current syllable."""
