@@ -1834,3 +1834,12 @@ The user clarified that the project needs only orthographic text and phonetic te
 - **FastThaiG2P:** exact pinned source code is Apache-2.0 with Amazon NOTICE; vendored TLTK parser file has a separate BSD-3 notice. The wheel bundles a mixed-provenance dictionary and TLTK fallback data. The Wiktionary-derived component is identified by upstream as sourced from kaikki.org, which states CC BY-SA and GFDL terms. Generated/manual/fallback data lack sufficient component-level rights detail in the inspected upstream data README. See [FastThaiG2P license review](fastthaig2p-license-review-2026-11-05.md).
 - **Project boundary:** FastThaiG2P remains an optional external dependency; no bundled dictionary/fallback data was copied into this repository. Bulk redistribution remains BLOCKED pending component-level provenance and license confirmation.
 - Independent IPA gold rows remain **0**; linguistic accuracy remains **NOT_MEASURED**.
+
+
+## 2026-11-05 evidence follow-up
+
+The primary CCOST paper now resolves base tier semantics (MAU phone-level, MAS phonemic syllable, KAN canonical word pronunciation, KAS canonical syllabified pronunciation, ORT orthographic word, TRN utterance transcript) and confirms X-SAMPA plus tone suffixes _1–_5. It does not explain the supplied ORT-MAU/KAN-MAU/KAS-MAU suffixes or _8. Curator clarification remains required.
+
+FastThaiG2P's pinned source-code license (Apache-2.0), NOTICE (Amazon attribution), and vendored parser's BSD-3-Clause file header are verified. The full bundled dictionary/fallback rights are **not** established under a single blanket license: upstream identifies Wiktionary/kaikki CC BY-SA/GFDL content, model-generated entries, manual overrides, and TLTK fallback data without a complete per-entry/per-file rights ledger. Keep the optional dependency external; bulk redistribution is blocked.
+
+The CCOST request has been prepared with public author/curator email addresses and specific questions, but **not sent**: no email-sending connector is available in this session. No curator response has been received. See docs/external-review-and-source-requests.md.
