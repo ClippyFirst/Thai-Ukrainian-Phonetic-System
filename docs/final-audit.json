@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Documentation audit branch: source-code checkpoint 41ef3f1e3a3e23f216ee16e6d3cfbb4244b00722 passed exact-head CI 41921113154; subsequent documentation checkpoint 6eb07a67aae3317d775401d6f7efdf34e1235b39 is under exact-head CI run 41923015472. PR #210 open, not merged. Linguistic accuracy NOT_MEASURED; zero independently adjudicated IPA gold rows; engineering-verified research prototype, not release-ready.",
+  "status": "Audit branch docs/repository-audit-2026-11-04 at 3b18a3b35a35c0573cadc2d81cdbcbd455b85a91; exact-head CI 41986104461 passed all jobs. PR #210 open, not merged. Owner decision: Global TIMIT excluded; CCOST primary phonetic-text candidate, selective FastThaiG2P/Wiktionary supporting data, LOTUSDIS optional orthographic context. Linguistic accuracy NOT_MEASURED; zero independently adjudicated IPA gold rows; engineering-verified research prototype, not release-ready.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -576,6 +576,26 @@
       "implementation": "Apache-2.0 code reuse path and CC BY-SA 3.0 Wiktionary subset identified; generated IPA is provisional; vendored TLTK data license mapping remains unresolved.",
       "blocker": "Per-file TLTK data licensing and generated/manual IPA provenance/rights are not fully established.",
       "acceptance": "Vendor only code with Apache NOTICE and only the isolated Wiktionary subset with CC BY-SA 3.0 attribution/share-alike; obtain TLTK asset-specific license clarification before fallback-data redistribution; keep generated outputs out of gold."
+    },
+    {
+      "task": "Global TIMIT Thai acquisition/reuse",
+      "status": "DEFERRED",
+      "reason": "Owner explicitly excluded this source; alternatives available; no LDC access or derived data work."
+    },
+    {
+      "task": "CCOST text-only phonetic reference",
+      "status": "PARTIAL",
+      "acceptance": "Obtain TextGrid-only export/manual, inspect MAU/MAS values, convert X-SAMPA to typed IPA, independently review stratified subset."
+    },
+    {
+      "task": "FastThaiG2P selective data/code reuse",
+      "status": "PARTIAL",
+      "acceptance": "Separate Apache code from CC BY-SA Wiktionary subset; provenance/attribution; keep generated rows provisional; resolve TLTK data licenses."
+    },
+    {
+      "task": "LOTUSDIS optional text robustness",
+      "status": "PARTIAL",
+      "acceptance": "Inspect text schema and determine bounded use for conversational orthographic robustness; no audio."
     }
   ],
   "latest_implementation_branch": "fix/benchmark-error-clusters-20261102 (PR #189 open draft)",
@@ -3745,5 +3765,12 @@
       "next_acceptance": "Request TextGrid-only export/manual, inspect actual tier instances and intervals, independently review a stratified subset."
     },
     "recommendation": "Prioritize CCOST TextGrid-only; then Global TIMIT text-only under LDC agreement; LOTUSDIS optional for orthographic/conversational text; selective FastThaiG2P code and Wiktionary data reuse."
+  },
+  "research_scope_decision_2026_11_05": {
+    "global_timit": "DEFERRED_EXCLUDED_BY_OWNER; no access, fees, agreement, audio, or derived labels",
+    "ccost": "PRIMARY_PHONETIC_TEXT_CANDIDATE; TextGrid-only export and actual MAU/MAS tier inspection pending; X-SAMPA-to-typed-IPA adapter and independent review required",
+    "fastthaig2p": "SUPPORTING_CANDIDATES; Apache-2.0 code and separately licensed Wiktionary subset only; generated IPA provisional; TLTK data rights unresolved",
+    "lotusdis": "OPTIONAL_ORTHOGRAPHIC_CONTEXT; no phone-level gold; audio out of scope",
+    "audio": "OUT_OF_SCOPE"
   }
 }
