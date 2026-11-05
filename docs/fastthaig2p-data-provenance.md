@@ -85,11 +85,11 @@ Manual and model-generated records are excluded from the browser wheel. The pinn
 
 The pinned FastThaiG2P README and data README say the OOV fallback is vendored from TLTK.
 
-- FastThaiG2P's vendored `fastthaig2p/_th2ipa.py` header explicitly identifies **TLTK version 1.3.8** and includes a BSD-3-Clause notice.
-- The PyPI TLTK 1.3.8 release page identifies BSD-3-Clause; the TLTK `LICENSE.txt` also contains BSD-3-Clause terms.
-- Five of the six fallback data files have identical Git blob SHA values to the matching files in the public `attapol/tltk` repository.
+- FastThaiG2P's vendored `fastthaig2p/_th2ipa.py` header identifies **TLTK version 1.3.8** and includes a BSD-3-Clause notice. This is evidence for that vendored parser file, not a blanket license for every fallback asset.
+- The pinned TLTK repository snapshot at commit `0cef4bcfbdd675f589783dd4134b87b9bb9fbb93` has `setup.py` version **1.9.1**, a root `LICENSE` under LGPL-3.0, and a separate `LICENSE.txt` with BSD-style three-clause terms. Its checked-in `PKG-INFO` is stale: version 1.1.7 / GPLv3. The exact license scope for the copied assets is therefore not established by one unambiguous package version.
+- Five of the six fallback data files are byte-identical to the matching files in the pinned TLTK repository snapshot.
 - The sixth file, FastThaiG2P's `sylform_var.pkl`, is byte-identical to `bz2.decompress(TLTK/tltk/sylform_var.pklz)`. The exact transform is reproduced and asserted by `scripts/verify_tltk_fallback_provenance.py`.
-- The TLTK repository also contains a separate root `LICENSE` file for LGPL-3.0 and an older `PKG-INFO` with GPLv3 metadata. The release-specific PyPI page and vendored source header support BSD-3-Clause for TLTK 1.3.8, but the separate repository file remains disclosed rather than silently ignored.
+- The verifier hashes the pinned `setup.py`, root `LICENSE`, module `LICENSE.txt`, and stale `PKG-INFO` so the conflicting evidence is inspectable and reproducible. It does not decide which license legally governs each data asset.
 
 Sources:
 - https://pypi.org/project/tltk/1.3.8/
@@ -98,7 +98,7 @@ Sources:
 - https://github.com/awslabs/FastThaiG2P/blob/4e82a291b4cf2876326744c6580121e9986ad354/fastthaig2p/_th2ipa.py
 - https://github.com/awslabs/FastThaiG2P/blob/4e82a291b4cf2876326744c6580121e9986ad354/data/README.md
 
-The BSD-3-Clause and LGPL-3.0 repository license texts are both retained in the browser notices directory. The remaining evidence item is the exact source transformation for `sylform_var.pkl`; it is not a reason to misstate the TLTK 1.3.8 code header or PyPI license metadata.
+The BSD-3-Clause-style module notice and LGPL-3.0 root license are both retained in the browser notices directory. All six asset transformations are verified, but the repository snapshot version/license discrepancy remains a legal-scope blocker. Do not infer that the 1.3.8 parser header settles the provenance or license of the data assets.
 
 ### Other runtime dependencies
 
@@ -119,8 +119,8 @@ The BSD-3-Clause and LGPL-3.0 repository license texts are both retained in the 
 | Source-filtered IPA and tokenizer dictionary parity | DONE_VERIFIED — 4 CPython/Pyodide inputs |
 | Stale metadata discrepancy disclosed | DONE_VERIFIED — one mismatch, `สวน` |
 | Generated/manual/unknown records excluded | DONE_VERIFIED |
-| TLTK fallback asset provenance | DONE_VERIFIED — TLTK 1.3.8 header; five byte-identical assets and one exact bzip2 decompression; CI 42085653176 |
-| TLTK license scope | PARTIAL — BSD-3-Clause package/header evidence and separate root LGPL-3.0 repository notice both retained pending final file-level review |
+| TLTK fallback asset provenance | DONE_VERIFIED — five byte-identical assets and one exact bzip2 decompression; CI 42085653176 |
+| TLTK license scope | PARTIAL — vendored parser header 1.3.8/BSD-3; pinned TLTK repository setup.py 1.9.1 with LGPL-3 root, BSD-style module notice and stale 1.1.7/GPLv3 PKG-INFO; exact asset scope remains unresolved |
 | Third-party license/NOTICE files staged and hashed | DONE_VERIFIED — 10 files |
 | Transparent filtered dataset ZIP | DONE_VERIFIED — 194,745 bytes; five expected members and 13,144-entry provenance asserted in CI 42086644531 |
 | Public Pages bundle refused while rights flag is false | DONE_VERIFIED |
