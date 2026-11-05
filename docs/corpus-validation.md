@@ -225,3 +225,24 @@ python scripts/validate_adjudication_packet.py --mode blind \
 The generator checks row count, columns, empty cells and whitespace, then reports per-order unique counts, duplicates and set differences. It does not assume that A-D are identical permutations. It generates a deterministic union packet and a manifest with the source SHA-256. If any order has duplicates or a different set, the manifest status is `SOURCE_ORDER_DISCREPANCY_REQUIRES_RECONCILIATION`; do not freeze or score the sample until the source discrepancy is understood. A concordant 206-item packet is still only a candidate-blind, unadjudicated broad-phonemic review packet. Reviewers must independently supply lexical reading, boundaries, phonemic IPA, tone and vowel length.
 
 The source registry allows `CORP-CCOST-WORDLIST` only for `BROAD_PHONEMIC_IPA_GOLD_INPUT`. It cannot support broad-surface IPA or acoustic claims. The full CCOST archive source remains BLOCKED until released TextGrid tier conformance and X-SAMPA mapping are verified. Generated wordlist packets are not committed and remain subject to CC BY-NC-SA 4.0 non-commercial/share-alike terms.
+
+
+## Current text-only source policy — 2026-11-05
+
+This section supersedes earlier audio-centric candidate recommendations where they conflict.
+
+- **CCOST is the primary phonetic-text candidate.** The LREC 2026 paper describes ORT/KAN/KAS/MAU/MAS/TRN tiers and X-SAMPA tone notation. The CCOST manual was inspected on 2026-11-01; actual released TextGrid tier instances and label values still require file-level inspection. Obtain a TextGrid-only export/manual where possible. Convert X-SAMPA through a documented, tested mapping into typed IPA. The corpus is CC BY-NC-SA 4.0; retain attribution and ShareAlike, and keep it out of commercial use.
+- **FastThaiG2P is a supporting candidate source, not gold.** The pinned adapter already exists and intentionally preserves external IPA separately from phonemic/broad-surface IPA. The Apache-2.0 code may be reused with NOTICE. Keep the CC BY-SA 3.0 Wiktionary-derived subset separate from generated IPA and manual overrides; generated and unreviewed entries remain provisional. Do not import a merged dictionary or TLTK data without asset-level rights/provenance.
+- **LOTUSDIS is optional orthographic context only.** Publicly described records are utterance-level transcripts with speaker/microphone metadata, not verified phone/IPA labels. Use text only for conversational vocabulary and orthographic robustness. Do not acquire audio, compute audio hashes, or claim phone-level annotations.
+- **Global TIMIT Thai is EXCLUDED by owner decision (2026-11-05).** No LDC access, agreement, fee, audio, text-label acquisition or derived dataset work is to be pursued.
+
+### Current task ledger
+
+| Task | Status | Acceptance criterion |
+|---|---|---|
+| Global TIMIT Thai | DEFERRED / EXCLUDED | No further work; alternatives cover required research roles |
+| CCOST TextGrid-only phonetic reference | PARTIAL | Obtain text-only annotations/manual; inspect MAU/MAS values; validate X-SAMPA→typed-IPA mapping; independent stratified review |
+| FastThaiG2P selective reuse | PARTIAL | Preserve upstream pin and Apache NOTICE; separate Wiktionary subset/provenance/license; generated IPA remains provisional; TLTK asset rights resolved before redistribution |
+| LOTUSDIS text-only context | PARTIAL / OPTIONAL | Inspect public text schema and select bounded orthographic robustness use; no audio |
+
+Audio acquisition, audio-object hashes, waveform inspection, acoustic interval selection, and audio-based validation are **OUT OF SCOPE** under the current user requirement.
