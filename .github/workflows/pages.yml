@@ -61,7 +61,6 @@ jobs:
       - name: Run static accessibility contract checks
         run: node web/tests/accessibility-contract.test.mjs
       - name: Build self-hosted Pyodide runtime for Pages
-        if: ${{ vars.FASTTHAIG2P_PYODIDE_BUNDLE_READY == 'true' }}
         run: |
           mkdir -p build/pyodide-wheels
           python -m pip wheel --no-deps --wheel-dir build/pyodide-wheels .
@@ -102,7 +101,7 @@ jobs:
           path: web
 
   deploy:
-    if: ${{ github.ref == 'refs/heads/main' && vars.FASTTHAIG2P_PYODIDE_BUNDLE_READY == 'true' }}
+    if: ${{ github.ref == 'refs/heads/main' }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
