@@ -12,7 +12,7 @@ class CorpusSourceRegistryTests(unittest.TestCase):
             rows = {row["source_id"]: row for row in csv.DictReader(stream)}
         row = rows["CORP-CCOST-WORDLIST"]
         self.assertEqual(row["type"], "controlled_wordlist")
-        self.assertEqual(row["license_or_access"], "CC BY-NC-SA 4.0; non-commercial use only; attribution and share-alike required")
+        self.assertEqual(row["license_or_access"], "CC BY-NC-SA 4.0; non-commercial use only")
         self.assertIn("orthographic prompts only", row["annotation"])
         self.assertIn("no IPA", row["notes"])
         self.assertIn("B/C/D each differ from A by two missing and two extra items", row["notes"])
