@@ -221,6 +221,9 @@ def build_worklist(paths: list[Path]) -> dict[str, Any]:
         (row["source_file"], row["start"], row["end"], row["raw_label"]) for row in tone_rows
     }
     marker_rows = [row for row in records if "UNRESOLVED_MARKER" in row["issue_types"]]
+    marker_interval_counts: Counter[str] = Counter()
+    for row in marker_rows:
+        marker_interval_counts.update(row["markers"].keys())
     summary = {
         "source_textgrid_files": source_files,
         "records": len(records),
@@ -228,7 +231,11 @@ def build_worklist(paths: list[Path]) -> dict[str, Any]:
         "tone_suffix_8_occurrences": len(tone_rows),
         "tone_suffix_8_event_groups": len(tone_events),
         "tone_suffix_8_unique_raw_label_events": len(tone_label_events),
+        "tone_suffix_8_distinct_raw_strings": len({row["raw_label"] for row in tone_rows}),
+        "tone_suffix_8_files": len({row["source_file"] for row in tone_rows}),
+        "phonetic_failure_occurrences": sum(phonetic_failures.values()),
         "unresolved_marker_interval_count": len(marker_rows),
+        "marker_interval_counts": dict(sorted(marker_interval_counts.items())),
         "unresolved_marker_appearances": sum(marker_appearances.values()),
         "markers": dict(sorted(marker_appearances.items())),
         "unique_raw_label_events": len({

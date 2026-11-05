@@ -74,5 +74,3 @@ Research continuation closeout: PR [#182](https://github.com/ClippyFirst/Thai-Uk
 ## 2026-11-02 — follow-up validator review
 
 PR #182 remains open on `research/independent-adjudication-gates-20261101`. A narrow-IPA-on-abstention guard was added after a test-first review: the new regression test is in commit `2852b47`, and the one-line implementation is in `e22c686`. Web Static passed on the implementation head; full CI and VISTEC were still running at the time of this snapshot. The test-only CI run was cancelled before the Python suite, so a red result is not claimed. See the newest continuation checkpoint and validation matrix for exact evidence and remaining blockers.
-
-- `scripts/build_ccost_review_worklist.py` — build the CI-published, blind CCOST label-review TSV and provenance manifest from TextGrid members only; preserves source labels and context and does not propose corrections.

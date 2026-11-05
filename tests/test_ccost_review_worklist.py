@@ -105,6 +105,8 @@ class CCOSTReviewWorklistTests(unittest.TestCase):
         self.assertEqual(report["summary"]["unresolved_marker_appearances"], 2)
         self.assertEqual(report["summary"]["markers"]["<P>"], 1)
         self.assertEqual(report["summary"]["markers"]["<Fail>"], 1)
+        self.assertEqual(report["summary"]["marker_interval_counts"]["<P>"], 1)
+        self.assertEqual(report["summary"]["marker_interval_counts"]["<Fail>"], 1)
 
     def test_keeps_source_labels_and_blank_expert_decision_fields(self):
         with tempfile.TemporaryDirectory() as directory:

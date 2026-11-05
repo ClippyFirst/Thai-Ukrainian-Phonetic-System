@@ -87,6 +87,11 @@ jobs:
           assert summary["tone_suffix_8_occurrences"] == 868, summary
           assert summary["tone_suffix_8_event_groups"] == 397, summary
           assert summary["tone_suffix_8_unique_raw_label_events"] == 438, summary
+          assert summary["tone_suffix_8_distinct_raw_strings"] == 22, summary
+          assert summary["tone_suffix_8_files"] == 119, summary
+          assert summary["phonetic_failure_occurrences"] == 1592, summary
+          assert summary["unresolved_marker_interval_count"] == 821, summary
+          assert summary["markers"] == {"<P>": 821, "<Fail>": 24, "<P:>": 4, "<:p>": 22}, summary
           assert summary["audio_members_read"] == 0, summary
           assert len(rows) == summary["records"], (len(rows), summary)
           assert all(not row["proposed_xsampa"] and not row["adjudicator_decision"] for row in rows)

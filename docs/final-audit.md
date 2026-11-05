@@ -1853,15 +1853,3 @@ The primary CCOST paper now resolves base tier semantics (MAU phone-level, MAS p
 FastThaiG2P's pinned source-code license (Apache-2.0), NOTICE (Amazon attribution), and vendored parser's BSD-3-Clause file header are verified. The full bundled dictionary/fallback rights are **not** established under a single blanket license: upstream identifies Wiktionary/kaikki CC BY-SA/GFDL content, model-generated entries, manual overrides, and TLTK fallback data without a complete per-entry/per-file rights ledger. Keep the optional dependency external; bulk redistribution is blocked.
 
 The CCOST request has been prepared with public author/curator email addresses and specific questions, but **not sent**: no email-sending connector is available in this session. No curator response has been received. See docs/external-review-and-source-requests.md.
-
-## CCOST exception worklist and expert-review readiness — 2026-11-05
-
-A focused worklist generator and regression suite were added for the three open CCOST workstreams. The CI workflow now builds a blind TSV and JSON manifest from CCOST TextGrid members only and uploads them as the `ccost-label-adjudication-worklist` artifact. Each row retains the raw source label, tier, source file, exact interval, overlapping labels from other tiers, adjacent same-tier context and blank expert/adjudicator fields. Audio members are not opened.
-
-The 868 `_8` appearances are **868 tier-level occurrences**, not independent tokens. Grouping yields 397 exact file/interval groups and 438 file/interval/raw-label events across 119 files. The 22 raw strings remain unchanged. `_8` is DONE_VERIFIED as out-of-range under the documented `_1`–`_5` tone scheme; the intended replacement is BLOCKED pending expert review.
-
-The four unresolved markers remain BLOCKED: `<P>` (394 appearances), `<P:>` (4), `<:p>` (22), and `<Fail>` (16). Their case-sensitive raw forms are preserved. The worklist provides context but does not establish their semantics.
-
-Public qualification evidence is now documented for three potential Thai reviewers: Chutamanee Onsuwan (Thammasat), Lena Maluleem (Kasetsart) and Rungpat Roengpitya (Mahidol). These are candidates only; none has been contacted or appointed. The reviewer registry remains empty. Acceptance requires two independent blind reviews, a separate adjudicator, frozen originals, documented disagreements/abstentions and a reproducible agreement report.
-
-No independent IPA gold rows were created. Linguistic accuracy remains NOT_MEASURED. This remains an engineering-verified research prototype, not a linguistically release-ready product.
