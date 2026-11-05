@@ -69,6 +69,6 @@ const actual = JSON.parse(actualText);
 assert.deepEqual(actual, expected, "Pyodide output diverged from the CPython reference");
 const garden = actual.cases.find(item => item.input === "สวน");
 assert.ok(garden, "สวน regression case must be present");
-assert.equal(garden.raw_ipa, "/sua̯n˩˩˦/");
-assert.equal(garden.complete_ipa, true);
+assert.equal(garden.result.status_code, 200);
+assert.equal(garden.result.body.raw_ipa, "/sua̯n˩˩˦/");
 console.log(`Pyodide parity passed: ${actual.cases.length} Thai inputs; upstream ${actual.upstream_commit}`);
