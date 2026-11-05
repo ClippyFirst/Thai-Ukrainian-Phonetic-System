@@ -10,7 +10,7 @@ const wheels = readdirSync(wheelDir).filter(name => name.endsWith(".whl"))
   .map(name => pathToFileURL(resolve(wheelDir, name)).href);
 assert.equal(wheels.length, 3, `Expected exactly three pinned wheels, found ${wheels.length}`);
 
-const indexURL = pathToFileURL(resolve("node_modules/pyodide") + "/").href;
+const indexURL = resolve("node_modules/pyodide") + "/";
 let pyodide;
 try {
   pyodide = await loadPyodide({ indexURL });
