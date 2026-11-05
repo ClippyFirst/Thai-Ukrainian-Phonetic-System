@@ -1933,3 +1933,24 @@ Exact verified runtime checkpoint: `80adb489105e6f2b447fb07331bfdf0c09c888b3`.
 - Full CI run 42085653265 was cancelled by subsequent pushes; do not count it as passed. The later dataset archive changes require a fresh exact-head Full CI and Pyodide run.
 
 Canonical implementation and rights records: `docs/fastthaig2p-pyodide-port.md`, `docs/fastthaig2p-data-provenance.md`, `data/third_party/fastthaig2p-browser-bundle.json`, and `web/third-party-notices.html`.
+
+---
+
+## Exact-head GitHub Pages port verification — 2026-11-05
+
+| Work item | Status | Evidence / remaining acceptance |
+|---|---|---|
+| Shared Python service used by FastAPI wrapper and browser worker | DONE_VERIFIED | Exact-head Pyodide and Site API workflows 42090379707 / 42090379612 passed. |
+| Pyodide 0.29.5 CPython parity | DONE_VERIFIED | Four Thai inputs passed in 42090379707. |
+| Real same-origin Chromium worker | DONE_VERIFIED | Cold/warm run, FastThaiG2P IPA regression, no API/CDN requests; run 42090379707. |
+| Source-filtered FastThaiG2P browser wheel | DONE_VERIFIED | 13,144 Wiktionary records retained; 48,957 generated records excluded; manual/unknown fail-closed; one metadata mismatch disclosed. |
+| TLTK fallback asset transformations | DONE_VERIFIED | Five byte-identical files plus one exact bzip2 decompression; source verifier passed in earlier run 42085653176. |
+| TLTK file-level license scope | PARTIAL / PUBLICATION BLOCKER | Preserve BSD-3 and LGPL-3 notices; owner/legal review must establish which terms apply to each copied file. |
+| Third-party notice page and ten local notices | DONE_VERIFIED | Web Static 42090379866 and Full CI 42090379627 passed; the CC BY-SA legal code and transparent dataset archive are linked. |
+| Public Pages redistribution | BLOCKED | `redistribution_approved=false`; explicit owner authorization and TLTK license-scope review required. |
+| Live Pages bundle hash and browser smoke | BLOCKED | Run only after authorization and merge; deploy workflow validates every runtime/notice/dataset hash and real interaction. |
+| Actual Pages cold-start/mobile performance | TODO | Measure after the authorized deployment. |
+| Manual accessibility testing | DEFERRED / UNVERIFIED | Not a beta certification gate; do not claim WCAG conformance. |
+
+Exact-head verification: `ba22872679869371e92ab9ad511db4ed74627da2`; workflows Pyodide 42090379707, Site API 42090379612, Web Static 42090379866, optional external smoke 42090379819, Full CI 42090379627 all SUCCESS. PR #210 remains open/unmerged; main unchanged. Public deployment has not occurred.
+
