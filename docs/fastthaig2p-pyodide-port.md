@@ -90,8 +90,9 @@ No deployment, main-branch change, merge, release tag or repository setting chan
 | Source filtering | Generated/manual/unknown IPA excluded; 13,144 Wiktionary entries retained | DONE_VERIFIED |
 | TLTK fallback asset provenance | TLTK 1.3.8 parser header; 5 byte-identical files + 1 exact bzip2 decompression | DONE_VERIFIED — run 42085653176 |
 | TLTK license scope | BSD-3-Clause release/header evidence and separate root LGPL-3.0 repository notice | PARTIAL — both notices retained pending final file-level scope review |
+| Transparent Wiktionary dataset ZIP | Standalone filtered IPA map/tokenizer list, provenance, attribution and CC BY-SA 4.0 notice | DONE_VERIFIED — 194,745 bytes; bundle CI 42086644531 |
 | Public redistribution | Owner rights flag remains false | BLOCKED — explicit owner approval and final license-scope review pending |
-| Public Pages deployment | Exact merged main commit deployed and live-smoked | BLOCKED — no merge or deployment |
+| Public Pages deployment | Exact merged main commit deployed and live-smoked | BLOCKED — rights flag false; owner approval and final TLTK license-scope review pending |
 | Performance | Actual Pages transfer/cold-start and mobile timing | TODO — requires public deployment |
 
 ## Product and linguistic limits
