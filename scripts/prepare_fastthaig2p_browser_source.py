@@ -16,7 +16,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-ALLOWED_SOURCES = {"wiktionary", "manual"}
+ALLOWED_SOURCES = {"wiktionary"}
 
 
 def prepare_source(source_dir: Path) -> dict[str, Any]:
@@ -76,7 +76,7 @@ def prepare_source(source_dir: Path) -> dict[str, Any]:
     }
     report = {
         "upstream_commit": "4e82a291b4cf2876326744c6580121e9986ad354",
-        "policy": "retain source=wiktionary or source=manual; exclude generated and unknown",
+        "policy": "retain source=wiktionary only; exclude generated, manual and unknown",
         "source_counts_before_filter": dict(sorted(source_counts.items())),
         "retained_counts": dict(sorted(retained_counts.items())),
         "excluded_counts": dict(sorted(excluded_counts.items())),
