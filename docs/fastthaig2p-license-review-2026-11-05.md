@@ -67,3 +67,24 @@ The project's existing optional dependency remains pinned to the reviewed commit
 5. Until that evidence exists, use FastThaiG2P only as the optional upstream dependency; do not copy its bundled datasets into the repository or release artifacts.
 
 **Status:** source-code license verified; full bundled-data redistribution rights **PARTIAL / BLOCKED on per-component provenance**.
+
+
+## Follow-up rights check — 2026-11-05
+
+The exact pinned files were re-opened through the GitHub connector. This confirms the following narrower position:
+
+- The full top-level FastThaiG2P LICENSE is Apache-2.0; NOTICE attributes copyright to Amazon.com, Inc. or its affiliates.
+- The vendored _th2ipa.py file carries a complete BSD-3-Clause notice for the TLTK-derived parser.
+- The upstream data README explicitly says the runtime wheel force-includes dict.txt, ipa.json, and data/fallback/. It describes ipa.json as a merge of Wiktionary and generated IPA; source priorities are manual overrides, Wiktionary, then generated entries.
+- TLTK's own repository states that its package has used BSD-3-Clause since version 1.2.2, and its repository carries both BSD and LGPL license files. This supports the BSD notice on the copied parser source, but it does **not** by itself establish a separate, file-by-file grant for every TLTK-derived fallback data asset shipped by FastThaiG2P.
+- The upstream README attributes about 13k IPA entries to kaikki/Wiktionary and about 49k to Claude Opus 4.6. kaikki states Wiktionary-extracted material is under CC BY-SA and GFDL. No complete attribution/rights ledger for each entry in the merged runtime dictionary is published in the inspected snapshot.
+
+**Answer to the whole-dictionary question:** No single blanket license or complete rights statement for the entire bundled dictionary was found. It is not accurate to say that all 62k entries and all fallback data are simply Apache-2.0. The Wiktionary-derived portion carries upstream share-alike/attribution terms; the generated/manual portions and TLTK fallback assets need explicit provenance/rights clarification. The Apache-2.0 code license does not settle those data questions.
+
+Primary references:
+- [Pinned FastThaiG2P data README](https://github.com/awslabs/FastThaiG2P/blob/4e82a291b4cf2876326744c6580121e9986ad354/data/README.md)
+- [TLTK upstream repository](https://github.com/attapol/tltk)
+- [TLTK BSD-3 license file](https://github.com/attapol/tltk/blob/master/LICENSE.txt)
+- [kaikki.org license statement](https://kaikki.org/thwiktionary/index.html)
+
+This is a source-based compliance assessment, not a legal opinion. **Bulk redistribution remains BLOCKED** until upstream supplies a component-level rights statement or the project independently rebuilds a separable, fully attributable dataset under verified terms.
