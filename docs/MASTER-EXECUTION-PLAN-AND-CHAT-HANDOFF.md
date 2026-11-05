@@ -1,14 +1,14 @@
 ## Owner decision — GitHub Pages-only FastThaiG2P browser port (2026-11-05)
 
-- Keep the existing pinned FastThaiG2P engine; port execution to Pyodide in a browser module Web Worker. GitHub Pages is the only hosting target. Do not create Vercel/remote API hosting or replace FastThaiG2P with the legacy JavaScript research engine.
-- The FastAPI site API remains the CPython reference/test oracle only; GitHub Pages cannot run it. User-entered Thai text must remain local to the browser.
-- Canonical implementation and acceptance ledger: `docs/fastthaig2p-pyodide-port.md`. The current status is also recorded at the top of `docs/validation-matrix.md` and in `docs/final-audit.md`.
-- Added `scripts/fastthaig2p_pyodide_parity.py` and `web/tests/fastthaig2p-pyodide.test.mjs`. Existing CI now builds the pinned project, PyThaiNLP 5.4.0 and FastThaiG2P wheels and compares adapter output between CPython and Pyodide 0.29.5.
-- Early compatibility attempts failed before parity because the Node loader received an invalid `file://` index path. The runner now passes an absolute filesystem path and installs verified pure-Python wheels by extracting them into local site-packages, avoiding micropip/CDN access. Latest run [42062255591](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42062255591) was IN_PROGRESS at last poll; no pass is claimed.
-- Observed wheel sizes: FastThaiG2P 6.9 MiB, PyThaiNLP 21 MiB, project 376 KiB. Inspect PyThaiNLP's package contents and optimize download footprint after compatibility passes.
-- Redistribution is conditional: separately attribute Wiktionary-derived rows under CC BY-SA/GFDL and retain applicable Apache-2.0/BSD-3 notices. Exact bundled wheel-member/source mapping remains PARTIAL; complete an inspectable manifest before publishing the bundle.
-- Pages deployment uses guard `FASTTHAIG2P_PYODIDE_BUNDLE_READY`, currently not enabled. No setting was changed, no deployment occurred, and PR #210 remains open/unmerged.
-- Task ledger: architecture DONE_VERIFIED; Pyodide compatibility PARTIAL; parity, browser worker, Pages self-hosted runtime and performance TODO; asset attribution manifest PARTIAL; public Pages deployment TODO. Independent IPA gold 0; accuracy NOT_MEASURED.
+- Keep the existing pinned FastThaiG2P engine; run it through Pyodide in a module Web Worker. GitHub Pages is the only host. Vercel, remote API hosting and replacing FastThaiG2P with the legacy JavaScript research engine are out of scope.
+- Shared transport-neutral service: `src/thai_ukrainian/fastthaig2p_service.py`; FastAPI in `src/index.py` is now a thin HTTP wrapper. Browser worker calls the same function.
+- **Verified:** Pyodide 0.29.5 CPython parity and real Chromium worker cold/warm smoke passed in [42065502645](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42065502645). No API/CDN requests were made. Exact package versions and wheel SHA-256 are checked from a same-origin bundle manifest.
+- PyThaiNLP 5.4.0 slim wheel retains Python source, `words_th.txt`, `stopwords_th.txt` (CC0-1.0) and `corpus_license.md`; 37 unused corpus assets / 64,041,055 uncompressed bytes removed. Total raw bundle is 21,283,724 bytes (~20.3 MiB) before HTTP compression.
+- The Pages workflow now stages the Pyodide runtime and wheels only when `FASTTHAIG2P_PYODIDE_BUNDLE_READY == 'true'`; the bundle builder separately refuses `--purpose pages` while the rights manifest is not approved.
+- **Public redistribution is not cleared:** FastThaiG2P's merged IPA runtime file has no per-record source provenance, and fallback assets are not mapped file by file. `data/third_party/fastthaig2p-browser-bundle.json` remains `redistribution_approved: false`. Do not enable the Pages variable or publish until the manifest is evidence-backed.
+- Dedicated Pyodide workflow [42065502645](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42065502645) passed; latest exact-head run [42065750203](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42065750203) was in progress at last poll. Core CI and Site API exact-head checks still need final successful completion after the latest changes.
+- Task ledger: architecture, shared service, Pyodide parity, Chromium worker and no-API/no-CDN privacy DONE_VERIFIED; Pages public build PARTIAL; real Pages/mobile performance TODO; asset provenance PARTIAL; public deployment BLOCKED. Independent IPA gold 0; accuracy NOT_MEASURED.
+- Starting checkpoint `7a2ab7434791971243dd18f80c8e3b4c70e8c2b6`; PR #210 open/unmerged; main unchanged; no production deploy or release.
 
 ---
 

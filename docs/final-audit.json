@@ -4339,5 +4339,54 @@
     ],
     "forced_colors_source_support": "IMPLEMENTED_IN_web/src/styles.css",
     "forced_colors_runtime_verification": "NOT_RUN"
+  },
+  "fastthaig2p_pyodide_port_2026_11_05": {
+    "owner_decision": "KEEP_FASTTHAIG2P; PYODIDE_BROWSER_WORKER; GITHUB_PAGES_ONLY",
+    "starting_branch_checkpoint": "7a2ab7434791971243dd18f80c8e3b4c70e8c2b6",
+    "branch": "docs/repository-audit-2026-11-04",
+    "pr": 210,
+    "pr_state": "OPEN_NOT_MERGED",
+    "pyodide_version": "0.29.5",
+    "upstream_fastthaig2p_commit": "4e82a291b4cf2876326744c6580121e9986ad354",
+    "python_service": "src/thai_ukrainian/fastthaig2p_service.py",
+    "cpython_pyodide_parity": {
+      "status": "DONE_VERIFIED",
+      "inputs": 4,
+      "run_id": 42065502645
+    },
+    "chromium_worker_smoke": {
+      "status": "DONE_VERIFIED",
+      "cold_and_warm": true,
+      "no_api_requests": true,
+      "no_cdn_requests": true,
+      "run_id": 42065502645
+    },
+    "pythainlp_trim": {
+      "version": "5.4.0",
+      "retained_member_bytes": 3648217,
+      "removed_assets": 37,
+      "removed_uncompressed_bytes": 64041055,
+      "retained_cc0": [
+        "words_th.txt",
+        "stopwords_th.txt"
+      ]
+    },
+    "bundle": {
+      "wheel_bytes": 8673701,
+      "pyodide_runtime_bytes": 12610023,
+      "raw_total_bytes": 21283724,
+      "raw_total_mib": 20.3
+    },
+    "integrity": "SAME_ORIGIN_MANIFEST; PINNED_PACKAGE_VERSIONS; SHA256_WHEEL_VERIFICATION",
+    "exact_head_pyodide_run": 42065750203,
+    "public_redistribution_approved": false,
+    "rights_blocker": "FASTTHAIG2P_MERGED_IPA_PER_RECORD_PROVENANCE_AND_FALLBACK_FILE_MAPPING_INCOMPLETE",
+    "pages_deploy_guard": "FASTTHAIG2P_PYODIDE_BUNDLE_READY",
+    "pages_publication": "BLOCKED",
+    "actual_pages_performance": "NOT_MEASURED",
+    "independent_ipa_gold_rows": 0,
+    "linguistic_accuracy": "NOT_MEASURED",
+    "main_merged": false,
+    "production_cutover": false
   }
 }
