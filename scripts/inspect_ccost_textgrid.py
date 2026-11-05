@@ -27,12 +27,12 @@ MAX_COMPRESSION_RATIO = 1000
 def _textgrid_structure_diagnostic(text: str) -> dict:
     """Summarize malformed interval structure without exposing transcript content."""
     interval_blocks = re.findall(
-        r"(?ms)^\\s*intervals\\s+\\[\\d+\\]\\s*:\\s*(.*?)(?=^\\s*(?:intervals\\s+\\[\\d+\\]|item\\s+\\[\\d+\\])|\\Z)",
+        r"(?ms)^\s*intervals\s+\[\d+\]\s*:\s*(.*?)(?=^\s*(?:intervals\s+\[\d+\]|item\s+\[\d+\])|\Z)",
         text,
     )
     missing_text = [
         block for block in interval_blocks
-        if not re.search(r"(?m)^\\s*text\\s*=", block)
+        if not re.search(r"(?m)^\s*text\s*=", block)
     ]
     first_fields = []
     if missing_text:
@@ -42,8 +42,8 @@ def _textgrid_structure_diagnostic(text: str) -> dict:
             if "=" in line
         ]
     return {
-        "tier_names": re.findall(r'(?m)^\\s*name\\s*=\\s*"([^"]*)"', text),
-        "tier_classes": re.findall(r'(?m)^\\s*class\\s*=\\s*"([^"]*)"', text),
+        "tier_names": re.findall(r'(?m)^\s*name\s*=\s*"([^"]*)"', text),
+        "tier_classes": re.findall(r'(?m)^\s*class\s*=\s*"([^"]*)"', text),
         "interval_blocks": len(interval_blocks),
         "interval_blocks_without_text": len(missing_text),
         "first_missing_interval_fields": first_fields,
