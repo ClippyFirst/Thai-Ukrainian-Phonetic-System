@@ -101,10 +101,15 @@ assert.doesNotMatch(await (await import("node:fs/promises")).readFile(new URL(".
 for (const example of examples) {
   await example.click();
   assert.equal(input.value, example.dataset.example);
-  assert.equal(output.hidden, false, "choosing an example must not erase the previous result");
+  assert.equal(output.hidden, true, "changing the input must invalidate the previous result");
   assert.equal(requests.length, 1, "choosing an example must not trigger analysis automatically");
 }
 assert.equal(requests.length, 1);
+assert.equal(element("input-count").textContent, "Знаків: 4");
+assert.match(status.textContent, /Приклад додано/);
+await analyze.click();
+assert.equal(requests.length, 3);
+assert.equal(requests[1].text, "จริง");
 
 let prevented = false;
 input.value = "พริก";

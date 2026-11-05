@@ -3,60 +3,118 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Вставте тайський текст і подивіться, як його можна записати українськими літерами.">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Вставте тайський текст і подивіться його IPA та попередній практичний запис українськими літерами.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
-  <title>Тайська українською — простий запис вимови</title>
-  <link rel="stylesheet" href="src/styles.css?v=20261105-pyodide-worker-1">
+  <title>Тайська українською — як прочитати тайський текст</title>
+  <link rel="stylesheet" href="src/styles.css?v=20261105-ux-recomposition-1">
 </head>
 <body>
 <a class="skip-link" href="#main-content">Перейти до основного вмісту</a>
 <header class="site-header">
-  <a class="brand" href="./" aria-label="Тайська українською — сервіс">ТАЙСЬКА <span>→</span> УКРАЇНСЬКА</a>
+  <a class="brand" href="./" aria-label="Тайська українською — головна">
+    <span class="brand-mark" aria-hidden="true">Т<span>→</span>У</span>
+    <span class="brand-name">Тайська <span>українською</span></span>
+  </a>
   <nav aria-label="Основна навігація">
-    <a class="active" href="./">Сервіс</a>
+    <a class="active" href="./" aria-current="page">Сервіс</a>
     <a href="system.html">Як це працює</a>
-    <a href="https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System" rel="noopener noreferrer">Проєкт на GitHub</a>
+    <a href="https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System" rel="noopener noreferrer">Вихідний код <span aria-hidden="true">↗</span></a>
   </nav>
 </header>
-<div class="beta-notice" role="note" aria-label="Статус бета-версії"><strong>ТЕСТОВА ВЕРСІЯ</strong><p>Сервіс ще розвивається. Він може помилятися, особливо з незнайомими словами. Сприймайте український запис як підказку, а не як остаточний варіант. <a href="system.html#beta-evidence">Що вже перевірено →</a></p></div>
+
+<div class="beta-notice" role="note" aria-label="Статус бета-версії">
+  <span class="beta-label">БЕТА</span>
+  <p>Український запис — попередня підказка, а не експертно підтверджена транскрипція. <a href="system.html#beta-evidence">Що вже перевірено</a></p>
+</div>
+
 <main class="container" id="main-content" tabindex="-1">
-<section class="hero">
-  <p class="eyebrow">ТАЙСЬКА → УКРАЇНСЬКА</p>
-  <h1>Як прочитати тайський текст українською</h1>
-  <p class="lede">Вставте слово або речення тайською. FastThaiG2P працює безпосередньо у вашому браузері, будує IPA, а сервіс показує її попередню практичну адаптацію українськими літерами. Це не переклад.</p>
-</section>
-<section class="workbench" aria-labelledby="input-heading">
-  <div class="section-head">
-    <div><p class="eyebrow">КРОК 1</p><h2 id="input-heading">Вставте тайський текст</h2></div>
-    <button class="text-button" id="clear" type="button">Очистити</button>
-  </div>
-  <label class="input-label" for="thai-input">Текст тайською</label>
-  <textarea id="thai-input" lang="th" rows="3" spellcheck="false" autocomplete="off" autocapitalize="off" aria-describedby="input-hint" placeholder="Наприклад: สวัสดี"></textarea>
-  <p class="input-hint" id="input-hint">Можна вставити слово або речення. Обробка відбувається локально у браузері: введений текст не надсилається на сервер. Якщо FastThaiG2P не поверне повний IPA, сервіс не перемикатиметься на інший рушій. <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>Enter</kbd> — показати результат.</p>
-  <div class="examples" aria-label="Швидкі приклади">
-    <span class="examples-label">Спробуйте:</span>
-    <button type="button" data-example="กา">กา</button>
-    <button type="button" data-example="พริก">พริก</button>
-    <button type="button" data-example="มา">มา</button>
-    <button type="button" data-example="ไฟ">ไฟ</button>
-    <button type="button" data-example="หมา">หมา</button>
-    <button type="button" data-example="ใหม่">ใหม่</button>
-    <button type="button" data-example="จริง">จริง</button>
-  </div>
-  <div class="action-row"><button class="primary" id="analyze" type="button">Показати, як це читається <span aria-hidden="true">↗</span></button><span class="action-note">Текст обробляється локально у вашому браузері й не надсилається на API.</span></div>
-</section>
-<section id="status" class="status" role="status" aria-live="polite" aria-atomic="true"></section>
-<section id="results" class="results" aria-label="Результати" aria-live="off" hidden></section>
-<section class="method-note" aria-labelledby="method-heading">
-  <p class="eyebrow">ВАЖЛИВО ЗНАТИ</p>
-  <h2 id="method-heading">Що означає результат</h2>
-  <p>Український рядок — попередня практична адаптація IPA FastThaiG2P. Він не є експертно підтвердженою транскрипцією і не є перекладом.</p>
-  <p>Тайські звуки не завжди можна точно передати українськими літерами. Тони й деякі відмінності вимови в такому записі можуть загубитися. Тому для важливих слів перевіряйте вимову за надійним словником або з носієм мови.</p>
-  <details><summary>Який рушій використовує сервіс?</summary><p>Для вимови використовується лише FastThaiG2P. Якщо він не повертає повний IPA для введеного тексту, сервіс повідомляє про це й не підставляє інший рушій. Український рядок — попередня адаптація IPA, а не експертно підтверджена транскрипція.</p></details>
-  <div class="method-links"><a href="system.html">Як працює сервіс — просте пояснення →</a><a href="system.html#statuses">Що означають позначки біля результату →</a><a href="system.html#beta-evidence">Що саме перевірено →</a></div>
-</section>
+  <section class="hero hero-grid" aria-labelledby="page-title">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="eyebrow-line" aria-hidden="true"></span> ТАЙСЬКА МОВА · ПРАКТИЧНЕ ЧИТАННЯ</p>
+      <h1 id="page-title">Побачте, як <span>прочитати</span> тайський текст</h1>
+      <p class="lede">Вставте слово або речення тайською — сервіс побудує IPA та покаже її попередню адаптацію українськими літерами. Це допомога з вимовою, не переклад.</p>
+      <div class="hero-facts" aria-label="Особливості сервісу">
+        <span><i aria-hidden="true"></i> Працює у браузері</span>
+        <span><i aria-hidden="true"></i> Без надсилання тексту на сервер</span>
+      </div>
+    </div>
+    <aside class="hero-aside" aria-label="Як працює перетворення">
+      <p class="aside-kicker">ВІД ТЕКСТУ ДО ЗВУЧАННЯ</p>
+      <ol class="flow-steps">
+        <li><span class="step-number">01</span><span><strong>Тайський текст</strong><small>Ваше слово або речення</small></span></li>
+        <li><span class="step-number">02</span><span><strong>IPA</strong><small>Фонетичний запис FastThaiG2P</small></span></li>
+        <li><span class="step-number">03</span><span><strong>Український кандидат</strong><small>Практична адаптація IPA</small></span></li>
+      </ol>
+      <p class="aside-footnote">Тони й частина звукових відмінностей можуть не передаватися українським письмом.</p>
+    </aside>
+  </section>
+
+  <section class="workbench" aria-labelledby="input-heading">
+    <div class="workbench-heading">
+      <div>
+        <p class="eyebrow">ПОЧНІМО</p>
+        <h2 id="input-heading">Введіть тайський текст</h2>
+        <p class="section-description">Можна аналізувати окреме слово або ціле речення.</p>
+      </div>
+      <span class="local-badge"><span aria-hidden="true"></span> Локальна обробка</span>
+    </div>
+
+    <label class="input-label" for="thai-input">Текст тайською</label>
+    <textarea id="thai-input" lang="th" rows="3" spellcheck="false" autocomplete="off" autocapitalize="off" aria-describedby="input-hint input-count" placeholder="Наприклад: สวัสดี"></textarea>
+    <div class="input-meta">
+      <p class="input-hint" id="input-hint">Ваш текст залишається у браузері. Для вимови використовується лише FastThaiG2P; якщо він не поверне повний IPA, сервіс не підмінятиме результат іншим рушієм.</p>
+      <span class="input-count" id="input-count" aria-live="off">Знаків: 0</span>
+    </div>
+
+    <div class="examples" aria-label="Приклади тайського тексту">
+      <span class="examples-label">Спробуйте приклад</span>
+      <button type="button" data-example="กา" lang="th">กา</button>
+      <button type="button" data-example="พริก" lang="th">พริก</button>
+      <button type="button" data-example="มา" lang="th">มา</button>
+      <button type="button" data-example="ไฟ" lang="th">ไฟ</button>
+      <button type="button" data-example="หมา" lang="th">หมา</button>
+      <button type="button" data-example="ใหม่" lang="th">ใหม่</button>
+      <button type="button" data-example="จริง" lang="th">จริง</button>
+    </div>
+
+    <div class="action-row">
+      <button class="primary" id="analyze" type="button">Показати результат <span aria-hidden="true">→</span></button>
+      <button class="text-button" id="clear" type="button">Очистити поле</button>
+      <span class="action-note"><kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>Enter</kbd> — швидкий запуск</span>
+    </div>
+  </section>
+
+  <section id="status" class="status" role="status" aria-live="polite" aria-atomic="true"></section>
+  <section id="results" class="results" aria-label="Результати аналізу" aria-live="off" hidden></section>
+
+  <section class="method-note" aria-labelledby="method-heading">
+    <div class="method-heading">
+      <p class="eyebrow">ВАЖЛИВО ЗНАТИ</p>
+      <h2 id="method-heading">Як читати результат</h2>
+    </div>
+    <div class="method-copy">
+      <p>Український рядок — попередня практична адаптація IPA FastThaiG2P. Він не є експертно підтвердженою транскрипцією й не передає всіх особливостей тайської вимови.</p>
+      <p>Тони та довгота голосних залишаються видимими в розборі IPA. Для важливих слів перевіряйте вимову за надійним словником або з носієм мови.</p>
+      <div class="method-links">
+        <a href="system.html">Докладніше про метод <span aria-hidden="true">→</span></a>
+        <a href="system.html#statuses">Позначки й обмеження <span aria-hidden="true">→</span></a>
+        <a href="system.html#beta-evidence">Що саме перевірено <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
 </main>
-<footer><span>Дослідницький проєкт «Тайська → українська»</span><a href="https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System" rel="noopener noreferrer">Вихідний код</a><a href="https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/issues/new?template=beta-feedback.yml" rel="noopener noreferrer">Зворотний зв’язок</a><a href="third-party-notices.html">Правові повідомлення</a><a href="third-party-notices.html">Ліцензії та джерела даних</a></footer>
-<script type="module" src="src/app.js?v=20261105-pyodide-worker-1"></script>
+
+<footer>
+  <span class="footer-brand">Тайська <strong>→</strong> українська</span>
+  <span class="footer-note">Дослідницький проєкт · Бета-версія</span>
+  <nav aria-label="Додаткова навігація">
+    <a href="system.html">Метод</a>
+    <a href="https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System" rel="noopener noreferrer">GitHub</a>
+    <a href="https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/issues/new?template=beta-feedback.yml" rel="noopener noreferrer">Зворотний зв’язок</a>
+    <a href="third-party-notices.html">Ліцензії</a>
+  </nav>
+</footer>
+<script type="module" src="src/app.js?v=20261105-ux-recomposition-1"></script>
 </body>
 </html>
