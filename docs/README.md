@@ -33,6 +33,7 @@ The [2026-11-04 repository audit](repository-audit-2026-11-04.md) records the li
 
 - `src/thai_ukrainian/` — Python reference implementation and public API; adapters/ccost.py and adapters/xsampa.py ingest CCOST TextGrid text only.
 - scripts/inspect_ccost_textgrid.py — local TextGrid tier inventory and X-SAMPA conversion report; no audio access.
+- scripts/export_textgrid_text.py — explicit orthographic interval export to provenance-rich JSONL; TextGrid members only, no audio access or gold promotion.
 - `web/src/` — browser implementation; parity with Python is a release gate.
 - `data/thai/` — runtime Thai registries and their provenance/license notices.
 - `data/ua_target_vectors.csv` — Ukrainian target feature inventory.
