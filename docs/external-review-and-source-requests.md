@@ -153,7 +153,7 @@ For each criterion and page, record: `test_id`, commit SHA, URL, date/time, test
 
 **Subject:** Request for text-only Praat TextGrid export of CCOST (no audio)
 
-Dear Professor Pittayaporn, Dr Yang, Dr Jitwiriyanont and Professor Kirby,
+Dear Pittayawat Pittayaporn, Cathryn Yang, Sujinat Jitwiriyanont and James Kirby,
 
 We are conducting non-commercial research on Thai phonetic transcription and would like to use CCOST's textual annotations while deliberately excluding all audio from our workflow.
 
@@ -161,10 +161,12 @@ The Zenodo v1.0 record (DOI 10.5281/zenodo.17366698) lists the 6.2 GB C-COST.zip
 
 Would you be able to provide or point us to:
 1. A TextGrid-only archive (or text-only export of ORT, KAN, KAS, MAU, MAS and TRN tiers), with no WAV/audio members;
-2. The current annotation manual as a standalone file;
+2. Confirmation that the separately published CCOST_manual.pdf is current, plus an updated copy if it is not;
 3. The expected Praat TextGrid encoding (long text, short text, or binary) and any tier/label conventions not fully specified in the paper;
 4. Confirmation that text-only extraction and local non-commercial research use are covered by the CC BY-NC-SA 4.0 release, including preferred attribution wording;
 5. Any known errata or updates to the A–D word-list orders.
+
+The LREC 2026 paper lists the following author contacts: cathryn_yang@sil.org, jkirby@phonetik.uni-muenchen.de, pittiyawat.p@chula.ac.th, sujinat.j@chula.ac.th.
 
 We will retain CC BY-NC-SA 4.0 attribution and ShareAlike conditions, keep the source files outside the public repository unless redistribution is explicitly permitted, and will not request or process audio.
 

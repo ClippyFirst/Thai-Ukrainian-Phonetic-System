@@ -63,4 +63,4 @@ This directory contains project tooling, not production runtime modules. Scripts
 - Before changing a generator, identify its canonical input, output paths, tests and downstream consumers. Never hand-edit its generated artifacts.
 - Before changing an evaluator, preserve its evidence-grade and denominator rules. Source-annotated, source-attested and adjudicated records must not be silently mixed.
 - Keep optional network-dependent probes out of the production runtime and default release path unless a separate decision explicitly changes that boundary.
-- Current inventory: **29 scripts**. Scripts are not interchangeable merely because they consume the same corpus: baseline, dictionary, TUD, and error-triage runs answer different questions.
+- Current inventory: **30 Python scripts**. Scripts are not interchangeable merely because they consume the same corpus: baseline, dictionary, TUD, and error-triage runs answer different questions.

@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "CCOST X-SAMPA/TextGrid adapter implemented on docs/repository-audit-2026-11-04; exact-head CI pending. Global TIMIT excluded by owner. No CCOST archive/audio downloaded; TextGrid-only acquisition blocked pending curator response. Independent IPA gold rows 0; linguistic accuracy NOT_MEASURED; engineering-verified research prototype only after CI passes.",
+  "status": "CCOST text-only X-SAMPA/TextGrid adapter and published Figure 2 regression fixtures added on docs/repository-audit-2026-11-04; exact-head CI pending. Global TIMIT excluded by owner. LOTUSDIS audio out of scope. No CCOST archive/audio downloaded; TextGrid-only acquisition blocked pending curator response. Independent IPA gold rows 0; linguistic accuracy NOT_MEASURED.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -556,24 +556,24 @@
     },
     {
       "id": "GLOBAL-TIMIT-TEXT-ONLY-001",
-      "status": "BLOCKED",
+      "status": "DEFERRED",
       "implementation": "Verified LDC2022S13 provides separate Word, Phones, Tones and TextGrid TXT assets; audio is not required for the planned text-only comparison.",
-      "blocker": "No signed LDC non-member agreement or access has been obtained; standard agreement forbids bulk redistribution outside the named research group.",
-      "acceptance": "Obtain text-only access and applicable fee; use internally for non-commercial research; seek separate written permission before publishing any machine-readable derived phonetic subset."
+      "blocker": "Owner explicitly excluded Global TIMIT; no further access or licensing work.",
+      "acceptance": "No further work. CCOST and selectively reusable FastThaiG2P/Wiktionary sources cover the chosen research roles."
     },
     {
       "id": "LOTUSDIS-TEXT-ONLY-001",
       "status": "PARTIAL",
       "implementation": "Verified CC BY-SA 4.0 and public text fields sentence/speaker_id/mic/duration; paper documents utterance-level transcripts, speaker labels and overlap tags, but no phone/IPA tier.",
       "blocker": "No file-level TextGrid tier inspection; phonetic annotation is not established by the paper or public viewer.",
-      "acceptance": "Use optionally for conversational lexical/orthographic robustness with attribution and ShareAlike; inspect TextGrid only if word-level text alignment is useful; do not treat as IPA gold. Audio work is out of scope."
+      "acceptance": "Optional orthographic transcript context only, with attribution and ShareAlike; all audio-specific tasks are DEFERRED / OUT OF SCOPE."
     },
     {
       "id": "CCOST-TEXTGRID-ONLY-001",
       "status": "PARTIAL",
-      "implementation": "Published MAU phonetic-segment and MAS phonemic-syllable tiers, X-SAMPA notation and five tone suffixes verified from LREC 2026 paper.",
+      "implementation": "Published tier map and Figure 2 sample labels inspected; strict X-SAMPA→IPA converter and long-text TextGrid parser implemented; synthetic/published-figure fixtures added.",
       "blocker": "No TextGrid-only export/manual obtained; actual file-level tier instances/intervals uninspected; no formal IAA was collected.",
-      "acceptance": "Request TextGrid-only export/manual, inspect actual tiers and intervals, document X-SAMPA-to-IPA conversion, independently review a stratified subset; use CC BY-NC-SA 4.0 with attribution and ShareAlike."
+      "acceptance": "Obtain curator-provided TextGrid-only sample or lawful extraction confirmation; inspect actual released tiers/labels and validate parser; independent review remains separate."
     },
     {
       "id": "FASTTHAIG2P-SELECTIVE-REUSE-001",
@@ -3843,6 +3843,30 @@
       "MAS": "phonemic syllable",
       "MAU": "phone-level surface segment"
     },
-    "external_blocker": "TextGrid-only export or curator-confirmed extraction path not publicly available; request prepared but not sent."
+    "external_blocker": "TextGrid-only export or curator-confirmed extraction path not publicly available; request prepared but not sent.",
+    "published_figure2_fixture": {
+      "source": "LREC 2026 paper, Figure 2, page 3156",
+      "word": "น่าจะ",
+      "KAN": "n a:_3 c a_2",
+      "KAS": "n a:_3 . c a_2",
+      "MAU": [
+        "n",
+        "a:_3",
+        "c",
+        "a_2"
+      ],
+      "MAS": [
+        "na:_3",
+        "ca_2"
+      ],
+      "status": "PUBLISHED_FIGURE_REGRESSION_ONLY; not a downloaded corpus TextGrid"
+    }
+  },
+  "scope_decisions_2026_11_05": {
+    "global_timit": "DEFERRED_EXCLUDED_BY_OWNER",
+    "lotusdis_audio": "DEFERRED_OUT_OF_SCOPE",
+    "lotusdis_text": "OPTIONAL_ORTHOGRAPHIC_CONTEXT",
+    "ccost": "PRIMARY_PHONETIC_TEXT_CANDIDATE",
+    "audio": "OUT_OF_SCOPE"
   }
 }

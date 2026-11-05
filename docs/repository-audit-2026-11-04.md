@@ -1,3 +1,14 @@
+## Current owner scope and implementation — 2026-11-05
+
+This current section supersedes earlier Global TIMIT access tasks and LOTUSDIS audio acquisition/validation tasks in the chronological audit below. Those historical notes are retained for traceability, not as active work.
+
+- Global TIMIT Thai: DEFERRED/EXCLUDED by owner decision. Do not pursue LDC access, fees, agreements, text/audio labels or derived files.
+- LOTUSDIS: optional text-only orthographic context; no audio acquisition, hashes, acoustic review or phone-level gold.
+- CCOST: primary phonetic-text candidate. Implemented strict X-SAMPA→IPA conversion, CCOST numeric tone metadata, Praat long-text TextGrid parsing, tier-aware typed provisional results, synthetic tests and published Figure 2 regression examples.
+- No CCOST TextGrid-only export is publicly listed; the mixed 6.2 GB WAV+TextGrid archive was not downloaded. Curator request prepared but not sent because no email action is connected.
+- Actual released TextGrid encoding and tier/label inventory remain unverified. No source corpus rows have been promoted to independent gold. Audio is out of scope.
+- Branch remains docs/repository-audit-2026-11-04 and PR #210; no merge, new branch, force push, release or main modification.
+
 ## Source-register implementation reconciliation — 2026-11-05
 
 - Updated `data/corpus_sources.csv`: LOTUSDIS is now a text corpus with transcript-only scope and no assumed phone/IPA labels; Global TIMIT is explicitly excluded by owner decision. Existing CCOST and Wiktionary source records were retained.

@@ -1,5 +1,5 @@
 import unittest
-from thai_ukrainian.adapters.ccost import TextGridFormatError, convert_ccost_tier, parse_textgrid_long
+from thai_ukrainian.adapters.ccost import (TextGridFormatError, TextGrid, TextGridInterval, TextGridTier, convert_ccost_tier, parse_textgrid_long)
 from thai_ukrainian.ukrainian_adaptation import adapt_phonetic_result
 
 TEXTGRID = """File type = "ooTextFile"
@@ -55,6 +55,18 @@ class CCOSTTextGridAdapterTests(unittest.TestCase):
         adapted=adapt_phonetic_result(result)
         self.assertEqual(adapted["status"],"provisional")
         self.assertEqual(adapted["output"],"к'а")
+    def test_published_kas_word_interval_splits_syllables_and_retains_tones(self):
+        grid=TextGrid(0,1.0,(TextGridTier(
+            "KAS","IntervalTier",0,1.0,
+            intervals=(TextGridInterval(0,1.0,"n a:_3 . c a_2"),)),))
+        annotation=convert_ccost_tier(grid,"KAS")[0]
+        results=annotation.to_phonetic_results()
+        self.assertEqual(tuple(item.phonemic_ipa for item in results),("naː","ca"))
+        self.assertEqual(tuple(item.tone_category for item in results),("falling","low"))
+        self.assertTrue(all(item.status=="PROVISIONAL" for item in results))
+        self.assertTrue(all("TextGrid interval 0.000000-1.000000" in item.provenance for item in results))
+        self.assertTrue(all(any("no per-syllable time alignment" in note for note in item.uncertainty) for item in results))
+
     def test_surface_phone_tier_does_not_drive_ukrainian_adapter(self):
         grid=parse_textgrid_long(TEXTGRID)
         result=convert_ccost_tier(grid,"MAU")[0].to_phonetic_results()[0]

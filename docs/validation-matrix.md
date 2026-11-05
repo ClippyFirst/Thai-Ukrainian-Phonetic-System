@@ -1,3 +1,26 @@
+## Current scope and CCOST adapter checkpoint — 2026-11-05
+
+- Owner decision: Global TIMIT is DEFERRED/EXCLUDED; do not pursue LDC access, fees, agreements, labels or audio. LOTUSDIS is optional orthographic text context only; its audio-specific tasks are DEFERRED/OUT OF SCOPE. These decisions supersede historical tasks below.
+- Audio is OUT OF SCOPE. No WAV has been downloaded, opened, extracted, hashed or committed.
+- CCOST is the primary phonetic-text candidate. Implemented: strict X-SAMPA→IPA conversion, CCOST _1.._5 tone mapping, Praat long-text TextGrid reader, typed provisional phonemic results for KAN/KAS/MAS, MAU phone-level surface preservation, and a text-only inspection CLI.
+- Regression tests now include the published LREC 2026 Figure 2 labels for น่าจะ: KAN n a:_3 c a_2; KAS n a:_3 . c a_2; MAU n / a:_3 / c / a_2; MAS na:_3 / ca_2. This is a published figure example, not a downloaded corpus file.
+- Actual released TextGrid files and full label inventory remain uninspected. Zenodo exposes a single mixed 6.2 GB WAV+TextGrid ZIP and no TextGrid-only archive. The curator request is prepared but NOT SENT because no email action is connected. No archive or audio downloaded.
+- The parser supports Praat long-text TextGrid only; short/binary formats fail closed. Unknown X-SAMPA notation fails closed. The symbol map is a tested subset, not a claim of full CCOST coverage.
+- CI on the prior source-register checkpoint 41987442859 failed one stale Global TIMIT assertion (358 passed, 1 failed, 1 skipped, 1,197 subtests passed); that test was corrected. Exact-head CI for the implementation/documentation checkpoint must pass before marking the code batch DONE_VERIFIED. Local tests were not run in the connector-only environment.
+- Independent IPA gold rows remain 0; linguistic accuracy remains NOT_MEASURED. This is an engineering research prototype, not a linguistically validated release.
+
+### Current task ledger
+| Task | Status | Acceptance / blocker |
+|---|---|---|
+| Global TIMIT | DEFERRED | Explicitly excluded; no further work |
+| LOTUSDIS audio | DEFERRED / OUT OF SCOPE | Text-only transcripts may be used optionally |
+| CCOST X-SAMPA converter | PARTIAL | Exact-head CI plus actual TextGrid label/encoding validation |
+| CCOST TextGrid parser | PARTIAL | Synthetic and published-figure fixtures; actual release compatibility pending |
+| CCOST TextGrid-only export | BLOCKED | Curator export or written confirmation of lawful text-only extraction |
+| CCOST independent phonetic gold | BLOCKED | Qualified independent Thai reviewers and adjudication required |
+
+---
+
 ## Current checkpoint — 2026-11-05: CCOST text-only adapter implementation
 
 - Work branch: docs/repository-audit-2026-11-04; keep all changes on this single branch and PR #210. No main merge or new branch.
@@ -32,7 +55,7 @@ The project owner has decided to **exclude Global TIMIT Thai (LDC2022S13)**. Do 
 
 **Next acceptance gates:** (1) request CCOST TextGrid-only files and manual; (2) inspect tier values and encoding, not just the published tier names; (3) build a documented X-SAMPA mapping with round-trip/edge-case tests and typed IPA preservation; (4) curate a legally attributable Wiktionary subset separately from generated FastThaiG2P rows; (5) decide whether LOTUSDIS text is useful after inspecting its actual text schema. Do not add corpus rows or claim linguistic accuracy until provenance and review gates pass.
 
-## Current repository audit — 2026-11-05
+## Previous checkpoint — 2026-11-05 (superseded by CCOST adapter batch)
 
 - Branch `docs/repository-audit-2026-11-04`; base `main` `56fba86b4b8be2fe4e67284355e9928108527387`; compare: **26 commits ahead, 0 behind**.
 - PR #210 remains **OPEN / NOT MERGED**. Latest branch head `3b18a3b35a35c0573cadc2d81cdbcbd455b85a91` exact-head Full CI [41986104461](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41986104461) completed successfully: `test`, `wheel-install-smoke`, and `master-artifact` all passed.

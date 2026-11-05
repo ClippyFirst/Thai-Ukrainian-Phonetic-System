@@ -18,7 +18,7 @@ The target evidence layers are separate:
 1. Thai orthographic word segmentation and lexical reading.
 2. Syllable boundaries and broad phonemic IPA.
 3. Lexical tone category, vowel length and final glottal status.
-4. Broad surface/narrow acoustic IPA only where a licensed recording and time-aligned asset are available.
+4. Broad surface IPA from text-only phonetic annotations where published; narrow acoustic IPA is DEFERRED / OUT OF SCOPE.
 5. Ukrainian practical transcription conditional on a separately graded IPA reference.
 
 A corpus with transcripts or audio is not automatically phonetic gold. A source-annotated corpus is not independent adjudication.
@@ -48,7 +48,7 @@ A row may be called independent gold only after:
 2. Two qualified Thai reviewers independently complete the blind sheet; reviewer identities/qualification evidence are verified by the project owner.
 3. Raw reviewer A/B labels are frozen before discussion.
 4. A distinct qualified adjudicator records agreement or resolves disagreement with a rationale and record ID.
-5. Broad phonemic, broad surface and narrow acoustic layers are never mixed in one score. Narrow acoustic labels require registered audio provenance.
+5. Keep phonemic and source surface labels separate. Audio-derived narrow acoustic labels are excluded from the current project scope.
 6. The evaluation split is by speaker/recording, not random utterance, to avoid speaker leakage. Tone, length, coda, onset and syllable-structure strata must be reported separately where sample size permits.
 
 ## Current state
@@ -57,7 +57,7 @@ A row may be called independent gold only after:
 - Ukrainian-native preference submissions: **0**.
 - Adjudicated Thai IPA gold: **0**.
 - Adjudicated word/syllable segmentation gold: **0**.
-- LOTUSDIS source/license: verified and registered; `data/benchmark/audio-assets.tsv` is header-only. Individual audio assets, hashes, speaker/mic metadata and intervals are not yet selected or pinned.
+- LOTUSDIS source/license: verified and registered for optional text-only use. `data/benchmark/audio-assets.tsv` remains header-only intentionally because audio is out of scope; do not select or pin audio assets.
 - CCOST: blocked pending source-order and archive-tier clarification.
 - Therefore phonetic accuracy remains **NOT MEASURED**.
 

@@ -15,7 +15,7 @@ The LREC 2026 paper documents these tier names and meanings:
 - MAS: phonemic syllable
 - TRN: orthographic utterance transcript
 
-The paper states that phonemic and phonetic labels use X-SAMPA and that numeric tone suffixes are _1 Mid, _2 Low, _3 Falling, _4 High, _5 Rising. Native Thai research assistants corrected alignment, tone and segmental accuracy; the paper reports no formal inter-annotator agreement. The published tier map is a research specification, **not proof that every released TextGrid has exactly these tier names/values**. Source: [Pittayaporn et al., LREC 2026](https://aclanthology.org/2026.lrec-1.247/).
+The paper states that phonemic and phonetic labels use X-SAMPA and that numeric tone suffixes are _1 Mid, _2 Low, _3 Falling, _4 High, _5 Rising. Figure 2 publishes an example for น่าจะ: KAN `n a:_3 c a_2`; KAS `n a:_3 . c a_2`; MAU intervals `n`, `a:_3`, `c`, `a_2`; MAS syllable labels `na:_3`, `ca_2`. These published examples are now regression fixtures; they are not a substitute for inspecting the released TextGrid files. Native Thai research assistants corrected alignment, tone and segmental accuracy; the paper reports no formal inter-annotator agreement. The published tier map is a research specification, **not proof that every released TextGrid has exactly these tier names/values**. Source: [Pittayaporn et al., LREC 2026](https://aclanthology.org/2026.lrec-1.247/).
 
 ## Acquisition decision
 

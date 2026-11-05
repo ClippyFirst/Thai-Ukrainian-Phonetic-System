@@ -55,39 +55,37 @@ class CCOSTAnnotation:
     @property
     def ipa(self)->str: return self.converted.ipa
     def to_phonetic_results(self)->tuple[PhoneticResult,...]:
-        """Return one typed result for this interval; never fabricate per-syllable times."""
+        """Return one typed result per syllable without inventing syllable timestamps."""
         provenance=(CCOST_SOURCE,f"Praat TextGrid tier {self.tier}",
+                    f"TextGrid interval {self.xmin:.6f}-{self.xmax:.6f}",
                     "X-SAMPA symbol mapping: Wells (1995; revised 2000)",
                     "CCOST tone suffix convention: _1.._5")
-        segments=tuple(_segment_ipa(self.converted.ipa,provenance))
-        boundaries=[0]
-        offset=0
+        results=[]
         for syllable in self.converted.syllables:
-            offset+=len(_segment_ipa(syllable.ipa,provenance))
-            boundaries.append(offset)
-        tone_category=(self.converted.syllables[0].tone_category
-                       if len(self.converted.syllables)==1 else None)
-        common={
-            "segments":segments,
-            "syllable_boundaries":tuple(boundaries),
-            "vowel_length":"long" if "ː" in self.converted.ipa else None,
-            "tone_category":tone_category,
-            "provenance":provenance,
-        }
-        if self.tier in CCOST_PHONEMIC_TIERS:
-            return (PhoneticResult(
-                phonemic_ipa=self.converted.ipa,broad_surface_ipa=None,
-                status="PROVISIONAL",uncertainty=(
-                    "CCOST source annotation; not independently adjudicated gold.",
-                    "Per-syllable tone labels remain in CCOSTAnnotation.converted; the scalar PhoneticResult tone is omitted for multisyllabic labels.",
-                    "Actual released TextGrid conformance has not yet been independently reviewed.",
-                ),external_ipa=self.converted.ipa,**common),)
-        return (PhoneticResult(
-            phonemic_ipa=None,broad_surface_ipa=self.converted.ipa,
-            status="UNSUPPORTED",uncertainty=(
-                "MAU is a phone-level surface tier; aggregate and align it with syllable context before adaptation.",
-                "Surface phone labels are not phonemic syllable labels.",
-            ),external_ipa=None,**common),)
+            segments=tuple(_segment_ipa(syllable.ipa,provenance))
+            boundaries=(0,len(segments)) if segments else (0,)
+            if self.tier in CCOST_PHONEMIC_TIERS:
+                uncertainty=["CCOST source annotation; not independently adjudicated gold."]
+                if self.tier in {"KAN","KAS"}:
+                    uncertainty.append("The source interval may span a word; no per-syllable time alignment is inferred.")
+                results.append(PhoneticResult(
+                    phonemic_ipa=syllable.ipa,broad_surface_ipa=None,segments=segments,
+                    syllable_boundaries=boundaries,
+                    vowel_length="long" if "ː" in syllable.ipa else None,
+                    tone_category=syllable.tone_category,status="PROVISIONAL",
+                    provenance=provenance,uncertainty=tuple(uncertainty),
+                    external_ipa=syllable.ipa))
+            else:
+                results.append(PhoneticResult(
+                    phonemic_ipa=None,broad_surface_ipa=syllable.ipa,segments=segments,
+                    syllable_boundaries=boundaries,
+                    vowel_length="long" if "ː" in syllable.ipa else None,
+                    tone_category=syllable.tone_category,status="UNSUPPORTED",
+                    provenance=provenance,
+                    uncertainty=("MAU is a phone-level surface tier; aggregate and align it with syllable context before adaptation.",
+                                 "Surface phone labels are not phonemic syllable labels."),
+                    external_ipa=None))
+        return tuple(results)
 
 def _quoted_field(block:str,field:str)->str:
     match=re.search(rf'(?m)^\s*{re.escape(field)}\s*=\s*"(.*)"\s*$',block)

@@ -1,3 +1,6 @@
+- Added regression coverage based on the published Figure 2 example: KAN and KAS multisyllabic forms, the five CCOST tone numbers, and the distinction between phonemic MAS/KAS and phone-level MAU. The actual released TextGrid files remain uninspected.
+- Corrected the provisional IPA warning so it no longer attributes all external provisional sources to FastThaiG2P; it now describes external IPA provenance generically.
+- Corrected current source scope: Global TIMIT excluded; LOTUSDIS audio is out of scope; the empty audio-assets registry is intentionally deferred.
 ## Latest audit and implementation batch — 2026-11-05
 
 The owner requested a full repository audit/documentation reconciliation on the existing branch and specifically prioritized obtaining CCOST TextGrid-only materials and implementing X-SAMPA→IPA. The following work was added on docs/repository-audit-2026-11-04:

@@ -9,7 +9,7 @@
 - MAS is the phonemic syllable tier; KAN/KAS are canonical word/syllabified layers; MAU is phone-level surface material and cannot independently drive syllable-level Ukrainian adaptation. Source annotations are not adjudicated gold.
 - A TextGrid-only export request is prepared in external-review-and-source-requests.md, but not sent: no connected email action is available. Do not download the mixed archive simply to extract text.
 
-**Acceptance ledger:** converter/parser implementation = PARTIAL pending exact-head CI and real TextGrid compatibility; TextGrid-only source acquisition = BLOCKED pending curator response; independent phonetic adjudication = BLOCKED pending qualified reviewers and source-appropriate review. No CCOST labels have been imported into gold; accuracy remains NOT_MEASURED.
+**Acceptance ledger:** converter/parser implementation = PARTIAL pending exact-head CI and real TextGrid compatibility; TextGrid-only source acquisition = BLOCKED pending curator response; independent phonetic adjudication = BLOCKED pending qualified reviewers and source-appropriate review. No CCOST labels have been imported into gold; accuracy remains NOT_MEASURED. Historical audio-specific gates elsewhere in this document are superseded and not active tasks.
 
 
 ## Purpose
