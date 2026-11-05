@@ -37,7 +37,7 @@ class CorpusSourceRegistryTests(unittest.TestCase):
         self.assertIn("3b1e3978c2b3a232dce4fdcfd137bb572ce5467f", notes)
         self.assertIn("10.5281/zenodo.17366698", notes)
         self.assertIn("10.63317/3ds35jijmgrx", notes)
-        self.assertIn("manual correction by trained native Thai research assistants", notes)
+        self.assertIn("Manual correction by trained native Thai research assistants", notes)
         self.assertIn("no formal inter-annotator agreement measures", notes)
         self.assertIn("CCOST_manual.pdf inspected 2026-11-01", notes)
         self.assertIn("Observed tiers: ORT-MAU", notes)
