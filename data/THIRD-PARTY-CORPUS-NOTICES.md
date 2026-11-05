@@ -17,8 +17,8 @@ The corpus archives below retain their own source licenses. They are not relicen
 - Authors: Pattara Tipaksorn, Sumonmas Thatphithakkul, Vataya Chunwijitra, and Kwanchiva Thangthai.
 - Dataset: [NECTEC LOTUSDIS dataset card](https://huggingface.co/datasets/nectec/LOTUSDIS); paper [Tipaksorn et al. (2025)](https://arxiv.org/abs/2509.18722).
 - Declared license: **CC BY-SA 4.0** — attribution and ShareAlike apply. See the [license deed](https://creativecommons.org/licenses/by-sa/4.0/).
-- Repository file: `nectecLOTUSDIS textgrid.zip`, owner-supplied export with 90 `.TextGrid` members and one extensionless member. Its Git blob SHA-1 is `50518e9a54e0986935e7b1cff122eb43c0b9edbd`; this pins only the branch copy, not the upstream dataset snapshot.
-- The TextGrid inspector/exporter reads only `.TextGrid` members. The extensionless member is deliberately not read and its content type is unknown; therefore this notice does not claim that the entire ZIP is audio-free. No audio bytes were read or extracted.
+- Repository file: `nectecLOTUSDIS textgrid.zip`, owner-supplied export with 90 `.TextGrid` members and one `textgrid/.DS_Store` metadata entry (6,148 uncompressed bytes). Its Git blob SHA-1 is `50518e9a54e0986935e7b1cff122eb43c0b9edbd`; this pins only the branch copy, not the upstream dataset snapshot.
+- The TextGrid inspector/exporter reads only `.TextGrid` members. The `.DS_Store` metadata entry is deliberately not read. No recognized audio-extension member is present; the inspector does not open any non-TextGrid member. No audio bytes were read or extracted.
 - The 90 parsed TextGrids contain recording-named orthographic transcript IntervalTiers. No phone/phoneme/toneme/IPA tiers were observed. These are conversational text context, not phonetic gold.
 - Derived transcript exports must retain CC BY-SA 4.0 attribution and ShareAlike conditions.
 
