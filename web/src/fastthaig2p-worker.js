@@ -3,12 +3,12 @@ import { loadPyodide } from "../vendor/pyodide/pyodide.mjs";
 const INDEX_URL = new URL("../vendor/pyodide/", import.meta.url).href;
 const MANIFEST_URL = new URL("../vendor/bundle-manifest.json", import.meta.url);
 const WHEEL_BASE = new URL("../vendor/wheels/", import.meta.url);
-const EXPECTED_PACKAGES = new Set([
-  "fastthaig2p",
-  "pythainlp",
-  "thai-ukrainian-phonetic-system",
-  "tzdata"
-]);
+const EXPECTED_VERSIONS = {
+  fastthaig2p: "0.1.0",
+  pythainlp: "5.4.0",
+  "thai-ukrainian-phonetic-system": "0.6.1",
+  tzdata: "2026.6"
+};
 
 let runtimePromise;
 
@@ -26,9 +26,10 @@ async function fetchManifest() {
     throw new Error("Публічне розповсюдження компонентів рушія ще не погоджено.");
   }
   if (!Array.isArray(manifest.wheels) ||
-      new Set(manifest.wheels.map(item => item.package)).size !== EXPECTED_PACKAGES.size ||
-      [...EXPECTED_PACKAGES].some(name => !manifest.wheels.some(item => item.package === name))) {
-    throw new Error("Маніфест локального рушія неповний.");
+      manifest.wheels.length !== Object.keys(EXPECTED_VERSIONS).length ||
+      Object.entries(EXPECTED_VERSIONS).some(([name, version]) =>
+        !manifest.wheels.some(item => item.package === name && item.version === version))) {
+    throw new Error("Маніфест локального рушія неповний або містить неочікувані версії.");
   }
   return manifest;
 }
