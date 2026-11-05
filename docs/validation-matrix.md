@@ -2,7 +2,7 @@
 
 - Branch: `docs/repository-audit-2026-11-04`; work remains on PR #210, no mainline mutation.
 - CCOST tier suffixes are now **DONE_VERIFIED** from the BAS WebServices tutorial: `ORT-MAU` = MAUS-tokenized word segmentation; `KAN-MAU` = canonical X-SAMPA word pronunciation; `KAS-MAU` = G2P phonological syllable segmentation. The earlier curator blocker for `-MAU` is closed.
-- `<notProcessedChunk>` is now **DONE_VERIFIED** as a MAUS dummy segment inserted when a chunk could not be processed; likely causes include transcript/signal mismatch or a chunk too short for its expected phone sequence. It is not a phone/IPA label. `<P>`, `<P:>`, `<:p>`, and `<Fail>` remain unresolved. `_8` is now classified as an out-of-range/invalid BAS tone suffix (BAS supports only `_1`–`_5`); its intended correction remains unknown and fail-closed. The public CCOST manual was text-extracted and searched; it contains no definition for `_8` or those four tag spellings.
+- `<notProcessedChunk>` is now **DONE_VERIFIED** as a MAUS dummy segment inserted when a chunk could not be processed; likely causes include transcript/signal mismatch or a chunk too short for its expected phone sequence. It is not a phone/IPA label. `<P>`, `<P:>`, `<:p>`, and `<Fail>` remain unresolved. `_8` is permitted by generic BAS/MAUS tone syntax (`_1`–`_9`) but is unmapped in the CCOST paper's five-category scheme (`_1`–`_5`); its CCOST-specific meaning remains unknown and fail-closed. The public CCOST manual was text-extracted and searched; it contains no definition for `_8` or those four tag spellings.
 - FastThaiG2P: optional external dependency use and internal candidate comparison are **PERMITTED** under the inspected upstream Apache-2.0 code grant. Upstream data metadata records per-word source categories. Wiktionary-derived entries retain CC BY-SA/GFDL obligations; generated/manual assets appear covered by the repository's Apache-2.0 grant; TLTK fallback data has BSD-3 package evidence (with a separate LGPL file in TLTK's repository). Bulk copying/redistribution is **PERMITTED WITH CONDITIONS** (separate/attribute the Wiktionary subset under CC BY-SA/GFDL; preserve Apache-2.0 and TLTK BSD-3 notices); project-side vendoring remains **PARTIAL / NOT IMPLEMENTED**, not a blocker on dependency use.
 - Sources: [BAS tier tutorial](https://clarin.phonetik.uni-muenchen.de/BASWebServices/help/tutorial), [BAS chunk failure FAQ](https://clarin.phonetik.uni-muenchen.de/BASWebServices/help/help_examples), [FastThaiG2P data README](https://github.com/awslabs/FastThaiG2P/blob/4e82a291b4cf2876326744c6580121e9986ad354/data/README.md), [FastThaiG2P merge script](https://github.com/awslabs/FastThaiG2P/blob/4e82a291b4cf2876326744c6580121e9986ad354/scripts/merge_ipa.py), [TLTK package metadata](https://github.com/attapol/tltk/blob/master/setup.py), [TLTK BSD notice](https://github.com/attapol/tltk/blob/master/LICENSE.txt).
 
@@ -1742,7 +1742,7 @@ Do not mark any gate DONE_VERIFIED because a registry entry, schema, blank revie
 | Inventory CCOST failure occurrences | DONE_VERIFIED | 1,014 occurrences / 116 unique raw labels, classified in `docs/ccost-label-review-2026-11-05.md` |
 | Confirm `<p:>`, `<usb>`, `<nib>` semantics | DONE_VERIFIED | CCOST LREC 2026 §3.3 and BAS Partitur Format |
 | Classify `<P>`, `<P:>`, `<:p>`, `<Fail>`, `<notProcessedChunk>` | BLOCKED | No corpus-specific definition located; curator response required |
-| Resolve `_8` (868 occurrences) | BLOCKED | CCOST paper documents only `_1`–`_5`; do not infer a sixth tone |
+| Resolve `_8` (868 occurrences) | BLOCKED | Generic BAS/MAUS syntax allows `_1`–`_9`, but CCOST paper documents only `_1`–`_5`; source-specific meaning of `_8` is unknown |
 | Confirm `-MAU` aliases | BLOCKED | Exact names observed; semantic mapping not defined by paper/manual |
 | FastThaiG2P source-code license | DONE_VERIFIED | Exact pinned commit contains Apache-2.0 LICENSE and Amazon NOTICE; TLTK parser retains BSD-3 notice |
 | FastThaiG2P bundled-data redistribution | BLOCKED | Wiktionary/kaikki subset has CC BY-SA/GFDL; generated/manual/TLTK fallback asset rights need per-component evidence |
@@ -1775,7 +1775,7 @@ The current X-SAMPA converter remains a declared partial subset. These findings 
 |---|---|---|
 | Define base MAU/MAS/KAN/KAS/ORT/TRN tier roles | DONE_VERIFIED | CCOST LREC 2026 paper §3.3–3.4 |
 | Explain ORT-MAU/KAN-MAU/KAS-MAU suffix semantics | BLOCKED | Curator response needed; raw names preserved |
-| Explain 868 _8 occurrences / 22 strings | BLOCKED | Paper defines only _1–_5; do not infer sixth tone |
+| Explain 868 _8 occurrences / 22 strings | BLOCKED | Generic MAUS allows _1–_9; CCOST paper maps only _1–_5; do not infer a CCOST category |
 | Clarify unresolved tag spellings and mixed labels | BLOCKED | Curator response needed; fail-closed behavior retained |
 | Verify FastThaiG2P source-code license | DONE_VERIFIED | Pinned LICENSE Apache-2.0; NOTICE checked |
 | Verify vendored TLTK parser notice | DONE_VERIFIED | Pinned source carries BSD-3-Clause notice |
@@ -1793,7 +1793,7 @@ The following entries supersede earlier rows that described the entire CCOST arc
 |---|---|---|
 | Inspect supplied CCOST TextGrids | DONE_VERIFIED | CI parsed 488/488 long-text TextGrids; no audio member was read. |
 | Classify documented `-MAU` tier names | DONE_VERIFIED | BAS tutorial defines ORT-MAU, KAN-MAU and KAS-MAU; exact release names are preserved. |
-| Classify `_8` as an out-of-range tone suffix | DONE_VERIFIED | CCOST/BAS document only `_1`–`_5`; `_8` is not a sixth tone. |
+| Establish CCOST meaning of `_8` | BLOCKED | Generic BAS/MAUS syntax allows `_1`–`_9`; CCOST paper maps only `_1`–`_5`. `_8` has no established CCOST category mapping; do not infer a value. |
 | Recover intended values for `_8` | BLOCKED | 868 tier occurrences = 397 exact interval groups = 438 file/interval/raw-label events across 119 files. Worklist supplies orthographic/cross-tier context; two independent Thai reviewers and a separate adjudicator must supply evidence-backed corrections or abstentions. No automatic replacement. |
 | Determine semantics of `<P>`, `<P:>`, `<:p>`, `<Fail>` | BLOCKED | Existing whole-archive counts: 394, 4, 22, 16 appearances respectively. Worklist scans all tiers and preserves case/interval/context. No reliable public corpus-specific definition located; expert adjudication or authoritative corpus documentation required. |
 | Generate contextual blind CCOST review worklist | PARTIAL_PENDING_EXACT_HEAD_CI | Generator, tests and CI artifact step are committed; exact-head CI must pass and artifact counts must be inspected before DONE_VERIFIED. |
