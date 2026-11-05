@@ -10,7 +10,15 @@ const wheels = readdirSync(wheelDir).filter(name => name.endsWith(".whl"))
   .map(name => pathToFileURL(resolve(wheelDir, name)).href);
 assert.equal(wheels.length, 3, `Expected exactly three pinned wheels, found ${wheels.length}`);
 
-const pyodide = await loadPyodide();
+const indexURL = pathToFileURL(resolve("node_modules/pyodide") + "/").href;
+let pyodide;
+try {
+  pyodide = await loadPyodide({ indexURL });
+} catch (error) {
+  console.error("Pyodide initialisation failed:", error?.stack || error);
+  process.exit(1);
+}
+await pyodide.loadPackage("micropip");
 pyodide.globals.set("WHEEL_URLS", pyodide.toPy(wheels));
 await pyodide.runPythonAsync(`
 import micropip
