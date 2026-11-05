@@ -10,7 +10,7 @@ The [2026-11-04 repository audit](repository-audit-2026-11-04.md) records the li
 
 ## Beta release
 
-The owner-approved beta scope, known limitations, accessibility source review, and operational release checklist are maintained in [Beta release scope](beta-release-scope.md). Thai/Ukrainian external linguistic review and acoustic validation are deferred for beta; this does not establish linguistic accuracy or WCAG conformance.
+The owner-approved beta scope, known limitations, accessibility source review, and operational release checklist are maintained in [Beta release scope](beta-release-scope.md). Thai/Ukrainian external linguistic review and acoustic validation are deferred for beta; this does not establish linguistic accuracy or WCAG conformance.\n\nThe owner selected a **GitHub Pages-only FastThaiG2P browser/WASM port**. Its architecture, Pyodide compatibility gate, current blockers and acceptance criteria are tracked in [FastThaiG2P Pyodide port](fastthaig2p-pyodide-port.md); the current status is also at the top of the [validation matrix](validation-matrix.md). Vercel and remote API hosting are superseded and out of scope.
 
 ## Start here
 
