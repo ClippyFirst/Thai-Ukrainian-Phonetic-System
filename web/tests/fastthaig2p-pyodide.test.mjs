@@ -17,6 +17,15 @@ try {
   process.exit(1);
 }
 
+async function runPython(label, source) {
+  try {
+    return await pyodide.runPythonAsync(source);
+  } catch (error) {
+    console.error(`${label} failed:`, error?.stack || error);
+    throw error;
+  }
+}
+
 pyodide.FS.mkdirTree("/wheels");
 for (const name of wheelNames) {
   pyodide.FS.writeFile(`/wheels/${name}`, readFileSync(resolve(wheelDir, name)));
@@ -47,7 +56,7 @@ for filename in WHEEL_NAMES:
 
 const pythonSource = readFileSync(resolve("scripts/fastthaig2p_pyodide_parity.py"), "utf8");
 pyodide.FS.writeFile("/fastthaig2p_pyodide_parity.py", pythonSource);
-const actualText = await pyodide.runPythonAsync(`
+const actualText = await runPython("FastThaiG2P parity fixture", `
 import importlib.util
 import json
 spec = importlib.util.spec_from_file_location("fastthaig2p_pyodide_parity", "/fastthaig2p_pyodide_parity.py")
