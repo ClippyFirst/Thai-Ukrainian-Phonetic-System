@@ -3,7 +3,7 @@
 - The BAS tutorial resolves the CCOST `-MAU` tier suffixes. `ORT-MAU`, `KAN-MAU`, and `KAS-MAU` have documented MAUS/G2P meanings; remove the former curator blocker for this question.
 - BAS FAQ resolves `<notProcessedChunk>` as a dummy failure segment inserted when a MAUS chunk could not be processed. It is an alignment/processing failure, not a phone. Other unknown forms (`<P>`, `<P:>`, `<:p>`, `<Fail>`) and `_8` remain fail-closed.
 - FastThaiG2P may continue to be used as the pinned optional external dependency and for internally labelled candidate comparisons. The upstream data README and merge script provide source-category metadata; generated/manual assets appear covered by the upstream Apache grant, the Wiktionary subset remains subject to CC BY-SA/GFDL, and TLTK fallback assets have BSD-3 package evidence. Bulk redistribution of the merged 62k dictionary is a separate packaging/attribution task, not a reason to disable runtime use.
-- The owner declined to write/send an email. No curator contact was made; research was limited to public internet/GitHub sources. `_8` has no public definition found in the inspected corpus paper, BAS docs, or GitHub search, so it remains unresolved.
+- The owner declined to write/send an email. No curator contact was made; research was limited to public internet/GitHub sources. The public Zenodo `CCOST_manual.pdf` was also text-extracted and searched; it contains no definition for `_8` or `<P>`, `<P:>`, `<:p>`, `<Fail>`. `_8` remains unresolved.
 - Current acceptance gates unchanged: expert-adjudicated Thai IPA/segmentation gold (0 rows), Ukrainian-native target review, and manual accessibility review. Linguistic accuracy remains NOT_MEASURED.
 
 ---
