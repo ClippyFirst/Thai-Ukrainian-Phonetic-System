@@ -78,3 +78,16 @@ The inspector and exporter read only `.TextGrid` members; no WAV is required. Th
 - MAU phone intervals must not be treated as a phonemic syllable. MAS is the phonemic syllable tier. KAS is canonical syllabified pronunciation. KAN is canonical word pronunciation. Do not merge them without an explicit alignment contract.
 
 **Current status:** TextGrid structure and text-only export are DONE_VERIFIED for supplied files. CCOST `-MAU` semantics and X-SAMPA coverage remain PARTIAL pending source/curator evidence. Independent phonetic gold remains BLOCKED; linguistic accuracy remains `NOT_MEASURED`; no CCOST IPA rows have been promoted to gold.
+
+
+## Evidence-based label review — 2026-11-05
+
+A full occurrence-level review is recorded in [CCOST label and marker review](ccost-label-review-2026-11-05.md). The CI inspection report [artifact](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42018381197/artifacts/13410038957) contains the 1,014 failed conversion occurrences.
+
+Key corrections and confirmed findings:
+- The CCOST paper §3.3 explicitly identifies X-SAMPA for its phonemic/phonetic tiers and defines only `_1` Mid, `_2` Low, `_3` Falling, `_4` High, `_5` Rising. It does **not** define `_8`.
+- The 1,014 failures are 1,014 tier-level occurrences and 116 distinct raw strings, not 1,014 distinct symbols. They comprise 868 `_8` cases, 58 slash/alternative forms, 26 mixed-marker cases, 17 non-ASCII phonetic-looking forms, 10 Thai/mixed text cases, 14 truncated/malformed tokens, and 21 other unsupported ASCII sequences.
+- CCOST and BAS sources define `<p:>` as pause, `<usb>` as a speaker event/disfluency/unintelligible event, and `<nib>` as a non-speech event/noise. They are not IPA. `<P>`, `<P:>`, `<:p>`, `<Fail>`, and `<notProcessedChunk>` remain unresolved and distinct.
+- The observed `ORT-MAU`, `KAN-MAU`, and `KAS-MAU` tier names are real, but their `-MAU` alias semantics remain provisional until confirmed by the corpus curator.
+- Unicode IPA-looking forms are not accepted as IPA by appearance alone. Mixed marker-plus-phone/text labels remain raw and fail-closed.
+- No parser mapping was broadened and no unsupported label was guessed. The adapter remains PARTIAL; source annotations are not gold.
