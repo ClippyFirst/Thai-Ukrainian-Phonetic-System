@@ -10,7 +10,7 @@ The latest structural and UX review is the [2026-11-05 repository audit](reposit
 
 The public website is the [GitHub Pages beta](https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/). It runs pinned FastThaiG2P locally in a same-origin Web Worker through self-hosted Pyodide. Vercel and remote API hosting are out of scope. The public UI presents a provisional Ukrainian practical adaptation of unclassified external IPA; it does not claim expert linguistic validation.
 
-The current browser design contract is in [Website UX and visual system](ui-ux-redesign.md). Runtime architecture and interaction boundaries are documented in [Web service architecture](web-service-architecture.md) and [Web service requirements](web-service-requirements.md). Runtime licenses and data attribution are listed on the public [third-party notices page](../web/third-party-notices.html).
+The current browser design contract is in [Website UX and visual system](ui-ux-redesign.md). Its implementation candidate is PR [#211](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/211); the redesign is not live until that PR is merged and Pages deployment succeeds. Runtime architecture and interaction boundaries are documented in [Web service architecture](web-service-architecture.md) and [Web service requirements](web-service-requirements.md). Runtime licenses and data attribution are listed on the public [third-party notices page](../web/third-party-notices.html).
 
 ## Start here
 

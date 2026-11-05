@@ -4530,5 +4530,45 @@
     "linguistic_accuracy": "NOT_MEASURED",
     "production_cutover": false,
     "beta_publication": true
+  },
+  "ui_ux_redesign_2026_11_05": {
+    "status": "IMPLEMENTED_CI_VERIFIED_PR_OPEN_NOT_DEPLOYED",
+    "base_main": "f0d41996e854185bd6bd92f0ffa8f6b83e71f777",
+    "branch": "design/site-recomposition-2026-11-05",
+    "tested_code_head": "5b2857953e13b8e2ac6fbba6e5cf1bd33dca344d",
+    "pull_request": 211,
+    "pull_request_state": "OPEN_MERGEABLE_NOT_MERGED",
+    "exact_head_ci": {
+      "run": 42106359041,
+      "status": "SUCCESS",
+      "test_job": "SUCCESS",
+      "wheel_install_smoke": "SUCCESS",
+      "master_artifact": "SUCCESS",
+      "passed": 398,
+      "skipped": 1,
+      "subtests_passed": 1211
+    },
+    "exact_head_web_static": {
+      "run": 42106359184,
+      "status": "SUCCESS"
+    },
+    "exact_head_site_api": {
+      "run": 42106358990,
+      "status": "SUCCESS"
+    },
+    "exact_head_pyodide_compat": {
+      "run": 42106358987,
+      "status": "SUCCESS"
+    },
+    "ui_contract_includes_delayed_stale_worker_response": true,
+    "manual_accessibility_review": "PARTIAL_UNVERIFIED",
+    "manual_zoom_reflow": "PARTIAL_UNVERIFIED",
+    "actual_clipboard_browser_test": "NOT_MANUALLY_VERIFIED",
+    "deployed_mobile_performance": "NOT_MEASURED",
+    "visual_browser_screenshot_review": "NOT_AVAILABLE_IN_CONNECTOR_SESSION",
+    "linguistic_accuracy": "NOT_MEASURED",
+    "independent_ipa_gold_rows": 0,
+    "live_pages_still_main": true,
+    "production_cutover": false
   }
 }

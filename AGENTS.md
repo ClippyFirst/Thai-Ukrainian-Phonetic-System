@@ -1,7 +1,7 @@
 # Agent workflow for this repository
 
 This file is the repository-specific entry point for coding agents that read
-`AGENTS.md`. It selectively adapts four public engineering skill sets to this project's
+`AGENTS.md`. It selectively adapts five public engineering skill references to this project's
 actual constraints. It does not vendor or claim to install those tools.
 
 ## Canonical project context
@@ -161,6 +161,7 @@ branches are moving references; these SHAs identify the source snapshots reviewe
 | Project | Reviewed commit | Adopted practice in this repository |
 |---|---|---|
 | [Unlazy](https://github.com/Leonxlnx/unlazy) | `16671491f6679ad9378f52604d3bc2415b4120c7` | Observable acceptance gates, explicit evidence, final re-verification, and truthful handoff of unmet/manual gates. Reuse the existing matrix/audit/handoff; do not add its checker, hooks, or a second ledger runtime. |
+| [UI UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | `b7d5353e0130feb8c5574ef1251f8a1db1873ccb` | Design hierarchy, visual-system reasoning, responsive layout and accessibility-first interaction. Use as design guidance only; do not import its React/Tailwind/shadcn stack into the static Pages service. |
 | [Superpowers](https://github.com/obra/superpowers) | `22f0b463e7a5e579904dd6211a520321035526f7` | Intent/spec before substantial changes; systematic root-cause debugging; one vertical RED→GREEN slice at a time; inspect final diff and verify the full suite. |
 | [Matt Pocock skills](https://github.com/mattpocock/skills) | `4ae2317ddb22b046e26455e4f9c9b3aaaf62212d` | Test public seams, avoid implementation-coupled or tautological tests, work in vertical tracer-bullet slices, and deepen modules only where current friction is demonstrated. |
 | [Ponytail](https://github.com/DietrichGebert/ponytail) | `96608e078b2d5ea607c5c3b8b5a54d1c1fba6846` | Read callers and downstream consumers before editing; use the smallest complete diff; retain trust-boundary validation, error handling, security and accessibility; leave a focused test for non-trivial logic. |

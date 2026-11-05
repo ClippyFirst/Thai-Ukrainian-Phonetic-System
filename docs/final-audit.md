@@ -1,32 +1,41 @@
 ## Current audit checkpoint — 2026-11-05
 
-This update is scoped to the public web product, documentation correctness and UI structure. It does not reopen linguistic research scope or alter the phonetic engine.
+This review covers the public browser UX, service documentation, repository navigation and exact-head verification. It does not change the phonetic engine or research evidence.
 
-### Confirmed baseline
+### Baseline and branch discipline
 
-- main HEAD: f0d41996e854185bd6bd92f0ffa8f6b83e71f777; latest main CI [42099035122](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42099035122) SUCCESS.
-- Live product: https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/. Runtime: static HTML/CSS/JS, same-origin module Worker, self-hosted Pyodide 0.29.5, pinned wheels and SHA-256 manifest.
-- The site calls the shared Python FastThaiG2P service in the worker. It does not call a remote API or use the old JS engine/RTGS as fallback.
-- Existing result schema, privacy boundary, source provenance, warnings and provisional IPA-to-Ukrainian status are preserved.
+- Base `main`: `f0d41996e854185bd6bd92f0ffa8f6b83e71f777`; live beta remains deployed on GitHub Pages.
+- Candidate branch `design/site-recomposition-2026-11-05`, tested code HEAD `5b2857953e13b8e2ac6fbba6e5cf1bd33dca344d`.
+- PR [#211](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/211) is open and mergeable. The supplied audit branch was preserved; stale ancestry was not merged into current main.
+- No changes to main, deployment settings, release tags, production cutover or external services were made.
 
-### Findings and actions
+### Findings and completed changes
 
-1. Stale hosting documentation — corrected. The web architecture and requirements had continued to describe a public FastAPI/Vercel deployment. They now document the live Pages/Pyodide/Worker path and distinguish the optional FastAPI reference wrapper.
-2. Flat hierarchy — redesigned. The service page now has a purpose-led editorial hero, compact local-processing and beta signals, a three-step text-to-IPA-to-Ukrainian explainer, a focused input workbench and a clear primary result area.
-3. Sample interaction — clarified. Samples fill the input but no longer start analysis automatically; the user explicitly chooses when to run it.
-4. Stale-result risk — addressed. Editing the input clears the previous result. A response that returns after the input has changed is discarded.
-5. Result priority — improved. The Ukrainian candidate is primary; IPA is adjacent and visibly technical. Word/syllable detail and provenance remain progressively disclosed.
-6. Responsive/accessibility structure — strengthened. Layout stacks at narrow widths; controls preserve touch size, visible focus, reduced motion and forced-colors support. Automated checks remain source-level only.
+1. **Stale public architecture claims — corrected.** Docs now describe GitHub Pages, self-hosted Pyodide, same-origin Worker and FastThaiG2P as the sole public G2P engine. FastAPI is a local/reference wrapper, not a deployed API.
+2. **Inconsistent user journey — recomposed.** Purpose-led hero, explicit text→IPA→Ukrainian explanation, local-processing/beta status, focused input workbench and Ukrainian-first result hierarchy.
+3. **Sample behavior — clarified.** Examples populate the input only; analysis requires an explicit action.
+4. **Stale-result risk — regression-tested.** Editing input clears prior output; a delayed Worker response for old text is discarded.
+5. **Research detail overload — improved.** IPA, syllable breakdown, tone, length, warnings and provenance remain progressively disclosed.
+6. **Accessibility source contracts — strengthened.** Heading hierarchy, labels, language metadata, skip links, status region, touch target height, focus, reduced motion, forced-colors and selected contrast pairs are statically checked.
+7. **Legal/deployment copy — reconciled.** System and third-party notices describe the already deployed owner-approved research beta and preserve the unresolved TLTK BSD/LGPL ambiguity without implying a waiver.
+8. **Repository navigation — improved.** `docs/README.md` points to the UI contract; `AGENTS.md` guides future agents to preserve the vanilla Pages architecture and use test-first UI changes.
 
-### Scope and limits
+### Exact-head verification
 
-- No linguistic rules, corpus labels, gold status, engine output or Ukrainian transcription decisions changed.
-- Independent IPA gold remains 0; accuracy remains NOT_MEASURED; Ukrainian candidates remain provisional.
-- Manual keyboard/screen-reader, zoom/reflow and real-device performance checks are still required. No WCAG conformance claim is made.
-- See ui-ux-redesign.md, web-service-architecture.md, web-service-requirements.md and the exact-head run results in the continuation handoff.
+- Full CI [42106359041](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42106359041): SUCCESS, all three jobs. Test job: **398 passed, 1 skipped, 1,211 subtests passed**; Ruff and generated-artifact checks passed. Skipped FastAPI test is covered by the dedicated Site API workflow.
+- Web Static [42106359184](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42106359184): SUCCESS.
+- Site API [42106358990](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42106358990): SUCCESS.
+- Pyodide compatibility [42106358987](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42106358987): SUCCESS, including real Chromium same-origin Worker smoke.
+
+### Remaining limits
+
+- PR #211 is not merged or deployed; live Pages still serves main.
+- Manual keyboard/screen-reader, 200%/400% zoom, narrow viewport and real-device performance checks remain unverified. Static checks do not establish WCAG conformance; no screenshot-based visual review of the PR branch was available.
+- Actual clipboard behavior has a source-level implementation but no manual browser verification.
+- Independent IPA gold remains 0; accuracy remains `NOT_MEASURED`; Ukrainian candidates remain provisional. No linguistic claims were upgraded.
+- TLTK-derived fallback still carries BSD-3-Clause and LGPL-3.0 notices because exact file-level scope is unresolved; owner beta-publication approval does not waive third-party terms.
 
 ---
-
 ## GitHub Pages / Pyodide continuation — 2026-11-05
 
 Owner decision: keep the existing FastThaiG2P engine and run it in a browser/WASM worker; GitHub Pages is the only host. Vercel and remote API hosting are superseded.

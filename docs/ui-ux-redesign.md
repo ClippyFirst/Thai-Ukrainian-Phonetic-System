@@ -1,6 +1,6 @@
 # Website UX and visual system
 
-**Status:** implementation brief and acceptance reference for the browser beta. This document describes the deployed Pages product, not a proposed second application.
+**Status:** implementation and acceptance reference for the browser beta. The recomposition is implemented on PR [#211](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/211), branch `design/site-recomposition-2026-11-05`; it is not yet merged or deployed. Until merge and Pages deployment, the live URL continues to serve the main-branch UI.
 
 ## Design intent
 
@@ -58,19 +58,21 @@ The primary job is simple: enter Thai text, request analysis, read the Ukrainian
 - Ponytail: review correctness, security, load, missing tests, speed and unnecessary code; every finding must have a concrete failure case.
 - Unlazy: use observable acceptance gates and report only evidence-backed completion. The repository's existing matrix and handoff remain canonical; no second gate system is installed.
 
-References: https://github.com/nextlevelbuilder/ui-ux-pro-max-skill, https://github.com/obra/superpowers, https://github.com/mattpocock/skills, https://github.com/DietrichGebert/ponytail, https://github.com/Leonxlnx/unlazy.
+Reviewed snapshots: UI UX Pro Max `b7d5353e0130feb8c5574ef1251f8a1db1873ccb`; Superpowers `22f0b463e7a5e579904dd6211a520321035526f7`; Matt Pocock skills `4ae2317ddb22b046e26455e4f9c9b3aaaf62212d`; Ponytail `96608e078b2d5ea607c5c3b8b5a54d1c1fba6846`; Unlazy `16671491f6679ad9378f52604d3bc2415b4120c7`.
 
-These are reviewed upstream references, not vendored code or installed runtime dependencies.
+These are reviewed upstream references, not vendored code or installed runtime dependencies. UI UX Pro Max's React/Tailwind/shadcn-specific recommendations were not imported because this service is deliberately static HTML/CSS/JS with no framework. Its hierarchy, interaction, accessibility and responsive-design principles were selectively applied.
 
 ## Acceptance checklist
 
-- [ ] The first viewport explains the tool and exposes the input without hunting.
-- [ ] A visitor can select an example, edit input, run analysis and copy either output.
-- [ ] Editing input cannot leave a stale result presented as current.
-- [ ] Ukrainian candidate and IPA are visually distinct and correctly labelled.
-- [ ] Word/syllable, tone, length, warning and provenance detail remain accessible.
-- [ ] All actions work with keyboard only and have visible focus.
-- [ ] Layout reflows at narrow viewport widths without horizontal scrolling.
-- [ ] Text and control contrast checks pass; manual accessibility review is still recorded separately.
-- [ ] The Pages/Pyodide worker and privacy contract are unchanged.
-- [ ] CI passes on the exact candidate commit.
+- [x] The first viewport's purpose, three-step explanation and input workbench are present in source; static document contract passes. Manual visual review remains open.
+- [x] Sample selection, explicit analysis, input clearing, keyboard shortcut, status and fail-closed output are covered by the UI contract. Actual browser clipboard interaction remains unverified manually.
+- [x] Editing input invalidates prior output; a delayed stale Worker response is explicitly tested and discarded.
+- [x] Ukrainian candidate and external IPA are separate, named result panels; automated UI contract passes.
+- [x] Word/syllable, tone, length, warnings and provenance remain in native progressive disclosure; automated UI contract passes.
+- [ ] Manual keyboard-only and screen-reader review on the deployed UI, including focus order and announcement quality.
+- [ ] Visual reflow review at narrow mobile widths and 200%/400% zoom; source contains responsive breakpoints, but no visual viewport capture was available in this run.
+- [x] Static source contrast contract checks 14 selected text pairs against 4.5:1 and the Thai input border against 3:1. This is not a complete contrast audit or WCAG conformance claim.
+- [x] Pages/Pyodide worker, same-origin asset and privacy contract preserved; exact-head Pyodide compatibility and Chromium Worker checks pass.
+- [x] Exact candidate commit CI, Web Static, Site API and Pyodide compatibility checks pass (see validation matrix).
+
+**Remaining manual acceptance:** keyboard and assistive-technology review, real viewport/zoom reflow, actual clipboard interaction, and deployed mobile cold/warm performance. No WCAG 2.2 AA conformance claim is made.
