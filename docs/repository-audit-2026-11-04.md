@@ -1,3 +1,15 @@
+## User decision — 2026-11-05: Global TIMIT excluded; text-only sources prioritized
+
+The project owner has decided to **exclude Global TIMIT Thai (LDC2022S13)**. Do not pursue LDC access, fees, agreements, audio, or derived labels. Its phone/tone reference role is not a project dependency; alternatives are CCOST text annotations plus selectively reusable, provenance-separated FastThaiG2P/Wiktionary candidates. This is a scope decision, not a claim that Global TIMIT is low quality.
+
+**Active source roles**
+- **CCOST — PRIMARY phonetic-text candidate (PARTIAL):** obtain TextGrid-only export/manual; inspect actual MAU/MAS tier instances; implement and test X-SAMPA → typed IPA conversion; independently review a stratified subset. No audio.
+- **FastThaiG2P — SUPPORTING lexical/IPA candidates (PARTIAL):** reuse Apache-2.0 code with NOTICE and only the separately licensed Wiktionary-derived subset after source/version attribution. Generated IPA and undocumented manual overrides remain provisional, never gold. Do not redistribute TLTK data until file-level rights are clarified.
+- **LOTUSDIS — OPTIONAL orthographic/context corpus (PARTIAL):** conversational vocabulary and text robustness only; not phonetic gold. Audio-specific tasks are OUT OF SCOPE.
+- **Global TIMIT — DEFERRED/EXCLUDED by owner decision:** no further acquisition or legal-access work.
+
+**Next acceptance gates:** (1) request CCOST TextGrid-only files and manual; (2) inspect tier values and encoding, not just the published tier names; (3) build a documented X-SAMPA mapping with round-trip/edge-case tests and typed IPA preservation; (4) curate a legally attributable Wiktionary subset separately from generated FastThaiG2P rows; (5) decide whether LOTUSDIS text is useful after inspecting its actual text schema. Do not add corpus rows or claim linguistic accuracy until provenance and review gates pass.
+
 # Repository audit and documentation closeout — 2026-11-04
 
 ## Scope and method
