@@ -1,3 +1,13 @@
+## Public-source research follow-up — 2026-11-05
+
+- **CCOST `-MAU` tiers: DONE_VERIFIED.** BAS documentation explicitly defines `ORT-MAU`, `KAN-MAU`, and `KAS-MAU`; the old curator blocker for suffix semantics is closed.
+- **`<notProcessedChunk>`: DONE_VERIFIED.** BAS FAQ says MAUS inserts this dummy segment when a chunk cannot be processed. It denotes an alignment/processing failure, not a speech phone. `<P>`, `<P:>`, `<:p>`, `<Fail>`, and `_8` remain unresolved; no values are guessed.
+- **FastThaiG2P use: PERMITTED.** Keep the pinned Apache-2.0 optional dependency and internal candidate comparisons. Source metadata records source categories; generated/manual assets appear covered by the upstream Apache grant; Wiktionary-derived entries retain CC BY-SA/GFDL terms; TLTK fallback data has BSD-3 package evidence, with a separate LGPL file also present upstream. Bulk redistribution of the merged dictionary remains a narrower packaging/attribution task.
+- **Contact:** no email was sent; the owner asked to use public internet/GitHub research instead.
+- Evidence and details are in `docs/ccost-label-review-2026-11-05.md`, `docs/fastthaig2p-license-review-2026-11-05.md`, and `docs/validation-matrix.md`.
+
+---
+
 ## Latest exact-head repository verification — 2026-11-05
 
 - Branch: `docs/repository-audit-2026-11-04`; documentation checkpoint HEAD: `45bbd7386ede98c6fa63b015c9c7a303c436e699`; implementation checkpoint: `f9b6baf1ad3c55057051ff5652ac7827a06fd7c1`; base `main`: `56fba86b4b8be2fe4e67284355e9928108527387`; comparison at this checkpoint: **137 commits ahead, 0 behind**.
