@@ -121,6 +121,13 @@ def main() -> None:
                 f"Unexpected {item['package']} version: expected {expected_version}, found {item['version']}"
             )
 
+    if args.output.exists():
+        shutil.rmtree(args.output)
+    pyodide_record = {
+        "version": PYODIDE_VERSION,
+        "license": "MPL-2.0",
+        "source": "https://www.npmjs.com/package/pyodide",
+    }
     dataset_out = args.output / "datasets"
     dataset_out.mkdir(parents=True)
     dataset_path = dataset_out / "fastthaig2p-wiktionary-derived.zip"
@@ -143,13 +150,6 @@ def main() -> None:
         "attribution": ["Wiktionary contributors", "Kaikki.org / Wiktextract"],
     }]
 
-    pyodide_record = {
-        "version": PYODIDE_VERSION,
-        "license": "MPL-2.0",
-        "source": "https://www.npmjs.com/package/pyodide",
-    }
-    if args.output.exists():
-        shutil.rmtree(args.output)
     runtime_out = args.output / "pyodide"
     wheels_out = args.output / "wheels"
     shutil.copytree(args.pyodide_dist, runtime_out)
