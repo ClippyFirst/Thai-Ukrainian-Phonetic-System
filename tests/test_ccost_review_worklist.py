@@ -128,6 +128,11 @@ class CCOSTReviewWorklistTests(unittest.TestCase):
         self.assertEqual(report["summary"]["markers"]["<Fail>"], 1)
         self.assertEqual(report["summary"]["marker_interval_counts"]["<P>"], 1)
         self.assertEqual(report["summary"]["marker_interval_counts"]["<Fail>"], 1)
+        self.assertEqual(report["summary"]["unresolved_marker_event_groups"], 2)
+        self.assertEqual(
+            report["summary"]["marker_event_group_counts"],
+            {"<P>": 1, "<Fail>": 1},
+        )
 
     def test_classifies_not_processed_chunk_as_documented_maus_failure(self):
         with tempfile.TemporaryDirectory() as directory:
