@@ -121,9 +121,9 @@ The BSD-3-Clause and LGPL-3.0 repository license texts are both retained in the 
 | Generated/manual/unknown records excluded | DONE_VERIFIED |
 | TLTK code version/license evidence | DONE_VERIFIED — TLTK 1.3.8 header and PyPI BSD-3; 5/6 data blobs exact |
 | TLTK pickle asset transformation | PARTIAL — `sylform_var.pkl` source transform not independently reproduced |
-| Third-party license/NOTICE files staged and hashed | DONE_VERIFIED — 10 files |
+| Third-party license/NOTICE files staged and hashed | DONE_VERIFIED — 10 files |\n| Transparent filtered dataset ZIP | DONE_VERIFIED — 194,745 bytes; five expected members and 13,144-entry provenance asserted in CI 42086644531 |
 | Public Pages bundle refused while rights flag is false | DONE_VERIFIED |
-| Public Pages deployment/live smoke | BLOCKED — no merge or deployment; rights flag remains false |
+| Public Pages deployment/live smoke | BLOCKED — no merge or deployment; rights flag remains false and owner approval is pending |
 | Live Pages transfer and mobile cold-start performance | TODO — requires public deployment |
 
 The Pages workflow is configured to refuse a public bundle unless the rights manifest and explicit repository variable approve publication. No deployment, merge, main-branch change, release tag or repository setting change was made.
