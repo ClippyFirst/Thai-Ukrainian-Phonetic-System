@@ -2641,3 +2641,16 @@ This worklist supports text-based review of canonical/phonemic labels. It cannot
 - Exact-interval cross-tier scan found 14 _8 groups with another mapped tone suffix at identical interval: MAU _2 7, MAS _2 4, MAS _3 4, KAN-MAU _3 1. Candidate evidence only; no replacement is inferred because tiers encode different layers.
 - Official Zenodo record lists C-COST.zip (6.2 GB) containing WAV and TextGrid files under CC BY-NC-SA 4.0. This offers a licensed route to acoustic review for non-commercial use with attribution/share-alike. No audio was downloaded; web preview says archive has too many files, and this container lacks outbound DNS/network access. Do not download 6.2 GB in routine CI; next audio step is opt-in selective per-recording retrieval plus source/asset/time registration and confirmation of non-commercial scope.
 - <P>, <P:>, <:p>, <Fail> semantics remain BLOCKED. Independent Thai review remains BLOCKED; reviewer registry header-only, no contact/consent/appointment, independent IPA gold rows 0. No curator/reviewer contact was made.
+
+
+## Handoff — verified latest checkpoint 2026-11-05
+
+- Branch remains docs/repository-audit-2026-11-04; PR #210 open and unmerged; main unchanged.
+- Latest code HEAD 43fa978d440bc654645a10430ac54962bd790582. Full CI run 42039619729 SUCCESS (test, wheel-install-smoke, master-artifact); test 395 passed, 1 skipped, 1,211 subtests; Ruff passed; 29 parity fixtures. Site API 42039619784 SUCCESS; optional external G2P smoke 42039619715 SUCCESS.
+- Latest worklist artifact 13421040388 downloaded and inspected. 1,975 rows, 488 TextGrids, all 11 reviewer/adjudicator fields blank, audio_members_read=0. The exact-interval relation is now distinguished from generic overlap; duplicate counterpart counts are deduplicated by event-group/tier/suffix.
+- Marker inventory: 871 literal appearances, 821 tier-interval rows, 398 exact file+interval groups; per-marker groups <P> 375, <P:> 4, <:p> 11, <Fail> 8. Structural duplication does not prove marker semantics.
+- _8 inventory: 868 tier occurrences, 397 exact interval groups, 438 file/interval/raw-label events, 22 raw strings, 119 files. Generic MAUS permits _1–_9; CCOST paper maps only _1–_5. Do not call _8 generically invalid; it is unmapped in the published CCOST mapping.
+- 14 _8 groups have a mapped suffix at exactly the same interval in another phonetic tier (MAU _2 7; MAS _2 4; MAS _3 4; KAN-MAU _3 1). These are blind-review clues, not corrections.
+- Audio source: Zenodo C-COST.zip is 6.2 GB, WAV+TextGrid, CC BY-NC-SA 4.0. No audio downloaded. Need opt-in selective per-recording retrieval and confirmation of non-commercial scope; don't fetch full archive in routine CI.
+- Candidate panel now has official public evidence: Chutamanee Onsuwan (Thammasat), Phanintra Teeranon (University of Phayao; phanintra.te@up.ac.th), Rungpat Roengpitya (Mahidol; rungpat.roe@mahidol.ac.th). Proposed first-pass: Onsuwan + Teeranon; separate adjudicator: Roengpitya. No contact/consent/appointment or conflict declarations; reviewer registry empty.
+- Marker semantics and actual expert adjudication remain BLOCKED. Independent IPA gold rows 0; linguistic accuracy NOT_MEASURED.
