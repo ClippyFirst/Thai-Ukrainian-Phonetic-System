@@ -88,7 +88,7 @@ The pinned FastThaiG2P README and data README say the OOV fallback is vendored f
 - FastThaiG2P's vendored `fastthaig2p/_th2ipa.py` header explicitly identifies **TLTK version 1.3.8** and includes a BSD-3-Clause notice.
 - The PyPI TLTK 1.3.8 release page identifies BSD-3-Clause; the TLTK `LICENSE.txt` also contains BSD-3-Clause terms.
 - Five of the six fallback data files have identical Git blob SHA values to the matching files in the public `attapol/tltk` repository.
-- The sixth file, FastThaiG2P's `sylform_var.pkl`, differs in size and format from TLTK's `sylform_var.pklz`; the exact transformation has not been independently reproduced.
+- The sixth file, FastThaiG2P's `sylform_var.pkl`, is byte-identical to `bz2.decompress(TLTK/tltk/sylform_var.pklz)`. The exact transform is reproduced and asserted by `scripts/verify_tltk_fallback_provenance.py`.
 - The TLTK repository also contains a separate root `LICENSE` file for LGPL-3.0 and an older `PKG-INFO` with GPLv3 metadata. The release-specific PyPI page and vendored source header support BSD-3-Clause for TLTK 1.3.8, but the separate repository file remains disclosed rather than silently ignored.
 
 Sources:
