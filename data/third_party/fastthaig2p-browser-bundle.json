@@ -3,7 +3,7 @@
   "target": "GitHub Pages static browser bundle",
   "owner_decision": "FASTTHAIG2P_PYODIDE_BROWSER_PORT",
   "redistribution_approved": false,
-  "status": "PARTIAL_SOURCE_FILTERED_TLTK_VERSION_ATTRIBUTION_REVIEW_PENDING",
+  "status": "PARTIAL_PUBLICATION_OWNER_APPROVAL_AND_PICKLE_TRANSFORM_EVIDENCE_PENDING",
   "packages": [
     {
       "name": "thai-ukrainian-phonetic-system",
@@ -24,29 +24,44 @@
       "software_license": "Apache-2.0",
       "runtime_data": {
         "dict_txt": {
-          "source": "Filtered from upstream ipa_metadata.json keys with source=wiktionary or source=manual; exact upstream dict order retained",
-          "excluded": "All keys whose source is generated or unknown",
-          "status": "BUILD_TIME_SOURCE_FILTERING_IMPLEMENTED_PENDING_CI_COUNTS"
+          "source": "Filtered from pinned upstream ipa_metadata.json; retain only source=wiktionary",
+          "original_source_counts": {
+            "wiktionary": 13144,
+            "generated": 48957
+          },
+          "retained_words": 13144,
+          "excluded_generated_words": 48957,
+          "excluded_manual_or_unknown": "No manual or unknown source rows present in pinned runtime metadata; all are excluded by policy",
+          "status": "DONE_VERIFIED_IN_CI_42073702543"
         },
         "ipa_json": {
-          "source": "Filtered from upstream ipa.json using per-entry source labels in ipa_metadata.json",
-          "retained": [
-            "wiktionary",
-            "manual"
+          "source": "Filtered from pinned upstream ipa.json using per-entry source labels in ipa_metadata.json",
+          "retained_source": "wiktionary",
+          "retained_entries": 13144,
+          "excluded_generated_entries": 48957,
+          "metadata_ipa_mismatch_count": 1,
+          "metadata_ipa_mismatch_examples": [
+            "สวน"
           ],
-          "excluded": [
-            "generated",
-            "unknown"
+          "license": "CC-BY-SA-4.0",
+          "attribution": [
+            "Wiktionary contributors",
+            "Kaikki.org / Wiktextract"
           ],
-          "wiktionary_license": "CC-BY-SA-4.0 and GFDL as documented by Wiktionary/Kaikki",
-          "manual_license": "FastThaiG2P Apache-2.0 repository content",
-          "status": "BUILD_TIME_SOURCE_FILTERING_IMPLEMENTED_PENDING_CI_COUNTS"
+          "status": "DONE_VERIFIED_IN_CI_42073702543"
         },
         "fallback": {
           "upstream_claim": "vendored from TLTK",
-          "package_release_evidence": "PyPI TLTK 1.3.8 metadata states BSD-3-Clause; PyPI project description says BSD-3-Clause since 1.2.2",
-          "source_repository_conflict": "attapol/tltk repository currently contains LICENSE (LGPL-3.0) and LICENSE.txt (BSD-3-Clause); FastThaiG2P does not record the exact TLTK source release/commit",
-          "status": "BSD_ATTRIBUTION_EVIDENCE_EXISTS_EXACT_VENDORED_RELEASE_AND_FILE_LEVEL_LICENSE_MAPPING_PENDING"
+          "code_version": "1.3.8 as stated in fastthaig2p/_th2ipa.py header",
+          "code_license": "BSD-3-Clause",
+          "package_release_evidence": "PyPI TLTK 1.3.8 identifies BSD-3-Clause",
+          "asset_mapping": {
+            "identical_git_blob_matches": 5,
+            "total_assets": 6,
+            "transformed_pickle": "FastThaiG2P sylform_var.pkl differs in size/format from TLTK sylform_var.pklz; exact transformation not independently reproduced"
+          },
+          "repository_notice_conflict": "TLTK repository contains a separate root LGPL-3.0 LICENSE and older GPLv3 PKG-INFO; both relevant source notices retained in web/licenses/",
+          "status": "PARTIAL — BSD-3 evidence strong; exact pickle transformation pending"
         }
       },
       "status": "SOFTWARE_LICENSE_IDENTIFIED_DATA_REDISTRIBUTION_NOT_CLEARED"
@@ -60,7 +75,7 @@
         "pythainlp/corpus/stopwords_th.txt": "CC0-1.0",
         "pythainlp/corpus/corpus_license.md": "license/source notice"
       },
-      "excluded_unused_corpus_assets": "All non-Python corpus files except words_th.txt, stopwords_th.txt and corpus_license.md",
+      "excluded_unused_corpus_assets": "37 unused corpus assets removed; only Python source, words_th.txt, stopwords_th.txt and corpus_license.md retained",
       "status": "MINIMAL_WHEEL_SOURCE_AND_DATA_LICENSES_IDENTIFIED"
     },
     {
@@ -71,16 +86,17 @@
     }
   ],
   "publication_gate": [
-    "Run the source-filtering build against the pinned FastThaiG2P commit; record retained Wiktionary/manual/generated counts and verify all runtime ipa.json entries have source metadata.",
-    "Include Wiktionary/Kaikki attribution, CC BY-SA 4.0 and GFDL notices; publish the filtered dictionary data under the applicable share-alike terms and provide a transparent copy.",
-    "Verify the exact TLTK version/release from which the six fallback assets and vendored parser code were copied; reconcile the PyPI BSD-3 metadata with the repository's additional LGPL-3 LICENSE file and retain all applicable notices.",
-    "Include FastThaiG2P Apache-2.0, PyThaiNLP Apache-2.0, CC0 corpus notices, tzdata Apache-2.0, Pyodide MPL-2.0 and the TLTK license texts in the browser distribution.",
-    "Set redistribution_approved to true only after the exact bundle's file manifest and attribution/license review are complete."
+    "Complete or explicitly accept the remaining TLTK sylform_var.pkl source transformation evidence and preserve the BSD-3/other applicable TLTK notices.",
+    "Keep the Wiktionary-derived dataset under CC BY-SA 4.0 with Wiktionary/Kaikki attribution; generated, manual and unknown-source records remain excluded.",
+    "Retain all ten notice files and the exact SHA-256 manifest; the build and Chromium worker already verify the bundle and notices set.",
+    "Owner must explicitly approve public redistribution by changing redistribution_approved only after reviewing the source/notice evidence.",
+    "Deploy only from main through the GitHub Pages workflow; do not use a separate API host or CDN."
   ],
   "notes": [
-    "The browser compatibility and parity tests may use ephemeral CI wheels; this does not grant public redistribution permission.",
-    "The build now removes the upstream model-generated IPA entries from the browser wheel; it retains only per-entry Wiktionary and manual source labels, with the custom tokenizer wordlist reduced to the same retained keys. OOV fallback remains enabled.",
-    "GitHub Pages deployment must remain gated while redistribution_approved is false.",
+    "Pyodide parity and the actual same-origin Chromium worker passed in CI run 42073702543; four Thai inputs were compared with the same CPython service.",
+    "The ephemeral CI bundle contains 4 wheels (7,823,799 bytes), 14 Pyodide runtime files (12,610,023 bytes), and 10 license/NOTICE files (57,389 bytes).",
+    "PyThaiNLP 5.4.0 was slimmed from 67,689,272 to 3,648,217 uncompressed member bytes by removing 37 unused corpus assets (64,041,055 bytes).",
+    "CI refuses public Pages packaging while redistribution_approved is false; this is a verified negative gate, not a deployment.",
     "No linguistic accuracy or independent IPA gold claim follows from this manifest."
   ]
 }
