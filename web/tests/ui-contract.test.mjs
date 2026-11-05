@@ -143,6 +143,7 @@ assert.match(status.textContent, /FastThaiG2P не зміг повернути �
 assert.equal(output.hidden, true, "an incomplete upstream result must not fall back to the old engine");
 
 // A response for an input that changed while analysis was running must never render.
+nextWorkerMessage = { type: "result", result: response };
 input.value = "พริก";
 deferNextWorkerMessage = true;
 const staleRun = analyze.click();
