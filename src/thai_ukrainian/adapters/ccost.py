@@ -7,6 +7,7 @@ from .xsampa import XSampaLabel, convert_xsampa_label
 
 CCOST_DOI="10.5281/zenodo.17366698"
 CCOST_SOURCE=f"CCOST@{CCOST_DOI}"
+CCOST_NONPHONETIC_MARKERS=frozenset({"<p:>","<nib>","<usb>"})
 CCOST_PHONETIC_TIERS=frozenset({"KAN","KAS","KAN-MAU","KAS-MAU","MAU","MAS"})
 CCOST_PHONEMIC_TIERS=frozenset({"KAN","KAS","KAN-MAU","KAS-MAU","MAS"})
 CCOST_TIER_DESCRIPTIONS={"ORT":"orthographic word","ORT-MAU":"orthographic word (release-aligned tier)",
@@ -14,14 +15,15 @@ CCOST_TIER_DESCRIPTIONS={"ORT":"orthographic word","ORT-MAU":"orthographic word 
 "KAS":"canonical syllabified pronunciation","KAS-MAU":"canonical syllabified pronunciation (release-aligned tier)",
 "MAU":"phonetic segment","MAS":"phonemic syllable","TRN":"orthographic utterance transcript"}
 def is_ccost_nonphonetic_label(label:str)->bool:
-    """Return true only when a label consists entirely of opaque angle-bracket tags.
+    """Recognize only source-documented MAUS event markers.
 
-    Mixed tag-plus-transcript labels are not discarded: they remain unsupported
-    inputs until their release-specific annotation semantics are reviewed.
+    Unknown tags (for example <Fail>, <P>, and <notProcessedChunk>) remain
+    unsupported inputs; tag shape alone is not evidence of marker semantics.
+    Mixed tag-plus-transcript labels are never stripped or partially converted.
     """
     value=label.strip()
     tags=re.findall(r"<[^<>]+>",value)
-    return bool(tags) and "".join(tags)==value
+    return bool(tags) and "".join(tags)==value and all(tag in CCOST_NONPHONETIC_MARKERS for tag in tags)
 
 class TextGridFormatError(ValueError):
     """Raised when a Praat long-text TextGrid cannot be parsed safely."""
@@ -144,7 +146,7 @@ def parse_textgrid_long(text:str)->TextGrid:
     return TextGrid(xmin,xmax,tuple(tiers))
 
 def convert_ccost_tier(textgrid:TextGrid,tier_name:str)->tuple[CCOSTAnnotation,...]:
-    """Convert non-empty X-SAMPA labels from one published CCOST pronunciation tier."""
+    """Convert the declared X-SAMPA subset; unknown labels remain fail-closed."""
     if tier_name not in CCOST_PHONETIC_TIERS:
         raise ValueError(f"tier {tier_name!r} is not a declared CCOST pronunciation tier; expected one of {', '.join(sorted(CCOST_PHONETIC_TIERS))}")
     tier=textgrid.tier(tier_name)
