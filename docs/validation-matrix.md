@@ -1784,3 +1784,20 @@ The current X-SAMPA converter remains a declared partial subset. These findings 
 | Receive curator explanation | BLOCKED | No message sent / no response received |
 
 The copy-ready request and public contact evidence are in [external-review-and-source-requests.md](external-review-and-source-requests.md). The detailed reviews are [CCOST labels](ccost-label-review-2026-11-05.md) and [FastThaiG2P rights](fastthaig2p-license-review-2026-11-05.md). Linguistic accuracy remains NOT_MEASURED; independent IPA gold rows remain 0.
+
+## Current task reconciliation — 2026-11-05 (CCOST adjudication worklist)
+
+The following entries supersede earlier rows that described the entire CCOST archive or `_8` problem as wholly uninspected. Historical entries remain for chronology; this is the current task ledger for the three requested workstreams.
+
+| Work item | Status | Evidence / remaining acceptance |
+|---|---|---|
+| Inspect supplied CCOST TextGrids | DONE_VERIFIED | CI parsed 488/488 long-text TextGrids; no audio member was read. |
+| Classify documented `-MAU` tier names | DONE_VERIFIED | BAS tutorial defines ORT-MAU, KAN-MAU and KAS-MAU; exact release names are preserved. |
+| Classify `_8` as an out-of-range tone suffix | DONE_VERIFIED | CCOST/BAS document only `_1`–`_5`; `_8` is not a sixth tone. |
+| Recover intended values for `_8` | BLOCKED | 868 tier occurrences = 397 exact interval groups = 438 file/interval/raw-label events across 119 files. Worklist supplies orthographic/cross-tier context; two independent Thai reviewers and a separate adjudicator must supply evidence-backed corrections or abstentions. No automatic replacement. |
+| Determine semantics of `<P>`, `<P:>`, `<:p>`, `<Fail>` | BLOCKED | Existing whole-archive counts: 394, 4, 22, 16 appearances respectively. Worklist scans all tiers and preserves case/interval/context. No reliable public corpus-specific definition located; expert adjudication or authoritative corpus documentation required. |
+| Generate contextual blind CCOST review worklist | PARTIAL_PENDING_EXACT_HEAD_CI | Generator, tests and CI artifact step are committed; exact-head CI must pass and artifact counts must be inspected before DONE_VERIFIED. |
+| Independent Thai phonetic review and adjudication | BLOCKED | Reviewer registry is empty; no reviewer contacted or appointed; no blind packets completed; no adjudication report; independent IPA gold rows remain 0. Acceptance: two verified independent reviewers, frozen original annotations, separate adjudicator, documented disagreements/abstentions and agreement report. |
+| Acoustic validation of surface realizations | DEFERRED / OUT OF SCOPE | User scope is text/phonetic-text only; no audio is read or distributed. Do not claim acoustic tone, duration or allophonic accuracy. |
+
+The new worklist uses stable event-group IDs and includes exact raw labels, tier/time provenance, overlapping cross-tier labels and adjacent same-tier labels. See [CCOST label review](ccost-label-review-2026-11-05.md), [independent adjudication protocol](independent-adjudication-protocol.md), and [reviewer qualification shortlist](reviewer-outreach-shortlist.md).
