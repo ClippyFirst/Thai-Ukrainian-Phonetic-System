@@ -143,7 +143,7 @@ For each criterion and page, record: `test_id`, commit SHA, URL, date/time, test
 
 - No email/messaging connector is available in this execution context; no outbound invitation or curator request has been sent. This file is a prepared request pack, not evidence of contact.
 - Firecrawl has `0` remaining credits in the current billing period, so live browser interaction and manual screen-reader testing could not be performed.
-- No CCOST 6.2 GB archive bytes have been inspected. LOTUSDIS is pinned to an immutable Hub revision and its 24 Parquet shard metadata is recorded. Its official WAV/TextGrid Drive archive links are known, but access is blocked; neither those archives nor Parquet/audio bytes were downloaded. Provider-reported LFS hashes were not independently recomputed, and no individual WAV hash or clean interval is registered.
+- The owner-supplied CCOST TextGrid-only ZIP has been structurally inspected: 488/488 files parse, with actual release tiers inventoried. The owner-supplied LOTUSDIS TextGrid ZIP has 90/90 parseable transcript files. No audio member was read or extracted. Remaining CCOST source questions concern provisional `-MAU` tier aliases, `_8`, Unicode IPA-looking forms and annotation tags; these require curator/manual clarification. LOTUSDIS audio/Parquet acquisition and acoustic provenance are DEFERRED / OUT OF SCOPE by owner decision.
 - No reviewer may be registered as verified and no annotation may be fabricated to make the evaluation gate pass.
 
 
