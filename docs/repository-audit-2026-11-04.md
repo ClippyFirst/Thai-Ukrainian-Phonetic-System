@@ -1,3 +1,10 @@
+## Source-register implementation reconciliation — 2026-11-05
+
+- Updated `data/corpus_sources.csv`: LOTUSDIS is now a text corpus with transcript-only scope and no assumed phone/IPA labels; Global TIMIT is explicitly excluded by owner decision. Existing CCOST and Wiktionary source records were retained.
+- Added a current text-only policy and task ledger to `docs/corpus-validation.md`. Audio-specific acquisition, hashing and acoustic validation are out of scope.
+- Reconciled the CCOST manual evidence: the manual is recorded as inspected on 2026-11-01; actual released TextGrid tier instances and label values remain uninspected.
+- Existing FastThaiG2P adapter is preserved: it keeps external IPA separate from typed phonemic/broad-surface IPA and marks output provisional. No generated dictionary rows were promoted to gold.
+
 ## User decision — 2026-11-05: Global TIMIT excluded; text-only sources prioritized
 
 The project owner has decided to **exclude Global TIMIT Thai (LDC2022S13)**. Do not pursue LDC access, fees, agreements, audio, or derived labels. Its phone/tone reference role is not a project dependency; alternatives are CCOST text annotations plus selectively reusable, provenance-separated FastThaiG2P/Wiktionary candidates. This is a scope decision, not a claim that Global TIMIT is low quality.
