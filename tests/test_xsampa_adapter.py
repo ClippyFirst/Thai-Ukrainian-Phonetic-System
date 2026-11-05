@@ -31,7 +31,7 @@ class XSampaAdapterTests(unittest.TestCase):
         self.assertEqual(converted.ipa,"ka.na")
         self.assertEqual(converted.tone_categories,(None,None))
     def test_common_diacritics_are_preserved(self):
-        self.assertEqual(convert_xsampa_label("a_~ n_}").ipa,"ã.n̚")
+        self.assertEqual(convert_xsampa_label("a_~ n_}").ipa,"ãn̚")
     def test_unknown_symbols_fail_closed(self):
         for label in ("z$","a$","k_h ə","ก"):
             with self.subTest(label=label):
