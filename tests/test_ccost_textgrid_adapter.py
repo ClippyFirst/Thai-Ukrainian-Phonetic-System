@@ -144,12 +144,17 @@ second line with ""quoted"" text"
                 archive.writestr("labels/sample.TextGrid", TEXTGRID)
                 archive.writestr("audio/sample.wav", b"THIS AUDIO MEMBER MUST NOT BE READ")
                 archive.writestr("README.txt", "metadata")
+                archive.writestr("LICENSE", "unclassified extensionless metadata")
             report = inspect([archive_path], sample_limit=1)
 
         self.assertEqual(report["files_inspected"], 1)
         self.assertEqual(report["archives"][0]["textgrid_members"], ["labels/sample.TextGrid"])
         self.assertEqual(report["archives"][0]["audio_members_skipped"], 1)
-        self.assertEqual(report["archives"][0]["non_textgrid_members_skipped"], 2)
+        self.assertEqual(report["archives"][0]["non_textgrid_members_skipped"], 3)
+        self.assertEqual(
+            report["archives"][0]["non_textgrid_member_metadata"][-1]["name"],
+            "LICENSE",
+        )
         self.assertIn("MAS", report["tier_nonempty_label_counts"])
         self.assertFalse(report["failures"])
 
