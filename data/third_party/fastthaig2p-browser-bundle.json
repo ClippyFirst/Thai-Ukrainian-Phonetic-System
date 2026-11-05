@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "target": "GitHub Pages static browser bundle",
+  "owner_decision": "FASTTHAIG2P_PYODIDE_BROWSER_PORT",
+  "redistribution_approved": false,
+  "status": "PARTIAL_CONDITIONAL_ATTRIBUTION_REQUIRED",
+  "packages": [
+    {
+      "name": "thai-ukrainian-phonetic-system",
+      "version_source": "pyproject.toml",
+      "license": "MIT",
+      "status": "CODE_LICENSE_IDENTIFIED"
+    },
+    {
+      "name": "pyodide",
+      "version": "0.29.5",
+      "license": "MPL-2.0",
+      "status": "LICENSE_NOTICE_REQUIRED"
+    },
+    {
+      "name": "fastthaig2p",
+      "source": "https://github.com/awslabs/FastThaiG2P",
+      "commit": "4e82a291b4cf2876326744c6580121e9986ad354",
+      "software_license": "Apache-2.0",
+      "runtime_data": {
+        "dict.txt": {
+          "sources": [
+            "manual_overrides.json",
+            "wiktionary_ipa.json (kaikki.org)",
+            "generated_ipa.json"
+          ],
+          "status": "MIXED_SOURCES_NOT_SEPARABLE_IN_PINNED_RUNTIME_WHEEL"
+        },
+        "ipa.json": {
+          "sources": [
+            "manual overrides",
+            "Wiktionary/kaikki-derived IPA",
+            "generated IPA"
+          ],
+          "status": "MERGED_FLAT_LOOKUP_WITHOUT_PER_RECORD_PROVENANCE"
+        },
+        "fallback": {
+          "upstream_claim": "vendored from TLTK",
+          "package_level_license_evidence": "BSD-3-Clause for TLTK 1.3.8",
+          "status": "EXACT_ASSET_HASH_AND_SOURCE_MAPPING_INCOMPLETE"
+        }
+      },
+      "status": "SOFTWARE_LICENSE_IDENTIFIED_DATA_REDISTRIBUTION_NOT_CLEARED"
+    },
+    {
+      "name": "pythainlp",
+      "version": "5.4.0",
+      "software_license": "Apache-2.0",
+      "retained_runtime_data": {
+        "pythainlp/corpus/words_th.txt": "CC0-1.0",
+        "pythainlp/corpus/corpus_license.md": "license/source notice"
+      },
+      "excluded_unused_corpus_assets": "All non-Python corpus files except words_th.txt and corpus_license.md",
+      "status": "MINIMAL_WHEEL_SOURCE_AND_DATA_LICENSES_IDENTIFIED"
+    },
+    {
+      "name": "tzdata",
+      "version": "2026.6",
+      "license": "Apache-2.0",
+      "status": "LICENSE_NOTICE_REQUIRED"
+    }
+  ],
+  "publication_gate": [
+    "Inspect the exact FastThaiG2P wheel member list and SHA-256.",
+    "Resolve the merged dict.txt/ipa.json provenance or produce a reproducible source-separated replacement.",
+    "Map each fallback file to its exact TLTK source and verify BSD-3-Clause terms and attribution.",
+    "Retain Pyodide MPL-2.0, PyThaiNLP Apache-2.0 and CC0 corpus notices, tzdata notice, FastThaiG2P Apache-2.0 and applicable TLTK BSD-3 notices.",
+    "Set redistribution_approved to true only after the complete manifest is evidence-backed."
+  ],
+  "notes": [
+    "The browser compatibility and parity tests may use ephemeral CI wheels; this does not grant public redistribution permission.",
+    "GitHub Pages deployment must remain gated while redistribution_approved is false.",
+    "No linguistic accuracy or independent IPA gold claim follows from this manifest."
+  ]
+}
