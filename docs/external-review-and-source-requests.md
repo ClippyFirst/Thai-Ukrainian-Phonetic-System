@@ -94,7 +94,7 @@ Best regards,
 
 **PREPARED — NOT SENT.** Public email addresses are verified from the paper/institutional sources. The connected tools available in this session include GitHub but no email-sending action, so no outbound message has been transmitted and no curator response has been received. Send the request from the project owner's email account; record the sent date, message ID, and any reply before changing blocked labels to verified.
 
-## 2. CCOST A–D clarification request
+## 3. CCOST A–D clarification request
 
 ### Public curator contacts
 
@@ -127,7 +127,7 @@ Thank you for your help.
 Best regards,
 [Project contact]
 
-## 3. LOTUSDIS data-provider clarification request
+## 4. LOTUSDIS data-provider clarification request
 
 The immutable Hub revision for the 14 October 2025 audio upload is now resolved from the official Hugging Face commits API: `45145d7ca2286498a31958b35628ab3c1969f808`. At that revision, the Hub tree API enumerates 24 Parquet shards (17 train, 3 validation, 4 test; 13,180,732,521 bytes total). Per-shard sizes, LFS SHA-256 values, Git blob SHA-1 values, Xet hashes and the commit that last wrote each shard are recorded in `data/benchmark/lotusdis-parquet-shards.tsv`.
 
@@ -150,7 +150,7 @@ We intend to select only a clean near-field single-speaker interval and retain t
 Best regards,
 [Project contact]
 
-## 4. WCAG 2.2 AA hands-on verification protocol
+## 5. WCAG 2.2 AA hands-on verification protocol
 
 **Status: NOT RUN.** Static source assertions and selected color-pair calculations are not manual conformance evidence. Firecrawl browser credits were exhausted at the time of this run, and no local browser/assistive-technology session was available. Do not mark any criterion passed until a tester records the actual build, browser, OS, assistive technology, steps and observed result.
 
