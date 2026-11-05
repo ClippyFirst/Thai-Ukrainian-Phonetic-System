@@ -218,3 +218,12 @@ No audio was downloaded or processed in this continuation. The web preview rejec
 - _8 inventory and cross-tier candidate discovery: **DONE_VERIFIED**; recovery of intended values: **BLOCKED** pending evidence-backed review. No automatic substitution.
 - Independent Thai phonetic review/adjudication: **BLOCKED**; reviewer registry remains header-only, no reviewers have been contacted/appointed/consented, and independent IPA gold rows remain 0.
 - Acoustic validation: **BLOCKED_PENDING_SELECTIVE_AUDIO_ACCESS_AND_NONCOMMERCIAL_SCOPE_CONFIRMATION**, not impossible: official audio exists in the licensed Zenodo archive but was not accessed.
+
+
+## Latest exact-head verification — 2026-11-05 15:58 UTC
+
+Full CI run [42039619729](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42039619729) passed on commit 43fa978d440bc654645a10430ac54962bd790582: test, wheel-install-smoke and master-artifact all SUCCESS. The test job log records **395 passed, 1 skipped, 1,211 subtests passed**, Ruff passed, and 29 web/Python parity fixtures passed. The dedicated FastThaiG2P Site API run [42039619784](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42039619784) and optional external smoke run [42039619715](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42039619715) also passed on the same HEAD.
+
+The exact-head worklist artifact [13421040388](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42039619729/artifacts/13421040388) was downloaded and independently inspected: 1,975 records from 488 TextGrid files; all 11 reviewer/adjudicator fields blank; no audio member read. The manifest asserts 868 _8 tier occurrences, 397 _8 exact interval groups, 438 file/interval/raw-label events, 22 raw strings, 119 files; 14 exact-interval mapped-tone counterpart groups; 821 marker-bearing tier intervals, 871 marker appearances and 398 unique marker interval groups; 142 documented notProcessedChunk intervals. The per-marker group counts are <P> 375, <P:> 4, <:p> 11 and <Fail> 8. The downloaded TSV independently reproduces the 14-group counterpart distribution: MAU _2 7; MAS _2 4; MAS _3 4; KAN-MAU _3 1.
+
+The added exact-interval relation and deduplicated summary counters are now DONE_VERIFIED on this exact HEAD. This remains inventory/context evidence only: no label is auto-corrected, no marker meaning is asserted, and no reviewer fields are populated.
