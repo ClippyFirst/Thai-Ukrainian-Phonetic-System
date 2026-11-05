@@ -1,7 +1,9 @@
 # Beta release scope and operational checklist
 
 **Decision date:** 2026-11-05  
-**Owner decision:** prepare a beta release; external Thai-phonetics and Ukrainian-native review are not beta acceptance gates.
+**Owner decision:** publish a clearly labelled research beta; external Thai-phonetics and Ukrainian-native review are not beta acceptance gates.
+
+**Current publication:** live on GitHub Pages. The owner authorized research-project publication on 2026-11-05. This approval does not waive third-party license terms; the TLTK-derived fallback retains both BSD-3-Clause and LGPL-3.0 notices while exact file-level scope remains ambiguous.
 
 ## Beta contract
 
@@ -13,7 +15,7 @@ This is a usable, evidence-labelled beta of a research-oriented Thai-to-Ukrainia
 - Do not claim independent linguistic accuracy. Current independent IPA gold remains 0 and accuracy remains NOT_MEASURED.
 - No audio acquisition, audio processing, acoustic validation, or narrow connected-speech claims. These remain outside the text-only beta scope.
 - CCOST/LOTUSDIS annotations remain source-annotated data, not independent gold. Corpus use remains subject to each source's terms and attribution.
-- Build a source-filtered browser wheel from the pinned FastThaiG2P commit and Pyodide in CI; self-host all runtime assets on GitHub Pages. The build retains only per-entry Wiktionary IPA records, excludes generated/manual/unknown records, and preserves the upstream OOV fallback. It embeds attribution/provenance and produces a separately downloadable CC BY-SA dataset archive in the bundle. All six TLTK fallback asset transformations are now verified; final license-scope review and owner approval remain publication gates. The CI-only bundle is ephemeral and is not published.
+- Build a source-filtered browser wheel from the pinned FastThaiG2P commit and Pyodide in CI; self-host all runtime assets on GitHub Pages. The build retains only per-entry Wiktionary IPA records, excludes generated/manual/unknown records, and preserves the upstream OOV fallback. It embeds attribution/provenance and produces a separately downloadable CC BY-SA dataset archive in the bundle. All six TLTK fallback asset transformations are source/transform verified. The owner-approved Pages bundle and transparent dataset ZIP are published and checked by the live post-deploy smoke; both TLTK notices remain disclosed because exact per-file license scope is not conclusively resolved.
 
 ## Owner-approved beta gate changes
 
@@ -25,7 +27,7 @@ This is a usable, evidence-labelled beta of a research-oriented Thai-to-Ukrainia
 | Manual accessibility certification | DEFERRED as a certification gate | Source-level and automated checks remain required; unresolved manual checks must be disclosed, not described as passed. |
 | CCOST unknown labels (_8, <P>, <P:>, <:p>, <Fail>) | PARTIAL / fail-closed | Keep raw values and abstain; beta may proceed without inventing semantics. |
 | CCOST controlled-wordlist discrepancy | DEFERRED unless it affects a shipped runtime path | Do not promote unresolved research rows into runtime data. |
-| FastThaiG2P browser runtime bundle | DONE_VERIFIED / PUBLICATION GATE | Exact-head Pyodide run `42090379707`, Web Static `42090379866`, Site API `42090379612`, optional external smoke `42090379819`, and Full CI `42090379627` all passed on `ba22872679869371e92ab9ad511db4ed74627da2`. Public Pages redistribution remains disabled pending explicit owner approval and final TLTK file-level license-scope review. |
+| FastThaiG2P browser runtime bundle | DONE_VERIFIED / PUBLISHED | Pages post-deploy smoke `42098396098`, Pyodide parity/Chromium worker `42098395877`, and main CI `42099035122` passed. Owner research-publication approval is recorded in the rights manifest; TLTK BSD/LGPL ambiguity remains disclosed and both notices are shipped. |
 
 DEFERRED is a scope decision, not a pass. Reopen a deferred item before any claim of linguistic validation, official-standard status, corpus accuracy, or acoustic fidelity.
 
@@ -81,8 +83,9 @@ No third-party skill files are copied into this repository.
 - [x] Dependency pins, license notices and corpus attribution are present.
 - [x] Beta UI clearly states provisional status, privacy caution, and unsupported-input behavior.
 - [x] A feedback path and a simple issue-triage procedure are published: website footer links to the GitHub Beta feedback form at .github/ISSUE_TEMPLATE/beta-feedback.yml; it asks for minimal reproduction context and explicitly prohibits personal/confidential data and audio.
-- [x] FastThaiG2P Pyodide browser port passes exact CPython parity and real Chromium cold/warm worker smoke without API/CDN requests (CI `42085653176`); live Pages deployment remains gated.
-- [ ] Runtime bundle redistribution/attribution manifest receives explicit publication approval; source filtering, dataset archive, notices and hashes are verified, but TLTK file-level license scope remains ambiguous and `redistribution_approved=false`.
+- [x] FastThaiG2P Pyodide browser port passes CPython parity and real Chromium cold/warm worker smoke without API/CDN requests; live Pages deployment and post-deploy dataset/license hash smoke passed (`42098396098`, `42098395877`).
+- [x] Owner-approved research-project redistribution is recorded in the bundle rights manifest; source filtering, transparent dataset archive, notices and live SHA-256 checks are verified. This approval does not waive third-party terms.
+- [ ] Final per-file TLTK BSD/LGPL scope clarification; both notices remain published and disclosed while the exact scope is unresolved.
 - [ ] Pyodide cold-start, warm-run and bundle-size budgets are measured on desktop and mobile.
 - [x] Manual accessibility limitations are disclosed; no unsupported WCAG conformance claim is made.
 - [x] Release notes identify known linguistic and corpus limitations.
@@ -95,6 +98,6 @@ The pinned FastThaiG2P dictionary is filtered by per-entry `ipa_metadata.json` s
 
 **Exact runtime evidence:** [Pyodide compatibility and Chromium worker — 42085653176](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42085653176) passed four CPython/Pyodide parity cases, cold/warm Chromium worker smoke, no API/CDN requests, source filtering, and all six TLTK fallback asset transformations. Five fallback assets are byte-identical to the pinned TLTK source; the sixth is byte-identical after bzip2 decompression. Ten third-party notices are staged and hashed. The transparent-dataset archive and its ZIP-member assertions passed on the exact branch head in [Pyodide workflow 42086644531](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42086644531). The deploy-time HTTP hash assertion is syntax-validated but cannot run until an authorized Pages deployment; Full CI and other PR checks remain queued. See [FastThaiG2P data provenance](fastthaig2p-data-provenance.md) and [Pyodide port status](fastthaig2p-pyodide-port.md).
 
-**Public deployment remains blocked.** `redistribution_approved=false`. The source and transformation evidence is now complete for all six TLTK assets, but both BSD-3-Clause release/header evidence and the TLTK repository's separate LGPL-3.0 notice are retained pending final license-scope review. The Pages builder and deploy job fail closed unless the rights manifest and explicit repository variable approve publication. The owner has not yet explicitly approved this third-party data redistribution; do not enable that variable, merge, or claim the new runtime is live.
+**Public deployment is verified.** The owner-approved bundle manifest has `redistribution_approved=true`; the Pages post-deploy smoke verifies the site, worker assets, runtime manifest, four pinned wheels, transparent dataset ZIP, all ten license notices and their hashes. The TLTK file-level scope remains ambiguous; both BSD-3-Clause and LGPL-3.0 notices are preserved. Do not interpret the owner approval as a legal waiver or a claim that the ambiguity is resolved.
 
-**Readiness:** `BETA_CANDIDATE_ENGINEERING_VERIFIED; PUBLIC_DEPLOYMENT_NOT_YET_VERIFIED`. This is software-runtime evidence, not linguistic validation. Independent IPA gold remains 0, accuracy remains `NOT_MEASURED`, and Ukrainian forms remain provisional. No release tag, merge, main-branch change or production cutover was made.
+**Readiness:** `BETA_PUBLICATION_VERIFIED; LINGUISTIC_VALIDATION_NOT_DONE`. This is software-runtime evidence, not linguistic validation. Independent IPA gold remains 0, accuracy remains `NOT_MEASURED`, and Ukrainian forms remain provisional. Actual performance budgets and manual assistive-technology checks remain open. Production cutover remains false; the published product is a research beta.

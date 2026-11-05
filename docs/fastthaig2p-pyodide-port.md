@@ -1,6 +1,8 @@
 # FastThaiG2P browser/WASM port
 
-**Owner decisions (2026-11-05):** GitHub Pages is the only hosting target. Keep FastThaiG2P and port the shared Python service to the browser using Pyodide. Do not introduce a separate API host, Vercel, serverless functions, CDN runtime dependencies, or a parallel JavaScript G2P implementation.
+**Owner decisions (2026-11-05):** GitHub Pages is the only hosting target. Keep FastThaiG2P and run the shared Python service in the browser using Pyodide. Do not introduce a separate API host, Vercel, serverless functions, CDN runtime dependencies, or a parallel JavaScript G2P implementation.
+
+**Current status:** the research beta is live on GitHub Pages. Pages post-deploy smoke [42098396098](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42098396098), Pyodide parity/Chromium worker [42098395877](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42098395877), and main CI [42099035122](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42099035122) passed. Owner approval authorizes research-project publication; third-party terms remain applicable and TLTK file-level license scope remains ambiguous.
 
 ## Architecture implemented
 
@@ -62,7 +64,7 @@ Verified ephemeral CI footprint:
 - Combined raw footprint including dataset ZIP: **20,685,956 bytes** before HTTP compression.
 - PyThaiNLP 5.4.0: 67,689,272 → 3,648,217 uncompressed member bytes; 37 unused corpus assets removed (64,041,055 bytes). The retained corpus lists are CC0-1.0.
 
-## Public Pages deployment gate
+## Public Pages deployment and rights record
 
 `data/third_party/fastthaig2p-browser-bundle.json` deliberately remains `redistribution_approved: false`.
 
@@ -72,9 +74,7 @@ Verified ephemeral CI footprint:
 - PyThaiNLP Apache-2.0 and CC0 corpus notices, Pyodide MPL-2.0, tzdata Apache-2.0, TLTK BSD-3/LGPL repository evidence, Wiktionary CC BY-SA and project MIT notices are staged and hashed.
 - The build and worker require the complete ten-file notice set. The Pages post-deploy smoke will fetch every notice and the standalone dataset ZIP and verify their size/SHA-256 against the manifest. The ZIP is built from the filtered wheel and contains the exact IPA map, tokenizer list, provenance, attribution and CC BY-SA 4.0 notice.
 
-The Pages workflow also requires the explicit repository variable `FASTTHAIG2P_PYODIDE_BUNDLE_READY=true`; the bundle builder independently refuses `--purpose pages` unless the rights manifest says `redistribution_approved=true`. CI uses ephemeral assets and does not grant public redistribution permission.
-
-No deployment, main-branch change, merge, release tag or repository setting change was made. PR #210 remains open and unmerged. The branch's static preview was tested in Chromium, but a real GitHub Pages URL has not yet been deployed or measured.
+The Pages workflow and bundle builder use the owner-approved rights manifest and explicit deployment control. The successful Pages post-deploy run confirms that the current public bundle was built and published from the authorized source state. The site is live; the current UI redesign is isolated in PR #211 and is not deployed until that PR is merged.
 
 ## Current acceptance ledger
 
@@ -91,9 +91,9 @@ No deployment, main-branch change, merge, release tag or repository setting chan
 | TLTK fallback asset provenance | TLTK 1.3.8 parser header; 5 byte-identical files + 1 exact bzip2 decompression | DONE_VERIFIED — run 42085653176 |
 | TLTK license scope | Parser header 1.3.8/BSD-3; data-source repository snapshot setup.py 1.9.1/BSD-3, root LGPL-3, module BSD-style, stale PKG-INFO 1.1.7/GPLv3 | PARTIAL — both notices retained; exact asset scope unresolved |
 | Transparent Wiktionary dataset ZIP | Standalone filtered IPA map/tokenizer list, provenance, attribution and CC BY-SA 4.0 notice | DONE_VERIFIED — 194,745 bytes; bundle CI 42086644531 |
-| Public redistribution | Owner rights flag remains false | BLOCKED — explicit owner approval and final license-scope review pending |
-| Public Pages deployment | Exact merged main commit deployed and live-smoked | BLOCKED — rights flag false; owner approval and final TLTK license-scope review pending |
-| Performance | Actual Pages transfer/cold-start and mobile timing | TODO — requires public deployment |
+| Public redistribution | Owner-approved research-project publication recorded in manifest | DONE_VERIFIED — third-party terms still apply; TLTK scope ambiguity remains disclosed |
+| Public Pages deployment | Exact merged main commit deployed and live-smoked | DONE_VERIFIED — Pages smoke 42098396098; production cutover remains false |
+| Performance | Actual Pages transfer/cold-start and mobile timing | TODO — beta live, but measured budgets not yet collected |
 
 ## Product and linguistic limits
 
