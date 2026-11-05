@@ -34,7 +34,7 @@ src/thai_ukrainian/adapters/xsampa.py is a strict X-SAMPA → IPA converter. It:
 - retains original raw label, per-syllable X-SAMPA, IPA, tone number and tone category;
 - raises XSampaConversionError for unknown symbols, malformed suffixes, non-ASCII input and unsupported notation; no best-effort substitution.
 
-The symbol map is a declared subset of the standard X-SAMPA inventory, not an assertion that all listed symbols occur in CCOST. Mapping is grounded in the X-SAMPA scheme described by Wells and the eSpeak-NG reference table. Before using the adapter on the corpus, inspect actual MAU, MAS, KAS and KAN labels and extend the map only with source/manual evidence and tests.
+The symbol map is a declared subset of the standard X-SAMPA inventory, not an assertion that all listed symbols occur in CCOST. Mapping is grounded in Wells's X-SAMPA scheme and the [eSpeak-NG X-SAMPA reference table](https://github.com/espeak-ng/espeak-ng/blob/master/docs/phonemes/xsampa.md). The implementation intentionally omits ambiguous/context-dependent modifiers until the CCOST manual and real tier labels establish their meaning. Before using the adapter on the corpus, inspect actual MAU, MAS, KAS and KAN labels and extend the map only with source/manual evidence and tests.
 
 src/thai_ukrainian/adapters/ccost.py reads Praat **long-text** TextGrid files and preserves tier name, interval boundaries and label text. It never accesses the paired audio. It maps KAN/KAS/MAS into provisional phonemic PhoneticResult values and preserves MAU as phone-level surface IPA that cannot directly drive syllable-level Ukrainian adaptation. Source annotations are not independently adjudicated gold.
 

@@ -5,7 +5,8 @@ import argparse
 import json
 from collections import Counter
 from pathlib import Path
-from thai_ukrainian.adapters.ccost import CCOST_PHONETIC_TIERS, convert_ccost_tier, parse_textgrid_long
+from thai_ukrainian.adapters.ccost import CCOST_PHONETIC_TIERS, parse_textgrid_long
+from thai_ukrainian.adapters.xsampa import XSampaConversionError, convert_xsampa_label
 
 def inspect(paths:list[Path],sample_limit:int=5)->dict:
     files=[]; failures=[]; tier_counts:Counter[str]=Counter(); converted_counts:Counter[str]=Counter()
@@ -19,8 +20,21 @@ def inspect(paths:list[Path],sample_limit:int=5)->dict:
                 entry["tiers"][tier.name]={"kind":tier.kind,"interval_count":len(tier.intervals),
                     "nonempty_labels":len(labels),"samples":labels[:sample_limit]}
                 if tier.name in CCOST_PHONETIC_TIERS:
-                    try: converted_counts[tier.name]+=len(convert_ccost_tier(grid,tier.name))
-                    except ValueError as exc: failures.append({"file":path.name,"tier":tier.name,"error":str(exc)})
+                    for interval in tier.intervals:
+                        label = interval.text.strip()
+                        if not label or label in {"<p :>", "<usb>"}:
+                            continue
+                        try:
+                            convert_xsampa_label(label)
+                            converted_counts[tier.name] += 1
+                        except XSampaConversionError as exc:
+                            failures.append({
+                                "file": path.name,
+                                "tier": tier.name,
+                                "interval": [interval.xmin, interval.xmax],
+                                "raw_label": label,
+                                "error": str(exc),
+                            })
             files.append(entry)
         except (OSError,UnicodeError,ValueError) as exc:
             failures.append({"file":path.name,"error":f"{type(exc).__name__}: {exc}"})

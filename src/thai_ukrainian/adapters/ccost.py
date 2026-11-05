@@ -2,7 +2,7 @@
 from __future__ import annotations
 import re
 from dataclasses import dataclass
-from .phonetic_result import PhoneticResult, _segment_ipa
+from ..phonetic_result import PhoneticResult, _segment_ipa
 from .xsampa import XSampaLabel, convert_xsampa_label
 
 CCOST_DOI="10.5281/zenodo.17366698"
