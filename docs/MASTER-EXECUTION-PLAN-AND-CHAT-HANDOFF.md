@@ -2714,3 +2714,14 @@ Canonical scope and checklist: docs/beta-release-scope.md.
 - Linguistic status unchanged: independent IPA gold 0; accuracy `NOT_MEASURED`; Ukrainian forms provisional. Thai/Ukrainian external reviews and audio/acoustic validation remain deferred for beta.
 
 Canonical documents: `docs/beta-release-scope.md`, `docs/fastthaig2p-pyodide-port.md`, `docs/fastthaig2p-data-provenance.md`, `data/third_party/fastthaig2p-browser-bundle.json`.
+
+## Handoff — exact-head GitHub Pages port verification (2026-11-05)
+
+- Owner decision remains: GitHub Pages only; use FastThaiG2P through self-hosted Pyodide/Web Worker. Do not add a separate API host, Vercel or CDN runtime.
+- Verified implementation checkpoint: `ba22872679869371e92ab9ad511db4ed74627da2`. Exact-head Pyodide [42090379707], Site API [42090379612], Web Static [42090379866], optional external G2P smoke [42090379819] and Full CI [42090379627] all SUCCESS. Full CI jobs test, wheel-install-smoke and master-artifact all passed.
+- Logs confirm 13,144 Wiktionary IPA records retained, 48,957 generated records excluded, one stale metadata IPA value for `สวน` reported, four CPython/Pyodide parity inputs passed, and Chromium cold/warm worker smoke passed with no API/CDN requests. The ephemeral bundle includes ten notices. The public Pages bundle is correctly refused while rights approval is false.
+- TLTK data transformations are fully reproducible: five byte-identical files and one bzip2-decompressed pickle match. License scope remains ambiguous because parser metadata and the pinned TLTK repository snapshot expose BSD-3, LGPL-3 and stale GPLv3 metadata. Keep both notices; do not unilaterally resolve or flip the rights flag.
+- Current branch includes corrected third-party notice copy and exact-head evidence in `docs/final-audit.md` and `docs/validation-matrix.md`. Re-run exact-head CI after these documentation commits and record the resulting head/run IDs in `docs/final-audit.json`.
+- PR #210 stays open/unmerged; main unchanged. No Pages deploy, repository variable update, release tag or production cutover. Existing Pages URL currently serves mainline and is not evidence of the new Pyodide runtime.
+- Public deployment remains BLOCKED until TLTK file-level license scope is reviewed and the owner explicitly approves public redistribution. After that, merge only through the owner's explicit direction, deploy through the existing Pages workflow, and verify live bundle/notice/dataset hashes plus actual browser use.
+- Beta linguistic limits remain: independent IPA gold 0; accuracy `NOT_MEASURED`; Ukrainian forms provisional. Thai/Ukrainian external review and audio/acoustic validation remain deferred by owner decision.
