@@ -1829,3 +1829,18 @@ Proposed role split: Onsuwan + Teeranon as independent first-pass reviewers; Roe
 Lena Maluleem remains a qualified phonetics/prosody candidate, but her public publication and doctoral-supervision record links her to CCOST author Pittayawat Pittayaporn. Treat this as a potential conflict for independent CCOST review; do not count her as independent without a documented assessment.
 
 The reviewer registry remains empty. No one has been contacted, appointed or consented. Independent IPA gold rows remain 0.
+
+
+## Latest exact-head continuation — 2026-11-05
+
+| Work item | Status | Evidence / remaining acceptance |
+|---|---|---|
+| All-tier unresolved-marker interval inventory | DONE_VERIFIED | 821 tier-interval rows, 871 appearances, 398 exact file+interval groups; per-marker groups: <P> 375, <P:> 4, <:p> 11, <Fail> 8. CI asserts all denominators. |
+| Exact-interval cross-tier _8 counterpart scan | DONE_VERIFIED_INVENTORY_ONLY | 14/397 _8 groups have another phonetic tier with a mapped _1–_5 suffix at the exact same interval: MAU _2 7; MAS _2 4; MAS _3 4; KAN-MAU _3 1. This is review evidence, not a repair rule. |
+| _8 original-value recovery | BLOCKED | Generic MAUS allows _1–_9; CCOST paper maps only _1–_5. Recover only with positive source-specific evidence and independent Thai review; abstain otherwise. |
+| <P>, <P:>, <:p>, <Fail> semantics | BLOCKED | 398 exact time groups are inventoried; exact spelling and case retained. No authoritative public CCOST definition located. |
+| Worklist generator, focused tests and CI artifact | DONE_VERIFIED | Full CI run 42036060620 passed all three jobs on ebd1f0a55b2987c40725659b1524d26ad21abc0c; test log: 394 passed, 1 skipped, 1,211 subtests passed; Ruff passed. Artifact 13418563592 downloaded and inspected: 1,975 rows; all 11 human fields blank; audio_members_read=0. |
+| Independent Thai expert adjudication | BLOCKED | Reviewer registry empty; no consent/contact/appointment or completed blind annotations. Acceptance requires two verified independent Thai phoneticians, frozen blind submissions, a separate adjudicator, disagreement/abstention log and validated provenance. |
+| Audio-backed review | BLOCKED_PENDING_SELECTIVE_AUDIO_ACCESS_AND_NONCOMMERCIAL_SCOPE_CONFIRMATION | Zenodo lists a 6.2 GB WAV+TextGrid archive under CC BY-NC-SA 4.0. No audio was downloaded. Implement opt-in selective per-recording retrieval; do not download full archive in routine CI. |
+
+**Convention correction:** _8 is not generically invalid MAUS syntax (BAS allows _1–_9); it is unmapped in CCOST's published five-tone mapping. This distinction is binding for all future documentation and prevents a false claim that _8 is a sixth Thai tone or an invalid MAUS token.
