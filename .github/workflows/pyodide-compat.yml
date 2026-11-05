@@ -57,7 +57,7 @@ jobs:
           assert garden["result"]["body"]["raw_ipa"] == "/sua̯n˩˩˦/"
           PY
       - name: Install pinned Pyodide runtime and browser runner
-        run: npm install --no-save --no-package-lock pyodide@0.29.5 playwright@1.55.0
+        run: npm install --no-save --no-package-lock pyodide@0.29.5 playwright@1.64.1
       - name: Run CPython versus Pyodide parity
         run: node web/tests/fastthaig2p-pyodide.test.mjs build/pyodide-wheels build/fastthaig2p-native.json
       - name: Stage same-origin runtime assets for browser smoke
