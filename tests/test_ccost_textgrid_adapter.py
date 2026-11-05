@@ -80,4 +80,40 @@ class CCOSTTextGridAdapterTests(unittest.TestCase):
     def test_short_textgrid_is_not_guessed(self):
         with self.assertRaises(TextGridFormatError): parse_textgrid_long('File type = "ooTextFile short"')
 
+    def test_zip_inspection_reads_textgrid_member_and_skips_audio(self):
+        import tempfile
+        import zipfile
+        from pathlib import Path
+        from scripts.inspect_ccost_textgrid import inspect
+
+        with tempfile.TemporaryDirectory() as directory:
+            archive_path = Path(directory) / "fixture.zip"
+            with zipfile.ZipFile(archive_path, "w") as archive:
+                archive.writestr("labels/sample.TextGrid", TEXTGRID)
+                archive.writestr("audio/sample.wav", b"THIS AUDIO MEMBER MUST NOT BE READ")
+                archive.writestr("README.txt", "metadata")
+            report = inspect([archive_path], sample_limit=1)
+
+        self.assertEqual(report["files_inspected"], 1)
+        self.assertEqual(report["archives"][0]["textgrid_members"], ["labels/sample.TextGrid"])
+        self.assertEqual(report["archives"][0]["audio_members_skipped"], 1)
+        self.assertEqual(report["archives"][0]["non_textgrid_members_skipped"], 2)
+        self.assertIn("MAS", report["tier_nonempty_label_counts"])
+        self.assertFalse(report["failures"])
+
+    def test_zip_inspection_rejects_unsupported_textgrid_encoding(self):
+        import tempfile
+        import zipfile
+        from pathlib import Path
+        from scripts.inspect_ccost_textgrid import inspect
+
+        with tempfile.TemporaryDirectory() as directory:
+            archive_path = Path(directory) / "short.zip"
+            with zipfile.ZipFile(archive_path, "w") as archive:
+                archive.writestr("short.TextGrid", 'File type = "ooTextFile short"')
+            report = inspect([archive_path])
+
+        self.assertEqual(report["files_inspected"], 0)
+        self.assertTrue(report["failures"])
+
 if __name__=="__main__": unittest.main()
