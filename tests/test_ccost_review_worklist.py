@@ -91,7 +91,7 @@ class CCOSTReviewWorklistTests(unittest.TestCase):
                 archive.writestr("audio/sample.wav", b"must never be read")
             report = build_worklist([archive_path])
 
-        tone_rows = [row for row in report["records"] if "TONE_SUFFIX_8" in row["issue_types"]]
+        tone_rows = [row for row in report["records"] if "UNDOCUMENTED_CCOST_TONE_SUFFIX_8" in row["issue_types"]]
         self.assertEqual(len(tone_rows), 2)
         self.assertEqual(len({row["event_group_id"] for row in tone_rows}), 1)
         self.assertEqual(report["summary"]["tone_suffix_8_occurrences"], 2)
