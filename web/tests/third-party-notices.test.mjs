@@ -17,7 +17,7 @@ assert.match(notices, /BSD-3-Clause/);
 assert.match(notices, /LGPL-3\.0/);
 assert.match(notices, /Apache License 2\.0/);
 assert.match(notices, /Mozilla Public License 2\.0/);
-assert.doesNotMatch(notices, /\\\\n/);
+assert.doesNotMatch(notices, /\\n/);
 
 const requiredNotices = [
   "Apache-2.0-FastThaiG2P.txt",
