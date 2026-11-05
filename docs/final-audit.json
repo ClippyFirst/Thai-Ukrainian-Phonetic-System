@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Exact-head CI passed on docs/repository-audit-2026-11-04 at documentation checkpoint 45bbd7386ede98c6fa63b015c9c7a303c436e699 (implementation checkpoint f9b6baf1ad3c55057051ff5652ac7827a06fd7c1): 385 passed, 1 skipped (optional FastAPI test; dedicated Site API workflow passed), 1,206 subtests; Ruff, wheel-install smoke, master-artifact, generated-artifact drift, 29 Python/browser parity fixtures, 578/578 TextGrid parsing, and 178,377-row text-only export passed. Dedicated Site API and optional external G2P smoke passed. PR #210 remains open/unmerged; branch was 137 commits ahead of main, 0 behind at the verified documentation checkpoint. Independent IPA gold rows 0; linguistic accuracy NOT_MEASURED; engineering-verified research prototype, not release-ready.",
+  "status": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -124,7 +124,10 @@
     "independent Ukrainian-native preference evidence",
     "CCOST actual TextGrid conformance",
     "CCOST inter-annotator agreement",
-    "acoustic phonetic accuracy"
+    "acoustic phonetic accuracy",
+    "independent_thai_expert_adjudication_of_ccost_exception_labels",
+    "recovered_original_values_for_ccost_tone_suffix_8",
+    "semantic_definitions_for_ccost_P_P_colon_colon_p_Fail_markers"
   ],
   "lexical_attestation": "Source-backed text lexicon includes ฤๅษี → รือ|สี (Thai Wiktionary oldid 1774048), ทฤษฎี → ทฺริด-สะ-ดี (en.wiktionary oldid 87195875), ประเทศ → ประ|เทศ (oldid 5722200), เป็น (oldid 5770798), หนึ่ง (oldid 5721517), and ใน (oldid 5759122). The first syllable ทฺริด is normalized only by an exact lexical respelling; no productive ทร rule is inferred. The distinct spelling ฤษี and standalone ฤๅ/ฦ/ฦๅ remain unresolved. Existing parser readings เตอร์ and เทอร์ are reachable through the curated text lexicon. All source-attested readings remain NOT_GOLD; their source registry permissions exclude phonemic and surface gold input.",
   "corpus_attestation": "993 source-annotated Wisesight word-tokenization rows (CC0-1.0; test-only, never training/tuning); pinned UD Thai TUD source snapshots under CC BY-SA 4.0 for a research-only frequency-Viterbi experiment; zero independently adjudicated IPA/tone/vowel-length gold rows.",
@@ -4133,5 +4136,51 @@
     "fastthaig2p_bulk_merged_dictionary_redistribution": "PERMITTED_WITH_SOURCE_SPECIFIC_LICENSES_AND_NOTICES_NOT_VENDORED",
     "fastthaig2p_optional_dependency_use": "PERMITTED_PINNED_APACHE_2_0_DEPENDENCY",
     "ccost_tone_suffix_8": "DONE_VERIFIED_OUT_OF_RANGE_BAS_SUFFIX_INTENDED_VALUE_UNKNOWN"
+  },
+  "ccost_review_worklist_2026_11_05": {
+    "status": "PARTIAL_PENDING_EXACT_HEAD_CI_AND_ARTIFACT_INSPECTION",
+    "generator": "scripts/build_ccost_review_worklist.py",
+    "tests": "tests/test_ccost_review_worklist.py",
+    "workflow": ".github/workflows/ci.yml",
+    "artifact": "ccost-label-adjudication-worklist",
+    "scope": "All non-empty TextGrid IntervalTier labels for unresolved markers; declared CCOST phonetic tiers for X-SAMPA conversion failures. TextGrid members only; audio members are not opened.",
+    "tone_suffix_8": {
+      "tier_occurrences": 868,
+      "exact_file_interval_groups": 397,
+      "file_interval_raw_label_events": 438,
+      "distinct_raw_strings": 22,
+      "files": 119,
+      "classification": "OUT_OF_RANGE_UNDER_DOCUMENTED_1_TO_5_TONE_SUFFIX_CONVENTION",
+      "intended_original_values": "UNKNOWN; no repair inferred"
+    },
+    "markers_all_tiers": {
+      "unresolved_interval_count": 821,
+      "appearances": {
+        "<P>": 821,
+        "<Fail>": 24,
+        "<P:>": 4,
+        "<:p>": 22
+      },
+      "semantics": "UNRESOLVED; preserve exact spelling and case"
+    },
+    "documented_maus_failure": {
+      "marker": "<notProcessedChunk>",
+      "intervals": 142,
+      "appearances": 142,
+      "classification": "MAUS_PROCESSING_OR_ALIGNMENT_FAILURE_NOT_PHONETIC_VALUE"
+    },
+    "phonetic_conversion_failures": 1450,
+    "expert_fields": "BLANK",
+    "expert_review": "BLOCKED; no reviewers contacted/appointed, no independent annotations, no adjudication; independent IPA gold rows remain 0",
+    "acoustic_validation": "DEFERRED_OUT_OF_SCOPE_TEXTGRID_ONLY",
+    "acceptance": {
+      "required": [
+        "exact-head Full CI PASS",
+        "inspect downloaded worklist TSV and manifest",
+        "verify asserted counts and all reviewer/adjudicator fields blank"
+      ],
+      "current": "Latest exact-head Full CI was cancelled during successive pushes; no local tests were run."
+    },
+    "denominator_note": "Earlier inspector marker counts <P>=394 and <Fail>=16 are phonetic-tier-only; the worklist scans all tiers, so its counts are not directly comparable."
   }
 }
