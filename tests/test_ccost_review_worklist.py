@@ -86,7 +86,7 @@ class CCOSTReviewWorklistTests(unittest.TestCase):
         self.assertEqual(len({row["event_group_id"] for row in tone_rows}), 1)
         self.assertEqual(report["summary"]["tone_suffix_8_occurrences"], 2)
         self.assertEqual(report["summary"]["tone_suffix_8_event_groups"], 1)
-        self.assertEqual(report["summary"]["unique_raw_label_events"], 1)
+        self.assertEqual(report["summary"]["tone_suffix_8_unique_raw_label_events"], 1)
         self.assertTrue(any("ภาษา" in item["label"] for item in tone_rows[0]["overlap_context"]))
         self.assertTrue(any("ภาษาไทย" in item["label"] for item in tone_rows[0]["overlap_context"]))
         self.assertEqual(report["archives"][0]["audio_members_skipped"], 1)
