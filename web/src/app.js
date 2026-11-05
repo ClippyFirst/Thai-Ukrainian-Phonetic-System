@@ -7,6 +7,56 @@ const output = document.getElementById('results');
 const status = document.getElementById('status');
 const analyzeButton = document.getElementById('analyze');
 
+let analysisWorker;
+let nextRequestId = 1;
+const pendingRequests = new Map();
+
+function getAnalysisWorker() {
+  if (analysisWorker) return analysisWorker;
+  analysisWorker = new Worker(new URL('./fastthaig2p-worker.js', import.meta.url), { type: 'module' });
+  analysisWorker.addEventListener('message', event => {
+    const message = event.data || {};
+    const pending = pendingRequests.get(message.requestId);
+    if (!pending) return;
+    if (message.type === 'progress') {
+      const labels = {
+        runtime: 'Запускаємо локальний рушій FastThaiG2P…',
+        download: 'Завантажуємо компоненти рушія у ваш браузер…',
+        analysis: 'FastThaiG2P аналізує текст локально…'
+      };
+      status.textContent = labels[message.stage] || 'Обробляємо текст у браузері…';
+      return;
+    }
+    pendingRequests.delete(message.requestId);
+    if (message.type === 'result') {
+      pending.resolve(message.result);
+    } else {
+      pending.reject(new Error(message.message || 'Не вдалося обробити текст локально.'));
+    }
+  });
+  analysisWorker.addEventListener('error', () => {
+    const error = new Error('Локальний рушій FastThaiG2P не вдалося запустити.');
+    for (const pending of pendingRequests.values()) pending.reject(error);
+    pendingRequests.clear();
+    analysisWorker?.terminate();
+    analysisWorker = undefined;
+  });
+  return analysisWorker;
+}
+
+function analyzeLocally(text) {
+  const requestId = nextRequestId++;
+  return new Promise((resolve, reject) => {
+    pendingRequests.set(requestId, { resolve, reject });
+    try {
+      getAnalysisWorker().postMessage({ type: 'analyze', requestId, text });
+    } catch (error) {
+      pendingRequests.delete(requestId);
+      reject(error);
+    }
+  });
+}
+
 function copyButton(label, value) {
   return '<button class="copy" type="button" data-copy="' + esc(value) +
     '" aria-label="Копіювати: ' + esc(label) + '">Копіювати</button>';
@@ -83,25 +133,16 @@ async function run() {
 
   analyzeButton.disabled = true;
   status.className = 'status';
-  status.textContent = 'FastThaiG2P аналізує текст…';
+  status.textContent = 'Запускаємо локальний рушій FastThaiG2P…';
   output.hidden = true;
   try {
-    const response = await fetch('/api/analyze', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text })
-    });
-    const payload = await response.json();
-    if (!response.ok) {
-      const detail = payload.detail;
-      throw new Error(typeof detail === 'string' ? detail : detail?.message || 'Не вдалося обробити текст.');
-    }
-    renderResult(payload);
+    const result = await analyzeLocally(text);
+    renderResult(result);
     status.className = 'status notice';
-    status.textContent = 'Готово. Український запис попередній і потребує перевірки.';
+    status.textContent = 'Готово. Текст оброблено у вашому браузері; український запис попередній і потребує перевірки.';
   } catch (error) {
     status.className = 'status error';
-    status.textContent = error instanceof Error ? error.message : 'Помилка API FastThaiG2P.';
+    status.textContent = error instanceof Error ? error.message : 'Помилка локального FastThaiG2P.';
     output.hidden = true;
     output.innerHTML = '';
   } finally {
