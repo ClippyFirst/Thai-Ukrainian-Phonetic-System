@@ -118,7 +118,8 @@ def _context_for(
             if max(item.xmin, target.xmin) < min(item.xmax, target.xmax)
         ]
         for item in matches[:MAX_CONTEXT_PER_TIER]:
-            overlap.append(_interval_payload(tier.name, item, "overlap"))
+            exact = abs(item.xmin - target.xmin) <= 1e-9 and abs(item.xmax - target.xmax) <= 1e-9
+            overlap.append(_interval_payload(tier.name, item, "exact_interval" if exact else "overlap"))
         if len(matches) > MAX_CONTEXT_PER_TIER:
             overlap.append({
                 "tier": tier.name,
@@ -234,6 +235,22 @@ def build_worklist(paths: list[Path]) -> dict[str, Any]:
     tone_label_events = {
         (row["source_file"], row["start"], row["end"], row["raw_label"]) for row in tone_rows
     }
+    exact_interval_tone_counterparts: Counter[str] = Counter()
+    exact_interval_tone_counterpart_groups: set[str] = set()
+    mapped_tone_pattern = re.compile(r"_(1|2|3|4|5)(?!\\d)")
+    for row in tone_rows:
+        for item in row["overlap_context"]:
+            if (
+                item.get("relation") == "exact_interval"
+                and item.get("tier") in CCOST_PHONETIC_TIERS
+                and isinstance(item.get("label"), str)
+                and "_8" not in item["label"]
+            ):
+                suffixes = set(mapped_tone_pattern.findall(item["label"]))
+                if suffixes:
+                    exact_interval_tone_counterpart_groups.add(row["event_group_id"])
+                    for suffix in suffixes:
+                        exact_interval_tone_counterparts[f"{item['tier']}:{suffix}"] += 1
     marker_rows = [row for row in records if "UNRESOLVED_MARKER" in row["issue_types"]]
     known_failure_rows = [row for row in records if "DOCUMENTED_MAUS_PROCESSING_FAILURE" in row["issue_types"]]
     marker_interval_counts: Counter[str] = Counter()
@@ -252,6 +269,8 @@ def build_worklist(paths: list[Path]) -> dict[str, Any]:
         "tone_suffix_8_unique_raw_label_events": len(tone_label_events),
         "tone_suffix_8_distinct_raw_strings": len({row["raw_label"] for row in tone_rows}),
         "tone_suffix_8_files": len({row["source_file"] for row in tone_rows}),
+        "tone_suffix_8_groups_with_exact_interval_mapped_tone_counterpart": len(exact_interval_tone_counterpart_groups),
+        "tone_suffix_8_exact_interval_mapped_tone_counterparts_by_tier_suffix": dict(sorted(exact_interval_tone_counterparts.items())),
         "phonetic_failure_occurrences": sum(phonetic_failures.values()),
         "documented_maus_failure_marker_occurrences": sum(known_failure_appearances.values()),
         "documented_maus_failure_marker_interval_count": len(known_failure_rows),
