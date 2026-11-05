@@ -79,7 +79,7 @@ No third-party skill files are copied into this repository.
 - [ ] Python/browser parity and generated-artifact drift gates pass.
 - [ ] Dependency pins, license notices and corpus attribution are present.
 - [ ] Beta UI clearly states provisional status, privacy caution, and unsupported-input behavior.
-- [ ] A feedback path and a simple issue-triage procedure are published.
+- [x] A feedback path and a simple issue-triage procedure are published: website footer links to the GitHub Beta feedback form at .github/ISSUE_TEMPLATE/beta-feedback.yml; it asks for minimal reproduction context and explicitly prohibits personal/confidential data and audio.
 - [ ] Python-capable hosting preview and same-origin API behavior are verified before public site cutover.
 - [ ] Manual accessibility limitations are disclosed; no unsupported WCAG conformance claim is made.
 - [ ] Release notes identify known linguistic and corpus limitations.
