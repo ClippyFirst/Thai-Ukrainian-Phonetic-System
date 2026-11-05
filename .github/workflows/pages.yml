@@ -71,6 +71,17 @@ jobs:
           git clone https://github.com/awslabs/FastThaiG2P.git build/FastThaiG2P
           git -C build/FastThaiG2P checkout 4e82a291b4cf2876326744c6580121e9986ad354
           python scripts/prepare_fastthaig2p_browser_source.py --source build/FastThaiG2P --report build/fastthaig2p-data-provenance.json
+          python -m unittest discover -s tests -p test_fastthaig2p_browser_data.py -v
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path("build/fastthaig2p-data-provenance.json").read_text())
+          assert report["retained_entries"] == report["retained_dictionary_words"]
+          assert report["retained_counts"].get("wiktionary", 0) > 0
+          assert report["excluded_counts"].get("generated", 0) > 0
+          assert "generated" not in report["retained_counts"]
+          assert "manual" not in report["retained_counts"]
+          PY
           python -m pip wheel --no-deps --wheel-dir build/pyodide-wheels ./build/FastThaiG2P
           npm install --no-save --no-package-lock pyodide@0.29.5
           python scripts/build_pyodide_bundle.py \
