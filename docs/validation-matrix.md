@@ -1747,3 +1747,30 @@ The current X-SAMPA converter remains a declared partial subset. These findings 
 - Unknown tag-only labels (`<Fail>`, `<P>`, `<P:>`, `<:p>`, `<notProcessedChunk>`) now remain unsupported and raise rather than being silently skipped.
 - Added regression test `test_undocumented_tag_only_labels_fail_closed`; existing mixed-marker tests remain.
 - Acceptance: code and regression test changes are committed; exact-head CI is still required before marking this behavior DONE_VERIFIED.
+
+
+## Follow-up evidence review — CCOST and FastThaiG2P — 2026-11-05
+
+### Evidence established from primary sources
+
+- The CCOST LREC 2026 paper §3.3–3.4 defines MAU as the phonetic segment tier, MAS as the phonemic syllable tier, KAN as canonical word pronunciation, KAS as canonical syllabified pronunciation, ORT as orthographic word, and TRN as orthographic utterance transcript. It says phonemic/phonetic labels use X-SAMPA and documents only tone suffixes _1–_5.
+- The paper does **not** explain the extra -MAU suffix in the supplied release's ORT-MAU, KAN-MAU, KAS-MAU names. Their relationship to the unsuffixed tiers remains curator-confirmation work.
+- CCOST source paper and BAS docs support <p:>, <usb>, and <nib> as non-phonetic event markers in the applicable annotation context. <P>, <P:>, <:p>, <Fail>, and <notProcessedChunk> remain unresolved.
+- FastThaiG2P's pinned source-code license is Apache-2.0, its NOTICE identifies Amazon, and its vendored TLTK parser has a BSD-3-Clause file header. Its bundled runtime dictionary is mixed-provenance: Wiktionary/kaikki entries (CC BY-SA/GFDL), model-generated entries, and manual overrides; TLTK fallback data is also bundled. No single blanket license/complete rights ledger for all bundled dictionary and fallback assets was found.
+- The TLTK project README states BSD-3-Clause for package versions from 1.2.2, but file-level rights/provenance for every copied fallback data asset remain unconfirmed.
+
+### Updated task ledger
+
+| Task | Status | Acceptance / blocker |
+|---|---|---|
+| Define base MAU/MAS/KAN/KAS/ORT/TRN tier roles | DONE_VERIFIED | CCOST LREC 2026 paper §3.3–3.4 |
+| Explain ORT-MAU/KAN-MAU/KAS-MAU suffix semantics | BLOCKED | Curator response needed; raw names preserved |
+| Explain 868 _8 occurrences / 22 strings | BLOCKED | Paper defines only _1–_5; do not infer sixth tone |
+| Clarify unresolved tag spellings and mixed labels | BLOCKED | Curator response needed; fail-closed behavior retained |
+| Verify FastThaiG2P source-code license | DONE_VERIFIED | Pinned LICENSE Apache-2.0; NOTICE checked |
+| Verify vendored TLTK parser notice | DONE_VERIFIED | Pinned source carries BSD-3-Clause notice |
+| Clear redistribution of all FastThaiG2P bundled dictionary/fallback data | BLOCKED | No complete component-level rights ledger; do not bulk redistribute |
+| Contact CCOST authors/curators | PARTIAL | Official emails and copy-ready request prepared; NOT SENT because no email-sending connector is available |
+| Receive curator explanation | BLOCKED | No message sent / no response received |
+
+The copy-ready request and public contact evidence are in [external-review-and-source-requests.md](external-review-and-source-requests.md). The detailed reviews are [CCOST labels](ccost-label-review-2026-11-05.md) and [FastThaiG2P rights](fastthaig2p-license-review-2026-11-05.md). Linguistic accuracy remains NOT_MEASURED; independent IPA gold rows remain 0.
