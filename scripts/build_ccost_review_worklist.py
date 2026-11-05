@@ -17,7 +17,7 @@ from pathlib import Path
 from typing import Any
 
 from thai_ukrainian.adapters.ccost import (
-    CCOST_NONPHONETIC_MARKERS,
+    is_ccost_nonphonetic_label,
     CCOST_PHONETIC_TIERS,
     TextGridInterval,
     TextGridTier,
@@ -180,7 +180,7 @@ def build_worklist(paths: list[Path]) -> dict[str, Any]:
                         issue_types: list[str] = []
                         if markers:
                             issue_types.append("UNRESOLVED_MARKER")
-                        if tier.name in CCOST_PHONETIC_TIERS and label not in CCOST_NONPHONETIC_MARKERS:
+                        if tier.name in CCOST_PHONETIC_TIERS and not is_ccost_nonphonetic_label(label):
                             try:
                                 convert_xsampa_label(label)
                             except XSampaConversionError:
