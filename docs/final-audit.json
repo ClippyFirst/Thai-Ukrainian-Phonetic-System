@@ -4532,36 +4532,46 @@
     "beta_publication": true
   },
   "ui_ux_redesign_2026_11_05": {
-    "status": "IMPLEMENTED_CI_VERIFIED_PR_OPEN_NOT_DEPLOYED",
+    "status": "IMPLEMENTED_EXACT_HEAD_CI_VERIFIED_PR_OPEN_NOT_DEPLOYED",
     "base_main": "f0d41996e854185bd6bd92f0ffa8f6b83e71f777",
     "branch": "design/site-recomposition-2026-11-05",
-    "tested_code_head": "f59e740afdc3ee172cbcb62f574802b5264a9ea2",
+    "tested_code_head": "d5c880a082ae553bf944d31f6d341f38f33690c8",
     "pull_request": 211,
     "pull_request_state": "OPEN_MERGEABLE_NOT_MERGED",
     "exact_head_ci": {
-      "run": 42109852830,
-      "run_attempt": 1,
+      "run": 42110596982,
       "status": "SUCCESS",
       "test_job": "SUCCESS",
       "wheel_install_smoke": "SUCCESS",
       "master_artifact": "SUCCESS",
       "passed": 398,
       "skipped": 1,
-      "subtests_passed": 1211
+      "subtests_passed": 1211,
+      "ruff": "PASS",
+      "python_browser_parity_fixtures": 29
     },
     "exact_head_web_static": {
-      "run": 42109852675,
+      "run": 42110596991,
       "status": "SUCCESS"
     },
     "exact_head_site_api": {
-      "run": 42109852790,
+      "run": 42110596971,
       "status": "SUCCESS"
     },
     "exact_head_pyodide_compat": {
-      "run": 42109852662,
-      "status": "SUCCESS"
+      "run": 42110597073,
+      "status": "SUCCESS",
+      "cpython_pyodide_parity": "PASS",
+      "chromium_same_origin_worker": "PASS",
+      "pages_bundle_build": "PASS"
+    },
+    "generic_ci_skip": {
+      "test": "tests/test_fastthaig2p_site_api.py",
+      "reason": "FastAPI optional dependency absent from generic CI",
+      "separate_site_api_workflow": "42110596971 SUCCESS"
     },
     "ui_contract_includes_delayed_stale_worker_response": true,
+    "ui_static_contract": "PASS",
     "manual_accessibility_review": "PARTIAL_UNVERIFIED",
     "manual_zoom_reflow": "PARTIAL_UNVERIFIED",
     "actual_clipboard_browser_test": "NOT_MANUALLY_VERIFIED",

@@ -166,7 +166,7 @@ branches are moving references; these SHAs identify the source snapshots reviewe
 | [Matt Pocock skills](https://github.com/mattpocock/skills) | `4ae2317ddb22b046e26455e4f9c9b3aaaf62212d` | Test public seams, avoid implementation-coupled or tautological tests, work in vertical tracer-bullet slices, and deepen modules only where current friction is demonstrated. |
 | [Ponytail](https://github.com/DietrichGebert/ponytail) | `96608e078b2d5ea607c5c3b8b5a54d1c1fba6846` | Read callers and downstream consumers before editing; use the smallest complete diff; retain trust-boundary validation, error handling, security and accessibility; leave a focused test for non-trivial logic. |
 
-These are complementary principles, not four competing workflows. The project
+These are complementary principles, not five competing workflows. The project
 execution matrix and evidence registries remain authoritative. No upstream
 skill files, hooks, CLI tools, package dependencies, or runtime components are
 vendored or installed by this policy.

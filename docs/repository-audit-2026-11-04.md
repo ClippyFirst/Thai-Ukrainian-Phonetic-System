@@ -9,7 +9,8 @@
 - UX findings addressed: flat single-column hero; dense input/help grouping; sample buttons triggered analysis without a separate explicit action; result hierarchy did not give the Ukrainian candidate a clear primary position; editing input could leave a result for old text visible. The new layout prioritizes purpose, input, Ukrainian output and progressive IPA detail.
 - Upstream practices reviewed: UI UX Pro Max (accessibility/interaction/responsive priorities), Superpowers (test-first and vertical-slice workflow), Matt Pocock (small interfaces and architecture restraint), Ponytail (concrete correctness/security/load/test/lean review), Unlazy (observable gates). No upstream skill files, hooks, CLI, packages or runtime code were installed or vendored.
 - Evidence boundary: static UI assertions and GitHub Actions can verify code contracts, not actual assistive-technology usability. Manual keyboard/screen-reader/zoom/mobile testing remains outstanding. Linguistic gold remains 0 and accuracy remains NOT_MEASURED.
-- Detailed design and acceptance rules: ui-ux-redesign.md; code ownership and test commands: docs/README.md, web-service-architecture.md, web-service-requirements.md, validation-matrix.md.
+- Exact-head CI on `d5c880a`: Full CI 42110596982, Web Static 42110596991, Site API 42110596971, Pyodide compatibility 42110597073 — all SUCCESS. Full suite 398 passed, 1 optional FastAPI skip, 1,211 subtests, Ruff pass, 29 parity fixtures.
+- Detailed design and acceptance rules: ui-ux-redesign.md; code ownership and test commands: docs/README.md, web-service-architecture.md, web-service-requirements.md, validation-matrix.md. PR #211 is not merged/deployed; live Pages remains on main.
 
 ---
 

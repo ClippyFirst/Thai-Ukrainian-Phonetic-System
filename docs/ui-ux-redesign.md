@@ -1,6 +1,6 @@
 # Website UX and visual system
 
-**Status:** implementation and acceptance reference for the browser beta. The recomposition is implemented on PR [#211](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/211), branch `design/site-recomposition-2026-11-05`; it is not yet merged or deployed. Until merge and Pages deployment, the live URL continues to serve the main-branch UI.
+**Status:** implementation and acceptance reference for the browser beta. The recomposition is implemented on PR [#211](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/211), branch `design/site-recomposition-2026-11-05`; exact-head checks on `d5c880a082ae553bf944d31f6d341f38f33690c8` pass (Full CI 42110596982, Web Static 42110596991, Site API 42110596971, Pyodide compatibility 42110597073). It is not yet merged or deployed. Until merge and Pages deployment, the live URL continues to serve the main-branch UI.
 
 ## Design intent
 

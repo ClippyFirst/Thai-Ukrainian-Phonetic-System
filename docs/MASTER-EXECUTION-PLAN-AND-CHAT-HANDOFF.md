@@ -1,3 +1,16 @@
+## Handoff — UI/UX recomposition exact-head verification refresh (2026-11-05)
+
+- Current branch `design/site-recomposition-2026-11-05`; exact tested HEAD `d5c880a082ae553bf944d31f6d341f38f33690c8`; base `main` `f0d41996e854185bd6bd92f0ffa8f6b83e71f777`. PR [#211](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/211) remains OPEN, mergeable and not merged. No mainline or deployment-setting mutation.
+- Exact-head Full CI [42110596982](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42110596982) SUCCESS: test, wheel-install-smoke and master-artifact passed. Test summary: 398 passed, 1 skipped, 1,211 subtests passed; Ruff passed; 29 Python/browser parity fixtures passed. The skipped test is optional FastAPI Site API coverage, separately passed in run 42110596971.
+- Exact-head Web Static [42110596991](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42110596991) SUCCESS. Dedicated FastThaiG2P Site API [42110596971](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42110596971) SUCCESS. Pyodide compatibility [42110597073](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42110597073) SUCCESS, including owner-approved Pages bundle build and real same-origin Chromium Worker smoke.
+- Current implementation: editorial purpose-led hero, text→IPA→Ukrainian explainer, local-processing/beta disclosure, input count, examples that only fill, explicit analyze action, stale-result clearing and delayed-response rejection, Ukrainian-first result, IPA and syllable/tone/length/provenance progressive disclosure, responsive/reduced-motion/forced-colors styles.
+- Docs refreshed in place: README, AGENTS.md, web architecture/requirements, beta scope, Pyodide port, integration decision, public notices, docs navigation, UI contract, validation matrix, final audit (Markdown + JSON), repository audit and handoff. Older historical Vercel/blocked-gate notes are retained as history and superseded by current deployment record.
+- Manual acceptance remains open: keyboard-only and screen-reader operation; 200%/400% zoom and narrow reflow; real clipboard operation; deployed mobile cold/warm performance; screenshot/visual review. Static source tests do not establish WCAG conformance.
+- Linguistic status unchanged: independent IPA gold 0, accuracy NOT_MEASURED, Ukrainian forms provisional. TLTK BSD/LGPL file-level scope ambiguity remains disclosed, both notices retained; owner approval does not waive third-party terms.
+- The published Pages site still serves main until PR #211 is merged and its deployment is verified. No merge or auto-merge performed.
+
+---
+
 ## Handoff — UI/UX recomposition exact-head closeout (2026-11-05)
 
 - Branch `design/site-recomposition-2026-11-05`; base main `f0d41996e854185bd6bd92f0ffa8f6b83e71f777`; tested code HEAD `f59e740afdc3ee172cbcb62f574802b5264a9ea2`. PR [#211](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/211) is open, mergeable and not merged. Supplied audit branch remains untouched because it diverges from current main.

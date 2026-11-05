@@ -5,8 +5,9 @@ This review covers the public browser UX, service documentation, repository navi
 ### Baseline and branch discipline
 
 - Base `main`: `f0d41996e854185bd6bd92f0ffa8f6b83e71f777`; live beta remains deployed on GitHub Pages.
-- Candidate branch `design/site-recomposition-2026-11-05`, tested code HEAD `f59e740afdc3ee172cbcb62f574802b5264a9ea2`.
+- Candidate branch `design/site-recomposition-2026-11-05`, latest exact-head CI-verified HEAD `d5c880a082ae553bf944d31f6d341f38f33690c8`.
 - PR [#211](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/211) is open and mergeable. The supplied audit branch was preserved; stale ancestry was not merged into current main.
+- Exact-head workflows on `d5c880a`: Full CI [42110596982](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42110596982), Web Static [42110596991](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42110596991), Site API [42110596971](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42110596971), Pyodide compatibility [42110597073](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42110597073) all SUCCESS. Full CI: 398 passed, 1 optional FastAPI test skipped, 1,211 subtests passed, Ruff passed, 29 parity fixtures passed. The skipped Site API test is independently covered by the dedicated Site API workflow.
 - No changes to main, deployment settings, release tags, production cutover or external services were made.
 
 ### Findings and completed changes
