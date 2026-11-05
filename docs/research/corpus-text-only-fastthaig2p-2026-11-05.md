@@ -138,6 +138,10 @@ The current upstream data README mentions tests/ground_truth_ipa.json (34 rows) 
 
 No corpus-derived rows, phonetic labels, IPA conversions, accuracy figures, or license permissions were added to runtime data in this review. No audio was downloaded.
 
+## CCOST adapter implementation follow-up — 2026-11-05
+
+A strict X-SAMPA→IPA converter and Praat long-text TextGrid reader have been implemented in src/thai_ukrainian/adapters/; see docs/ccost-text-only-adapter.md. They are covered by synthetic fixtures only. The public Zenodo listing still exposes no separate TextGrid-only archive, so actual tier/label compatibility remains blocked. No audio was downloaded.
+
 ## Owner scope decision — 2026-11-05
 
 Global TIMIT is excluded. Its earlier access/licensing discussion above is historical only and must not be treated as an active task. The active order is CCOST → selective FastThaiG2P/Wiktionary reuse → optional LOTUSDIS text. All corpus work remains text-only; audio is out of scope.

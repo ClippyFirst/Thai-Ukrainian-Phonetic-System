@@ -1,6 +1,15 @@
 # Thai phonetic corpus selection
 
-**Checkpoint:** 2026-11-01. This is a source-selection decision, not a gold dataset. No third-party audio or labels are bundled.
+**Historical checkpoint:** 2026-11-01. The current owner decision below supersedes conflicting audio-centric recommendations in this historical comparison. No third-party audio or labels are bundled.
+
+## Current scope decision — 2026-11-05
+
+- **Global TIMIT Thai: EXCLUDED.** Do not pursue access, fees, agreements, audio, text-label acquisition or derived labels.
+- **CCOST: primary phonetic-text candidate.** A strict X-SAMPA→IPA converter and long-text TextGrid parser are implemented in docs/ccost-text-only-adapter.md; actual TextGrid files are not yet available for compatibility testing. Obtain a TextGrid-only export from curators. No WAV.
+- **FastThaiG2P/Wiktionary: supporting candidate source.** Keep source licenses/provenance separate; generated IPA remains provisional, not gold.
+- **LOTUSDIS: optional orthographic context only.** Use public utterance transcripts for conversational vocabulary/robustness if useful; no phone-level IPA gold and no audio work.
+- **Audio-specific tasks are OUT OF SCOPE.** No acoustic annotation, interval selection, audio hashes or audio download.
+
 
 ## What the benchmark must measure
 
@@ -19,16 +28,16 @@ A corpus with transcripts or audio is not automatically phonetic gold. A source-
 | Source | Useful evidence | License / access | Limitations and decision |
 |---|---|---|---|
 | Project-authored challenge | 42 frozen Thai prompts plus six supplemental regression prompts; controlled blind review, no model output or source IPA in reviewer sheet. | MIT project-authored prompts. | **Use as the controlled baseline.** No audio; expert reviewers must supply lexical, segmentation, IPA, tone, length and glottal labels. |
-| CCOST | 49 speakers; approx. 7h spontaneous + 5h controlled speech; 206-item controlled monosyllabic list; paper describes ORT/KAN/KAS/MAU/MAS/TRN tiers, X-SAMPA and five tone numerals. | CC BY-NC-SA 4.0; 6.2 GB audio/TextGrid archive. | Best controlled tonal/phonetic design, but non-commercial share-alike; paper reports no formal IAA; A-D wordlist columns differ by two items and released TextGrid schema remains uninspected. **Keep BLOCKED** until curator and archive checks. |
-| Global TIMIT Thai (THAIMIT, LDC2022S13) | Approx. 11.77h read Standard Thai; 50 speakers; 6,000 utterances; aligned word, phone and tone tiers; separate .phones, .tones, .words and Praat TextGrid files. | LDC User Agreement for Non-Members; paid/authorized access; non-commercial research only; no redistribution outside research group. | Phone labels are aligner-specific DARPABET, not IPA. Official README describes custom HTK forced alignment using SWATH tokenization, Haas dictionary and ~1,000 added pronunciations; the 2018 GlobalTIMIT paper reports proof-listening and a final phone-sequence/alignment check for each collection, but no Thai-specific quantitative phone/tone accuracy, independent double labels or IAA. Its 93.2% within-20-ms alignment result is for Mandarin, not Thai. **Candidate for restricted audio/re-annotation and alignment tooling only, not gold; commercial product release requires LDC for-profit membership/fees.** Sample phone/tone files not inspected because browser fetch rejected binary content. |
-| LOTUSDIS | Approx. 114 aggregate microphone-channel hours (about 20h unique session time), 86 participants; nine separately recorded single-channel devices, utterance transcripts, TextGrid and overlap masks; dataset card lists 160,915 rows / approx. 13.2 GB. | CC BY-SA 4.0; repository states academic and commercial use subject to license. | **Register as supplementary audio for fresh human re-annotation.** No phone/toneme IPA gold; device placement ranges near-to-far field and overlap is explicitly marked; select clear near-field, non-overlapped single-speaker intervals after checking the actual device and mask. Standard Thai representativeness must be checked per speaker. |
+| CCOST | Published tier map: ORT/KAN/KAS/MAU/MAS/TRN; X-SAMPA and five tone numerals; 206-item wordlist. | CC BY-NC-SA 4.0; 6.2 GB mixed WAV+TextGrid ZIP; no separate TextGrid-only archive listed. | **PRIMARY phonetic-text candidate.** Adapter/parser implemented against synthetic fixtures only. Actual TextGrid tier labels/encoding remain uninspected; request TextGrid-only export. No audio. |
+| Global TIMIT Thai (THAIMIT, LDC2022S13) | Historical source description retained for audit traceability. | LDC User Agreement for Non-Members. | **EXCLUDED by owner decision 2026-11-05.** No access or acquisition work. Historical quality/licensing notes are not active project requirements. |
+| LOTUSDIS | 160,915 public utterance-level text rows with speaker/microphone metadata; no verified phone/IPA labels. | CC BY-SA 4.0; attribution and ShareAlike required. | **OPTIONAL orthographic context only** for conversational vocabulary, disfluencies and text robustness. No audio, acoustic review or phone-level gold. |
 | Common Voice Thai v27.0 | Approx. 427h, 366,656 clips, 7,997 speakers; CC0 dataset. | CC0, but dataset card separately forbids re-hosting/re-sharing and speaker identification. | Not selected for a shared/re-distributed reviewer packet; no phonemic IPA or tone gold. Reviewers would need direct access under the dataset terms. |
 
 ## Recommended design
 
 - **Controlled phonemic baseline:** use the project-authored 42+6 blind packet. Recruit two independent qualified Thai phoneticians/phonologists; preserve raw first-pass labels and abstentions; a distinct adjudicator resolves disagreements.
 - **Controlled tonal contrasts:** use CCOST only if the project accepts the NC-SA restriction, the curator resolves the A-D set discrepancy, and the actual TextGrid tier/label/notation mapping is inspected and pinned. The LREC paper's intended tier map is not proof of the released archive's exact tier names.
-- **Supplementary acoustic evidence:** use LOTUSDIS for new expert labels, not as pre-existing phonetic gold. Select clear near-field, single-speaker, non-overlapped intervals. The corpus reports roughly 114 aggregate device/channel hours but only about 20 hours of unique session time; it uses nine separate single-channel devices. Pin the dataset revision, file hash, asset ID, speaker pseudonym, microphone/channel and exact interval. Do not copy audio into the repository.
+- **Optional orthographic context:** use LOTUSDIS transcript text only for conversational vocabulary and orthographic robustness. Do not acquire or process its audio under the current project scope.
 - **Ukrainian target adaptation:** use a separate two-reviewer Ukrainian-native preference process conditional on source IPA. Never treat this as a validation of the Thai IPA itself.
 
 ## Gold acceptance gate

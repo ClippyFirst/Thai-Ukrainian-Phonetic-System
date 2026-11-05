@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Audit branch docs/repository-audit-2026-11-04; latest fully reconciled checkpoint before this JSON status refresh c143b901bea54093fc1a17e69f10703f4467fb9f, 43 commits ahead and 0 behind main 56fba86b4b8be2fe4e67284355e9928108527387. Exact-head CI 41986104461 passed all jobs on the preceding documentation checkpoint; exact-head CI 41987384592 for the current source-register reconciliation is queued. PR #210 open, not merged. Global TIMIT excluded by owner; CCOST primary phonetic-text candidate, FastThaiG2P/Wiktionary supporting, LOTUSDIS optional orthographic context. Linguistic accuracy NOT_MEASURED; zero independently adjudicated IPA gold rows; engineering-verified research prototype, not release-ready.",
+  "status": "CCOST X-SAMPA/TextGrid adapter implemented on docs/repository-audit-2026-11-04; exact-head CI pending. Global TIMIT excluded by owner. No CCOST archive/audio downloaded; TextGrid-only acquisition blocked pending curator response. Independent IPA gold rows 0; linguistic accuracy NOT_MEASURED; engineering-verified research prototype only after CI passes.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -91,7 +91,12 @@
     "source_pinned_article_word_lexicon_for_continuous_text_challenge",
     "exact_text_lexicon_anchor_in_opt_in_word_segmented_pipeline",
     "row_level_word_segmented_token_details_in_challenge_diagnostic_artifact",
-    "browser_python_article_phrase_parity_regressions"
+    "browser_python_article_phrase_parity_regressions",
+    "ccost_textgrid_long_text_reader",
+    "strict_xsampa_to_ipa_adapter",
+    "ccost_numeric_tone_suffix_and_tier_preservation",
+    "typed_provisional_ccost_phonetic_result_adapter",
+    "text_only_ccost_inspection_cli"
   ],
   "not_claimed": [
     "complete_lexical_segmentation",
@@ -601,6 +606,31 @@
       "task": "Corpus source register text-only correction",
       "status": "DONE_VERIFIED",
       "evidence": "data/corpus_sources.csv updated; docs/corpus-validation.md policy/ledger appended; exact-head CI pending."
+    },
+    {
+      "id": "CORP-CCOST-XSAMPA-001",
+      "status": "PARTIAL",
+      "implementation": "Strict X-SAMPA→IPA converter with CCOST _1.._5 tone suffixes, raw-label retention, syllable boundaries and fail-closed unknown symbols; synthetic tests added.",
+      "acceptance": "Run exact-head CI, inspect actual released MAU/MAS/KAS/KAN labels and TextGrid encoding, then extend mapping only from manual/source evidence."
+    },
+    {
+      "id": "CORP-CCOST-TEXTGRID-001",
+      "status": "PARTIAL",
+      "implementation": "Praat long-text TextGrid parser preserves tier names, interval bounds and raw labels; typed provisional phonemic and surface tier adapters; local text-only inspector.",
+      "acceptance": "Obtain a lawful TextGrid-only sample and validate parser against actual CCOST files; no audio."
+    },
+    {
+      "id": "CORP-CCOST-TEXT-EXPORT-001",
+      "status": "BLOCKED",
+      "implementation": "Public Zenodo file listing checked; no separate TextGrid-only archive is exposed; mixed 6.2 GB WAV+TextGrid ZIP not downloaded.",
+      "blocker": "Await curator-provided TextGrid-only export or written confirmation of lawful selective text extraction. Request prepared, not sent because no email connector is available.",
+      "acceptance": "TextGrid-only files/manual plus encoding/tier-label specification and attribution confirmation."
+    },
+    {
+      "id": "GLOBAL-TIMIT-EXCLUSION-001",
+      "status": "DEFERRED",
+      "implementation": "Global TIMIT source is excluded by owner decision; registry test updated.",
+      "acceptance": "No further acquisition or licensing work."
     }
   ],
   "latest_implementation_branch": "fix/benchmark-error-clusters-20261102 (PR #189 open draft)",
@@ -3784,5 +3814,35 @@
     "ccost_manual": "inspected 2026-11-01 per corpus-validation record; actual released TextGrid tiers/labels still uninspected",
     "fastthaig2p_adapter": "existing adapter preserved; external IPA remains separate and provisional",
     "audio": "OUT_OF_SCOPE"
+  },
+  "ccost_text_only_adapter_2026_11_05": {
+    "status": "PARTIAL",
+    "code": [
+      "src/thai_ukrainian/adapters/xsampa.py",
+      "src/thai_ukrainian/adapters/ccost.py"
+    ],
+    "tests": [
+      "tests/test_xsampa_adapter.py",
+      "tests/test_ccost_textgrid_adapter.py"
+    ],
+    "tool": "scripts/inspect_ccost_textgrid.py",
+    "docs": "docs/ccost-text-only-adapter.md",
+    "synthetic_fixtures_only": true,
+    "actual_release_textgrid_inspected": false,
+    "audio_downloaded": false,
+    "tone_mapping": {
+      "_1": "mid",
+      "_2": "low",
+      "_3": "falling",
+      "_4": "high",
+      "_5": "rising"
+    },
+    "tiers": {
+      "KAN": "canonical word pronunciation",
+      "KAS": "canonical syllabified pronunciation",
+      "MAS": "phonemic syllable",
+      "MAU": "phone-level surface segment"
+    },
+    "external_blocker": "TextGrid-only export or curator-confirmed extraction path not publicly available; request prepared but not sent."
   }
 }

@@ -145,3 +145,30 @@ For each criterion and page, record: `test_id`, commit SHA, URL, date/time, test
 - Firecrawl has `0` remaining credits in the current billing period, so live browser interaction and manual screen-reader testing could not be performed.
 - No CCOST 6.2 GB archive bytes have been inspected. LOTUSDIS is pinned to an immutable Hub revision and its 24 Parquet shard metadata is recorded. Its official WAV/TextGrid Drive archive links are known, but access is blocked; neither those archives nor Parquet/audio bytes were downloaded. Provider-reported LFS hashes were not independently recomputed, and no individual WAV hash or clean interval is registered.
 - No reviewer may be registered as verified and no annotation may be fabricated to make the evaluation gate pass.
+
+
+## 2A. CCOST TextGrid-only export request — prepared, not sent
+
+**Status: PREPARED — NOT SENT.** The public Zenodo v1.0 file table lists a 6.2 GB mixed C-COST.zip containing WAV and TextGrid files. It lists CCOST_manual.pdf separately but no TextGrid-only archive. The ZIP preview is unavailable because it contains too many files. No archive or audio has been downloaded.
+
+**Subject:** Request for text-only Praat TextGrid export of CCOST (no audio)
+
+Dear Professor Pittayaporn, Dr Yang, Dr Jitwiriyanont and Professor Kirby,
+
+We are conducting non-commercial research on Thai phonetic transcription and would like to use CCOST's textual annotations while deliberately excluding all audio from our workflow.
+
+The Zenodo v1.0 record (DOI 10.5281/zenodo.17366698) lists the 6.2 GB C-COST.zip as containing both WAV recordings and Praat TextGrid annotations, while the manual is a separate PDF. We could not find a separate TextGrid-only download.
+
+Would you be able to provide or point us to:
+1. A TextGrid-only archive (or text-only export of ORT, KAN, KAS, MAU, MAS and TRN tiers), with no WAV/audio members;
+2. The current annotation manual as a standalone file;
+3. The expected Praat TextGrid encoding (long text, short text, or binary) and any tier/label conventions not fully specified in the paper;
+4. Confirmation that text-only extraction and local non-commercial research use are covered by the CC BY-NC-SA 4.0 release, including preferred attribution wording;
+5. Any known errata or updates to the A–D word-list orders.
+
+We will retain CC BY-NC-SA 4.0 attribution and ShareAlike conditions, keep the source files outside the public repository unless redistribution is explicitly permitted, and will not request or process audio.
+
+Thank you for making CCOST available.
+
+Best regards,
+[Project contact]

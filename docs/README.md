@@ -25,13 +25,14 @@ The [2026-11-04 repository audit](repository-audit-2026-11-04.md) records the li
 | IPA contract | [IPA](ipa.md), [benchmarking and external IPA](benchmarking-and-external-ipa.md) | Typed IPA, provenance, uncertainty and comparator limits |
 | Ukrainian output | [Target layer](ukrainian-target-layer.md), [transcription methodology](ukrainian-transcription-methodology.md), [correspondence matrices](ukrainian-correspondence-matrices.md) | IPA adaptation and practical orthography |
 | RTGS | [RTGS reference/parity research](research/rtgs-parity-corpus.json), [external renderer registry](external-ipa-renderers.md) | Separate romanization route; never an IPA substitute |
-| Data and licenses | [Evidence registry](evidence.md), [corpus validation](corpus-validation.md), `data/corpus_sources.csv`, dataset-specific license notices | Provenance, permitted use and evidence grades |
+| Data and licenses | [Evidence registry](evidence.md), [corpus validation](corpus-validation.md), [CCOST text-only adapter](ccost-text-only-adapter.md), `data/corpus_sources.csv`, dataset-specific license notices | Provenance, permitted use and evidence grades |
 | Interfaces | [CLI and batch API](cli-batch-api.md), [web architecture](web-service-architecture.md), [web requirements](web-service-requirements.md), [FastThaiG2P site integration](fastthaig2p-site-integration.md) | Supported interfaces, single website G2P engine and deployment boundaries |
 | Research protocol and literature | [Research protocol](research-protocol.md), [independent adjudication](independent-adjudication-protocol.md), [Thai G2P evaluation literature](research/thai-g2p-evaluation-literature-2026-11-03.md), [text-only corpus and FastThaiG2P rights review](research/corpus-text-only-fastthaig2p-2026-11-05.md) | Reproducible evaluation, corpus text-only rights, published-score caveats and human-review gates |
 
 ## Code and data layout
 
-- `src/thai_ukrainian/` — Python reference implementation and public API.
+- `src/thai_ukrainian/` — Python reference implementation and public API; adapters/ccost.py and adapters/xsampa.py ingest CCOST TextGrid text only.
+- scripts/inspect_ccost_textgrid.py — local TextGrid tier inventory and X-SAMPA conversion report; no audio access.
 - `web/src/` — browser implementation; parity with Python is a release gate.
 - `data/thai/` — runtime Thai registries and their provenance/license notices.
 - `data/ua_target_vectors.csv` — Ukrainian target feature inventory.

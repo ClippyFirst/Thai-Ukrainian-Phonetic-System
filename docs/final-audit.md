@@ -1,3 +1,19 @@
+## Latest audit and implementation batch — 2026-11-05
+
+The owner requested a full repository audit/documentation reconciliation on the existing branch and specifically prioritized obtaining CCOST TextGrid-only materials and implementing X-SAMPA→IPA. The following work was added on docs/repository-audit-2026-11-04:
+
+- Implemented src/thai_ukrainian/adapters/xsampa.py: strict token-based X-SAMPA→IPA conversion, CCOST numeric tone suffixes, raw label retention, per-syllable boundaries, and fail-closed unknown symbols.
+- Implemented src/thai_ukrainian/adapters/ccost.py: Praat long-text TextGrid parsing; preserves tier names, interval bounds and raw labels; maps KAN/KAS/MAS to provisional typed phonemic IPA and MAU to phone-level surface IPA that cannot drive syllable-level Ukrainian adaptation.
+- Added synthetic regression tests and scripts/inspect_ccost_textgrid.py, which inspects only researcher-supplied TextGrid text and never accesses WAV.
+- Added docs/ccost-text-only-adapter.md and updated corpus selection, validation, architecture, script inventory and external request documentation.
+- Updated the source-registry test to assert Global TIMIT's owner-directed exclusion instead of requiring it to remain an active acoustic corpus.
+- **Not obtained:** no TextGrid-only export is publicly listed; Zenodo exposes a mixed 6.2 GB WAV+TextGrid ZIP. No archive or audio was downloaded. The curator request is prepared but not sent (no email action connected). Actual TextGrid encoding and symbol inventory remain unverified.
+- **Verification limitation:** CI on the prior checkpoint 41987442859 failed only the now-updated Global TIMIT registry assertion (358 passed, 1 failed, 1 skipped, 1,197 subtests passed). The new implementation and updated test need fresh exact-head CI. No local tests are claimed.
+
+Status: PARTIAL implementation; external source acquisition BLOCKED; independent phonetic gold remains 0 and accuracy NOT_MEASURED.
+
+---
+
 ## Source-register implementation reconciliation — 2026-11-05
 
 - Updated `data/corpus_sources.csv`: LOTUSDIS is now a text corpus with transcript-only scope and no assumed phone/IPA labels; Global TIMIT is explicitly excluded by owner decision. Existing CCOST and Wiktionary source records were retained.

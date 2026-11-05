@@ -1,3 +1,25 @@
+## Current checkpoint — 2026-11-05: CCOST text-only adapter implementation
+
+- Work branch: docs/repository-audit-2026-11-04; keep all changes on this single branch and PR #210. No main merge or new branch.
+- Global TIMIT is EXCLUDED by owner decision; audio is OUT OF SCOPE.
+- Added strict X-SAMPA→IPA converter, CCOST tier-aware TextGrid reader, typed provisional IPA boundary, synthetic regression tests, and a local text-only inspection script. No CCOST archive/audio or source labels were downloaded.
+- CCOST TextGrid-only export is BLOCKED pending curator response. A request is prepared but NOT SENT because no email action is connected. The public Zenodo file list exposes one mixed 6.2 GB WAV+TextGrid ZIP and no TextGrid-only archive.
+- The parser currently supports Praat long-text TextGrid only. Real release encoding and MAU/MAS/KAS/KAN symbol inventory remain unverified. Unknown X-SAMPA fails closed.
+- CI on the prior source-register checkpoint 41987442859 failed one stale assertion requiring Global TIMIT to remain an active acoustic corpus; 358 tests passed, 1 failed, 1 skipped, 1,197 subtests passed. The test has been updated to match the owner decision; the new code batch requires its own exact-head CI.
+- Local tests are not available in the connector-only environment. Linguistic accuracy remains NOT_MEASURED; independent IPA gold rows remain 0.
+
+### Task ledger
+| Task | Status | Acceptance / blocker |
+|---|---|---|
+| Global TIMIT | DEFERRED | Explicitly excluded; no further acquisition |
+| X-SAMPA→IPA converter | PARTIAL | Synthetic tests and exact-head CI; verify against actual CCOST tier labels before corpus use |
+| Praat long-text TextGrid parser | PARTIAL | Synthetic fixture tests; actual CCOST encoding unverified |
+| CCOST TextGrid-only export | BLOCKED | Curator must provide export or confirm a lawful text-only extraction method |
+| CCOST phonetic gold | BLOCKED | Two independent qualified Thai reviewers plus adjudication; CCOST annotations alone are not independent gold |
+| LOTUSDIS | OPTIONAL / PARTIAL | Orthographic text context only; no audio |
+
+---
+
 ## User decision — 2026-11-05: Global TIMIT excluded; text-only sources prioritized
 
 The project owner has decided to **exclude Global TIMIT Thai (LDC2022S13)**. Do not pursue LDC access, fees, agreements, audio, or derived labels. Its phone/tone reference role is not a project dependency; alternatives are CCOST text annotations plus selectively reusable, provenance-separated FastThaiG2P/Wiktionary candidates. This is a scope decision, not a claim that Global TIMIT is low quality.

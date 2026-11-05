@@ -1,5 +1,17 @@
 # Corpus validation
 
+## Current owner scope and CCOST adapter status — 2026-11-05
+
+- **Global TIMIT Thai is excluded by owner decision.** No LDC access, agreement, fees, text/audio acquisition or derived labels are to be pursued.
+- **Audio is out of scope.** The project needs orthographic text, phonetic transcription and IPA only.
+- **CCOST is the primary phonetic-text candidate.** Its published paper specifies ORT/KAN/KAS/MAU/MAS/TRN tiers, X-SAMPA labels and numeric tone suffixes. Zenodo lists one mixed 6.2 GB WAV+TextGrid ZIP, not a separate TextGrid-only archive; no archive or audio has been downloaded.
+- Implemented in this branch: strict X-SAMPA→IPA conversion, CCOST numeric tone suffix parsing, a Praat long-text TextGrid reader, typed provisional PhoneticResult conversion, and a local inspection script. Synthetic fixtures only have been tested; the actual released tier inventory and encoding remain unverified.
+- MAS is the phonemic syllable tier; KAN/KAS are canonical word/syllabified layers; MAU is phone-level surface material and cannot independently drive syllable-level Ukrainian adaptation. Source annotations are not adjudicated gold.
+- A TextGrid-only export request is prepared in external-review-and-source-requests.md, but not sent: no connected email action is available. Do not download the mixed archive simply to extract text.
+
+**Acceptance ledger:** converter/parser implementation = PARTIAL pending exact-head CI and real TextGrid compatibility; TextGrid-only source acquisition = BLOCKED pending curator response; independent phonetic adjudication = BLOCKED pending qualified reviewers and source-appropriate review. No CCOST labels have been imported into gold; accuracy remains NOT_MEASURED.
+
+
 ## Purpose
 
 This repository contains validation infrastructure, not a redistributed copy of third-party corpora. A licensed/local corpus is supplied by the researcher and evaluated deterministically.

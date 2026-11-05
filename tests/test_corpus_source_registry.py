@@ -86,12 +86,13 @@ class CorpusSourceRegistryTests(unittest.TestCase):
         self.assertIn("not bundled", lst20["notes"])
 
 
-    def test_global_timit_thai_is_restricted_forced_alignment_not_gold(self):
+    def test_global_timit_thai_is_excluded_by_owner_decision(self):
         path = ROOT / "data" / "corpus_sources.csv"
         with path.open("r", encoding="utf-8-sig", newline="") as stream:
             rows = {row["source_id"]: row for row in csv.DictReader(stream)}
         row = rows["CORP-GLOBAL-TIMIT-THAI"]
-        self.assertEqual(row["type"], "acoustic_speech_corpus")
+        self.assertEqual(row["type"], "deferred_excluded_by_owner_decision")
+        self.assertIn("EXCLUDED by owner decision 2026-11-05", row["notes"])
         self.assertIn("Standard Thai read speech", row["scope"])
         self.assertIn("DARPABET, not IPA", row["annotation"])
         self.assertIn("LDC User Agreement for Non-Members", row["license_or_access"])
