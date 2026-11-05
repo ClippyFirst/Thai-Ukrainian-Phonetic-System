@@ -3,29 +3,26 @@
 ## Current owner scope and supplied TextGrid evidence — 2026-11-05
 
 - **Global TIMIT Thai is excluded by owner decision.** Do not pursue LDC access, agreements, fees, labels or audio.
-- **Audio is out of scope.** The two owner-supplied ZIPs contain TextGrid annotations only; CI reads `.TextGrid` members and does not read or extract audio.
-- **CCOST is the primary phonetic-text candidate.** The supplied `CCOST textgrid.zip` contains 488 TextGrid members; all 488 parse. The observed release tiers are `ORT-MAU`, `KAN-MAU`, `KAS-MAU`, `MAU`, `MAS`, and `TRN`. The `-MAU` aliases are provisional mappings to published ORT/KAN/KAS roles pending curator confirmation.
-- **LOTUSDIS is optional transcript context only.** The supplied `nectecLOTUSDIS textgrid.zip` contains 90 TextGrid members; all 90 parse. Each has one recording-named transcript IntervalTier. No phone, phoneme, toneme, IPA or X-SAMPA tier was observed.
-- Added `scripts/export_textgrid_text.py` to export explicitly selected orthographic intervals to provenance-rich JSONL. The export preserves raw labels, interval times, source file/tier, license, attribution and `SOURCE_ANNOTATED_NOT_GOLD`; it never reads non-TextGrid ZIP members. The generated corpus file is not committed.
-- Suggested text-only export command:
+- **Audio acquisition and acoustic validation are out of scope.** CI reads only `.TextGrid` members. The CCOST ZIP contains 488 TextGrids only; the LOTUSDIS ZIP contains 90 TextGrids and one `textgrid/.DS_Store` metadata entry, skipped without reading its contents.
+- **CCOST is the primary phonetic-text candidate.** All 488 supplied files parse. Observed release tiers: `ORT-MAU`, `KAN-MAU`, `KAS-MAU`, `MAU`, `MAS`, `TRN`; `-MAU` mappings to published ORT/KAN/KAS roles remain provisional pending curator confirmation.
+- **LOTUSDIS is optional transcript context only.** All 90 supplied TextGrids parse; each has one recording-named transcript IntervalTier. No phone, phoneme, toneme, IPA or X-SAMPA tier was observed.
+- `scripts/export_textgrid_text.py` exports explicitly selected orthographic intervals to provenance-rich JSONL. It preserves raw labels, interval bounds, source file/tier, archive Git blob SHA-1, license, attribution and `SOURCE_ANNOTATED_NOT_GOLD`; it never reads non-TextGrid members and does not commit generated corpus rows.
+- CI verified **178,377 exported records**: 145,434 CCOST (`ORT-MAU` + `TRN`) and 32,943 LOTUSDIS transcript intervals. The export is temporary/local; it is not project gold.
+- CCOST X-SAMPA conversion remains PARTIAL: 1,014 labels are unsupported after strict tag-only marker handling. The LREC 2026 paper defines `_1`–`_5`; observed `_8`, Unicode IPA-looking forms, unusual sequences and mixed tag-plus-text labels are not guessed.
+- Exact-head CI [42014178666](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42014178666) passed on `1dc252c517343fd6277badaa1625c095bd3a63d9`: 385 passed, 1 skipped, 1,206 subtests; Ruff, wheel-install smoke, master-artifact, 578-file inventory and 178,377-row export assertions passed. Dedicated Site API [42014178630](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42014178630) and optional external G2P smoke [42014178504](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42014178504) passed.
 
-  `python scripts/export_textgrid_text.py "CCOST textgrid.zip" "nectecLOTUSDIS textgrid.zip" --tier ORT-MAU --tier TRN --tier-prefix Hijack_ --output /tmp/thai-orthographic-text.jsonl`
+**Acceptance ledger:** supplied TextGrid inventory/parser = DONE_VERIFIED for 578/578 files; orthographic JSONL export = DONE_VERIFIED for 178,377 records; CCOST `-MAU` tier semantics and X-SAMPA coverage = PARTIAL; independent phonetic adjudication = BLOCKED pending two qualified Thai reviewers and separate adjudicator. Independent gold rows remain 0; linguistic accuracy remains `NOT_MEASURED`.
 
-- CCOST converter/parser implementation is PARTIAL: all supplied TextGrid structures parse, but the X-SAMPA map is a declared subset. The LREC 2026 paper defines tone suffixes `_1`–`_5`; observed `_8` labels remain unsupported. Unicode IPA-looking forms and mixed tag-plus-transcript labels are not guessed.
-- CCOST source annotations and LOTUSDIS transcripts are not independent gold. Gold IPA rows remain 0; linguistic accuracy remains `NOT_MEASURED`. CCOST paper reports no formal inter-annotator agreement.
-- Exact-head CI for the initial full archive inventory [42011279020](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42011279020) passed all three jobs, but predates the latest strict marker and exporter additions. Their exact-head CI rerun is pending.
-
-**Acceptance ledger:** supplied TextGrid inventory and long-text parsing = DONE_VERIFIED for 578/578 files; CCOST `-MAU` tier semantics and X-SAMPA coverage = PARTIAL; text-only JSONL exporter = PARTIAL pending exact-head CI; independent phonetic adjudication = BLOCKED pending qualified reviewers and adjudication. No audio or derived corpus records are committed.
 ## Purpose
 
-This repository contains validation infrastructure, not a redistributed copy of third-party corpora. A licensed/local corpus is supplied by the researcher and evaluated deterministically.
+This repository contains validation infrastructure and two owner-supplied TextGrid exports under separate file-level third-party licenses. It does not include the upstream mixed CCOST WAV+TextGrid archive or LOTUSDIS audio. Source-specific attribution and reuse terms are recorded in [third-party corpus notices](../data/THIRD-PARTY-CORPUS-NOTICES.md).
 
 ## Registered resources
 
-- **CCOST** — phonetically annotated Standard Thai resource suitable for orthography, word, syllable, phone and toneme analysis. The primary source states CC BY-NC-SA 4.0; the 6.2 GB `C-COST.zip` contains WAV audio and TextGrid annotations, while the manual, metadata, wordlist, and sentences are separate files. This repository does not redistribute the archive.
+- **CCOST** — phonetically annotated Standard Thai resource suitable for orthography, word, syllable, phone and toneme analysis. The upstream Zenodo `C-COST.zip` is a 6.2 GB WAV+TextGrid archive, but this repository contains only the owner-supplied `CCOST textgrid.zip` export (488 TextGrid members, no audio). CC BY-NC-SA 4.0 applies; non-commercial, attribution and ShareAlike conditions are mandatory.
+- **LOTUSDIS** — conversational orthographic transcript context. The supplied `nectecLOTUSDIS textgrid.zip` contains 90 transcript TextGrids and one `.DS_Store` metadata member; no audio bytes are read. The upstream dataset card declares CC BY-SA 4.0. It is not phone/IPA gold.
 - **Thai Grapheme to Phoneme Wiktionary Corpus** — Thai forms paired with IPA, suitable for broad G2P regression.
 - **Thai National Corpus II / Thai Textbook Corpus** — useful for lexical frequency and distribution checks, not substitutes for phonetic gold labels.
-
 ## Input contract
 
 The evaluator consumes JSONL. Every record requires id, thai, and source. Gold fields such as ipa and tone are optional, but a missing gold field is excluded from that metric rather than counted as correct.
