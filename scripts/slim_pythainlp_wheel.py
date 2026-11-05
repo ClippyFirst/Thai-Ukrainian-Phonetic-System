@@ -2,8 +2,7 @@
 """Trim unused PyThaiNLP corpus assets from the browser runtime wheel.
 
 The FastThaiG2P normalizer uses PyThaiNLP word tokenization for mai yamok.
-The required bundled dictionary is words_th.txt (CC0-1.0); retain the corpus
-license notice and Python source. Other corpus/model data are not used by this
+The required bundled dictionaries are words_th.txt and stopwords_th.txt (both CC0-1.0); retain the corpus license notice and Python source. Other corpus/model data are not used by this
 runtime and are deliberately excluded from the Pages bundle.
 """
 from __future__ import annotations
@@ -19,6 +18,7 @@ from pathlib import Path, PurePosixPath
 
 REQUIRED = {
     "pythainlp/corpus/words_th.txt",
+    "pythainlp/corpus/stopwords_th.txt",
     "pythainlp/corpus/corpus_license.md",
 }
 
