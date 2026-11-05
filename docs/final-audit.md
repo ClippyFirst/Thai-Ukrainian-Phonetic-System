@@ -1875,3 +1875,12 @@ No independent IPA gold rows were created. Linguistic accuracy remains NOT_MEASU
 - The CI workflow asserts these inventory values and uploads `ccost-label-adjudication-worklist`. The latest exact-head Full CI was cancelled during successive pushes; the current generator/tests/artifact are **not yet CI-verified**. No local test execution is claimed.
 - Marker semantics and `_8` value recovery remain blocked on positive linguistic evidence. Two independent qualified Thai reviewers and a separate adjudicator have not been engaged; the reviewer registry is empty, gold rows remain 0 and linguistic accuracy remains `NOT_MEASURED`.
 - Readiness remains **engineering research prototype, not linguistically validated/release-ready**.
+
+
+## Thai expert candidate screening — 2026-11-05
+
+Public institutional/publication evidence supports an uncontacted candidate panel: Chutamanee Onsuwan (Thammasat; Thai temporal/laboratory phonetics), Phanintra Teeranon (University of Phayao; acoustic/perceptual Thai tone studies), and Rungpat Roengpitya (Mahidol; acoustic Thai tone and segmental studies). Proposed split: Onsuwan + Teeranon for blind first-pass review, Roengpitya as separate adjudicator. No CCOST paper authors are included in this candidate panel.
+
+Lena Maluleem has relevant phonetics/phonology and prosody credentials, but her public coauthorship and doctoral-supervision link to CCOST author Pittayawat Pittayaporn is a potential conflict for independent CCOST review. She is not assigned to the proposed independent panel unless the conflict is assessed and disclosed.
+
+This is qualification screening only. No contact, consent, appointment, identity verification or conflict declaration exists; reviewer registry remains empty. Independent IPA gold rows remain 0; linguistic accuracy remains NOT_MEASURED.
