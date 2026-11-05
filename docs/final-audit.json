@@ -4165,7 +4165,14 @@
         "<P:>": 4,
         "<:p>": 22
       },
-      "semantics": "UNRESOLVED; preserve exact spelling and case"
+      "semantics": "UNRESOLVED; preserve exact spelling and case",
+      "total_marker_appearances": 871,
+      "interval_counts": {
+        "<P>": 771,
+        "<Fail>": 24,
+        "<P:>": 4,
+        "<:p>": 22
+      }
     },
     "documented_maus_failure": {
       "marker": "<notProcessedChunk>",
@@ -4184,7 +4191,7 @@
         "verify asserted counts and all reviewer/adjudicator fields blank",
         "Preserve distinction between generic MAUS suffix syntax (_1.._9) and CCOST paper's five mapped Thai tonemes (_1.._5)"
       ],
-      "current": "Latest exact-head Full CI is being rerun after correcting the generic MAUS versus CCOST tone-scheme distinction; no local tests were run."
+      "current": "Latest exact-head Full CI failed on an overly narrow suffix-token regex (it missed the attached-coda label nia_8p); reverted to inventory-preserving substring detection, added a regression test, and expanded blank-field checks. Rerun pending."
     },
     "denominator_note": "Earlier inspector marker counts <P>=394 and <Fail>=16 are phonetic-tier-only; the worklist scans all tiers, so its counts are not directly comparable."
   },
