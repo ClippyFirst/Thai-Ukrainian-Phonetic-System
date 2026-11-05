@@ -4135,7 +4135,7 @@
     "ccost_manual_review": "DONE_VERIFIED_WORKFLOW_GUIDE_NO_UNRESOLVED_SYMBOL_DEFINITIONS",
     "fastthaig2p_bulk_merged_dictionary_redistribution": "PERMITTED_WITH_SOURCE_SPECIFIC_LICENSES_AND_NOTICES_NOT_VENDORED",
     "fastthaig2p_optional_dependency_use": "PERMITTED_PINNED_APACHE_2_0_DEPENDENCY",
-    "ccost_tone_suffix_8": "DONE_VERIFIED_OUT_OF_RANGE_BAS_SUFFIX_INTENDED_VALUE_UNKNOWN"
+    "ccost_tone_suffix_8": "BLOCKED_CCOST_SPECIFIC_MAPPING_UNKNOWN_GENERIC_MAUS_1_TO_9"
   },
   "ccost_review_worklist_2026_11_05": {
     "status": "PARTIAL_PENDING_EXACT_HEAD_CI_AND_ARTIFACT_INSPECTION",
@@ -4150,7 +4150,7 @@
       "file_interval_raw_label_events": 438,
       "distinct_raw_strings": 22,
       "files": 119,
-      "classification": "OUT_OF_RANGE_UNDER_DOCUMENTED_1_TO_5_TONE_SUFFIX_CONVENTION",
+      "classification": "UNMAPPED_IN_CCOST_PAPER_MAPPING; GENERIC_BAS_MAUS_SYNTAX_PERMITS_1_TO_9",
       "intended_original_values": "UNKNOWN; no repair inferred"
     },
     "markers_all_tiers": {
@@ -4177,9 +4177,10 @@
       "required": [
         "exact-head Full CI PASS",
         "inspect downloaded worklist TSV and manifest",
-        "verify asserted counts and all reviewer/adjudicator fields blank"
+        "verify asserted counts and all reviewer/adjudicator fields blank",
+        "Preserve distinction between generic MAUS suffix syntax (_1.._9) and CCOST paper's five mapped Thai tonemes (_1.._5)"
       ],
-      "current": "Latest exact-head Full CI was cancelled during successive pushes; no local tests were run."
+      "current": "Latest exact-head Full CI is being rerun after correcting the generic MAUS versus CCOST tone-scheme distinction; no local tests were run."
     },
     "denominator_note": "Earlier inspector marker counts <P>=394 and <Fail>=16 are phonetic-tier-only; the worklist scans all tiers, so its counts are not directly comparable."
   }
