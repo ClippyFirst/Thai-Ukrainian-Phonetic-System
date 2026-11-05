@@ -580,22 +580,27 @@
     {
       "task": "Global TIMIT Thai acquisition/reuse",
       "status": "DEFERRED",
-      "reason": "Owner explicitly excluded this source; alternatives available; no LDC access or derived data work."
+      "reason": "Explicitly excluded by owner; no access, fees, agreement, audio or derived labels."
     },
     {
-      "task": "CCOST text-only phonetic reference",
+      "task": "CCOST TextGrid-only phonetic reference",
       "status": "PARTIAL",
-      "acceptance": "Obtain TextGrid-only export/manual, inspect MAU/MAS values, convert X-SAMPA to typed IPA, independently review stratified subset."
+      "acceptance": "Obtain TextGrid-only export/manual; inspect actual MAU/MAS labels; convert X-SAMPA to typed IPA; independently review a stratified subset."
     },
     {
-      "task": "FastThaiG2P selective data/code reuse",
+      "task": "FastThaiG2P selective reuse",
       "status": "PARTIAL",
-      "acceptance": "Separate Apache code from CC BY-SA Wiktionary subset; provenance/attribution; keep generated rows provisional; resolve TLTK data licenses."
+      "acceptance": "Reuse existing pinned adapter as provisional comparator; isolate Apache code and NOTICE from CC BY-SA Wiktionary subset; generated IPA stays provisional; resolve fallback asset rights."
     },
     {
-      "task": "LOTUSDIS optional text robustness",
+      "task": "LOTUSDIS text-only context",
       "status": "PARTIAL",
-      "acceptance": "Inspect text schema and determine bounded use for conversational orthographic robustness; no audio."
+      "acceptance": "Optional bounded use of public orthographic transcripts for conversational vocabulary and robustness; no phone/IPA gold and no audio."
+    },
+    {
+      "task": "Corpus source register text-only correction",
+      "status": "DONE_VERIFIED",
+      "evidence": "data/corpus_sources.csv updated; docs/corpus-validation.md policy/ledger appended; exact-head CI pending."
     }
   ],
   "latest_implementation_branch": "fix/benchmark-error-clusters-20261102 (PR #189 open draft)",
@@ -3771,6 +3776,13 @@
     "ccost": "PRIMARY_PHONETIC_TEXT_CANDIDATE; TextGrid-only export and actual MAU/MAS tier inspection pending; X-SAMPA-to-typed-IPA adapter and independent review required",
     "fastthaig2p": "SUPPORTING_CANDIDATES; Apache-2.0 code and separately licensed Wiktionary subset only; generated IPA provisional; TLTK data rights unresolved",
     "lotusdis": "OPTIONAL_ORTHOGRAPHIC_CONTEXT; no phone-level gold; audio out of scope",
+    "audio": "OUT_OF_SCOPE"
+  },
+  "source_register_reconciliation_2026_11_05": {
+    "corpus_sources_csv": "updated; LOTUSDIS text-only optional context; Global TIMIT excluded; CCOST and Wiktionary retained",
+    "corpus_validation": "current text-only policy and acceptance ledger appended",
+    "ccost_manual": "inspected 2026-11-01 per corpus-validation record; actual released TextGrid tiers/labels still uninspected",
+    "fastthaig2p_adapter": "existing adapter preserved; external IPA remains separate and provisional",
     "audio": "OUT_OF_SCOPE"
   }
 }
