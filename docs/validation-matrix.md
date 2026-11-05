@@ -1844,3 +1844,18 @@ The reviewer registry remains empty. No one has been contacted, appointed or con
 | Audio-backed review | BLOCKED_PENDING_SELECTIVE_AUDIO_ACCESS_AND_NONCOMMERCIAL_SCOPE_CONFIRMATION | Zenodo lists a 6.2 GB WAV+TextGrid archive under CC BY-NC-SA 4.0. No audio was downloaded. Implement opt-in selective per-recording retrieval; do not download full archive in routine CI. |
 
 **Convention correction:** _8 is not generically invalid MAUS syntax (BAS allows _1–_9); it is unmapped in CCOST's published five-tone mapping. This distinction is binding for all future documentation and prevents a false claim that _8 is a sixth Thai tone or an invalid MAUS token.
+
+
+## Final exact-head acceptance — 2026-11-05
+
+| Work item | Status | Evidence / remaining acceptance |
+|---|---|---|
+| CCOST blind worklist and exact interval context | DONE_VERIFIED | Full CI 42039619729 on 43fa978d passed all 3 jobs; test 395 passed, 1 skipped, 1,211 subtests; Ruff and 29 parity fixtures passed. Artifact 13421040388 downloaded and inspected: 1,975 rows, 488 TextGrids, all 11 human fields blank, no audio read. |
+| All-tier marker group counts | DONE_VERIFIED_INVENTORY_ONLY | 871 literal appearances; 821 tier-interval rows; 398 exact file+interval groups. Per marker: <P> 375, <P:> 4, <:p> 11, <Fail> 8. Semantics remain BLOCKED. |
+| Exact-interval cross-tier mapped-tone candidates | DONE_VERIFIED_INVENTORY_ONLY | 14 of 397 _8 groups; MAU _2 7, MAS _2 4, MAS _3 4, KAN-MAU _3 1. Context only, no repairs. |
+| Recover original _8 values | BLOCKED | Generic MAUS permits _1–_9; CCOST paper maps _1–_5 only. Requires positive source-specific evidence and independent Thai adjudication. |
+| Resolve <P>, <P:>, <:p>, <Fail> semantics | BLOCKED | No authoritative CCOST-specific definitions located. Preserve exact spelling/case. |
+| Independent Thai expert review/adjudication | BLOCKED | Reviewer registry header-only; no contacts, consent, appointments or annotations. Acceptance requires two qualified independent first-pass reviewers, a separate adjudicator, frozen submissions, disagreement/abstention log and validated provenance. |
+| Acoustic review | BLOCKED_PENDING_SELECTIVE_AUDIO_ACCESS_AND_NONCOMMERCIAL_SCOPE_CONFIRMATION | Zenodo lists a 6.2 GB WAV+TextGrid archive under CC BY-NC-SA 4.0; no audio accessed. Selective per-recording retrieval and non-commercial scope check required; no full archive download in routine CI. |
+
+Exact-head Site API run 42039619784 and external G2P smoke run 42039619715 both SUCCESS on 43fa978d.
