@@ -159,11 +159,13 @@ We are conducting non-commercial research on Thai phonetic transcription using t
 
 Our structural inventory contains 488 TextGrid files, matching the total recording-file count in Table 1 of the LREC 2026 paper. The files use tiers named `ORT-MAU`, `KAN-MAU`, `KAS-MAU`, `MAU`, `MAS` and `TRN`, rather than the shorter published names ORT/KAN/KAS/MAU/MAS/TRN. Could you confirm whether the `-MAU` suffixes are release-specific aliases for the corresponding orthographic/canonical tiers?
 
+We also ran a full fail-closed inventory of the phonetic tiers. It recorded 1,014 conversion-failure occurrences across 116 distinct raw label strings: 868 occurrences contain an undocumented `_8` sequence (22 distinct strings); 58 are slash/alternative forms; 26 mix a MAUS marker with phonetic or text material; 17 are non-ASCII phonetic-looking forms; 10 contain Thai script or mixed Thai/phonetic text; 14 are truncated/malformed; and 21 are other unsupported ASCII sequences. Failures occur in MAU (276), MAS (263), KAS-MAU (239), and KAN-MAU (236). These are tier-level occurrences, not 1,014 unique speech events. We preserve every raw label and do not guess conversions.
+
 We also observed labels that are not explained by the paper's five-tone table:
 
 1. `_8` tone suffixes (for example `? a_8`, `a_8` and `{:_8`), although the paper documents only `_1`–`_5` for Mid/Low/Falling/High/Rising. What does `_8` mean, and should these labels be treated as unknown/unspecified rather than lexical tone?
 2. Unicode IPA-looking tokens in MAU (for example `ɹ`, `ɾ`, `tʃ`, `ʔ`) and unusual forms such as `r/`. Are these intentionally IPA rather than X-SAMPA, and is there a canonical conversion table?
-3. Annotation tags including `<nib>`, `<usb>`, `<p:>`, `<notProcessedChunk>`, `<Fail>`, `<P>`, `<:p>` and `<P:>`, including occasional labels that combine tags with Thai transcript text. Could you confirm their semantics and whether mixed tag-plus-text labels should remain in the canonical tiers?
+3. We understand from the paper and BAS format documentation that `<p:>` denotes pause, `<usb>` is used for speaker-produced disfluency/unintelligible events, and `<nib>` denotes a non-speech event/noise. Could you confirm these meanings for the CCOST release and explain the distinct observed tags `<notProcessedChunk>`, `<Fail>`, `<P>`, `<:p>` and `<P:>`? Should the latter be treated as errors/unknown markers? We also observe mixed marker-plus-Thai-text and marker-plus-phone labels; should these be preserved as raw events rather than parsed as phonetic segments?
 4. Is the supplied 488-file TextGrid set complete for the v1.0 recording manifest, or are any sessions/files intentionally absent?
 5. Is the published `CCOST_manual.pdf` the current authoritative manual for the released tier schema, and is there a more detailed MAUS/PHO2SYL label inventory?
 
