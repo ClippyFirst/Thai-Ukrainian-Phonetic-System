@@ -93,7 +93,7 @@ jobs:
             --pyodide-dist node_modules/pyodide \
             --wheels build/pyodide-wheels \
             --output web/vendor \
-            --rights-manifest data/third_party/fastthaig2p-browser-bundle.json
+            --rights-manifest data/third_party/fastthaig2p-browser-bundle.json \\\n            --notices-dir web/licenses
       - name: Verify public Pages bundle is refused without rights approval
         run: |
           if python scripts/build_pyodide_bundle.py \
@@ -101,7 +101,7 @@ jobs:
             --pyodide-dist node_modules/pyodide \
             --wheels build/pyodide-wheels \
             --output build/pages-bundle \
-            --rights-manifest data/third_party/fastthaig2p-browser-bundle.json; then
+            --rights-manifest data/third_party/fastthaig2p-browser-bundle.json \\\n            --notices-dir web/licenses; then
             echo "Public bundle unexpectedly passed without rights approval" >&2
             exit 1
           fi
