@@ -134,7 +134,9 @@ const source = await readFile(new URL("../src/rtgs-reference.js", import.meta.ur
 assert.doesNotMatch(source, /adaptIpaToUkrainian|ipa-ua/);
 assert.doesNotMatch(source, /fetch\s*\(|XMLHttpRequest/);
 const app = await readFile(new URL("../src/app.js", import.meta.url), "utf8");
-assert.ok(app.includes("fetch('/api/analyze'"), "the public app must use the FastThaiG2P API");
+assert.ok(app.includes("new Worker("), "the public app must use the local FastThaiG2P worker");
+assert.ok(app.includes("fastthaig2p-worker.js"), "the public app must load the Pyodide worker");
+assert.equal(app.includes("fetch("), false, "the public app must not send Thai text to an API");
 assert.doesNotMatch(app, /renderRtgsTokens|renderRtgsUkrainianTokens|RTGS/);
 assert.doesNotMatch(app, /analyzeText|analyze\(/, "the browser must not execute a second G2P engine");
 assert.doesNotMatch(app, /adaptIpaToUkrainian\(source\)/, "the browser must not expose a parallel IPA input path");

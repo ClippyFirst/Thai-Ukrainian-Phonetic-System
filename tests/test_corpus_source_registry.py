@@ -28,20 +28,22 @@ class CorpusSourceRegistryTests(unittest.TestCase):
         with path.open("r", encoding="utf-8-sig", newline="") as stream:
             rows = {row["source_id"]: row for row in csv.DictReader(stream)}
         row = rows["CORP-CCOST"]
+        notes = row["notes"]
         self.assertEqual(row["license_or_access"], "CC BY-NC-SA 4.0; non-commercial use only")
-        self.assertIn("6.2 GB", row["notes"])
-        self.assertIn("TextGrid", row["notes"])
-        self.assertIn("not bundled", row["notes"])
-        self.assertIn("10.5281/zenodo.17366698", row["notes"])
-        self.assertIn("10.63317/3ds35jijmgrx", row["notes"])
-        self.assertIn("manual correction by trained native Thai research assistants", row["notes"])
-        self.assertIn("no formal inter-annotator agreement measures", row["notes"])
-        self.assertIn("CCOST_manual.pdf inspected 2026-11-01", row["notes"])
-        self.assertIn("LREC 2026 paper specifies intended tiers ORT", row["notes"])
-        self.assertIn("X-SAMPA", row["notes"])
-        self.assertIn("tone numerals _1=Mid, _2=Low, _3=Falling, _4=High, _5=Rising", row["notes"])
-        self.assertIn("no formal inter-annotator agreement", row["notes"])
-        self.assertIn("actual released archive tier/label conformance and local sample mapping still require inspection", row["notes"])
+        self.assertIn("6.2 GB", notes)
+        self.assertIn("TextGrid-only archive", notes)
+        self.assertIn("CCOST textgrid.zip", notes)
+        self.assertIn("488/488", notes)
+        self.assertIn("3b1e3978c2b3a232dce4fdcfd137bb572ce5467f", notes)
+        self.assertIn("10.5281/zenodo.17366698", notes)
+        self.assertIn("10.63317/3ds35jijmgrx", notes)
+        self.assertIn("Manual correction by trained native Thai research assistants", notes)
+        self.assertIn("no formal inter-annotator agreement measures", notes)
+        self.assertIn("CCOST_manual.pdf inspected 2026-11-01", notes)
+        self.assertIn("Observed tiers: ORT-MAU", notes)
+        self.assertIn("X-SAMPA", notes)
+        self.assertIn("tone numerals _1=Mid, _2=Low, _3=Falling, _4=High, _5=Rising", notes)
+        self.assertIn("unsupported labels remain fail-closed", notes)
 
     def test_segmentation_sources_preserve_license_and_usage_gates(self):
         path = ROOT / "data" / "corpus_sources.csv"
@@ -86,12 +88,13 @@ class CorpusSourceRegistryTests(unittest.TestCase):
         self.assertIn("not bundled", lst20["notes"])
 
 
-    def test_global_timit_thai_is_restricted_forced_alignment_not_gold(self):
+    def test_global_timit_thai_is_excluded_by_owner_decision(self):
         path = ROOT / "data" / "corpus_sources.csv"
         with path.open("r", encoding="utf-8-sig", newline="") as stream:
             rows = {row["source_id"]: row for row in csv.DictReader(stream)}
         row = rows["CORP-GLOBAL-TIMIT-THAI"]
-        self.assertEqual(row["type"], "acoustic_speech_corpus")
+        self.assertEqual(row["type"], "deferred_excluded_by_owner_decision")
+        self.assertIn("EXCLUDED by owner decision 2026-11-05", row["notes"])
         self.assertIn("Standard Thai read speech", row["scope"])
         self.assertIn("DARPABET, not IPA", row["annotation"])
         self.assertIn("LDC User Agreement for Non-Members", row["license_or_access"])

@@ -1,15 +1,42 @@
+## Current verified checkpoint — 2026-11-05 (text-only scope)
+
+- Branch `docs/repository-audit-2026-11-04`, HEAD `2ce66a5ace012675c0d9fea06aca5ae962003092`; base `main` HEAD `56fba86b4b8be2fe4e67284355e9928108527387`. PR [#210](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/210) is OPEN, mergeable, and not merged. No mainline mutation, branch deletion, force-push, or release.
+- Exact-head Full CI [42040828931](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42040828931) passed all three jobs (`test`, `wheel-install-smoke`, `master-artifact`). Dedicated Site API [42040828955](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42040828955) and optional external G2P smoke [42040829124](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42040829124) also passed. Local tests were not run in this connector-only session.
+- Supplied text-only archives: CCOST 488/488 TextGrids and LOTUSDIS 90/90 TextGrids parse. CI exports 178,377 orthographic intervals (CCOST 145,434; LOTUSDIS 32,943). The reviewed worklist has 1,975 rows; all 11 reviewer/adjudicator fields are blank. CI asserts `audio_members_read=0`; no audio was read, extracted, hashed, or required.
+- CCOST worklist: `_8` appears 868 times at tier level (397 exact file/interval groups; 438 file/interval/raw-label events; 22 strings; 119 files). Generic MAUS permits suffixes `_1`–`_9`, but the CCOST paper maps only `_1`–`_5`; `_8` remains unmapped for CCOST and is not guessed. Unknown markers `<P>`, `<P:>`, `<:p>`, `<Fail>` remain fail-closed; `<notProcessedChunk>` is a documented processing failure, not a phone.
+- **Owner scope:** text and phonetic transcription only. Global TIMIT acquisition and all audio/acoustic work are DEFERRED/OUT OF SCOPE. Broad-phonemic text-based review remains possible; narrow surface/acoustic claims are not in scope.
+- **Remaining evidence gates:** two independent qualified Thai reviewers plus a separate adjudicator; independent Ukrainian-native target-form review; authoritative CCOST-specific clarification/recovery for unresolved markers and `_8`; resolve CCOST controlled-wordlist A–D discrepancy; hands-on accessibility review. FastThaiG2P optional dependency use is permitted with notices; bulk vendoring of mixed dictionary/TLTK fallback data remains restricted by component-level provenance/licensing.
+- **Readiness:** ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY. CI proves software/packaging contracts, not pronunciation accuracy. Independent IPA gold rows remain 0; linguistic accuracy remains NOT_MEASURED.
+
+This checkpoint supersedes earlier chronological notes that say CCOST TextGrids were unavailable, that the TextGrid parser had not been tested against the supplied archives, or that audio acquisition was an active acceptance gate. Those entries remain as historical records only.
+
+---
+
 # Corpus validation
+
+## Current owner scope and supplied TextGrid evidence — 2026-11-05
+
+- **Global TIMIT Thai is excluded by owner decision.** Do not pursue LDC access, agreements, fees, labels or audio.
+- **Audio acquisition and acoustic validation are out of scope.** CI reads only `.TextGrid` members. The CCOST ZIP contains 488 TextGrids only; the LOTUSDIS ZIP contains 90 TextGrids and one `textgrid/.DS_Store` metadata entry, skipped without reading its contents.
+- **CCOST is the primary phonetic-text candidate.** All 488 supplied files parse. Observed release tiers: `ORT-MAU`, `KAN-MAU`, `KAS-MAU`, `MAU`, `MAS`, `TRN`; `-MAU` mappings to published ORT/KAN/KAS roles remain provisional pending curator confirmation.
+- **LOTUSDIS is optional transcript context only.** All 90 supplied TextGrids parse; each has one recording-named transcript IntervalTier. No phone, phoneme, toneme, IPA or X-SAMPA tier was observed.
+- `scripts/export_textgrid_text.py` exports explicitly selected orthographic intervals to provenance-rich JSONL. It preserves raw labels, interval bounds, source file/tier, archive Git blob SHA-1, license, attribution and `SOURCE_ANNOTATED_NOT_GOLD`; it never reads non-TextGrid members and does not commit generated corpus rows.
+- CI verified **178,377 exported records**: 145,434 CCOST (`ORT-MAU` + `TRN`) and 32,943 LOTUSDIS transcript intervals. The export is not committed as repository data. CI publishes the `textgrid-text-only-jsonl` artifact with the two JSONL files, a validated SHA-256 manifest and the third-party corpus notice; it is not project gold.
+- CCOST X-SAMPA conversion remains PARTIAL: 1,014 labels are unsupported after strict tag-only marker handling. The LREC 2026 paper defines `_1`–`_5`; observed `_8`, Unicode IPA-looking forms, unusual sequences and mixed tag-plus-text labels are not guessed.
+- Final exact-head CI [42015757949](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42015757949) passed on `824c09098d2869256ab8206324b3e1fa1d6d6d81`: 385 passed, 1 skipped, 1,206 subtests; Ruff, wheel-install smoke, master-artifact, 578-file inventory, 178,377-row export, manifest validation and notice upload passed. Dedicated Site API [42015757883](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42015757883) and optional external G2P smoke [42015757971](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42015757971) passed.
+
+**Acceptance ledger:** supplied TextGrid inventory/parser = DONE_VERIFIED for 578/578 files; orthographic JSONL export = DONE_VERIFIED for 178,377 records; CCOST `-MAU` tier semantics and X-SAMPA coverage = PARTIAL; independent phonetic adjudication = BLOCKED pending two qualified Thai reviewers and separate adjudicator. Independent gold rows remain 0; linguistic accuracy remains `NOT_MEASURED`.
 
 ## Purpose
 
-This repository contains validation infrastructure, not a redistributed copy of third-party corpora. A licensed/local corpus is supplied by the researcher and evaluated deterministically.
+This repository contains validation infrastructure and two owner-supplied TextGrid exports under separate file-level third-party licenses. It does not include the upstream mixed CCOST WAV+TextGrid archive or LOTUSDIS audio. Source-specific attribution and reuse terms are recorded in [third-party corpus notices](../data/THIRD-PARTY-CORPUS-NOTICES.md).
 
 ## Registered resources
 
-- **CCOST** — phonetically annotated Standard Thai resource suitable for orthography, word, syllable, phone and toneme analysis. The primary source states CC BY-NC-SA 4.0; the 6.2 GB `C-COST.zip` contains WAV audio and TextGrid annotations, while the manual, metadata, wordlist, and sentences are separate files. This repository does not redistribute the archive.
+- **CCOST** — phonetically annotated Standard Thai resource suitable for orthography, word, syllable, phone and toneme analysis. The upstream Zenodo `C-COST.zip` is a 6.2 GB WAV+TextGrid archive, but this repository contains only the owner-supplied `CCOST textgrid.zip` export (488 TextGrid members, no audio). CC BY-NC-SA 4.0 applies; non-commercial, attribution and ShareAlike conditions are mandatory.
+- **LOTUSDIS** — conversational orthographic transcript context. The supplied `nectecLOTUSDIS textgrid.zip` contains 90 transcript TextGrids and one `.DS_Store` metadata member; no audio bytes are read. The upstream dataset card declares CC BY-SA 4.0. It is not phone/IPA gold.
 - **Thai Grapheme to Phoneme Wiktionary Corpus** — Thai forms paired with IPA, suitable for broad G2P regression.
 - **Thai National Corpus II / Thai Textbook Corpus** — useful for lexical frequency and distribution checks, not substitutes for phonetic gold labels.
-
 ## Input contract
 
 The evaluator consumes JSONL. Every record requires id, thai, and source. Gold fields such as ipa and tone are optional, but a missing gold field is excluded from that metric rather than counted as correct.
@@ -225,3 +252,24 @@ python scripts/validate_adjudication_packet.py --mode blind \
 The generator checks row count, columns, empty cells and whitespace, then reports per-order unique counts, duplicates and set differences. It does not assume that A-D are identical permutations. It generates a deterministic union packet and a manifest with the source SHA-256. If any order has duplicates or a different set, the manifest status is `SOURCE_ORDER_DISCREPANCY_REQUIRES_RECONCILIATION`; do not freeze or score the sample until the source discrepancy is understood. A concordant 206-item packet is still only a candidate-blind, unadjudicated broad-phonemic review packet. Reviewers must independently supply lexical reading, boundaries, phonemic IPA, tone and vowel length.
 
 The source registry allows `CORP-CCOST-WORDLIST` only for `BROAD_PHONEMIC_IPA_GOLD_INPUT`. It cannot support broad-surface IPA or acoustic claims. The full CCOST archive source remains BLOCKED until released TextGrid tier conformance and X-SAMPA mapping are verified. Generated wordlist packets are not committed and remain subject to CC BY-NC-SA 4.0 non-commercial/share-alike terms.
+
+
+## Current text-only source policy — 2026-11-05
+
+This section supersedes earlier audio-centric candidate recommendations where they conflict.
+
+- **CCOST is the primary phonetic-text candidate.** The LREC 2026 paper describes ORT/KAN/KAS/MAU/MAS/TRN tiers and X-SAMPA tone notation. The CCOST manual was inspected on 2026-11-01; actual released TextGrid tier instances and label values still require file-level inspection. Obtain a TextGrid-only export/manual where possible. Convert X-SAMPA through a documented, tested mapping into typed IPA. The corpus is CC BY-NC-SA 4.0; retain attribution and ShareAlike, and keep it out of commercial use.
+- **FastThaiG2P is a supporting candidate source, not gold.** The pinned adapter already exists and intentionally preserves external IPA separately from phonemic/broad-surface IPA. The Apache-2.0 code may be reused with NOTICE. Keep the CC BY-SA 3.0 Wiktionary-derived subset separate from generated IPA and manual overrides; generated and unreviewed entries remain provisional. Do not import a merged dictionary or TLTK data without asset-level rights/provenance.
+- **LOTUSDIS is optional orthographic context only.** Publicly described records are utterance-level transcripts with speaker/microphone metadata, not verified phone/IPA labels. Use text only for conversational vocabulary and orthographic robustness. Do not acquire audio, compute audio hashes, or claim phone-level annotations.
+- **Global TIMIT Thai is EXCLUDED by owner decision (2026-11-05).** No LDC access, agreement, fee, audio, text-label acquisition or derived dataset work is to be pursued.
+
+### Current task ledger
+
+| Task | Status | Acceptance criterion |
+|---|---|---|
+| Global TIMIT Thai | DEFERRED / EXCLUDED | No further work; alternatives cover required research roles |
+| CCOST TextGrid-only phonetic reference | PARTIAL | Obtain text-only annotations/manual; inspect MAU/MAS values; validate X-SAMPA→typed-IPA mapping; independent stratified review |
+| FastThaiG2P selective reuse | PARTIAL | Preserve upstream pin and Apache NOTICE; separate Wiktionary subset/provenance/license; generated IPA remains provisional; TLTK asset rights resolved before redistribution |
+| LOTUSDIS text-only context | PARTIAL / OPTIONAL | Inspect public text schema and select bounded orthographic robustness use; no audio |
+
+Audio acquisition, audio-object hashes, waveform inspection, acoustic interval selection, and audio-based validation are **OUT OF SCOPE** under the current user requirement.

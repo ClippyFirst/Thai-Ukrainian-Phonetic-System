@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="Вставте тайський текст і подивіться, як його можна записати українськими літерами.">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
   <title>Тайська українською — простий запис вимови</title>
-  <link rel="stylesheet" href="src/styles.css?v=20261031-rtgs-ua-1">
+  <link rel="stylesheet" href="src/styles.css?v=20261105-pyodide-worker-1">
 </head>
 <body>
 <a class="skip-link" href="#main-content">Перейти до основного вмісту</a>
@@ -23,7 +23,7 @@
 <section class="hero">
   <p class="eyebrow">ТАЙСЬКА → УКРАЇНСЬКА</p>
   <h1>Як прочитати тайський текст українською</h1>
-  <p class="lede">Вставте слово або речення тайською. FastThaiG2P побудує IPA, а сервіс покаже її попередню практичну адаптацію українськими літерами. Це не переклад.</p>
+  <p class="lede">Вставте слово або речення тайською. FastThaiG2P працює безпосередньо у вашому браузері, будує IPA, а сервіс показує її попередню практичну адаптацію українськими літерами. Це не переклад.</p>
 </section>
 <section class="workbench" aria-labelledby="input-heading">
   <div class="section-head">
@@ -32,7 +32,7 @@
   </div>
   <label class="input-label" for="thai-input">Текст тайською</label>
   <textarea id="thai-input" lang="th" rows="3" spellcheck="false" autocomplete="off" autocapitalize="off" aria-describedby="input-hint" placeholder="Наприклад: สวัสดี"></textarea>
-  <p class="input-hint" id="input-hint">Можна вставити слово або речення. Якщо FastThaiG2P не поверне повний IPA, сервіс не перемикатиметься на інший рушій. <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>Enter</kbd> — показати результат.</p>
+  <p class="input-hint" id="input-hint">Можна вставити слово або речення. Обробка відбувається локально у браузері: введений текст не надсилається на сервер. Якщо FastThaiG2P не поверне повний IPA, сервіс не перемикатиметься на інший рушій. <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>Enter</kbd> — показати результат.</p>
   <div class="examples" aria-label="Швидкі приклади">
     <span class="examples-label">Спробуйте:</span>
     <button type="button" data-example="กา">กา</button>
@@ -43,7 +43,7 @@
     <button type="button" data-example="ใหม่">ใหม่</button>
     <button type="button" data-example="จริง">จริง</button>
   </div>
-  <div class="action-row"><button class="primary" id="analyze" type="button">Показати, як це читається <span aria-hidden="true">↗</span></button><span class="action-note">Текст надсилається на API FastThaiG2P для обробки. Не вводьте конфіденційні дані.</span></div>
+  <div class="action-row"><button class="primary" id="analyze" type="button">Показати, як це читається <span aria-hidden="true">↗</span></button><span class="action-note">Текст обробляється локально у вашому браузері й не надсилається на API.</span></div>
 </section>
 <section id="status" class="status" role="status" aria-live="polite" aria-atomic="true"></section>
 <section id="results" class="results" aria-label="Результати" aria-live="off" hidden></section>
@@ -56,7 +56,7 @@
   <div class="method-links"><a href="system.html">Як працює сервіс — просте пояснення →</a><a href="system.html#statuses">Що означають позначки біля результату →</a><a href="system.html#beta-evidence">Що саме перевірено →</a></div>
 </section>
 </main>
-<footer><span>Дослідницький проєкт «Тайська → українська»</span><a href="https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System" rel="noopener noreferrer">Вихідний код</a></footer>
-<script type="module" src="src/app.js?v=20261104-fastthaig2p-1"></script>
+<footer><span>Дослідницький проєкт «Тайська → українська»</span><a href="https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System" rel="noopener noreferrer">Вихідний код</a><a href="https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/issues/new?template=beta-feedback.yml" rel="noopener noreferrer">Зворотний зв’язок</a><a href="third-party-notices.html">Правові повідомлення</a><a href="third-party-notices.html">Ліцензії та джерела даних</a></footer>
+<script type="module" src="src/app.js?v=20261105-pyodide-worker-1"></script>
 </body>
 </html>

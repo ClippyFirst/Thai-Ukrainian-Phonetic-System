@@ -31,7 +31,7 @@ jobs:
           python-version: '3.12'
       - name: Run Python regression tests
         run: |
-          python -m pip install -e ".[dev]" fastapi==0.117.1 pythainlp==5.4.0
+          python -m pip install -e ".[dev,fastthaig2p]"
           python scripts/generate_master_table.py
           python -m unittest discover -s tests -v
       - name: Validate browser parity
@@ -60,6 +60,39 @@ jobs:
         run: node web/tests/ui-contract.test.mjs
       - name: Run static accessibility contract checks
         run: node web/tests/accessibility-contract.test.mjs
+      - name: Build self-hosted Pyodide runtime for Pages
+        run: |
+          mkdir -p build/pyodide-wheels
+          python -m pip wheel --no-deps --wheel-dir build/pyodide-wheels .
+          python -m pip download --no-deps --only-binary=:all: --dest build/pyodide-wheels pythainlp==5.4.0
+          python -m pip download --no-deps --only-binary=:all: --dest build/pyodide-wheels tzdata==2026.6
+          python scripts/slim_pythainlp_wheel.py build/pyodide-wheels/pythainlp-5.4.0-py3-none-any.whl
+          git clone https://github.com/awslabs/FastThaiG2P.git build/FastThaiG2P
+          git -C build/FastThaiG2P checkout 4e82a291b4cf2876326744c6580121e9986ad354
+          git clone https://github.com/attapol/tltk.git build/TLTK
+          git -C build/TLTK checkout 0cef4bcfbdd675f589783dd4134b87b9bb9fbb93
+          python scripts/verify_tltk_fallback_provenance.py --fastthaig2p build/FastThaiG2P --tltk build/TLTK --report build/tltk-fallback-provenance.json
+          python scripts/prepare_fastthaig2p_browser_source.py --source build/FastThaiG2P --report build/fastthaig2p-data-provenance.json
+          python -m unittest discover -s tests -p test_fastthaig2p_browser_data.py -v
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path("build/fastthaig2p-data-provenance.json").read_text())
+          assert report["retained_entries"] == report["retained_dictionary_words"]
+          assert report["retained_counts"].get("wiktionary", 0) > 0
+          assert report["excluded_counts"].get("generated", 0) > 0
+          assert "generated" not in report["retained_counts"]
+          assert "manual" not in report["retained_counts"]
+          PY
+          python -m pip wheel --no-deps --wheel-dir build/pyodide-wheels ./build/FastThaiG2P
+          npm install --no-save --no-package-lock pyodide@0.29.5
+          python scripts/build_pyodide_bundle.py \
+            --purpose pages \
+            --pyodide-dist node_modules/pyodide \
+            --wheels build/pyodide-wheels \
+            --output web/vendor \
+            --rights-manifest data/third_party/fastthaig2p-browser-bundle.json \
+            --notices-dir web/licenses
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v6
       - name: Upload Pages artifact
@@ -68,7 +101,7 @@ jobs:
           path: web
 
   deploy:
-    if: ${{ vars.FASTTHAIG2P_VERCEL_PREVIEW_VERIFIED == 'true' }}
+    if: ${{ github.ref == 'refs/heads/main' }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -78,7 +111,7 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
-      - name: Verify published plain-language service and transcription pipeline
+      - name: Verify published GitHub Pages Pyodide service and local-processing contract
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
         run: |
@@ -86,58 +119,82 @@ jobs:
           for attempt in $(seq 1 12); do
             if curl --fail --silent --show-error "$PAGE_URL" -o /tmp/deployed-index.html \
               && grep -Fq 'Як прочитати тайський текст українською' /tmp/deployed-index.html \
-              && grep -Fq 'Вставте слово або речення тайською' /tmp/deployed-index.html \
-              && grep -Fq 'Текст залишається у вашому браузері' /tmp/deployed-index.html \
+              && grep -Fq 'FastThaiG2P працює безпосередньо у вашому браузері' /tmp/deployed-index.html \
+              && grep -Fq 'Обробка відбувається локально у браузері' /tmp/deployed-index.html \
               && grep -Fq 'ТЕСТОВА ВЕРСІЯ' /tmp/deployed-index.html \
-              && grep -Fq 'Суворість інтерпретації · шкала 1–3' /tmp/deployed-index.html \
-              && grep -Fq '3 · Консервативний' /tmp/deployed-index.html \
-              && grep -Fq '1 · Евристичний' /tmp/deployed-index.html \
-              && grep -Fq '2 · Структурний' /tmp/deployed-index.html \
-              && grep -Fq 'data-example="กา"' /tmp/deployed-index.html \
-              && grep -Fq 'data-example="จริง"' /tmp/deployed-index.html \
-              && grep -Fq 'id="engine-mode"' /tmp/deployed-index.html \
-              && grep -Fq 'type="range" min="1" max="3" step="1" value="3"' /tmp/deployed-index.html \
-              && grep -Fq 'Що означає результат' /tmp/deployed-index.html \
-              && ! grep -Fq 'id="ipa-input"' /tmp/deployed-index.html \
-              && ! grep -Fq 'id="ipa-adapt"' /tmp/deployed-index.html \
-              && curl --fail --silent --show-error "$PAGE_URL/src/app.js?v=20261030-graded-scale-1" -o /tmp/deployed-app.js \
-              && curl --fail --silent --show-error "$PAGE_URL/src/styles.css?v=20261030-graded-scale-2" -o /tmp/deployed-styles.css \
-              && grep -Fq '.strictness-scale' /tmp/deployed-styles.css \
-              && grep -Fq '#engine-mode[type="range"]{display:block;width:100%;min-height:44px' /tmp/deployed-styles.css \
-              && curl --fail --silent --show-error "$PAGE_URL/src/engine.js" -o /tmp/deployed-engine.js \
-              && curl --fail --silent --show-error "$PAGE_URL/src/ipa-ua.js" -o /tmp/deployed-ipa-ua.js \
-              && curl --fail --silent --show-error "$PAGE_URL/src/rtgs-reference.js" -o /tmp/deployed-rtgs.js \
+              && grep -Fq 'id="thai-input"' /tmp/deployed-index.html \
+              && grep -Fq 'id="analyze"' /tmp/deployed-index.html \
+              && curl --fail --silent --show-error "$PAGE_URL/src/app.js?v=20261105-pyodide-worker-1" -o /tmp/deployed-app.js \
+              && curl --fail --silent --show-error "$PAGE_URL/src/fastthaig2p-worker.js" -o /tmp/deployed-worker.js \
+              && curl --fail --silent --show-error "$PAGE_URL/src/styles.css?v=20261105-pyodide-worker-1" -o /tmp/deployed-styles.css \
+              && grep -Fq 'new Worker(' /tmp/deployed-app.js \
+              && grep -Fq 'bundle-manifest.json' /tmp/deployed-worker.js \
+              && grep -Fq 'SHA-256' /tmp/deployed-worker.js \
+              && ! grep -Fq '/api/analyze' /tmp/deployed-app.js \
+              && ! grep -Fq 'cdn.jsdelivr.net' /tmp/deployed-worker.js \
+              && grep -Fq '@media(forced-colors:active)' /tmp/deployed-styles.css \
               && curl --fail --silent --show-error "$PAGE_URL/system.html" -o /tmp/deployed-system.html \
-              && grep -Fq 'Як сервіс читає тайський текст' /tmp/deployed-system.html \
-              && grep -Fq 'Шкала суворості обробки' /tmp/deployed-system.html \
-              && grep -Fq 'Технічні подробиці для дослідників' /tmp/deployed-system.html \
-              && grep -Fq 'Що вже перевірено' /tmp/deployed-system.html \
-              && grep -Fq 'не маємо незалежно перевіреного фахівцями набору' /tmp/deployed-system.html \
-              && grep -Fq 'Латинський запис' /tmp/deployed-app.js \
-              && grep -Fq '02 · Детальний запис звуків' /tmp/deployed-app.js \
-              && grep -Fq '03 · Українськими літерами' /tmp/deployed-app.js \
-              && grep -Fq 'Для частини слів сервіс зробив припущення' /tmp/deployed-app.js \
-              && grep -Fq 'Це приблизне читання' /tmp/deployed-app.js \
-              && grep -Fq 'continuous-output-value' /tmp/deployed-app.js \
-              && grep -Fq 'Показати подробиці про окремі частини' /tmp/deployed-app.js \
-              && grep -Fq 'renderRtgsTokens' /tmp/deployed-app.js \
-              && grep -Fq 'romanizeRtgsWord' /tmp/deployed-rtgs.js \
-              && grep -Fq 'IPA delimiters are mismatched' /tmp/deployed-ipa-ua.js \
-              && grep -Fq 'softSyllabify' /tmp/deployed-engine.js \
-              && grep -Fq 'UNVERIFIED_ORTHOGRAPHIC_FALLBACK' /tmp/deployed-engine.js; then
-              latin_line=$(grep -nF "continuousPanel('01 · Латинський запис'" /tmp/deployed-app.js | cut -d: -f1)
-              ipa_line=$(grep -nF "continuousPanel('02 · Детальний запис звуків'" /tmp/deployed-app.js | cut -d: -f1)
-              ukrainian_line=$(grep -nF "continuousPanel('03 · Українськими літерами'" /tmp/deployed-app.js | cut -d: -f1)
-              test "$latin_line" -lt "$ipa_line"
-              test "$ipa_line" -lt "$ukrainian_line"
-              echo "Published plain-language service and transcription pipeline verified at $PAGE_URL"
+              && grep -Fq 'Pyodide' /tmp/deployed-system.html \
+              && grep -Fq 'GitHub Pages' /tmp/deployed-system.html \
+              && grep -Fq 'не надсилається на API або зовнішній сервер' /tmp/deployed-system.html \
+              && curl --fail --silent --show-error "$PAGE_URL/vendor/bundle-manifest.json" -o /tmp/bundle-manifest.json \
+              && python - <<'PY'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+          from urllib.request import urlopen
+
+          manifest = json.loads(Path("/tmp/bundle-manifest.json").read_text())
+          assert manifest["purpose"] == "public-pages"
+          assert manifest["redistribution_approved"] is True
+          assert manifest["pyodide"]["version"] == "0.29.5"
+          expected_versions = {
+              "fastthaig2p": "0.1.0",
+              "pythainlp": "5.4.0",
+              "thai-ukrainian-phonetic-system": "0.6.1",
+              "tzdata": "2026.6",
+          }
+          assert {wheel["package"]: wheel["version"] for wheel in manifest["wheels"]} == expected_versions
+          datasets = {item["path"]: item for item in manifest["datasets"]}
+          assert "datasets/fastthaig2p-wiktionary-derived.zip" in datasets
+          dataset = datasets["datasets/fastthaig2p-wiktionary-derived.zip"]
+          dataset_bytes = urlopen(f"{os.environ['PAGE_URL'].rstrip('/')}/{dataset['path']}").read()
+          assert len(dataset_bytes) == dataset["size_bytes"]
+          assert hashlib.sha256(dataset_bytes).hexdigest() == dataset["sha256"]
+          required_notices = {
+              "licenses/Apache-2.0-FastThaiG2P.txt",
+              "licenses/NOTICE-FastThaiG2P.txt",
+              "licenses/Apache-2.0-PyThaiNLP.txt",
+              "licenses/PyThaiNLP-corpus-license.md",
+              "licenses/MPL-2.0-Pyodide.txt",
+              "licenses/Apache-2.0-tzdata.txt",
+              "licenses/BSD-3-Clause-TLTK.txt",
+              "licenses/LGPL-3.0-TLTK-repository-license.txt",
+              "licenses/CC-BY-SA-4.0.txt",
+              "licenses/MIT-Project.txt",
+          }
+          notices = {item["path"]: item for item in manifest["notices"]}
+          assert required_notices <= notices.keys()
+          base = os.environ["PAGE_URL"].rstrip("/")
+          for path, item in notices.items():
+              data = urlopen(f"{base}/{path}").read()
+              assert len(data) == item["size_bytes"], path
+              assert hashlib.sha256(data).hexdigest() == item["sha256"], path
+          page = urlopen(f"{base}/third-party-notices.html").read().decode("utf-8")
+          assert "Wiktionary" in page and "CC BY-SA 4.0" in page and "BSD-3-Clause" in page
+          assert "GNU Free Documentation License 1.3" in page
+          assert "fastthaig2p-wiktionary-derived.zip" in page
+          PY
+            then
+              for asset in pyodide.mjs pyodide.asm.js pyodide.asm.wasm python_stdlib.zip; do
+                curl --fail --silent --show-error "$PAGE_URL/vendor/pyodide/$asset" -o "/tmp/$asset"
+              done
+              echo "Published GitHub Pages Pyodide runtime and local-processing contract verified at $PAGE_URL"
               exit 0
             fi
             if [ "$attempt" -eq 12 ]; then
-              echo "Published plain-language service did not appear after 12 attempts" >&2
-              for marker in 'Як прочитати тайський текст українською' 'Вставте слово або речення тайською' 'ТЕСТОВА ВЕРСІЯ' 'Що означає результат'; do
-                grep -Fq "$marker" /tmp/deployed-index.html || echo "Missing homepage marker: $marker" >&2
-              done
+              echo "Published Pyodide service contract did not appear after 12 attempts" >&2
               exit 1
             fi
             sleep 5

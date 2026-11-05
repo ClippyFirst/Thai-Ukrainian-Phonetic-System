@@ -2,6 +2,18 @@
 
 This page is the navigation layer for the repository. It distinguishes the maintained product contract from research evidence and the chronological execution record.
 
+## Latest repository audit
+
+**Current corpus decision (2026-11-05):** Global TIMIT is excluded by owner decision. CCOST is the primary phonetic-text candidate; FastThaiG2P/Wiktionary is a provenance-separated supporting source; LOTUSDIS is optional orthographic context. See the [text-only corpus review](research/corpus-text-only-fastthaig2p-2026-11-05.md), the [CCOST label/marker review](ccost-label-review-2026-11-05.md), the [FastThaiG2P component-level license review](fastthaig2p-license-review-2026-11-05.md), [external curator clarification requests](external-review-and-source-requests.md), and current [validation matrix](validation-matrix.md).
+
+The [2026-11-04 repository audit](repository-audit-2026-11-04.md) records the live main SHA, branch/PR state, CI evidence, code/data/docs ownership, adopted engineering practices and external blockers. It is the current structural-audit snapshot; older dated entries below remain historical.
+
+## Beta release
+
+The owner-approved beta scope, known limitations, accessibility source review, and operational release checklist are maintained in [Beta release scope](beta-release-scope.md). Thai/Ukrainian external linguistic review and acoustic validation are deferred for beta; this does not establish linguistic accuracy or WCAG conformance.
+
+The owner selected a **GitHub Pages-only FastThaiG2P browser/WASM port**. Its architecture, Pyodide compatibility gate, source-filtered dictionary and current blockers are tracked in [FastThaiG2P Pyodide port](fastthaig2p-pyodide-port.md) and [FastThaiG2P data provenance](fastthaig2p-data-provenance.md); the current status is also at the top of the [validation matrix](validation-matrix.md). The public-facing [third-party notices page](../web/third-party-notices.html) lists runtime licenses and data attribution. Vercel and remote API hosting are superseded and out of scope.
+
 ## Start here
 
 1. [Project overview and user-facing capabilities](../README.md)
@@ -19,14 +31,17 @@ This page is the navigation layer for the repository. It distinguishes the maint
 | IPA contract | [IPA](ipa.md), [benchmarking and external IPA](benchmarking-and-external-ipa.md) | Typed IPA, provenance, uncertainty and comparator limits |
 | Ukrainian output | [Target layer](ukrainian-target-layer.md), [transcription methodology](ukrainian-transcription-methodology.md), [correspondence matrices](ukrainian-correspondence-matrices.md) | IPA adaptation and practical orthography |
 | RTGS | [RTGS reference/parity research](research/rtgs-parity-corpus.json), [external renderer registry](external-ipa-renderers.md) | Separate romanization route; never an IPA substitute |
-| Data and licenses | [Evidence registry](evidence.md), [corpus validation](corpus-validation.md), `data/corpus_sources.csv`, dataset-specific license notices | Provenance, permitted use and evidence grades |
-| Interfaces | [CLI and batch API](cli-batch-api.md), [web architecture](web-service-architecture.md), [web requirements](web-service-requirements.md), [FastThaiG2P site integration](fastthaig2p-site-integration.md) | Supported interfaces, single website G2P engine and deployment boundaries |
-| Research protocol | [Research protocol](research-protocol.md), [independent adjudication](independent-adjudication-protocol.md) | Reproducible evaluation and human-review gates |
+| Data and licenses | [Evidence registry](evidence.md), [corpus validation](corpus-validation.md), [CCOST text-only adapter](ccost-text-only-adapter.md), [FastThaiG2P data provenance](fastthaig2p-data-provenance.md), `data/corpus_sources.csv`, [third-party corpus notices](../data/THIRD-PARTY-CORPUS-NOTICES.md), [runtime third-party notices](../web/third-party-notices.html) | Provenance, permitted use and evidence grades |
+| Interfaces | [CLI and batch API](cli-batch-api.md), [web architecture](web-service-architecture.md), [web requirements](web-service-requirements.md), [FastThaiG2P Pyodide port](fastthaig2p-pyodide-port.md), [FastThaiG2P site integration](fastthaig2p-site-integration.md) | Supported interfaces, single website G2P engine and deployment boundaries |
+| Research protocol and literature | [Research protocol](research-protocol.md), [independent adjudication](independent-adjudication-protocol.md), [Thai G2P evaluation literature](research/thai-g2p-evaluation-literature-2026-11-03.md), [text-only corpus and FastThaiG2P rights review](research/corpus-text-only-fastthaig2p-2026-11-05.md) | Reproducible evaluation, corpus text-only rights, published-score caveats and human-review gates |
 
 ## Code and data layout
 
-- `src/thai_ukrainian/` — Python reference implementation and public API.
-- `web/src/` — browser implementation; parity with Python is a release gate.
+- `src/thai_ukrainian/` — Python reference implementation and public API; adapters/ccost.py and adapters/xsampa.py ingest CCOST TextGrid text only.
+- scripts/inspect_ccost_textgrid.py — local TextGrid tier inventory and X-SAMPA conversion report; no audio access.
+- scripts/export_textgrid_text.py — explicit orthographic interval export to provenance-rich JSONL; TextGrid members only, no audio access or gold promotion.
+- `web/src/` — browser implementation; `fastthaig2p-worker.js` runs the shared Python service in self-hosted Pyodide; parity with CPython is a release gate.
+- `web/licenses/` and `web/third-party-notices.html` — runtime license and data-attribution notices; public bundle remains gated until the rights manifest is approved.
 - `data/thai/` — runtime Thai registries and their provenance/license notices.
 - `data/ua_target_vectors.csv` — Ukrainian target feature inventory.
 - `data/benchmark/` — benchmark inputs, blind Thai and Ukrainian reviewer packets, adjudication-gold registries and diagnostic run records; evidence grades remain explicit.
@@ -66,3 +81,5 @@ Research continuation closeout: PR [#182](https://github.com/ClippyFirst/Thai-Uk
 ## 2026-11-02 — follow-up validator review
 
 PR #182 remains open on `research/independent-adjudication-gates-20261101`. A narrow-IPA-on-abstention guard was added after a test-first review: the new regression test is in commit `2852b47`, and the one-line implementation is in `e22c686`. Web Static passed on the implementation head; full CI and VISTEC were still running at the time of this snapshot. The test-only CI run was cancelled before the Python suite, so a red result is not claimed. See the newest continuation checkpoint and validation matrix for exact evidence and remaining blockers.
+
+- `scripts/build_ccost_review_worklist.py` — build the CI-published, blind CCOST label-review TSV and provenance manifest from TextGrid members only; preserves source labels and context and does not propose corrections.

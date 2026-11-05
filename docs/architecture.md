@@ -13,6 +13,10 @@ The layers are intentionally non-collapsible:
 5. **Ukrainian practical adaptation** — `ukrainian_adaptation.py` consumes the typed IPA result only. It records applied rules and neutralized features, and withholds output for unsupported IPA.
 6. **Secondary target candidates** — `ua_orthography.py` renders project-defined orthographic alternatives from supported typed IPA. `correspondence.py` separately ranks feature-space candidates using `data/ua_target_vectors.csv`; its distance is a model parameter, not a probability or the primary Ukrainian transcription path.
 
+## External phonetic-text corpus boundary
+
+CCOST TextGrid ingestion is a separate, text-only source adapter. The supplied archives contain 488 CCOST and 90 LOTUSDIS long-text TextGrid files, all structurally parsed by CI without reading audio members. The observed CCOST release tiers are ORT-MAU, KAN-MAU, KAS-MAU, MAU, MAS and TRN; the `-MAU` aliases remain provisional pending curator confirmation. The adapter preserves raw labels, tier names, interval bounds and tone metadata before producing typed provisional IPA. MAS/KAS/KAN source labels remain provisional; MAU phone-level surface labels cannot independently drive syllable-level Ukrainian adaptation. Unknown X-SAMPA and unreviewed IPA-looking labels fail closed. `scripts/export_textgrid_text.py` exports explicitly selected orthographic intervals with provenance and license metadata; it does not read audio or promote source annotations to gold.
+
 ## Separate romanization route
 
 The optional RTGS route is intentionally separate:
@@ -28,6 +32,7 @@ It is not phonetic IPA, ISO 11940 transliteration, or an input to the primary IP
 | Thai orthography and syllable parsing | `orthography.py`, `parser.py`, `special.py`, `orthographic_rules.py` | `engine.js`, `vowels.js` | `data/thai/*.csv` |
 | Phonology and tone | `phonology.py`, `contextual.py`, `tone.py` | `engine.js` | consonant, vowel, phonotactic and tone registries |
 | Typed IPA boundary | `phonetic_result.py`, `models.py` | Browser analysis result contract in `engine.js` | regression fixtures and source provenance |
+| Text-only CCOST import/export | `adapters/ccost.py`, `adapters/xsampa.py`, `scripts/inspect_ccost_textgrid.py`, `scripts/export_textgrid_text.py` | — | Praat long-text parsing, observed tier inventory, strict X-SAMPA → IPA conversion, text-only transcript export and source provenance |
 | Ukrainian IPA adaptation | `ukrainian_adaptation.py` | `ipa-ua.js` | Explicit project mapping; parity tests |
 | Text segmentation | `text.py`, `segmentation.py` | `engine.js` plus generated dictionary index | reviewed text lexicon and pinned CC0 word-boundary list |
 | RTGS | Python reference/parity script | `rtgs-reference.js`, `rtgs-ukrainian.js` | pinned RTGS source and method matrices |

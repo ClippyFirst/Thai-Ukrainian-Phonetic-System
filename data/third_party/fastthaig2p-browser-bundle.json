@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "target": "GitHub Pages static browser bundle",
+  "owner_decision": "FASTTHAIG2P_PYODIDE_BROWSER_PORT",
+  "redistribution_approved": true,
+  "status": "OWNER_APPROVED_FOR_RESEARCH_PROJECT_PUBLICATION_WITH_TLTK_SCOPE_DISCLOSED",
+  "packages": [
+    {
+      "name": "thai-ukrainian-phonetic-system",
+      "version_source": "pyproject.toml",
+      "license": "MIT",
+      "status": "CODE_LICENSE_IDENTIFIED"
+    },
+    {
+      "name": "pyodide",
+      "version": "0.29.5",
+      "license": "MPL-2.0",
+      "status": "LICENSE_NOTICE_REQUIRED"
+    },
+    {
+      "name": "fastthaig2p",
+      "source": "https://github.com/awslabs/FastThaiG2P",
+      "commit": "4e82a291b4cf2876326744c6580121e9986ad354",
+      "software_license": "Apache-2.0",
+      "runtime_data": {
+        "dict_txt": {
+          "source": "Filtered from pinned upstream ipa_metadata.json; retain only source=wiktionary",
+          "original_source_counts": {
+            "wiktionary": 13144,
+            "generated": 48957
+          },
+          "retained_words": 13144,
+          "excluded_generated_words": 48957,
+          "excluded_manual_or_unknown": "No manual or unknown source rows present in pinned runtime metadata; all are excluded by policy",
+          "status": "DONE_VERIFIED_IN_CI_42073702543"
+        },
+        "ipa_json": {
+          "source": "Filtered from pinned upstream ipa.json using per-entry source labels in ipa_metadata.json",
+          "retained_source": "wiktionary",
+          "retained_entries": 13144,
+          "excluded_generated_entries": 48957,
+          "metadata_ipa_mismatch_count": 1,
+          "metadata_ipa_mismatch_examples": [
+            "สวน"
+          ],
+          "license": "CC-BY-SA-4.0",
+          "attribution": [
+            "Wiktionary contributors",
+            "Kaikki.org / Wiktextract"
+          ],
+          "status": "DONE_VERIFIED_IN_CI_42073702543"
+        },
+        "fallback": {
+          "upstream_claim": "vendored from TLTK",
+          "code_version": "1.3.8 as stated in FastThaiG2P vendored parser header; this does not prove the source release of the data files",
+          "code_license": "BSD-3-Clause in the vendored parser file header; not a blanket license for all TLTK assets",
+          "package_release_evidence": "Pinned TLTK repository snapshot at 0cef4bcfbdd675f589783dd4134b87b9bb9fbb93 has setup.py version 1.9.1 and license='BSD-3-Clause'; root LICENSE is LGPL-3.0; LICENSE.txt contains a BSD-style module notice; stale PKG-INFO says version 1.1.7/GPLv3",
+          "asset_mapping": {
+            "identical_git_blob_matches": 5,
+            "total_assets": 6,
+            "transformed_pickle": "Verified: bz2.decompress(TLTK tltk/sylform_var.pklz) is byte-identical to FastThaiG2P data/fallback/sylform_var.pkl",
+            "verification_script": "scripts/verify_tltk_fallback_provenance.py",
+            "tltk_file_last_change_commit": "0cef4bcfbdd675f589783dd4134b87b9bb9fbb93",
+            "ci_run": 42085653176,
+            "verified_assets": 6,
+            "source_commit": "0cef4bcfbdd675f589783dd4134b87b9bb9fbb93",
+            "repository_setup_version": "1.9.1",
+            "version_caveat": "The vendored parser header says TLTK 1.3.8, while the pinned repository snapshot setup.py says 1.9.1; do not attribute the data files to release 1.3.8 without further evidence.",
+            "verifier": "scripts/verify_tltk_fallback_provenance.py",
+            "license_evidence": {
+              "parser_header": {
+                "version": "1.3.8",
+                "license": "BSD-3-Clause"
+              },
+              "pinned_repository_snapshot": {
+                "commit": "0cef4bcfbdd675f589783dd4134b87b9bb9fbb93",
+                "setup_py_version": "1.9.1",
+                "root_license": "LGPL-3.0",
+                "module_license_txt": "BSD-3-Clause-style notice",
+                "stale_pkg_info": {
+                  "version": "1.1.7",
+                  "license": "GPLv3"
+                },
+                "setup_py_license": "BSD-3-Clause"
+              },
+              "status": "AMBIGUOUS_FILE_LEVEL_LICENSE_SCOPE; preserve both LGPL and BSD notices"
+            }
+          },
+          "repository_notice_conflict": "TLTK source snapshot carries distinct root LGPL-3.0 and module BSD-style LICENSE.txt; PKG-INFO metadata is stale. Both LGPL-3.0 and BSD-3-Clause notices are preserved; exact applicability to every copied asset requires file-level legal review.",
+          "status": "DONE_VERIFIED_ASSET_TRANSFORMATIONS; LICENSE_SCOPE_PARTIAL_AMBIGUOUS"
+        }
+      },
+      "status": "SOFTWARE_LICENSE_IDENTIFIED_DATA_REDISTRIBUTION_NOT_CLEARED"
+    },
+    {
+      "name": "pythainlp",
+      "version": "5.4.0",
+      "software_license": "Apache-2.0",
+      "retained_runtime_data": {
+        "pythainlp/corpus/words_th.txt": "CC0-1.0",
+        "pythainlp/corpus/stopwords_th.txt": "CC0-1.0",
+        "pythainlp/corpus/corpus_license.md": "license/source notice"
+      },
+      "excluded_unused_corpus_assets": "37 unused corpus assets removed; only Python source, words_th.txt, stopwords_th.txt and corpus_license.md retained",
+      "status": "MINIMAL_WHEEL_SOURCE_AND_DATA_LICENSES_IDENTIFIED"
+    },
+    {
+      "name": "tzdata",
+      "version": "2026.6",
+      "license": "Apache-2.0",
+      "status": "LICENSE_NOTICE_REQUIRED"
+    }
+  ],
+  "publication_gate": [
+    "Keep the filtered Wiktionary dataset under CC BY-SA 4.0 with full legal text, contributor attribution, modification disclosure and transparent dataset ZIP.",
+    "Keep FastThaiG2P Apache-2.0/NOTICE and all ten dependency/corpus/project notices in the manifest.",
+    "Preserve both LGPL-3.0 and BSD-3-Clause TLTK notices and disclose the unresolved file-level applicability; the repository owner has approved publication for this research project.",
+    "Deploy only from main through the GitHub Pages workflow; do not use a separate API host or CDN."
+  ],
+  "notes": [
+    "Pyodide parity, filtered dictionary source counts, actual same-origin Chromium worker smoke, and TLTK fallback asset transformations passed in CI run 42085653176.",
+    "The filtered wheel retains 13,144 Wiktionary IPA records, excludes 48,957 generated records, excludes manual/unknown records by policy, and records one stale metadata value for สวน without altering the current runtime IPA.",
+    "All six TLTK fallback assets are now source/transform verified: five byte-identical; sylform_var.pkl is the exact bzip2 decompression of the TLTK 1.3.8 source asset.",
+    "The exact scope of the LGPL-3.0 root repository notice versus the BSD-3.0 TLTK 1.3.8 package/file notices remains disclosed and requires final rights review; both notices are bundled.",
+    "Public redistribution remains disabled until owner sign-off; no Pages deploy, main merge, release tag, or repository setting change was made.",
+    "Owner approval recorded 2026-11-05: public GitHub Pages publication is authorized for this research project. This is a project-scope decision, not a waiver of third-party terms; all applicable notices and the remaining TLTK file-level scope ambiguity are retained."
+  ],
+  "owner_approval": {
+    "date": "2026-11-05",
+    "scope": "Public GitHub Pages publication for this research project, as explicitly authorized by the repository owner.",
+    "note": "This project-scope approval does not alter third-party license terms. Required notices and the disclosed TLTK file-level license ambiguity remain preserved."
+  }
+}

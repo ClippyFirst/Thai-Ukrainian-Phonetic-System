@@ -49,7 +49,52 @@ Before adding a row to `data/benchmark/reviewer-qualifications.tsv`:
 7. Freeze both original submissions before any reconciliation.
 8. Appoint a separate adjudicator; preserve disagreements, abstentions and written rationales.
 
-## 2. CCOST A–D clarification request
+## 2. CCOST annotation-tier and label clarification request
+
+### Public author/curator contacts
+
+The published LREC 2026 paper lists these author contacts:
+- Cathryn Yang: cathryn_yang@sil.org
+- James Kirby: jkirby@phonetik.uni-muenchen.de
+- Pittayawat Pittayaporn: pittiyawat.p@chula.ac.th (paper spelling; ChulaSEAL's official page lists Pittayawat.P@chula.ac.th)
+- Sujinat Jitwiriyanont: sujinat.j@chula.ac.th (paper spelling; ChulaSEAL's official page lists Sujinat.J@chula.ac.th)
+
+The Zenodo record identifies Pittayawat Pittayaporn and Sujinat Jitwiriyanont as data curators and Cathryn Yang and James Kirby as data managers. These contacts are taken from the paper and institutional pages; no message has been sent by this workflow.
+
+### Copy-ready request
+
+**To:** Pittayawat Pittayaporn; Sujinat Jitwiriyanont; Cathryn Yang; James Kirby  
+**Subject:** CCOST v1.0 TextGrid clarification: -MAU tiers, _8 labels and MAUS markers
+
+Dear CCOST team,
+
+We are reviewing the public CCOST v1.0 TextGrid annotations for a research prototype on Thai-to-Ukrainian phonetic transcription. We have read the LREC 2026 paper and inspected all 488 TextGrid files in our supplied text-only archive. We have not changed source labels or inferred pronunciations for unsupported forms.
+
+The paper (§3.3–3.4) describes ORT, KAN, KAS, MAU, MAS, and TRN; it defines MAU as the phonetic-segment tier, MAS as the phonemic-syllable tier, and says phonetic/phonemic labels use X-SAMPA. The release we inspected instead contains ORT-MAU, KAN-MAU, and KAS-MAU alongside MAU, MAS, and TRN.
+
+Could you please clarify:
+
+1. **Tier names:** Why do ORT-MAU, KAN-MAU, and KAS-MAU carry the -MAU suffix? Are these export aliases for ORT, KAN, and KAS, additional MAUS-generated tiers, or a distinct tier family? Should downstream users treat them as semantically equivalent to the unsuffixed names?
+2. **_8 labels:** The paper documents only _1–_5 for Mid, Low, Falling, High, and Rising tones. We found 868 failed-conversion occurrences containing _8 across 22 distinct raw strings (including ? a_8, l {:_8 p, a_8, and {:_8). What does _8 encode in this release? Is it a MAUS/X-SAMPA convention, an unknown/unclassifiable event, an alignment artifact, or a transcription error? Should it be retained as an opaque marker or excluded from phonetic interpretation?
+3. **-MAU spelling and segmentation:** Are slash forms such as r/ and compound forms intended to represent alternatives, boundaries, or multiple phones? Is there a release-specific X-SAMPA inventory or mapping table?
+4. **Tag spellings:** The paper documents <usb> for disfluencies and <p:> for pauses; BAS documentation also defines <nib> as a non-speech event. We also found <P>, <P:>, <:p>, <Fail>, and <notProcessedChunk>. What do these exact, case-sensitive forms mean? Are they all MAUS/BAS control markers, and if so, which should be treated as non-phonetic?
+5. **Mixed labels:** We found labels combining tags with phonetic material or Thai text (for example marker-plus-phone and marker-plus-transcript strings). Should these be preserved as complete raw events, split into aligned components, or interpreted using a specific escape/serialization rule?
+6. **Unicode-looking strings:** Some failed labels contain IPA-like Unicode symbols (ɹ, ɾ, tʃ, ʔ, nˠ) despite the paper specifying X-SAMPA. Are these intentional release annotations, post-processing artifacts, or malformed entries?
+
+We recorded 1,014 tier-level failed-conversion occurrences across 116 distinct raw strings. These are not necessarily 1,014 unique speech events because aligned tiers can repeat the same event. We can provide a compact CSV of distinct labels, counts, tier names, and representative file/interval identifiers if useful.
+
+Until we receive clarification, our adapter preserves all raw strings, converts only explicitly supported X-SAMPA forms, and fails closed on unresolved markers and mixed labels. We will not interpret _8 as a sixth tone or silently strip unknown tags.
+
+Thank you for maintaining this valuable resource. Any pointer to a corrected manual, release note, or canonical MAUS export specification would also be very helpful.
+
+Best regards,  
+[Project contact]
+
+### Contact and delivery status
+
+**PREPARED — NOT SENT.** Public email addresses are verified from the paper/institutional sources. The connected tools available in this session include GitHub but no email-sending action, so no outbound message has been transmitted and no curator response has been received. Send the request from the project owner's email account; record the sent date, message ID, and any reply before changing blocked labels to verified.
+
+## 3. CCOST A–D clarification request
 
 ### Public curator contacts
 
@@ -82,7 +127,7 @@ Thank you for your help.
 Best regards,
 [Project contact]
 
-## 3. LOTUSDIS data-provider clarification request
+## 4. LOTUSDIS data-provider clarification request
 
 The immutable Hub revision for the 14 October 2025 audio upload is now resolved from the official Hugging Face commits API: `45145d7ca2286498a31958b35628ab3c1969f808`. At that revision, the Hub tree API enumerates 24 Parquet shards (17 train, 3 validation, 4 test; 13,180,732,521 bytes total). Per-shard sizes, LFS SHA-256 values, Git blob SHA-1 values, Xet hashes and the commit that last wrote each shard are recorded in `data/benchmark/lotusdis-parquet-shards.tsv`.
 
@@ -105,7 +150,7 @@ We intend to select only a clean near-field single-speaker interval and retain t
 Best regards,
 [Project contact]
 
-## 4. WCAG 2.2 AA hands-on verification protocol
+## 5. WCAG 2.2 AA hands-on verification protocol
 
 **Status: NOT RUN.** Static source assertions and selected color-pair calculations are not manual conformance evidence. Firecrawl browser credits were exhausted at the time of this run, and no local browser/assistive-technology session was available. Do not mark any criterion passed until a tester records the actual build, browser, OS, assistive technology, steps and observed result.
 
@@ -143,5 +188,37 @@ For each criterion and page, record: `test_id`, commit SHA, URL, date/time, test
 
 - No email/messaging connector is available in this execution context; no outbound invitation or curator request has been sent. This file is a prepared request pack, not evidence of contact.
 - Firecrawl has `0` remaining credits in the current billing period, so live browser interaction and manual screen-reader testing could not be performed.
-- No CCOST 6.2 GB archive bytes have been inspected. LOTUSDIS is pinned to an immutable Hub revision and its 24 Parquet shard metadata is recorded. Its official WAV/TextGrid Drive archive links are known, but access is blocked; neither those archives nor Parquet/audio bytes were downloaded. Provider-reported LFS hashes were not independently recomputed, and no individual WAV hash or clean interval is registered.
+- The owner-supplied CCOST TextGrid-only ZIP has been structurally inspected: 488/488 files parse, with actual release tiers inventoried. The owner-supplied LOTUSDIS TextGrid ZIP has 90/90 parseable transcript files. No audio member was read or extracted. Remaining CCOST source questions concern provisional `-MAU` tier aliases, `_8`, Unicode IPA-looking forms and annotation tags; these require curator/manual clarification. LOTUSDIS audio/Parquet acquisition and acoustic provenance are DEFERRED / OUT OF SCOPE by owner decision.
 - No reviewer may be registered as verified and no annotation may be fabricated to make the evaluation gate pass.
+
+
+## 2A. CCOST release-tier and label clarification — prepared, not sent
+
+**Status: PREPARED — NOT SENT.** The owner has supplied a TextGrid-only ZIP containing 488 `.TextGrid` files; CI parses all 488. The earlier request for a TextGrid-only export is superseded. This follow-up asks only for clarification of observed release-tier and label conventions.
+
+**Subject:** Clarification of CCOST TextGrid tier aliases and observed annotation labels
+
+Dear Pittayawat Pittayaporn, Cathryn Yang, Sujinat Jitwiriyanont and James Kirby,
+
+We are conducting non-commercial research on Thai phonetic transcription using the CCOST v1.0 release (Zenodo DOI 10.5281/zenodo.17366698). We have obtained a TextGrid-only export and deliberately excluded audio from our workflow.
+
+Our structural inventory contains 488 TextGrid files, matching the total recording-file count in Table 1 of the LREC 2026 paper. The files use tiers named `ORT-MAU`, `KAN-MAU`, `KAS-MAU`, `MAU`, `MAS` and `TRN`, rather than the shorter published names ORT/KAN/KAS/MAU/MAS/TRN. Could you confirm whether the `-MAU` suffixes are release-specific aliases for the corresponding orthographic/canonical tiers?
+
+We also ran a full fail-closed inventory of the phonetic tiers. It recorded 1,014 conversion-failure occurrences across 116 distinct raw label strings: 868 occurrences contain an undocumented `_8` sequence (22 distinct strings); 58 are slash/alternative forms; 26 mix a MAUS marker with phonetic or text material; 17 are non-ASCII phonetic-looking forms; 10 contain Thai script or mixed Thai/phonetic text; 14 are truncated/malformed; and 21 are other unsupported ASCII sequences. Failures occur in MAU (276), MAS (263), KAS-MAU (239), and KAN-MAU (236). These are tier-level occurrences, not 1,014 unique speech events. We preserve every raw label and do not guess conversions.
+
+We also observed labels that are not explained by the paper's five-tone table:
+
+1. `_8` tone suffixes (for example `? a_8`, `a_8` and `{:_8`), although the paper documents only `_1`–`_5` for Mid/Low/Falling/High/Rising. What does `_8` mean, and should these labels be treated as unknown/unspecified rather than lexical tone?
+2. Unicode IPA-looking tokens in MAU (for example `ɹ`, `ɾ`, `tʃ`, `ʔ`) and unusual forms such as `r/`. Are these intentionally IPA rather than X-SAMPA, and is there a canonical conversion table?
+3. We understand from the paper and BAS format documentation that `<p:>` denotes pause, `<usb>` is used for speaker-produced disfluency/unintelligible events, and `<nib>` denotes a non-speech event/noise. Could you confirm these meanings for the CCOST release and explain the distinct observed tags `<notProcessedChunk>`, `<Fail>`, `<P>`, `<:p>` and `<P:>`? Should the latter be treated as errors/unknown markers? We also observe mixed marker-plus-Thai-text and marker-plus-phone labels; should these be preserved as raw events rather than parsed as phonetic segments?
+4. Is the supplied 488-file TextGrid set complete for the v1.0 recording manifest, or are any sessions/files intentionally absent?
+5. Is the published `CCOST_manual.pdf` the current authoritative manual for the released tier schema, and is there a more detailed MAUS/PHO2SYL label inventory?
+
+We preserve all raw labels and tier names, fail closed on unsupported notation, and do not promote CCOST annotations to independently adjudicated gold. We will retain CC BY-NC-SA 4.0 attribution and ShareAlike conditions.
+
+The LREC 2026 paper lists these author contacts: cathryn_yang@sil.org, jkirby@phonetik.uni-muenchen.de, pittiyawat.p@chula.ac.th, sujinat.j@chula.ac.th.
+
+Thank you for your guidance.
+
+Best regards,
+[Project contact]

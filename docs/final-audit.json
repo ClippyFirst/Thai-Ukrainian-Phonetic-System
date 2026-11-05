@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Consolidated Thai integration PR #199 and follow-up PRs #200–#203 are merged. Current main before this documentation refresh is a65b0d24ccb4f1eb2720d800a17578d552f067a2; exact-head CI 41901296995 passed test, wheel-install-smoke and master-artifact. No open PRs remain. Linguistic accuracy remains NOT_MEASURED; research prototype, not release-ready.",
+  "status": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -91,7 +91,12 @@
     "source_pinned_article_word_lexicon_for_continuous_text_challenge",
     "exact_text_lexicon_anchor_in_opt_in_word_segmented_pipeline",
     "row_level_word_segmented_token_details_in_challenge_diagnostic_artifact",
-    "browser_python_article_phrase_parity_regressions"
+    "browser_python_article_phrase_parity_regressions",
+    "ccost_textgrid_long_text_reader",
+    "strict_xsampa_to_ipa_adapter",
+    "ccost_numeric_tone_suffix_and_tier_preservation",
+    "typed_provisional_ccost_phonetic_result_adapter",
+    "text_only_ccost_inspection_cli"
   ],
   "not_claimed": [
     "complete_lexical_segmentation",
@@ -119,7 +124,10 @@
     "independent Ukrainian-native preference evidence",
     "CCOST actual TextGrid conformance",
     "CCOST inter-annotator agreement",
-    "acoustic phonetic accuracy"
+    "acoustic phonetic accuracy",
+    "independent_thai_expert_adjudication_of_ccost_exception_labels",
+    "recovered_original_values_for_ccost_tone_suffix_8",
+    "semantic_definitions_for_ccost_P_P_colon_colon_p_Fail_markers"
   ],
   "lexical_attestation": "Source-backed text lexicon includes ฤๅษี → รือ|สี (Thai Wiktionary oldid 1774048), ทฤษฎี → ทฺริด-สะ-ดี (en.wiktionary oldid 87195875), ประเทศ → ประ|เทศ (oldid 5722200), เป็น (oldid 5770798), หนึ่ง (oldid 5721517), and ใน (oldid 5759122). The first syllable ทฺริด is normalized only by an exact lexical respelling; no productive ทร rule is inferred. The distinct spelling ฤษี and standalone ฤๅ/ฦ/ฦๅ remain unresolved. Existing parser readings เตอร์ and เทอร์ are reachable through the curated text lexicon. All source-attested readings remain NOT_GOLD; their source registry permissions exclude phonemic and surface gold input.",
   "corpus_attestation": "993 source-annotated Wisesight word-tokenization rows (CC0-1.0; test-only, never training/tuning); pinned UD Thai TUD source snapshots under CC BY-SA 4.0 for a research-only frequency-Viterbi experiment; zero independently adjudicated IPA/tone/vowel-length gold rows.",
@@ -296,7 +304,9 @@
       "reason": "No owner-approved archive/delete policy; historical refs preserved."
     },
     "latest_checkpoint_note": "PR #189 exact branch head fba3e63deeda6e61565e0444dc4685f248dbb763 (116 ahead, 0 behind) passed exact-head Full CI 41646388428 and Web Static 41646388317 on 2026-11-03. Full CI: Ruff, 327 pytest tests, 1,185 subtests, validators, generated-artifact checks, diagnostics, IPA-UA adapter, 29 browser parity fixtures, wheel install and master artifact all passed. Linguistic accuracy remains NOT_MEASURED; independent Thai/Ukrainian adjudication and manual accessibility remain open.",
-    "python_subtests": 1164
+    "python_subtests": 1164,
+    "latest_ccost_worklist_head_status": "PENDING_EXACT_HEAD_CI_AFTER_CORRECTION",
+    "latest_ccost_worklist_local_tests": "NOT_RUN_CONNECTOR_ONLY_SESSION"
   },
   "challenge_runtime": {
     "challenge_inputs": 36,
@@ -313,7 +323,7 @@
     "rows": 351780,
     "vowel_rime_records": 41
   },
-  "latest_documentation_checkpoint": "docs/post-merge-site-release-closeout-20261102; current branch head is available from GitHub metadata.",
+  "latest_documentation_checkpoint": "docs/repository-audit-2026-11-04 (PR #210; inspected head 4b3e58a7c714e1f0a517ebf39299f974b5cf5998 passed CI run 41919548444)",
   "text_only_checkpoint": {
     "branch": "research/thai-segmentation-gold-parity-verified-20261025",
     "parent_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
@@ -359,7 +369,7 @@
   },
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
   "latest_code_checkpoint": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
-  "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY",
+  "readiness": "BETA_CANDIDATE_ENGINEERING_VERIFIED_PUBLIC_DEPLOYMENT_NOT_YET_VERIFIED",
   "latest_verified_repository_head": "d9958db0e877944e5a75183c053681cdbdd525dc",
   "task_ledger": [
     {
@@ -371,9 +381,9 @@
     {
       "id": "IPA-GOLD-001",
       "status": "BLOCKED",
-      "implementation": "Independent adjudication template and transcription-level protocol prepared; no CCOST recordings/TextGrid accessed",
-      "blocker": "Qualified independent Thai phonetician and authorized audio/TextGrid access required",
-      "acceptance": "Independent dual labels, agreed broad/surface protocol, acoustic references where claimed, disagreement log"
+      "implementation": "Independent broad-phonemic adjudication protocol and blank review templates prepared; no CCOST TextGrid sample or independent IPA rows imported.",
+      "blocker": "The supplied CCOST TextGrid-only sample is now available and parsed (488/488 files); the remaining blocker is two qualified independent Thai phonetics reviewers plus a separate adjudicator. No independent annotations or adjudication exist. Audio/narrow acoustic validation is explicitly OUT OF SCOPE.",
+      "acceptance": "Two independent qualified reviewers label broad phonemic IPA, syllable boundaries, tone and vowel length from the pinned text-only CCOST sample; record abstentions/disagreements; a separate adjudicator resolves differences. No acoustic/narrow surface validation is claimed."
     },
     {
       "id": "WALK-LEX-001",
@@ -548,11 +558,93 @@
       "status": "DONE_VERIFIED",
       "implementation": "Regression test proves that a resolved Thai token with an empty syllable list cannot be counted as complete. Test-first RED was observed on 8492d2478425a88f24827d8547c96a26d9559ac9; minimal guard implemented on 94eaadb5bda2318dfa864eee7dae1b3715b70374.",
       "acceptance": "Exact-head Full CI 41641516453 passed test/wheel-install-smoke/master-artifact; Web Static 41641516658 passed; 327 pytest tests and 1,185 subtests passed; Ruff and 29 browser parity fixtures passed. Diagnostic-only change; no linguistic accuracy claim."
+    },
+    {
+      "id": "GLOBAL-TIMIT-TEXT-ONLY-001",
+      "status": "DEFERRED",
+      "implementation": "Verified LDC2022S13 provides separate Word, Phones, Tones and TextGrid TXT assets; audio is not required for the planned text-only comparison.",
+      "blocker": "Owner explicitly excluded Global TIMIT; no further access or licensing work.",
+      "acceptance": "No further work. CCOST and selectively reusable FastThaiG2P/Wiktionary sources cover the chosen research roles."
+    },
+    {
+      "id": "LOTUSDIS-TEXT-ONLY-001",
+      "status": "DONE_VERIFIED_FOR_SUPPLIED_SAMPLE",
+      "implementation": "Owner-supplied 90-file TextGrid sample parsed; 32,943 transcript intervals exported; one recording-named orthographic transcript tier per file; no phonetic tiers observed.",
+      "blocker": null,
+      "acceptance": "Bounded orthographic context only; not phonetic gold and not a claim of full-dataset coverage. No audio."
+    },
+    {
+      "id": "CCOST-TEXTGRID-ONLY-001",
+      "status": "DONE_VERIFIED",
+      "implementation": "Owner-supplied CCOST TextGrid-only ZIP is committed; CI parsed 488/488 members without reading audio.",
+      "blocker": null,
+      "acceptance": "Structural inventory complete for supplied archive. Unsupported labels and expert interpretation remain separate evidence gates."
+    },
+    {
+      "id": "FASTTHAIG2P-SELECTIVE-REUSE-001",
+      "status": "PARTIAL_EVIDENCE_LIMITED",
+      "implementation": "Pinned optional dependency and internal candidate comparison are permitted; Apache-2.0 code/NOTICE, CC BY-SA/GFDL Wiktionary subset, generated/manual assets and TLTK fallback are provenance-separated in the rights review. No project-side bulk dictionary vendoring.",
+      "blocker": "Do not redistribute a merged dictionary or TLTK fallback data until per-component attribution and file-level rights are documented. Generated IPA and undocumented manual overrides remain provisional, never gold.",
+      "acceptance": "Continue using the pinned optional dependency with required notices; any future vendoring must isolate/attribute Wiktionary-derived entries and resolve TLTK asset rights; no generated output promoted to gold."
+    },
+    {
+      "task": "Global TIMIT Thai acquisition/reuse",
+      "status": "DEFERRED",
+      "reason": "Explicitly excluded by owner; no access, fees, agreement, audio or derived labels."
+    },
+    {
+      "task": "CCOST TextGrid-only phonetic reference",
+      "status": "PARTIAL",
+      "acceptance": "Obtain TextGrid-only export/manual; inspect actual MAU/MAS labels; convert X-SAMPA to typed IPA; independently review a stratified subset."
+    },
+    {
+      "task": "FastThaiG2P selective reuse",
+      "status": "PARTIAL",
+      "acceptance": "Reuse existing pinned adapter as provisional comparator; isolate Apache code and NOTICE from CC BY-SA Wiktionary subset; generated IPA stays provisional; resolve fallback asset rights."
+    },
+    {
+      "task": "LOTUSDIS text-only context",
+      "status": "DONE_VERIFIED_FOR_SUPPLIED_SAMPLE",
+      "acceptance": "Bounded orthographic context only; not phonetic gold and not a claim of full-dataset coverage. No audio.",
+      "implementation": "Owner-supplied 90-file TextGrid sample parsed; 32,943 transcript intervals exported; one recording-named orthographic transcript tier per file; no phonetic tiers observed.",
+      "blocker": null
+    },
+    {
+      "task": "Corpus source register text-only correction",
+      "status": "DONE_VERIFIED",
+      "evidence": "data/corpus_sources.csv updated; docs/corpus-validation.md policy/ledger appended; exact-head CI pending."
+    },
+    {
+      "id": "CORP-CCOST-XSAMPA-001",
+      "status": "PARTIAL",
+      "implementation": "Strict X-SAMPA→IPA converter, tone _1.._5, raw-label retention, explicit syllable boundaries, canonical NFD, and fail-closed unknown symbols; actual supplied corpus labels inventoried.",
+      "acceptance": "Only add mappings supported by CCOST manual/curator evidence and regression fixtures; preserve unsupported labels and do not infer _8 or normalize IPA-looking strings.",
+      "blocker": "1,014 phonetic-tier labels remain unsupported, including _8, Unicode IPA-looking variants, unusual sequences and mixed tag-plus-text labels; curator semantics not confirmed."
+    },
+    {
+      "id": "CORP-CCOST-TEXTGRID-001",
+      "status": "DONE_VERIFIED_FOR_SUPPLIED_LONG_TEXT_ARCHIVES",
+      "implementation": "Praat long-text parser and inventory verified against 488 supplied CCOST and 90 supplied LOTUSDIS TextGrids; preserves tier names, interval bounds and raw labels. CI confirms 578/578 files parse.",
+      "acceptance": "DONE for supplied long-text archives. Alternate TextGrid encodings/formats are not claimed. Base CCOST tier roles and -MAU aliases are documented from the CCOST paper and BAS tutorial; unresolved label semantics remain separately blocked.",
+      "blocker": null
+    },
+    {
+      "id": "CORP-CCOST-TEXT-EXPORT-001",
+      "status": "DONE_VERIFIED",
+      "implementation": "CI exported 178,377 provenance-rich orthographic intervals (145,434 CCOST; 32,943 LOTUSDIS), validated manifest and uploaded text-only artifact; audio members were not read.",
+      "blocker": null,
+      "acceptance": "DONE for explicit selected tiers and supplied archives. Respect CC BY-NC-SA 4.0 / CC BY-SA 4.0 terms and retain notices; no gold promotion."
+    },
+    {
+      "id": "GLOBAL-TIMIT-EXCLUSION-001",
+      "status": "DEFERRED",
+      "implementation": "Global TIMIT source is excluded by owner decision; registry test updated.",
+      "acceptance": "No further acquisition or licensing work."
     }
   ],
   "latest_implementation_branch": "fix/benchmark-error-clusters-20261102 (PR #189 open draft)",
   "latest_implementation_commit_pending_ci": "Runtime code head 94eaadb5bda2318dfa864eee7dae1b3715b70374 is exact-head verified by Full CI 41641516453 and Web Static 41641516658. The subsequent audit/matrix/handoff update is documentation-only and awaits its own exact-head verification.",
-  "current_head_status_at_audit_refresh": "Code/workflow checkpoint b6dbec7928b106f0ab52e06af33a26635df75412 passed CI 40322960615 and Web static validation 40322959844. Documentation checkpoint e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff passed full CI 40323209539 and Web static validation 40323209471. This audit-register update creates a newer documentation HEAD and requires exact-head CI/static validation before the current branch HEAD is marked green.",
+  "current_head_status_at_audit_refresh": "Branch docs/repository-audit-2026-11-04 HEAD 2ce66a5ace012675c0d9fea06aca5ae962003092; main HEAD 56fba86b4b8be2fe4e67284355e9928108527387; PR #210 OPEN and mergeable. Exact-head Full CI 42040828931 passed test, wheel-install-smoke and master-artifact; Site API 42040828955 and optional external G2P smoke 42040829124 passed. Supplied CCOST/LOTUSDIS TextGrid archives parsed 488/488 and 90/90; 178,377 orthographic intervals exported; worklist artifact inspected; audio_members_read=0. Local tests not run in connector-only session. Audio/acoustic work is out of scope by owner decision. Independent IPA gold=0; accuracy=NOT_MEASURED.",
   "current_implementation_branch": "fix/benchmark-error-clusters-20261102",
   "current_implementation_commit_before_audit_update": "e7ebb28e64afd5ec70fc136a12d6723ccebdd59e",
   "latest_documentation_checkpoint_before_audit": "e7ebb28e64afd5ec70fc136a12d6723ccebdd59e",
@@ -2123,9 +2215,9 @@
       167
     ]
   },
-  "latest_full_repository_head": "65584d9a3d3d64a8e520dbd32411bef4b0a3dd9e",
-  "latest_full_repository_head_ci_run": "41420468842",
-  "latest_full_repository_head_web_validation_run": "41420468939",
+  "latest_full_repository_head": "56fba86b4b8be2fe4e67284355e9928108527387",
+  "latest_full_repository_head_ci_run": 41918227400,
+  "latest_full_repository_head_web_validation_run": 41918227382,
   "latest_web_static_verified_code_commit": "536f03327f11d258a4e7638091797128754b6602",
   "latest_web_static_verified_code_run": "41342132990",
   "ccost_source_reconciliation_2026_10_31": {
@@ -2166,30 +2258,32 @@
     "latest_pr_head_ci_status": "See PR #169 metadata; previous exact-head run 41244614135 passed all three jobs."
   },
   "current_branch_inventory": {
-    "branch_refs": 22,
-    "prefix_counts": {
-      "chore": 2,
-      "ci": 1,
-      "docs": 4,
-      "fix": 2,
-      "main": 1,
-      "refactor": 4,
-      "research": 6,
-      "test": 1,
-      "work": 1
-    },
-    "as_of": "2026-11-03",
-    "deletions": 0,
-    "note": "22 current refs inspected. No branch deleted. Six open draft PRs: #184, #185, #186, #188, #189 and #190. #186 remains stacked on #185; #184 is a separate FastThaiG2P adapter; #188 overlaps shared source registry/audit paths; #190 is an independent accessibility contrast fix."
+    "audited_at": "2026-11-04",
+    "default_branch": "main",
+    "branches": [
+      "main",
+      "docs/repository-audit-2026-11-04"
+    ],
+    "non_main_branches": 1,
+    "open_pull_requests": 1
   },
-  "open_prs_current": [
-    "#189 — Triage G2P benchmark error clusters and recover attested lexical cases (draft; unmerged)",
-    "#190 — Fix non-text contrast for form controls (draft; unmerged; independent accessibility change)",
-    "#188 — Register Global TIMIT Thai as restricted alignment candidate (draft; unmerged)",
-    "#186 — Add conservative typed FastThaiG2P IPA boundary (draft; unmerged; based on #185)",
-    "#185 — Add optional FastThaiG2P challenge comparison spike (draft; unmerged)",
-    "#184 — Add optional FastThaiG2P adapter and same-input comparison (draft; unmerged)"
-  ],
+  "open_prs_current": {
+    "only_open_pr": [
+      210
+    ],
+    "merged_prs": [
+      199
+    ],
+    "closed_unmerged_prs": [
+      184,
+      185,
+      186,
+      188,
+      190,
+      193
+    ],
+    "note": "PR #193 was closed unmerged; the integration is present on main through PR #199, merged 2026-11-04. PR #210 remains open; no merge performed."
+  },
   "latest_pr_head_source": "PR #182 merged into main as 65584d9a3d3d64a8e520dbd32411bef4b0a3dd9e; no product PR remains open at this checkpoint.",
   "status_refresh_2026_10_31": {
     "main_sha": "8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8",
@@ -2708,11 +2802,7 @@
     "exact_regression_test_ci_result": "PASSED_ALL_3_JOBS"
   },
   "open_prs": [
-    "#189 — Triage G2P benchmark error clusters and recover attested lexical cases (draft; unmerged)",
-    "#188 — Register Global TIMIT Thai as restricted alignment candidate (draft; unmerged)",
-    "#186 — Add conservative typed FastThaiG2P IPA boundary (draft; unmerged; based on #185)",
-    "#185 — Add optional FastThaiG2P challenge comparison spike (draft; unmerged)",
-    "#184 — Add optional FastThaiG2P adapter and same-input comparison (draft; unmerged)"
+    "#210 — docs: audit repository structure and refresh canonical status (open; inspected head CI passed)"
   ],
   "audio_interval_overlap_code_checkpoint_2026_11_02": {
     "verified_code_head": "964b4930321e68c77ba5e956e1c0ecd12164ccfa",
@@ -3524,5 +3614,886 @@
     "open_pull_requests": 0,
     "engineering_integration": "DONE_VERIFIED",
     "release_ready": false
+  },
+  "repository_audit_2026_11_04": {
+    "audited_main": "56fba86b4b8be2fe4e67284355e9928108527387",
+    "audit_document": "docs/repository-audit-2026-11-04.md",
+    "full_ci_run": 41918227400,
+    "full_ci_status": "PASS",
+    "pages_run": 41918227410,
+    "pages_status": "PASS",
+    "web_static_run": 41918227382,
+    "web_static_status": "PASS",
+    "site_api_run": 41918227381,
+    "site_api_status": "PASS",
+    "branches": [
+      "main",
+      "docs/repository-audit-2026-11-04"
+    ],
+    "open_pull_requests": 1,
+    "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
+    "architecture_reorganization": "NOT_REQUIRED_EXISTING_STRUCTURE_HAS_CLEAR_OWNERSHIP",
+    "readme_fastthaig2p_status": "INTEGRATED_API_VERIFIED_PRODUCTION_DEPLOYMENT_BLOCKED_PENDING_DATA_RIGHTS_AND_VERIFIED_PREVIEW",
+    "linguistic_accuracy": "NOT_MEASURED",
+    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY",
+    "audit_branch": "docs/repository-audit-2026-11-04",
+    "audit_pr": 210,
+    "audit_pr_inspected_head": "4b3e58a7c714e1f0a517ebf39299f974b5cf5998",
+    "audit_branch_ci_run": 41919548444,
+    "audit_branch_ci_status": "PASS",
+    "audit_branch_ci_jobs": [
+      "test",
+      "wheel-install-smoke",
+      "master-artifact"
+    ],
+    "pr_merge_status": "OPEN_NOT_MERGED"
+  },
+  "source_code_verification_checkpoint_2026_11_05": {
+    "branch": "docs/repository-audit-2026-11-04",
+    "head": "41ef3f1e3a3e23f216ee16e6d3cfbb4244b00722",
+    "ahead_of_main": 9,
+    "behind_main": 0,
+    "base_main": "56fba86b4b8be2fe4e67284355e9928108527387",
+    "pr": 210,
+    "pr_state": "OPEN_NOT_MERGED",
+    "exact_head_ci_run": 41921113154,
+    "exact_head_ci_status": "SUCCESS",
+    "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
+    "linguistic_accuracy": "NOT_MEASURED",
+    "independently_adjudicated_ipa_gold_rows": 0,
+    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY",
+    "blockers": {
+      "thai_independent_phonetic_and_segmentation_review": "BLOCKED",
+      "ukrainian_native_target_review": "BLOCKED",
+      "global_timit_thai_ldc_written_permission": "BLOCKED",
+      "lotusdis_wav_sha256_intervals": "PARTIAL",
+      "fastthaig2p_bundled_data_rights": "BLOCKED",
+      "fastthaig2p_python_host_preview": "BLOCKED",
+      "manual_accessibility_review": "PARTIAL",
+      "ccost_textgrid_and_tier_mapping": "PARTIAL_PUBLISHED_TIER_MAP_VERIFIED_ARCHIVE_UNINSPECTED_CC_BY_NC_SA_4_0"
+    },
+    "main_changed": false,
+    "branch_deleted": false,
+    "force_push": false,
+    "release_published": false
+  },
+  "latest_documentation_checkpoint_2026_11_05": {
+    "branch": "docs/repository-audit-2026-11-04",
+    "head": "45bbd7386ede98c6fa63b015c9c7a303c436e699",
+    "implementation_checkpoint": "f9b6baf1ad3c55057051ff5652ac7827a06fd7c1",
+    "compare_ahead_of_main": 137,
+    "compare_behind_main": 0,
+    "pr": 210,
+    "pr_state": "OPEN_NOT_MERGED",
+    "exact_head_ci_run": 42018381197,
+    "exact_head_ci_status": "PASSED",
+    "wheel_install_smoke": "PASSED",
+    "test_job": "PASSED_385_1_SKIPPED_1206_SUBTESTS",
+    "reviews": 0,
+    "inline_review_threads": 0,
+    "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
+    "linguistic_accuracy": "NOT_MEASURED",
+    "independently_adjudicated_ipa_gold_rows": 0,
+    "blockers": {
+      "ccost_curator_semantics": "PARTIAL_1014_UNSUPPORTED_LABELS",
+      "thai_independent_phonetic_and_segmentation_review": "BLOCKED",
+      "ukrainian_native_target_review": "BLOCKED",
+      "fastthaig2p_bundled_data_rights": "BLOCKED",
+      "fastthaig2p_python_host_preview": "BLOCKED",
+      "manual_accessibility_review": "PARTIAL"
+    },
+    "main_changed": false,
+    "branch_deleted": false,
+    "force_push": false,
+    "release_published": false
+  },
+  "ccost_lrec_2026_tier_reconciliation": {
+    "status": "PARTIAL_PUBLISHED_TIER_MAP_VERIFIED_ARCHIVE_UNINSPECTED",
+    "paper": "Pittayaporn et al. 2026 LREC 2026",
+    "paper_url": "https://aclanthology.org/2026.lrec-1.247.pdf",
+    "zenodo_record": "https://zenodo.org/records/17366698",
+    "tiers": {
+      "ORT": "orthographic word",
+      "KAN": "canonical word pronunciation",
+      "KAS": "canonical syllabified pronunciation",
+      "MAU": "phonetic segment",
+      "MAS": "phonemic syllable",
+      "TRN": "orthographic utterance transcript"
+    },
+    "phonetic_alphabet": "X-SAMPA",
+    "tone_suffixes": {
+      "_1": "Mid",
+      "_2": "Low",
+      "_3": "Falling",
+      "_4": "High",
+      "_5": "Rising"
+    },
+    "manual_correction": "trained native Thai research assistants",
+    "formal_inter_annotator_agreement": "NOT_COLLECTED",
+    "archive_size": "6.2 GB",
+    "actual_archive_textgrid_inspected": false,
+    "manual_pdf_inspected": false,
+    "license": "CC BY-NC-SA 4.0",
+    "next_acceptance": "Inspect actual authorized TextGrid files and manual, verify tier instances/intervals and reconcile with published map; preserve CC BY-NC-SA 4.0 restrictions."
+  },
+  "fastthaig2p_rights_reconciliation": {
+    "code_license": "Apache-2.0",
+    "code_reuse": "REUSABLE_WITH_APACHE_LICENSE_NOTICE_AND_MODIFICATION_NOTICES_RETAINED",
+    "wiktionary_data_license": "CC BY-SA 3.0",
+    "wiktionary_subset": "ABOUT_13K_ENTRIES_SOURCE_FILE_SEPARATE_REUSE_POSSIBLE_WITH_ATTRIBUTION_AND_SHAREALIKE",
+    "generated_ipa": "ABOUT_49K_CLAUDE_OPUS_4_6_ENTRIES_MERGED_IN_RUNTIME_MAP; PROVISIONAL_NOT_GOLD; PROMPT_VALIDATION_500_WORDS_78_8_PERCENT_EXACT_1_8_PERCENT_FATAL_UNDER_UPSTREAM_CLASSIFICATION",
+    "manual_overrides": "PROVENANCE_AND_REVIEWER_CREDENTIALS_NOT_ESTABLISHED",
+    "tltk_code": "VENDORED_TH2IPA_SOURCE_HAS_BSD_3_CLAUSE_NOTICE",
+    "tltk_data": "BLOCKED_FILE_LEVEL_LICENSE_CLARIFICATION_REQUIRED; UPSTREAM_LICENSE_INDICATORS_CONFLICT",
+    "claimed_gold_files": "tests/ground_truth_ipa.json_AND_tests/blind_test_ipa.json_RETURN_404_ON_CURRENT_MAIN",
+    "data_rights": "PARTIAL_SELECTIVE_REUSE_PATH_IDENTIFIED",
+    "source_readme": "https://github.com/awslabs/FastThaiG2P/blob/main/data/README.md",
+    "wiktionary_source": "https://github.com/PyThaiNLP/thai-g2p-wiktionary-corpus",
+    "tltk_license_sources": [
+      "https://github.com/attapol/tltk/blob/master/LICENSE",
+      "https://github.com/attapol/tltk/blob/master/LICENSE.txt",
+      "https://github.com/attapol/tltk/blob/master/setup.py",
+      "https://pypi.org/project/tltk/"
+    ],
+    "reason": "Apache-2.0 covers FastThaiG2P code, not every bundled source dataset; Wiktionary-derived data can be reused under its own CC BY-SA 3.0 terms, generated entries remain provisional, and TLTK data assets need file-level license mapping."
+  },
+  "text_only_corpus_rights_review_2026_11_05": {
+    "scope": "TEXT_AND_PHONETIC_ANNOTATIONS_ONLY_NO_AUDIO",
+    "global_timit_thai": {
+      "status": "BLOCKED_FOR_ACCESS",
+      "catalog": "https://catalog.ldc.upenn.edu/LDC2022S13",
+      "catalog_id": "LDC2022S13",
+      "relevant_assets": [
+        "Word TXT",
+        "Phones TXT",
+        "Tones TXT",
+        "TextGrid TXT"
+      ],
+      "license": "LDC User Agreement for Non-Members",
+      "allowed_use": "Internal non-commercial linguistic education, research and technology development after signed agreement; limited excerpts in research reports",
+      "redistribution": "BULK_REDISTRIBUTION_OUTSIDE_NAMED_RESEARCH_GROUP_NOT_PERMITTED_WITH_STANDARD_AGREEMENT",
+      "audio_required": false,
+      "next_acceptance": "Ask LDC for text-only access, applicable fee, and separate permission for any small public derived phonetic test subset."
+    },
+    "lotusdis": {
+      "status": "PARTIAL_TEXT_TRANSCRIPTS_NO_PHONE_LEVEL_LABELS_ESTABLISHED",
+      "dataset": "https://huggingface.co/datasets/nectec/LOTUSDIS",
+      "paper": "https://arxiv.org/abs/2509.18722",
+      "license": "CC BY-SA 4.0",
+      "available_text_fields": [
+        "sentence",
+        "speaker_id",
+        "mic",
+        "duration"
+      ],
+      "paper_annotation": "utterance-level orthographic transcripts, speaker labels, overlap tags; no phone/IPA tier described",
+      "useful_for": [
+        "conversational vocabulary",
+        "code-switching",
+        "disfluency",
+        "orthographic robustness"
+      ],
+      "audio_required": false,
+      "audio_hash_work": "DEFERRED_OUT_OF_SCOPE"
+    },
+    "ccost": {
+      "status": "PARTIAL_PUBLISHED_PHONE_TIER_MAP_TEXTGRID_EXPORT_PENDING",
+      "paper": "https://aclanthology.org/2026.lrec-1.247.pdf",
+      "zenodo": "https://zenodo.org/records/17366698",
+      "license": "CC BY-NC-SA 4.0",
+      "tiers": {
+        "ORT": "orthographic word",
+        "KAN": "canonical word pronunciation",
+        "KAS": "canonical syllabified pronunciation",
+        "MAU": "phonetic segment",
+        "MAS": "phonemic syllable",
+        "TRN": "orthographic utterance transcript"
+      },
+      "phonetic_alphabet": "X-SAMPA",
+      "tone_suffixes": {
+        "_1": "Mid",
+        "_2": "Low",
+        "_3": "Falling",
+        "_4": "High",
+        "_5": "Rising"
+      },
+      "formal_inter_annotator_agreement": "NOT_COLLECTED",
+      "audio_required": false,
+      "next_acceptance": "Request TextGrid-only export/manual, inspect actual tier instances and intervals, independently review a stratified subset."
+    },
+    "recommendation": "Prioritize CCOST TextGrid-only; then Global TIMIT text-only under LDC agreement; LOTUSDIS optional for orthographic/conversational text; selective FastThaiG2P code and Wiktionary data reuse."
+  },
+  "research_scope_decision_2026_11_05": {
+    "global_timit": "DEFERRED_EXCLUDED_BY_OWNER; no access, fees, agreement, audio, or derived labels",
+    "ccost": "PRIMARY_PHONETIC_TEXT_CANDIDATE; TextGrid-only export and actual MAU/MAS tier inspection pending; X-SAMPA-to-typed-IPA adapter and independent review required",
+    "fastthaig2p": "SUPPORTING_CANDIDATES; Apache-2.0 code and separately licensed Wiktionary subset only; generated IPA provisional; TLTK data rights unresolved",
+    "lotusdis": "OPTIONAL_ORTHOGRAPHIC_CONTEXT; no phone-level gold; audio out of scope",
+    "audio": "OUT_OF_SCOPE"
+  },
+  "source_register_reconciliation_2026_11_05": {
+    "corpus_sources_csv": "updated; LOTUSDIS text-only optional context; Global TIMIT excluded; CCOST and Wiktionary retained",
+    "corpus_validation": "current text-only policy and acceptance ledger appended",
+    "ccost_manual": "inspected 2026-11-01 per corpus-validation record; actual released TextGrid tiers/labels still uninspected",
+    "fastthaig2p_adapter": "existing adapter preserved; external IPA remains separate and provisional",
+    "audio": "OUT_OF_SCOPE"
+  },
+  "ccost_text_only_adapter_2026_11_05": {
+    "status": "PARTIAL",
+    "code": [
+      "src/thai_ukrainian/adapters/xsampa.py",
+      "src/thai_ukrainian/adapters/ccost.py"
+    ],
+    "tests": [
+      "tests/test_xsampa_adapter.py",
+      "tests/test_ccost_textgrid_adapter.py"
+    ],
+    "tool": "scripts/inspect_ccost_textgrid.py",
+    "docs": "docs/ccost-text-only-adapter.md",
+    "synthetic_fixtures_only": true,
+    "actual_release_textgrid_inspected": false,
+    "audio_downloaded": false,
+    "tone_mapping": {
+      "_1": "mid",
+      "_2": "low",
+      "_3": "falling",
+      "_4": "high",
+      "_5": "rising"
+    },
+    "tiers": {
+      "KAN": "canonical word pronunciation",
+      "KAS": "canonical syllabified pronunciation",
+      "MAS": "phonemic syllable",
+      "MAU": "phone-level surface segment"
+    },
+    "external_blocker": "TextGrid-only export or curator-confirmed extraction path not publicly available; request prepared but not sent.",
+    "published_figure2_fixture": {
+      "source": "LREC 2026 paper, Figure 2, page 3156",
+      "word": "น่าจะ",
+      "KAN": "n a:_3 c a_2",
+      "KAS": "n a:_3 . c a_2",
+      "MAU": [
+        "n",
+        "a:_3",
+        "c",
+        "a_2"
+      ],
+      "MAS": [
+        "na:_3",
+        "ca_2"
+      ],
+      "status": "PUBLISHED_FIGURE_REGRESSION_ONLY; not a downloaded corpus TextGrid"
+    },
+    "exact_head_ci": {
+      "commit": "f8e19499c056afeb2b2532887d2887812472664d",
+      "run": 41992116524,
+      "conclusion": "success",
+      "python_tests": "376 passed, 1 skipped, 1,206 subtests passed",
+      "ruff": "passed",
+      "wheel_install_smoke": "passed",
+      "master_artifact": "passed",
+      "dedicated_site_api": "passed",
+      "optional_external_g2p_smoke": "passed"
+    }
+  },
+  "scope_decisions_2026_11_05": {
+    "global_timit": "DEFERRED_EXCLUDED_BY_OWNER",
+    "lotusdis_audio": "DEFERRED_OUT_OF_SCOPE",
+    "lotusdis_text": "OPTIONAL_ORTHOGRAPHIC_CONTEXT",
+    "ccost": "PRIMARY_PHONETIC_TEXT_CANDIDATE",
+    "audio": "OUT_OF_SCOPE"
+  },
+  "latest_exact_head_verification_2026_11_05": {
+    "branch": "docs/repository-audit-2026-11-04",
+    "commit": "45bbd7386ede98c6fa63b015c9c7a303c436e699",
+    "implementation_checkpoint": "f9b6baf1ad3c55057051ff5652ac7827a06fd7c1",
+    "base": "56fba86b4b8be2fe4e67284355e9928108527387",
+    "ahead": 137,
+    "behind": 0,
+    "pr": 210,
+    "pr_state": "OPEN_NOT_MERGED",
+    "ci_run": 42018381197,
+    "ci_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42018381197",
+    "ci_conclusion": "success",
+    "jobs": {
+      "test": "success",
+      "wheel_install_smoke": "success",
+      "master_artifact": "success"
+    },
+    "tests": {
+      "python_passed": 385,
+      "python_skipped": 1,
+      "subtests_passed": 1206,
+      "ruff": "passed",
+      "browser_python_parity_fixtures": 29
+    },
+    "skipped_test": "tests/test_fastthaig2p_site_api.py; FastAPI absent in generic dev environment",
+    "dedicated_site_api_run": 42018381263,
+    "dedicated_site_api_conclusion": "success",
+    "optional_external_g2p_smoke_run": 42018381361,
+    "optional_external_g2p_smoke_conclusion": "success",
+    "textgrid_files_parsed": 578,
+    "textgrid_export_records": 178377,
+    "ccost_records": 145434,
+    "lotusdis_records": 32943,
+    "text_only_artifact": {
+      "run_id": 42018381197,
+      "artifact_id": 13411240199,
+      "size_bytes": 12609560,
+      "sha256": "260ff20858e588f78152fdfb01d969f7160fbfc530ed2a8945758f80ee3c0fcb"
+    },
+    "unsupported_ccost_phonetic_labels": 1014,
+    "independently_adjudicated_ipa_gold_rows": 0,
+    "linguistic_accuracy": "NOT_MEASURED",
+    "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
+    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY"
+  },
+  "latest_exact_head_verification_2026_11_05_previous_824c": {
+    "branch": "docs/repository-audit-2026-11-04",
+    "commit": "f8e19499c056afeb2b2532887d2887812472664d",
+    "base": "56fba86b4b8be2fe4e67284355e9928108527387",
+    "ahead": 55,
+    "behind": 0,
+    "ci_run": 41992116524,
+    "ci_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41992116524",
+    "ci_conclusion": "success",
+    "jobs": {
+      "wheel_install_smoke": "success",
+      "test": "success",
+      "master_artifact": "success"
+    },
+    "tests": {
+      "python_passed": 376,
+      "python_skipped": 1,
+      "subtests_passed": 1206,
+      "ruff": "passed",
+      "browser_python_parity_fixtures": 29
+    },
+    "dedicated_site_api_run": 41992116526,
+    "dedicated_site_api_conclusion": "success",
+    "optional_external_g2p_smoke_run": 41992116614,
+    "optional_external_g2p_smoke_conclusion": "success",
+    "skip_reason": "tests/test_fastthaig2p_site_api.py skipped in generic dev environment because FastAPI is optional; dedicated site-api workflow installed FastAPI and passed.",
+    "local_tests": "not run; connector-only GitHub session"
+  },
+  "latest_branch_audit_2026_11_05": {
+    "branch": "docs/repository-audit-2026-11-04",
+    "head": "2ce66a5ace012675c0d9fea06aca5ae962003092",
+    "base": "56fba86b4b8be2fe4e67284355e9928108527387",
+    "pr": 210,
+    "pr_state": "OPEN_NOT_MERGED",
+    "exact_head_ci": 42040828931,
+    "exact_head_ci_status": "PASS",
+    "site_api": 42040828955,
+    "external_g2p_smoke": 42040829124,
+    "local_tests": "NOT_RUN",
+    "main_changed": false,
+    "release_published": false,
+    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY"
+  },
+  "ccost_label_review_2026_11_05": {
+    "status": "PARTIAL",
+    "report": "docs/ccost-label-review-2026-11-05.md",
+    "inspected_textgrids": 488,
+    "failed_conversion_occurrences": 1014,
+    "distinct_raw_labels": 116,
+    "failure_classes": {
+      "undocumented_underscore_8": {
+        "occurrences": 868,
+        "distinct_raw_labels": 22
+      },
+      "slash_or_alternative": {
+        "occurrences": 58,
+        "distinct_raw_labels": 27
+      },
+      "mixed_marker_text": {
+        "occurrences": 26,
+        "distinct_raw_labels": 20
+      },
+      "non_ascii_phonetic_looking": {
+        "occurrences": 17,
+        "distinct_raw_labels": 9
+      },
+      "thai_or_mixed_text": {
+        "occurrences": 10,
+        "distinct_raw_labels": 8
+      },
+      "truncated_or_malformed": {
+        "occurrences": 14,
+        "distinct_raw_labels": 13
+      },
+      "other_unsupported_ascii": {
+        "occurrences": 21,
+        "distinct_raw_labels": 17
+      }
+    },
+    "documented_markers": [
+      "<p:>",
+      "<usb>",
+      "<nib>"
+    ],
+    "unresolved_markers": [
+      "<P>",
+      "<P:>",
+      "<:p>",
+      "<Fail>",
+      "<notProcessedChunk>"
+    ],
+    "adapter_policy": "Only documented markers are skipped; all unknown tag-only and mixed labels fail closed.",
+    "gold_rows": 0,
+    "linguistic_accuracy": "NOT_MEASURED",
+    "evidence_artifact": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42018381197/artifacts/13410038957"
+  },
+  "fastthaig2p_license_review_2026_11_05": {
+    "status": "PARTIAL_BLOCKED",
+    "report": "docs/fastthaig2p-license-review-2026-11-05.md",
+    "pinned_commit": "4e82a291b4cf2876326744c6580121e9986ad354",
+    "source_code_license": "Apache-2.0",
+    "upstream_notice": "Amazon.com, Inc. or its affiliates",
+    "vendored_tltk_parser_license": "BSD-3-Clause",
+    "bundled_data": "Mixed provenance: Wiktionary/kaikki CC BY-SA and GFDL, generated IPA, manual overrides, and TLTK fallback data.",
+    "redistribution": "BLOCKED pending component-level provenance and license confirmation",
+    "project_action": "Keep as optional external dependency; do not bulk redistribute the bundled dictionary or fallback data.",
+    "notice": "Amazon.com, Inc. or its affiliates",
+    "vendored_parser_license": "BSD-3-Clause",
+    "tltk_package_license": "BSD-3-Clause from upstream TLTK 1.2.2 onward",
+    "bundled_dictionary_rights": "NO_SINGLE_BLANKET_LICENSE_FOUND",
+    "data_components": [
+      "Wiktionary/kaikki-derived IPA (~13k; CC BY-SA and GFDL)",
+      "generated IPA (~49k; Claude Opus 4.6; no separate data license statement in inspected README)",
+      "manual overrides (rights/provenance not separately stated)",
+      "TLTK fallback data (package-level BSD statement exists, but each bundled data file's provenance/rights not itemized)"
+    ]
+  },
+  "ccost_curator_contact_2026_11_05": {
+    "status": "PARTIAL_NOT_SENT",
+    "public_contacts": {
+      "Pittayawat_Pittayaporn": "Pittayawat.P@chula.ac.th",
+      "Sujinat_Jitwiriyanont": "Sujinat.J@chula.ac.th",
+      "Cathryn_Yang": "cathryn_yang@sil.org",
+      "James_Kirby": "jkirby@phonetik.uni-muenchen.de"
+    },
+    "request_document": "docs/external-review-and-source-requests.md",
+    "request_status": "PREPARED_NOT_SENT",
+    "reason": "No email-sending connector available in this session; no curator response received.",
+    "questions": [
+      "ORT-MAU/KAN-MAU/KAS-MAU suffix semantics",
+      "_8 values",
+      "case-sensitive MAUS/BAS marker variants",
+      "mixed marker/text labels",
+      "slash and Unicode-looking labels"
+    ],
+    "contact_source": "Official ChulaSEAL people page; paper's PDF contact line has a spelling variant."
+  },
+  "ccost_primary_paper_reconciliation_2026_11_05": {
+    "status": "PARTIAL; five CCOST tone categories documented, _8 remains unmapped",
+    "source": "https://aclanthology.org/2026.lrec-1.247.pdf",
+    "confirmed_tiers": {
+      "ORT": "orthographic word",
+      "KAN": "canonical word pronunciation",
+      "KAS": "canonical syllabified pronunciation",
+      "MAU": "phonetic segment",
+      "MAS": "phonemic syllable",
+      "TRN": "orthographic utterance transcript"
+    },
+    "phonetic_encoding": "X-SAMPA",
+    "documented_tones": {
+      "_1": "Mid",
+      "_2": "Low",
+      "_3": "Falling",
+      "_4": "High",
+      "_5": "Rising"
+    },
+    "unresolved": [
+      "ORT-MAU/KAN-MAU/KAS-MAU suffix semantics",
+      "_8",
+      "<P>",
+      "<P:>",
+      "<:p>",
+      "<Fail>",
+      "<notProcessedChunk>",
+      "mixed labels"
+    ]
+  },
+  "research_follow_up_2026_11_05": {
+    "branch": "docs/repository-audit-2026-11-04",
+    "source_research": {
+      "ccost_maus_tiers": "DONE_VERIFIED",
+      "ccost_not_processed_chunk": "DONE_VERIFIED",
+      "ccost_tone_suffix_8": "BLOCKED_PUBLIC_DEFINITION_NOT_FOUND",
+      "ccost_markers_P_P_colon_colon_p_Fail": "BLOCKED_PUBLIC_DEFINITION_NOT_FOUND",
+      "fastthaig2p_optional_dependency_use": "PERMITTED_PINNED_APACHE_2_0_DEPENDENCY",
+      "fastthaig2p_internal_candidate_outputs": "PERMITTED_WITH_PROVENANCE_AND_NON_GOLD_LABEL",
+      "fastthaig2p_bulk_merged_dictionary_redistribution": "PARTIAL_BLOCKED_ON_CLEAR_SOURCE_SPLIT_AND_ATTRIBUTION"
+    },
+    "evidence": [
+      "https://clarin.phonetik.uni-muenchen.de/BASWebServices/help/tutorial",
+      "https://clarin.phonetik.uni-muenchen.de/BASWebServices/help/help_examples",
+      "https://github.com/awslabs/FastThaiG2P/blob/4e82a291b4cf2876326744c6580121e9986ad354/data/README.md",
+      "https://github.com/awslabs/FastThaiG2P/blob/4e82a291b4cf2876326744c6580121e9986ad354/scripts/merge_ipa.py",
+      "https://github.com/attapol/tltk/blob/master/setup.py",
+      "https://github.com/attapol/tltk/blob/master/LICENSE.txt",
+      "https://github.com/attapol/tltk/blob/master/LICENSE"
+    ],
+    "contact_status": "NO_EMAIL_SENT; PUBLIC_SOURCES_ONLY",
+    "latest_commit_before_audit_update": "c85b32d0c1db6a2320158ab02beb8ea08ec6bb79",
+    "ccost_manual_review": "DONE_VERIFIED_WORKFLOW_GUIDE_NO_UNRESOLVED_SYMBOL_DEFINITIONS",
+    "fastthaig2p_bulk_merged_dictionary_redistribution": "PERMITTED_WITH_SOURCE_SPECIFIC_LICENSES_AND_NOTICES_NOT_VENDORED",
+    "fastthaig2p_optional_dependency_use": "PERMITTED_PINNED_APACHE_2_0_DEPENDENCY",
+    "ccost_tone_suffix_8": "BLOCKED_CCOST_SPECIFIC_MAPPING_UNKNOWN_GENERIC_MAUS_1_TO_9"
+  },
+  "ccost_review_worklist_2026_11_05": {
+    "status": "DONE_VERIFIED_ON_FINAL_BRANCH_HEAD",
+    "generator": "scripts/build_ccost_review_worklist.py",
+    "tests": "tests/test_ccost_review_worklist.py",
+    "workflow": ".github/workflows/ci.yml",
+    "artifact": "ccost-label-adjudication-worklist",
+    "scope": "All non-empty TextGrid IntervalTier labels for unresolved markers; declared CCOST phonetic tiers for X-SAMPA conversion failures. TextGrid members only; audio members are not opened.",
+    "tone_suffix_8": {
+      "tier_occurrences": 868,
+      "exact_file_interval_groups": 397,
+      "file_interval_raw_label_events": 438,
+      "distinct_raw_strings": 22,
+      "files": 119,
+      "classification": "UNMAPPED_IN_CCOST_PUBLISHED_FIVE_TONE_MAPPING; GENERIC_MAUS_SYNTAX_PERMITS_1_TO_9",
+      "intended_original_values": "UNKNOWN; no repair inferred",
+      "generic_maus_syntax": "_1.._9 permitted by BAS FAQ; _0 disallowed",
+      "ccost_paper_mapping": "_1.._5 only: Mid, Low, Falling, High, Rising",
+      "exact_interval_mapped_counterpart_groups": 14,
+      "exact_interval_mapped_counterparts_by_tier_suffix": {
+        "KAN-MAU:3": 1,
+        "MAS:2": 4,
+        "MAS:3": 4,
+        "MAU:2": 7
+      }
+    },
+    "markers_all_tiers": {
+      "unresolved_interval_count": 821,
+      "appearances": {
+        "<P>": 821,
+        "<Fail>": 24,
+        "<P:>": 4,
+        "<:p>": 22
+      },
+      "semantics": "UNRESOLVED; preserve exact spelling and case",
+      "total_marker_appearances": 871,
+      "interval_counts": {
+        "<P>": 771,
+        "<Fail>": 24,
+        "<P:>": 4,
+        "<:p>": 22
+      },
+      "unique_exact_file_interval_groups": 398,
+      "unique_groups_by_marker": {
+        "<P>": 375,
+        "<P:>": 4,
+        "<:p>": 11,
+        "<Fail>": 8
+      }
+    },
+    "documented_maus_failure": {
+      "marker": "<notProcessedChunk>",
+      "intervals": 142,
+      "appearances": 142,
+      "classification": "MAUS_PROCESSING_OR_ALIGNMENT_FAILURE_NOT_PHONETIC_VALUE"
+    },
+    "phonetic_conversion_failures": 1450,
+    "expert_fields": "BLANK",
+    "expert_review": "BLOCKED; no reviewers contacted/appointed/consented, no independent annotations or adjudication; independent IPA gold rows 0",
+    "acoustic_validation": "DEFERRED_OUT_OF_SCOPE_BY_OWNER_DECISION; no audio read or required",
+    "acceptance": {
+      "required": [
+        "exact-head Full CI PASS",
+        "inspect downloaded worklist TSV and manifest",
+        "verify asserted counts and all reviewer/adjudicator fields blank"
+      ],
+      "current": "Exact-head Full CI 42040828931 passed all three jobs; exact-head artifact 13421505387 inspected: 1,975 rows, 488 TextGrids, all 11 reviewer/adjudicator fields blank, audio_members_read=0."
+    },
+    "denominator_note": "Earlier inspector marker counts <P>=394 and <Fail>=16 are phonetic-tier-only; the worklist scans all tiers, so its counts are not directly comparable.",
+    "exact_head_ci": {
+      "sha": "43fa978d440bc654645a10430ac54962bd790582",
+      "run": 42039619729,
+      "conclusion": "success",
+      "jobs": {
+        "test": "success",
+        "wheel_install_smoke": "success",
+        "master_artifact": "success"
+      },
+      "pytest": "395 passed, 1 skipped, 1211 subtests passed",
+      "ruff": "passed",
+      "web_python_parity": "29 fixtures passed",
+      "site_api_run": 42039619784,
+      "site_api_conclusion": "success",
+      "external_g2p_smoke_run": 42039619715,
+      "external_g2p_smoke_conclusion": "success"
+    },
+    "artifact_verification": {
+      "artifact_id": 13421040388,
+      "name": "ccost-label-adjudication-worklist",
+      "records": 1975,
+      "source_textgrid_files": 488,
+      "all_11_reviewer_and_adjudicator_fields_blank": true,
+      "audio_members_read": 0
+    }
+  },
+  "thai_expert_candidate_panel_2026_11_05": {
+    "status": "PUBLIC_QUALIFICATION_SCREENING_ONLY_NOT_CONTACTED_NOT_APPOINTED",
+    "proposed_first_pass_reviewers": [
+      {
+        "name": "Chutamanee Onsuwan, Ph.D.",
+        "institution": "Thammasat University",
+        "evidence": "Official profile documents PhD on temporal relations between consonants and vowels in Thai syllables; laboratory phonetics, speech science and phonology.",
+        "url": "https://arts.tu.ac.th/th/teacherlarts/cmukv6znk0052pm61l213msd6",
+        "role": "first_pass_candidate"
+      },
+      {
+        "name": "Phanintra Teeranon, Ph.D.",
+        "institution": "University of Phayao",
+        "evidence": "Official University of Phayao profile confirms Associate Professor/current affiliation and institutional contact; public CV documents PhD in Linguistics and acoustic/perceptual Thai tone research.",
+        "url": "https://www.libarts.up.ac.th/employee/phanintra.te",
+        "role": "first_pass_candidate",
+        "institutional_email": "phanintra.te@up.ac.th"
+      }
+    ],
+    "proposed_adjudicator": {
+      "name": "Rungpat Roengpitya",
+      "institution": "Mahidol University",
+      "evidence": "Mahidol profile and peer-reviewed acoustic work on Thai tones, vowel length and fricatives.",
+      "url": "https://murex.mahidol.ac.th/en/persons/rungpat-roengpitya/",
+      "role": "separate_adjudicator_candidate",
+      "institutional_email": "rungpat.roe@mahidol.ac.th"
+    },
+    "conflict_risk_alternate": {
+      "name": "Lena Maluleem, Ph.D.",
+      "institution": "Kasetsart University",
+      "evidence": "Phonetics/phonology and prosody credentials; public coauthorship and doctoral-supervision link to CCOST author Pittayawat Pittayaporn.",
+      "url": "https://ling.human.ku.ac.th/index.php/lyna_cv/",
+      "status": "DO_NOT_COUNT_AS_INDEPENDENT_CCOST_REVIEWER_UNLESS_CONFLICT_ASSESSED"
+    },
+    "registry": "data/benchmark/reviewer-qualifications.tsv remains header-only",
+    "contacted": false,
+    "appointed": false,
+    "consented": false,
+    "independent_ipa_gold_rows": 0,
+    "acceptance": "Verify identity, current qualifications, Standard Thai competence, IPA/X-SAMPA familiarity, independence/conflicts, availability, consent and permission to retain evidence; obtain two frozen blind first-pass submissions and a separate adjudication record.",
+    "conflict_status": "NOT_ESTABLISHED; no CCOST paper authorship identified, but independent collaboration/supervision/financial/personal conflict declarations still required"
+  },
+  "latest_exact_head_verification_2026_11_05_final": {
+    "branch": "docs/repository-audit-2026-11-04",
+    "commit": "2ce66a5ace012675c0d9fea06aca5ae962003092",
+    "base": "56fba86b4b8be2fe4e67284355e9928108527387",
+    "pr": 210,
+    "pr_state": "OPEN_NOT_MERGED",
+    "mergeable": true,
+    "full_ci_run": 42040828931,
+    "full_ci_conclusion": "success",
+    "full_ci_jobs": {
+      "test": "success",
+      "wheel_install_smoke": "success",
+      "master_artifact": "success"
+    },
+    "site_api_run": 42040828955,
+    "site_api_conclusion": "success",
+    "optional_external_g2p_smoke_run": 42040829124,
+    "optional_external_g2p_smoke_conclusion": "success",
+    "ccost_textgrids_parsed": 488,
+    "lotusdis_textgrids_parsed": 90,
+    "orthographic_intervals_exported": 178377,
+    "ccost_intervals": 145434,
+    "lotusdis_intervals": 32943,
+    "ccost_worklist_rows": 1975,
+    "reviewer_and_adjudicator_fields_blank": 11,
+    "audio_members_read": 0,
+    "independent_ipa_gold_rows": 0,
+    "linguistic_accuracy": "NOT_MEASURED",
+    "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
+    "audio_scope": "DEFERRED_OUT_OF_SCOPE_BY_OWNER",
+    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY"
+  },
+  "owner_approved_beta_scope_2026_11_05": {
+    "decision": "BETA_RELEASE",
+    "thai_external_review": "DEFERRED_NOT_A_BETA_ACCEPTANCE_GATE",
+    "ukrainian_native_target_review": "DEFERRED_NOT_A_BETA_ACCEPTANCE_GATE",
+    "audio_and_acoustic_validation": "DEFERRED_OUT_OF_SCOPE",
+    "manual_accessibility_certification": "DEFERRED_AS_CERTIFICATION_GATE; source_review_recorded; browser_manual_checks_unverified",
+    "unknown_ccost_labels": "PARTIAL_FAIL_CLOSED; no guessed mappings",
+    "fastthaig2p_vendoring": "OWNER_APPROVED_BROWSER_PORT_IMPLEMENTED; source-filtered Pyodide wheel; public redistribution separately gated",
+    "reference_repository": "https://github.com/mfwarren/entrepreneur-claude-skills",
+    "reference_use": "SOP, product-feedback, decision-framework and landing-page communication patterns; no dedicated accessibility skill listed; no files copied",
+    "canonical_scope_document": "docs/beta-release-scope.md",
+    "beta_engineering_readiness": "BETA_CANDIDATE_ENGINEERING_VERIFIED",
+    "public_deployment_readiness": "NOT_YET_VERIFIED",
+    "last_verified_code_head": "08bad62278a7bf6ee787ccf9d4f1b45d3d6b8562",
+    "last_verified_full_ci": "42042740322",
+    "last_verified_site_api": "42042740326",
+    "last_verified_optional_external_g2p_smoke": 42085652951,
+    "documentation_head_at_decision_update": "PENDING_FINAL_DOC_COMMIT",
+    "final_documentation_head_ci": "PENDING_FINAL_HEAD_FULL_CI",
+    "release_tag_created": false,
+    "production_cutover": false,
+    "main_merged": false,
+    "feedback_path": "IMPLEMENTED_GITHUB_ISSUE_FORM",
+    "feedback_template": ".github/ISSUE_TEMPLATE/beta-feedback.yml",
+    "feedback_links": [
+      "web/index.html",
+      "web/system.html"
+    ],
+    "forced_colors_source_support": "IMPLEMENTED_IN_web/src/styles.css",
+    "forced_colors_runtime_verification": "NOT_RUN",
+    "last_verified_pyodide_run": 42086644531,
+    "last_verified_web_static_run": 42085653505,
+    "last_verified_site_api_run": 42085653055
+  },
+  "fastthaig2p_pyodide_port_2026_11_05": {
+    "owner_decision": "KEEP_FASTTHAIG2P; PYODIDE_BROWSER_WORKER; GITHUB_PAGES_ONLY",
+    "starting_branch_checkpoint": "7a2ab7434791971243dd18f80c8e3b4c70e8c2b6",
+    "branch": "docs/repository-audit-2026-11-04",
+    "pr": 210,
+    "pr_state": "OPEN_NOT_MERGED",
+    "pyodide_version": "0.29.5",
+    "upstream_fastthaig2p_commit": "4e82a291b4cf2876326744c6580121e9986ad354",
+    "python_service": "src/thai_ukrainian/fastthaig2p_service.py",
+    "cpython_pyodide_parity": {
+      "status": "DONE_VERIFIED",
+      "inputs": 4,
+      "run_id": 42086644531
+    },
+    "chromium_worker_smoke": {
+      "status": "DONE_VERIFIED",
+      "cold_and_warm": true,
+      "no_api_requests": true,
+      "no_cdn_requests": true,
+      "run_id": 42086644531
+    },
+    "pythainlp_trim": {
+      "version": "5.4.0",
+      "retained_member_bytes": 3648217,
+      "removed_assets": 37,
+      "removed_uncompressed_bytes": 64041055,
+      "retained_cc0": [
+        "words_th.txt",
+        "stopwords_th.txt"
+      ]
+    },
+    "bundle": {
+      "wheel_bytes": 8673701,
+      "pyodide_runtime_bytes": 12610023,
+      "raw_total_bytes": 21283724,
+      "raw_total_mib": 20.3
+    },
+    "integrity": "SAME_ORIGIN_MANIFEST; PINNED_PACKAGE_VERSIONS; SHA256_WHEEL_VERIFICATION",
+    "exact_head_pyodide_run": 42065750203,
+    "public_redistribution_approved": false,
+    "rights_blocker": "OWNER_APPROVAL_AND_FINAL_TLTK_BSD_VS_REPOSITORY_LGPL_SCOPE_REVIEW",
+    "pages_deploy_guard": "FASTTHAIG2P_PYODIDE_BUNDLE_READY_AND_RIGHTS_MANIFEST",
+    "pages_publication": "BLOCKED_PENDING_OWNER_APPROVAL_AND_FINAL_TLTK_LICENSE_SCOPE_REVIEW",
+    "actual_pages_performance": "NOT_MEASURED",
+    "independent_ipa_gold_rows": 0,
+    "linguistic_accuracy": "NOT_MEASURED",
+    "main_merged": false,
+    "production_cutover": false,
+    "source_filtered_dictionary": {
+      "retained_wiktionary_entries": 13144,
+      "excluded_generated_entries": 48957,
+      "excluded_manual_unknown": "By fail-closed source policy",
+      "runtime_ipa_metadata_mismatches": 1,
+      "mismatch_example": "สวน",
+      "status": "DONE_VERIFIED_IN_CI_42085653176"
+    },
+    "tltk_fallback_provenance": {
+      "tltk_code_version": "1.3.8",
+      "tltk_file_last_change_commit": "0cef4bcfbdd675f589783dd4134b87b9bb9fbb93",
+      "identical_assets": 5,
+      "total_assets": 6,
+      "transformed_pickle": "bz2.decompress(TLTK/tltk/sylform_var.pklz) == FastThaiG2P/data/fallback/sylform_var.pkl",
+      "verification_script": "scripts/verify_tltk_fallback_provenance.py",
+      "run_id": 42085653176,
+      "status": "DONE_VERIFIED_ASSET_TRANSFORMATIONS; LICENSE_SCOPE_PARTIAL",
+      "parser_header_version": "1.3.8",
+      "parser_header_license": "BSD-3-Clause",
+      "pinned_data_source_repository_commit": "0cef4bcfbdd675f589783dd4134b87b9bb9fbb93",
+      "data_source_setup_version": "1.9.1",
+      "data_source_root_license": "LGPL-3.0",
+      "data_source_module_license_txt": "BSD-3-Clause-style notice",
+      "data_source_stale_pkg_info": {
+        "version": "1.1.7",
+        "license": "GPLv3"
+      },
+      "license_scope_status": "AMBIGUOUS_FILE_LEVEL_SCOPE_REVIEW_REQUIRED",
+      "data_source_setup_license": "BSD-3-Clause"
+    },
+    "transparent_dataset_archive": {
+      "path": "vendor/datasets/fastthaig2p-wiktionary-derived.zip",
+      "contents": [
+        "dict.txt",
+        "ipa.json",
+        "browser-data-provenance.json",
+        "WIKTIONARY-ATTRIBUTION.md",
+        "CC-BY-SA-4.0.txt"
+      ],
+      "license": "CC-BY-SA-4.0",
+      "status": "DONE_VERIFIED_IN_CI_42086644531",
+      "size_bytes": 194745,
+      "live_pages_hash_check": "NOT_RUN_DEPLOYMENT_NOT_AUTHORIZED"
+    }
+  },
+  "github_pages_port_latest_exact_head": {
+    "verified_code_checkpoint": "ba22872679869371e92ab9ad511db4ed74627da2",
+    "workflows": {
+      "pyodide_compatibility": {
+        "run_id": 42090379707,
+        "status": "SUCCESS"
+      },
+      "site_api": {
+        "run_id": 42090379612,
+        "status": "SUCCESS"
+      },
+      "web_static": {
+        "run_id": 42090379866,
+        "status": "SUCCESS"
+      },
+      "optional_external_g2p_smoke": {
+        "run_id": 42090379819,
+        "status": "SUCCESS"
+      },
+      "full_ci": {
+        "run_id": 42090379627,
+        "status": "SUCCESS",
+        "jobs": {
+          "test": "SUCCESS",
+          "wheel_install_smoke": "SUCCESS",
+          "master_artifact": "SUCCESS"
+        }
+      }
+    },
+    "verified": {
+      "retained_wiktionary_entries": 13144,
+      "excluded_generated_entries": 48957,
+      "manual_and_unknown_sources": "FAIL_CLOSED",
+      "runtime_metadata_ipa_mismatch_count": 1,
+      "mismatch_example": "สวน",
+      "cpython_pyodide_parity_inputs": 4,
+      "chromium_worker_cold_and_warm": true,
+      "browser_no_api_requests": true,
+      "browser_no_cdn_requests": true,
+      "third_party_notice_files": 10,
+      "public_bundle_refused_without_rights_approval": true
+    },
+    "tltk_fallback": {
+      "verified_assets": 6,
+      "byte_identical_assets": 5,
+      "exact_bzip2_decompression_assets": 1,
+      "license_scope": "PARTIAL_AMBIGUOUS_BSD_3_VS_LGPL_3",
+      "preserve_both_notices": true
+    },
+    "public_pages": {
+      "redistribution_approved": false,
+      "deployment": "BLOCKED_PENDING_OWNER_APPROVAL_AND_TLTK_FILE_LEVEL_LICENSE_REVIEW",
+      "live_performance": "NOT_MEASURED",
+      "main_merged": false,
+      "production_cutover": false
+    },
+    "pr_210": "OPEN_UNMERGED",
+    "linguistic_accuracy": "NOT_MEASURED",
+    "independent_ipa_gold_rows": 0
   }
 }

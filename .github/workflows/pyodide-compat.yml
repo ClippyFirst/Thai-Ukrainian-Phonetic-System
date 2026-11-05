@@ -1,0 +1,148 @@
+name: FastThaiG2P Pyodide compatibility
+on:
+  push:
+    paths:
+      - "src/thai_ukrainian/**"
+      - "web/src/**"
+      - "web/index.html"
+      - "web/system.html"
+      - "web/third-party-notices.html"
+      - "web/licenses/**"
+      - "web/tests/fastthaig2p-browser.test.mjs"
+      - "scripts/fastthaig2p_pyodide_parity.py"
+      - "scripts/slim_pythainlp_wheel.py"
+      - "scripts/prepare_fastthaig2p_browser_source.py"
+      - "scripts/verify_tltk_fallback_provenance.py"
+      - "tests/test_fastthaig2p_browser_data.py"
+      - "scripts/build_pyodide_bundle.py"
+      - "data/third_party/fastthaig2p-browser-bundle.json"
+      - "web/tests/fastthaig2p-pyodide.test.mjs"
+      - "pyproject.toml"
+      - ".github/workflows/**"
+      - "scripts/validate_github_workflows.py"
+  pull_request:
+    paths:
+      - "src/thai_ukrainian/**"
+      - "web/third-party-notices.html"
+      - "web/licenses/**"
+      - "scripts/fastthaig2p_pyodide_parity.py"
+      - "scripts/prepare_fastthaig2p_browser_source.py"
+      - "scripts/verify_tltk_fallback_provenance.py"
+      - "tests/test_fastthaig2p_browser_data.py"
+      - "web/tests/fastthaig2p-pyodide.test.mjs"
+      - "pyproject.toml"
+      - ".github/workflows/pyodide-compat.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  pyodide-compat:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Validate GitHub Actions YAML and shell blocks
+        run: |
+          python -m pip install pyyaml==6.0.3
+          python scripts/validate_github_workflows.py
+      - name: Build pinned pure-Python wheels
+        run: |
+          mkdir -p build/pyodide-wheels
+          python -m pip wheel --no-deps --wheel-dir build/pyodide-wheels .
+          python -m pip download --no-deps --only-binary=:all: --dest build/pyodide-wheels pythainlp==5.4.0
+          python -m pip download --no-deps --only-binary=:all: --dest build/pyodide-wheels tzdata==2026.6
+          python scripts/slim_pythainlp_wheel.py build/pyodide-wheels/pythainlp-5.4.0-py3-none-any.whl
+          git clone https://github.com/awslabs/FastThaiG2P.git build/FastThaiG2P
+          git -C build/FastThaiG2P checkout 4e82a291b4cf2876326744c6580121e9986ad354
+          git clone https://github.com/attapol/tltk.git build/TLTK
+          git -C build/TLTK checkout 0cef4bcfbdd675f589783dd4134b87b9bb9fbb93
+          python scripts/verify_tltk_fallback_provenance.py --fastthaig2p build/FastThaiG2P --tltk build/TLTK --report build/tltk-fallback-provenance.json
+          python scripts/prepare_fastthaig2p_browser_source.py --source build/FastThaiG2P --report build/fastthaig2p-data-provenance.json
+          python -m pip wheel --no-deps --wheel-dir build/pyodide-wheels ./build/FastThaiG2P
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path("build/fastthaig2p-data-provenance.json").read_text())
+          assert report["retained_entries"] == report["retained_dictionary_words"]
+          assert report["retained_counts"].get("wiktionary", 0) > 0
+          assert report["excluded_counts"].get("generated", 0) > 0
+          assert "generated" not in report["retained_counts"]
+          PY
+          python -m unittest discover -s tests -p test_fastthaig2p_browser_data.py -v
+          test "$(find build/pyodide-wheels -maxdepth 1 -name '*.whl' | wc -l)" -eq 4
+          sha256sum build/pyodide-wheels/*.whl
+          du -h build/pyodide-wheels/*.whl
+      - name: Generate CPython reference and verify upstream pin
+        run: |
+          python -m pip install --no-deps build/pyodide-wheels/*.whl
+          python scripts/fastthaig2p_pyodide_parity.py > build/fastthaig2p-native.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          payload = json.loads(Path("build/fastthaig2p-native.json").read_text())
+          assert payload["upstream_commit"] == "4e82a291b4cf2876326744c6580121e9986ad354"
+          assert len(payload["cases"]) == 4
+          garden = next(case for case in payload["cases"] if case["input"] == "สวน")
+          assert garden["result"]["status_code"] == 200
+          assert garden["result"]["body"]["raw_ipa"] == "/sua̯n˩˩˦/"
+          PY
+      - name: Install pinned Pyodide runtime and browser runner
+        run: npm install --no-save --no-package-lock pyodide@0.29.5 playwright@1.64.1
+      - name: Run CPython versus Pyodide parity
+        run: node web/tests/fastthaig2p-pyodide.test.mjs build/pyodide-wheels build/fastthaig2p-native.json
+      - name: Stage same-origin runtime assets and integrity manifest
+        run: |
+          python scripts/build_pyodide_bundle.py \
+            --purpose ci \
+            --pyodide-dist node_modules/pyodide \
+            --wheels build/pyodide-wheels \
+            --output web/vendor \
+            --rights-manifest data/third_party/fastthaig2p-browser-bundle.json \
+            --notices-dir web/licenses
+          python - <<'PY'
+          import json
+          import zipfile
+          from pathlib import Path
+          manifest = json.loads(Path("web/vendor/bundle-manifest.json").read_text())
+          datasets = {item["path"]: item for item in manifest["datasets"]}
+          record = datasets["datasets/fastthaig2p-wiktionary-derived.zip"]
+          archive_path = Path("web/vendor") / record["path"]
+          assert archive_path.is_file()
+          with zipfile.ZipFile(archive_path) as archive:
+              assert set(archive.namelist()) == {
+                  "dict.txt", "ipa.json", "browser-data-provenance.json",
+                  "WIKTIONARY-ATTRIBUTION.md", "CC-BY-SA-4.0.txt"
+              }
+              provenance = json.loads(archive.read("browser-data-provenance.json"))
+              assert provenance["retained_entries"] == 13144
+          PY
+      - name: Verify owner-approved public Pages bundle builds
+        run: |
+          python scripts/build_pyodide_bundle.py \
+            --purpose pages \
+            --pyodide-dist node_modules/pyodide \
+            --wheels build/pyodide-wheels \
+            --output build/pages-bundle \
+            --rights-manifest data/third_party/fastthaig2p-browser-bundle.json \
+            --notices-dir web/licenses
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          manifest = json.loads(Path("build/pages-bundle/bundle-manifest.json").read_text())
+          assert manifest["purpose"] == "public-pages"
+          assert manifest["redistribution_approved"] is True
+          assert len(manifest["wheels"]) == 4
+          assert len(manifest["notices"]) >= 10
+          assert any(item["path"] == "datasets/fastthaig2p-wiktionary-derived.zip" for item in manifest["datasets"])
+          PY
+          echo "Owner-approved public Pages bundle built and manifest verified"
+      - name: Install headless Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Test the real same-origin Pyodide worker in Chromium
+        run: node web/tests/fastthaig2p-browser.test.mjs

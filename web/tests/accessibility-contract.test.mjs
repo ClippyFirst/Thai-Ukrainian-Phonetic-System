@@ -3,20 +3,31 @@ import { readFile } from "node:fs/promises";
 
 const html = await readFile(new URL("../index.html", import.meta.url), "utf8");
 const systemHtml = await readFile(new URL("../system.html", import.meta.url), "utf8");
+const noticesHtml = await readFile(new URL("../third-party-notices.html", import.meta.url), "utf8");
 const css = await readFile(new URL("../src/styles.css", import.meta.url), "utf8");
 const app = await readFile(new URL("../src/app.js", import.meta.url), "utf8");
 
 // Document language, landmarks, bypass mechanism and page-level navigation.
 assert.match(html, /<html lang="uk">/);
 assert.match(systemHtml, /<html lang="uk">/);
+assert.match(noticesHtml, /<html lang="uk">/);
 assert.match(html, /<a class="skip-link" href="#main-content">/);
 assert.match(systemHtml, /<a class="skip-link" href="#main-content">/);
+assert.match(noticesHtml, /<a class="skip-link" href="#main-content">/);
 assert.match(html, /<main[^>]+id="main-content"/);
 assert.match(systemHtml, /<main[^>]+id="main-content"/);
+assert.match(noticesHtml, /<main[^>]+id="main-content"/);
 assert.match(html, /<nav aria-label="Основна навігація">/);
 assert.match(systemHtml, /<nav aria-label="Основна навігація">/);
+assert.match(noticesHtml, /<nav aria-label="Основна навігація">/);
 assert.equal((html.match(/<h1(?:\s|>)/g) || []).length, 1, "service page must have one primary heading");
 assert.equal((systemHtml.match(/<h1(?:\s|>)/g) || []).length, 1, "method page must have one primary heading");
+assert.equal((noticesHtml.match(/<h1(?:\s|>)/g) || []).length, 1, "notices page must have one primary heading");
+assert.match(noticesHtml, /CC BY-SA 4\.0/);
+assert.match(noticesHtml, /BSD-3-Clause/);
+assert.match(noticesHtml, /Apache License 2\.0/);
+assert.match(noticesHtml, /Mozilla Public License 2\.0/);
+assert.match(noticesHtml, /MIT License/);
 
 // Every static form control has a programmatic label and its described-by targets exist.
 const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]);
@@ -90,12 +101,13 @@ for (const [foreground, background, label] of palettePairs) {
 
 console.log(JSON.stringify({
   result: "PASS",
-  static_documents: 2,
+  static_documents: 3,
   unique_service_ids: ids.length,
   wcag_aa_text_contrast_pairs: palettePairs.length,
   minimum_contrast_ratio: Math.min(...palettePairs.map(([foreground, background]) => contrast(foreground, background))),
   checked: [
     "document language and landmarks",
+    "third-party notices navigation and license references",
     "skip links and navigation names",
     "visible labels and described-by references",
     "status and result announcements",

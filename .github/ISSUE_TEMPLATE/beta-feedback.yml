@@ -1,0 +1,73 @@
+name: Beta feedback
+description: Report a beta usability issue, unexpected result, or accessibility problem.
+title: "[Beta feedback]: "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping improve the beta. Do not include personal, confidential, or otherwise sensitive text. Do not upload audio. Thai examples are optional; include only material you are permitted to share publicly.
+  - type: dropdown
+    id: category
+    attributes:
+      label: Feedback category
+      options:
+        - Unexpected Thai → IPA → Ukrainian result
+        - Unsupported input or unclear limitation
+        - Website or API error
+        - Accessibility or usability
+        - Documentation or privacy notice
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+      description: Describe the issue without including confidential content.
+      placeholder: What did you try, and what did you observe?
+    validations:
+      required: true
+  - type: textarea
+    id: example
+    attributes:
+      label: Optional public Thai example
+      description: Only include text you are allowed to share publicly. Do not include names, personal data, or private messages.
+      render: text
+    validations:
+      required: false
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect the beta to do?
+    validations:
+      required: false
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and version
+      placeholder: e.g. Firefox 132
+    validations:
+      required: false
+  - type: input
+    id: device
+    attributes:
+      label: Device / operating system
+      placeholder: e.g. Android 16, Windows 11
+    validations:
+      required: false
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: List the smallest steps that reproduce the issue.
+    validations:
+      required: false
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacy confirmation
+      options:
+        - label: I have not included personal, confidential, or sensitive information, and I have permission to share any example text publicly.
+          required: true

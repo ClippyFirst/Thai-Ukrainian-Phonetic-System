@@ -1,0 +1,203 @@
+import tempfile
+import unittest
+import zipfile
+from pathlib import Path
+
+from scripts.build_ccost_review_worklist import build_worklist
+
+
+TEXTGRID = """File type = "ooTextFile"
+Object class = "TextGrid"
+xmin = 0
+xmax = 2
+item []:
+    item [1]:
+        class = "IntervalTier"
+        name = "ORT-MAU"
+        xmin = 0
+        xmax = 2
+        intervals: size = 2
+        intervals [1]:
+            xmin = 0
+            xmax = 1
+            text = "ภาษา"
+        intervals [2]:
+            xmin = 1
+            xmax = 2
+            text = "ไทย"
+    item [2]:
+        class = "IntervalTier"
+        name = "KAN-MAU"
+        xmin = 0
+        xmax = 2
+        intervals: size = 1
+        intervals [1]:
+            xmin = 0
+            xmax = 1
+            text = "? a_8"
+    item [3]:
+        class = "IntervalTier"
+        name = "KAS-MAU"
+        xmin = 0
+        xmax = 2
+        intervals: size = 1
+        intervals [1]:
+            xmin = 0
+            xmax = 1
+            text = "? a_8"
+    item [4]:
+        class = "IntervalTier"
+        name = "MAS"
+        xmin = 0
+        xmax = 2
+        intervals: size = 2
+        intervals [1]:
+            xmin = 0
+            xmax = 1
+            text = "<P>"
+        intervals [2]:
+            xmin = 1
+            xmax = 2
+            text = "<Fail>"
+    item [5]:
+        class = "IntervalTier"
+        name = "TRN"
+        xmin = 0
+        xmax = 2
+        intervals: size = 1
+        intervals [1]:
+            xmin = 0
+            xmax = 2
+            text = "ภาษาไทย"
+    item [6]:
+        class = "IntervalTier"
+        name = "MAU"
+        xmin = 0
+        xmax = 2
+        intervals: size = 1
+        intervals [1]:
+            xmin = 0
+            xmax = 1
+            text = "<notProcessedChunk>"
+"""
+
+
+class CCOSTReviewWorklistTests(unittest.TestCase):
+    def test_groups_repeated_tier_failures_and_preserves_cross_tier_context(self):
+        with tempfile.TemporaryDirectory() as directory:
+            archive_path = Path(directory) / "ccost.zip"
+            with zipfile.ZipFile(archive_path, "w") as archive:
+                archive.writestr("labels/sample.TextGrid", TEXTGRID)
+                archive.writestr("audio/sample.wav", b"must never be read")
+            report = build_worklist([archive_path])
+
+        tone_rows = [row for row in report["records"] if "UNDOCUMENTED_CCOST_TONE_SUFFIX_8" in row["issue_types"]]
+        self.assertEqual(len(tone_rows), 2)
+        self.assertEqual(len({row["event_group_id"] for row in tone_rows}), 1)
+        self.assertEqual(report["summary"]["tone_suffix_8_occurrences"], 2)
+        self.assertEqual(report["summary"]["tone_suffix_8_event_groups"], 1)
+        self.assertEqual(report["summary"]["tone_suffix_8_unique_raw_label_events"], 1)
+        self.assertTrue(any("ภาษา" in item["label"] for item in tone_rows[0]["overlap_context"]))
+        self.assertTrue(any("ภาษาไทย" in item["label"] for item in tone_rows[0]["overlap_context"]))
+        self.assertEqual(report["archives"][0]["audio_members_skipped"], 1)
+        self.assertEqual(report["summary"]["audio_members_read"], 0)
+
+    def test_suffix_is_detected_when_followed_by_coda_without_space(self):
+        fixture = TEXTGRID.replace('text = "? a_8"', 'text = "nia_8p"', 1)
+        with tempfile.TemporaryDirectory() as directory:
+            archive_path = Path(directory) / "ccost.zip"
+            with zipfile.ZipFile(archive_path, "w") as archive:
+                archive.writestr("labels/sample.TextGrid", fixture)
+            report = build_worklist([archive_path])
+
+        row = next(row for row in report["records"] if row["raw_label"] == "nia_8p")
+        self.assertIn("UNDOCUMENTED_CCOST_TONE_SUFFIX_8", row["issue_types"])
+
+    def test_exposes_exact_interval_mapped_tone_counterparts_without_repairing(self):
+        fixture = TEXTGRID.replace('text = "<P>"', 'text = "? a_2"', 1)
+        with tempfile.TemporaryDirectory() as directory:
+            archive_path = Path(directory) / "ccost.zip"
+            with zipfile.ZipFile(archive_path, "w") as archive:
+                archive.writestr("labels/sample.TextGrid", fixture)
+            report = build_worklist([archive_path])
+
+        tone_row = next(
+            row for row in report["records"]
+            if row["raw_label"] == "? a_8" and row["tier"] == "KAN-MAU"
+        )
+        exact = [
+            item for item in tone_row["overlap_context"]
+            if item["tier"] == "MAS" and item["relation"] == "exact_interval"
+        ]
+        self.assertEqual([item["label"] for item in exact], ["? a_2"])
+        self.assertEqual(report["summary"]["tone_suffix_8_groups_with_exact_interval_mapped_tone_counterpart"], 1)
+        self.assertEqual(
+            report["summary"]["tone_suffix_8_exact_interval_mapped_tone_counterparts_by_tier_suffix"],
+            {"MAS:2": 1},
+        )
+        self.assertEqual(tone_row["proposed_xsampa"], "")
+        self.assertEqual(tone_row["decision"], "")
+
+    def test_finds_unresolved_markers_in_non_phonetic_tiers(self):
+        with tempfile.TemporaryDirectory() as directory:
+            archive_path = Path(directory) / "ccost.zip"
+            with zipfile.ZipFile(archive_path, "w") as archive:
+                archive.writestr("labels/sample.TextGrid", TEXTGRID)
+            report = build_worklist([archive_path])
+
+        marker_rows = [row for row in report["records"] if "UNRESOLVED_MARKER" in row["issue_types"]]
+        self.assertEqual({marker for row in marker_rows for marker in row["markers"]}, {"<P>", "<Fail>"})
+        self.assertEqual(report["summary"]["unresolved_marker_interval_count"], 2)
+        self.assertEqual(report["summary"]["unresolved_marker_appearances"], 2)
+        self.assertEqual(report["summary"]["markers"]["<P>"], 1)
+        self.assertEqual(report["summary"]["markers"]["<Fail>"], 1)
+        self.assertEqual(report["summary"]["marker_interval_counts"]["<P>"], 1)
+        self.assertEqual(report["summary"]["marker_interval_counts"]["<Fail>"], 1)
+        self.assertEqual(report["summary"]["unresolved_marker_event_groups"], 2)
+        self.assertEqual(
+            report["summary"]["marker_event_group_counts"],
+            {"<P>": 1, "<Fail>": 1},
+        )
+
+    def test_classifies_not_processed_chunk_as_documented_maus_failure(self):
+        with tempfile.TemporaryDirectory() as directory:
+            archive_path = Path(directory) / "ccost.zip"
+            with zipfile.ZipFile(archive_path, "w") as archive:
+                archive.writestr("labels/sample.TextGrid", TEXTGRID)
+            report = build_worklist([archive_path])
+
+        row = next(row for row in report["records"] if row["raw_label"] == "<notProcessedChunk>")
+        self.assertIn("DOCUMENTED_MAUS_PROCESSING_FAILURE", row["issue_types"])
+        self.assertNotIn("OTHER_UNSUPPORTED_XSAMPA", row["issue_types"])
+        self.assertEqual(row["known_failure_markers"], {"<notProcessedChunk>": 1})
+        self.assertEqual(report["summary"]["documented_maus_failure_marker_occurrences"], 1)
+        self.assertEqual(report["summary"]["documented_maus_failure_marker_interval_count"], 1)
+
+    def test_preserves_exact_source_label_whitespace(self):
+        fixture = TEXTGRID.replace('text = "? a_8"', 'text = "  ? a_8  "', 1)
+        with tempfile.TemporaryDirectory() as directory:
+            archive_path = Path(directory) / "ccost.zip"
+            with zipfile.ZipFile(archive_path, "w") as archive:
+                archive.writestr("labels/sample.TextGrid", fixture)
+            report = build_worklist([archive_path])
+
+        row = next(row for row in report["records"] if row["raw_label"] == "  ? a_8  ")
+        self.assertIn("UNDOCUMENTED_CCOST_TONE_SUFFIX_8", row["issue_types"])
+
+    def test_keeps_source_labels_and_blank_expert_decision_fields(self):
+        with tempfile.TemporaryDirectory() as directory:
+            archive_path = Path(directory) / "ccost.zip"
+            with zipfile.ZipFile(archive_path, "w") as archive:
+                archive.writestr("labels/sample.TextGrid", TEXTGRID)
+            report = build_worklist([archive_path])
+
+        row = next(row for row in report["records"] if row["raw_label"] == "? a_8")
+        self.assertEqual(row["raw_label"], "? a_8")
+        self.assertEqual(row["decision"], "")
+        self.assertEqual(row["proposed_xsampa"], "")
+        self.assertEqual(row["adjudicator_decision"], "")
+        self.assertIn("CC-BY-NC-SA-4.0", report["source_license"])
+
+
+if __name__ == "__main__":
+    unittest.main()

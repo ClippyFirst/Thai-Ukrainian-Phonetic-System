@@ -156,8 +156,9 @@ def adapt_phonetic_result(result: PhoneticResult) -> dict:
     ]
     if provisional:
         warnings.append(
-            "PROVISIONAL: FastThaiG2P IPA has not been independently adjudicated as "
-            "phonemic or broad-surface IPA; this Ukrainian rendering is an unvalidated candidate."
+            "PROVISIONAL: external IPA has not been independently adjudicated as an "
+            "authoritative phonemic or broad-surface reference; this Ukrainian rendering "
+            "is an unvalidated candidate."
         )
     return {
         "status": "provisional" if provisional else "adapted",

@@ -1,3 +1,116 @@
+## Owner decision — GitHub Pages-only FastThaiG2P browser port (2026-11-05)
+
+- Keep the existing pinned FastThaiG2P engine; run it through Pyodide in a module Web Worker. GitHub Pages is the only host. Vercel, remote API hosting and replacing FastThaiG2P with the legacy JavaScript research engine are out of scope.
+- Shared transport-neutral service: `src/thai_ukrainian/fastthaig2p_service.py`; FastAPI in `src/index.py` is now a thin HTTP wrapper. Browser worker calls the same function.
+- **Verified:** Pyodide 0.29.5 CPython parity and real Chromium worker cold/warm smoke passed in [42065502645](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42065502645). No API/CDN requests were made. Exact package versions and wheel SHA-256 are checked from a same-origin bundle manifest.
+- PyThaiNLP 5.4.0 slim wheel retains Python source, `words_th.txt`, `stopwords_th.txt` (CC0-1.0) and `corpus_license.md`; 37 unused corpus assets / 64,041,055 uncompressed bytes removed. Total raw bundle is 21,283,724 bytes (~20.3 MiB) before HTTP compression.
+- The Pages workflow now stages the Pyodide runtime and wheels only when `FASTTHAIG2P_PYODIDE_BUNDLE_READY == 'true'`; the bundle builder separately refuses `--purpose pages` while the rights manifest is not approved.
+- **Public redistribution is not cleared:** FastThaiG2P's merged IPA runtime file has no per-record source provenance, and fallback assets are not mapped file by file. `data/third_party/fastthaig2p-browser-bundle.json` remains `redistribution_approved: false`. Do not enable the Pages variable or publish until the manifest is evidence-backed.
+- Dedicated Pyodide workflow [42065502645](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42065502645) passed; latest exact-head run [42065750203](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42065750203) was in progress at last poll. Core CI and Site API exact-head checks still need final successful completion after the latest changes.
+- Task ledger: architecture, shared service, Pyodide parity, Chromium worker and no-API/no-CDN privacy DONE_VERIFIED; Pages public build PARTIAL; real Pages/mobile performance TODO; asset provenance PARTIAL; public deployment BLOCKED. Independent IPA gold 0; accuracy NOT_MEASURED.
+- Starting checkpoint `7a2ab7434791971243dd18f80c8e3b4c70e8c2b6`; PR #210 open/unmerged; main unchanged; no production deploy or release.
+
+---
+
+## Current verified checkpoint — 2026-11-05 (text-only scope)
+
+- Branch `docs/repository-audit-2026-11-04`, HEAD `2ce66a5ace012675c0d9fea06aca5ae962003092`; base `main` HEAD `56fba86b4b8be2fe4e67284355e9928108527387`. PR [#210](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/210) is OPEN, mergeable, and not merged. No mainline mutation, branch deletion, force-push, or release.
+- Exact-head Full CI [42040828931](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42040828931) passed all three jobs (`test`, `wheel-install-smoke`, `master-artifact`). Dedicated Site API [42040828955](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42040828955) and optional external G2P smoke [42040829124](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42040829124) also passed. Local tests were not run in this connector-only session.
+- Supplied text-only archives: CCOST 488/488 TextGrids and LOTUSDIS 90/90 TextGrids parse. CI exports 178,377 orthographic intervals (CCOST 145,434; LOTUSDIS 32,943). The reviewed worklist has 1,975 rows; all 11 reviewer/adjudicator fields are blank. CI asserts `audio_members_read=0`; no audio was read, extracted, hashed, or required.
+- CCOST worklist: `_8` appears 868 times at tier level (397 exact file/interval groups; 438 file/interval/raw-label events; 22 strings; 119 files). Generic MAUS permits suffixes `_1`–`_9`, but the CCOST paper maps only `_1`–`_5`; `_8` remains unmapped for CCOST and is not guessed. Unknown markers `<P>`, `<P:>`, `<:p>`, `<Fail>` remain fail-closed; `<notProcessedChunk>` is a documented processing failure, not a phone.
+- **Owner scope:** text and phonetic transcription only. Global TIMIT acquisition and all audio/acoustic work are DEFERRED/OUT OF SCOPE. Broad-phonemic text-based review remains possible; narrow surface/acoustic claims are not in scope.
+- **Remaining evidence gates:** two independent qualified Thai reviewers plus a separate adjudicator; independent Ukrainian-native target-form review; authoritative CCOST-specific clarification/recovery for unresolved markers and `_8`; resolve CCOST controlled-wordlist A–D discrepancy; hands-on accessibility review. FastThaiG2P optional dependency use is permitted with notices; bulk vendoring of mixed dictionary/TLTK fallback data remains restricted by component-level provenance/licensing.
+- **Readiness:** ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY. CI proves software/packaging contracts, not pronunciation accuracy. Independent IPA gold rows remain 0; linguistic accuracy remains NOT_MEASURED.
+
+This checkpoint supersedes earlier chronological notes that say CCOST TextGrids were unavailable, that the TextGrid parser had not been tested against the supplied archives, or that audio acquisition was an active acceptance gate. Those entries remain as historical records only.
+
+---
+
+## Public-source research continuation — 2026-11-05
+
+- The BAS tutorial resolves the CCOST `-MAU` tier suffixes. `ORT-MAU`, `KAN-MAU`, and `KAS-MAU` have documented MAUS/G2P meanings; remove the former curator blocker for this question.
+- BAS FAQ resolves `<notProcessedChunk>` as a dummy failure segment inserted when a MAUS chunk could not be processed. It is an alignment/processing failure, not a phone. Other unknown forms (`<P>`, `<P:>`, `<:p>`, `<Fail>`) remain fail-closed. Generic BAS/MAUS notation permits tone suffixes `_1`–`_9`; the CCOST paper maps only `_1`–`_5`. `_8` is therefore syntactically allowed in MAUS but unmapped in the published CCOST convention; its CCOST-specific meaning remains unknown.
+- FastThaiG2P source-code use remains permitted under the pinned Apache-2.0 grant with NOTICE. The browser port isolates the Wiktionary subset under CC BY-SA 4.0 and excludes generated/manual/unknown IPA. TLTK fallback transforms are verified, but the parser header says 1.3.8/BSD-3 while the data-source repository snapshot says setup.py 1.9.1/BSD-3 and contains root LGPL-3, module BSD-style LICENSE.txt and stale 1.1.7/GPLv3 PKG-INFO. Keep both notices and do not publish the full runtime until file-level TLTK license scope is resolved and the owner approves redistribution.
+- The owner declined to write/send an email. No curator contact was made; research was limited to public internet/GitHub sources. The public Zenodo `CCOST_manual.pdf` was also text-extracted and searched; it contains no definition for `_8` or `<P>`, `<P:>`, `<:p>`, `<Fail>`. BAS's general FAQ permits `_1`–`_9`; CCOST's paper maps only `_1`–`_5`. The CCOST-specific meaning of `_8` remains unknown.
+- Current acceptance gates unchanged: expert-adjudicated Thai IPA/segmentation gold (0 rows), Ukrainian-native target review, and manual accessibility review. Linguistic accuracy remains NOT_MEASURED.
+
+---
+
+## Latest exact-head repository verification — 2026-11-05
+
+- Branch: `docs/repository-audit-2026-11-04`; documentation checkpoint HEAD: `45bbd7386ede98c6fa63b015c9c7a303c436e699`; implementation checkpoint: `f9b6baf1ad3c55057051ff5652ac7827a06fd7c1`; base `main`: `56fba86b4b8be2fe4e67284355e9928108527387`; comparison at this checkpoint: **137 commits ahead, 0 behind**.
+- PR [#210](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/210) is **OPEN, not merged**, targets `main`, and is mergeable. No mainline change, force-push, branch deletion or release was made.
+- Exact-head Full CI [run 42018381197](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42018381197) succeeded on the documentation checkpoint HEAD. Jobs `test`, `wheel-install-smoke`, and `master-artifact` all passed. The test job reports **385 passed, 1 skipped, 1,206 subtests passed**; Ruff passed; 29 Python/browser parity fixtures passed; generated-artifact drift checks, source/reviewer packet validators, archive inspection, JSONL export, and artifact upload passed.
+- The one skip is `tests/test_fastthaig2p_site_api.py` in the generic environment because FastAPI is optional and absent there. Dedicated FastThaiG2P Site API [run 42018381263](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42018381263) passed; optional external Thai G2P smoke [run 42018381361](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42018381361) passed.
+- CI re-inspected 578/578 supplied TextGrid files and verified 178,377 orthographic JSONL rows (CCOST 145,434; LOTUSDIS 32,943). The current `textgrid-text-only-jsonl` artifact is [available from run 42018381197](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42018381197/artifacts/13411240199), 12,609,560 bytes, artifact digest `sha256:260ff20858e588f78152fdfb01d969f7160fbfc530ed2a8945758f80ee3c0fcb`. It contains text-only exports, manifest and notices; no audio is read or included.
+- Linguistic status is unchanged: independent IPA gold rows **0**; accuracy **NOT_MEASURED**. The CCOST adapter remains PARTIAL with 1,014 unsupported labels; `_8`, Unicode IPA-looking strings, unusual sequences and mixed marker/text labels remain fail-closed.
+- Current blockers: CCOST curator clarification of `-MAU` aliases and unsupported labels; two qualified independent Thai reviewers plus adjudicator; independent Ukrainian-native target review; hands-on accessibility review; FastThaiG2P bundled-data rights and Python-host preview. Global TIMIT and audio tasks remain DEFERRED/EXCLUDED by owner decision.
+- Local tests were not run in this connector-only session. The exact-head GitHub Actions evidence above is the verification record; no local checkout or local test execution is claimed.
+- Readiness: **ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY**. Software/packaging/CI gates pass, but independent linguistic and human accessibility gates remain unmet.
+
+
+---
+## Exact-head verification and current source scope — 2026-11-05
+
+- Branch: `docs/repository-audit-2026-11-04`; implementation checkpoint `f8e19499c056afeb2b2532887d2887812472664d`; exact-head CI [41992116524](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41992116524) passed all jobs: 376 Python tests passed, 1 optional FastAPI test skipped, 1,206 subtests passed; Ruff, wheel-install smoke and master-artifact passed.
+- Dedicated FastThaiG2P Site API [41992116526](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41992116526) passed; optional external G2P smoke [41992116614](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41992116614) passed.
+- The optional FastAPI test is skipped only in the generic development environment because FastAPI is not installed there; the dedicated site-api workflow installs it and passed.
+- X-SAMPA output uses canonical NFD. Spaces separate tokens but do not imply syllable boundaries; only explicit periods and CCOST numeric tone suffixes close syllables. Unknown symbols fail closed.
+- Global TIMIT is DEFERRED/EXCLUDED by owner decision. LOTUSDIS is optional orthographic text context only. Audio acquisition, hashing, acoustic review and narrow acoustic claims are OUT OF SCOPE.
+- CCOST remains the primary phonetic-text candidate. The converter/parser is engineering-verified against synthetic and published Figure 2 fixtures, but actual released TextGrid compatibility remains unverified. Zenodo lists only a mixed 6.2 GB WAV+TextGrid ZIP; no TextGrid-only archive is exposed. No archive/audio was downloaded.
+- The TextGrid-only export request is prepared but NOT SENT because no email connector is connected. Independent broad-phonemic IPA gold remains BLOCKED on TextGrid-only sample access, two qualified Thai reviewers and a separate adjudicator; gold rows 0; linguistic accuracy NOT_MEASURED.
+- PR reconciliation: PR #193 was closed unmerged; the FastThaiG2P site integration is present on `main` through PR #199, merged 2026-11-04. PRs #184–#186, #188 and #190 are closed unmerged and left untouched. PR #210 is the only currently open PR and remains unmerged. No main change, branch deletion, force-push or release was made.
+- Local tests were not run in this connector-only session; GitHub Actions is the verification evidence.
+
+---
+
+- Added regression coverage based on the published Figure 2 example: KAN and KAS multisyllabic forms, the five CCOST tone numbers, and the distinction between phonemic MAS/KAS and phone-level MAU. The actual released TextGrid files remain uninspected.
+- Corrected the provisional IPA warning so it no longer attributes all external provisional sources to FastThaiG2P; it now describes external IPA provenance generically.
+- Corrected current source scope: Global TIMIT excluded; LOTUSDIS audio is out of scope; the empty audio-assets registry is intentionally deferred.
+## Latest audit and implementation batch — 2026-11-05
+
+The owner requested a full repository audit/documentation reconciliation on the existing branch and specifically prioritized obtaining CCOST TextGrid-only materials and implementing X-SAMPA→IPA. The following work was added on docs/repository-audit-2026-11-04:
+
+- Implemented src/thai_ukrainian/adapters/xsampa.py: strict token-based X-SAMPA→IPA conversion, CCOST numeric tone suffixes, raw label retention, per-syllable boundaries, and fail-closed unknown symbols.
+- Implemented src/thai_ukrainian/adapters/ccost.py: Praat long-text TextGrid parsing; preserves tier names, interval bounds and raw labels; maps KAN/KAS/MAS to provisional typed phonemic IPA and MAU to phone-level surface IPA that cannot drive syllable-level Ukrainian adaptation.
+- Added synthetic regression tests and scripts/inspect_ccost_textgrid.py, which inspects only researcher-supplied TextGrid text and never accesses WAV.
+- Added docs/ccost-text-only-adapter.md and updated corpus selection, validation, architecture, script inventory and external request documentation.
+- Updated the source-registry test to assert Global TIMIT's owner-directed exclusion instead of requiring it to remain an active acoustic corpus.
+- **Not obtained:** no TextGrid-only export is publicly listed; Zenodo exposes a mixed 6.2 GB WAV+TextGrid ZIP. No archive or audio was downloaded. The curator request is prepared but not sent (no email action connected). Actual TextGrid encoding and symbol inventory remain unverified.
+- **Verification limitation:** CI on the prior checkpoint 41987442859 failed only the now-updated Global TIMIT registry assertion (358 passed, 1 failed, 1 skipped, 1,197 subtests passed). The new implementation and updated test need fresh exact-head CI. No local tests are claimed.
+
+Status: PARTIAL implementation; external source acquisition BLOCKED; independent phonetic gold remains 0 and accuracy NOT_MEASURED.
+
+---
+
+## Source-register implementation reconciliation — 2026-11-05
+
+- Updated `data/corpus_sources.csv`: LOTUSDIS is now a text corpus with transcript-only scope and no assumed phone/IPA labels; Global TIMIT is explicitly excluded by owner decision. Existing CCOST and Wiktionary source records were retained.
+- Added a current text-only policy and task ledger to `docs/corpus-validation.md`. Audio-specific acquisition, hashing and acoustic validation are out of scope.
+- Reconciled the CCOST manual evidence: the manual is recorded as inspected on 2026-11-01; actual released TextGrid tier instances and label values remain uninspected.
+- Existing FastThaiG2P adapter is preserved: it keeps external IPA separate from typed phonemic/broad-surface IPA and marks output provisional. No generated dictionary rows were promoted to gold.
+
+## User decision — 2026-11-05: Global TIMIT excluded; text-only sources prioritized
+
+The project owner has decided to **exclude Global TIMIT Thai (LDC2022S13)**. Do not pursue LDC access, fees, agreements, audio, or derived labels. Its phone/tone reference role is not a project dependency; alternatives are CCOST text annotations plus selectively reusable, provenance-separated FastThaiG2P/Wiktionary candidates. This is a scope decision, not a claim that Global TIMIT is low quality.
+
+**Active source roles**
+- **CCOST — PRIMARY phonetic-text candidate (PARTIAL):** obtain TextGrid-only export/manual; inspect actual MAU/MAS tier instances; implement and test X-SAMPA → typed IPA conversion; independently review a stratified subset. No audio.
+- **FastThaiG2P — SUPPORTING lexical/IPA candidates (PARTIAL):** reuse Apache-2.0 code with NOTICE and only the separately licensed Wiktionary-derived subset after source/version attribution. Generated IPA and undocumented manual overrides remain provisional, never gold. Do not redistribute TLTK data until file-level rights are clarified.
+- **LOTUSDIS — OPTIONAL orthographic/context corpus (PARTIAL):** conversational vocabulary and text robustness only; not phonetic gold. Audio-specific tasks are OUT OF SCOPE.
+- **Global TIMIT — DEFERRED/EXCLUDED by owner decision:** no further acquisition or legal-access work.
+
+**Next acceptance gates:** (1) request CCOST TextGrid-only files and manual; (2) inspect tier values and encoding, not just the published tier names; (3) build a documented X-SAMPA mapping with round-trip/edge-case tests and typed IPA preservation; (4) curate a legally attributable Wiktionary subset separately from generated FastThaiG2P rows; (5) decide whether LOTUSDIS text is useful after inspecting its actual text schema. Do not add corpus rows or claim linguistic accuracy until provenance and review gates pass.
+
+## Current repository audit — 2026-11-05
+
+- Branch `docs/repository-audit-2026-11-04`; base `main` `56fba86b4b8be2fe4e67284355e9928108527387`; compare: **26 commits ahead, 0 behind**.
+- PR #210 remains **OPEN / NOT MERGED**. Latest branch head `3b18a3b35a35c0573cadc2d81cdbcbd455b85a91` exact-head Full CI [41986104461](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41986104461) completed successfully: `test`, `wheel-install-smoke`, and `master-artifact` all passed.
+- CI covered Ruff, generators/drift, source/reviewer/blind-packet validators, full pytest, Python/browser parity, IPA→Ukrainian adapter, UI/accessibility contracts, segmentation diagnostics, and isolated wheel install. Local tests were not run in the connector-only environment.
+- Linguistic accuracy remains `NOT_MEASURED`; independently adjudicated IPA gold rows: **0**. Status: engineering-verified research prototype, not linguistically release-ready.
+
+---
+
 ## Latest exact-head reconciliation — 2026-11-03 (PR #189)
 
 - Current branch HEAD `d9958db0e877944e5a75183c053681cdbdd525dc`; compare against `main`: **144 commits ahead, 0 behind**. Base `main` remains `75c331f69aa3c8e5b4db3ccc5a6da85124600a01`. PR [#189](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/189) remains open as Draft.
@@ -2451,3 +2564,164 @@ The test workflow uploaded the current diagnostic and master artifacts (includin
 - The original frozen 42-item challenge and its 42-item blind packet remain unchanged. No denominator, original challenge input, or prior benchmark result was modified.
 - An accessibility branch also contained a contrast change for `#output-mode`, but the current public HTML and JavaScript no longer render an output-mode control; that stale selector is not part of the active UI and was not retained as a functional accessibility fix. The active Thai input border already has a 3:1 source-level contrast assertion. No manual WCAG conformance is claimed.
 - PR #207 merged as `6137fe27c6c610ff193731c45dc0ec4f503608f3`. Exact PR-head `validate` and `site-api` checks passed; the post-merge exact-main CI test/build and Pages workflows were still running at this checkpoint. The merged PR does not change the original 42-item benchmark or claim linguistic accuracy.
+
+
+## Live reconciliation — 2026-11-05
+
+- Branch: `docs/repository-audit-2026-11-04`; verified head: `41ef3f1e3a3e23f216ee16e6d3cfbb4244b00722`. GitHub compare against `main` reports **9 commits ahead, 0 behind** (base `56fba86b4b8be2fe4e67284355e9928108527387`).
+- PR [#210](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/210) remains **OPEN / NOT MERGED**. No merge, force-push, branch deletion, release or change to `main` is claimed.
+- Exact-head GitHub Actions CI run [41921113154](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41921113154) for `41ef3f1e3a3e23f216ee16e6d3cfbb4244b00722` completed **success**. This is GitHub-hosted CI evidence; no local test run is claimed.
+- Readiness remains **engineering-verified research prototype**. Linguistic accuracy is **NOT_MEASURED**; there are still **zero independently adjudicated IPA gold rows**.
+
+### External evidence and rights gates — current status
+
+| Gate | Status | What is required to change status |
+|---|---|---|
+| Independent Standard Thai phonetic/segmentation expertise | BLOCKED | Qualified independent Thai reviewers, blind first-pass annotations, documented adjudication and inter-annotator agreement; no engine-derived labels counted as gold. |
+| Independent Ukrainian-native target review | BLOCKED | Independent native-speaker review of target forms and a recorded adjudication outcome, separate from Thai IPA review. |
+| Global TIMIT Thai | BLOCKED | Written authorization from LDC covering the intended access, processing, evaluation and any redistribution; until then, do not download, process, publish or redistribute restricted Thai material. |
+| LOTUSDIS audio | PARTIAL | Obtain the actual authorized WAV assets; verify each file's SHA-256 from bytes; pin source/version; verify speaker/channel, clean intervals, overlap and alignment against the annotation records. Metadata or archive hashes alone do not satisfy this. |
+| FastThaiG2P bundled-data rights | BLOCKED | Source-by-source license/terms and attribution review demonstrating that redistribution and intended use are permitted. Keep data excluded from production bundles until cleared. |
+| FastThaiG2P Python-host preview | BLOCKED | Deploy to a Python-capable preview host and record a reproducible live smoke/contract test against the deployed URL; a static Pages pass or API unit test is not a hosted preview. |
+| Manual accessibility review | PARTIAL | Record keyboard-only, screen-reader, zoom/reflow and mobile checks against the active UI, including browser/AT versions, steps, outcomes and defects. Automated checks are not conformance evidence. |
+| CCOST TextGrid and tier mapping | PARTIAL | Published LREC 2026 paper verifies ORT/KAN/KAS/MAU/MAS/TRN, X-SAMPA and tone suffix mapping; actual 6.2 GB archive/TextGrid files and manual remain uninspected. Complete file-level tier/interval verification and document discrepancies. CC BY-NC-SA 4.0 applies; no unrestricted redistribution. No formal IAA was collected in the paper. |
+
+### Evidence policy
+
+Do not mark any gate DONE_VERIFIED because a registry entry, schema, blank reviewer packet, model output, source annotation, static check or documentation paragraph exists. Keep CCOST under CC BY-NC-SA 4.0 restrictions; keep Global TIMIT Thai unused pending written LDC permission. Keep LOTUSDIS PARTIAL until actual WAV bytes and per-file hashes/interval evidence are verified. Keep FastThaiG2P production data and preview gates separate. Do not create or report independent IPA gold rows until the blinded expert adjudication has actually happened.
+
+
+## 2026-11-05 — text-only corpus and FastThaiG2P rights continuation
+
+User scope clarified: **text and phonetic transcription only; no audio files are needed**. Use the detailed research note at docs/research/corpus-text-only-fastthaig2p-2026-11-05.md.
+
+Current decisions:
+- Global TIMIT Thai: phone/word/tone/TextGrid TXT assets are relevant. A signed LDC non-member agreement permits internal non-commercial research and limited publication excerpts; it does not permit bulk public redistribution. Ask LDC for text-only access and whether a small derived test subset can be published. Audio is not needed.
+- LOTUSDIS: CC BY-SA 4.0 transcript rows can be considered for conversational vocabulary/orthographic robustness. The paper describes utterance-level orthographic transcripts, speaker labels and overlap tags, not phone/IPA tiers. Mark audio hashes/intervals DEFERRED / OUT OF SCOPE for this user objective.
+- CCOST: strongest phonetic-text source. Published tiers MAU (phonetic segments) and MAS (phonemic syllables), plus ORT/KAN/KAS/TRN; X-SAMPA with five tone suffixes. CC BY-NC-SA 4.0 is compatible with stated non-commercial research if attribution and ShareAlike are followed. Request TextGrid-only export and manual; do not download WAV. No formal IAA; independently review a subset.
+- FastThaiG2P: Apache-2.0 code + NOTICE is reusable; Wiktionary subset has CC BY-SA 3.0; generated IPA remains provisional, not gold; TLTK fallback data awaits exact license mapping. Upstream README's purported 34/17 gold files currently return 404; accessible tests are smoke tests.
+- No audio was downloaded; no corpus labels were added to runtime data. The exact-head CI for this documentation batch must be checked after the commit; do not inherit previous CI status.
+
+
+
+## 2026-11-05 follow-up: CCOST label review and FastThaiG2P license
+
+- Added `docs/ccost-label-review-2026-11-05.md`: inspected 1,014 conversion-failure occurrences, classified 116 distinct raw labels into seven fail-closed classes, and separated documented MAUS markers from unresolved tags.
+- CI inspection artifact: [textgrid-archive-inspection](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42018381197/artifacts/13410038957), SHA-256 `dd3b0f263fe72e17af7d6de1e429385286140fb55d1df0b6e3ba3a33c3925cc2`.
+- CCOST paper §3.3 confirms X-SAMPA and tone suffixes `_1`–`_5`; BAS and CCOST sources define `<p:>`, `<usb>`, and `<nib>`. `_8` (868 occurrences), slash forms, mixed markers, Unicode-looking forms, Thai text, malformed tokens and opaque tags remain unsupported. No guessed mapping was added.
+- `ORT-MAU`, `KAN-MAU`, and `KAS-MAU` are observed release tier names; the semantics of the `-MAU` suffix remain provisional pending curator confirmation.
+- Added `docs/fastthaig2p-license-review-2026-11-05.md`. Exact pinned source code has Apache-2.0 LICENSE and Amazon NOTICE; vendored `_th2ipa.py` retains a TLTK BSD-3 notice. Upstream wheel bundles a mixed-provenance dictionary and TLTK fallback data; Wiktionary/kaikki entries are CC BY-SA/GFDL. Per-component redistribution rights for generated/manual/fallback data remain unresolved.
+- FastThaiG2P remains an optional pinned external dependency. This change does not vendor its dictionary or fallback assets and does not promote its IPA output to gold.
+- No linguistic gold was created: independently adjudicated IPA rows remain 0; accuracy remains `NOT_MEASURED`.
+
+
+### Follow-up implementation correction — CCOST marker classification
+
+A final source review found that the previous helper skipped every tag-only label, including opaque `<Fail>`, `<P>`, and `<notProcessedChunk>`. This would silently erase unresolved annotations. The helper now recognizes only the three documented markers `<p:>`, `<nib>`, and `<usb>`; all unknown tag-only and mixed labels fail closed. Added a regression test for five unresolved marker forms. Await exact-head CI before accepting the correction as verified.
+
+
+## 2026-11-05 follow-up — CCOST primary-paper and FastThaiG2P rights review
+
+- Re-read the published CCOST LREC 2026 paper. Base tier semantics are now confirmed: MAU = phonetic segment; MAS = phonemic syllable; KAN = canonical word pronunciation; KAS = canonical syllabified pronunciation; ORT = orthographic word; TRN = orthographic utterance transcript. The paper says these phonetic/phonemic tiers use X-SAMPA and defines only _1–_5 tones.
+- The paper does not define why the supplied release has ORT-MAU, KAN-MAU, and KAS-MAU. Keep the suffix alias question open.
+- _8, <P>, <P:>, <:p>, <Fail>, <notProcessedChunk>, slash alternatives, Unicode-looking X-SAMPA failures, and mixed marker/text labels remain unconfirmed. Adapter remains fail-closed.
+- FastThaiG2P's pinned LICENSE, NOTICE, data README, package inclusion configuration, and _th2ipa.py were rechecked. Source code Apache-2.0 and vendored TLTK parser BSD-3-Clause are confirmed. No single blanket rights statement for the entire 62k runtime dictionary/fallback data exists in the inspected snapshot. Bulk redistribution remains BLOCKED.
+- Public CCOST curator/author emails and a complete clarification request are now recorded in docs/external-review-and-source-requests.md. **Not sent:** no email-sending action is available in this connected session. No response has been received.
+- Exact status and acceptance criteria are recorded in docs/validation-matrix.md; detailed evidence is in docs/ccost-label-review-2026-11-05.md and docs/fastthaig2p-license-review-2026-11-05.md.
+
+## 2026-11-05 — CCOST expert-review worklist continuation
+
+### Current branch and implementation checkpoint
+
+- Work remains on the single requested branch `docs/repository-audit-2026-11-04`; PR [#210](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/210) remains open and unmerged. `main` is unchanged.
+- Added `scripts/build_ccost_review_worklist.py`, its focused tests, and a CI step that publishes the blind review TSV + provenance manifest as `ccost-label-adjudication-worklist`.
+- The worklist reads only CCOST `.TextGrid` members, preserves raw labels and times, adds overlapping context from other tiers and adjacent same-tier labels, and leaves all expert/adjudicator fields blank. It does not infer repairs.
+- The exact-head Full CI for the current code/documentation batch must be checked after the final commit; do not inherit earlier CI evidence.
+
+### Three requested workstreams
+
+1. **Marker semantics** — `<P>`, `<P:>`, `<:p>`, `<Fail>` remain BLOCKED. Prior whole-archive counts are 394 / 4 / 22 / 16 appearances. The worklist now captures interval context across all tiers. No case-folding or alias normalization is allowed without evidence.
+2. **Recover `_8`** — the generic MAUS syntax permits `_1`–`_9`, but `_8` has no documented CCOST category mapping; its meaning/recovery is BLOCKED. There are 868 tier-level appearances, 397 exact file/interval groups, 438 unique file/interval/raw-label events and 22 raw strings. Review groups, not duplicated tier rows. Use positive orthographic/cross-tier evidence; abstain where intent is not recoverable.
+3. **Independent expert adjudication** — BLOCKED. Public institutional qualification evidence was refreshed for Chutamanee Onsuwan (Thammasat), Lena Maluleem (Kasetsart) and Rungpat Roengpitya (Mahidol). A stronger public-source candidate panel is Chutamanee Onsuwan + Phanintra Teeranon as first-pass reviewers and Rungpat Roengpitya as separate adjudicator, subject to qualification, independence, conflict and availability checks. Lena Maluleem has relevant expertise but a documented supervisory/coauthor relationship with CCOST author Pittayawat Pittayaporn, so flag a potential conflict before considering her for this CCOST review. No contact has been made, no consent is assumed, and the reviewer registry remains empty.
+
+### Evidence boundary
+
+This worklist supports text-based review of canonical/phonemic labels. It cannot verify acoustic surface realization, tone contours, duration or speaker-specific allophony because no audio is in scope. Independent IPA gold rows remain **0**; linguistic accuracy remains **NOT_MEASURED**. Do not call the worklist itself expert verification.
+
+
+## Handoff — latest CCOST worklist status (2026-11-05)
+
+- Single branch retained: `docs/repository-audit-2026-11-04`; PR #210 remains open/unmerged; `main` remains unchanged.
+- The worklist generator and regression tests now scan all TextGrid IntervalTiers for unresolved marker spellings and inspect declared phonetic tiers for unsupported X-SAMPA. It reads TextGrid members only; it never opens audio. Cross-tier overlaps and adjacent same-tier context are included. All expert/adjudicator fields remain blank.
+- Distinguish inventory scopes: earlier inspector `<P>` 394 / `<Fail>` 16 were phonetic-tier-only counts. The all-tier worklist CI assertions are 821 intervals with any marker (871 appearances); per-marker interval counts `<P>` 771, `<Fail>` 24, `<P:>` 4, `<:p>` 22; appearance counts `<P>` 821, `<Fail>` 24, `<P:>` 4, `<:p>` 22. `<notProcessedChunk>` is separately identified as 142 MAUS processing-failure intervals.
+- `_8` counts remain 868 tier occurrences, 397 exact file/interval groups, 438 file/interval/raw-label events, 22 raw strings, 119 files. `_8` is syntactically allowed by generic MAUS notation (`_1`–`_9`) but unmapped in CCOST's published `_1`–`_5` mapping; no CCOST-specific meaning has been recovered. Use group IDs to prevent repeated aligned-tier entries being misrepresented as independent speech events.
+- The CI workflow uploads `ccost-label-adjudication-worklist` (TSV + JSON manifest) and asserts the `_8`/marker counts; the latest successful artifact was inspected directly. Full CI run 42034879862 passed all three jobs on implementation checkpoint 47db8ac988836014663a435e08e2afe470342fe8. The worklist artifact 13418750385 was downloaded and inspected: 1,975 rows; all 11 reviewer/adjudicator fields blank; 868 `_8` occurrences, 397 groups, 438 raw-label events, 22 strings, 119 files; `nia_8p` retained; audio_members_read=0. Generator, focused tests and artifact are DONE_VERIFIED on that checkpoint. A later workflow-only commit adds exact marker interval/appearance assertions and is pending final-head CI.
+- `<P>`, `<P:>`, `<:p>`, `<Fail>` semantics remain BLOCKED. No authoritative public definition was found; case/shape does not establish equivalence.
+- Independent Thai review remains BLOCKED: reviewer registry empty; no reviewers contacted, appointed or consented; no completed blind annotations/adjudication; independent IPA gold rows 0; linguistic accuracy NOT_MEASURED. Reviewer candidates in the shortlist are leads only, not verified panel members.
+- Acoustic claims remain DEFERRED / OUT OF SCOPE because this workstream is TextGrid-only. Do not infer acoustic surface tone, duration or allophony.
+
+
+## 2026-11-05 — exact-head evidence and audio-source discovery
+
+- Current implementation checkpoint: ebd1f0a55b2987c40725659b1524d26ad21abc0c; Full CI run 42036060620 passed test, wheel-install-smoke, and master-artifact. Test log: 394 passed, 1 skipped, 1,211 subtests passed; Ruff passed; 29 parity fixtures passed. Worklist artifact 13418563592 was downloaded and inspected (1,975 rows, 488 TextGrids, 11 reviewer/adjudicator fields blank, audio_members_read=0).
+- Marker counts reconciled by denominator: 871 literal appearances; 821 tier-interval rows; 398 exact file+interval groups. Per-marker groups: <P> 375, <P:> 4, <:p> 11, <Fail> 8. Structural duplication: <:p> appears in MAU+MAS at 11 identical intervals; <Fail> appears in ORT-MAU+KAN-MAU+KAS-MAU at 8 identical intervals. This does not prove semantics.
+- _8: 868 tier-level occurrences, 397 exact interval groups, 438 file/interval/raw-label events, 22 raw strings, 119 files. Correction to prior shorthand: _8 is allowed by generic MAUS syntax _1–_9, but has no mapping in the CCOST paper's five-category _1–_5 scheme. It is unmapped in CCOST, not generically syntactically invalid.
+- Exact-interval cross-tier scan found 14 _8 groups with another mapped tone suffix at identical interval: MAU _2 7, MAS _2 4, MAS _3 4, KAN-MAU _3 1. Candidate evidence only; no replacement is inferred because tiers encode different layers.
+- Official Zenodo record lists C-COST.zip (6.2 GB) containing WAV and TextGrid files under CC BY-NC-SA 4.0. This offers a licensed route to acoustic review for non-commercial use with attribution/share-alike. No audio was downloaded; web preview says archive has too many files, and this container lacks outbound DNS/network access. Do not download 6.2 GB in routine CI; next audio step is opt-in selective per-recording retrieval plus source/asset/time registration and confirmation of non-commercial scope.
+- <P>, <P:>, <:p>, <Fail> semantics remain BLOCKED. Independent Thai review remains BLOCKED; reviewer registry header-only, no contact/consent/appointment, independent IPA gold rows 0. No curator/reviewer contact was made.
+
+
+## Handoff — verified latest checkpoint 2026-11-05
+
+- Branch remains docs/repository-audit-2026-11-04; PR #210 open and unmerged; main unchanged.
+- Latest code HEAD 43fa978d440bc654645a10430ac54962bd790582. Full CI run 42039619729 SUCCESS (test, wheel-install-smoke, master-artifact); test 395 passed, 1 skipped, 1,211 subtests; Ruff passed; 29 parity fixtures. Site API 42039619784 SUCCESS; optional external G2P smoke 42039619715 SUCCESS.
+- Latest worklist artifact 13421040388 downloaded and inspected. 1,975 rows, 488 TextGrids, all 11 reviewer/adjudicator fields blank, audio_members_read=0. The exact-interval relation is now distinguished from generic overlap; duplicate counterpart counts are deduplicated by event-group/tier/suffix.
+- Marker inventory: 871 literal appearances, 821 tier-interval rows, 398 exact file+interval groups; per-marker groups <P> 375, <P:> 4, <:p> 11, <Fail> 8. Structural duplication does not prove marker semantics.
+- _8 inventory: 868 tier occurrences, 397 exact interval groups, 438 file/interval/raw-label events, 22 raw strings, 119 files. Generic MAUS permits _1–_9; CCOST paper maps only _1–_5. Do not call _8 generically invalid; it is unmapped in the published CCOST mapping.
+- 14 _8 groups have a mapped suffix at exactly the same interval in another phonetic tier (MAU _2 7; MAS _2 4; MAS _3 4; KAN-MAU _3 1). These are blind-review clues, not corrections.
+- Audio source: Zenodo C-COST.zip is 6.2 GB, WAV+TextGrid, CC BY-NC-SA 4.0. No audio downloaded. Need opt-in selective per-recording retrieval and confirmation of non-commercial scope; don't fetch full archive in routine CI.
+- Candidate panel now has official public evidence: Chutamanee Onsuwan (Thammasat), Phanintra Teeranon (University of Phayao; phanintra.te@up.ac.th), Rungpat Roengpitya (Mahidol; rungpat.roe@mahidol.ac.th). Proposed first-pass: Onsuwan + Teeranon; separate adjudicator: Roengpitya. No contact/consent/appointment or conflict declarations; reviewer registry empty.
+- Marker semantics and actual expert adjudication remain BLOCKED. Independent IPA gold rows 0; linguistic accuracy NOT_MEASURED.
+
+
+---
+
+## Owner-approved beta scope update — 2026-11-05
+
+- The owner has selected a **beta release** rather than a linguistically validated release. Two independent Thai reviewers plus adjudicator, and independent Ukrainian-native target-form review, are **DEFERRED** and are not beta acceptance gates. Do not represent these items as completed.
+- Audio acquisition and acoustic/narrow-phonetic validation remain **DEFERRED / OUT OF SCOPE**. No audio is required for this beta.
+- Unknown CCOST labels and tone suffix _8 remain **PARTIAL / fail-closed**. Preserve raw labels and abstain; beta scope does not authorize guessed mappings.
+- Manual accessibility certification is **DEFERRED as a certification gate**, not passed. Static source review is recorded in docs/beta-release-scope.md; browser keyboard, screen-reader, zoom/reflow, forced-colors and device checks remain unverified. Do not claim WCAG conformance.
+- FastThaiG2P vendoring remains deferred; the pinned optional dependency path is retained. Do not redistribute mixed assets without component-level attribution/notices.
+- The mfwarren/entrepreneur-claude-skills repository is used only for relevant operational patterns (SOP, product feedback, decision-making and landing-page communication). It contains no dedicated accessibility skill; WCAG criteria remain the accessibility basis. No third-party skill files were copied.
+- Beta engineering readiness is **BETA_CANDIDATE_ENGINEERING_VERIFIED; PUBLIC_DEPLOYMENT_NOT_YET_VERIFIED**. The previous exact-head code CI on 5a7f6888420009e288f6b43332bd0dd4b560fddd passed Full CI, Site API and optional external G2P smoke. The subsequent documentation-only commits have not yet been verified by their own exact-head CI at the time of this note.
+- Acceptance to proceed from candidate to public beta: exact-head CI on the final candidate; verified Python-capable hosting preview with same-origin API; published feedback path; dependency/corpus notices; beta warnings; known limitations and manual accessibility gaps disclosed. No release tag, production cutover or merge is performed here.
+
+Canonical scope and checklist: docs/beta-release-scope.md.
+
+
+
+## Handoff — GitHub Pages-only FastThaiG2P port (2026-11-05)
+
+- Owner decision: host and run the website only on GitHub Pages. Use the browser/WASM port of FastThaiG2P through Pyodide; do not use Vercel, a remote API host, CDN runtime files, or a separate JavaScript phonology engine.
+- Branch: `docs/repository-audit-2026-11-04`; PR #210 remains open/unmerged; `main` unchanged.
+- Runtime checkpoint `80adb489105e6f2b447fb07331bfdf0c09c888b3` passed Pyodide parity, source filtering, TLTK asset verification and Chromium cold/warm worker smoke in run 42085653176. Web Static 42085653505, Site API 42085653055 and optional external smoke 42085652951 also passed on that checkpoint.
+- Filtered dictionary counts: 13,144 Wiktionary IPA entries retained; 48,957 generated entries excluded; manual/unknown entries excluded by policy; one metadata/runtime IPA mismatch (`สวน`) is reported without modifying the runtime value.
+- TLTK fallback: all six asset transformations verified. Five match source bytes exactly; `sylform_var.pkl` matches bzip2 decompression of TLTK `sylform_var.pklz`. The parser header says 1.3.8/BSD-3, while the pinned data-source snapshot says setup.py 1.9.1/BSD-3, root LGPL-3, module BSD-style LICENSE.txt and stale PKG-INFO 1.1.7/GPLv3. Keep both notices; exact asset license scope remains unresolved.
+- Runtime notices: ten license/NOTICE files staged. The bundle now also generates a transparent CC BY-SA 4.0 ZIP of the filtered Wiktionary-derived IPA map and tokenizer dictionary. The dataset ZIP packaging and its member/provenance assertions passed on exact head `08bad62278a7bf6ee787ccf9d4f1b45d3d6b8562` in Pyodide workflow 42086644531. The deploy-time HTTP hash assertion is syntax-validated but cannot run until an authorized Pages deployment. Full CI and other PR checks are still queued.
+- Public deployment gate: `redistribution_approved=false`; do not change the repository variable, merge, or deploy until final TLTK license-scope review and explicit owner approval. After authorization, deploy only through the existing Pages workflow from `main`, then verify runtime manifest, every notice hash, dataset ZIP hash and actual browser interaction.
+- Full CI run 42085653265 was cancelled by subsequent pushes; not a pass. The next genuine engineering task is exact-head CI on the updated dataset bundle and Pages workflow.
+- Linguistic status unchanged: independent IPA gold 0; accuracy `NOT_MEASURED`; Ukrainian forms provisional. Thai/Ukrainian external reviews and audio/acoustic validation remain deferred for beta.
+
+Canonical documents: `docs/beta-release-scope.md`, `docs/fastthaig2p-pyodide-port.md`, `docs/fastthaig2p-data-provenance.md`, `data/third_party/fastthaig2p-browser-bundle.json`.
+
+## Handoff — exact-head GitHub Pages port verification (2026-11-05)
+
+- Owner decision remains: GitHub Pages only; use FastThaiG2P through self-hosted Pyodide/Web Worker. Do not add a separate API host, Vercel or CDN runtime.
+- Verified implementation checkpoint: `ba22872679869371e92ab9ad511db4ed74627da2`. Exact-head Pyodide [42090379707], Site API [42090379612], Web Static [42090379866], optional external G2P smoke [42090379819] and Full CI [42090379627] all SUCCESS. Full CI jobs test, wheel-install-smoke and master-artifact all passed.
+- Logs confirm 13,144 Wiktionary IPA records retained, 48,957 generated records excluded, one stale metadata IPA value for `สวน` reported, four CPython/Pyodide parity inputs passed, and Chromium cold/warm worker smoke passed with no API/CDN requests. The ephemeral bundle includes ten notices. The public Pages bundle is correctly refused while rights approval is false.
+- TLTK data transformations are fully reproducible: five byte-identical files and one bzip2-decompressed pickle match. License scope remains ambiguous because parser metadata and the pinned TLTK repository snapshot expose BSD-3, LGPL-3 and stale GPLv3 metadata. Keep both notices; do not unilaterally resolve or flip the rights flag.
+- Current branch includes corrected third-party notice copy and exact-head evidence in `docs/final-audit.md` and `docs/validation-matrix.md`. Re-run exact-head CI after these documentation commits and record the resulting head/run IDs in `docs/final-audit.json`.
+- PR #210 stays open/unmerged; main unchanged. No Pages deploy, repository variable update, release tag or production cutover. Existing Pages URL currently serves mainline and is not evidence of the new Pyodide runtime.
+- Public deployment remains BLOCKED until TLTK file-level license scope is reviewed and the owner explicitly approves public redistribution. After that, merge only through the owner's explicit direction, deploy through the existing Pages workflow, and verify live bundle/notice/dataset hashes plus actual browser use.
+- Beta linguistic limits remain: independent IPA gold 0; accuracy `NOT_MEASURED`; Ukrainian forms provisional. Thai/Ukrainian external review and audio/acoustic validation remain deferred by owner decision.

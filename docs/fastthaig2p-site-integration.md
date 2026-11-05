@@ -1,5 +1,7 @@
 # FastThaiG2P website integration
 
+> **Historical plan (2026-11-04), superseded by the owner decision on 2026-11-05.** Current target is GitHub Pages only, with FastThaiG2P running in a Pyodide Web Worker. Do not follow the Vercel deployment instructions below. See [FastThaiG2P Pyodide port](fastthaig2p-pyodide-port.md).
+
 **Decision (2026-11-04):** the public website uses FastThaiG2P as its single pronunciation engine. The site displays a Ukrainian practical rendering from FastThaiG2P's IPA, but labels that rendering as provisional until independent phonetic and Ukrainian-native review is complete.
 
 ## Runtime contract
@@ -149,3 +151,10 @@ The one generic pytest skip is the API test module because FastAPI is an optiona
 The upstream pinned implementation was inspected directly: `G2P.convert` normalizes the input, tokenizes it, then emits one slash-delimited IPA group per non-whitespace token in order. The project adapter obtains provenance from the same pinned normalizer/tokenizer. The follow-up guard rejects any count mismatch rather than attaching a Thai token path to the wrong IPA word.
 
 **Readiness remains research prototype:** CI proves software contracts, not Thai phonetic accuracy. Preview hosting, complete bundled-data rights, independent Thai/Ukrainian review and manual WCAG 2.2 AA remain acceptance gates.
+
+
+## Superseding hosting decision — 2026-11-05
+
+The earlier Vercel/Python-hosting proposal in this document is superseded by the owner decision: GitHub Pages is the only hosting target. Do not create or connect a Vercel project, do not publish a separate API, and do not replace FastThaiG2P with the repository JavaScript research engine. The selected path is to run the pinned FastThaiG2P Python package in-browser through Pyodide in a module Web Worker. The existing FastAPI implementation remains the CPython reference and test oracle, not a production service.
+
+Implementation and acceptance ledger: [FastThaiG2P browser/WASM port](fastthaig2p-pyodide-port.md). The existing Vercel sections above are retained as historical analysis only; they are not current deployment instructions. The GitHub Pages deployment job must remain gated until the browser port, CPython parity, performance and public data-rights manifest are verified.

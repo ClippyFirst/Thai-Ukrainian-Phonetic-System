@@ -40,6 +40,137 @@ jobs:
         run: python scripts/validate_ukrainian_preference_packet.py data/benchmark/ukrainian-target-preference-blind.tsv
       - name: Run the complete Python test suite (pytest functions and unittest classes)
         run: python -m pytest -q -ra
+      - name: Inspect supplied CCOST and LOTUSDIS TextGrid archives (TextGrid members only)
+        run: |
+          python scripts/inspect_ccost_textgrid.py "CCOST textgrid.zip" "nectecLOTUSDIS textgrid.zip" --output /tmp/textgrid-archive-inspection.json --quiet --report-only
+          python - <<'PY'
+          import collections, json
+          report = json.load(open('/tmp/textgrid-archive-inspection.json', encoding='utf-8'))
+          tier_samples = {}
+          for file in report['files']:
+              for tier, data in file['tiers'].items():
+                  samples = tier_samples.setdefault(tier, [])
+                  for label in data['samples']:
+                      if label not in samples and len(samples) < 12:
+                          samples.append(label)
+          failure_counts = collections.Counter(
+              (item.get('tier', 'FILE'), item.get('raw_label', item.get('error', '')))
+              for item in report['failures']
+          )
+          print(json.dumps({
+              'files_inspected': report['files_inspected'],
+              'archives': [{k: v for k, v in item.items() if k != 'textgrid_members'}
+                           | {'textgrid_member_examples': item['textgrid_members'][:5]}
+                           for item in report['archives']],
+              'tier_nonempty_label_counts': report['tier_nonempty_label_counts'],
+              'tier_label_samples': tier_samples,
+              'converted_label_counts': report['converted_label_counts'],
+              'bracket_marker_counts': report['bracket_marker_counts'],
+              'failure_count': len(report['failures']),
+              'file_errors': [item for item in report['failures'] if 'tier' not in item],
+              'failure_groups': [
+                  {'tier': key[0], 'label_or_error': key[1], 'count': count}
+                  for key, count in failure_counts.most_common(40)
+              ],
+          }, ensure_ascii=False, indent=2))
+          PY
+      - name: Build blind CCOST label adjudication worklist (TextGrid only)
+        run: |
+          python scripts/build_ccost_review_worklist.py "CCOST textgrid.zip" --output /tmp/ccost-label-review-worklist.tsv --manifest /tmp/ccost-label-review-manifest.json
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          manifest = json.loads(Path("/tmp/ccost-label-review-manifest.json").read_text(encoding="utf-8"))
+          summary = manifest["summary"]
+          with Path("/tmp/ccost-label-review-worklist.tsv").open(encoding="utf-8", newline="") as handle:
+              rows = list(csv.DictReader(handle, delimiter="\t"))
+          assert summary["tone_suffix_8_occurrences"] == 868, summary
+          assert summary["tone_suffix_8_event_groups"] == 397, summary
+          assert summary["tone_suffix_8_unique_raw_label_events"] == 438, summary
+          assert summary["tone_suffix_8_distinct_raw_strings"] == 22, summary
+          assert summary["tone_suffix_8_files"] == 119, summary
+          assert summary["tone_suffix_8_groups_with_exact_interval_mapped_tone_counterpart"] == 14, summary
+          assert summary["tone_suffix_8_exact_interval_mapped_tone_counterparts_by_tier_suffix"] == {"KAN-MAU:3": 1, "MAS:2": 4, "MAS:3": 4, "MAU:2": 7}, summary
+          assert summary["phonetic_failure_occurrences"] == 1450, summary
+          assert summary["documented_maus_failure_marker_occurrences"] == 142, summary
+          assert summary["documented_maus_failure_marker_interval_count"] == 142, summary
+          assert summary["documented_maus_failure_markers"] == {"<notProcessedChunk>": 142}, summary
+          assert summary["unresolved_marker_interval_count"] == 821, summary
+          assert summary["markers"] == {"<P>": 821, "<Fail>": 24, "<P:>": 4, "<:p>": 22}, summary
+          assert summary["marker_interval_counts"] == {"<P>": 771, "<Fail>": 24, "<P:>": 4, "<:p>": 22}, summary
+          assert summary["unresolved_marker_event_groups"] == 398, summary
+          assert summary["marker_event_group_counts"] == {"<P>": 375, "<Fail>": 8, "<P:>": 4, "<:p>": 11}, summary
+          assert summary["unresolved_marker_appearances"] == 871, summary
+          assert summary["audio_members_read"] == 0, summary
+          assert len(rows) == summary["records"], (len(rows), summary)
+          annotation_fields = [
+              "reviewer_id", "reviewer_qualification_ref", "reviewed_at", "decision",
+              "proposed_xsampa", "evidence_note", "confidence", "abstain_reason",
+              "adjudicator_id", "adjudicator_decision", "adjudicator_note",
+          ]
+          assert all(not row[field] for row in rows for field in annotation_fields)
+          print(json.dumps({"review_records": len(rows), "summary": summary}, ensure_ascii=False, indent=2))
+          PY
+      - uses: actions/upload-artifact@v7
+        with:
+          name: ccost-label-adjudication-worklist
+          path: |
+            /tmp/ccost-label-review-worklist.tsv
+            /tmp/ccost-label-review-manifest.json
+            data/THIRD-PARTY-CORPUS-NOTICES.md
+          if-no-files-found: error
+      - name: Export selected orthographic TextGrid intervals without audio
+        run: |
+          python scripts/export_textgrid_text.py "CCOST textgrid.zip" "nectecLOTUSDIS textgrid.zip" --tier ORT-MAU --tier TRN --tier-prefix Hijack_ --output /tmp/textgrid-orthographic-text.jsonl
+          python - <<'PY'
+          import collections, json
+          rows = [json.loads(line) for line in open('/tmp/textgrid-orthographic-text.jsonl', encoding='utf-8')]
+          sources = collections.Counter(row['source'] for row in rows)
+          assert len(rows) == 178377, len(rows)
+          assert sources == {'CCOST': 145434, 'LOTUSDIS': 32943}, sources
+          assert all(row['evidence_grade'] == 'SOURCE_ANNOTATED_NOT_GOLD' for row in rows)
+          assert all(row['license'] in {'CC-BY-NC-SA-4.0', 'CC-BY-SA-4.0'} for row in rows)
+          assert all('audio' not in row for row in rows)
+          print(json.dumps({'records': len(rows), 'by_source': sources, 'audio_read': False, 'gold_promoted': False}))
+          PY
+      - uses: actions/upload-artifact@v7
+        with:
+          name: textgrid-archive-inspection
+          path: /tmp/textgrid-archive-inspection.json
+          if-no-files-found: error
+      - name: Export orthographic TextGrid intervals as provenance-rich JSONL (no audio)
+        run: |
+          python scripts/export_textgrid_text.py "CCOST textgrid.zip" --tier ORT-MAU --tier TRN --output /tmp/ccost-orthographic.jsonl
+          python scripts/export_textgrid_text.py "nectecLOTUSDIS textgrid.zip" --tier-prefix Hijack_ --output /tmp/lotusdis-transcripts.jsonl
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          files = [Path("/tmp/ccost-orthographic.jsonl"), Path("/tmp/lotusdis-transcripts.jsonl")]
+          manifest = {}
+          for path in files:
+              payload = path.read_bytes()
+              manifest[path.name] = {
+                  "records": sum(1 for line in payload.splitlines() if line.strip()),
+                  "bytes": len(payload),
+                  "sha256": hashlib.sha256(payload).hexdigest(),
+              }
+          manifest_path = Path("/tmp/textgrid-text-only-manifest.json")
+          manifest_path.write_text(
+              json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
+              encoding="utf-8",
+          )
+          assert json.loads(manifest_path.read_text(encoding="utf-8")) == manifest
+          print(json.dumps(manifest, ensure_ascii=False, indent=2))
+          PY
+      - uses: actions/upload-artifact@v7
+        with:
+          name: textgrid-text-only-jsonl
+          path: |
+            /tmp/ccost-orthographic.jsonl
+            /tmp/lotusdis-transcripts.jsonl
+            /tmp/textgrid-text-only-manifest.json
+            data/THIRD-PARTY-CORPUS-NOTICES.md
+          if-no-files-found: error
       - name: Build the static dependency graph and test-overlap inventory
         run: python scripts/audit_repository_structure.py --output /tmp/repository-structure-audit.json --revision "$GITHUB_SHA"
       - uses: actions/upload-artifact@v7
@@ -88,7 +219,7 @@ jobs:
       - name: Build unadjudicated manual segmentation review sample
         run: python scripts/build_segmentation_manual_review.py --report /tmp/thai-segmentation-comparative-error-review.json --tud-model /tmp/thai-tud-word-model.json --output /tmp/thai-segmentation-manual-review.tsv --sample-per-stratum 8 --control-sample 12 --seed thai-segmentation-review-v1
       - name: Validate manual review sample remains unadjudicated
-        run: python -c "import csv,json; rows=list(csv.DictReader(open('/tmp/thai-segmentation-manual-review.tsv',encoding='utf-8'),delimiter='\\t')); assert rows; assert any('UNIFORM_CONTROL' in r['sampled_for'].split(';') for r in rows); assert all(r['gold_status']=='SOURCE_ANNOTATED' and r['adjudicated']=='NO' and not r['human_decision'] and not r['reviewer_id'] and not r['decision_rationale'] for r in rows); assert all(''.join(json.loads(r[k]))==r['text'] for r in rows for k in ('gold_tokens_json','dictionary_tokens_json','tud_tokens_json'))"
+        run: python -c "import csv,json; rows=list(csv.DictReader(open('/tmp/thai-segmentation-manual-review.tsv',encoding='utf-8'),delimiter='\t')); assert rows; assert any('UNIFORM_CONTROL' in r['sampled_for'].split(';') for r in rows); assert all(r['gold_status']=='SOURCE_ANNOTATED' and r['adjudicated']=='NO' and not r['human_decision'] and not r['reviewer_id'] and not r['decision_rationale'] for r in rows); assert all(''.join(json.loads(r[k]))==r['text'] for r in rows for k in ('gold_tokens_json','dictionary_tokens_json','tud_tokens_json'))"
       - uses: actions/upload-artifact@v7
         with:
           name: thai-tud-word-segmentation-model-and-report

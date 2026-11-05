@@ -18,7 +18,7 @@ The typed `PhoneticResult` is that adapter boundary. It carries phonemic IPA, co
 
 **Acceptance rule:** test the whole chain `Thai input → IPA intermediate → Ukrainian output`, including tests proving that changing/withholding the IPA result changes/withholds the Ukrainian result accordingly. Python and browser implementations must obey the same boundary and pass cross-runtime parity checks.
 
-The FastThaiG2P website integration is implemented in Draft PR #193 but is not deployed yet. In that target runtime, the site uses the pinned FastThaiG2P Python engine through a same-origin FastAPI endpoint; the browser is a presentation client and does not run a second G2P engine. The old JavaScript engine and RTGS renderer remain in the repository as research/reference code and regression fixtures, but are not part of the new homepage execution path. The current main/GitHub Pages site remains unchanged until a Python-capable host is connected and a preview is verified. See [FastThaiG2P website integration](docs/fastthaig2p-site-integration.md).
+The FastThaiG2P website integration is present on `main` through PR #199, merged on 2026-11-04. The earlier implementation PR #193 was closed unmerged; its work was reconciled into the broader integration PR #199. The same-origin FastAPI site API remains a CI-verified Python reference wrapper, but the public browser path no longer calls it. The owner selected a browser/WASM port of the same FastThaiG2P engine using Pyodide; GitHub Pages is the only hosting target. Exact-head CI verified CPython/Pyodide parity for four Thai inputs and a real Chromium cold/warm Web Worker smoke with no API or CDN requests. The browser wheel retains 13,144 Wiktionary-labelled IPA entries and excludes 48,957 generated entries; its attribution and provenance are embedded in the wheel. Public redistribution remains gated by explicit owner approval and final review of the TLTK BSD-3-Clause release evidence alongside its separate LGPL-3.0 repository notice; all six fallback asset transformations are now verified. See [FastThaiG2P Pyodide port](docs/fastthaig2p-pyodide-port.md), [data provenance](docs/fastthaig2p-data-provenance.md), and the [runtime third-party notices](web/third-party-notices.html). The old JavaScript engine and RTGS renderer remain in the repository as research/reference code and regression fixtures, not as a fallback in the FastThaiG2P homepage path. See [FastThaiG2P website integration](docs/fastthaig2p-site-integration.md) and the [current repository audit](docs/repository-audit-2026-11-04.md).
 
 ## Thai → Ukrainian methodology table
 
@@ -32,6 +32,24 @@ The repository retains a separate RTGS → Ukrainian research renderer and its c
 
 The public website has one G2P engine: FastThaiG2P. It shows the engine's IPA and a provisional Ukrainian practical adaptation. If FastThaiG2P returns incomplete IPA or unsupported symbols, the site reports the limitation and does not switch to the repository's research/reference engine, RTGS, or an orthographic heuristic. The Python CLI and research scripts continue to expose the project's internal reference engine for development and evaluation; this does not make it a website fallback.
 
+## Supplied text-only corpora
+
+The repository branch also contains owner-supplied CCOST and LOTUSDIS Praat TextGrid exports. Their roles, exact archive hashes, observed tiers, licenses, and evidence limits are documented in the [TextGrid inventory](docs/corpus-textgrid-inventory-2026-11-05.md) and [third-party corpus notices](data/THIRD-PARTY-CORPUS-NOTICES.md).
+
+- **CCOST** is the primary phonetic-text candidate. Its observed `ORT-MAU`, `KAN-MAU`, `KAS-MAU`, `MAU`, `MAS`, and `TRN` tiers are parsed; phonetic conversion remains partial.
+- **LOTUSDIS** is orthographic conversational transcript context only; the supplied TextGrids contain no observed phonetic tiers.
+- Neither source annotation is independent gold. Current independent IPA gold remains zero and linguistic accuracy is `NOT_MEASURED`.
+- The exporter reads only `.TextGrid` members, preserves source/time/license provenance, and marks each row `SOURCE_ANNOTATED_NOT_GOLD`. It does not read or export audio.
+
+To recreate the text-only JSONL locally after installing the project dependencies:
+
+```bash
+python scripts/export_textgrid_text.py "CCOST textgrid.zip" "nectecLOTUSDIS textgrid.zip" \
+  --tier ORT-MAU --tier TRN --tier-prefix Hijack_ \
+  --output textgrid-orthographic-text.jsonl
+```
+
+The command produces a local JSONL file. CI publishes the separate `textgrid-text-only-jsonl` artifact with CCOST and LOTUSDIS JSONL files, a SHA-256 manifest, and `data/THIRD-PARTY-CORPUS-NOTICES.md`. The workflow validates the manifest before upload. The latest successful artifact is [available from exact-head CI run 42018381197](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42018381197/artifacts/13411240199). Observe the corpus-specific terms before redistributing or using extracted text; in particular, CCOST is non-commercial CC BY-NC-SA 4.0. See the [source-specific notices](data/THIRD-PARTY-CORPUS-NOTICES.md).
 ## Scope
 
 Primary scope: contemporary Standard Thai with a Bangkok/central-standard reference where the evidence permits.
@@ -88,6 +106,10 @@ The browser interface exposes the same three-position strictness scale described
 ### Pasted article preprocessing
 
 The browser input now has a conservative preprocessing step for recognizable Wikipedia/Markdown/HTML markup: it removes link destinations and common reference markup while retaining visible link labels, decodes common and numeric HTML entities, and shows a notice when the input was changed. Plain unmarked text is passed through unchanged. This is input hygiene, **not** Thai word segmentation or pronunciation inference; it does not make long article text linguistically validated, and it must not be used as evidence that a candidate pronunciation is correct.
+
+## Beta release status
+
+The owner-approved next milestone is a **clearly labelled beta**. External Thai phonetics review and Ukrainian-native target-form review are deferred and are not beta acceptance gates. The public UI must continue to label Ukrainian output as provisional; independent IPA gold remains empty and linguistic accuracy is **NOT_MEASURED**. This is not an official Ukrainian standard or an empirically validated benchmark. Audio/acoustic work remains out of scope. The FastThaiG2P browser/WASM port is implemented and CI-verified; public cutover remains gated on explicit runtime-data redistribution approval, final TLTK license-scope review and GitHub Pages live deployment checks. See [beta release scope](docs/beta-release-scope.md) for the acceptance checklist and known accessibility verification limits.
 
 ## Current release status
 
@@ -198,7 +220,7 @@ The repository includes a static two-page web application under `web/`:
 
 The browser uses the CC0 list for **word-boundary evidence only**. A dictionary match does not imply a known pronunciation: IPA and Ukrainian output are still withheld unless the word has curated syllabification or a typed source-attested IPA override. To run browser tests locally, first run `python scripts/generate_web_word_dictionary.py`; the generated `web/src/word-dictionary.generated.js` is a build artifact and is not committed.
 
-The web CI gate compares the browser engine against the Python reference on the same probes before the Pages artifact is eligible for deployment. GitHub Pages is a static presentation/deployment layer; it does not run the Python package server-side.
+The FastThaiG2P browser port passed its dedicated Pyodide 0.29.5 parity gate and headless Chromium smoke test for the same-origin Web Worker. The verified ephemeral bundle contains four wheels, 14 Pyodide runtime files, ten hashed license/NOTICE files, and a separately downloadable CC BY-SA 4.0 ZIP of the filtered Wiktionary-derived IPA dictionary and tokenizer wordlist. GitHub Pages remains static-only; the public build and deployment stay gated until the explicit bundle-ready control and component-level redistribution manifest approve publication. The worker sends no Thai input to an API or CDN. The current branch has not been merged or deployed; the runtime notices are listed at [web/third-party-notices.html](web/third-party-notices.html).
 
 ## Research workspace
 
