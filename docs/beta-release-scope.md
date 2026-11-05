@@ -87,6 +87,10 @@ No third-party skill files are copied into this repository.
 - [ ] Manual accessibility limitations are disclosed; no unsupported WCAG conformance claim is made.
 - [ ] Release notes identify known linguistic and corpus limitations.
 
-## GitHub Pages-only hosting decision (2026-11-05)\n\nThe owner selected a browser/WASM port of the existing FastThaiG2P engine. GitHub Pages is the sole hosting target; Vercel, remote API hosting and JavaScript engine replacement are out of scope. The Pyodide compatibility/parity spike and its current status are tracked in [FastThaiG2P Pyodide port](fastthaig2p-pyodide-port.md). Do not enable Pages deployment of the new runtime bundle until the browser parity, bundle, and asset-rights gates pass.\n\n## Current readiness statement
+## GitHub Pages-only hosting decision (2026-11-05)
+
+The owner selected a browser/WASM port of the existing FastThaiG2P engine. GitHub Pages is the sole hosting target; Vercel, remote API hosting and JavaScript engine replacement are out of scope. The Pyodide compatibility/parity spike and its current status are tracked in [FastThaiG2P Pyodide port](fastthaig2p-pyodide-port.md). Do not enable Pages deployment of the new runtime bundle until the browser parity, bundle, and asset-rights gates pass.
+
+## Current readiness statement
 
 **BETA_CANDIDATE_ENGINEERING_VERIFIED; PUBLIC_DEPLOYMENT_NOT_YET_VERIFIED.** Existing exact-head CI on 5a7f6888420009e288f6b43332bd0dd4b560fddd passed (Full CI, Site API, optional external G2P smoke). This is an engineering verification result, not linguistic validation and not proof that the GitHub Pages browser/WASM port or its public runtime bundle is ready. No release tag or production cutover is made by this document.
