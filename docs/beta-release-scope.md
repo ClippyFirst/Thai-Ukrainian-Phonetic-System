@@ -50,7 +50,7 @@ The following source-level properties were inspected in web/index.html, web/syst
 - Actual Windows High Contrast / forced-colors visual behavior in supported browsers (a source-level rule is present, but runtime rendering has not been inspected).
 - Cross-browser rendering, touch target behavior and actual computed contrast for every dynamic result state.
 
-These are manual verification tasks, not evidence of failure. Do not claim WCAG conformance or certification until the checks are executed and recorded. The beta can ship with this limitation stated if all automated repository gates pass.
+These are manual verification tasks, not evidence of failure. Use [W3C WCAG 2.2](https://www.w3.org/TR/WCAG22/) as the normative checklist; in particular, sampled text contrast is compared with SC 1.4.3 (4.5:1 for normal text). Do not claim WCAG conformance or certification until the checks are executed and recorded. The beta can ship with this limitation stated if all automated repository gates pass.
 
 ## Product and operations practices adopted from the reference skills repository
 
