@@ -83,7 +83,7 @@ jobs:
           manifest = json.loads(Path("/tmp/ccost-label-review-manifest.json").read_text(encoding="utf-8"))
           summary = manifest["summary"]
           with Path("/tmp/ccost-label-review-worklist.tsv").open(encoding="utf-8", newline="") as handle:
-              rows = list(csv.DictReader(handle, delimiter="\\t"))
+              rows = list(csv.DictReader(handle, delimiter="\t"))
           assert summary["tone_suffix_8_occurrences"] == 868, summary
           assert summary["tone_suffix_8_event_groups"] == 397, summary
           assert summary["tone_suffix_8_unique_raw_label_events"] == 438, summary
@@ -205,7 +205,7 @@ jobs:
       - name: Build unadjudicated manual segmentation review sample
         run: python scripts/build_segmentation_manual_review.py --report /tmp/thai-segmentation-comparative-error-review.json --tud-model /tmp/thai-tud-word-model.json --output /tmp/thai-segmentation-manual-review.tsv --sample-per-stratum 8 --control-sample 12 --seed thai-segmentation-review-v1
       - name: Validate manual review sample remains unadjudicated
-        run: python -c "import csv,json; rows=list(csv.DictReader(open('/tmp/thai-segmentation-manual-review.tsv',encoding='utf-8'),delimiter='\\t')); assert rows; assert any('UNIFORM_CONTROL' in r['sampled_for'].split(';') for r in rows); assert all(r['gold_status']=='SOURCE_ANNOTATED' and r['adjudicated']=='NO' and not r['human_decision'] and not r['reviewer_id'] and not r['decision_rationale'] for r in rows); assert all(''.join(json.loads(r[k]))==r['text'] for r in rows for k in ('gold_tokens_json','dictionary_tokens_json','tud_tokens_json'))"
+        run: python -c "import csv,json; rows=list(csv.DictReader(open('/tmp/thai-segmentation-manual-review.tsv',encoding='utf-8'),delimiter='\t')); assert rows; assert any('UNIFORM_CONTROL' in r['sampled_for'].split(';') for r in rows); assert all(r['gold_status']=='SOURCE_ANNOTATED' and r['adjudicated']=='NO' and not r['human_decision'] and not r['reviewer_id'] and not r['decision_rationale'] for r in rows); assert all(''.join(json.loads(r[k]))==r['text'] for r in rows for k in ('gold_tokens_json','dictionary_tokens_json','tud_tokens_json'))"
       - uses: actions/upload-artifact@v7
         with:
           name: thai-tud-word-segmentation-model-and-report
