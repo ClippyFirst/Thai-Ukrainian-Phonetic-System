@@ -4060,8 +4060,8 @@
   "ccost_curator_contact_2026_11_05": {
     "status": "PARTIAL_NOT_SENT",
     "public_contacts": {
-      "Pittayawat_Pittayaporn": "pittiyawat.p@chula.ac.th",
-      "Sujinat_Jitwiriyanont": "sujinat.j@chula.ac.th",
+      "Pittayawat_Pittayaporn": "Pittayawat.P@chula.ac.th",
+      "Sujinat_Jitwiriyanont": "Sujinat.J@chula.ac.th",
       "Cathryn_Yang": "cathryn_yang@sil.org",
       "James_Kirby": "jkirby@phonetik.uni-muenchen.de"
     },
@@ -4074,7 +4074,8 @@
       "case-sensitive MAUS/BAS marker variants",
       "mixed marker/text labels",
       "slash and Unicode-looking labels"
-    ]
+    ],
+    "contact_source": "Official ChulaSEAL people page; paper's PDF contact line has a spelling variant."
   },
   "ccost_primary_paper_reconciliation_2026_11_05": {
     "status": "PARTIAL",
