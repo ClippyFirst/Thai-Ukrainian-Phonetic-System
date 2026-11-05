@@ -39,6 +39,7 @@ The following source-level properties were inspected in web/index.html, web/syst
 - Keyboard focus styling exists for buttons, links, textarea, select, and summary; the stylesheet includes responsive layouts at 760px and 420px.
 - Interactive controls and navigation generally use 44px minimum heights; the primary action uses 48px.
 - Reduced-motion preference is respected for smooth scrolling.
+- A forced-colors media rule now uses system colors for visible focus, component boundaries, status markers, and the primary action.
 - Contrast ratios calculated from authored CSS tokens: muted text #5e6070 on white 6.21:1; body text #505360 on white 7.64:1; primary blue #302d8b on white 11.21:1; red #9b263b on white 7.68:1; beta notice text #51474b on #fbf6f6 8.34:1. These sampled pairs exceed WCAG AA normal-text contrast (4.5:1). This is not a complete audit of every rendered state or CSS combination.
 
 ### Accessibility items not verified in this connector-only review
@@ -46,7 +47,7 @@ The following source-level properties were inspected in web/index.html, web/syst
 - Actual keyboard-only traversal and focus order in a browser.
 - Screen-reader output for errors, result changes, copy feedback, and expandable syllable details.
 - 200%/400% zoom, text-spacing overrides, narrow viewport/reflow and mobile assistive technology.
-- Windows High Contrast / forced-colors behavior.
+- Actual Windows High Contrast / forced-colors visual behavior in supported browsers (a source-level rule is present, but runtime rendering has not been inspected).
 - Cross-browser rendering, touch target behavior and actual computed contrast for every dynamic result state.
 
 These are manual verification tasks, not evidence of failure. Do not claim WCAG conformance or certification until the checks are executed and recorded. The beta can ship with this limitation stated if all automated repository gates pass.
