@@ -45,6 +45,7 @@
       "software_license": "Apache-2.0",
       "retained_runtime_data": {
         "pythainlp/corpus/words_th.txt": "CC0-1.0",
+        "pythainlp/corpus/stopwords_th.txt": "CC0-1.0",
         "pythainlp/corpus/corpus_license.md": "license/source notice"
       },
       "excluded_unused_corpus_assets": "All non-Python corpus files except words_th.txt and corpus_license.md",
