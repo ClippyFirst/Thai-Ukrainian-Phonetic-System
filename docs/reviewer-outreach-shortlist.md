@@ -74,3 +74,20 @@ A reasonable *proposed* panel is Onsuwan + Maluleem for blind first-pass annotat
 **Review scope boundary:** the supplied worklist supports text-based review of canonical/phonemic labels, marker semantics and cross-tier consistency. It does not support acoustic adjudication of surface tone contours, timing, or allophonic realization because audio is deliberately not opened or distributed in this project scope.
 
 No contact has been made. No email has been sent. No reviewer has agreed to participate.
+
+
+## Public-source candidate refresh for CCOST exception review — 2026-11-05
+
+A focused search for Thai acoustic-phonetics and tone specialists found a stronger three-person *proposed* panel. These are public qualification leads only; no contact, consent, availability, conflict declaration or appointment is established.
+
+| Candidate | Directly relevant public evidence | Proposed role, subject to acceptance |
+|---|---|---|
+| **Chutamanee Onsuwan, Ph.D.** | Official Thammasat profile documents a Ph.D. on temporal relations between consonants and vowels in Thai syllables and expertise in laboratory phonetics, speech science and phonology. Her publication record includes Thai tone perception and segmental timing. [Official Thammasat profile](https://arts.tu.ac.th/th/teacherlarts/cmukv6znk0052pm61l213msd6); [Thai stop/vowel timing study](https://sealang.net/sala/archives/pdf4/onsuwan2002temporal.pdf). | First-pass reviewer A |
+| **Phanintra Teeranon, Ph.D.** | Public CV lists a Ph.D. in linguistics and phonetics coursework; peer-reviewed research directly examines acoustic and perceptual properties of Standard Thai tones, including comparisons with native Thai speakers and Praat F0 analysis. [CV](https://mfuth.academia.edu/PhanintraTeeranon/CurriculumVitae); [Thai tones acoustic/perceptual study](https://so03.tci-thaijo.org/index.php/JLC/article/view/240495); [2020 tone application study](https://asianonlinejournals.com/index.php/EDU/article/view/1701). | First-pass reviewer B |
+| **Rungpat Roengpitya** | Mahidol profile lists work on Standard Thai tone variation, Thai children's lexical-tone awareness, vowel-length perception and word-final stops. Publications include acoustic work on Thai fricatives and phonetic realization of Khorat Thai tones. [Official Mahidol profile](https://murex.mahidol.ac.th/en/persons/rungpat-roengpitya/); [Khorat Thai tones](https://assta.org/proceedings/sst/2006/sst2006-76.pdf); [ICPhS acoustic study](https://www.internationalphoneticassociation.org/icphs-proceedings/ICPhS2011/OnlineProceedings/RegularSession/Roengpitya/Roengpitya.pdf). | Separate adjudicator |
+
+**Why this panel is preferable:** all three have public evidence directly relevant to Thai phonetics/tones, and none is listed as a CCOST paper author or curator. This is not enough to certify independence: each must still disclose collaboration, supervision, financial and personal conflicts with CCOST authors, the project and each other. The project owner must verify identity, current role, Thai competence and consent before adding any reviewer registry entry.
+
+**Conflict caution — Lena Maluleem:** her phonetics/phonology and Thai prosody credentials are relevant, but public publication metadata identifies Pittayawat Pittayaporn as her co-author on Thai prosody research, and her doctoral work was supervised by him. Since Pittayaporn is a CCOST co-author/data curator, treat this as a potential conflict for independent CCOST adjudication; do not assign her to the independent CCOST panel unless the conflict is disclosed and explicitly assessed. [Journal article](https://so04.tci-thaijo.org/index.php/TSDJ/article/view/261290); [Kasetsart profile](https://ling.human.ku.ac.th/index.php/lyna_cv/).
+
+The CCOST authors/curators Pittayawat Pittayaporn and Sujinat Jitwiriyanont remain useful for source-format clarification but should not be counted as independent reviewers of their own corpus annotations.
