@@ -4131,6 +4131,7 @@
     "latest_commit_before_audit_update": "c85b32d0c1db6a2320158ab02beb8ea08ec6bb79",
     "ccost_manual_review": "DONE_VERIFIED_WORKFLOW_GUIDE_NO_UNRESOLVED_SYMBOL_DEFINITIONS",
     "fastthaig2p_bulk_merged_dictionary_redistribution": "PERMITTED_WITH_SOURCE_SPECIFIC_LICENSES_AND_NOTICES_NOT_VENDORED",
-    "fastthaig2p_optional_dependency_use": "PERMITTED_PINNED_APACHE_2_0_DEPENDENCY"
+    "fastthaig2p_optional_dependency_use": "PERMITTED_PINNED_APACHE_2_0_DEPENDENCY",
+    "ccost_tone_suffix_8": "DONE_VERIFIED_OUT_OF_RANGE_BAS_SUFFIX_INTENDED_VALUE_UNKNOWN"
   }
 }
