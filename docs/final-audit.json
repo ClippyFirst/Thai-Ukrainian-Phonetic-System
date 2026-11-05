@@ -304,7 +304,9 @@
       "reason": "No owner-approved archive/delete policy; historical refs preserved."
     },
     "latest_checkpoint_note": "PR #189 exact branch head fba3e63deeda6e61565e0444dc4685f248dbb763 (116 ahead, 0 behind) passed exact-head Full CI 41646388428 and Web Static 41646388317 on 2026-11-03. Full CI: Ruff, 327 pytest tests, 1,185 subtests, validators, generated-artifact checks, diagnostics, IPA-UA adapter, 29 browser parity fixtures, wheel install and master artifact all passed. Linguistic accuracy remains NOT_MEASURED; independent Thai/Ukrainian adjudication and manual accessibility remain open.",
-    "python_subtests": 1164
+    "python_subtests": 1164,
+    "latest_ccost_worklist_head_status": "PENDING_EXACT_HEAD_CI_AFTER_CORRECTION",
+    "latest_ccost_worklist_local_tests": "NOT_RUN_CONNECTOR_ONLY_SESSION"
   },
   "challenge_runtime": {
     "challenge_inputs": 36,
@@ -4081,7 +4083,7 @@
     "contact_source": "Official ChulaSEAL people page; paper's PDF contact line has a spelling variant."
   },
   "ccost_primary_paper_reconciliation_2026_11_05": {
-    "status": "PARTIAL",
+    "status": "PARTIAL; five CCOST tone categories documented, _8 remains unmapped",
     "source": "https://aclanthology.org/2026.lrec-1.247.pdf",
     "confirmed_tiers": {
       "ORT": "orthographic word",
@@ -4151,7 +4153,9 @@
       "distinct_raw_strings": 22,
       "files": 119,
       "classification": "UNMAPPED_IN_CCOST_PAPER_MAPPING; GENERIC_BAS_MAUS_SYNTAX_PERMITS_1_TO_9",
-      "intended_original_values": "UNKNOWN; no repair inferred"
+      "intended_original_values": "UNKNOWN; no repair inferred",
+      "generic_maus_syntax": "_1.._9 permitted by BAS FAQ; _0 disallowed",
+      "ccost_paper_mapping": "_1.._5 only: Mid, Low, Falling, High, Rising"
     },
     "markers_all_tiers": {
       "unresolved_interval_count": 821,
