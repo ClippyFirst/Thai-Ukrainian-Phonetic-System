@@ -1,7 +1,7 @@
 ## Public-source research follow-up — 2026-11-05
 
 - **CCOST `-MAU` tiers: DONE_VERIFIED.** BAS documentation explicitly defines `ORT-MAU`, `KAN-MAU`, and `KAS-MAU`; the old curator blocker for suffix semantics is closed.
-- **`<notProcessedChunk>`: DONE_VERIFIED.** BAS FAQ says MAUS inserts this dummy segment when a chunk cannot be processed. It denotes an alignment/processing failure, not a speech phone. `<P>`, `<P:>`, `<:p>`, `<Fail>`, and `_8` remain unresolved; no values are guessed.
+- **`<notProcessedChunk>`: DONE_VERIFIED.** BAS FAQ says MAUS inserts this dummy segment when a chunk cannot be processed. It denotes an alignment/processing failure, not a speech phone. `<P>`, `<P:>`, `<:p>`, and `<Fail>` remain unresolved. `_8` is classified as an out-of-range suffix because BAS supports only `_1`–`_5`; its intended correction remains unknown.
 - **FastThaiG2P use: PERMITTED.** Keep the pinned Apache-2.0 optional dependency and internal candidate comparisons. Source metadata records source categories; generated/manual assets appear covered by the upstream Apache grant; Wiktionary-derived entries retain CC BY-SA/GFDL terms; TLTK fallback data has BSD-3 package evidence, with a separate LGPL file also present upstream. Bulk redistribution is permitted with source separation and license notices (CC BY-SA/GFDL for Wiktionary-derived entries; Apache-2.0/BSD-3 for corresponding other components); this repository has not vendored the dataset.
 - **Contact:** no email was sent; the owner asked to use public internet/GitHub research instead.
 - Evidence and details are in `docs/ccost-label-review-2026-11-05.md`, `docs/fastthaig2p-license-review-2026-11-05.md`, and `docs/validation-matrix.md`.
