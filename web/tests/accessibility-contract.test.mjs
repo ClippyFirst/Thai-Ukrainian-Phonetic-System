@@ -59,6 +59,12 @@ assert.match(app, /aria-label="Копіювати: /);
 assert.match(app, /lang="und-fonipa"/);
 assert.match(app, /const esc =/);
 assert.match(app, /continuous-output-value/);
+assert.match(app, /<h3 class="word-heading">/);
+assert.match(app, /<h4 class="result-title">/);
+const sampleButtonRule = css.match(/\\.examples button\\s*\\{([^}]*)\\}/);
+const copyButtonRule = css.match(/\\.copy\\s*\\{([^}]*)\\}/);
+assert(sampleButtonRule && /border:\\s*1px solid #767676/.test(sampleButtonRule[1]), "sample button boundary must have visible contrast");
+assert(copyButtonRule && /border:\\s*1px solid #767676/.test(copyButtonRule[1]), "copy button boundary must have visible contrast");
 
 // Keyboard focus must remain visible for all native interactive controls, 
 assert.match(css, /:focus-visible\s*\{/);
@@ -98,6 +104,8 @@ const palettePairs = [
   ["#505360", "#ffffff", "body text"],
   ["#505360", "#f5f5fa", "body text on wash"],
   ["#302d8b", "#f5f6fb", "blue badge text"],
+  ["#767676", "#ffffff", "sample and copy button boundaries"],
+  ["#ffffff", "#9b263b", "beta label text"],
   ["#9b263b", "#fbf4f5", "warning badge text"]
 ];
 for (const [foreground, background, label] of palettePairs) {
