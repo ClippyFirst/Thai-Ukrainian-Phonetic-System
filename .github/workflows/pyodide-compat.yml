@@ -5,6 +5,9 @@ on:
       - "src/thai_ukrainian/**"
       - "web/src/**"
       - "web/index.html"
+      - "web/system.html"
+      - "web/third-party-notices.html"
+      - "web/licenses/**"
       - "web/tests/fastthaig2p-browser.test.mjs"
       - "scripts/fastthaig2p_pyodide_parity.py"
       - "scripts/slim_pythainlp_wheel.py"
@@ -20,6 +23,8 @@ on:
   pull_request:
     paths:
       - "src/thai_ukrainian/**"
+      - "web/third-party-notices.html"
+      - "web/licenses/**"
       - "scripts/fastthaig2p_pyodide_parity.py"
       - "scripts/prepare_fastthaig2p_browser_source.py"
       - "scripts/verify_tltk_fallback_provenance.py"
