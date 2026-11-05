@@ -29,6 +29,7 @@ REQUIRED_NOTICES = {
     "licenses/BSD-3-Clause-TLTK.txt",
     "licenses/LGPL-3.0-TLTK-repository-license.txt",
     "licenses/CC-BY-SA-4.0.txt",
+    "licenses/MIT-Project.txt",
 }
 
 
