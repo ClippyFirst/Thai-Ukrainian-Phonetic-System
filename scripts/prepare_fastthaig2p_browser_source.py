@@ -95,25 +95,25 @@ def prepare_source(source_dir: Path) -> dict[str, Any]:
 
     provenance_path = data_dir / "browser-data-provenance.json"
     provenance_path.write_text(
-        json.dumps(report, ensure_ascii=False, indent=2) + "\\n",
+        json.dumps(report, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
     attribution_path = data_dir / "WIKTIONARY-ATTRIBUTION.md"
     attribution_path.write_text(
-        "# FastThaiG2P filtered Wiktionary data attribution\\n\\n"
+        "# FastThaiG2P filtered Wiktionary data attribution\n\n"
         "This browser wheel contains a filtered, modified subset of Thai IPA records "
         "from Wiktionary via Kaikki.org. Attribution: Wiktionary contributors; "
-        "Kaikki.org / Wiktextract.\\n\\n"
+        "Kaikki.org / Wiktextract.\n\n"
         "Changes made for this build: records without a per-entry wiktionary "
         "source label were excluded; model-generated entries were excluded; the "
         "tokenizer wordlist was reduced to the retained IPA keys; the original "
         "runtime IPA string is preserved when the audit snapshot's IPA value differs "
-        "(see browser-data-provenance.json).\\n\\n"
+        "(see browser-data-provenance.json).\n\n"
         "The derived Wiktionary data is made available under "
         "[Creative Commons Attribution-ShareAlike 4.0 International]"
         "(https://creativecommons.org/licenses/by-sa/4.0/). "
         "Source and license information: https://kaikki.org/thwiktionary/index.html "
-        "and https://en.wiktionary.org/wiki/Wiktionary:Copyrights.\\n",
+        "and https://en.wiktionary.org/wiki/Wiktionary:Copyrights.\n",
         encoding="utf-8",
     )
 
@@ -124,8 +124,8 @@ def prepare_source(source_dir: Path) -> dict[str, Any]:
         raise SystemExit("FastThaiG2P wheel include configuration changed; refusing to omit provenance notices")
     project_text = project_text.replace(
         fallback_include,
-        fallback_include + '\\n'
-        '"data/browser-data-provenance.json" = "fastthaig2p/data/browser-data-provenance.json"\\n'
+        fallback_include + '\n'
+        '"data/browser-data-provenance.json" = "fastthaig2p/data/browser-data-provenance.json"\n'
         '"data/WIKTIONARY-ATTRIBUTION.md" = "fastthaig2p/data/WIKTIONARY-ATTRIBUTION.md"',
         1,
     )
