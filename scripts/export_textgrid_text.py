@@ -22,8 +22,13 @@ MAX_COMPRESSION_RATIO = 1000
 
 SOURCE_METADATA = {
     "CCOST textgrid.zip": {
+        "source_id": "CORP-CCOST",
         "source": "CCOST",
-        "source_version": "Zenodo v1.0; DOI 10.5281/zenodo.17366698",
+        "source_version": (
+            "Researcher-supplied TextGrid-only export; upstream CCOST Zenodo v1.0 "
+            "reference; exact upstream export manifest not supplied"
+        ),
+        "source_archive_git_blob_sha1": "3b1e3978c2b3a232dce4fdcfd137bb572ce5467f",
         "license": "CC-BY-NC-SA-4.0",
         "attribution": (
             "Pittayaporn, Yang, Jitwiriyanont, and Kirby (2026), "
@@ -32,13 +37,15 @@ SOURCE_METADATA = {
         "source_url": "https://zenodo.org/records/17366698",
     },
     "nectecLOTUSDIS textgrid.zip": {
+        "source_id": "CORP-LOTUSDIS",
         "source": "LOTUSDIS",
         "source_version": "Researcher-supplied TextGrid export; upstream snapshot not pinned",
+        "source_archive_git_blob_sha1": "50518e9a54e0986935e7b1cff122eb43c0b9edbd",
         "license": "CC-BY-SA-4.0",
         "attribution": (
             "Tipaksorn, Thatphithakkul, Chunwijitra, and Thangthai (2025), LOTUSDIS"
         ),
-        "source_url": "https://github.com/CAI-NECTEC/LOTUSDIS",
+        "source_url": "https://huggingface.co/datasets/nectec/LOTUSDIS",
     },
 }
 
@@ -124,22 +131,27 @@ def export_records(
                     identity = (
                         f"{metadata['source']}\0{member_name}\0{tier.name}\0{interval_index}"
                     )
+                    if tier.name == "ORT-MAU":
+                        annotation_role = "orthographic_word"
+                    elif tier.name == "TRN":
+                        annotation_role = "orthographic_utterance_transcript"
+                    elif tier.name.startswith("Hijack_"):
+                        annotation_role = "conversational_transcript"
+                    else:
+                        annotation_role = "explicitly_selected_textgrid_tier"
                     record = {
                         "id": hashlib.sha256(identity.encode("utf-8")).hexdigest(),
                         "text": interval.text,
                         "start": interval.xmin,
                         "end": interval.xmax,
+                        "source_id": metadata["source_id"],
                         "source": metadata["source"],
                         "source_version": metadata["source_version"],
+                        "source_archive_git_blob_sha1": metadata["source_archive_git_blob_sha1"],
                         "source_file": member_name,
                         "tier": tier.name,
                         "interval_index": interval_index,
-                        "annotation_role": (
-                            "orthographic_transcript"
-                            if tier.name in {"ORT-MAU", "TRN"}
-                            or tier.name.startswith("Hijack_")
-                            else "explicitly_selected_textgrid_tier"
-                        ),
+                        "annotation_role": annotation_role,
                         "license": metadata["license"],
                         "attribution": metadata["attribution"],
                         "source_url": metadata["source_url"],
