@@ -132,6 +132,38 @@ class CCOSTTextGridAdapterTests(unittest.TestCase):
         self.assertIn("MAS", report["tier_nonempty_label_counts"])
         self.assertFalse(report["failures"])
 
+    def test_textgrid_parse_failure_reports_structure_without_label_text(self):
+        import tempfile
+        import zipfile
+        from pathlib import Path
+        from scripts.inspect_ccost_textgrid import inspect
+
+        malformed = """File type = "ooTextFile"
+Object class = "TextGrid"
+xmin = 0
+xmax = 1
+item []:
+    item [1]:
+        class = "IntervalTier"
+        name = "MAS"
+        xmin = 0
+        xmax = 1
+        intervals [1]:
+            xmin = 0
+            xmax = 1
+"""
+        with tempfile.TemporaryDirectory() as directory:
+            archive_path = Path(directory) / "malformed.zip"
+            with zipfile.ZipFile(archive_path, "w") as archive:
+                archive.writestr("bad.TextGrid", malformed)
+            report = inspect([archive_path])
+
+        diagnostic = report["failures"][0]["structure"]
+        self.assertEqual(diagnostic["tier_names"], ["MAS"])
+        self.assertEqual(diagnostic["interval_blocks_without_text"], 1)
+        self.assertEqual(diagnostic["first_missing_interval_fields"], ["xmin", "xmax"])
+        self.assertNotIn("label", diagnostic)
+
     def test_zip_inspection_rejects_unsupported_textgrid_encoding(self):
         import tempfile
         import zipfile
