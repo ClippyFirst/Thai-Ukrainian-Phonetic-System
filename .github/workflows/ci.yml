@@ -96,6 +96,8 @@ jobs:
           assert summary["unresolved_marker_interval_count"] == 821, summary
           assert summary["markers"] == {"<P>": 821, "<Fail>": 24, "<P:>": 4, "<:p>": 22}, summary
           assert summary["marker_interval_counts"] == {"<P>": 771, "<Fail>": 24, "<P:>": 4, "<:p>": 22}, summary
+          assert summary["unresolved_marker_event_groups"] == 398, summary
+          assert summary["marker_event_group_counts"] == {"<P>": 375, "<Fail>": 8, "<P:>": 4, "<:p>": 11}, summary
           assert summary["unresolved_marker_appearances"] == 871, summary
           assert summary["audio_members_read"] == 0, summary
           assert len(rows) == summary["records"], (len(rows), summary)
