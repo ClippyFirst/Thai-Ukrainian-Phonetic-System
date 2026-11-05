@@ -2580,3 +2580,13 @@ Current decisions:
 ### Follow-up implementation correction — CCOST marker classification
 
 A final source review found that the previous helper skipped every tag-only label, including opaque `<Fail>`, `<P>`, and `<notProcessedChunk>`. This would silently erase unresolved annotations. The helper now recognizes only the three documented markers `<p:>`, `<nib>`, and `<usb>`; all unknown tag-only and mixed labels fail closed. Added a regression test for five unresolved marker forms. Await exact-head CI before accepting the correction as verified.
+
+
+## 2026-11-05 follow-up — CCOST primary-paper and FastThaiG2P rights review
+
+- Re-read the published CCOST LREC 2026 paper. Base tier semantics are now confirmed: MAU = phonetic segment; MAS = phonemic syllable; KAN = canonical word pronunciation; KAS = canonical syllabified pronunciation; ORT = orthographic word; TRN = orthographic utterance transcript. The paper says these phonetic/phonemic tiers use X-SAMPA and defines only _1–_5 tones.
+- The paper does not define why the supplied release has ORT-MAU, KAN-MAU, and KAS-MAU. Keep the suffix alias question open.
+- _8, <P>, <P:>, <:p>, <Fail>, <notProcessedChunk>, slash alternatives, Unicode-looking X-SAMPA failures, and mixed marker/text labels remain unconfirmed. Adapter remains fail-closed.
+- FastThaiG2P's pinned LICENSE, NOTICE, data README, package inclusion configuration, and _th2ipa.py were rechecked. Source code Apache-2.0 and vendored TLTK parser BSD-3-Clause are confirmed. No single blanket rights statement for the entire 62k runtime dictionary/fallback data exists in the inspected snapshot. Bulk redistribution remains BLOCKED.
+- Public CCOST curator/author emails and a complete clarification request are now recorded in docs/external-review-and-source-requests.md. **Not sent:** no email-sending action is available in this connected session. No response has been received.
+- Exact status and acceptance criteria are recorded in docs/validation-matrix.md; detailed evidence is in docs/ccost-label-review-2026-11-05.md and docs/fastthaig2p-license-review-2026-11-05.md.
