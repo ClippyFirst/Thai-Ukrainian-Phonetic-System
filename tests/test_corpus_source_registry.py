@@ -28,20 +28,22 @@ class CorpusSourceRegistryTests(unittest.TestCase):
         with path.open("r", encoding="utf-8-sig", newline="") as stream:
             rows = {row["source_id"]: row for row in csv.DictReader(stream)}
         row = rows["CORP-CCOST"]
+        notes = row["notes"]
         self.assertEqual(row["license_or_access"], "CC BY-NC-SA 4.0; non-commercial use only")
-        self.assertIn("6.2 GB", row["notes"])
-        self.assertIn("TextGrid", row["notes"])
-        self.assertIn("not bundled", row["notes"])
-        self.assertIn("10.5281/zenodo.17366698", row["notes"])
-        self.assertIn("10.63317/3ds35jijmgrx", row["notes"])
-        self.assertIn("manual correction by trained native Thai research assistants", row["notes"])
-        self.assertIn("no formal inter-annotator agreement measures", row["notes"])
-        self.assertIn("CCOST_manual.pdf inspected 2026-11-01", row["notes"])
-        self.assertIn("LREC 2026 paper specifies intended tiers ORT", row["notes"])
-        self.assertIn("X-SAMPA", row["notes"])
-        self.assertIn("tone numerals _1=Mid, _2=Low, _3=Falling, _4=High, _5=Rising", row["notes"])
-        self.assertIn("no formal inter-annotator agreement", row["notes"])
-        self.assertIn("actual released archive tier/label conformance and local sample mapping still require inspection", row["notes"])
+        self.assertIn("6.2 GB", notes)
+        self.assertIn("TextGrid-only archive", notes)
+        self.assertIn("CCOST textgrid.zip", notes)
+        self.assertIn("488/488", notes)
+        self.assertIn("3b1e3978c2b3a232dce4fdcfd137bb572ce5467f", notes)
+        self.assertIn("10.5281/zenodo.17366698", notes)
+        self.assertIn("10.63317/3ds35jijmgrx", notes)
+        self.assertIn("manual correction by trained native Thai research assistants", notes)
+        self.assertIn("no formal inter-annotator agreement measures", notes)
+        self.assertIn("CCOST_manual.pdf inspected 2026-11-01", notes)
+        self.assertIn("LREC 2026 paper specifies intended tiers ORT", notes)
+        self.assertIn("X-SAMPA", notes)
+        self.assertIn("tone numerals _1=Mid, _2=Low, _3=Falling, _4=High, _5=Rising", notes)
+        self.assertIn("actual release labels remain partly unsupported", notes)
 
     def test_segmentation_sources_preserve_license_and_usage_gates(self):
         path = ROOT / "data" / "corpus_sources.csv"
