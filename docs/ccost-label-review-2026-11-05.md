@@ -154,3 +154,18 @@ The four unresolved markers have a separate interval inventory. The previous who
 - No audio is opened or supplied. The worklist cannot establish acoustic surface-tone contours, speaker-specific allophony, duration, or exact acoustic realization.
 - A valid correction must cite positive cross-tier or source-convention evidence. `_8` being out of range does not identify which valid suffix was intended.
 - Review status remains BLOCKED until two qualified independent Thai reviewers submit blind packets and a separate adjudicator records decisions. Reviewer candidates and public qualification evidence are listed in `reviewer-outreach-shortlist.md`; no one has been contacted or appointed.
+
+
+## Worklist inventory reconciliation — all-tier scope (2026-11-05)
+
+The CI worklist intentionally uses a broader scope than the earlier `inspect_ccost_textgrid.py` marker summary: it scans **every non-empty interval in every IntervalTier**, not only the declared phonetic tiers. Therefore its marker counts must not be conflated with the earlier inspector's phonetic-tier-only `bracket_marker_counts`.
+
+The latest worklist CI gate asserts the following independently:
+- `_8`: 868 tier-level conversion failures; 397 exact file/interval groups; 438 file/interval/raw-label events; 22 distinct raw strings; 119 source files.
+- All phonetic conversion failures: 1,450 tier-level occurrences. This includes `_8` and other unsupported forms; it is not a count of unique speech events.
+- `<notProcessedChunk>`: 142 documented MAUS processing-failure intervals, kept separate from unknown symbols.
+- Unresolved marker labels across **all tiers**: 821 intervals, with appearances `<P>` 821, `<Fail>` 24, `<P:>` 4, and `<:p>` 22. These are worklist all-tier counts. The earlier inspector counted `<P>` 394 and `<Fail>` 16 in phonetic tiers only; the two reports have different scope and are not contradictory.
+
+The worklist preserves exact raw strings, file/tier/time provenance, overlapping labels from other tiers, adjacent same-tier context, and blank reviewer/adjudicator fields. The artifact is published as `ccost-label-adjudication-worklist` by the PR CI workflow. Its generator and tests are **PARTIAL_PENDING_EXACT_HEAD_CI** until the exact latest PR-head run succeeds and the uploaded artifact is inspected. Do not mark the worklist verified based only on the presence of code or a workflow step.
+
+No semantic interpretation is inferred for `<P>`, `<P:>`, `<:p>`, or `<Fail>`. The counts identify review targets, not meanings. `_8` remains out-of-range under the documented five-tone convention; intended original values remain unknown.
