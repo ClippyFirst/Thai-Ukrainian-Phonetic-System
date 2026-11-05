@@ -13,7 +13,7 @@ This is a usable, evidence-labelled beta of a research-oriented Thai-to-Ukrainia
 - Do not claim independent linguistic accuracy. Current independent IPA gold remains 0 and accuracy remains NOT_MEASURED.
 - No audio acquisition, audio processing, acoustic validation, or narrow connected-speech claims. These remain outside the text-only beta scope.
 - CCOST/LOTUSDIS annotations remain source-annotated data, not independent gold. Corpus use remains subject to each source's terms and attribution.
-- Do not bulk-vendor mixed FastThaiG2P dictionary/fallback data unless exact component-level provenance and notices are preserved. The pinned optional dependency path is separate from redistribution.
+- Build the browser runtime from the pinned FastThaiG2P wheel and Pyodide in CI; self-host all runtime assets on GitHub Pages. Public redistribution remains gated on the exact wheel-member provenance and attribution manifest. The CI-only bundle is ephemeral and is not published.
 
 ## Owner-approved beta gate changes
 
@@ -25,7 +25,7 @@ This is a usable, evidence-labelled beta of a research-oriented Thai-to-Ukrainia
 | Manual accessibility certification | DEFERRED as a certification gate | Source-level and automated checks remain required; unresolved manual checks must be disclosed, not described as passed. |
 | CCOST unknown labels (_8, <P>, <P:>, <:p>, <Fail>) | PARTIAL / fail-closed | Keep raw values and abstain; beta may proceed without inventing semantics. |
 | CCOST controlled-wordlist discrepancy | DEFERRED unless it affects a shipped runtime path | Do not promote unresolved research rows into runtime data. |
-| FastThaiG2P component-level vendoring | DEFERRED | Continue using the pinned optional dependency; do not copy unreviewed mixed assets into the distribution. |
+| FastThaiG2P browser runtime bundle | PARTIAL / PUBLICATION GATE | Pyodide parity and same-origin worker are being verified. Pages build refuses public redistribution until `data/third_party/fastthaig2p-browser-bundle.json` records evidence-backed approval. |
 
 DEFERRED is a scope decision, not a pass. Reopen a deferred item before any claim of linguistic validation, official-standard status, corpus accuracy, or acoustic fidelity.
 
@@ -93,4 +93,4 @@ The owner selected a browser/WASM port of the existing FastThaiG2P engine. GitHu
 
 ## Current readiness statement
 
-**BETA_CANDIDATE_ENGINEERING_VERIFIED; PUBLIC_DEPLOYMENT_NOT_YET_VERIFIED.** Existing exact-head CI on 5a7f6888420009e288f6b43332bd0dd4b560fddd passed (Full CI, Site API, optional external G2P smoke). This is an engineering verification result, not linguistic validation and not proof that the GitHub Pages browser/WASM port or its public runtime bundle is ready. No release tag or production cutover is made by this document.
+**BETA_CANDIDATE_ENGINEERING_VERIFIED; PUBLIC_DEPLOYMENT_NOT_YET_VERIFIED.** The Pyodide 0.29.5 shared-service parity gate has passed four inputs; the real-browser worker smoke and latest full CI are still being verified. This is software-runtime evidence, not linguistic validation and not proof that the public Pages runtime bundle is cleared for redistribution. No release tag or production cutover is made by this document.
