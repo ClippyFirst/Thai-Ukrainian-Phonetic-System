@@ -113,6 +113,31 @@ class CCOSTReviewWorklistTests(unittest.TestCase):
         row = next(row for row in report["records"] if row["raw_label"] == "nia_8p")
         self.assertIn("UNDOCUMENTED_CCOST_TONE_SUFFIX_8", row["issue_types"])
 
+    def test_exposes_exact_interval_mapped_tone_counterparts_without_repairing(self):
+        fixture = TEXTGRID.replace('text = "<P>"', 'text = "? a_2"', 1)
+        with tempfile.TemporaryDirectory() as directory:
+            archive_path = Path(directory) / "ccost.zip"
+            with zipfile.ZipFile(archive_path, "w") as archive:
+                archive.writestr("labels/sample.TextGrid", fixture)
+            report = build_worklist([archive_path])
+
+        tone_row = next(
+            row for row in report["records"]
+            if row["raw_label"] == "? a_8" and row["tier"] == "KAN-MAU"
+        )
+        exact = [
+            item for item in tone_row["overlap_context"]
+            if item["tier"] == "MAS" and item["relation"] == "exact_interval"
+        ]
+        self.assertEqual([item["label"] for item in exact], ["? a_2"])
+        self.assertEqual(report["summary"]["tone_suffix_8_groups_with_exact_interval_mapped_tone_counterpart"], 1)
+        self.assertEqual(
+            report["summary"]["tone_suffix_8_exact_interval_mapped_tone_counterparts_by_tier_suffix"],
+            {"MAS:2": 1},
+        )
+        self.assertEqual(tone_row["proposed_xsampa"], "")
+        self.assertEqual(tone_row["decision"], "")
+
     def test_finds_unresolved_markers_in_non_phonetic_tiers(self):
         with tempfile.TemporaryDirectory() as directory:
             archive_path = Path(directory) / "ccost.zip"
