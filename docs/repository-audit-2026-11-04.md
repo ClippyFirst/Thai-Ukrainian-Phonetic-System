@@ -246,3 +246,23 @@ The latest work adds an evidence-preserving path for the three outstanding CCOST
 - No expert adjudication has occurred. Independent IPA gold rows remain 0; accuracy remains NOT_MEASURED.
 
 The upstream practice review remains selective rather than vendored: repository `AGENTS.md` adapts Superpowers TDD/root-cause/verification, Matt Pocock's small-interface and review principles, Ponytail's deletion-first/YAGNI audit, and Unlazy's acceptance-ledger/reverification discipline. No upstream skill framework is installed or copied wholesale. See `AGENTS.md` and `docs/README.md`.
+
+
+## Current CCOST adjudication continuation — 2026-11-05
+
+The existing PR #210 branch now includes a contextual all-tier CCOST review-worklist generator, regression tests and a CI artifact step. It is intentionally non-destructive: raw labels and source provenance are preserved, cross-tier and adjacent context is included, expert/adjudicator fields are blank, and only TextGrid members are read.
+
+Inventory denominators:
+- `_8`: 868 tier occurrences; 397 exact file/interval groups; 438 file/interval/raw-label events; 22 distinct raw strings; 119 files.
+- All-tier unknown marker worklist: 821 intervals; `<P>` 821, `<Fail>` 24, `<P:>` 4, `<:p>` 22 appearances.
+- Earlier inspector counts `<P>` 394 and `<Fail>` 16 were limited to declared phonetic tiers; do not compare them as if the scope were identical.
+- `<notProcessedChunk>`: 142 documented MAUS processing-failure intervals, not phonetic labels.
+
+The exact-head CI workflow asserts these values and publishes `ccost-label-adjudication-worklist`. The latest exact-head Full CI was cancelled by subsequent pushes; this batch remains **PARTIAL pending a successful exact-head run and artifact inspection**. No local tests are claimed.
+
+The three owner-prioritized tasks remain accurately separated:
+1. `<P>`, `<P:>`, `<:p>`, `<Fail>` semantic definitions: **BLOCKED**; no public source establishes them.
+2. `_8` original-value recovery: **BLOCKED**; out-of-range classification is established, but no replacement is inferred.
+3. Independent Thai expert review/adjudication: **BLOCKED**; no reviewer has been contacted/appointed, no independent annotations exist, and independent IPA gold rows remain 0.
+
+The repository remains an engineering-verified research prototype, not linguistically release-ready. Audio/acoustic validation is deferred/out of scope for this text-only workstream.
