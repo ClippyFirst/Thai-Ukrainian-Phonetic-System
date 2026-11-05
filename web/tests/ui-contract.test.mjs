@@ -132,4 +132,4 @@ assert.equal(input.value, "");
 assert.equal(output.hidden, true);
 assert.equal(status.textContent, "");
 
-console.log("FastThaiG2P-only UI contract: API routing, provisional disclosure and fail-closed behavior passed");
+console.log("FastThaiG2P-only UI contract: local worker routing, provisional disclosure and fail-closed behavior passed");
