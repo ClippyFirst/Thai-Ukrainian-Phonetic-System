@@ -103,6 +103,8 @@ class CCOSTTextGridAdapterTests(unittest.TestCase):
         self.assertEqual(annotations[0].ipa, "kʰa")
         self.assertTrue(is_ccost_nonphonetic_label("<p:>"))
         self.assertTrue(is_ccost_nonphonetic_label("<nib>"))
+        self.assertTrue(is_ccost_nonphonetic_label("<usb><P>"))
+        self.assertFalse(is_ccost_nonphonetic_label("<nib>ข้อความ<P>"))
 
     def test_unpublished_tone_number_8_remains_fail_closed(self):
         with self.assertRaises(XSampaConversionError):
