@@ -43,7 +43,7 @@ for (const id of ["thai-input"]) {
   assert.match(html, new RegExp(`<label[^>]+for="${id}"`), `${id} must have a visible label`);
 }
 assert.match(html, /<textarea[^>]+lang="th"/);
-assert.match(html, /class="hero-grid"/);
+assert.match(html, /class="hero hero-grid"/);
 assert.match(html, /id="input-count"/);
 assert.match(html, /aria-describedby="input-hint input-count"/);
 assert.match(css, /\.hero-grid\s*\{/);

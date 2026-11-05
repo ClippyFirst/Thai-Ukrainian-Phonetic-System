@@ -108,7 +108,7 @@ assert.equal(requests.length, 1);
 assert.equal(element("input-count").textContent, "Знаків: 4");
 assert.match(status.textContent, /Приклад додано/);
 await analyze.click();
-assert.equal(requests.length, 3);
+assert.equal(requests.length, 2);
 assert.equal(requests[1].text, "จริง");
 
 let prevented = false;
@@ -118,7 +118,7 @@ await input.listeners.keydown({
   preventDefault() { prevented = true; }
 });
 assert.equal(prevented, true);
-assert.equal(requests.length, 2);
+assert.equal(requests.length, 3);
 
 input.value = "";
 await analyze.click();
