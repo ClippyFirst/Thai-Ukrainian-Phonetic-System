@@ -19,6 +19,17 @@ EXPECTED_VERSIONS = {
     "tzdata": "2026.6",
 }
 PYODIDE_VERSION = "0.29.5"
+REQUIRED_NOTICES = {
+    "licenses/Apache-2.0-FastThaiG2P.txt",
+    "licenses/NOTICE-FastThaiG2P.txt",
+    "licenses/Apache-2.0-PyThaiNLP.txt",
+    "licenses/PyThaiNLP-corpus-license.md",
+    "licenses/MPL-2.0-Pyodide.txt",
+    "licenses/Apache-2.0-tzdata.txt",
+    "licenses/BSD-3-Clause-TLTK.txt",
+    "licenses/LGPL-3.0-TLTK-repository-license.txt",
+    "licenses/CC-BY-SA-4.0.txt",
+}
 
 
 def wheel_metadata(path: Path) -> tuple[str, str, str]:
@@ -67,6 +78,10 @@ def main() -> None:
     notice_paths = sorted(path for path in args.notices_dir.rglob("*") if path.is_file())
     if not notice_paths:
         raise SystemExit("No third-party license/NOTICE files were supplied")
+    notice_names = {path.relative_to(args.notices_dir.parent).as_posix() for path in notice_paths}
+    missing_notice_names = REQUIRED_NOTICES - notice_names
+    if missing_notice_names:
+        raise SystemExit(f"Required third-party notices are missing: {sorted(missing_notice_names)}")
 
     if not args.pyodide_dist.is_dir():
         raise SystemExit(f"Pyodide distribution directory not found: {args.pyodide_dist}")
