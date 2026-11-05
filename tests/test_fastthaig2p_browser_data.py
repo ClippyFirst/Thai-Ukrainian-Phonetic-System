@@ -14,7 +14,7 @@ class FastThaiG2PBrowserDataTests(unittest.TestCase):
             source = Path(temporary)
             data = source / "data"
             data.mkdir()
-            (source / "pyproject.toml").write_text('"data/fallback" = "fastthaig2p/data/fallback"\\n', encoding="utf-8")
+            (source / "pyproject.toml").write_text('"data/fallback" = "fastthaig2p/data/fallback"\n', encoding="utf-8")
             (data / "dict.txt").write_text("สวน\nโมเดล\nคำแก้\n", encoding="utf-8")
             (data / "ipa.json").write_text(
                 json.dumps({
@@ -35,17 +35,16 @@ class FastThaiG2PBrowserDataTests(unittest.TestCase):
 
             report = prepare_source(source)
 
-            self.assertEqual((data / "dict.txt").read_text(encoding="utf-8"), "สวน\nคำแก้\n")
+            self.assertEqual((data / "dict.txt").read_text(encoding="utf-8"), "สวน\n")
             self.assertEqual(
                 json.loads((data / "ipa.json").read_text(encoding="utf-8")),
                 {
                     "สวน": "/sua̯n˩˩˦/",
-                    "คำแก้": "/kʰam˧.kɛː˥˩/",
                 },
             )
-            self.assertEqual(report["retained_counts"], {"manual": 1, "wiktionary": 1})
-            self.assertEqual(report["excluded_counts"], {"generated": 1})
-            self.assertEqual(report["retained_entries"], 2)
+            self.assertEqual(report["retained_counts"], {"wiktionary": 1})
+            self.assertEqual(report["excluded_counts"], {"generated": 1, "manual": 1})
+            self.assertEqual(report["retained_entries"], 1)
             self.assertTrue((data / "browser-data-provenance.json").is_file())
             self.assertTrue((data / "WIKTIONARY-ATTRIBUTION.md").is_file())
             self.assertIn("WIKTIONARY-ATTRIBUTION.md", (source / "pyproject.toml").read_text(encoding="utf-8"))
@@ -55,7 +54,7 @@ class FastThaiG2PBrowserDataTests(unittest.TestCase):
             source = Path(temporary)
             data = source / "data"
             data.mkdir()
-            (source / "pyproject.toml").write_text('"data/fallback" = "fastthaig2p/data/fallback"\\n', encoding="utf-8")
+            (source / "pyproject.toml").write_text('"data/fallback" = "fastthaig2p/data/fallback"\n', encoding="utf-8")
             (data / "dict.txt").write_text("สวน\n", encoding="utf-8")
             (data / "ipa.json").write_text('{"สวน": "/sua̯n˩˩˦/"}', encoding="utf-8")
             (data / "ipa_metadata.json").write_text(
