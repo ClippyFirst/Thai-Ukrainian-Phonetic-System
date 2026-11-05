@@ -237,7 +237,7 @@ def build_worklist(paths: list[Path]) -> dict[str, Any]:
     }
     exact_interval_tone_counterparts: Counter[str] = Counter()
     exact_interval_tone_counterpart_groups: set[str] = set()
-    mapped_tone_pattern = re.compile(r"_(1|2|3|4|5)(?!\\d)")
+    mapped_tone_pattern = re.compile(r"_(1|2|3|4|5)(?![0-9])")
     for row in tone_rows:
         for item in row["overlap_context"]:
             if (
