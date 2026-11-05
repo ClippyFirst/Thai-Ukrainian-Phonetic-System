@@ -4322,12 +4322,12 @@
     "canonical_scope_document": "docs/beta-release-scope.md",
     "beta_engineering_readiness": "BETA_CANDIDATE_ENGINEERING_VERIFIED",
     "public_deployment_readiness": "NOT_YET_VERIFIED",
-    "last_verified_code_head": "80adb489105e6f2b447fb07331bfdf0c09c888b3",
+    "last_verified_code_head": "08bad62278a7bf6ee787ccf9d4f1b45d3d6b8562",
     "last_verified_full_ci": "42042740322",
     "last_verified_site_api": "42042740326",
     "last_verified_optional_external_g2p_smoke": 42085652951,
     "documentation_head_at_decision_update": "PENDING_FINAL_DOC_COMMIT",
-    "final_documentation_head_ci": "PENDING_EXACT_HEAD_CI",
+    "final_documentation_head_ci": "PENDING_FINAL_HEAD_FULL_CI",
     "release_tag_created": false,
     "production_cutover": false,
     "main_merged": false,
@@ -4339,7 +4339,7 @@
     ],
     "forced_colors_source_support": "IMPLEMENTED_IN_web/src/styles.css",
     "forced_colors_runtime_verification": "NOT_RUN",
-    "last_verified_pyodide_run": 42085653176,
+    "last_verified_pyodide_run": 42086644531,
     "last_verified_web_static_run": 42085653505,
     "last_verified_site_api_run": 42085653055
   },
@@ -4355,14 +4355,14 @@
     "cpython_pyodide_parity": {
       "status": "DONE_VERIFIED",
       "inputs": 4,
-      "run_id": 42065502645
+      "run_id": 42086644531
     },
     "chromium_worker_smoke": {
       "status": "DONE_VERIFIED",
       "cold_and_warm": true,
       "no_api_requests": true,
       "no_cdn_requests": true,
-      "run_id": 42065502645
+      "run_id": 42086644531
     },
     "pythainlp_trim": {
       "version": "5.4.0",
@@ -4384,8 +4384,8 @@
     "exact_head_pyodide_run": 42065750203,
     "public_redistribution_approved": false,
     "rights_blocker": "OWNER_APPROVAL_AND_FINAL_TLTK_BSD_VS_REPOSITORY_LGPL_SCOPE_REVIEW",
-    "pages_deploy_guard": "FASTTHAIG2P_PYODIDE_BUNDLE_READY",
-    "pages_publication": "BLOCKED",
+    "pages_deploy_guard": "FASTTHAIG2P_PYODIDE_BUNDLE_READY_AND_RIGHTS_MANIFEST",
+    "pages_publication": "BLOCKED_PENDING_OWNER_APPROVAL_AND_FINAL_TLTK_LICENSE_SCOPE_REVIEW",
     "actual_pages_performance": "NOT_MEASURED",
     "independent_ipa_gold_rows": 0,
     "linguistic_accuracy": "NOT_MEASURED",
@@ -4419,7 +4419,9 @@
         "CC-BY-SA-4.0.txt"
       ],
       "license": "CC-BY-SA-4.0",
-      "status": "IMPLEMENTED_AWAITING_EXACT_HEAD_CI"
+      "status": "DONE_VERIFIED_IN_CI_42086644531",
+      "size_bytes": 194745,
+      "live_pages_hash_check": "NOT_RUN_DEPLOYMENT_NOT_AUTHORIZED"
     }
   }
 }
