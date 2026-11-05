@@ -95,6 +95,8 @@ jobs:
           assert summary["documented_maus_failure_markers"] == {"<notProcessedChunk>": 142}, summary
           assert summary["unresolved_marker_interval_count"] == 821, summary
           assert summary["markers"] == {"<P>": 821, "<Fail>": 24, "<P:>": 4, "<:p>": 22}, summary
+          assert summary["marker_interval_counts"] == {"<P>": 771, "<Fail>": 24, "<P:>": 4, "<:p>": 22}, summary
+          assert summary["unresolved_marker_appearances"] == 871, summary
           assert summary["audio_members_read"] == 0, summary
           assert len(rows) == summary["records"], (len(rows), summary)
           annotation_fields = [
