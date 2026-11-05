@@ -19,7 +19,7 @@ from thai_ukrainian.adapters.xsampa import XSampaConversionError, convert_xsampa
 TEXTGRID_SUFFIXES = (".textgrid",)
 AUDIO_SUFFIXES = {".wav", ".wave", ".mp3", ".flac", ".ogg", ".m4a", ".aiff", ".aif"}
 MAX_TEXTGRID_MEMBER_BYTES = 8 * 1024 * 1024
-MAX_TOTAL_TEXTGRID_BYTES = 128 * 1024 * 1024
+MAX_ARCHIVE_TEXTGRID_BYTES = 1024 * 1024 * 1024
 MAX_COMPRESSION_RATIO = 1000
 
 
@@ -29,7 +29,7 @@ def inspect(paths: list[Path], sample_limit: int = 5) -> dict:
     archives: list[dict] = []
     tier_counts: Counter[str] = Counter()
     converted_counts: Counter[str] = Counter()
-    textgrid_bytes_total = 0
+    marker_counts: Counter[tuple[str, str]] = Counter()
 
     def inspect_text(name: str, raw: bytes) -> None:
         try:
@@ -49,6 +49,9 @@ def inspect(paths: list[Path], sample_limit: int = 5) -> dict:
                     for interval in tier.intervals:
                         label = interval.text.strip()
                         if not label or label in {"<p :>", "<usb>"}:
+                            continue
+                        if label.startswith("<") and label.endswith(">"):
+                            marker_counts[(tier.name, label)] += 1
                             continue
                         try:
                             convert_xsampa_label(label)
@@ -90,48 +93,82 @@ def inspect(paths: list[Path], sample_limit: int = 5) -> dict:
         archive_report = {
             "archive": path.name,
             "members_total": 0,
+            "textgrid_member_count": 0,
+            "textgrid_uncompressed_bytes": 0,
             "textgrid_members": [],
+            "extension_counts": {},
             "non_textgrid_members_skipped": 0,
             "audio_members_skipped": 0,
         }
         try:
             with zipfile.ZipFile(path) as archive:
                 members = [info for info in archive.infolist() if not info.is_dir()]
-                archive_report["members_total"] = len(members)
-                for info in members:
-                    suffix = Path(info.filename).suffix.lower()
-                    if suffix not in TEXTGRID_SUFFIXES:
-                        archive_report["non_textgrid_members_skipped"] += 1
-                        if suffix in AUDIO_SUFFIXES:
-                            archive_report["audio_members_skipped"] += 1
-                        continue
-                    archive_report["textgrid_members"].append(info.filename)
+                textgrid_infos = [
+                    info for info in members
+                    if Path(info.filename).suffix.lower() in TEXTGRID_SUFFIXES
+                ]
+                extension_counts = Counter(
+                    Path(info.filename).suffix.lower() or "[no extension]" for info in members
+                )
+                total_textgrid_bytes = sum(info.file_size for info in textgrid_infos)
+                archive_report.update({
+                    "members_total": len(members),
+                    "textgrid_member_count": len(textgrid_infos),
+                    "textgrid_uncompressed_bytes": total_textgrid_bytes,
+                    "textgrid_members": [info.filename for info in textgrid_infos],
+                    "extension_counts": dict(sorted(extension_counts.items())),
+                    "non_textgrid_members_skipped": len(members) - len(textgrid_infos),
+                    "audio_members_skipped": sum(
+                        Path(info.filename).suffix.lower() in AUDIO_SUFFIXES for info in members
+                    ),
+                })
+                if total_textgrid_bytes > MAX_ARCHIVE_TEXTGRID_BYTES:
+                    failures.append({
+                        "file": path.name,
+                        "error": (
+                            f"aggregate TextGrid data is {total_textgrid_bytes} bytes; "
+                            f"limit is {MAX_ARCHIVE_TEXTGRID_BYTES} bytes"
+                        ),
+                    })
+                    archives.append(archive_report)
+                    continue
+
+                for info in textgrid_infos:
                     if info.file_size > MAX_TEXTGRID_MEMBER_BYTES:
-                        failures.append({"file": f"{path.name}:{info.filename}", "error": "TextGrid member exceeds 8 MiB safety limit"})
+                        failures.append({
+                            "file": f"{path.name}:{info.filename}",
+                            "error": "TextGrid member exceeds 8 MiB safety limit",
+                        })
                         continue
                     if info.compress_size and info.file_size / info.compress_size > MAX_COMPRESSION_RATIO:
-                        failures.append({"file": f"{path.name}:{info.filename}", "error": "TextGrid member exceeds compression-ratio safety limit"})
+                        failures.append({
+                            "file": f"{path.name}:{info.filename}",
+                            "error": "TextGrid member exceeds compression-ratio safety limit",
+                        })
                         continue
-                    textgrid_bytes_total += info.file_size
-                    if textgrid_bytes_total > MAX_TOTAL_TEXTGRID_BYTES:
-                        failures.append({"file": path.name, "error": "aggregate TextGrid data exceeds 128 MiB safety limit"})
-                        break
                     try:
                         inspect_text(f"{path.name}:{info.filename}", archive.read(info))
                     except (OSError, RuntimeError, zipfile.BadZipFile) as exc:
-                        failures.append({"file": f"{path.name}:{info.filename}", "error": f"{type(exc).__name__}: {exc}"})
+                        failures.append({
+                            "file": f"{path.name}:{info.filename}",
+                            "error": f"{type(exc).__name__}: {exc}",
+                        })
         except (OSError, zipfile.BadZipFile, zipfile.LargeZipFile) as exc:
             failures.append({"file": str(path), "error": f"{type(exc).__name__}: {exc}"})
         archives.append(archive_report)
 
     return {
-        "schema_version": "1.1",
+        "schema_version": "1.2",
         "source": "researcher-supplied TextGrid text; non-TextGrid ZIP members were not read",
         "files_inspected": len(files),
         "files": files,
         "archives": archives,
         "tier_nonempty_label_counts": dict(sorted(tier_counts.items())),
         "converted_label_counts": dict(sorted(converted_counts.items())),
+        "bracket_marker_counts": {
+            f"{tier}:{label}": count
+            for (tier, label), count in sorted(marker_counts.items())
+        },
         "failures": failures,
         "limitations": [
             "TextGrid labels are source annotations, not independent project gold.",
@@ -139,6 +176,7 @@ def inspect(paths: list[Path], sample_limit: int = 5) -> dict:
             "Successful conversion does not establish released-tier completeness or linguistic correctness.",
             "Only Praat long-text TextGrid is supported; short/binary formats are rejected.",
             "Unknown X-SAMPA labels are reported and are not guessed.",
+            "Unrecognized tier names are inventoried but are not assumed to be phonetic tiers.",
         ],
     }
 
