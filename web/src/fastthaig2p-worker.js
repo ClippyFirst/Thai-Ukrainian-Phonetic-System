@@ -1,35 +1,70 @@
 import { loadPyodide } from "../vendor/pyodide/pyodide.mjs";
 
 const INDEX_URL = new URL("../vendor/pyodide/", import.meta.url).href;
+const MANIFEST_URL = new URL("../vendor/bundle-manifest.json", import.meta.url);
 const WHEEL_BASE = new URL("../vendor/wheels/", import.meta.url);
-const WHEELS = [
-  "fastthaig2p-0.1.0-py3-none-any.whl",
-  "pythainlp-5.4.0-py3-none-any.whl",
-  "thai_ukrainian_phonetic_system-0.6.1-py3-none-any.whl",
-  "tzdata-2026.6-py2.py3-none-any.whl"
-];
+const EXPECTED_PACKAGES = new Set([
+  "fastthaig2p",
+  "pythainlp",
+  "thai-ukrainian-phonetic-system",
+  "tzdata"
+]);
 
 let runtimePromise;
+
+async function fetchManifest() {
+  const response = await fetch(MANIFEST_URL, {
+    credentials: "same-origin",
+    cache: "force-cache"
+  });
+  if (!response.ok) throw new Error(`Не вдалося завантажити маніфест рушія (${response.status}).`);
+  const manifest = await response.json();
+  if (manifest.schema_version !== 1 || manifest.pyodide?.version !== "0.29.5") {
+    throw new Error("Версія локального Pyodide bundle не відповідає перевіреній конфігурації.");
+  }
+  if (manifest.purpose === "public-pages" && manifest.redistribution_approved !== true) {
+    throw new Error("Публічне розповсюдження компонентів рушія ще не погоджено.");
+  }
+  if (!Array.isArray(manifest.wheels) ||
+      new Set(manifest.wheels.map(item => item.package)).size !== EXPECTED_PACKAGES.size ||
+      [...EXPECTED_PACKAGES].some(name => !manifest.wheels.some(item => item.package === name))) {
+    throw new Error("Маніфест локального рушія неповний.");
+  }
+  return manifest;
+}
 
 async function initializeRuntime(requestId) {
   self.postMessage({ type: "progress", requestId, stage: "runtime" });
   const pyodide = await loadPyodide({ indexURL: INDEX_URL });
+  const manifest = await fetchManifest();
   pyodide.FS.mkdirTree("/wheels");
+  const wheelNames = [];
 
-  for (const filename of WHEELS) {
-    self.postMessage({ type: "progress", requestId, stage: "download", filename });
-    const response = await fetch(new URL(filename, WHEEL_BASE), {
+  for (const asset of manifest.wheels) {
+    if (!/^[a-zA-Z0-9_.-]+\.whl$/.test(asset.filename)) {
+      throw new Error("Маніфест містить неприпустимий шлях до Python wheel.");
+    }
+    self.postMessage({ type: "progress", requestId, stage: "download", filename: asset.filename });
+    const response = await fetch(new URL(asset.filename, WHEEL_BASE), {
       credentials: "same-origin",
       cache: "force-cache"
     });
     if (!response.ok) {
-      throw new Error(`Не вдалося завантажити локальний компонент ${filename} (${response.status}).`);
+      throw new Error(`Не вдалося завантажити локальний компонент ${asset.filename} (${response.status}).`);
     }
-    const bytes = new Uint8Array(await response.arrayBuffer());
-    pyodide.FS.writeFile(`/wheels/${filename}`, bytes);
+    const buffer = await response.arrayBuffer();
+    const digest = await crypto.subtle.digest("SHA-256", buffer);
+    const actualHash = [...new Uint8Array(digest)]
+      .map(value => value.toString(16).padStart(2, "0"))
+      .join("");
+    if (actualHash !== asset.sha256) {
+      throw new Error(`Контрольна сума локального компонента ${asset.filename} не збігається.`);
+    }
+    pyodide.FS.writeFile(`/wheels/${asset.filename}`, new Uint8Array(buffer));
+    wheelNames.push(asset.filename);
   }
 
-  pyodide.globals.set("WHEEL_NAMES", pyodide.toPy(WHEELS));
+  pyodide.globals.set("WHEEL_NAMES", pyodide.toPy(wheelNames));
   await pyodide.runPythonAsync(`
 import sysconfig
 import zipfile
