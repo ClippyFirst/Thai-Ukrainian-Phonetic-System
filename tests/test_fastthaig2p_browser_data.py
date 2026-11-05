@@ -51,7 +51,7 @@ class FastThaiG2PBrowserDataTests(unittest.TestCase):
             source = Path(temporary)
             data = source / "data"
             data.mkdir()
-            (data / "dict.txt").write_text("สวน\\n", encoding="utf-8")
+            (data / "dict.txt").write_text("สวน\n", encoding="utf-8")
             (data / "ipa.json").write_text('{"สวน": "/sua̯n˩˩˦/"}', encoding="utf-8")
             (data / "ipa_metadata.json").write_text(
                 '{"สวน": {"ipa": "/suaːn/", "source": "wiktionary"}}',
