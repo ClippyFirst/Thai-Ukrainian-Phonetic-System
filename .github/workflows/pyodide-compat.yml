@@ -100,6 +100,23 @@ jobs:
             --output web/vendor \
             --rights-manifest data/third_party/fastthaig2p-browser-bundle.json \
             --notices-dir web/licenses
+          python - <<'PY'
+          import json
+          import zipfile
+          from pathlib import Path
+          manifest = json.loads(Path("web/vendor/bundle-manifest.json").read_text())
+          datasets = {item["path"]: item for item in manifest["datasets"]}
+          record = datasets["datasets/fastthaig2p-wiktionary-derived.zip"]
+          archive_path = Path("web/vendor") / record["path"]
+          assert archive_path.is_file()
+          with zipfile.ZipFile(archive_path) as archive:
+              assert set(archive.namelist()) == {
+                  "dict.txt", "ipa.json", "browser-data-provenance.json",
+                  "WIKTIONARY-ATTRIBUTION.md", "CC-BY-SA-4.0.txt"
+              }
+              provenance = json.loads(archive.read("browser-data-provenance.json"))
+              assert provenance["retained_entries"] == 13144
+          PY
       - name: Verify public Pages bundle is refused without rights approval
         run: |
           if python scripts/build_pyodide_bundle.py \
