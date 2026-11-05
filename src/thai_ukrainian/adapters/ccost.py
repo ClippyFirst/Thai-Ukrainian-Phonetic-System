@@ -7,11 +7,18 @@ from .xsampa import XSampaLabel, convert_xsampa_label
 
 CCOST_DOI="10.5281/zenodo.17366698"
 CCOST_SOURCE=f"CCOST@{CCOST_DOI}"
-CCOST_PHONETIC_TIERS=frozenset({"KAN","KAS","MAU","MAS"})
-CCOST_PHONEMIC_TIERS=frozenset({"KAN","KAS","MAS"})
-CCOST_TIER_DESCRIPTIONS={"ORT":"orthographic word","KAN":"canonical word pronunciation",
-"KAS":"canonical syllabified pronunciation","MAU":"phonetic segment","MAS":"phonemic syllable",
-"TRN":"orthographic utterance transcript"}
+CCOST_PHONETIC_TIERS=frozenset({"KAN","KAS","KAN-MAU","KAS-MAU","MAU","MAS"})
+CCOST_PHONEMIC_TIERS=frozenset({"KAN","KAS","KAN-MAU","KAS-MAU","MAS"})
+CCOST_TIER_DESCRIPTIONS={"ORT":"orthographic word","ORT-MAU":"orthographic word (release-aligned tier)",
+"KAN":"canonical word pronunciation","KAN-MAU":"canonical word pronunciation (release-aligned tier)",
+"KAS":"canonical syllabified pronunciation","KAS-MAU":"canonical syllabified pronunciation (release-aligned tier)",
+"MAU":"phonetic segment","MAS":"phonemic syllable","TRN":"orthographic utterance transcript"}
+CCOST_NONPHONETIC_LABELS=frozenset({"<p :>","<p:>","<nib>","<usb>","<notProcessedChunk>"})
+
+def is_ccost_nonphonetic_label(label:str)->bool:
+    """Identify opaque annotation/control markers, not phonetic segments."""
+    value=label.strip()
+    return value in CCOST_NONPHONETIC_LABELS or (value.startswith("<") and value.endswith(">"))
 
 class TextGridFormatError(ValueError):
     """Raised when a Praat long-text TextGrid cannot be parsed safely."""
@@ -140,6 +147,6 @@ def convert_ccost_tier(textgrid:TextGrid,tier_name:str)->tuple[CCOSTAnnotation,.
     converted=[]
     for interval in tier.intervals:
         label=interval.text.strip()
-        if not label or label in {"<p :>","<usb>"}: continue
+        if not label or is_ccost_nonphonetic_label(label): continue
         converted.append(CCOSTAnnotation(tier_name,interval.xmin,interval.xmax,convert_xsampa_label(label)))
     return tuple(converted)
