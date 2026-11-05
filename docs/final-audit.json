@@ -4336,6 +4336,8 @@
     "feedback_links": [
       "web/index.html",
       "web/system.html"
-    ]
+    ],
+    "forced_colors_source_support": "IMPLEMENTED_IN_web/src/styles.css",
+    "forced_colors_runtime_verification": "NOT_RUN"
   }
 }
