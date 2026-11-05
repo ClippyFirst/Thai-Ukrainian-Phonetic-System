@@ -139,7 +139,7 @@ async function run() {
     const result = await analyzeLocally(text);
     renderResult(result);
     status.className = 'status notice';
-    status.textContent = 'Готово. Текст оброблено у вашому браузері; український запис попередній і потребує перевірки.';
+    status.textContent = 'Готово. Текст оброблено у вашому браузері. Український запис попередній і потребує перевірки.';
   } catch (error) {
     status.className = 'status error';
     status.textContent = error instanceof Error ? error.message : 'Помилка локального FastThaiG2P.';
