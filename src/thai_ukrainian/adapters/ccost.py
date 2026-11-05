@@ -73,7 +73,7 @@ class CCOSTAnnotation:
             boundaries=(0,len(segments)) if segments else (0,)
             if self.tier in CCOST_PHONEMIC_TIERS:
                 uncertainty=["CCOST source annotation; not independently adjudicated gold."]
-                if self.tier in {"KAN","KAS"}:
+                if self.tier in {"KAN","KAS","KAN-MAU","KAS-MAU"}:
                     uncertainty.append("The source interval may span a word; no per-syllable time alignment is inferred.")
                 results.append(PhoneticResult(
                     phonemic_ipa=syllable.ipa,broad_surface_ipa=None,segments=segments,
