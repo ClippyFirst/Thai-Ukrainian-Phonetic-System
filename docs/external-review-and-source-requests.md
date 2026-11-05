@@ -147,30 +147,31 @@ For each criterion and page, record: `test_id`, commit SHA, URL, date/time, test
 - No reviewer may be registered as verified and no annotation may be fabricated to make the evaluation gate pass.
 
 
-## 2A. CCOST TextGrid-only export request — prepared, not sent
+## 2A. CCOST release-tier and label clarification — prepared, not sent
 
-**Status: PREPARED — NOT SENT.** The public Zenodo v1.0 file table lists a 6.2 GB mixed C-COST.zip containing WAV and TextGrid files. It lists CCOST_manual.pdf separately but no TextGrid-only archive. The ZIP preview is unavailable because it contains too many files. No archive or audio has been downloaded.
+**Status: PREPARED — NOT SENT.** The owner has supplied a TextGrid-only ZIP containing 488 `.TextGrid` files; CI parses all 488. The earlier request for a TextGrid-only export is superseded. This follow-up asks only for clarification of observed release-tier and label conventions.
 
-**Subject:** Request for text-only Praat TextGrid export of CCOST (no audio)
+**Subject:** Clarification of CCOST TextGrid tier aliases and observed annotation labels
 
 Dear Pittayawat Pittayaporn, Cathryn Yang, Sujinat Jitwiriyanont and James Kirby,
 
-We are conducting non-commercial research on Thai phonetic transcription and would like to use CCOST's textual annotations while deliberately excluding all audio from our workflow.
+We are conducting non-commercial research on Thai phonetic transcription using the CCOST v1.0 release (Zenodo DOI 10.5281/zenodo.17366698). We have obtained a TextGrid-only export and deliberately excluded audio from our workflow.
 
-The Zenodo v1.0 record (DOI 10.5281/zenodo.17366698) lists the 6.2 GB C-COST.zip as containing both WAV recordings and Praat TextGrid annotations, while the manual is a separate PDF. We could not find a separate TextGrid-only download.
+Our structural inventory contains 488 TextGrid files, matching the total recording-file count in Table 1 of the LREC 2026 paper. The files use tiers named `ORT-MAU`, `KAN-MAU`, `KAS-MAU`, `MAU`, `MAS` and `TRN`, rather than the shorter published names ORT/KAN/KAS/MAU/MAS/TRN. Could you confirm whether the `-MAU` suffixes are release-specific aliases for the corresponding orthographic/canonical tiers?
 
-Would you be able to provide or point us to:
-1. A TextGrid-only archive (or text-only export of ORT, KAN, KAS, MAU, MAS and TRN tiers), with no WAV/audio members;
-2. Confirmation that the separately published CCOST_manual.pdf is current, plus an updated copy if it is not;
-3. The expected Praat TextGrid encoding (long text, short text, or binary) and any tier/label conventions not fully specified in the paper;
-4. Confirmation that text-only extraction and local non-commercial research use are covered by the CC BY-NC-SA 4.0 release, including preferred attribution wording;
-5. Any known errata or updates to the A–D word-list orders.
+We also observed labels that are not explained by the paper's five-tone table:
 
-The LREC 2026 paper lists the following author contacts: cathryn_yang@sil.org, jkirby@phonetik.uni-muenchen.de, pittiyawat.p@chula.ac.th, sujinat.j@chula.ac.th.
+1. `_8` tone suffixes (for example `? a_8`, `a_8` and `{:_8`), although the paper documents only `_1`–`_5` for Mid/Low/Falling/High/Rising. What does `_8` mean, and should these labels be treated as unknown/unspecified rather than lexical tone?
+2. Unicode IPA-looking tokens in MAU (for example `ɹ`, `ɾ`, `tʃ`, `ʔ`) and unusual forms such as `r/`. Are these intentionally IPA rather than X-SAMPA, and is there a canonical conversion table?
+3. Annotation tags including `<nib>`, `<usb>`, `<p:>`, `<notProcessedChunk>`, `<Fail>`, `<P>`, `<:p>` and `<P:>`, including occasional labels that combine tags with Thai transcript text. Could you confirm their semantics and whether mixed tag-plus-text labels should remain in the canonical tiers?
+4. Is the supplied 488-file TextGrid set complete for the v1.0 recording manifest, or are any sessions/files intentionally absent?
+5. Is the published `CCOST_manual.pdf` the current authoritative manual for the released tier schema, and is there a more detailed MAUS/PHO2SYL label inventory?
 
-We will retain CC BY-NC-SA 4.0 attribution and ShareAlike conditions, keep the source files outside the public repository unless redistribution is explicitly permitted, and will not request or process audio.
+We preserve all raw labels and tier names, fail closed on unsupported notation, and do not promote CCOST annotations to independently adjudicated gold. We will retain CC BY-NC-SA 4.0 attribution and ShareAlike conditions.
 
-Thank you for making CCOST available.
+The LREC 2026 paper lists these author contacts: cathryn_yang@sil.org, jkirby@phonetik.uni-muenchen.de, pittiyawat.p@chula.ac.th, sujinat.j@chula.ac.th.
+
+Thank you for your guidance.
 
 Best regards,
 [Project contact]
