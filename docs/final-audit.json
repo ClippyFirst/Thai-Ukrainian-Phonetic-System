@@ -3982,5 +3982,69 @@
     "main_changed": false,
     "release_published": false,
     "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY"
+  },
+  "ccost_label_review_2026_11_05": {
+    "status": "PARTIAL",
+    "report": "docs/ccost-label-review-2026-11-05.md",
+    "inspected_textgrids": 488,
+    "failed_conversion_occurrences": 1014,
+    "distinct_raw_labels": 116,
+    "failure_classes": {
+      "undocumented_underscore_8": {
+        "occurrences": 868,
+        "distinct_raw_labels": 22
+      },
+      "slash_or_alternative": {
+        "occurrences": 58,
+        "distinct_raw_labels": 27
+      },
+      "mixed_marker_text": {
+        "occurrences": 26,
+        "distinct_raw_labels": 20
+      },
+      "non_ascii_phonetic_looking": {
+        "occurrences": 17,
+        "distinct_raw_labels": 9
+      },
+      "thai_or_mixed_text": {
+        "occurrences": 10,
+        "distinct_raw_labels": 8
+      },
+      "truncated_or_malformed": {
+        "occurrences": 14,
+        "distinct_raw_labels": 13
+      },
+      "other_unsupported_ascii": {
+        "occurrences": 21,
+        "distinct_raw_labels": 17
+      }
+    },
+    "documented_markers": [
+      "<p:>",
+      "<usb>",
+      "<nib>"
+    ],
+    "unresolved_markers": [
+      "<P>",
+      "<P:>",
+      "<:p>",
+      "<Fail>",
+      "<notProcessedChunk>"
+    ],
+    "adapter_policy": "Only documented markers are skipped; all unknown tag-only and mixed labels fail closed.",
+    "gold_rows": 0,
+    "linguistic_accuracy": "NOT_MEASURED",
+    "evidence_artifact": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42018381197/artifacts/13410038957"
+  },
+  "fastthaig2p_license_review_2026_11_05": {
+    "status": "PARTIAL",
+    "report": "docs/fastthaig2p-license-review-2026-11-05.md",
+    "pinned_commit": "4e82a291b4cf2876326744c6580121e9986ad354",
+    "source_code_license": "Apache-2.0",
+    "upstream_notice": "Amazon.com, Inc. or its affiliates",
+    "vendored_tltk_parser_license": "BSD-3-Clause",
+    "bundled_data": "Mixed provenance: Wiktionary/kaikki CC BY-SA and GFDL, generated IPA, manual overrides, and TLTK fallback data.",
+    "redistribution": "BLOCKED pending component-level provenance and license confirmation",
+    "project_action": "Keep as optional external dependency; no bundled dictionary or fallback data vendored."
   }
 }
