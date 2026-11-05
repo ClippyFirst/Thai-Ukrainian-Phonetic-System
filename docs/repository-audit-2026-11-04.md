@@ -1,3 +1,17 @@
+## Exact-head verification and current source scope — 2026-11-05
+
+- Branch: `docs/repository-audit-2026-11-04`; implementation checkpoint `f8e19499c056afeb2b2532887d2887812472664d`; exact-head CI [41992116524](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41992116524) passed all jobs: 376 Python tests passed, 1 optional FastAPI test skipped, 1,206 subtests passed; Ruff, wheel-install smoke and master-artifact passed.
+- Dedicated FastThaiG2P Site API [41992116526](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41992116526) passed; optional external G2P smoke [41992116614](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41992116614) passed.
+- The optional FastAPI test is skipped only in the generic development environment because FastAPI is not installed there; the dedicated site-api workflow installs it and passed.
+- X-SAMPA output uses canonical NFD. Spaces separate tokens but do not imply syllable boundaries; only explicit periods and CCOST numeric tone suffixes close syllables. Unknown symbols fail closed.
+- Global TIMIT is DEFERRED/EXCLUDED by owner decision. LOTUSDIS is optional orthographic text context only. Audio acquisition, hashing, acoustic review and narrow acoustic claims are OUT OF SCOPE.
+- CCOST remains the primary phonetic-text candidate. The converter/parser is engineering-verified against synthetic and published Figure 2 fixtures, but actual released TextGrid compatibility remains unverified. Zenodo lists only a mixed 6.2 GB WAV+TextGrid ZIP; no TextGrid-only archive is exposed. No archive/audio was downloaded.
+- The TextGrid-only export request is prepared but NOT SENT because no email connector is connected. Independent broad-phonemic IPA gold remains BLOCKED on TextGrid-only sample access, two qualified Thai reviewers and a separate adjudicator; gold rows 0; linguistic accuracy NOT_MEASURED.
+- PR reconciliation: PR #193 was closed unmerged; the FastThaiG2P site integration is present on `main` through PR #199, merged 2026-11-04. PRs #184–#186, #188 and #190 are closed unmerged and left untouched. PR #210 is the only currently open PR and remains unmerged. No main change, branch deletion, force-push or release was made.
+- Local tests were not run in this connector-only session; GitHub Actions is the verification evidence.
+
+---
+
 ## Current owner scope and implementation — 2026-11-05
 
 This current section supersedes earlier Global TIMIT access tasks and LOTUSDIS audio acquisition/validation tasks in the chronological audit below. Those historical notes are retained for traceability, not as active work.
@@ -40,7 +54,7 @@ This is a source-tree and GitHub-hosted audit. No local checkout or local test e
 
 The repository already has a mature, unusually explicit structure for a research prototype. It has a root agent contract, a documentation index, architecture ownership map, script inventory, a canonical validation matrix, an audit register, a chronological handoff, machine-readable schemas, provenance/license records, generated-artifact ownership, Python and browser test suites, and static dependency/test-overlap auditing. A wholesale reorganization would create churn and duplicate existing governance. The correct action is to preserve this structure and repair stale status/documentation, not invent a second docs system.
 
-The highest-priority documentation defect was stale repository state: older top sections in the matrix/audit/handoff still described a 2026-11-03 branch/PR checkpoint even though main had advanced through the 2026-11-04 integration work. The README also described FastThaiG2P site integration as still sitting in Draft PR #193. That is no longer accurate: the implementation is integrated, while production deployment remains separately gated by external data-rights and verified-preview requirements.
+The highest-priority documentation defect was stale repository state. The README's former reference to Draft PR #193 was stale: PR #193 was closed unmerged; the FastThaiG2P site integration is present on main through PR #199, merged 2026-11-04. Production deployment remains separately gated by external data-rights and verified-preview requirements.
 
 ## Current GitHub state
 

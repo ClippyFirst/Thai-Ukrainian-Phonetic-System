@@ -1,3 +1,17 @@
+## Exact-head verification and current source scope — 2026-11-05
+
+- Branch: `docs/repository-audit-2026-11-04`; implementation checkpoint `f8e19499c056afeb2b2532887d2887812472664d`; exact-head CI [41992116524](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41992116524) passed all jobs: 376 Python tests passed, 1 optional FastAPI test skipped, 1,206 subtests passed; Ruff, wheel-install smoke and master-artifact passed.
+- Dedicated FastThaiG2P Site API [41992116526](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41992116526) passed; optional external G2P smoke [41992116614](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/41992116614) passed.
+- The optional FastAPI test is skipped only in the generic development environment because FastAPI is not installed there; the dedicated site-api workflow installs it and passed.
+- X-SAMPA output uses canonical NFD. Spaces separate tokens but do not imply syllable boundaries; only explicit periods and CCOST numeric tone suffixes close syllables. Unknown symbols fail closed.
+- Global TIMIT is DEFERRED/EXCLUDED by owner decision. LOTUSDIS is optional orthographic text context only. Audio acquisition, hashing, acoustic review and narrow acoustic claims are OUT OF SCOPE.
+- CCOST remains the primary phonetic-text candidate. The converter/parser is engineering-verified against synthetic and published Figure 2 fixtures, but actual released TextGrid compatibility remains unverified. Zenodo lists only a mixed 6.2 GB WAV+TextGrid ZIP; no TextGrid-only archive is exposed. No archive/audio was downloaded.
+- The TextGrid-only export request is prepared but NOT SENT because no email connector is connected. Independent broad-phonemic IPA gold remains BLOCKED on TextGrid-only sample access, two qualified Thai reviewers and a separate adjudicator; gold rows 0; linguistic accuracy NOT_MEASURED.
+- PR reconciliation: PR #193 was closed unmerged; the FastThaiG2P site integration is present on `main` through PR #199, merged 2026-11-04. PRs #184–#186, #188 and #190 are closed unmerged and left untouched. PR #210 is the only currently open PR and remains unmerged. No main change, branch deletion, force-push or release was made.
+- Local tests were not run in this connector-only session; GitHub Actions is the verification evidence.
+
+---
+
 - Added regression coverage based on the published Figure 2 example: KAN and KAS multisyllabic forms, the five CCOST tone numbers, and the distinction between phonemic MAS/KAS and phone-level MAU. The actual released TextGrid files remain uninspected.
 - Corrected the provisional IPA warning so it no longer attributes all external provisional sources to FastThaiG2P; it now describes external IPA provenance generically.
 - Corrected current source scope: Global TIMIT excluded; LOTUSDIS audio is out of scope; the empty audio-assets registry is intentionally deferred.
