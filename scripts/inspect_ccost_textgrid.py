@@ -13,7 +13,7 @@ import zipfile
 from collections import Counter
 from pathlib import Path
 
-from thai_ukrainian.adapters.ccost import CCOST_PHONETIC_TIERS, parse_textgrid_long
+from thai_ukrainian.adapters.ccost import CCOST_PHONETIC_TIERS, is_ccost_nonphonetic_label, parse_textgrid_long
 from thai_ukrainian.adapters.xsampa import XSampaConversionError, convert_xsampa_label
 
 TEXTGRID_SUFFIXES = (".textgrid",)
@@ -48,9 +48,9 @@ def inspect(paths: list[Path], sample_limit: int = 5) -> dict:
                 if tier.name in CCOST_PHONETIC_TIERS:
                     for interval in tier.intervals:
                         label = interval.text.strip()
-                        if not label or label in {"<p :>", "<usb>"}:
+                        if not label:
                             continue
-                        if label.startswith("<") and label.endswith(">"):
+                        if is_ccost_nonphonetic_label(label):
                             marker_counts[(tier.name, label)] += 1
                             continue
                         try:
