@@ -6,7 +6,7 @@ import { loadPyodide } from "pyodide";
 const wheelDir = resolve(process.argv[2] || "build/pyodide-wheels");
 const expectedPath = resolve(process.argv[3] || "build/fastthaig2p-native.json");
 const wheelNames = readdirSync(wheelDir).filter(name => name.endsWith(".whl")).sort();
-assert.equal(wheelNames.length, 3, `Expected exactly three pinned wheels, found ${wheelNames.length}`);
+assert.equal(wheelNames.length, 4, `Expected exactly three pinned wheels, found ${wheelNames.length}`);
 
 const indexURL = resolve("node_modules/pyodide") + "/";
 let pyodide;
