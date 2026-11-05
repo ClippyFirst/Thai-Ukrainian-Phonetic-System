@@ -24,19 +24,11 @@
       "software_license": "Apache-2.0",
       "runtime_data": {
         "dict.txt": {
-          "sources": [
-            "manual_overrides.json",
-            "wiktionary_ipa.json (kaikki.org)",
-            "generated_ipa.json"
-          ],
-          "status": "MIXED_SOURCES_NOT_SEPARABLE_IN_PINNED_RUNTIME_WHEEL"
+          "source_scope": "62k runtime word list; the pinned upstream README does not provide per-entry provenance for dict.txt",
+          "status": "PER_ENTRY_SOURCE_NOT_DOCUMENTED"
         },
         "ipa.json": {
-          "sources": [
-            "manual overrides",
-            "Wiktionary/kaikki-derived IPA",
-            "generated IPA"
-          ],
+          "merge_priority": "manual_overrides.json > wiktionary_ipa.json > generated_ipa.json",
           "status": "MERGED_FLAT_LOOKUP_WITHOUT_PER_RECORD_PROVENANCE"
         },
         "fallback": {
