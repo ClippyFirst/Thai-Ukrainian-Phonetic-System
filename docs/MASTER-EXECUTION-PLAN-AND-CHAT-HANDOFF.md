@@ -2575,3 +2575,8 @@ Current decisions:
 - Added `docs/fastthaig2p-license-review-2026-11-05.md`. Exact pinned source code has Apache-2.0 LICENSE and Amazon NOTICE; vendored `_th2ipa.py` retains a TLTK BSD-3 notice. Upstream wheel bundles a mixed-provenance dictionary and TLTK fallback data; Wiktionary/kaikki entries are CC BY-SA/GFDL. Per-component redistribution rights for generated/manual/fallback data remain unresolved.
 - FastThaiG2P remains an optional pinned external dependency. This change does not vendor its dictionary or fallback assets and does not promote its IPA output to gold.
 - No linguistic gold was created: independently adjudicated IPA rows remain 0; accuracy remains `NOT_MEASURED`.
+
+
+### Follow-up implementation correction — CCOST marker classification
+
+A final source review found that the previous helper skipped every tag-only label, including opaque `<Fail>`, `<P>`, and `<notProcessedChunk>`. This would silently erase unresolved annotations. The helper now recognizes only the three documented markers `<p:>`, `<nib>`, and `<usb>`; all unknown tag-only and mixed labels fail closed. Added a regression test for five unresolved marker forms. Await exact-head CI before accepting the correction as verified.
