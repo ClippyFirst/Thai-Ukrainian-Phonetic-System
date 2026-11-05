@@ -91,3 +91,16 @@ A focused search for Thai acoustic-phonetics and tone specialists found a strong
 **Conflict caution — Lena Maluleem:** her phonetics/phonology and Thai prosody credentials are relevant, but public publication metadata identifies Pittayawat Pittayaporn as her co-author on Thai prosody research, and her doctoral work was supervised by him. Since Pittayaporn is a CCOST co-author/data curator, treat this as a potential conflict for independent CCOST adjudication; do not assign her to the independent CCOST panel unless the conflict is disclosed and explicitly assessed. [Journal article](https://so04.tci-thaijo.org/index.php/TSDJ/article/view/261290); [Kasetsart profile](https://ling.human.ku.ac.th/index.php/lyna_cv/).
 
 The CCOST authors/curators Pittayawat Pittayaporn and Sujinat Jitwiriyanont remain useful for source-format clarification but should not be counted as independent reviewers of their own corpus annotations.
+
+
+## Official institutional qualification refresh — 2026-11-05
+
+The proposed Thai panel has been rechecked against current public institutional pages rather than relying only on aggregator/CV mirrors. This is qualification screening, not contact or appointment.
+
+| Candidate | Official institutional evidence | Relevant fit and caveat | Proposed role |
+|---|---|---|---|
+| **Chutamanee Onsuwan, Ph.D.** | [Thammasat official faculty profile](https://arts.tu.ac.th/th/teacherlarts/cmukv6znk0052pm61l213msd6) | Ph.D. dissertation on temporal relations between consonants and vowels in Thai syllables; expertise in laboratory phonetics, speech science and phonology; publication list includes Thai vowel-length and lexical-tone perception studies. | Blind first-pass reviewer A |
+| **Phanintra Teeranon, Ph.D.** | [University of Phayao official staff profile](https://www.libarts.up.ac.th/employee/phanintra.te); public institutional email: phanintra.te@up.ac.th; [CV/publications](https://mfuth.academia.edu/PhanintraTeeranon/CurriculumVitae) | Associate Professor; Ph.D. in Linguistics; public CV lists phonetics coursework and acoustic/perceptual Thai tone research, including an acoustic/perceptual study of Standard Thai high tone and Thai-tone production/perception work. The official profile confirms current institutional affiliation/contact. | Blind first-pass reviewer B |
+| **Rungpat Roengpitya** | [Mahidol official profile](https://murex.mahidol.ac.th/en/persons/rungpat-roengpitya/); public institutional email: rungpat.roe@mahidol.ac.th | Assistant Professor; official profile lists research on variation and quantification of Standard Thai tones, Thai lexical-tone awareness, Japanese vowel-length perception and Thai word-final stops. | Separate adjudicator candidate |
+
+All three are not listed as authors of the CCOST LREC paper, but that alone does **not** establish independence. Before appointment, each must disclose prior collaboration, supervision, financial/personal interests and relationships with the other reviewers, the CCOST authors/curators and this project. Confirm Standard Thai competence, X-SAMPA/IPA familiarity, willingness, scope, compensation and permission to retain qualification evidence. The project has not contacted anyone, and no one has consented or been appointed. Keep reviewer-qualifications.tsv header-only until those checks are completed.
