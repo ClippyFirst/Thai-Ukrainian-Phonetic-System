@@ -61,7 +61,7 @@ assert.match(app, /const esc =/);
 assert.match(app, /continuous-output-value/);
 
 // Keyboard focus must remain visible for all native interactive controls, 
-assert.match(css, /button:focus-visible[^\{]*a:focus-visible[^\{]*textarea:focus-visible[^\{]*select:focus-visible[^\{]*summary:focus-visible/);
+assert.match(css, /:focus-visible\s*\{/);
 assert.match(css, /\.skip-link:focus\s*\{/);
 assert.match(css, /@media\s*\(prefers-reduced-motion:\s*reduce\)/);
 

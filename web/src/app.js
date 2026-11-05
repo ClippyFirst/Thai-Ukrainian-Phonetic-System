@@ -136,6 +136,7 @@ function renderResult(result) {
 }
 
 async function run() {
+  if (analyzeButton.disabled) return;
   const text = input.value;
   if (!text.trim()) {
     status.className = 'status error';
