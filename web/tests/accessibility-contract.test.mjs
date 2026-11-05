@@ -27,6 +27,7 @@ assert.match(noticesHtml, /CC BY-SA 4\.0/);
 assert.match(noticesHtml, /BSD-3-Clause/);
 assert.match(noticesHtml, /Apache License 2\.0/);
 assert.match(noticesHtml, /Mozilla Public License 2\.0/);
+assert.match(noticesHtml, /MIT License/);
 
 // Every static form control has a programmatic label and its described-by targets exist.
 const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]);
