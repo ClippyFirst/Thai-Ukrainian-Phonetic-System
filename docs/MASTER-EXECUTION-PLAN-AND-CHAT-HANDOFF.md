@@ -2619,3 +2619,15 @@ A final source review found that the previous helper skipped every tag-only labe
 ### Evidence boundary
 
 This worklist supports text-based review of canonical/phonemic labels. It cannot verify acoustic surface realization, tone contours, duration or speaker-specific allophony because no audio is in scope. Independent IPA gold rows remain **0**; linguistic accuracy remains **NOT_MEASURED**. Do not call the worklist itself expert verification.
+
+
+## Handoff — latest CCOST worklist status (2026-11-05)
+
+- Single branch retained: `docs/repository-audit-2026-11-04`; PR #210 remains open/unmerged; `main` remains unchanged.
+- The worklist generator and regression tests now scan all TextGrid IntervalTiers for unresolved marker spellings and inspect declared phonetic tiers for unsupported X-SAMPA. It reads TextGrid members only; it never opens audio. Cross-tier overlaps and adjacent same-tier context are included. All expert/adjudicator fields remain blank.
+- Distinguish inventory scopes: earlier inspector `<P>` 394 / `<Fail>` 16 were phonetic-tier-only counts. The all-tier worklist CI assertions are 821 unresolved marker intervals, with appearances `<P>` 821, `<Fail>` 24, `<P:>` 4 and `<:p>` 22. `<notProcessedChunk>` is separately identified as 142 MAUS processing-failure intervals.
+- `_8` counts remain 868 tier occurrences, 397 exact file/interval groups, 438 file/interval/raw-label events, 22 raw strings, 119 files. `_8` is invalid/out of range under the documented `_1`–`_5` tone convention; no intended value has been recovered. Use group IDs to prevent repeated aligned-tier entries being misrepresented as independent speech events.
+- The latest CI workflow asserts these exact counts and uploads `ccost-label-adjudication-worklist` (TSV + JSON manifest). The exact latest PR-head Full CI was cancelled during successive pushes; a successful exact-head run and artifact inspection are still required. Do not mark the generator/worklist DONE_VERIFIED until then.
+- `<P>`, `<P:>`, `<:p>`, `<Fail>` semantics remain BLOCKED. No authoritative public definition was found; case/shape does not establish equivalence.
+- Independent Thai review remains BLOCKED: reviewer registry empty; no reviewers contacted, appointed or consented; no completed blind annotations/adjudication; independent IPA gold rows 0; linguistic accuracy NOT_MEASURED. Reviewer candidates in the shortlist are leads only, not verified panel members.
+- Acoustic claims remain DEFERRED / OUT OF SCOPE because this workstream is TextGrid-only. Do not infer acoustic surface tone, duration or allophony.
