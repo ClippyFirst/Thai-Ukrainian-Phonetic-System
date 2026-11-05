@@ -37,3 +37,6 @@ web/tests/fixtures.python.json
 
 # Generated browser word index from pinned CC0 Thai dictionary
 web/src/word-dictionary.generated.js
+
+# Ephemeral self-hosted Pyodide runtime bundle (built in CI after rights gate)
+web/vendor/
