@@ -1,84 +1,14 @@
-# User-supplied TextGrid archive inventory — 2026-11-05
+## Latest exact-head repository verification — 2026-11-05
 
-**Status:** DONE_VERIFIED for structural parsing and the explicit orthographic JSONL export. This is a source-annotation inventory, not linguistic validation or gold-data promotion.
-
-## Safety and provenance boundary
-
-- Both archives were supplied by the repository owner on `docs/repository-audit-2026-11-04`.
-- CI reads ZIP central-directory metadata and only bytes of `.TextGrid` members. It never extracts, opens, hashes or copies audio members.
-- `CCOST textgrid.zip` contains 488 `.TextGrid` members and no other members. `nectecLOTUSDIS textgrid.zip` contains 90 `.TextGrid` members plus one `textgrid/.DS_Store` entry (6,148 uncompressed bytes), which is skipped without reading its contents. No recognized audio-extension member is present in either archive.
-- Git blob SHA-1 values pin the exact files committed to this branch; they are not upstream publisher checksums and do not prove byte identity with an upstream release archive.
-
-## Archive inventory
-
-| Archive | Git blob SHA-1 | ZIP bytes | Members | TextGrid members | Parsed | TextGrid bytes uncompressed | Other members skipped |
-|---|---|---:|---:|---:|---:|---:|---:|
-| `CCOST textgrid.zip` | `3b1e3978c2b3a232dce4fdcfd137bb572ce5467f` | 18,376,603 | 488 | 488 | 488 | 149,676,102 | 0 |
-| `nectecLOTUSDIS textgrid.zip` | `50518e9a54e0986935e7b1cff122eb43c0b9edbd` | 1,527,911 | 91 | 90 | 90 | 8,245,774 | 1 `.DS_Store` |
-
-All 578/578 TextGrid files parse with the Praat long-text reader, including multiline quoted labels and doubled-quote escaping. The 488 CCOST files match the total number of recording files summed from Table 1 of the LREC 2026 paper. The LOTUSDIS `.DS_Store` entry is metadata by filename and was not read.
-
-## CCOST: observed release tiers and adapter status
-
-The LREC 2026 paper documents ORT (orthographic word), KAN (canonical word pronunciation), KAS (canonical syllabified pronunciation), MAU (phonetic segment), MAS (phonemic syllable), and TRN (orthographic utterance transcript). It specifies X-SAMPA for phonemic/phonetic labels and only five tone suffixes: `_1` Mid, `_2` Low, `_3` Falling, `_4` High, `_5` Rising.
-
-| Observed tier | Non-empty labels | Current interpretation |
-|---|---:|---|
-| `ORT-MAU` | 133,344 | Orthographic-word tier; provisional alias of published ORT |
-| `KAN-MAU` | 133,338 | Canonical word pronunciation; provisional alias of published KAN |
-| `KAS-MAU` | 133,340 | Canonical syllabified pronunciation; provisional alias of published KAS |
-| `MAU` | 445,723 | Phone-level surface tier |
-| `MAS` | 195,288 | Phonemic syllable tier |
-| `TRN` | 12,090 | Orthographic utterance transcript |
-
-The `-MAU` alias mapping is a provisional project decision based on the observed release tier names and the paper's tier roles; curator confirmation is still desirable. Exact raw tier names remain in provenance.
-
-Successfully converted source-label counts:
-
-| Tier | Converted labels |
-|---|---:|
-| `KAN-MAU` | 130,080 |
-| `KAS-MAU` | 130,076 |
-| `MAS` | 153,103 |
-| `MAU` | 403,487 |
-
-After tightening marker recognition to accept only labels consisting entirely of angle-bracket tags, **1,014 labels remain unsupported** across the four phonetic tiers. The previous 1,002 count was superseded: 12 mixed tag-plus-Thai-text labels had been incorrectly treated as tag-only markers. They are now surfaced as unsupported instead of silently discarded.
-
-The largest unsupported groups include `? a_8` (144 occurrences each in KAN-MAU, KAS-MAU and MAS), `a_8` (137 in MAU), `l {:_8 p`, `{:_8`, and `r/`. Other outliers include Unicode IPA-looking forms (`ɹ`, `ɾ`, `tʃ`, `ʔ`) and a Thai-script token. The CCOST paper defines only `_1`–`_5`; `_8` is not guessed as a sixth lexical tone. Unicode IPA-looking labels and unusual ASCII sequences are not silently normalized.
-
-Pure tag-only labels are counted separately as opaque markers. The paper explicitly identifies `<usb>` as a disfluency label and `<p :>` as a pause label; other tags (for example `<nib>`, `<notProcessedChunk>`, `<Fail>` and `<P>`) are preserved as opaque until their exact release-specific semantics are confirmed. Mixed tag-plus-transcript labels are not treated as markers.
-
-**Interpretation:** CCOST is an accessible and structurally parseable primary phonetic-text candidate. The X-SAMPA adapter remains PARTIAL, and source labels are not independent project gold. No Ukrainian output or accuracy claim is promoted from this inventory.
-
-## LOTUSDIS: transcript-only role
-
-All 90 supplied TextGrid files parse. Each has one recording-named IntervalTier (for example `Hijack_S..._T..._Con123`) containing time-aligned conversational transcript intervals. There are 32,943 non-empty transcript intervals. No phone, phoneme, toneme, IPA or X-SAMPA tiers were observed.
-
-The official LOTUSDIS dataset card declares CC BY-SA 4.0 and describes sentence text, speaker ID, microphone ID and duration alongside audio. The supplied TextGrid intervals are orthographic conversational context only—useful for vocabulary, disfluencies, code-switching and orthographic robustness, but not phonetic gold.
-
-## Explicit orthographic export
-
-`scripts/export_textgrid_text.py` exports only explicitly selected orthographic tiers, preserving raw text, interval bounds, source file, tier, source version, archive Git blob SHA-1, license, attribution and `SOURCE_ANNOTATED_NOT_GOLD` evidence grade.
-
-CI executed:
-
-    python scripts/export_textgrid_text.py "CCOST textgrid.zip" "nectecLOTUSDIS textgrid.zip" --tier ORT-MAU --tier TRN --tier-prefix Hijack_ --output /tmp/textgrid-orthographic-text.jsonl
-
-Verified output: **178,377 records** — 145,434 CCOST (`ORT-MAU` + `TRN`) and 32,943 LOTUSDIS transcript intervals. The JSONL is temporary in CI/local output and is not committed as derived corpus data. No audio is read; no gold is promoted.
-
-CI publishes the downloadable artifact [`textgrid-text-only-jsonl`](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42016775144). It contains the two JSONL files, a valid JSON SHA-256 manifest, and `data/THIRD-PARTY-CORPUS-NOTICES.md`:
-
-| Artifact member | Records | Bytes | SHA-256 |
-|---|---:|---:|---|
-| `ccost-orthographic.jsonl` | 145,434 | 118,942,033 | `673f384e89d2f507b631fb8ecdabb7f364b6ea5cac3b259c32d986b45bb34303` |
-| `lotusdis-transcripts.jsonl` | 32,943 | 29,764,700 | `7144e51d193ee07bc31e36c7fcf7532cba419b593e56237dad0c2666370594cf` |
-| `textgrid-text-only-manifest.json` | — | 333 | `1c0a07e01b4e37f4877620d4e339a2732de17f99efb2bd279a5da8e663bdea3d` |
-| `THIRD-PARTY-CORPUS-NOTICES.md` | — | 3,378 | `e44a87d6c83acfd34d30377d14b14cd8aa05580a309ba1775af594da55f28991` |
-
-Manifest validation passed in CI before upload. The artifact is a reproducible text-only export, not an independent reference/gold corpus; CCOST's non-commercial ShareAlike and LOTUSDIS's ShareAlike terms travel with it.
-## Latest exact-head verification — 2026-11-05
-
-The inventory and exporter were re-run on branch HEAD `f9b6baf1ad3c55057051ff5652ac7827a06fd7c1` by Full CI [42016775144](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42016775144). The workflow passed all three jobs. It parsed 578/578 TextGrid files and re-exported 178,377 orthographic intervals (CCOST 145,434; LOTUSDIS 32,943). The published [`textgrid-text-only-jsonl` artifact](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42016775144/artifacts/13410071688) is 12,609,560 bytes with digest `sha256:98089f717561e86116c3f6aeef278d3ca84beaa50c5d0ea5d52a1a27b5ed6323`. Dedicated Site API [42016775080](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42016775080) and optional external G2P smoke [42016775087](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42016775087) passed. This verifies the software/export contract only; it does not turn source annotations into independent gold.
+- Branch: `docs/repository-audit-2026-11-04`; documentation checkpoint HEAD: `45bbd7386ede98c6fa63b015c9c7a303c436e699`; implementation checkpoint: `f9b6baf1ad3c55057051ff5652ac7827a06fd7c1`; base `main`: `56fba86b4b8be2fe4e67284355e9928108527387`; comparison at this checkpoint: **137 commits ahead, 0 behind**.
+- PR [#210](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/210) is **OPEN, not merged**, targets `main`, and is mergeable. No mainline change, force-push, branch deletion or release was made.
+- Exact-head Full CI [run 42018381197](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42018381197) succeeded on the documentation checkpoint HEAD. Jobs `test`, `wheel-install-smoke`, and `master-artifact` all passed. The test job reports **385 passed, 1 skipped, 1,206 subtests passed**; Ruff passed; 29 Python/browser parity fixtures passed; generated-artifact drift checks, source/reviewer packet validators, archive inspection, JSONL export, and artifact upload passed.
+- The one skip is `tests/test_fastthaig2p_site_api.py` in the generic environment because FastAPI is optional and absent there. Dedicated FastThaiG2P Site API [run 42018381263](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42018381263) passed; optional external Thai G2P smoke [run 42018381361](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42018381361) passed.
+- CI re-inspected 578/578 supplied TextGrid files and verified 178,377 orthographic JSONL rows (CCOST 145,434; LOTUSDIS 32,943). The current `textgrid-text-only-jsonl` artifact is [available from run 42018381197](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42018381197/artifacts/13411240199), 12,609,560 bytes, artifact digest `sha256:260ff20858e588f78152fdfb01d969f7160fbfc530ed2a8945758f80ee3c0fcb`. It contains text-only exports, manifest and notices; no audio is read or included.
+- Linguistic status is unchanged: independent IPA gold rows **0**; accuracy **NOT_MEASURED**. The CCOST adapter remains PARTIAL with 1,014 unsupported labels; `_8`, Unicode IPA-looking strings, unusual sequences and mixed marker/text labels remain fail-closed.
+- Current blockers: CCOST curator clarification of `-MAU` aliases and unsupported labels; two qualified independent Thai reviewers plus adjudicator; independent Ukrainian-native target review; hands-on accessibility review; FastThaiG2P bundled-data rights and Python-host preview. Global TIMIT and audio tasks remain DEFERRED/EXCLUDED by owner decision.
+- Local tests were not run in this connector-only session. The exact-head GitHub Actions evidence above is the verification record; no local checkout or local test execution is claimed.
+- Readiness: **ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY**. Software/packaging/CI gates pass, but independent linguistic and human accessibility gates remain unmet.
 
 ## Exact-head verification
 

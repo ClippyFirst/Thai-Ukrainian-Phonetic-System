@@ -1,45 +1,16 @@
 ## Latest exact-head repository verification — 2026-11-05
 
-- Branch: `docs/repository-audit-2026-11-04`; HEAD: `f9b6baf1ad3c55057051ff5652ac7827a06fd7c1`; base `main`: `56fba86b4b8be2fe4e67284355e9928108527387`; comparison: **136 commits ahead, 0 behind**.
+- Branch: `docs/repository-audit-2026-11-04`; documentation checkpoint HEAD: `45bbd7386ede98c6fa63b015c9c7a303c436e699`; implementation checkpoint: `f9b6baf1ad3c55057051ff5652ac7827a06fd7c1`; base `main`: `56fba86b4b8be2fe4e67284355e9928108527387`; comparison at this checkpoint: **137 commits ahead, 0 behind**.
 - PR [#210](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/210) is **OPEN, not merged**, targets `main`, and is mergeable. No mainline change, force-push, branch deletion or release was made.
-- Exact-head Full CI [run 42016775144](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42016775144) succeeded on this HEAD. Jobs `test`, `wheel-install-smoke`, and `master-artifact` all passed. The test job reports **385 passed, 1 skipped, 1,206 subtests passed**; Ruff passed; 29 Python/browser parity fixtures passed; generated-artifact drift checks, source/reviewer packet validators, archive inspection, JSONL export, and artifact upload passed.
-- The one skip is `tests/test_fastthaig2p_site_api.py` in the generic environment because FastAPI is optional and absent there. Dedicated FastThaiG2P Site API [run 42016775080](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42016775080) passed; optional external Thai G2P smoke [run 42016775087](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42016775087) passed.
-- CI re-inspected 578/578 supplied TextGrid files and verified 178,377 orthographic JSONL rows (CCOST 145,434; LOTUSDIS 32,943). The current `textgrid-text-only-jsonl` artifact is [available from run 42016775144](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42016775144/artifacts/13410071688), 12,609,560 bytes, artifact digest `sha256:98089f717561e86116c3f6aeef278d3ca84beaa50c5d0ea5d52a1a27b5ed6323`. It contains text-only exports, manifest and notices; no audio is read or included.
+- Exact-head Full CI [run 42018381197](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42018381197) succeeded on the documentation checkpoint HEAD. Jobs `test`, `wheel-install-smoke`, and `master-artifact` all passed. The test job reports **385 passed, 1 skipped, 1,206 subtests passed**; Ruff passed; 29 Python/browser parity fixtures passed; generated-artifact drift checks, source/reviewer packet validators, archive inspection, JSONL export, and artifact upload passed.
+- The one skip is `tests/test_fastthaig2p_site_api.py` in the generic environment because FastAPI is optional and absent there. Dedicated FastThaiG2P Site API [run 42018381263](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42018381263) passed; optional external Thai G2P smoke [run 42018381361](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42018381361) passed.
+- CI re-inspected 578/578 supplied TextGrid files and verified 178,377 orthographic JSONL rows (CCOST 145,434; LOTUSDIS 32,943). The current `textgrid-text-only-jsonl` artifact is [available from run 42018381197](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42018381197/artifacts/13411240199), 12,609,560 bytes, artifact digest `sha256:260ff20858e588f78152fdfb01d969f7160fbfc530ed2a8945758f80ee3c0fcb`. It contains text-only exports, manifest and notices; no audio is read or included.
 - Linguistic status is unchanged: independent IPA gold rows **0**; accuracy **NOT_MEASURED**. The CCOST adapter remains PARTIAL with 1,014 unsupported labels; `_8`, Unicode IPA-looking strings, unusual sequences and mixed marker/text labels remain fail-closed.
 - Current blockers: CCOST curator clarification of `-MAU` aliases and unsupported labels; two qualified independent Thai reviewers plus adjudicator; independent Ukrainian-native target review; hands-on accessibility review; FastThaiG2P bundled-data rights and Python-host preview. Global TIMIT and audio tasks remain DEFERRED/EXCLUDED by owner decision.
 - Local tests were not run in this connector-only session. The exact-head GitHub Actions evidence above is the verification record; no local checkout or local test execution is claimed.
 - Readiness: **ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY**. Software/packaging/CI gates pass, but independent linguistic and human accessibility gates remain unmet.
 
-# Continuation checkpoint — owner-supplied TextGrid archives — 2026-11-05
 
-## Current repository state
-
-- Work branch: `docs/repository-audit-2026-11-04`; PR #210 remains open/unmerged against `main`. No merge, force-push, branch deletion, release or `main` modification.
-- Owner supplied `CCOST textgrid.zip` and `nectecLOTUSDIS textgrid.zip`. CCOST contains 488 TextGrid members; LOTUSDIS contains 90 TextGrid members plus one `.DS_Store` metadata entry. CI reads only `.TextGrid` members; no audio bytes were read, extracted, hashed or copied.
-- CCOST: 488/488 TextGrid files parse; observed tiers `ORT-MAU`, `KAN-MAU`, `KAS-MAU`, `MAU`, `MAS`, `TRN`. The `-MAU` aliases are provisional. LOTUSDIS: 90/90 files parse; each has one recording-named transcript tier, with no observed phone/phoneme/toneme/IPA tier.
-- `scripts/export_textgrid_text.py` exports only explicitly selected orthographic tiers to local provenance-rich JSONL. It preserves raw text and interval bounds, source file/tier, archive Git blob SHA-1, license and attribution, and labels every row `SOURCE_ANNOTATED_NOT_GOLD`. CI verified 178,377 records (CCOST 145,434; LOTUSDIS 32,943). The export is not committed as repository data. CI publishes artifact `textgrid-text-only-jsonl` with both JSONL files, a validated SHA-256 manifest and the third-party notice.
-- CCOST X-SAMPA conversion is PARTIAL: 1,014 labels remain unsupported. The LREC paper specifies `_1`–`_5`; `_8`, Unicode IPA-looking forms, unusual sequences and mixed tag-plus-text labels remain fail-closed. Only tag-only angle-bracket sequences are treated as opaque markers.
-- Final exact-head CI [42015757949](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42015757949) passed on `824c09098d2869256ab8206324b3e1fa1d6d6d81`: 385 passed, 1 optional FastAPI test skipped, 1,206 subtests; Ruff, wheel-install smoke, master-artifact, archive inspection, 178,377-row export, valid manifest and license-notice artifact upload passed. Dedicated Site API [42015757883](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42015757883) and optional external Thai G2P smoke [42015757971](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42015757971) passed.
-- Independent IPA gold rows: 0. Linguistic accuracy: `NOT_MEASURED`. This remains an engineering research prototype, not a linguistically validated release.
-
-## Immediate continuation
-
-1. Seek curator clarification on the provisional `-MAU` tier aliases, `_8`, Unicode IPA-looking forms, unusual X-SAMPA-like sequences and opaque tags. The request is prepared but not sent; no email connector is available.
-2. Keep CCOST X-SAMPA conversion PARTIAL until every unsupported group has an evidence-backed mapping or explicit unsupported classification.
-3. Obtain two qualified independent Thai phonetic/segmentation reviews plus a separate adjudicator; do not treat source annotations as independent gold.
-4. Obtain independent Ukrainian-native target-form review.
-5. Complete hands-on keyboard, screen-reader, zoom/reflow and mobile accessibility review.
-6. Preserve LOTUSDIS as orthographic transcript context only. Global TIMIT and all audio acquisition/acoustic tasks remain excluded/out of scope.
-
-## Outstanding blockers
-
-- CCOST release semantics: curator confirmation of `-MAU` aliases, `_8`, IPA-looking variants and tag meanings.
-- Phonetic evidence: two independent qualified Thai reviewers and a separate adjudicator; current gold rows remain zero.
-- Ukrainian target evidence: independent Ukrainian-native review.
-- Accessibility: hands-on keyboard, screen-reader, zoom/reflow and mobile testing.
-- Local execution: unavailable in connector-only environment; GitHub Actions is the verification source.
-
-Historical checkpoints below are retained for traceability; this section is the current state of the branch.
 ---
 ## Exact-head verification and current source scope — 2026-11-05
 
