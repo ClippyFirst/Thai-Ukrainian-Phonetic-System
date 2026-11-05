@@ -1,79 +1,90 @@
-## Verified browser runtime checkpoint — 2026-11-05
-
-**DONE_VERIFIED** **Pyodide parity and real-browser worker smoke passed** in dedicated workflow [42065502645](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42065502645), branch checkpoint `c42b0eef`.
-
-- Pyodide 0.29.5 ran the shared Python service and matched CPython JSON for four Thai inputs, including `สวน → /sua̯n˩˩˦/`.
-- Chromium loaded the actual module Web Worker, Pyodide runtime, wheel manifest and wheel assets from one same-origin static server; first/cold analysis and a second/warm analysis passed.
-- Browser test confirmed zero `/api/analyze` requests and zero CDN requests. Thai input stays in the browser.
-- The transport-neutral `thai_ukrainian.fastthaig2p_service` is shared by the FastAPI wrapper and the browser worker; the two runtimes do not implement separate G2P or IPA→Ukrainian paths.
-- PyThaiNLP 5.4.0 is trimmed to the Python modules plus `words_th.txt`, `stopwords_th.txt` and `corpus_license.md`. The retained word and stopword lists are CC0-1.0. The trim removed 37 unused corpus assets / 64,041,055 uncompressed bytes: source wheel members 67,689,272 bytes; retained members 3,648,217 bytes.
-- Staged wheel total: 8,673,701 bytes. Pyodide runtime files: 12,610,023 bytes. Raw bundle total: 21,283,724 bytes (~20.3 MiB), before HTTP compression. Actual GitHub Pages transfer/cold-start timings and mobile-device performance remain unmeasured.
-- PyThaiNLP imports `ZoneInfo('Asia/Bangkok')`; pinned `tzdata==2026.6` is required in the browser bundle.
-- The bundle builder emits per-wheel SHA-256 and version records. The worker checks the manifest, pinned versions and wheel hashes before installing pure-Python wheels locally; no micropip or CDN package installation is used.
-
-**Public deployment remains blocked.** `data/third_party/fastthaig2p-browser-bundle.json` deliberately has `redistribution_approved: false`. The pinned FastThaiG2P runtime wheel contains a merged IPA lookup without per-record provenance, and fallback asset mapping is incomplete. The Pages workflow refuses a public bundle while this flag is false; `FASTTHAIG2P_PYODIDE_BUNDLE_READY` is not enabled. The browser test uses ephemeral CI assets only.
-
-### Updated acceptance ledger
-
-| Area | Acceptance criterion | Status |
-|---|---|---|
-| Runtime | Pinned pure-Python wheels import/run in Pyodide 0.29.5 | DONE_VERIFIED |
-| Parity | Complete shared service JSON matches CPython for four inputs | DONE_VERIFIED |
-| Browser | Actual module worker, cold and warm analysis in Chromium | DONE_VERIFIED |
-| Privacy | No Thai-input API or CDN request | DONE_VERIFIED |
-| PyThaiNLP footprint | Retain only needed Python source and CC0 word/stopword data | DONE_VERIFIED |
-| Hosting build | Same-origin Pyodide runtime and wheels staged by Pages build | PARTIAL — CI staging verified; public Pages build not run |
-| Performance | Real Pages cold/warm timing and mobile measurement | TODO |
-| Licensing | FastThaiG2P per-record and fallback provenance/attribution manifest | PARTIAL — public redistribution not cleared |
-| Deployment | Main Pages deploy and live published-site smoke | BLOCKED — rights manifest false and bundle-ready variable not enabled |
-
-Independent IPA gold remains 0; linguistic accuracy remains NOT_MEASURED; Ukrainian practical forms remain provisional. This is runtime compatibility evidence, not linguistic validation.
-
----
-
 # FastThaiG2P browser/WASM port
 
-Owner decision (2026-11-05): retain FastThaiG2P and run it in the browser. GitHub Pages is the only hosting target. Do not replace the engine with the JavaScript research engine or introduce a separate API host.
+**Owner decisions (2026-11-05):** GitHub Pages is the only hosting target. Keep FastThaiG2P and port the shared Python service to the browser using Pyodide. Do not introduce a separate API host, Vercel, serverless functions, CDN runtime dependencies, or a parallel JavaScript G2P implementation.
 
-## Target architecture
+## Architecture implemented
 
-- GitHub Pages serves the UI, module Web Worker, pinned Pyodide runtime, pinned pure-Python wheels, FastThaiG2P data and the existing Python IPA/UA adapters.
-- Pyodide runs in a module Web Worker so startup and analysis do not block the UI.
-- Keep Python canonical. Do not independently reimplement G2P or Ukrainian adaptation in JavaScript.
-- Preserve raw external IPA, word/syllable groups, dictionary/fallback provenance, tone, length, uncertainty and provisional Ukrainian output.
-- Preserve fail-closed behavior for incomplete IPA, unsupported segments and misaligned token/word/syllable paths.
-- No Vercel, external API, or request carrying user-entered Thai text.
+```
+GitHub Pages static files
+  ├─ Ukrainian UI
+  ├─ module Web Worker
+  ├─ self-hosted Pyodide 0.29.5
+  ├─ pinned pure-Python wheels + SHA-256 manifest
+  └─ shared thai_ukrainian.fastthaig2p_service
+       ├─ FastThaiG2P adapter
+       ├─ typed phonetic result / IPA boundary
+       └─ existing IPA → Ukrainian adaptation
+```
 
-## Feasibility evidence
+- `src/thai_ukrainian/fastthaig2p_service.py` is transport-neutral and shared by the FastAPI wrapper and the browser worker.
+- `web/src/fastthaig2p-worker.js` initializes Pyodide in a module worker, loads only same-origin assets, checks the manifest and exact wheel versions/sizes/SHA-256, and installs pure-Python wheels locally without micropip or a CDN.
+- `web/src/app.js` sends Thai input only to that worker. The browser UI no longer calls `/api/analyze`.
+- The Python adapter and IPA→Ukrainian function remain canonical. No parallel JavaScript phonology or transliteration path was introduced.
+- Incomplete IPA remains fail-closed; the worker returns the shared service's explicit rejection rather than switching to RTGS or another engine.
 
-- Pinned FastThaiG2P declares Python >=3.11 and one G2P runtime dependency, PyThaiNLP >=5.3.4. ONNX/PyTorch dependencies are optional TTS only.
-- G2P, normalizer, tokenizer wrapper and vendored TLTK fallback are Python code; fallback describes itself as standard-library-only.
-- PyThaiNLP 5.4.0 is the current native dependency. Exact-wheel compatibility under Pyodide must be tested, not assumed.
-- Upstream data includes a 62k-word dictionary, IPA lookup data and about 19 MB fallback data.
-- Initial spike pins stable Pyodide 0.29.5 (CPython 3.13). The PyThaiNLP 5.4.0 wheel is about 21 MiB, FastThaiG2P about 6.9 MiB and the project wheel about 376 KiB; inspect PyThaiNLP package contents before setting browser download budgets.
-- Added scripts/fastthaig2p_pyodide_parity.py, web/tests/fastthaig2p-pyodide.test.mjs and .github/workflows/pyodide-compat.yml. The workflow builds exact wheels, creates a CPython reference, installs verified pure-Python wheels into Pyodide's local site-packages without micropip/CDN access, runs the same adapter and compares four Thai inputs, including the upstream garden-word correction.
-- Initial run [42061102029](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42061102029) passed wheel build/native fixture generation but failed at Pyodide bootstrap. Follow-up [42061814086](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42061814086) identified an invalid `file://` indexURL path. The absolute-path runner then reached the shared Python service but failed because PyThaiNLP imports `ZoneInfo('Asia/Bangkok')` and the runtime lacked timezone data. Pinned `tzdata==2026.6` is now included. Latest workflow [42063433307](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42063433307) was queued at last poll; no parity pass is claimed.
+## Runtime and browser verification
 
-## Redistribution gate
+At code checkpoint `8ff38629c5e51dc6e6e709f7a91c786520d148d3`:
 
-Browser execution is technically plausible; public redistribution of the complete runtime bundle is not yet cleared. The upstream inventory identifies manual overrides, roughly 13k Wiktionary/kaikki-derived entries, roughly 49k generated IPA entries and TLTK fallback files. Existing audit evidence does not establish file-by-file rights and attribution for every runtime asset. Serving these assets from Pages makes them directly downloadable. A software license does not automatically clear bundled data.
+- Pyodide 0.29.5 parity passed for four Thai inputs against the same CPython service JSON, including `สวน → /sua̯n˩˩˦/`.
+- Chromium loaded the actual module worker and same-origin runtime assets; both cold and warm analysis passed.
+- Browser smoke confirmed no `/api/analyze` request and no CDN request.
+- The exact runtime bundle staged by CI contained four wheels (8,673,701 bytes) and 12,610,023 bytes of Pyodide runtime files: about 20.3 MiB raw before compression.
+- PyThaiNLP 5.4.0's wheel was trimmed from 67,689,272 to 3,648,217 uncompressed member bytes by removing 37 unused corpus assets; only required Python source, `words_th.txt`, `stopwords_th.txt`, and the corpus license notice remain.
+- `tzdata==2026.6` is required because PyThaiNLP resolves `ZoneInfo("Asia/Bangkok")`.
 
-Existing audit classification: FastThaiG2P use is permitted; redistribution is conditional, not categorically prohibited. Keep Wiktionary-derived rows separately attributable under CC BY-SA/GFDL and retain applicable Apache-2.0/BSD-3 notices. Before public Pages distribution: inspect the exact wheel and hashes; map every dictionary/fallback asset to source, version, terms and notices; resolve the remaining generated/manual/fallback asset mapping; include applicable Pyodide MPL-2.0, PyThaiNLP Apache-2.0, FastThaiG2P and TLTK BSD-3-Clause notices; generate a version/hash/size/license manifest; fail the Pages build if that manifest is missing or hashes differ. Ephemeral CI wheels are not public deployment or license clearance.
+Exact workflow evidence at that checkpoint:
+- [Pyodide compatibility and Chromium worker smoke — 42066731247](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42066731247)
+- [Web static validation — 42066731252](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42066731252)
+- [Site API wrapper — 42066731528](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42066731528)
+- [Full CI — 42066735544](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42066735544)
 
-## Acceptance ledger
+These runs predate the source-filtering changes below. They prove the initial browser runtime, not the later filtered wheel.
+
+## Browser data provenance changes
+
+The pinned upstream wheel includes a merged IPA dictionary. Upstream `data/README.md` and `scripts/merge_ipa.py` identify three source classes: manual, Wiktionary, and model-generated. The runtime wheel does not include the source metadata file.
+
+The browser build now clones the exact upstream commit and runs `scripts/prepare_fastthaig2p_browser_source.py` before building the wheel:
+- retain only records whose per-entry source label is `wiktionary` or `manual`;
+- exclude model-generated and unknown-source records;
+- reduce the tokenizer wordlist to the retained IPA keys;
+- preserve upstream ordering and report source counts;
+- report stale differences between `ipa.json` and the IPA snapshot in `ipa_metadata.json` without silently changing the source label;
+- keep the upstream TLTK-derived OOV fallback enabled.
+
+Focused tests cover source filtering, invalid IPA rejection, and metadata/runtime IPA differences. The workflow must pass on the exact current head before the new filtered wheel is marked verified. See [FastThaiG2P data provenance and redistribution review](fastthaig2p-data-provenance.md).
+
+## Public Pages deployment gate
+
+`data/third_party/fastthaig2p-browser-bundle.json` remains `redistribution_approved: false`.
+
+The remaining legal/evidence work is specific:
+- publish Wiktionary/Kaikki attribution and the filtered derived dataset under the applicable CC BY-SA/GFDL terms;
+- establish the exact TLTK release/commit used for the vendored fallback files and reconcile its file-level license notices;
+- include FastThaiG2P, PyThaiNLP, Pyodide, tzdata, TLTK, and retained corpus license/NOTICE material in the public bundle;
+- verify the exact public bundle file/hash manifest.
+
+The Pages workflow builds the runtime only when `FASTTHAIG2P_PYODIDE_BUNDLE_READY=true`, and the builder independently refuses `--purpose pages` unless the rights manifest says `redistribution_approved=true`. The deploy job is also gated on the repository variable. CI uses ephemeral assets and does not grant public redistribution permission.
+
+No deployment, main-branch change, merge, or repository setting change was made. PR #210 remains open and unmerged. The branch's static preview was tested in Chromium, but a real GitHub Pages URL has not yet been deployed or measured.
+
+## Current acceptance ledger
 
 | Area | Criterion | Status |
 |---|---|---|
-| Runtime | Four exact pure-Python wheels import/run in Pyodide 0.29.5 | PARTIAL — timezone fix queued |
-| Parity | CPython/Pyodide JSON matches | TODO |
-| IPA/UA | Same typed adapter and IPA-to-Ukrainian function | TODO |
-| Browser | Worker integration and responsive UI | TODO |
-| Hosting | All runtime assets on Pages; no API host/text upload | TODO |
-| Performance | Bundle size and cold/warm timings recorded | TODO |
-| Licensing | Per-file redistribution/attribution manifest | PARTIAL / PUBLICATION GATE — conditional attribution and asset mapping required |
-| Privacy | UI states input is processed locally | TODO |
-| Deployment | Exact merged main commit passes Pages live smoke | TODO |
+| Shared service | Same Python service used by API and browser | DONE_VERIFIED |
+| Pyodide runtime | Pinned pure-Python wheels import and run | DONE_VERIFIED at 8ff38629; reverify after filtered wheel |
+| CPython/Pyodide parity | Complete service JSON matches | DONE_VERIFIED at 8ff38629; reverify after filtered wheel |
+| Browser worker | Cold/warm Chromium run, no API/CDN text transfer | DONE_VERIFIED at 8ff38629; reverify after exact version checks |
+| PyThaiNLP footprint | Unused corpus assets removed; required CC0 lists retained | DONE_VERIFIED |
+| Source filtering | Generated/unknown IPA excluded from browser wheel | PARTIAL — latest workflow verification pending |
+| Wiktionary/Kaikki attribution | Share-alike data notice and transparent copy | TODO |
+| TLTK fallback provenance | Exact vendored release and license file mapping | BLOCKED — upstream does not record exact version; source repository contains multiple license files |
+| Dependency notices | All license/NOTICE texts included in Pages artifact | TODO |
+| Public Pages deployment | Exact merged main commit deployed and live-smoked | BLOCKED — rights flag false; merge and repository settings not changed |
+| Performance | Actual Pages transfer/cold-start and mobile timing | TODO |
 
-No TTS, audio, acoustic validation, remote API, Vercel, serverless function or engine fallback. No independent IPA gold, accuracy, official Ukrainian standardisation or WCAG certification claim.
+## Product and linguistic limits
 
-Disposition: PARTIAL. Do not call the port complete, change live Pages or publicly redistribute runtime data until compatibility, parity, browser integration, performance and rights gates have evidence.
+This is a runtime-port milestone, not a linguistic validation result. Independent IPA gold remains 0; accuracy remains `NOT_MEASURED`; Ukrainian practical forms remain provisional. No TTS, audio, acoustic validation, or external expert review is required for the owner-approved beta scope.
