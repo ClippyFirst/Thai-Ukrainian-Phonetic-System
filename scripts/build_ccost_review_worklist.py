@@ -177,8 +177,8 @@ def build_worklist(paths: list[Path]) -> dict[str, Any]:
                     if tier.kind != "IntervalTier":
                         continue
                     for interval in tier.intervals:
-                        label = interval.text.strip()
-                        if not label:
+                        label = interval.text
+                        if not label.strip():
                             continue
                         markers = _marker_counts(label)
                         known_failure_markers = _known_failure_counts(label)
