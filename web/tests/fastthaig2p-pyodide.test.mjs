@@ -31,7 +31,7 @@ for (const name of wheelNames) {
   pyodide.FS.writeFile(`/wheels/${name}`, readFileSync(resolve(wheelDir, name)));
 }
 pyodide.globals.set("WHEEL_NAMES", pyodide.toPy(wheelNames));
-await pyodide.runPythonAsync(`
+await runPython("Pure-Python wheel installation", `
 import sysconfig
 import zipfile
 from pathlib import Path, PurePosixPath
