@@ -43,8 +43,8 @@
   </section>
   <section>
     <h2>TLTK-derived fallback</h2>
-    <p>FastThaiG2P вказує, що його OOV fallback походить із Thai Language Toolkit (TLTK). Вендорений файл коду містить заголовок TLTK version 1.3.8 і BSD-3-Clause notice. П’ять із шести перевірених fallback-файлів мають ідентичні Git blob SHA з файлами в репозиторії TLTK; для шостого файла розмір і формат відрізняються, точне перетворення ще не підтверджено.</p>
-    <p>Публічна сторінка PyPI для TLTK 1.3.8 вказує BSD-3-Clause. Репозиторій TLTK водночас містить окремий кореневий LGPL-3.0 LICENSE; цей файл також збережено у каталозі повідомлень як історичний evidence. Точне співвідношення root LICENSE до релізу 1.3.8 ще підлягає остаточній перевірці, тому публічний bundle залишається gated.</p>
+    <p>FastThaiG2P вказує, що його OOV fallback походить із Thai Language Toolkit (TLTK). Вендорений файл коду містить заголовок TLTK version 1.3.8 і BSD-3-Clause notice. П’ять із шести перевірених fallback-файлів мають ідентичні Git blob SHA з файлами у зафіксованому знімку репозиторію TLTK; шостий файл `sylform_var.pkl` точно дорівнює результату `bz2.decompress()` для `tltk/sylform_var.pklz`. Усі шість зіставлень і перетворення відтворюються перевірочним скриптом у репозиторії.</p>
+    <p>Заголовок вендореного parser-файла посилається на TLTK 1.3.8 та BSD-3-Clause. Окремо перевірений знімок TLTK за commit `0cef4bcfbdd675f589783dd4134b87b9bb9fbb93` містить `setup.py` version 1.9.1 із BSD-3-Clause, кореневий `LICENSE` LGPL-3.0, `LICENSE.txt` із BSD-подібними умовами та застарілий `PKG-INFO` 1.1.7/GPLv3. Це не доводить, що кожен скопійований файл підпадає під однакову ліцензію. Обидва повідомлення — BSD і LGPL — збережено; точну сферу їх застосування до кожного файла має остаточно перевірити правовласник/юрист. Тому публічний bundle залишається заблокованим.</p>
     <ul>
       <li><a href="licenses/BSD-3-Clause-TLTK.txt">BSD-3-Clause — TLTK</a></li>
       <li><a href="licenses/LGPL-3.0-TLTK-repository-license.txt">LGPL-3.0 — файл LICENSE у репозиторії TLTK</a></li>
