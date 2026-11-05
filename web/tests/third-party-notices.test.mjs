@@ -18,6 +18,8 @@ assert.match(notices, /BSD-3-Clause/);
 assert.match(notices, /LGPL-3\.0/);
 assert.match(notices, /Apache License 2\.0/);
 assert.match(notices, /Mozilla Public License 2\.0/);
+assert.match(ccBySa, /Creative Commons Attribution-ShareAlike 4\.0 International/);
+assert.ok(ccBySa.length > 10000, "CC BY-SA license file should contain the full legal code");
 assert.doesNotMatch(notices, /\\n/);
 
 const requiredNotices = [
