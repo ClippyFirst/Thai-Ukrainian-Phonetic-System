@@ -143,6 +143,17 @@ class CCOSTReviewWorklistTests(unittest.TestCase):
         self.assertEqual(report["summary"]["documented_maus_failure_marker_occurrences"], 1)
         self.assertEqual(report["summary"]["documented_maus_failure_marker_interval_count"], 1)
 
+    def test_preserves_exact_source_label_whitespace(self):
+        fixture = TEXTGRID.replace('text = "? a_8"', 'text = "  ? a_8  "', 1)
+        with tempfile.TemporaryDirectory() as directory:
+            archive_path = Path(directory) / "ccost.zip"
+            with zipfile.ZipFile(archive_path, "w") as archive:
+                archive.writestr("labels/sample.TextGrid", fixture)
+            report = build_worklist([archive_path])
+
+        row = next(row for row in report["records"] if row["raw_label"] == "  ? a_8  ")
+        self.assertIn("UNDOCUMENTED_CCOST_TONE_SUFFIX_8", row["issue_types"])
+
     def test_keeps_source_labels_and_blank_expert_decision_fields(self):
         with tempfile.TemporaryDirectory() as directory:
             archive_path = Path(directory) / "ccost.zip"
