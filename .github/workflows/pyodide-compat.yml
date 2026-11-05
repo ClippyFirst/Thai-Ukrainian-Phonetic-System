@@ -8,6 +8,8 @@ on:
       - "web/tests/fastthaig2p-browser.test.mjs"
       - "scripts/fastthaig2p_pyodide_parity.py"
       - "scripts/slim_pythainlp_wheel.py"
+      - "scripts/build_pyodide_bundle.py"
+      - "data/third_party/fastthaig2p-browser-bundle.json"
       - "web/tests/fastthaig2p-pyodide.test.mjs"
       - "pyproject.toml"
       - ".github/workflows/pyodide-compat.yml"
@@ -62,11 +64,14 @@ jobs:
         run: npm install --no-save --no-package-lock pyodide@0.29.5 playwright@1.64.1
       - name: Run CPython versus Pyodide parity
         run: node web/tests/fastthaig2p-pyodide.test.mjs build/pyodide-wheels build/fastthaig2p-native.json
-      - name: Stage same-origin runtime assets for browser smoke
+      - name: Stage same-origin runtime assets and integrity manifest
         run: |
-          mkdir -p web/vendor/pyodide web/vendor/wheels
-          cp -R node_modules/pyodide/. web/vendor/pyodide/
-          cp build/pyodide-wheels/*.whl web/vendor/wheels/
+          python scripts/build_pyodide_bundle.py \
+            --purpose ci \
+            --pyodide-dist node_modules/pyodide \
+            --wheels build/pyodide-wheels \
+            --output web/vendor \
+            --rights-manifest data/third_party/fastthaig2p-browser-bundle.json
       - name: Install headless Chromium
         run: npx playwright install --with-deps chromium
       - name: Test the real same-origin Pyodide worker in Chromium
