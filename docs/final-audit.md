@@ -1897,3 +1897,16 @@ _8 remains unmapped in the published CCOST five-tone mapping, but it is **not in
 The official [Zenodo CCOST record](https://zenodo.org/records/17366698) lists a 6.2 GB WAV+TextGrid archive under CC BY-NC-SA 4.0. Audio was not downloaded. Selective retrieval is technically desirable for acoustic adjudication but remains blocked by current container network/DNS limitations and the need to confirm non-commercial project scope. Do not fetch the full archive in routine CI.
 
 Unresolved marker semantics and actual expert adjudication remain BLOCKED. No reviewer has been contacted or appointed; the reviewer registry is empty; independent IPA gold rows remain 0; linguistic accuracy remains NOT_MEASURED.
+
+
+## Final exact-head CCOST checkpoint — 2026-11-05
+
+Full CI run 42039619729 passed on 43fa978d440bc654645a10430ac54962bd790582: all three jobs SUCCESS; test 395 passed, 1 skipped, 1,211 subtests; Ruff and 29 parity fixtures passed. Dedicated Site API 42039619784 and external G2P smoke 42039619715 also passed. The latest worklist artifact 13421040388 was downloaded and inspected: 1,975 records from 488 TextGrids, all 11 reviewer/adjudicator fields blank, no audio read.
+
+Marker denominators are now explicit: 871 appearances, 821 tier-interval rows, 398 exact file+interval groups; per-marker groups <P> 375, <P:> 4, <:p> 11, <Fail> 8. Semantics remain unknown.
+
+_8: 868 tier occurrences, 397 exact interval groups, 438 file/interval/raw-label events, 22 strings, 119 files. Generic MAUS allows _1–_9, while the CCOST paper maps _1–_5 only. Exact-interval cross-tier scan finds 14 groups with mapped counterparts (MAU _2 7; MAS _2 4; MAS _3 4; KAN-MAU _3 1). These remain expert-review clues, not automatic repairs.
+
+The official Zenodo CCOST archive contains WAV and TextGrid assets (6.2 GB) under CC BY-NC-SA 4.0. Audio was not downloaded. Selective retrieval and confirmation of non-commercial scope are needed for acoustic review. Proposed uncontacted panel: Chutamanee Onsuwan + Phanintra Teeranon for blind first pass; Rungpat Roengpitya as separate adjudicator. Public official qualifications are recorded in reviewer-outreach-shortlist.md; reviewer registry remains empty.
+
+Unresolved marker semantics, intended _8 recovery and human adjudication remain BLOCKED. Independent IPA gold rows 0; linguistic accuracy NOT_MEASURED.
