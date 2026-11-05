@@ -239,6 +239,10 @@ def build_worklist(paths: list[Path]) -> dict[str, Any]:
     marker_interval_counts: Counter[str] = Counter()
     for row in marker_rows:
         marker_interval_counts.update(row["markers"].keys())
+    marker_event_groups = {
+        marker: len({row["event_group_id"] for row in marker_rows if marker in row["markers"]})
+        for marker in UNRESOLVED_MARKERS
+    }
     summary = {
         "source_textgrid_files": source_files,
         "records": len(records),
@@ -254,6 +258,10 @@ def build_worklist(paths: list[Path]) -> dict[str, Any]:
         "documented_maus_failure_markers": dict(sorted(known_failure_appearances.items())),
         "unresolved_marker_interval_count": len(marker_rows),
         "marker_interval_counts": dict(sorted(marker_interval_counts.items())),
+        "marker_event_group_counts": {
+            marker: count for marker, count in sorted(marker_event_groups.items()) if count
+        },
+        "unresolved_marker_event_groups": len({row["event_group_id"] for row in marker_rows}),
         "unresolved_marker_appearances": sum(marker_appearances.values()),
         "markers": dict(sorted(marker_appearances.items())),
         "unique_raw_label_events": len({
