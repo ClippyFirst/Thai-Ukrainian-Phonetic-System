@@ -108,3 +108,24 @@ Primary source additions:
 - [TLTK BSD license](https://github.com/attapol/tltk/blob/master/LICENSE.txt)
 - [TLTK LGPL license](https://github.com/attapol/tltk/blob/master/LICENSE)
 - [FastThaiG2P paper/preprint page](https://arxiv.org/abs/2608.12814).
+
+
+## GitHub Pages browser-port follow-up — 2026-11-05
+
+The browser bundle now applies the upstream per-entry source metadata instead of redistributing the merged dictionary as a single undifferentiated asset.
+
+- CI retained exactly **13,144** `wiktionary` records and excluded **48,957** `generated` records. No manual or unknown-source rows were present in the pinned runtime metadata. The tokenizer wordlist was reduced to the 13,144 retained IPA keys.
+- One runtime value (`สวน`) differs from its `ipa_metadata.json` snapshot. The source label remains Wiktionary; the current runtime IPA is preserved and the mismatch is recorded in the embedded provenance file rather than silently rewritten.
+- The filtered FastThaiG2P wheel now embeds `browser-data-provenance.json` and `WIKTIONARY-ATTRIBUTION.md`. The attribution names Wiktionary contributors and Kaikki.org/Wiktextract, records the filtering/modification, and identifies CC BY-SA 4.0 for the derived Wiktionary subset. The generated and manual layers are not redistributed in this browser wheel.
+- FastThaiG2P's vendored `_th2ipa.py` header explicitly identifies TLTK version 1.3.8 and carries a BSD-3-Clause notice. The TLTK 1.3.8 PyPI release page also identifies BSD-3-Clause. Five of six fallback data files have exact Git blob SHA matches with corresponding TLTK repository files. The remaining `sylform_var.pkl` differs from TLTK's `.pklz` file in size/format; the exact transformation is not independently reproduced.
+- The TLTK repository's root LGPL-3.0 file and older GPLv3 package metadata remain disclosed alongside its BSD-3-Clause `LICENSE.txt`; they are not silently removed from the evidence. The public notice page explains this distinction.
+- Ten third-party/project license and attribution notices are staged under `web/licenses/`. The bundle builder requires them, records their SHA-256/size in `bundle-manifest.json`, and the worker requires the full notice set. The Pages post-deploy smoke is configured to fetch and hash-check every notice.
+
+Verification at code checkpoint `9894c80a4c47fe0b1e3b966ff4f6fb3dcaa2e124`:
+- Pyodide parity and real Chromium worker smoke: [42073702543](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42073702543), SUCCESS.
+- Full CI: [42073702565](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42073702565), SUCCESS.
+- Web static validation: [42073702564](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42073702564), SUCCESS.
+- Site API reference wrapper: [42073702559](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42073702559), SUCCESS.
+- Optional external smoke: [42073702598](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42073702598), SUCCESS.
+
+**Current operational position:** the source-filtered ephemeral CI bundle and attribution notices are verified. `redistribution_approved` remains false; the Pages build refuses public packaging, and no live deployment or merge was performed. The remaining TLTK pickle transformation evidence is recorded as PARTIAL, not treated as resolved. This review remains a source-based compliance assessment, not legal advice.
