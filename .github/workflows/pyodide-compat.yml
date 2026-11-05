@@ -8,7 +8,7 @@ on:
       - "web/tests/fastthaig2p-browser.test.mjs"
       - "scripts/fastthaig2p_pyodide_parity.py"
       - "scripts/slim_pythainlp_wheel.py"
-      - "scripts/prepare_fastthaig2p_browser_source.py"
+      - "scripts/prepare_fastthaig2p_browser_source.py"\n      - "scripts/verify_tltk_fallback_provenance.py"
       - "tests/test_fastthaig2p_browser_data.py"
       - "scripts/build_pyodide_bundle.py"
       - "data/third_party/fastthaig2p-browser-bundle.json"
