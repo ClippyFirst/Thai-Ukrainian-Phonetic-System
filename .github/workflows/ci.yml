@@ -67,6 +67,7 @@ jobs:
               'converted_label_counts': report['converted_label_counts'],
               'bracket_marker_counts': report['bracket_marker_counts'],
               'failure_count': len(report['failures']),
+              'file_errors': [item for item in report['failures'] if 'tier' not in item],
               'failure_groups': [
                   {'tier': key[0], 'label_or_error': key[1], 'count': count}
                   for key, count in failure_counts.most_common(40)
