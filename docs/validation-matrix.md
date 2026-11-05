@@ -1,16 +1,13 @@
-## GitHub Pages / Pyodide continuation — 2026-11-05
+## Current Pages beta and UI/UX checkpoint — 2026-11-05
 
-Owner decision: keep FastThaiG2P and port it to browser/WASM; GitHub Pages only. Vercel, remote API and JS-engine replacement are out of scope. Canonical plan: [fastthaig2p-pyodide-port.md](fastthaig2p-pyodide-port.md).
-
-- **Runtime/parity:** Pyodide 0.29.5 passed full shared-service JSON parity with CPython for four Thai inputs, including `สวน → /sua̯n˩˩˦/`.
-- **Browser:** dedicated workflow [42065502645](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42065502645) passed actual Chromium module-worker cold/warm analysis. The test confirmed no `/api/analyze` and no CDN requests.
-- **Shared service:** `src/thai_ukrainian/fastthaig2p_service.py` is now the single transport-neutral analysis path used by FastAPI and the browser worker. `src/index.py` wraps it for HTTP only.
-- **Bundle:** PyThaiNLP is trimmed to needed Python source plus CC0 `words_th.txt` and `stopwords_th.txt`; 37 unused corpus assets / 64,041,055 uncompressed bytes removed. Retained PyThaiNLP wheel members: 3,648,217 bytes. Staged wheels total 8,673,701 bytes; Pyodide runtime files 12,610,023 bytes; raw total 21,283,724 bytes (~20.3 MiB), before HTTP compression.
-- **Integrity:** browser worker verifies manifest, exact package versions and SHA-256 wheel hashes. It installs pure-Python wheels locally; no micropip or CDN.
-- **Privacy:** input is passed only to a same-origin module worker. Chromium smoke confirmed no API/CDN network requests.
-- **Publication gate:** [bundle rights manifest](../data/third_party/fastthaig2p-browser-bundle.json) remains `redistribution_approved: false`. FastThaiG2P merged IPA per-record provenance and exact fallback asset mapping are incomplete. Pages workflow refuses public bundle creation until rights are approved; `FASTTHAIG2P_PYODIDE_BUNDLE_READY` is not enabled.
-- **Task ledger:** architecture DONE_VERIFIED; Pyodide runtime and parity DONE_VERIFIED; browser worker smoke DONE_VERIFIED; Pages build path PARTIAL (ephemeral staging verified, public build not run); performance PARTIAL (raw size measured, real Pages/mobile timings TODO); redistribution PARTIAL / publication gate; public Pages deployment BLOCKED by rights manifest.
-- **Current branch:** `docs/repository-audit-2026-11-04`; PR #210 remains open/unmerged. No main mutation, production deployment or release. Independent IPA gold 0; accuracy NOT_MEASURED.
+- Current main: f0d41996e854185bd6bd92f0ffa8f6b83e71f777. Main CI [42099035122](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42099035122) SUCCESS. Pages deployment [42098396098](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42098396098) and Pyodide compatibility [42098395877](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42098395877) SUCCESS on the preceding code checkpoint.
+- Public beta is live on GitHub Pages. Runtime is static HTML/CSS/JS, same-origin module Worker, self-hosted Pyodide, pinned wheels and SHA-256 manifest. No public FastAPI/Vercel request path.
+- Working branch: design/site-recomposition-2026-11-05. Test-first checkpoint 91d0058e064af4b0d1c47985a96461c5c81efdb0 failed at the intended new UI contract assertion (missing result-feature-grid); this confirms the new test detects the not-yet-implemented layout. Implementation checkpoint 3c1c0e20dc757bc9b0ac2482a105666625451f5f; follow-up test/focus checkpoint cb0b5d342373f5f09313b0102688368716a83dde. Exact-head workflow runs for the current candidate must be inspected before marking implementation verified.
+- UX changes: editorial two-column hero; three-stage text→IPA→Ukrainian explanation; clear beta/local-processing indicators; input counter; sample buttons fill without auto-running; explicit analyze action; input edits invalidate previous results; changed-in-flight input discards stale worker result; Ukrainian-first and IPA-supporting result composition; progressive word/syllable/provenance detail; responsive layout, reduced-motion and forced-colors support.
+- Documentation correction: web-service-architecture.md and web-service-requirements.md now describe Pages/Pyodide/Worker; FastAPI remains a reference/local wrapper. ui-ux-redesign.md is the UI source-of-truth.
+- Upstream practices selectively applied: UI UX Pro Max, Superpowers, Matt Pocock skills, Ponytail and Unlazy. No upstream code, skill packages, hooks, runtimes or UI dependencies were installed.
+- Manual gate: keyboard-only and screen-reader check, 200%/400% zoom/reflow, narrow mobile viewport and real-device cold/warm performance. Static checks do not prove WCAG 2.2 AA conformance.
+- Linguistic evidence unchanged: independent IPA gold rows 0; accuracy NOT_MEASURED; Ukrainian candidates remain provisional.
 
 ---
 

@@ -1,42 +1,65 @@
 # Web service architecture
 
-## Target site runtime (Draft PR #193)
+## Deployed product
 
-This architecture is implemented on a development branch and is not deployed to the live GitHub Pages site. The current main deployment remains unchanged until a Python-capable host is connected and a preview is verified.
+The public website is a static GitHub Pages application. Thai analysis runs locally in the visitor's browser through a module Web Worker that initializes the self-hosted Pyodide runtime and invokes the shared Python FastThaiG2P service.
 
-## Production site runtime
+The public site does not call a remote API, FastAPI endpoint, CDN-hosted runtime, Vercel function, or a second JavaScript pronunciation engine.
 
-The website uses **FastThaiG2P as its sole Thai pronunciation/G2P engine**. The browser does not run the ClippyFirst grapheme-to-phonology engine, RTGS renderer, heuristic fallback, or a second pronunciation engine.
+## Runtime flow
 
-Data flow:
+Browser UI (web/index.html + web/src/app.js)
+  → Thai text via Worker.postMessage
+  → module Web Worker (web/src/fastthaig2p-worker.js)
+  → self-hosted Pyodide 0.29.5 + pinned wheels
+  → thai_ukrainian.fastthaig2p_service
+  → FastThaiG2P adapter
+  → typed external-IPA result and provenance
+  → IPA-to-Ukrainian provisional adaptation
+  → worker result message and escaped DOM rendering
 
-`Thai text → same-origin FastAPI endpoint → pinned FastThaiG2P → raw external IPA → typed external-IPA boundary → existing IPA → Ukrainian adapter → provisional Ukrainian practical spelling → browser presentation`.
+- web/index.html is the public service entry point.
+- web/src/app.js owns input interaction, worker requests, status messages, safe result rendering, copy controls and progressive disclosure.
+- web/src/fastthaig2p-worker.js owns Pyodide startup, same-origin runtime/wheel loading, manifest and SHA-256 checks, package installation and worker message transport.
+- src/thai_ukrainian/fastthaig2p_service.py is the shared transport-neutral analysis function called by both the browser worker and the optional FastAPI reference wrapper.
+- src/index.py and FastAPI remain useful for local/API testing, but are not part of the deployed Pages request path.
+- web/src/engine.js and RTGS renderers remain research/reference code. They are not site fallbacks.
 
-The FastThaiG2P output is retained as raw IPA. Because its mixed dictionary/OOV output has not been independently adjudicated as phonemic or broad-surface IPA, it is represented in `PhoneticResult.external_ipa`; it is never mislabeled as either canonical IPA layer. The Ukrainian adapter may consume this field only when the typed result is explicitly `PROVISIONAL`. Unknown symbols and incomplete/passthrough output remain fail-closed.
+## Data and privacy contract
 
-The Ukrainian result is explicitly provisional, not expert-validated and not an official Ukrainian transcription standard. Tone and vowel length remain separately visible in IPA/metadata and may be neutralized in Ukrainian practical spelling.
+- Thai text is sent from the page to a same-origin module worker using postMessage; it is not sent to a server.
+- Runtime assets and pinned wheels are served from the Pages origin. The worker checks the committed bundle manifest and package hashes before installing the local wheels.
+- Content Security Policy is restrictive and allows only same-origin scripts, styles, workers and connections plus the WebAssembly execution capability required by Pyodide.
+- No account, analytics, telemetry, or user-text persistence is introduced by the website.
+- Dynamic output is inserted only after escaping untrusted values. Unsupported or incomplete IPA is withheld; no legacy-engine or RTGS fallback is allowed.
 
-## API and hosting
+## Output contract
 
-- `src/index.py` exports the FastAPI application and serves `web/` static assets.
-- `POST /api/analyze` accepts JSON `{"text":"..." }` and returns the pinned FastThaiG2P IPA, provisional Ukrainian output, word/syllable groups, tone, length, provenance and warnings.
-- `GET /api/health` identifies the active engine.
-- `requirements.txt` pins FastAPI, PyThaiNLP and FastThaiG2P at an immutable upstream commit.
-- The browser calls only same-origin `/api/analyze`; CSP allows same-origin connections only.
+The website uses FastThaiG2P as its sole pronunciation/G2P engine. Its IPA is retained as unclassified external IPA until independently adjudicated; it must not be relabelled as canonical phonemic or broad-surface IPA. The Ukrainian string is a provisional practical adaptation of that IPA, not an official Ukrainian standard or expert-validated transcription.
 
-The GitHub Pages deployment is static-only and cannot execute this Python API. The new combined FastAPI/static application must be deployed to a Python-capable host (the implementation targets Vercel's Python runtime) before this branch can replace the currently published GitHub Pages site. No Vercel project is currently linked to this repository; project creation/connection and production-domain cutover remain external deployment actions and are not performed by this code change.
+The result view preserves:
+- complete raw IPA and segmental IPA where supplied;
+- word and syllable grouping;
+- tone and tone-IPA metadata;
+- vowel length;
+- engine/upstream provenance;
+- warnings and explicit provisional status.
 
-## Failure policy
+The UI must not imply that Ukrainian spelling retains every Thai tone or length distinction.
 
-- No fallback to the previous browser engine, RTGS, orthographic heuristics or another G2P provider.
-- Incomplete upstream IPA returns an explicit API error; the UI shows the error instead of inventing a partial Ukrainian string.
-- Unsupported IPA symbols withhold the affected Ukrainian candidate.
-- Every displayed Ukrainian result carries a provisional warning and pinned engine provenance.
+## Failure and interaction policy
 
-## QA
+- Empty input produces a clear inline prompt.
+- Worker startup, download and analysis progress are announced through one polite status region.
+- Incomplete upstream IPA produces an explicit error; the site does not switch engines.
+- Editing the input invalidates the previously displayed result so that old output cannot be mistaken for the new text.
+- Selecting an example fills the input; the visitor explicitly starts analysis.
+- If the input changes while an analysis is in flight, the returned result is discarded and the visitor is asked to rerun it.
+- Copy actions provide visible confirmation and retain accessible names.
+- Keyboard operation, visible focus, reduced-motion preferences, responsive reflow and high-contrast mode are preserved.
 
-Automated: pinned upstream smoke test, typed external-IPA tests, provisional IPA→Ukrainian adapter tests, API contract tests, UI fail-closed tests, static accessibility checks and the repository's existing Python/browser regression suite.
+## Verification
 
-Manual: desktop/mobile, keyboard-only, screen-reader result announcements, API failure, unsupported IPA, cold-start latency, and hosting/deployment verification.
+The public workflow is defined in .github/workflows/pages.yml; browser and UI contracts are in web/tests/. The Pyodide compatibility workflow validates CPython parity and the real worker in Chromium. Static UI checks do not establish WCAG 2.2 AA conformance; manual keyboard, screen-reader, zoom/reflow and mobile testing remain separate evidence gates.
 
-UI quality cannot upgrade an unadjudicated external IPA result into phonetic gold.
+Current live publication: https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/.

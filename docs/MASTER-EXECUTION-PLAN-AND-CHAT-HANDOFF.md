@@ -1,3 +1,17 @@
+## UI/UX recomposition continuation — 2026-11-05
+
+- Work branch: design/site-recomposition-2026-11-05, created from main f0d41996e854185bd6bd92f0ffa8f6b83e71f777. The supplied docs/repository-audit-2026-11-04 branch diverges substantially from current main (main 503 commits ahead; audit branch 4 commits ahead); it was inspected and preserved, not used as the base. No main mutation or force-push.
+- Baseline main CI [42099035122](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42099035122) SUCCESS; live Pages deployment [42098396098](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42098396098) SUCCESS; Pyodide parity/Chromium worker [42098395877](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42098395877) SUCCESS.
+- Test-first commit 91d0058e064af4b0d1c47985a96461c5c81efdb0 added UI contract expectations before implementation. Its CI run 42101658522 failed at the expected missing result-feature-grid assertion; Python tests, Ruff, package smoke and parity passed before the UI assertion stopped the job. This is the RED evidence, not a regression in the shipped main branch.
+- Implementation commit 3c1c0e20dc757bc9b0ac2482a105666625451f5f; follow-up contract/focus correction cb0b5d342373f5f09313b0102688368716a83dde. Inspect all exact-head workflows before reporting final pass/fail.
+- Product changes: editorial two-column hero, three-step pipeline explainer, compact beta/local-processing labels, explicit analysis action, sample-fill-only behavior, input character count, stale-result invalidation, primary Ukrainian/secondary IPA presentation, progressive syllable/provenance detail, responsive and reduced-motion/forced-colors styling.
+- Docs reconciled to the deployed GitHub Pages/Pyodide architecture; previous public FastAPI/Vercel claims were stale. FastAPI remains a reference/local wrapper only.
+- Upstream practices selectively applied: UI UX Pro Max, Superpowers, Matt Pocock, Ponytail and Unlazy. No skill packages, hooks, runtimes or third-party UI dependencies were installed.
+- Final acceptance: exact-head Web static and full CI; verify app JS syntax, UI contract, accessibility contract, parity, third-party notices, Pyodide worker and Pages workflow where relevant. Manual screen-reader/keyboard/zoom/mobile testing remains a human gate. Linguistic status unchanged: IPA gold 0, accuracy NOT_MEASURED.
+- Do not merge without inspecting exact-head checks and the final diff. Public Pages will not update until a later approved merge/deployment.
+
+---
+
 ## Owner decision — GitHub Pages-only FastThaiG2P browser port (2026-11-05)
 
 - Keep the existing pinned FastThaiG2P engine; run it through Pyodide in a module Web Worker. GitHub Pages is the only host. Vercel, remote API hosting and replacing FastThaiG2P with the legacy JavaScript research engine are out of scope.

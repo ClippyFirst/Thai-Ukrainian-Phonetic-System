@@ -1,3 +1,32 @@
+## Current audit checkpoint — 2026-11-05
+
+This update is scoped to the public web product, documentation correctness and UI structure. It does not reopen linguistic research scope or alter the phonetic engine.
+
+### Confirmed baseline
+
+- main HEAD: f0d41996e854185bd6bd92f0ffa8f6b83e71f777; latest main CI [42099035122](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42099035122) SUCCESS.
+- Live product: https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/. Runtime: static HTML/CSS/JS, same-origin module Worker, self-hosted Pyodide 0.29.5, pinned wheels and SHA-256 manifest.
+- The site calls the shared Python FastThaiG2P service in the worker. It does not call a remote API or use the old JS engine/RTGS as fallback.
+- Existing result schema, privacy boundary, source provenance, warnings and provisional IPA-to-Ukrainian status are preserved.
+
+### Findings and actions
+
+1. Stale hosting documentation — corrected. The web architecture and requirements had continued to describe a public FastAPI/Vercel deployment. They now document the live Pages/Pyodide/Worker path and distinguish the optional FastAPI reference wrapper.
+2. Flat hierarchy — redesigned. The service page now has a purpose-led editorial hero, compact local-processing and beta signals, a three-step text-to-IPA-to-Ukrainian explainer, a focused input workbench and a clear primary result area.
+3. Sample interaction — clarified. Samples fill the input but no longer start analysis automatically; the user explicitly chooses when to run it.
+4. Stale-result risk — addressed. Editing the input clears the previous result. A response that returns after the input has changed is discarded.
+5. Result priority — improved. The Ukrainian candidate is primary; IPA is adjacent and visibly technical. Word/syllable detail and provenance remain progressively disclosed.
+6. Responsive/accessibility structure — strengthened. Layout stacks at narrow widths; controls preserve touch size, visible focus, reduced motion and forced-colors support. Automated checks remain source-level only.
+
+### Scope and limits
+
+- No linguistic rules, corpus labels, gold status, engine output or Ukrainian transcription decisions changed.
+- Independent IPA gold remains 0; accuracy remains NOT_MEASURED; Ukrainian candidates remain provisional.
+- Manual keyboard/screen-reader, zoom/reflow and real-device performance checks are still required. No WCAG conformance claim is made.
+- See ui-ux-redesign.md, web-service-architecture.md, web-service-requirements.md and the exact-head run results in the continuation handoff.
+
+---
+
 ## GitHub Pages / Pyodide continuation — 2026-11-05
 
 Owner decision: keep the existing FastThaiG2P engine and run it in a browser/WASM worker; GitHub Pages is the only host. Vercel and remote API hosting are superseded.

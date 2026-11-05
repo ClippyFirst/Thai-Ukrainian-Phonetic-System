@@ -169,3 +169,19 @@ These are complementary principles, not four competing workflows. The project
 execution matrix and evidence registries remain authoritative. No upstream
 skill files, hooks, CLI tools, package dependencies, or runtime components are
 vendored or installed by this policy.
+
+
+## UI/UX work on the public beta
+
+The current user-facing product is the GitHub Pages/Pyodide browser application. Before changing it, read docs/web-service-architecture.md for the runtime/privacy boundary, docs/web-service-requirements.md for the user journey and accessibility contract, docs/ui-ux-redesign.md for visual intent, and the browser tests for executable UI contracts.
+
+Apply the relevant UI UX Pro Max priorities in order: accessibility, interaction feedback, performance, responsive layout, typography/colour, progressive disclosure. Keep the current editorial identity (white dominant surface, blue structure, restrained red caution). Do not introduce a generic dashboard, gradients, decorative icons, remote fonts, frameworks, UI packages or runtime dependencies without a demonstrated need. Preserve keyboard focus, labels, status announcements, 44px controls, reduced motion and forced-colors behavior.
+
+For substantial UI work, write a failing UI contract first, implement the smallest vertical slice, then review requirement compliance and code quality separately. Use the Superpowers TDD workflow, Unlazy acceptance-gate discipline and Ponytail's concrete-finding review. Do not claim upstream skills were installed or invoked; only reviewed practices are adopted.
+
+References:
+- https://github.com/nextlevelbuilder/ui-ux-pro-max-skill
+- https://github.com/obra/superpowers
+- https://github.com/mattpocock/skills
+- https://github.com/DietrichGebert/ponytail
+- https://github.com/Leonxlnx/unlazy
