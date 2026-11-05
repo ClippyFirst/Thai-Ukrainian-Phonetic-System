@@ -1,3 +1,13 @@
+## Post-merge verification update — 2026-11-06
+
+- `main` now contains PR #211 at merge commit `476cb6ed0e4421ab02bb564ff232c99b6c19e008`.
+- Exact PR-head verification (`8200255df8d7c2cfb4f8aa30d218785e9a625b08`): Full CI [42117563464](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42117563464), Web Static [42117563510](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42117563510), Site API [42117563500](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42117563500), Pyodide compatibility [42117563482](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42117563482): all SUCCESS.
+- Post-merge Pages workflow [42120159047](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42120159047) was `in_progress` at the latest check. Live deployment and its post-deploy smoke assertions remain NOT VERIFIED.
+- Manual acceptance remains open: keyboard/screen-reader, 200%/400% zoom and narrow reflow, real clipboard, screenshot review, mobile cold/warm performance. Do not infer WCAG conformance from static checks.
+- Linguistic evidence remains unchanged: independent IPA gold = 0, accuracy `NOT_MEASURED`, Ukrainian candidates provisional. See [current handoff](MASTER-EXECUTION-PLAN-AND-CHAT-HANDOFF.md).
+
+---
+
 ## Current Pages beta and UI/UX checkpoint — 2026-11-05
 
 - Default branch remains `main` at `f0d41996e854185bd6bd92f0ffa8f6b83e71f777`; the previously published research beta remains live. This PR does not modify main or deployment settings.
