@@ -1739,3 +1739,11 @@ Do not mark any gate DONE_VERIFIED because a registry entry, schema, blank revie
 | Promote CCOST/FastThaiG2P candidates to gold | BLOCKED | Independent Thai review and adjudication still required; gold rows remain 0 |
 
 The current X-SAMPA converter remains a declared partial subset. These findings do not promote any source label or FastThaiG2P output to independent IPA gold.
+
+
+### CCOST marker handling correction — 2026-11-05
+
+- Corrected `is_ccost_nonphonetic_label`: it recognizes only source-documented `<p:>`, `<nib>`, and `<usb>`.
+- Unknown tag-only labels (`<Fail>`, `<P>`, `<P:>`, `<:p>`, `<notProcessedChunk>`) now remain unsupported and raise rather than being silently skipped.
+- Added regression test `test_undocumented_tag_only_labels_fail_closed`; existing mixed-marker tests remain.
+- Acceptance: code and regression test changes are committed; exact-head CI is still required before marking this behavior DONE_VERIFIED.
