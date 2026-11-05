@@ -369,7 +369,7 @@
   },
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
   "latest_code_checkpoint": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
-  "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY",
+  "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY",
   "latest_verified_repository_head": "d9958db0e877944e5a75183c053681cdbdd525dc",
   "task_ledger": [
     {
@@ -382,8 +382,8 @@
       "id": "IPA-GOLD-001",
       "status": "BLOCKED",
       "implementation": "Independent broad-phonemic adjudication protocol and blank review templates prepared; no CCOST TextGrid sample or independent IPA rows imported.",
-      "blocker": "TextGrid-only CCOST sample/export is not yet available; two qualified Thai phonetics reviewers and a separate adjudicator have not been engaged. Audio/narrow acoustic validation is explicitly OUT OF SCOPE.",
-      "acceptance": "Two independent qualified reviewers label broad phonemic IPA, syllable boundaries, tone and vowel length from a pinned text-only sample; record abstentions and disagreements; adjudicator resolves differences. Do not claim acoustic/narrow surface validation."
+      "blocker": "The supplied CCOST TextGrid-only sample is now available and parsed (488/488 files); the remaining blocker is two qualified independent Thai phonetics reviewers plus a separate adjudicator. No independent annotations or adjudication exist. Audio/narrow acoustic validation is explicitly OUT OF SCOPE.",
+      "acceptance": "Two independent qualified reviewers label broad phonemic IPA, syllable boundaries, tone and vowel length from the pinned text-only CCOST sample; record abstentions/disagreements; a separate adjudicator resolves differences. No acoustic/narrow surface validation is claimed."
     },
     {
       "id": "WALK-LEX-001",
@@ -569,23 +569,23 @@
     {
       "id": "LOTUSDIS-TEXT-ONLY-001",
       "status": "DONE_VERIFIED_FOR_SUPPLIED_SAMPLE",
-      "implementation": "Supplied 90-file TextGrid sample parsed; 32,943 transcript intervals exported; one recording-named transcript tier per file and no phonetic tiers observed.",
+      "implementation": "Owner-supplied 90-file TextGrid sample parsed; 32,943 transcript intervals exported; one recording-named orthographic transcript tier per file; no phonetic tiers observed.",
       "blocker": null,
-      "acceptance": "Bounded orthographic context only; no phone/IPA gold, no claim of full-dataset coverage, no audio."
+      "acceptance": "Bounded orthographic context only; not phonetic gold and not a claim of full-dataset coverage. No audio."
     },
     {
       "id": "CCOST-TEXTGRID-ONLY-001",
       "status": "DONE_VERIFIED",
-      "implementation": "Owner-supplied CCOST TextGrid-only ZIP committed; CI inspected 488/488 TextGrid members and parsed all files without reading audio.",
+      "implementation": "Owner-supplied CCOST TextGrid-only ZIP is committed; CI parsed 488/488 members without reading audio.",
       "blocker": null,
-      "acceptance": "Structural inventory complete for supplied archive. Tier aliases and unsupported label semantics remain separately tracked as PARTIAL."
+      "acceptance": "Structural inventory complete for supplied archive. Unsupported labels and expert interpretation remain separate evidence gates."
     },
     {
       "id": "FASTTHAIG2P-SELECTIVE-REUSE-001",
-      "status": "PARTIAL",
-      "implementation": "Apache-2.0 code reuse path and CC BY-SA 3.0 Wiktionary subset identified; generated IPA is provisional; vendored TLTK data license mapping remains unresolved.",
-      "blocker": "Per-file TLTK data licensing and generated/manual IPA provenance/rights are not fully established.",
-      "acceptance": "Vendor only code with Apache NOTICE and only the isolated Wiktionary subset with CC BY-SA 3.0 attribution/share-alike; obtain TLTK asset-specific license clarification before fallback-data redistribution; keep generated outputs out of gold."
+      "status": "PARTIAL_EVIDENCE_LIMITED",
+      "implementation": "Pinned optional dependency and internal candidate comparison are permitted; Apache-2.0 code/NOTICE, CC BY-SA/GFDL Wiktionary subset, generated/manual assets and TLTK fallback are provenance-separated in the rights review. No project-side bulk dictionary vendoring.",
+      "blocker": "Do not redistribute a merged dictionary or TLTK fallback data until per-component attribution and file-level rights are documented. Generated IPA and undocumented manual overrides remain provisional, never gold.",
+      "acceptance": "Continue using the pinned optional dependency with required notices; any future vendoring must isolate/attribute Wiktionary-derived entries and resolve TLTK asset rights; no generated output promoted to gold."
     },
     {
       "task": "Global TIMIT Thai acquisition/reuse",
@@ -604,8 +604,10 @@
     },
     {
       "task": "LOTUSDIS text-only context",
-      "status": "PARTIAL",
-      "acceptance": "Optional bounded use of public orthographic transcripts for conversational vocabulary and robustness; no phone/IPA gold and no audio."
+      "status": "DONE_VERIFIED_FOR_SUPPLIED_SAMPLE",
+      "acceptance": "Bounded orthographic context only; not phonetic gold and not a claim of full-dataset coverage. No audio.",
+      "implementation": "Owner-supplied 90-file TextGrid sample parsed; 32,943 transcript intervals exported; one recording-named orthographic transcript tier per file; no phonetic tiers observed.",
+      "blocker": null
     },
     {
       "task": "Corpus source register text-only correction",
@@ -621,9 +623,10 @@
     },
     {
       "id": "CORP-CCOST-TEXTGRID-001",
-      "status": "PARTIAL",
-      "implementation": "Praat long-text parser validated against all 488 supplied CCOST and 90 supplied LOTUSDIS TextGrids; tier names, interval bounds and raw labels preserved.",
-      "acceptance": "Parser is verified for supplied long-text files; alternate encodings remain unsupported, and CCOST tier-role semantics still need curator confirmation."
+      "status": "DONE_VERIFIED_FOR_SUPPLIED_LONG_TEXT_ARCHIVES",
+      "implementation": "Praat long-text parser and inventory verified against 488 supplied CCOST and 90 supplied LOTUSDIS TextGrids; preserves tier names, interval bounds and raw labels. CI confirms 578/578 files parse.",
+      "acceptance": "DONE for supplied long-text archives. Alternate TextGrid encodings/formats are not claimed. Base CCOST tier roles and -MAU aliases are documented from the CCOST paper and BAS tutorial; unresolved label semantics remain separately blocked.",
+      "blocker": null
     },
     {
       "id": "CORP-CCOST-TEXT-EXPORT-001",
@@ -641,7 +644,7 @@
   ],
   "latest_implementation_branch": "fix/benchmark-error-clusters-20261102 (PR #189 open draft)",
   "latest_implementation_commit_pending_ci": "Runtime code head 94eaadb5bda2318dfa864eee7dae1b3715b70374 is exact-head verified by Full CI 41641516453 and Web Static 41641516658. The subsequent audit/matrix/handoff update is documentation-only and awaits its own exact-head verification.",
-  "current_head_status_at_audit_refresh": "Code/workflow checkpoint b6dbec7928b106f0ab52e06af33a26635df75412 passed CI 40322960615 and Web static validation 40322959844. Documentation checkpoint e4ab3fd46e9c48c4220afb1f73ae5c6127b328ff passed full CI 40323209539 and Web static validation 40323209471. This audit-register update creates a newer documentation HEAD and requires exact-head CI/static validation before the current branch HEAD is marked green.",
+  "current_head_status_at_audit_refresh": "Branch docs/repository-audit-2026-11-04 HEAD 2ce66a5ace012675c0d9fea06aca5ae962003092; main HEAD 56fba86b4b8be2fe4e67284355e9928108527387; PR #210 OPEN and mergeable. Exact-head Full CI 42040828931 passed test, wheel-install-smoke and master-artifact; Site API 42040828955 and optional external G2P smoke 42040829124 passed. Supplied CCOST/LOTUSDIS TextGrid archives parsed 488/488 and 90/90; 178,377 orthographic intervals exported; worklist artifact inspected; audio_members_read=0. Local tests not run in connector-only session. Audio/acoustic work is out of scope by owner decision. Independent IPA gold=0; accuracy=NOT_MEASURED.",
   "current_implementation_branch": "fix/benchmark-error-clusters-20261102",
   "current_implementation_commit_before_audit_update": "e7ebb28e64afd5ec70fc136a12d6723ccebdd59e",
   "latest_documentation_checkpoint_before_audit": "e7ebb28e64afd5ec70fc136a12d6723ccebdd59e",
@@ -3974,19 +3977,18 @@
   },
   "latest_branch_audit_2026_11_05": {
     "branch": "docs/repository-audit-2026-11-04",
-    "head": "45bbd7386ede98c6fa63b015c9c7a303c436e699",
-    "implementation_checkpoint": "f9b6baf1ad3c55057051ff5652ac7827a06fd7c1",
+    "head": "2ce66a5ace012675c0d9fea06aca5ae962003092",
     "base": "56fba86b4b8be2fe4e67284355e9928108527387",
-    "ahead": 137,
-    "behind": 0,
     "pr": 210,
     "pr_state": "OPEN_NOT_MERGED",
-    "exact_head_ci": 42018381197,
+    "exact_head_ci": 42040828931,
     "exact_head_ci_status": "PASS",
+    "site_api": 42040828955,
+    "external_g2p_smoke": 42040829124,
     "local_tests": "NOT_RUN",
     "main_changed": false,
     "release_published": false,
-    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY"
+    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY"
   },
   "ccost_label_review_2026_11_05": {
     "status": "PARTIAL",
@@ -4140,7 +4142,7 @@
     "ccost_tone_suffix_8": "BLOCKED_CCOST_SPECIFIC_MAPPING_UNKNOWN_GENERIC_MAUS_1_TO_9"
   },
   "ccost_review_worklist_2026_11_05": {
-    "status": "DONE_VERIFIED_IMPLEMENTATION_CHECKPOINT; FINAL_WORKFLOW_ASSERTIONS_PENDING",
+    "status": "DONE_VERIFIED_ON_FINAL_BRANCH_HEAD",
     "generator": "scripts/build_ccost_review_worklist.py",
     "tests": "tests/test_ccost_review_worklist.py",
     "workflow": ".github/workflows/ci.yml",
@@ -4196,16 +4198,15 @@
     },
     "phonetic_conversion_failures": 1450,
     "expert_fields": "BLANK",
-    "expert_review": "BLOCKED; no reviewers contacted/appointed, no independent annotations, no adjudication; independent IPA gold rows remain 0",
-    "acoustic_validation": "BLOCKED_PENDING_SELECTIVE_AUDIO_ACCESS_AND_NONCOMMERCIAL_SCOPE_CONFIRMATION; Zenodo C-COST.zip is 6.2GB WAV+TextGrid under CC-BY-NC-SA-4.0; no audio downloaded",
+    "expert_review": "BLOCKED; no reviewers contacted/appointed/consented, no independent annotations or adjudication; independent IPA gold rows 0",
+    "acoustic_validation": "DEFERRED_OUT_OF_SCOPE_BY_OWNER_DECISION; no audio read or required",
     "acceptance": {
       "required": [
         "exact-head Full CI PASS",
         "inspect downloaded worklist TSV and manifest",
-        "verify asserted counts and all reviewer/adjudicator fields blank",
-        "Preserve distinction between generic MAUS suffix syntax (_1.._9) and CCOST paper's five mapped Thai tonemes (_1.._5)"
+        "verify asserted counts and all reviewer/adjudicator fields blank"
       ],
-      "current": "Exact-head Full CI 42039619729 passed all three jobs on 43fa978d440bc654645a10430ac54962bd790582; Site API 42039619784 and external G2P smoke 42039619715 passed. Latest artifact 13421040388 downloaded and inspected."
+      "current": "Exact-head Full CI 42040828931 passed all three jobs; exact-head artifact 13421505387 inspected: 1,975 rows, 488 TextGrids, all 11 reviewer/adjudicator fields blank, audio_members_read=0."
     },
     "denominator_note": "Earlier inspector marker counts <P>=394 and <Fail>=16 are phonetic-tier-only; the worklist scans all tiers, so its counts are not directly comparable.",
     "exact_head_ci": {
@@ -4275,5 +4276,37 @@
     "independent_ipa_gold_rows": 0,
     "acceptance": "Verify identity, current qualifications, Standard Thai competence, IPA/X-SAMPA familiarity, independence/conflicts, availability, consent and permission to retain evidence; obtain two frozen blind first-pass submissions and a separate adjudication record.",
     "conflict_status": "NOT_ESTABLISHED; no CCOST paper authorship identified, but independent collaboration/supervision/financial/personal conflict declarations still required"
+  },
+  "latest_exact_head_verification_2026_11_05_final": {
+    "branch": "docs/repository-audit-2026-11-04",
+    "commit": "2ce66a5ace012675c0d9fea06aca5ae962003092",
+    "base": "56fba86b4b8be2fe4e67284355e9928108527387",
+    "pr": 210,
+    "pr_state": "OPEN_NOT_MERGED",
+    "mergeable": true,
+    "full_ci_run": 42040828931,
+    "full_ci_conclusion": "success",
+    "full_ci_jobs": {
+      "test": "success",
+      "wheel_install_smoke": "success",
+      "master_artifact": "success"
+    },
+    "site_api_run": 42040828955,
+    "site_api_conclusion": "success",
+    "optional_external_g2p_smoke_run": 42040829124,
+    "optional_external_g2p_smoke_conclusion": "success",
+    "ccost_textgrids_parsed": 488,
+    "lotusdis_textgrids_parsed": 90,
+    "orthographic_intervals_exported": 178377,
+    "ccost_intervals": 145434,
+    "lotusdis_intervals": 32943,
+    "ccost_worklist_rows": 1975,
+    "reviewer_and_adjudicator_fields_blank": 11,
+    "audio_members_read": 0,
+    "independent_ipa_gold_rows": 0,
+    "linguistic_accuracy": "NOT_MEASURED",
+    "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
+    "audio_scope": "DEFERRED_OUT_OF_SCOPE_BY_OWNER",
+    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY"
   }
 }

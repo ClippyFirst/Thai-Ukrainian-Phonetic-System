@@ -1,3 +1,17 @@
+## Current verified checkpoint — 2026-11-05 (text-only scope)
+
+- Branch `docs/repository-audit-2026-11-04`, HEAD `2ce66a5ace012675c0d9fea06aca5ae962003092`; base `main` HEAD `56fba86b4b8be2fe4e67284355e9928108527387`. PR [#210](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/210) is OPEN, mergeable, and not merged. No mainline mutation, branch deletion, force-push, or release.
+- Exact-head Full CI [42040828931](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42040828931) passed all three jobs (`test`, `wheel-install-smoke`, `master-artifact`). Dedicated Site API [42040828955](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42040828955) and optional external G2P smoke [42040829124](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42040829124) also passed. Local tests were not run in this connector-only session.
+- Supplied text-only archives: CCOST 488/488 TextGrids and LOTUSDIS 90/90 TextGrids parse. CI exports 178,377 orthographic intervals (CCOST 145,434; LOTUSDIS 32,943). The reviewed worklist has 1,975 rows; all 11 reviewer/adjudicator fields are blank. CI asserts `audio_members_read=0`; no audio was read, extracted, hashed, or required.
+- CCOST worklist: `_8` appears 868 times at tier level (397 exact file/interval groups; 438 file/interval/raw-label events; 22 strings; 119 files). Generic MAUS permits suffixes `_1`–`_9`, but the CCOST paper maps only `_1`–`_5`; `_8` remains unmapped for CCOST and is not guessed. Unknown markers `<P>`, `<P:>`, `<:p>`, `<Fail>` remain fail-closed; `<notProcessedChunk>` is a documented processing failure, not a phone.
+- **Owner scope:** text and phonetic transcription only. Global TIMIT acquisition and all audio/acoustic work are DEFERRED/OUT OF SCOPE. Broad-phonemic text-based review remains possible; narrow surface/acoustic claims are not in scope.
+- **Remaining evidence gates:** two independent qualified Thai reviewers plus a separate adjudicator; independent Ukrainian-native target-form review; authoritative CCOST-specific clarification/recovery for unresolved markers and `_8`; resolve CCOST controlled-wordlist A–D discrepancy; hands-on accessibility review. FastThaiG2P optional dependency use is permitted with notices; bulk vendoring of mixed dictionary/TLTK fallback data remains restricted by component-level provenance/licensing.
+- **Readiness:** ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY. CI proves software/packaging contracts, not pronunciation accuracy. Independent IPA gold rows remain 0; linguistic accuracy remains NOT_MEASURED.
+
+This checkpoint supersedes earlier chronological notes that say CCOST TextGrids were unavailable, that the TextGrid parser had not been tested against the supplied archives, or that audio acquisition was an active acceptance gate. Those entries remain as historical records only.
+
+---
+
 ## Public-source research follow-up — 2026-11-05
 
 - **CCOST `-MAU` tiers: DONE_VERIFIED.** BAS documentation explicitly defines `ORT-MAU`, `KAN-MAU`, and `KAS-MAU`; the old curator blocker for suffix semantics is closed.
