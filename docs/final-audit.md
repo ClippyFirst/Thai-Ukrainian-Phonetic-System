@@ -1,3 +1,15 @@
+## GitHub Pages / Pyodide continuation — 2026-11-05
+
+Owner decision: retain FastThaiG2P and port it to browser/WASM; GitHub Pages only. Vercel and remote API hosting are superseded. The existing FastAPI API is a CPython reference/test oracle only.
+
+The compatibility gate builds the pinned FastThaiG2P, PyThaiNLP 5.4.0 and project wheels and compares CPython/Pyodide adapter output. Initial attempts failed before parity due to Node loader path configuration; the current runner uses an absolute filesystem index path and local extraction of pure-Python wheels (no micropip/CDN). Latest compatibility run [42062255591](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42062255591) was still in progress at the last poll. No pass is claimed.
+
+Observed wheel sizes: FastThaiG2P 6.9 MiB, PyThaiNLP 21 MiB, project 376 KiB. Browser worker integration, same-origin runtime build, bundle performance and CPython/Pyodide parity remain TODO. Redistribution is conditional: separate Wiktionary CC BY-SA/GFDL attribution and applicable Apache-2.0/BSD-3 notices are required; exact wheel-member provenance manifest remains PARTIAL. Pages deploy is gated by `FASTTHAIG2P_PYODIDE_BUNDLE_READY`; no deployment occurred.
+
+Readiness: PARTIAL engineering port. Independent IPA gold remains 0; accuracy remains NOT_MEASURED.
+
+---
+
 ## Current verified checkpoint — 2026-11-05 (text-only scope)
 
 - Branch `docs/repository-audit-2026-11-04`, HEAD `2ce66a5ace012675c0d9fea06aca5ae962003092`; base `main` HEAD `56fba86b4b8be2fe4e67284355e9928108527387`. PR [#210](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/210) is OPEN, mergeable, and not merged. No mainline mutation, branch deletion, force-push, or release.
