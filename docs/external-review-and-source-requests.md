@@ -49,6 +49,51 @@ Before adding a row to `data/benchmark/reviewer-qualifications.tsv`:
 7. Freeze both original submissions before any reconciliation.
 8. Appoint a separate adjudicator; preserve disagreements, abstentions and written rationales.
 
+## 2. CCOST annotation-tier and label clarification request
+
+### Public author/curator contacts
+
+The published LREC 2026 paper lists these author contacts:
+- Cathryn Yang: cathryn_yang@sil.org
+- James Kirby: jkirby@phonetik.uni-muenchen.de
+- Pittayawat Pittayaporn: pittiyawat.p@chula.ac.th (paper spelling; ChulaSEAL's official page lists Pittayawat.P@chula.ac.th)
+- Sujinat Jitwiriyanont: sujinat.j@chula.ac.th (paper spelling; ChulaSEAL's official page lists Sujinat.J@chula.ac.th)
+
+The Zenodo record identifies Pittayawat Pittayaporn and Sujinat Jitwiriyanont as data curators and Cathryn Yang and James Kirby as data managers. These contacts are taken from the paper and institutional pages; no message has been sent by this workflow.
+
+### Copy-ready request
+
+**To:** Pittayawat Pittayaporn; Sujinat Jitwiriyanont; Cathryn Yang; James Kirby  
+**Subject:** CCOST v1.0 TextGrid clarification: -MAU tiers, _8 labels and MAUS markers
+
+Dear CCOST team,
+
+We are reviewing the public CCOST v1.0 TextGrid annotations for a research prototype on Thai-to-Ukrainian phonetic transcription. We have read the LREC 2026 paper and inspected all 488 TextGrid files in our supplied text-only archive. We have not changed source labels or inferred pronunciations for unsupported forms.
+
+The paper (§3.3–3.4) describes ORT, KAN, KAS, MAU, MAS, and TRN; it defines MAU as the phonetic-segment tier, MAS as the phonemic-syllable tier, and says phonetic/phonemic labels use X-SAMPA. The release we inspected instead contains ORT-MAU, KAN-MAU, and KAS-MAU alongside MAU, MAS, and TRN.
+
+Could you please clarify:
+
+1. **Tier names:** Why do ORT-MAU, KAN-MAU, and KAS-MAU carry the -MAU suffix? Are these export aliases for ORT, KAN, and KAS, additional MAUS-generated tiers, or a distinct tier family? Should downstream users treat them as semantically equivalent to the unsuffixed names?
+2. **_8 labels:** The paper documents only _1–_5 for Mid, Low, Falling, High, and Rising tones. We found 868 failed-conversion occurrences containing _8 across 22 distinct raw strings (including ? a_8, l {:_8 p, a_8, and {:_8). What does _8 encode in this release? Is it a MAUS/X-SAMPA convention, an unknown/unclassifiable event, an alignment artifact, or a transcription error? Should it be retained as an opaque marker or excluded from phonetic interpretation?
+3. **-MAU spelling and segmentation:** Are slash forms such as r/ and compound forms intended to represent alternatives, boundaries, or multiple phones? Is there a release-specific X-SAMPA inventory or mapping table?
+4. **Tag spellings:** The paper documents <usb> for disfluencies and <p:> for pauses; BAS documentation also defines <nib> as a non-speech event. We also found <P>, <P:>, <:p>, <Fail>, and <notProcessedChunk>. What do these exact, case-sensitive forms mean? Are they all MAUS/BAS control markers, and if so, which should be treated as non-phonetic?
+5. **Mixed labels:** We found labels combining tags with phonetic material or Thai text (for example marker-plus-phone and marker-plus-transcript strings). Should these be preserved as complete raw events, split into aligned components, or interpreted using a specific escape/serialization rule?
+6. **Unicode-looking strings:** Some failed labels contain IPA-like Unicode symbols (ɹ, ɾ, tʃ, ʔ, nˠ) despite the paper specifying X-SAMPA. Are these intentional release annotations, post-processing artifacts, or malformed entries?
+
+We recorded 1,014 tier-level failed-conversion occurrences across 116 distinct raw strings. These are not necessarily 1,014 unique speech events because aligned tiers can repeat the same event. We can provide a compact CSV of distinct labels, counts, tier names, and representative file/interval identifiers if useful.
+
+Until we receive clarification, our adapter preserves all raw strings, converts only explicitly supported X-SAMPA forms, and fails closed on unresolved markers and mixed labels. We will not interpret _8 as a sixth tone or silently strip unknown tags.
+
+Thank you for maintaining this valuable resource. Any pointer to a corrected manual, release note, or canonical MAUS export specification would also be very helpful.
+
+Best regards,  
+[Project contact]
+
+### Contact and delivery status
+
+**PREPARED — NOT SENT.** Public email addresses are verified from the paper/institutional sources. The connected tools available in this session include GitHub but no email-sending action, so no outbound message has been transmitted and no curator response has been received. Send the request from the project owner's email account; record the sent date, message ID, and any reply before changing blocked labels to verified.
+
 ## 2. CCOST A–D clarification request
 
 ### Public curator contacts
