@@ -179,7 +179,8 @@ def main() -> None:
         "pyodide": pyodide_record,
         "wheels": wheel_records,
         "runtime_files": runtime_records,
-        "notices": notice_records,\n        "datasets": dataset_records,
+        "notices": notice_records,
+        "datasets": dataset_records,
     }
     (args.output / "bundle-manifest.json").write_text(
         json.dumps(bundle_manifest, ensure_ascii=False, indent=2) + "\n",
