@@ -12,7 +12,8 @@ class XSampaAdapterTests(unittest.TestCase):
     def test_thai_vowel_and_palatal_stop_symbols(self):
         self.assertEqual(convert_xsampa_label("c_h E: M 7").ipa,"cʰɛːɯɤ")
     def test_multi_character_xsampa_symbols_use_longest_match(self):
-        self.assertEqual(convert_xsampa_label("J\\\\ N\\\\").ipa,"ɟɴ")
+        label = "J" + chr(92) + " N" + chr(92)
+        self.assertEqual(convert_xsampa_label(label).ipa,"ɟɴ")
 
     def test_all_five_ccost_tone_suffixes_are_typed(self):
         expected={"1":"mid","2":"low","3":"falling","4":"high","5":"rising"}
