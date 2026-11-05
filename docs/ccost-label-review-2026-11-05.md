@@ -170,3 +170,51 @@ The verified worklist artifact manifest reports the following independently:
 The worklist preserves exact raw strings, file/tier/time provenance, overlapping labels from other tiers, adjacent same-tier context, and blank reviewer/adjudicator fields. The artifact is published as `ccost-label-adjudication-worklist` by the PR CI workflow. The generator, focused tests, exact-head CI worklist step and artifact are **DONE_VERIFIED on implementation checkpoint `47db8ac988836014663a435e08e2afe470342fe8`**: [Full CI run 42034879862](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42034879862) passed all three jobs; artifact [ccost-label-adjudication-worklist](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42034879862/artifacts/13418750385) was downloaded and inspected. It contains 1,975 rows; all 11 reviewer/adjudicator fields are blank; 868 `_8` occurrences are preserved, including `nia_8p`; `audio_members_read=0`. A subsequent workflow-only commit adds assertions for marker interval/appearance counts and is pending its own exact-head run.
 
 No semantic interpretation is inferred for `<P>`, `<P:>`, `<:p>`, or `<Fail>`. The counts identify review targets, not meanings. `_8` is syntactically permitted by generic MAUS tone notation but unmapped in the CCOST paper's five-category scheme; its CCOST-specific meaning remains unknown.
+
+
+## Exact-head continuation — cross-tier evidence and interval deduplication (2026-11-05)
+
+This section supersedes earlier checkpoint-only statements above. The worklist and its current inventory were verified on Full CI run [42036060620](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42036060620), commit ebd1f0a55b2987c40725659b1524d26ad21abc0c. The run's test, wheel-install-smoke, and master-artifact jobs all succeeded. The test job log reports **394 passed, 1 skipped, 1,211 subtests passed**, Ruff passed, and 29 web/Python parity fixtures passed. Its uploaded worklist artifact was downloaded and inspected: 1,975 TSV rows, 488 source TextGrids, 11 expert/adjudicator fields blank, and audio_members_read=0.
+
+### Marker inventory at three different denominators
+
+The all-tier worklist has **821 tier-interval rows** containing at least one unresolved marker and **871 literal marker appearances**. These reduce to **398 exact file+interval groups** after aligned-tier duplicates are grouped. Per marker:
+
+| Marker | Literal appearances | Tier-interval rows | Exact file+interval groups | Observed tier distribution |
+|---|---:|---:|---:|---|
+| <P> | 821 | 771 | 375 | ORT-MAU 198; KAN-MAU 198; KAS-MAU 198; TRN 177 |
+| <P:> | 4 | 4 | 4 | MAS 4 |
+| <:p> | 22 | 22 | 11 | MAU 11; MAS 11 (same exact intervals in both tiers) |
+| <Fail> | 24 | 24 | 8 | ORT-MAU 8; KAN-MAU 8; KAS-MAU 8 (same exact intervals in all three tiers) |
+| **Total** | **871** | **821** | **398** | Counts have different denominators; do not sum across columns |
+
+The <P> appearance count exceeds its tier-interval-row count because some TRN labels contain multiple inline occurrences. The repeated aligned-tier forms of <Fail> and <:p> are evidence of structural duplication, **not proof of what the markers mean**. The generator now records per-marker unique interval-group counts and labels cross-tier context as exact_interval only when both boundaries match within 1 ns. CI asserts the group counts above.
+
+### _8: source convention versus cross-tier evidence
+
+Important correction: **_8 is not generically invalid MAUS syntax.** BAS's generic MAUS syntax permits numeric tone suffixes _1–_9 (not _0). The CCOST paper publishes a five-category Thai mapping only: _1 Mid, _2 Low, _3 Falling, _4 High, _5 Rising. Therefore these 868 cases are **unmapped in the published CCOST mapping**, not syntactically impossible under MAUS. Their intended CCOST-specific value remains unknown.
+
+A new conservative exact-interval scan found **14 of the 397 _8 interval groups** with a different, mapped _1–_5 suffix in another phonetic tier at the exact same interval:
+
+| Other tier and suffix | Exact-interval groups |
+|---|---:|
+| MAU _2 | 7 |
+| MAS _2 | 4 |
+| MAS _3 | 4 |
+| KAN-MAU _3 | 1 |
+
+This is useful review evidence, **not a correction rule**: canonical and realized tiers have different annotation roles, and exact interval coincidence alone does not establish which label is authoritative. The generator marks such context explicitly and leaves proposed_xsampa, decision, and adjudicator fields blank. CI asserts 14 groups and the tier/suffix distribution. The other 383 groups have no exact-interval mapped counterpart under this conservative test; they may still have non-exact overlapping or adjacent context.
+
+### Audio availability and next gate
+
+The official Zenodo record lists C-COST.zip as a **6.2 GB archive containing both WAV audio and TextGrid annotations**, under **CC BY-NC-SA 4.0**. The license permits sharing/adaptation for non-commercial purposes with attribution and the same license on derivatives. This means acoustic evidence is publicly deposited; it is not present in the owner-supplied TextGrid-only archive. Source: [CCOST Zenodo record, file inventory and license](https://zenodo.org/records/17366698).
+
+No audio was downloaded or processed in this continuation. The web preview rejects the archive because it contains too many files, and the execution container has no outbound DNS/network access for selective range retrieval. Do not pull the entire 6.2 GB archive into routine CI. A future audio-backed review needs an opt-in, selective per-recording extraction path, a non-commercial-use check, speaker/recording metadata, time-interval registration, and a human phonetics panel. Until then, text-only canonical/cross-tier review is possible; acoustic tone-contour, duration and surface-realization claims remain blocked.
+
+### Current acceptance status
+
+- Marker inventory, interval grouping, exact-tier context and artifact generation: **DONE_VERIFIED** on the exact-head CI above.
+- Marker semantics for <P>, <P:>, <:p>, <Fail>: **BLOCKED**; public search and the corpus paper/manual/BAS references did not define these CCOST-specific forms. Preserve verbatim.
+- _8 inventory and cross-tier candidate discovery: **DONE_VERIFIED**; recovery of intended values: **BLOCKED** pending evidence-backed review. No automatic substitution.
+- Independent Thai phonetic review/adjudication: **BLOCKED**; reviewer registry remains header-only, no reviewers have been contacted/appointed/consented, and independent IPA gold rows remain 0.
+- Acoustic validation: **BLOCKED_PENDING_SELECTIVE_AUDIO_ACCESS_AND_NONCOMMERCIAL_SCOPE_CONFIRMATION**, not impossible: official audio exists in the licensed Zenodo archive but was not accessed.
