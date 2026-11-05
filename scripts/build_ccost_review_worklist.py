@@ -230,7 +230,7 @@ def build_worklist(paths: list[Path]) -> dict[str, Any]:
     records.sort(key=lambda row: (
         row["source_file"], float(row["start"]), float(row["end"]), row["tier"], row["raw_label"]
     ))
-    tone_rows = [row for row in records if "TONE_SUFFIX_8" in row["issue_types"]]
+    tone_rows = [row for row in records if "UNDOCUMENTED_CCOST_TONE_SUFFIX_8" in row["issue_types"]]
     tone_events = {row["event_group_id"] for row in tone_rows}
     tone_label_events = {
         (row["source_file"], row["start"], row["end"], row["raw_label"]) for row in tone_rows
