@@ -1801,3 +1801,17 @@ The following entries supersede earlier rows that described the entire CCOST arc
 | Acoustic validation of surface realizations | DEFERRED / OUT OF SCOPE | User scope is text/phonetic-text only; no audio is read or distributed. Do not claim acoustic tone, duration or allophonic accuracy. |
 
 The new worklist uses stable event-group IDs and includes exact raw labels, tier/time provenance, overlapping cross-tier labels and adjacent same-tier labels. See [CCOST label review](ccost-label-review-2026-11-05.md), [independent adjudication protocol](independent-adjudication-protocol.md), and [reviewer qualification shortlist](reviewer-outreach-shortlist.md).
+
+
+## Exact all-tier CCOST review-worklist reconciliation — 2026-11-05 (supersedes prior count scope)
+
+| Work item | Status | Evidence / acceptance |
+|---|---|---|
+| Build blind CCOST review worklist | PARTIAL_PENDING_EXACT_HEAD_CI | `scripts/build_ccost_review_worklist.py`, focused tests and CI artifact step exist. Require latest exact-head Full CI PASS, inspect artifact contents and manifest counts, and verify all expert fields are blank before DONE_VERIFIED. |
+| `_8` grouping | DATA_INVENTORY_DONE; VALUE_RECOVERY_BLOCKED | 868 tier occurrences; 397 exact file/interval groups; 438 file/interval/raw-label events; 22 raw strings; 119 files. Two blind Thai reviews and separate adjudication must produce supported corrections or abstentions. |
+| Unknown markers in all tiers | INVENTORY_DONE; SEMANTICS_BLOCKED | Worklist all-tier interval counts: 821; appearance counts: `<P>` 821, `<Fail>` 24, `<P:>` 4, `<:p>` 22. Earlier inspector figures `<P>` 394 and `<Fail>` 16 cover phonetic tiers only. Neither inventory establishes marker semantics. |
+| Documented MAUS processing failure | DONE_VERIFIED | `<notProcessedChunk>`: 142 intervals/appearances in the worklist; retain as processing failure, never convert to IPA. |
+| Independent Thai phonetic review/adjudication | BLOCKED | Reviewer registry empty; no consent/contact/appointment or completed independent annotations. Acceptance: two verified qualified independent Thai phoneticians, blind first-pass annotations, separate adjudicator, frozen originals, disagreement/abstention log, and validator-approved provenance. |
+| Audio/acoustic surface validation | DEFERRED / OUT OF SCOPE | User-prioritized scope is TextGrid text only. No audio member is read. Do not claim acoustic tone contour, duration, speaker-specific allophony or surface realization accuracy. |
+
+The all-tier worklist counts are deliberately distinct from the phonetic-tier-only inspector counts. Preserve both denominators and scope labels in future reports. The exact-head CI and artifact inspection remain outstanding; code presence alone is not verification.
