@@ -4,9 +4,11 @@
 
 This review is deliberately **text-only**. The project does not need to download, store, process, or redistribute WAV/FLAC audio for the planned lexical/phonetic text evaluation. The useful assets are orthographic transcripts, word/phone/toneme labels, and text annotations such as Praat TextGrid tiers. No audio archive was downloaded or inspected in this review.
 
-The three corpora serve different purposes:
+**Owner decision update (2026-11-05): Global TIMIT Thai is excluded from this project.** Do not pursue LDC access, fees, agreements, audio, or derived labels. Its role is not a dependency; alternatives are CCOST phonetic text and selectively reusable FastThaiG2P/Wiktionary candidates. This is a scope decision, not a quality judgment.
 
-- **Global TIMIT Thai** is a strong phone/toneme reference source, but its LDC agreement restricts copying and redistribution. It is a candidate for internal research after access is licensed, not for a public GitHub data release.
+The remaining corpora serve different purposes:
+
+- **Global TIMIT Thai** is **EXCLUDED by owner decision**. Its earlier licensing analysis is retained below as historical rationale only; no access or acquisition work should be scheduled.
 - **LOTUSDIS** is an openly licensed conversational transcript resource, but the published corpus description does not identify phone-level or IPA labels. It can help with conversational vocabulary, code-switching and orthographic robustness; it is not a Thai IPA gold source.
 - **CCOST** is the strongest match for phonetic text validation: its published TextGrid schema includes phonetic segments and phonemic syllables with tone labels. The non-commercial project purpose appears compatible with its CC BY-NC-SA 4.0 terms, provided attribution and ShareAlike are followed. Obtain a TextGrid-only export or selectively extract text annotations; do not fetch audio just because it is packaged beside them.
 
@@ -28,7 +30,7 @@ Consequences for this project:
 - Limited examples in research reports are allowed by the agreement; for a public machine-readable evaluation subset or wider release, obtain separate written permission from LDC.
 - The current catalog page requires login to view the applicable fee; no fee amount is asserted here.
 
-**Recommended status: BLOCKED_FOR_ACCESS, NOT_BLOCKED_AS_A_RESEARCH_OPTION.** Next step is to ask LDC for the text-only access route, price/eligibility, and whether they will authorize publication of a small derived phonetic test set. Do not request or download audio.
+**Current status: DEFERRED / EXCLUDED by owner decision.** No further LDC contact, access, fees, agreement, data acquisition, or derived-label work is planned.
 
 ## 2. LOTUSDIS
 
@@ -129,9 +131,13 @@ The current upstream data README mentions tests/ground_truth_ipa.json (34 rows) 
 
 ## 5. Recommended project priority
 
-1. **First: CCOST TextGrid-only export** — best available phone/tone/phonemic text reference; request text-only files and manual, then inspect tier instances and independently review a subset.
-2. **Second: Global TIMIT Thai text-only access** — obtain the non-member agreement and price; use internally for phone/toneme comparisons, not for a public corpus dump. Ask separately about publication of a small derived subset.
-3. **Third: FastThaiG2P selective reuse** — code + Wiktionary subset first; generated dictionary only as a provisional baseline; TLTK data after license clarification.
-4. **Optional: LOTUSDIS text** — use for conversational vocabulary and orthographic robustness, not phonetic gold. No audio acquisition or hash work is required for this objective.
+1. **First: CCOST TextGrid-only export** — request text-only files and manual, inspect actual tier instances, convert X-SAMPA to typed IPA, and independently review a stratified subset.
+2. **Second: FastThaiG2P selective reuse** — Apache-2.0 code + separately licensed Wiktionary subset first; generated dictionary only as provisional candidates; TLTK data only after file-level license clarification.
+3. **Optional: LOTUSDIS text** — use for conversational vocabulary and orthographic robustness, not phonetic gold. No audio acquisition or hash work is required.
+4. **Global TIMIT Thai: excluded** — do not spend further effort on it.
 
 No corpus-derived rows, phonetic labels, IPA conversions, accuracy figures, or license permissions were added to runtime data in this review. No audio was downloaded.
+
+## Owner scope decision — 2026-11-05
+
+Global TIMIT is excluded. Its earlier access/licensing discussion above is historical only and must not be treated as an active task. The active order is CCOST → selective FastThaiG2P/Wiktionary reuse → optional LOTUSDIS text. All corpus work remains text-only; audio is out of scope.
