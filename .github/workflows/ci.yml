@@ -43,7 +43,36 @@ jobs:
       - name: Inspect supplied CCOST and LOTUSDIS TextGrid archives (TextGrid members only)
         run: |
           python scripts/inspect_ccost_textgrid.py "CCOST textgrid.zip" "nectecLOTUSDIS textgrid.zip" --output /tmp/textgrid-archive-inspection.json --quiet --report-only
-          python -c "import json; r=json.load(open('/tmp/textgrid-archive-inspection.json',encoding='utf-8')); print(json.dumps({'files_inspected':r['files_inspected'],'archives':r['archives'],'tier_nonempty_label_counts':r['tier_nonempty_label_counts'],'converted_label_counts':r['converted_label_counts'],'failure_count':len(r['failures']),'failure_samples':r['failures'][:20]},ensure_ascii=False,indent=2))"
+          python - <<'PY'
+          import collections, json
+          report = json.load(open('/tmp/textgrid-archive-inspection.json', encoding='utf-8'))
+          tier_samples = {}
+          for file in report['files']:
+              for tier, data in file['tiers'].items():
+                  samples = tier_samples.setdefault(tier, [])
+                  for label in data['samples']:
+                      if label not in samples and len(samples) < 12:
+                          samples.append(label)
+          failure_counts = collections.Counter(
+              (item.get('tier', 'FILE'), item.get('raw_label', item.get('error', '')))
+              for item in report['failures']
+          )
+          print(json.dumps({
+              'files_inspected': report['files_inspected'],
+              'archives': [{k: v for k, v in item.items() if k != 'textgrid_members'}
+                           | {'textgrid_member_examples': item['textgrid_members'][:5]}
+                           for item in report['archives']],
+              'tier_nonempty_label_counts': report['tier_nonempty_label_counts'],
+              'tier_label_samples': tier_samples,
+              'converted_label_counts': report['converted_label_counts'],
+              'bracket_marker_counts': report['bracket_marker_counts'],
+              'failure_count': len(report['failures']),
+              'failure_groups': [
+                  {'tier': key[0], 'label_or_error': key[1], 'count': count}
+                  for key, count in failure_counts.most_common(40)
+              ],
+          }, ensure_ascii=False, indent=2))
+          PY
       - uses: actions/upload-artifact@v7
         with:
           name: textgrid-archive-inspection
