@@ -58,7 +58,8 @@ Verified ephemeral CI footprint:
 - 4 pure-Python wheels: **7,823,799 bytes** total; FastThaiG2P wheel **6,317,099 bytes**.
 - 14 self-hosted Pyodide runtime files: **12,610,023 bytes**.
 - 10 license/NOTICE files: **57,389 bytes**.
-- Combined raw footprint: **20,491,211 bytes** before HTTP compression.
+- Transparent Wiktionary-derived dataset ZIP: **194,745 bytes**.
+- Combined raw footprint including dataset ZIP: **20,685,956 bytes** before HTTP compression.
 - PyThaiNLP 5.4.0: 67,689,272 → 3,648,217 uncompressed member bytes; 37 unused corpus assets removed (64,041,055 bytes). The retained corpus lists are CC0-1.0.
 
 ## Public Pages deployment gate
@@ -67,9 +68,9 @@ Verified ephemeral CI footprint:
 
 - The Wiktionary-derived subset is attributed to Wiktionary contributors and Kaikki.org/Wiktextract and labelled CC BY-SA 4.0.
 - FastThaiG2P code is Apache-2.0 with Amazon NOTICE.
-- The vendored TLTK parser header identifies version 1.3.8 and BSD-3-Clause; five of six fallback data files have exact Git blob matches. The remaining `sylform_var.pkl` transformation from TLTK's `.pklz` asset is not independently reproduced.
+- The vendored TLTK parser header identifies version 1.3.8 and BSD-3-Clause. Five fallback data files match TLTK source bytes exactly; the sixth (`sylform_var.pkl`) is byte-identical to bzip2 decompression of TLTK's `sylform_var.pklz`. All six transforms passed verifier CI run 42085653176.
 - PyThaiNLP Apache-2.0 and CC0 corpus notices, Pyodide MPL-2.0, tzdata Apache-2.0, TLTK BSD-3/LGPL repository evidence, Wiktionary CC BY-SA and project MIT notices are staged and hashed.
-- The build and worker require the complete ten-file notice set. The Pages post-deploy smoke will fetch every notice and verify its size/SHA-256 against the manifest.
+- The build and worker require the complete ten-file notice set. The Pages post-deploy smoke will fetch every notice and the standalone dataset ZIP and verify their size/SHA-256 against the manifest. The ZIP is built from the filtered wheel and contains the exact IPA map, tokenizer list, provenance, attribution and CC BY-SA 4.0 notice.
 
 The Pages workflow also requires the explicit repository variable `FASTTHAIG2P_PYODIDE_BUNDLE_READY=true`; the bundle builder independently refuses `--purpose pages` unless the rights manifest says `redistribution_approved=true`. CI uses ephemeral assets and does not grant public redistribution permission.
 
@@ -87,8 +88,8 @@ No deployment, main-branch change, merge, release tag or repository setting chan
 | License notices | Ten notices embedded in manifest and checked | DONE_VERIFIED |
 | PyThaiNLP footprint | 37 unused corpus assets removed; required CC0 lists retained | DONE_VERIFIED |
 | Source filtering | Generated/manual/unknown IPA excluded; 13,144 Wiktionary entries retained | DONE_VERIFIED |
-| TLTK fallback | BSD-3 source header and 5/6 data blob matches | PARTIAL — one pickle transformation not independently reproduced |
-| Public redistribution | Owner rights flag remains false | BLOCKED — final evidence/approval pending |
+| TLTK fallback asset provenance | TLTK 1.3.8 parser header; 5 byte-identical files + 1 exact bzip2 decompression | DONE_VERIFIED — run 42085653176 |
+| TLTK license scope | BSD-3-Clause release/header evidence and separate root LGPL-3.0 repository notice | PARTIAL — both notices retained pending final file-level scope review |\n| Public redistribution | Owner rights flag remains false | BLOCKED — explicit owner approval and final license-scope review pending |
 | Public Pages deployment | Exact merged main commit deployed and live-smoked | BLOCKED — no merge or deployment |
 | Performance | Actual Pages transfer/cold-start and mobile timing | TODO — requires public deployment |
 
