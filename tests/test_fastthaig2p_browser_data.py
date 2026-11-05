@@ -46,6 +46,22 @@ class FastThaiG2PBrowserDataTests(unittest.TestCase):
             self.assertEqual(report["excluded_counts"], {"generated": 1})
             self.assertEqual(report["retained_entries"], 2)
 
+    def test_reports_stale_metadata_ipa_without_losing_source_label(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            source = Path(temporary)
+            data = source / "data"
+            data.mkdir()
+            (data / "dict.txt").write_text("สวน\\n", encoding="utf-8")
+            (data / "ipa.json").write_text('{"สวน": "/sua̯n˩˩˦/"}', encoding="utf-8")
+            (data / "ipa_metadata.json").write_text(
+                '{"สวน": {"ipa": "/suaːn/", "source": "wiktionary"}}',
+                encoding="utf-8",
+            )
+            report = prepare_source(source)
+            self.assertEqual(report["retained_entries"], 1)
+            self.assertEqual(report["metadata_ipa_mismatch_count"], 1)
+            self.assertEqual(report["metadata_ipa_mismatch_examples"], ["สวน"])
+
     def test_rejects_missing_provenance_and_invalid_ipa(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             source = Path(temporary)
