@@ -1905,3 +1905,31 @@ Exact-head Site API run 42039619784 and external G2P smoke run 42039619715 both 
 - Acceptance to proceed from candidate to public beta: exact-head CI on the final candidate; verified Python-capable hosting preview with same-origin API; published feedback path; dependency/corpus notices; beta warnings; known limitations and manual accessibility gaps disclosed. No release tag, production cutover or merge is performed here.
 
 Canonical scope and checklist: docs/beta-release-scope.md.
+
+
+
+## GitHub Pages-only FastThaiG2P port — evidence reconciliation (2026-11-05)
+
+This section supersedes earlier requirements for a Python-capable external preview or Vercel hosting. The owner selected GitHub Pages as the only hosting target and approved the Pyodide browser port. No remote API or CDN is part of the browser path.
+
+| Work item | Status | Evidence / acceptance |
+|---|---|---|
+| Shared Python service in self-hosted Pyodide 0.29.5 | DONE_VERIFIED | Same service adapter is used by CPython and browser worker; CPython/Pyodide JSON parity passed four Thai cases. |
+| Same-origin Chromium worker | DONE_VERIFIED | Cold initialization and warm analysis passed; no `/api/analyze` or CDN requests. |
+| FastThaiG2P dictionary provenance filter | DONE_VERIFIED | 13,144 Wiktionary entries retained; 48,957 generated entries excluded; manual/unknown excluded by policy; one stale metadata IPA value for `สวน` is disclosed. |
+| TLTK fallback asset provenance | DONE_VERIFIED | Five assets byte-identical; `sylform_var.pkl` equals exact bzip2 decompression of TLTK `sylform_var.pklz`; all six asserted by `scripts/verify_tltk_fallback_provenance.py`. |
+| Runtime notices | DONE_VERIFIED | Ten source license/NOTICE files staged; bundle builder checks required filenames and hashes. |
+| Transparent share-alike dataset copy | PARTIAL | Build emits a standalone ZIP containing filtered `dict.txt`, `ipa.json`, provenance, attribution and CC BY-SA 4.0 notice; new ZIP packaging and deploy hash assertion await exact-head CI. |
+| TLTK license scope | PARTIAL | Vendored code header and PyPI TLTK 1.3.8 identify BSD-3-Clause; TLTK repository also has a root LGPL-3.0 notice. Both notices are preserved. Final file-level license-scope review remains. |
+| Public Pages redistribution | BLOCKED | `redistribution_approved=false`; explicit owner approval and final TLTK license-scope review required. Do not change repository variables or publish the runtime without approval. |
+| Pages deployment/live smoke | BLOCKED | No merge to `main`, Pages deployment or production cutover has occurred. After rights approval and merge, verify manifest, notice hashes, dataset ZIP hash, Pyodide runtime and actual browser interaction at the published Pages URL. |
+| Linguistic validation | PARTIAL / NOT A DEPLOYMENT GATE | Independent IPA gold 0; accuracy `NOT_MEASURED`; Ukrainian practical forms provisional. |
+
+Exact verified runtime checkpoint: `80adb489105e6f2b447fb07331bfdf0c09c888b3`.
+- Pyodide compatibility + TLTK verifier + Chromium: [42085653176 SUCCESS](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42085653176).
+- Web static: [42085653505 SUCCESS](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42085653505).
+- Site API reference wrapper: [42085653055 SUCCESS](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42085653055).
+- Optional external smoke: [42085652951 SUCCESS](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42085652951).
+- Full CI run 42085653265 was cancelled by subsequent pushes; do not count it as passed. The later dataset archive changes require a fresh exact-head Full CI and Pyodide run.
+
+Canonical implementation and rights records: `docs/fastthaig2p-pyodide-port.md`, `docs/fastthaig2p-data-provenance.md`, `data/third_party/fastthaig2p-browser-bundle.json`, and `web/third-party-notices.html`.
