@@ -4316,17 +4316,17 @@
     "audio_and_acoustic_validation": "DEFERRED_OUT_OF_SCOPE",
     "manual_accessibility_certification": "DEFERRED_AS_CERTIFICATION_GATE; source_review_recorded; browser_manual_checks_unverified",
     "unknown_ccost_labels": "PARTIAL_FAIL_CLOSED; no guessed mappings",
-    "fastthaig2p_vendoring": "DEFERRED; pinned optional dependency retained; no bulk redistribution",
+    "fastthaig2p_vendoring": "OWNER_APPROVED_BROWSER_PORT_IMPLEMENTED; source-filtered Pyodide wheel; public redistribution separately gated",
     "reference_repository": "https://github.com/mfwarren/entrepreneur-claude-skills",
     "reference_use": "SOP, product-feedback, decision-framework and landing-page communication patterns; no dedicated accessibility skill listed; no files copied",
     "canonical_scope_document": "docs/beta-release-scope.md",
     "beta_engineering_readiness": "BETA_CANDIDATE_ENGINEERING_VERIFIED",
     "public_deployment_readiness": "NOT_YET_VERIFIED",
-    "last_verified_code_head": "5a7f6888420009e288f6b43332bd0dd4b560fddd",
+    "last_verified_code_head": "80adb489105e6f2b447fb07331bfdf0c09c888b3",
     "last_verified_full_ci": "42042740322",
     "last_verified_site_api": "42042740326",
-    "last_verified_optional_external_g2p_smoke": "42042740524",
-    "documentation_head_at_decision_update": "PENDING_FINAL_BRANCH_HEAD",
+    "last_verified_optional_external_g2p_smoke": 42085652951,
+    "documentation_head_at_decision_update": "PENDING_FINAL_DOC_COMMIT",
     "final_documentation_head_ci": "PENDING_EXACT_HEAD_CI",
     "release_tag_created": false,
     "production_cutover": false,
@@ -4338,7 +4338,10 @@
       "web/system.html"
     ],
     "forced_colors_source_support": "IMPLEMENTED_IN_web/src/styles.css",
-    "forced_colors_runtime_verification": "NOT_RUN"
+    "forced_colors_runtime_verification": "NOT_RUN",
+    "last_verified_pyodide_run": 42085653176,
+    "last_verified_web_static_run": 42085653505,
+    "last_verified_site_api_run": 42085653055
   },
   "fastthaig2p_pyodide_port_2026_11_05": {
     "owner_decision": "KEEP_FASTTHAIG2P; PYODIDE_BROWSER_WORKER; GITHUB_PAGES_ONLY",
@@ -4380,13 +4383,43 @@
     "integrity": "SAME_ORIGIN_MANIFEST; PINNED_PACKAGE_VERSIONS; SHA256_WHEEL_VERIFICATION",
     "exact_head_pyodide_run": 42065750203,
     "public_redistribution_approved": false,
-    "rights_blocker": "FASTTHAIG2P_MERGED_IPA_PER_RECORD_PROVENANCE_AND_FALLBACK_FILE_MAPPING_INCOMPLETE",
+    "rights_blocker": "OWNER_APPROVAL_AND_FINAL_TLTK_BSD_VS_REPOSITORY_LGPL_SCOPE_REVIEW",
     "pages_deploy_guard": "FASTTHAIG2P_PYODIDE_BUNDLE_READY",
     "pages_publication": "BLOCKED",
     "actual_pages_performance": "NOT_MEASURED",
     "independent_ipa_gold_rows": 0,
     "linguistic_accuracy": "NOT_MEASURED",
     "main_merged": false,
-    "production_cutover": false
+    "production_cutover": false,
+    "source_filtered_dictionary": {
+      "retained_wiktionary_entries": 13144,
+      "excluded_generated_entries": 48957,
+      "excluded_manual_unknown": "By fail-closed source policy",
+      "runtime_ipa_metadata_mismatches": 1,
+      "mismatch_example": "สวน",
+      "status": "DONE_VERIFIED_IN_CI_42085653176"
+    },
+    "tltk_fallback_provenance": {
+      "tltk_code_version": "1.3.8",
+      "tltk_file_last_change_commit": "0cef4bcfbdd675f589783dd4134b87b9bb9fbb93",
+      "identical_assets": 5,
+      "total_assets": 6,
+      "transformed_pickle": "bz2.decompress(TLTK/tltk/sylform_var.pklz) == FastThaiG2P/data/fallback/sylform_var.pkl",
+      "verification_script": "scripts/verify_tltk_fallback_provenance.py",
+      "run_id": 42085653176,
+      "status": "DONE_VERIFIED_TRANSFORMATION; LICENSE_SCOPE_REVIEW_PARTIAL"
+    },
+    "transparent_dataset_archive": {
+      "path": "vendor/datasets/fastthaig2p-wiktionary-derived.zip",
+      "contents": [
+        "dict.txt",
+        "ipa.json",
+        "browser-data-provenance.json",
+        "WIKTIONARY-ATTRIBUTION.md",
+        "CC-BY-SA-4.0.txt"
+      ],
+      "license": "CC-BY-SA-4.0",
+      "status": "IMPLEMENTED_AWAITING_EXACT_HEAD_CI"
+    }
   }
 }
