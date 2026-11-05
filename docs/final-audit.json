@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Audit branch docs/repository-audit-2026-11-04 at 3b18a3b35a35c0573cadc2d81cdbcbd455b85a91; exact-head CI 41986104461 passed all jobs. PR #210 open, not merged. Owner decision: Global TIMIT excluded; CCOST primary phonetic-text candidate, selective FastThaiG2P/Wiktionary supporting data, LOTUSDIS optional orthographic context. Linguistic accuracy NOT_MEASURED; zero independently adjudicated IPA gold rows; engineering-verified research prototype, not release-ready.",
+  "status": "Audit branch docs/repository-audit-2026-11-04; latest fully reconciled checkpoint before this JSON status refresh c143b901bea54093fc1a17e69f10703f4467fb9f, 43 commits ahead and 0 behind main 56fba86b4b8be2fe4e67284355e9928108527387. Exact-head CI 41986104461 passed all jobs on the preceding documentation checkpoint; exact-head CI 41987384592 for the current source-register reconciliation is queued. PR #210 open, not merged. Global TIMIT excluded by owner; CCOST primary phonetic-text candidate, FastThaiG2P/Wiktionary supporting, LOTUSDIS optional orthographic context. Linguistic accuracy NOT_MEASURED; zero independently adjudicated IPA gold rows; engineering-verified research prototype, not release-ready.",
   "implemented": [
     "orthography",
     "syllable_structure",
