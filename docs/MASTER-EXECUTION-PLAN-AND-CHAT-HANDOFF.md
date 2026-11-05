@@ -1,3 +1,30 @@
+## Handoff — UI/UX recomposition exact-head verification refresh (2026-11-05)
+
+- Current branch `design/site-recomposition-2026-11-05`; exact tested code HEAD `d5c880a082ae553bf944d31f6d341f38f33690c8`; docs refresh HEAD `56c17a87c0c229ffdfa8dc524f5cf60a6fb8eb79` passed all four workflows; base `main` `f0d41996e854185bd6bd92f0ffa8f6b83e71f777`. PR [#211](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/211) remains OPEN, mergeable and not merged. No mainline or deployment-setting mutation.
+- Exact-head Full CI [42110596982](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42110596982) SUCCESS: test, wheel-install-smoke and master-artifact passed. Test summary: 398 passed, 1 skipped, 1,211 subtests passed; Ruff passed; 29 Python/browser parity fixtures passed. The skipped test is optional FastAPI Site API coverage, separately passed in run 42110596971.
+- Exact-head Web Static [42110596991](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42110596991) SUCCESS. Dedicated FastThaiG2P Site API [42110596971](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42110596971) SUCCESS. Pyodide compatibility [42110597073](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42110597073) SUCCESS, including owner-approved Pages bundle build and real same-origin Chromium Worker smoke.
+- Current implementation: editorial purpose-led hero, text→IPA→Ukrainian explainer, local-processing/beta disclosure, input count, examples that only fill, explicit analyze action, stale-result clearing and delayed-response rejection, Ukrainian-first result, IPA and syllable/tone/length/provenance progressive disclosure, responsive/reduced-motion/forced-colors styles.
+- Docs refreshed in place: README, AGENTS.md, web architecture/requirements, beta scope, Pyodide port, integration decision, public notices, docs navigation, UI contract, validation matrix, final audit (Markdown + JSON), repository audit and handoff. The structured publication record was reconciled to the later successful main CI run 42099035122. Older historical Vercel/blocked-gate notes are retained as history and superseded by current deployment record.
+- Manual acceptance remains open: keyboard-only and screen-reader operation; 200%/400% zoom and narrow reflow; real clipboard operation; deployed mobile cold/warm performance; screenshot/visual review. Static source tests do not establish WCAG conformance.
+- Linguistic status unchanged: independent IPA gold 0, accuracy NOT_MEASURED, Ukrainian forms provisional. TLTK BSD/LGPL file-level scope ambiguity remains disclosed, both notices retained; owner approval does not waive third-party terms.
+- The published Pages site still serves main until PR #211 is merged and its deployment is verified. No merge or auto-merge performed.
+
+---
+
+## Handoff — UI/UX recomposition exact-head closeout (2026-11-05)
+
+- Branch `design/site-recomposition-2026-11-05`; base main `f0d41996e854185bd6bd92f0ffa8f6b83e71f777`; tested code HEAD `f59e740afdc3ee172cbcb62f574802b5264a9ea2`. PR [#211](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/211) is open, mergeable and not merged. Supplied audit branch remains untouched because it diverges from current main.
+- Full CI [42109852830](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42109852830) SUCCESS: test, wheel-install-smoke and master-artifact passed. Test job: 398 passed, 1 skipped, 1,211 subtests passed; Ruff passed. Generic-CI FastAPI skip is covered by dedicated Site API [42109852790] SUCCESS.
+- Web Static [42109852675] SUCCESS. Pyodide compatibility [42109852662] SUCCESS, including CPython parity, Pages bundle build and same-origin Chromium Worker smoke.
+- Delayed-worker-response regression test: editing during analysis invalidates prior output; the old response is discarded and analyze button is restored. Initial failed run exposed stale fixture state; fixture was corrected and final exact-head run passed.
+- UX: editorial hero, text→IPA→Ukrainian explainer, beta/local-processing disclosure, character counter, sample-fill-only controls, explicit analysis, stale-result protection, Ukrainian-first result, IPA and syllable/provenance progressive disclosure, responsive/reduced-motion/forced-colors styling.
+- Docs updated in place: README, docs navigation, web architecture and requirements, UI/UX contract, final audit, validation matrix, handoff, third-party notices and AGENTS.md. UI branch not deployed; live Pages remains main until PR #211 is merged and deployment verified.
+- Manual acceptance open: keyboard-only and screen-reader checks, 200%/400% zoom and narrow viewport visual reflow, actual clipboard operation, deployed mobile cold/warm performance. No browser screenshot review or WCAG conformance claim.
+- Research unchanged: independent IPA gold 0; linguistic accuracy NOT_MEASURED; Ukrainian candidates provisional. TLTK BSD-3/LGPL-3 scope ambiguous; both notices preserved. Production cutover false.
+- Upstream practices reviewed selectively: UI UX Pro Max, Superpowers, Matt Pocock skills, Ponytail and Unlazy. No third-party code, skills, hooks, framework, CSS library or runtime dependency installed.
+- Next: review PR #211 diff; merge only with owner authorization; after merge verify Pages deployment and repeat manual accessibility/performance checks. Do not mark human gates DONE based on static CI.
+
+---
 ## Owner decision — GitHub Pages-only FastThaiG2P browser port (2026-11-05)
 
 - Keep the existing pinned FastThaiG2P engine; run it through Pyodide in a module Web Worker. GitHub Pages is the only host. Vercel, remote API hosting and replacing FastThaiG2P with the legacy JavaScript research engine are out of scope.

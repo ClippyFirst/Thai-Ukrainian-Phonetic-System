@@ -1,3 +1,42 @@
+## Current audit checkpoint — 2026-11-05
+
+This review covers the public browser UX, service documentation, repository navigation and exact-head verification. It does not change the phonetic engine or research evidence.
+
+### Baseline and branch discipline
+
+- Base `main`: `f0d41996e854185bd6bd92f0ffa8f6b83e71f777`; live beta remains deployed on GitHub Pages.
+- Candidate branch `design/site-recomposition-2026-11-05`, latest exact-head CI-verified HEAD `d5c880a082ae553bf944d31f6d341f38f33690c8`.
+- PR [#211](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/211) is open and mergeable. The supplied audit branch was preserved; stale ancestry was not merged into current main.
+- Exact-head workflows on `d5c880a`: Full CI [42110596982](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42110596982), Web Static [42110596991](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42110596991), Site API [42110596971](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42110596971), Pyodide compatibility [42110597073](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42110597073) all SUCCESS. Full CI: 398 passed, 1 optional FastAPI test skipped, 1,211 subtests passed, Ruff passed, 29 parity fixtures passed. The skipped Site API test is independently covered by the dedicated Site API workflow.
+- No changes to main, deployment settings, release tags, production cutover or external services were made.
+
+### Findings and completed changes
+
+1. **Stale public architecture claims — corrected.** Docs now describe GitHub Pages, self-hosted Pyodide, same-origin Worker and FastThaiG2P as the sole public G2P engine. FastAPI is a local/reference wrapper, not a deployed API.
+2. **Inconsistent user journey — recomposed.** Purpose-led hero, explicit text→IPA→Ukrainian explanation, local-processing/beta status, focused input workbench and Ukrainian-first result hierarchy.
+3. **Sample behavior — clarified.** Examples populate the input only; analysis requires an explicit action.
+4. **Stale-result risk — regression-tested.** Editing input clears prior output; a delayed Worker response for old text is discarded.
+5. **Research detail overload — improved.** IPA, syllable breakdown, tone, length, warnings and provenance remain progressively disclosed.
+6. **Accessibility source contracts — strengthened.** Heading hierarchy, labels, language metadata, skip links, status region, touch target height, focus, reduced motion, forced-colors and selected contrast pairs are statically checked.
+7. **Legal/deployment copy — reconciled.** System and third-party notices describe the already deployed owner-approved research beta and preserve the unresolved TLTK BSD/LGPL ambiguity without implying a waiver.
+8. **Repository navigation — improved.** `docs/README.md` points to the UI contract; `AGENTS.md` guides future agents to preserve the vanilla Pages architecture and use test-first UI changes.
+
+### Exact-head verification
+
+- Full CI [42109852830](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42109852830): SUCCESS, all three jobs. Test job: **398 passed, 1 skipped, 1,211 subtests passed**; Ruff and generated-artifact checks passed. Skipped FastAPI test is covered by the dedicated Site API workflow.
+- Web Static [42109852675](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42109852675): SUCCESS.
+- Site API [42109852790](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42109852790): SUCCESS.
+- Pyodide compatibility [42109852662](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42109852662): SUCCESS, including real Chromium same-origin Worker smoke.
+
+### Remaining limits
+
+- PR #211 is not merged or deployed; live Pages still serves main.
+- Manual keyboard/screen-reader, 200%/400% zoom, narrow viewport and real-device performance checks remain unverified. Static checks do not establish WCAG conformance; no screenshot-based visual review of the PR branch was available.
+- Actual clipboard behavior has a source-level implementation but no manual browser verification.
+- Independent IPA gold remains 0; accuracy remains `NOT_MEASURED`; Ukrainian candidates remain provisional. No linguistic claims were upgraded.
+- TLTK-derived fallback still carries BSD-3-Clause and LGPL-3.0 notices because exact file-level scope is unresolved; owner beta-publication approval does not waive third-party terms.
+
+---
 ## GitHub Pages / Pyodide continuation — 2026-11-05
 
 Owner decision: keep the existing FastThaiG2P engine and run it in a browser/WASM worker; GitHub Pages is the only host. Vercel and remote API hosting are superseded.
@@ -2000,6 +2039,6 @@ PR #210 was squash-merged into `main` as `c5618d8adfdfd0a12415fc083e5f5a518ae4c5
 
 The first Pages deployment [42097237901](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42097237901) deployed but its post-deploy test failed because the dataset path was checked at the site root instead of under `/vendor/`. The builder output is `web/vendor/datasets/...`, so the check was corrected in commit `d672dd0fb721cbe6600d28fe900600ea297416c3`. The corrected [Pages run 42098396098](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42098396098) completed SUCCESS. Its live smoke verified the index, worker/style/system files, no API/CDN path, Pyodide manifest and pinned wheel versions, dataset ZIP size and SHA-256, all ten license-notice files and hashes, third-party attribution, and Pyodide runtime assets.
 
-[Pyodide compatibility run 42098395877](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42098395877) also completed SUCCESS, including CPython/Pyodide parity and real Chromium worker execution. Main CI [42098395810](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42098395810) had passed the Python test suite and wheel-install smoke but was still running the supplied TextGrid archive inspection at the time of this note; its final result must be checked before claiming complete CI success.
+[Pyodide compatibility run 42098395877](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42098395877) also completed SUCCESS, including CPython/Pyodide parity and real Chromium worker execution. Main CI [42099035122](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42099035122) on main `f0d41996e854185bd6bd92f0ffa8f6b83e71f777` subsequently completed SUCCESS. The earlier 42098395810 run was an intermediate checkpoint and is superseded.
 
 **Current status:** public beta is deployed at https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/ . Deployment and live bundle integrity are DONE_VERIFIED. Deployed performance and manual accessibility checks remain TODO/DEFERRED. Linguistic accuracy remains NOT_MEASURED (zero independent IPA gold rows); external Thai/Ukrainian expert audits and audio/acoustic validation remain deferred by owner decision.

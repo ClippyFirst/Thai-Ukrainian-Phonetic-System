@@ -48,6 +48,8 @@ const response = {
 };
 let requests = [];
 let nextWorkerMessage = { type: "result", result: response };
+let deferNextWorkerMessage = false;
+let deferredWorkerResponse;
 let workerInstance;
 class FakeWorker {
   constructor(url, options) {
@@ -60,7 +62,12 @@ class FakeWorker {
   postMessage(message) {
     requests.push(message);
     const responseMessage = { ...nextWorkerMessage, requestId: message.requestId };
-    queueMicrotask(() => this.listeners.message?.({ data: responseMessage }));
+    if (deferNextWorkerMessage) {
+      deferNextWorkerMessage = false;
+      deferredWorkerResponse = () => this.listeners.message?.({ data: responseMessage });
+    } else {
+      queueMicrotask(() => this.listeners.message?.({ data: responseMessage }));
+    }
   }
   terminate() {}
 }
@@ -78,6 +85,8 @@ input.value = "พริก";
 await analyze.click();
 assert.equal(output.hidden, false);
 assert.match(output.innerHTML, /Попередній результат FastThaiG2P/);
+assert.match(output.innerHTML, /result-feature-grid/);
+assert.match(output.innerHTML, /class="continuous-output ua-continuous"/);
 assert.match(output.innerHTML, /Українськими літерами/);
 assert.match(output.innerHTML, /п&#39;рік/);
 assert.match(output.innerHTML, /IPA FastThaiG2P/);
@@ -99,9 +108,15 @@ assert.doesNotMatch(await (await import("node:fs/promises")).readFile(new URL(".
 for (const example of examples) {
   await example.click();
   assert.equal(input.value, example.dataset.example);
-  assert.equal(output.hidden, false);
+  assert.equal(output.hidden, true, "changing the input must invalidate the previous result");
+  assert.equal(requests.length, 1, "choosing an example must not trigger analysis automatically");
 }
-assert.equal(requests.length, 1 + examples.length);
+assert.equal(requests.length, 1);
+assert.equal(element("input-count").textContent, "Знаків: 4");
+assert.match(status.textContent, /Приклад додано/);
+await analyze.click();
+assert.equal(requests.length, 2);
+assert.equal(requests[1].text, "จริง");
 
 let prevented = false;
 input.value = "พริก";
@@ -110,7 +125,7 @@ await input.listeners.keydown({
   preventDefault() { prevented = true; }
 });
 assert.equal(prevented, true);
-assert.equal(requests.length, 2 + examples.length);
+assert.equal(requests.length, 3);
 
 input.value = "";
 await analyze.click();
@@ -126,6 +141,21 @@ await analyze.click();
 assert.equal(status.className, "status error");
 assert.match(status.textContent, /FastThaiG2P не зміг повернути повний IPA/);
 assert.equal(output.hidden, true, "an incomplete upstream result must not fall back to the old engine");
+
+// A response for an input that changed while analysis was running must never render.
+nextWorkerMessage = { type: "result", result: response };
+input.value = "พริก";
+deferNextWorkerMessage = true;
+const staleRun = analyze.click();
+assert.equal(analyze.disabled, true, "analysis action is locked while the worker is running");
+input.value = "กา";
+input.listeners.input();
+assert.equal(output.hidden, true, "editing input invalidates prior output immediately");
+deferredWorkerResponse();
+await staleRun;
+assert.equal(output.hidden, true, "a stale worker response must not render");
+assert.match(status.textContent, /Текст змінився під час аналізу/);
+assert.equal(analyze.disabled, false, "analysis action unlocks after the stale response is discarded");
 
 clear.click();
 assert.equal(input.value, "");

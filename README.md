@@ -99,17 +99,11 @@ The model distinguishes:
 - GitHub Actions CI that regenerates derived artifacts and verifies a clean tree.
 - Citation metadata, license and research release protocol.
 
-## Whole-text browser output
+## Current browser experience
 
-The browser interface exposes the same three-position strictness scale described above: 1/3 heuristic, 2/3 structural, and 3/3 conservative (default). The scale selects an existing processing policy; it is not a numeric confidence estimate. In the default phonetic mode, the interface presents a single copyable Ukrainian phonetic candidate for the full input alongside a single IPA intermediate output. In the optional RTGS mode, it presents the RTGS romanization and a separate Ukrainian rendering based on RTGS consonant and rime sequences. Source whitespace and punctuation are preserved; syllables within a known word are joined in the Ukrainian candidate, and adjacent recognized Thai segments are separated for Ukrainian readability. Detailed per-segment and per-syllable diagnostics remain available in a collapsible section. Unsupported or unresolved Thai spans are explicitly marked in the continuous output rather than silently omitted or guessed. Reducing strictness can increase provisional output coverage, but it does not establish word boundaries or improve pronunciation accuracy. The interface does not imply that arbitrary long Thai prose has been linguistically validated or that every word is recognized.
+The public GitHub Pages service is a focused Thai-reading workflow, not a translation interface and not a multi-engine selector. The visitor enters Thai text or chooses a sample, explicitly starts analysis, then sees the provisional Ukrainian candidate first and the raw FastThaiG2P IPA alongside it. Word/syllable detail, tone, vowel length, warnings and upstream provenance remain available in a progressive disclosure. Copy controls are available for both main outputs.
 
-### Pasted article preprocessing
-
-The browser input now has a conservative preprocessing step for recognizable Wikipedia/Markdown/HTML markup: it removes link destinations and common reference markup while retaining visible link labels, decodes common and numeric HTML entities, and shows a notice when the input was changed. Plain unmarked text is passed through unchanged. This is input hygiene, **not** Thai word segmentation or pronunciation inference; it does not make long article text linguistically validated, and it must not be used as evidence that a candidate pronunciation is correct.
-
-## Beta release status
-
-The owner-approved next milestone is a **clearly labelled beta**. External Thai phonetics review and Ukrainian-native target-form review are deferred and are not beta acceptance gates. The public UI must continue to label Ukrainian output as provisional; independent IPA gold remains empty and linguistic accuracy is **NOT_MEASURED**. This is not an official Ukrainian standard or an empirically validated benchmark. Audio/acoustic work remains out of scope. The FastThaiG2P browser/WASM port is implemented and CI-verified; public cutover remains gated on explicit runtime-data redistribution approval, final TLTK license-scope review and GitHub Pages live deployment checks. See [beta release scope](docs/beta-release-scope.md) for the acceptance checklist and known accessibility verification limits.
+The interface explains the text → IPA → Ukrainian path, reports local worker startup/download/analysis, and keeps Thai input in the browser. Samples fill the input without triggering analysis. Editing input clears an older result; an in-flight response for text that has since changed is discarded. The public UI does not expose the legacy research engine, RTGS rendering, or engine strictness profiles as selectable modes. Those remain separate research/reference capabilities, not public-site fallbacks.
 
 ## Current release status
 
@@ -209,18 +203,22 @@ The evaluator reports numerators and denominators explicitly and excludes missin
 
 ## Web service
 
-The repository includes a static two-page web application under `web/`:
+The public service is a static GitHub Pages application with three content pages:
 
-- `web/index.html` — public Service interface for Thai analysis;
-- `web/system.html` — methodology and evidence page;
-- `web/src/engine.js` — browser-safe implementation of the declared analysis pipeline;
-- `web/tests/fixtures.json` — versioned parity probes;
-- `scripts/generate_web_fixtures.py` — generates the authoritative fixture values from the Python core.
-- `scripts/generate_web_word_dictionary.py` — validates the pinned CC0 word-list snapshot and creates an ignored, reproducible browser index before browser tests and Pages packaging. The index uses two-code-point prefix buckets (with a one-code-point fallback for single-character entries) to reduce candidate scans; it carries boundary evidence only, not pronunciation data.
+- web/index.html — the Thai input and results interface.
+- web/system.html — method, evidence status and limitations.
+- web/third-party-notices.html — runtime licenses, dataset attribution and publication status.
 
-The browser uses the CC0 list for **word-boundary evidence only**. A dictionary match does not imply a known pronunciation: IPA and Ukrainian output are still withheld unless the word has curated syllabification or a typed source-attested IPA override. To run browser tests locally, first run `python scripts/generate_web_word_dictionary.py`; the generated `web/src/word-dictionary.generated.js` is a build artifact and is not committed.
+Runtime ownership is intentionally small:
 
-The FastThaiG2P browser port passed its dedicated Pyodide 0.29.5 parity gate and headless Chromium smoke test for the same-origin Web Worker. The verified ephemeral bundle contains four wheels, 14 Pyodide runtime files, ten hashed license/NOTICE files, and a separately downloadable CC BY-SA 4.0 ZIP of the filtered Wiktionary-derived IPA dictionary and tokenizer wordlist. GitHub Pages remains static-only; the public build and deployment stay gated until the explicit bundle-ready control and component-level redistribution manifest approve publication. The worker sends no Thai input to an API or CDN. The current branch has not been merged or deployed; the runtime notices are listed at [web/third-party-notices.html](web/third-party-notices.html).
+- web/src/app.js — input state, worker messaging, progress/status, safe result rendering and copy interactions.
+- web/src/fastthaig2p-worker.js — same-origin Pyodide bootstrap, pinned wheel installation, manifest/hash checks and FastThaiG2P calls.
+- src/thai_ukrainian/fastthaig2p_service.py — shared Python service and IPA-first adapter boundary.
+- web/src/engine.js and RTGS modules — research/reference implementations only; not selectable public G2P fallbacks.
+- web/src/article-cleanup.js — separately tested wiki/Markdown text-cleanup utility; it is not currently wired into the public input flow.
+- web/tests/ — UI, accessibility-source, article-cleanup, IPA-adapter, worker and parity contracts.
+
+The browser uses self-hosted Pyodide in a same-origin module Web Worker. Thai input is not sent to an API or CDN. The page presents only FastThaiG2P as its G2P engine; incomplete IPA remains fail-closed. To run browser tests locally, first run python scripts/generate_web_word_dictionary.py; the generated web/src/word-dictionary.generated.js is a build artifact and is not committed.
 
 ## Research workspace
 

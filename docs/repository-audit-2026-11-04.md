@@ -1,3 +1,19 @@
+## Current verified repository and UX checkpoint — 2026-11-05
+
+- Default branch: main; latest inspected HEAD f0d41996e854185bd6bd92f0ffa8f6b83e71f777. Latest main CI [42099035122](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42099035122) completed SUCCESS. Pages deployment [42098396098](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42098396098) and Pyodide compatibility [42098395877](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42098395877) completed SUCCESS on the preceding code checkpoint.
+- PR #210 is merged. The public GitHub Pages beta is live. The old docs/repository-audit-2026-11-04 branch diverges substantially from main (compare: main 503 commits ahead, audit branch 4 commits ahead); it is not a safe base for new work and is left intact.
+- A single focused branch design/site-recomposition-2026-11-05 was created from current main. All changes in this UX pass stay on that branch; main is not modified and no force-push/branch deletion is performed.
+- The codebase already contains mature product, research, source-provenance, licensing, Python/browser parity, worker, CI and Pages deployment work. Preserve it; do not duplicate the research pipeline or reintroduce RTGS/legacy JS as a site fallback.
+- Verified product path: static web/index.html → web/src/app.js → same-origin module Worker → self-hosted Pyodide → shared thai_ukrainian.fastthaig2p_service → FastThaiG2P external IPA → provisional IPA-to-Ukrainian adaptation. The UI must preserve privacy, provenance, uncertainty and fail-closed behavior.
+- Audit finding: web-service-architecture.md and web-service-requirements.md described the superseded FastAPI/Vercel public hosting model despite the live Pages/Pyodide product. This is corrected in this change set; FastAPI remains a reference/local wrapper, not the Pages runtime.
+- UX findings addressed: flat single-column hero; dense input/help grouping; sample buttons triggered analysis without a separate explicit action; result hierarchy did not give the Ukrainian candidate a clear primary position; editing input could leave a result for old text visible. The new layout prioritizes purpose, input, Ukrainian output and progressive IPA detail.
+- Upstream practices reviewed: UI UX Pro Max (accessibility/interaction/responsive priorities), Superpowers (test-first and vertical-slice workflow), Matt Pocock (small interfaces and architecture restraint), Ponytail (concrete correctness/security/load/test/lean review), Unlazy (observable gates). No upstream skill files, hooks, CLI, packages or runtime code were installed or vendored.
+- Evidence boundary: static UI assertions and GitHub Actions can verify code contracts, not actual assistive-technology usability. Manual keyboard/screen-reader/zoom/mobile testing remains outstanding. Linguistic gold remains 0 and accuracy remains NOT_MEASURED.
+- Exact-head CI on `d5c880a`: Full CI 42110596982, Web Static 42110596991, Site API 42110596971, Pyodide compatibility 42110597073 — all SUCCESS. Full suite 398 passed, 1 optional FastAPI skip, 1,211 subtests, Ruff pass, 29 parity fixtures.
+- Detailed design and acceptance rules: ui-ux-redesign.md; code ownership and test commands: docs/README.md, web-service-architecture.md, web-service-requirements.md, validation-matrix.md. PR #211 is not merged/deployed; live Pages remains on main.
+
+---
+
 ## Current verified checkpoint — 2026-11-05 (text-only scope)
 
 - Branch `docs/repository-audit-2026-11-04`, HEAD `2ce66a5ace012675c0d9fea06aca5ae962003092`; base `main` HEAD `56fba86b4b8be2fe4e67284355e9928108527387`. PR [#210](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/210) is OPEN, mergeable, and not merged. No mainline mutation, branch deletion, force-push, or release.

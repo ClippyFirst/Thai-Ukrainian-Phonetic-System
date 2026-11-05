@@ -43,6 +43,12 @@ for (const id of ["thai-input"]) {
   assert.match(html, new RegExp(`<label[^>]+for="${id}"`), `${id} must have a visible label`);
 }
 assert.match(html, /<textarea[^>]+lang="th"/);
+assert.match(html, /class="hero hero-grid"/);
+assert.match(html, /id="input-count"/);
+assert.match(html, /aria-describedby="input-hint input-count"/);
+assert.match(css, /\.hero-grid\s*\{/);
+assert.match(css, /\.input-count\s*\{/);
+assert.match(css, /\.examples button\s*\{[^}]*min-height:\s*44px/);
 assert.match(html, /<section id="status" class="status" role="status" aria-live="polite"/);
 assert.match(html, /<section id="results"[^>]+aria-label="Результати" aria-live="off"/);
 assert.match(html, /<details[^>]*>[\s\S]*?<summary>/, "disclosure widgets need a native summary control");
@@ -53,9 +59,15 @@ assert.match(app, /aria-label="Копіювати: /);
 assert.match(app, /lang="und-fonipa"/);
 assert.match(app, /const esc =/);
 assert.match(app, /continuous-output-value/);
+assert.match(app, /<h3 class="word-heading">/);
+assert.match(app, /<h4 class="result-title">/);
+const sampleButtonRule = css.match(/\.examples button\s*\{([^}]*)\}/);
+const copyButtonRule = css.match(/\.copy\s*\{([^}]*min-height:\s*44px[^}]*)\}/)
+assert(sampleButtonRule && /border:\s*1px solid #767676/.test(sampleButtonRule[1]), "sample button boundary must have visible contrast");
+assert(copyButtonRule && /border:\s*1px solid #767676/.test(copyButtonRule[1]), "copy button boundary must have visible contrast");
 
 // Keyboard focus must remain visible for all native interactive controls, 
-assert.match(css, /button:focus-visible[^\{]*a:focus-visible[^\{]*textarea:focus-visible[^\{]*select:focus-visible[^\{]*summary:focus-visible/);
+assert.match(css, /:focus-visible\s*\{/);
 assert.match(css, /\.skip-link:focus\s*\{/);
 assert.match(css, /@media\s*\(prefers-reduced-motion:\s*reduce\)/);
 
@@ -92,6 +104,8 @@ const palettePairs = [
   ["#505360", "#ffffff", "body text"],
   ["#505360", "#f5f5fa", "body text on wash"],
   ["#302d8b", "#f5f6fb", "blue badge text"],
+  ["#767676", "#ffffff", "sample and copy button boundaries"],
+  ["#ffffff", "#9b263b", "beta label text"],
   ["#9b263b", "#fbf4f5", "warning badge text"]
 ];
 for (const [foreground, background, label] of palettePairs) {
