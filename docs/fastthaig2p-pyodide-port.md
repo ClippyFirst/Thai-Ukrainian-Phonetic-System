@@ -31,7 +31,7 @@ Existing audit classification: FastThaiG2P use is permitted; redistribution is c
 
 | Area | Criterion | Status |
 |---|---|---|
-| Runtime | Exact wheels import/run in Pyodide 0.29.5 | PARTIAL — CI pending |
+| Runtime | Four exact pure-Python wheels import/run in Pyodide 0.29.5 | PARTIAL — timezone fix queued |
 | Parity | CPython/Pyodide JSON matches | TODO |
 | IPA/UA | Same typed adapter and IPA-to-Ukrainian function | TODO |
 | Browser | Worker integration and responsive UI | TODO |
