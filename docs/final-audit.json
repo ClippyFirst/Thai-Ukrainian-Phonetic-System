@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "Exact-head CI passed on docs/repository-audit-2026-11-04 at f8e19499c056afeb2b2532887d2887812472664d: 376 passed, 1 skipped, 1,206 subtests; Ruff, wheel-install smoke and master-artifact passed. Dedicated FastThaiG2P site API and optional external smoke benchmark passed. Global TIMIT excluded; LOTUSDIS text-only optional; audio out of scope. CCOST TextGrid-only acquisition remains blocked pending curator export/confirmation; no CCOST archive or audio downloaded. Independent IPA gold rows 0; linguistic accuracy NOT_MEASURED.",
+  "status": "Exact-head CI passed on docs/repository-audit-2026-11-04 at f9b6baf1ad3c55057051ff5652ac7827a06fd7c1: 385 passed, 1 skipped (optional FastAPI test; dedicated Site API workflow passed), 1,206 subtests; Ruff, wheel-install smoke, master-artifact, generated-artifact drift, 29 Python/browser parity fixtures, 578/578 TextGrid parsing, and 178,377-row text-only export passed. Dedicated Site API and optional external G2P smoke passed. PR #210 remains open/unmerged; branch is 136 commits ahead of main, 0 behind. Independent IPA gold rows 0; linguistic accuracy NOT_MEASURED; engineering-verified research prototype, not release-ready.",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -563,17 +563,17 @@
     },
     {
       "id": "LOTUSDIS-TEXT-ONLY-001",
-      "status": "PARTIAL",
-      "implementation": "Verified CC BY-SA 4.0 and public text fields sentence/speaker_id/mic/duration; paper documents utterance-level transcripts, speaker labels and overlap tags, but no phone/IPA tier.",
-      "blocker": "No file-level TextGrid tier inspection; phonetic annotation is not established by the paper or public viewer.",
-      "acceptance": "Optional orthographic transcript context only, with attribution and ShareAlike; all audio-specific tasks are DEFERRED / OUT OF SCOPE."
+      "status": "DONE_VERIFIED_FOR_SUPPLIED_SAMPLE",
+      "implementation": "Supplied 90-file TextGrid sample parsed; 32,943 transcript intervals exported; one recording-named transcript tier per file and no phonetic tiers observed.",
+      "blocker": null,
+      "acceptance": "Bounded orthographic context only; no phone/IPA gold, no claim of full-dataset coverage, no audio."
     },
     {
       "id": "CCOST-TEXTGRID-ONLY-001",
-      "status": "PARTIAL",
-      "implementation": "Published tier map and Figure 2 sample labels inspected; strict X-SAMPA→IPA converter and long-text TextGrid parser implemented; synthetic/published-figure fixtures added.",
-      "blocker": "No TextGrid-only export/manual obtained; actual file-level tier instances/intervals uninspected; no formal IAA was collected.",
-      "acceptance": "Obtain curator-provided TextGrid-only sample or lawful extraction confirmation; inspect actual released tiers/labels and validate parser; independent review remains separate."
+      "status": "DONE_VERIFIED",
+      "implementation": "Owner-supplied CCOST TextGrid-only ZIP committed; CI inspected 488/488 TextGrid members and parsed all files without reading audio.",
+      "blocker": null,
+      "acceptance": "Structural inventory complete for supplied archive. Tier aliases and unsupported label semantics remain separately tracked as PARTIAL."
     },
     {
       "id": "FASTTHAIG2P-SELECTIVE-REUSE-001",
@@ -610,21 +610,22 @@
     {
       "id": "CORP-CCOST-XSAMPA-001",
       "status": "PARTIAL",
-      "implementation": "Strict X-SAMPA→IPA converter with CCOST _1.._5 tone suffixes, raw-label retention, explicit syllable boundaries, canonical NFD output and fail-closed unknown symbols; synthetic and published Figure 2 regression tests; exact-head CI passed.",
-      "acceptance": "Obtain a lawful TextGrid-only sample, inspect actual MAU/MAS/KAS/KAN labels and encoding, then extend mapping only from manual/source evidence. Current converter coverage is a tested subset, not complete CCOST conformance."
+      "implementation": "Strict X-SAMPA→IPA converter, tone _1.._5, raw-label retention, explicit syllable boundaries, canonical NFD, and fail-closed unknown symbols; actual supplied corpus labels inventoried.",
+      "acceptance": "Only add mappings supported by CCOST manual/curator evidence and regression fixtures; preserve unsupported labels and do not infer _8 or normalize IPA-looking strings.",
+      "blocker": "1,014 phonetic-tier labels remain unsupported, including _8, Unicode IPA-looking variants, unusual sequences and mixed tag-plus-text labels; curator semantics not confirmed."
     },
     {
       "id": "CORP-CCOST-TEXTGRID-001",
       "status": "PARTIAL",
-      "implementation": "Praat long-text TextGrid parser preserves tier names, interval bounds and raw labels; typed provisional phonemic and surface tier adapters; local text-only inspector.",
-      "acceptance": "Obtain a lawful TextGrid-only sample and validate parser against actual CCOST files; no audio."
+      "implementation": "Praat long-text parser validated against all 488 supplied CCOST and 90 supplied LOTUSDIS TextGrids; tier names, interval bounds and raw labels preserved.",
+      "acceptance": "Parser is verified for supplied long-text files; alternate encodings remain unsupported, and CCOST tier-role semantics still need curator confirmation."
     },
     {
       "id": "CORP-CCOST-TEXT-EXPORT-001",
-      "status": "BLOCKED",
-      "implementation": "Public Zenodo file listing checked; no separate TextGrid-only archive is exposed; mixed 6.2 GB WAV+TextGrid ZIP not downloaded.",
-      "blocker": "Await curator-provided TextGrid-only export or written confirmation of lawful selective text extraction. Request prepared, not sent because no email connector is available.",
-      "acceptance": "TextGrid-only files/manual plus encoding/tier-label specification and attribution confirmation."
+      "status": "DONE_VERIFIED",
+      "implementation": "CI exported 178,377 provenance-rich orthographic intervals (145,434 CCOST; 32,943 LOTUSDIS), validated manifest and uploaded text-only artifact; audio members were not read.",
+      "blocker": null,
+      "acceptance": "DONE for explicit selected tiers and supplied archives. Respect CC BY-NC-SA 4.0 / CC BY-SA 4.0 terms and retain notices; no gold promotion."
     },
     {
       "id": "GLOBAL-TIMIT-EXCLUSION-001",
@@ -3670,29 +3671,27 @@
   },
   "latest_documentation_checkpoint_2026_11_05": {
     "branch": "docs/repository-audit-2026-11-04",
-    "head_before_machine_register_refresh": "6eb07a67aae3317d775401d6f7efdf34e1235b39",
-    "compare_ahead_of_main": 18,
+    "head": "f9b6baf1ad3c55057051ff5652ac7827a06fd7c1",
+    "compare_ahead_of_main": 136,
     "compare_behind_main": 0,
-    "exact_head_ci_run": 41923015472,
-    "exact_head_ci_status": "IN_PROGRESS_AT_REGISTER_REFRESH",
-    "wheel_install_smoke": "PASSED",
-    "test_job": "IN_PROGRESS",
     "pr": 210,
     "pr_state": "OPEN_NOT_MERGED",
+    "exact_head_ci_run": 42016775144,
+    "exact_head_ci_status": "PASSED",
+    "wheel_install_smoke": "PASSED",
+    "test_job": "PASSED_385_1_SKIPPED_1206_SUBTESTS",
     "reviews": 0,
     "inline_review_threads": 0,
     "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
     "linguistic_accuracy": "NOT_MEASURED",
     "independently_adjudicated_ipa_gold_rows": 0,
     "blockers": {
+      "ccost_curator_semantics": "PARTIAL_1014_UNSUPPORTED_LABELS",
       "thai_independent_phonetic_and_segmentation_review": "BLOCKED",
       "ukrainian_native_target_review": "BLOCKED",
-      "global_timit_thai_ldc_written_permission": "BLOCKED",
-      "lotusdis_wav_sha256_intervals": "PARTIAL",
       "fastthaig2p_bundled_data_rights": "BLOCKED",
       "fastthaig2p_python_host_preview": "BLOCKED",
-      "manual_accessibility_review": "PARTIAL",
-      "ccost_textgrid_and_tier_mapping": "PARTIAL_PUBLISHED_TIER_MAP_VERIFIED_ARCHIVE_UNINSPECTED_CC_BY_NC_SA_4_0"
+      "manual_accessibility_review": "PARTIAL"
     },
     "main_changed": false,
     "branch_deleted": false,
@@ -3896,6 +3895,50 @@
   },
   "latest_exact_head_verification_2026_11_05": {
     "branch": "docs/repository-audit-2026-11-04",
+    "commit": "f9b6baf1ad3c55057051ff5652ac7827a06fd7c1",
+    "base": "56fba86b4b8be2fe4e67284355e9928108527387",
+    "ahead": 136,
+    "behind": 0,
+    "pr": 210,
+    "pr_state": "OPEN_NOT_MERGED",
+    "ci_run": 42016775144,
+    "ci_url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42016775144",
+    "ci_conclusion": "success",
+    "jobs": {
+      "test": "success",
+      "wheel_install_smoke": "success",
+      "master_artifact": "success"
+    },
+    "tests": {
+      "python_passed": 385,
+      "python_skipped": 1,
+      "subtests_passed": 1206,
+      "ruff": "passed",
+      "browser_python_parity_fixtures": 29
+    },
+    "skipped_test": "tests/test_fastthaig2p_site_api.py; FastAPI absent in generic dev environment",
+    "dedicated_site_api_run": 42016775080,
+    "dedicated_site_api_conclusion": "success",
+    "optional_external_g2p_smoke_run": 42016775087,
+    "optional_external_g2p_smoke_conclusion": "success",
+    "textgrid_files_parsed": 578,
+    "textgrid_export_records": 178377,
+    "ccost_records": 145434,
+    "lotusdis_records": 32943,
+    "text_only_artifact": {
+      "run_id": 42016775144,
+      "artifact_id": 13410071688,
+      "size_bytes": 12609560,
+      "sha256": "98089f717561e86116c3f6aeef278d3ca84beaa50c5d0ea5d52a1a27b5ed6323"
+    },
+    "unsupported_ccost_phonetic_labels": 1014,
+    "independently_adjudicated_ipa_gold_rows": 0,
+    "linguistic_accuracy": "NOT_MEASURED",
+    "local_tests": "NOT_RUN_CONNECTOR_ONLY_ENVIRONMENT",
+    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY"
+  },
+  "latest_exact_head_verification_2026_11_05_previous_824c": {
+    "branch": "docs/repository-audit-2026-11-04",
     "commit": "f8e19499c056afeb2b2532887d2887812472664d",
     "base": "56fba86b4b8be2fe4e67284355e9928108527387",
     "ahead": 55,
@@ -3921,5 +3964,20 @@
     "optional_external_g2p_smoke_conclusion": "success",
     "skip_reason": "tests/test_fastthaig2p_site_api.py skipped in generic dev environment because FastAPI is optional; dedicated site-api workflow installed FastAPI and passed.",
     "local_tests": "not run; connector-only GitHub session"
+  },
+  "latest_branch_audit_2026_11_05": {
+    "branch": "docs/repository-audit-2026-11-04",
+    "head": "f9b6baf1ad3c55057051ff5652ac7827a06fd7c1",
+    "base": "56fba86b4b8be2fe4e67284355e9928108527387",
+    "ahead": 136,
+    "behind": 0,
+    "pr": 210,
+    "pr_state": "OPEN_NOT_MERGED",
+    "exact_head_ci": 42016775144,
+    "exact_head_ci_status": "PASS",
+    "local_tests": "NOT_RUN",
+    "main_changed": false,
+    "release_published": false,
+    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY"
   }
 }

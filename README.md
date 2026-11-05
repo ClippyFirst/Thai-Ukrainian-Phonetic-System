@@ -49,7 +49,7 @@ python scripts/export_textgrid_text.py "CCOST textgrid.zip" "nectecLOTUSDIS text
   --output textgrid-orthographic-text.jsonl
 ```
 
-The command produces a local JSONL file. CI publishes the separate `textgrid-text-only-jsonl` artifact with CCOST and LOTUSDIS JSONL files, a SHA-256 manifest, and `data/THIRD-PARTY-CORPUS-NOTICES.md`. The workflow validates the manifest before upload. Observe the corpus-specific terms before redistributing or using extracted text; in particular, CCOST is non-commercial CC BY-NC-SA 4.0. See the [source-specific notices](data/THIRD-PARTY-CORPUS-NOTICES.md).
+The command produces a local JSONL file. CI publishes the separate `textgrid-text-only-jsonl` artifact with CCOST and LOTUSDIS JSONL files, a SHA-256 manifest, and `data/THIRD-PARTY-CORPUS-NOTICES.md`. The workflow validates the manifest before upload. The latest successful artifact is [available from exact-head CI run 42016775144](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42016775144/artifacts/13410071688). Observe the corpus-specific terms before redistributing or using extracted text; in particular, CCOST is non-commercial CC BY-NC-SA 4.0. See the [source-specific notices](data/THIRD-PARTY-CORPUS-NOTICES.md).
 ## Scope
 
 Primary scope: contemporary Standard Thai with a Bangkok/central-standard reference where the evidence permits.

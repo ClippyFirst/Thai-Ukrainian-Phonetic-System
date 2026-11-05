@@ -66,7 +66,7 @@ CI executed:
 
 Verified output: **178,377 records** — 145,434 CCOST (`ORT-MAU` + `TRN`) and 32,943 LOTUSDIS transcript intervals. The JSONL is temporary in CI/local output and is not committed as derived corpus data. No audio is read; no gold is promoted.
 
-CI publishes the downloadable artifact [`textgrid-text-only-jsonl`](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42015757949). It contains the two JSONL files, a valid JSON SHA-256 manifest, and `data/THIRD-PARTY-CORPUS-NOTICES.md`:
+CI publishes the downloadable artifact [`textgrid-text-only-jsonl`](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42016775144). It contains the two JSONL files, a valid JSON SHA-256 manifest, and `data/THIRD-PARTY-CORPUS-NOTICES.md`:
 
 | Artifact member | Records | Bytes | SHA-256 |
 |---|---:|---:|---|
@@ -76,6 +76,10 @@ CI publishes the downloadable artifact [`textgrid-text-only-jsonl`](https://gith
 | `THIRD-PARTY-CORPUS-NOTICES.md` | — | 3,378 | `e44a87d6c83acfd34d30377d14b14cd8aa05580a309ba1775af594da55f28991` |
 
 Manifest validation passed in CI before upload. The artifact is a reproducible text-only export, not an independent reference/gold corpus; CCOST's non-commercial ShareAlike and LOTUSDIS's ShareAlike terms travel with it.
+## Latest exact-head verification — 2026-11-05
+
+The inventory and exporter were re-run on branch HEAD `f9b6baf1ad3c55057051ff5652ac7827a06fd7c1` by Full CI [42016775144](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42016775144). The workflow passed all three jobs. It parsed 578/578 TextGrid files and re-exported 178,377 orthographic intervals (CCOST 145,434; LOTUSDIS 32,943). The published [`textgrid-text-only-jsonl` artifact](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42016775144/artifacts/13410071688) is 12,609,560 bytes with digest `sha256:98089f717561e86116c3f6aeef278d3ca84beaa50c5d0ea5d52a1a27b5ed6323`. Dedicated Site API [42016775080](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42016775080) and optional external G2P smoke [42016775087](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42016775087) passed. This verifies the software/export contract only; it does not turn source annotations into independent gold.
+
 ## Exact-head verification
 
 On final workflow checkpoint `824c09098d2869256ab8206324b3e1fa1d6d6d81`: [CI run 42015757949](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42015757949) passed all jobs.
@@ -86,8 +90,8 @@ On final workflow checkpoint `824c09098d2869256ab8206324b3e1fa1d6d6d81`: [CI run
 - Master artifact: passed.
 - Actual TextGrid inspection: 578/578 parse; no file-level parse errors.
 - Actual orthographic export: 178,377 rows; source counts and license/evidence metadata assertions passed. The `textgrid-text-only-jsonl` artifact includes both JSONLs, a valid SHA-256 manifest and the third-party corpus notice.
-- FastThaiG2P Site API: [42015757883](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42015757883) passed.
-- Optional external Thai G2P smoke: [42015757971](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42015757971) passed.
+- FastThaiG2P Site API: [42015757883](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42016775080) passed.
+- Optional external Thai G2P smoke: [42015757971](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42016775087) passed.
 - The one skipped test is optional FastAPI-dependent coverage in the generic Python test environment; the dedicated Site API workflow passed.
 
 ## Task ledger
