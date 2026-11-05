@@ -4535,11 +4535,12 @@
     "status": "IMPLEMENTED_CI_VERIFIED_PR_OPEN_NOT_DEPLOYED",
     "base_main": "f0d41996e854185bd6bd92f0ffa8f6b83e71f777",
     "branch": "design/site-recomposition-2026-11-05",
-    "tested_code_head": "5b2857953e13b8e2ac6fbba6e5cf1bd33dca344d",
+    "tested_code_head": "fdf6316acfa580da086d14e04d3b7bc575da455f",
     "pull_request": 211,
     "pull_request_state": "OPEN_MERGEABLE_NOT_MERGED",
     "exact_head_ci": {
-      "run": 42106359041,
+      "run": 42108230809,
+      "run_attempt": 3,
       "status": "SUCCESS",
       "test_job": "SUCCESS",
       "wheel_install_smoke": "SUCCESS",
@@ -4549,15 +4550,15 @@
       "subtests_passed": 1211
     },
     "exact_head_web_static": {
-      "run": 42106359184,
+      "run": 42108230802,
       "status": "SUCCESS"
     },
     "exact_head_site_api": {
-      "run": 42106358990,
+      "run": 42108230837,
       "status": "SUCCESS"
     },
     "exact_head_pyodide_compat": {
-      "run": 42106358987,
+      "run": 42108230811,
       "status": "SUCCESS"
     },
     "ui_contract_includes_delayed_stale_worker_response": true,

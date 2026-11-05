@@ -5,7 +5,7 @@ This review covers the public browser UX, service documentation, repository navi
 ### Baseline and branch discipline
 
 - Base `main`: `f0d41996e854185bd6bd92f0ffa8f6b83e71f777`; live beta remains deployed on GitHub Pages.
-- Candidate branch `design/site-recomposition-2026-11-05`, tested code HEAD `5b2857953e13b8e2ac6fbba6e5cf1bd33dca344d`.
+- Candidate branch `design/site-recomposition-2026-11-05`, tested code HEAD `fdf6316acfa580da086d14e04d3b7bc575da455f`.
 - PR [#211](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/211) is open and mergeable. The supplied audit branch was preserved; stale ancestry was not merged into current main.
 - No changes to main, deployment settings, release tags, production cutover or external services were made.
 
@@ -22,10 +22,10 @@ This review covers the public browser UX, service documentation, repository navi
 
 ### Exact-head verification
 
-- Full CI [42106359041](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42106359041): SUCCESS, all three jobs. Test job: **398 passed, 1 skipped, 1,211 subtests passed**; Ruff and generated-artifact checks passed. Skipped FastAPI test is covered by the dedicated Site API workflow.
-- Web Static [42106359184](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42106359184): SUCCESS.
-- Site API [42106358990](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42106358990): SUCCESS.
-- Pyodide compatibility [42106358987](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42106358987): SUCCESS, including real Chromium same-origin Worker smoke.
+- Full CI [42108230809](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42108230809): SUCCESS, all three jobs. Test job: **398 passed, 1 skipped, 1,211 subtests passed**; Ruff and generated-artifact checks passed. Skipped FastAPI test is covered by the dedicated Site API workflow.
+- Web Static [42108230802](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42108230802): SUCCESS.
+- Site API [42108230837](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42108230837): SUCCESS.
+- Pyodide compatibility [42108230811](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42108230811): SUCCESS, including real Chromium same-origin Worker smoke.
 
 ### Remaining limits
 
