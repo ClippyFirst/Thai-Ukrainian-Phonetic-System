@@ -121,6 +121,28 @@ def main() -> None:
                 f"Unexpected {item['package']} version: expected {expected_version}, found {item['version']}"
             )
 
+    dataset_out = args.output / "datasets"
+    dataset_out.mkdir(parents=True)
+    dataset_path = dataset_out / "fastthaig2p-wiktionary-derived.zip"
+    with zipfile.ZipFile(fastthaig2p_wheel) as wheel_archive, zipfile.ZipFile(dataset_path, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as dataset_archive:
+        dataset_members = {
+            "fastthaig2p/data/dict.txt": "dict.txt",
+            "fastthaig2p/data/ipa.json": "ipa.json",
+            "fastthaig2p/data/browser-data-provenance.json": "browser-data-provenance.json",
+            "fastthaig2p/data/WIKTIONARY-ATTRIBUTION.md": "WIKTIONARY-ATTRIBUTION.md",
+        }
+        for source_name, archive_name in dataset_members.items():
+            dataset_archive.writestr(archive_name, wheel_archive.read(source_name))
+        dataset_archive.write(args.notices_dir / "CC-BY-SA-4.0.txt", "CC-BY-SA-4.0.txt")
+
+    dataset_records = [{
+        "path": dataset_path.relative_to(args.output).as_posix(),
+        "sha256": sha256(dataset_path),
+        "size_bytes": dataset_path.stat().st_size,
+        "license": "CC-BY-SA-4.0",
+        "attribution": ["Wiktionary contributors", "Kaikki.org / Wiktextract"],
+    }]
+
     pyodide_record = {
         "version": PYODIDE_VERSION,
         "license": "MPL-2.0",
@@ -157,7 +179,7 @@ def main() -> None:
         "pyodide": pyodide_record,
         "wheels": wheel_records,
         "runtime_files": runtime_records,
-        "notices": notice_records,
+        "notices": notice_records,\n        "datasets": dataset_records,
     }
     (args.output / "bundle-manifest.json").write_text(
         json.dumps(bundle_manifest, ensure_ascii=False, indent=2) + "\n",
@@ -170,7 +192,7 @@ def main() -> None:
         "runtime_file_count": len(runtime_records),
         "runtime_bytes": sum(item["size_bytes"] for item in runtime_records),
         "notice_count": len(notice_records),
-        "notice_bytes": sum(item["size_bytes"] for item in notice_records),
+        "notice_bytes": sum(item["size_bytes"] for item in notice_records),\n        "dataset_count": len(dataset_records),\n        "dataset_bytes": sum(item["size_bytes"] for item in dataset_records),
         "redistribution_approved": bundle_manifest["redistribution_approved"],
     }, ensure_ascii=False, indent=2))
 
