@@ -7,7 +7,8 @@ This review covers the owner-supplied `CCOST textgrid.zip` only. The inspection 
 Primary sources:
 - [CCOST LREC 2026 paper, §3.3–3.4](https://aclanthology.org/2026.lrec-1.247/): explicitly identifies X-SAMPA for phonemic/phonetic representations; defines only tone suffixes `_1`–`_5`; says disfluencies are marked `<usb>` and pauses `<p:>`; describes phonetic variants at MAU level.
 - [CCOST Zenodo record and manual](https://zenodo.org/records/17366698): CC BY-NC-SA 4.0 and release documentation. I extracted/search-inspected the public `CCOST_manual.pdf`: it documents the RA workflow and the CHUNKPREP → G2P → MAUS → PHO2SYL pipeline, but is not a phonetic-symbol key; the extracted text contains no `_8` or definitions for `<P>`, `<P:>`, `<:p>`, or `<Fail>`.
-- [BAS Partitur Format, MAU tier](https://www.phonetik.uni-muenchen.de/Bas/BasFormatseng.html): defines generic MAU labels `<nib>` (non-speech event), `<p:>` (pause), and `<usb>` (speaker event that cannot be classified, e.g. unintelligible words). The CCOST paper is the corpus-specific source for its X-SAMPA and tone conventions.
+- [BAS Partitur Format, MAU tier](https://www.phonetik.uni-muenchen.de/Bas/BasFormatseng.html): defines generic MAU labels `<nib>` (non-speech event), `<p:>` (pause), and `<usb>` (speaker event that cannot be classified, e.g. unintelligible words).
+- [BAS WebServices FAQ](https://clarin.phonetik.uni-muenchen.de/BASWebServices/help/help_examples): generic MAUS tone suffix syntax permits `_1`–`_9` and disallows `_0`; this is a generic syntax rule, not the CCOST language-specific mapping. The CCOST paper maps only `_1`–`_5`.
 
 ## Observed release tier names
 
@@ -160,12 +161,12 @@ The four unresolved markers have a separate interval inventory. The previous who
 
 The CI worklist intentionally uses a broader scope than the earlier `inspect_ccost_textgrid.py` marker summary: it scans **every non-empty interval in every IntervalTier**, not only the declared phonetic tiers. Therefore its marker counts must not be conflated with the earlier inspector's phonetic-tier-only `bracket_marker_counts`.
 
-The latest worklist CI gate asserts the following independently:
+The verified worklist artifact manifest reports the following independently:
 - `_8`: 868 tier-level conversion failures; 397 exact file/interval groups; 438 file/interval/raw-label events; 22 distinct raw strings; 119 source files.
 - All phonetic conversion failures: 1,450 tier-level occurrences. This includes `_8` and other unsupported forms; it is not a count of unique speech events.
 - `<notProcessedChunk>`: 142 documented MAUS processing-failure intervals, kept separate from unknown symbols.
 - Unresolved marker labels across **all tiers**: 821 intervals containing at least one marker; 871 total marker appearances. Per-marker interval counts are `<P>` 771, `<Fail>` 24, `<P:>` 4, `<:p>` 22; appearance counts are `<P>` 821, `<Fail>` 24, `<P:>` 4, `<:p>` 22. These are worklist all-tier counts. The earlier inspector counted `<P>` 394 and `<Fail>` 16 in phonetic tiers only; the two reports have different scope and are not contradictory.
 
-The worklist preserves exact raw strings, file/tier/time provenance, overlapping labels from other tiers, adjacent same-tier context, and blank reviewer/adjudicator fields. The artifact is published as `ccost-label-adjudication-worklist` by the PR CI workflow. Its generator and tests are **PARTIAL_PENDING_EXACT_HEAD_CI** until the exact latest PR-head run succeeds and the uploaded artifact is inspected. Do not mark the worklist verified based only on the presence of code or a workflow step.
+The worklist preserves exact raw strings, file/tier/time provenance, overlapping labels from other tiers, adjacent same-tier context, and blank reviewer/adjudicator fields. The artifact is published as `ccost-label-adjudication-worklist` by the PR CI workflow. The generator, focused tests, exact-head CI worklist step and artifact are **DONE_VERIFIED on implementation checkpoint `47db8ac988836014663a435e08e2afe470342fe8`**: [Full CI run 42034879862](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42034879862) passed all three jobs; artifact [ccost-label-adjudication-worklist](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42034879862/artifacts/13418750385) was downloaded and inspected. It contains 1,975 rows; all 11 reviewer/adjudicator fields are blank; 868 `_8` occurrences are preserved, including `nia_8p`; `audio_members_read=0`. A subsequent workflow-only commit adds assertions for marker interval/appearance counts and is pending its own exact-head run.
 
 No semantic interpretation is inferred for `<P>`, `<P:>`, `<:p>`, or `<Fail>`. The counts identify review targets, not meanings. `_8` is syntactically permitted by generic MAUS tone notation but unmapped in the CCOST paper's five-category scheme; its CCOST-specific meaning remains unknown.
