@@ -254,7 +254,7 @@ The existing PR #210 branch now includes a contextual all-tier CCOST review-work
 
 Inventory denominators:
 - `_8`: 868 tier occurrences; 397 exact file/interval groups; 438 file/interval/raw-label events; 22 distinct raw strings; 119 files.
-- All-tier unknown marker worklist: 821 intervals; `<P>` 821, `<Fail>` 24, `<P:>` 4, `<:p>` 22 appearances.
+- All-tier unknown marker worklist: 821 intervals with any marker (871 appearances); per-marker interval counts `<P>` 771, `<Fail>` 24, `<P:>` 4, `<:p>` 22; appearance counts `<P>` 821, `<Fail>` 24, `<P:>` 4, `<:p>` 22.
 - Earlier inspector counts `<P>` 394 and `<Fail>` 16 were limited to declared phonetic tiers; do not compare them as if the scope were identical.
 - `<notProcessedChunk>`: 142 documented MAUS processing-failure intervals, not phonetic labels.
 
