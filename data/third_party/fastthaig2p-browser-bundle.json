@@ -65,7 +65,25 @@
             "verified_assets": 6,
             "source_commit": "0cef4bcfbdd675f589783dd4134b87b9bb9fbb93",
             "repository_setup_version": "1.9.1",
-            "version_caveat": "The vendored parser header says TLTK 1.3.8, while the pinned repository snapshot setup.py says 1.9.1; do not attribute the data files to release 1.3.8 without further evidence."
+            "version_caveat": "The vendored parser header says TLTK 1.3.8, while the pinned repository snapshot setup.py says 1.9.1; do not attribute the data files to release 1.3.8 without further evidence.",
+            "verifier": "scripts/verify_tltk_fallback_provenance.py",
+            "license_evidence": {
+              "parser_header": {
+                "version": "1.3.8",
+                "license": "BSD-3-Clause"
+              },
+              "pinned_repository_snapshot": {
+                "commit": "0cef4bcfbdd675f589783dd4134b87b9bb9fbb93",
+                "setup_py_version": "1.9.1",
+                "root_license": "LGPL-3.0",
+                "module_license_txt": "BSD-3-Clause-style notice",
+                "stale_pkg_info": {
+                  "version": "1.1.7",
+                  "license": "GPLv3"
+                }
+              },
+              "status": "AMBIGUOUS_FILE_LEVEL_LICENSE_SCOPE; preserve both LGPL and BSD notices"
+            }
           },
           "repository_notice_conflict": "TLTK source snapshot carries distinct root LGPL-3.0 and module BSD-style LICENSE.txt; PKG-INFO metadata is stale. Both LGPL-3.0 and BSD-3-Clause notices are preserved; exact applicability to every copied asset requires file-level legal review.",
           "status": "DONE_VERIFIED_ASSET_TRANSFORMATIONS; LICENSE_SCOPE_PARTIAL_AMBIGUOUS"
@@ -93,10 +111,10 @@
     }
   ],
   "publication_gate": [
-    "Keep the filtered Wiktionary dataset under CC BY-SA 4.0 with full license text, contributor attribution, modification disclosure and transparent dataset ZIP.",
+    "Keep the filtered Wiktionary dataset under CC BY-SA 4.0 with full legal text, contributor attribution, modification disclosure and transparent dataset ZIP.",
     "Keep FastThaiG2P Apache-2.0/NOTICE and all ten dependency/corpus/project notices in the manifest.",
-    "Complete legal scope review of TLTK fallback assets: parser header says 1.3.8/BSD-3; the pinned data-source repository snapshot says setup.py 1.9.1, has root LGPL-3.0 and module BSD-style LICENSE.txt, plus stale PKG-INFO 1.1.7/GPLv3. Both notices remain included.",
-    "Owner must explicitly approve public redistribution after reviewing the TLTK license ambiguity and the Wiktionary share-alike dataset.",
+    "Resolve TLTK asset license scope: vendored parser header says 1.3.8/BSD-3; pinned data-source snapshot says setup.py 1.9.1, root LGPL-3, module BSD-style LICENSE.txt, and stale PKG-INFO 1.1.7/GPLv3. Preserve both LGPL and BSD notices pending file-level review.",
+    "Owner must explicitly approve public redistribution after reviewing the TLTK license ambiguity and Wiktionary share-alike obligations.",
     "Deploy only from main through the GitHub Pages workflow; do not use a separate API host or CDN."
   ],
   "notes": [
