@@ -4435,5 +4435,65 @@
       "size_bytes": 194745,
       "live_pages_hash_check": "NOT_RUN_DEPLOYMENT_NOT_AUTHORIZED"
     }
+  },
+  "github_pages_port_latest_exact_head": {
+    "verified_code_checkpoint": "ba22872679869371e92ab9ad511db4ed74627da2",
+    "workflows": {
+      "pyodide_compatibility": {
+        "run_id": 42090379707,
+        "status": "SUCCESS"
+      },
+      "site_api": {
+        "run_id": 42090379612,
+        "status": "SUCCESS"
+      },
+      "web_static": {
+        "run_id": 42090379866,
+        "status": "SUCCESS"
+      },
+      "optional_external_g2p_smoke": {
+        "run_id": 42090379819,
+        "status": "SUCCESS"
+      },
+      "full_ci": {
+        "run_id": 42090379627,
+        "status": "SUCCESS",
+        "jobs": {
+          "test": "SUCCESS",
+          "wheel_install_smoke": "SUCCESS",
+          "master_artifact": "SUCCESS"
+        }
+      }
+    },
+    "verified": {
+      "retained_wiktionary_entries": 13144,
+      "excluded_generated_entries": 48957,
+      "manual_and_unknown_sources": "FAIL_CLOSED",
+      "runtime_metadata_ipa_mismatch_count": 1,
+      "mismatch_example": "สวน",
+      "cpython_pyodide_parity_inputs": 4,
+      "chromium_worker_cold_and_warm": true,
+      "browser_no_api_requests": true,
+      "browser_no_cdn_requests": true,
+      "third_party_notice_files": 10,
+      "public_bundle_refused_without_rights_approval": true
+    },
+    "tltk_fallback": {
+      "verified_assets": 6,
+      "byte_identical_assets": 5,
+      "exact_bzip2_decompression_assets": 1,
+      "license_scope": "PARTIAL_AMBIGUOUS_BSD_3_VS_LGPL_3",
+      "preserve_both_notices": true
+    },
+    "public_pages": {
+      "redistribution_approved": false,
+      "deployment": "BLOCKED_PENDING_OWNER_APPROVAL_AND_TLTK_FILE_LEVEL_LICENSE_REVIEW",
+      "live_performance": "NOT_MEASURED",
+      "main_merged": false,
+      "production_cutover": false
+    },
+    "pr_210": "OPEN_UNMERGED",
+    "linguistic_accuracy": "NOT_MEASURED",
+    "independent_ipa_gold_rows": 0
   }
 }
