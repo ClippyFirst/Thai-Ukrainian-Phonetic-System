@@ -3,6 +3,9 @@ on:
   push:
     paths:
       - "src/thai_ukrainian/**"
+      - "web/src/**"
+      - "web/index.html"
+      - "web/tests/fastthaig2p-browser.test.mjs"
       - "scripts/fastthaig2p_pyodide_parity.py"
       - "web/tests/fastthaig2p-pyodide.test.mjs"
       - "pyproject.toml"
@@ -53,7 +56,16 @@ jobs:
           assert garden["result"]["status_code"] == 200
           assert garden["result"]["body"]["raw_ipa"] == "/sua̯n˩˩˦/"
           PY
-      - name: Install pinned Pyodide runtime
-        run: npm install --no-save --no-package-lock pyodide@0.29.5
+      - name: Install pinned Pyodide runtime and browser runner
+        run: npm install --no-save --no-package-lock pyodide@0.29.5 playwright@1.55.0
       - name: Run CPython versus Pyodide parity
         run: node web/tests/fastthaig2p-pyodide.test.mjs build/pyodide-wheels build/fastthaig2p-native.json
+      - name: Stage same-origin runtime assets for browser smoke
+        run: |
+          mkdir -p web/vendor/pyodide web/vendor/wheels
+          cp -R node_modules/pyodide/. web/vendor/pyodide/
+          cp build/pyodide-wheels/*.whl web/vendor/wheels/
+      - name: Install headless Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Test the real same-origin Pyodide worker in Chromium
+        run: node web/tests/fastthaig2p-browser.test.mjs
