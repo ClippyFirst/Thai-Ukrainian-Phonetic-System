@@ -75,7 +75,7 @@ Sources:
 - https://kaikki.org/thwiktionary/index.html
 - https://en.wiktionary.org/wiki/Wiktionary:Copyrights
 
-The filtered pronunciation data is a modified subset of Wiktionary-derived records. Attribution is to Wiktionary contributors and Kaikki.org/Wiktextract. The build excludes generated/manual/unknown-source records, reduces the tokenizer wordlist to retained IPA keys, and preserves one current runtime IPA value that differs from the audit snapshot. The filtered data is labelled CC BY-SA 4.0, and the wheel embeds the attribution and build provenance. The public notices page links to the license and source. This is a source-based compliance assessment, not legal advice.
+The full CC BY-SA 4.0 legal code is included at `web/licenses/CC-BY-SA-4.0.txt` (sourced from SPDX license-list data); the attribution page also links the alternative GFDL 1.3 source license. The filtered pronunciation data is a modified subset of Wiktionary-derived records. Attribution is to Wiktionary contributors and Kaikki.org/Wiktextract. The build excludes generated/manual/unknown-source records, reduces the tokenizer wordlist to retained IPA keys, and preserves one current runtime IPA value that differs from the audit snapshot. The filtered data is labelled CC BY-SA 4.0, and the wheel embeds the attribution and build provenance. The public notices page links to the license and source. This is a source-based compliance assessment, not legal advice.
 
 ### Manual and model-generated records
 
