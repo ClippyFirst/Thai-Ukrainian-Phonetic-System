@@ -47,10 +47,24 @@ const response = {
   warnings: ["Український запис попередній."]
 };
 let requests = [];
-globalThis.fetch = async (url, options) => {
-  requests.push({ url, options });
-  return { ok: true, status: 200, json: async () => response };
-};
+let nextWorkerMessage = { type: "result", result: response };
+let workerInstance;
+class FakeWorker {
+  constructor(url, options) {
+    this.url = url;
+    this.options = options;
+    this.listeners = {};
+    workerInstance = this;
+  }
+  addEventListener(type, callback) { this.listeners[type] = callback; }
+  postMessage(message) {
+    requests.push(message);
+    const responseMessage = { ...nextWorkerMessage, requestId: message.requestId };
+    queueMicrotask(() => this.listeners.message?.({ data: responseMessage }));
+  }
+  terminate() {}
+}
+globalThis.Worker = FakeWorker;
 
 await import("../src/app.js?ui-contract-test");
 
@@ -76,9 +90,10 @@ assert.match(output.innerHTML, /upstream commit/);
 assert.equal(status.className, "status notice");
 assert.match(status.textContent, /Український запис попередній/);
 assert.equal(requests.length, 1);
-assert.equal(requests[0].url, "/api/analyze");
-assert.equal(requests[0].options.method, "POST");
-assert.deepEqual(JSON.parse(requests[0].options.body), { text: "พริก" });
+assert.equal(requests[0].type, "analyze");
+assert.equal(requests[0].text, "พริก");
+assert.equal(workerInstance.options.type, "module");
+assert.match(String(workerInstance.url), /fastthaig2p-worker\.js$/);
 assert.doesNotMatch(await (await import("node:fs/promises")).readFile(new URL("../src/app.js", import.meta.url), "utf8"), /analyzeText|renderRtgsTokens|renderRtgsUkrainianTokens/);
 
 for (const example of examples) {
@@ -103,14 +118,10 @@ assert.equal(status.className, "status error");
 assert.match(status.textContent, /Введіть тайський текст/);
 
 input.value = "ทดสอบ";
-globalThis.fetch = async () => ({
-  ok: false, status: 422,
-  json: async () => ({ detail: {
-    code: "incomplete_ipa",
-    message: "FastThaiG2P не зміг повернути повний IPA.",
-    passthrough: "unsupported"
-  } })
-});
+nextWorkerMessage = {
+  type: "analysis-error",
+  message: "FastThaiG2P не зміг повернути повний IPA."
+};
 await analyze.click();
 assert.equal(status.className, "status error");
 assert.match(status.textContent, /FastThaiG2P не зміг повернути повний IPA/);
