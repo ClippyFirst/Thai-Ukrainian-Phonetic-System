@@ -1,30 +1,46 @@
 # CCOST text-only adapter and acquisition record
 
-**Status: PARTIAL — converter and long-text TextGrid reader implemented; CCOST release files not yet inspected.**
-**Scope:** text and phonetic annotation only. No WAV is needed, downloaded, extracted, opened, or bundled.
+**Status: PARTIAL — supplied release TextGrids are structurally parsed; X-SAMPA coverage and release-tier semantics still need review.**
+**Scope:** orthographic and phonetic annotations only. No WAV/audio member is present in the supplied CCOST ZIP; the CI inspector reads only `.TextGrid` members.
 
-## What is actually published
+## Supplied archive and observed release schema
 
-The Zenodo v1.0 record (DOI 10.5281/zenodo.17366698) publishes wordlist.csv, sentences.txt, metadata, CCOST_manual.pdf, and a single 6.2 GB C-COST.zip described as containing both WAV files and Praat TextGrid annotations. The public file list does **not** expose a separate TextGrid-only archive. Its ZIP preview reports too many files. The 206-item wordlist can be previewed independently; it is not pronunciation gold. See the [Zenodo record](https://zenodo.org/records/17366698).
+The repository owner supplied `CCOST textgrid.zip` on branch `docs/repository-audit-2026-11-04`. It contains 488 `.TextGrid` members (18,376,603 compressed bytes; 149,676,102 uncompressed TextGrid bytes); all 488 parse as Praat long-text TextGrid. The 488-file count matches the sum of recording files in Table 1 of Pittayaporn et al., LREC 2026. The branch Git blob SHA-1 is `3b1e3978c2b3a232dce4fdcfd137bb572ce5467f`; this pins the supplied branch file, not an upstream publisher checksum.
 
-The LREC 2026 paper documents these tier names and meanings:
-- ORT: orthographic word
-- KAN: canonical word pronunciation
-- KAS: canonical syllabified pronunciation
-- MAU: phonetic segment
-- MAS: phonemic syllable
-- TRN: orthographic utterance transcript
+The paper describes these tier roles: ORT (orthographic word), KAN (canonical word pronunciation), KAS (canonical syllabified pronunciation), MAU (phonetic segment), MAS (phonemic syllable), and TRN (orthographic utterance transcript). The supplied release files use these exact names:
 
-The paper states that phonemic and phonetic labels use X-SAMPA and that numeric tone suffixes are _1 Mid, _2 Low, _3 Falling, _4 High, _5 Rising. Figure 2 publishes an example for น่าจะ: KAN `n a:_3 c a_2`; KAS `n a:_3 . c a_2`; MAU intervals `n`, `a:_3`, `c`, `a_2`; MAS syllable labels `na:_3`, `ca_2`. These published examples are now regression fixtures; they are not a substitute for inspecting the released TextGrid files. Native Thai research assistants corrected alignment, tone and segmental accuracy; the paper reports no formal inter-annotator agreement. The published tier map is a research specification, **not proof that every released TextGrid has exactly these tier names/values**. Source: [Pittayaporn et al., LREC 2026](https://aclanthology.org/2026.lrec-1.247/).
+| Observed tier | Non-empty labels | Project interpretation |
+|---|---:|---|
+| `ORT-MAU` | 133,344 | Orthographic word tier; provisional alias of ORT |
+| `KAN-MAU` | 133,338 | Canonical word pronunciation; provisional alias of KAN |
+| `KAS-MAU` | 133,340 | Canonical syllabified pronunciation; provisional alias of KAS |
+| `MAU` | 445,723 | Phone-level surface tier |
+| `MAS` | 195,288 | Phonemic syllable tier |
+| `TRN` | 12,090 | Orthographic utterance transcript |
 
-## Acquisition decision
+The `-MAU` suffix is an observed release-tier naming convention. The mapping to the paper's published roles is a provisional project decision, not a confirmed statement from the curators. Preserve the raw tier names in provenance.
 
-Do not download the 6.2 GB mixed archive merely to extract text. The owner requirement is text-only. A request for a TextGrid-only export and the precise annotation manual is prepared in docs/external-review-and-source-requests.md, but has **not been sent** because this execution has no connected email action. Public curator contacts listed by the project's official ChulaSEAL page are:
-- Pittayawat Pittayaporn — Pittayawat.P@chula.ac.th
-- Sujinat Jitwiriyanont — Sujinat.J@chula.ac.th
+## Source tone and marker evidence
 
-If a TextGrid-only export is unavailable, the acceptable fallback is a curator-confirmed method for streaming/selectively extracting .TextGrid members without persisting WAV bytes, with a documented license basis and a verified file manifest. Do not assume that a ZIP containing both file types automatically authorizes selective redistribution; all extracted text remains CC BY-NC-SA 4.0. Keep source files outside this repository unless the license, attribution and ShareAlike obligations are handled explicitly.
+The LREC 2026 paper explicitly states that phonemic and phonetic labels use X-SAMPA and defines only `_1` Mid, `_2` Low, `_3` Falling, `_4` High and `_5` Rising. It reports manual correction by trained native Thai research assistants but no formal inter-annotator agreement. Generic BAS documentation describes a broader 1–9 tone-number facility; that generic facility does not override CCOST's corpus-specific five-tone mapping. Therefore observed `_8` labels are not interpreted as a sixth tone or converted by guesswork.
 
+Actual files contain tag-only labels such as `<p:>`, `<nib>`, `<usb>`, `<notProcessedChunk>`, `<Fail>` and `<P>`. The paper explicitly documents `<usb>` for disfluencies and `<p :>` for pauses; other tags remain opaque until their release-specific meaning is confirmed. Mixed tag-plus-transcript labels are not discarded as control markers; they remain unsupported for phonetic conversion.
+
+Other unsupported labels include Unicode IPA-looking forms (`ɹ`, `ɾ`, `tʃ`, `ʔ`), unusual ASCII sequences such as `r/`, and a Thai-script token. The paper describes phonetic variation and code-mixed items at MAU level, but it does not provide a complete conversion table for every observed label. Keep these cases fail-closed pending manual/curator evidence.
+
+## Text-only export
+
+To create a local JSONL containing orthographic intervals only (no phonetic tiers, no audio), run:
+
+    python scripts/export_textgrid_text.py "CCOST textgrid.zip" --tier ORT-MAU --tier TRN --output /tmp/ccost-orthographic-text.jsonl
+
+The exporter preserves interval times, raw label text, source file, tier, source version, CC BY-NC-SA 4.0 license, attribution and `SOURCE_ANNOTATED_NOT_GOLD` status. It does not write derived corpus rows into the repository. Keep the output under the source license and do not call it gold.
+
+## Curator follow-up
+
+The prior need to obtain a TextGrid-only archive is satisfied for the supplied 488-file export. A curator response is still useful to confirm the `-MAU` tier aliases and explain `_8`, non-ASCII variants and opaque markers. The prepared request in `docs/external-review-and-source-requests.md` has not been sent because no email action is connected.
+
+Primary references: [CCOST Zenodo record](https://zenodo.org/records/17366698), [Pittayaporn et al., LREC 2026](https://aclanthology.org/2026.lrec-1.247/), and [BAS tone/X-SAMPA help](https://clarin.phonetik.uni-muenchen.de/BASWebServices/help/help_examples).
 ## Converter contract
 
 src/thai_ukrainian/adapters/xsampa.py is a strict X-SAMPA → IPA converter. It:
