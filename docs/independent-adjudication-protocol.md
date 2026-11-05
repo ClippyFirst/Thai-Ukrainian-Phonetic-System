@@ -267,3 +267,35 @@ A reviewer may add `broad_surface_ipa` only when the row names a VERIFIED audio 
 ## Audio metadata granularity — 2026-11-02
 
 The audio manifest records both a normalized microphone category and the source's exact `microphone_id` (for LOTUSDIS, preserve the dataset `mic` value such as `con123`). Its `overlap_status` describes the registered asset as a whole and may be `NONE`, `PRESENT` or `UNKNOWN`. Each reviewed row separately records `audio_interval_overlap_status`; acoustic IPA evidence is accepted only when the exact annotated interval is verified as `NONE`. This permits a clean, time-bounded interval from a longer recording that contains overlap elsewhere, without treating the entire recording as overlap-free. The audio file still requires immutable revision, absolute URI, SHA-256, speaker pseudonym, duration and in-bounds interval. The interval-level status is an annotation claim to be independently checked, not an automatic property inferred from the source card.
+
+## CCOST TextGrid exception worklist — 2026-11-05
+
+The repository now provides `scripts/build_ccost_review_worklist.py`. CI runs it against the supplied CCOST archive and publishes the output as the `ccost-label-adjudication-worklist` workflow artifact. The generator:
+
+- opens only `.TextGrid` members and skips every audio/non-TextGrid ZIP member;
+- preserves each raw label, tier name, source member, and exact interval;
+- links rows sharing the same source file and interval with a stable `event_group_id`, so repeated aligned-tier occurrences are not counted as independent speech events;
+- includes overlapping labels from the other tiers (including orthographic `ORT-MAU` and transcript `TRN`) plus previous/next labels in the same tier;
+- inventories the four unresolved markers `<P>`, `<P:>`, `<:p>`, and `<Fail>` across all interval tiers, not only phonetic tiers;
+- leaves every expert and adjudicator decision field blank. It does not repair, normalize, infer, or convert a problematic source label.
+
+The `_8` inventory is **868 tier-level occurrences**, **397 exact file/interval groups**, and **438 unique file/interval/raw-label events**. These denominators are different and must not be interchanged. Review one event group as a unit, inspect all rows in that group, and preserve any tier-specific disagreement. The 868 rows are not 868 independent speech tokens.
+
+### Required decisions for each `_8` group
+
+1. Confirm the raw X-SAMPA token boundary and whether `_8` is actually attached to the preceding syllable or appears in a malformed/mixed token.
+2. Compare the orthographic context and aligned `KAN-MAU`, `KAS-MAU`, `MAU`, and `MAS` rows supplied by the worklist.
+3. State whether the label is recoverable from text/canonical cross-tier evidence. If so, provide the proposed source-level X-SAMPA correction and a specific evidence note; otherwise abstain.
+4. Never replace `_8` with a valid tone suffix merely because one of `_1`–`_5` is allowed. A proposed correction needs positive evidence from the source context or a separately documented source convention.
+
+### Required decisions for unresolved marker groups
+
+For `<P>`, `<P:>`, `<:p>`, and `<Fail>`, classify the occurrence only after considering case, punctuation, tier role, surrounding Thai text, and cross-tier alignment. Record whether it is a markup token, processing/alignment status, non-speech event, literal transcript text, or still unknown. Do not equate uppercase `<P>` with lowercase `<p:>`, or infer `<Fail>` semantics from its English-looking spelling.
+
+### Scope of adjudication
+
+This packet can support expert review of **textual/canonical/phonemic annotation consistency** without audio. It cannot establish acoustic correctness of surface realization, pitch contours, duration, or speaker-specific allophony. Keep those claims outside the current text-only evidence grade. CCOST-derived review material remains subject to CC BY-NC-SA 4.0 and the repository's third-party corpus notice.
+
+### Completion gate
+
+The worklist artifact and blank templates are preparation only. Mark the review DONE_VERIFIED only after two qualified, independent reviewers submit complete blind packets, the reviewer registry is verified, the originals are frozen, a separate adjudicator resolves or explicitly leaves disagreements unresolved, and a reproducible agreement/adjudication report is recorded. Until then, independent IPA gold rows remain zero and linguistic accuracy remains NOT_MEASURED.

@@ -65,3 +65,5 @@ This directory contains project tooling, not production runtime modules. Scripts
 - Before changing an evaluator, preserve its evidence-grade and denominator rules. Source-annotated, source-attested and adjudicated records must not be silently mixed.
 - Keep optional network-dependent probes out of the production runtime and default release path unless a separate decision explicitly changes that boundary.
 - Current inventory: **31 Python scripts**. Scripts are not interchangeable merely because they consume the same corpus: baseline, dictionary, TUD, and error-triage runs answer different questions.
+
+| `build_ccost_review_worklist.py` | Build a blind, context-rich CCOST review worklist from TextGrid labels | Preserves raw labels, exact tier/time provenance, overlapping cross-tier context and adjacent labels; inventories `_8` and unresolved `<P>`/`<P:>`/`<:p>`/`<Fail>`; reads TextGrid members only and never infers corrections |

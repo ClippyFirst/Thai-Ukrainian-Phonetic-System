@@ -233,3 +233,16 @@ The user clarified that the project needs only orthographic text and phonetic te
 - **CCOST:** published TextGrid tiers include MAU phonetic segments and MAS phonemic syllables, plus ORT/KAN/KAS/TRN; labels use X-SAMPA and five tone suffixes. CC BY-NC-SA 4.0 appears compatible with the stated non-commercial public-interest research if attribution and ShareAlike are followed. Prefer requesting TextGrid-only files and manual; do not download WAV. No formal IAA was collected, so independent review of a subset is still required.
 - **FastThaiG2P:** Apache-2.0 code can be reused with NOTICE. Its Wiktionary-derived IPA subset has a CC BY-SA 3.0 reuse path. Do not blindly copy the merged 62k dictionary: it combines that subset with ~49k LLM-generated entries and manual overrides. TLTK fallback code has a BSD-3 notice, but vendored TLTK data files need file-level license clarification because upstream exposes conflicting license indicators. The data README's 34-row/17-row gold test files return 404 on current upstream main; accessible tests are smoke tests, not a phonetic benchmark. Keep generated IPA provisional.
 - **No runtime corpus rows or phonetic labels were added. No audio was downloaded.** The full source-by-source analysis and links are in the linked research note.
+
+## 2026-11-05 follow-up — CCOST label adjudication readiness
+
+The latest work adds an evidence-preserving path for the three outstanding CCOST tasks rather than guessing at source labels:
+
+- `scripts/build_ccost_review_worklist.py` builds a blind contextual worklist from TextGrid members only. The CI workflow publishes TSV + JSON provenance as `ccost-label-adjudication-worklist`.
+- The worklist captures all unsupported X-SAMPA labels and the four unresolved marker spellings across interval tiers, preserves source labels/times, adds cross-tier and adjacent context, and keeps expert decision fields blank.
+- `_8`: 868 tier-level occurrences, 397 exact interval groups, 438 file/interval/raw-label events, 22 distinct strings, 119 files. `_8` is invalid/out-of-range under the published five-tone convention; intended corrections remain unknown.
+- Markers `<P>`, `<P:>`, `<:p>`, `<Fail>` remain unresolved. Prior inventory counts are 394, 4, 22, 16 appearances. No normalization or semantic inference is implemented.
+- Public institutional evidence is recorded for potential reviewers Onsuwan, Maluleem and Roengpitya. No one has been contacted, appointed, or verified in the reviewer registry.
+- No expert adjudication has occurred. Independent IPA gold rows remain 0; accuracy remains NOT_MEASURED.
+
+The upstream practice review remains selective rather than vendored: repository `AGENTS.md` adapts Superpowers TDD/root-cause/verification, Matt Pocock's small-interface and review principles, Ponytail's deletion-first/YAGNI audit, and Unlazy's acceptance-ledger/reverification discipline. No upstream skill framework is installed or copied wholesale. See `AGENTS.md` and `docs/README.md`.
