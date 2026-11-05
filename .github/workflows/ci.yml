@@ -74,6 +74,32 @@ jobs:
               ],
           }, ensure_ascii=False, indent=2))
           PY
+      - name: Build blind CCOST label adjudication worklist (TextGrid only)
+        run: |
+          python scripts/build_ccost_review_worklist.py "CCOST textgrid.zip" --output /tmp/ccost-label-review-worklist.tsv --manifest /tmp/ccost-label-review-manifest.json
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          manifest = json.loads(Path("/tmp/ccost-label-review-manifest.json").read_text(encoding="utf-8"))
+          summary = manifest["summary"]
+          with Path("/tmp/ccost-label-review-worklist.tsv").open(encoding="utf-8", newline="") as handle:
+              rows = list(csv.DictReader(handle, delimiter="\\t"))
+          assert summary["tone_suffix_8_occurrences"] == 868, summary
+          assert summary["tone_suffix_8_event_groups"] == 397, summary
+          assert summary["tone_suffix_8_unique_raw_label_events"] == 438, summary
+          assert summary["audio_members_read"] == 0, summary
+          assert len(rows) == summary["records"], (len(rows), summary)
+          assert all(not row["proposed_xsampa"] and not row["adjudicator_decision"] for row in rows)
+          print(json.dumps({"review_records": len(rows), "summary": summary}, ensure_ascii=False, indent=2))
+          PY
+      - uses: actions/upload-artifact@v7
+        with:
+          name: ccost-label-adjudication-worklist
+          path: |
+            /tmp/ccost-label-review-worklist.tsv
+            /tmp/ccost-label-review-manifest.json
+            data/THIRD-PARTY-CORPUS-NOTICES.md
+          if-no-files-found: error
       - name: Export selected orthographic TextGrid intervals without audio
         run: |
           python scripts/export_textgrid_text.py "CCOST textgrid.zip" "nectecLOTUSDIS textgrid.zip" --tier ORT-MAU --tier TRN --tier-prefix Hijack_ --output /tmp/textgrid-orthographic-text.jsonl
