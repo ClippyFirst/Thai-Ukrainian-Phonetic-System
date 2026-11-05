@@ -27,7 +27,19 @@ def digest(data: bytes) -> str:
 def verify(fast_root: Path, tltk_root: Path) -> dict:
     fast_source = (fast_root / "fastthaig2p/_th2ipa.py").read_text(encoding="utf-8")
     if "Thai Language Toolkit : version  1.3.8" not in fast_source:
-        raise SystemExit("Vendored FastThaiG2P fallback code no longer identifies TLTK 1.3.8")
+        raise SystemExit("Vendored FastThaiG2P parser no longer identifies TLTK 1.3.8")
+    setup_source = (tltk_root / "setup.py").read_text(encoding="utf-8")
+    repository_license = (tltk_root / "LICENSE").read_text(encoding="utf-8")
+    module_license = (tltk_root / "LICENSE.txt").read_text(encoding="utf-8")
+    package_metadata = (tltk_root / "PKG-INFO").read_text(encoding="utf-8")
+    if "version='1.9.1'" not in setup_source:
+        raise SystemExit("Pinned TLTK repository setup.py version changed")
+    if "GNU LESSER GENERAL PUBLIC LICENSE" not in repository_license:
+        raise SystemExit("Pinned TLTK repository LICENSE no longer identifies LGPL-3.0")
+    if "Redistribution and use in source and binary forms" not in module_license:
+        raise SystemExit("Pinned TLTK LICENSE.txt no longer contains the BSD-style module notice")
+    if "Version: 1.1.7" not in package_metadata or "License: GPLv3" not in package_metadata:
+        raise SystemExit("Pinned TLTK PKG-INFO no longer matches the recorded stale metadata")
     records = []
     for name, (fast_rel, tltk_rel, transform) in PAIRS.items():
         fast_bytes = (fast_root / fast_rel).read_bytes()
@@ -48,8 +60,17 @@ def verify(fast_root: Path, tltk_root: Path) -> dict:
     return {
         "fastthaig2p_commit": EXPECTED_FASTTHAIG2P_COMMIT,
         "tltk_file_last_change_commit": EXPECTED_TLTK_FILE_COMMIT,
-        "tltk_code_version_header": "1.3.8",
-        "tltk_code_license": "BSD-3-Clause",
+        "fastthaig2p_vendored_parser_header_version": "1.3.8",
+        "fastthaig2p_vendored_parser_header_license": "BSD-3-Clause",
+        "pinned_tltk_repository_setup_version": "1.9.1",
+        "pinned_tltk_repository_root_license": "LGPL-3.0",
+        "pinned_tltk_module_license_txt": "BSD-3-Clause-style notice",
+        "pinned_tltk_pkg_info": {
+            "version": "1.1.7",
+            "license": "GPLv3",
+            "status": "STALE_METADATA_RELATIVE_TO_SETUP_PY_1_9_1",
+        },
+        "license_scope": "AMBIGUOUS_RETAIN_BOTH_LGPL_AND_BSD_NOTICES_PENDING_FILE_LEVEL_REVIEW",
         "assets": records,
         "verified_assets": len(records),
         "status": "BYTE_OR_BZIP2_DECOMPRESSION_TRANSFORM_VERIFIED",
