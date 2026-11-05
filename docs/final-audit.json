@@ -4205,24 +4205,28 @@
         "verify asserted counts and all reviewer/adjudicator fields blank",
         "Preserve distinction between generic MAUS suffix syntax (_1.._9) and CCOST paper's five mapped Thai tonemes (_1.._5)"
       ],
-      "current": "Exact-head Full CI run 42036060620 passed all three jobs on ebd1f0a55b2987c40725659b1524d26ad21abc0; artifact 13418563592 downloaded and inspected; next batch adds marker-group and exact-tone-counterpart assertions."
+      "current": "Exact-head Full CI 42039619729 passed all three jobs on 43fa978d440bc654645a10430ac54962bd790582; Site API 42039619784 and external G2P smoke 42039619715 passed. Latest artifact 13421040388 downloaded and inspected."
     },
     "denominator_note": "Earlier inspector marker counts <P>=394 and <Fail>=16 are phonetic-tier-only; the worklist scans all tiers, so its counts are not directly comparable.",
     "exact_head_ci": {
-      "sha": "ebd1f0a55b2987c40725659b1524d26ad21abc0c",
-      "run": 42036060620,
+      "sha": "43fa978d440bc654645a10430ac54962bd790582",
+      "run": 42039619729,
       "conclusion": "success",
       "jobs": {
         "test": "success",
         "wheel_install_smoke": "success",
         "master_artifact": "success"
       },
-      "pytest": "394 passed, 1 skipped, 1211 subtests passed",
+      "pytest": "395 passed, 1 skipped, 1211 subtests passed",
       "ruff": "passed",
-      "web_python_parity": "29 fixtures passed"
+      "web_python_parity": "29 fixtures passed",
+      "site_api_run": 42039619784,
+      "site_api_conclusion": "success",
+      "external_g2p_smoke_run": 42039619715,
+      "external_g2p_smoke_conclusion": "success"
     },
     "artifact_verification": {
-      "artifact_id": 13418563592,
+      "artifact_id": 13421040388,
       "name": "ccost-label-adjudication-worklist",
       "records": 1975,
       "source_textgrid_files": 488,
@@ -4243,9 +4247,10 @@
       {
         "name": "Phanintra Teeranon, Ph.D.",
         "institution": "University of Phayao",
-        "evidence": "Public CV and peer-reviewed acoustic/perceptual studies of Standard Thai tones.",
-        "url": "https://so03.tci-thaijo.org/index.php/JLC/article/view/240495",
-        "role": "first_pass_candidate"
+        "evidence": "Official University of Phayao profile confirms Associate Professor/current affiliation and institutional contact; public CV documents PhD in Linguistics and acoustic/perceptual Thai tone research.",
+        "url": "https://www.libarts.up.ac.th/employee/phanintra.te",
+        "role": "first_pass_candidate",
+        "institutional_email": "phanintra.te@up.ac.th"
       }
     ],
     "proposed_adjudicator": {
@@ -4253,7 +4258,8 @@
       "institution": "Mahidol University",
       "evidence": "Mahidol profile and peer-reviewed acoustic work on Thai tones, vowel length and fricatives.",
       "url": "https://murex.mahidol.ac.th/en/persons/rungpat-roengpitya/",
-      "role": "separate_adjudicator_candidate"
+      "role": "separate_adjudicator_candidate",
+      "institutional_email": "rungpat.roe@mahidol.ac.th"
     },
     "conflict_risk_alternate": {
       "name": "Lena Maluleem, Ph.D.",
@@ -4267,6 +4273,7 @@
     "appointed": false,
     "consented": false,
     "independent_ipa_gold_rows": 0,
-    "acceptance": "Verify identity, current qualifications, Standard Thai competence, IPA/X-SAMPA familiarity, independence/conflicts, availability, consent and permission to retain evidence; obtain two frozen blind first-pass submissions and a separate adjudication record."
+    "acceptance": "Verify identity, current qualifications, Standard Thai competence, IPA/X-SAMPA familiarity, independence/conflicts, availability, consent and permission to retain evidence; obtain two frozen blind first-pass submissions and a separate adjudication record.",
+    "conflict_status": "NOT_ESTABLISHED; no CCOST paper authorship identified, but independent collaboration/supervision/financial/personal conflict declarations still required"
   }
 }
