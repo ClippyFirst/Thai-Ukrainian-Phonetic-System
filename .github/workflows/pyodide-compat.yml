@@ -8,6 +8,8 @@ on:
       - "web/tests/fastthaig2p-browser.test.mjs"
       - "scripts/fastthaig2p_pyodide_parity.py"
       - "scripts/slim_pythainlp_wheel.py"
+      - "scripts/prepare_fastthaig2p_browser_source.py"
+      - "tests/test_fastthaig2p_browser_data.py"
       - "scripts/build_pyodide_bundle.py"
       - "data/third_party/fastthaig2p-browser-bundle.json"
       - "web/tests/fastthaig2p-pyodide.test.mjs"
@@ -18,6 +20,8 @@ on:
     paths:
       - "src/thai_ukrainian/**"
       - "scripts/fastthaig2p_pyodide_parity.py"
+      - "scripts/prepare_fastthaig2p_browser_source.py"
+      - "tests/test_fastthaig2p_browser_data.py"
       - "web/tests/fastthaig2p-pyodide.test.mjs"
       - "pyproject.toml"
       - ".github/workflows/pyodide-compat.yml"
@@ -47,7 +51,20 @@ jobs:
           python -m pip download --no-deps --only-binary=:all: --dest build/pyodide-wheels pythainlp==5.4.0
           python -m pip download --no-deps --only-binary=:all: --dest build/pyodide-wheels tzdata==2026.6
           python scripts/slim_pythainlp_wheel.py build/pyodide-wheels/pythainlp-5.4.0-py3-none-any.whl
-          python -m pip wheel --no-deps --wheel-dir build/pyodide-wheels "fastthaig2p @ git+https://github.com/awslabs/FastThaiG2P.git@4e82a291b4cf2876326744c6580121e9986ad354"
+          git clone https://github.com/awslabs/FastThaiG2P.git build/FastThaiG2P
+          git -C build/FastThaiG2P checkout 4e82a291b4cf2876326744c6580121e9986ad354
+          python scripts/prepare_fastthaig2p_browser_source.py --source build/FastThaiG2P --report build/fastthaig2p-data-provenance.json
+          python -m pip wheel --no-deps --wheel-dir build/pyodide-wheels ./build/FastThaiG2P
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path("build/fastthaig2p-data-provenance.json").read_text())
+          assert report["retained_entries"] == report["retained_dictionary_words"]
+          assert report["retained_counts"].get("wiktionary", 0) > 0
+          assert report["excluded_counts"].get("generated", 0) > 0
+          assert "generated" not in report["retained_counts"]
+          PY
+          python -m unittest tests.test_fastthaig2p_browser_data -v
           test "$(find build/pyodide-wheels -maxdepth 1 -name '*.whl' | wc -l)" -eq 4
           sha256sum build/pyodide-wheels/*.whl
           du -h build/pyodide-wheels/*.whl
