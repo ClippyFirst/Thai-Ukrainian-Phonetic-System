@@ -89,7 +89,7 @@ No deployment, main-branch change, merge, release tag or repository setting chan
 | PyThaiNLP footprint | 37 unused corpus assets removed; required CC0 lists retained | DONE_VERIFIED |
 | Source filtering | Generated/manual/unknown IPA excluded; 13,144 Wiktionary entries retained | DONE_VERIFIED |
 | TLTK fallback asset provenance | TLTK 1.3.8 parser header; 5 byte-identical files + 1 exact bzip2 decompression | DONE_VERIFIED — run 42085653176 |
-| TLTK license scope | Parser header 1.3.8/BSD-3; data-source repository snapshot setup.py 1.9.1, root LGPL-3, module BSD-style, stale PKG-INFO 1.1.7/GPLv3 | PARTIAL — both notices retained; exact asset scope unresolved |
+| TLTK license scope | Parser header 1.3.8/BSD-3; data-source repository snapshot setup.py 1.9.1/BSD-3, root LGPL-3, module BSD-style, stale PKG-INFO 1.1.7/GPLv3 | PARTIAL — both notices retained; exact asset scope unresolved |
 | Transparent Wiktionary dataset ZIP | Standalone filtered IPA map/tokenizer list, provenance, attribution and CC BY-SA 4.0 notice | DONE_VERIFIED — 194,745 bytes; bundle CI 42086644531 |
 | Public redistribution | Owner rights flag remains false | BLOCKED — explicit owner approval and final license-scope review pending |
 | Public Pages deployment | Exact merged main commit deployed and live-smoked | BLOCKED — rights flag false; owner approval and final TLTK license-scope review pending |
