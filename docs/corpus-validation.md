@@ -1,17 +1,21 @@
 # Corpus validation
 
-## Current owner scope and CCOST adapter status — 2026-11-05
+## Current owner scope and supplied TextGrid evidence — 2026-11-05
 
-- **Global TIMIT Thai is excluded by owner decision.** No LDC access, agreement, fees, text/audio acquisition or derived labels are to be pursued.
-- **Audio is out of scope.** The project needs orthographic text, phonetic transcription and IPA only.
-- **CCOST is the primary phonetic-text candidate.** Its published paper specifies ORT/KAN/KAS/MAU/MAS/TRN tiers, X-SAMPA labels and numeric tone suffixes. Zenodo lists one mixed 6.2 GB WAV+TextGrid ZIP, not a separate TextGrid-only archive; no archive or audio has been downloaded.
-- Implemented in this branch: strict X-SAMPA→IPA conversion, CCOST numeric tone suffix parsing, a Praat long-text TextGrid reader, typed provisional PhoneticResult conversion, and a local inspection script. Synthetic fixtures only have been tested; the actual released tier inventory and encoding remain unverified.
-- MAS is the phonemic syllable tier; KAN/KAS are canonical word/syllabified layers; MAU is phone-level surface material and cannot independently drive syllable-level Ukrainian adaptation. Source annotations are not adjudicated gold.
-- A TextGrid-only export request is prepared in external-review-and-source-requests.md, but not sent: no connected email action is available. Do not download the mixed archive simply to extract text.
+- **Global TIMIT Thai is excluded by owner decision.** Do not pursue LDC access, agreements, fees, labels or audio.
+- **Audio is out of scope.** The two owner-supplied ZIPs contain TextGrid annotations only; CI reads `.TextGrid` members and does not read or extract audio.
+- **CCOST is the primary phonetic-text candidate.** The supplied `CCOST textgrid.zip` contains 488 TextGrid members; all 488 parse. The observed release tiers are `ORT-MAU`, `KAN-MAU`, `KAS-MAU`, `MAU`, `MAS`, and `TRN`. The `-MAU` aliases are provisional mappings to published ORT/KAN/KAS roles pending curator confirmation.
+- **LOTUSDIS is optional transcript context only.** The supplied `nectecLOTUSDIS textgrid.zip` contains 90 TextGrid members; all 90 parse. Each has one recording-named transcript IntervalTier. No phone, phoneme, toneme, IPA or X-SAMPA tier was observed.
+- Added `scripts/export_textgrid_text.py` to export explicitly selected orthographic intervals to provenance-rich JSONL. The export preserves raw labels, interval times, source file/tier, license, attribution and `SOURCE_ANNOTATED_NOT_GOLD`; it never reads non-TextGrid ZIP members. The generated corpus file is not committed.
+- Suggested text-only export command:
 
-**Acceptance ledger:** converter/parser implementation = PARTIAL pending exact-head CI and real TextGrid compatibility; TextGrid-only source acquisition = BLOCKED pending curator response; independent phonetic adjudication = BLOCKED pending qualified reviewers and source-appropriate review. No CCOST labels have been imported into gold; accuracy remains NOT_MEASURED. Historical audio-specific gates elsewhere in this document are superseded and not active tasks.
+  `python scripts/export_textgrid_text.py "CCOST textgrid.zip" "nectecLOTUSDIS textgrid.zip" --tier ORT-MAU --tier TRN --tier-prefix Hijack_ --output /tmp/thai-orthographic-text.jsonl`
 
+- CCOST converter/parser implementation is PARTIAL: all supplied TextGrid structures parse, but the X-SAMPA map is a declared subset. The LREC 2026 paper defines tone suffixes `_1`–`_5`; observed `_8` labels remain unsupported. Unicode IPA-looking forms and mixed tag-plus-transcript labels are not guessed.
+- CCOST source annotations and LOTUSDIS transcripts are not independent gold. Gold IPA rows remain 0; linguistic accuracy remains `NOT_MEASURED`. CCOST paper reports no formal inter-annotator agreement.
+- Exact-head CI for the initial full archive inventory [42011279020](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42011279020) passed all three jobs, but predates the latest strict marker and exporter additions. Their exact-head CI rerun is pending.
 
+**Acceptance ledger:** supplied TextGrid inventory and long-text parsing = DONE_VERIFIED for 578/578 files; CCOST `-MAU` tier semantics and X-SAMPA coverage = PARTIAL; text-only JSONL exporter = PARTIAL pending exact-head CI; independent phonetic adjudication = BLOCKED pending qualified reviewers and adjudication. No audio or derived corpus records are committed.
 ## Purpose
 
 This repository contains validation infrastructure, not a redistributed copy of third-party corpora. A licensed/local corpus is supplied by the researcher and evaluated deterministically.
