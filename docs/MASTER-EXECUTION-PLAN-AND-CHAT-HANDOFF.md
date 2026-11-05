@@ -2564,3 +2564,14 @@ Current decisions:
 - FastThaiG2P: Apache-2.0 code + NOTICE is reusable; Wiktionary subset has CC BY-SA 3.0; generated IPA remains provisional, not gold; TLTK fallback data awaits exact license mapping. Upstream README's purported 34/17 gold files currently return 404; accessible tests are smoke tests.
 - No audio was downloaded; no corpus labels were added to runtime data. The exact-head CI for this documentation batch must be checked after the commit; do not inherit previous CI status.
 
+
+
+## 2026-11-05 follow-up: CCOST label review and FastThaiG2P license
+
+- Added `docs/ccost-label-review-2026-11-05.md`: inspected 1,014 conversion-failure occurrences, classified 116 distinct raw labels into seven fail-closed classes, and separated documented MAUS markers from unresolved tags.
+- CI inspection artifact: [textgrid-archive-inspection](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42018381197/artifacts/13410038957), SHA-256 `dd3b0f263fe72e17af7d6de1e429385286140fb55d1df0b6e3ba3a33c3925cc2`.
+- CCOST paper §3.3 confirms X-SAMPA and tone suffixes `_1`–`_5`; BAS and CCOST sources define `<p:>`, `<usb>`, and `<nib>`. `_8` (868 occurrences), slash forms, mixed markers, Unicode-looking forms, Thai text, malformed tokens and opaque tags remain unsupported. No guessed mapping was added.
+- `ORT-MAU`, `KAN-MAU`, and `KAS-MAU` are observed release tier names; the semantics of the `-MAU` suffix remain provisional pending curator confirmation.
+- Added `docs/fastthaig2p-license-review-2026-11-05.md`. Exact pinned source code has Apache-2.0 LICENSE and Amazon NOTICE; vendored `_th2ipa.py` retains a TLTK BSD-3 notice. Upstream wheel bundles a mixed-provenance dictionary and TLTK fallback data; Wiktionary/kaikki entries are CC BY-SA/GFDL. Per-component redistribution rights for generated/manual/fallback data remain unresolved.
+- FastThaiG2P remains an optional pinned external dependency. This change does not vendor its dictionary or fallback assets and does not promote its IPA output to gold.
+- No linguistic gold was created: independently adjudicated IPA rows remain 0; accuracy remains `NOT_MEASURED`.
