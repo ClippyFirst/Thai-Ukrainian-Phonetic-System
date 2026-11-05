@@ -58,7 +58,7 @@ The official LOTUSDIS dataset card describes sentence text, speaker ID, micropho
 
 ## Verification
 
-Exact-head CI on implementation commit `9214e7a03c3fbd8652e705f7d027197bba644c7f`:
+Exact-head CI on final verified checkpoint `1dc252c517343fd6277badaa1625c095bd3a63d9` [42014178666](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42014178666):
 
 - Python: **383 passed, 1 skipped, 1,206 subtests passed**.
 - Ruff: passed.
