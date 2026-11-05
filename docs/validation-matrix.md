@@ -1,3 +1,13 @@
+## Public-source clarification checkpoint — 2026-11-05
+
+- Branch: `docs/repository-audit-2026-11-04`; work remains on PR #210, no mainline mutation.
+- CCOST tier suffixes are now **DONE_VERIFIED** from the BAS WebServices tutorial: `ORT-MAU` = MAUS-tokenized word segmentation; `KAN-MAU` = canonical X-SAMPA word pronunciation; `KAS-MAU` = G2P phonological syllable segmentation. The earlier curator blocker for `-MAU` is closed.
+- `<notProcessedChunk>` is now **DONE_VERIFIED** as a MAUS dummy segment inserted when a chunk could not be processed; likely causes include transcript/signal mismatch or a chunk too short for its expected phone sequence. It is not a phone/IPA label. `<P>`, `<P:>`, `<:p>`, and `<Fail>` remain unresolved; `_8` remains unresolved and must not be guessed as a sixth tone.
+- FastThaiG2P: optional external dependency use and internal candidate comparison are **PERMITTED** under the inspected upstream Apache-2.0 code grant. Upstream data metadata records per-word source categories. Wiktionary-derived entries retain CC BY-SA/GFDL obligations; generated/manual assets appear covered by the repository's Apache-2.0 grant; TLTK fallback data has BSD-3 package evidence (with a separate LGPL file in TLTK's repository). Bulk copying/redistribution of the merged 62k dataset remains **PARTIAL/BLOCKED** pending a clear split/attribution package, not a blocker on current dependency use.
+- Sources: [BAS tier tutorial](https://clarin.phonetik.uni-muenchen.de/BASWebServices/help/tutorial), [BAS chunk failure FAQ](https://clarin.phonetik.uni-muenchen.de/BASWebServices/help/help_examples), [FastThaiG2P data README](https://github.com/awslabs/FastThaiG2P/blob/4e82a291b4cf2876326744c6580121e9986ad354/data/README.md), [FastThaiG2P merge script](https://github.com/awslabs/FastThaiG2P/blob/4e82a291b4cf2876326744c6580121e9986ad354/scripts/merge_ipa.py), [TLTK package metadata](https://github.com/attapol/tltk/blob/master/setup.py), [TLTK BSD notice](https://github.com/attapol/tltk/blob/master/LICENSE.txt).
+
+---
+
 ## Latest exact-head repository verification — 2026-11-05
 
 - Branch: `docs/repository-audit-2026-11-04`; documentation checkpoint HEAD: `45bbd7386ede98c6fa63b015c9c7a303c436e699`; implementation checkpoint: `f9b6baf1ad3c55057051ff5652ac7827a06fd7c1`; base `main`: `56fba86b4b8be2fe4e67284355e9928108527387`; comparison at this checkpoint: **137 commits ahead, 0 behind**.
