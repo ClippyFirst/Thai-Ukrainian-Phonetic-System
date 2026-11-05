@@ -78,14 +78,14 @@ No third-party skill files are copied into this repository.
 - [ ] Dedicated FastThaiG2P Site API workflow passes.
 - [ ] Optional external G2P smoke passes, or its unavailability is explicitly recorded.
 - [ ] Python/browser parity and generated-artifact drift gates pass.
-- [ ] Dependency pins, license notices and corpus attribution are present.
-- [ ] Beta UI clearly states provisional status, privacy caution, and unsupported-input behavior.
+- [x] Dependency pins, license notices and corpus attribution are present.
+- [x] Beta UI clearly states provisional status, privacy caution, and unsupported-input behavior.
 - [x] A feedback path and a simple issue-triage procedure are published: website footer links to the GitHub Beta feedback form at .github/ISSUE_TEMPLATE/beta-feedback.yml; it asks for minimal reproduction context and explicitly prohibits personal/confidential data and audio.
 - [x] FastThaiG2P Pyodide browser port passes exact CPython parity and real Chromium cold/warm worker smoke without API/CDN requests (CI `42085653176`); live Pages deployment remains gated.
 - [ ] Runtime bundle redistribution/attribution manifest is verified before public Pages deployment.
 - [ ] Pyodide cold-start, warm-run and bundle-size budgets are measured on desktop and mobile.
-- [ ] Manual accessibility limitations are disclosed; no unsupported WCAG conformance claim is made.
-- [ ] Release notes identify known linguistic and corpus limitations.
+- [x] Manual accessibility limitations are disclosed; no unsupported WCAG conformance claim is made.
+- [x] Release notes identify known linguistic and corpus limitations.
 
 ## GitHub Pages-only hosting decision and port status (2026-11-05)
 
