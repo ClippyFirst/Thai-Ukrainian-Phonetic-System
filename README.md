@@ -220,7 +220,7 @@ The repository includes a static two-page web application under `web/`:
 
 The browser uses the CC0 list for **word-boundary evidence only**. A dictionary match does not imply a known pronunciation: IPA and Ukrainian output are still withheld unless the word has curated syllabification or a typed source-attested IPA override. To run browser tests locally, first run `python scripts/generate_web_word_dictionary.py`; the generated `web/src/word-dictionary.generated.js` is a build artifact and is not committed.
 
-The web CI gate compares the browser engine against the Python reference on the same probes before the Pages artifact is eligible for deployment. GitHub Pages is a static presentation/deployment layer; it does not run the Python package server-side.
+The FastThaiG2P browser port has a dedicated Pyodide 0.29.5 parity gate and a headless Chromium smoke test for its same-origin Web Worker. GitHub Pages remains static-only; the build stages the Pyodide runtime and Python wheels only when the explicit bundle-ready gate is enabled and the component-level redistribution manifest approves publication. The worker sends no Thai input to an API or CDN.
 
 ## Research workspace
 
