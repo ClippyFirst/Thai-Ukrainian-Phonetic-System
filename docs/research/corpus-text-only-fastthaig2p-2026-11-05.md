@@ -145,3 +145,8 @@ A strict X-SAMPA→IPA converter and Praat long-text TextGrid reader have been i
 ## Owner scope decision — 2026-11-05
 
 Global TIMIT is excluded. Its earlier access/licensing discussion above is historical only and must not be treated as an active task. The active order is CCOST → selective FastThaiG2P/Wiktionary reuse → optional LOTUSDIS text. All corpus work remains text-only; audio is out of scope.
+
+
+## FastThaiG2P component-level license findings — 2026-11-05
+
+See [the exact-pin license review](../fastthaig2p-license-review-2026-11-05.md). The pinned FastThaiG2P source code is Apache-2.0 with an Amazon NOTICE; its vendored TLTK parser retains a separate BSD-3 notice. However, the runtime wheel bundles a mixed-provenance dictionary (Wiktionary/kaikki under CC BY-SA and GFDL, model-generated entries, manual overrides) and TLTK fallback data. The upstream data README does not prove a single Apache-only license for all bundled assets. This repository keeps FastThaiG2P as an optional external dependency and does not copy its dictionary/fallback data. Bulk redistribution remains BLOCKED pending per-component provenance and rights.
