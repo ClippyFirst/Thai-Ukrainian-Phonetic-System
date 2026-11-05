@@ -40,6 +40,15 @@ jobs:
         run: python scripts/validate_ukrainian_preference_packet.py data/benchmark/ukrainian-target-preference-blind.tsv
       - name: Run the complete Python test suite (pytest functions and unittest classes)
         run: python -m pytest -q -ra
+      - name: Inspect supplied CCOST and LOTUSDIS TextGrid archives (TextGrid members only)
+        run: |
+          python scripts/inspect_ccost_textgrid.py "CCOST textgrid.zip" "nectecLOTUSDIS textgrid.zip" --output /tmp/textgrid-archive-inspection.json --quiet --report-only
+          python -c "import json; r=json.load(open('/tmp/textgrid-archive-inspection.json',encoding='utf-8')); print(json.dumps({'files_inspected':r['files_inspected'],'archives':r['archives'],'tier_nonempty_label_counts':r['tier_nonempty_label_counts'],'converted_label_counts':r['converted_label_counts'],'failure_count':len(r['failures']),'failure_samples':r['failures'][:20]},ensure_ascii=False,indent=2))"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: textgrid-archive-inspection
+          path: /tmp/textgrid-archive-inspection.json
+          if-no-files-found: error
       - name: Build the static dependency graph and test-overlap inventory
         run: python scripts/audit_repository_structure.py --output /tmp/repository-structure-audit.json --revision "$GITHUB_SHA"
       - uses: actions/upload-artifact@v7
