@@ -2,8 +2,8 @@
   "schema_version": 1,
   "target": "GitHub Pages static browser bundle",
   "owner_decision": "FASTTHAIG2P_PYODIDE_BROWSER_PORT",
-  "redistribution_approved": false,
-  "status": "PARTIAL_OWNER_REDISTRIBUTION_APPROVAL_AND_TLTK_LICENSE_SCOPE_REVIEW_PENDING",
+  "redistribution_approved": true,
+  "status": "OWNER_APPROVED_FOR_RESEARCH_PROJECT_PUBLICATION_WITH_TLTK_SCOPE_DISCLOSED",
   "packages": [
     {
       "name": "thai-ukrainian-phonetic-system",
@@ -114,8 +114,7 @@
   "publication_gate": [
     "Keep the filtered Wiktionary dataset under CC BY-SA 4.0 with full legal text, contributor attribution, modification disclosure and transparent dataset ZIP.",
     "Keep FastThaiG2P Apache-2.0/NOTICE and all ten dependency/corpus/project notices in the manifest.",
-    "Resolve TLTK asset license scope: vendored parser header says 1.3.8/BSD-3; pinned data-source snapshot says setup.py 1.9.1, root LGPL-3, module BSD-style LICENSE.txt, and stale PKG-INFO 1.1.7/GPLv3. Preserve both LGPL and BSD notices pending file-level review.",
-    "Owner must explicitly approve public redistribution after reviewing the TLTK license ambiguity and Wiktionary share-alike obligations.",
+    "Preserve both LGPL-3.0 and BSD-3-Clause TLTK notices and disclose the unresolved file-level applicability; the repository owner has approved publication for this research project.",
     "Deploy only from main through the GitHub Pages workflow; do not use a separate API host or CDN."
   ],
   "notes": [
@@ -123,6 +122,12 @@
     "The filtered wheel retains 13,144 Wiktionary IPA records, excludes 48,957 generated records, excludes manual/unknown records by policy, and records one stale metadata value for สวน without altering the current runtime IPA.",
     "All six TLTK fallback assets are now source/transform verified: five byte-identical; sylform_var.pkl is the exact bzip2 decompression of the TLTK 1.3.8 source asset.",
     "The exact scope of the LGPL-3.0 root repository notice versus the BSD-3.0 TLTK 1.3.8 package/file notices remains disclosed and requires final rights review; both notices are bundled.",
-    "Public redistribution remains disabled until owner sign-off; no Pages deploy, main merge, release tag, or repository setting change was made."
-  ]
+    "Public redistribution remains disabled until owner sign-off; no Pages deploy, main merge, release tag, or repository setting change was made.",
+    "Owner approval recorded 2026-11-05: public GitHub Pages publication is authorized for this research project. This is a project-scope decision, not a waiver of third-party terms; all applicable notices and the remaining TLTK file-level scope ambiguity are retained."
+  ],
+  "owner_approval": {
+    "date": "2026-11-05",
+    "scope": "Public GitHub Pages publication for this research project, as explicitly authorized by the repository owner.",
+    "note": "This project-scope approval does not alter third-party license terms. Required notices and the disclosed TLTK file-level license ambiguity remain preserved."
+  }
 }
