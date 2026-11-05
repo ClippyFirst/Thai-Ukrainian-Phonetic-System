@@ -4590,5 +4590,34 @@
       "pyodide_compat": 42116529563,
       "all": "SUCCESS"
     }
+  },
+  "repository_audit_checkpoint": {
+    "audited_at": "2026-11-06",
+    "default_branch": "main",
+    "main_commit": "476cb6ed0e4421ab02bb564ff232c99b6c19e008",
+    "merged_pull_request": 211,
+    "merged_branch": "design/site-recomposition-2026-11-05",
+    "tested_pr_head": "8200255df8d7c2cfb4f8aa30d218785e9a625b08",
+    "verified_workflows": {
+      "full_ci": 42117563464,
+      "web_static": 42117563510,
+      "site_api": 42117563500,
+      "pyodide_compatibility": 42117563482
+    },
+    "pages_deployment_workflow": 42120159047,
+    "pages_deployment_status_at_audit": "IN_PROGRESS",
+    "live_site_verification": "NOT_VERIFIED",
+    "manual_acceptance": [
+      "keyboard_and_screen_reader",
+      "200_percent_and_400_percent_zoom_reflow",
+      "real_browser_clipboard",
+      "deployed_mobile_cold_warm_performance",
+      "screenshot_visual_review"
+    ],
+    "linguistic_status": "NOT_MEASURED",
+    "independent_ipa_gold_rows": 0,
+    "ukrainian_candidates": "PROVISIONAL",
+    "audit_branch": "docs/repository-audit-2026-11-04",
+    "audit_branch_disposition": "PRESERVED_UNMERGED_DIVERGED_503_AHEAD_4_BEHIND_AT_COMPARISON"
   }
 }
