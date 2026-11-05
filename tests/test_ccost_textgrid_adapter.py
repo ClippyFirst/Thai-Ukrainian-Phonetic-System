@@ -108,6 +108,27 @@ class CCOSTTextGridAdapterTests(unittest.TestCase):
         with self.assertRaises(XSampaConversionError):
             convert_xsampa_label("a_8")
 
+    def test_long_textgrid_supports_multiline_and_escaped_quoted_labels(self):
+        textgrid = '''File type = "ooTextFile"
+Object class = "TextGrid"
+xmin = 0
+xmax = 1
+item []:
+    item [1]:
+        class = "IntervalTier"
+        name = "TRN"
+        xmin = 0
+        xmax = 1
+        intervals: size = 1
+        intervals [1]:
+            xmin = 0
+            xmax = 1
+            text = "first line
+second line with ""quoted"" text"
+'''
+        grid = parse_textgrid_long(textgrid)
+        self.assertEqual(grid.tier("TRN").intervals[0].text, 'first line\nsecond line with "quoted" text')
+
     def test_short_textgrid_is_not_guessed(self):
         with self.assertRaises(TextGridFormatError): parse_textgrid_long('File type = "ooTextFile short"')
 
