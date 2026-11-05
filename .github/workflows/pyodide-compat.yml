@@ -64,7 +64,7 @@ jobs:
           assert report["excluded_counts"].get("generated", 0) > 0
           assert "generated" not in report["retained_counts"]
           PY
-          python -m unittest tests.test_fastthaig2p_browser_data -v
+          python -m unittest discover -s tests -p test_fastthaig2p_browser_data.py -v
           test "$(find build/pyodide-wheels -maxdepth 1 -name '*.whl' | wc -l)" -eq 4
           sha256sum build/pyodide-wheels/*.whl
           du -h build/pyodide-wheels/*.whl
