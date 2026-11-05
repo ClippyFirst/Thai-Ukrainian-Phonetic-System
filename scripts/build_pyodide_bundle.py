@@ -7,7 +7,7 @@ import hashlib
 import json
 import shutil
 import zipfile
-from pathlib import Path, PurePosixPath
+from pathlib import Path
 from email.parser import Parser
 
 
