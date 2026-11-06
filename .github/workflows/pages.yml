@@ -73,6 +73,7 @@ jobs:
           git -C build/TLTK checkout 0cef4bcfbdd675f589783dd4134b87b9bb9fbb93
           python scripts/verify_tltk_fallback_provenance.py --fastthaig2p build/FastThaiG2P --tltk build/TLTK --report build/tltk-fallback-provenance.json
           python scripts/prepare_fastthaig2p_browser_source.py --source build/FastThaiG2P --report build/fastthaig2p-data-provenance.json
+          python scripts/extract_fastthaig2p_normalizer_data.py --source build/FastThaiG2P
           python -m unittest discover -s tests -p test_fastthaig2p_browser_data.py -v
           python - <<'PY'
           import json
