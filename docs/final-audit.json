@@ -4629,41 +4629,39 @@
     "final_pr_head": "0d4503ed55ff726807917e2cfbf14c0ad30eb624",
     "exact_head_workflows": {
       "full_ci": {
-        "run_id": 42199395072,
+        "run_id": 42203706898,
         "status": "SUCCESS",
-        "jobs": {
-          "test": "SUCCESS",
-          "wheel_install_smoke": "SUCCESS",
-          "master_artifact": "SUCCESS"
-        },
         "test_summary": {
-          "pytest": "399 passed, 1 skipped, 1211 subtests passed",
+          "pytest": "401 passed, 1 skipped, 1211 subtests passed",
           "ruff": "PASS",
-          "skipped_test": "tests/test_fastthaig2p_site_api.py",
-          "skip_reason": "FastAPI is not installed in generic CI",
-          "separate_coverage": {
-            "workflow_run": 42199395069,
-            "status": "SUCCESS"
-          }
-        }
+          "wheel_install_smoke": "PASS",
+          "master_artifact": "PASS"
+        },
+        "skipped_test": "tests/test_fastthaig2p_site_api.py",
+        "skip_reason": "FastAPI is not installed in generic CI"
+      },
+      "pages_build": {
+        "run_id": 42203706810,
+        "status": "SUCCESS",
+        "deployment": "SKIPPED_ON_PULL_REQUEST",
+        "browser_parity": "PASS",
+        "rtgs_reference_parity": "PASS",
+        "ipa_adaptation": "PASS",
+        "ui_contract": "PASS",
+        "static_accessibility": "PASS",
+        "pyodide_bundle": "PASS",
+        "tltk_oov_data_extraction": "PASS",
+        "artifact_upload": "PASS"
       },
       "web_static": {
-        "run_id": 42199395225,
-        "status": "SUCCESS"
-      },
-      "site_api": {
-        "run_id": 42199395069,
-        "status": "SUCCESS"
-      },
-      "pyodide_compatibility": {
-        "run_id": 42199395284,
+        "run_id": 42203706779,
         "status": "SUCCESS"
       }
     },
     "post_merge_main_ci": "NOT_VERIFIED_IN_CONNECTOR_SESSION",
     "post_merge_pages_deployment": "NOT_VERIFIED",
     "browser_runtime": "HYBRID_NATIVE_FIRST_DICTIONARY_HITS_WITH_PYODIDE_OOV_FALLBACK",
-    "tltk_native_oov": "TODO_NO_JAVASCRIPT_RUNTIME_PARSER; keep Pyodide OOV fallback",
+    "tltk_native_oov": "TODO_NO_JAVASCRIPT_RUNTIME_PARSER; KEEP_PYODIDE_OOV_FALLBACK",
     "performance": "NOT_MEASURED",
     "manual_accessibility": "NOT_VERIFIED",
     "independent_ipa_gold_rows": 0,
@@ -4694,23 +4692,16 @@
     "tltk_oov_data_extractor": "PARTIAL_BUILD_TIME_DATA_ONLY; five runtime tables and AST-extracted stable/AK/EngAbbr constants; excludes sylform_var.pkl because no reads in g2p call path",
     "pages_live_observation": {
       "status": "LIVE_HTTP_CONTENT_AND_ASSET_FETCHES_CONFIRMED",
-      "checked_at": "2026-11-06",
-      "evidence": [
-        "homepage serves native-first explanatory text",
-        "src/app.js serves native worker-first logic and lazy Pyodide fallback",
-        "src/fastthaig2p-native-worker.js and src/fastthaig2p-native.js are reachable",
-        "vendor/native/manifest.json and all five declared native assets are reachable",
-        "vendor/bundle-manifest.json is reachable",
-        "system.html and third-party-notices.html are reachable"
-      ],
-      "limitations": "The current live manifest still identifies the native runtime as dictionary-only. No native TLTK OOV runtime or new branch deployment is claimed."
+      "evidence": "Main public site serves native-first page/app/worker/module, native manifest and five declared assets, bundle manifest, system page and notices.",
+      "current_runtime": "NATIVE_DICTIONARY_HITS_WITH_PYODIDE_OOV_FALLBACK",
+      "post_merge_smoke": "PENDING_PR_215_MERGE_AND_MAIN_DEPLOY"
     },
     "pages_post_merge_workflow": "LIVE_SITE_IS_REACHABLE; CURRENT_BRANCH_PAGES_BUILD_AND_POST_MERGE_HASH_SMOKE_PENDING",
     "pages_workflow_change": "pages.yml post-deploy smoke now checks current native-first UI, both same-origin workers, native and OOV manifests, compressed TLTK OOV data SHA-256, all notices, and retained Pyodide runtime; build now runs on pull_request with deploy main-only",
     "current_work_branch": "feat/native-tltk-oov-and-pages-verification-2026-11-06",
     "draft_pull_request": 215,
     "draft_pull_request_head": "a54cab92f9008663b4b640003c7b21b8581fdf9d",
-    "pages_workflow_fix": "PR 215 updates stale smoke assertions and adds PR build trigger; deployment remains main-only",
+    "pages_workflow_fix": "PR #215 corrected stale post-deploy smoke assertions, added PR build trigger, and checks native assets, OOV manifest/data hash, notices and Pyodide fallback.",
     "branch_checks": {
       "web_static": {
         "run_id": 42202709762,
@@ -4724,6 +4715,17 @@
         "run_id": 42202709579,
         "status": "QUEUED_AT_LAST_OBSERVATION"
       }
+    },
+    "code_tested_head": "e2f09fb82014bdbc514fa860e49a7f8f788aef6d",
+    "branch_ahead_by": 40,
+    "branch_behind_by": 0,
+    "tltk_oov_data_pack": {
+      "status": "DONE_VERIFIED_BUILD_PIPELINE_NOT_RUNTIME",
+      "compressed_size_bytes": 2844409,
+      "uncompressed_size_bytes": 19848231,
+      "runtime_tables": 5,
+      "parser_constants": "AST_EXTRACTED_FROM_PINNED_BSD_PARSER",
+      "pickle_in_browser": false
     }
   },
   "repository_state_2026_11_06_pre_merge": {

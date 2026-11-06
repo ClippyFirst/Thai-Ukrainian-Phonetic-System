@@ -149,3 +149,17 @@ Exact-head PR validation on 24e4605b7921524b60dc1c5a3e3e9a66965a3206 now passes 
 The six TLTK fallback assets are now classified as BSD-3-Clause for the pinned TLTK 1.9.1 package scope. Evidence: the versioned README's license-change statement, setup.py's 1.9.1/BSD declaration and package_data list containing all six assets, MANIFEST.in's inclusion of LICENSE.txt, the BSD terms in LICENSE.txt, and PyPI's 1.9.1 release metadata. The repository-root LGPL-3.0 file is retained as a separate historical repository notice; stale PKG-INFO is version 1.1.7/GPLv3. See [the detailed source-based license review](fastthaig2p-license-review-2026-11-05.md) and [public notices](../web/third-party-notices.html).
 
 This clears the TLTK package-license evidence gate for use and redistribution of those six packaged assets under BSD-3-Clause conditions. It does **not** complete the browser-native OOV algorithm or its parity gate. Full TLTK OOV implementation remains TODO; Pyodide remains the OOV fallback until native output matches the pinned Python service contract.
+
+
+## Alternative JavaScript package review — 2026-11-06
+
+The npm package `tltk-js@0.1.4` was inspected as a possible shortcut. It is not accepted as a production dependency or as the parity reference:
+
+- The npm package metadata declares WTFPL, while the package README declares MIT. This license metadata mismatch is not a clean compliance basis.
+- The published package reports 66,340,514 bytes unpacked, which is disproportionate for this browser-first runtime.
+- Its README describes an optional heuristic fallback for unknown syllables that intentionally differs from the Python TLTK behavior. That cannot satisfy this project's exact FastThaiG2P/TLTK OOV parity contract.
+- It is not pinned to the exact FastThaiG2P parser/data combination used by this repository.
+
+Use it only as a non-authoritative comparison reference. Continue implementing against the pinned FastThaiG2P parser source and TLTK 1.9.1 packaged tables; never substitute its heuristic output for an unsupported or failed native parse.
+
+Sources: [npm package page](https://www.npmjs.com/package/tltk-js), [published package metadata](https://registry.npmjs.org/tltk-js).

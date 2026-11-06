@@ -1,3 +1,17 @@
+## 2026-11-06 PR #215 verification update
+
+| Item | Status | Evidence / acceptance |
+|---|---|---|
+| TLTK 1.9.1 package rights | DONE_VERIFIED | Pinned README, setup.py, package_data, MANIFEST.in, LICENSE.txt and PyPI release metadata support BSD-3-Clause for all six packaged fallback assets. Preserve BSD terms; retain the separate root LGPL-3.0 and stale 1.1.7/GPLv3 notices as historical context. |
+| TLTK OOV data extraction | DONE_VERIFIED_BUILD_PIPELINE | Pages build #42203706810 generated and uploaded a deterministic JSON/gzip data pack (2,844,409 compressed / 19,848,231 uncompressed bytes) with five runtime tables and AST-extracted parser constants. The unused sylform_var.pkl is excluded from the runtime pack but remains in the six-file provenance check. |
+| Pages build | DONE_VERIFIED | PR Pages run #42203706810 SUCCESS: Python regression, browser parity, RTGS reference parity, IPA adaptation, UI contract, static accessibility, Pyodide bundle, OOV extraction and artifact upload. Deploy was skipped on PR. |
+| Full CI | DONE_VERIFIED | Run #42203706898 SUCCESS: 401 passed, 1 skipped, 1,211 subtests passed; Ruff passed; wheel-install-smoke and master-artifact passed. The only skip is optional FastAPI test (FastAPI absent from generic CI). |
+| Web Static | DONE_VERIFIED | Run #42203706779 SUCCESS. |
+| Live Pages deployment after PR #215 | TODO / PENDING_MERGE | Current main site and native-first assets are reachable. New post-deploy SHA smoke will run only after PR merge; no deployment from this draft PR is claimed. |
+| Native JavaScript TLTK OOV algorithm | TODO | Not implemented. Data extraction is preparation only; public UI still uses Pyodide for OOV. Acceptance requires complete raw IPA and full typed service JSON parity against multiple pinned Python OOV fixtures, then real browser Worker lazy-load/hash verification. |
+
+---
+
 ## 2026-11-06 follow-up — Pages and TLTK package rights
 
 | Item | Status | Evidence / next acceptance |

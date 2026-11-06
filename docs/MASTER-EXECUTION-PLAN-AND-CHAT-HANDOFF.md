@@ -1,3 +1,17 @@
+## Verification checkpoint — PR #215 build and CI passed (2026-11-06)
+
+- Code-tested branch head: `e2f09fb82014bdbc514fa860e49a7f8f788aef6d`.
+- Draft PR [#215](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/215) remains open and unmerged. It is 40 commits ahead and 0 behind main.
+- Full CI [run 42203706898](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42203706898) — SUCCESS. Python suite: 401 passed, 1 skipped, 1,211 subtests passed. The only skip is the optional FastAPI test because FastAPI is not installed in generic CI. Ruff passed; wheel-install-smoke and master-artifact jobs passed.
+- Pages build [run 42203706810](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42203706810) — SUCCESS. Python regression, browser parity, RTGS reference parity, IPA adaptation, UI contracts, static accessibility, self-hosted Pyodide bundle build, TLTK OOV data extraction and Pages artifact upload passed. Deployment was skipped because this is a pull request.
+- Web Static [run 42203706779](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42203706779) — SUCCESS.
+- TLTK OOV data artifact: 2,844,409 compressed bytes; 19,848,231 uncompressed bytes. It contains five runtime tables and parser constants; no Python code or pickle is sent to the browser. The data pack is not yet consumed by the UI.
+- TLTK 1.9.1 package rights: DONE_VERIFIED under BSD-3-Clause for the six packaged fallback assets. Root LGPL-3.0 and stale PKG-INFO 1.1.7/GPLv3 remain preserved as historical/repository context.
+- Live Pages from main remains reachable and shows native-first dictionary processing with Pyodide OOV fallback. The corrected post-deploy hash smoke has not yet run against a deployment containing PR #215; it will run after merge.
+- Native JavaScript TLTK OOV algorithm remains TODO. Do not remove Pyodide or claim full OOV parity. PR #215 remains draft until that implementation and multi-case exact Python parity are completed.
+
+---
+
 ## Active continuation branch — PR #215 (2026-11-06)
 
 - Branch: `feat/native-tltk-oov-and-pages-verification-2026-11-06`.

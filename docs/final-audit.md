@@ -1,3 +1,20 @@
+## PR #215 validation results — 2026-11-06
+
+Draft PR #215 has passed its code and Pages build gates at code-tested head `e2f09fb82014bdbc514fa860e49a7f8f788aef6d`:
+
+- Full CI [42203706898](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42203706898): SUCCESS — 401 passed, 1 skipped, 1,211 subtests passed; Ruff passed; wheel-install-smoke and master-artifact passed. The one skip is the optional FastAPI test because FastAPI is absent from generic CI.
+- Pages build [42203706810](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42203706810): SUCCESS — browser parity, RTGS reference parity, IPA adaptation, UI contracts, static accessibility, Pyodide bundle build, TLTK OOV data extraction and artifact upload passed. The deploy job was skipped on PR.
+- Web Static [42203706779](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42203706779): SUCCESS.
+- TLTK OOV data artifact is 2,844,409 bytes compressed and 19,848,231 bytes uncompressed. It is data-only JSON/gzip with parser constants; no Python runtime or pickle is delivered to the browser.
+
+The TLTK 1.9.1 package rights gate is DONE_VERIFIED under BSD-3-Clause for the six packaged fallback assets. Root LGPL-3.0 and stale PKG-INFO 1.1.7/GPLv3 are retained as historical/repository context. Research use is permitted; BSD notices, conditions, disclaimer and no-endorsement condition apply to redistribution.
+
+The current public Pages deployment is reachable and serves native-first dictionary processing plus the existing Pyodide OOV fallback. The corrected post-deploy hash smoke remains pending because PR #215 has not been merged.
+
+**Native OOV remains incomplete:** no JavaScript TLTK parser is integrated; the generated data pack is preparatory only. Keep Pyodide as the OOV fallback until multi-case exact Python-service JSON parity and browser Worker tests pass.
+
+---
+
 ## Follow-up — live Pages inspection, TLTK package rights and OOV preparation (2026-11-06)
 
 The public GitHub Pages site was inspected directly. The homepage currently discloses native-first FastThaiG2P processing; the deployed `src/app.js`, native Worker, native module, `vendor/native/manifest.json`, its five declared native assets, `vendor/bundle-manifest.json`, `system.html`, and `third-party-notices.html` are reachable. The live manifest still identifies the native stage as dictionary-only. This confirms current content/asset reachability, not a new deployment from the current work branch and not a completed native OOV runtime.
