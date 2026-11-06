@@ -184,7 +184,6 @@ export function createFastThaiG2PNativeEngine({
 
       return {
         input: text,
-        normalized_input: normalized,
         engine: "FastThaiG2P",
         upstream_commit: FASTTHAIG2P_UPSTREAM_COMMIT,
         status: "provisional",
@@ -195,10 +194,6 @@ export function createFastThaiG2PNativeEngine({
           dictionary_tokens: tokens.length - fallbackTokens.length,
           rule_fallback_tokens: fallbackTokens.length
         },
-        token_paths: tokens.map(token => ({
-          token,
-          path: dictionary[token] ? "wiktionary-dictionary" : "tltk-oov"
-        })),
         warnings: [
           "Це експериментальний нативний JavaScript-порт: нормалізація, newmm сегментація, словниковий IPA та TLTK OOV працюють у браузері.",
           "TLTK OOV відтворює закріплений алгоритм; непідтриманий або неузгоджений результат передається сумісному резервному рушію.",
