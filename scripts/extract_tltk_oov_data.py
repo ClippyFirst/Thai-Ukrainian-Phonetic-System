@@ -242,6 +242,7 @@ def main() -> None:
         "tltk_source_commit": TLTK_COMMIT,
         "tltk_package_version": "1.9.1",
         "license": "BSD-3-Clause",
+        "parser_source_sha256": data["parser_source_sha256"],
         "path": "tltk-oov-data.json.gz",
         "compressed_size_bytes": len(compressed),
         "compressed_sha256": sha256(compressed),
