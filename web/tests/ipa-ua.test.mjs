@@ -103,6 +103,10 @@ assert(serviceHtml.includes("Тайські звуки не завжди мож�
 assert(systemHtml.includes("Український запис не створюється прямою заміною тайських літер"));
 assert(systemHtml.includes("IPA — це окремий проміжний рівень"));
 assert(systemHtml.includes("RTGS — окрема латинська система"));
+
+assert(systemHtml.includes("Як передаємо початковий звук /j/"));
+assert(systemHtml.includes("/je/, /jɛ/"));
+assert(systemHtml.includes("розрізняти «е» та «є»"));
 console.log("Public UI: plain-language explanation preserves the IPA-first adapter contract");
 
 
