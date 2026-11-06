@@ -1,3 +1,16 @@
+## 2026-11-06 — Thai → Latin RTGS romanization module
+
+- Starting main commit: a35100e336f2bda02f927918ed3e13a892872e84.
+- Working branch: feat/thai-rtgs-romanizer-2026-11-06.
+- Added a separate public Thai → Latin page at web/romanization.html; the Thai → IPA → Ukrainian contract is unchanged.
+- Reused PyThaiNLP 5.4.0 royin RTGS port (web/src/rtgs-reference.js) and browser-native PyThaiNLP newmm tokenizer (web/src/fastthaig2p-tokenizer.js). The pinned CC0 wordlist is loaded from the same-origin Pages artifact only after manifest/version/license/size/SHA-256 checks.
+- Added rtgs-romanizer.js, romanization-app.js, module/page tests, navigation, CSS and Pages build/live-smoke gates.
+- Method choice: RTGS is primary as the official Royal Thai system described by PyThaiNLP. Thai2Rom/ONNX is deferred for separate model-size, license and evaluation review. ISO 11940 is not pronunciation-based; IPA is not romanization.
+- Implementation checkpoint only: exact-head CI, Pages artifact build and production deployment must pass before DONE_VERIFIED. Linguistic accuracy remains NOT_MEASURED.
+- Previous Pages run for main a35100e336f2bda02f927918ed3e13a892872e84: #42259473947 SUCCESS.
+
+---
+
 ## Post-merge practical-system closeout — 2026-11-06
 
 - Implementation PR: #221, squash-merged into main as d0528deac04db9a3ed9e062e98ace45492e95f9f. Previous branch: docs/practical-system-site-2026-11-06. Current closeout branch: docs/post-merge-closeout-2026-11-06, created from that main commit.

@@ -271,3 +271,7 @@ footer nav a:hover, footer > a:hover { text-decoration: underline; text-underlin
 @media (max-width: 640px) {
   .system .evidence table { min-width: 540px; }
 }
+
+/* Thai → Latin RTGS module */
+.romanization-page{padding-bottom:36px}.romanization-result{margin-top:28px}.romanization-result .continuous-output{margin-bottom:18px}.romanization-result .continuous-output-value{overflow-wrap:anywhere;white-space:pre-wrap}.romanization-token-list{display:grid;gap:8px;margin:16px 0 0;padding:0;list-style:none}.romanization-token-list li{display:grid;grid-template-columns:minmax(90px,.8fr) minmax(90px,1fr) minmax(160px,1.4fr);gap:12px;align-items:baseline;padding:10px 12px;border-bottom:1px solid var(--line)}.romanization-token-list li span{font-size:1.05rem}.romanization-token-list li strong{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere}.romanization-token-list li small{color:var(--muted)}.romanization-method{margin-top:54px}.romanization-backlink{padding:18px 0 42px;font-weight:700}
+@media(max-width:640px){.romanization-token-list li{grid-template-columns:1fr 1fr;gap:4px 12px}.romanization-token-list li small{grid-column:1/-1}}

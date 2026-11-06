@@ -24,6 +24,10 @@ The public browser service is deployed at [GitHub Pages](https://clippyfirst.git
 
 The repository's user-facing system is described in [Тайсько-українська практична транскрипція](docs/thai-ukrainian-practical-transcription.md). It presents consonant and vowel correspondences in the style of a practical transcription reference and explains the ClippyFirst pipeline, IPA boundary, implementation, comparison with the Thai–Russian convention, and evidence limitations. The technical contract remains in [docs/practical-transcription.md](docs/practical-transcription.md).
 
+## Thai romanization (Thai → Latin)
+
+The site also provides a separate [Thai romanization tool](web/romanization.html) based on the official RTGS approach through PyThaiNLP 5.4.0 royin. It reuses the pinned PyThaiNLP newmm tokenizer and CC0 word list, verifies the local word-list asset by SHA-256, and runs entirely in the browser. RTGS is kept separate from IPA and Ukrainian transcription; tones and vowel length are not fully represented. See [the romanization method and limitations](docs/thai-romanization.md).
+
 ## Thai → Ukrainian methodology table
 
 The initial context-sensitive methodology matrix is documented in [`docs/ukrainian-transcription-methodology.md`](docs/ukrainian-transcription-methodology.md). It distinguishes onset/coda, phonemic vs surface IPA, contextual rules, tone/length, and evidence-gated cases. It is explicitly PARTIAL pending independent IPA and Ukrainian-form adjudication; it is not an official Ukrainian standard.
