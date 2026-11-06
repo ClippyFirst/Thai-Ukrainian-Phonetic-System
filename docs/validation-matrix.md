@@ -2009,12 +2009,12 @@ Implementation branch: `feat/ukrainian-first-ux-2026-11-06`. Do not mark the imp
 |---|---|---|
 | Owner decision and port scope | DONE_VERIFIED | Decision recorded in `docs/fastthaig2p-javascript-port.md`; prior Pyodide-only constraint superseded. |
 | Native dictionary IPA/result adapter | PARTIAL | `web/src/fastthaig2p-native.js` parses slash/dot IPA, preserves Chao tone and vowel length, and delegates to existing IPA→Ukrainian adapter. Unit contract added; not integrated into public UI. |
-| Filtered native dictionary asset | IMPLEMENTED_PENDING_EXACT_HEAD_CI | Bundle builder updated to emit native IPA JSON/provenance/manifest; exact-head CI and byte/hash assertions required. |
-| Normalizer port | IMPLEMENTED_PENDING_EXACT_PARITY | Native JS normalizer plus AST-extracted pinned upstream maps and CPython reference fixture generator added; exact parity CI pending. |
-| PyThaiNLP newmm parity | TODO | Port exact algorithm and effective dictionaries; verify token-array parity. |
+| Filtered native dictionary + normalizer + wordlist assets | DONE_VERIFIED | Pyodide compatibility #42181862972 built 5 native assets and verified sizes/SHA-256; source pins and CC BY-SA / Apache-2.0 / CC0 licenses recorded. |
+| Normalizer port | DONE_VERIFIED | #42181862972: 18 pinned CPython cases passed with the extracted PyThaiNLP default wordlist, including mai yamok, numbers, symbols, abbreviations, email and units. |
+| PyThaiNLP newmm tokenizer | DONE_VERIFIED | #42181862972: 16 custom FastThaiG2P token-array cases passed; 18 default-wordlist cases also passed inside normalizer parity. |
 | TLTK OOV fallback | BLOCKED / PARTIAL | Exact asset-level license scope remains unresolved; do not redistribute/port fallback assets until a defensible rights disposition exists. |
-| Full Python/JS result parity | TODO | Complete response JSON parity over frozen inputs, including unsupported and ambiguous cases. |
-| Native Worker and UI cutover | DEFERRED | Only after every parity, licensing, cold/warm, offline, CSP and performance gate passes. |
+| Native front-half pipeline parity | DONE_VERIFIED | #42181862972: 16 dictionary-only CPython pipeline cases matched normalized text, tokens and raw IPA. Full typed/result JSON parity including OOV remains TODO. |
+| Native Worker and UI cutover | DEFERRED | No native Worker/browser smoke yet; only after TLTK rights, OOV parity, full result parity, cold/warm/offline, CSP and performance gates pass. |
 | Pyodide removal | DEFERRED | Remove only after production cutover is verified and rollback path is retained. |
 
-The public site still uses Pyodide. The new adapter is an isolated development slice, not a claim that the native port is complete or faster. No IPA or Ukrainian phonetic rules were changed; linguistic accuracy remains `NOT_MEASURED`.
+The public site still uses Pyodide. The native normalizer, default/custom newmm tokenizers and dictionary-only pipeline have differential evidence, but the TLTK OOV fallback and native Worker are not complete; do not claim full replacement or a speed improvement. No IPA or Ukrainian phonetic rules were changed; linguistic accuracy remains `NOT_MEASURED`.
