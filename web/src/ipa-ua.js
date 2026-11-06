@@ -134,11 +134,9 @@ export function adaptIpaToUkrainian(sourceIpa) {
     tokens.push({text:key,...rule});
     i += key.length;
   }
-  for (let i=1;i<tokens.length;i++) {
-    if (tokens[i].text === "w" && tokens[i-1].text && /^(?:a|i|e|ɛ|ɯ|ɤ|u|o|ɔ|ː|ˑ)$/u.test(tokens[i-1].text)) {
-      tokens[i] = {...tokens[i], out:"у", rule:"UA-W-VOCALIC", neutralized:[...(tokens[i].neutralized||[]),"glide-vowel sequence adapted as Ukrainian vowel spelling"]};
-    }
-  }
+  // Thai /w/ is consistently represented by Ukrainian в in every position.
+  // In a coda, Ukrainian в may be realized as the non-syllabic [u̯], so a
+  // separate Ukrainian vowel letter у is not needed for /Vw/ rimes.
   const preservedFeatures=[...new Set(tokens.flatMap(t=>t.preserved||[]))];
   const neutralizedFeatures=[...new Set(tokens.flatMap(t=>t.neutralized||[]))];
   if (normalized.notes.toneNotationSeen) neutralizedFeatures.push("lexical tone is not encoded in Ukrainian practical spelling");

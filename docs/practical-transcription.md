@@ -126,7 +126,7 @@ The parser already distinguishes structures such as /aj/, /am/, /aːj/, /aːw/, 
 
 The practical renderer must consume the registered rime output instead of independently translating each visible Thai vowel sign.
 
-A rime containing /j/ or /w/ must not be mistaken for a coda consonant merely because the glide is written near the end of the Thai orthographic sequence.
+A rime containing /j/ or /w/ must not be mistaken for a coda consonant merely because the glide is written near the end of the Thai orthographic sequence. Thai /w/ is rendered as Ukrainian **в** in every position; in coda position, Ukrainian **в** can be realized as the non-syllabic [u̯], so the practical spelling does not switch to **у**. For example, /daːw/ → **дав**, /kʰaːw/ → **к'ав**, and /mɛːw/ → **мев**.
 
 ## 8. Context-dependent grapheme อ
 

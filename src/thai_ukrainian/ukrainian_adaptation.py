@@ -25,7 +25,6 @@ IPA_TO_UA = {
     "ɔ": ("о", "UA-OPEN-O"),
 }
 ORDER = tuple(sorted(IPA_TO_UA, key=len, reverse=True))
-VOWELS = {"a", "i", "e", "ɛ", "ɯ", "ɤ", "u", "o", "ɔ"}
 TONE_DIACRITICS = {"\u0300", "\u0301", "\u0302", "\u0304", "\u030c", "\u030b", "\u030f"}  # U+0306 breve can mark extra-shortness; preserve/fail closed.
 IPA_MODIFIERS = {"\u031a", "\u032f", "\u0329"}
 
@@ -106,12 +105,10 @@ def adapt_phonetic_result(result: PhoneticResult) -> dict:
     rules: list[str] = []
     neutralized: list[str] = []
     i = 0
-    previous_base = ""
     while i < len(ipa):
         if ipa[i].isspace() or ipa[i] == ".":
             output.append(ipa[i])
             i += 1
-            previous_base = ""
             continue
         if ipa[i] in {"ː", "ˑ", "\u032f", "\u0329", "\u031a"}:
             if ipa[i] in {"ː", "ˑ"}:
@@ -128,11 +125,9 @@ def adapt_phonetic_result(result: PhoneticResult) -> dict:
                 "warnings": [f"Unsupported IPA symbol {ipa[i]!r}; Ukrainian output withheld."],
             }
         rendered, rule = IPA_TO_UA[token]
-        # In licensed vowel+glide sequences, Thai /w/ is conventionally rendered
-        # as Ukrainian у to preserve the rime rather than introducing в.
-        if token == "w" and previous_base in VOWELS:
-            rendered, rule = "у", "UA-W-VOCALIC"
-            neutralized.append("glide-vowel sequence represented by Ukrainian vowel spelling")
+        # Thai /w/ is consistently rendered as Ukrainian в. In coda position,
+        # Ukrainian в can surface as the non-syllabic [u̯], so /Vw/ rimes do
+        # not require a separate Ukrainian vowel letter у.
         output.append(rendered)
         rules.append(rule)
         # Aspiration is represented by an apostrophe in the Ukrainian candidate;
@@ -141,7 +136,6 @@ def adapt_phonetic_result(result: PhoneticResult) -> dict:
             neutralized.append("glottal place and voicing")
         if token in {"ɛ", "ɯ", "ɤ", "ɔ"}:
             neutralized.append("vowel quality")
-        previous_base = token
         i += len(token)
 
     if notation["tone"]:

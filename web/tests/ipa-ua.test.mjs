@@ -14,9 +14,10 @@ assert(canonical.rulesApplied.includes("UA-K-ASP"));
 
 for (const [ipa, expected] of [
   ["ka", "ка"], ["kʰa", "к\u0027а"], ["kaː", "ка"],
-  ["iw", "іу"], ["ew", "еу"], ["iaw", "іау"],
+  ["iw", "ів"], ["ew", "ев"], ["iaw", "іав"],
   ["pʰaː", "п\u0027а"], ["tʰaː", "т\u0027а"], ["tɕa", "ча"], ["tɕʰa", "ч\u0027а"], ["haː", "га"],
-  ["ŋaː", "нга"], ["klaj", "клай"], ["kaw", "кау"]
+  ["ŋaː", "нга"], ["klaj", "клай"], ["kaw", "кав"],
+  ["wa", "ва"], ["daːw", "дав"], ["kʰaːw", "к\u0027ав"], ["mɛːw", "мев"]
 ]) {
   assert.equal(adaptIpaToUkrainian(ipa).output, expected, ipa);
 }

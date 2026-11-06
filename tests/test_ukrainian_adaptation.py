@@ -121,6 +121,23 @@ def test_common_external_thai_ipa_notation_is_normalized_before_adaptation():
     assert voiced_affricate["output"] is None
 
 
+def test_w_glide_uses_ukrainian_v_in_onset_and_coda_positions():
+    base = PhoneticResult.from_syllable_analysis(analyze_syllable("กา"))
+    for ipa, expected in [
+        ("wa", "ва"),
+        ("daːw", "дав"),
+        ("kʰaːw", "к'ав"),
+        ("mɛːw", "мев"),
+        ("iw", "ів"),
+        ("ew", "ев"),
+        ("iaw", "іав"),
+    ]:
+        adapted = adapt_phonetic_result(replace(base, phonemic_ipa=ipa))
+        assert adapted["status"] == "adapted", ipa
+        assert adapted["output"] == expected, ipa
+    assert candidates_for_ipa("daːw") == ["дав"]
+
+
 def test_tone_only_ipa_and_unknown_symbols_are_not_guessed():
     base = PhoneticResult.from_syllable_analysis(analyze_syllable("กา"))
     tone_only = adapt_phonetic_result(replace(base, phonemic_ipa="˥˩"))
