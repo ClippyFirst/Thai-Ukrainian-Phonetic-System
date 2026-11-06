@@ -27,6 +27,7 @@ on:
       - "web/tests/fastthaig2p-normalizer-parity.test.mjs"
       - "scripts/verify_tltk_fallback_provenance.py"
       - "tests/test_fastthaig2p_browser_data.py"
+      - "tests/test_tltk_fallback_provenance.py"
       - "scripts/build_pyodide_bundle.py"
       - "data/third_party/fastthaig2p-browser-bundle.json"
       - "web/tests/fastthaig2p-pyodide.test.mjs"
