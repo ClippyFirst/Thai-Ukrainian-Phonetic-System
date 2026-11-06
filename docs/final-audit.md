@@ -2194,3 +2194,16 @@ The TLTK 1.9.1 package-level BSD-3-Clause conclusion applies to the six fallback
 
 Post-merge Pages deployment is not yet independently verified. The workflow is configured for main pushes and includes live smoke checks, but the available GitHub workflow connector returns PR-triggered runs only, combined commit status exposes no checks, and the public Pages URL could not be fetched through the available web reader. Do not mark the deployment gate complete without a successful main-run result or live URL fetch. Performance, manual accessibility and independent phonetic accuracy remain open; accuracy is NOT_MEASURED.
 
+
+
+---
+
+## Live repository and homepage RTGS reconciliation — 2026-11-06
+
+- Starting `main`: `c7db5ce22de230b0cb7ffecb866db0e77ab0bb34`. Repository default branch is `main`; no open PRs. PRs #210–#214 and #216–#224 are merged; #215 was closed as superseded by #216.
+- Fifteen branch refs were inventoried and all fourteen non-main refs compared against main. The feature/documentation branches correspond to merged or superseded PR work. The old `docs/repository-audit-2026-11-04` branch is divergent at 503 commits ahead / 42 behind; PR #210's contribution is merged, but the branch's later history is not a safe merge unit. It is preserved rather than merged wholesale or deleted.
+- The current work uses one dedicated continuation branch, `docs/repository-structure-closeout-2026-11-06`, based on the exact starting main head.
+- The homepage now exposes RTGS as a collapsed secondary result after the primary Ukrainian/IPA output. It uses the existing PyThaiNLP 5.4.0 royin/newmm implementation; the module and CC0 word list are loaded only on expansion. It remains methodologically separate from IPA → Ukrainian adaptation. A stale result is discarded if the input changes during loading.
+- Documentation and test source changes are present in this branch. Exact-head CI/Web Static/Pages verification is pending; no completion claim is made until those checks and the post-merge Pages live smoke pass.
+- Existing verified baseline: PR #223 mainline implementation checks and Pages deploy/live smoke passed on `ffbcd96b12c5a0ddf46211d71ee18a08e3d6b078`; PR #224 closeout main CI #42288841151 passed on `c7db5ce22de230b0cb7ffecb866db0e77ab0bb34`.
+- Linguistic accuracy remains `NOT_MEASURED` (zero independent IPA gold rows). Ukrainian output remains provisional. Manual accessibility and instrumented device performance remain open/deferred; no WCAG conformance claim is made.
