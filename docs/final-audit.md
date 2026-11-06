@@ -1,6 +1,6 @@
 ## Географічний словник — 2026-11-07
 
-<badge color="success">DONE_VERIFIED — engineering implementation</badge>
+**Status: DONE_VERIFIED — engineering implementation.**
 
 PR #228 was squash-merged into `main` as `b7973b03961317abf3c5e2fed67c53c7b450eeee`. The CSV builder, pinned PyThaiNLP 5.4.0 RTGS integration, typed IPA → Ukrainian path, fail-closed handling, tests, template and documentation are implemented. Exact PR-head CI #42303606383 and Pages build #42303606414 passed. Post-merge main CI #42304411797, Pages build/deploy/live smoke #42304411720, Site API #42304411749, Pyodide compatibility #42304411607 and optional external G2P smoke #42304411785 all passed.
 
