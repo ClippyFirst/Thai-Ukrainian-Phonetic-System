@@ -9,7 +9,7 @@ from scripts.extract_tltk_oov_data import ASSET_NAMES, build
 
 
 class TltkOovDataExtractionTests(unittest.TestCase):
-    def test_extracts_pinned_oov_tables_to_json_safe_records(self) -> None:
+    def test_extracts_pinned_oov_tables_and_parser_constants(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             fallback = Path(temporary)
             (fallback / "sylrule.lts").write_bytes("XOO,abc,T\n# ignored\n".encode("cp874"))
@@ -44,7 +44,7 @@ class TltkOovDataExtractionTests(unittest.TestCase):
             self.assertEqual(data["syllable_dictionary"], [["กา", "kaa0"]])
             self.assertEqual(data["phone_trigrams"], [["|", "กา", "กา", "kaa0", 5.0]])
             self.assertEqual(len(data["syllable_trigrams"]), 2)
-            self.assertEqual(data["word_dictionary"], ["ขา", "กา"])
+            self.assertEqual(data["word_dictionary"], sorted(["กา", "ขา"]))
             self.assertEqual(report["record_counts"]["word_dictionary"], 2)
             self.assertEqual(len(report["source_assets"]), 5)
             self.assertIn("sylform_var.pkl", report["excluded_assets"])
