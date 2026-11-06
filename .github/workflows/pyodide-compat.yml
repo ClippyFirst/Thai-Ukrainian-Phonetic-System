@@ -1,6 +1,8 @@
 name: FastThaiG2P Pyodide compatibility
 on:
   push:
+    branches:
+      - main
     paths:
       - "src/thai_ukrainian/**"
       - "web/src/**"
