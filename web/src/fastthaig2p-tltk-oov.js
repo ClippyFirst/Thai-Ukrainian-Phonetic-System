@@ -136,7 +136,7 @@ export function createTltkOovFallback(data){
   throw new TypeError("Pinned TLTK OOV data schema is incomplete");
  const constants=data.parser_constants;
  const stable=Object.fromEntries(Object.entries(constants.stable_aliases).map(([key,base])=>[key,constants.stable_base[base]]));
- const pron=new Map();for(const [form,phone] of data.syllable_dictionary)addPron(pron,form,phone);
+ const basePron=new Map();for(const [form,phone] of data.syllable_dictionary)addPron(basePron,form,phone);
  const patterns=data.syllable_patterns.map(record=>({...record,expression:compilePattern(record)}));
  const sylStats=makeSyllableStats(data.syllable_trigrams),phoneScore=makePhoneScorer(data.phone_trigrams),dictionary=new Set(data.word_dictionary);
  function parseSyllables(input, pron){
