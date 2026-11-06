@@ -4866,5 +4866,39 @@
     "linguistic_accuracy": "NOT_MEASURED",
     "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY"
   }
+,
+  "pages_static_payload_inventory_2026_11_06": {
+    "source_run_id": 42226988467,
+    "artifact_id": 13505189970,
+    "artifact_zip_bytes": 17205394,
+    "tar_bytes": 27791360,
+    "file_count": 82,
+    "file_payload_bytes": 27718221,
+    "initial_shell": {"files": 4, "raw_bytes": 46279, "gzip9_estimate_bytes": 12980},
+    "native_worker_js": {"files": 6, "raw_bytes": 63350, "gzip9_estimate_bytes": 21092},
+    "native_assets": {"files": 6, "raw_bytes": 2215791, "gzip9_estimate_bytes": 442372},
+    "first_native_analysis_path": {"raw_bytes": 2325420, "gzip9_estimate_bytes": 476444},
+    "tltk_oov_pack": {"compressed_bytes": 2844409, "loaded_on": "native dictionary miss"},
+    "pyodide_core": {"files": 4, "raw_bytes": 12163625, "gzip9_estimate_bytes": 5430038},
+    "python_wheels": {"files": 4, "raw_bytes": 7826126, "gzip9_estimate_bytes": 7640698},
+    "existing_node_segmentation_diagnostic": {
+      "run_id": 42231257136,
+      "runtime": "Node v22.23.4",
+      "warmup_iterations": 5,
+      "measured_iterations": 30,
+      "cases": [
+        {"input_code_points": 113, "median_ms": 1.658, "p95_ms": 3.078},
+        {"input_code_points": 261, "median_ms": 3.101, "p95_ms": 4.981},
+        {"input_code_points": 500, "median_ms": 5.373, "p95_ms": 11.891}
+      ],
+      "scope": "web/src/engine.js segmentation in Node; not browser FastThaiG2P/Worker latency or accuracy"
+    },
+    "measurement_caveat": "gzip-9 values are local estimates, not observed HTTP Content-Encoding/Brotli/cache transfer. Artifact ZIP size is not first-load transfer.",
+    "remaining": [
+      "Instrumented browser cold/warm FastThaiG2P dictionary and TLTK OOV latency and actual request bytes",
+      "Offline reload/cache validation",
+      "Browser/Worker and process memory on named desktop and physical mobile devices"
+    ]
+  }
 
 }

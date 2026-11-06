@@ -8,6 +8,7 @@ The native TLTK OOV implementation and its parity follow-up are already merged. 
 - PR #217 merged as `533cd3f8df6112b000f5c91524f8050026b4d79a`; exact pinned TLTK syllable segmentation/scoring regression guard added. Exact-head CI #42226080426, Pages build #42226080435 and Pyodide compatibility #42226080581 passed. CI reported 401 passed, 1 skipped, 1,211 subtests; Ruff and wheel-install smoke passed.
 - PR #218 merged as `9f279ce04c14b81fa4728a15e81fb89ab046b753`; it reconciles documentation after #217.
 - Main push CI #42229026310 on the current main HEAD succeeded, including test, wheel-install-smoke and master-artifact jobs.
+- Static Pages payload was measured from artifact #13505189970: 27,718,221 bytes across 82 files; first native-analysis path 2,325,420 raw bytes (gzip-9 estimate 476,444); TLTK OOV pack 2,844,409 compressed. These are build-file sizes/estimates, not observed HTTP transfer. The existing Node segmentation diagnostic (run #42231257136) reports median/p95 1.658/3.078 ms at 113 code points, 3.101/4.981 ms at 261, and 5.373/11.891 ms at 500, but measures `engine.js` in Node—not FastThaiG2P browser latency.
 - TLTK 1.9.1 BSD-3-Clause evidence applies to six packaged fallback assets only. Preserve all BSD conditions/disclaimer/no-endorsement; retain root LGPL-3.0 and stale 1.1.7/GPLv3 metadata as separate historical context. Do not generalize the package conclusion to the entire upstream repository.
 
 ### Branch reconciliation

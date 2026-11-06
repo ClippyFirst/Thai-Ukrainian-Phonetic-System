@@ -11,6 +11,33 @@ Independent linguistic accuracy is still NOT_MEASURED: implementation parity aga
 
 **Owner decision (2026-11-06):** proceed with an original browser-native JavaScript/TypeScript port of the pinned FastThaiG2P pipeline. The existing Pyodide implementation remains the production/reference path until the native implementation reaches exact, evidence-backed acceptance. Do not cut over or remove Pyodide merely because a dictionary-only prototype exists.
 
+## Static Pages payload inventory — 2026-11-06
+
+Measured from the actual `github-pages` artifact produced by main Pages run [42226988467](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42226988467), source commit `533cd3f8df6112b000f5c91524f8050026b4d79a`, artifact ID `13505189970`. The ZIP artifact is **17,205,394 bytes**; its `artifact.tar` contains **82 files / 27,718,221 bytes** of file payload (27,791,360 bytes including tar headers/padding).
+
+| Lazy-load group | Files | Raw bytes | Offline gzip-9 estimate |
+|---|---:|---:|---:|
+| Initial HTML/CSS/app/messages shell | 4 | 46,279 | 12,980 |
+| Native Worker JavaScript module graph | 6 | 63,350 | 21,092 |
+| Native dictionary/normalizer/wordlist assets + manifests | 6 | 2,215,791 | 442,372 |
+| TLTK OOV data pack (already gzip-compressed) | 1 | 2,844,409 | 2,844,409 |
+| Pyodide core assets | 4 | 12,163,625 | 5,430,038 |
+| Python wheels (ZIP archives) | 4 | 7,826,126 | 7,640,698 |
+| Entire static-site file payload | 82 | 27,718,221 | Not a browser transfer measurement |
+
+The first native analysis path (shell + native JS modules + native assets) is **2,325,420 raw bytes**, with a local gzip-9 estimate of **476,444 bytes**. The TLTK OOV pack adds 2,844,409 bytes only after a native dictionary miss. Pyodide core and wheels are retained for the last-resort compatibility fallback and are not required for a supported native dictionary hit or supported TLTK OOV result.
+
+**Measurement boundary:** these are file and build-artifact byte counts. The gzip column is a local Python gzip-9 estimate, not observed GitHub Pages `Content-Encoding`, Brotli, cache or HTTP transfer bytes. The 17.2 MB ZIP is a CI artifact size, not first-load transfer. No cold/warm G2P latency, offline reload, real mobile-device timing or browser/Worker memory measurement is claimed.
+
+The existing `scripts/benchmark_web_segmentation.mjs` diagnostic is also recorded separately, not as FastThaiG2P runtime performance: exact CI run #42231257136, Node v22.23.4, 5 warmups and 30 measured iterations; median/p95 were 1.658/3.078 ms for 113 code points, 3.101/4.981 ms for 261 code points, and 5.373/11.891 ms for 500 code points. It exercises `web/src/engine.js` segmentation in Node, not the browser FastThaiG2P/Worker path and not phonetic accuracy.
+
+### Remaining performance acceptance
+
+- **TODO:** instrument real browser cold initialization and warm repeated analysis for dictionary hits and TLTK OOV; report median/p95 and request-level bytes.
+- **TODO:** test offline reload and cached execution with a documented cache state and network-disabled browser context.
+- **TODO:** measure browser/Worker memory (where supported) and total process memory on named desktop and physical mobile devices.
+- **TODO:** repeat on physical mobile hardware and representative network profiles. Chromium mobile emulation is not a substitute for device acceptance.
+
 ## Product and attribution positioning
 
 The deliverable is a **ClippyFirst browser-native JavaScript/TypeScript port of FastThaiG2P**, not a claim that the upstream Python package itself is JavaScript. Preserve the upstream project name, author, immutable source revision, Apache-2.0 license and Amazon NOTICE. Clearly distinguish:
@@ -26,7 +53,7 @@ A language port does not automatically transfer copyright in the upstream implem
 - Upstream pin: `awslabs/FastThaiG2P@4e82a291b4cf2876326744c6580121e9986ad354`.
 - The current filtered dictionary contains 13,144 Wiktionary-labelled entries; generated/manual/unknown records are excluded.
 - The Python reference adapter is `src/thai_ukrainian/fastthaig2p_adapter.py`; the shared response contract is `src/thai_ukrainian/fastthaig2p_service.py`.
-- The current runtime bundle is approximately 20.5 MB raw including Pyodide, wheels, notices and the filtered dataset ZIP. Exact figures vary only if the pinned artifacts change; see `docs/fastthaig2p-pyodide-port.md`.
+- The complete static Pages artifact is 27,718,221 bytes of file payload (17,205,394-byte uploaded ZIP artifact) at the 2026-11-06 mainline checkpoint. This is total deployment size, not first-load transfer; see the measured lazy-load inventory below.
 
 ## Pipeline that must be ported
 
@@ -60,7 +87,7 @@ Do not conflate this work with the separate ClippyFirst Thai orthographic resear
 | Native Worker smoke | DONE_VERIFIED (front-half) | Exact-head Pyodide compatibility #42186384082: real Chromium module Worker matched all 16 pinned CPython normalized-input/token/raw-IPA cases and returned the Ukrainian fail-closed OOV response; request audit confirmed no Pyodide/Python/wheels/WASM/remote requests. |
 | Python/JS differential suite | DONE_VERIFIED (dictionary-covered inputs) | Exact-head CI #42186384082 passes 18 normalizer cases, 16 custom tokenizer cases, and 16 complete service JSON parity cases including typed IPA metadata, Ukrainian adaptation, tone/length, rules, provenance and warnings. OOV algorithm parity remains TODO. |
 | Browser cold/warm/offline tests | PARTIAL | Isolated Chromium native Worker smoke proves same-origin JS/data-only execution and no Pyodide/Python/wheel/remote requests. New public-UI acceptance checks no Python downloads for dictionary hits and lazy Pyodide only on OOV; current run is pending. Cold-vs-warm timing, memory, cache reuse and offline reload remain TODO. |
-| Footprint/performance | TODO | Measure transferred bytes, cold-start, warm latency and memory on desktop and mobile; compare to the 20.5 MB baseline. |
+| Footprint/performance | PARTIAL (static artifact inventory) / TODO | Artifact file payload 27,718,221 bytes; first native-analysis path 2,325,420 raw bytes (local gzip-9 estimate 476,444); OOV pack 2,844,409 bytes compressed. Actual HTTP transfer, cold/warm browser latency, offline, physical mobile and memory remain unmeasured. |
 | Documentation and attribution | PARTIAL | This decision/ledger records the intended original port and required upstream/data notices. Update public product claims only after production cutover. |
 
 ## Implemented native front-half

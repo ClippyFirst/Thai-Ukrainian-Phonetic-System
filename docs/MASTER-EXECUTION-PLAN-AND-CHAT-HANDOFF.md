@@ -7,7 +7,8 @@
 - The corrected Pages workflow must pass its PR build first. After merge, require a new main push Pages run to complete with deploy and post-deploy hash smoke SUCCESS. A PR Pages build is not a live deployment.
 - PR #215 was closed as superseded: its head is an ancestor of PR #216's branch head (74 commits ahead, 0 behind); #216's full native OOV implementation was merged. Its source branch is preserved.
 - Ten non-main branch refs remain (nine pre-existing historical/merged refs plus this active repair branch). The active PR source branches correspond to already-merged PRs or historical documentation; do not delete/force-update them. Preserve `docs/repository-audit-2026-11-04` (503 ahead/23 behind) rather than importing its divergent history.
-- Remaining gates after Pages repair: measured cold/warm/offline/mobile latency, transfer size and memory; hands-on keyboard/screen-reader/zoom/reflow/device acceptance; independent Thai IPA gold and Ukrainian-native adaptation review. Independent IPA gold is still 0 and accuracy is `NOT_MEASURED`.
+- Static payload inventory is now measured from Pages artifact #13505189970: 27,718,221 file-payload bytes; first native-analysis path 2,325,420 raw bytes (gzip-9 estimate 476,444); TLTK OOV pack 2,844,409 compressed. This is not observed HTTP transfer. The existing Node segmentation benchmark is not FastThaiG2P browser latency.
+- Remaining gates after Pages repair: end-to-end browser cold/warm/offline and physical mobile latency, actual transfer and memory; hands-on keyboard/screen-reader/zoom/reflow/device acceptance; independent Thai IPA gold and Ukrainian-native adaptation review. Independent IPA gold is still 0 and accuracy is `NOT_MEASURED`.
 - No local checkout or local test execution is claimed in this connector session. Exact CI/Actions results are the verification evidence; rerun exact-head workflows on the repair branch and inspect the post-merge main run.
 
 ---
