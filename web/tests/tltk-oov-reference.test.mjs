@@ -26,6 +26,8 @@ const pipeline = createFastThaiG2PNativePipeline({
 });
 for (const item of fixtures.cases) {
   const actual = pipeline.convert(item.token, { oovFallback: fallback.convert });
-  assert.deepEqual(actual, item.response, "Native typed service JSON must match pinned Python output for " + item.token);
+  assert.equal(actual.normalized_input, item.token);
+  const { normalized_input, ...serviceResult } = actual;
+  assert.deepEqual(serviceResult, item.response, "Native typed service JSON must match pinned Python output for " + item.token);
 }
 console.log("Native TLTK OOV full typed Python-service parity: " + fixtures.cases.length + " reference cases PASS");
