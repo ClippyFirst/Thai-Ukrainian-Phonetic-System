@@ -207,7 +207,7 @@ def main() -> None:
         "normalizer_license": "Apache-2.0",
         "pythainlp_version": EXPECTED_VERSIONS["pythainlp"],
         "pythainlp_wordlist_license": "CC0-1.0",
-        "pythainlp_wordlist_entries": len(native_default_words.decode("utf-8").splitlines()),
+        "pythainlp_wordlist_entries": len([word for word in native_default_words.decode("utf-8").splitlines() if word]),
         "attribution": ["Wiktionary contributors", "Kaikki.org / Wiktextract", "PyThaiNLP contributors"],
         "assets": native_records,
     }
