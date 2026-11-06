@@ -21,7 +21,7 @@ assert.match(page, /\/[e, ɛ]+\/[\s\S]*«е»/);
 assert.match(page, /не є затвердженим національним стандартом|не затверджений національний стандарт/);
 assert.match(page, /незалежн/);
 assert.match(page, /third-party-notices\.html/);
-assert.match(page, /docs\/thai-ukrainian-practical-transcription\.md/);
+assert.match(page, /github\.com\/ClippyFirst\/Thai-Ukrainian-Phonetic-System\/blob\/main\/docs\/thai-ukrainian-practical-transcription\.md/);
 assert.match(home, /href="transcription\.html"/);
 assert.match(system, /href="transcription\.html"/);
 assert.match(system, /64\/64/);
