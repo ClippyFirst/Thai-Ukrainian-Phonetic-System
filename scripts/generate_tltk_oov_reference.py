@@ -58,6 +58,18 @@ def main() -> None:
                 if len(rejected) < 30:
                     rejected[token] = response["raw_ipa"]
                 continue
+            if token == "กขส":
+                print(json.dumps({
+                    "debug_token": token,
+                    "python_sylparse": _th2ipa.sylparse(token),
+                    "python_path_scores": {
+                        "full": _th2ipa.prob_trisyl(["กขส"]),
+                        "one_plus_two": _th2ipa.prob_trisyl(["ก", "ขส"]),
+                        "one_plus_one_plus_one": _th2ipa.prob_trisyl(["ก", "ข", "ส"]),
+                    },
+                    "python_stat_sample": list(_th2ipa.TriCount.items())[:3],
+                    "totals": {"word": _th2ipa.TotalWord, "lex": _th2ipa.TotalLex},
+                }, ensure_ascii=False))
             selected[token] = response
             if len(selected) >= 24:
                 break
