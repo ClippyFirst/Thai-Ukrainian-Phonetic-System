@@ -33,6 +33,9 @@ assert.match(feedback, /name: Відгук про бета-версію/);
 assert.match(feedback, /label: Категорія відгуку/);
 assert.match(feedback, /label: Що сталося/);
 assert.match(feedback, /label: Браузер і версія/);
+assert.match(feedback, /"Неочікуваний результат: тайський текст → IPA → український запис"/);
+assert.match(feedback, /placeholder: "Наприклад: Firefox 132"/);
+assert.match(feedback, /placeholder: "Наприклад: Android 16, Windows 11"/);
 assert.match(feedback, /Підтверджую, що не додаю особистої/);
 assert.doesNotMatch(feedback, /Feedback category|What happened|Browser and version|Privacy confirmation/);
 
