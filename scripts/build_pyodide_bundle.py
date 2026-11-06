@@ -178,13 +178,20 @@ def main() -> None:
     # port. This is data, not executable Python/WASM; loading it never loads wheels.
     native_out = args.output / "native"
     native_out.mkdir(parents=True)
+    pythainlp_wheel = next(path for path in wheel_paths if wheel_metadata(path)[0] == "pythainlp")
     with zipfile.ZipFile(fastthaig2p_wheel) as wheel_archive:
         native_ipa = wheel_archive.read("fastthaig2p/data/ipa.json")
         native_provenance = wheel_archive.read("fastthaig2p/data/browser-data-provenance.json")
         native_normalizer = wheel_archive.read("fastthaig2p/data/normalizer-data.json")
+    with zipfile.ZipFile(pythainlp_wheel) as pythainlp_archive:
+        native_default_words = pythainlp_archive.read("pythainlp/corpus/words_th.txt")
+        corpus_license = pythainlp_archive.read("pythainlp/corpus/corpus_license.md").decode("utf-8", errors="replace")
+    if "CC0" not in corpus_license.upper():
+        raise SystemExit("PyThaiNLP default wordlist license evidence is missing CC0")
     (native_out / "fastthaig2p-ipa.json").write_bytes(native_ipa)
     (native_out / "browser-data-provenance.json").write_bytes(native_provenance)
     (native_out / "fastthaig2p-normalizer.json").write_bytes(native_normalizer)
+    (native_out / "pythainlp-default-words.txt").write_bytes(native_default_words)
     native_records = [{
         "path": path.relative_to(args.output).as_posix(),
         "sha256": sha256(path),
@@ -194,11 +201,14 @@ def main() -> None:
         "schema_version": 1,
         "engine": "FastThaiG2P native JavaScript/TypeScript port",
         "upstream_commit": "4e82a291b4cf2876326744c6580121e9986ad354",
-        "stage": "dictionary-and-normalizer-data-only; not a complete runtime",
+        "stage": "dictionary-normalizer-and-default-wordlist-data-only; not a complete runtime",
         "dictionary_entries": len(json.loads(native_ipa)),
         "dictionary_license": "CC-BY-SA-4.0",
         "normalizer_license": "Apache-2.0",
-        "attribution": ["Wiktionary contributors", "Kaikki.org / Wiktextract"],
+        "pythainlp_version": EXPECTED_VERSIONS["pythainlp"],
+        "pythainlp_wordlist_license": "CC0-1.0",
+        "pythainlp_wordlist_entries": len(native_default_words.decode("utf-8").splitlines()),
+        "attribution": ["Wiktionary contributors", "Kaikki.org / Wiktextract", "PyThaiNLP contributors"],
         "assets": native_records,
     }
     (native_out / "manifest.json").write_text(
