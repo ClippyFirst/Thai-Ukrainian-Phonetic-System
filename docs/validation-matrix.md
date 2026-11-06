@@ -2057,3 +2057,6 @@ This section supersedes the earlier statement that the native Worker was not con
 | Latest CI/Web Static/Pyodide compatibility | BLOCKED — GitHub Actions pending | Runs for head 0e6479450d6205f0a2b65aa80fb1e3d6a13937b0 were queued/pending at the time of this update; no current-head pass is claimed. |
 
 The application is now hybrid native-first, not a full Pyodide replacement. For dictionary-covered inputs it should avoid Python module/wheel/WASM requests; it still fetches JS modules and the approximately 2.2 MB native data bundle. OOV inputs still load Pyodide. Accuracy remains NOT_MEASURED; no speedup is claimed.
+
+
+Latest branch-head update: `228d80d51d58a4437ab0f70ba12597a1259902e8`. The UI contract test now covers both native and Pyodide workers. Exact-head CI, Web Static, site API and Pyodide compatibility runs are queued/pending; keep the native-first UI integration PARTIAL until they pass.
