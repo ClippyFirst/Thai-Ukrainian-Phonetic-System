@@ -154,20 +154,72 @@ export function createFastThaiG2PNativeEngine({ dictionary, tokenize = text => t
 }
 
 /**
- * Load the generated source-filtered dictionary on demand. The dictionary is
- * a data asset; this loader does not load Python, Pyodide or executable wheels.
+ * Load and verify the generated source-filtered dictionary on demand. The
+ * dictionary is a data asset; this loader never loads Python, Pyodide or wheels.
  */
 export async function loadFastThaiG2PNativeDictionary({
   url = new URL("../vendor/native/fastthaig2p-ipa.json", import.meta.url),
-  fetchImpl = fetch
+  manifestUrl = new URL("../vendor/native/manifest.json", import.meta.url),
+  fetchImpl = fetch,
+  cryptoImpl = globalThis.crypto
 } = {}) {
-  const response = await fetchImpl(url, { credentials: "same-origin", cache: "force-cache" });
+  const manifestResponse = await fetchImpl(manifestUrl, {
+    credentials: "same-origin",
+    cache: "force-cache"
+  });
+  if (!manifestResponse.ok) {
+    throw new NativeFastThaiG2PError("native_manifest_unavailable", `HTTP ${manifestResponse.status}`);
+  }
+  const manifest = await manifestResponse.json();
+  if (
+    manifest?.schema_version !== 1 ||
+    manifest?.upstream_commit !== FASTTHAIG2P_UPSTREAM_COMMIT ||
+    manifest?.stage !== "dictionary-data-only; not a complete runtime" ||
+    manifest?.license !== "CC-BY-SA-4.0" ||
+    !Number.isInteger(manifest?.dictionary_entries)
+  ) {
+    throw new NativeFastThaiG2PError("native_manifest_invalid", "Native dictionary manifest does not match the reviewed source contract");
+  }
+  const asset = manifest.assets?.find(item => item.path === "native/fastthaig2p-ipa.json");
+  if (!asset || !/^[a-f0-9]{64}$/u.test(asset.sha256) || !Number.isInteger(asset.size_bytes)) {
+    throw new NativeFastThaiG2PError("native_manifest_invalid", "Native dictionary integrity record is missing");
+  }
+
+  const response = await fetchImpl(url, {
+    credentials: "same-origin",
+    cache: "force-cache"
+  });
   if (!response.ok) {
     throw new NativeFastThaiG2PError("native_dictionary_unavailable", `HTTP ${response.status}`);
   }
-  const dictionary = await response.json();
-  if (!dictionary || typeof dictionary !== "object" || Array.isArray(dictionary)) {
-    throw new NativeFastThaiG2PError("native_dictionary_invalid", "Native IPA dictionary must be a JSON object");
+  const buffer = await response.arrayBuffer();
+  if (buffer.byteLength !== asset.size_bytes) {
+    throw new NativeFastThaiG2PError("native_dictionary_corrupt", "Native IPA dictionary size does not match its manifest");
+  }
+  if (!cryptoImpl?.subtle?.digest) {
+    throw new NativeFastThaiG2PError("native_integrity_unavailable", "Web Crypto SHA-256 is required to verify the native dictionary");
+  }
+  const digest = await cryptoImpl.subtle.digest("SHA-256", buffer);
+  const actualHash = [...new Uint8Array(digest)]
+    .map(value => value.toString(16).padStart(2, "0"))
+    .join("");
+  if (actualHash !== asset.sha256) {
+    throw new NativeFastThaiG2PError("native_dictionary_corrupt", "Native IPA dictionary SHA-256 does not match its manifest");
+  }
+
+  let dictionary;
+  try {
+    dictionary = JSON.parse(new TextDecoder().decode(buffer));
+  } catch {
+    throw new NativeFastThaiG2PError("native_dictionary_invalid", "Native IPA dictionary is not valid UTF-8 JSON");
+  }
+  if (
+    !dictionary ||
+    typeof dictionary !== "object" ||
+    Array.isArray(dictionary) ||
+    Object.keys(dictionary).length !== manifest.dictionary_entries
+  ) {
+    throw new NativeFastThaiG2PError("native_dictionary_invalid", "Native IPA dictionary entry count does not match its manifest");
   }
   return dictionary;
 }
