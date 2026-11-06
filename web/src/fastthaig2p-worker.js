@@ -25,14 +25,24 @@ function safeDiagnostic(value, inputText) {
 }
 
 async function fetchManifest() {
-  const response = await fetch(MANIFEST_URL, {
-    credentials: "same-origin",
-    cache: "force-cache"
-  });
+  let response;
+  try {
+    response = await fetch(MANIFEST_URL, {
+      credentials: "same-origin",
+      cache: "force-cache"
+    });
+  } catch (error) {
+    throw failure("bundle_unavailable", `Маніфест рушія: помилка мережі (${error?.name || "невідома"}).`);
+  }
   if (!response.ok) {
     throw failure("bundle_unavailable", `Маніфест рушія: HTTP ${response.status}`);
   }
-  const manifest = await response.json();
+  let manifest;
+  try {
+    manifest = await response.json();
+  } catch (error) {
+    throw failure("bundle_invalid", `Маніфест рушія не є коректним JSON (${error?.name || "невідома помилка"}).`);
+  }
   if (manifest.schema_version !== 1 || manifest.pyodide?.version !== "0.29.5") {
     throw failure("bundle_invalid", "Версія або схема маніфесту не відповідає перевіреній конфігурації.");
   }
@@ -60,10 +70,15 @@ async function initializeRuntime(requestId) {
       throw failure("bundle_invalid", "Маніфест містить неприпустиму назву Python-компонента.");
     }
     self.postMessage({ type: "progress", requestId, stage: "download", filename: asset.filename });
-    const response = await fetch(new URL(asset.filename, WHEEL_BASE), {
-      credentials: "same-origin",
-      cache: "force-cache"
-    });
+    let response;
+    try {
+      response = await fetch(new URL(asset.filename, WHEEL_BASE), {
+        credentials: "same-origin",
+        cache: "force-cache"
+      });
+    } catch (error) {
+      throw failure("bundle_unavailable", `Компонент ${asset.filename}: помилка мережі (${error?.name || "невідома"}).`);
+    }
     if (!response.ok) {
       throw failure("bundle_unavailable", `Компонент ${asset.filename}: HTTP ${response.status}`);
     }
