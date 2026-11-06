@@ -36,7 +36,7 @@ try {
   const page = await browser.newPage();
   const requests = [];
   page.on("request", request => requests.push(request.url()));
-  await page.goto("http://127.0.0.1:" + address.port + "/index.html");
+  await page.goto("http://127.0.0.1:" + address.port + "/tests/native-worker-smoke.html");
   const actual = await page.evaluate(async input => {
     const worker = new Worker("/src/fastthaig2p-native-worker.js", { type: "module" });
     return await new Promise((resolve, reject) => {
@@ -73,7 +73,7 @@ try {
   assert.equal(actual.raw_ipa, expected.expected_ipa);
 
   const forbidden = requests.filter(url =>
-    /pyodide|\\/wheels\\/|\\.whl(?:$|\\?)|pyodide\\.mjs|https?:\\/\\/(?!127\\.0\\.0\\.1)/iu.test(url)
+    /pyodide|\/wheels\/|\.whl(?:$|\?)|pyodide\.mjs|https?:\/\/(?!127\.0\.0\.1)/iu.test(url)
   );
   assert.deepEqual(forbidden, [], "Native worker requested a Python/Pyodide/wheel or remote asset");
   assert(requests.some(url => url.includes("/vendor/native/fastthaig2p-ipa.json")));
