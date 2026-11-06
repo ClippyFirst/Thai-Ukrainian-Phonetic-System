@@ -1,6 +1,6 @@
 # FastThaiG2P browser/WASM port
 
-**Owner decisions (2026-11-05):** GitHub Pages is the only hosting target. Keep FastThaiG2P and run the shared Python service in the browser using Pyodide. Do not introduce a separate API host, Vercel, serverless functions, CDN runtime dependencies, or a parallel JavaScript G2P implementation.
+**Owner decisions:** On 2026-11-05, GitHub Pages and a same-origin Pyodide Worker were selected. On 2026-11-06, the owner superseded the no-JavaScript-port constraint and approved an original browser-native JavaScript/TypeScript port. Pyodide remains the production/reference runtime until the native port meets the complete parity and browser acceptance gates in [FastThaiG2P native JavaScript/TypeScript port](fastthaig2p-javascript-port.md). GitHub Pages remains the only hosting target; do not introduce a remote API or CDN runtime dependency.
 
 **Current status:** the research beta is live on GitHub Pages. Pages post-deploy smoke [42098396098](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42098396098), Pyodide parity/Chromium worker [42098395877](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42098395877), and main CI [42099035122](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42099035122) passed. Owner approval authorizes research-project publication; third-party terms remain applicable and TLTK file-level license scope remains ambiguous.
 
@@ -98,3 +98,10 @@ The Pages workflow and bundle builder use the owner-approved rights manifest and
 ## Product and linguistic limits
 
 This is a runtime-port milestone, not a linguistic validation result. Independent IPA gold remains 0; accuracy remains `NOT_MEASURED`; Ukrainian practical forms remain provisional. No TTS, audio, acoustic validation, or external expert review is required for the owner-approved beta scope.
+
+
+## Superseding owner decision — native JavaScript/TypeScript port (2026-11-06)
+
+The owner has approved a browser-native JavaScript/TypeScript port. The Pyodide implementation documented above is retained as the verified reference until the port reproduces normalization, tokenization, dictionary lookup, TLTK OOV fallback, typed IPA and the complete service response. Do not remove the current worker, wheels or runtime before exact differential and Chromium acceptance pass.
+
+The initial isolated dictionary adapter is documented in [FastThaiG2P native JavaScript/TypeScript port](fastthaig2p-javascript-port.md). Its dictionary-only scope is not production parity.

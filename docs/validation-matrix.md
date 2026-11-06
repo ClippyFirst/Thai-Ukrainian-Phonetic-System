@@ -2001,3 +2001,20 @@ Live beta: https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/ .
 | Ukrainian phonetics glossary and plain-language help | TODO | Explain IPA, tone, vowel length and provisional adaptation in Ukrainian; linguistic claims require evidence review. |
 
 Implementation branch: `feat/ukrainian-first-ux-2026-11-06`. Do not mark the implementation DONE_VERIFIED until exact-head CI and the Pages deployment/browser smoke succeed. No phonetic rules or linguistic accuracy claims changed. See [Ukrainian-first UX contract](ukrainian-first-ux.md).
+
+
+## Owner-approved FastThaiG2P native JavaScript/TypeScript port — 2026-11-06
+
+| Work item | Status | Evidence / acceptance |
+|---|---|---|
+| Owner decision and port scope | DONE_VERIFIED | Decision recorded in `docs/fastthaig2p-javascript-port.md`; prior Pyodide-only constraint superseded. |
+| Native dictionary IPA/result adapter | PARTIAL | `web/src/fastthaig2p-native.js` parses slash/dot IPA, preserves Chao tone and vowel length, and delegates to existing IPA→Ukrainian adapter. Unit contract added; not integrated into public UI. |
+| Filtered native dictionary asset | TODO | Bundle builder updated to emit native IPA JSON/provenance/manifest; exact-head CI and byte/hash assertions required. |
+| Normalizer parity | TODO | Port pinned FastThaiG2P normalizer and PyThaiNLP maiyamok behavior; differential fixture coverage required. |
+| PyThaiNLP newmm parity | TODO | Port exact algorithm and effective dictionaries; verify token-array parity. |
+| TLTK OOV fallback | BLOCKED / PARTIAL | Exact asset-level license scope remains unresolved; do not redistribute/port fallback assets until a defensible rights disposition exists. |
+| Full Python/JS result parity | TODO | Complete response JSON parity over frozen inputs, including unsupported and ambiguous cases. |
+| Native Worker and UI cutover | DEFERRED | Only after every parity, licensing, cold/warm, offline, CSP and performance gate passes. |
+| Pyodide removal | DEFERRED | Remove only after production cutover is verified and rollback path is retained. |
+
+The public site still uses Pyodide. The new adapter is an isolated development slice, not a claim that the native port is complete or faster. No IPA or Ukrainian phonetic rules were changed; linguistic accuracy remains `NOT_MEASURED`.

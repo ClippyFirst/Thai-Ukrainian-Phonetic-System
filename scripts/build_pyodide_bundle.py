@@ -174,6 +174,35 @@ def main() -> None:
         "attribution": ["Wiktionary contributors", "Kaikki.org / Wiktextract"],
     }]
 
+    # Emit the filtered IPA map as a standalone data asset for the native JS/TS
+    # port. This is data, not executable Python/WASM; loading it never loads wheels.
+    native_out = args.output / "native"
+    native_out.mkdir(parents=True)
+    with zipfile.ZipFile(fastthaig2p_wheel) as wheel_archive:
+        native_ipa = wheel_archive.read("fastthaig2p/data/ipa.json")
+        native_provenance = wheel_archive.read("fastthaig2p/data/browser-data-provenance.json")
+    (native_out / "fastthaig2p-ipa.json").write_bytes(native_ipa)
+    (native_out / "browser-data-provenance.json").write_bytes(native_provenance)
+    native_records = [{
+        "path": path.relative_to(args.output).as_posix(),
+        "sha256": sha256(path),
+        "size_bytes": path.stat().st_size,
+    } for path in sorted(native_out.iterdir()) if path.is_file()]
+    native_manifest = {
+        "schema_version": 1,
+        "engine": "FastThaiG2P native JavaScript/TypeScript port",
+        "upstream_commit": "4e82a291b4cf2876326744c6580121e9986ad354",
+        "stage": "dictionary-data-only; not a complete runtime",
+        "dictionary_entries": len(json.loads(native_ipa)),
+        "license": "CC-BY-SA-4.0",
+        "attribution": ["Wiktionary contributors", "Kaikki.org / Wiktextract"],
+        "assets": native_records,
+    }
+    (native_out / "manifest.json").write_text(
+        json.dumps(native_manifest, ensure_ascii=False, indent=2) + "\\n",
+        encoding="utf-8",
+    )
+
     runtime_out = args.output / "pyodide"
     wheels_out = args.output / "wheels"
     shutil.copytree(args.pyodide_dist, runtime_out)
