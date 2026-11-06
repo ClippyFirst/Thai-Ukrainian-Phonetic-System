@@ -149,7 +149,9 @@ export function createTltkOovFallback(data){
    if(!groups.length){for(const p of [pronunciation])addPron(pron,form,p);continue;}
    const charmatch=groups.join(" ");
    const code=pronunciation.replace(/[^AKYDZCRX]/gu,"");if(!code)continue;
-   let phone=replaceSound(pronunciation,code,charmatch,stable);
+   let phone;
+   try { phone=replaceSound(pronunciation,code,charmatch,stable); }
+   catch(error) { if(error?.code==="native_oov_stable_missing")continue; throw error; }
    if(allowedPronunciation(code,charmatch,form,phone,constants.allowed_clusters)){
     const [assigned,tone]=toneAssign(form,phone,code,charmatch);phone=assigned;
     if(tone<"5")phone=phone.replaceAll("8",tone);
