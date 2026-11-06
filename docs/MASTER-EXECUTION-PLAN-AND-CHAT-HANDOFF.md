@@ -2799,3 +2799,22 @@ Canonical documents: `docs/beta-release-scope.md`, `docs/fastthaig2p-pyodide-por
 - Current port scope is still PARTIAL: normalization is implemented but awaiting CPython parity; PyThaiNLP newmm tokenizer and TLTK OOV fallback remain outstanding. TLTK asset-level licensing is still unresolved, so do not redistribute or port those assets until a defensible license disposition is recorded.
 - Keep the Pyodide Worker and Python reference production path until exact normalization, tokenizer, dictionary, fallback, typed IPA, complete JSON and Chromium no-Pyodide acceptance pass. Do not label the current dictionary adapter as a complete browser-native engine.
 - Linguistic accuracy remains `NOT_MEASURED`; no Thai phonology, IPA gold, Ukrainian adaptation rule or accuracy claim changed.
+
+
+## Updated handoff — native FastThaiG2P front-half parity (2026-11-06)
+
+- Current branch: `feat/fastthaig2p-native-ts-port-2026-11-06`.
+- PR #214 remains open: https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/214
+- Latest PR head at this update: `2801b8fbad00eb7d8560ee02989e5b794ff9c61b`.
+- Exact successful native front-half evidence: Pyodide compatibility run #42181862972 SUCCESS. Its build stage reported:
+  - 18 pinned CPython normalizer cases matched using the extracted PyThaiNLP default wordlist;
+  - 16 custom FastThaiG2P newmm token-array cases matched;
+  - 16 dictionary-only native pipeline cases matched normalized input, token sequence and IPA;
+  - native data manifest recorded 5 assets, total 694,141 bytes before adding the PyThaiNLP default wordlist; current asset byte count must be read from the latest exact-head run;
+  - existing Pages bundle build, Pyodide/CPython parity and real Chromium Pyodide worker smoke passed.
+- Web Static #42181943550 SUCCESS on latest PR head `2801b8fbad00eb7d8560ee02989e5b794ff9c61b`.
+- Full CI #42181943478 was still pending when this handoff was updated; do not claim it passed until its run concludes.
+- The public app remains on Pyodide. Native code composes normalizer → default newmm → custom newmm → Wiktionary-only dictionary lookup → existing IPA→Ukrainian adapter, but fails closed on OOV.
+- Remaining genuine blocker: TLTK fallback source/data asset-level licensing. The current evidence includes BSD-3-Clause and LGPL-3.0 notices; do not port or redistribute the fallback data/pickle until exact scope is resolved. Then require exact OOV and full typed IPA/result parity.
+- Native Worker integration, browser cold/warm/offline smoke, performance measurements and production cutover remain TODO/DEFERRED. No speed or full replacement claim.
+- Linguistic accuracy remains `NOT_MEASURED`.
