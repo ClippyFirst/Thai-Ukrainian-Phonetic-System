@@ -40,17 +40,17 @@ Do not conflate this work with the separate ClippyFirst Thai orthographic resear
 | Component | Status | Acceptance |
 |---|---|---|
 | JavaScript module/result adapter | PARTIAL | First dictionary adapter exists in `web/src/fastthaig2p-native.js`; unit tests cover parsing, tone extraction, IPA→Ukrainian adaptation and fail-closed dictionary misses. It is not wired into the public UI. |
-| Source-filtered dictionary build asset | IMPLEMENTED_PENDING_EXACT_HEAD_CI | Build emits `web/vendor/native/fastthaig2p-ipa.json` from the exact filtered wheel; provenance, entry count, size and SHA-256 are checked. |
-| Text normalization | IMPLEMENTED_PENDING_EXACT_PARITY | JavaScript implementation, AST-extracted upstream maps and pinned PyThaiNLP default wordlist are added; the differential suite verifies normalization and maiyamok tokenization. |
-| PyThaiNLP newmm tokenizer | IMPLEMENTED_PENDING_EXACT_PARITY | JS trie/TCC/maximal-matching port added against PyThaiNLP 5.4.0; pinned token-array differential suite pending for both default and FastThaiG2P custom dictionaries. |
-| Dictionary IPA lookup | PARTIAL | Adapter supports an injected map; the exact filtered JSON asset is generated and integrity-manifested. Production tokenizer/lookup integration remains TODO. |
+| Source-filtered dictionary build asset | DONE_VERIFIED | Build emits `web/vendor/native/fastthaig2p-ipa.json` from the exact filtered wheel; provenance, entry count, size and SHA-256 are checked. |
+| Text normalization | DONE_VERIFIED | #42181862972: 18 pinned CPython cases passed with the extracted PyThaiNLP default wordlist, including maiyamok. |
+| PyThaiNLP newmm tokenizer | DONE_VERIFIED | #42181862972: 16 FastThaiG2P custom-dictionary cases and 18 PyThaiNLP default-wordlist cases passed token-array parity. |
+| Dictionary IPA lookup | PARTIAL | Native pipeline uses the 13,144-entry Wiktionary-only map and matches 16 dictionary-only CPython cases; OOV fallback is not yet available. |
 | TLTK OOV fallback | BLOCKED / PARTIAL | The current fallback depends on `_th2ipa.py`, six TLTK-derived data assets, trigram statistics and a pickled syllable-variant structure. The source repository contains conflicting LGPL-3.0/BSD-3-Clause evidence for the data package. Acceptance requires an explicit asset-level licensing disposition and deterministic JSON serialization of the pickle before porting. |
 | Typed IPA result contract | PARTIAL | Tone contours and segmental IPA are parsed; exact parity for uncertainty, unsupported symbols, word/syllable alignment and metadata remains TODO. |
 | IPA → Ukrainian adapter | REUSED | Existing `web/src/ipa-ua.js` remains the sole target adaptation boundary; it must not be duplicated. |
 | Native pipeline composition | PARTIAL | `createFastThaiG2PNativePipeline` composes normalizer, default/custom newmm tokenizers and Wiktionary-only IPA lookup; OOV fallback is fail-closed and still missing. |
 | Worker integration | TODO | Add a separate native worker and an explicit runtime selector for CI only; production remains on Pyodide until all gates pass. |
-| Python/JS differential suite | TODO | Same normalized text, tokens, IPA groups, typed fields and complete service JSON for the same frozen input set. |
-| Browser cold/warm tests | TODO | Chromium smoke proves no Pyodide, Python, wheel or API assets are requested by the native path; verify offline repeat use after dictionary cache. |
+| Python/JS differential suite | PARTIAL | 18 normalizer, 16 custom tokenizer and 16 dictionary-only front-half cases pass. Typed IPA metadata and full service JSON/OOV differential remain TODO. |
+| Browser cold/warm tests | TODO | No native Worker exists yet; future Chromium smoke must prove no Pyodide, Python, wheel or API requests and verify offline repeat use after data cache. |
 | Footprint/performance | TODO | Measure transferred bytes, cold-start, warm latency and memory on desktop and mobile; compare to the 20.5 MB baseline. |
 | Documentation and attribution | PARTIAL | This decision/ledger records the intended original port and required upstream/data notices. Update public product claims only after production cutover. |
 
@@ -65,7 +65,7 @@ Do not conflate this work with the separate ClippyFirst Thai orthographic resear
 - `web/src/fastthaig2p-normalizer.js` ports the upstream normalization sequence; it consumes data maps extracted from the pinned Python source and receives the PyThaiNLP default word tokenizer for maiyamok expansion.
 - `web/src/fastthaig2p-tokenizer.js` ports PyThaiNLP 5.4.0 newmm, including TCC boundaries, trie prefix matching, graph traversal and formatted-number rejoining, using the same filtered FastThaiG2P dictionary keys.
 
-This is a development seam, not a complete FastThaiG2P port. It intentionally does not normalize text, segment unspaced Thai, or provide OOV fallback. The public application continues to use the verified Pyodide worker.
+This is a development seam, not a complete FastThaiG2P port. It now normalizes text and segments unspaced Thai with differential evidence, but it still does not provide OOV fallback. The public application continues to use the verified Pyodide worker.
 
 ## Licensing and data boundary
 
