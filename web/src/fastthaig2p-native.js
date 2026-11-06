@@ -53,7 +53,7 @@ function syllableResult(rawIpa) {
   const adaptation = adaptIpaToUkrainian(segmentalIpa);
   const warnings = [
     "FastThaiG2P output is not independently adjudicated phonetic gold.",
-    "Its phonemic-versus-broad-surface status is not established; external IPA remains separate.",
+    "Its phonemic-versus-broad-surface status is not established; external IPA is kept separate from phonemic and broad-surface IPA fields.",
     "Ukrainian output is a provisional practical adaptation, not an expert-validated transcription."
   ];
   if (toneIpa && !TONE_CATEGORIES[toneIpa]) {
@@ -67,11 +67,19 @@ function syllableResult(rawIpa) {
     tone_ipa: toneIpa,
     vowel_length: segmentalIpa.includes("ː") ? "long" : null,
     ukrainian: adaptation.output,
-    adaptation_status: adaptation.status,
+    adaptation_status: adaptation.status === "adapted" ? "provisional" : adaptation.status,
     rules_applied: adaptation.rulesApplied ?? [],
     neutralized_features: adaptation.neutralizedFeatures ?? [],
     provenance: [`FastThaiG2P@${FASTTHAIG2P_UPSTREAM_COMMIT}`],
-    warnings: [...warnings, ...(adaptation.warnings ?? [])]
+    warnings: [
+      ...warnings,
+      ...(adaptation.status === "withheld"
+        ? ["Phonetic result is not supported; Ukrainian output withheld."]
+        : [
+            ...(adaptation.warnings ?? []),
+            "PROVISIONAL: external IPA has not been independently adjudicated as an authoritative phonemic or broad-surface reference; this Ukrainian rendering is an unvalidated candidate."
+          ])
+    ]
   };
 }
 
@@ -155,9 +163,9 @@ export function createFastThaiG2PNativeEngine({
         words,
         coverage: { dictionary_tokens: tokens.length, rule_fallback_tokens: 0 },
         warnings: [
-          "Це експериментальний нативний JavaScript-порт: нормалізація, newmm сегментація та словниковий IPA-пошук реалізовані окремими модулями.",
-          "TLTK OOV fallback ще не портований; невідомі токени відхиляються без здогадок, тому це поки не повна заміна FastThaiG2P.",
-          "Український запис є попередньою практичною адаптацією IPA, не підтвердженою незалежними фахівцями."
+          "Український запис є попередньою практичною адаптацією IPA, не підтвердженою незалежними фахівцями.",
+          "FastThaiG2P IPA не класифіковано як фонемну або широку поверхневу IPA; сирий результат збережено окремо.",
+          "Тони та довгота показані в IPA/метаданих, але не повністю відтворюються українськими літерами."
         ]
       };
     }
