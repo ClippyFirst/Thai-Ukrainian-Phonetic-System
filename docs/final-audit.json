@@ -5063,78 +5063,123 @@
       {
         "branch": "design/site-recomposition-2026-11-05",
         "ahead": 28,
-        "behind": 38
+        "behind": 38,
+        "tree_added_paths": 0,
+        "tree_deleted_paths": 37,
+        "tree_changed_paths": 41
       },
       {
         "branch": "docs/post-211-pages-verification-2026-11-06",
         "ahead": 7,
-        "behind": 37
+        "behind": 37,
+        "tree_added_paths": 0,
+        "tree_deleted_paths": 37,
+        "tree_changed_paths": 39
       },
       {
         "branch": "docs/post-merge-closeout-2026-11-06",
         "ahead": 17,
-        "behind": 3
+        "behind": 3,
+        "tree_added_paths": 0,
+        "tree_deleted_paths": 6,
+        "tree_changed_paths": 11
       },
       {
         "branch": "docs/post-merge-tltk-oov-verification-2026-11-06",
         "ahead": 9,
-        "behind": 20
+        "behind": 20,
+        "tree_added_paths": 0,
+        "tree_deleted_paths": 10,
+        "tree_changed_paths": 21
       },
       {
         "branch": "docs/practical-system-site-2026-11-06",
         "ahead": 19,
-        "behind": 4
+        "behind": 4,
+        "tree_added_paths": 0,
+        "tree_deleted_paths": 6,
+        "tree_changed_paths": 11
       },
       {
         "branch": "docs/repository-audit-2026-11-04",
         "ahead": 503,
         "behind": 42,
-        "disposition": "PRESERVED_NOT_MERGED_WHOLESALE"
+        "disposition": "PRESERVED_NOT_MERGED_WHOLESALE",
+        "tree_added_paths": 0,
+        "tree_deleted_paths": 38,
+        "tree_changed_paths": 46
       },
       {
         "branch": "docs/rtgs-romanizer-closeout-2026-11-06",
         "ahead": 1,
-        "behind": 1
+        "behind": 1,
+        "tree_added_paths": 0,
+        "tree_deleted_paths": 0,
+        "tree_changed_paths": 0
       },
       {
         "branch": "feat/fastthaig2p-native-ts-port-2026-11-06",
         "ahead": 138,
-        "behind": 35
+        "behind": 35,
+        "tree_added_paths": 0,
+        "tree_deleted_paths": 17,
+        "tree_changed_paths": 35
       },
       {
         "branch": "feat/native-tltk-oov-and-pages-verification-2026-11-06",
         "ahead": 41,
-        "behind": 22
+        "behind": 22,
+        "tree_added_paths": 0,
+        "tree_deleted_paths": 15,
+        "tree_changed_paths": 30
       },
       {
         "branch": "feat/native-tltk-oov-runtime-2026-11-06",
         "ahead": 115,
-        "behind": 22
+        "behind": 22,
+        "tree_added_paths": 0,
+        "tree_deleted_paths": 10,
+        "tree_changed_paths": 22
       },
       {
         "branch": "feat/thai-rtgs-romanizer-2026-11-06",
         "ahead": 2,
-        "behind": 2
+        "behind": 2,
+        "tree_added_paths": 0,
+        "tree_deleted_paths": 0,
+        "tree_changed_paths": 5
       },
       {
         "branch": "feat/ukrainian-first-ux-2026-11-06",
         "ahead": 44,
-        "behind": 37
+        "behind": 37,
+        "tree_added_paths": 0,
+        "tree_deleted_paths": 34,
+        "tree_changed_paths": 39
       },
       {
         "branch": "fix/pages-smoke-and-audit-consolidation-2026-11-06",
         "ahead": 4,
-        "behind": 19
+        "behind": 19,
+        "tree_added_paths": 0,
+        "tree_deleted_paths": 9,
+        "tree_changed_paths": 20
       },
       {
         "branch": "fix/tltk-oov-parity-followup-2026-11-06",
         "ahead": 2,
-        "behind": 21
+        "behind": 21,
+        "tree_added_paths": 0,
+        "tree_deleted_paths": 10,
+        "tree_changed_paths": 21
       },
       {
         "branch": "fix/ukrainian-onset-j-system-2026-11-06",
         "ahead": 20,
-        "behind": 10
+        "behind": 10,
+        "tree_added_paths": 0,
+        "tree_deleted_paths": 8,
+        "tree_changed_paths": 10
       }
     ],
     "policy": "Merged/squash-merged PR branch refs are historical source refs, not pending work. Preserve user branches; do not merge divergent history wholesale or delete refs without explicit instruction.",
@@ -5143,7 +5188,11 @@
       "head_sha": "c7db5ce22de230b0cb7ffecb866db0e77ab0bb34",
       "conclusion": "SUCCESS"
     },
-    "working_branch": "docs/repository-structure-closeout-2026-11-06"
+    "working_branch": "docs/repository-structure-closeout-2026-11-06",
+    "refs_total_at_start_including_main": 15,
+    "refs_total_after_working_branch_including_main": 16,
+    "current_open_pull_request": 225,
+    "tree_reconciliation": "All 14 historical non-main refs have zero added paths relative to main; one RTGS closeout branch is tree-identical, other refs are stale/different snapshots. No missing new file paths identified."
   },
   "homepage_rtgs_progressive_disclosure_2026_11_06": {
     "status": "PENDING_EXACT_HEAD_CI",
