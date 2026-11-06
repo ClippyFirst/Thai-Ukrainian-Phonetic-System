@@ -138,6 +138,7 @@ export function createTltkOovFallback(data){
  const stable={...constants.stable_base,...Object.fromEntries(Object.entries(constants.stable_aliases).map(([key,base])=>[key,constants.stable_base[base]]))};
  const basePron=new Map();for(const [form,phone] of data.syllable_dictionary)addPron(basePron,form,phone);
  let lastMatches=[];
+ let lastSyllablePaths=[];
  const patterns=data.syllable_patterns.map(record=>({...record,expression:compilePattern(record)}));
  const sylStats=makeSyllableStats(data.syllable_trigrams),phoneScore=makePhoneScorer(data.phone_trigrams),dictionary=new Set(data.word_dictionary);
  function parseSyllables(input, pron){
@@ -168,6 +169,13 @@ export function createTltkOovFallback(data){
    addPron(pron,form,phone);
    if(/^ทร/u.test(form)&&/^thr/u.test(phone))addPron(pron,form,replaceAllLiteral(phone,"thr","s"));
   }
+  const originalEdges=new Map([...chart.entries()].map(([start,edges])=>[start,[...edges.entries()]]));
+  lastSyllablePaths=[];
+  const walk=(start,forms)=>{
+   if(start===n){lastSyllablePaths.push({forms:[...forms],score:sylStats.score(forms)});return;}
+   for(const [end,nextForms] of originalEdges.get(start)||[])if(end>start)walk(end,[...forms,...nextForms]);
+  };
+  walk(0,[]);
   for(let j=0;j<n;j++){
    const fromZero=chart.get(0),atJ=chart.get(j);if(!fromZero?.has(j)||!atJ)continue;
    for(const [end,forms] of [...atJ.entries()]){
@@ -213,7 +221,7 @@ export function createTltkOovFallback(data){
    return {word, candidates:forms.map(form=>({form,phones:pron.get(form)||[]})), selected:selectPhones(forms,pron)};
   });
   const raw=details.map(item=>item.selected).join("|");
-  return {normalized,syllables,words,details,matches:lastMatches,raw,ipa:phonesToIpa(raw)};
+  return {normalized,syllables,words,details,matches:lastMatches,syllablePaths:lastSyllablePaths,raw,ipa:phonesToIpa(raw)};
  }
  function convert(word){return inspect(word)?.ipa??null;}
  return Object.freeze({sourceCommit:data.fastthaig2p_commit,tltkCommit:data.tltk_source_commit,packageVersion:data.tltk_package_version,convert,inspect});
