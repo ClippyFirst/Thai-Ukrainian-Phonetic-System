@@ -57,9 +57,9 @@ function toneAssign(form,phone,code,charmatch){
  if("งญณนมยรลวฬ".includes(init)&&lead&&"ขฃฉฐถผฝสศษห".includes(lead))return [phone,dead==="L"?(has("่")?"1":has("้")?"2":"4"):(has("่")?"9":has("้")?"2":"1")];
  if("งญณนมยรลวฬ".includes(init)&&lead&&"กจดตฎฏบปอ".includes(lead))return [phone,dead==="L"?(has("่")?"1":has("้")?"2":has("๊")?"3":has("๋")?"4":"0"):(has("่")?"9":has("้")?"2":has("๊")?"3":has("๋")?"4":"1")];
  if("คฅฆชฌซฑฒทธพภฟฮงญณนมยรลวฬฤฦ".includes(init)){
-  if(dead==="L")return [phone,has("่")?"2":has("้")?"3":"0"];
-  if(/[aeiouxOU@][aeiouxOU@]+/u.test(phone))return [phone,has("่")?"9":has("้")?"3":has("๋")?"4":"2"];
-  return [phone,has("่")?"2":has("้")?"9":has("๋")?"4":"3"];
+  if(dead==="L")return [phone,has("่")?"2":has("้")?"3":has("๊")||has("๋")?"9":"0"];
+  if(/[aeiouxOU@][aeiouxOU@]+/u.test(phone))return [phone,has("่")?"9":has("้")?"3":has("๊")?"9":has("๋")?"4":"2"];
+  return [phone,has("่")?"2":has("้")?"9":has("๊")?"9":has("๋")?"4":"3"];
  }
  return [phone,"9"];
 }
