@@ -19,6 +19,7 @@ assert.match(notices, /LGPL-3\.0/);
 assert.match(notices, /пакета TLTK 1\.9\.1, — BSD-3-Clause/);
 assert.match(notices, /дослідницьке використання, модифікація й розповсюдження дозволені/);
 assert.ok(notices.includes("https://pypi.org/project/tltk/1.9.1/"));
+assert.ok(notices.includes("vendor/native-oov/manifest.json"), "native TLTK OOV data pack manifest disclosure is missing");
 assert.match(notices, /Apache License 2\.0/);
 assert.match(notices, /Mozilla Public License 2\.0/);
 assert.match(ccBySa, /Creative Commons Attribution-ShareAlike 4\.0 International/);
