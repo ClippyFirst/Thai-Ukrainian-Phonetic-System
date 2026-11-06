@@ -1,18 +1,16 @@
 /**
- * Incremental browser-native FastThaiG2P port.
+ * Browser-native FastThaiG2P pipeline.
  *
- * This browser-native front-half composes normalization, PyThaiNLP newmm
- * tokenization, Wiktionary-only IPA lookup and the existing IPA→Ukrainian
- * adapter. The public UI runs this same-origin worker first for dictionary
- * hits and retains the verified Pyodide worker as the OOV fallback. Full
- * native TLTK OOV parity remains outstanding.
+ * This module composes normalization, PyThaiNLP newmm tokenization,
+ * Wiktionary-filtered IPA lookup, pinned TLTK OOV rules/data and the existing
+ * IPA→Ukrainian adapter. OOV parity remains gated by independent Python fixtures.
  */
 import { adaptIpaToUkrainian } from "./ipa-ua.js";
 import { normalizeFastThaiG2PText } from "./fastthaig2p-normalizer.js";
 import { createFastThaiG2PNativeTokenizer } from "./fastthaig2p-tokenizer.js";
 
 export const FASTTHAIG2P_UPSTREAM_COMMIT = "4e82a291b4cf2876326744c6580121e9986ad354";
-export const NATIVE_PORT_STAGE = "dictionary-adapter-only";
+export const NATIVE_PORT_STAGE = "normalizer+default-newmm+custom-newmm+wiktionary-dictionary+tltk-oov";
 
 const TONE_CATEGORIES = Object.freeze({
   "˧": "mid",
@@ -130,7 +128,7 @@ export function createFastThaiG2PNativeEngine({
   return Object.freeze({
     stage: NATIVE_PORT_STAGE,
     upstreamCommit: FASTTHAIG2P_UPSTREAM_COMMIT,
-    convert(text) {
+    convert(text, { oovFallback = null } = {}) {
       if (typeof text !== "string" || !text.trim()) {
         throw new NativeFastThaiG2PError("empty_input", "Введіть тайський текст.");
       }
@@ -144,15 +142,22 @@ export function createFastThaiG2PNativeEngine({
       }
 
       const wordGroups = [];
+      const fallbackTokens = [];
       for (const token of tokens) {
         const ipa = dictionary[token];
-        if (!ipa) {
+        if (ipa) {
+          wordGroups.push(ipa.slice(1, -1));
+          continue;
+        }
+        const fallbackIpa = typeof oovFallback === "function" ? oovFallback(token) : null;
+        if (typeof fallbackIpa !== "string" || !/^\/[^/]+\/$/u.test(fallbackIpa)) {
           throw new NativeFastThaiG2PError(
             "native_dictionary_miss",
-            `Нативний порт поки не підтримує токенізацію або OOV-обробку для фрагмента довжиною ${[...token].length}.`
+            `Нативний словник і TLTK OOV-порт не змогли опрацювати фрагмент довжиною ${[...token].length}; буде використано сумісний резервний рушій.`
           );
         }
-        wordGroups.push(ipa.slice(1, -1));
+        wordGroups.push(fallbackIpa.slice(1, -1));
+        fallbackTokens.push(token);
       }
 
       const rawIpa = wordGroups.map(group => `/${group}/`).join(" ");
@@ -184,10 +189,13 @@ export function createFastThaiG2PNativeEngine({
         raw_ipa: rawIpa,
         ukrainian: words.map(word => word.ukrainian).join(" "),
         words,
-        coverage: { dictionary_tokens: tokens.length, rule_fallback_tokens: 0 },
+        coverage: {
+          dictionary_tokens: tokens.length - fallbackTokens.length,
+          rule_fallback_tokens: fallbackTokens.length
+        },
         warnings: [
-          "Це експериментальний нативний JavaScript-порт: нормалізація, newmm сегментація та словниковий IPA-пошук реалізовані окремими модулями.",
-          "TLTK OOV fallback ще не портований; невідомі токени відхиляються без здогадок, тому це поки не повна заміна FastThaiG2P.",
+          "Це експериментальний нативний JavaScript-порт: нормалізація, newmm сегментація, словниковий IPA та TLTK OOV працюють у браузері.",
+          "TLTK OOV відтворює закріплений алгоритм; непідтриманий або неузгоджений результат передається сумісному резервному рушію.",
           "Український запис є попередньою практичною адаптацією IPA, не підтвердженою незалежними фахівцями."
         ]
       };
@@ -271,9 +279,9 @@ export async function loadFastThaiG2PNativeDictionary({
 }
 
 /**
- * Compose the native normalization, PyThaiNLP default newmm tokenizer,
- * FastThaiG2P custom newmm tokenizer and filtered IPA dictionary. OOV words
- * fail closed until a licensed, parity-tested fallback port is available.
+ * Compose normalization, PyThaiNLP default newmm, FastThaiG2P custom newmm,
+ * filtered IPA dictionary and an injectable TLTK OOV fallback. The worker
+ * loads the OOV data only after a native dictionary miss.
  */
 export function createFastThaiG2PNativePipeline({ dictionary, normalizerData, defaultWords }) {
   if (!normalizerData || !Array.isArray(defaultWords) || !defaultWords.length) {
@@ -292,9 +300,9 @@ export function createFastThaiG2PNativePipeline({ dictionary, normalizerData, de
   const convert = adapter.convert;
   return Object.freeze({
     ...adapter,
-    stage: "normalizer+default-newmm+custom-newmm+wiktionary-dictionary; no-oov-fallback",
-    convert(text) {
-      const result = convert(text);
+    stage: "normalizer+default-newmm+custom-newmm+wiktionary-dictionary+tltk-oov",
+    convert(text, options = {}) {
+      const result = convert(text, options);
       return {
         ...result,
         warnings: [

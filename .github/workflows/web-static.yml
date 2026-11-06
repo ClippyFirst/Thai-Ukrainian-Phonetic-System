@@ -34,6 +34,7 @@ jobs:
         run: |
           node --check web/src/app.js
           node --check web/src/fastthaig2p-native.js
+          node --check web/src/fastthaig2p-tltk-oov.js
           node --check web/src/fastthaig2p-normalizer.js
           node --check web/src/fastthaig2p-tokenizer.js
           node --check web/src/fastthaig2p-native-worker.js
@@ -65,6 +66,7 @@ jobs:
           node web/tests/accessibility-contract.test.mjs
           node web/tests/ukrainian-first.test.mjs
           node web/tests/fastthaig2p-native.test.mjs
+          node web/tests/tltk-oov.test.mjs
           node web/tests/ui-contract.test.mjs
       - name: Validate third-party notices and dataset attribution
         run: node web/tests/third-party-notices.test.mjs

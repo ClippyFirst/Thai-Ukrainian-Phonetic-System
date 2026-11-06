@@ -1,3 +1,36 @@
+## PR #215 validation results — 2026-11-06
+
+Draft PR #215 has passed its code and Pages build gates at code-tested head `e2f09fb82014bdbc514fa860e49a7f8f788aef6d`:
+
+- Full CI [42203706898](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42203706898): SUCCESS — 401 passed, 1 skipped, 1,211 subtests passed; Ruff passed; wheel-install-smoke and master-artifact passed. The one skip is the optional FastAPI test because FastAPI is absent from generic CI.
+- Pages build [42203706810](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42203706810): SUCCESS — browser parity, RTGS reference parity, IPA adaptation, UI contracts, static accessibility, Pyodide bundle build, TLTK OOV data extraction and artifact upload passed. The deploy job was skipped on PR.
+- Web Static [42203706779](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42203706779): SUCCESS.
+- TLTK OOV data artifact is 2,844,409 bytes compressed and 19,848,231 bytes uncompressed. It is data-only JSON/gzip with parser constants; no Python runtime or pickle is delivered to the browser.
+
+The TLTK 1.9.1 package rights gate is DONE_VERIFIED under BSD-3-Clause for the six packaged fallback assets. Root LGPL-3.0 and stale PKG-INFO 1.1.7/GPLv3 are retained as historical/repository context. Research use is permitted; BSD notices, conditions, disclaimer and no-endorsement condition apply to redistribution.
+
+The current public Pages deployment is reachable and serves native-first dictionary processing plus the existing Pyodide OOV fallback. The corrected post-deploy hash smoke remains pending because PR #215 has not been merged.
+
+**Native OOV remains incomplete:** no JavaScript TLTK parser is integrated; the generated data pack is preparatory only. Keep Pyodide as the OOV fallback until multi-case exact Python-service JSON parity and browser Worker tests pass.
+
+---
+
+## Follow-up — live Pages inspection, TLTK package rights and OOV preparation (2026-11-06)
+
+The public GitHub Pages site was inspected directly. The homepage currently discloses native-first FastThaiG2P processing; the deployed `src/app.js`, native Worker, native module, `vendor/native/manifest.json`, its five declared native assets, `vendor/bundle-manifest.json`, `system.html`, and `third-party-notices.html` are reachable. The live manifest still identifies the native stage as dictionary-only. This confirms current content/asset reachability, not a new deployment from the current work branch and not a completed native OOV runtime.
+
+The Pages workflow's post-deploy smoke was stale: it asserted pre-recomposition UI strings despite the current mainline native-first UI. The branch fixes these assertions, checks both same-origin workers, native/OOV manifests and data hashes, all third-party notices and retained Pyodide runtime assets, and adds a pull_request build trigger while keeping deployment main-only. The corrected workflow remains subject to PR and post-merge verification.
+
+TLTK package licensing is no longer treated as a blocker for the six fallback assets. The pinned 1.9.1 README, setup.py, package_data, MANIFEST.in, LICENSE.txt and PyPI release metadata consistently support BSD-3-Clause for the packaged fallback files. The root LGPL-3.0 notice and stale PKG-INFO 1.1.7/GPLv3 remain preserved as historical/repository context. BSD-3-Clause permits research use, modification and redistribution with its copyright notice, conditions, disclaimer and no-endorsement clause. This is a source-based compliance assessment, not legal advice.
+
+A build-time extractor now prepares a deterministic gzip-compressed JSON data pack from the five TLTK tables used in the g2p() -> sylparse() -> wordparse() path and extracts literal pronunciation tables from the pinned parser AST. The sixth asset, sylform_var.pkl, is provenance-verified but omitted from the runtime pack because static call-graph inspection found no reads of SYLVAR from that G2P path. This is data preparation, not the JavaScript algorithm.
+
+**Current limitation:** the TLTK OOV JavaScript parser is still TODO. The data pack is not used by the public UI; the existing same FastThaiG2P Pyodide Worker remains the OOV fallback. No guessed pronunciation is substituted. Native OOV acceptance requires complete raw IPA and full typed service JSON parity against multiple pinned Python OOV fixtures, followed by real browser Worker and lazy-load/hash verification.
+
+Draft PR [#215](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/215) contains the Pages smoke correction, TLTK license-evidence updates, and OOV data-extraction preparation. It must remain unmerged until its Pages build and tests pass; it does not yet complete the requested native OOV port.
+
+---
+
 ## Post-merge audit — native-first FastThaiG2P integrated (2026-11-06)
 
 PR #214 is merged into the default branch as `29b63b8f58db1f6d7ff068d131df0b0759895115`. The final PR head `0d4503ed55ff726807917e2cfbf14c0ad30eb624` passed all four required exact-head workflows: Full CI #42199395072, Web Static #42199395225, Site API #42199395069 and Pyodide compatibility #42199395284. The UI regression-fixture correction was test-only and passed on the final head.
@@ -2089,3 +2122,14 @@ The first Pages deployment [42097237901](https://github.com/ClippyFirst/Thai-Ukr
 [Pyodide compatibility run 42098395877](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42098395877) also completed SUCCESS, including CPython/Pyodide parity and real Chromium worker execution. Main CI [42099035122](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42099035122) on main `f0d41996e854185bd6bd92f0ffa8f6b83e71f777` subsequently completed SUCCESS. The earlier 42098395810 run was an intermediate checkpoint and is superseded.
 
 **Current status:** public beta is deployed at https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/ . Deployment and live bundle integrity are DONE_VERIFIED. Deployed performance and manual accessibility checks remain TODO/DEFERRED. Linguistic accuracy remains NOT_MEASURED (zero independent IPA gold rows); external Thai/Ukrainian expert audits and audio/acoustic validation remain deferred by owner decision.
+
+
+## 2026-11-06 — Native TLTK OOV port exact-head verification (PR #216)
+
+PR #216 adds the browser-native TLTK OOV path. The port implements the pinned FastThaiG2P/TLTK syllable parser, tone assignment, syllable transformations, syllable and word segmentation, TLTK collocation scoring, phone-trigram candidate selection and IPA conversion. The worker lazily fetches a same-origin JSON/gzip data pack and verifies compressed/uncompressed SHA-256 before parsing. Pyodide remains only as a fail-closed last-resort fallback when native TLTK cannot complete an input.
+
+The Python reference generator produced 64 independently generated OOV tokens and rejected none. Native module typed-service parity passed 64/64; native Worker typed-service parity passed 64/64; real Chromium UI test passed the dictionary-hit and TLTK OOV paths and confirmed no Python/Pyodide/wheel/API/CDN requests for supported OOV. Exact PR head `d4f35892adc02eb03b1fd345a0193c46c07b1eb7` passed CI [42217143967](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42217143967), Web Static [42217143995](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42217143995), Pages build [42217143962](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42217143962), and Pyodide compatibility [42217144084](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42217144084), all SUCCESS. CI reported 401 passed, 1 skipped, 1211 subtests; Ruff and wheel-install smoke passed.
+
+The PR Pages workflow successfully built the owner-approved public bundle; deployment is not performed for pull_request events. Post-merge main CI, actual Pages deployment and live URL smoke remain TODO. Linguistic accuracy remains NOT_MEASURED: parity with the pinned Python engine is not independent phonetic gold. Performance/mobile/offline/memory and manual accessibility checks remain TODO.
+
+TLTK package scope is now sufficiently evidenced for this port: TLTK 1.9.1 README, setup.py, package_data, MANIFEST.in, LICENSE.txt and PyPI metadata support BSD-3-Clause for the six packaged fallback assets. Preserve all BSD conditions, disclaimer and no-endorsement clause. Keep the repository-root LGPL-3.0 notice and stale 1.1.7/GPLv3 PKG-INFO visible as separate historical context; do not extend the 1.9.1 package conclusion to all TLTK repository contents. This remains a source-based assessment, not legal advice.

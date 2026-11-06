@@ -1,3 +1,30 @@
+## 2026-11-06 PR #215 verification update
+
+| Item | Status | Evidence / acceptance |
+|---|---|---|
+| TLTK 1.9.1 package rights | DONE_VERIFIED | Pinned README, setup.py, package_data, MANIFEST.in, LICENSE.txt and PyPI release metadata support BSD-3-Clause for all six packaged fallback assets. Preserve BSD terms; retain the separate root LGPL-3.0 and stale 1.1.7/GPLv3 notices as historical context. |
+| TLTK OOV data extraction | DONE_VERIFIED_BUILD_PIPELINE | Pages build #42203706810 generated and uploaded a deterministic JSON/gzip data pack (2,844,409 compressed / 19,848,231 uncompressed bytes) with five runtime tables and AST-extracted parser constants. The unused sylform_var.pkl is excluded from the runtime pack but remains in the six-file provenance check. |
+| Pages build | DONE_VERIFIED | PR Pages run #42203706810 SUCCESS: Python regression, browser parity, RTGS reference parity, IPA adaptation, UI contract, static accessibility, Pyodide bundle, OOV extraction and artifact upload. Deploy was skipped on PR. |
+| Full CI | DONE_VERIFIED | Run #42203706898 SUCCESS: 401 passed, 1 skipped, 1,211 subtests passed; Ruff passed; wheel-install-smoke and master-artifact passed. The only skip is optional FastAPI test (FastAPI absent from generic CI). |
+| Web Static | DONE_VERIFIED | Run #42203706779 SUCCESS. |
+| Live Pages deployment after PR #215 | TODO / PENDING_MERGE | Current main site and native-first assets are reachable. New post-deploy SHA smoke will run only after PR merge; no deployment from this draft PR is claimed. |
+| Native JavaScript TLTK OOV algorithm | TODO | Not implemented. Data extraction is preparation only; public UI still uses Pyodide for OOV. Acceptance requires complete raw IPA and full typed service JSON parity against multiple pinned Python OOV fixtures, then real browser Worker lazy-load/hash verification. |
+
+---
+
+## 2026-11-06 follow-up — Pages and TLTK package rights
+
+| Item | Status | Evidence / next acceptance |
+|---|---|---|
+| Live GitHub Pages native-first content and assets | PARTIAL_VERIFIED | Live HTTP fetches confirmed homepage, app.js, native Worker/module, native manifest and all five declared native data assets, bundle manifest, system page and legal notices. This proves current public content/asset reachability, not the corrected post-deploy SHA smoke or native OOV runtime. |
+| Pages deployment smoke | PARTIAL_IMPLEMENTED | Fixed stale pre-recomposition string assertions; now checks current native-first UI, both workers, native and OOV manifests/data hashes, legal notices, and retained Pyodide assets. Added PR build trigger while deploy remains main-only. Requires successful PR Pages build and post-merge main deployment smoke. |
+| TLTK 1.9.1 fallback package rights | DONE_VERIFIED | Pinned README 1.9.1, setup.py version/license/package_data, MANIFEST.in, LICENSE.txt and PyPI 1.9.1 metadata support BSD-3-Clause for the six packaged fallback assets. Root LGPL-3.0 notice and stale PKG-INFO 1.1.7/GPLv3 are retained as historical/repository context. BSD notice, conditions, disclaimer and no-endorsement clause must be preserved. |
+| TLTK fallback source/asset mapping | DONE_VERIFIED | Five files byte-identical; sylform_var.pkl is exact BZip2 decompression of TLTK sylform_var.pklz. |
+| Native OOV data extraction | PARTIAL | Deterministic CP874/pickle-to-JSON/gzip build extractor added. It includes the five data tables used by g2p() -> sylparse() -> wordparse(), and excludes sylform_var.pkl because SYLVAR has no reads in that call path. Parser constants are extracted from the pinned BSD parser source AST. |
+| Native JavaScript OOV algorithm | TODO | No JS TLTK parser has been integrated yet. The data pack is preparatory only and is not used by the public UI. Keep Pyodide OOV fallback. Acceptance: complete raw IPA and full typed service JSON parity against pinned Python for a multi-case OOV fixture set, then real browser Worker parity and lazy-load/hash checks. |
+
+---
+
 ## Post-merge execution checkpoint — PR #214 integrated (2026-11-06)
 
 | Work item | Status | Evidence / remaining acceptance |
@@ -2104,14 +2131,17 @@ This section supersedes the earlier statement that the native Worker was not con
 | Work item | Current status | Evidence / acceptance |
 |---|---|---|
 | Native dictionary-covered runtime | DONE_VERIFIED (earlier exact head) | 16 complete service JSON cases match pinned CPython; real Chromium native Worker smoke passed with no Pyodide/Python/wheel/WASM/remote requests on head 24e4605b7921524b60dc1c5a3e3e9a66965a3206. |
-| Public UI native-first integration | PARTIAL — verification pending | app.js now calls native Worker first; a native_dictionary_miss alone starts the existing Pyodide Worker. Browser test asserts dictionary hits do not fetch Pyodide/wheels and a pinned OOV fixture does. Current code head before docs-only update: 0e6479450d6205f0a2b65aa80fb1e3d6a13937b0. |
-| OOV reference fixture | PARTIAL — verification pending | New Python fixture generator searches the pinned TLTK fallback dictionary for a complete rule-fallback result absent from the filtered IPA map. The Chromium test consumes this fixture. |
-| Full native TLTK OOV implementation | TODO / rights-limited | TLTK release metadata/README/setup.py/LICENSE.txt indicate BSD-3-Clause; root repository LICENSE remains LGPL-3.0 (unchanged since 2018) and stale PKG-INFO says GPLv3. Keep TLTK assets/code out of native bundle until package-file distribution scope is cleared; existing Pyodide fallback remains the compatibility path. |
-| Native UI user disclosure | DONE_VERIFIED (code present) | Input hint and system page explain native-first behavior and lazy Python/Pyodide loading on dictionary miss. |
+| Public UI native-first integration | DONE_VERIFIED on PR #216 head; post-merge deploy pending | Dictionary hits use the native Worker; misses first lazy-load the TLTK OOV pack and native parser; Pyodide is last-resort only. Exact-head CI, Web Static, Pages build and Pyodide/Chromium compatibility passed on d4f35892adc02eb03b1fd345a0193c46c07b1eb7. Live post-merge Pages smoke remains TODO. |
+| OOV reference fixture | DONE_VERIFIED | Pinned Python reference generator produced 64 single-token OOV cases with zero rejected candidates; all 64 exact typed-service outputs match the native module and native Worker. Chromium UI smoke confirms lazy same-origin TLTK loading and no Python/Pyodide/API/CDN requests for supported OOV. |
+| Native TLTK OOV implementation | DONE_VERIFIED for pinned FastThaiG2P/TLTK path; Pyodide retained as last resort | Browser-native port implements TLTK syllable parsing, tone assignment, transformations, segmentation/collocation, candidate scoring and IPA conversion. 64/64 exact Python-service parity cases and real Worker/Chromium tests passed. TLTK 1.9.1 packaged fallback assets are supported by BSD-3-Clause package evidence; retain separate root LGPL-3.0 and stale 1.1.7/GPLv3 notices as historical context. |
+| Native UI user disclosure | DONE_VERIFIED (code present) | Input hint and system page explain native-first dictionary handling, lazy TLTK OOV loading, and Pyodide as last-resort compatibility fallback. |
 | Cold/warm/offline/mobile performance and memory | TODO | Measure same-origin transfer, cold/warm latency, browser cache, offline reload, memory and mobile performance against the Pyodide baseline. |
-| Latest CI/Web Static/Pyodide compatibility | BLOCKED — GitHub Actions pending | Runs for head 0e6479450d6205f0a2b65aa80fb1e3d6a13937b0 were queued/pending at the time of this update; no current-head pass is claimed. |
+| Exact-head CI/Web Static/Pages build/Pyodide compatibility | DONE_VERIFIED on PR #216 head | d4f35892adc02eb03b1fd345a0193c46c07b1eb7: CI 42217143967 SUCCESS (401 passed, 1 skipped, 1211 subtests); Web Static 42217143995 SUCCESS; Pages build 42217143962 SUCCESS; Pyodide compatibility 42217144084 SUCCESS. Main-branch post-merge CI and live Pages deploy remain TODO. |
 
-The application is now hybrid native-first, not a full Pyodide replacement. For dictionary-covered inputs it should avoid Python module/wheel/WASM requests; it still fetches JS modules and the approximately 2.2 MB native data bundle. OOV inputs still load Pyodide. Accuracy remains NOT_MEASURED; no speedup is claimed.
+The application is hybrid native-first, not a complete Pyodide removal. Dictionary-covered inputs use the browser JavaScript worker and do not fetch Python/Pyodide. OOV inputs first lazy-load the TLTK 1.9.1 data-only pack (2,844,409 compressed bytes; 19,848,231 uncompressed bytes: 267 syllable patterns, 2,127 syllable dictionary entries, 68,702 phone trigrams, 364,726 syllable trigrams and 65,431 word-dictionary entries). TLTK-supported OOV cases run in native JavaScript; Pyodide is retained as the last-resort compatibility path only when TLTK cannot complete. The initial native dictionary/normalizer/default-wordlist assets remain approximately 2.2 MB; the larger OOV pack is lazy. Exact parity with 64 independently generated pinned Python-service OOV cases passed in both module and worker tests, and Chromium verified no Python/Pyodide/wheel/API/CDN requests for supported OOV. This establishes engine parity, not independent phonetic accuracy; accuracy remains NOT_MEASURED. No speedup claim is made; cold/warm/offline/mobile performance and memory remain TODO.
 
 
-Latest branch-head update: `228d80d51d58a4437ab0f70ba12597a1259902e8`. The UI contract test now covers both native and Pyodide workers. Exact-head CI, Web Static, site API and Pyodide compatibility runs are queued/pending; keep the native-first UI integration PARTIAL until they pass.
+Latest verified code head: `d4f35892adc02eb03b1fd345a0193c46c07b1eb7`. Exact-head CI 42217143967, Web Static 42217143995, Pages build 42217143962 and Pyodide compatibility 42217144084 passed. Documentation checkpoint `06fa145f476ade86996a065983b3014a20b2a5a8` also passed CI 42218587500 (401 passed, 1 skipped, 1211 subtests), Web Static 42218587220, Pages build 42218587339 and Pyodide compatibility 42218587302. Post-merge main CI and live Pages deployment remain TODO.
+
+
+| Post-merge GitHub Pages deployment for PR #216 | TODO | PR-head Pages build passed, but deploy job does not publish from pull_request. After merge, require main push workflow success plus live smoke for index, native worker, lazy TLTK manifest/data pack, SHA-256, notices, and Pyodide last-resort assets. |

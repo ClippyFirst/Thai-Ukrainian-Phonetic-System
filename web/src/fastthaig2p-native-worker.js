@@ -7,8 +7,17 @@ import {
   createFastThaiG2PNativePipeline,
   loadFastThaiG2PNativeAssets
 } from "./fastthaig2p-native.js";
+import { createTltkOovFallback, loadTltkOovData } from "./fastthaig2p-tltk-oov.js";
 
 let pipelinePromise;
+let oovFallbackPromise;
+
+function getOovFallback() {
+  if (!oovFallbackPromise) {
+    oovFallbackPromise = loadTltkOovData().then(createTltkOovFallback);
+  }
+  return oovFallbackPromise;
+}
 
 function getPipeline() {
   if (!pipelinePromise) {
@@ -29,7 +38,27 @@ self.addEventListener("message", async event => {
       return;
     }
     if (type === "convert") {
-      const result = pipeline.convert(message.text);
+      let result;
+      try {
+        result = pipeline.convert(message.text);
+      } catch (error) {
+        if (error?.code !== "native_dictionary_miss") throw error;
+        try {
+          const oovFallback = await getOovFallback();
+          result = pipeline.convert(message.text, { oovFallback: oovFallback.convert });
+        } catch (oovError) {
+          if (oovError?.code === "native_dictionary_miss") throw oovError;
+          // A missing/corrupt/unavailable OOV data pack is a safe fallback
+          // condition, not permission to guess a pronunciation.
+          self.postMessage({
+            type: "error",
+            id,
+            code: "native_dictionary_miss",
+            message: "Нативний OOV-пакет недоступний або не пройшов перевірку; буде використано сумісний резервний рушій."
+          });
+          return;
+        }
+      }
       self.postMessage({ type: "result", id, result });
       return;
     }

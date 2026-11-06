@@ -66,6 +66,8 @@ try {
   );
   assert.equal(pyodideRequestedBeforeOov, false,
     "Dictionary-covered inputs must stay on the native JavaScript worker without downloading Python modules");
+  assert.equal(requests.some(url => url.includes("/vendor/native-oov/")), false,
+    "Dictionary-covered inputs must not download the lazy TLTK OOV data pack");
 
   await page.locator("#thai-input").fill(oovReference.input);
   await page.locator("#analyze").click();
@@ -73,15 +75,17 @@ try {
   const oovResult = await page.locator("#results").innerText();
   assert(oovResult.includes(oovReference.raw_ipa),
     "The lazy Pyodide fallback must return the pinned OOV IPA result");
-  assert(requests.some(url => url.includes("/vendor/pyodide/pyodide.mjs")),
-    "Pyodide should be requested only after the native dictionary miss");
-  assert(requests.some(url => url.includes("/vendor/wheels/")),
-    "Pinned Python wheels should be requested only after the native dictionary miss");
+  assert(requests.some(url => url.includes("/vendor/native-oov/manifest.json")),
+    "The native TLTK OOV manifest should load only after a native dictionary miss");
+  assert(requests.some(url => url.includes("/vendor/native-oov/tltk-oov-data.json.gz")),
+    "The native TLTK OOV data pack should load lazily for a supported OOV token");
+  assert.equal(requests.some(url => url.includes("/vendor/pyodide/") || url.includes("/vendor/wheels/")), false,
+    "A TLTK-supported OOV token must not download Python or Pyodide modules");
 
   assert.equal(requests.some(url => url.includes("/api/analyze")), false);
   assert.equal(requests.some(url => url.includes("cdn.jsdelivr.net")), false);
   assert.deepEqual(pageErrors, []);
-  console.log("Browser app passed: native JavaScript for dictionary hits, lazy same-origin Pyodide fallback for a pinned OOV token, no API/CDN requests");
+  console.log("Browser app passed: native JavaScript dictionary and TLTK OOV paths, lazy same-origin OOV data, no Python/Pyodide/API/CDN requests");
 } finally {
   await browser?.close();
   server.kill("SIGTERM");

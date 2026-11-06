@@ -142,3 +142,35 @@ Exact-head PR validation on 24e4605b7921524b60dc1c5a3e3e9a66965a3206 now passes 
 - PR #214 was squash-merged to main as `29b63b8f58db1f6d7ff068d131df0b0759895115`.
 - Final PR head `0d4503ed55ff726807917e2cfbf14c0ad30eb624` passed Full CI #42199395072, Web Static #42199395225, Site API #42199395069 and Pyodide compatibility #42199395284.
 - The mainline browser path is hybrid native-first. The existing Pyodide worker remains the OOV fallback. The post-merge Pages deployment/live smoke is not yet verified; do not claim public-site cutover or Pyodide removal.
+
+
+## TLTK rights disposition update — 2026-11-06
+
+The six TLTK fallback assets are now classified as BSD-3-Clause for the pinned TLTK 1.9.1 package scope. Evidence: the versioned README's license-change statement, setup.py's 1.9.1/BSD declaration and package_data list containing all six assets, MANIFEST.in's inclusion of LICENSE.txt, the BSD terms in LICENSE.txt, and PyPI's 1.9.1 release metadata. The repository-root LGPL-3.0 file is retained as a separate historical repository notice; stale PKG-INFO is version 1.1.7/GPLv3. See [the detailed source-based license review](fastthaig2p-license-review-2026-11-05.md) and [public notices](../web/third-party-notices.html).
+
+This clears the TLTK package-license evidence gate for use and redistribution of those six packaged assets under BSD-3-Clause conditions. It does **not** complete the browser-native OOV algorithm or its parity gate. Full TLTK OOV implementation remains TODO; Pyodide remains the OOV fallback until native output matches the pinned Python service contract.
+
+
+## Alternative JavaScript package review — 2026-11-06
+
+The npm package `tltk-js@0.1.4` was inspected as a possible shortcut. It is not accepted as a production dependency or as the parity reference:
+
+- The npm package metadata declares WTFPL, while the package README declares MIT. This license metadata mismatch is not a clean compliance basis.
+- The published package reports 66,340,514 bytes unpacked, which is disproportionate for this browser-first runtime.
+- Its README describes an optional heuristic fallback for unknown syllables that intentionally differs from the Python TLTK behavior. That cannot satisfy this project's exact FastThaiG2P/TLTK OOV parity contract.
+- It is not pinned to the exact FastThaiG2P parser/data combination used by this repository.
+
+Use it only as a non-authoritative comparison reference. Continue implementing against the pinned FastThaiG2P parser source and TLTK 1.9.1 packaged tables; never substitute its heuristic output for an unsupported or failed native parse.
+
+Sources: [npm package page](https://www.npmjs.com/package/tltk-js), [published package metadata](https://registry.npmjs.org/tltk-js).
+
+
+## Browser-native TLTK OOV port — 2026-11-06
+
+The native worker now has a browser JavaScript implementation of the pinned FastThaiG2P/TLTK 1.3.8 OOV path. It ports TLTK syllable-pattern matching, literal syllable dictionary entries, stable consonant mapping, tone assignment and exceptions, syllable transformations, syllable trigram segmentation, word segmentation and collocation scoring, phone-trigram candidate selection, and TLTK romanization-to-IPA. The lazy same-origin data pack is JSON/gzip (no Python or pickle) and verifies compressed and decompressed SHA-256. It is loaded only after a miss in the filtered native IPA dictionary. Pyodide remains a fail-closed last-resort compatibility fallback if native TLTK cannot produce a complete result.
+
+**Exact-head evidence on PR #216 head `d4f35892adc02eb03b1fd345a0193c46c07b1eb7`:** the pinned Python generator produced 64 OOV reference cases (zero rejected); module parity 64/64 and Worker parity 64/64 passed; Chromium confirmed lazy TLTK loading and no Python/Pyodide/wheels/API/CDN requests for a TLTK-supported OOV input. CI 42217143967, Web Static 42217143995, Pages build 42217143962, and Pyodide compatibility 42217144084 all passed. The PR Pages build validates the owner-approved bundle but does not publish on a pull_request event. Actual post-merge Pages deployment and live smoke remain pending.
+
+The six TLTK 1.9.1 packaged fallback assets are supported by package-level BSD-3-Clause evidence. Preserve copyright notice, conditions, disclaimer and no-endorsement clause. Retain the separate repository-root LGPL-3.0 notice and stale 1.1.7/GPLv3 metadata as historical context; do not generalize the package conclusion to the entire TLTK repository. See [the license review](fastthaig2p-license-review-2026-11-05.md).
+
+This establishes implementation parity with the pinned Python engine, not independent phonetic correctness. Thai IPA gold and Ukrainian expert validation remain absent; accuracy is NOT_MEASURED. Cold/warm/offline/mobile performance, memory, and manual accessibility remain TODO.

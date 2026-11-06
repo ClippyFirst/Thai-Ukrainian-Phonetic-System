@@ -129,3 +129,28 @@ Verification at code checkpoint `9894c80a4c47fe0b1e3b966ff4f6fb3dcaa2e124`:
 - Optional external smoke: [42073702598](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42073702598), SUCCESS.
 
 **Current operational position:** the source-filtered ephemeral CI bundle and attribution notices are verified. `redistribution_approved` remains false; the Pages build refuses public packaging, and no live deployment or merge was performed. The remaining TLTK pickle transformation evidence is recorded as PARTIAL, not treated as resolved. This review remains a source-based compliance assessment, not legal advice.
+
+
+## TLTK 1.9.1 package-scope conclusion — 2026-11-06
+
+The previous wording overstated the uncertainty by treating the repository root license and the released package license as if they necessarily had the same scope. The pinned TLTK snapshot at `0cef4bcfbdd675f589783dd4134b87b9bb9fbb93` provides a coherent package-level BSD-3-Clause chain:
+
+1. `README.rst` identifies itself as TLTK 1.9.1 and says the package license changed to New BSD (BSD-3-Clause) as of 1.2.2.
+2. `setup.py` identifies version 1.9.1, declares `license='BSD-3-Clause'`, and includes the BSD classifier.
+3. The same `setup.py` `package_data` explicitly includes all six fallback assets checked by `scripts/verify_tltk_fallback_provenance.py`.
+4. `MANIFEST.in` includes `LICENSE.txt`; that file contains the BSD-3-Clause copyright notice, conditions and disclaimer.
+5. The official [PyPI TLTK 1.9.1 release page](https://pypi.org/project/tltk/1.9.1/) corroborates the release's BSD-3-Clause license metadata.
+6. `PKG-INFO` is stale: it identifies version 1.1.7 and GPLv3. The repository root `LICENSE` is LGPL-3.0 and remains in the repository, but it is not the license declaration used by the 1.9.1 package setup and its explicitly included `LICENSE.txt`.
+
+**Operational disposition:** classify the six fallback files packaged in TLTK 1.9.1, and the TLTK parser file carrying its own BSD header, as BSD-3-Clause for this port. Preserve the BSD copyright/conditions/disclaimer and no-endorsement clause. Preserve the root LGPL file as historical repository-level context and disclose it; do not silently delete it or claim that every file in the entire TLTK repository is BSD. The stale GPLv3 PKG-INFO is evidence about 1.1.7, not 1.9.1.
+
+BSD-3-Clause is permissive: it allows research use, modification, and redistribution, including commercial use, provided the notice, conditions and disclaimer are retained and the copyright holder/contributor names are not used to endorse derived products without permission. Research purpose is not needed as a special exception. This is a source-based compliance assessment, not a legal opinion.
+
+The verification script now checks the versioned README, setup metadata, package-data inclusion for all six files, MANIFEST inclusion of LICENSE.txt, and the BSD text itself. The generated provenance report records the package-level BSD conclusion while preserving the separate root LGPL notice and stale metadata as evidence.
+
+Primary sources:
+- [TLTK 1.9.1 README](https://github.com/attapol/tltk/blob/0cef4bcfbdd675f589783dd4134b87b9bb9fbb93/README.rst)
+- [TLTK 1.9.1 setup.py](https://github.com/attapol/tltk/blob/0cef4bcfbdd675f589783dd4134b87b9bb9fbb93/setup.py)
+- [TLTK 1.9.1 MANIFEST.in](https://github.com/attapol/tltk/blob/0cef4bcfbdd675f589783dd4134b87b9bb9fbb93/MANIFEST.in)
+- [TLTK 1.9.1 LICENSE.txt](https://github.com/attapol/tltk/blob/0cef4bcfbdd675f589783dd4134b87b9bb9fbb93/LICENSE.txt)
+- [TLTK 1.9.1 PyPI release](https://pypi.org/project/tltk/1.9.1/)

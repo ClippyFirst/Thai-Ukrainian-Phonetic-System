@@ -22,6 +22,8 @@ on:
       - "web/tests/fastthaig2p-native-pipeline.test.mjs"
       - "web/tests/fastthaig2p-native.test.mjs"
       - "web/src/fastthaig2p-native-worker.js"
+      - "web/src/fastthaig2p-tltk-oov.js"
+      - "web/tests/tltk-oov-*.test.mjs"
       - "web/tests/fastthaig2p-native-browser.test.mjs"
       - "web/tests/native-worker-smoke.html"
       - "web/src/fastthaig2p-tokenizer.js"
@@ -29,6 +31,9 @@ on:
       - "web/src/fastthaig2p-normalizer.js"
       - "web/tests/fastthaig2p-normalizer-parity.test.mjs"
       - "scripts/verify_tltk_fallback_provenance.py"
+      - "scripts/extract_tltk_oov_data.py"
+      - "scripts/generate_tltk_oov_reference.py"
+      - "tests/test_extract_tltk_oov_data.py"
       - "tests/test_fastthaig2p_browser_data.py"
       - "tests/test_tltk_fallback_provenance.py"
       - "scripts/build_pyodide_bundle.py"
@@ -46,6 +51,8 @@ on:
       - "web/src/messages.uk.js"
       - "web/src/app.js"
       - "web/src/fastthaig2p-native.js"
+      - "web/src/fastthaig2p-tltk-oov.js"
+      - "web/tests/tltk-oov-*.test.mjs"
       - "web/src/fastthaig2p-native-worker.js"
       - "web/src/fastthaig2p-normalizer.js"
       - "web/src/fastthaig2p-tokenizer.js"
@@ -65,6 +72,9 @@ on:
       - "scripts/fastthaig2p_pyodide_parity.py"
       - "scripts/prepare_fastthaig2p_browser_source.py"
       - "scripts/verify_tltk_fallback_provenance.py"
+      - "scripts/extract_tltk_oov_data.py"
+      - "scripts/generate_tltk_oov_reference.py"
+      - "tests/test_extract_tltk_oov_data.py"
       - "tests/test_fastthaig2p_browser_data.py"
       - "web/tests/fastthaig2p-pyodide.test.mjs"
       - "pyproject.toml"
@@ -182,6 +192,12 @@ jobs:
           node web/tests/fastthaig2p-normalizer-parity.test.mjs build/fastthaig2p-normalizer-reference.json web/vendor/native/fastthaig2p-normalizer.json web/vendor/native/pythainlp-default-words.txt
           node web/tests/fastthaig2p-tokenizer-parity.test.mjs build/fastthaig2p-tokenizer-reference.json web/vendor/native/fastthaig2p-ipa.json
           node web/tests/fastthaig2p-native-pipeline.test.mjs build/fastthaig2p-native-pipeline-reference.json web/vendor/native/fastthaig2p-ipa.json web/vendor/native/fastthaig2p-normalizer.json web/vendor/native/pythainlp-default-words.txt
+          python scripts/extract_tltk_oov_data.py --fallback-dir build/FastThaiG2P/data/fallback --parser-source build/FastThaiG2P/fastthaig2p/_th2ipa.py --output-dir web/vendor/native-oov
+          python -m unittest discover -s tests -p test_extract_tltk_oov_data.py -v
+          python scripts/generate_tltk_oov_reference.py
+          node web/tests/tltk-oov.test.mjs
+          node web/tests/tltk-oov-reference.test.mjs
+          node web/tests/tltk-oov-worker.test.mjs
       - name: Verify owner-approved public Pages bundle builds
         run: |
           python scripts/build_pyodide_bundle.py \

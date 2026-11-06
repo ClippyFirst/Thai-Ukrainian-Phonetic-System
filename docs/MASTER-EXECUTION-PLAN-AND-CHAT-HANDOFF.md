@@ -1,3 +1,40 @@
+## Verification checkpoint — PR #215 build and CI passed (2026-11-06)
+
+- Code-tested branch head: `e2f09fb82014bdbc514fa860e49a7f8f788aef6d`.
+- Draft PR [#215](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/215) remains open and unmerged. It is 40 commits ahead and 0 behind main.
+- Full CI [run 42203706898](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42203706898) — SUCCESS. Python suite: 401 passed, 1 skipped, 1,211 subtests passed. The only skip is the optional FastAPI test because FastAPI is not installed in generic CI. Ruff passed; wheel-install-smoke and master-artifact jobs passed.
+- Pages build [run 42203706810](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42203706810) — SUCCESS. Python regression, browser parity, RTGS reference parity, IPA adaptation, UI contracts, static accessibility, self-hosted Pyodide bundle build, TLTK OOV data extraction and Pages artifact upload passed. Deployment was skipped because this is a pull request.
+- Web Static [run 42203706779](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42203706779) — SUCCESS.
+- TLTK OOV data artifact: 2,844,409 compressed bytes; 19,848,231 uncompressed bytes. It contains five runtime tables and parser constants; no Python code or pickle is sent to the browser. The data pack is not yet consumed by the UI.
+- TLTK 1.9.1 package rights: DONE_VERIFIED under BSD-3-Clause for the six packaged fallback assets. Root LGPL-3.0 and stale PKG-INFO 1.1.7/GPLv3 remain preserved as historical/repository context.
+- Live Pages from main remains reachable and shows native-first dictionary processing with Pyodide OOV fallback. The corrected post-deploy hash smoke has not yet run against a deployment containing PR #215; it will run after merge.
+- Native JavaScript TLTK OOV algorithm remains TODO. Do not remove Pyodide or claim full OOV parity. PR #215 remains draft until that implementation and multi-case exact Python parity are completed.
+
+---
+
+## Active continuation branch — PR #215 (2026-11-06)
+
+- Branch: `feat/native-tltk-oov-and-pages-verification-2026-11-06`.
+- Draft PR: [#215](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/215), base `main`. Keep draft/unmerged until Pages build and full CI pass.
+- Latest branch checkpoint before this handoff update: `a54cab92f9008663b4b640003c7b21b8581fdf9d`.
+- TLTK 1.9.1 package rights gate is now DONE_VERIFIED for the six packaged fallback assets under BSD-3-Clause; root LGPL-3.0 and stale PKG-INFO 1.1.7/GPLv3 are retained and explained as separate historical/repository metadata.
+- Public Pages content and current native-first assets were fetched successfully. The corrected post-deploy smoke is in PR #215; the current branch's Pages build, full CI and post-merge live hash smoke are not yet confirmed.
+- Build-time OOV data extraction now serializes five required TLTK tables plus parser constants extracted from the pinned BSD source. It excludes sylform_var.pkl from the browser payload because no SYLVAR reads exist in the G2P call path, while the independent provenance verifier still checks all six original source assets.
+- **Do not mark the native OOV port complete.** No JavaScript TLTK parser has been integrated; the generated data pack is preparatory and unused by the UI. Keep the existing Pyodide OOV fallback until exact full-service JSON parity is demonstrated on multiple OOV fixtures in a real Worker.
+- Latest validation observed before this handoff: Web Static run #2179 passed; Pages build #191 and CI #6519 were queued/running. Check exact run state before further integration.
+
+---
+
+## Follow-up — TLTK license scope clarified and Pages verification repaired (2026-11-06)
+
+- **TLTK package rights:** DONE_VERIFIED for the six fallback assets packaged by TLTK 1.9.1. The pinned versioned README, setup.py version/license/package_data, MANIFEST.in, LICENSE.txt and PyPI 1.9.1 metadata form a consistent BSD-3-Clause package-level chain. The separate repository-root LGPL-3.0 notice and stale PKG-INFO 1.1.7/GPLv3 are retained and disclosed, not silently deleted. BSD-3-Clause permits research use, modification and redistribution if the notice, conditions and disclaimer are preserved and the no-endorsement condition is respected. No research-only exception is needed. This is a source-based assessment, not legal advice. See `docs/fastthaig2p-license-review-2026-11-05.md`.
+- **TLTK asset provenance:** all six FastThaiG2P fallback assets are reproducibly mapped to the pinned TLTK snapshot (five byte-identical; one exact BZip2 decompression). The verification script now asserts package-level licensing evidence as well as byte transformations.
+- **GitHub Pages:** live site inspection confirms the public page, app module, native worker, native module, native data manifest and system page are currently served and disclose the native-first dictionary path with lazy Pyodide OOV fallback. The Pages post-deploy smoke was stale and still asserted pre-UX-recomposition strings. It is updated to check the current UI, both same-origin workers, native integrity manifest/assets, notices/hashes, and retained Pyodide fallback. The Pages workflow now also runs its build on pull requests (deploy remains main-only), so the build can be validated before merge.
+- **Native TLTK OOV:** TODO/PARTIAL. Rights are no longer the blocker; the missing work is a faithful JavaScript implementation of TLTK 1.3.8 parser logic and the associated rule/trigram/word data conversion, with exact full-service JSON differential tests. Do not replace this with a guessed phonology rule or precomputed finite word list. Keep Pyodide OOV fallback until the exact parity gate passes.
+- **Post-merge live check:** public assets are reachable, but no new Pages deployment is claimed from this branch. A successful PR build and a main deployment/live hash smoke are still required after merge.
+
+---
+
 ## Handoff — PR #214 merged; native-first mainline and post-merge deployment gate (2026-11-06)
 
 - Starting `main` HEAD for this work: `f7ce29d6bbae03a8d5a8d03e8c09dbbd5dd01662`.
@@ -2938,3 +2975,14 @@ The canonical native-port ledger remains `docs/fastthaig2p-javascript-port.md`; 
 
 
 Latest branch head: `228d80d51d58a4437ab0f70ba12597a1259902e8`. The UI contract test now mocks both native and Pyodide workers and verifies that a dictionary hit never instantiates Pyodide, while only `native_dictionary_miss` triggers the fallback. Exact-head CI, Web Static, site API and Pyodide compatibility PR runs are queued/pending; do not report them as passing. No further code changes are planned until these checks return.
+
+
+## 2026-11-06 — Native TLTK OOV port verified on PR #216 head
+
+- Branch: `feat/native-tltk-oov-runtime-2026-11-06`; exact code head before documentation reconciliation: `d4f35892adc02eb03b1fd345a0193c46c07b1eb7`; PR #216 targets `main`, is mergeable, and was still a draft at that code checkpoint.
+- Implemented browser-native TLTK OOV path in `web/src/fastthaig2p-tltk-oov.js`: pinned syllable-pattern matching and dictionary, TLTK source consonant/stable maps, tone assignment and exceptions, syllable trigram segmentation, word segmentation/collocation scoring, phone-trigram candidate selection, and TLTK romanization-to-IPA. The worker lazily loads a same-origin JSON/gzip pack with compressed and uncompressed SHA-256 checks. No Python, pickle, Pyodide, wheels, API or CDN are required for TLTK-supported OOV inputs; Pyodide remains fail-closed last-resort compatibility fallback.
+- Python reference generator produced 64 independently generated single-token OOV cases with zero rejected candidates. Exact typed service parity passed for all 64 in module tests and all 64 through the native Worker tests. Chromium passed the real UI path: native dictionary hit, lazy TLTK OOV asset load, exact pinned IPA, and no Python/Pyodide/wheel/API/CDN requests for a TLTK-supported OOV token.
+- Exact-head workflows for `d4f35892adc02eb03b1fd345a0193c46c07b1eb7`: CI run [42217143967](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42217143967) SUCCESS (401 passed, 1 skipped, 1211 subtests passed; Ruff passed; wheel-install smoke passed); Web Static [42217143995](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42217143995) SUCCESS; Pages build [42217143962](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42217143962) SUCCESS; Pyodide compatibility [42217144084](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42217144084) SUCCESS, including CPython/Pyodide parity, TLTK 64-case parity, native Worker, and Chromium UI checks.
+- TLTK rights: the six fallback assets in the pinned TLTK 1.9.1 package are supported by its README/setup.py/package_data/MANIFEST.in/LICENSE.txt/PyPI release evidence as BSD-3-Clause. Preserve the BSD notice, conditions, disclaimer and no-endorsement clause. Retain the separate root LGPL-3.0 notice and stale 1.1.7/GPLv3 PKG-INFO as historical repository context; do not generalize the package license to every file in the TLTK repository. This is a source-based compliance assessment, not legal advice.
+- Pages workflow on the PR head built the owner-approved public bundle successfully, but its deploy job is intentionally skipped for pull_request. Actual post-merge deployment, live URL smoke and main-branch CI remain TODO until PR #216 is merged and new main runs complete.
+- Accuracy remains NOT_MEASURED: these fixtures establish parity with the pinned engine, not independent Thai phonetic truth or Ukrainian expert validation. Performance/mobile/offline/memory and manual assistive-technology checks remain TODO.

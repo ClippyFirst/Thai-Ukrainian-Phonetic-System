@@ -3,7 +3,7 @@
   "target": "GitHub Pages static browser bundle",
   "owner_decision": "FASTTHAIG2P_PYODIDE_BROWSER_PORT",
   "redistribution_approved": true,
-  "status": "OWNER_APPROVED_FOR_RESEARCH_PROJECT_PUBLICATION_WITH_TLTK_SCOPE_DISCLOSED",
+  "status": "OWNER_APPROVED_FOR_RESEARCH_PROJECT_PUBLICATION_WITH_COMPONENT_LICENSES_AND_NOTICES",
   "packages": [
     {
       "name": "thai-ukrainian-phonetic-system",
@@ -53,8 +53,8 @@
         "fallback": {
           "upstream_claim": "vendored from TLTK",
           "code_version": "1.3.8 as stated in FastThaiG2P vendored parser header; this does not prove the source release of the data files",
-          "code_license": "BSD-3-Clause in the vendored parser file header; not a blanket license for all TLTK assets",
-          "package_release_evidence": "Pinned TLTK repository snapshot at 0cef4bcfbdd675f589783dd4134b87b9bb9fbb93 has setup.py version 1.9.1 and license='BSD-3-Clause'; root LICENSE is LGPL-3.0; LICENSE.txt contains a BSD-style module notice; stale PKG-INFO says version 1.1.7/GPLv3",
+          "code_license": "BSD-3-Clause in the vendored parser file header; TLTK 1.9.1 packaged fallback assets are separately covered by package BSD-3-Clause evidence",
+          "package_release_evidence": "Pinned TLTK 1.9.1 snapshot: README says package license changed to BSD-3-Clause as of 1.2.2; setup.py declares version 1.9.1/license BSD-3-Clause and includes all six fallback files in package_data; MANIFEST.in includes LICENSE.txt; LICENSE.txt contains BSD-3-Clause terms; PyPI 1.9.1 metadata corroborates. Root LICENSE LGPL-3.0 is retained as separate repository-level notice; PKG-INFO is stale 1.1.7/GPLv3.",
           "asset_mapping": {
             "identical_git_blob_matches": 5,
             "total_assets": 6,
@@ -65,7 +65,7 @@
             "verified_assets": 6,
             "source_commit": "0cef4bcfbdd675f589783dd4134b87b9bb9fbb93",
             "repository_setup_version": "1.9.1",
-            "version_caveat": "The vendored parser header says TLTK 1.3.8, while the pinned repository snapshot setup.py says 1.9.1; do not attribute the data files to release 1.3.8 without further evidence.",
+            "version_caveat": "The vendored parser file header identifies its TLTK code lineage as 1.3.8; the six data assets are independently mapped to the pinned TLTK repository/package snapshot 1.9.1. Do not conflate parser code header version and packaged data release version.",
             "verifier": "scripts/verify_tltk_fallback_provenance.py",
             "license_evidence": {
               "parser_header": {
@@ -74,23 +74,29 @@
               },
               "pinned_repository_snapshot": {
                 "commit": "0cef4bcfbdd675f589783dd4134b87b9bb9fbb93",
+                "package_version": "1.9.1",
+                "package_readme_license": "BSD-3-Clause",
                 "setup_py_version": "1.9.1",
-                "root_license": "LGPL-3.0",
-                "module_license_txt": "BSD-3-Clause-style notice",
+                "setup_py_license": "BSD-3-Clause",
+                "package_data_includes_all_six_fallback_assets": true,
+                "manifest_in_includes_license_txt": true,
+                "module_license_txt": "BSD-3-Clause",
+                "pypi_release_metadata": "BSD-3-Clause",
+                "root_license": "LGPL-3.0 (retained separate repository-level notice)",
                 "stale_pkg_info": {
                   "version": "1.1.7",
-                  "license": "GPLv3"
-                },
-                "setup_py_license": "BSD-3-Clause"
+                  "license": "GPLv3",
+                  "status": "STALE"
+                }
               },
-              "status": "AMBIGUOUS_FILE_LEVEL_LICENSE_SCOPE; preserve both LGPL and BSD notices"
+              "status": "BSD-3-CLAUSE_SUPPORTED_FOR_TLTK_1_9_1_PACKAGED_FALLBACK_ASSETS; ROOT_LGPL_NOTICE_RETAINED_AS_HISTORICAL_CONTEXT"
             }
           },
-          "repository_notice_conflict": "TLTK source snapshot carries distinct root LGPL-3.0 and module BSD-style LICENSE.txt; PKG-INFO metadata is stale. Both LGPL-3.0 and BSD-3-Clause notices are preserved; exact applicability to every copied asset requires file-level legal review.",
-          "status": "DONE_VERIFIED_ASSET_TRANSFORMATIONS; LICENSE_SCOPE_PARTIAL_AMBIGUOUS"
+          "repository_notice_conflict": "The TLTK repository retains a root LGPL-3.0 notice and stale PKG-INFO 1.1.7/GPLv3, while the pinned 1.9.1 package README, setup.py, MANIFEST.in, LICENSE.txt and PyPI metadata consistently support BSD-3-Clause for the package and its six included fallback assets. Both notices are preserved; this is a package-scope conclusion, not a blanket license claim for the entire TLTK repository.",
+          "status": "DONE_VERIFIED_ASSET_TRANSFORMATIONS_AND_TLTK_1_9_1_PACKAGE_LICENSE_SCOPE"
         }
       },
-      "status": "SOFTWARE_LICENSE_IDENTIFIED_DATA_REDISTRIBUTION_NOT_CLEARED"
+      "status": "SOFTWARE_LICENSES_IDENTIFIED; DATA_COMPONENTS_REDISTRIBUTABLE_WITH_COMPONENT_TERMS"
     },
     {
       "name": "pythainlp",
@@ -114,20 +120,19 @@
   "publication_gate": [
     "Keep the filtered Wiktionary dataset under CC BY-SA 4.0 with full legal text, contributor attribution, modification disclosure and transparent dataset ZIP.",
     "Keep FastThaiG2P Apache-2.0/NOTICE and all ten dependency/corpus/project notices in the manifest.",
-    "Preserve both LGPL-3.0 and BSD-3-Clause TLTK notices and disclose the unresolved file-level applicability; the repository owner has approved publication for this research project.",
+    "For TLTK 1.9.1 fallback assets, preserve BSD-3-Clause conditions/notices; retain the separate repository LGPL-3.0 notice as historical context. Keep the Wiktionary subset under CC BY-SA 4.0.",
     "Deploy only from main through the GitHub Pages workflow; do not use a separate API host or CDN."
   ],
   "notes": [
     "Pyodide parity, filtered dictionary source counts, actual same-origin Chromium worker smoke, and TLTK fallback asset transformations passed in CI run 42085653176.",
     "The filtered wheel retains 13,144 Wiktionary IPA records, excludes 48,957 generated records, excludes manual/unknown records by policy, and records one stale metadata value for สวน without altering the current runtime IPA.",
-    "All six TLTK fallback assets are now source/transform verified: five byte-identical; sylform_var.pkl is the exact bzip2 decompression of the TLTK 1.3.8 source asset.",
-    "The exact scope of the LGPL-3.0 root repository notice versus the BSD-3.0 TLTK 1.3.8 package/file notices remains disclosed and requires final rights review; both notices are bundled.",
-    "Public redistribution remains disabled until owner sign-off; no Pages deploy, main merge, release tag, or repository setting change was made.",
-    "Owner approval recorded 2026-11-05: public GitHub Pages publication is authorized for this research project. This is a project-scope decision, not a waiver of third-party terms; all applicable notices and the remaining TLTK file-level scope ambiguity are retained."
+    "All six TLTK fallback assets are now source/transform verified: five byte-identical; sylform_var.pkl is the exact bzip2 decompression of the TLTK 1.9.1 source package asset.",
+    "TLTK package rights review completed 2026-11-06: the six fallback assets are included in TLTK 1.9.1 package_data under its explicit BSD-3-Clause package declaration and included LICENSE.txt; the separate root LGPL-3.0 notice and stale 1.1.7/GPLv3 PKG-INFO remain disclosed as historical repository metadata.",
+    "The native OOV data extraction pipeline emits a deterministic gzip-compressed JSON data pack from the six verified fallback assets. It is data-only and does not include Python modules or pickle at browser runtime; the JavaScript algorithm and parity gate remain separate TODO."
   ],
   "owner_approval": {
     "date": "2026-11-05",
     "scope": "Public GitHub Pages publication for this research project, as explicitly authorized by the repository owner.",
-    "note": "This project-scope approval does not alter third-party license terms. Required notices and the disclosed TLTK file-level license ambiguity remain preserved."
+    "note": "This project-scope approval does not alter third-party license terms. Required notices remain preserved; TLTK 1.9.1 package-level BSD-3-Clause scope is supported by the pinned README/setup.py/MANIFEST.in/LICENSE.txt/PyPI evidence, while the separate root LGPL-3.0 notice remains disclosed as historical repository context."
   }
 }

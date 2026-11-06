@@ -97,7 +97,7 @@ try {
   }
   assert.equal(actual.oov.unexpectedly_succeeded, undefined);
   assert.match(actual.oov.message, /^native_dictionary_miss: /u);
-  assert.match(actual.oov.message, /Нативний порт поки не підтримує/u);
+  assert.match(actual.oov.message, /Нативний словник і TLTK OOV-порт не змогли опрацювати/u);
 
   const forbidden = requests.filter(url =>
     /pyodide|\/wheels\/|\.whl(?:$|\?)|pyodide\.mjs|https?:\/\/(?!127\.0\.0\.1)/iu.test(url)
@@ -106,6 +106,9 @@ try {
   assert(requests.some(url => url.includes("/vendor/native/fastthaig2p-ipa.json")));
   assert(requests.some(url => url.includes("/vendor/native/fastthaig2p-normalizer.json")));
   assert(requests.some(url => url.includes("/vendor/native/pythainlp-default-words.txt")));
+  assert(requests.some(url => url.includes("/vendor/native-oov/manifest.json")),
+    "TLTK OOV pack must be lazy-loaded only after the unsupported token reaches fallback");
+  assert(requests.some(url => url.includes("/vendor/native-oov/tltk-oov-data.json.gz")));
   console.log("Native FastThaiG2P Worker passed Chromium smoke for " + reference.cases.length +
     " CPython cases and fail-closed OOV without Pyodide, Python, wheels or remote requests");
 } finally {

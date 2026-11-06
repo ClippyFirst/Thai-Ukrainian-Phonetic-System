@@ -4629,46 +4629,44 @@
     "final_pr_head": "0d4503ed55ff726807917e2cfbf14c0ad30eb624",
     "exact_head_workflows": {
       "full_ci": {
-        "run_id": 42199395072,
+        "run_id": 42203706898,
         "status": "SUCCESS",
-        "jobs": {
-          "test": "SUCCESS",
-          "wheel_install_smoke": "SUCCESS",
-          "master_artifact": "SUCCESS"
-        },
         "test_summary": {
-          "pytest": "399 passed, 1 skipped, 1211 subtests passed",
+          "pytest": "401 passed, 1 skipped, 1211 subtests passed",
           "ruff": "PASS",
-          "skipped_test": "tests/test_fastthaig2p_site_api.py",
-          "skip_reason": "FastAPI is not installed in generic CI",
-          "separate_coverage": {
-            "workflow_run": 42199395069,
-            "status": "SUCCESS"
-          }
-        }
+          "wheel_install_smoke": "PASS",
+          "master_artifact": "PASS"
+        },
+        "skipped_test": "tests/test_fastthaig2p_site_api.py",
+        "skip_reason": "FastAPI is not installed in generic CI"
+      },
+      "pages_build": {
+        "run_id": 42203706810,
+        "status": "SUCCESS",
+        "deployment": "SKIPPED_ON_PULL_REQUEST",
+        "browser_parity": "PASS",
+        "rtgs_reference_parity": "PASS",
+        "ipa_adaptation": "PASS",
+        "ui_contract": "PASS",
+        "static_accessibility": "PASS",
+        "pyodide_bundle": "PASS",
+        "tltk_oov_data_extraction": "PASS",
+        "artifact_upload": "PASS"
       },
       "web_static": {
-        "run_id": 42199395225,
-        "status": "SUCCESS"
-      },
-      "site_api": {
-        "run_id": 42199395069,
-        "status": "SUCCESS"
-      },
-      "pyodide_compatibility": {
-        "run_id": 42199395284,
+        "run_id": 42203706779,
         "status": "SUCCESS"
       }
     },
     "post_merge_main_ci": "NOT_VERIFIED_IN_CONNECTOR_SESSION",
     "post_merge_pages_deployment": "NOT_VERIFIED",
     "browser_runtime": "HYBRID_NATIVE_FIRST_DICTIONARY_HITS_WITH_PYODIDE_OOV_FALLBACK",
-    "tltk_native_oov": "BLOCKED_PENDING_FILE_LEVEL_LICENSE_SCOPE_AND_PARITY",
+    "tltk_native_oov": "TODO_NO_JAVASCRIPT_RUNTIME_PARSER; KEEP_PYODIDE_OOV_FALLBACK",
     "performance": "NOT_MEASURED",
     "manual_accessibility": "NOT_VERIFIED",
     "independent_ipa_gold_rows": 0,
     "linguistic_accuracy": "NOT_MEASURED",
-    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY",
+    "readiness": "ENGINEERING_VERIFIED_HYBRID_RESEARCH_PROTOTYPE; NATIVE_OOV_AND_LINGUISTIC_RELEASE_GATES_OPEN",
     "branch_policy": "main_is_only_active_integration_branch; historical_refs_preserved",
     "audit_branch": {
       "name": "docs/repository-audit-2026-11-04",
@@ -4679,7 +4677,56 @@
     },
     "documentation_snapshot_head_before_this_structured_update": "484d95f9c5e37f562b6d24bb63be959dea732578",
     "open_pull_requests": 0,
-    "mainline_status": "NATIVE_FIRST_HYBRID_INTEGRATED"
+    "mainline_status": "NATIVE_FIRST_HYBRID_INTEGRATED",
+    "tltk_package_license_scope": "DONE_VERIFIED_BSD_3_CLAUSE_FOR_TLTK_1_9_1_PACKAGED_FALLBACK_ASSETS",
+    "tltk_license_evidence": {
+      "tltk_commit": "0cef4bcfbdd675f589783dd4134b87b9bb9fbb93",
+      "package_readme": "BSD-3-Clause as of version 1.2.2",
+      "setup_py": "version 1.9.1; BSD-3-Clause; all six fallback assets included in package_data",
+      "manifest_in": "includes LICENSE.txt",
+      "license_txt": "BSD-3-Clause conditions and disclaimer",
+      "pypi_release": "1.9.1 metadata corroborates BSD-3-Clause",
+      "root_license": "LGPL-3.0 preserved as separate repository-level notice",
+      "stale_pkg_info": "1.1.7 / GPLv3; stale relative to 1.9.1 package"
+    },
+    "tltk_oov_data_extractor": "PARTIAL_BUILD_TIME_DATA_ONLY; five runtime tables and AST-extracted stable/AK/EngAbbr constants; excludes sylform_var.pkl because no reads in g2p call path",
+    "pages_live_observation": {
+      "status": "LIVE_HTTP_CONTENT_AND_ASSET_FETCHES_CONFIRMED",
+      "evidence": "Main public site serves native-first page/app/worker/module, native manifest and five declared assets, bundle manifest, system page and notices.",
+      "current_runtime": "NATIVE_DICTIONARY_HITS_WITH_PYODIDE_OOV_FALLBACK",
+      "post_merge_smoke": "PENDING_PR_215_MERGE_AND_MAIN_DEPLOY"
+    },
+    "pages_post_merge_workflow": "LIVE_SITE_IS_REACHABLE; CURRENT_BRANCH_PAGES_BUILD_AND_POST_MERGE_HASH_SMOKE_PENDING",
+    "pages_workflow_change": "pages.yml post-deploy smoke now checks current native-first UI, both same-origin workers, native and OOV manifests, compressed TLTK OOV data SHA-256, all notices, and retained Pyodide runtime; build now runs on pull_request with deploy main-only",
+    "current_work_branch": "feat/native-tltk-oov-and-pages-verification-2026-11-06",
+    "draft_pull_request": 215,
+    "draft_pull_request_head": "a54cab92f9008663b4b640003c7b21b8581fdf9d",
+    "pages_workflow_fix": "PR #215 corrected stale post-deploy smoke assertions, added PR build trigger, and checks native assets, OOV manifest/data hash, notices and Pyodide fallback.",
+    "branch_checks": {
+      "web_static": {
+        "run_id": 42202709762,
+        "status": "SUCCESS"
+      },
+      "pages_build": {
+        "run_id": 42202709548,
+        "status": "IN_PROGRESS_AT_LAST_OBSERVATION"
+      },
+      "full_ci": {
+        "run_id": 42202709579,
+        "status": "QUEUED_AT_LAST_OBSERVATION"
+      }
+    },
+    "code_tested_head": "e2f09fb82014bdbc514fa860e49a7f8f788aef6d",
+    "branch_ahead_by": 40,
+    "branch_behind_by": 0,
+    "tltk_oov_data_pack": {
+      "status": "DONE_VERIFIED_BUILD_PIPELINE_NOT_RUNTIME",
+      "compressed_size_bytes": 2844409,
+      "uncompressed_size_bytes": 19848231,
+      "runtime_tables": 5,
+      "parser_constants": "AST_EXTRACTED_FROM_PINNED_BSD_PARSER",
+      "pickle_in_browser": false
+    }
   },
   "repository_state_2026_11_06_pre_merge": {
     "audited_at": "2026-11-06",
@@ -4738,5 +4785,51 @@
     "manual_accessibility": "NOT_VERIFIED",
     "performance": "NOT_MEASURED",
     "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY"
+  },
+  "native_tltk_oov_2026_11_06": {
+    "status": "DONE_VERIFIED_ON_PR_HEAD_POST_MERGE_DEPLOYMENT_PENDING",
+    "branch": "feat/native-tltk-oov-runtime-2026-11-06",
+    "pr": 216,
+    "code_head": "d4f35892adc02eb03b1fd345a0193c46c07b1eb7",
+    "implementation": "Browser-native pinned FastThaiG2P/TLTK OOV parser with lazy same-origin JSON/gzip assets, SHA-256 verification, and Pyodide retained as last-resort compatibility fallback.",
+    "reference_cases": 64,
+    "rejected_reference_candidates": 0,
+    "module_typed_service_parity": "64/64 PASS",
+    "worker_typed_service_parity": "64/64 PASS",
+    "chromium": "PASS; supported OOV path loads native TLTK pack and makes no Python/Pyodide/wheel/API/CDN requests",
+    "workflows": {
+      "ci": {
+        "run_id": 42217143967,
+        "status": "SUCCESS",
+        "tests": "401 passed, 1 skipped, 1211 subtests; Ruff and wheel-install smoke passed"
+      },
+      "web_static": {
+        "run_id": 42217143995,
+        "status": "SUCCESS"
+      },
+      "pages_build": {
+        "run_id": 42217143962,
+        "status": "SUCCESS",
+        "live_deploy": "NOT_RUN_FOR_PULL_REQUEST"
+      },
+      "pyodide_compat": {
+        "run_id": 42217144084,
+        "status": "SUCCESS"
+      }
+    },
+    "license": {
+      "packaged_tltk_1_9_1_fallback_assets": "BSD-3-Clause supported by README/setup.py/package_data/MANIFEST.in/LICENSE.txt/PyPI release evidence",
+      "repository_root_license": "LGPL-3.0 retained as separate repository-level historical notice",
+      "stale_pkg_info": "1.1.7/GPLv3 retained as stale historical metadata",
+      "disposition": "Preserve all applicable BSD notices, conditions, disclaimer and no-endorsement clause; do not generalize package license to all TLTK repository contents."
+    },
+    "remaining": [
+      "Merge PR #216 after exact-head checks",
+      "Verify main-branch CI after merge",
+      "Verify actual GitHub Pages deployment and live URL smoke for TLTK manifest/data, integrity hashes, notices, and Pyodide last-resort assets",
+      "Measure cold/warm/offline/mobile transfer, latency and memory",
+      "Manual keyboard/screen-reader/zoom/reflow/device accessibility checks",
+      "Independent Thai phonetic gold and Ukrainian-native expert validation; accuracy remains NOT_MEASURED"
+    ]
   }
 }
