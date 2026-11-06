@@ -39,7 +39,7 @@ def main() -> None:
             word for word in fallback_words
             if isinstance(word, str)
             and len(word) >= 3
-            and all("\\u0e00" <= char <= "\\u0e7f" for char in word)
+            and all("\u0e00" <= char <= "\u0e7f" for char in word)
         ),
         key=lambda word: (len(word), word),
     )
