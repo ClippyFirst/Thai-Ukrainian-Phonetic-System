@@ -165,13 +165,15 @@ function renderResult(result) {
       esc(result.raw_ipa) + '</pre></section>' +
     '</div>' +
     '<details class="word-breakdown"><summary>Показати складовий розбір і походження</summary>' +
-    '<p>Рушій: <strong>' + esc(result.engine) + '</strong>; upstream commit: <code>' +
+    '<p>Рушій: <strong>' + esc(result.engine) + '</strong>; коміт вихідного проєкту: <code>' +
     esc(result.upstream_commit) + '</code>.</p>' + words + '</details>';
   output.hidden = false;
   output.querySelectorAll('[data-copy]').forEach(button => button.addEventListener('click', async () => {
     try {
       await navigator.clipboard.writeText(button.dataset.copy);
+      const previousLabel = button.textContent;
       button.textContent = UI_TEXT.copied;
+      window.setTimeout(() => { button.textContent = previousLabel; }, 1200);
     } catch {
       status.className = 'status error';
       status.textContent = UI_TEXT.copyFailed;
