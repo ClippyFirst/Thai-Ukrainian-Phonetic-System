@@ -19,8 +19,17 @@ class TltkOovDataExtractionTests(unittest.TestCase):
                 pickle.dump({("|", "|", "กา"): 5, ("|", "กา", "|"): 2}, target)
             with (fallback / "thdict").open("wb") as target:
                 pickle.dump({"กา": 1, "ขา": 1}, target)
+            parser_source = fallback / "_th2ipa.py"
+            parser_source.write_text(
+                "def read_sylpattern(path):\\n"
+                "    stable['X'] = {'ก': 'k'}\\n"
+                "    stable['Y'] = {'ก': 'k'}\\n"
+                "    AK['ก'] = 'น'\\n"
+                "    EngAbbr = ['เอ']\\n",
+                encoding="utf-8",
+            )
 
-            data, report = build(fallback)
+            data, report = build(fallback, parser_source)
 
             self.assertEqual(set(ASSET_NAMES), {
                 "sylrule.lts", "thaisyl.dict", "PhSTrigram.sts",
@@ -28,6 +37,9 @@ class TltkOovDataExtractionTests(unittest.TestCase):
             })
             self.assertNotIn("sylform_var.pkl", ASSET_NAMES)
             self.assertEqual(data["tltk_package_license"], "BSD-3-Clause")
+            self.assertEqual(data["parser_constants"]["stable_base"]["X"], {"ก": "k"})
+            self.assertEqual(data["parser_constants"]["allowed_clusters"], {"ก": "น"})
+            self.assertEqual(data["parser_constants"]["english_abbreviations"], ["เอ"])
             self.assertEqual(len(data["syllable_patterns"]), 1)
             self.assertEqual(data["syllable_dictionary"], [["กา", "kaa0"]])
             self.assertEqual(data["phone_trigrams"], [["|", "กา", "กา", "kaa0", 5.0]])
@@ -40,7 +52,7 @@ class TltkOovDataExtractionTests(unittest.TestCase):
     def test_rejects_missing_source_assets(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             with self.assertRaises(FileNotFoundError):
-                build(Path(temporary))
+                build(Path(temporary), Path(temporary) / "_th2ipa.py")
 
 
 if __name__ == "__main__":
