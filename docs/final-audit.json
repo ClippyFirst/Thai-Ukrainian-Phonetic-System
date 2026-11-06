@@ -4663,7 +4663,7 @@
     "post_merge_main_ci": "NOT_VERIFIED_IN_CONNECTOR_SESSION",
     "post_merge_pages_deployment": "NOT_VERIFIED",
     "browser_runtime": "HYBRID_NATIVE_FIRST_DICTIONARY_HITS_WITH_PYODIDE_OOV_FALLBACK",
-    "tltk_native_oov": "TODO_FAITHFUL_JAVASCRIPT_PARSER_AND_FULL_TYPED_PARITY; RIGHTS_NO_LONGER_BLOCKING",
+    "tltk_native_oov": "TODO_NO_JAVASCRIPT_RUNTIME_PARSER; keep Pyodide OOV fallback",
     "performance": "NOT_MEASURED",
     "manual_accessibility": "NOT_VERIFIED",
     "independent_ipa_gold_rows": 0,
@@ -4691,7 +4691,7 @@
       "root_license": "LGPL-3.0 preserved as separate repository-level notice",
       "stale_pkg_info": "1.1.7 / GPLv3; stale relative to 1.9.1 package"
     },
-    "tltk_oov_data_extractor": "PARTIAL_BUILD_TIME_JSON_GZIP_DATA_PACK_AND_SOURCE_MANIFEST; JAVASCRIPT_RUNTIME_PORT_NOT_IMPLEMENTED",
+    "tltk_oov_data_extractor": "PARTIAL_BUILD_TIME_DATA_ONLY; five runtime tables and AST-extracted stable/AK/EngAbbr constants; excludes sylform_var.pkl because no reads in g2p call path",
     "pages_live_observation": {
       "status": "LIVE_HTTP_CONTENT_AND_ASSET_FETCHES_CONFIRMED",
       "checked_at": "2026-11-06",
@@ -4705,8 +4705,26 @@
       ],
       "limitations": "The current live manifest still identifies the native runtime as dictionary-only. No native TLTK OOV runtime or new branch deployment is claimed."
     },
-    "pages_post_merge_workflow": "NOT_VERIFIED_BY_COMMIT_RUN_LOOKUP; LIVE_NATIVE_FIRST_ASSETS_OBSERVED; POST_DEPLOY_HASH_SMOKE_UPDATED_ON_WORK_BRANCH_AND_PENDING_PR",
-    "pages_workflow_change": "pages.yml post-deploy smoke now checks current native-first UI, both same-origin workers, native and OOV manifests, compressed TLTK OOV data SHA-256, all notices, and retained Pyodide runtime; build now runs on pull_request with deploy main-only"
+    "pages_post_merge_workflow": "LIVE_SITE_IS_REACHABLE; CURRENT_BRANCH_PAGES_BUILD_AND_POST_MERGE_HASH_SMOKE_PENDING",
+    "pages_workflow_change": "pages.yml post-deploy smoke now checks current native-first UI, both same-origin workers, native and OOV manifests, compressed TLTK OOV data SHA-256, all notices, and retained Pyodide runtime; build now runs on pull_request with deploy main-only",
+    "current_work_branch": "feat/native-tltk-oov-and-pages-verification-2026-11-06",
+    "draft_pull_request": 215,
+    "draft_pull_request_head": "a54cab92f9008663b4b640003c7b21b8581fdf9d",
+    "pages_workflow_fix": "PR 215 updates stale smoke assertions and adds PR build trigger; deployment remains main-only",
+    "branch_checks": {
+      "web_static": {
+        "run_id": 42202709762,
+        "status": "SUCCESS"
+      },
+      "pages_build": {
+        "run_id": 42202709548,
+        "status": "IN_PROGRESS_AT_LAST_OBSERVATION"
+      },
+      "full_ci": {
+        "run_id": 42202709579,
+        "status": "QUEUED_AT_LAST_OBSERVATION"
+      }
+    }
   },
   "repository_state_2026_11_06_pre_merge": {
     "audited_at": "2026-11-06",
