@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Generate independent pinned FastThaiG2P OOV reference cases for the browser port."""
+"""Generate independent pinned FastThaiG2P OOV reference cases for the browser port.
+
+The diagnostic block records upstream segmentation/scoring internals for parity debugging.
+"""
 from __future__ import annotations
 
 import gzip
@@ -60,17 +63,13 @@ def main() -> None:
                     rejected[token] = response["raw_ipa"]
                 continue
             if token == "กขส":
-                print(json.dumps({
-                    "debug_token": token,
-                    "python_sylparse": _th2ipa.sylparse(token),
-                    "python_path_scores": {
-                        "full": _th2ipa.prob_trisyl(["กขส"]),
-                        "one_plus_two": _th2ipa.prob_trisyl(["ก", "ขส"]),
-                        "one_plus_one_plus_one": _th2ipa.prob_trisyl(["ก", "ข", "ส"]),
-                    },
-                    "python_stat_sample": list(_th2ipa.TriCount.items())[:3],
-                    "totals": {"word": _th2ipa.TotalWord, "lex": _th2ipa.TotalLex},
-                }, ensure_ascii=False))
+                # Guard the upstream segmentation/scoring anchor that exposed
+                # the initial browser-port mismatch; keep diagnostics out of CI output.
+                assert _th2ipa.sylparse(token) == "กขส"
+                full = _th2ipa.prob_trisyl(["กขส"])
+                split_two = _th2ipa.prob_trisyl(["ก", "ขส"])
+                split_three = _th2ipa.prob_trisyl(["ก", "ข", "ส"])
+                assert full > split_two > split_three
             selected[token] = response
             if len(selected) >= 64:
                 break
