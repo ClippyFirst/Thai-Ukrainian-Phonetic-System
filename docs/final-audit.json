@@ -5059,128 +5059,115 @@
     "superseded_closed_pull_requests": [
       215
     ],
-    "refs_total_including_main": 15,
+    "refs_total_including_main": 19,
     "non_main_branch_comparisons": [
       {
         "branch": "design/site-recomposition-2026-11-05",
         "ahead": 28,
-        "behind": 38,
-        "tree_added_paths": 0,
-        "tree_deleted_paths": 37,
-        "tree_changed_paths": 41
+        "behind": 41,
+        "tree_added_paths": 0
+      },
+      {
+        "branch": "docs/final-mainline-state-2026-11-06",
+        "ahead": 6,
+        "behind": 1,
+        "tree_added_paths": 0
       },
       {
         "branch": "docs/post-211-pages-verification-2026-11-06",
         "ahead": 7,
-        "behind": 37,
-        "tree_added_paths": 0,
-        "tree_deleted_paths": 37,
-        "tree_changed_paths": 39
+        "behind": 40,
+        "tree_added_paths": 0
       },
       {
         "branch": "docs/post-merge-closeout-2026-11-06",
         "ahead": 17,
-        "behind": 3,
-        "tree_added_paths": 0,
-        "tree_deleted_paths": 6,
-        "tree_changed_paths": 11
+        "behind": 6,
+        "tree_added_paths": 0
+      },
+      {
+        "branch": "docs/post-merge-rtgs-closeout-2026-11-06",
+        "ahead": 13,
+        "behind": 2,
+        "tree_added_paths": 0
       },
       {
         "branch": "docs/post-merge-tltk-oov-verification-2026-11-06",
         "ahead": 9,
-        "behind": 20,
-        "tree_added_paths": 0,
-        "tree_deleted_paths": 10,
-        "tree_changed_paths": 21
+        "behind": 23,
+        "tree_added_paths": 0
       },
       {
         "branch": "docs/practical-system-site-2026-11-06",
         "ahead": 19,
-        "behind": 4,
-        "tree_added_paths": 0,
-        "tree_deleted_paths": 6,
-        "tree_changed_paths": 11
+        "behind": 7,
+        "tree_added_paths": 0
       },
       {
         "branch": "docs/repository-audit-2026-11-04",
         "ahead": 503,
-        "behind": 42,
-        "disposition": "PRESERVED_NOT_MERGED_WHOLESALE",
-        "tree_added_paths": 0,
-        "tree_deleted_paths": 38,
-        "tree_changed_paths": 46
+        "behind": 45,
+        "tree_added_paths": 0
+      },
+      {
+        "branch": "docs/repository-structure-closeout-2026-11-06",
+        "ahead": 41,
+        "behind": 3,
+        "tree_added_paths": 0
       },
       {
         "branch": "docs/rtgs-romanizer-closeout-2026-11-06",
         "ahead": 1,
-        "behind": 1,
-        "tree_added_paths": 0,
-        "tree_deleted_paths": 0,
-        "tree_changed_paths": 0
+        "behind": 4,
+        "tree_added_paths": 0
       },
       {
         "branch": "feat/fastthaig2p-native-ts-port-2026-11-06",
         "ahead": 138,
-        "behind": 35,
-        "tree_added_paths": 0,
-        "tree_deleted_paths": 17,
-        "tree_changed_paths": 35
+        "behind": 38,
+        "tree_added_paths": 0
       },
       {
         "branch": "feat/native-tltk-oov-and-pages-verification-2026-11-06",
         "ahead": 41,
-        "behind": 22,
-        "tree_added_paths": 0,
-        "tree_deleted_paths": 15,
-        "tree_changed_paths": 30
+        "behind": 25,
+        "tree_added_paths": 0
       },
       {
         "branch": "feat/native-tltk-oov-runtime-2026-11-06",
         "ahead": 115,
-        "behind": 22,
-        "tree_added_paths": 0,
-        "tree_deleted_paths": 10,
-        "tree_changed_paths": 22
+        "behind": 25,
+        "tree_added_paths": 0
       },
       {
         "branch": "feat/thai-rtgs-romanizer-2026-11-06",
         "ahead": 2,
-        "behind": 2,
-        "tree_added_paths": 0,
-        "tree_deleted_paths": 0,
-        "tree_changed_paths": 5
+        "behind": 5,
+        "tree_added_paths": 0
       },
       {
         "branch": "feat/ukrainian-first-ux-2026-11-06",
         "ahead": 44,
-        "behind": 37,
-        "tree_added_paths": 0,
-        "tree_deleted_paths": 34,
-        "tree_changed_paths": 39
+        "behind": 40,
+        "tree_added_paths": 0
       },
       {
         "branch": "fix/pages-smoke-and-audit-consolidation-2026-11-06",
         "ahead": 4,
-        "behind": 19,
-        "tree_added_paths": 0,
-        "tree_deleted_paths": 9,
-        "tree_changed_paths": 20
+        "behind": 22,
+        "tree_added_paths": 0
       },
       {
         "branch": "fix/tltk-oov-parity-followup-2026-11-06",
         "ahead": 2,
-        "behind": 21,
-        "tree_added_paths": 0,
-        "tree_deleted_paths": 10,
-        "tree_changed_paths": 21
+        "behind": 24,
+        "tree_added_paths": 0
       },
       {
         "branch": "fix/ukrainian-onset-j-system-2026-11-06",
         "ahead": 20,
-        "behind": 10,
-        "tree_added_paths": 0,
-        "tree_deleted_paths": 8,
-        "tree_changed_paths": 10
+        "behind": 13,
+        "tree_added_paths": 0
       }
     ],
     "policy": "Merged/squash-merged PR branch refs are historical source refs, not pending work. Preserve user branches; do not merge divergent history wholesale or delete refs without explicit instruction.",
@@ -5193,7 +5180,7 @@
     "refs_total_at_start_including_main": 15,
     "refs_total_after_working_branch_including_main": 16,
     "current_open_pull_request": null,
-    "tree_reconciliation": "All 14 historical non-main refs have zero added paths relative to main; one RTGS closeout branch is tree-identical, other refs are stale/different snapshots. No missing new file paths identified.",
+    "tree_reconciliation": "Live exact recursive Git tree comparison on final main 5c5cfa7f7a064253f56aaef4a98fd0f6e3ef11ca covered all 18 non-main refs (19 refs total including main): every branch has zero file paths absent from main. Commit graphs are divergent/stale snapshots, including squash-merged histories; branch refs are preserved, not merged wholesale or deleted. No unique file path is missing from main.",
     "merged_implementation_pr": 225,
     "merge_commit_sha": "1782064a530b7466962a1b1ea5503841fa88ba25",
     "refs_total_with_documentation_closeout_branch_including_main": 17,
@@ -5222,15 +5209,26 @@
       "head_sha": "1782064a530b7466962a1b1ea5503841fa88ba25",
       "conclusion": "SUCCESS"
     },
-    "refs_total_after_final_documentation_branch_including_main": 18,
+    "refs_total_after_final_documentation_branch_including_main": 19,
     "pr226_merge_commit_sha": "bc33b40bbbe57d5c2b8a597176447c09cdadf702",
     "main_ci_after_pr226": {
       "run_id": 42295345065,
       "head_sha": "bc33b40bbbe57d5c2b8a597176447c09cdadf702",
       "conclusion": "SUCCESS"
     },
-    "final_state_after_pr227_merge": "PR #227 is merged; main is the sole active working branch and no PR remains open.",
-    "final_documentation_pr": 227
+    "final_state_after_pr227_merge": "PR #227 is merged; main is the sole active working branch, 18 historical non-main refs are preserved, and no PR remains open.",
+    "final_documentation_pr": 227,
+    "main_ci_after_pr227": {
+      "run_id": 42297033289,
+      "head_sha": "5c5cfa7f7a064253f56aaef4a98fd0f6e3ef11ca",
+      "conclusion": "SUCCESS",
+      "jobs": {
+        "test": "SUCCESS",
+        "wheel_install_smoke": "SUCCESS",
+        "master_artifact": "SUCCESS"
+      }
+    },
+    "final_main_sha": "5c5cfa7f7a064253f56aaef4a98fd0f6e3ef11ca"
   },
   "homepage_rtgs_progressive_disclosure_2026_11_06": {
     "status": "DONE_VERIFIED",
