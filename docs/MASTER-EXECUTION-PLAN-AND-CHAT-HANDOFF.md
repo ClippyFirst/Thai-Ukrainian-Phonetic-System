@@ -1,3 +1,13 @@
+## Follow-up — TLTK license scope clarified and Pages verification repaired (2026-11-06)
+
+- **TLTK package rights:** DONE_VERIFIED for the six fallback assets packaged by TLTK 1.9.1. The pinned versioned README, setup.py version/license/package_data, MANIFEST.in, LICENSE.txt and PyPI 1.9.1 metadata form a consistent BSD-3-Clause package-level chain. The separate repository-root LGPL-3.0 notice and stale PKG-INFO 1.1.7/GPLv3 are retained and disclosed, not silently deleted. BSD-3-Clause permits research use, modification and redistribution if the notice, conditions and disclaimer are preserved and the no-endorsement condition is respected. No research-only exception is needed. This is a source-based assessment, not legal advice. See `docs/fastthaig2p-license-review-2026-11-05.md`.
+- **TLTK asset provenance:** all six FastThaiG2P fallback assets are reproducibly mapped to the pinned TLTK snapshot (five byte-identical; one exact BZip2 decompression). The verification script now asserts package-level licensing evidence as well as byte transformations.
+- **GitHub Pages:** live site inspection confirms the public page, app module, native worker, native module, native data manifest and system page are currently served and disclose the native-first dictionary path with lazy Pyodide OOV fallback. The Pages post-deploy smoke was stale and still asserted pre-UX-recomposition strings. It is updated to check the current UI, both same-origin workers, native integrity manifest/assets, notices/hashes, and retained Pyodide fallback. The Pages workflow now also runs its build on pull requests (deploy remains main-only), so the build can be validated before merge.
+- **Native TLTK OOV:** TODO/PARTIAL. Rights are no longer the blocker; the missing work is a faithful JavaScript implementation of TLTK 1.3.8 parser logic and the associated rule/trigram/word data conversion, with exact full-service JSON differential tests. Do not replace this with a guessed phonology rule or precomputed finite word list. Keep Pyodide OOV fallback until the exact parity gate passes.
+- **Post-merge live check:** public assets are reachable, but no new Pages deployment is claimed from this branch. A successful PR build and a main deployment/live hash smoke are still required after merge.
+
+---
+
 ## Handoff — PR #214 merged; native-first mainline and post-merge deployment gate (2026-11-06)
 
 - Starting `main` HEAD for this work: `f7ce29d6bbae03a8d5a8d03e8c09dbbd5dd01662`.
