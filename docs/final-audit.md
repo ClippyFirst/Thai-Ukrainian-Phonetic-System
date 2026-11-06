@@ -1,3 +1,31 @@
+## Current repository audit — 2026-11-06 (after PR #218)
+
+The native TLTK OOV implementation and its parity follow-up are already merged. Do not use the older PR #215 preparation entries below as current status. Mainline CI on `9f279ce04c14b81fa4728a15e81fb89ab046b753` passed (#42229026310). The main Pages workflow on code commit `533cd3f8df6112b000f5c91524f8050026b4d79a` built and uploaded the artifact, and GitHub reported the Pages deployment successful, but the post-deploy smoke failed. Inspection of current source and the failing job shows a deterministic false-negative assertion: the HTML heading contains inline markup around “прочитати”, while the smoke expects the entire sentence as one contiguous string. This audit branch corrects the selector/text checks and adds a regression test. A successful main Pages run and live asset/hash smoke are still required before marking deployment DONE_VERIFIED.
+
+### Verified implementation and evidence
+
+- PR #216 merged as `77a80a5e28f9b7566cb9c3ef8b11417d081d2c82`; browser-native TLTK OOV port has exact typed-service parity 64/64 in module and Worker tests. Chromium verified no Python/Pyodide/wheel/API/CDN requests for supported OOV inputs. Pyodide remains a fail-closed compatibility fallback.
+- PR #217 merged as `533cd3f8df6112b000f5c91524f8050026b4d79a`; exact pinned TLTK syllable segmentation/scoring regression guard added. Exact-head CI #42226080426, Pages build #42226080435 and Pyodide compatibility #42226080581 passed. CI reported 401 passed, 1 skipped, 1,211 subtests; Ruff and wheel-install smoke passed.
+- PR #218 merged as `9f279ce04c14b81fa4728a15e81fb89ab046b753`; it reconciles documentation after #217.
+- Main push CI #42229026310 on the current main HEAD succeeded, including test, wheel-install-smoke and master-artifact jobs.
+- Static Pages payload was measured from artifact #13505189970: 27,718,221 bytes across 82 files; first native-analysis path 2,325,420 raw bytes (gzip-9 estimate 476,444); TLTK OOV pack 2,844,409 compressed. These are build-file sizes/estimates, not observed HTTP transfer. The existing Node segmentation diagnostic (run #42231257136) reports median/p95 1.658/3.078 ms at 113 code points, 3.101/4.981 ms at 261, and 5.373/11.891 ms at 500, but measures `engine.js` in Node—not FastThaiG2P browser latency.
+- TLTK 1.9.1 BSD-3-Clause evidence applies to six packaged fallback assets only. Preserve all BSD conditions/disclaimer/no-endorsement; retain root LGPL-3.0 and stale 1.1.7/GPLv3 metadata as separate historical context. Do not generalize the package conclusion to the entire upstream repository.
+
+### Branch reconciliation
+
+The current main tree incorporates the active work from the site redesign, Ukrainian-first UX, FastThaiG2P native front-half, TLTK OOV, parity follow-up and documentation PRs. PR #215 is superseded: PR #216's source branch is a descendant of #215's head, and #216 was merged. PR #215 was closed as superseded, with its source branch retained. Historical source refs remain on GitHub; do not delete or force-update them. The 503-commit divergent repository-audit branch is not a safe merge base and remains preserved without wholesale import.
+
+### Remaining acceptance gates
+
+1. Fix the Pages post-deploy smoke false negative; merge the repair; require main push deployment and live URL asset/hash smoke to pass.
+2. Measure cold/warm/offline/mobile latency, transferred bytes and memory on named devices/browsers/networks.
+3. Complete manual keyboard, screen-reader, zoom/reflow, clipboard and device checks with reviewer/evidence records.
+4. Obtain independent Thai IPA gold and qualified Thai adjudication plus separate Ukrainian-native target adaptation review. Accuracy remains `NOT_MEASURED` until then.
+
+Overall readiness remains **ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY**. The remaining research and human acceptance gates are not replaceable by software parity or static tests.
+
+---
+
 ## PR #215 validation results — 2026-11-06
 
 Draft PR #215 has passed its code and Pages build gates at code-tested head `e2f09fb82014bdbc514fa860e49a7f8f788aef6d`:
