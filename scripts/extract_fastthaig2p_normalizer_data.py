@@ -45,7 +45,7 @@ def main() -> None:
     args = parser.parse_args()
     data = extract(args.source)
     data_path = args.source / "fastthaig2p" / "data" / "normalizer-data.json"
-    data_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+    data_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     project = args.source / "pyproject.toml"
     project_text = project.read_text(encoding="utf-8")
@@ -54,7 +54,7 @@ def main() -> None:
     if include not in project_text:
         if fallback not in project_text:
             raise SystemExit("FastThaiG2P wheel force-include configuration changed")
-        project_text = project_text.replace(fallback, fallback + "\\n" + include, 1)
+        project_text = project_text.replace(fallback, fallback + "\n" + include, 1)
         project.write_text(project_text, encoding="utf-8")
     print(json.dumps({"data_file": str(data_path), "map_count": len(CONSTANTS)}, ensure_ascii=False))
 
