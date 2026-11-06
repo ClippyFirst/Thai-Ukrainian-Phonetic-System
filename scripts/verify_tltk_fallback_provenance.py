@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import bz2
 import hashlib
+import gzip
 import json
 from pathlib import Path
 
@@ -43,14 +44,21 @@ def verify(fast_root: Path, tltk_root: Path) -> dict:
     if "Version: 1.1.7" not in package_metadata or "License: GPLv3" not in package_metadata:
         raise SystemExit("Pinned TLTK PKG-INFO no longer matches the recorded stale metadata")
     records = []
+    total_uncompressed_bytes = 0
+    total_gzip_bytes = 0
     for name, (fast_rel, tltk_rel, transform) in PAIRS.items():
         fast_bytes = (fast_root / fast_rel).read_bytes()
         tltk_bytes = (tltk_root / tltk_rel).read_bytes()
         transformed = bz2.decompress(tltk_bytes) if transform == "bzip2_decompressed" else tltk_bytes
         if fast_bytes != transformed:
             raise SystemExit(f"TLTK fallback asset transformation mismatch: {name}")
+        gzip_bytes = gzip.compress(fast_bytes, compresslevel=9, mtime=0)
+        total_uncompressed_bytes += len(fast_bytes)
+        total_gzip_bytes += len(gzip_bytes)
         records.append({
             "asset": name,
+            "size_bytes": len(fast_bytes),
+            "gzip_size_bytes": len(gzip_bytes),
             "fastthaig2p_path": fast_rel,
             "tltk_path": tltk_rel,
             "transform": transform,
@@ -82,6 +90,13 @@ def verify(fast_root: Path, tltk_root: Path) -> dict:
         "license_scope": "AMBIGUOUS_RETAIN_BOTH_LGPL_AND_BSD_NOTICES_PENDING_FILE_LEVEL_REVIEW",
         "assets": records,
         "verified_assets": len(records),
+        "fallback_data_size_bytes": total_uncompressed_bytes,
+        "fallback_data_gzip_size_bytes": total_gzip_bytes,
+        "fallback_data_gzip_savings_ratio": (
+            round(1 - total_gzip_bytes / total_uncompressed_bytes, 4)
+            if total_uncompressed_bytes else 0.0
+        ),
+        "size_note": "gzip sizes are deterministic compression estimates, not measured GitHub Pages transfer sizes",
         "status": "BYTE_OR_BZIP2_DECOMPRESSION_TRANSFORM_VERIFIED",
     }
 
