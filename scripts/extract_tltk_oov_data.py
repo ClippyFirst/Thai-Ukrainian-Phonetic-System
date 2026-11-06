@@ -17,12 +17,15 @@ from typing import Any
 
 FASTTHAIG2P_COMMIT = "4e82a291b4cf2876326744c6580121e9986ad354"
 TLTK_COMMIT = "0cef4bcfbdd675f589783dd4134b87b9bb9fbb93"
+# sylform_var.pkl is loaded by TLTK module initialisation but static call-graph
+# inspection found no reads of SYLVAR from g2p() -> sylparse() -> wordparse().
+# It is therefore provenance-verified separately but intentionally omitted
+# from the browser OOV payload.
 ASSET_NAMES = (
     "sylrule.lts",
     "thaisyl.dict",
     "PhSTrigram.sts",
     "sylseg.3g",
-    "sylform_var.pkl",
     "thdict",
 )
 
@@ -45,10 +48,10 @@ def parse_syllable_patterns(path: Path) -> list[dict[str, str]]:
     for line_number, line in enumerate(read_cp874(path), 1):
         if not line or line.startswith("#"):
             continue
-        fields = line.split(",", 2)
-        if len(fields) != 3:
-            raise ValueError(f"{path}:{line_number}: expected three comma-separated fields")
-        pattern, pronunciation, tone_flag = fields
+        fields = line.split(",")
+        if len(fields) < 3:
+            raise ValueError(f"{path}:{line_number}: expected at least three comma-separated fields")
+        pattern, pronunciation, tone_flag = fields[:3]
         records.append({
             "pattern": pattern,
             "pronunciation": pronunciation,
@@ -127,38 +130,11 @@ def parse_word_dictionary(path: Path) -> list[str]:
     return normalized
 
 
-def json_safe(value: Any) -> Any:
-    """Convert a nested pickle object to deterministic JSON without executable pickle."""
-    if value is None or isinstance(value, (str, int, float, bool)):
-        return value
-    if isinstance(value, bytes):
-        return {"$bytes_hex": value.hex()}
-    if isinstance(value, tuple):
-        return {"$tuple": [json_safe(item) for item in value]}
-    if isinstance(value, (set, frozenset)):
-        items = [json_safe(item) for item in value]
-        return sorted(items, key=lambda item: json.dumps(item, ensure_ascii=False, sort_keys=True))
-    if isinstance(value, list):
-        return [json_safe(item) for item in value]
-    if isinstance(value, dict):
-        items = [
-            [json_safe(key), json_safe(item)]
-            for key, item in value.items()
-        ]
-        items.sort(key=lambda row: json.dumps(row[0], ensure_ascii=False, sort_keys=True))
-        return {"$map": items}
-    raise TypeError(f"Unsupported pickle value type: {type(value).__name__}")
-
-
 def build(fallback_dir: Path) -> tuple[dict[str, Any], dict[str, Any]]:
     source_files = {name: fallback_dir / name for name in ASSET_NAMES}
     missing = [str(path) for path in source_files.values() if not path.is_file()]
     if missing:
         raise FileNotFoundError("Missing pinned TLTK fallback assets: " + ", ".join(missing))
-
-    syllable_variants = json_safe(load_pickle(source_files["sylform_var.pkl"]))
-    if not isinstance(syllable_variants, dict) or "$map" not in syllable_variants:
-        raise TypeError("sylform_var.pkl did not decode to a mapping")
 
     data = {
         "schema_version": 1,
@@ -171,7 +147,6 @@ def build(fallback_dir: Path) -> tuple[dict[str, Any], dict[str, Any]]:
         "phone_trigrams": parse_phone_trigrams(source_files["PhSTrigram.sts"]),
         "syllable_trigrams": parse_trigram_counts(source_files["sylseg.3g"]),
         "word_dictionary": parse_word_dictionary(source_files["thdict"]),
-        "syllable_variants": syllable_variants,
     }
     source_manifest = {
         name: {
@@ -187,6 +162,9 @@ def build(fallback_dir: Path) -> tuple[dict[str, Any], dict[str, Any]]:
         "tltk_package_version": "1.9.1",
         "tltk_package_license": "BSD-3-Clause",
         "source_assets": source_manifest,
+        "excluded_assets": {
+            "sylform_var.pkl": "Loaded by TLTK initial() but not read anywhere in the g2p() -> sylparse() -> wordparse() call path; excluded from the browser OOV data pack."
+        },
         "record_counts": {
             "syllable_patterns": len(data["syllable_patterns"]),
             "syllable_dictionary": len(data["syllable_dictionary"]),
