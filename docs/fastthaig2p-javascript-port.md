@@ -44,7 +44,7 @@ Do not conflate this work with the separate ClippyFirst Thai orthographic resear
 | Text normalization | DONE_VERIFIED | #42181862972: 18 pinned CPython cases passed with the extracted PyThaiNLP default wordlist, including maiyamok. |
 | PyThaiNLP newmm tokenizer | DONE_VERIFIED | #42181862972: 16 FastThaiG2P custom-dictionary cases and 18 PyThaiNLP default-wordlist cases passed token-array parity. |
 | Dictionary IPA lookup | PARTIAL | Native pipeline uses the 13,144-entry Wiktionary-only map and matches 16 dictionary-only CPython cases; OOV fallback is not yet available. |
-| TLTK OOV fallback | BLOCKED / PARTIAL | `scripts/verify_tltk_fallback_provenance.py` verifies all six pinned fallback assets: five byte-identical and `sylform_var.pkl` exactly equal to BZip2-decompressed TLTK `.pklz`. The remaining blocker is rights scope (BSD-3-Clause package metadata and LICENSE.txt versus repository LGPL-3.0 and stale GPLv3 PKG-INFO), followed by native algorithm/data port and parity. No fallback data is shipped in the public bundle. |
+| TLTK OOV fallback | BLOCKED / PARTIAL | All six pinned asset transformations are verified. Payload is 19,883,873 bytes raw / 5,911,457 bytes deterministic gzip estimate (70.27% reduction). Rights scope still needs explicit disposition (BSD-3-Clause package metadata/LICENSE.txt vs repository LGPL-3.0 and stale GPLv3 PKG-INFO); native algorithm/data port and parity remain TODO. No fallback data is shipped publicly. |
 | Typed IPA result contract | PARTIAL | Tone contours and segmental IPA are parsed; exact parity for uncertainty, unsupported symbols, word/syllable alignment and metadata remains TODO. |
 | IPA → Ukrainian adapter | REUSED | Existing `web/src/ipa-ua.js` remains the sole target adaptation boundary; it must not be duplicated. |
 | Native pipeline composition | PARTIAL | `createFastThaiG2PNativePipeline` composes normalization, default/custom newmm, dictionary lookup and existing IPA→Ukrainian adapter; 16 dictionary-only cases match CPython. OOV fallback is missing. |
@@ -70,14 +70,14 @@ Differential evidence on the exact tested code head:
 - 16 dictionary-only end-to-end front-half cases matched CPython raw IPA.
 - The same 16 cases also passed inside the real Chromium module Worker, including manifest/SHA-256 data loading; an OOV probe returned the expected Ukrainian fail-closed error without fetching Python/Pyodide/wheels/remote assets.
 
-This is not a complete FastThaiG2P port: the TLTK-derived OOV fallback and full typed IPA/result JSON parity are still missing. An isolated native module Worker is implemented and passes Chromium smoke, but is not yet integrated into the public application, which continues to use the verified Pyodide worker.
+This is not a complete FastThaiG2P port: the TLTK-derived OOV fallback and full typed IPA/result JSON parity are still missing. The fallback data is ~19.9 MB raw (5.91 MB gzip estimate), so it is not negligible; measure actual Pages transfer and compare with the Pyodide baseline before cutover. An isolated native module Worker is implemented and passes Chromium smoke, but is not yet integrated into the public application, which continues to use the verified Pyodide worker.
 
 ## Licensing and data boundary
 
 - FastThaiG2P source code is Apache-2.0 with Amazon NOTICE at the pinned revision.
 - The filtered dictionary is derived from Wiktionary via Kaikki.org/Wiktextract and is labelled CC BY-SA 4.0; attribution and share-alike obligations continue to apply.
 - The newmm tokenizer port is based on PyThaiNLP 5.4.0 source under Apache-2.0; retain the upstream copyright/license notice in the bundled notices.
-- TLTK fallback provenance is now mechanically verified at the pinned revisions: five assets are byte-identical and the sixth is the exact BZip2-decompressed counterpart of TLTK's `.pklz` asset. Rights scope remains unresolved because the TLTK repository contains BSD-3-Clause package metadata and LICENSE.txt alongside an LGPL-3.0 root LICENSE and stale GPLv3 PKG-INFO. Preserve all notices; do not publish these assets in the public bundle until the rights disposition is resolved.
+- TLTK fallback provenance is mechanically verified at the pinned revisions: five assets are byte-identical and the sixth is the exact BZip2-decompressed counterpart of TLTK's `.pklz` asset. Their total is 19,883,873 bytes raw and 5,911,457 bytes under deterministic gzip level 9 (70.27% smaller; estimate, not measured Pages transfer). Rights scope remains unresolved because the TLTK repository contains BSD-3-Clause package metadata and LICENSE.txt alongside an LGPL-3.0 root LICENSE and stale GPLv3 PKG-INFO. Preserve all notices; do not publish these assets in the public bundle until the rights disposition is resolved.
 - The project MIT license applies to ClippyFirst-authored code only; it does not relicense upstream code or third-party data.
 
 ## Verification commands
