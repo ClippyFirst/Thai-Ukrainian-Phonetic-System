@@ -10,7 +10,7 @@ for (const [key, value] of Object.entries(UI_TEXT)) {
 const ids = new Set();
 for (const [code, value] of Object.entries(ERROR_MESSAGES)) {
   assert(ukrainian.test(value.message), `Error ${code} must have Ukrainian user copy`);
-  assert.match(value.id, /^UA-[A-Z]+-\\d{3}$/u);
+  assert.match(value.id, /^UA-[A-Z]+-\d{3}$/u);
   assert(!ids.has(value.id), `Duplicate user-facing error ID: ${value.id}`);
   ids.add(value.id);
 }
@@ -21,9 +21,9 @@ const app = await readFile(new URL("../src/app.js", import.meta.url), "utf8");
 const worker = await readFile(new URL("../src/fastthaig2p-worker.js", import.meta.url), "utf8");
 const html = await readFile(new URL("../index.html", import.meta.url), "utf8");
 assert.match(app, /errorMessage\(error\?\.code\)/);
-assert.doesNotMatch(app, /status\\.textContent\\s*=\\s*error\\.message/);
-assert.match(app, /diagnosticDetails\\.textContent/);
-assert.match(worker, /type: "error"[\\s\\S]*?code,/);
+assert.doesNotMatch(app, /status\.textContent\s*=\s*error\.message/);
+assert.match(app, /diagnosticDetails\.textContent/);
+assert.match(worker, /type: "error"[\s\S]*?code,/);
 assert.doesNotMatch(worker, /message: typeof detail/);
 assert.doesNotMatch(worker, /detail\?\.message/);
 assert.match(html, /id="technical-diagnostics"/);
