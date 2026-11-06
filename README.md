@@ -26,7 +26,7 @@ The repository's user-facing system is described in [Тайсько-україн
 
 ## Thai romanization (Thai → Latin)
 
-The site also provides a separate [Thai romanization tool](web/romanization.html) based on the official RTGS approach through PyThaiNLP 5.4.0 royin. It reuses the pinned PyThaiNLP newmm tokenizer and CC0 word list, verifies the local word-list asset by SHA-256, and runs entirely in the browser. RTGS is kept separate from IPA and Ukrainian transcription; tones and vowel length are not fully represented. See [the romanization method and limitations](docs/thai-romanization.md).
+The homepage keeps Ukrainian IPA adaptation as its primary result and offers RTGS as an optional collapsed, lazily loaded secondary result; a full [Thai romanization tool](web/romanization.html) is also available. Both use the official RTGS approach through PyThaiNLP 5.4.0 royin. It reuses the pinned PyThaiNLP newmm tokenizer and CC0 word list, verifies the local word-list asset by SHA-256, and runs entirely in the browser. RTGS is kept separate from IPA and Ukrainian transcription; tones and vowel length are not fully represented. See [the romanization method and limitations](docs/thai-romanization.md).
 
 ## Thai → Ukrainian methodology table
 
