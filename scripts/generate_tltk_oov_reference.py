@@ -12,8 +12,11 @@ ROOT = Path(__file__).resolve().parents[1]
 UPSTREAM = ROOT / "build" / "FastThaiG2P"
 sys.path.insert(0, str(UPSTREAM))
 
-from fastthaig2p.g2p import G2P  # noqa: E402
-from fastthaig2p.normalizer import normalize  # noqa: E402
+from thai_ukrainian.fastthaig2p_adapter import FastThaiG2PAdapter  # noqa: E402
+from thai_ukrainian.fastthaig2p_service import (  # noqa: E402
+    FastThaiG2PAnalysisError,
+    analyze_with_fastthaig2p,
+)
 
 
 CANDIDATES = (
@@ -28,7 +31,10 @@ CANDIDATES = (
 
 
 def main() -> None:
-    engine = G2P()
+    sys.path.insert(0, str(ROOT / "src"))
+    engine = FastThaiG2PAdapter()
+    g2p = engine._engine
+    normalize = engine._normalize
     data_pack = ROOT / "web" / "vendor" / "native-oov" / "tltk-oov-data.json.gz"
     if not data_pack.is_file():
         raise SystemExit("The extracted TLTK OOV data pack is required before generating parity fixtures.")
@@ -38,16 +44,21 @@ def main() -> None:
     for candidate in (*CANDIDATES, *tltk_words):
         normalized = normalize(candidate)
         for token in engine._tokenizer.tokenize(normalized):
-            if not token or token in engine._ipa or not re.fullmatch(r"[ก-๛]+", token):
+            if not token or token in g2p._ipa or not re.fullmatch(r"[ก-๛]+", token):
                 continue
-            if engine._tokenizer.tokenize(normalize(token)) != [token]:
+            if g2p._tokenizer.tokenize(normalize(token)) != [token]:
                 continue
-            result = engine.convert(token).strip()
-            if not (result.startswith("/") and result.endswith("/") and len(result) > 2):
+            try:
+                response = analyze_with_fastthaig2p(token, engine=engine)
+            except FastThaiG2PAnalysisError as error:
                 if len(rejected) < 30:
-                    rejected[token] = result
+                    rejected[token] = str(error.detail)
                 continue
-            selected[token] = result
+            if response["coverage"]["rule_fallback_tokens"] != 1 or not response["raw_ipa"].startswith("/"):
+                if len(rejected) < 30:
+                    rejected[token] = response["raw_ipa"]
+                continue
+            selected[token] = response
             if len(selected) >= 24:
                 break
         if len(selected) >= 24:
@@ -64,7 +75,7 @@ def main() -> None:
             {
                 "schema_version": 1,
                 "fastthaig2p_commit": "4e82a291b4cf2876326744c6580121e9986ad354",
-                "cases": [{"token": token, "ipa": ipa} for token, ipa in sorted(selected.items())],
+                "cases": [{"token": token, "response": response} for token, response in sorted(selected.items())],
                 "rejected": rejected,
             },
             ensure_ascii=False,
