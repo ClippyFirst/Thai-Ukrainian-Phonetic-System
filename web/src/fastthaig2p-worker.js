@@ -66,7 +66,7 @@ async function initializeRuntime(requestId) {
   const wheelNames = [];
 
   for (const asset of manifest.wheels) {
-    if (!/^[a-zA-Z0-9_.-]+\\.whl$/.test(asset.filename)) {
+    if (!/^[a-zA-Z0-9_.-]+\.whl$/.test(asset.filename)) {
       throw failure("bundle_invalid", "Маніфест містить неприпустиму назву Python-компонента.");
     }
     self.postMessage({ type: "progress", requestId, stage: "download", filename: asset.filename });
