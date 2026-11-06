@@ -28,7 +28,7 @@ function compilePattern(record) {
  try{return new RegExp("^(?:"+pattern+")","u");}
  catch(error){throw new NativeFastThaiG2PError("native_oov_pattern_invalid","TLTK OOV pattern is invalid: "+String(error?.message||error));}
 }
-function addPron(map,form,phone){const values=map.get(form)||[];if(!values.includes(phone))values.push(phone);map.set(form,values);}
+function addPron(map,form,phone){const values=map.get(form)||[];values.push(phone);map.set(form,values);}
 function deadSyllable(phone){
  const value=phone.replaceAll("ch","C").replace(/[0-4]/gu,"");
  if(/[mnwjlN]8?$/u.test(value))return "L";
@@ -82,10 +82,10 @@ function allowedPronunciation(code,charmatch,form,phone,allowed){
  return true;
 }
 function mergeKaran(forms,pron){
- const out=[];let pending=null;
+ const out=[];let pending=null;const mergedSeen=new Set();
  for(const form of [...forms].reverse()){
   if((/(.+)[ิุ]์/u.test(form)||/(.+)์/u.test(form))&&length(form)<4){pending=form;continue;}
-  if(pending!==null){for(const phone of pron.get(form)||[])addPron(pron,form+pending,phone);out.push(form+pending);pending=null;}
+  if(pending!==null){for(const phone of pron.get(form)||[]){const key=tuple(form+pending,phone);if(!mergedSeen.has(key)){addPron(pron,form+pending,phone);mergedSeen.add(key);}}out.push(form+pending);pending=null;}
   else out.push(form);
  }
  return out.reverse();
