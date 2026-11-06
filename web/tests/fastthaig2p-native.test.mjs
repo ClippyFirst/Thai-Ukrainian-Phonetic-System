@@ -32,21 +32,48 @@ assert.throws(
   /Invalid source-attributed IPA/
 );
 
-let requestedUrl;
+const dictionaryText = JSON.stringify({ "สวน": "/sua̯n˩˩˦/" });
+const dictionaryBytes = new TextEncoder().encode(dictionaryText);
+const dictionaryHash = [...new Uint8Array(await crypto.subtle.digest("SHA-256", dictionaryBytes))]
+  .map(value => value.toString(16).padStart(2, "0"))
+  .join("");
+const manifest = {
+  schema_version: 1,
+  upstream_commit: "4e82a291b4cf2876326744c6580121e9986ad354",
+  stage: "dictionary-data-only; not a complete runtime",
+  license: "CC-BY-SA-4.0",
+  dictionary_entries: 1,
+  assets: [{
+    path: "native/fastthaig2p-ipa.json",
+    sha256: dictionaryHash,
+    size_bytes: dictionaryBytes.byteLength
+  }]
+};
 const loaded = await loadFastThaiG2PNativeDictionary({
-  url: "https://example.test/native.json",
+  url: "https://example.test/native/fastthaig2p-ipa.json",
+  manifestUrl: "https://example.test/native/manifest.json",
   fetchImpl: async url => {
-    requestedUrl = url;
-    return { ok: true, json: async () => ({ "สวน": "/sua̯n˩˩˦/" }) };
+    if (String(url).endsWith("manifest.json")) {
+      return { ok: true, json: async () => manifest };
+    }
+    return { ok: true, arrayBuffer: async () => dictionaryBytes.buffer };
   }
 });
-assert.equal(requestedUrl, "https://example.test/native.json");
 assert.equal(loaded["สวน"], "/sua̯n˩˩˦/");
+
 await assert.rejects(
   loadFastThaiG2PNativeDictionary({
+    manifestUrl: "https://example.test/native/manifest.json",
     fetchImpl: async () => ({ ok: false, status: 404 })
   }),
-  error => error.code === "native_dictionary_unavailable"
+  error => error.code === "native_manifest_unavailable"
+);
+await assert.rejects(
+  loadFastThaiG2PNativeDictionary({
+    manifestUrl: "https://example.test/native/manifest.json",
+    fetchImpl: async () => ({ ok: true, json: async () => ({}) })
+  }),
+  error => error.code === "native_manifest_invalid"
 );
 
 console.log("FastThaiG2P native JavaScript dictionary-adapter contracts passed");
