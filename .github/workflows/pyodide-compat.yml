@@ -17,6 +17,10 @@ on:
       - "scripts/fastthaig2p_tokenizer_reference.py"
       - "scripts/fastthaig2p_native_pipeline_reference.py"
       - "web/tests/fastthaig2p-native-pipeline.test.mjs"
+      - "web/src/fastthaig2p-native-worker.js"
+      - "web/tests/fastthaig2p-native-browser.test.mjs"
+      - "web/src/fastthaig2p-native-worker.js"
+      - "web/tests/fastthaig2p-native-browser.test.mjs"
       - "web/src/fastthaig2p-tokenizer.js"
       - "web/tests/fastthaig2p-tokenizer-parity.test.mjs"
       - "scripts/fastthaig2p_native_pipeline_reference.py"
@@ -184,3 +188,5 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Test the real same-origin Pyodide worker in Chromium
         run: node web/tests/fastthaig2p-browser.test.mjs
+      - name: Test the native FastThaiG2P worker without Python or Pyodide
+        run: node web/tests/fastthaig2p-native-browser.test.mjs build/fastthaig2p-native-pipeline-reference.json

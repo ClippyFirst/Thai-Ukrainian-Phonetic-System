@@ -263,3 +263,91 @@ export function createFastThaiG2PNativePipeline({ dictionary, normalizerData, de
     stage: "normalizer+default-newmm+custom-newmm+wiktionary-dictionary; no-oov-fallback"
   });
 }
+
+
+/**
+ * Load all data required by the native front-half and verify each same-origin
+ * asset against the pinned manifest before parsing it.
+ */
+export async function loadFastThaiG2PNativeAssets({
+  baseUrl = new URL("../vendor/native/", import.meta.url),
+  fetchImpl = fetch,
+  cryptoImpl = globalThis.crypto
+} = {}) {
+  const manifestResponse = await fetchImpl(new URL("manifest.json", baseUrl), {
+    credentials: "same-origin",
+    cache: "force-cache"
+  });
+  if (!manifestResponse.ok) {
+    throw new NativeFastThaiG2PError("native_manifest_unavailable", "Не вдалося завантажити маніфест браузерного рушія.");
+  }
+  const manifest = await manifestResponse.json();
+  if (
+    manifest?.schema_version !== 1 ||
+    manifest?.upstream_commit !== FASTTHAIG2P_UPSTREAM_COMMIT ||
+    manifest?.stage !== "dictionary-normalizer-and-default-wordlist-data-only; not a complete runtime" ||
+    manifest?.dictionary_license !== "CC-BY-SA-4.0" ||
+    manifest?.normalizer_license !== "Apache-2.0" ||
+    manifest?.pythainlp_version !== "5.4.0" ||
+    manifest?.pythainlp_wordlist_license !== "CC0-1.0" ||
+    !Number.isInteger(manifest?.dictionary_entries) ||
+    !Number.isInteger(manifest?.pythainlp_wordlist_entries)
+  ) {
+    throw new NativeFastThaiG2PError("native_manifest_invalid", "Маніфест браузерного рушія не відповідає перевіреному контракту.");
+  }
+  if (!cryptoImpl?.subtle?.digest) {
+    throw new NativeFastThaiG2PError("native_integrity_unavailable", "Для перевірки цілісності потрібен Web Crypto SHA-256.");
+  }
+
+  const readVerifiedAsset = async (filename) => {
+    const assetPath = "native/" + filename;
+    const record = manifest.assets?.find(item => item.path === assetPath);
+    if (!record || !/^[a-f0-9]{64}$/u.test(record.sha256) || !Number.isInteger(record.size_bytes)) {
+      throw new NativeFastThaiG2PError("native_manifest_invalid", "У маніфесті відсутній запис цілісності для " + filename + ".");
+    }
+    const response = await fetchImpl(new URL(filename, baseUrl), {
+      credentials: "same-origin",
+      cache: "force-cache"
+    });
+    if (!response.ok) {
+      throw new NativeFastThaiG2PError("native_asset_unavailable", "Не вдалося завантажити дані браузерного рушія: " + filename + ".");
+    }
+    const bytes = await response.arrayBuffer();
+    if (bytes.byteLength !== record.size_bytes) {
+      throw new NativeFastThaiG2PError("native_asset_corrupt", "Розмір ресурсу не збігається з маніфестом: " + filename + ".");
+    }
+    const digest = await cryptoImpl.subtle.digest("SHA-256", bytes);
+    const actualHash = [...new Uint8Array(digest)]
+      .map(value => value.toString(16).padStart(2, "0"))
+      .join("");
+    if (actualHash !== record.sha256) {
+      throw new NativeFastThaiG2PError("native_asset_corrupt", "SHA-256 ресурсу не збігається з маніфестом: " + filename + ".");
+    }
+    return new Uint8Array(bytes);
+  };
+
+  const [ipaBytes, normalizerBytes, wordsBytes] = await Promise.all([
+    readVerifiedAsset("fastthaig2p-ipa.json"),
+    readVerifiedAsset("fastthaig2p-normalizer.json"),
+    readVerifiedAsset("pythainlp-default-words.txt")
+  ]);
+  let dictionary;
+  let normalizerData;
+  try {
+    dictionary = JSON.parse(new TextDecoder().decode(ipaBytes));
+    normalizerData = JSON.parse(new TextDecoder().decode(normalizerBytes));
+  } catch {
+    throw new NativeFastThaiG2PError("native_asset_invalid", "JSON-ресурси браузерного рушія пошкоджені.");
+  }
+  const defaultWords = new TextDecoder().decode(wordsBytes).split(/\r?\n/u).filter(Boolean);
+  if (
+    !dictionary || typeof dictionary !== "object" || Array.isArray(dictionary) ||
+    Object.keys(dictionary).length !== manifest.dictionary_entries ||
+    normalizerData?.schema_version !== 1 ||
+    normalizerData?.upstream_commit !== FASTTHAIG2P_UPSTREAM_COMMIT ||
+    defaultWords.length !== manifest.pythainlp_wordlist_entries
+  ) {
+    throw new NativeFastThaiG2PError("native_asset_invalid", "Кількість або версія даних браузерного рушія не збігається з маніфестом.");
+  }
+  return { dictionary, normalizerData, defaultWords, manifest };
+}

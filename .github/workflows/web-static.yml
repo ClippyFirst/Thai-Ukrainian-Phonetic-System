@@ -34,6 +34,7 @@ jobs:
           node --check web/src/fastthaig2p-native.js
           node --check web/src/fastthaig2p-normalizer.js
           node --check web/src/fastthaig2p-tokenizer.js
+          node --check web/src/fastthaig2p-native-worker.js
           node --check web/src/messages.uk.js
           node --check web/src/fastthaig2p-worker.js
           node --check web/src/engine.js
@@ -46,6 +47,7 @@ jobs:
           test -s web/system.html
           test -s web/src/styles.css
           test -s web/src/app.js
+          test -s web/src/fastthaig2p-native-worker.js
       - name: Check static accessibility contract
         run: |
           grep -q '<html lang="uk">' web/index.html

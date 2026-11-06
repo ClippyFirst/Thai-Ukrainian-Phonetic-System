@@ -48,7 +48,7 @@ Do not conflate this work with the separate ClippyFirst Thai orthographic resear
 | Typed IPA result contract | PARTIAL | Tone contours and segmental IPA are parsed; exact parity for uncertainty, unsupported symbols, word/syllable alignment and metadata remains TODO. |
 | IPA → Ukrainian adapter | REUSED | Existing `web/src/ipa-ua.js` remains the sole target adaptation boundary; it must not be duplicated. |
 | Native pipeline composition | PARTIAL | `createFastThaiG2PNativePipeline` composes normalization, default/custom newmm, dictionary lookup and existing IPA→Ukrainian adapter; 16 dictionary-only cases match CPython. OOV fallback is missing. |
-| Worker integration | TODO | Add a separate native worker and an explicit runtime selector for CI only; production remains on Pyodide until all gates pass. |
+| Native Worker smoke | IMPLEMENTED_PENDING_EXACT_HEAD_CI | Separate same-origin Worker and Chromium request-audit test added; it exercises dictionary-only conversion and asserts no Pyodide/Python/wheel/remote requests. Production remains on Pyodide. |
 | Python/JS differential suite | PARTIAL | 18 normalizer, 16 custom tokenizer and 16 dictionary-only front-half cases pass. Typed IPA metadata and full service JSON/OOV differential remain TODO. |
 | Browser cold/warm tests | TODO | No native Worker exists yet; future Chromium smoke must prove no Pyodide, Python, wheel or API requests and verify offline repeat use after data cache. |
 | Footprint/performance | TODO | Measure transferred bytes, cold-start, warm latency and memory on desktop and mobile; compare to the 20.5 MB baseline. |
@@ -61,6 +61,7 @@ The browser-native front-half is split into inspectable modules:
 - `web/src/fastthaig2p-tokenizer.js` ports PyThaiNLP 5.4.0 newmm, including TCC boundaries, trie prefix matching, graph traversal, unknown chunks and formatted-number rejoining.
 - Two tokenizer instances use the exact PyThaiNLP default wordlist (for mai yamok) and the FastThaiG2P custom filtered dictionary (for G2P segmentation).
 - `web/src/fastthaig2p-native.js` composes normalization → default newmm → custom newmm → Wiktionary-only IPA lookup → the existing IPA→Ukrainian adapter. It preserves slash/dot IPA, Chao tone and vowel-length metadata, and fails closed on dictionary misses.
+- `web/src/fastthaig2p-native-worker.js` runs this front-half in a separate module Worker; `loadFastThaiG2PNativeAssets` verifies each same-origin data asset against the manifest before constructing the pipeline.
 - The native bundle emits source-attributed JSON/text data assets with source pins, license metadata, sizes and SHA-256 integrity records. These are data assets; they are not Python modules or executable wheels.
 
 Differential evidence on the exact tested code head:
