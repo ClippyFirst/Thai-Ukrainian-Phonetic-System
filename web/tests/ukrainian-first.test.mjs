@@ -20,6 +20,7 @@ assert.match(errorMessage("incomplete_ipa").message, /не підмінятим�
 const app = await readFile(new URL("../src/app.js", import.meta.url), "utf8");
 const worker = await readFile(new URL("../src/fastthaig2p-worker.js", import.meta.url), "utf8");
 const html = await readFile(new URL("../index.html", import.meta.url), "utf8");
+const feedback = await readFile(new URL("../../.github/ISSUE_TEMPLATE/beta-feedback.yml", import.meta.url), "utf8");
 assert.match(app, /errorMessage\(error\?\.code\)/);
 assert.doesNotMatch(app, /status\.textContent\s*=\s*error\.message/);
 assert.match(app, /diagnosticDetails\.textContent/);
@@ -28,6 +29,12 @@ assert.doesNotMatch(worker, /message: typeof detail/);
 assert.doesNotMatch(worker, /detail\?\.message/);
 assert.match(html, /id="technical-diagnostics"/);
 assert.match(html, /Ці дані допоможуть повідомити про помилку/);
+assert.match(feedback, /name: Відгук про бета-версію/);
+assert.match(feedback, /label: Категорія відгуку/);
+assert.match(feedback, /label: Що сталося\\?/);
+assert.match(feedback, /label: Браузер і версія/);
+assert.match(feedback, /Підтверджую, що не додаю особистої/);
+assert.doesNotMatch(feedback, /Feedback category|What happened\\?|Browser and version|Privacy confirmation/);
 
 console.log(JSON.stringify({
   result: "PASS",
