@@ -14,6 +14,9 @@ on:
       - "scripts/prepare_fastthaig2p_browser_source.py"
       - "scripts/extract_fastthaig2p_normalizer_data.py"
       - "scripts/fastthaig2p_normalizer_reference.py"
+      - "scripts/fastthaig2p_tokenizer_reference.py"
+      - "web/src/fastthaig2p-tokenizer.js"
+      - "web/tests/fastthaig2p-tokenizer-parity.test.mjs"
       - "web/src/fastthaig2p-normalizer.js"
       - "web/tests/fastthaig2p-normalizer-parity.test.mjs"
       - "scripts/verify_tltk_fallback_provenance.py"
@@ -27,6 +30,9 @@ on:
   pull_request:
     paths:
       - "src/thai_ukrainian/**"
+      - "scripts/fastthaig2p_tokenizer_reference.py"
+      - "web/src/fastthaig2p-tokenizer.js"
+      - "web/tests/fastthaig2p-tokenizer-parity.test.mjs"
       - "scripts/extract_fastthaig2p_normalizer_data.py"
       - "scripts/fastthaig2p_normalizer_reference.py"
       - "web/src/fastthaig2p-normalizer.js"
@@ -92,6 +98,7 @@ jobs:
           python -m pip install --no-deps build/pyodide-wheels/*.whl
           python scripts/fastthaig2p_pyodide_parity.py > build/fastthaig2p-native.json
           python scripts/fastthaig2p_normalizer_reference.py > build/fastthaig2p-normalizer-reference.json
+          python scripts/fastthaig2p_tokenizer_reference.py > build/fastthaig2p-tokenizer-reference.json
           python - <<'PY'
           import json
           from pathlib import Path
@@ -142,6 +149,7 @@ jobs:
               assert hashlib.sha256(asset.read_bytes()).hexdigest() == item["sha256"]
           PY
           node web/tests/fastthaig2p-normalizer-parity.test.mjs build/fastthaig2p-normalizer-reference.json web/vendor/native/fastthaig2p-normalizer.json
+          node web/tests/fastthaig2p-tokenizer-parity.test.mjs build/fastthaig2p-tokenizer-reference.json web/vendor/native/fastthaig2p-ipa.json
       - name: Verify owner-approved public Pages bundle builds
         run: |
           python scripts/build_pyodide_bundle.py \

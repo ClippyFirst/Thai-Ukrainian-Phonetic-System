@@ -42,7 +42,7 @@ Do not conflate this work with the separate ClippyFirst Thai orthographic resear
 | JavaScript module/result adapter | PARTIAL | First dictionary adapter exists in `web/src/fastthaig2p-native.js`; unit tests cover parsing, tone extraction, IPA→Ukrainian adaptation and fail-closed dictionary misses. It is not wired into the public UI. |
 | Source-filtered dictionary build asset | IMPLEMENTED_PENDING_EXACT_HEAD_CI | Build emits `web/vendor/native/fastthaig2p-ipa.json` from the exact filtered wheel; provenance, entry count, size and SHA-256 are checked. |
 | Text normalization | IMPLEMENTED_PENDING_EXACT_PARITY | JavaScript implementation and AST-extracted upstream data are added; the pinned CPython differential suite must pass for numeric, symbol, abbreviation, email and maiyamok cases. |
-| PyThaiNLP newmm tokenizer | TODO | Port the pinned tokenizer algorithm and exact effective default/custom dictionary inputs; token-array parity on a versioned corpus. |
+| PyThaiNLP newmm tokenizer | IMPLEMENTED_PENDING_EXACT_PARITY | JS trie/TCC/maximal-matching port added against PyThaiNLP 5.4.0; pinned token-array differential suite pending. |
 | Dictionary IPA lookup | PARTIAL | Adapter supports an injected map; the exact filtered JSON asset is generated and integrity-manifested. Production tokenizer/lookup integration remains TODO. |
 | TLTK OOV fallback | BLOCKED / PARTIAL | The current fallback depends on `_th2ipa.py`, six TLTK-derived data assets, trigram statistics and a pickled syllable-variant structure. The source repository contains conflicting LGPL-3.0/BSD-3-Clause evidence for the data package. Acceptance requires an explicit asset-level licensing disposition and deterministic JSON serialization of the pickle before porting. |
 | Typed IPA result contract | PARTIAL | Tone contours and segmental IPA are parsed; exact parity for uncertainty, unsupported symbols, word/syllable alignment and metadata remains TODO. |
@@ -61,7 +61,8 @@ Do not conflate this work with the separate ClippyFirst Thai orthographic resear
 - delegates segmental IPA adaptation to the existing `ipa-ua.js`;
 - refuses missing dictionary entries instead of guessing or invoking an unrelated engine;
 - labels itself `dictionary-adapter-only`.
-- `web/src/fastthaig2p-normalizer.js` ports the upstream normalization sequence; it consumes data maps extracted from the pinned Python source and receives the word tokenizer for maiyamok expansion.
+- `web/src/fastthaig2p-normalizer.js` ports the upstream normalization sequence; it consumes data maps extracted from the pinned Python source and receives the PyThaiNLP default word tokenizer for maiyamok expansion.
+- `web/src/fastthaig2p-tokenizer.js` ports PyThaiNLP 5.4.0 newmm, including TCC boundaries, trie prefix matching, graph traversal and formatted-number rejoining, using the same filtered FastThaiG2P dictionary keys.
 
 This is a development seam, not a complete FastThaiG2P port. It intentionally does not normalize text, segment unspaced Thai, or provide OOV fallback. The public application continues to use the verified Pyodide worker.
 
@@ -69,6 +70,7 @@ This is a development seam, not a complete FastThaiG2P port. It intentionally do
 
 - FastThaiG2P source code is Apache-2.0 with Amazon NOTICE at the pinned revision.
 - The filtered dictionary is derived from Wiktionary via Kaikki.org/Wiktextract and is labelled CC BY-SA 4.0; attribution and share-alike obligations continue to apply.
+- The newmm tokenizer port is based on PyThaiNLP 5.4.0 source under Apache-2.0; retain the upstream copyright/license notice in the bundled notices.
 - TLTK-derived parser/data licensing remains unresolved at file/package scope. Preserve both existing BSD-3-Clause and LGPL-3.0 notices. Do not copy, transform or redistribute the TLTK fallback assets into the native bundle until the exact applicable terms are established.
 - The project MIT license applies to ClippyFirst-authored code only; it does not relicense upstream code or third-party data.
 
