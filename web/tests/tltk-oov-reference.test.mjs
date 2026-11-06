@@ -22,7 +22,7 @@ const fallback = createTltkOovFallback(data);
 const pipeline = createFastThaiG2PNativePipeline({
   dictionary: JSON.parse(dictionaryBytes.toString("utf8")),
   normalizerData: JSON.parse(normalizerBytes.toString("utf8")),
-  defaultWords: defaultWordsBytes.toString("utf8").split(/\\r?\\n/u).filter(Boolean)
+  defaultWords: defaultWordsBytes.toString("utf8").split(/\r?\n/u).filter(Boolean)
 });
 for (const item of fixtures.cases) {
   const actual = pipeline.convert(item.token, { oovFallback: fallback.convert });
