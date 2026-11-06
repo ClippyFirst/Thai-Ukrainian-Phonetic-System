@@ -42,6 +42,10 @@ const manifest = {
   upstream_commit: "4e82a291b4cf2876326744c6580121e9986ad354",
   stage: "dictionary-normalizer-and-default-wordlist-data-only; not a complete runtime",
   dictionary_license: "CC-BY-SA-4.0",
+  normalizer_license: "Apache-2.0",
+  pythainlp_version: "5.4.0",
+  pythainlp_wordlist_license: "CC0-1.0",
+  pythainlp_wordlist_entries: 60963,
   dictionary_entries: 1,
   assets: [{
     path: "native/fastthaig2p-ipa.json",
