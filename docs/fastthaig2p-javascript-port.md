@@ -47,9 +47,9 @@ Do not conflate this work with the separate ClippyFirst Thai orthographic resear
 | TLTK OOV fallback | BLOCKED / PARTIAL | All six pinned asset transformations are verified. Payload is 19,883,873 bytes raw / 5,911,457 bytes deterministic gzip estimate (70.27% reduction). Rights scope still needs explicit disposition (BSD-3-Clause package metadata/LICENSE.txt vs repository LGPL-3.0 and stale GPLv3 PKG-INFO); native algorithm/data port and parity remain TODO. No fallback data is shipped publicly. |
 | Typed IPA result contract | PARTIAL | Tone contours and segmental IPA are parsed; exact parity for uncertainty, unsupported symbols, word/syllable alignment and metadata remains TODO. |
 | IPA → Ukrainian adapter | REUSED | Existing `web/src/ipa-ua.js` remains the sole target adaptation boundary; it must not be duplicated. |
-| Native pipeline composition | PARTIAL | `createFastThaiG2PNativePipeline` composes normalization, default/custom newmm, dictionary lookup and existing IPA→Ukrainian adapter; 16 dictionary-only cases match CPython. OOV fallback is missing. |
-| Native Worker smoke | DONE_VERIFIED | Pyodide compatibility #42184407769: real Chromium Worker matched all 16 pinned CPython front-half cases and fail-closed OOV; request audit confirmed no Pyodide/Python/wheels/WASM/remote requests. |
-| Python/JS differential suite | PARTIAL | 18 normalizer, 16 custom tokenizer and 16 dictionary-only front-half cases pass. Typed IPA metadata and full service JSON/OOV differential remain TODO. |
+| Native pipeline composition | DONE_VERIFIED (dictionary-covered inputs) | `createFastThaiG2PNativePipeline` composes normalization, default/custom newmm, dictionary lookup and existing IPA→Ukrainian adapter; 16 complete service JSON responses match pinned CPython exactly. OOV fallback remains unavailable. |
+| Native Worker smoke | DONE_VERIFIED (front-half) | Exact-head Pyodide compatibility #42186384082: real Chromium module Worker matched all 16 pinned CPython normalized-input/token/raw-IPA cases and returned the Ukrainian fail-closed OOV response; request audit confirmed no Pyodide/Python/wheels/WASM/remote requests. |
+| Python/JS differential suite | DONE_VERIFIED (dictionary-covered inputs) | Exact-head CI #42186384082 passes 18 normalizer cases, 16 custom tokenizer cases, and 16 complete service JSON parity cases including typed IPA metadata, Ukrainian adaptation, tone/length, rules, provenance and warnings. OOV algorithm parity remains TODO. |
 | Browser cold/warm/offline tests | PARTIAL | Isolated Chromium native Worker smoke proves same-origin JS/data-only execution and no Pyodide/Python/wheel/remote requests. Cold-vs-warm timing, memory, cache reuse and offline reload remain TODO. |
 | Footprint/performance | TODO | Measure transferred bytes, cold-start, warm latency and memory on desktop and mobile; compare to the 20.5 MB baseline. |
 | Documentation and attribution | PARTIAL | This decision/ledger records the intended original port and required upstream/data notices. Update public product claims only after production cutover. |
@@ -98,4 +98,15 @@ node web/tests/fastthaig2p-pyodide.test.mjs build/pyodide-wheels build/fastthaig
 node web/tests/fastthaig2p-browser.test.mjs
 ```
 
-The native front-half differential suite and 16-case isolated Chromium Worker smoke pass on the cited code head, but the TLTK OOV algorithm has not yet been ported and full typed-result parity remains unverified. The six upstream fallback data transformations are verified; the remaining gate is license scope and implementation parity. Do not claim full browser-native capability, performance improvement or production readiness.
+Exact-head PR validation on 24e4605b7921524b60dc1c5a3e3e9a66965a3206 now passes the complete CI, Web Static and Pyodide compatibility workflows. The 16 dictionary-covered service responses match Python JSON exactly, and the isolated Chromium Worker matches the front-half plus fail-closed OOV behavior. The six TLTK fallback file transformations are byte/decompression verified; their rights scope remains unresolved and the OOV algorithm is not ported. Public UI remains on Pyodide. Do not claim full browser-native replacement, measured performance improvement or production readiness.
+
+
+## Exact-head verification update — 2026-11-06
+
+- Code head: `24e4605b7921524b60dc1c5a3e3e9a66965a3206`.
+- [Pyodide compatibility #42186384082](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42186384082): SUCCESS. Builds the Pages bundle, smoke-tests the existing Pyodide Worker, and tests the native module Worker in Chromium without Python/Pyodide/wheels/WASM/remote requests.
+- [Web Static #42186383919](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42186383919): SUCCESS.
+- [Full CI #42186383939](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42186383939): SUCCESS, including the complete Python test suite, master artifact generation/validation, JS contracts and browser segmentation benchmark.
+- The pipeline differential suite compares the complete service JSON for 16 dictionary-covered inputs, not just raw IPA. It does not establish OOV fallback parity.
+- TLTK's six data-file transformations are reproducibly verified (five byte-identical, one exact BZip2 decompression). License scope remains ambiguous; no TLTK fallback code/data is bundled into the native browser assets.
+- Native browser port remains PARTIAL overall: no public UI cutover, no TLTK OOV port, and no measured cold/warm/offline/mobile performance or memory benchmark.
