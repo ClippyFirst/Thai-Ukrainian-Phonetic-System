@@ -106,6 +106,7 @@ jobs:
             --rights-manifest data/third_party/fastthaig2p-browser-bundle.json \
             --notices-dir web/licenses
           python - <<'PY'
+          import hashlib
           import json
           import zipfile
           from pathlib import Path
@@ -125,7 +126,7 @@ jobs:
           assert native_manifest["stage"] == "dictionary-data-only; not a complete runtime"
           assert native_manifest["dictionary_entries"] == 13144
           for item in native_manifest["assets"]:
-              asset = Path("web/vendor") / item["path"].removeprefix("native/")
+              asset = Path("web/vendor") / item["path"]
               assert asset.is_file()
               assert asset.stat().st_size == item["size_bytes"]
               assert hashlib.sha256(asset.read_bytes()).hexdigest() == item["sha256"]
