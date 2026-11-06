@@ -2009,8 +2009,8 @@ Implementation branch: `feat/ukrainian-first-ux-2026-11-06`. Do not mark the imp
 |---|---|---|
 | Owner decision and port scope | DONE_VERIFIED | Decision recorded in `docs/fastthaig2p-javascript-port.md`; prior Pyodide-only constraint superseded. |
 | Native dictionary IPA/result adapter | PARTIAL | `web/src/fastthaig2p-native.js` parses slash/dot IPA, preserves Chao tone and vowel length, and delegates to existing IPA→Ukrainian adapter. Unit contract added; not integrated into public UI. |
-| Filtered native dictionary asset | TODO | Bundle builder updated to emit native IPA JSON/provenance/manifest; exact-head CI and byte/hash assertions required. |
-| Normalizer parity | TODO | Port pinned FastThaiG2P normalizer and PyThaiNLP maiyamok behavior; differential fixture coverage required. |
+| Filtered native dictionary asset | IMPLEMENTED_PENDING_EXACT_HEAD_CI | Bundle builder updated to emit native IPA JSON/provenance/manifest; exact-head CI and byte/hash assertions required. |
+| Normalizer port | IMPLEMENTED_PENDING_EXACT_PARITY | Native JS normalizer plus AST-extracted pinned upstream maps and CPython reference fixture generator added; exact parity CI pending. |
 | PyThaiNLP newmm parity | TODO | Port exact algorithm and effective dictionaries; verify token-array parity. |
 | TLTK OOV fallback | BLOCKED / PARTIAL | Exact asset-level license scope remains unresolved; do not redistribute/port fallback assets until a defensible rights disposition exists. |
 | Full Python/JS result parity | TODO | Complete response JSON parity over frozen inputs, including unsupported and ambiguous cases. |
