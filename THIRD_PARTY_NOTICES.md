@@ -44,8 +44,11 @@ The finite correction/abstention layer in `web/src/rtgs-reference.js` is maintai
 - Bundled runtime data: upstream `data/README.md` identifies a 62k-word dictionary; `ipa.json` is merged from manual overrides, approximately 13k Wiktionary/kaikki entries and approximately 49k LLM-generated entries. The generated source JSON is gitignored upstream. The upstream build force-includes `data/dict.txt`, `data/ipa.json` and `data/fallback/` in its wheel. The data README does not provide one comprehensive license statement for all runtime data assets.
 - Fallback source: upstream identifies the fallback data as vendored from TLTK; `fastthaig2p/_th2ipa.py` carries a BSD 3-Clause notice and 2018 Chulalongkorn University copyright. This code is installed as part of the upstream dependency and is not copied here.
 - Dictionary/data limitation: Apache-2.0 for the upstream software does not by itself establish rights for every bundled manual, Wiktionary-derived, generated IPA, dictionary and fallback data record. Exact terms, provenance, attribution and share-alike obligations remain under review.
-- ClippyFirst integration: `src/thai_ukrainian/fastthaig2p_adapter.py` calls the pinned package; no upstream dictionary or fallback dataset is copied into this repository.
-- Production gate: do not publicly deploy the FastThaiG2P endpoint until the exact pinned package's bundled data assets and applicable terms/attribution have been inspected and recorded in the integration audit.
+- ClippyFirst integration: `src/thai_ukrainian/fastthaig2p_adapter.py` still calls the pinned package for the production Pyodide path. The browser-native build additionally copies only the 13,144-entry subset labelled `source=wiktionary`, with the matching filtered tokenizer wordlist; generated, manual and unknown-source IPA entries are excluded. The native build includes `browser-data-provenance.json` and `WIKTIONARY-ATTRIBUTION.md` alongside the data, and records CC BY-SA 4.0 in its native manifest.
+- PyThaiNLP browser data: the native build includes `pythainlp/corpus/words_th.txt` from pinned PyThaiNLP 5.4.0 for default newmm/mai yamok tokenization. The wheel's `corpus_license.md` declares CC0; the native manifest records CC0-1.0 and the entry count.
+- Native code ports: the FastThaiG2P normalizer is adapted from the pinned Apache-2.0 upstream source; the newmm tokenizer is adapted from PyThaiNLP 5.4.0 under Apache-2.0. Existing upstream license/NOTICE files remain bundled.
+- No TLTK fallback code or fallback pickle/data files are copied into the native bundle. OOV remains fail-closed in the native Worker.
+- Production gate: the public app continues to use the verified Pyodide worker. A complete native cutover remains gated on a lawful, source-verified TLTK fallback port, full OOV/typed-result parity, and browser/mobile/offline/performance acceptance.
 
 This notice records software attribution and an explicit unresolved data-rights gate; it is not a claim that all upstream bundled data has been cleared for redistribution or commercial use.
 
@@ -68,4 +71,16 @@ Primary package/source references:
 - [TLTK MANIFEST.in](https://github.com/attapol/tltk/blob/master/MANIFEST.in) — explicitly includes `LICENSE.txt`.
 - [TLTK LICENSE.txt](https://github.com/attapol/tltk/blob/master/LICENSE.txt) — BSD-3-Clause; [repository LICENSE](https://github.com/attapol/tltk/blob/master/LICENSE) is LGPL-3.
 
-The package-level evidence narrows the license ambiguity, but the exact 1.3.8 sdist contents and byte-level mapping to each FastThaiG2P fallback asset were not retrieved/verified. Do not treat this as blanket asset-level clearance.
+The repository evidence now verifies the six fallback-file transformations against pinned TLTK file snapshot `0cef4bcfbdd675f589783dd4134b87b9bb9fbb93`: five FastThaiG2P files are byte-identical to TLTK files, and `sylform_var.pkl` is the exact BZip2 decompression of `sylform_var.pklz`. SHA-256 values and deterministic gzip estimates are recorded by `scripts/verify_tltk_fallback_provenance.py`. License evidence is now stronger than the earlier audit: the pinned TLTK snapshot is the 2025-10-20 `update tltl 1.9.1` commit; its `setup.py`, README and LICENSE.txt state BSD-3-Clause, and the official [PyPI TLTK 1.9.1 release metadata](https://pypi.org/project/tltk/1.9.1/) also declares BSD-3-Clause. `MANIFEST.in` includes LICENSE.txt. The conflicting root LICENSE is only present from the 2018-11-23 initial commit and has no later history; PKG-INFO is unchanged since 2018-11-29 version 1.1.7 and contains stale GPLv3 metadata. Working evidence therefore supports BSD-3-Clause for the published 1.9.1 package and its packaged fallback files, while the repository-root notice remains a historical conflict. Preserve both notices and attribution; this is not legal advice or an author-issued clarification.
+
+
+### Browser-native FastThaiG2P assets (2026-11-06)
+
+The native front-half is a JavaScript/TypeScript port, not a Python runtime. Its same-origin data assets are:
+- `fastthaig2p-ipa.json`: 13,144 Wiktionary-labelled IPA records only; CC BY-SA 4.0; generated/manual/unknown entries excluded.
+- `fastthaig2p-normalizer.json`: constant maps extracted from the pinned FastThaiG2P normalizer source; FastThaiG2P software license Apache-2.0.
+- `pythainlp-default-words.txt`: PyThaiNLP 5.4.0 default wordlist; CC0-1.0.
+- `browser-data-provenance.json`: source filter counts, upstream pin, license and accuracy disclaimer.
+- `manifest.json`: asset paths, SHA-256, byte sizes, source pins and license metadata.
+
+The native Worker verifies SHA-256 and byte sizes before parsing its runtime assets. It does not request Pyodide, Python, wheels, WASM or a remote API. The TLTK fallback assets are intentionally absent pending exact file-level source-distribution verification; see the TLTK 1.3.8 evidence below.

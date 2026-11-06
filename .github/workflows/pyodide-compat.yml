@@ -1,6 +1,8 @@
 name: FastThaiG2P Pyodide compatibility
 on:
   push:
+    branches:
+      - main
     paths:
       - "src/thai_ukrainian/**"
       - "web/src/**"
@@ -12,8 +14,23 @@ on:
       - "scripts/fastthaig2p_pyodide_parity.py"
       - "scripts/slim_pythainlp_wheel.py"
       - "scripts/prepare_fastthaig2p_browser_source.py"
+      - "scripts/extract_fastthaig2p_normalizer_data.py"
+      - "scripts/fastthaig2p_normalizer_reference.py"
+      - "scripts/fastthaig2p_tokenizer_reference.py"
+      - "scripts/fastthaig2p_native_pipeline_reference.py"
+      - "scripts/fastthaig2p_native_oov_reference.py"
+      - "web/tests/fastthaig2p-native-pipeline.test.mjs"
+      - "web/tests/fastthaig2p-native.test.mjs"
+      - "web/src/fastthaig2p-native-worker.js"
+      - "web/tests/fastthaig2p-native-browser.test.mjs"
+      - "web/tests/native-worker-smoke.html"
+      - "web/src/fastthaig2p-tokenizer.js"
+      - "web/tests/fastthaig2p-tokenizer-parity.test.mjs"
+      - "web/src/fastthaig2p-normalizer.js"
+      - "web/tests/fastthaig2p-normalizer-parity.test.mjs"
       - "scripts/verify_tltk_fallback_provenance.py"
       - "tests/test_fastthaig2p_browser_data.py"
+      - "tests/test_tltk_fallback_provenance.py"
       - "scripts/build_pyodide_bundle.py"
       - "data/third_party/fastthaig2p-browser-bundle.json"
       - "web/tests/fastthaig2p-pyodide.test.mjs"
@@ -23,6 +40,26 @@ on:
   pull_request:
     paths:
       - "src/thai_ukrainian/**"
+      - "scripts/fastthaig2p_native_oov_reference.py"
+      - "web/tests/fastthaig2p-browser.test.mjs"
+      - "web/index.html"
+      - "web/src/messages.uk.js"
+      - "web/src/app.js"
+      - "web/src/fastthaig2p-native.js"
+      - "web/src/fastthaig2p-native-worker.js"
+      - "web/src/fastthaig2p-normalizer.js"
+      - "web/src/fastthaig2p-tokenizer.js"
+      - "web/tests/fastthaig2p-native.test.mjs"
+      - "web/tests/fastthaig2p-native-pipeline.test.mjs"
+      - "web/tests/fastthaig2p-native-browser.test.mjs"
+      - "web/tests/fastthaig2p-normalizer-parity.test.mjs"
+      - "web/tests/fastthaig2p-tokenizer-parity.test.mjs"
+      - "web/tests/native-worker-smoke.html"
+      - "scripts/build_pyodide_bundle.py"
+      - "scripts/fastthaig2p_normalizer_reference.py"
+      - "scripts/fastthaig2p_tokenizer_reference.py"
+      - "scripts/fastthaig2p_native_pipeline_reference.py"
+      - "scripts/extract_fastthaig2p_normalizer_data.py"
       - "web/third-party-notices.html"
       - "web/licenses/**"
       - "scripts/fastthaig2p_pyodide_parity.py"
@@ -33,6 +70,9 @@ on:
       - "pyproject.toml"
       - ".github/workflows/pyodide-compat.yml"
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.repository }}-${{ github.event_name }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 permissions:
   contents: read
 
@@ -64,6 +104,7 @@ jobs:
           git -C build/TLTK checkout 0cef4bcfbdd675f589783dd4134b87b9bb9fbb93
           python scripts/verify_tltk_fallback_provenance.py --fastthaig2p build/FastThaiG2P --tltk build/TLTK --report build/tltk-fallback-provenance.json
           python scripts/prepare_fastthaig2p_browser_source.py --source build/FastThaiG2P --report build/fastthaig2p-data-provenance.json
+          python scripts/extract_fastthaig2p_normalizer_data.py --source build/FastThaiG2P
           python -m pip wheel --no-deps --wheel-dir build/pyodide-wheels ./build/FastThaiG2P
           python - <<'PY'
           import json
@@ -82,6 +123,9 @@ jobs:
         run: |
           python -m pip install --no-deps build/pyodide-wheels/*.whl
           python scripts/fastthaig2p_pyodide_parity.py > build/fastthaig2p-native.json
+          python scripts/fastthaig2p_normalizer_reference.py > build/fastthaig2p-normalizer-reference.json
+          python scripts/fastthaig2p_tokenizer_reference.py > build/fastthaig2p-tokenizer-reference.json
+          python scripts/fastthaig2p_native_pipeline_reference.py > build/fastthaig2p-native-pipeline-reference.json
           python - <<'PY'
           import json
           from pathlib import Path
@@ -106,6 +150,7 @@ jobs:
             --rights-manifest data/third_party/fastthaig2p-browser-bundle.json \
             --notices-dir web/licenses
           python - <<'PY'
+          import hashlib
           import json
           import zipfile
           from pathlib import Path
@@ -121,7 +166,22 @@ jobs:
               }
               provenance = json.loads(archive.read("browser-data-provenance.json"))
               assert provenance["retained_entries"] == 13144
+          native_manifest = json.loads((Path("web/vendor") / "native" / "manifest.json").read_text())
+          assert native_manifest["stage"] == "dictionary-normalizer-and-default-wordlist-data-only; not a complete runtime"
+          assert native_manifest["dictionary_entries"] == 13144
+          assert native_manifest["normalizer_license"] == "Apache-2.0"
+          assert native_manifest["pythainlp_version"] == "5.4.0"
+          assert native_manifest["pythainlp_wordlist_license"] == "CC0-1.0"
+          assert native_manifest["pythainlp_wordlist_entries"] > 0
+          for item in native_manifest["assets"]:
+              asset = Path("web/vendor") / item["path"]
+              assert asset.is_file()
+              assert asset.stat().st_size == item["size_bytes"]
+              assert hashlib.sha256(asset.read_bytes()).hexdigest() == item["sha256"]
           PY
+          node web/tests/fastthaig2p-normalizer-parity.test.mjs build/fastthaig2p-normalizer-reference.json web/vendor/native/fastthaig2p-normalizer.json web/vendor/native/pythainlp-default-words.txt
+          node web/tests/fastthaig2p-tokenizer-parity.test.mjs build/fastthaig2p-tokenizer-reference.json web/vendor/native/fastthaig2p-ipa.json
+          node web/tests/fastthaig2p-native-pipeline.test.mjs build/fastthaig2p-native-pipeline-reference.json web/vendor/native/fastthaig2p-ipa.json web/vendor/native/fastthaig2p-normalizer.json web/vendor/native/pythainlp-default-words.txt
       - name: Verify owner-approved public Pages bundle builds
         run: |
           python scripts/build_pyodide_bundle.py \
@@ -144,5 +204,9 @@ jobs:
           echo "Owner-approved public Pages bundle built and manifest verified"
       - name: Install headless Chromium
         run: npx playwright install --with-deps chromium
+      - name: Generate pinned OOV fallback browser reference
+        run: python scripts/fastthaig2p_native_oov_reference.py --output build/fastthaig2p-native-oov-reference.json
       - name: Test the real same-origin Pyodide worker in Chromium
-        run: node web/tests/fastthaig2p-browser.test.mjs
+        run: node web/tests/fastthaig2p-browser.test.mjs build/fastthaig2p-native-oov-reference.json
+      - name: Test the native FastThaiG2P worker without Python or Pyodide
+        run: node web/tests/fastthaig2p-native-browser.test.mjs build/fastthaig2p-native-pipeline-reference.json

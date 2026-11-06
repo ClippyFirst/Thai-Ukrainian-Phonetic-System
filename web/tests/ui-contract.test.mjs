@@ -46,28 +46,42 @@ const response = {
   }],
   warnings: ["Український запис попередній."]
 };
-let requests = [];
-let nextWorkerMessage = { type: "result", result: response };
-let deferNextWorkerMessage = false;
-let deferredWorkerResponse;
-let workerInstance;
+const nativeRequests = [];
+const pyodideRequests = [];
+let nextNativeWorkerMessage = { type: "result", result: response };
+let nextPyodideWorkerMessage = { type: "result", result: response };
+let deferNextNativeWorkerMessage = false;
+let deferredNativeWorkerResponse;
+let nativeWorkerInstance;
+let pyodideWorkerInstance;
+
 class FakeWorker {
   constructor(url, options) {
     this.url = url;
     this.options = options;
     this.listeners = {};
-    workerInstance = this;
+    this.isNative = String(url).includes("fastthaig2p-native-worker.js");
+    if (this.isNative) nativeWorkerInstance = this;
+    else pyodideWorkerInstance = this;
   }
   addEventListener(type, callback) { this.listeners[type] = callback; }
   postMessage(message) {
-    requests.push(message);
-    const responseMessage = { ...nextWorkerMessage, requestId: message.requestId };
-    if (deferNextWorkerMessage) {
-      deferNextWorkerMessage = false;
-      deferredWorkerResponse = () => this.listeners.message?.({ data: responseMessage });
-    } else {
-      queueMicrotask(() => this.listeners.message?.({ data: responseMessage }));
+    if (this.isNative) {
+      nativeRequests.push(message);
+      const responseMessage = message.type === "init"
+        ? { type: "ready", id: message.id }
+        : { ...nextNativeWorkerMessage, id: message.id };
+      if (deferNextNativeWorkerMessage) {
+        deferNextNativeWorkerMessage = false;
+        deferredNativeWorkerResponse = () => this.listeners.message?.({ data: responseMessage });
+      } else {
+        queueMicrotask(() => this.listeners.message?.({ data: responseMessage }));
+      }
+      return;
     }
+    pyodideRequests.push(message);
+    const responseMessage = { ...nextPyodideWorkerMessage, requestId: message.requestId };
+    queueMicrotask(() => this.listeners.message?.({ data: responseMessage }));
   }
   terminate() {}
 }
@@ -102,25 +116,29 @@ assert.doesNotMatch(output.innerHTML, /PROVISIONAL|not independently adjudicated
 assert.match(output.innerHTML, /коміт вихідного проєкту/);
 assert.equal(status.className, "status notice");
 assert.match(status.textContent, /Український запис попередній/);
-assert.equal(requests.length, 1);
-assert.equal(requests[0].type, "analyze");
-assert.equal(requests[0].text, "พริก");
-assert.equal(workerInstance.options.type, "module");
-assert.match(String(workerInstance.url), /fastthaig2p-worker\.js$/);
+assert.equal(nativeRequests.length, 2);
+assert.equal(nativeRequests[0].type, "init");
+assert.equal(nativeRequests[1].type, "convert");
+assert.equal(nativeRequests[1].text, "พริก");
+assert.equal(nativeWorkerInstance.options.type, "module");
+assert.match(String(nativeWorkerInstance.url), /fastthaig2p-native-worker\.js$/);
+assert.equal(pyodideWorkerInstance, undefined,
+  "dictionary-covered input must not create the Pyodide worker");
 assert.doesNotMatch(await (await import("node:fs/promises")).readFile(new URL("../src/app.js", import.meta.url), "utf8"), /analyzeText|renderRtgsTokens|renderRtgsUkrainianTokens/);
 
 for (const example of examples) {
   await example.click();
   assert.equal(input.value, example.dataset.example);
   assert.equal(output.hidden, true, "changing the input must invalidate the previous result");
-  assert.equal(requests.length, 1, "choosing an example must not trigger analysis automatically");
+  assert.equal(nativeRequests.length, 2, "choosing an example must not trigger analysis automatically");
 }
-assert.equal(requests.length, 1);
+assert.equal(nativeRequests.length, 2);
 assert.equal(element("input-count").textContent, "Знаків: 4");
 assert.match(status.textContent, /Приклад додано/);
 await analyze.click();
-assert.equal(requests.length, 2);
-assert.equal(requests[1].text, "จริง");
+assert.equal(nativeRequests.length, 3);
+assert.equal(nativeRequests[2].text, "จริง");
+assert.equal(pyodideWorkerInstance, undefined);
 
 let prevented = false;
 input.value = "พริก";
@@ -129,15 +147,22 @@ await input.listeners.keydown({
   preventDefault() { prevented = true; }
 });
 assert.equal(prevented, true);
-assert.equal(requests.length, 3);
+assert.equal(nativeRequests.length, 4);
+assert.equal(pyodideWorkerInstance, undefined);
 
 input.value = "";
 await analyze.click();
 assert.equal(status.className, "status error");
 assert.match(status.textContent, /Введіть тайський текст/);
+assert.equal(nativeRequests.length, 4);
 
 input.value = "ทดสอบ";
-nextWorkerMessage = {
+nextNativeWorkerMessage = {
+  type: "error",
+  code: "native_dictionary_miss",
+  message: "Нативний порт поки не підтримує цей словниковий запис."
+};
+nextPyodideWorkerMessage = {
   type: "error",
   code: "incomplete_ipa",
   diagnostic: "Upstream FastThaiG2P: unsupported token"
@@ -149,17 +174,26 @@ assert.doesNotMatch(status.textContent, /Upstream|unsupported|FastThaiG2P/);
 assert.equal(diagnostics.hidden, false, "technical diagnostics should be available after an error");
 assert.match(diagnosticDetails.textContent, /unsupported token/, "raw diagnostics stay in the optional details");
 assert.equal(output.hidden, true, "an incomplete upstream result must not fall back to the old engine");
+assert.equal(nativeRequests.length, 5);
+assert.equal(pyodideRequests.length, 1, "only a native dictionary miss may initialize the Pyodide fallback");
+assert.equal(pyodideRequests[0].type, "analyze");
+assert.equal(pyodideRequests[0].text, "ทดสอบ");
+assert.match(String(pyodideWorkerInstance.url), /fastthaig2p-worker\.js$/);
 
-// A response for an input that changed while analysis was running must never render.
-nextWorkerMessage = { type: "result", result: response };
+// A response for an input that changed while native analysis was running must never render.
+nextNativeWorkerMessage = { type: "result", result: response };
 input.value = "พริก";
-deferNextWorkerMessage = true;
+deferNextNativeWorkerMessage = true;
 const staleRun = analyze.click();
 assert.equal(analyze.disabled, true, "analysis action is locked while the worker is running");
 input.value = "กา";
 input.listeners.input();
-assert.equal(output.hidden, true, "editing input invalidates prior output immediately");
-deferredWorkerResponse();
+// Native analysis awaits the already-resolved worker-ready promise before posting.
+// Flush that microtask so the fake worker has installed its deferred response callback.
+await Promise.resolve();
+assert.equal(typeof deferredNativeWorkerResponse, "function",
+  "the native worker request must be pending before delivering its stale response");
+deferredNativeWorkerResponse();
 await staleRun;
 assert.equal(output.hidden, true, "a stale worker response must not render");
 assert.match(status.textContent, /Текст змінився під час аналізу/);
@@ -171,4 +205,4 @@ assert.equal(output.hidden, true);
 assert.equal(status.textContent, "");
 assert.equal(diagnostics.hidden, true, "editing/clearing input hides stale diagnostics");
 
-console.log("FastThaiG2P-only UI contract: local worker routing, provisional disclosure and fail-closed behavior passed");
+console.log("Native-first FastThaiG2P UI contract: dictionary hits avoid Pyodide; only OOV initializes the full fallback worker");

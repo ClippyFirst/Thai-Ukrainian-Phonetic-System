@@ -1,3 +1,20 @@
+## Handoff — PR #214 native-first verification and branch consolidation (2026-11-06)
+
+- Default branch: `main`; starting audited main HEAD: `f7ce29d6bbae03a8d5a8d03e8c09dbbd5dd01662` (PR #213, Ukrainian-first interface, merged).
+- Active implementation branch: `feat/fastthaig2p-native-ts-port-2026-11-06`; PR [#214](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/214), native-first browser JavaScript/TypeScript port. Latest change in this checkpoint: `37e0ee6b6fb1385bd4c98bfdd582d8eee3dac5c1`.
+- Branch comparison before this checkpoint: 129 commits ahead, 0 behind `main`; no unrelated branch was force-updated or deleted.
+- Initial exact-head checks on `14ee73df59f181186dd735513555ec59065363d8`: CI [42193925476](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42193925476), Web Static [42193925539](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42193925539), and Site API [42193925514](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42193925514) failed at the same UI contract fixture; Pyodide compatibility [42193925617](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42193925617) passed.
+- Failure diagnosis: `web/tests/ui-contract.test.mjs` called the deferred native-worker callback before the asynchronous `analyzeNative()` continuation had posted the request. The application awaits the already-resolved native-ready promise; the fake worker callback is therefore installed on the next microtask. The observed TypeError was a test-harness ordering defect, not evidence of a failed product request.
+- Fix commit `37e0ee6b6fb1385bd4c98bfdd582d8eee3dac5c1` adds one microtask flush and an explicit assertion that the deferred callback exists before the test delivers the stale response. No production runtime code changed.
+- Exact-head reruns on `37e0ee6b6fb1385bd4c98bfdd582d8eee3dac5c1`: Web Static [42198840129](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42198840129) SUCCESS; Site API [42198840133](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42198840133) SUCCESS; Full CI [42198840130](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42198840130) and Pyodide compatibility [42198840192](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42198840192) were still running when this note was written. Do not claim the full gate passed until both finish successfully.
+- Native-first scope remains hybrid: 13,144 Wiktionary-labelled dictionary entries use the browser-native worker; only a native dictionary miss loads the existing FastThaiG2P Pyodide worker. Full native TLTK OOV parity is not implemented. Conflicting TLTK BSD-3-Clause/LGPL-3.0/GPLv3 historical notices remain unresolved; do not ship TLTK fallback data/code in the native bundle. No speedup or linguistic accuracy claim is made.
+- Branch consolidation: PR #211 (site redesign), #212 (post-merge docs), and #213 (Ukrainian-first UX) are already represented in `main`; PR #210 and earlier corpus/evidence work are also integrated. Their source branches remain as historical refs and must not be re-merged solely because they still exist. PR #214 is the only current implementation candidate awaiting final verification.
+- `docs/repository-audit-2026-11-04` remains a separate, highly divergent branch (503 commits ahead, 7 behind at this comparison). Earlier handoff explicitly rejected importing its whole history. Preserve it; port only individually verified missing changes if a concrete gap is found. Do not merge the 503-commit history wholesale.
+- Remaining acceptance after CI: exact-head Full CI and Pyodide compatibility success; PR diff/review; merge PR #214 to `main`; post-merge main CI and Pages deployment/live smoke; retain manual accessibility and mobile performance gates; retain independent linguistic gold = 0 and accuracy = `NOT_MEASURED`.
+- Verification source for this connector session: GitHub metadata, compare results, exact workflow jobs/logs, and repository files. No local checkout or local test execution is claimed.
+
+---
+
 ## Handoff — PR #211 merged; Pages deployment pending verification (2026-11-06)
 
 - PR [#211](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/211) was squash-merged to `main`; merge commit `476cb6ed0e4421ab02bb564ff232c99b6c19e008`. The branch head tested before merge was `8200255df8d7c2cfb4f8aa30d218785e9a625b08`.
@@ -2785,3 +2802,118 @@ Canonical documents: `docs/beta-release-scope.md`, `docs/fastthaig2p-pyodide-por
 - Canonical product contract: [Ukrainian-first UX](ukrainian-first-ux.md). Validation ledger updated in `docs/validation-matrix.md`.
 - Remaining: inspect latest exact-head Web Static, Full CI and Pyodide/browser smoke; inspect Pages deployment after merge; complete full visible-string/ARIA inventory; manually verify GitHub feedback form rendering; manual mobile, keyboard, screen-reader, zoom and clipboard review; privacy wording only after verifying hosting/logging facts; Ukrainian phonetics glossary.
 - Scope guard: no Thai phonological rules, IPA outputs, Ukrainian adaptation rules, corpora, evidence grades or accuracy claims changed. Accuracy remains `NOT_MEASURED`; Ukrainian output remains provisional. Local tests were not run in this connector-only session.
+
+
+## Handoff — FastThaiG2P browser-native JavaScript/TypeScript port (2026-11-06)
+
+- Owner approved an original browser-native JavaScript/TypeScript port, superseding the 2026-11-05 Pyodide-only/no-parallel-JS constraint. GitHub Pages remains the hosting target; no remote API or CDN runtime.
+- Previous Ukrainian-first UX PR #213 merged to main as `f7ce29d6bbae03a8d5a8d03e8c09dbbd5dd01662`.
+- Dedicated branch: `feat/fastthaig2p-native-ts-port-2026-11-06`, based on that main checkpoint. PR [#214](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/214) is open and not merged.
+- Implemented in this branch: isolated dictionary-only JS result adapter; source-filtered native IPA JSON data asset with integrity manifest; JS normalizer port; AST extraction of exact upstream normalizer maps; deterministic CPython normalizer reference fixtures; unit/differential test wiring; Pages and Pyodide build checks for native asset integrity. No runtime cutover.
+- Web Static [42180685131](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42180685131) SUCCESS on code head `7153ca835b1df220e9b3f2c9a750f6c6c3e501c9`; it checked JS syntax and native adapter contracts. Later changes through `3a3811ada4e33c9461510dcdb085c9d6cd92d38f` are build-script/workflow fixes and require exact-head checks.
+- Earlier Pyodide compatibility runs failed in the new extraction step because the upstream package has no pre-existing `fastthaig2p/data` directory. The extractor now creates it before writing. Latest exact-head Pyodide compatibility run [42180750405](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42180750405) is IN_PROGRESS at the time of this handoff; do not claim normalizer parity or complete CI until it succeeds.
+- Full CI on the latest head is pending. No Pages deployment has been run for PR #214.
+- Current port scope is still PARTIAL: normalization is implemented but awaiting CPython parity; PyThaiNLP newmm tokenizer and TLTK OOV fallback remain outstanding. TLTK asset-level licensing is still unresolved, so do not redistribute or port those assets until a defensible license disposition is recorded.
+- Keep the Pyodide Worker and Python reference production path until exact normalization, tokenizer, dictionary, fallback, typed IPA, complete JSON and Chromium no-Pyodide acceptance pass. Do not label the current dictionary adapter as a complete browser-native engine.
+- Linguistic accuracy remains `NOT_MEASURED`; no Thai phonology, IPA gold, Ukrainian adaptation rule or accuracy claim changed.
+
+
+## Updated handoff — native FastThaiG2P front-half parity (2026-11-06)
+
+- Current branch: `feat/fastthaig2p-native-ts-port-2026-11-06`.
+- PR #214 remains open: https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/214
+- Latest PR head at this update: `a0bd6b683a5b5f4cb60648aa3de765eb4696bb7d`; the last code-bearing head is `2801b8fbad00eb7d8560ee02989e5b794ff9c61b` (the subsequent commits update evidence/documentation only).
+- Exact successful native front-half evidence: Pyodide compatibility run #42181943552 SUCCESS on code head `2801b8fbad00eb7d8560ee02989e5b794ff9c61b`. Its build stage reported:
+  - 18 pinned CPython normalizer cases matched using the extracted PyThaiNLP default wordlist;
+  - 16 custom FastThaiG2P newmm token-array cases matched;
+  - 16 dictionary-only native pipeline cases matched normalized input, token sequence and IPA;
+  - native data bundle recorded 5 assets totalling 2,214,726 bytes, including the filtered IPA map, normalizer data, PyThaiNLP default wordlist, provenance and manifest;
+  - existing Pages bundle build, Pyodide/CPython parity and real Chromium Pyodide worker smoke passed.
+- Web Static #42181943550 SUCCESS on code head `2801b8fbad00eb7d8560ee02989e5b794ff9c61b`.
+- Full CI #42181943478 remains IN_PROGRESS on code head `2801b8fbad00eb7d8560ee02989e5b794ff9c61b`; do not claim it passed until its run concludes.
+- The public app remains on Pyodide. Native code composes normalizer → default newmm → custom newmm → Wiktionary-only dictionary lookup → existing IPA→Ukrainian adapter, but fails closed on OOV.
+- Remaining genuine blocker: TLTK fallback source/data asset-level licensing. The current evidence includes BSD-3-Clause and LGPL-3.0 notices; do not port or redistribute the fallback data/pickle until exact scope is resolved. Then require exact OOV and full typed IPA/result parity.
+- Native Worker integration, browser cold/warm/offline smoke, performance measurements and production cutover remain TODO/DEFERRED. No speed or full replacement claim.
+- Linguistic accuracy remains `NOT_MEASURED`.
+
+
+## Native Worker smoke — verified (2026-11-06)
+
+- Native Worker source: `web/src/fastthaig2p-native-worker.js`; it imports only local JS modules and loads the manifest, filtered IPA dictionary, normalizer maps and PyThaiNLP default wordlist from same-origin static assets.
+- Asset loader verifies byte lengths and SHA-256 for each runtime data file before parsing.
+- Isolated Chromium smoke: [Pyodide compatibility #42182444849](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42182444849) SUCCESS. The native Worker produced the same normalized input, token sequence and raw IPA as the pinned CPython reference. The request audit found no Pyodide, Python, wheel, WASM or remote API requests.
+- The test intentionally uses a blank isolated page, not the production app; therefore this verifies the native Worker itself, not UI integration or production cutover.
+- Latest Web Static #42182453339 SUCCESS on workflow-only head `e4f587f4a868651c9bfcbbc981089c671853a6cd`.
+- Full CI #42182453368 was PENDING at the time of this update. The repeated Pyodide compatibility run #42182453326 is IN_PROGRESS on the same workflow-only head; the previous exact code head #42182444849 is already fully green.
+- Remaining blockers are unchanged: TLTK fallback file-level license scope; full OOV/typed IPA/result JSON parity; public UI runtime selector; mobile/offline/cold-warm performance evidence. The app remains on Pyodide.
+
+
+## Follow-up verification and licensing review (2026-11-06 09:52 EET)
+
+- Current branch head at follow-up: `7c5cb9fcd3861ad9177cabcb2e04132124cf4472`.
+- Latest native browser evidence: [Pyodide compatibility #42183434605](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42183434605) SUCCESS. Its real Chromium native Worker step passed; normalizer, newmm and dictionary-only pipeline differential assertions were present in the job log.
+- Web Static #42183434615 SUCCESS on the same head.
+- Full CI #42183434579 still IN_PROGRESS at handoff update; do not claim full CI green until terminal success.
+- Corrected stale ledger language: a native Worker now exists and has isolated smoke evidence. It is still not wired into the production UI.
+- TLTK license evidence narrowed but not cleared: PyPI TLTK 1.3.8 metadata identifies BSD-3-Clause; the upstream package setup.py at current repository HEAD declares BSD-3-Clause and package_data enumerates the relevant syllable assets; MANIFEST.in includes LICENSE.txt, whose text is BSD-3-Clause. The repository root LICENSE file is LGPL-3.0, creating a repository-vs-distribution discrepancy. The current FastThaiG2P vendored fallback files are not yet proven byte-for-byte or version-for-version to be the same files from the TLTK 1.3.8 sdist; the pickle filename/format also differs from setup.py's listed `sylform_var.pklz`. Therefore retain BLOCKED until exact sdist extraction/file mapping and asset provenance are verified. Do not describe this as blanket BSD clearance.
+- Firecrawl page retrieval was unavailable because connected-app credits were exhausted; no source archive was downloaded or inspected. Public PyPI metadata and upstream source files were read separately; no archive contents are claimed.
+- Remaining: exact TLTK fallback data provenance/license scope, port/validate fallback if cleared, full typed result parity, production UI integration, cold/warm/offline/mobile performance, and final cutover.
+
+
+## Correction — TLTK fallback asset transformation evidence (2026-11-06)
+
+The earlier handoff wording that described the pickle transformation as not independently reproduced was too conservative. The repository's existing `scripts/verify_tltk_fallback_provenance.py` runs against pinned FastThaiG2P commit `4e82a291b4cf2876326744c6580121e9986ad354` and TLTK file snapshot `0cef4bcfbdd675f589783dd4134b87b9bb9fbb93`. It confirms all six assets:
+- Five are byte-identical.
+- `sylform_var.pkl` equals the exact BZip2 decompression of TLTK's `sylform_var.pklz`.
+- The script also records SHA-256 values and retains the conflicting license metadata evidence.
+
+This closes the data-transformation/provenance subtask, not the license-scope question. TLTK fallback code/data are still not ported into the browser runtime, and no fallback assets are shipped publicly.
+
+
+## Expanded native Worker differential smoke (2026-11-06)
+
+- Browser test expanded from one representative case to all **16** pinned dictionary-only CPython reference cases, then explicitly checks that an OOV token returns the expected Ukrainian fail-closed error.
+- Exact-head run [#42184407769](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42184407769) SUCCESS on code head `aafc98a06aca2f982f2a0fbb3ce03f64c7a8561e`. Job log: “Native FastThaiG2P Worker passed Chromium smoke for 16 CPython cases and fail-closed OOV without Pyodide, Python, wheels or remote requests”.
+- Web Static [#42184407781](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42184407781) SUCCESS on the same head.
+- Full CI [#42184407814](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42184407814) remained IN_PROGRESS when this note was written. No merge or production cutover has been performed.
+
+
+## TLTK fallback payload sizing (2026-11-06)
+
+- The new provenance report now includes deterministic gzip estimates for each pinned fallback asset.
+- Exact CI run [#42185083463](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42185083463) SUCCESS on code head `cba5252fb8e725fc7572bd798d896b3df2ec3883`.
+- Six verified TLTK fallback assets total **19,883,873 bytes raw** and **5,911,457 bytes gzip level-9 estimate** (70.27% smaller). This is a deterministic compression estimate, not a measured GitHub Pages transfer size.
+- Combined with the existing native front-half assets (~2.2 MB raw), the complete native runtime data is not tiny; however gzip could make the fallback payload ~5.9 MB. Before making any speed/size claim, measure actual transfer behavior and compare against gzip-compressed Pyodide JS/WASM/wheels on the same hosting path.
+- Web Static [#42185083614](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42185083614) SUCCESS on the same code head.
+- Full CI [#42185083671](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42185083671) IN_PROGRESS at the time of this note.
+
+
+## Exact-head native FastThaiG2P status — 2026-11-06
+
+- Feature branch: `feat/fastthaig2p-native-ts-port-2026-11-06`.
+- Exact code head verified by the three PR workflows: `24e4605b7921524b60dc1c5a3e3e9a66965a3206`.
+- [Web Static #42186383919](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42186383919): SUCCESS.
+- [FastThaiG2P Pyodide compatibility #42186384082](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42186384082): SUCCESS; native Chromium Worker and existing Pyodide Chromium Worker smoke both passed, and the Pages bundle built.
+- [Full CI #42186383939](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42186383939): SUCCESS; complete Python tests, JS tests, master artifact generation and validation passed.
+- Native dictionary-covered pipeline now has 16 exact full-service-JSON differential cases against Python. Native Chromium Worker checks all 16 front-half cases and fail-closed OOV; it does not yet implement TLTK fallback.
+- TLTK data transformation provenance is closed for six files (five byte-identical, one BZip2 decompression). License scope is still ambiguous; no fallback code/data is included in native browser assets.
+- No public UI cutover or Pyodide removal. Remaining blockers: rights disposition and native OOV algorithm/parity; then actual cold/warm/offline/mobile transfer/performance/memory measurements and production integration acceptance.
+- PR #214 remains open pending review/merge. Do not claim the public GitHub Pages app is already running the native engine.
+
+The canonical task ledger is `docs/fastthaig2p-javascript-port.md` and `docs/validation-matrix.md`. Linguistic accuracy remains `NOT_MEASURED`.
+
+
+## Native-first browser integration update — 2026-11-06
+
+- Public UI integration has changed since the earlier handoff: `web/src/app.js` now calls the native JavaScript Worker first. Dictionary-covered inputs return without creating the Pyodide Worker. Only `native_dictionary_miss` triggers the existing full FastThaiG2P Pyodide fallback.
+- The input hint and `web/system.html` disclose the hybrid behavior. The app still uses the same FastThaiG2P engine and does not fall back to RTGS or a second G2P system.
+- A new pinned OOV fixture generator (`scripts/fastthaig2p_native_oov_reference.py`) and Chromium UI acceptance (`web/tests/fastthaig2p-browser.test.mjs`) verify that dictionary hits make no Pyodide/wheel requests, while an OOV input lazily loads Pyodide and returns the same pinned FastThaiG2P IPA.
+- Code head before this documentation reconciliation: `0e6479450d6205f0a2b65aa80fb1e3d6a13937b0`. CI, Web Static, site API and Pyodide compatibility runs were pending/queued; do not claim the native-first acceptance passed until current-head runs complete.
+- Concurrency groups in Web Static, Pyodide compatibility and site API now include the GitHub event name, so push and pull_request runs no longer cancel each other. The CI workflow remains PR-only on feature branches and push-on-main.
+- Native OOV algorithm is still not ported; Pyodide remains the OOV compatibility fallback. TLTK 1.9.1 package metadata/README/setup.py/LICENSE.txt indicate BSD-3-Clause, while the repository root LICENSE is an unchanged 2018 LGPL-3.0 file and PKG-INFO contains stale GPLv3 metadata. Preserve conflicting notices and do not bundle TLTK fallback assets into the native package until file-distribution scope is cleared.
+- No Python modules/wheels/WASM are requested for dictionary-covered inputs; JS modules and the approximately 2.2 MB native data assets are still fetched from same-origin Pages. OOV still downloads Pyodide. Cold/warm/offline/mobile performance, memory and accessibility-device acceptance remain TODO.
+
+The canonical native-port ledger remains `docs/fastthaig2p-javascript-port.md`; the validation register is `docs/validation-matrix.md`. Accuracy remains `NOT_MEASURED`.
+
+
+Latest branch head: `228d80d51d58a4437ab0f70ba12597a1259902e8`. The UI contract test now mocks both native and Pyodide workers and verifies that a dictionary hit never instantiates Pyodide, while only `native_dictionary_miss` triggers the fallback. Exact-head CI, Web Static, site API and Pyodide compatibility PR runs are queued/pending; do not report them as passing. No further code changes are planned until these checks return.

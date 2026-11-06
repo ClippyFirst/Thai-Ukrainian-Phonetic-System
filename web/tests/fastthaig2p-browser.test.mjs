@@ -1,6 +1,10 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import { spawn } from "node:child_process";
 import { chromium } from "playwright";
+
+const oovReference = JSON.parse(await readFile(process.argv[2], "utf8"));
+assert(oovReference.input && oovReference.raw_ipa, "A pinned OOV fallback reference is required");
 
 const server = spawn("python", [
   "-m", "http.server", "4173", "--bind", "127.0.0.1", "--directory", "web"
@@ -57,10 +61,27 @@ try {
   assert.match(secondResult, /крунгт/);
   assert.match(secondResult, /IPA FastThaiG2P/);
 
+  const pyodideRequestedBeforeOov = requests.some(url =>
+    url.includes("/vendor/pyodide/") || url.includes("/vendor/wheels/")
+  );
+  assert.equal(pyodideRequestedBeforeOov, false,
+    "Dictionary-covered inputs must stay on the native JavaScript worker without downloading Python modules");
+
+  await page.locator("#thai-input").fill(oovReference.input);
+  await page.locator("#analyze").click();
+  await waitForAnalysis(page, 180000);
+  const oovResult = await page.locator("#results").innerText();
+  assert(oovResult.includes(oovReference.raw_ipa),
+    "The lazy Pyodide fallback must return the pinned OOV IPA result");
+  assert(requests.some(url => url.includes("/vendor/pyodide/pyodide.mjs")),
+    "Pyodide should be requested only after the native dictionary miss");
+  assert(requests.some(url => url.includes("/vendor/wheels/")),
+    "Pinned Python wheels should be requested only after the native dictionary miss");
+
   assert.equal(requests.some(url => url.includes("/api/analyze")), false);
   assert.equal(requests.some(url => url.includes("cdn.jsdelivr.net")), false);
   assert.deepEqual(pageErrors, []);
-  console.log("Browser worker passed: same-origin Pyodide, FastThaiG2P IPA regression, warm run and no API/CDN requests");
+  console.log("Browser app passed: native JavaScript for dictionary hits, lazy same-origin Pyodide fallback for a pinned OOV token, no API/CDN requests");
 } finally {
   await browser?.close();
   server.kill("SIGTERM");

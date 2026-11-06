@@ -1,3 +1,32 @@
+## Current execution checkpoint — branch consolidation and native-first port (2026-11-06)
+
+| Work item | Status | Evidence / next acceptance |
+|---|---|---|
+| Existing repository documentation architecture | DONE_VERIFIED | `AGENTS.md`, `docs/README.md`, `scripts/README.md`, architecture, validation matrix, audit, schemas, provenance and generated-artifact ownership already exist. Preserve and maintain these canonical sources; do not create a duplicate documentation system. |
+| PR #211 site redesign | DONE_VERIFIED | Merged to `main` as `476cb6ed0e4421ab02bb564ff232c99b6c19e008`; exact-head CI/Web Static/Site API/Pyodide checks passed on the tested PR head. |
+| PR #212 post-merge documentation reconciliation | DONE_VERIFIED | Closed after documentation reconciliation; its content is represented in mainline history. |
+| PR #213 Ukrainian-first UX and localized diagnostics | DONE_VERIFIED | Merged to `main`; commit `f7ce29d6bbae03a8d5a8d03e8c09dbbd5dd01662`. |
+| PR #214 browser-native FastThaiG2P port | PARTIAL — exact-head verification in progress | Latest code/test commit `37e0ee6b6fb1385bd4c98bfdd582d8eee3dac5c1`. Web Static #42198840129 and Site API #42198840133 passed. Full CI #42198840130 and Pyodide compatibility #42198840192 were still running at checkpoint. Merge only after both pass and PR diff is reviewed. |
+| PR #214 stale-response UI regression fixture | DONE_VERIFIED (fix committed; rerun checks pending) | Initial CI/Web Static/Site API all exposed `TypeError: deferredNativeWorkerResponse is not a function`. Root cause was test timing across the native-ready promise microtask. Commit `37e0ee6` flushes the microtask and asserts callback installation before delivery; no production code changed. |
+| Native TLTK OOV implementation and rights | BLOCKED / PARTIAL | Rights scope is conflicting (BSD-3-Clause package metadata/LICENSE.txt vs LGPL-3.0 repository LICENSE and stale GPLv3 PKG-INFO). Keep native OOV code/data out of the browser bundle until file-level distribution scope is cleared; retain Pyodide fallback. |
+| Desktop/mobile cold/warm/offline performance and memory | TODO | Measure transferred bytes, cold/warm latency, caching, offline reload and memory on real desktop/mobile browsers. Do not infer a speedup from avoiding Pyodide on dictionary hits. |
+| Manual accessibility acceptance | TODO / DEFERRED_UNVERIFIED | Keyboard-only, screen reader, 200%/400% zoom/reflow, real clipboard and visual review require human/browser testing; static checks are not WCAG conformance evidence. |
+| Independent linguistic validation | BLOCKED / EVIDENCE-LIMITED | Independent IPA gold rows = 0; accuracy = `NOT_MEASURED`; Ukrainian candidates remain provisional. Requires qualified Thai reviewers/adjudicator and independent Ukrainian target review. |
+| Branch consolidation | PARTIAL | PR #211/#212/#213 and prior PR #210 work are already integrated in main. PR #214 is pending. The 503-ahead divergent audit branch is preserved, not wholesale-merged. Historical source branches are not deleted or rewritten. |
+
+### Current branch disposition
+
+- `main`: current default branch; starting audited HEAD `f7ce29d6bbae03a8d5a8d03e8c09dbbd5dd01662`.
+- `design/site-recomposition-2026-11-05`: content integrated by PR #211; source ref retained.
+- `docs/post-211-pages-verification-2026-11-06`: content integrated by PR #212; source ref retained.
+- `feat/ukrainian-first-ux-2026-11-06`: content integrated by PR #213; source ref retained.
+- `feat/fastthaig2p-native-ts-port-2026-11-06`: active PR #214; 129 commits ahead, 0 behind main at checkpoint.
+- `docs/repository-audit-2026-11-04`: 503 commits ahead, 7 behind; preserve without wholesale merge because the history is divergent and earlier audit explicitly rejected it.
+
+A branch existing on GitHub is not proof its work is absent from main. Do not re-merge squash-integrated work or delete historical branches merely to make the branch list shorter.
+
+---
+
 ## Post-merge verification update — 2026-11-06
 
 - `main` now contains PR #211 at merge commit `476cb6ed0e4421ab02bb564ff232c99b6c19e008`.
@@ -2001,3 +2030,62 @@ Live beta: https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/ .
 | Ukrainian phonetics glossary and plain-language help | TODO | Explain IPA, tone, vowel length and provisional adaptation in Ukrainian; linguistic claims require evidence review. |
 
 Implementation branch: `feat/ukrainian-first-ux-2026-11-06`. Do not mark the implementation DONE_VERIFIED until exact-head CI and the Pages deployment/browser smoke succeed. No phonetic rules or linguistic accuracy claims changed. See [Ukrainian-first UX contract](ukrainian-first-ux.md).
+
+
+## Owner-approved FastThaiG2P native JavaScript/TypeScript port — 2026-11-06
+
+| Work item | Status | Evidence / acceptance |
+|---|---|---|
+| Owner decision and port scope | DONE_VERIFIED | Decision recorded in `docs/fastthaig2p-javascript-port.md`; prior Pyodide-only constraint superseded. |
+| Native dictionary IPA/result adapter | PARTIAL | `web/src/fastthaig2p-native.js` parses slash/dot IPA, preserves Chao tone and vowel length, and delegates to existing IPA→Ukrainian adapter. Unit contract added; not integrated into public UI. |
+| Filtered native dictionary + normalizer + wordlist assets | DONE_VERIFIED | Pyodide compatibility #42181862972 built 5 native assets and verified sizes/SHA-256; source pins and CC BY-SA / Apache-2.0 / CC0 licenses recorded. |
+| Normalizer port | DONE_VERIFIED | #42181862972: 18 pinned CPython cases passed with the extracted PyThaiNLP default wordlist, including mai yamok, numbers, symbols, abbreviations, email and units. |
+| PyThaiNLP newmm tokenizer | DONE_VERIFIED | #42181862972: 16 custom FastThaiG2P token-array cases passed; 18 default-wordlist cases also passed inside normalizer parity. |
+| TLTK OOV fallback | BLOCKED / PARTIAL | All six transforms verified. Data is 19,883,873 bytes raw / 5,911,457 bytes deterministic gzip estimate. Rights scope still needs explicit disposition (BSD package metadata/LICENSE.txt vs LGPL root LICENSE and stale GPLv3 PKG-INFO); algorithm/parity not ported. |
+| Native front-half pipeline parity | DONE_VERIFIED | #42181862972: 16 dictionary-only CPython pipeline cases matched normalized text, tokens and raw IPA. Full typed/result JSON parity including OOV remains TODO. |
+| Native Worker smoke | DONE_VERIFIED | #42184407769: Chromium native Worker matched all 16 CPython front-half cases and fail-closed OOV; same-origin JS/data only, no Python/Pyodide/wheels/WASM/remote requests. | 
+| Cold/warm/offline and mobile performance | TODO | Isolated Worker smoke passes; still measure transfer size, cold/warm latency, cache reuse, offline reload, memory and mobile devices. |
+| Public UI runtime selector and cutover | DEFERRED | Only after TLTK rights, OOV parity, full result parity, cold/warm/offline, CSP and performance gates pass. |
+| Pyodide removal | DEFERRED | Remove only after production cutover is verified and rollback path is retained. |
+
+The public site still uses Pyodide. The native normalizer, default/custom newmm tokenizers, dictionary-only pipeline and isolated Chromium Worker smoke have differential evidence, but the TLTK OOV fallback and UI cutover are not complete; do not claim full replacement or a speed improvement. No IPA or Ukrainian phonetic rules were changed; linguistic accuracy remains `NOT_MEASURED`.
+
+
+## Native FastThaiG2P exact-head reconciliation — 2026-11-06
+
+The following replaces earlier, now-stale native-port status rows above. Historical entries are retained for audit traceability.
+
+| Work item | Current status | Exact evidence / remaining acceptance |
+|---|---|---|
+| Native normalizer and newmm tokenizer | DONE_VERIFIED | Exact-head Pyodide compatibility #42186384082 passed 18 normalizer and 16 custom tokenizer differential cases against pinned Python references. |
+| Native dictionary-covered service pipeline | DONE_VERIFIED | The 16-case reference compares the complete service JSON, including Ukrainian adaptation, tone/length metadata, rules, provenance and warnings; all cases passed. This does not cover OOV. |
+| Native Chromium module Worker | DONE_VERIFIED (isolated) | #42186384082 passed 16 real Chromium Worker cases plus Ukrainian fail-closed OOV. Request audit found no Python, Pyodide, wheel, WASM or remote API requests. |
+| TLTK fallback data provenance | DONE_VERIFIED (transformation only) | Six pinned source transformations verified: five byte-identical and one exact BZip2 decompression. Report retains SHA-256 evidence and contradictory license records. |
+| TLTK fallback rights and native OOV port | BLOCKED / PARTIAL | BSD-3-Clause package metadata and LICENSE.txt coexist with LGPL-3.0 root LICENSE and stale GPLv3 PKG-INFO. Keep fallback code/data out of native bundle until rights disposition; then port algorithm and verify OOV/result parity. |
+| Web Static | DONE_VERIFIED | #42186383919 SUCCESS on exact code head 24e4605b7921524b60dc1c5a3e3e9a66965a3206. |
+| Full CI | DONE_VERIFIED | #42186383939 SUCCESS on exact code head; test, wheel-install smoke and master-artifact generation/validation all succeeded. |
+| Pyodide compatibility and browser checks | DONE_VERIFIED | #42186384082 SUCCESS on exact code head; Pages bundle build, production Pyodide Worker smoke and isolated native Worker smoke all succeeded. |
+| Public UI native runtime integration/cutover | DEFERRED | Keep current Pyodide production path until TLTK rights/OOV parity, typed contract, mobile/offline/CSP and measured performance acceptance pass. |
+| Cold/warm/offline/mobile performance and memory | TODO | Measure actual Pages transfer and browser cache behavior, startup and repeat latency, memory, offline reload and mobile devices against the same Pyodide baseline. |
+
+Current branch head at this verification: 24e4605b7921524b60dc1c5a3e3e9a66965a3206. Public site still uses Pyodide. Overall native port is a verified dictionary-covered prototype, not a complete FastThaiG2P replacement; accuracy remains NOT_MEASURED and no speedup is claimed.
+
+
+## Native-first UI reconciliation — 2026-11-06
+
+This section supersedes the earlier statement that the native Worker was not connected to the public UI. The code implementation is present; the current acceptance run is pending.
+
+| Work item | Current status | Evidence / acceptance |
+|---|---|---|
+| Native dictionary-covered runtime | DONE_VERIFIED (earlier exact head) | 16 complete service JSON cases match pinned CPython; real Chromium native Worker smoke passed with no Pyodide/Python/wheel/WASM/remote requests on head 24e4605b7921524b60dc1c5a3e3e9a66965a3206. |
+| Public UI native-first integration | PARTIAL — verification pending | app.js now calls native Worker first; a native_dictionary_miss alone starts the existing Pyodide Worker. Browser test asserts dictionary hits do not fetch Pyodide/wheels and a pinned OOV fixture does. Current code head before docs-only update: 0e6479450d6205f0a2b65aa80fb1e3d6a13937b0. |
+| OOV reference fixture | PARTIAL — verification pending | New Python fixture generator searches the pinned TLTK fallback dictionary for a complete rule-fallback result absent from the filtered IPA map. The Chromium test consumes this fixture. |
+| Full native TLTK OOV implementation | TODO / rights-limited | TLTK release metadata/README/setup.py/LICENSE.txt indicate BSD-3-Clause; root repository LICENSE remains LGPL-3.0 (unchanged since 2018) and stale PKG-INFO says GPLv3. Keep TLTK assets/code out of native bundle until package-file distribution scope is cleared; existing Pyodide fallback remains the compatibility path. |
+| Native UI user disclosure | DONE_VERIFIED (code present) | Input hint and system page explain native-first behavior and lazy Python/Pyodide loading on dictionary miss. |
+| Cold/warm/offline/mobile performance and memory | TODO | Measure same-origin transfer, cold/warm latency, browser cache, offline reload, memory and mobile performance against the Pyodide baseline. |
+| Latest CI/Web Static/Pyodide compatibility | BLOCKED — GitHub Actions pending | Runs for head 0e6479450d6205f0a2b65aa80fb1e3d6a13937b0 were queued/pending at the time of this update; no current-head pass is claimed. |
+
+The application is now hybrid native-first, not a full Pyodide replacement. For dictionary-covered inputs it should avoid Python module/wheel/WASM requests; it still fetches JS modules and the approximately 2.2 MB native data bundle. OOV inputs still load Pyodide. Accuracy remains NOT_MEASURED; no speedup is claimed.
+
+
+Latest branch-head update: `228d80d51d58a4437ab0f70ba12597a1259902e8`. The UI contract test now covers both native and Pyodide workers. Exact-head CI, Web Static, site API and Pyodide compatibility runs are queued/pending; keep the native-first UI integration PARTIAL until they pass.

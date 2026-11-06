@@ -63,7 +63,7 @@
     <label class="input-label" for="thai-input">Текст тайською</label>
     <textarea id="thai-input" lang="th" rows="3" spellcheck="false" autocomplete="off" autocapitalize="off" aria-describedby="input-hint input-count" placeholder="Наприклад: สวัสดี"></textarea>
     <div class="input-meta">
-      <p class="input-hint" id="input-hint">Ваш текст залишається у браузері. Для вимови використовується лише FastThaiG2P; якщо він не поверне повний IPA, сервіс не підмінятиме результат іншим рушієм.</p>
+      <p class="input-hint" id="input-hint">Ваш текст залишається у браузері. Спочатку працює нативний JavaScript-порт FastThaiG2P без Python-модулів. Якщо слова немає в локальному словнику, браузер завантажить повний Pyodide-рушій FastThaiG2P для сумісного резервного опрацювання.</p>
       <span class="input-count" id="input-count" aria-live="off">Знаків: 0</span>
     </div>
 

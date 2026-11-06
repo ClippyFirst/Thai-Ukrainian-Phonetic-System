@@ -73,6 +73,7 @@ jobs:
           git -C build/TLTK checkout 0cef4bcfbdd675f589783dd4134b87b9bb9fbb93
           python scripts/verify_tltk_fallback_provenance.py --fastthaig2p build/FastThaiG2P --tltk build/TLTK --report build/tltk-fallback-provenance.json
           python scripts/prepare_fastthaig2p_browser_source.py --source build/FastThaiG2P --report build/fastthaig2p-data-provenance.json
+          python scripts/extract_fastthaig2p_normalizer_data.py --source build/FastThaiG2P
           python -m unittest discover -s tests -p test_fastthaig2p_browser_data.py -v
           python - <<'PY'
           import json
@@ -93,6 +94,20 @@ jobs:
             --output web/vendor \
             --rights-manifest data/third_party/fastthaig2p-browser-bundle.json \
             --notices-dir web/licenses
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          manifest = json.loads(Path("web/vendor/native/manifest.json").read_text())
+          assert manifest["dictionary_entries"] == 13144
+          assert manifest["normalizer_license"] == "Apache-2.0"
+          assert manifest["pythainlp_version"] == "5.4.0"
+          assert manifest["pythainlp_wordlist_license"] == "CC0-1.0"
+          assert manifest["pythainlp_wordlist_entries"] > 0
+          assert manifest["stage"] == "dictionary-normalizer-and-default-wordlist-data-only; not a complete runtime"
+          for asset in manifest["assets"]:
+              path = Path("web/vendor") / asset["path"]
+              assert path.is_file() and path.stat().st_size == asset["size_bytes"]
+          PY
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v6
       - name: Upload Pages artifact
@@ -185,6 +200,12 @@ jobs:
           assert "Wiktionary" in page and "CC BY-SA 4.0" in page and "BSD-3-Clause" in page
           assert "GNU Free Documentation License 1.3" in page
           assert "fastthaig2p-wiktionary-derived.zip" in page
+          native_assets = manifest["native_assets"]
+          assert len(native_assets) == 6
+          for item in native_assets:
+              data = urlopen(f"{base}/{item['path']}").read()
+              assert len(data) == item["size_bytes"], item["path"]
+              assert hashlib.sha256(data).hexdigest() == item["sha256"], item["path"]
           PY
             then
               for asset in pyodide.mjs pyodide.asm.js pyodide.asm.wasm python_stdlib.zip; do

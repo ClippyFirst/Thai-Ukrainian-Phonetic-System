@@ -1,6 +1,8 @@
 name: Web static validation
 on:
   push:
+    branches:
+      - main
     paths:
       - "web/**"
       - ".github/ISSUE_TEMPLATE/**"
@@ -11,7 +13,7 @@ on:
       - ".github/ISSUE_TEMPLATE/**"
       - ".github/workflows/web-static.yml"
 concurrency:
-  group: ${{ github.workflow }}-${{ github.repository }}-${{ github.head_ref || github.ref_name }}
+  group: ${{ github.workflow }}-${{ github.repository }}-${{ github.event_name }}-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 jobs:
   validate:
@@ -31,6 +33,10 @@ jobs:
       - name: Check browser JavaScript syntax
         run: |
           node --check web/src/app.js
+          node --check web/src/fastthaig2p-native.js
+          node --check web/src/fastthaig2p-normalizer.js
+          node --check web/src/fastthaig2p-tokenizer.js
+          node --check web/src/fastthaig2p-native-worker.js
           node --check web/src/messages.uk.js
           node --check web/src/fastthaig2p-worker.js
           node --check web/src/engine.js
@@ -43,6 +49,8 @@ jobs:
           test -s web/system.html
           test -s web/src/styles.css
           test -s web/src/app.js
+          test -s web/src/fastthaig2p-native-worker.js
+          test -s web/tests/native-worker-smoke.html
       - name: Check static accessibility contract
         run: |
           grep -q '<html lang="uk">' web/index.html
@@ -56,6 +64,7 @@ jobs:
         run: |
           node web/tests/accessibility-contract.test.mjs
           node web/tests/ukrainian-first.test.mjs
+          node web/tests/fastthaig2p-native.test.mjs
           node web/tests/ui-contract.test.mjs
       - name: Validate third-party notices and dataset attribution
         run: node web/tests/third-party-notices.test.mjs
