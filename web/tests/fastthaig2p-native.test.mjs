@@ -23,7 +23,7 @@ assert.equal(engine.convert("สวน ครับ").raw_ipa, "/sua̯n˩˩˦/ /
 assert.equal(engine.convert("สวน ครับ").coverage.dictionary_tokens, 2);
 assert.equal(engine.convert("สวน").words[0].syllables[0].tone, "rising");
 assert.equal(engine.convert("สวน").words[0].syllables[0].vowel_length, null);
-assert.match(engine.convert("สวน").warnings.join(" "), /лише словниковий адаптер/);
+assert.match(engine.convert("สวน").warnings.join(" "), /TLTK OOV fallback ще не портований/);
 assert.throws(() => engine.convert("невідоме"), error => error.code === "native_dictionary_miss");
 assert.throws(() => engine.convert("สวน!"), error => error.code === "native_dictionary_miss");
 assert.throws(() => engine.convert("   "), error => error.code === "empty_input");
