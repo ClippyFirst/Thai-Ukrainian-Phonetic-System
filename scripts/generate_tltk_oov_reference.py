@@ -13,6 +13,7 @@ UPSTREAM = ROOT / "build" / "FastThaiG2P"
 sys.path.insert(0, str(UPSTREAM))
 sys.path.insert(0, str(ROOT / "src"))
 
+from fastthaig2p import _th2ipa  # noqa: E402
 from thai_ukrainian.fastthaig2p_adapter import FastThaiG2PAdapter  # noqa: E402
 from thai_ukrainian.fastthaig2p_service import (  # noqa: E402
     FastThaiG2PAnalysisError,
