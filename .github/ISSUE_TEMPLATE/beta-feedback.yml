@@ -28,6 +28,13 @@ body:
       placeholder: Що ви зробили та який результат побачили?
     validations:
       required: true
+  - type: input
+    id: error_code
+    attributes:
+      label: Код повідомлення про помилку (якщо відображається)
+      placeholder: "Наприклад: UA-LOAD-001"
+    validations:
+      required: false
   - type: textarea
     id: example
     attributes:
