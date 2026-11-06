@@ -72,13 +72,14 @@ const loaded = await loadTltkOovData({
 assert.equal(loaded.schema_version, 1);
 assert.equal(loaded.tltk_package_license, "BSD-3-Clause");
 
+const tampered = compressed.subarray(1);
 await assert.rejects(loadTltkOovData({
   baseUrl: new URL("https://example.test/native-oov/"),
   cryptoImpl: webcrypto,
   DecompressionStreamImpl: DecompressionStream,
   fetchImpl: async url => String(url).endsWith("manifest.json")
     ? { ok: true, json: async () => manifest }
-    : { ok: true, arrayBuffer: async () => compressed.subarray(1).buffer }
+    : { ok: true, arrayBuffer: async () => tampered.buffer.slice(tampered.byteOffset, tampered.byteOffset + tampered.byteLength) }
 }), error => error.code === "native_oov_asset_corrupt");
 
 console.log("Native TLTK OOV synthetic parser and integrity-loader contracts: PASS");
