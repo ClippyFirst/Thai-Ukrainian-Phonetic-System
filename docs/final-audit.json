@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_POST_MERGE_PAGES_SMOKE_FIX_PENDING",
+  "status": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_LIVE_PAGES_DEPLOYED_LINGUISTIC_VALIDATION_PENDING",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -4726,7 +4726,25 @@
       "runtime_tables": 5,
       "parser_constants": "AST_EXTRACTED_FROM_PINNED_BSD_PARSER",
       "pickle_in_browser": false
-    }
+    },
+    "main_commit": "b4896bc7ad50e8e4cdb6dd8a9367cb22cbdec5e8",
+    "merged_pr": 219,
+    "main_ci_run": 42233360770,
+    "main_pages_run": 42233360749,
+    "pages_deployment": "SUCCESS",
+    "pages_live_smoke": "SUCCESS",
+    "public_url": "https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/",
+    "pages_smoke_scope": [
+      "published homepage and app",
+      "native Worker and JS modules",
+      "Pyodide Worker",
+      "native and OOV manifests",
+      "payload size and SHA-256 integrity",
+      "TLTK 1.9.1 package metadata and BSD-3-Clause notice",
+      "third-party license notices",
+      "Pyodide 0.29.5 bundle",
+      "same-origin/no-CDN contract"
+    ]
   },
   "repository_state_2026_11_06_pre_merge": {
     "audited_at": "2026-11-06",
@@ -4939,5 +4957,10 @@
       "Offline reload/cache validation",
       "Browser/Worker and process memory on named desktop and physical mobile devices"
     ]
-  }
+  },
+  "remaining_acceptance_2026_11_06": [
+    "Instrument real browser FastThaiG2P cold/warm and OOV latency; record HTTP transfer bytes, offline reload/cache behavior and browser/Worker memory on desktop and physical mobile devices.",
+    "Manual keyboard-only, screen-reader, 200%/400% zoom, reflow, clipboard and physical-device acceptance with named browser/device and reviewer evidence.",
+    "Independent Thai IPA gold and qualified Thai phonetic adjudication; separate Ukrainian-native review of target adaptation. Accuracy remains NOT_MEASURED."
+  ]
 }

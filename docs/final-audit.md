@@ -1,6 +1,6 @@
-## Current repository audit — 2026-11-06 (after PR #218)
+## Current repository audit — 2026-11-06 (after PR #219)
 
-The native TLTK OOV implementation and its parity follow-up are already merged. Do not use the older PR #215 preparation entries below as current status. Mainline CI on `9f279ce04c14b81fa4728a15e81fb89ab046b753` passed (#42229026310). The main Pages workflow on code commit `533cd3f8df6112b000f5c91524f8050026b4d79a` built and uploaded the artifact, and GitHub reported the Pages deployment successful, but the post-deploy smoke failed. Inspection of current source and the failing job shows a deterministic false-negative assertion: the HTML heading contains inline markup around “прочитати”, while the smoke expects the entire sentence as one contiguous string. This audit branch corrects the selector/text checks and adds a regression test. A successful main Pages run and live asset/hash smoke are still required before marking deployment DONE_VERIFIED.
+PR #219 merged the Pages smoke repair into `main` as `b4896bc7ad50e8e4cdb6dd8a9367cb22cbdec5e8`. Main CI #42233360770 SUCCESS; exact-head repair CI #42232494753 SUCCESS. Main Pages run #42233360749 SUCCESS, including build, deploy and post-deploy live verification. The smoke fetched the public deployment at https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/ and verified the published native-first UI, same-origin workers/modules, native/OOV manifests and payload hashes, TLTK package metadata, legal notices and Pyodide fallback bundle. The former false-negative heading assertion is repaired and a regression test is included.
 
 ### Verified implementation and evidence
 
@@ -17,12 +17,11 @@ The current main tree incorporates the active work from the site redesign, Ukrai
 
 ### Remaining acceptance gates
 
-1. Fix the Pages post-deploy smoke false negative; merge the repair; require main push deployment and live URL asset/hash smoke to pass.
-2. Measure cold/warm/offline/mobile latency, transferred bytes and memory on named devices/browsers/networks.
-3. Complete manual keyboard, screen-reader, zoom/reflow, clipboard and device checks with reviewer/evidence records.
-4. Obtain independent Thai IPA gold and qualified Thai adjudication plus separate Ukrainian-native target adaptation review. Accuracy remains `NOT_MEASURED` until then.
+1. Measure real browser cold/warm/offline/mobile latency, actual transferred bytes and memory on named devices/browsers/networks. The static artifact inventory and Node segmentation diagnostic are not substitutes for browser FastThaiG2P measurements.
+2. Complete manual keyboard, screen-reader, zoom/reflow, clipboard and physical-device checks with reviewer/evidence records.
+3. Obtain independent Thai IPA gold and qualified Thai adjudication plus separate Ukrainian-native target adaptation review. Accuracy remains `NOT_MEASURED` until then.
 
-Overall readiness remains **ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY**. The remaining research and human acceptance gates are not replaceable by software parity or static tests.
+Overall readiness remains **ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY**. Hosting is live and the main Pages deploy/live smoke is verified; linguistic accuracy and human/device acceptance are still open. The remaining research and human acceptance gates are not replaceable by software parity or static tests.
 
 ---
 
