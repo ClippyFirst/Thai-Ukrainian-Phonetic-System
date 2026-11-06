@@ -121,6 +121,14 @@ jobs:
               }
               provenance = json.loads(archive.read("browser-data-provenance.json"))
               assert provenance["retained_entries"] == 13144
+          native_manifest = json.loads((Path("web/vendor") / "native" / "manifest.json").read_text())
+          assert native_manifest["stage"] == "dictionary-data-only; not a complete runtime"
+          assert native_manifest["dictionary_entries"] == 13144
+          for item in native_manifest["assets"]:
+              asset = Path("web/vendor") / item["path"].removeprefix("native/")
+              assert asset.is_file()
+              assert asset.stat().st_size == item["size_bytes"]
+              assert hashlib.sha256(asset.read_bytes()).hexdigest() == item["sha256"]
           PY
       - name: Verify owner-approved public Pages bundle builds
         run: |
