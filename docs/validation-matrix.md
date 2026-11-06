@@ -1,3 +1,16 @@
+## 2026-11-06 follow-up — Pages and TLTK package rights
+
+| Item | Status | Evidence / next acceptance |
+|---|---|---|
+| Live GitHub Pages native-first content and assets | PARTIAL_VERIFIED | Live HTTP fetches confirmed homepage, app.js, native Worker/module, native manifest and all five declared native data assets, bundle manifest, system page and legal notices. This proves current public content/asset reachability, not the corrected post-deploy SHA smoke or native OOV runtime. |
+| Pages deployment smoke | PARTIAL_IMPLEMENTED | Fixed stale pre-recomposition string assertions; now checks current native-first UI, both workers, native and OOV manifests/data hashes, legal notices, and retained Pyodide assets. Added PR build trigger while deploy remains main-only. Requires successful PR Pages build and post-merge main deployment smoke. |
+| TLTK 1.9.1 fallback package rights | DONE_VERIFIED | Pinned README 1.9.1, setup.py version/license/package_data, MANIFEST.in, LICENSE.txt and PyPI 1.9.1 metadata support BSD-3-Clause for the six packaged fallback assets. Root LGPL-3.0 notice and stale PKG-INFO 1.1.7/GPLv3 are retained as historical/repository context. BSD notice, conditions, disclaimer and no-endorsement clause must be preserved. |
+| TLTK fallback source/asset mapping | DONE_VERIFIED | Five files byte-identical; sylform_var.pkl is exact BZip2 decompression of TLTK sylform_var.pklz. |
+| Native OOV data extraction | PARTIAL | Deterministic CP874/pickle-to-JSON/gzip build extractor added. It includes the five data tables used by g2p() -> sylparse() -> wordparse(), and excludes sylform_var.pkl because SYLVAR has no reads in that call path. Parser constants are extracted from the pinned BSD parser source AST. |
+| Native JavaScript OOV algorithm | TODO | No JS TLTK parser has been integrated yet. The data pack is preparatory only and is not used by the public UI. Keep Pyodide OOV fallback. Acceptance: complete raw IPA and full typed service JSON parity against pinned Python for a multi-case OOV fixture set, then real browser Worker parity and lazy-load/hash checks. |
+
+---
+
 ## Post-merge execution checkpoint — PR #214 integrated (2026-11-06)
 
 | Work item | Status | Evidence / remaining acceptance |
