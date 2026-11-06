@@ -81,6 +81,24 @@ jobs:
           git clone https://github.com/attapol/tltk.git build/TLTK
           git -C build/TLTK checkout 0cef4bcfbdd675f589783dd4134b87b9bb9fbb93
           python scripts/verify_tltk_fallback_provenance.py --fastthaig2p build/FastThaiG2P --tltk build/TLTK --report build/tltk-fallback-provenance.json
+          python scripts/extract_tltk_oov_data.py --fallback-dir build/FastThaiG2P/data/fallback --output-dir web/vendor/native-oov
+          python -m unittest discover -s tests -p test_extract_tltk_oov_data.py -v
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          manifest = json.loads(Path("web/vendor/native-oov/manifest.json").read_text())
+          payload = Path("web/vendor/native-oov/tltk-oov-data.json.gz")
+          assert manifest["schema_version"] == 1
+          assert manifest["license"] == "BSD-3-Clause"
+          assert manifest["tltk_package_version"] == "1.9.1"
+          assert payload.is_file()
+          assert payload.stat().st_size == manifest["compressed_size_bytes"]
+          assert manifest["record_counts"]["syllable_patterns"] > 0
+          assert manifest["record_counts"]["syllable_dictionary"] > 0
+          assert manifest["record_counts"]["phone_trigrams"] > 0
+          assert manifest["record_counts"]["syllable_trigrams"] > 0
+          assert manifest["record_counts"]["word_dictionary"] > 0
+          PY
           python scripts/prepare_fastthaig2p_browser_source.py --source build/FastThaiG2P --report build/fastthaig2p-data-provenance.json
           python scripts/extract_fastthaig2p_normalizer_data.py --source build/FastThaiG2P
           python -m unittest discover -s tests -p test_fastthaig2p_browser_data.py -v
@@ -171,6 +189,7 @@ jobs:
               && grep -Fq 'LGPL-3.0' /tmp/deployed-notices.html \
               && curl --fail --silent --show-error "$PAGE_URL/vendor/bundle-manifest.json" -o /tmp/bundle-manifest.json \
               && curl --fail --silent --show-error "$PAGE_URL/vendor/native/manifest.json" -o /tmp/native-manifest.json \
+              && curl --fail --silent --show-error "$PAGE_URL/vendor/native-oov/manifest.json" -o /tmp/native-oov-manifest.json \
               && python - <<'PY'
           import hashlib
           import json
@@ -223,6 +242,13 @@ jobs:
           assert "Wiktionary" in page and "CC BY-SA 4.0" in page
           assert "BSD-3-Clause" in page and "LGPL-3.0" in page
           assert "GNU Free Documentation License 1.3" in page
+
+          oov = json.loads(Path("/tmp/native-oov-manifest.json").read_text())
+          oov_payload = get("vendor/native-oov/" + oov["path"])
+          assert oov["license"] == "BSD-3-Clause"
+          assert oov["tltk_package_version"] == "1.9.1"
+          assert len(oov_payload) == oov["compressed_size_bytes"]
+          assert hashlib.sha256(oov_payload).hexdigest() == oov["compressed_sha256"]
 
           native = json.loads(Path("/tmp/native-manifest.json").read_text())
           assert native["schema_version"] == 1
