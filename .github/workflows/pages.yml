@@ -126,33 +126,42 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
-      - name: Verify published GitHub Pages Pyodide service and local-processing contract
+      - name: Verify published native-first FastThaiG2P Pages service and local-processing contract
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
         run: |
           set -eu
           for attempt in $(seq 1 12); do
             if curl --fail --silent --show-error "$PAGE_URL" -o /tmp/deployed-index.html \
-              && grep -Fq 'Як прочитати тайський текст українською' /tmp/deployed-index.html \
-              && grep -Fq 'FastThaiG2P працює безпосередньо у вашому браузері' /tmp/deployed-index.html \
-              && grep -Fq 'Обробка відбувається локально у браузері' /tmp/deployed-index.html \
-              && grep -Fq 'ТЕСТОВА ВЕРСІЯ' /tmp/deployed-index.html \
+              && grep -Fq 'Побачте, як прочитати тайський текст' /tmp/deployed-index.html \
+              && grep -Fq 'Спочатку працює нативний JavaScript-порт FastThaiG2P' /tmp/deployed-index.html \
               && grep -Fq 'id="thai-input"' /tmp/deployed-index.html \
               && grep -Fq 'id="analyze"' /tmp/deployed-index.html \
-              && curl --fail --silent --show-error "$PAGE_URL/src/app.js?v=20261105-pyodide-worker-1" -o /tmp/deployed-app.js \
-              && curl --fail --silent --show-error "$PAGE_URL/src/fastthaig2p-worker.js" -o /tmp/deployed-worker.js \
-              && curl --fail --silent --show-error "$PAGE_URL/src/styles.css?v=20261105-pyodide-worker-1" -o /tmp/deployed-styles.css \
-              && grep -Fq 'new Worker(' /tmp/deployed-app.js \
-              && grep -Fq 'bundle-manifest.json' /tmp/deployed-worker.js \
-              && grep -Fq 'SHA-256' /tmp/deployed-worker.js \
+              && curl --fail --silent --show-error "$PAGE_URL/src/app.js?v=20261106-ukrainian-first-1" -o /tmp/deployed-app.js \
+              && curl --fail --silent --show-error "$PAGE_URL/src/fastthaig2p-native-worker.js" -o /tmp/deployed-native-worker.js \
+              && curl --fail --silent --show-error "$PAGE_URL/src/fastthaig2p-native.js" -o /tmp/deployed-native.js \
+              && curl --fail --silent --show-error "$PAGE_URL/src/fastthaig2p-worker.js" -o /tmp/deployed-pyodide-worker.js \
+              && curl --fail --silent --show-error "$PAGE_URL/src/styles.css?v=20261106-ukrainian-first-1" -o /tmp/deployed-styles.css \
+              && grep -Fq 'native_dictionary_miss' /tmp/deployed-app.js \
+              && grep -Fq 'fastthaig2p-native-worker.js' /tmp/deployed-app.js \
+              && grep -Fq 'fastthaig2p-worker.js' /tmp/deployed-app.js \
+              && grep -Fq 'loadFastThaiG2PNativeAssets' /tmp/deployed-native-worker.js \
+              && grep -Fq 'createFastThaiG2PNativePipeline' /tmp/deployed-native-worker.js \
+              && grep -Fq 'native_dictionary_miss' /tmp/deployed-native.js \
+              && grep -Fq 'bundle-manifest.json' /tmp/deployed-pyodide-worker.js \
+              && grep -Fq 'SHA-256' /tmp/deployed-pyodide-worker.js \
               && ! grep -Fq '/api/analyze' /tmp/deployed-app.js \
-              && ! grep -Fq 'cdn.jsdelivr.net' /tmp/deployed-worker.js \
+              && ! grep -Fq 'cdn.jsdelivr.net' /tmp/deployed-pyodide-worker.js \
               && grep -Fq '@media(forced-colors:active)' /tmp/deployed-styles.css \
               && curl --fail --silent --show-error "$PAGE_URL/system.html" -o /tmp/deployed-system.html \
-              && grep -Fq 'Pyodide' /tmp/deployed-system.html \
-              && grep -Fq 'GitHub Pages' /tmp/deployed-system.html \
+              && grep -Fq 'нативний JavaScript-порт FastThaiG2P' /tmp/deployed-system.html \
+              && grep -Fq 'Pyodide Worker' /tmp/deployed-system.html \
               && grep -Fq 'не надсилається на API або зовнішній сервер' /tmp/deployed-system.html \
+              && curl --fail --silent --show-error "$PAGE_URL/third-party-notices.html" -o /tmp/deployed-notices.html \
+              && grep -Fq 'BSD-3-Clause' /tmp/deployed-notices.html \
+              && grep -Fq 'LGPL-3.0' /tmp/deployed-notices.html \
               && curl --fail --silent --show-error "$PAGE_URL/vendor/bundle-manifest.json" -o /tmp/bundle-manifest.json \
+              && curl --fail --silent --show-error "$PAGE_URL/vendor/native/manifest.json" -o /tmp/native-manifest.json \
               && python - <<'PY'
           import hashlib
           import json
@@ -160,23 +169,28 @@ jobs:
           from pathlib import Path
           from urllib.request import urlopen
 
-          manifest = json.loads(Path("/tmp/bundle-manifest.json").read_text())
-          assert manifest["purpose"] == "public-pages"
-          assert manifest["redistribution_approved"] is True
-          assert manifest["pyodide"]["version"] == "0.29.5"
+          base = os.environ["PAGE_URL"].rstrip("/")
+          def get(path):
+              return urlopen(f"{base}/{path}").read()
+
+          bundle = json.loads(Path("/tmp/bundle-manifest.json").read_text())
+          assert bundle["purpose"] == "public-pages"
+          assert bundle["redistribution_approved"] is True
+          assert bundle["pyodide"]["version"] == "0.29.5"
           expected_versions = {
               "fastthaig2p": "0.1.0",
               "pythainlp": "5.4.0",
               "thai-ukrainian-phonetic-system": "0.6.1",
               "tzdata": "2026.6",
           }
-          assert {wheel["package"]: wheel["version"] for wheel in manifest["wheels"]} == expected_versions
-          datasets = {item["path"]: item for item in manifest["datasets"]}
-          assert "datasets/fastthaig2p-wiktionary-derived.zip" in datasets
+          assert {wheel["package"]: wheel["version"] for wheel in bundle["wheels"]} == expected_versions
+
+          datasets = {item["path"]: item for item in bundle["datasets"]}
           dataset = datasets["datasets/fastthaig2p-wiktionary-derived.zip"]
-          dataset_bytes = urlopen(f"{os.environ['PAGE_URL'].rstrip('/')}/vendor/{dataset['path']}").read()
-          assert len(dataset_bytes) == dataset["size_bytes"]
-          assert hashlib.sha256(dataset_bytes).hexdigest() == dataset["sha256"]
+          payload = get("vendor/" + dataset["path"])
+          assert len(payload) == dataset["size_bytes"]
+          assert hashlib.sha256(payload).hexdigest() == dataset["sha256"]
+
           required_notices = {
               "licenses/Apache-2.0-FastThaiG2P.txt",
               "licenses/NOTICE-FastThaiG2P.txt",
@@ -189,33 +203,39 @@ jobs:
               "licenses/CC-BY-SA-4.0.txt",
               "licenses/MIT-Project.txt",
           }
-          notices = {item["path"]: item for item in manifest["notices"]}
+          notices = {item["path"]: item for item in bundle["notices"]}
           assert required_notices <= notices.keys()
-          base = os.environ["PAGE_URL"].rstrip("/")
           for path, item in notices.items():
-              data = urlopen(f"{base}/{path}").read()
-              assert len(data) == item["size_bytes"], path
-              assert hashlib.sha256(data).hexdigest() == item["sha256"], path
-          page = urlopen(f"{base}/third-party-notices.html").read().decode("utf-8")
-          assert "Wiktionary" in page and "CC BY-SA 4.0" in page and "BSD-3-Clause" in page
+              payload = get(path)
+              assert len(payload) == item["size_bytes"], path
+              assert hashlib.sha256(payload).hexdigest() == item["sha256"], path
+
+          page = get("third-party-notices.html").decode("utf-8")
+          assert "Wiktionary" in page and "CC BY-SA 4.0" in page
+          assert "BSD-3-Clause" in page and "LGPL-3.0" in page
           assert "GNU Free Documentation License 1.3" in page
-          assert "fastthaig2p-wiktionary-derived.zip" in page
-          native_assets = manifest["native_assets"]
-          assert len(native_assets) == 6
-          for item in native_assets:
-              data = urlopen(f"{base}/{item['path']}").read()
-              assert len(data) == item["size_bytes"], item["path"]
-              assert hashlib.sha256(data).hexdigest() == item["sha256"], item["path"]
+
+          native = json.loads(Path("/tmp/native-manifest.json").read_text())
+          assert native["schema_version"] == 1
+          assert native["dictionary_entries"] == 13144
+          assert native["stage"] == "dictionary-normalizer-and-default-wordlist-data-only; not a complete runtime"
+          assert len(bundle["native_assets"]) == 6
+          for item in bundle["native_assets"]:
+              payload = get(item["path"])
+              assert len(payload) == item["size_bytes"], item["path"]
+              assert hashlib.sha256(payload).hexdigest() == item["sha256"], item["path"]
+
+          for asset in ("pyodide.mjs", "pyodide.asm.js", "pyodide.asm.wasm", "python_stdlib.zip"):
+              payload = get("vendor/pyodide/" + asset)
+              assert payload, asset
+          print("Published native-first FastThaiG2P UI, same-origin workers, integrity manifests, notices, Wiktionary data and Pyodide OOV fallback verified.")
           PY
             then
-              for asset in pyodide.mjs pyodide.asm.js pyodide.asm.wasm python_stdlib.zip; do
-                curl --fail --silent --show-error "$PAGE_URL/vendor/pyodide/$asset" -o "/tmp/$asset"
-              done
-              echo "Published GitHub Pages Pyodide runtime and local-processing contract verified at $PAGE_URL"
+              echo "Published native-first FastThaiG2P service and Pyodide OOV fallback verified at $PAGE_URL"
               exit 0
             fi
             if [ "$attempt" -eq 12 ]; then
-              echo "Published Pyodide service contract did not appear after 12 attempts" >&2
+              echo "Published native-first Pages service contract did not appear after 12 attempts" >&2
               exit 1
             fi
             sleep 5
