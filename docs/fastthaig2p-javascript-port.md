@@ -142,3 +142,10 @@ Exact-head PR validation on 24e4605b7921524b60dc1c5a3e3e9a66965a3206 now passes 
 - PR #214 was squash-merged to main as `29b63b8f58db1f6d7ff068d131df0b0759895115`.
 - Final PR head `0d4503ed55ff726807917e2cfbf14c0ad30eb624` passed Full CI #42199395072, Web Static #42199395225, Site API #42199395069 and Pyodide compatibility #42199395284.
 - The mainline browser path is hybrid native-first. The existing Pyodide worker remains the OOV fallback. The post-merge Pages deployment/live smoke is not yet verified; do not claim public-site cutover or Pyodide removal.
+
+
+## TLTK rights disposition update — 2026-11-06
+
+The six TLTK fallback assets are now classified as BSD-3-Clause for the pinned TLTK 1.9.1 package scope. Evidence: the versioned README's license-change statement, setup.py's 1.9.1/BSD declaration and package_data list containing all six assets, MANIFEST.in's inclusion of LICENSE.txt, the BSD terms in LICENSE.txt, and PyPI's 1.9.1 release metadata. The repository-root LGPL-3.0 file is retained as a separate historical repository notice; stale PKG-INFO is version 1.1.7/GPLv3. See [the detailed source-based license review](fastthaig2p-license-review-2026-11-05.md) and [public notices](../web/third-party-notices.html).
+
+This clears the TLTK package-license evidence gate for use and redistribution of those six packaged assets under BSD-3-Clause conditions. It does **not** complete the browser-native OOV algorithm or its parity gate. Full TLTK OOV implementation remains TODO; Pyodide remains the OOV fallback until native output matches the pinned Python service contract.
