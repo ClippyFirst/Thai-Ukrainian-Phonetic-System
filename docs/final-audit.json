@@ -2267,7 +2267,28 @@
     "non_main_branches": 1,
     "open_pull_requests": 1
   },
-  "open_prs_current": [],
+  "open_prs_current": {
+    "only_open_pr": [
+      222
+    ],
+    "merged_prs": [
+      210,
+      211,
+      212,
+      213,
+      214,
+      216,
+      217,
+      218,
+      219,
+      220,
+      221
+    ],
+    "closed_unmerged_prs": [
+      215
+    ],
+    "note": "PR #222 is the documentation and post-deployment smoke closeout only; the practical-system implementation is already merged in PR #221."
+  },
   "latest_pr_head_source": "PR #182 merged into main as 65584d9a3d3d64a8e520dbd32411bef4b0a3dd9e; no product PR remains open at this checkpoint.",
   "status_refresh_2026_10_31": {
     "main_sha": "8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8",
@@ -5009,7 +5030,7 @@
   "post_merge_pages_smoke_enhancement_2026_11_06": {
     "branch": "docs/post-merge-closeout-2026-11-06",
     "purpose": "Explicitly check the deployed practical-system page, /j/ section, nav links and responsive stylesheet in future main Pages smoke runs",
-    "status": "IN_PROGRESS_PENDING_PR_222",
+    "status": "PENDING_PR_222_MERGE_AND_MAIN_DEPLOY",
     "source_commit": "d0528deac04db9a3ed9e062e98ace45492e95f9f"
   }
 }
