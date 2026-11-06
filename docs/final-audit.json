@@ -4787,7 +4787,7 @@
     "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY"
   },
   "native_tltk_oov_2026_11_06": {
-    "status": "DONE_VERIFIED_IN_MAIN_POST_MERGE_DEPLOYMENT_UNVERIFIED",
+    "status": "DONE_VERIFIED_IN_MAIN_POST_MERGE_PAGES_SMOKE_REPAIR_PENDING",
     "branch": "feat/native-tltk-oov-runtime-2026-11-06",
     "pr": 216,
     "code_head": "d4f35892adc02eb03b1fd345a0193c46c07b1eb7",
@@ -4824,10 +4824,10 @@
       "disposition": "Preserve all applicable BSD notices, conditions, disclaimer and no-endorsement clause; do not generalize package license to all TLTK repository contents."
     },
     "remaining": [
-      "Verify the main-push GitHub Pages deployment and live URL smoke; PR deploy is intentionally skipped and current connector cannot expose push-triggered run details.",
-      "Measure cold/warm/offline/mobile transfer, latency and memory.",
-      "Manual keyboard/screen-reader/zoom/reflow/device accessibility checks.",
-      "Independent Thai phonetic gold and Ukrainian-native expert validation; accuracy remains NOT_MEASURED."
+      "Main push Pages run 42226988467 reported deployment success but its post-deploy smoke failed on the stale inline-heading assertion; PR #219 contains the repair. After merging #219, require a successful main-push deployment and live asset/hash smoke.",
+      "Static Pages payload inventory and existing Node segmentation diagnostic are recorded; instrumented browser cold/warm/offline/mobile transfer, latency and memory remain TODO.",
+      "Manual keyboard/screen-reader/zoom/reflow/device accessibility checks remain TODO.",
+      "Independent Thai phonetic gold and Ukrainian-native expert validation remain blocked; accuracy stays NOT_MEASURED."
     ],
     "follow_up_pr": 217,
     "follow_up_head": "d6becd86a21b92dc20098279b87b523bb4060c11",
@@ -4836,7 +4836,10 @@
   },
   "pages_smoke_followup_2026_11_06": {
     "starting_main_sha": "9f279ce04c14b81fa4728a15e81fb89ab046b753",
-    "main_ci_run": {"run_id": 42229026310, "status": "SUCCESS"},
+    "main_ci_run": {
+      "run_id": 42229026310,
+      "status": "SUCCESS"
+    },
     "main_pages_run": {
       "run_id": 42226988467,
       "build": "SUCCESS",
@@ -4865,8 +4868,7 @@
     "independent_ipa_gold_rows": 0,
     "linguistic_accuracy": "NOT_MEASURED",
     "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY"
-  }
-,
+  },
   "pages_static_payload_inventory_2026_11_06": {
     "source_run_id": 42226988467,
     "artifact_id": 13505189970,
@@ -4874,22 +4876,60 @@
     "tar_bytes": 27791360,
     "file_count": 82,
     "file_payload_bytes": 27718221,
-    "initial_shell": {"files": 4, "raw_bytes": 46279, "gzip9_estimate_bytes": 12980},
-    "native_worker_js": {"files": 6, "raw_bytes": 63350, "gzip9_estimate_bytes": 21092},
-    "native_assets": {"files": 6, "raw_bytes": 2215791, "gzip9_estimate_bytes": 442372},
-    "first_native_analysis_path": {"raw_bytes": 2325420, "gzip9_estimate_bytes": 476444},
-    "tltk_oov_pack": {"compressed_bytes": 2844409, "loaded_on": "native dictionary miss"},
-    "pyodide_core": {"files": 4, "raw_bytes": 12163625, "gzip9_estimate_bytes": 5430038},
-    "python_wheels": {"files": 4, "raw_bytes": 7826126, "gzip9_estimate_bytes": 7640698},
+    "initial_shell": {
+      "files": 4,
+      "raw_bytes": 46279,
+      "gzip9_estimate_bytes": 12980
+    },
+    "native_worker_js": {
+      "files": 6,
+      "raw_bytes": 63350,
+      "gzip9_estimate_bytes": 21092
+    },
+    "native_assets": {
+      "files": 6,
+      "raw_bytes": 2215791,
+      "gzip9_estimate_bytes": 442372
+    },
+    "first_native_analysis_path": {
+      "raw_bytes": 2325420,
+      "gzip9_estimate_bytes": 476444
+    },
+    "tltk_oov_pack": {
+      "compressed_bytes": 2844409,
+      "loaded_on": "native dictionary miss"
+    },
+    "pyodide_core": {
+      "files": 4,
+      "raw_bytes": 12163625,
+      "gzip9_estimate_bytes": 5430038
+    },
+    "python_wheels": {
+      "files": 4,
+      "raw_bytes": 7826126,
+      "gzip9_estimate_bytes": 7640698
+    },
     "existing_node_segmentation_diagnostic": {
       "run_id": 42231257136,
       "runtime": "Node v22.23.4",
       "warmup_iterations": 5,
       "measured_iterations": 30,
       "cases": [
-        {"input_code_points": 113, "median_ms": 1.658, "p95_ms": 3.078},
-        {"input_code_points": 261, "median_ms": 3.101, "p95_ms": 4.981},
-        {"input_code_points": 500, "median_ms": 5.373, "p95_ms": 11.891}
+        {
+          "input_code_points": 113,
+          "median_ms": 1.658,
+          "p95_ms": 3.078
+        },
+        {
+          "input_code_points": 261,
+          "median_ms": 3.101,
+          "p95_ms": 4.981
+        },
+        {
+          "input_code_points": 500,
+          "median_ms": 5.373,
+          "p95_ms": 11.891
+        }
       ],
       "scope": "web/src/engine.js segmentation in Node; not browser FastThaiG2P/Worker latency or accuracy"
     },
@@ -4900,5 +4940,4 @@
       "Browser/Worker and process memory on named desktop and physical mobile devices"
     ]
   }
-
 }
