@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import pickle
 import sys
 from pathlib import Path
 
@@ -26,12 +27,17 @@ def main() -> None:
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
-    dictionary_path = UPSTREAM / "data/dict.txt"
-    if not dictionary_path.is_file():
-        raise SystemExit(f"Pinned FastThaiG2P wordlist is missing: {dictionary_path}")
+    fallback_dictionary_path = UPSTREAM / "data/fallback/thdict"
+    if not fallback_dictionary_path.is_file():
+        raise SystemExit(f"Pinned TLTK fallback dictionary is missing: {fallback_dictionary_path}")
 
     engine = FastThaiG2PAdapter()
-    candidates = dictionary_path.read_text(encoding="utf-8").splitlines()
+    with fallback_dictionary_path.open("rb") as source:
+        fallback_words = pickle.load(source)
+    candidates = sorted(
+        (word for word in fallback_words if isinstance(word, str)),
+        key=lambda word: (len(word), word),
+    )
     for word in candidates:
         word = word.strip()
         if not word or word in engine._engine._ipa:
