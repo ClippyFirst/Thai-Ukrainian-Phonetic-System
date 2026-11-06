@@ -44,7 +44,7 @@ Do not conflate this work with the separate ClippyFirst Thai orthographic resear
 | Text normalization | DONE_VERIFIED | #42181862972: 18 pinned CPython cases passed with the extracted PyThaiNLP default wordlist, including maiyamok. |
 | PyThaiNLP newmm tokenizer | DONE_VERIFIED | #42181862972: 16 FastThaiG2P custom-dictionary cases and 18 PyThaiNLP default-wordlist cases passed token-array parity. |
 | Dictionary IPA lookup | PARTIAL | Native pipeline uses the 13,144-entry Wiktionary-only map and matches 16 dictionary-only CPython cases; OOV fallback is not yet available. |
-| TLTK OOV fallback | BLOCKED / PARTIAL | The current fallback depends on `_th2ipa.py`, six TLTK-derived data assets, trigram statistics and a pickled syllable-variant structure. The source repository contains conflicting LGPL-3.0/BSD-3-Clause evidence for the data package. Acceptance requires an explicit asset-level licensing disposition and deterministic JSON serialization of the pickle before porting. |
+| TLTK OOV fallback | BLOCKED / PARTIAL | `scripts/verify_tltk_fallback_provenance.py` verifies all six pinned fallback assets: five byte-identical and `sylform_var.pkl` exactly equal to BZip2-decompressed TLTK `.pklz`. The remaining blocker is rights scope (BSD-3-Clause package metadata and LICENSE.txt versus repository LGPL-3.0 and stale GPLv3 PKG-INFO), followed by native algorithm/data port and parity. No fallback data is shipped in the public bundle. |
 | Typed IPA result contract | PARTIAL | Tone contours and segmental IPA are parsed; exact parity for uncertainty, unsupported symbols, word/syllable alignment and metadata remains TODO. |
 | IPA → Ukrainian adapter | REUSED | Existing `web/src/ipa-ua.js` remains the sole target adaptation boundary; it must not be duplicated. |
 | Native pipeline composition | PARTIAL | `createFastThaiG2PNativePipeline` composes normalization, default/custom newmm, dictionary lookup and existing IPA→Ukrainian adapter; 16 dictionary-only cases match CPython. OOV fallback is missing. |
@@ -76,7 +76,7 @@ This is not a complete FastThaiG2P port: the TLTK-derived OOV fallback and full 
 - FastThaiG2P source code is Apache-2.0 with Amazon NOTICE at the pinned revision.
 - The filtered dictionary is derived from Wiktionary via Kaikki.org/Wiktextract and is labelled CC BY-SA 4.0; attribution and share-alike obligations continue to apply.
 - The newmm tokenizer port is based on PyThaiNLP 5.4.0 source under Apache-2.0; retain the upstream copyright/license notice in the bundled notices.
-- TLTK-derived parser/data licensing remains unresolved at file/package scope. Preserve both existing BSD-3-Clause and LGPL-3.0 notices. Do not copy, transform or redistribute the TLTK fallback assets into the native bundle until the exact applicable terms are established.
+- TLTK fallback provenance is now mechanically verified at the pinned revisions: five assets are byte-identical and the sixth is the exact BZip2-decompressed counterpart of TLTK's `.pklz` asset. Rights scope remains unresolved because the TLTK repository contains BSD-3-Clause package metadata and LICENSE.txt alongside an LGPL-3.0 root LICENSE and stale GPLv3 PKG-INFO. Preserve all notices; do not publish these assets in the public bundle until the rights disposition is resolved.
 - The project MIT license applies to ClippyFirst-authored code only; it does not relicense upstream code or third-party data.
 
 ## Verification commands
@@ -90,10 +90,11 @@ python scripts/fastthaig2p_native_pipeline_reference.py > build/fastthaig2p-nati
 node web/tests/fastthaig2p-normalizer-parity.test.mjs build/fastthaig2p-normalizer-reference.json web/vendor/native/fastthaig2p-normalizer.json web/vendor/native/pythainlp-default-words.txt
 node web/tests/fastthaig2p-tokenizer-parity.test.mjs build/fastthaig2p-tokenizer-reference.json web/vendor/native/fastthaig2p-ipa.json
 node web/tests/fastthaig2p-native-pipeline.test.mjs build/fastthaig2p-native-pipeline-reference.json web/vendor/native/fastthaig2p-ipa.json web/vendor/native/fastthaig2p-normalizer.json web/vendor/native/pythainlp-default-words.txt
+python scripts/verify_tltk_fallback_provenance.py --fastthaig2p build/FastThaiG2P --tltk build/TLTK --report build/tltk-fallback-provenance.json
 python scripts/validate_github_workflows.py
 python -m unittest discover -s tests -v
 node web/tests/fastthaig2p-pyodide.test.mjs build/pyodide-wheels build/fastthaig2p-native.json
 node web/tests/fastthaig2p-browser.test.mjs
 ```
 
-The native front-half differential suite and isolated Chromium Worker smoke pass on the cited code head, but OOV and full typed-result parity remain unverified. Do not claim full browser-native capability, performance improvement or production readiness.
+The native front-half differential suite and isolated Chromium Worker smoke pass on the cited code head, but the TLTK OOV algorithm has not yet been ported and full typed-result parity remains unverified. The six upstream fallback data transformations are verified; the remaining gate is license scope and implementation parity. Do not claim full browser-native capability, performance improvement or production readiness.
