@@ -2841,3 +2841,13 @@ Canonical documents: `docs/beta-release-scope.md`, `docs/fastthaig2p-pyodide-por
 - TLTK license evidence narrowed but not cleared: PyPI TLTK 1.3.8 metadata identifies BSD-3-Clause; the upstream package setup.py at current repository HEAD declares BSD-3-Clause and package_data enumerates the relevant syllable assets; MANIFEST.in includes LICENSE.txt, whose text is BSD-3-Clause. The repository root LICENSE file is LGPL-3.0, creating a repository-vs-distribution discrepancy. The current FastThaiG2P vendored fallback files are not yet proven byte-for-byte or version-for-version to be the same files from the TLTK 1.3.8 sdist; the pickle filename/format also differs from setup.py's listed `sylform_var.pklz`. Therefore retain BLOCKED until exact sdist extraction/file mapping and asset provenance are verified. Do not describe this as blanket BSD clearance.
 - Firecrawl page retrieval was unavailable because connected-app credits were exhausted; no source archive was downloaded or inspected. Public PyPI metadata and upstream source files were read separately; no archive contents are claimed.
 - Remaining: exact TLTK fallback data provenance/license scope, port/validate fallback if cleared, full typed result parity, production UI integration, cold/warm/offline/mobile performance, and final cutover.
+
+
+## Correction — TLTK fallback asset transformation evidence (2026-11-06)
+
+The earlier handoff wording that described the pickle transformation as not independently reproduced was too conservative. The repository's existing `scripts/verify_tltk_fallback_provenance.py` runs against pinned FastThaiG2P commit `4e82a291b4cf2876326744c6580121e9986ad354` and TLTK file snapshot `0cef4bcfbdd675f589783dd4134b87b9bb9fbb93`. It confirms all six assets:
+- Five are byte-identical.
+- `sylform_var.pkl` equals the exact BZip2 decompression of TLTK's `sylform_var.pklz`.
+- The script also records SHA-256 values and retains the conflicting license metadata evidence.
+
+This closes the data-transformation/provenance subtask, not the license-scope question. TLTK fallback code/data are still not ported into the browser runtime, and no fallback assets are shipped publicly.
