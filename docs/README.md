@@ -1,3 +1,9 @@
+## Географічний словник Thai → RTGS + IPA → українська
+
+Для побудови власного CSV-корпусу географічних назв додано [географічний словник](geographic-dictionary.md), [шаблон даних](../data/geography/geographic-names-template.csv) та `scripts/build_geographic_dictionary.py`. Скрипт зберігає вихідні метадані й додає RTGS через PyThaiNLP 5.4.0 та фонемний/поверхневий IPA з українською адаптацією через штатний typed IPA pipeline. RTGS не використовується для українського результату; неповні IPA/UA випадки утримуються. Це інструмент побудови дослідницького набору, не джерело офіційних назв чи оцінка точності.
+
+## Latest repository audit
+
 # Repository guide
 
 This page is the navigation layer for the repository. It distinguishes the maintained product contract from research evidence and the chronological execution record.
