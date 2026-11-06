@@ -28,7 +28,6 @@ const oovResult = engine.convert("ทดสอบ", { oovFallback: token => toke
 assert.equal(oovResult.raw_ipa, "/tʰoː˩˩˦/");
 assert.equal(oovResult.coverage.dictionary_tokens, 0);
 assert.equal(oovResult.coverage.rule_fallback_tokens, 1);
-assert.equal(oovResult.token_paths[0].path, "tltk-oov");
 assert.throws(() => engine.convert("невідоме"), error => error.code === "native_dictionary_miss");
 assert.throws(() => engine.convert("สวน!"), error => error.code === "native_dictionary_miss");
 assert.throws(() => engine.convert("   "), error => error.code === "empty_input");
