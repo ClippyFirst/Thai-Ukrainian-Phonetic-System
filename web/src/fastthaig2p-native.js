@@ -174,8 +174,8 @@ export async function loadFastThaiG2PNativeDictionary({
   if (
     manifest?.schema_version !== 1 ||
     manifest?.upstream_commit !== FASTTHAIG2P_UPSTREAM_COMMIT ||
-    manifest?.stage !== "dictionary-data-only; not a complete runtime" ||
-    manifest?.license !== "CC-BY-SA-4.0" ||
+    manifest?.stage !== "dictionary-and-normalizer-data-only; not a complete runtime" ||
+    manifest?.dictionary_license !== "CC-BY-SA-4.0" ||
     !Number.isInteger(manifest?.dictionary_entries)
   ) {
     throw new NativeFastThaiG2PError("native_manifest_invalid", "Native dictionary manifest does not match the reviewed source contract");
