@@ -257,7 +257,7 @@ jobs:
           assert native["stage"] == "dictionary-normalizer-and-default-wordlist-data-only; not a complete runtime"
           assert len(bundle["native_assets"]) == 6
           for item in bundle["native_assets"]:
-              payload = get(item["path"])
+              payload = get("vendor/" + item["path"])
               assert len(payload) == item["size_bytes"], item["path"]
               assert hashlib.sha256(payload).hexdigest() == item["sha256"], item["path"]
 
