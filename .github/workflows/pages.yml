@@ -100,7 +100,7 @@ jobs:
           assert manifest["dictionary_entries"] == 13144
           assert manifest["stage"] == "dictionary-data-only; not a complete runtime"
           for asset in manifest["assets"]:
-              path = Path("web/vendor") / asset["path"].removeprefix("native/")
+              path = Path("web/vendor") / asset["path"]
               assert path.is_file() and path.stat().st_size == asset["size_bytes"]
           PY
       - name: Setup GitHub Pages
@@ -195,6 +195,12 @@ jobs:
           assert "Wiktionary" in page and "CC BY-SA 4.0" in page and "BSD-3-Clause" in page
           assert "GNU Free Documentation License 1.3" in page
           assert "fastthaig2p-wiktionary-derived.zip" in page
+          native_assets = manifest["native_assets"]
+          assert len(native_assets) == 3
+          for item in native_assets:
+              data = urlopen(f"{base}/{item['path']}").read()
+              assert len(data) == item["size_bytes"], item["path"]
+              assert hashlib.sha256(data).hexdigest() == item["sha256"], item["path"]
           PY
             then
               for asset in pyodide.mjs pyodide.asm.js pyodide.asm.wasm python_stdlib.zip; do
