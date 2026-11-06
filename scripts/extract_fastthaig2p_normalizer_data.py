@@ -44,7 +44,7 @@ def main() -> None:
     parser.add_argument("--source", type=Path, required=True)
     args = parser.parse_args()
     data = extract(args.source)
-    data_path = args.source / "fastthaig2p" / "data" / "normalizer-data.json"
+    data_path = args.source / "data" / "normalizer-data.json"
     data_path.parent.mkdir(parents=True, exist_ok=True)
     data_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
