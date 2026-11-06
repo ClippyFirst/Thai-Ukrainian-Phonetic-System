@@ -93,6 +93,16 @@ jobs:
             --output web/vendor \
             --rights-manifest data/third_party/fastthaig2p-browser-bundle.json \
             --notices-dir web/licenses
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          manifest = json.loads(Path("web/vendor/native/manifest.json").read_text())
+          assert manifest["dictionary_entries"] == 13144
+          assert manifest["stage"] == "dictionary-data-only; not a complete runtime"
+          for asset in manifest["assets"]:
+              path = Path("web/vendor") / asset["path"].removeprefix("native/")
+              assert path.is_file() and path.stat().st_size == asset["size_bytes"]
+          PY
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v6
       - name: Upload Pages artifact
