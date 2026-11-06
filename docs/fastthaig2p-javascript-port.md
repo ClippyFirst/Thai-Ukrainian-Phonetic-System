@@ -120,3 +120,10 @@ Exact-head PR validation on 24e4605b7921524b60dc1c5a3e3e9a66965a3206 now passes 
 - `web/tests/fastthaig2p-browser.test.mjs` now asserts that two dictionary-covered examples make no `/vendor/pyodide/` or `/vendor/wheels/` requests, then verifies a pinned OOV input triggers the same FastThaiG2P Pyodide fallback and matches its IPA.
 - Current implementation head before this documentation reconciliation: `0e6479450d6205f0a2b65aa80fb1e3d6a13937b0`. The new native-first browser acceptance, full CI and Web Static runs are pending; do not mark this integration DONE_VERIFIED until those runs pass.
 - This is a hybrid browser-native-first deployment, not a full Pyodide replacement. No Python modules are loaded for dictionary-covered inputs; JS modules and the ~2.2 MB native data bundle are still fetched from same-origin GitHub Pages on first use. An OOV input still loads Pyodide and its wheels.
+
+
+## Latest branch-head reconciliation — 2026-11-06
+
+- Latest code/test head: `228d80d51d58a4437ab0f70ba12597a1259902e8`.
+- The native-first UI contract test was updated to mock both workers: dictionary-covered requests use only the native Worker; only a `native_dictionary_miss` creates the Pyodide Worker. The test also retains incomplete-IPA fail-closed and stale-response checks.
+- Exact-head CI, Web Static, site API and Pyodide compatibility PR runs are queued/pending; no current-head pass is claimed. Earlier dictionary-only differential and isolated native Worker evidence remains on head `24e4605b7921524b60dc1c5a3e3e9a66965a3206`.
