@@ -82,6 +82,11 @@ for (const [ipa, expected, rule] of [
 
 // End-to-end boundary proof: the browser's final Ukrainian result is the
 // adaptation of the actual IPA intermediate, and a changed IPA changes output.
+const yodInitial = analyze("ยา");
+assert.equal(yodInitial.status, "analyzed");
+assert.equal(yodInitial.phonemicIpa, "jaː");
+assert.equal(yodInitial.ukrainian, "я");
+assert.equal(yodInitial.ukrainian, adaptIpaToUkrainian(yodInitial.phonemicIpa).output);
 const endToEnd = analyze("กา");
 assert.equal(endToEnd.status, "analyzed");
 assert.equal(endToEnd.ukrainian, adaptIpaToUkrainian(endToEnd.phonemicIpa).output);
