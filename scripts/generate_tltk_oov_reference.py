@@ -44,7 +44,8 @@ def main() -> None:
                 continue
             result = engine.convert(token).strip()
             if not (result.startswith("/") and result.endswith("/") and len(result) > 2):
-                rejected[token] = result
+                if len(rejected) < 30:
+                    rejected[token] = result
                 continue
             selected[token] = result
             if len(selected) >= 24:
