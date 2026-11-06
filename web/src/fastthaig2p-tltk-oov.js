@@ -136,7 +136,16 @@ export function createTltkOovFallback(data){
   throw new TypeError("Pinned TLTK OOV data schema is incomplete");
  const constants=data.parser_constants;
  const stable={...constants.stable_base,...Object.fromEntries(Object.entries(constants.stable_aliases).map(([key,base])=>[key,constants.stable_base[base]]))};
- const basePron=new Map();for(const [form,phone] of data.syllable_dictionary)addPron(basePron,form,phone);
+ const patterns=data.syllable_patterns.map(record=>({...record,expression:compilePattern(record)}));
+ for(const [form,pronunciation] of data.syllable_dictionary){
+  const literalPattern=escapeRegex(form);
+  patterns.push({
+   pattern:literalPattern,
+   pronunciation,
+   tone_flag:"N",
+   expression:new RegExp("^(?:"+literalPattern+")","u")
+  });
+ }
  let lastMatches=[];
  let lastSyllablePaths=[];
  const patterns=data.syllable_patterns.map(record=>({...record,expression:compilePattern(record)}));
@@ -214,7 +223,7 @@ export function createTltkOovFallback(data){
  function inspect(word,{debug=false}={}){
   if(typeof word!=="string"||!word)return null;
   if(/^[^ก-์]+/u.test(word))return null;
-  const pron=new Map([...basePron.entries()].map(([form,phones])=>[form,[...phones]]));
+  const pron=new Map();
   const normalized=word.replaceAll("เเ","แ").replaceAll("ํา","ำ").replaceAll("ฤา","ฤๅ").replaceAll("ฦา","ฦๅ");
   const syllables=parseSyllables(normalized,pron,{trace:debug});if(!syllables)return null;
   const words=parseWords(syllables);if(!words)return null;
