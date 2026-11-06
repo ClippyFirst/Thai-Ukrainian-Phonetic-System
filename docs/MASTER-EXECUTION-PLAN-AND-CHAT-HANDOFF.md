@@ -1,3 +1,16 @@
+## Active continuation branch — PR #215 (2026-11-06)
+
+- Branch: `feat/native-tltk-oov-and-pages-verification-2026-11-06`.
+- Draft PR: [#215](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/215), base `main`. Keep draft/unmerged until Pages build and full CI pass.
+- Latest branch checkpoint before this handoff update: `a54cab92f9008663b4b640003c7b21b8581fdf9d`.
+- TLTK 1.9.1 package rights gate is now DONE_VERIFIED for the six packaged fallback assets under BSD-3-Clause; root LGPL-3.0 and stale PKG-INFO 1.1.7/GPLv3 are retained and explained as separate historical/repository metadata.
+- Public Pages content and current native-first assets were fetched successfully. The corrected post-deploy smoke is in PR #215; the current branch's Pages build, full CI and post-merge live hash smoke are not yet confirmed.
+- Build-time OOV data extraction now serializes five required TLTK tables plus parser constants extracted from the pinned BSD source. It excludes sylform_var.pkl from the browser payload because no SYLVAR reads exist in the G2P call path, while the independent provenance verifier still checks all six original source assets.
+- **Do not mark the native OOV port complete.** No JavaScript TLTK parser has been integrated; the generated data pack is preparatory and unused by the UI. Keep the existing Pyodide OOV fallback until exact full-service JSON parity is demonstrated on multiple OOV fixtures in a real Worker.
+- Latest validation observed before this handoff: Web Static run #2179 passed; Pages build #191 and CI #6519 were queued/running. Check exact run state before further integration.
+
+---
+
 ## Follow-up — TLTK license scope clarified and Pages verification repaired (2026-11-06)
 
 - **TLTK package rights:** DONE_VERIFIED for the six fallback assets packaged by TLTK 1.9.1. The pinned versioned README, setup.py version/license/package_data, MANIFEST.in, LICENSE.txt and PyPI 1.9.1 metadata form a consistent BSD-3-Clause package-level chain. The separate repository-root LGPL-3.0 notice and stale PKG-INFO 1.1.7/GPLv3 are retained and disclosed, not silently deleted. BSD-3-Clause permits research use, modification and redistribution if the notice, conditions and disclaimer are preserved and the no-endorsement condition is respected. No research-only exception is needed. This is a source-based assessment, not legal advice. See `docs/fastthaig2p-license-review-2026-11-05.md`.
