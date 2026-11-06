@@ -1,4 +1,4 @@
-import { ERROR_MESSAGES, UI_TEXT, errorMessage } from "./messages.uk.js";
+import { UI_TEXT, errorMessage } from "./messages.uk.js";
 
 const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
