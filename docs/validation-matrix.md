@@ -1,3 +1,32 @@
+## Current execution checkpoint — branch consolidation and native-first port (2026-11-06)
+
+| Work item | Status | Evidence / next acceptance |
+|---|---|---|
+| Existing repository documentation architecture | DONE_VERIFIED | `AGENTS.md`, `docs/README.md`, `scripts/README.md`, architecture, validation matrix, audit, schemas, provenance and generated-artifact ownership already exist. Preserve and maintain these canonical sources; do not create a duplicate documentation system. |
+| PR #211 site redesign | DONE_VERIFIED | Merged to `main` as `476cb6ed0e4421ab02bb564ff232c99b6c19e008`; exact-head CI/Web Static/Site API/Pyodide checks passed on the tested PR head. |
+| PR #212 post-merge documentation reconciliation | DONE_VERIFIED | Closed after documentation reconciliation; its content is represented in mainline history. |
+| PR #213 Ukrainian-first UX and localized diagnostics | DONE_VERIFIED | Merged to `main`; commit `f7ce29d6bbae03a8d5a8d03e8c09dbbd5dd01662`. |
+| PR #214 browser-native FastThaiG2P port | PARTIAL — exact-head verification in progress | Latest code/test commit `37e0ee6b6fb1385bd4c98bfdd582d8eee3dac5c1`. Web Static #42198840129 and Site API #42198840133 passed. Full CI #42198840130 and Pyodide compatibility #42198840192 were still running at checkpoint. Merge only after both pass and PR diff is reviewed. |
+| PR #214 stale-response UI regression fixture | DONE_VERIFIED (fix committed; rerun checks pending) | Initial CI/Web Static/Site API all exposed `TypeError: deferredNativeWorkerResponse is not a function`. Root cause was test timing across the native-ready promise microtask. Commit `37e0ee6` flushes the microtask and asserts callback installation before delivery; no production code changed. |
+| Native TLTK OOV implementation and rights | BLOCKED / PARTIAL | Rights scope is conflicting (BSD-3-Clause package metadata/LICENSE.txt vs LGPL-3.0 repository LICENSE and stale GPLv3 PKG-INFO). Keep native OOV code/data out of the browser bundle until file-level distribution scope is cleared; retain Pyodide fallback. |
+| Desktop/mobile cold/warm/offline performance and memory | TODO | Measure transferred bytes, cold/warm latency, caching, offline reload and memory on real desktop/mobile browsers. Do not infer a speedup from avoiding Pyodide on dictionary hits. |
+| Manual accessibility acceptance | TODO / DEFERRED_UNVERIFIED | Keyboard-only, screen reader, 200%/400% zoom/reflow, real clipboard and visual review require human/browser testing; static checks are not WCAG conformance evidence. |
+| Independent linguistic validation | BLOCKED / EVIDENCE-LIMITED | Independent IPA gold rows = 0; accuracy = `NOT_MEASURED`; Ukrainian candidates remain provisional. Requires qualified Thai reviewers/adjudicator and independent Ukrainian target review. |
+| Branch consolidation | PARTIAL | PR #211/#212/#213 and prior PR #210 work are already integrated in main. PR #214 is pending. The 503-ahead divergent audit branch is preserved, not wholesale-merged. Historical source branches are not deleted or rewritten. |
+
+### Current branch disposition
+
+- `main`: current default branch; starting audited HEAD `f7ce29d6bbae03a8d5a8d03e8c09dbbd5dd01662`.
+- `design/site-recomposition-2026-11-05`: content integrated by PR #211; source ref retained.
+- `docs/post-211-pages-verification-2026-11-06`: content integrated by PR #212; source ref retained.
+- `feat/ukrainian-first-ux-2026-11-06`: content integrated by PR #213; source ref retained.
+- `feat/fastthaig2p-native-ts-port-2026-11-06`: active PR #214; 129 commits ahead, 0 behind main at checkpoint.
+- `docs/repository-audit-2026-11-04`: 503 commits ahead, 7 behind; preserve without wholesale merge because the history is divergent and earlier audit explicitly rejected it.
+
+A branch existing on GitHub is not proof its work is absent from main. Do not re-merge squash-integrated work or delete historical branches merely to make the branch list shorter.
+
+---
+
 ## Post-merge verification update — 2026-11-06
 
 - `main` now contains PR #211 at merge commit `476cb6ed0e4421ab02bb564ff232c99b6c19e008`.
