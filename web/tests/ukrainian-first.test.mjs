@@ -31,10 +31,10 @@ assert.match(html, /id="technical-diagnostics"/);
 assert.match(html, /Ці дані допоможуть повідомити про помилку/);
 assert.match(feedback, /name: Відгук про бета-версію/);
 assert.match(feedback, /label: Категорія відгуку/);
-assert.match(feedback, /label: Що сталося\\?/);
+assert.match(feedback, /label: Що сталося/);
 assert.match(feedback, /label: Браузер і версія/);
 assert.match(feedback, /Підтверджую, що не додаю особистої/);
-assert.doesNotMatch(feedback, /Feedback category|What happened\\?|Browser and version|Privacy confirmation/);
+assert.doesNotMatch(feedback, /Feedback category|What happened|Browser and version|Privacy confirmation/);
 
 console.log(JSON.stringify({
   result: "PASS",
