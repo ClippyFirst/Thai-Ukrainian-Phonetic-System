@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY",
+  "status": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_POST_MERGE_PAGES_DEPLOYMENT_NOT_INDEPENDENTLY_VERIFIED",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -369,7 +369,7 @@
   },
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
   "latest_code_checkpoint": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
-  "readiness": "BETA_CANDIDATE_ENGINEERING_VERIFIED_PUBLIC_DEPLOYMENT_NOT_YET_VERIFIED",
+  "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY",
   "latest_verified_repository_head": "d9958db0e877944e5a75183c053681cdbdd525dc",
   "task_ledger": [
     {
@@ -4787,7 +4787,7 @@
     "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY"
   },
   "native_tltk_oov_2026_11_06": {
-    "status": "DONE_VERIFIED_ON_PR_HEAD_POST_MERGE_DEPLOYMENT_PENDING",
+    "status": "DONE_VERIFIED_IN_MAIN_POST_MERGE_DEPLOYMENT_UNVERIFIED",
     "branch": "feat/native-tltk-oov-runtime-2026-11-06",
     "pr": 216,
     "code_head": "d4f35892adc02eb03b1fd345a0193c46c07b1eb7",
@@ -4799,22 +4799,22 @@
     "chromium": "PASS; supported OOV path loads native TLTK pack and makes no Python/Pyodide/wheel/API/CDN requests",
     "workflows": {
       "ci": {
-        "run_id": 42217143967,
+        "run_id": 42226080426,
         "status": "SUCCESS",
         "tests": "401 passed, 1 skipped, 1211 subtests; Ruff and wheel-install smoke passed"
       },
-      "web_static": {
-        "run_id": 42217143995,
-        "status": "SUCCESS"
-      },
       "pages_build": {
-        "run_id": 42217143962,
+        "run_id": 42226080435,
         "status": "SUCCESS",
+        "artifact_bytes": 17205333,
         "live_deploy": "NOT_RUN_FOR_PULL_REQUEST"
       },
       "pyodide_compat": {
-        "run_id": 42217144084,
-        "status": "SUCCESS"
+        "run_id": 42226080581,
+        "status": "SUCCESS",
+        "oov_module": "64/64 PASS",
+        "oov_worker": "64/64 PASS",
+        "chromium": "PASS"
       }
     },
     "license": {
@@ -4824,12 +4824,14 @@
       "disposition": "Preserve all applicable BSD notices, conditions, disclaimer and no-endorsement clause; do not generalize package license to all TLTK repository contents."
     },
     "remaining": [
-      "Merge PR #216 after exact-head checks",
-      "Verify main-branch CI after merge",
-      "Verify actual GitHub Pages deployment and live URL smoke for TLTK manifest/data, integrity hashes, notices, and Pyodide last-resort assets",
-      "Measure cold/warm/offline/mobile transfer, latency and memory",
-      "Manual keyboard/screen-reader/zoom/reflow/device accessibility checks",
-      "Independent Thai phonetic gold and Ukrainian-native expert validation; accuracy remains NOT_MEASURED"
-    ]
+      "Verify the main-push GitHub Pages deployment and live URL smoke; PR deploy is intentionally skipped and current connector cannot expose push-triggered run details.",
+      "Measure cold/warm/offline/mobile transfer, latency and memory.",
+      "Manual keyboard/screen-reader/zoom/reflow/device accessibility checks.",
+      "Independent Thai phonetic gold and Ukrainian-native expert validation; accuracy remains NOT_MEASURED."
+    ],
+    "follow_up_pr": 217,
+    "follow_up_head": "d6becd86a21b92dc20098279b87b523bb4060c11",
+    "main_merge_commit": "533cd3f8df6112b000f5c91524f8050026b4d79a",
+    "regression_guard": "Pinned TLTK sylparse('กขส') == 'กขส'; full n-gram segmentation score ranks above the two alternate splits."
   }
 }

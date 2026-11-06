@@ -174,3 +174,13 @@ The native worker now has a browser JavaScript implementation of the pinned Fast
 The six TLTK 1.9.1 packaged fallback assets are supported by package-level BSD-3-Clause evidence. Preserve copyright notice, conditions, disclaimer and no-endorsement clause. Retain the separate repository-root LGPL-3.0 notice and stale 1.1.7/GPLv3 metadata as historical context; do not generalize the package conclusion to the entire TLTK repository. See [the license review](fastthaig2p-license-review-2026-11-05.md).
 
 This establishes implementation parity with the pinned Python engine, not independent phonetic correctness. Thai IPA gold and Ukrainian expert validation remain absent; accuracy is NOT_MEASURED. Cold/warm/offline/mobile performance, memory, and manual accessibility remain TODO.
+
+
+## Follow-up verification after PR #217 — 2026-11-06
+
+The native TLTK OOV implementation is now integrated into main. PR #217 merged as `533cd3f8df6112b000f5c91524f8050026b4d79a`. Its exact head passed CI 42226080426 (401 passed, 1 skipped, 1211 subtests; Ruff and wheel smoke), Pages build 42226080435 (public bundle artifact produced), and Pyodide compatibility 42226080581. The Python generator produced 64 OOV references with no rejected candidates; typed service parity passed 64/64 in the module and 64/64 in the native Worker. Chromium verified the native Worker and same-origin Pyodide fallback path. A regression assertion now locks the pinned TLTK segmentation/scoring behavior for `กขส`.
+
+The PR Pages build does not deploy. The main-push Pages workflow is configured and contains live checks for the public page, native and Pyodide workers, TLTK OOV manifest/data, SHA-256, and notices. The post-merge run/live URL could not be independently observed with the available GitHub/web access; deployment remains NOT_VERIFIED.
+
+The six TLTK 1.9.1 packaged fallback assets are treated as BSD-3-Clause under the versioned package evidence. Research use needs no special exemption; redistribution is allowed with the required notices/conditions/disclaimer/no-endorsement clause. The repository-root LGPL-3.0 and stale 1.1.7/GPLv3 metadata remain separate historical context.
+
