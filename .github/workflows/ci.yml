@@ -26,6 +26,20 @@ jobs:
       - run: python scripts/generate_web_word_dictionary.py
       - run: node web/tests/mode-adversarial.test.mjs
       - run: python scripts/test_rtgs_parity.py
+      - name: Smoke-test the geographic dictionary with pinned RTGS and IPA adapter
+        run: |
+          printf 'id,name_th,source_license\\n1,กา,\\n' > /tmp/geographic-input.csv
+          python scripts/build_geographic_dictionary.py /tmp/geographic-input.csv --output /tmp/geographic-output.csv
+          python - <<'PY'
+          import csv
+          with open('/tmp/geographic-output.csv', encoding='utf-8-sig', newline='') as handle:
+              row = next(csv.DictReader(handle))
+          assert row['romanization_rtgs'], row
+          assert row['pipeline_status'] == 'COMPLETE_MODEL_OUTPUT_NOT_ADJUDICATED', row
+          assert row['ipa_phonemic'] and row['ipa_broad_surface'] and row['ukrainian_from_ipa'], row
+          assert row['source_license'] == '', row
+          print({key: row[key] for key in ('name_th', 'romanization_rtgs', 'ipa_phonemic', 'ipa_broad_surface', 'ukrainian_from_ipa', 'pipeline_status')})
+          PY
       - run: python scripts/generate_derived.py
       - run: python scripts/generate_syllable_space.py
       - run: git diff --exit-code -- docs/generated-audit.json docs/syllable-space.json docs/source-final-manifest.json
