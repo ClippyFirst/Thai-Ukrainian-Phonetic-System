@@ -2020,3 +2020,23 @@ Implementation branch: `feat/ukrainian-first-ux-2026-11-06`. Do not mark the imp
 | Pyodide removal | DEFERRED | Remove only after production cutover is verified and rollback path is retained. |
 
 The public site still uses Pyodide. The native normalizer, default/custom newmm tokenizers, dictionary-only pipeline and isolated Chromium Worker smoke have differential evidence, but the TLTK OOV fallback and UI cutover are not complete; do not claim full replacement or a speed improvement. No IPA or Ukrainian phonetic rules were changed; linguistic accuracy remains `NOT_MEASURED`.
+
+
+## Native FastThaiG2P exact-head reconciliation — 2026-11-06
+
+The following replaces earlier, now-stale native-port status rows above. Historical entries are retained for audit traceability.
+
+| Work item | Current status | Exact evidence / remaining acceptance |
+|---|---|---|
+| Native normalizer and newmm tokenizer | DONE_VERIFIED | Exact-head Pyodide compatibility #42186384082 passed 18 normalizer and 16 custom tokenizer differential cases against pinned Python references. |
+| Native dictionary-covered service pipeline | DONE_VERIFIED | The 16-case reference compares the complete service JSON, including Ukrainian adaptation, tone/length metadata, rules, provenance and warnings; all cases passed. This does not cover OOV. |
+| Native Chromium module Worker | DONE_VERIFIED (isolated) | #42186384082 passed 16 real Chromium Worker cases plus Ukrainian fail-closed OOV. Request audit found no Python, Pyodide, wheel, WASM or remote API requests. |
+| TLTK fallback data provenance | DONE_VERIFIED (transformation only) | Six pinned source transformations verified: five byte-identical and one exact BZip2 decompression. Report retains SHA-256 evidence and contradictory license records. |
+| TLTK fallback rights and native OOV port | BLOCKED / PARTIAL | BSD-3-Clause package metadata and LICENSE.txt coexist with LGPL-3.0 root LICENSE and stale GPLv3 PKG-INFO. Keep fallback code/data out of native bundle until rights disposition; then port algorithm and verify OOV/result parity. |
+| Web Static | DONE_VERIFIED | #42186383919 SUCCESS on exact code head 24e4605b7921524b60dc1c5a3e3e9a66965a3206. |
+| Full CI | DONE_VERIFIED | #42186383939 SUCCESS on exact code head; test, wheel-install smoke and master-artifact generation/validation all succeeded. |
+| Pyodide compatibility and browser checks | DONE_VERIFIED | #42186384082 SUCCESS on exact code head; Pages bundle build, production Pyodide Worker smoke and isolated native Worker smoke all succeeded. |
+| Public UI native runtime integration/cutover | DEFERRED | Keep current Pyodide production path until TLTK rights/OOV parity, typed contract, mobile/offline/CSP and measured performance acceptance pass. |
+| Cold/warm/offline/mobile performance and memory | TODO | Measure actual Pages transfer and browser cache behavior, startup and repeat latency, memory, offline reload and mobile devices against the same Pyodide baseline. |
+
+Current branch head at this verification: 24e4605b7921524b60dc1c5a3e3e9a66965a3206. Public site still uses Pyodide. Overall native port is a verified dictionary-covered prototype, not a complete FastThaiG2P replacement; accuracy remains NOT_MEASURED and no speedup is claimed.
