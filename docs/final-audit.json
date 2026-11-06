@@ -4620,7 +4620,58 @@
     "audit_branch": "docs/repository-audit-2026-11-04",
     "audit_branch_disposition": "PRESERVED_UNMERGED_DIVERGED_503_AHEAD_4_BEHIND_AT_COMPARISON"
   },
-  "repository_state_2026_11_06": {
+  "repository_state_2026_11_06_post_merge": {
+    "audited_at": "2026-11-06",
+    "default_branch": "main",
+    "starting_main_commit": "f7ce29d6bbae03a8d5a8d03e8c09dbbd5dd01662",
+    "merged_pull_request": 214,
+    "merge_commit": "29b63b8f58db1f6d7ff068d131df0b0759895115",
+    "final_pr_head": "0d4503ed55ff726807917e2cfbf14c0ad30eb624",
+    "exact_head_workflows": {
+      "full_ci": {
+        "run_id": 42199395072,
+        "status": "SUCCESS",
+        "jobs": {
+          "test": "SUCCESS",
+          "wheel_install_smoke": "SUCCESS",
+          "master_artifact": "SUCCESS"
+        }
+      },
+      "web_static": {
+        "run_id": 42199395225,
+        "status": "SUCCESS"
+      },
+      "site_api": {
+        "run_id": 42199395069,
+        "status": "SUCCESS"
+      },
+      "pyodide_compatibility": {
+        "run_id": 42199395284,
+        "status": "SUCCESS"
+      }
+    },
+    "post_merge_main_ci": "NOT_VERIFIED_IN_CONNECTOR_SESSION",
+    "post_merge_pages_deployment": "NOT_VERIFIED",
+    "browser_runtime": "HYBRID_NATIVE_FIRST_DICTIONARY_HITS_WITH_PYODIDE_OOV_FALLBACK",
+    "tltk_native_oov": "BLOCKED_PENDING_FILE_LEVEL_LICENSE_SCOPE_AND_PARITY",
+    "performance": "NOT_MEASURED",
+    "manual_accessibility": "NOT_VERIFIED",
+    "independent_ipa_gold_rows": 0,
+    "linguistic_accuracy": "NOT_MEASURED",
+    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY",
+    "branch_policy": "main_is_only_active_integration_branch; historical_refs_preserved",
+    "audit_branch": {
+      "name": "docs/repository-audit-2026-11-04",
+      "ahead_by": 503,
+      "behind_by": 16,
+      "comparison_point": "After PR #214 merge and post-merge documentation reconciliation, before this JSON-only update",
+      "disposition": "PRESERVED_DIVERGED_NO_WHOLE_HISTORY_MERGE"
+    },
+    "documentation_snapshot_head_before_this_structured_update": "484d95f9c5e37f562b6d24bb63be959dea732578",
+    "open_pull_requests": 0,
+    "mainline_status": "NATIVE_FIRST_HYBRID_INTEGRATED"
+  },
+  "repository_state_2026_11_06_pre_merge": {
     "audited_at": "2026-11-06",
     "default_branch": "main",
     "starting_main_commit": "f7ce29d6bbae03a8d5a8d03e8c09dbbd5dd01662",
@@ -4677,52 +4728,5 @@
     "manual_accessibility": "NOT_VERIFIED",
     "performance": "NOT_MEASURED",
     "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY"
-  },
-  "repository_state_2026_11_06_post_merge": {
-    "audited_at": "2026-11-06",
-    "default_branch": "main",
-    "starting_main_commit": "f7ce29d6bbae03a8d5a8d03e8c09dbbd5dd01662",
-    "merged_pull_request": 214,
-    "merge_commit": "29b63b8f58db1f6d7ff068d131df0b0759895115",
-    "final_pr_head": "0d4503ed55ff726807917e2cfbf14c0ad30eb624",
-    "exact_head_workflows": {
-      "full_ci": {
-        "run_id": 42199395072,
-        "status": "SUCCESS",
-        "jobs": {
-          "test": "SUCCESS",
-          "wheel_install_smoke": "SUCCESS",
-          "master_artifact": "SUCCESS"
-        }
-      },
-      "web_static": {
-        "run_id": 42199395225,
-        "status": "SUCCESS"
-      },
-      "site_api": {
-        "run_id": 42199395069,
-        "status": "SUCCESS"
-      },
-      "pyodide_compatibility": {
-        "run_id": 42199395284,
-        "status": "SUCCESS"
-      }
-    },
-    "post_merge_main_ci": "NOT_VERIFIED_IN_CONNECTOR_SESSION",
-    "post_merge_pages_deployment": "NOT_VERIFIED",
-    "browser_runtime": "HYBRID_NATIVE_FIRST_DICTIONARY_HITS_WITH_PYODIDE_OOV_FALLBACK",
-    "tltk_native_oov": "BLOCKED_PENDING_FILE_LEVEL_LICENSE_SCOPE_AND_PARITY",
-    "performance": "NOT_MEASURED",
-    "manual_accessibility": "NOT_VERIFIED",
-    "independent_ipa_gold_rows": 0,
-    "linguistic_accuracy": "NOT_MEASURED",
-    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY",
-    "branch_policy": "main_is_only_active_integration_branch; historical_refs_preserved",
-    "audit_branch": {
-      "name": "docs/repository-audit-2026-11-04",
-      "ahead_by": 503,
-      "behind_by": 8,
-      "disposition": "PRESERVED_NO_WHOLE_HISTORY_MERGE"
-    }
   }
 }
