@@ -5188,14 +5188,42 @@
       "head_sha": "c7db5ce22de230b0cb7ffecb866db0e77ab0bb34",
       "conclusion": "SUCCESS"
     },
-    "working_branch": "docs/repository-structure-closeout-2026-11-06",
+    "working_branch": "docs/post-merge-rtgs-closeout-2026-11-06",
     "refs_total_at_start_including_main": 15,
     "refs_total_after_working_branch_including_main": 16,
-    "current_open_pull_request": 225,
-    "tree_reconciliation": "All 14 historical non-main refs have zero added paths relative to main; one RTGS closeout branch is tree-identical, other refs are stale/different snapshots. No missing new file paths identified."
+    "current_open_pull_request": 226,
+    "tree_reconciliation": "All 14 historical non-main refs have zero added paths relative to main; one RTGS closeout branch is tree-identical, other refs are stale/different snapshots. No missing new file paths identified.",
+    "merged_implementation_pr": 225,
+    "merge_commit_sha": "1782064a530b7466962a1b1ea5503841fa88ba25",
+    "refs_total_with_documentation_closeout_branch_including_main": 17,
+    "main_post_merge_ci": {
+      "run_id": 42293152558,
+      "head_sha": "1782064a530b7466962a1b1ea5503841fa88ba25",
+      "conclusion": "SUCCESS"
+    },
+    "main_post_merge_web_static": {
+      "run_id": 42293152791,
+      "head_sha": "1782064a530b7466962a1b1ea5503841fa88ba25",
+      "conclusion": "SUCCESS"
+    },
+    "main_post_merge_site_api": {
+      "run_id": 42293152654,
+      "head_sha": "1782064a530b7466962a1b1ea5503841fa88ba25",
+      "conclusion": "SUCCESS"
+    },
+    "main_post_merge_pyodide_compat": {
+      "run_id": 42293152787,
+      "head_sha": "1782064a530b7466962a1b1ea5503841fa88ba25",
+      "conclusion": "SUCCESS"
+    },
+    "main_post_merge_pages_deploy_and_live_smoke": {
+      "run_id": 42293152547,
+      "head_sha": "1782064a530b7466962a1b1ea5503841fa88ba25",
+      "conclusion": "SUCCESS"
+    }
   },
   "homepage_rtgs_progressive_disclosure_2026_11_06": {
-    "status": "PENDING_EXACT_HEAD_CI",
+    "status": "DONE_VERIFIED",
     "primary_result": "provisional Ukrainian adaptation from external IPA",
     "secondary_result": "collapsed RTGS romanization",
     "lazy_load": true,
@@ -5217,6 +5245,31 @@
       "Pages build/deploy/live smoke",
       "FastThaiG2P Pyodide compatibility Chromium UI smoke"
     ],
-    "acceptance": "Exact-head checks pass; after merge, main Pages deployment and live smoke verify homepage app module, RTGS module and user-visible result."
+    "acceptance": "Exact-head checks pass; after merge, main Pages deployment and live smoke verify homepage app module, RTGS module and user-visible result.",
+    "implementation_pr": 225,
+    "pr_head_sha": "9e53ecf1a19ab744b120a0fd69ca214af46e2f10",
+    "merge_commit_sha": "1782064a530b7466962a1b1ea5503841fa88ba25",
+    "pr_head_checks": {
+      "ci": 42292476568,
+      "web_static": 42292476379,
+      "site_api": 42292476358,
+      "pyodide_compat": 42292476413,
+      "pages_build": 42292476431
+    },
+    "main_post_merge_checks": {
+      "ci": 42293152558,
+      "web_static": 42293152791,
+      "site_api": 42293152654,
+      "pyodide_compat": 42293152787,
+      "pages_deploy_and_live_smoke": 42293152547
+    },
+    "test_summary": {
+      "pytest": "406 passed, 1 skipped, 1211 subtests passed",
+      "ruff": "All checks passed",
+      "web_python_parity": "29 fixtures passed",
+      "tltk_oov": "64 reference cases passed",
+      "native_chromium": "16 CPython cases plus fail-closed OOV"
+    },
+    "deployed": true
   }
 }
