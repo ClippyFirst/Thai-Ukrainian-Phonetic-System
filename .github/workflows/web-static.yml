@@ -8,6 +8,7 @@ on:
   pull_request:
     paths:
       - "web/**"
+      - ".github/ISSUE_TEMPLATE/**"
       - ".github/workflows/web-static.yml"
 concurrency:
   group: ${{ github.workflow }}-${{ github.repository }}-${{ github.head_ref || github.ref_name }}
