@@ -41,7 +41,11 @@ def verify(fast_root: Path, tltk_root: Path) -> dict:
         raise SystemExit("Pinned TLTK 1.9.1 README no longer documents the package BSD-3-Clause change")
     if "include LICENSE.txt" not in manifest_source:
         raise SystemExit("Pinned TLTK source distribution no longer includes its BSD LICENSE.txt")
-    missing_packaged_assets = [name for name in PAIRS if name not in setup_source]
+    missing_packaged_assets = [
+        fast_name
+        for fast_name, (_, tltk_rel, _) in PAIRS.items()
+        if Path(tltk_rel).name not in setup_source
+    ]
     if missing_packaged_assets:
         raise SystemExit("Pinned TLTK setup.py no longer packages fallback assets: " + ", ".join(missing_packaged_assets))
     if "license='BSD-3-Clause'" not in setup_source or "License :: OSI Approved :: BSD License" not in setup_source:
