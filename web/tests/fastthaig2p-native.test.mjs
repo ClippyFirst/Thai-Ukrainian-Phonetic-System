@@ -40,8 +40,8 @@ const dictionaryHash = [...new Uint8Array(await crypto.subtle.digest("SHA-256", 
 const manifest = {
   schema_version: 1,
   upstream_commit: "4e82a291b4cf2876326744c6580121e9986ad354",
-  stage: "dictionary-data-only; not a complete runtime",
-  license: "CC-BY-SA-4.0",
+  stage: "dictionary-and-normalizer-data-only; not a complete runtime",
+  dictionary_license: "CC-BY-SA-4.0",
   dictionary_entries: 1,
   assets: [{
     path: "native/fastthaig2p-ipa.json",
