@@ -48,7 +48,7 @@ Do not conflate this work with the separate ClippyFirst Thai orthographic resear
 | Typed IPA result contract | PARTIAL | Tone contours and segmental IPA are parsed; exact parity for uncertainty, unsupported symbols, word/syllable alignment and metadata remains TODO. |
 | IPA → Ukrainian adapter | REUSED | Existing `web/src/ipa-ua.js` remains the sole target adaptation boundary; it must not be duplicated. |
 | Native pipeline composition | PARTIAL | `createFastThaiG2PNativePipeline` composes normalization, default/custom newmm, dictionary lookup and existing IPA→Ukrainian adapter; 16 dictionary-only cases match CPython. OOV fallback is missing. |
-| Native Worker smoke | DONE_VERIFIED | Pyodide compatibility #42183434605: real Chromium Worker initialized, loaded only same-origin JS/data, matched CPython raw IPA, and requested no Pyodide/Python/wheel/remote assets on current PR head. |
+| Native Worker smoke | DONE_VERIFIED | Pyodide compatibility #42184407769: real Chromium Worker matched all 16 pinned CPython front-half cases and fail-closed OOV; request audit confirmed no Pyodide/Python/wheels/WASM/remote requests. |
 | Python/JS differential suite | PARTIAL | 18 normalizer, 16 custom tokenizer and 16 dictionary-only front-half cases pass. Typed IPA metadata and full service JSON/OOV differential remain TODO. |
 | Browser cold/warm/offline tests | PARTIAL | Isolated Chromium native Worker smoke proves same-origin JS/data-only execution and no Pyodide/Python/wheel/remote requests. Cold-vs-warm timing, memory, cache reuse and offline reload remain TODO. |
 | Footprint/performance | TODO | Measure transferred bytes, cold-start, warm latency and memory on desktop and mobile; compare to the 20.5 MB baseline. |
@@ -68,6 +68,7 @@ Differential evidence on the exact tested code head:
 - 18 normalizer cases matched pinned CPython, including maiyamok using the extracted default wordlist;
 - 16 custom FastThaiG2P newmm cases matched PyThaiNLP;
 - 16 dictionary-only end-to-end front-half cases matched CPython raw IPA.
+- The same 16 cases also passed inside the real Chromium module Worker, including manifest/SHA-256 data loading; an OOV probe returned the expected Ukrainian fail-closed error without fetching Python/Pyodide/wheels/remote assets.
 
 This is not a complete FastThaiG2P port: the TLTK-derived OOV fallback and full typed IPA/result JSON parity are still missing. An isolated native module Worker is implemented and passes Chromium smoke, but is not yet integrated into the public application, which continues to use the verified Pyodide worker.
 
@@ -97,4 +98,4 @@ node web/tests/fastthaig2p-pyodide.test.mjs build/pyodide-wheels build/fastthaig
 node web/tests/fastthaig2p-browser.test.mjs
 ```
 
-The native front-half differential suite and isolated Chromium Worker smoke pass on the cited code head, but the TLTK OOV algorithm has not yet been ported and full typed-result parity remains unverified. The six upstream fallback data transformations are verified; the remaining gate is license scope and implementation parity. Do not claim full browser-native capability, performance improvement or production readiness.
+The native front-half differential suite and 16-case isolated Chromium Worker smoke pass on the cited code head, but the TLTK OOV algorithm has not yet been ported and full typed-result parity remains unverified. The six upstream fallback data transformations are verified; the remaining gate is license scope and implementation parity. Do not claim full browser-native capability, performance improvement or production readiness.
