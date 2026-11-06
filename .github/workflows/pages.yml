@@ -99,6 +99,10 @@ jobs:
           from pathlib import Path
           manifest = json.loads(Path("web/vendor/native/manifest.json").read_text())
           assert manifest["dictionary_entries"] == 13144
+          assert manifest["normalizer_license"] == "Apache-2.0"
+          assert manifest["pythainlp_version"] == "5.4.0"
+          assert manifest["pythainlp_wordlist_license"] == "CC0-1.0"
+          assert manifest["pythainlp_wordlist_entries"] > 0
           assert manifest["stage"] == "dictionary-normalizer-and-default-wordlist-data-only; not a complete runtime"
           for asset in manifest["assets"]:
               path = Path("web/vendor") / asset["path"]
