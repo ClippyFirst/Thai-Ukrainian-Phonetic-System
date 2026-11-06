@@ -81,7 +81,11 @@ function syllableResult(rawIpa) {
  *
  * @param {{dictionary: Record<string,string>, tokenize?: (text:string)=>string[]}} options
  */
-export function createFastThaiG2PNativeEngine({ dictionary, tokenize = text => text.split(/\s+/u).filter(Boolean) }) {
+export function createFastThaiG2PNativeEngine({
+  dictionary,
+  tokenize = text => text.split(/\s+/u).filter(Boolean),
+  normalize = text => text.normalize("NFC").trim()
+}) {
   if (!dictionary || typeof dictionary !== "object" || Array.isArray(dictionary)) {
     throw new TypeError("A FastThaiG2P IPA dictionary object is required");
   }
