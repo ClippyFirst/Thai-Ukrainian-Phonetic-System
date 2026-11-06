@@ -27,6 +27,10 @@ The primary job is simple: enter Thai text, request analysis, read the Ukrainian
 6. Progressive detail: word/syllable breakdown, tone, vowel length, warnings and engine provenance.
 7. Support: method, evidence, feedback, GitHub and legal notices.
 
+## Optional RTGS result
+
+The primary result remains the provisional Ukrainian IPA adaptation, with external IPA beside it. A separate RTGS romanization is discoverable directly below as a collapsed native disclosure; it is dynamically imported only when the user opens it. The pinned CC0 word list is shared with the primary native tokenizer and may already be cached or fetched during the main analysis; the RTGS loader still validates the same-origin manifest, version, size and SHA-256. This keeps the additional capability visible without competing with the primary task or loading the optional RTGS module for users who do not request it. RTGS is labelled as a separate romanization method and never feeds the IPA → Ukrainian adapter.
+
 ## Interaction contracts
 
 - Selecting a sample fills the input; it does not launch analysis automatically.
@@ -36,6 +40,7 @@ The primary job is simple: enter Thai text, request analysis, read the Ukrainian
 - The status region reports startup, download, analysis, success and failure without moving focus.
 - Copy controls copy the exact displayed string and show a short confirmation.
 - Advanced detail remains inside a native details/summary disclosure.
+- RTGS is an explicit, collapsed secondary result; it loads only on expansion, uses same-origin integrity-checked assets, and discards results if the input changes while loading.
 
 ## Responsive rules
 

@@ -2204,3 +2204,21 @@ Latest verified code head: `d4f35892adc02eb03b1fd345a0193c46c07b1eb7`. Exact-hea
 | Post-merge main Pages deployment and live URL smoke | BLOCKED_EVIDENCE_ACCESS | Pages workflow's main-push trigger and live smoke commands are present. PR build passed, but PR deploy is skipped by design. Current GitHub connector exposes PR-triggered workflow runs only; combined status has no contexts; public Pages fetch was inaccessible and Firecrawl credits were exhausted. Acceptance: main push deploy SUCCESS and live fetch/hash checks for app, native worker, TLTK manifest/data, notices and Pyodide fallback. |
 | Performance, manual accessibility, independent linguistic accuracy | TODO / NOT_MEASURED | No cold/warm/offline/mobile or memory benchmark; no manual AT/device audit; no independently adjudicated Thai IPA gold or Ukrainian expert validation. |
 
+
+
+---
+
+## Repository consolidation and homepage RTGS disclosure — 2026-11-06
+
+| Work item | Status | Evidence / acceptance |
+|---|---|---|
+| Default branch and PR inventory | DONE_VERIFIED | Default branch is `main`, starting head `c7db5ce22de230b0cb7ffecb866db0e77ab0bb34`; no open PRs. PRs #210–#214 and #216–#224 are merged; #215 is closed as superseded by #216. |
+| Branch reconciliation | DONE_VERIFIED_WITH_PRESERVED_HISTORY | Baseline 15 refs including main; all 14 non-main refs compared by commit graph and exact tree. All 14 historical trees have zero file paths absent from main; `docs/rtgs-romanizer-closeout-2026-11-06` is tree-identical. Other refs are stale/different snapshots, not missing file additions. The historical audit ref is divergent (503 ahead / 42 behind) and is intentionally not merged wholesale. Historical refs are preserved; no destructive branch deletion or force-push. Current total is 16 refs including the one new working branch. |
+| One active working branch | DONE_VERIFIED | `docs/repository-structure-closeout-2026-11-06` created from starting main `c7db5ce22de230b0cb7ffecb866db0e77ab0bb34`; PR #225 is the only active continuation PR. |
+| Homepage RTGS progressive disclosure | PARTIAL_PENDING_EXACT_HEAD_CI | Primary Ukrainian/IPA result remains unchanged. Secondary RTGS `details/summary` dynamically imports `rtgs-romanizer.js` only on expansion; the shared CC0 word list may already be cached by the primary native tokenizer, and the RTGS loader retains manifest and SHA-256 verification. Stale output is discarded when input changes. Acceptance: exact-head Web Static and Pages contract pass; post-merge Pages live smoke verifies homepage and lazy RTGS assets. |
+| RTGS regression tests | PARTIAL_PENDING_EXACT_HEAD_CI | Added assertions to `web/tests/ui-contract.test.mjs` and `web/tests/romanization-page.test.mjs`; Web Static runs `rtgs-reference.test.mjs`, `rtgs-romanizer.test.mjs`, `romanization-page.test.mjs` and JS syntax checks. Acceptance: workflow succeeds on exact PR head and post-merge main. |
+| Documentation alignment | DONE_VERIFIED_AS_SOURCE_UPDATE | Root README, docs index, RTGS method note, UI/UX specification and chronological handoff describe the homepage disclosure and dedicated RTGS page. This status records the source edits, not external CI verification. |
+| Independent Thai/Ukrainian linguistic validation | NOT_MEASURED / DEFERRED | RTGS parity and automated tests are engineering evidence only. Independent IPA gold remains 0; Ukrainian target forms remain provisional. |
+| Manual accessibility and physical-device performance | DEFERRED / NOT_VERIFIED | Requires recorded keyboard/screen-reader/zoom/reflow/device checks and instrumented cold/warm/offline/mobile latency, transfer and memory measurements. |
+
+Branch reconciliation rule: do not merge a stale branch merely because GitHub reports commits ahead of main. Check its PR merge/supersession status and compare its actual file patch against current main. Squash-merged branch commits remain non-ancestor commits; they are not missing work by default. Preserve historical branches unless the owner explicitly requests their deletion.

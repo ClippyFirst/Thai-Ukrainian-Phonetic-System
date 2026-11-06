@@ -33,6 +33,7 @@ jobs:
       - name: Check browser JavaScript syntax
         run: |
           node --check web/src/app.js
+          node --check web/src/rtgs-romanizer.js
           node --check web/src/fastthaig2p-native.js
           node --check web/src/fastthaig2p-tltk-oov.js
           node --check web/src/fastthaig2p-normalizer.js
@@ -65,6 +66,9 @@ jobs:
         run: |
           node web/tests/accessibility-contract.test.mjs
           node web/tests/ukrainian-first.test.mjs
+          node web/tests/rtgs-reference.test.mjs
+          node web/tests/rtgs-romanizer.test.mjs
+          node web/tests/romanization-page.test.mjs
           node web/tests/fastthaig2p-native.test.mjs
           node web/tests/tltk-oov.test.mjs
           node web/tests/ui-contract.test.mjs

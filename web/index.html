@@ -4,10 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#ffffff">
-  <meta name="description" content="Вставте тайський текст і подивіться його IPA та попередній практичний запис українськими літерами.">
+  <meta name="description" content="Вставте тайський текст і подивіться IPA та попередній український запис; за бажанням відкрийте додаткову романізацію RTGS.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
   <title>Тайська українською — як прочитати тайський текст</title>
-  <link rel="stylesheet" href="src/styles.css?v=20261106-ukrainian-first-1">
+  <link rel="stylesheet" href="src/styles.css?v=20261106-rtgs-inline-1">
 </head>
 <body>
 <a class="skip-link" href="#main-content">Перейти до основного вмісту</a>
@@ -34,7 +34,7 @@
     <div class="hero-copy">
       <p class="eyebrow"><span class="eyebrow-line" aria-hidden="true"></span> ТАЙСЬКА МОВА · ПРАКТИЧНЕ ЧИТАННЯ</p>
       <h1 id="page-title">Побачте, як <span>прочитати</span> тайський текст</h1>
-      <p class="lede">Вставте слово або речення тайською — сервіс побудує IPA та покаже її попередню адаптацію українськими літерами. Це допомога з вимовою, не переклад.</p>
+      <p class="lede">Вставте слово або речення тайською — сервіс побудує IPA та покаже її попередню адаптацію українськими літерами. За бажанням у результаті можна розгорнути додаткову романізацію RTGS латиницею. Це допомога з читанням і вимовою, не переклад.</p>
       <div class="hero-facts" aria-label="Особливості сервісу">
         <span><i aria-hidden="true"></i> Працює у браузері</span>
         <span><i aria-hidden="true"></i> Без надсилання тексту на сервер</span>
@@ -64,7 +64,7 @@
     <label class="input-label" for="thai-input">Текст тайською</label>
     <textarea id="thai-input" lang="th" rows="3" spellcheck="false" autocomplete="off" autocapitalize="off" aria-describedby="input-hint input-count" placeholder="Наприклад: สวัสดี"></textarea>
     <div class="input-meta">
-      <p class="input-hint" id="input-hint">Ваш текст залишається у браузері. Спочатку працює нативний JavaScript-порт FastThaiG2P без Python-модулів. Якщо слова немає в локальному словнику, браузер завантажить повний Pyodide-рушій FastThaiG2P для сумісного резервного опрацювання.</p>
+      <p class="input-hint" id="input-hint">Ваш текст залишається у браузері. Спочатку працює нативний JavaScript-порт FastThaiG2P. Якщо слова немає в основному словнику, сервіс спробує нативний TLTK OOV-модуль; Pyodide залишається резервним сумісним шляхом лише тоді, коли нативний рушій не може завершити аналіз.</p>
       <span class="input-count" id="input-count" aria-live="off">Знаків: 0</span>
     </div>
 
@@ -123,6 +123,6 @@
     <a href="third-party-notices.html">Ліцензії</a>
   </nav>
 </footer>
-<script type="module" src="src/app.js?v=20261106-ukrainian-first-1"></script>
+<script type="module" src="src/app.js?v=20261106-rtgs-inline-1"></script>
 </body>
 </html>

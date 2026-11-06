@@ -182,15 +182,17 @@ jobs:
               && grep -Fq 'Спочатку працює нативний JavaScript-порт FastThaiG2P' /tmp/deployed-index.html \
               && grep -Fq 'id="thai-input"' /tmp/deployed-index.html \
               && grep -Fq 'id="analyze"' /tmp/deployed-index.html \
-              && curl --fail --silent --show-error "$PAGE_URL/src/app.js?v=20261106-ukrainian-first-1" -o /tmp/deployed-app.js \
+              && curl --fail --silent --show-error "$PAGE_URL/src/app.js?v=20261106-rtgs-inline-1" -o /tmp/deployed-app.js \
               && curl --fail --silent --show-error "$PAGE_URL/src/fastthaig2p-native-worker.js" -o /tmp/deployed-native-worker.js \
               && curl --fail --silent --show-error "$PAGE_URL/src/fastthaig2p-tltk-oov.js" -o /tmp/deployed-native-oov.js \
               && curl --fail --silent --show-error "$PAGE_URL/src/fastthaig2p-native.js" -o /tmp/deployed-native.js \
               && curl --fail --silent --show-error "$PAGE_URL/src/fastthaig2p-worker.js" -o /tmp/deployed-pyodide-worker.js \
-              && curl --fail --silent --show-error "$PAGE_URL/src/styles.css?v=20261106-ukrainian-first-1" -o /tmp/deployed-styles.css \
+              && curl --fail --silent --show-error "$PAGE_URL/src/styles.css?v=20261106-rtgs-inline-1" -o /tmp/deployed-styles.css \
               && grep -Fq 'native_dictionary_miss' /tmp/deployed-app.js \
               && grep -Fq 'fastthaig2p-native-worker.js' /tmp/deployed-app.js \
               && grep -Fq 'fastthaig2p-worker.js' /tmp/deployed-app.js \
+              && grep -Fq 'rtgs-inline-result' /tmp/deployed-app.js \
+              && grep -Fq 'import("./rtgs-romanizer.js")' /tmp/deployed-app.js \
               && grep -Fq 'fastthaig2p-tltk-oov.js' /tmp/deployed-native-worker.js \
               && grep -Fq 'createTltkOovFallback' /tmp/deployed-native-oov.js \
               && grep -Fq 'loadTltkOovData' /tmp/deployed-native-oov.js \

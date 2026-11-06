@@ -5034,5 +5034,189 @@
     "purpose": "Explicitly check the deployed practical-system page, /j/ section, nav links and responsive stylesheet in future main Pages smoke runs",
     "status": "PENDING_PR_222_MERGE_AND_MAIN_DEPLOY",
     "source_commit": "d0528deac04db9a3ed9e062e98ace45492e95f9f"
+  },
+  "repository_consolidation_2026_11_06": {
+    "starting_main_sha": "c7db5ce22de230b0cb7ffecb866db0e77ab0bb34",
+    "default_branch": "main",
+    "open_pull_requests": 0,
+    "merged_pull_requests": [
+      210,
+      211,
+      212,
+      213,
+      214,
+      216,
+      217,
+      218,
+      219,
+      220,
+      221,
+      222,
+      223,
+      224
+    ],
+    "superseded_closed_pull_requests": [
+      215
+    ],
+    "refs_total_including_main": 15,
+    "non_main_branch_comparisons": [
+      {
+        "branch": "design/site-recomposition-2026-11-05",
+        "ahead": 28,
+        "behind": 38,
+        "tree_added_paths": 0,
+        "tree_deleted_paths": 37,
+        "tree_changed_paths": 41
+      },
+      {
+        "branch": "docs/post-211-pages-verification-2026-11-06",
+        "ahead": 7,
+        "behind": 37,
+        "tree_added_paths": 0,
+        "tree_deleted_paths": 37,
+        "tree_changed_paths": 39
+      },
+      {
+        "branch": "docs/post-merge-closeout-2026-11-06",
+        "ahead": 17,
+        "behind": 3,
+        "tree_added_paths": 0,
+        "tree_deleted_paths": 6,
+        "tree_changed_paths": 11
+      },
+      {
+        "branch": "docs/post-merge-tltk-oov-verification-2026-11-06",
+        "ahead": 9,
+        "behind": 20,
+        "tree_added_paths": 0,
+        "tree_deleted_paths": 10,
+        "tree_changed_paths": 21
+      },
+      {
+        "branch": "docs/practical-system-site-2026-11-06",
+        "ahead": 19,
+        "behind": 4,
+        "tree_added_paths": 0,
+        "tree_deleted_paths": 6,
+        "tree_changed_paths": 11
+      },
+      {
+        "branch": "docs/repository-audit-2026-11-04",
+        "ahead": 503,
+        "behind": 42,
+        "disposition": "PRESERVED_NOT_MERGED_WHOLESALE",
+        "tree_added_paths": 0,
+        "tree_deleted_paths": 38,
+        "tree_changed_paths": 46
+      },
+      {
+        "branch": "docs/rtgs-romanizer-closeout-2026-11-06",
+        "ahead": 1,
+        "behind": 1,
+        "tree_added_paths": 0,
+        "tree_deleted_paths": 0,
+        "tree_changed_paths": 0
+      },
+      {
+        "branch": "feat/fastthaig2p-native-ts-port-2026-11-06",
+        "ahead": 138,
+        "behind": 35,
+        "tree_added_paths": 0,
+        "tree_deleted_paths": 17,
+        "tree_changed_paths": 35
+      },
+      {
+        "branch": "feat/native-tltk-oov-and-pages-verification-2026-11-06",
+        "ahead": 41,
+        "behind": 22,
+        "tree_added_paths": 0,
+        "tree_deleted_paths": 15,
+        "tree_changed_paths": 30
+      },
+      {
+        "branch": "feat/native-tltk-oov-runtime-2026-11-06",
+        "ahead": 115,
+        "behind": 22,
+        "tree_added_paths": 0,
+        "tree_deleted_paths": 10,
+        "tree_changed_paths": 22
+      },
+      {
+        "branch": "feat/thai-rtgs-romanizer-2026-11-06",
+        "ahead": 2,
+        "behind": 2,
+        "tree_added_paths": 0,
+        "tree_deleted_paths": 0,
+        "tree_changed_paths": 5
+      },
+      {
+        "branch": "feat/ukrainian-first-ux-2026-11-06",
+        "ahead": 44,
+        "behind": 37,
+        "tree_added_paths": 0,
+        "tree_deleted_paths": 34,
+        "tree_changed_paths": 39
+      },
+      {
+        "branch": "fix/pages-smoke-and-audit-consolidation-2026-11-06",
+        "ahead": 4,
+        "behind": 19,
+        "tree_added_paths": 0,
+        "tree_deleted_paths": 9,
+        "tree_changed_paths": 20
+      },
+      {
+        "branch": "fix/tltk-oov-parity-followup-2026-11-06",
+        "ahead": 2,
+        "behind": 21,
+        "tree_added_paths": 0,
+        "tree_deleted_paths": 10,
+        "tree_changed_paths": 21
+      },
+      {
+        "branch": "fix/ukrainian-onset-j-system-2026-11-06",
+        "ahead": 20,
+        "behind": 10,
+        "tree_added_paths": 0,
+        "tree_deleted_paths": 8,
+        "tree_changed_paths": 10
+      }
+    ],
+    "policy": "Merged/squash-merged PR branch refs are historical source refs, not pending work. Preserve user branches; do not merge divergent history wholesale or delete refs without explicit instruction.",
+    "main_ci": {
+      "run_id": 42288841151,
+      "head_sha": "c7db5ce22de230b0cb7ffecb866db0e77ab0bb34",
+      "conclusion": "SUCCESS"
+    },
+    "working_branch": "docs/repository-structure-closeout-2026-11-06",
+    "refs_total_at_start_including_main": 15,
+    "refs_total_after_working_branch_including_main": 16,
+    "current_open_pull_request": 225,
+    "tree_reconciliation": "All 14 historical non-main refs have zero added paths relative to main; one RTGS closeout branch is tree-identical, other refs are stale/different snapshots. No missing new file paths identified."
+  },
+  "homepage_rtgs_progressive_disclosure_2026_11_06": {
+    "status": "PENDING_EXACT_HEAD_CI",
+    "primary_result": "provisional Ukrainian adaptation from external IPA",
+    "secondary_result": "collapsed RTGS romanization",
+    "lazy_load": true,
+    "module": "web/src/rtgs-romanizer.js",
+    "method": "PyThaiNLP 5.4.0 royin / RTGS",
+    "segmentation": "PyThaiNLP 5.4.0 newmm",
+    "data_license": "CC0-1.0 word list; existing manifest/version/size/SHA-256 checks retained",
+    "separate_from_ipa_ukrainian_adapter": true,
+    "stale_input_guard": true,
+    "tests": [
+      "web/tests/ui-contract.test.mjs",
+      "web/tests/romanization-page.test.mjs",
+      "web/tests/fastthaig2p-browser.test.mjs",
+      "web/tests/rtgs-romanizer.test.mjs",
+      "web/tests/rtgs-reference.test.mjs"
+    ],
+    "workflows": [
+      "Web Static",
+      "Pages build/deploy/live smoke",
+      "FastThaiG2P Pyodide compatibility Chromium UI smoke"
+    ],
+    "acceptance": "Exact-head checks pass; after merge, main Pages deployment and live smoke verify homepage app module, RTGS module and user-visible result."
   }
 }
