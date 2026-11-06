@@ -37,7 +37,7 @@ const data = {
 const fallback = createTltkOovFallback(data);
 assert.equal(fallback.convert("ก"), "/k˨˩/");
 assert.equal(fallback.convert("ข"), null);
-assert.equal(fallback.convert("abc"), "/abc/");
+assert.equal(fallback.convert("abc"), null);
 assert.equal(fallback.packageVersion, "1.9.1");
 assert.equal(fallback.sourceCommit, "4e82a291b4cf2876326744c6580121e9986ad354");
 
