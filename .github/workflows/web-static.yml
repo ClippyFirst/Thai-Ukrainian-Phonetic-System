@@ -50,8 +50,9 @@ jobs:
           grep -q 'focus-visible' web/src/styles.css
           grep -q 'Content-Security-Policy' web/index.html
           grep -q 'Content-Security-Policy' web/system.html
-      - name: Run static accessibility contract suite
-        run: node web/tests/accessibility-contract.test.mjs
+      - name: Run localization, UI and static accessibility contracts
+        run: |
+          node web/tests/accessibility-contract.test.mjs
           node web/tests/ukrainian-first.test.mjs
           node web/tests/ui-contract.test.mjs
       - name: Validate third-party notices and dataset attribution
