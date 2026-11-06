@@ -5279,5 +5279,31 @@
       "native_chromium": "16 CPython cases plus fail-closed OOV"
     },
     "deployed": true
+  },
+  "geographic_dictionary_2026_11_07": {
+    "status": "PARTIAL",
+    "starting_commit": "d2d9c3f862864587262a0732fef0af2a03b9ed83",
+    "branch": "feat/geographic-name-dictionary-2026-11-07",
+    "implementation": "scripts/build_geographic_dictionary.py",
+    "tests": "tests/test_geographic_dictionary.py",
+    "documentation": [
+      "docs/geographic-dictionary.md",
+      "data/geography/README.md",
+      "data/geography/geographic-names-template.csv"
+    ],
+    "outputs": [
+      "romanization_rtgs",
+      "ipa_phonemic",
+      "ipa_broad_surface",
+      "ukrainian_from_ipa",
+      "pipeline_status",
+      "segmentation_method",
+      "pipeline_warnings",
+      "romanization_method"
+    ],
+    "pipeline_boundary": "RTGS is separate; Ukrainian output is consumed from typed PhoneticResult / IPA adapter only.",
+    "verification": "PENDING_EXACT_HEAD_CI",
+    "linguistic_accuracy": "NOT_MEASURED",
+    "blocker": "No source-licensed geographic corpus and no independent expert IPA/Ukrainian-name adjudication."
   }
 }
