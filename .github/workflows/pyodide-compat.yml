@@ -142,6 +142,10 @@ jobs:
           native_manifest = json.loads((Path("web/vendor") / "native" / "manifest.json").read_text())
           assert native_manifest["stage"] == "dictionary-normalizer-and-default-wordlist-data-only; not a complete runtime"
           assert native_manifest["dictionary_entries"] == 13144
+          assert native_manifest["normalizer_license"] == "Apache-2.0"
+          assert native_manifest["pythainlp_version"] == "5.4.0"
+          assert native_manifest["pythainlp_wordlist_license"] == "CC0-1.0"
+          assert native_manifest["pythainlp_wordlist_entries"] > 0
           for item in native_manifest["assets"]:
               asset = Path("web/vendor") / item["path"]
               assert asset.is_file()
