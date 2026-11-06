@@ -2897,3 +2897,6 @@ The canonical task ledger is `docs/fastthaig2p-javascript-port.md` and `docs/val
 - No Python modules/wheels/WASM are requested for dictionary-covered inputs; JS modules and the approximately 2.2 MB native data assets are still fetched from same-origin Pages. OOV still downloads Pyodide. Cold/warm/offline/mobile performance, memory and accessibility-device acceptance remain TODO.
 
 The canonical native-port ledger remains `docs/fastthaig2p-javascript-port.md`; the validation register is `docs/validation-matrix.md`. Accuracy remains `NOT_MEASURED`.
+
+
+Latest branch head: `228d80d51d58a4437ab0f70ba12597a1259902e8`. The UI contract test now mocks both native and Pyodide workers and verifies that a dictionary hit never instantiates Pyodide, while only `native_dictionary_miss` triggers the fallback. Exact-head CI, Web Static, site API and Pyodide compatibility PR runs are queued/pending; do not report them as passing. No further code changes are planned until these checks return.
