@@ -52,6 +52,19 @@ try {
   assert.match(firstResult, /\/sua̯n˩˩˦\//);
   assert.match(firstResult, /Українськими літерами/);
   assert.match(firstResult, /FastThaiG2P/);
+  const rtgsDisclosure = page.locator("#results .rtgs-inline-result");
+  assert.equal(await rtgsDisclosure.evaluate(element => element.open), false,
+    "RTGS must be collapsed until the user requests the additional result");
+  assert.equal(requests.some(url => url.includes("/src/rtgs-romanizer.js")), false,
+    "The optional RTGS module must not load before the disclosure is opened");
+  await rtgsDisclosure.locator("summary").click();
+  await page.locator("#results .rtgs-inline-value").waitFor({ state: "visible", timeout: 30000 });
+  assert((await page.locator("#results .rtgs-inline-value").innerText()).trim().length > 0,
+    "Expanding the disclosure must produce a non-empty RTGS result");
+  assert(requests.some(url => url.includes("/src/rtgs-romanizer.js")),
+    "The RTGS module must load after an explicit expansion");
+  assert(requests.some(url => url.includes("/src/rtgs-reference.js")),
+    "The RTGS renderer must be loaded with the optional feature");
 
   await page.locator("#thai-input").fill("กรุงเทพมหานคร");
   await page.locator("#analyze").click();
