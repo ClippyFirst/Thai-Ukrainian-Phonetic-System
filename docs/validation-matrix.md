@@ -1,3 +1,29 @@
+## Post-merge execution checkpoint — PR #214 integrated (2026-11-06)
+
+| Work item | Status | Evidence / remaining acceptance |
+|---|---|---|
+| PR #214 native-first FastThaiG2P browser port | DONE_VERIFIED (PR-head engineering gates) | Squash-merged to main as `29b63b8f58db1f6d7ff068d131df0b0759895115`. Exact final PR head `0d4503ed55ff726807917e2cfbf14c0ad30eb624`: Full CI #42199395072, Web Static #42199395225, Site API #42199395069 and Pyodide compatibility #42199395284 all SUCCESS. Post-merge main push CI/Pages deployment still require independent verification. |
+| Native-first UI stale-response test correction | DONE_VERIFIED | Test-only microtask flush and callback assertion in `37e0ee6b6fb1385bd4c98bfdd582d8eee3dac5c1`; final exact-head suite passed. |
+| Browser-native TLTK OOV algorithm | BLOCKED / PARTIAL | Full native OOV parity not implemented. TLTK BSD-3-Clause metadata/LICENSE.txt conflicts with LGPL-3.0 root LICENSE and stale GPLv3 PKG-INFO. Keep Pyodide OOV fallback and do not bundle TLTK assets/code until file-level rights are resolved. |
+| Mainline Pages deployment after PR #214 | BLOCKED / NOT VERIFIED | PR-head tests passed, but post-merge Pages workflow and live smoke were not accessible through the available commit-run lookup. Verify main push CI, Pages deployment and deployed assets before claiming the hybrid UI is live. |
+| Native cold/warm/offline/mobile performance and memory | TODO | Measure actual same-origin transfer, first-use/cached latency, offline reload and memory on desktop/mobile. No speedup claim. |
+| Manual accessibility acceptance | TODO / DEFERRED_UNVERIFIED | Keyboard-only, screen-reader, 200%/400% zoom/reflow, real clipboard and screenshot/visual review require human/browser testing. Static tests do not prove WCAG conformance. |
+| Independent linguistic validation | BLOCKED / EVIDENCE-LIMITED | Independent IPA gold = 0; accuracy = `NOT_MEASURED`; Ukrainian candidates remain provisional. Requires qualified independent Thai reviewers/adjudicator and Ukrainian-native target review. |
+| Branch consolidation | DONE_VERIFIED for active PR work; historical refs preserved | PR #210–#214 are integrated. The audit branch remains preserved because it is 503 commits ahead/8 behind and includes older code; no whole-history merge or branch deletion. |
+
+### Mainline and branch disposition
+
+- `main`: default and active integration branch; PR #214 merge commit `29b63b8f58db1f6d7ff068d131df0b0759895115`.
+- `design/site-recomposition-2026-11-05`: integrated by PR #211; historical source ref retained.
+- `docs/post-211-pages-verification-2026-11-06`: integrated by PR #212; historical source ref retained.
+- `feat/ukrainian-first-ux-2026-11-06`: integrated by PR #213; historical source ref retained.
+- `feat/fastthaig2p-native-ts-port-2026-11-06`: integrated by PR #214; historical source ref retained.
+- `docs/repository-audit-2026-11-04`: preserved, 503 ahead/8 behind; no wholesale merge.
+
+The branch list still contains historical refs because no user branch was deleted. The single active development/integration line is `main`.
+
+---
+
 ## Current execution checkpoint — branch consolidation and native-first port (2026-11-06)
 
 | Work item | Status | Evidence / next acceptance |
