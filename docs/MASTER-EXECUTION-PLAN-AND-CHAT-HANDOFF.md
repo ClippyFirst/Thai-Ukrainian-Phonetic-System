@@ -2785,3 +2785,17 @@ Canonical documents: `docs/beta-release-scope.md`, `docs/fastthaig2p-pyodide-por
 - Canonical product contract: [Ukrainian-first UX](ukrainian-first-ux.md). Validation ledger updated in `docs/validation-matrix.md`.
 - Remaining: inspect latest exact-head Web Static, Full CI and Pyodide/browser smoke; inspect Pages deployment after merge; complete full visible-string/ARIA inventory; manually verify GitHub feedback form rendering; manual mobile, keyboard, screen-reader, zoom and clipboard review; privacy wording only after verifying hosting/logging facts; Ukrainian phonetics glossary.
 - Scope guard: no Thai phonological rules, IPA outputs, Ukrainian adaptation rules, corpora, evidence grades or accuracy claims changed. Accuracy remains `NOT_MEASURED`; Ukrainian output remains provisional. Local tests were not run in this connector-only session.
+
+
+## Handoff — FastThaiG2P browser-native JavaScript/TypeScript port (2026-11-06)
+
+- Owner approved an original browser-native JavaScript/TypeScript port, superseding the 2026-11-05 Pyodide-only/no-parallel-JS constraint. GitHub Pages remains the hosting target; no remote API or CDN runtime.
+- Previous Ukrainian-first UX PR #213 merged to main as `f7ce29d6bbae03a8d5a8d03e8c09dbbd5dd01662`.
+- Dedicated branch: `feat/fastthaig2p-native-ts-port-2026-11-06`, based on that main checkpoint. PR [#214](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/214) is open and not merged.
+- Implemented in this branch: isolated dictionary-only JS result adapter; source-filtered native IPA JSON data asset with integrity manifest; JS normalizer port; AST extraction of exact upstream normalizer maps; deterministic CPython normalizer reference fixtures; unit/differential test wiring; Pages and Pyodide build checks for native asset integrity. No runtime cutover.
+- Web Static [42180685131](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42180685131) SUCCESS on code head `7153ca835b1df220e9b3f2c9a750f6c6c3e501c9`; it checked JS syntax and native adapter contracts. Later changes through `3a3811ada4e33c9461510dcdb085c9d6cd92d38f` are build-script/workflow fixes and require exact-head checks.
+- Earlier Pyodide compatibility runs failed in the new extraction step because the upstream package has no pre-existing `fastthaig2p/data` directory. The extractor now creates it before writing. Latest exact-head Pyodide compatibility run [42180750405](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42180750405) is IN_PROGRESS at the time of this handoff; do not claim normalizer parity or complete CI until it succeeds.
+- Full CI on the latest head is pending. No Pages deployment has been run for PR #214.
+- Current port scope is still PARTIAL: normalization is implemented but awaiting CPython parity; PyThaiNLP newmm tokenizer and TLTK OOV fallback remain outstanding. TLTK asset-level licensing is still unresolved, so do not redistribute or port those assets until a defensible license disposition is recorded.
+- Keep the Pyodide Worker and Python reference production path until exact normalization, tokenizer, dictionary, fallback, typed IPA, complete JSON and Chromium no-Pyodide acceptance pass. Do not label the current dictionary adapter as a complete browser-native engine.
+- Linguistic accuracy remains `NOT_MEASURED`; no Thai phonology, IPA gold, Ukrainian adaptation rule or accuracy claim changed.
