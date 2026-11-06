@@ -2851,3 +2851,11 @@ The earlier handoff wording that described the pickle transformation as not inde
 - The script also records SHA-256 values and retains the conflicting license metadata evidence.
 
 This closes the data-transformation/provenance subtask, not the license-scope question. TLTK fallback code/data are still not ported into the browser runtime, and no fallback assets are shipped publicly.
+
+
+## Expanded native Worker differential smoke (2026-11-06)
+
+- Browser test expanded from one representative case to all **16** pinned dictionary-only CPython reference cases, then explicitly checks that an OOV token returns the expected Ukrainian fail-closed error.
+- Exact-head run [#42184407769](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42184407769) SUCCESS on code head `aafc98a06aca2f982f2a0fbb3ce03f64c7a8561e`. Job log: “Native FastThaiG2P Worker passed Chromium smoke for 16 CPython cases and fail-closed OOV without Pyodide, Python, wheels or remote requests”.
+- Web Static [#42184407781](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42184407781) SUCCESS on the same head.
+- Full CI [#42184407814](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42184407814) remained IN_PROGRESS when this note was written. No merge or production cutover has been performed.
