@@ -186,6 +186,14 @@ def test_onset_yod_vowels_and_e_distinction():
         assert adapted["output"] == expected, ipa
         assert rule in adapted["rules_applied"], ipa
 
+
+def test_thai_y_initial_word_flows_through_python_ipa_adapter():
+    analysis = analyze_syllable("ยา")
+    result = PhoneticResult.from_syllable_analysis(analysis)
+    assert result.phonemic_ipa == "jaː"
+    assert analysis.ukrainian_transliteration == "я"
+    assert adapt_phonetic_result(result)["output"] == "я"
+
 def test_tone_only_ipa_and_unknown_symbols_are_not_guessed():
     base = PhoneticResult.from_syllable_analysis(analyze_syllable("กา"))
     tone_only = adapt_phonetic_result(replace(base, phonemic_ipa="˥˩"))
