@@ -99,7 +99,7 @@ jobs:
           from pathlib import Path
           manifest = json.loads(Path("web/vendor/native/manifest.json").read_text())
           assert manifest["dictionary_entries"] == 13144
-          assert manifest["stage"] == "dictionary-and-normalizer-data-only; not a complete runtime"
+          assert manifest["stage"] == "dictionary-normalizer-and-default-wordlist-data-only; not a complete runtime"
           for asset in manifest["assets"]:
               path = Path("web/vendor") / asset["path"]
               assert path.is_file() and path.stat().st_size == asset["size_bytes"]
@@ -197,7 +197,7 @@ jobs:
           assert "GNU Free Documentation License 1.3" in page
           assert "fastthaig2p-wiktionary-derived.zip" in page
           native_assets = manifest["native_assets"]
-          assert len(native_assets) == 4
+          assert len(native_assets) == 5
           for item in native_assets:
               data = urlopen(f"{base}/{item['path']}").read()
               assert len(data) == item["size_bytes"], item["path"]
