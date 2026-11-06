@@ -96,7 +96,8 @@
     "strict_xsampa_to_ipa_adapter",
     "ccost_numeric_tone_suffix_and_tier_preservation",
     "typed_provisional_ccost_phonetic_result_adapter",
-    "text_only_ccost_inspection_cli"
+    "text_only_ccost_inspection_cli",
+    "thai_rtgs_romanization_browser_module"
   ],
   "not_claimed": [
     "complete_lexical_segmentation",
@@ -127,7 +128,8 @@
     "acoustic phonetic accuracy",
     "independent_thai_expert_adjudication_of_ccost_exception_labels",
     "recovered_original_values_for_ccost_tone_suffix_8",
-    "semantic_definitions_for_ccost_P_P_colon_colon_p_Fail_markers"
+    "semantic_definitions_for_ccost_P_P_colon_colon_p_Fail_markers",
+    "independently_adjudicated_thai_romanization_accuracy"
   ],
   "lexical_attestation": "Source-backed text lexicon includes ฤๅษี → รือ|สี (Thai Wiktionary oldid 1774048), ทฤษฎี → ทฺริด-สะ-ดี (en.wiktionary oldid 87195875), ประเทศ → ประ|เทศ (oldid 5722200), เป็น (oldid 5770798), หนึ่ง (oldid 5721517), and ใน (oldid 5759122). The first syllable ทฺริด is normalized only by an exact lexical respelling; no productive ทร rule is inferred. The distinct spelling ฤษี and standalone ฤๅ/ฦ/ฦๅ remain unresolved. Existing parser readings เตอร์ and เทอร์ are reachable through the curated text lexicon. All source-attested readings remain NOT_GOLD; their source registry permissions exclude phonemic and surface gold input.",
   "corpus_attestation": "993 source-annotated Wisesight word-tokenization rows (CC0-1.0; test-only, never training/tuning); pinned UD Thai TUD source snapshots under CC BY-SA 4.0 for a research-only frequency-Viterbi experiment; zero independently adjudicated IPA/tone/vowel-length gold rows.",

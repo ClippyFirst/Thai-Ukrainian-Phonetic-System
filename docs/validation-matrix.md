@@ -2,11 +2,11 @@
 
 | Task | State | Evidence / acceptance |
 |---|---|---|
-| Reuse pinned RTGS implementation | DONE_IMPLEMENTED_PENDING_CI | Reuses existing web/src/rtgs-reference.js (PyThaiNLP 5.4.0 royin port) and web/src/fastthaig2p-tokenizer.js (newmm). No duplicate algorithm. |
-| Browser module and public page | DONE_IMPLEMENTED_PENDING_CI | New web/src/rtgs-romanizer.js, web/src/romanization-app.js, and web/romanization.html; same-origin CC0 wordlist is checked against manifest SHA-256/size/version/license. |
-| Method, source and limitations | DONE_IMPLEMENTED_PENDING_CI | docs/thai-romanization.md distinguishes RTGS, Thai2Rom, ISO 11940, IPA and Ukrainian transcription; discloses RTGS tone/length and segmentation limitations. |
-| Tests and Pages publication gate | TODO_CI | Module/page tests and post-deploy smoke wired into .github/workflows/pages.yml; requires exact-head CI, Pages build, main deployment and live smoke SUCCESS. |
-| Independent linguistic review | NOT_MEASURED | Software parity is not independent expert validation; names and ambiguous segmentation need Thai-language review. |
+| Reuse pinned RTGS implementation | DONE_VERIFIED | PR #223 merged as ffbcd96b12c5a0ddf46211d71ee18a08e3d6b078. Reuses PyThaiNLP 5.4.0 royin port and PyThaiNLP newmm tokenizer; no duplicate romanizer. |
+| Browser module and public page | DONE_VERIFIED | web/romanization.html deployed at https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/romanization.html. Local CC0 wordlist is manifest/version/license/size/SHA-256 checked. |
+| Method, source and limitations | DONE_VERIFIED | docs/thai-romanization.md distinguishes RTGS, Thai2Rom, ISO 11940, IPA and Ukrainian transcription; tone/length and segmentation limitations are disclosed. |
+| Exact-head and post-merge checks | DONE_VERIFIED | PR CI #42286668243 SUCCESS; PR Pages build #42286668187 SUCCESS; main CI #42287520737 SUCCESS; Web Static #42287520941 SUCCESS; Site API #42287520854 SUCCESS; Pyodide compatibility #42287520780 SUCCESS; Pages build/deploy/live smoke #42287520778 SUCCESS. The live smoke fetched romanization.html, checked the RTGS heading, and fetched both romanization JS modules. |
+| Independent linguistic review | NOT_MEASURED | Engineering parity with PyThaiNLP is not independent Thai expert validation; proper names and ambiguous segmentation require human review. |
 
 ## Post-merge practical-system closeout — 2026-11-06
 
@@ -15,7 +15,7 @@
 - Runtime documentation now reflects the implemented native-first FastThaiG2P flow: browser-native dictionary path → TLTK OOV parser/data pack → Pyodide compatibility fallback only if the native path cannot return a complete result. TLTK OOV exact typed-service JSON parity is 64/64 in module and Worker tests.
 - PR #221 checks: CI #42256019761 SUCCESS; Pages build #42256019692 SUCCESS (including practical-transcription contract); Web Static #42256019665 SUCCESS; Site API #42256019815 SUCCESS; Pyodide compatibility #42256019619 SUCCESS.
 - Main post-merge checks on d0528deac04db9a3ed9e062e98ace45492e95f9f: CI #42256973431 SUCCESS; Web Static #42256973453 SUCCESS; Site API #42256973448 SUCCESS; Pyodide compatibility #42256973545 SUCCESS; Pages build/deploy/live service smoke #42256973592 SUCCESS.
-- Current closeout PR: #222 is the only open PR; it changes documentation and adds explicit post-deploy assertions for the practical-system page. The implementation itself is already merged.
+- PR #222 was squash-merged as a35100e336f2bda02f927918ed3e13a892872e84; PR #223 was squash-merged as ffbcd96b12c5a0ddf46211d71ee18a08e3d6b078. There are no open PRs at this checkpoint. The Pages smoke now verifies both the practical-system and Thai romanization pages.
 - New live-smoke acceptance: the closeout branch extends the Pages deployment smoke to request web/transcription.html, check its heading and /j/ section, verify homepage/method navigation, and check the dedicated responsive table stylesheet. This makes future production deployments explicitly verify the practical-system page itself.
 - Branch reconciliation: PRs #210–#214 and #216–#221 are merged; #215 was superseded by #216. The docs/repository-audit-2026-11-04 branch is 503 ahead / 39 behind and remains preserved because its history is divergent; do not merge it wholesale or delete historical refs.
 - Remaining acceptance gates are linguistic and human, not missing code: independent Thai IPA gold/adjudication, independent Ukrainian-native target-form review, instrumented real-device cold/warm/offline performance, and manual keyboard/screen-reader/zoom/reflow/device acceptance. Accuracy remains NOT_MEASURED; the project is an engineering-verified research prototype, not a linguistically validated standard.
