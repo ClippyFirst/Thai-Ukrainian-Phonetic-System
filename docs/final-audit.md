@@ -1,8 +1,10 @@
 ## Географічний словник — 2026-11-07
 
-**Статус: PARTIAL, до точного CI.** Додано пакетний CSV-скрипт `scripts/build_geographic_dictionary.py`, optional extra `.[geography]` із PyThaiNLP 5.4.0, pinned CC0 custom trie для newmm, тестовий модуль, шаблон CSV, методичну документацію та CI runtime smoke. RTGS використовує `newmm` + `royin` і залишається незалежним від фонетичного шляху. IPA та українська форма беруться зі штатного Thai → typed IPA → Ukrainian pipeline; якщо весь запис не підтриманий, IPA/UA поля порожні. Усі вхідні колонки/метадані зберігаються.
+<badge color="success">DONE_VERIFIED — engineering implementation</badge>
 
-Немає доданого географічного корпусу, оскільки джерела, ліцензії, координати й українські офіційні назви не були перевірені. Повний CI/Pages перевірки ще очікуються; локальне виконання не заявляється. Технічна готовність скрипта не доводить лінгвістичну точність географічних власних назв.
+PR #228 was squash-merged into `main` as `b7973b03961317abf3c5e2fed67c53c7b450eeee`. The CSV builder, pinned PyThaiNLP 5.4.0 RTGS integration, typed IPA → Ukrainian path, fail-closed handling, tests, template and documentation are implemented. Exact PR-head CI #42303606383 and Pages build #42303606414 passed. Post-merge main CI #42304411797, Pages build/deploy/live smoke #42304411720, Site API #42304411749, Pyodide compatibility #42304411607 and optional external G2P smoke #42304411785 all passed.
+
+The CI smoke uses the single-syllable Thai fixture `กา`; it verifies the software route, not the accuracy of geographic proper names. No geographic dataset, coordinates, source licenses or Ukrainian exonyms were fabricated. Independent Thai expert IPA and Ukrainian-native review remain **NOT_MEASURED / BLOCKED** until a source-licensed geographic corpus and qualified reviewers are available. Overall readiness remains an engineering-verified research prototype, not a linguistically validated standard.
 
 ---
 

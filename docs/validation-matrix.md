@@ -2,12 +2,14 @@
 
 | Task | State | Evidence / acceptance |
 |---|---|---|
-| CSV batch builder | PARTIAL | `scripts/build_geographic_dictionary.py` створено; зберігає вхідні метадані й додає RTGS, фонемний/поверхневий IPA, IPA-derived Ukrainian, status/warnings. Потрібен точний-head CI та перевірка на реальному корпусі. |
-| RTGS integration | PARTIAL | Використовує optional PyThaiNLP 5.4.0 extra, newmm із pinned CC0 custom trie та royin RTGS; unit tests із injected stubs і runtime smoke додані. Потрібен exact-head CI. |
-| IPA → Ukrainian boundary | PARTIAL | Скрипт викликає наявний `analyze_text_with_word_segmentation` і бере тільки typed `PhoneticResult` та штатний IPA adapter output; будь-який неповний запис утримує IPA/UA. Regression tests і реальний runtime smoke додані; потрібен exact-head CI. |
-| Dataset schema and provenance | DONE_VERIFIED (template only) | Додано заголовковий шаблон і правила джерельної атрибуції; жодних неперевірених географічних даних/ліцензій не внесено. |
-| Documentation/navigation | PARTIAL | README, docs index, script inventory та handoff оновлено; потрібні точний-head перевірки і review. |
-| Linguistic validation of geographic proper names | BLOCKED / NOT_MEASURED | Немає наданого географічного корпусу з ліцензіями та незалежної експертної транскрипції/українських форм. Acceptance: джерельно атестований набір + незалежне IPA adjudication + український native-speaker review. |
+| CSV batch builder | DONE_VERIFIED | PR #228 merged as `b7973b03961317abf3c5e2fed67c53c7b450eeee`. `scripts/build_geographic_dictionary.py` preserves source columns, streams CSV rows, prevents input overwrite and emits RTGS, phonemic IPA, optional broad-surface IPA, IPA-derived Ukrainian output, statuses and warnings. |
+| RTGS integration | DONE_VERIFIED | PyThaiNLP 5.4.0 `newmm` + `royin`, with `newmm` constrained by the repository's source-pinned CC0-1.0 custom trie. Actual runtime smoke passed in CI; no unpinned default word corpus is used. |
+| IPA → Ukrainian boundary | DONE_VERIFIED | Reuses `analyze_text_with_word_segmentation` → typed `PhoneticResult` → existing IPA-to-Ukrainian adapter. RTGS is never used as the Ukrainian input. Incomplete records withhold IPA/UA. Regression tests include missing surface-IPA distinction. |
+| Dataset schema and provenance | DONE_VERIFIED (template only) | CSV header template and source/license/coordinate guidance added. No geographic facts, coordinates, source licenses or Ukrainian exonyms were invented or copied without verification. |
+| Documentation/navigation | DONE_VERIFIED | README, docs guide, script inventory, handoff, validation matrix and final audit updated. |
+| Exact PR-head verification | DONE_VERIFIED | PR #228 head `b481259f1b939b1e62727d85017343c3e7772dc8`: CI [#42303606383](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42303606383) SUCCESS (test, wheel-install-smoke, master-artifact); Pages build [#42303606414](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42303606414) SUCCESS (deployment skipped on PR). |
+| Mainline post-merge verification | DONE_VERIFIED | Main `b7973b03961317abf3c5e2fed67c53c7b450eeee`: CI [#42304411797](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42304411797), Pages build/deploy/live smoke [#42304411720](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42304411720), Site API #42304411749, Pyodide compatibility #42304411607 and external G2P smoke #42304411785 all SUCCESS. |
+| Linguistic validation of geographic proper names | BLOCKED / NOT_MEASURED | No source-licensed geographic corpus or independent Thai IPA adjudication/Ukrainian-native review. Acceptance: sourced geographic records with exact license/attribution, independent Thai pronunciation review, independent Ukrainian target-form review and adjudication. |
 
 ---
 

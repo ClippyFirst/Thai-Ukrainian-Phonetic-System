@@ -1,14 +1,14 @@
+# Repository guide
+
+This page is the navigation layer for the repository. It distinguishes the maintained product contract from research evidence and the chronological execution record.
+
 ## Географічний словник Thai → RTGS + IPA → українська
 
 Для побудови власного CSV-корпусу географічних назв додано [географічний словник](geographic-dictionary.md), [шаблон даних](../data/geography/geographic-names-template.csv) та `scripts/build_geographic_dictionary.py`. Скрипт зберігає вихідні метадані й додає RTGS через PyThaiNLP 5.4.0 newmm із pinned CC0 trie та royin, а також фонемний/поверхневий IPA з українською адаптацією через штатний typed IPA pipeline. RTGS не використовується для українського результату; неповні IPA/UA випадки утримуються. Це інструмент побудови дослідницького набору, не джерело офіційних назв чи оцінка точності.
 
 ## Latest repository audit
 
-# Repository guide
-
-This page is the navigation layer for the repository. It distinguishes the maintained product contract from research evidence and the chronological execution record.
-
-## Latest repository audit
+PR #228 added the geographic-name CSV builder and was squash-merged as `b7973b03961317abf3c5e2fed67c53c7b450eeee`. Exact PR-head CI #42303606383 and Pages build #42303606414 passed. Main CI #42304411797, Pages build/deploy/live smoke #42304411720, Site API #42304411749, Pyodide compatibility #42304411607 and external G2P smoke #42304411785 all passed. The new Python workflow uses PyThaiNLP 5.4.0 newmm + royin with the repository's pinned CC0 trie; Ukrainian output still comes only from typed IPA. Public site: https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/. No open PRs. Geographic-name linguistic accuracy remains NOT_MEASURED pending a source-licensed corpus and independent review.
 
 PR #223 added the Thai → Latin RTGS romanization module and was squash-merged into main as ffbcd96b12c5a0ddf46211d71ee18a08e3d6b078. PR #224 reconciled its post-merge evidence and was merged as c7db5ce22de230b0cb7ffecb866db0e77ab0bb34. The homepage now also exposes RTGS as a collapsed, lazily loaded secondary result; the Ukrainian IPA adaptation remains primary. The page reuses PyThaiNLP 5.4.0 royin and the pinned newmm tokenizer/CC0 wordlist with a same-origin SHA-256 guard; it is independent of the IPA → Ukrainian pipeline. PR-head CI #42286668243 and Pages build #42286668187 passed. Main CI #42287520737, Web Static #42287520941, Site API #42287520854, Pyodide compatibility #42287520780, and Pages build/deploy/live smoke #42287520778 all passed. Public page: ../web/romanization.html. No open PRs at this checkpoint.
 

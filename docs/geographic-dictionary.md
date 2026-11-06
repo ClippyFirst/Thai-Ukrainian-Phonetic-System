@@ -82,3 +82,8 @@ python -m ruff check .
 ```
 
 PyThaiNLP 5.4.0 є обов'язковою лише для фактичного запуску географічного RTGS-експорту; тести ізольовують її виклик через залежності, що передаються в функції.
+
+
+## Перевірений стан реалізації — 2026-11-07
+
+PR [#228](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/228) merged as `b7973b03961317abf3c5e2fed67c53c7b450eeee`. Exact-head CI #42303606383 and Pages build #42303606414 passed. Post-merge main CI #42304411797 and Pages build/deploy/live smoke #42304411720 passed, along with Site API, Pyodide compatibility and external G2P smoke. The CI runtime fixture verifies the software pipeline only; geographic proper-name accuracy remains NOT_MEASURED until independent sourced corpus review.

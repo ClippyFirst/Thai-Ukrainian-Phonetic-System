@@ -97,7 +97,12 @@
     "ccost_numeric_tone_suffix_and_tier_preservation",
     "typed_provisional_ccost_phonetic_result_adapter",
     "text_only_ccost_inspection_cli",
-    "thai_rtgs_romanization_browser_module"
+    "thai_rtgs_romanization_browser_module",
+    "geographic_name_dictionary_csv_pipeline",
+    "geographic_name_rtgs_pythainlp_5_4_0_newmm_royin_pinned_cc0_trie",
+    "geographic_name_typed_ipa_to_ukrainian_adapter_outputs",
+    "geographic_dictionary_fail_closed_incomplete_record_handling",
+    "geographic_dictionary_actual_runtime_ci_smoke"
   ],
   "not_claimed": [
     "complete_lexical_segmentation",
@@ -372,7 +377,7 @@
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
   "latest_code_checkpoint": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
   "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY",
-  "latest_verified_repository_head": "d0528deac04db9a3ed9e062e98ace45492e95f9f",
+  "latest_verified_repository_head": "b7973b03961317abf3c5e2fed67c53c7b450eeee",
   "task_ledger": [
     {
       "id": "SEG-TRAIN-001",
@@ -2217,8 +2222,8 @@
       167
     ]
   },
-  "latest_full_repository_head": "d0528deac04db9a3ed9e062e98ace45492e95f9f",
-  "latest_full_repository_head_ci_run": 42256973431,
+  "latest_full_repository_head": "b7973b03961317abf3c5e2fed67c53c7b450eeee",
+  "latest_full_repository_head_ci_run": 42304411797,
   "latest_full_repository_head_web_validation_run": 42256973453,
   "latest_web_static_verified_code_commit": "536f03327f11d258a4e7638091797128754b6602",
   "latest_web_static_verified_code_run": "41342132990",
@@ -3047,7 +3052,7 @@
     "linguistic_accuracy": "NOT_MEASURED",
     "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_RELEASE_READY"
   },
-  "latest_full_repository_head_pages_run": "41420468875",
+  "latest_full_repository_head_pages_run": 42304411720,
   "benchmark_error_triage": {
     "baseline_workflow_run": 41454481686,
     "baseline_branch": "research/fastthaig2p-typed-ipa-boundary-20261102",
@@ -5281,8 +5286,10 @@
     "deployed": true
   },
   "geographic_dictionary_2026_11_07": {
-    "status": "PARTIAL",
-    "starting_commit": "d2d9c3f862864587262a0732fef0af2a03b9ed83",
+    "status": "DONE_VERIFIED",
+    "pr": 228,
+    "pr_head_commit": "b481259f1b939b1e62727d85017343c3e7772dc8",
+    "merge_commit": "b7973b03961317abf3c5e2fed67c53c7b450eeee",
     "branch": "feat/geographic-name-dictionary-2026-11-07",
     "implementation": "scripts/build_geographic_dictionary.py",
     "tests": "tests/test_geographic_dictionary.py",
@@ -5301,9 +5308,42 @@
       "pipeline_warnings",
       "romanization_method"
     ],
-    "pipeline_boundary": "RTGS is separate; Ukrainian output is consumed from typed PhoneticResult / IPA adapter only.",
-    "verification": "PENDING_EXACT_HEAD_CI",
+    "pipeline_boundary": "RTGS is separate; Ukrainian output is consumed from typed PhoneticResult / IPA adapter only. Incomplete records withhold IPA/UA.",
+    "rtgs": "PyThaiNLP 5.4.0 newmm + royin; newmm uses repository-pinned CC0-1.0 custom trie.",
+    "pr_head_verification": {
+      "ci": 42303606383,
+      "ci_status": "SUCCESS",
+      "pages_build": 42303606414,
+      "pages_build_status": "SUCCESS",
+      "pages_deploy": "SKIPPED_ON_PULL_REQUEST"
+    },
+    "post_merge_verification": {
+      "ci": 42304411797,
+      "ci_status": "SUCCESS",
+      "pages": 42304411720,
+      "pages_status": "SUCCESS_BUILD_DEPLOY_LIVE_SMOKE",
+      "site_api": 42304411749,
+      "site_api_status": "SUCCESS",
+      "pyodide_compatibility": 42304411607,
+      "pyodide_status": "SUCCESS",
+      "external_g2p_smoke": 42304411785,
+      "external_g2p_status": "SUCCESS"
+    },
     "linguistic_accuracy": "NOT_MEASURED",
-    "blocker": "No source-licensed geographic corpus and no independent expert IPA/Ukrainian-name adjudication."
+    "blocker": "No source-licensed geographic-name corpus and no independent Thai IPA / Ukrainian target-form adjudication."
+  },
+  "current_branch_inventory_2026_11_07": {
+    "audited_at": "2026-11-07",
+    "default_branch": "main",
+    "active_branch": "main",
+    "refs": [
+      "main",
+      "docs/final-mainline-state-2026-11-06",
+      "feat/geographic-name-dictionary-2026-11-07"
+    ],
+    "open_pull_requests": 0,
+    "merged_feature_branch": "feat/geographic-name-dictionary-2026-11-07",
+    "preserved_historical_branch": "docs/final-mainline-state-2026-11-06",
+    "historical_branch_disposition": "PRESERVED_NOT_MERGED_STALE_DOCUMENTATION_SNAPSHOT; identical 371 path set to main and no unique paths; five audit/index file versions are older than current main."
   }
 }
