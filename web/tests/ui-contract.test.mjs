@@ -188,6 +188,11 @@ const staleRun = analyze.click();
 assert.equal(analyze.disabled, true, "analysis action is locked while the worker is running");
 input.value = "กา";
 input.listeners.input();
+// Native analysis awaits the already-resolved worker-ready promise before posting.
+// Flush that microtask so the fake worker has installed its deferred response callback.
+await Promise.resolve();
+assert.equal(typeof deferredNativeWorkerResponse, "function",
+  "the native worker request must be pending before delivering its stale response");
 deferredNativeWorkerResponse();
 await staleRun;
 assert.equal(output.hidden, true, "a stale worker response must not render");
