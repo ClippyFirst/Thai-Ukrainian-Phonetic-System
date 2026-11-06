@@ -48,6 +48,7 @@ jobs:
           test -s web/src/styles.css
           test -s web/src/app.js
           test -s web/src/fastthaig2p-native-worker.js
+          test -s web/tests/native-worker-smoke.html
       - name: Check static accessibility contract
         run: |
           grep -q '<html lang="uk">' web/index.html
