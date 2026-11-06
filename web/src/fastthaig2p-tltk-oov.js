@@ -144,9 +144,12 @@ export function createTltkOovFallback(data){
   const set=(i,j,forms)=>{if(!chart.has(i))chart.set(i,new Map());chart.get(i).set(j,forms);};
   for(const {pronunciation,expression} of patterns)for(let i=0;i<n;i++){
    const match=expression.exec(chars.slice(i).join(""));if(!match)continue;
-   const form=match[0],groups=match.slice(1,4).filter(x=>x!==undefined&&x!=="");
+   const form=match[0];
+   const groupCount=match.length-1;
+   const groups=groupCount>=3?match.slice(1,4):groupCount===2?match.slice(1,3):groupCount===1?match.slice(1,2):[];
    const end=i+length(form);set(i,end,[form]);
-   if(!groups.length){for(const p of [pronunciation])addPron(pron,form,p);continue;}
+   if(!groups.length){addPron(pron,form,pronunciation);continue;}
+   if(groups.some(value=>value===undefined))continue;
    const charmatch=groups.join(" ");
    const code=pronunciation.replace(/[^AKYDZCRX]/gu,"");if(!code)continue;
    let phone;
