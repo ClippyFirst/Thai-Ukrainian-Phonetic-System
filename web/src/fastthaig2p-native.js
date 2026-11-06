@@ -52,6 +52,13 @@ function syllableResult(rawIpa) {
   const segmentalIpa = toneMatch ? rawIpa.slice(0, toneMatch.index) : rawIpa;
   const externalIpa = segmentalIpa.replace(/t[\u0361\u035c]ɕ/gu, "tɕ");
   const adaptation = adaptIpaToUkrainian(externalIpa);
+  const rulesApplied = (adaptation.rulesApplied ?? [])
+    .filter(rule => rule !== "UA-DIACRITIC-NEUTRALIZATION");
+  const neutralizedFeatures = (adaptation.neutralizedFeatures ?? [])
+    .filter(feature => feature !== "length");
+  if (/[ːˑ]/u.test(externalIpa) && !neutralizedFeatures.includes("vowel length")) {
+    neutralizedFeatures.push("vowel length");
+  }
   const warnings = [
     "FastThaiG2P output is not independently adjudicated phonetic gold.",
     "Its phonemic-versus-broad-surface status is not established; external IPA is kept separate from phonemic and broad-surface IPA fields.",
@@ -69,8 +76,8 @@ function syllableResult(rawIpa) {
     vowel_length: segmentalIpa.includes("ː") ? "long" : null,
     ukrainian: adaptation.output,
     adaptation_status: adaptation.status === "adapted" ? "provisional" : adaptation.status,
-    rules_applied: adaptation.status === "withheld" ? [] : (adaptation.rulesApplied ?? []),
-    neutralized_features: adaptation.status === "withheld" ? [] : (adaptation.neutralizedFeatures ?? []),
+    rules_applied: adaptation.status === "withheld" ? [] : rulesApplied,
+    neutralized_features: adaptation.status === "withheld" ? [] : neutralizedFeatures,
     provenance: [`FastThaiG2P@${FASTTHAIG2P_UPSTREAM_COMMIT}`],
     warnings: [
       ...warnings,
