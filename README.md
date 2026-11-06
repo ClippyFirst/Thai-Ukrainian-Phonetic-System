@@ -28,6 +28,10 @@ The repository's user-facing system is described in [Тайсько-україн
 
 The homepage keeps Ukrainian IPA adaptation as its primary result and offers RTGS as an optional collapsed, lazily loaded secondary result; a full [Thai romanization tool](web/romanization.html) is also available. Both use the official RTGS approach through PyThaiNLP 5.4.0 royin. It reuses the pinned PyThaiNLP newmm tokenizer and CC0 word list, verifies the local word-list asset by SHA-256, and runs entirely in the browser. RTGS is kept separate from IPA and Ukrainian transcription; tones and vowel length are not fully represented. See [the romanization method and limitations](docs/thai-romanization.md).
 
+## Географічні назви та пакетний словник
+
+Для збагачення власного CSV географічних назв див. [документацію географічного словника](docs/geographic-dictionary.md) і [шаблон CSV](data/geography/geographic-names-template.csv). Скрипт `scripts/build_geographic_dictionary.py` додає RTGS (PyThaiNLP 5.4.0), фонемний та широкий поверхневий IPA і український результат, отриманий лише через typed IPA → Ukrainian адаптер. Встановлення: `python -m pip install -e ".[geography]"`. Неповний IPA/UA результат утримується; RTGS є окремою, тонально неповною романізацією. Вихідні ліцензії та джерела набору потрібно фіксувати окремо.
+
 ## Thai → Ukrainian methodology table
 
 The initial context-sensitive methodology matrix is documented in [`docs/ukrainian-transcription-methodology.md`](docs/ukrainian-transcription-methodology.md). It distinguishes onset/coda, phonemic vs surface IPA, contextual rules, tone/length, and evidence-gated cases. It is explicitly PARTIAL pending independent IPA and Ukrainian-form adjudication; it is not an official Ukrainian standard.
