@@ -1,3 +1,24 @@
+## Handoff — PR #214 merged; native-first mainline and post-merge deployment gate (2026-11-06)
+
+- Starting `main` HEAD for this work: `f7ce29d6bbae03a8d5a8d03e8c09dbbd5dd01662`.
+- PR [#214](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/214) was squash-merged into `main` as `29b63b8f58db1f6d7ff068d131df0b0759895115`; PR state is CLOSED/MERGED.
+- Final PR head: `0d4503ed55ff726807917e2cfbf14c0ad30eb624`; it was 138 commits ahead and 0 behind `main` immediately before merge. The squash merge preserves the reviewed final tree without importing the branch's entire commit history.
+- Exact-head verification on that final PR head:
+  - Full CI [42199395072](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42199395072) — SUCCESS; `test`, `wheel-install-smoke`, and `master-artifact` all passed.
+  - Web Static [42199395225](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42199395225) — SUCCESS.
+  - FastThaiG2P Site API [42199395069](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42199395069) — SUCCESS.
+  - Pyodide compatibility [42199395284](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42199395284) — SUCCESS, including real Chromium worker checks.
+- Initial native-first UI checks exposed a test-fixture ordering issue: the deferred fake-worker callback was invoked before the async native-ready promise continuation had posted the request. The test-only correction in `37e0ee6b6fb1385bd4c98bfdd582d8eee3dac5c1` yields one microtask and asserts callback installation before delivering the stale response. No production behavior was changed by that fix.
+- Mainline browser architecture is now hybrid native-first: dictionary-covered inputs use the same-origin JavaScript Worker; a native dictionary miss lazily starts the existing FastThaiG2P Pyodide Worker. This is not a full native replacement and does not claim a performance improvement.
+- **Post-merge main CI and Pages deployment/live smoke are not verified in this connector session.** The GitHub connector's commit-workflow lookup only exposed pull-request-triggered runs; combined commit status returned no status contexts for the merge commit. Do not infer a successful main push workflow or live Pages cutover from the PR-head checks. Confirm post-merge main CI, Pages deployment and live smoke separately.
+- Branch consolidation: PR #210, #211, #212, #213 and #214 are represented in main. Their historical source refs remain on GitHub; no branch was deleted or force-updated. The intended active integration line is `main`.
+- `docs/repository-audit-2026-11-04` remains 503 commits ahead and 8 behind. It is not a safe whole-history merge. Key ownership/evidence files `data/corpus_sources.csv`, `scripts/build_ccost_review_worklist.py`, and `docs/ccost-label-review-2026-11-05.md` have identical blob SHAs on that branch and main; its `web/src/app.js` is an older, smaller implementation than main. Preserve the branch and port only a specifically identified missing item after review.
+- Local checkout/tests were not available: `git clone` failed because the execution environment could not resolve `github.com`. GitHub Actions exact-head runs above are the actual test evidence; no local test execution is claimed.
+- Remaining gates: native TLTK OOV algorithm and file-level rights disposition; cold/warm/offline/mobile transfer, latency and memory measurements; keyboard/screen-reader, zoom/reflow, real clipboard and visual review; independent Thai IPA adjudication plus separate Ukrainian-native target review. Independent IPA gold remains 0; accuracy remains `NOT_MEASURED`; Ukrainian candidates remain provisional.
+- Readiness remains **ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY**. PR merge completes engineering integration, not linguistic validation or final production/release acceptance.
+
+---
+
 ## Handoff — PR #214 native-first verification and branch consolidation (2026-11-06)
 
 - Default branch: `main`; starting audited main HEAD: `f7ce29d6bbae03a8d5a8d03e8c09dbbd5dd01662` (PR #213, Ukrainian-first interface, merged).
