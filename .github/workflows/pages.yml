@@ -62,6 +62,8 @@ jobs:
         run: python scripts/generate_web_word_dictionary.py
       - name: Run RTGS browser regression tests
         run: node web/tests/rtgs-reference.test.mjs
+      - name: Run RTGS romanizer module tests
+        run: node web/tests/rtgs-romanizer.test.mjs
       - name: Run RTGS reference parity tests
         run: python scripts/test_rtgs_parity.py
       - name: Run IPA adaptation browser tests
@@ -76,6 +78,8 @@ jobs:
         run: node web/tests/ui-contract.test.mjs
       - name: Run practical transcription page contract checks
         run: node web/tests/practical-transcription.test.mjs
+      - name: Run Thai romanization page contract checks
+        run: node web/tests/romanization-page.test.mjs
       - name: Run static accessibility contract checks
         run: node web/tests/accessibility-contract.test.mjs
       - name: Build self-hosted Pyodide runtime for Pages
@@ -206,6 +210,13 @@ jobs:
               && grep -Fq 'href="transcription.html"' /tmp/deployed-system.html \
               && curl --fail --silent --show-error "$PAGE_URL/transcription.html" -o /tmp/deployed-transcription.html \
               && grep -Fq 'Тайсько-українська практична транскрипція' /tmp/deployed-transcription.html \
+              && curl --fail --silent --show-error "$PAGE_URL/romanization.html" -o /tmp/deployed-romanization.html \
+              && grep -Fq 'Тайська романізація' /tmp/deployed-romanization.html \
+              && grep -Fq 'RTGS' /tmp/deployed-romanization.html \
+              && curl --fail --silent --show-error "$PAGE_URL/src/romanization-app.js?v=20261106-rtgs-romanization-1" -o /tmp/deployed-romanization-app.js \
+              && grep -Fq 'createRtgsRomanizer' /tmp/deployed-romanization-app.js \
+              && curl --fail --silent --show-error "$PAGE_URL/src/rtgs-romanizer.js" -o /tmp/deployed-rtgs-romanizer.js \
+              && grep -Fq 'pythainlp-default-words.txt' /tmp/deployed-rtgs-romanizer.js \
               && grep -Fq 'Початковий /j/ перед голосною' /tmp/deployed-transcription.html \
               && grep -Fq '64/64' /tmp/deployed-system.html \
               && grep -Fq 'blob/main/docs/thai-ukrainian-practical-transcription.md' /tmp/deployed-transcription.html \
