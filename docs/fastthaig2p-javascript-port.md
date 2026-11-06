@@ -40,7 +40,7 @@ Do not conflate this work with the separate ClippyFirst Thai orthographic resear
 | Component | Status | Acceptance |
 |---|---|---|
 | JavaScript module/result adapter | PARTIAL | First dictionary adapter exists in `web/src/fastthaig2p-native.js`; unit tests cover parsing, tone extraction, IPA→Ukrainian adaptation and fail-closed dictionary misses. It is not wired into the public UI. |
-| Source-filtered dictionary build asset | TODO | Build emits `web/vendor/native/fastthaig2p-ipa.json` from the exact filtered wheel; provenance, entry count, size and SHA-256 are checked. |
+| Source-filtered dictionary build asset | IMPLEMENTED_PENDING_EXACT_HEAD_CI | Build emits `web/vendor/native/fastthaig2p-ipa.json` from the exact filtered wheel; provenance, entry count, size and SHA-256 are checked. |
 | Text normalization | TODO | Port pinned `normalizer.py` and PyThaiNLP maiyamok behavior; exact fixtures for numbers, Thai numerals, emails, units, dates/times, abbreviations, Latin residue and punctuation. |
 | PyThaiNLP newmm tokenizer | TODO | Port the pinned tokenizer algorithm and exact effective default/custom dictionary inputs; token-array parity on a versioned corpus. |
 | Dictionary IPA lookup | PARTIAL | Adapter supports an injected map; generated data asset and provenance gate remain TODO. |
