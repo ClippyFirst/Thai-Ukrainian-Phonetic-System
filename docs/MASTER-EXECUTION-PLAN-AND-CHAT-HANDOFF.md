@@ -1,11 +1,12 @@
-## Continuation — Ukrainian onset /j/ implementation (2026-11-06, PR #220)
+## Continuation — Ukrainian onset /j/ implementation merged (2026-11-06, PR #220)
 
-- Starting `main`: `3770fd4e64b6004af594061ed3997fb2dbba9704`. Work branch: `fix/ukrainian-onset-j-system-2026-11-06`; PR #220 is open against `main`.
-- Python IPA adapter now applies the same boundary-aware `/j/` + vowel rule as the browser adapter. It rewrites only at IPA start or after explicit `.` / whitespace; coda `/j/` stays `й`. Plain `/e, ɛ/` stay `е`; `/je, jɛ/` become `є`; `/jɯ, jɤ/` remain `йи/йе`.
-- Python unit tests cover all seven requested onset vowels, open-mid variants, explicit syllable boundaries, plain `e/ɛ`, coda `/j/`, and unspecified `jɯ/jɤ`. Browser regression tests and public `web/system.html` explanation are included in the PR.
-- The practical transcription article, Ukrainian methodology table, and Ukrainian-vs-Russian comparison now document the same contract.
-- Exact-head evidence at this checkpoint: Web Static #42243685711 SUCCESS; Site API #42243685705 SUCCESS; Pyodide compatibility #42243685724 IN_PROGRESS; full CI #42243685764 PENDING; Pages build #42243685819 PENDING. Do not claim the full test matrix passed until those runs complete.
-- Independent Thai phonetic gold and Ukrainian-native review are not supplied by parity tests and remain EVIDENCE-LIMITED. No accuracy claim is made.
+- Starting `main`: `3770fd4e64b6004af594061ed3997fb2dbba9704`. Dedicated branch: `fix/ukrainian-onset-j-system-2026-11-06`. PR #220 was merged by squash as `e2cfba14815221d6f8cc05db5f1874dd43984ac9`; new `main` HEAD at merge: that SHA.
+- Both Python and browser IPA adapters now apply the same boundary-aware rule: `/ja/→я`, `/je,jɛ/→є`, `/ji/→ї`, `/jo,jɔ/→йо`, `/ju/→ю`. Plain `/e, ɛ/` remain **е**; coda/non-onset `/j/` remains **й**. Unspecified `/jɯ, jɤ/` remain **йи/йе**.
+- Rule application is restricted to IPA start or an explicit syllable delimiter (period/whitespace). The adapter does not invent missing syllable boundaries. The public system page, practical transcription article, methodology and Ukrainian-vs-Russian comparison now state the same contract.
+- Regression coverage includes all seven requested vowel mappings, open-mid variants, plain `e/ɛ`, coda and boundary cases, Thai `ยา` → /jaː/ → **я**, and the /ju/ text-pipeline changes for `ยุโรป` and `ยูเครน`.
+- Exact PR-head verification on `9db86951945eca0301f26547ebc98d41e3e87c0d`: CI #42244990687 SUCCESS; Site API #42244990565 SUCCESS; Web Static #42244990532 SUCCESS; Pyodide compatibility #42244990520 SUCCESS; Pages build #42244990505 SUCCESS. The complete Python suite, JS adapter/parity/UI tests, Ruff, generated artifact checks, master artifact and wheel-install smoke passed. PR Pages deploy was correctly skipped.
+- Main-push post-merge verification at the time of this note: Site API #42245944544 SUCCESS; Web Static #42245944386 SUCCESS. Main CI #42245944388, Pyodide #42245944639 and Pages build/deploy/live smoke #42245944508 were in progress before the documentation reconciliation commits; check the latest main-push runs before claiming deployment is complete.
+- Independent Thai phonetic gold and Ukrainian-native review are not supplied by parity tests and remain EVIDENCE-LIMITED. Accuracy remains `NOT_MEASURED`; no linguistic accuracy claim is made.
 
 ---
 
