@@ -2,7 +2,7 @@
 
 - Starting default branch: `main`; starting HEAD: `9f279ce04c14b81fa4728a15e81fb89ab046b753`.
 - Repair branch: `fix/pages-smoke-and-audit-consolidation-2026-11-06`; PR #219 merged to main as `b4896bc7ad50e8e4cdb6dd8a9367cb22cbdec5e8`. Continue work on `main`.
-- Native TLTK OOV implementation is already merged (PR #216, `77a80a5e28f9b7566cb9c3ef8b11417d081d2c82`); parity follow-up #217 merged as `533cd3f8df6112b000f5c91524f8050026b4d79a`; documentation checkpoint #218 merged as the current main HEAD.
+- Native TLTK OOV implementation is already merged (PR #216, `77a80a5e28f9b7566cb9c3ef8b11417d081d2c82`); parity follow-up #217 merged as `533cd3f8df6112b000f5c91524f8050026b4d79a`; documentation checkpoint #218 merged before the Pages repair; PR #219 is the latest functional merge. Latest documentation checkpoint is `8bf4202fd20358bfa29cbbd8c58696752d11b43d`.
 - Exact-head repair CI #42232494753: SUCCESS (test, wheel-install-smoke, master-artifact). Main merge CI #42233360770: SUCCESS. Main Pages run #42233360749: SUCCESS (build, deploy and live smoke). The old heading assertion false negative was corrected to inspect the heading id/text fragments; a regression test was added. A PR Pages build is not a live deployment.
 - PR #215 was closed as superseded: its head is an ancestor of PR #216's branch head (74 commits ahead, 0 behind); #216's full native OOV implementation was merged. Its source branch is preserved.
 - Ten non-main branch refs remain as preserved source/history refs; the canonical active branch is `main`. Do not force-update or bulk-delete historical branches. Preserve `docs/repository-audit-2026-11-04` (503 ahead/23 behind) rather than importing its divergent history.
