@@ -26,5 +26,8 @@ for (const testCase of reference.cases) {
   assert.deepEqual(result.words.map(word => word.thai), testCase.tokens);
   assert.equal(result.raw_ipa, testCase.expected_ipa);
   assert.equal(result.coverage.rule_fallback_tokens, 0);
+  const { normalized_input, ...serviceResult } = result;
+  assert.equal(normalized_input, testCase.normalized);
+  assert.deepEqual(serviceResult, testCase.expected_result, "complete service JSON parity for " + testCase.input);
 }
 console.log("FastThaiG2P native front-half pipeline matched " + reference.cases.length + " dictionary-only CPython cases");
