@@ -1,7 +1,7 @@
 export const UI_TEXT = Object.freeze({
   inputRequired: "Введіть тайський текст.",
   starting: "Запускаємо локальний рушій FastThaiG2P…",
-  downloading: "Завантажуємо компоненти рушія у ваш браузер…",
+  downloading: "Для цього слова потрібен повний рушій. Завантажуємо його компоненти у ваш браузер…",
   analyzing: "FastThaiG2P аналізує текст локально…",
   working: "Обробляємо текст у браузері…",
   analysisButton: "Аналізуємо…",
