@@ -174,7 +174,7 @@ vendored or installed by this policy.
 
 ## UI/UX work on the public beta
 
-The current user-facing product is the GitHub Pages/Pyodide browser application. Before changing it, read docs/web-service-architecture.md for the runtime/privacy boundary, docs/web-service-requirements.md for the user journey and accessibility contract, docs/ui-ux-redesign.md for visual intent, and the browser tests for executable UI contracts.
+The deployed mainline product is the GitHub Pages FastThaiG2P browser application using a same-origin Pyodide Worker. PR #214 develops a hybrid native-first JavaScript/TypeScript path: dictionary-covered inputs use the native Worker and only a native dictionary miss loads the existing Pyodide Worker. Before changing either path, read docs/web-service-architecture.md for the runtime/privacy boundary, docs/web-service-requirements.md for the user journey and accessibility contract, docs/ui-ux-redesign.md for visual intent, docs/fastthaig2p-javascript-port.md for native-port scope and parity gates, and the browser tests for executable UI contracts.
 
 Apply the relevant UI UX Pro Max priorities in order: accessibility, interaction feedback, performance, responsive layout, typography/colour, progressive disclosure. Keep the current editorial identity (white dominant surface, blue structure, restrained red caution). Do not introduce a generic dashboard, gradients, decorative icons, remote fonts, frameworks, UI packages or runtime dependencies without a demonstrated need. Preserve keyboard focus, labels, status announcements, 44px controls, reduced motion and forced-colors behavior.
 
