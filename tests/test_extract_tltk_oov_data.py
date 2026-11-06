@@ -17,17 +17,16 @@ class TltkOovDataExtractionTests(unittest.TestCase):
             (fallback / "PhSTrigram.sts").write_bytes("|-กา-กา/kaa0\t5\n".encode("cp874"))
             with (fallback / "sylseg.3g").open("wb") as target:
                 pickle.dump({("|", "|", "กา"): 5, ("|", "กา", "|"): 2}, target)
-            with (fallback / "sylform_var.pkl").open("wb") as target:
-                pickle.dump({"กา": ["กา"]}, target)
             with (fallback / "thdict").open("wb") as target:
                 pickle.dump({"กา": 1, "ขา": 1}, target)
 
             data, report = build(fallback)
 
-            self.assertEqual(set(fallback_file for fallback_file in ASSET_NAMES), {
+            self.assertEqual(set(ASSET_NAMES), {
                 "sylrule.lts", "thaisyl.dict", "PhSTrigram.sts",
-                "sylseg.3g", "sylform_var.pkl", "thdict",
+                "sylseg.3g", "thdict",
             })
+            self.assertNotIn("sylform_var.pkl", ASSET_NAMES)
             self.assertEqual(data["tltk_package_license"], "BSD-3-Clause")
             self.assertEqual(len(data["syllable_patterns"]), 1)
             self.assertEqual(data["syllable_dictionary"], [["กา", "kaa0"]])
@@ -35,7 +34,8 @@ class TltkOovDataExtractionTests(unittest.TestCase):
             self.assertEqual(len(data["syllable_trigrams"]), 2)
             self.assertEqual(data["word_dictionary"], ["ขา", "กา"])
             self.assertEqual(report["record_counts"]["word_dictionary"], 2)
-            self.assertEqual(len(report["source_assets"]), 6)
+            self.assertEqual(len(report["source_assets"]), 5)
+            self.assertIn("sylform_var.pkl", report["excluded_assets"])
 
     def test_rejects_missing_source_assets(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
