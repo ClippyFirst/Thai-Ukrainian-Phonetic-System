@@ -19,6 +19,7 @@ on:
       - "web/tests/fastthaig2p-native-pipeline.test.mjs"
       - "web/src/fastthaig2p-native-worker.js"
       - "web/tests/fastthaig2p-native-browser.test.mjs"
+      - "web/tests/native-worker-smoke.html"
       - "web/src/fastthaig2p-native-worker.js"
       - "web/tests/fastthaig2p-native-browser.test.mjs"
       - "web/src/fastthaig2p-tokenizer.js"
