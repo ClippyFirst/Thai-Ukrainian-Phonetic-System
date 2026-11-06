@@ -1,3 +1,30 @@
+## Current audit checkpoint — repository organization and branch reconciliation (2026-11-06)
+
+The repository already has a coherent documentation and engineering governance system: root agent instructions, canonical docs navigation, architecture and product contracts, a script ownership inventory, validation matrix, final audit, chronological handoff, machine-readable audit, schemas, evidence registries, generated-artifact ownership, and Python/browser test suites. The appropriate action is to keep these sources authoritative and reconcile their current status—not to create a parallel documentation hierarchy.
+
+### Branch and PR findings
+
+- Default branch is `main`; the audited starting commit for this session is `f7ce29d6bbae03a8d5a8d03e8c09dbbd5dd01662`.
+- PR #211 site redesign, PR #212 post-merge documentation update, and PR #213 Ukrainian-first UX are already represented in main. Their still-existing source refs are historical, not unmerged work.
+- PR #214 is the only open implementation candidate found. It contains the native-first FastThaiG2P JavaScript port and targets main. It is not yet eligible to merge until exact-head CI and Pyodide compatibility complete successfully.
+- The feature branch is 129 commits ahead and 0 behind main at the comparison checkpoint. This is a substantial change set and requires PR-level review; branch age or ahead count alone is not an acceptance criterion.
+- The audit branch `docs/repository-audit-2026-11-04` is 503 commits ahead and 7 behind. Preserve it; importing its full history would be unsafe and would duplicate/reintroduce already-integrated work. Port only a specific, verified missing change if one is identified.
+- No branch was deleted, force-pushed, or rewritten.
+
+### CI diagnosis and repair
+
+The first exact-head PR #214 run set failed in three workflows because the same UI test called a deferred fake-worker response callback before the async native-ready promise continuation had posted the request. The Pyodide compatibility workflow passed. The test harness was corrected in commit `37e0ee6b6fb1385bd4c98bfdd582d8eee3dac5c1` by yielding one microtask and asserting callback installation before delivering the stale response. This changes only the test fixture, not production runtime behavior.
+
+On the corrected exact head, Web Static #42198840129 and Site API #42198840133 passed. Full CI #42198840130 and Pyodide compatibility #42198840192 were still running at the time of this checkpoint. Their outcomes must be recorded only after the workflows finish.
+
+### Preserved boundaries and open acceptance
+
+The native-first browser path handles only the filtered 13,144-entry Wiktionary IPA dictionary; the existing Pyodide FastThaiG2P worker remains the OOV fallback. TLTK file-level license scope remains ambiguous (BSD-3-Clause metadata and LICENSE.txt vs LGPL-3.0 root LICENSE and stale GPLv3 PKG-INFO), so native OOV code/data must not be bundled until rights are resolved. Do not claim a full Pyodide replacement, performance improvement, or linguistic accuracy.
+
+Independent IPA gold remains zero and linguistic accuracy remains `NOT_MEASURED`. Manual keyboard/screen-reader, zoom/reflow, clipboard, visual and deployed mobile performance checks remain human acceptance gates. The repository is an engineering-verified research prototype, not a linguistically release-ready system.
+
+---
+
 ## Post-merge status correction — 2026-11-06
 
 PR [#211](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/211) is **MERGED**, not open. `main` is at `476cb6ed0e4421ab02bb564ff232c99b6c19e008`. The PR-head Full CI, Web Static, Site API and Pyodide compatibility runs all passed on `8200255df8d7c2cfb4f8aa30d218785e9a625b08`. Post-merge Pages workflow [42120159047](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42120159047) was still running when this correction was recorded; deployed-page verification is **BLOCKED/PENDING**, not passed. The remaining human accessibility, visual, clipboard and mobile-performance gates are unchanged. See the current [handoff](MASTER-EXECUTION-PLAN-AND-CHAT-HANDOFF.md).
