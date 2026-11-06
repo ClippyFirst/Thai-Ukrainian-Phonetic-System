@@ -323,7 +323,7 @@
     "rows": 351780,
     "vowel_rime_records": 41
   },
-  "latest_documentation_checkpoint": "docs/repository-audit-2026-11-04 (PR #210; inspected head 4b3e58a7c714e1f0a517ebf39299f974b5cf5998 passed CI run 41919548444)",
+  "latest_documentation_checkpoint": "bbbfeff944304e1010e3d0daed6fcc6710a27ba6",
   "text_only_checkpoint": {
     "branch": "research/thai-segmentation-gold-parity-verified-20261025",
     "parent_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
@@ -370,7 +370,7 @@
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
   "latest_code_checkpoint": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
   "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY",
-  "latest_verified_repository_head": "d9958db0e877944e5a75183c053681cdbdd525dc",
+  "latest_verified_repository_head": "bbbfeff944304e1010e3d0daed6fcc6710a27ba6",
   "task_ledger": [
     {
       "id": "SEG-TRAIN-001",
@@ -4962,5 +4962,46 @@
     "Instrument real browser FastThaiG2P cold/warm and OOV latency; record HTTP transfer bytes, offline reload/cache behavior and browser/Worker memory on desktop and physical mobile devices.",
     "Manual keyboard-only, screen-reader, 200%/400% zoom, reflow, clipboard and physical-device acceptance with named browser/device and reviewer evidence.",
     "Independent Thai IPA gold and qualified Thai phonetic adjudication; separate Ukrainian-native review of target adaptation. Accuracy remains NOT_MEASURED."
-  ]
+  ],
+  "site_practical_system_2026_11_06": {
+    "working_branch": "docs/practical-system-site-2026-11-06",
+    "starting_main_sha": "bbbfeff944304e1010e3d0daed6fcc6710a27ba6",
+    "status": "IN_PROGRESS_PENDING_PR_HEAD_AND_PAGES_VERIFICATION",
+    "public_page": "web/transcription.html",
+    "navigation": [
+      "web/index.html",
+      "web/system.html"
+    ],
+    "branch_reconciliation": {
+      "open_pull_requests": 0,
+      "merged_pull_requests": [
+        211,
+        212,
+        213,
+        214,
+        216,
+        217,
+        218,
+        219,
+        220
+      ],
+      "superseded_pull_requests": [
+        215
+      ],
+      "divergent_preserved_branch": "docs/repository-audit-2026-11-04",
+      "divergent_ahead": 503,
+      "divergent_behind": 38,
+      "policy": "single active working branch; preserve historical refs; do not wholesale-merge divergent history"
+    },
+    "baseline_ci_run": 42247363425,
+    "functional_main_pages_live_smoke_run": 42245944508,
+    "remaining_acceptance": [
+      "PR-head Pages build",
+      "post-merge Pages deployment and live page check",
+      "manual browser/device performance",
+      "manual accessibility acceptance",
+      "independent Thai IPA gold",
+      "independent Ukrainian-native adaptation review"
+    ]
+  }
 }
