@@ -29,6 +29,8 @@ assert(worker.includes(String.raw`/^[a-zA-Z0-9_.-]+\.whl$/`), "wheel filename va
 assert.doesNotMatch(worker, /message: typeof detail/);
 assert.doesNotMatch(worker, /detail\?\.message/);
 assert.match(html, /id="technical-diagnostics"/);
+assert.match(html, /нативний TLTK OOV-модуль/);
+assert.match(html, /Pyodide залишається резервним сумісним шляхом/);
 assert.match(html, /Ці дані допоможуть повідомити про помилку/);
 assert.match(feedback, /name: Відгук про бета-версію/);
 assert.match(feedback, /label: Категорія відгуку/);
