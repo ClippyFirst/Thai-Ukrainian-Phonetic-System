@@ -30,11 +30,20 @@ def verify(fast_root: Path, tltk_root: Path) -> dict:
     if "Thai Language Toolkit : version  1.3.8" not in fast_source:
         raise SystemExit("Vendored FastThaiG2P parser no longer identifies TLTK 1.3.8")
     setup_source = (tltk_root / "setup.py").read_text(encoding="utf-8")
+    readme_source = (tltk_root / "README.rst").read_text(encoding="utf-8")
+    manifest_source = (tltk_root / "MANIFEST.in").read_text(encoding="utf-8")
     repository_license = (tltk_root / "LICENSE").read_text(encoding="utf-8")
     module_license = (tltk_root / "LICENSE.txt").read_text(encoding="utf-8")
     package_metadata = (tltk_root / "PKG-INFO").read_text(encoding="utf-8")
     if "version='1.9.1'" not in setup_source:
         raise SystemExit("Pinned TLTK repository setup.py version changed")
+    if "New BSD License (BSD-3-Clause)" not in readme_source:
+        raise SystemExit("Pinned TLTK 1.9.1 README no longer documents the package BSD-3-Clause change")
+    if "include LICENSE.txt" not in manifest_source:
+        raise SystemExit("Pinned TLTK source distribution no longer includes its BSD LICENSE.txt")
+    missing_packaged_assets = [name for name in PAIRS if name not in setup_source]
+    if missing_packaged_assets:
+        raise SystemExit("Pinned TLTK setup.py no longer packages fallback assets: " + ", ".join(missing_packaged_assets))
     if "license='BSD-3-Clause'" not in setup_source or "License :: OSI Approved :: BSD License" not in setup_source:
         raise SystemExit("Pinned TLTK repository setup.py license metadata changed")
     if "GNU LESSER GENERAL PUBLIC LICENSE" not in repository_license:
@@ -73,9 +82,13 @@ def verify(fast_root: Path, tltk_root: Path) -> dict:
         "fastthaig2p_vendored_parser_header_version": "1.3.8",
         "fastthaig2p_vendored_parser_header_license": "BSD-3-Clause",
         "pinned_tltk_repository_setup_version": "1.9.1",
-        "pinned_tltk_repository_setup_license": "BSD-3-Clause",
-        "pinned_tltk_repository_root_license": "LGPL-3.0",
-        "pinned_tltk_module_license_txt": "BSD-3-Clause-style notice",
+        "pinned_tltk_package_readme_license": "BSD-3-Clause",
+        "pinned_tltk_package_setup_license": "BSD-3-Clause",
+        "pinned_tltk_package_license_file": "BSD-3-Clause",
+        "pinned_tltk_package_manifest_includes_license": True,
+        "pinned_tltk_fallback_assets_in_package_data": True,
+        "pinned_tltk_repository_root_license": "LGPL-3.0 (repository-level notice retained; not the 1.9.1 package license declaration)",
+        "pinned_tltk_module_license_txt": "BSD-3-Clause",
         "pinned_tltk_pkg_info": {
             "version": "1.1.7",
             "license": "GPLv3",
@@ -83,11 +96,22 @@ def verify(fast_root: Path, tltk_root: Path) -> dict:
         },
         "pinned_tltk_evidence_sha256": {
             "setup_py": digest(setup_source.encode("utf-8")),
+            "readme_rst": digest(readme_source.encode("utf-8")),
+            "manifest_in": digest(manifest_source.encode("utf-8")),
             "root_license": digest(repository_license.encode("utf-8")),
             "module_license_txt": digest(module_license.encode("utf-8")),
             "pkg_info": digest(package_metadata.encode("utf-8")),
         },
-        "license_scope": "AMBIGUOUS_RETAIN_BOTH_LGPL_AND_BSD_NOTICES_PENDING_FILE_LEVEL_REVIEW",
+        "license_scope": "BSD-3-CLAUSE_SUPPORTED_FOR_TLTK_1.9.1_PACKAGED_FALLBACK_ASSETS; RETAIN_REPOSITORY_LGPL_NOTICE_AS_HISTORICAL_CONTEXT",
+        "license_evidence": {
+            "package_readme": "Version 1.9.1 README states that the package license changed to BSD-3-Clause as of version 1.2.2.",
+            "setup_py": "Pinned setup.py declares version 1.9.1 and license BSD-3-Clause.",
+            "package_data": "Pinned setup.py includes all six verified fallback assets in tltk package_data.",
+            "manifest_in": "Pinned MANIFEST.in includes LICENSE.txt.",
+            "license_txt": "The distributed LICENSE.txt contains the BSD-3-Clause copyright, conditions and disclaimer.",
+            "stale_pkg_info": "PKG-INFO identifies version 1.1.7/GPLv3 and is not the 1.9.1 package metadata.",
+            "root_license": "A separate repository-root LGPL-3.0 file is retained as historical repository-level evidence; it does not override the versioned 1.9.1 package declaration and its included LICENSE.txt."
+        },
         "assets": records,
         "verified_assets": len(records),
         "fallback_data_size_bytes": total_uncompressed_bytes,
