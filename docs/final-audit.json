@@ -4663,12 +4663,12 @@
     "post_merge_main_ci": "NOT_VERIFIED_IN_CONNECTOR_SESSION",
     "post_merge_pages_deployment": "NOT_VERIFIED",
     "browser_runtime": "HYBRID_NATIVE_FIRST_DICTIONARY_HITS_WITH_PYODIDE_OOV_FALLBACK",
-    "tltk_native_oov": "BLOCKED_PENDING_FILE_LEVEL_LICENSE_SCOPE_AND_PARITY",
+    "tltk_native_oov": "TODO_FAITHFUL_JAVASCRIPT_PARSER_AND_FULL_TYPED_PARITY; RIGHTS_NO_LONGER_BLOCKING",
     "performance": "NOT_MEASURED",
     "manual_accessibility": "NOT_VERIFIED",
     "independent_ipa_gold_rows": 0,
     "linguistic_accuracy": "NOT_MEASURED",
-    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY",
+    "readiness": "ENGINEERING_VERIFIED_HYBRID_RESEARCH_PROTOTYPE; NATIVE_OOV_AND_LINGUISTIC_RELEASE_GATES_OPEN",
     "branch_policy": "main_is_only_active_integration_branch; historical_refs_preserved",
     "audit_branch": {
       "name": "docs/repository-audit-2026-11-04",
@@ -4679,7 +4679,34 @@
     },
     "documentation_snapshot_head_before_this_structured_update": "484d95f9c5e37f562b6d24bb63be959dea732578",
     "open_pull_requests": 0,
-    "mainline_status": "NATIVE_FIRST_HYBRID_INTEGRATED"
+    "mainline_status": "NATIVE_FIRST_HYBRID_INTEGRATED",
+    "tltk_package_license_scope": "DONE_VERIFIED_BSD_3_CLAUSE_FOR_TLTK_1_9_1_PACKAGED_FALLBACK_ASSETS",
+    "tltk_license_evidence": {
+      "tltk_commit": "0cef4bcfbdd675f589783dd4134b87b9bb9fbb93",
+      "package_readme": "BSD-3-Clause as of version 1.2.2",
+      "setup_py": "version 1.9.1; BSD-3-Clause; all six fallback assets included in package_data",
+      "manifest_in": "includes LICENSE.txt",
+      "license_txt": "BSD-3-Clause conditions and disclaimer",
+      "pypi_release": "1.9.1 metadata corroborates BSD-3-Clause",
+      "root_license": "LGPL-3.0 preserved as separate repository-level notice",
+      "stale_pkg_info": "1.1.7 / GPLv3; stale relative to 1.9.1 package"
+    },
+    "tltk_oov_data_extractor": "PARTIAL_BUILD_TIME_JSON_GZIP_DATA_PACK_AND_SOURCE_MANIFEST; JAVASCRIPT_RUNTIME_PORT_NOT_IMPLEMENTED",
+    "pages_live_observation": {
+      "status": "LIVE_HTTP_CONTENT_AND_ASSET_FETCHES_CONFIRMED",
+      "checked_at": "2026-11-06",
+      "evidence": [
+        "homepage serves native-first explanatory text",
+        "src/app.js serves native worker-first logic and lazy Pyodide fallback",
+        "src/fastthaig2p-native-worker.js and src/fastthaig2p-native.js are reachable",
+        "vendor/native/manifest.json and all five declared native assets are reachable",
+        "vendor/bundle-manifest.json is reachable",
+        "system.html and third-party-notices.html are reachable"
+      ],
+      "limitations": "The current live manifest still identifies the native runtime as dictionary-only. No native TLTK OOV runtime or new branch deployment is claimed."
+    },
+    "pages_post_merge_workflow": "NOT_VERIFIED_BY_COMMIT_RUN_LOOKUP; LIVE_NATIVE_FIRST_ASSETS_OBSERVED; POST_DEPLOY_HASH_SMOKE_UPDATED_ON_WORK_BRANCH_AND_PENDING_PR",
+    "pages_workflow_change": "pages.yml post-deploy smoke now checks current native-first UI, both same-origin workers, native and OOV manifests, compressed TLTK OOV data SHA-256, all notices, and retained Pyodide runtime; build now runs on pull_request with deploy main-only"
   },
   "repository_state_2026_11_06_pre_merge": {
     "audited_at": "2026-11-06",
