@@ -1,3 +1,15 @@
+## Handoff — PR #211 merged; Pages deployment pending verification (2026-11-06)
+
+- PR [#211](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/211) was squash-merged to `main`; merge commit `476cb6ed0e4421ab02bb564ff232c99b6c19e008`. The branch head tested before merge was `8200255df8d7c2cfb4f8aa30d218785e9a625b08`.
+- Exact-head checks on that PR head: Full CI [42117563464](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42117563464), Web Static [42117563510](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42117563510), Site API [42117563500](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42117563500), and Pyodide compatibility [42117563482](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42117563482) all completed SUCCESS.
+- Post-merge Pages deployment workflow [42120159047](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42120159047) was observed `in_progress`, with the Python regression-test step running. No successful post-deploy smoke result or live-site content check is available yet. Do not mark the redesign as deployed until this run succeeds and the published URL is independently checked.
+- The supplied `docs/repository-audit-2026-11-04` branch was inspected and preserved. It has divergent history (503 commits ahead and 4 behind the then-current main) and is not a safe integration base; its work was not merged wholesale. PR #211 already carried the relevant current documentation and UX reconciliation.
+- Manual acceptance remains open: keyboard-only and screen-reader review; 200%/400% zoom and narrow viewport reflow; actual clipboard interaction; deployed mobile cold/warm performance; screenshot-based visual review. Static tests do not establish WCAG conformance.
+- Research status is unchanged: independent IPA gold 0, accuracy `NOT_MEASURED`, Ukrainian candidates provisional. TLTK BSD/LGPL file-level scope ambiguity remains disclosed; both notices retained.
+- This checkpoint was written from GitHub metadata and repository files. The connected Firecrawl service had no available credits and direct external network access from the runtime was unavailable, so no independent live-page fetch or screenshot was completed.
+
+---
+
 ## Handoff — UI/UX recomposition exact-head verification refresh (2026-11-05)
 
 - Current branch `design/site-recomposition-2026-11-05`; exact tested code HEAD `d5c880a082ae553bf944d31f6d341f38f33690c8`; docs refresh HEAD `56c17a87c0c229ffdfa8dc524f5cf60a6fb8eb79` passed all four workflows; base `main` `f0d41996e854185bd6bd92f0ffa8f6b83e71f777`. PR [#211](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/211) remains OPEN, mergeable and not merged. No mainline or deployment-setting mutation.

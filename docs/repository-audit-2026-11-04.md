@@ -1,3 +1,13 @@
+## Post-merge repository checkpoint — 2026-11-06
+
+- Current default branch `main` is at `476cb6ed0e4421ab02bb564ff232c99b6c19e008`, the squash merge of PR #211.
+- PR #211 merged after exact-head Full CI, Web Static, Site API and Pyodide compatibility workflows all completed SUCCESS. See the canonical run links in the current [handoff](MASTER-EXECUTION-PLAN-AND-CHAT-HANDOFF.md).
+- The post-merge Pages workflow [42120159047](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42120159047) was still in progress at the time of this checkpoint. Deployment success and live-page content are therefore **NOT VERIFIED** here.
+- `docs/repository-audit-2026-11-04` remains preserved and unmerged: it is substantially divergent (503 commits ahead, 4 behind the then-current main). Do not merge it wholesale or use it as a new work base without a fresh ancestry/content reconciliation.
+- Automated implementation evidence is strong; human acceptance remains partial: keyboard/screen-reader operation, zoom/reflow, real clipboard and deployed mobile performance are still required. Linguistic accuracy remains `NOT_MEASURED`; independent IPA gold is 0 and Ukrainian output remains provisional.
+
+---
+
 ## Current verified repository and UX checkpoint — 2026-11-05
 
 - Default branch: main; latest inspected HEAD f0d41996e854185bd6bd92f0ffa8f6b83e71f777. Latest main CI [42099035122](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42099035122) completed SUCCESS. Pages deployment [42098396098](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42098396098) and Pyodide compatibility [42098395877](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42098395877) completed SUCCESS on the preceding code checkpoint.
