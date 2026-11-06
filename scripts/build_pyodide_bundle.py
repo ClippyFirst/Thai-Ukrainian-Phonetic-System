@@ -202,6 +202,11 @@ def main() -> None:
         json.dumps(native_manifest, ensure_ascii=False, indent=2) + "\\n",
         encoding="utf-8",
     )
+    native_records = [{
+        "path": path.relative_to(args.output).as_posix(),
+        "sha256": sha256(path),
+        "size_bytes": path.stat().st_size,
+    } for path in sorted(native_out.iterdir()) if path.is_file()]
 
     runtime_out = args.output / "pyodide"
     wheels_out = args.output / "wheels"
@@ -234,6 +239,7 @@ def main() -> None:
         "runtime_files": runtime_records,
         "notices": notice_records,
         "datasets": dataset_records,
+        "native_assets": native_records,
     }
     (args.output / "bundle-manifest.json").write_text(
         json.dumps(bundle_manifest, ensure_ascii=False, indent=2) + "\n",
@@ -249,6 +255,8 @@ def main() -> None:
         "notice_bytes": sum(item["size_bytes"] for item in notice_records),
         "dataset_count": len(dataset_records),
         "dataset_bytes": sum(item["size_bytes"] for item in dataset_records),
+        "native_asset_count": len(native_records),
+        "native_asset_bytes": sum(item["size_bytes"] for item in native_records),
         "redistribution_approved": bundle_manifest["redistribution_approved"],
     }, ensure_ascii=False, indent=2))
 
