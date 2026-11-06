@@ -1,3 +1,17 @@
+## Current continuation — Pages smoke repair and final acceptance (2026-11-06)
+
+- Starting default branch: `main`; starting HEAD: `9f279ce04c14b81fa4728a15e81fb89ab046b753`.
+- Work branch: `fix/pages-smoke-and-audit-consolidation-2026-11-06`, created from that exact mainline.
+- Native TLTK OOV implementation is already merged (PR #216, `77a80a5e28f9b7566cb9c3ef8b11417d081d2c82`); parity follow-up #217 merged as `533cd3f8df6112b000f5c91524f8050026b4d79a`; documentation checkpoint #218 merged as the current main HEAD.
+- Current main CI #42229026310: SUCCESS. Main Pages run #42226988467: build SUCCESS; Pages deployment action reported success; post-deploy smoke FAILED after 12 attempts. The source-level root cause is the heading assertion: `web/index.html` has inline `span` markup within the h1, so the old full-sentence grep can never match. Correct the check to assert the heading id and text fragments; add a regression test preventing this drift.
+- The corrected Pages workflow must pass its PR build first. After merge, require a new main push Pages run to complete with deploy and post-deploy hash smoke SUCCESS. A PR Pages build is not a live deployment.
+- PR #215 remains open but is superseded: its head is an ancestor of PR #216's branch head (74 commits ahead, 0 behind); #216's full native OOV implementation was merged. Close #215 as superseded and preserve the source branch.
+- Nine non-main branch refs remain. The active PR source branches correspond to already-merged PRs or historical documentation; do not delete/force-update them. Preserve `docs/repository-audit-2026-11-04` (503 ahead/23 behind) rather than importing its divergent history.
+- Remaining gates after Pages repair: measured cold/warm/offline/mobile latency, transfer size and memory; hands-on keyboard/screen-reader/zoom/reflow/device acceptance; independent Thai IPA gold and Ukrainian-native adaptation review. Independent IPA gold is still 0 and accuracy is `NOT_MEASURED`.
+- No local checkout or local test execution is claimed in this connector session. Exact CI/Actions results are the verification evidence; rerun exact-head workflows on the repair branch and inspect the post-merge main run.
+
+---
+
 ## Verification checkpoint — PR #215 build and CI passed (2026-11-06)
 
 - Code-tested branch head: `e2f09fb82014bdbc514fa860e49a7f8f788aef6d`.

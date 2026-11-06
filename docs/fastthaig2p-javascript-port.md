@@ -1,5 +1,14 @@
 # FastThaiG2P native JavaScript/TypeScript port
 
+
+## Current mainline status — 2026-11-06
+
+PR #216 and its parity follow-up #217 are merged. The browser-native TLTK OOV implementation is no longer TODO: 64/64 typed-service JSON parity passed in both module and Worker tests, and Chromium confirmed that supported OOV inputs do not fetch Python, Pyodide, wheels, API or CDN assets. Pyodide remains a fail-closed last-resort compatibility fallback. TLTK 1.9.1 package-level BSD-3-Clause evidence covers the six packaged fallback assets only; the separate root LGPL-3.0 and stale 1.1.7/GPLv3 metadata remain disclosed historical context.
+
+The remaining browser-engineering gates are measured cold/warm/offline/mobile transfer, latency and memory. Mainline CI #42229026310 passed. The main Pages run #42226988467 built and deployed the artifact but its post-deploy smoke failed because an exact-string heading assertion did not account for inline markup in the current HTML; this is being corrected separately. Do not claim a successful post-merge Pages smoke until a main push run passes.
+
+Independent linguistic accuracy is still NOT_MEASURED: implementation parity against the pinned Python engine is not independent Thai phonetic gold. Ukrainian target forms remain provisional pending Ukrainian-native review.
+
 **Owner decision (2026-11-06):** proceed with an original browser-native JavaScript/TypeScript port of the pinned FastThaiG2P pipeline. The existing Pyodide implementation remains the production/reference path until the native implementation reaches exact, evidence-backed acceptance. Do not cut over or remove Pyodide merely because a dictionary-only prototype exists.
 
 ## Product and attribution positioning

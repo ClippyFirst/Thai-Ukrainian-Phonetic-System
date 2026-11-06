@@ -1,16 +1,28 @@
-## 2026-11-06 PR #215 verification update
+## 2026-11-06 — current post-merge acceptance checkpoint
 
-| Item | Status | Evidence / acceptance |
+This section supersedes earlier PR #215 preparation-only snapshots below. PR #216 and PR #217 are merged; the native TLTK OOV implementation is present in main. Historical sections remain for provenance and must not be read as the current runtime state.
+
+| Gate | Status | Evidence / acceptance |
 |---|---|---|
-| TLTK 1.9.1 package rights | DONE_VERIFIED | Pinned README, setup.py, package_data, MANIFEST.in, LICENSE.txt and PyPI release metadata support BSD-3-Clause for all six packaged fallback assets. Preserve BSD terms; retain the separate root LGPL-3.0 and stale 1.1.7/GPLv3 notices as historical context. |
-| TLTK OOV data extraction | DONE_VERIFIED_BUILD_PIPELINE | Pages build #42203706810 generated and uploaded a deterministic JSON/gzip data pack (2,844,409 compressed / 19,848,231 uncompressed bytes) with five runtime tables and AST-extracted parser constants. The unused sylform_var.pkl is excluded from the runtime pack but remains in the six-file provenance check. |
-| Pages build | DONE_VERIFIED | PR Pages run #42203706810 SUCCESS: Python regression, browser parity, RTGS reference parity, IPA adaptation, UI contract, static accessibility, Pyodide bundle, OOV extraction and artifact upload. Deploy was skipped on PR. |
-| Full CI | DONE_VERIFIED | Run #42203706898 SUCCESS: 401 passed, 1 skipped, 1,211 subtests passed; Ruff passed; wheel-install-smoke and master-artifact passed. The only skip is optional FastAPI test (FastAPI absent from generic CI). |
-| Web Static | DONE_VERIFIED | Run #42203706779 SUCCESS. |
-| Live Pages deployment after PR #215 | TODO / PENDING_MERGE | Current main site and native-first assets are reachable. New post-deploy SHA smoke will run only after PR merge; no deployment from this draft PR is claimed. |
-| Native JavaScript TLTK OOV algorithm | TODO | Not implemented. Data extraction is preparation only; public UI still uses Pyodide for OOV. Acceptance requires complete raw IPA and full typed service JSON parity against multiple pinned Python OOV fixtures, then real browser Worker lazy-load/hash verification. |
+| Native FastThaiG2P/TLTK OOV JavaScript port | DONE_VERIFIED (implementation parity) | PR #216 merged as `77a80a5e28f9b7566cb9c3ef8b11417d081d2c82`; 64/64 typed-service JSON parity in module and Worker; Chromium verifies supported OOV avoids Python, Pyodide, wheels, API and CDN. Pyodide remains a fail-closed last-resort compatibility fallback. |
+| TLTK package-level rights for six shipped fallback assets | DONE_VERIFIED (source-based scope) | TLTK 1.9.1 README, setup.py/package_data, MANIFEST.in, LICENSE.txt and PyPI metadata support BSD-3-Clause for the packaged files. Preserve BSD conditions, disclaimer and no-endorsement clause; retain root LGPL-3.0 and stale 1.1.7/GPLv3 metadata as separate historical context. Not legal advice. |
+| PR #217 regression anchor | DONE_VERIFIED | Merged as `533cd3f8df6112b000f5c91524f8050026b4d79a`; pinned TLTK syllable segmentation/scoring regression guard for `กขส`. Exact PR-head CI #42226080426, Pages build #42226080435 and Pyodide compatibility #42226080581 succeeded. CI: 401 passed, 1 skipped, 1,211 subtests; Ruff and wheel-install smoke passed. PR Pages deploy correctly skipped. |
+| Mainline CI | DONE_VERIFIED | Main HEAD `9f279ce04c14b81fa4728a15e81fb89ab046b753`; push CI #42229026310 SUCCESS. |
+| Mainline GitHub Pages deployment and live smoke | PARTIAL / BLOCKED BY SMOKE CONTRACT | Main Pages run #42226988467 built the artifact and GitHub Pages reported deployment success, but the post-deploy smoke failed after 12 attempts. The failure is reproducible from source: the smoke expected one contiguous heading string, while `web/index.html` wraps “прочитати” in a `span`. This branch updates the assertion to check the heading id and visible text fragments and adds a regression test. Acceptance still requires merged main-push Pages run with deploy + live hash smoke SUCCESS. |
+| Cold/warm/offline/mobile latency, transfer and memory | TODO | Measure actual transferred bytes, cold start, warm/cache latency, offline reload and memory on desktop and real mobile devices. Record browser/device/network, sample count and raw output. No speedup claim. |
+| Manual keyboard, screen reader, zoom/reflow and device acceptance | TODO | Human test evidence required for keyboard-only, representative screen readers, 200%/400% zoom, narrow viewport/reflow, clipboard and real device checks. Static tests do not establish WCAG conformance. |
+| Independent Thai IPA gold and Ukrainian adaptation review | BLOCKED / EVIDENCE-LIMITED | Independent IPA gold remains 0; accuracy remains `NOT_MEASURED`. Requires qualified Thai phonetics reviewers/adjudication and a separate Ukrainian-native review of target forms. Source annotations and Python/JS parity are not expert gold. |
+
+### Branch and PR consolidation
+
+- Default branch remains `main`; the audited starting HEAD is `9f279ce04c14b81fa4728a15e81fb89ab046b753`.
+- PRs #211–#218 that represent the current site redesign, Ukrainian-first UX, native front-half, native TLTK OOV, parity follow-up and documentation checkpoints are merged into main.
+- PR #215 is an obsolete preparation PR: its head `5fd73a4abb489ac43b2531abcdb86a026ac6e48c` is an ancestor of the merged PR #216 branch head (74 commits later). Its work is superseded by #216; close the PR as superseded after this reconciliation, retaining its source branch as history.
+- The nine extant non-main refs are historical or merged PR source refs. Do not force-update or delete them. `docs/repository-audit-2026-11-04` remains highly divergent (503 commits ahead and 23 behind main at this audit) and must not be wholesale-merged; retain it and port only a separately evidenced missing change.
+- Use one active continuation branch for this acceptance repair; merge it only after exact-head CI/Pages build pass. The deployment smoke itself must then be verified on main.
 
 ---
+
 
 ## 2026-11-06 follow-up — Pages and TLTK package rights
 

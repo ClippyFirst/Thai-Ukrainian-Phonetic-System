@@ -1,6 +1,6 @@
 {
   "release": "0.6.1",
-  "status": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_POST_MERGE_PAGES_DEPLOYMENT_NOT_INDEPENDENTLY_VERIFIED",
+  "status": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_POST_MERGE_PAGES_SMOKE_FIX_PENDING",
   "implemented": [
     "orthography",
     "syllable_structure",
@@ -4694,12 +4694,12 @@
       "status": "LIVE_HTTP_CONTENT_AND_ASSET_FETCHES_CONFIRMED",
       "evidence": "Main public site serves native-first page/app/worker/module, native manifest and five declared assets, bundle manifest, system page and notices.",
       "current_runtime": "NATIVE_DICTIONARY_HITS_WITH_PYODIDE_OOV_FALLBACK",
-      "post_merge_smoke": "PENDING_PR_215_MERGE_AND_MAIN_DEPLOY"
+      "post_merge_smoke": "MAIN_DEPLOY_ACTION_REPORTED_SUCCESS_BUT_POST_DEPLOY_SMOKE_FAILED_ON_STALE_INLINE_HEADING_ASSERTION; REPAIR_PENDING"
     },
-    "pages_post_merge_workflow": "LIVE_SITE_IS_REACHABLE; CURRENT_BRANCH_PAGES_BUILD_AND_POST_MERGE_HASH_SMOKE_PENDING",
+    "pages_post_merge_workflow": "MAIN_RUN_42226988467_BUILD_SUCCESS_DEPLOYMENT_REPORTED_SUCCESS_POST_DEPLOY_SMOKE_FAILED_ON_STALE_HEADING_ASSERTION",
     "pages_workflow_change": "pages.yml post-deploy smoke now checks current native-first UI, both same-origin workers, native and OOV manifests, compressed TLTK OOV data SHA-256, all notices, and retained Pyodide runtime; build now runs on pull_request with deploy main-only",
-    "current_work_branch": "feat/native-tltk-oov-and-pages-verification-2026-11-06",
-    "draft_pull_request": 215,
+    "current_work_branch": "fix/pages-smoke-and-audit-consolidation-2026-11-06",
+    "superseded_open_pull_request": 215,
     "draft_pull_request_head": "a54cab92f9008663b4b640003c7b21b8581fdf9d",
     "pages_workflow_fix": "PR #215 corrected stale post-deploy smoke assertions, added PR build trigger, and checks native assets, OOV manifest/data hash, notices and Pyodide fallback.",
     "branch_checks": {
@@ -4833,5 +4833,38 @@
     "follow_up_head": "d6becd86a21b92dc20098279b87b523bb4060c11",
     "main_merge_commit": "533cd3f8df6112b000f5c91524f8050026b4d79a",
     "regression_guard": "Pinned TLTK sylparse('กขส') == 'กขส'; full n-gram segmentation score ranks above the two alternate splits."
+  },
+  "pages_smoke_followup_2026_11_06": {
+    "starting_main_sha": "9f279ce04c14b81fa4728a15e81fb89ab046b753",
+    "main_ci_run": {"run_id": 42229026310, "status": "SUCCESS"},
+    "main_pages_run": {
+      "run_id": 42226988467,
+      "build": "SUCCESS",
+      "deployment_action": "REPORTED_SUCCESS",
+      "post_deploy_smoke": "FAILED_AFTER_12_ATTEMPTS",
+      "root_cause": "The workflow grepped a contiguous h1 sentence, but web/index.html wraps the word 'прочитати' in an inline span; the assertion cannot match valid current markup."
+    },
+    "repair": {
+      "branch": "fix/pages-smoke-and-audit-consolidation-2026-11-06",
+      "workflow_change": "Check h1 id and visible text fragments separately.",
+      "regression_test": "tests/test_pages_smoke_contract.py",
+      "acceptance": "PR exact-head CI and Pages build pass; after merge, main Pages deployment and live hash smoke pass."
+    },
+    "branch_reconciliation": {
+      "non_main_refs": 9,
+      "superseded_pr": 215,
+      "superseded_by": 216,
+      "pr215_head_is_ancestor_of_pr216_head": true,
+      "divergent_audit_branch": "PRESERVED; 503 ahead / 23 behind; no wholesale merge or branch deletion"
+    },
+    "remaining_gates": [
+      "Cold/warm/offline/mobile latency, transfer size and memory measurements",
+      "Manual keyboard, screen-reader, zoom/reflow and device acceptance",
+      "Independent Thai IPA gold and Ukrainian-native adaptation review"
+    ],
+    "independent_ipa_gold_rows": 0,
+    "linguistic_accuracy": "NOT_MEASURED",
+    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY"
   }
+
 }

@@ -170,7 +170,9 @@ jobs:
           set -eu
           for attempt in $(seq 1 12); do
             if curl --fail --silent --show-error "$PAGE_URL" -o /tmp/deployed-index.html \
-              && grep -Fq 'Побачте, як прочитати тайський текст' /tmp/deployed-index.html \
+              && grep -Fq 'id="page-title"' /tmp/deployed-index.html \
+              && grep -Fq 'Побачте, як' /tmp/deployed-index.html \
+              && grep -Fq 'тайський текст' /tmp/deployed-index.html \
               && grep -Fq 'Спочатку працює нативний JavaScript-порт FastThaiG2P' /tmp/deployed-index.html \
               && grep -Fq 'id="thai-input"' /tmp/deployed-index.html \
               && grep -Fq 'id="analyze"' /tmp/deployed-index.html \
