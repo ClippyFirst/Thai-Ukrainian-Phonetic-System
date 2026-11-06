@@ -39,6 +39,31 @@ class GeographicDictionaryTests(unittest.TestCase):
         self.assertTrue(result["ukrainian_from_ipa"])
         self.assertEqual(result["romanization_method"], "PyThaiNLP 5.4.0 newmm + royin RTGS")
 
+    def test_missing_surface_ipa_is_not_filled_from_phonemic_ipa(self):
+        analysis = [{
+            "kind": "thai",
+            "input": "กา",
+            "word_segmentation_complete": True,
+            "word_segmentation_method": "fixture",
+            "syllables": [{
+                "status": "analyzed",
+                "phonemic_ipa": "kaː",
+                "phonetic_ipa": None,
+                "ukrainian_transliteration": "กา",
+                "phonetic_result": {
+                    "phonemic_ipa": "kaː",
+                    "broad_surface_ipa": None,
+                    "status": "SUPPORTED",
+                    "uncertainty": [],
+                },
+            }],
+        }]
+        with patch("thai_ukrainian.text.analyze_text_with_word_segmentation", return_value=analysis):
+            result = analyze_geographic_name("กา", lambda *_a, **_k: "ka", lambda text, **_k: [text])
+        self.assertEqual(result["ipa_phonemic"], "kaː")
+        self.assertEqual(result["ipa_broad_surface"], "")
+        self.assertEqual(result["ukrainian_from_ipa"], "กา")
+
     def test_csv_cli_preserves_source_columns_and_adds_outputs(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
