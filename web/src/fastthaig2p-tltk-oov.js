@@ -74,12 +74,12 @@ function transformSyllable(form,phone){
 }
 function allowedPronunciation(code,charmatch,form,phone,allowed){
  if(form.includes("."))return true;
- if(code.includes("CR")&&/^(?:ผ ร|ด ล|ต ล|ท ล|ด ว|ต ว|ท ว|บ ว|ป ว|พ ว|ฟ ว|ผ ว|ส ล|ส ว|ร ร|ศ ล|ศ ว)/u.test(charmatch))return false;
- if(code.includes("AK")){const c=charmatch.split(" ");if(!(allowed[c[0]]||"").includes(c[1]||""))return false;}
+ if(code.includes("CR")&&/^(?:ผ ร|ด ล|ต ล|ท ล|ด ว|ต ว|ท ว|บ ว|ป ว|พ ว|ฟ ว|ผ ว|ส ล|ส ว|ร ร|ศ ล|ศ ว)/u.test(charmatch))return -1;
+ if(code.includes("AK")){const c=charmatch.split(" ");if(!(allowed[c[0]]||"").includes(c[1]||""))return -1;}
  if(/\u0E31[\0E48-\u0E4B]?ว\]/u.test(form)&&phone.includes("aw"))return false;
- if(/[ก-ฮ] ข/u.test(charmatch)&&!/[ุัเ]/u.test(form))return false;
- if(/[ก-ฮ] ร$/u.test(charmatch)&&/.an/u.test(phone))return false;
- return true;
+ if(/[ก-ฮ] ข/u.test(charmatch)&&!/[ุัเ]/u.test(form))return -1;
+ if(/[ก-ฮ] ร$/u.test(charmatch)&&/.an/u.test(phone))return -1;
+ return 1;
 }
 function mergeKaran(forms,pron){
  const out=[];let pending=null;const mergedSeen=new Set();
@@ -165,6 +165,9 @@ export function createTltkOovFallback(data){
    let phone;
    try { phone=replaceSound(pronunciation,code,charmatch,stable); }
    catch(error) { if(error?.code==="native_oov_stable_missing")continue; throw error; }
+   // Upstream TLTK NotExceptionSyl returns -1 for exception branches, but
+   // sylparse() checks the return value by truthiness, so -1 still triggers
+   // tone assignment. Preserve this legacy behavior for exact G2P parity.
    const allowed=allowedPronunciation(code,charmatch,form,phone,constants.allowed_clusters);
    const beforeTone=phone;
    let assignedTone=null;
