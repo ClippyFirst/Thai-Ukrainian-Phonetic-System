@@ -65,7 +65,7 @@
             "verified_assets": 6,
             "source_commit": "0cef4bcfbdd675f589783dd4134b87b9bb9fbb93",
             "repository_setup_version": "1.9.1",
-            "version_caveat": "The vendored parser header says TLTK 1.3.8, while the pinned repository snapshot setup.py says 1.9.1; do not attribute the data files to release 1.3.8 without further evidence.",
+            "version_caveat": "The vendored parser file header identifies its TLTK code lineage as 1.3.8; the six data assets are independently mapped to the pinned TLTK repository/package snapshot 1.9.1. Do not conflate parser code header version and packaged data release version.",
             "verifier": "scripts/verify_tltk_fallback_provenance.py",
             "license_evidence": {
               "parser_header": {
@@ -126,13 +126,13 @@
   "notes": [
     "Pyodide parity, filtered dictionary source counts, actual same-origin Chromium worker smoke, and TLTK fallback asset transformations passed in CI run 42085653176.",
     "The filtered wheel retains 13,144 Wiktionary IPA records, excludes 48,957 generated records, excludes manual/unknown records by policy, and records one stale metadata value for สวน without altering the current runtime IPA.",
-    "All six TLTK fallback assets are now source/transform verified: five byte-identical; sylform_var.pkl is the exact bzip2 decompression of the TLTK 1.3.8 source asset.",
+    "All six TLTK fallback assets are now source/transform verified: five byte-identical; sylform_var.pkl is the exact bzip2 decompression of the TLTK 1.9.1 source package asset.",
     "TLTK package rights review completed 2026-11-06: the six fallback assets are included in TLTK 1.9.1 package_data under its explicit BSD-3-Clause package declaration and included LICENSE.txt; the separate root LGPL-3.0 notice and stale 1.1.7/GPLv3 PKG-INFO remain disclosed as historical repository metadata.",
     "The native OOV data extraction pipeline emits a deterministic gzip-compressed JSON data pack from the six verified fallback assets. It is data-only and does not include Python modules or pickle at browser runtime; the JavaScript algorithm and parity gate remain separate TODO."
   ],
   "owner_approval": {
     "date": "2026-11-05",
     "scope": "Public GitHub Pages publication for this research project, as explicitly authorized by the repository owner.",
-    "note": "This project-scope approval does not alter third-party license terms. Required notices and the disclosed TLTK file-level license ambiguity remain preserved."
+    "note": "This project-scope approval does not alter third-party license terms. Required notices remain preserved; TLTK 1.9.1 package-level BSD-3-Clause scope is supported by the pinned README/setup.py/MANIFEST.in/LICENSE.txt/PyPI evidence, while the separate root LGPL-3.0 notice remains disclosed as historical repository context."
   }
 }
