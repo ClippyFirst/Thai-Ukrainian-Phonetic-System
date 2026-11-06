@@ -2859,3 +2859,13 @@ This closes the data-transformation/provenance subtask, not the license-scope qu
 - Exact-head run [#42184407769](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42184407769) SUCCESS on code head `aafc98a06aca2f982f2a0fbb3ce03f64c7a8561e`. Job log: “Native FastThaiG2P Worker passed Chromium smoke for 16 CPython cases and fail-closed OOV without Pyodide, Python, wheels or remote requests”.
 - Web Static [#42184407781](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42184407781) SUCCESS on the same head.
 - Full CI [#42184407814](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42184407814) remained IN_PROGRESS when this note was written. No merge or production cutover has been performed.
+
+
+## TLTK fallback payload sizing (2026-11-06)
+
+- The new provenance report now includes deterministic gzip estimates for each pinned fallback asset.
+- Exact CI run [#42185083463](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42185083463) SUCCESS on code head `cba5252fb8e725fc7572bd798d896b3df2ec3883`.
+- Six verified TLTK fallback assets total **19,883,873 bytes raw** and **5,911,457 bytes gzip level-9 estimate** (70.27% smaller). This is a deterministic compression estimate, not a measured GitHub Pages transfer size.
+- Combined with the existing native front-half assets (~2.2 MB raw), the complete native runtime data is not tiny; however gzip could make the fallback payload ~5.9 MB. Before making any speed/size claim, measure actual transfer behavior and compare against gzip-compressed Pyodide JS/WASM/wheels on the same hosting path.
+- Web Static [#42185083614](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42185083614) SUCCESS on the same code head.
+- Full CI [#42185083671](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42185083671) IN_PROGRESS at the time of this note.
