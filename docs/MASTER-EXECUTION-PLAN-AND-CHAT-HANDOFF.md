@@ -2818,3 +2818,14 @@ Canonical documents: `docs/beta-release-scope.md`, `docs/fastthaig2p-pyodide-por
 - Remaining genuine blocker: TLTK fallback source/data asset-level licensing. The current evidence includes BSD-3-Clause and LGPL-3.0 notices; do not port or redistribute the fallback data/pickle until exact scope is resolved. Then require exact OOV and full typed IPA/result parity.
 - Native Worker integration, browser cold/warm/offline smoke, performance measurements and production cutover remain TODO/DEFERRED. No speed or full replacement claim.
 - Linguistic accuracy remains `NOT_MEASURED`.
+
+
+## Native Worker smoke — verified (2026-11-06)
+
+- Native Worker source: `web/src/fastthaig2p-native-worker.js`; it imports only local JS modules and loads the manifest, filtered IPA dictionary, normalizer maps and PyThaiNLP default wordlist from same-origin static assets.
+- Asset loader verifies byte lengths and SHA-256 for each runtime data file before parsing.
+- Isolated Chromium smoke: [Pyodide compatibility #42182444849](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42182444849) SUCCESS. The native Worker produced the same normalized input, token sequence and raw IPA as the pinned CPython reference. The request audit found no Pyodide, Python, wheel, WASM or remote API requests.
+- The test intentionally uses a blank isolated page, not the production app; therefore this verifies the native Worker itself, not UI integration or production cutover.
+- Latest Web Static #42182453339 SUCCESS on workflow-only head `e4f587f4a868651c9bfcbbc981089c671853a6cd`.
+- Full CI #42182453368 was PENDING at the time of this update. The repeated Pyodide compatibility run #42182453326 is IN_PROGRESS on the same workflow-only head; the previous exact code head #42182444849 is already fully green.
+- Remaining blockers are unchanged: TLTK fallback file-level license scope; full OOV/typed IPA/result JSON parity; public UI runtime selector; mobile/offline/cold-warm performance evidence. The app remains on Pyodide.
