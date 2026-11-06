@@ -2219,3 +2219,12 @@ Post-merge Pages deployment is not yet independently verified. The workflow is c
 - Post-deploy smoke confirmed the published main page, app bundle, RTGS disclosure import, dedicated RTGS page, practical transcription page, native worker, TLTK OOV assets and Pyodide fallback. The user-facing RTGS disclosure is deployed.
 - Local `git clone` and local command execution could not be run because the container could not resolve `github.com`; the repository's exact-head and post-merge GitHub Actions ran all required suites successfully.
 - Linguistic research status is unchanged: independent IPA gold = 0, linguistic accuracy = `NOT_MEASURED`, Ukrainian practical output remains provisional. Manual accessibility and instrumented real-device performance remain deferred.
+
+
+## Final mainline and historical branch verification — 2026-11-06
+
+- PR #227 merged; final `main` is `5c5cfa7f7a064253f56aaef4a98fd0f6e3ef11ca`. No open PRs remain.
+- Exact-head CI [#42297033289](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42297033289) completed SUCCESS on final main. The `test`, `wheel-install-smoke`, and `master-artifact` jobs all passed.
+- Live branch inventory is 19 refs total: main plus 18 historical non-main refs. Recursive Git tree comparison of every non-main ref against final main found zero file paths absent from main. Commit graphs remain divergent because these refs are historical snapshots and several PRs were squash-merged; an ahead count alone is not evidence of missing implementation. The most divergent audit branch is 503 ahead / 45 behind and is intentionally not merged wholesale. Historical branches are preserved, not deleted.
+- `main` is the only active working branch. This satisfies the one-active-branch workflow without rewriting or destroying historical references.
+- Engineering status: CI verified; RTGS progressive disclosure is deployed. Linguistic accuracy remains NOT_MEASURED (zero independently adjudicated IPA gold rows); Ukrainian practical output remains provisional. Manual accessibility and instrumented device-performance gates remain deferred/unverified.
