@@ -25,6 +25,7 @@ assert.match(app, /errorMessage\(error\?\.code\)/);
 assert.doesNotMatch(app, /status\.textContent\s*=\s*error\.message/);
 assert.match(app, /diagnosticDetails\.textContent/);
 assert.match(worker, /type: "error"[\s\S]*?code,/);
+assert(worker.includes(String.raw`/^[a-zA-Z0-9_.-]+\.whl$/`), "wheel filename validation must match .whl assets");
 assert.doesNotMatch(worker, /message: typeof detail/);
 assert.doesNotMatch(worker, /detail\?\.message/);
 assert.match(html, /id="technical-diagnostics"/);
