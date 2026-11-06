@@ -1,3 +1,14 @@
+## Repository and public practical-system checkpoint — 2026-11-06
+
+- Working branch: docs/practical-system-site-2026-11-06, created from main at bbbfeff944304e1010e3d0daed6fcc6710a27ba6. Latest main-push CI run #42247363425 is SUCCESS. No open PRs were present at the checkpoint.
+- Branch reconciliation: PRs #211–#214 and #216–#220 are merged; PR #215 is closed as superseded by #216. Existing non-main refs are historical source refs, not active workstreams. The divergent docs/repository-audit-2026-11-04 ref is 503 commits ahead and 38 behind main; do not merge it wholesale. Keep one active working branch; preserve historical refs.
+- Public-site change: add Ukrainian-language web/transcription.html presenting the practical Thai → IPA → Ukrainian system (consonants by syllable position, vowels, initial /j/ rules, rimes/glides, Thai orthography caveats, tones/length, examples and evidence status). Add first-class navigation from the homepage and method page. Correct the method page's stale OOV description: native TLTK OOV is implemented with 64/64 typed-service JSON parity; Pyodide is retained only as fail-closed compatibility fallback.
+- Documentation: refresh docs/README.md navigation and runtime/branch status; add this checkpoint to the canonical matrix, audit and handoff. No linguistic accuracy claim is introduced.
+- Verified baseline: functional merge e2cfba14815221d6f8cc05db5f1874dd43984ac9 has CI #42245944388, Web Static #42245944386, Site API #42245944544, Pyodide compatibility #42245944639 and Pages deploy/live smoke #42245944508 all SUCCESS. Latest docs-only main bbbfeff944304e1010e3d0daed6fcc6710a27ba6 CI #42247363425 SUCCESS. The new page still requires PR-head Pages build, post-merge Pages deployment and live-page verification.
+- Remaining gates: real browser/device cold/warm/offline latency, transfer and memory; manual keyboard/screen-reader/zoom/reflow/device acceptance; independent Thai IPA gold and Ukrainian-native adaptation adjudication. Accuracy remains NOT_MEASURED.
+
+---
+
 ## Current repository audit — 2026-11-06 (after PR #219)
 
 PR #219 merged the Pages smoke repair into `main` as `b4896bc7ad50e8e4cdb6dd8a9367cb22cbdec5e8`. Main CI #42233360770 SUCCESS; exact-head repair CI #42232494753 SUCCESS. Main Pages run #42233360749 SUCCESS, including build, deploy and post-deploy live verification. The smoke fetched the public deployment at https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/ and verified the published native-first UI, same-origin workers/modules, native/OOV manifests and payload hashes, TLTK package metadata, legal notices and Pyodide fallback bundle. The former false-negative heading assertion is repaired and a regression test is included.

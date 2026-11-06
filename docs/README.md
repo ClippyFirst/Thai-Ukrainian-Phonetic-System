@@ -4,21 +4,24 @@ This page is the navigation layer for the repository. It distinguishes the maint
 
 ## Latest repository audit
 
-The latest structural and branch reconciliation checkpoint is recorded at the top of [final audit](final-audit.md), [validation matrix](validation-matrix.md), and [master handoff](MASTER-EXECUTION-PLAN-AND-CHAT-HANDOFF.md) (2026-11-06). The [2026-11-05 repository audit](repository-audit-2026-11-04.md) remains the detailed structural baseline; its historical branch counts are not current. PR #211, #212 and #213 are already integrated into main. PR #214 is merged as 29b63b8f58db1f6d7ff068d131df0b0759895115; PR #216 integrated the native TLTK OOV parser; PR #217 merged the pinned segmentation/scoring regression guard as 533cd3f8df6112b000f5c91524f8050026b4d79a. Exact-head CI 42226080426, Pages build 42226080435, and Pyodide/Chromium compatibility 42226080581 passed. TLTK OOV parity is 64/64 in both module and Worker tests. Main push Pages run #42226988467 reported deployment success but failed its post-deploy smoke due to an obsolete heading assertion; the smoke repair and a successful main rerun remain required. The 503-commit divergent audit branch remains preserved, not wholesale-merged.
+Current default branch: main, commit `bbbfeff944304e1010e3d0daed6fcc6710a27ba6` (2026-11-06). Latest main-push CI run [#42247363425](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42247363425) completed successfully. PRs #211–#214 and #216–#220 are merged; PR #215 was closed as superseded by #216. At the baseline checkpoint there were no open PRs; the current practical-system page and documentation reconciliation are tracked in [PR #221](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/221). The practical transcription rules, browser-native FastThaiG2P/TLTK OOV path, Ukrainian-first interface, /j/ adaptation and Pages smoke repair are integrated. The Pages deployment and live smoke passed on functional commit `e2cfba14815221d6f8cc05db5f1874dd43984ac9` (run #42245944508); the latest docs-only main commit has CI success. The `docs/repository-audit-2026-11-04` branch is 503 commits ahead and 38 behind current main and is intentionally preserved, not merged wholesale. Other non-main refs are historical source refs for already merged work; continue active work from one dedicated branch off main.
 
 ## Public beta
 
-The public website is the [GitHub Pages beta](https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/). Mainline now contains a hybrid native-first FastThaiG2P path: dictionary hits use a same-origin JavaScript Worker, dictionary misses first use the lazy TLTK OOV data pack and native parser, and Pyodide remains a last-resort compatibility fallback. Exact Python-service parity passed on 64 OOV fixtures in both module and Worker tests; Chromium verified the supported OOV path makes no Python/Pyodide/API/CDN requests. PR #216 and its follow-up #217 are merged; the main-push deployment action reported success, but post-deploy smoke #42226988467 failed on an obsolete heading assertion; successful main rerun and live hash checks remain required. See [FastThaiG2P native port](fastthaig2p-javascript-port.md); do not describe Pyodide as removed. Vercel and remote API hosting are out of scope. The public UI presents a provisional Ukrainian practical adaptation of unclassified external IPA; it does not claim expert linguistic validation.
+The public website is the [GitHub Pages beta](https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/). The service exposes the Thai → Ukrainian practical system on a dedicated [Практична система](../web/transcription.html) page, alongside the live [browser service](../web/index.html) and [method/runtime explanation](../web/system.html). Mainline uses a hybrid native-first FastThaiG2P path: dictionary hits use a same-origin JavaScript Worker; dictionary misses use the browser-native TLTK OOV parser and lazy same-origin data pack; Pyodide remains a fail-closed compatibility fallback only when the native path cannot complete. Exact typed-service JSON parity passed on 64 OOV fixtures in module and Worker tests. The main Pages deployment and live smoke passed on functional commit e2cfba14815221d6f8cc05db5f1874dd43984ac9 (run #42245944508). The latest docs-only main commit bbbfeff944304e1010e3d0daed6fcc6710a27ba6 has CI run #42247363425 SUCCESS. Vercel and remote API hosting are out of scope. The public UI presents a provisional Ukrainian practical adaptation of external IPA; it does not claim expert linguistic validation.
 
-The current browser design contract is in [Website UX and visual system](ui-ux-redesign.md). Its implementation was merged through PR [#211](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/211) as `476cb6ed0e4421ab02bb564ff232c99b6c19e008`. The post-merge GitHub Pages workflow [42120159047](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42120159047) was observed in progress during the 2026-11-06 audit; the deployed UI has not yet been independently confirmed. Runtime architecture and interaction boundaries are documented in [Web service architecture](web-service-architecture.md) and [Web service requirements](web-service-requirements.md). Runtime licenses and data attribution are listed on the public [third-party notices page](../web/third-party-notices.html).
+The current browser design contract is in [Website UX and visual system](ui-ux-redesign.md). The deployed site has three distinct entry points: the [interactive browser service](../web/index.html), the [practical Thai–Ukrainian transcription system](../web/transcription.html), and the [runtime/method explanation](../web/system.html). Runtime architecture and interaction boundaries are documented in [Web service architecture](web-service-architecture.md) and [Web service requirements](web-service-requirements.md). Runtime licenses and data attribution are listed on the public [third-party notices page](../web/third-party-notices.html).
 
 ## Start here
 
 1. [Project overview and user-facing capabilities](../README.md)
-2. [Architecture and data flow](architecture.md)
-3. [Validation and evidence status](validation-matrix.md)
-4. [Current audit findings](final-audit.md)
-5. [Current continuation checkpoint and historical handoff](MASTER-EXECUTION-PLAN-AND-CHAT-HANDOFF.md)
+2. [Public browser service](../web/index.html)
+3. [Thai–Ukrainian practical transcription system](../web/transcription.html)
+4. [Browser runtime explanation](../web/system.html)
+5. [Architecture and data flow](architecture.md)
+6. [Validation and evidence status](validation-matrix.md)
+7. [Current audit findings](final-audit.md)
+8. [Current continuation checkpoint and historical handoff](MASTER-EXECUTION-PLAN-AND-CHAT-HANDOFF.md)
 
 ## Canonical documentation by concern
 
@@ -39,7 +42,7 @@ The current browser design contract is in [Website UX and visual system](ui-ux-r
 - `src/thai_ukrainian/` — Python reference implementation and public API; adapters/ccost.py and adapters/xsampa.py ingest CCOST TextGrid text only.
 - scripts/inspect_ccost_textgrid.py — local TextGrid tier inventory and X-SAMPA conversion report; no audio access.
 - scripts/export_textgrid_text.py — explicit orthographic interval export to provenance-rich JSONL; TextGrid members only, no audio access or gold promotion.
-- `web/src/` — browser implementation; `fastthaig2p-worker.js` runs the shared Python service in self-hosted Pyodide; parity with CPython is a release gate.
+- `web/src/` — browser implementation; native JavaScript Workers handle dictionary and TLTK OOV paths first, with `fastthaig2p-worker.js` and self-hosted Pyodide retained as a fail-closed compatibility fallback.
 - `web/licenses/` and `web/third-party-notices.html` — runtime license and data-attribution notices for the published Pages bundle.
 - `data/thai/` — runtime Thai registries and their provenance/license notices.
 - `data/ua_target_vectors.csv` — Ukrainian target feature inventory.
