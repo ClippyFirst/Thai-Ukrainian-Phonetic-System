@@ -127,8 +127,9 @@ function onecut(chars, trie) {
   let endPosition = 0;
   const output = [];
 
-  while (positions.length && positions[0] < chars.length) {
+  while (positions.length) {
     positions.sort((a, b) => a - b);
+    if (positions[0] >= chars.length) break;
     const begin = positions.shift();
     graphSize = extendGraph(graph, positions, chars, begin, valid, trie, graphSize);
 
