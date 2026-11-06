@@ -143,6 +143,7 @@ jobs:
           assert manifest["record_counts"]["syllable_trigrams"] > 0
           assert manifest["record_counts"]["word_dictionary"] > 0
           PY
+          node web/tests/tltk-oov-reference.test.mjs
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v6
       - name: Upload Pages artifact
