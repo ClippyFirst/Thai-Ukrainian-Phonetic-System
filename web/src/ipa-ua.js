@@ -137,6 +137,20 @@ export function adaptIpaToUkrainian(sourceIpa) {
   // Thai /w/ is consistently represented by Ukrainian в in every position.
   // In a coda, Ukrainian в may be realized as the non-syllabic [u̯], so a
   // separate Ukrainian vowel letter у is not needed for /Vw/ rimes.
+  const onsetYodVowels = new Map([
+    ["a", ["я", "UA-JA"]], ["e", ["є", "UA-JE"]],
+    ["ɛ", ["є", "UA-JE-OPEN"]], ["i", ["ї", "UA-JI"]],
+    ["o", ["йо", "UA-JO"]], ["ɔ", ["йо", "UA-JO-OPEN"]],
+    ["u", ["ю", "UA-JU"]]
+  ]);
+  for (let i=0;i<tokens.length-1;i++) {
+    const boundary = i===0 || tokens[i-1].text==="." || tokens[i-1].text.trim()==="";
+    const vowel = onsetYodVowels.get(tokens[i+1].text);
+    if (tokens[i].text==="j" && boundary && vowel) {
+      tokens[i] = {...tokens[i], out:vowel[0], rule:vowel[1], preserved:["onset /j/ + vowel sequence"]};
+      tokens[i+1] = {...tokens[i+1], out:"", rule:null, preserved:[]};
+    }
+  }
   const preservedFeatures=[...new Set(tokens.flatMap(t=>t.preserved||[]))];
   const neutralizedFeatures=[...new Set(tokens.flatMap(t=>t.neutralized||[]))];
   if (normalized.notes.toneNotationSeen) neutralizedFeatures.push("lexical tone is not encoded in Ukrainian practical spelling");
