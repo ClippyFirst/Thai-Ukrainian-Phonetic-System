@@ -8,14 +8,17 @@ The latest structural and branch reconciliation checkpoint is recorded at the to
 
 ## Public beta
 
-The public website is the [GitHub Pages beta](https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/). Mainline now contains a hybrid native-first FastThaiG2P path: dictionary hits use a same-origin JavaScript Worker, dictionary misses first use the lazy TLTK OOV data pack and native parser, and Pyodide remains a last-resort compatibility fallback. Exact Python-service parity passed on 64 OOV fixtures in both module and Worker tests; Chromium verified the supported OOV path makes no Python/Pyodide/API/CDN requests. PR #216 and its follow-up #217 are merged; the main-push deployment action reported success, but post-deploy smoke #42226988467 failed on an obsolete heading assertion; successful main rerun and live hash checks remain required. See [FastThaiG2P native port](fastthaig2p-javascript-port.md); do not describe Pyodide as removed. Vercel and remote API hosting are out of scope. The public UI presents a provisional Ukrainian practical adaptation of unclassified external IPA; it does not claim expert linguistic validation.
+The public website is the [GitHub Pages beta](https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/). The service exposes the Thai → Ukrainian practical system on a dedicated [Практична система](../web/transcription.html) page, alongside the live [browser service](../web/index.html) and [method/runtime explanation](../web/system.html). Mainline uses a hybrid native-first FastThaiG2P path: dictionary hits use a same-origin JavaScript Worker; dictionary misses use the browser-native TLTK OOV parser and lazy same-origin data pack; Pyodide remains a fail-closed compatibility fallback only when the native path cannot complete. Exact typed-service JSON parity passed on 64 OOV fixtures in module and Worker tests. The main Pages deployment and live smoke passed on functional commit e2cfba14815221d6f8cc05db5f1874dd43984ac9 (run #42245944508). The latest docs-only main commit bbbfeff944304e1010e3d0daed6fcc6710a27ba6 has CI run #42247363425 SUCCESS. Vercel and remote API hosting are out of scope. The public UI presents a provisional Ukrainian practical adaptation of external IPA; it does not claim expert linguistic validation.
 
 The current browser design contract is in [Website UX and visual system](ui-ux-redesign.md). Its implementation was merged through PR [#211](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/211) as `476cb6ed0e4421ab02bb564ff232c99b6c19e008`. The post-merge GitHub Pages workflow [42120159047](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42120159047) was observed in progress during the 2026-11-06 audit; the deployed UI has not yet been independently confirmed. Runtime architecture and interaction boundaries are documented in [Web service architecture](web-service-architecture.md) and [Web service requirements](web-service-requirements.md). Runtime licenses and data attribution are listed on the public [third-party notices page](../web/third-party-notices.html).
 
 ## Start here
 
 1. [Project overview and user-facing capabilities](../README.md)
-2. [Architecture and data flow](architecture.md)
+2. [Public browser service](../web/index.html)
+3. [Thai–Ukrainian practical transcription system](../web/transcription.html)
+4. [Browser runtime explanation](../web/system.html)
+5. [Architecture and data flow](architecture.md)
 3. [Validation and evidence status](validation-matrix.md)
 4. [Current audit findings](final-audit.md)
 5. [Current continuation checkpoint and historical handoff](MASTER-EXECUTION-PLAN-AND-CHAT-HANDOFF.md)
@@ -39,7 +42,7 @@ The current browser design contract is in [Website UX and visual system](ui-ux-r
 - `src/thai_ukrainian/` — Python reference implementation and public API; adapters/ccost.py and adapters/xsampa.py ingest CCOST TextGrid text only.
 - scripts/inspect_ccost_textgrid.py — local TextGrid tier inventory and X-SAMPA conversion report; no audio access.
 - scripts/export_textgrid_text.py — explicit orthographic interval export to provenance-rich JSONL; TextGrid members only, no audio access or gold promotion.
-- `web/src/` — browser implementation; `fastthaig2p-worker.js` runs the shared Python service in self-hosted Pyodide; parity with CPython is a release gate.
+- `web/src/` — browser implementation; native JavaScript Workers handle dictionary and TLTK OOV paths first, with `fastthaig2p-worker.js` and self-hosted Pyodide retained as a fail-closed compatibility fallback.
 - `web/licenses/` and `web/third-party-notices.html` — runtime license and data-attribution notices for the published Pages bundle.
 - `data/thai/` — runtime Thai registries and their provenance/license notices.
 - `data/ua_target_vectors.csv` — Ukrainian target feature inventory.
