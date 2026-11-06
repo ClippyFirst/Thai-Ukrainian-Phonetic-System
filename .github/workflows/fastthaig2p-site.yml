@@ -2,6 +2,8 @@ name: FastThaiG2P site API
 on:
   workflow_dispatch:
   push:
+    branches:
+      - main
     paths:
       - "src/index.py"
       - "src/thai_ukrainian/fastthaig2p_adapter.py"
