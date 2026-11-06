@@ -153,8 +153,7 @@ def adapt_phonetic_result(result: PhoneticResult) -> dict:
         vowel = onset_yod_vowels.get(tokens[index + 1][0])
         if token == "j" and at_syllable_onset and vowel:
             tokens[index] = (token, vowel[0], vowel[1])
-            next_token, _, next_rule = tokens[index + 1]
-            tokens[index + 1] = (next_token, "", None)
+            tokens[index + 1] = (tokens[index + 1][0], "", None)
 
     output = [rendered for _, rendered, _ in tokens]
     rules = [rule for _, _, rule in tokens if rule]
