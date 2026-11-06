@@ -101,13 +101,13 @@ def adapt_phonetic_result(result: PhoneticResult) -> dict:
             "warnings": ["IPA input contains no supported segmental symbols after normalization."],
         }
 
-    output: list[str] = []
-    rules: list[str] = []
+    # Tokenize IPA first so onset /j/+vowel rules can inspect syllable boundaries.
+    tokens: list[tuple[str, str, str | None]] = []
     neutralized: list[str] = []
     i = 0
     while i < len(ipa):
         if ipa[i].isspace() or ipa[i] == ".":
-            output.append(ipa[i])
+            tokens.append((ipa[i], ipa[i], None))
             i += 1
             continue
         if ipa[i] in {"ː", "ˑ", "\u032f", "\u0329", "\u031a"}:
@@ -115,29 +115,48 @@ def adapt_phonetic_result(result: PhoneticResult) -> dict:
                 neutralized.append("vowel length")
             else:
                 neutralized.append("phonetic detail not represented in Ukrainian practical spelling")
+            tokens.append((ipa[i], "", None))
             i += 1
             continue
         token = next((key for key in ORDER if ipa.startswith(key, i)), None)
         if token is None:
             return {
                 "status": "withheld", "source_ipa": source_ipa, "normalized_ipa": ipa,
-                "output": None, "rules_applied": rules, "input_notes": input_notes,
+                "output": None, "rules_applied": [], "input_notes": input_notes,
                 "warnings": [f"Unsupported IPA symbol {ipa[i]!r}; Ukrainian output withheld."],
             }
         rendered, rule = IPA_TO_UA[token]
-        # Thai /w/ is consistently rendered as Ukrainian в. In coda position,
-        # Ukrainian в can surface as the non-syllabic [u̯], so /Vw/ rimes do
-        # not require a separate Ukrainian vowel letter у.
-        output.append(rendered)
-        rules.append(rule)
-        # Aspiration is represented by an apostrophe in the Ukrainian candidate;
-        # it is not a neutralized feature.
+        tokens.append((token, rendered, rule))
         if token == "h":
             neutralized.append("glottal place and voicing")
         if token in {"ɛ", "ɯ", "ɤ", "ɔ"}:
             neutralized.append("vowel quality")
         i += len(token)
 
+    # Only syllable-initial /j/ forms an iotated Ukrainian vowel. A coda /j/
+    # remains й; plain /e, ɛ/ remain е. Dots/spaces are explicit boundaries.
+    onset_yod_vowels = {
+        "a": ("я", "UA-JA"),
+        "e": ("є", "UA-JE"),
+        "ɛ": ("є", "UA-JE-OPEN"),
+        "i": ("ї", "UA-JI"),
+        "o": ("йо", "UA-JO"),
+        "ɔ": ("йо", "UA-JO-OPEN"),
+        "u": ("ю", "UA-JU"),
+    }
+    for index in range(len(tokens) - 1):
+        token, _, _ = tokens[index]
+        at_syllable_onset = (
+            index == 0 or tokens[index - 1][0] == "."
+            or tokens[index - 1][0].isspace()
+        )
+        vowel = onset_yod_vowels.get(tokens[index + 1][0])
+        if token == "j" and at_syllable_onset and vowel:
+            tokens[index] = (token, vowel[0], vowel[1])
+            tokens[index + 1] = (tokens[index + 1][0], "", None)
+
+    output = [rendered for _, rendered, _ in tokens]
+    rules = [rule for _, _, rule in tokens if rule]
     if notation["tone"]:
         neutralized.append("lexical tone is not encoded in Ukrainian practical spelling")
     if notation["stress"]:
