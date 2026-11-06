@@ -175,8 +175,10 @@ function renderResult(result) {
       button.textContent = UI_TEXT.copied;
       window.setTimeout(() => { button.textContent = previousLabel; }, 1200);
     } catch {
-      status.className = 'status error';
-      status.textContent = UI_TEXT.copyFailed;
+      showError({
+        code: 'clipboard_failed',
+        diagnostic: 'Браузер не надав доступу до буфера обміну.'
+      });
     }
   }));
 }
