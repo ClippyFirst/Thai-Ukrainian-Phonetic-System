@@ -25,7 +25,11 @@ const pipeline = createFastThaiG2PNativePipeline({
   defaultWords: defaultWordsBytes.toString("utf8").split(/\r?\n/u).filter(Boolean)
 });
 for (const item of fixtures.cases) {
+  const trace = fallback.inspect(item.token);
   const actual = pipeline.convert(item.token, { oovFallback: fallback.convert });
+  if (actual.raw_ipa !== item.response.raw_ipa) {
+    console.error("TLTK OOV trace:", JSON.stringify({ token: item.token, trace }, null, 2));
+  }
   assert.equal(actual.normalized_input, item.token);
   const { normalized_input, ...serviceResult } = actual;
   assert.deepEqual(serviceResult, item.response, "Native typed service JSON must match pinned Python output for " + item.token);
