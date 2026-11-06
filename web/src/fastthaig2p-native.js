@@ -3,8 +3,9 @@
  *
  * This browser-native front-half composes normalization, PyThaiNLP newmm
  * tokenization, Wiktionary-only IPA lookup and the existing IPA→Ukrainian
- * adapter. The TLTK OOV fallback remains outstanding; the public UI stays on
- * the verified Pyodide worker until complete parity is reached.
+ * adapter. The public UI runs this same-origin worker first for dictionary
+ * hits and retains the verified Pyodide worker as the OOV fallback. Full
+ * native TLTK OOV parity remains outstanding.
  */
 import { adaptIpaToUkrainian } from "./ipa-ua.js";
 import { normalizeFastThaiG2PText } from "./fastthaig2p-normalizer.js";
@@ -106,9 +107,9 @@ function syllableResult(rawIpa) {
 }
 
 /**
- * Construct a dictionary-only engine around the filtered, source-attributed
- * IPA map. A tokenizer is injected so the later newmm port can replace the
- * temporary whitespace tokenizer without changing the result contract.
+ * Construct a dictionary-only adapter around the filtered, source-attributed
+ * IPA map. The production pipeline injects the pinned newmm tokenizer; the
+ * whitespace default is retained only for isolated adapter-level tests.
  *
  * @param {{dictionary: Record<string,string>, tokenize?: (text:string)=>string[]}} options
  */
