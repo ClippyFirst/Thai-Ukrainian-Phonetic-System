@@ -28,7 +28,7 @@ jobs:
       - run: python scripts/test_rtgs_parity.py
       - name: Smoke-test the geographic dictionary with pinned RTGS and IPA adapter
         run: |
-          printf 'id,name_th,source_license\\n1,กา,\\n' > /tmp/geographic-input.csv
+          printf 'id,name_th,source_license\n1,กา,\n' > /tmp/geographic-input.csv
           python scripts/build_geographic_dictionary.py /tmp/geographic-input.csv --output /tmp/geographic-output.csv
           python - <<'PY'
           import csv
