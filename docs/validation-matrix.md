@@ -1,3 +1,17 @@
+## 2026-11-06 — Ukrainian syllable-initial /j/ rule (PR #220)
+
+| Gate | Status | Evidence / acceptance |
+|---|---|---|
+| Browser IPA adapter | PARTIAL — implementation present | Boundary-aware `/ja/→я`, `/je,jɛ/→є`, `/ji/→ї`, `/jo,jɔ/→йо`, `/ju/→ю`; plain `/e,ɛ/→е`, coda `/j/→й`; `/jɯ,jɤ/` remain `йи/йе`. Web Static #42243685711 SUCCESS; full CI pending. |
+| Python IPA adapter parity | PARTIAL — implementation and unit cases present | Python adapter applies the same rule only at IPA start or after explicit `.`/space. Regression cases cover all mappings, plain e/ɛ, coda and boundaries. Exact-head CI #42243685764 pending. |
+| Public system and methodology | DONE_IMPLEMENTED / verification pending | System page and three method documents describe the same distinction. |
+| Exact-head regression/runtime parity | TODO / RUNNING | CI #42243685764 pending; Pyodide #42243685724 in progress; Web Static #42243685711 SUCCESS; Site API #42243685705 SUCCESS. |
+| Independent linguistic adjudication | BLOCKED / EVIDENCE-LIMITED | Code parity is not expert gold. Independent Thai IPA and Ukrainian-native reviews remain separate gates. |
+
+Rule contract: apply `/j/` + vowel as a Ukrainian iotated sequence only when `/j/` is syllable-initial and the boundary is explicit. Do not infer missing boundaries. Plain `/e, ɛ/` stay **е**; coda `/j/` stays **й**.
+
+---
+
 ## 2026-11-06 — current post-merge acceptance checkpoint
 
 This section supersedes earlier PR #215 preparation-only snapshots below. PR #216, #217, #218 and #219 are merged; the native TLTK OOV implementation and Pages smoke repair are present in main. Historical sections remain for provenance and must not be read as the current runtime state.
