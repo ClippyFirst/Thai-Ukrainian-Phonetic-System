@@ -141,8 +141,8 @@ export function createTltkOovFallback(data){
  let lastSyllablePaths=[];
  const patterns=data.syllable_patterns.map(record=>({...record,expression:compilePattern(record)}));
  const sylStats=makeSyllableStats(data.syllable_trigrams),phoneScore=makePhoneScorer(data.phone_trigrams),dictionary=new Set(data.word_dictionary);
- function parseSyllables(input, pron){
-  const chars=Array.from(input),n=chars.length,chart=new Map();lastMatches=[];
+ function parseSyllables(input, pron, {trace=false}={}){
+  const chars=Array.from(input),n=chars.length,chart=new Map();lastMatches=trace?[]:null;
   const set=(i,j,forms)=>{if(!chart.has(i))chart.set(i,new Map());chart.get(i).set(j,forms);};
   for(const {pronunciation,expression} of patterns)for(let i=0;i<n;i++){
    const match=expression.exec(chars.slice(i).join(""));if(!match)continue;
@@ -165,17 +165,19 @@ export function createTltkOovFallback(data){
     if(tone<"5")phone=phone.replaceAll("8",tone);
     [,phone]=transformSyllable(form,phone);
    }
-   lastMatches.push({form,pronunciation,code,charmatch,allowed,beforeTone,assignedTone,phone});
+   if(trace)lastMatches.push({form,pronunciation,code,charmatch,allowed,beforeTone,assignedTone,phone});
    addPron(pron,form,phone);
    if(/^ทร/u.test(form)&&/^thr/u.test(phone))addPron(pron,form,replaceAllLiteral(phone,"thr","s"));
   }
-  const originalEdges=new Map([...chart.entries()].map(([start,edges])=>[start,[...edges.entries()]]));
   lastSyllablePaths=[];
-  const walk=(start,forms)=>{
-   if(start===n){lastSyllablePaths.push({forms:[...forms],score:sylStats.score(forms)});return;}
-   for(const [end,nextForms] of originalEdges.get(start)||[])if(end>start)walk(end,[...forms,...nextForms]);
-  };
-  walk(0,[]);
+  if(trace){
+   const originalEdges=new Map([...chart.entries()].map(([start,edges])=>[start,[...edges.entries()]]));
+   const walk=(start,forms)=>{
+    if(start===n){lastSyllablePaths.push({forms:[...forms],score:sylStats.score(forms)});return;}
+    for(const [end,nextForms] of originalEdges.get(start)||[])if(end>start)walk(end,[...forms,...nextForms]);
+   };
+   walk(0,[]);
+  }
   for(let j=0;j<n;j++){
    const fromZero=chart.get(0),atJ=chart.get(j);if(!fromZero?.has(j)||!atJ)continue;
    for(const [end,forms] of [...atJ.entries()]){
@@ -209,19 +211,19 @@ export function createTltkOovFallback(data){
    return chosen;
   });
  }
- function inspect(word){
+ function inspect(word,{debug=false}={}){
   if(typeof word!=="string"||!word)return null;
   if(/^[^ก-์]+/u.test(word))return null;
   const pron=new Map([...basePron.entries()].map(([form,phones])=>[form,[...phones]]));
   const normalized=word.replaceAll("เเ","แ").replaceAll("ํา","ำ").replaceAll("ฤา","ฤๅ").replaceAll("ฦา","ฦๅ");
-  const syllables=parseSyllables(normalized,pron);if(!syllables)return null;
+  const syllables=parseSyllables(normalized,pron,{trace:debug});if(!syllables)return null;
   const words=parseWords(syllables);if(!words)return null;
   const details=words.map(word=>{
    const forms=word.split("~");
    return {word, candidates:forms.map(form=>({form,phones:pron.get(form)||[]})), selected:selectPhones(forms,pron)};
   });
   const raw=details.map(item=>item.selected).join("|");
-  return {normalized,syllables,words,details,matches:lastMatches,syllablePaths:lastSyllablePaths,raw,ipa:phonesToIpa(raw)};
+  return {normalized,syllables,words,details,...(debug?{matches:lastMatches,syllablePaths:lastSyllablePaths}:{}),raw,ipa:phonesToIpa(raw)};
  }
  function convert(word){return inspect(word)?.ipa??null;}
  return Object.freeze({sourceCommit:data.fastthaig2p_commit,tltkCommit:data.tltk_source_commit,packageVersion:data.tltk_package_version,convert,inspect});
