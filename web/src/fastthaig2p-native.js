@@ -61,7 +61,7 @@ function syllableResult(rawIpa) {
   }
   if (!toneIpa) warnings.push("No terminal Chao tone contour was present in this syllable.");
   return {
-    ipa: segmentalIpa,
+    ipa: adaptation.status === "withheld" ? null : segmentalIpa,
     raw_ipa: rawIpa,
     tone: TONE_CATEGORIES[toneIpa] ?? null,
     tone_ipa: toneIpa,
@@ -146,7 +146,7 @@ export function createFastThaiG2PNativeEngine({
         ).join("");
         return {
           thai: token,
-          fastthaig2p_ipa: `/${rawGroup}/`,
+          fastthaig2p_ipa: rawGroup,
           ukrainian,
           syllables
         };
