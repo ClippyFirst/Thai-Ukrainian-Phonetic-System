@@ -12,24 +12,33 @@ const EXPECTED_VERSIONS = {
 
 let runtimePromise;
 
+function failure(code, diagnostic) {
+  const error = new Error(code);
+  error.code = code;
+  error.diagnostic = diagnostic;
+  return error;
+}
+
 async function fetchManifest() {
   const response = await fetch(MANIFEST_URL, {
     credentials: "same-origin",
     cache: "force-cache"
   });
-  if (!response.ok) throw new Error(`Не вдалося завантажити маніфест рушія (${response.status}).`);
+  if (!response.ok) {
+    throw failure("bundle_unavailable", `Маніфест рушія: HTTP ${response.status}`);
+  }
   const manifest = await response.json();
   if (manifest.schema_version !== 1 || manifest.pyodide?.version !== "0.29.5") {
-    throw new Error("Версія локального Pyodide bundle не відповідає перевіреній конфігурації.");
+    throw failure("bundle_invalid", "Версія або схема маніфесту не відповідає перевіреній конфігурації.");
   }
   if (manifest.purpose === "public-pages" && manifest.redistribution_approved !== true) {
-    throw new Error("Публічне розповсюдження компонентів рушія ще не погоджено.");
+    throw failure("bundle_invalid", "Публічне розповсюдження компонентів рушія не погоджено.");
   }
   if (!Array.isArray(manifest.wheels) ||
       manifest.wheels.length !== Object.keys(EXPECTED_VERSIONS).length ||
       Object.entries(EXPECTED_VERSIONS).some(([name, version]) =>
         !manifest.wheels.some(item => item.package === name && item.version === version))) {
-    throw new Error("Маніфест локального рушія неповний або містить неочікувані версії.");
+    throw failure("bundle_invalid", "Маніфест рушія неповний або містить неочікувані версії.");
   }
   return manifest;
 }
@@ -42,8 +51,8 @@ async function initializeRuntime(requestId) {
   const wheelNames = [];
 
   for (const asset of manifest.wheels) {
-    if (!/^[a-zA-Z0-9_.-]+\.whl$/.test(asset.filename)) {
-      throw new Error("Маніфест містить неприпустимий шлях до Python wheel.");
+    if (!/^[a-zA-Z0-9_.-]+\\.whl$/.test(asset.filename)) {
+      throw failure("bundle_invalid", "Маніфест містить неприпустиму назву Python-компонента.");
     }
     self.postMessage({ type: "progress", requestId, stage: "download", filename: asset.filename });
     const response = await fetch(new URL(asset.filename, WHEEL_BASE), {
@@ -51,18 +60,18 @@ async function initializeRuntime(requestId) {
       cache: "force-cache"
     });
     if (!response.ok) {
-      throw new Error(`Не вдалося завантажити локальний компонент ${asset.filename} (${response.status}).`);
+      throw failure("bundle_unavailable", `Компонент ${asset.filename}: HTTP ${response.status}`);
     }
     const buffer = await response.arrayBuffer();
     if (buffer.byteLength !== asset.size_bytes) {
-      throw new Error(`Розмір локального компонента ${asset.filename} не збігається з маніфестом.`);
+      throw failure("bundle_corrupt", `Розмір ${asset.filename} не збігається з маніфестом.`);
     }
     const digest = await crypto.subtle.digest("SHA-256", buffer);
     const actualHash = [...new Uint8Array(digest)]
       .map(value => value.toString(16).padStart(2, "0"))
       .join("");
     if (actualHash !== asset.sha256) {
-      throw new Error(`Контрольна сума локального компонента ${asset.filename} не збігається.`);
+      throw failure("bundle_corrupt", `Контрольна сума ${asset.filename} не збігається.`);
     }
     pyodide.FS.writeFile(`/wheels/${asset.filename}`, new Uint8Array(buffer));
     wheelNames.push(asset.filename);
@@ -110,8 +119,10 @@ self.addEventListener("message", async event => {
   const { type, requestId, text } = event.data || {};
   if (type !== "analyze") return;
 
+  let phase = "runtime";
   try {
     const pyodide = await getRuntime(requestId);
+    phase = "analysis";
     self.postMessage({ type: "progress", requestId, stage: "analysis" });
     pyodide.globals.set("INPUT_TEXT", String(text ?? ""));
     const responseText = await pyodide.runPythonAsync(`
@@ -129,12 +140,16 @@ json.dumps(payload, ensure_ascii=False, separators=(",", ":"))
     const payload = JSON.parse(responseText);
     if (payload.status_code !== 200) {
       const detail = payload.detail;
+      const code = payload.status_code === 422 && detail?.code === "incomplete_ipa"
+        ? "incomplete_ipa"
+        : payload.status_code === 502
+          ? "engine_inconsistent"
+          : "analysis_failed";
       self.postMessage({
-        type: "analysis-error",
+        type: "error",
         requestId,
-        message: typeof detail === "string"
-          ? detail
-          : detail?.message || "Не вдалося обробити тайський текст."
+        code,
+        diagnostic: `Відмова рушія: HTTP ${payload.status_code}; код: ${detail?.code || "не вказано"}.`
       });
       return;
     }
@@ -143,8 +158,8 @@ json.dumps(payload, ensure_ascii=False, separators=(",", ":"))
     self.postMessage({
       type: "error",
       requestId,
-      message: "Не вдалося запустити локальний рушій FastThaiG2P.",
-      diagnostic: String(error?.message || error)
+      code: error?.code || (phase === "runtime" ? "runtime_failed" : "analysis_failed"),
+      diagnostic: String(error?.diagnostic || error?.message || "Невідома технічна причина.")
     });
   }
 });
