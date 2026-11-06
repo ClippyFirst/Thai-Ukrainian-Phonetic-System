@@ -127,3 +127,11 @@ Exact-head PR validation on 24e4605b7921524b60dc1c5a3e3e9a66965a3206 now passes 
 - Latest code/test head: `228d80d51d58a4437ab0f70ba12597a1259902e8`.
 - The native-first UI contract test was updated to mock both workers: dictionary-covered requests use only the native Worker; only a `native_dictionary_miss` creates the Pyodide Worker. The test also retains incomplete-IPA fail-closed and stale-response checks.
 - Exact-head CI, Web Static, site API and Pyodide compatibility PR runs are queued/pending; no current-head pass is claimed. Earlier dictionary-only differential and isolated native Worker evidence remains on head `24e4605b7921524b60dc1c5a3e3e9a66965a3206`.
+
+
+## Exact-head verification update — 2026-11-06
+
+- Latest code/test commit: `37e0ee6b6fb1385bd4c98bfdd582d8eee3dac5c1`.
+- The first UI contract runs exposed a fake-worker test ordering issue: the native path awaits its ready promise before posting a convert request. The test attempted to invoke its deferred callback before that microtask ran. The test now flushes one microtask and asserts the callback exists; production code is unchanged.
+- Corrected-head Web Static [42198840129](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42198840129) and Site API [42198840133](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42198840133) passed. Full CI [42198840130](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42198840130) and Pyodide compatibility [42198840192](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42198840192) were still running at this update. Native-first UI acceptance remains PARTIAL until both finish successfully.
+- Keep the existing Pyodide fallback for OOV. Full native OOV parity, TLTK rights disposition, mobile/offline performance and manual accessibility remain open. Linguistic accuracy remains `NOT_MEASURED`.
