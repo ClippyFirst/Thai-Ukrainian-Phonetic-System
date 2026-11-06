@@ -9,7 +9,8 @@ Ukrainian is the default language for every user-facing interaction on the publi
 - validation, analysis, runtime, network and clipboard errors;
 - warnings returned by Python packages or the G2P engine;
 - dynamically rendered result labels and provenance captions;
-- accessible names, status announcements, summaries and help text.
+- accessible names, status announcements, summaries and help text;
+- the GitHub beta feedback form, including its categories, field labels, safety guidance and privacy confirmation.
 
 Technical product names and notation (FastThaiG2P, Pyodide, Web Worker, IPA, RTGS) remain unchanged where they are proper names or established notation. Explain them in Ukrainian instead of translating the identifiers.
 
@@ -56,7 +57,7 @@ These tests are source-level contracts. They do not establish manual screen-read
 | Audit every public page and all accessible text | TODO | Inventory all visible strings, aria labels, placeholders, titles, feedback form and third-party notices; retain English only for proper names/legal source titles |
 | Manual mobile/keyboard/screen-reader/zoom acceptance | DEFERRED / NOT VERIFIED | Real-browser checks at narrow widths and 200%/400% zoom; keyboard-only and assistive-technology review |
 | Privacy explanation page | TODO / EVIDENCE REQUIRED | Verify current GitHub Pages request/logging practices and explain local input processing, storage and telemetry accurately |
-| User feedback workflow | PARTIAL | Verify feedback form prompts and ensure it does not automatically include user input or diagnostics without consent |
+| User feedback workflow | IMPLEMENTED_PENDING_CI | GitHub beta feedback form is now Ukrainian; it warns against sharing private data and makes examples optional. Confirm the workflow and template render correctly. |
 | Glossary and plain-language phonetics help | TODO | Ukrainian explanations of IPA, tones, vowel length, syllables and adaptation limitations, reviewed for linguistic accuracy |
 
 ## Out of scope for this UX change
