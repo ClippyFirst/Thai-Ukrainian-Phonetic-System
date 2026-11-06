@@ -10,6 +10,15 @@ on:
       - "scripts/**"
       - "pyproject.toml"
       - ".github/workflows/pages.yml"
+  pull_request:
+    paths:
+      - "web/**"
+      - "src/**"
+      - "data/**"
+      - "tests/**"
+      - "scripts/**"
+      - "pyproject.toml"
+      - ".github/workflows/pages.yml"
   workflow_dispatch:
 
 permissions:
