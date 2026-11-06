@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
-import { createTltkOovFallback } from "../src/fastthaig2p-tltk-oov.js";
+import { createHash, webcrypto } from "node:crypto";
+import { gzipSync } from "node:zlib";
+import { createTltkOovFallback, loadTltkOovData } from "../src/fastthaig2p-tltk-oov.js";
 
 const data = {
   schema_version: 1,
@@ -44,4 +46,39 @@ assert.equal(fallback.sourceCommit, "4e82a291b4cf2876326744c6580121e9986ad354");
 assert.throws(() => createTltkOovFallback({ ...data, tltk_package_license: "GPL-3.0" }),
   /schema is incomplete/);
 
-console.log("Native TLTK OOV synthetic parser contract: PASS");
+const payload = Buffer.from(JSON.stringify(data), "utf8");
+const compressed = gzipSync(payload, { level: 9, mtime: 0 });
+const digest = bytes => createHash("sha256").update(bytes).digest("hex");
+const manifest = {
+  schema_version: 1,
+  license: "BSD-3-Clause",
+  tltk_package_version: "1.9.1",
+  fastthaig2p_commit: data.fastthaig2p_commit,
+  tltk_source_commit: data.tltk_source_commit,
+  path: "tltk-oov-data.json.gz",
+  compressed_size_bytes: compressed.byteLength,
+  compressed_sha256: digest(compressed),
+  uncompressed_size_bytes: payload.byteLength,
+  uncompressed_sha256: digest(payload)
+};
+const loaded = await loadTltkOovData({
+  baseUrl: new URL("https://example.test/native-oov/"),
+  cryptoImpl: webcrypto,
+  DecompressionStreamImpl: DecompressionStream,
+  fetchImpl: async url => String(url).endsWith("manifest.json")
+    ? { ok: true, json: async () => manifest }
+    : { ok: true, arrayBuffer: async () => compressed.buffer.slice(compressed.byteOffset, compressed.byteOffset + compressed.byteLength) }
+});
+assert.equal(loaded.schema_version, 1);
+assert.equal(loaded.tltk_package_license, "BSD-3-Clause");
+
+await assert.rejects(loadTltkOovData({
+  baseUrl: new URL("https://example.test/native-oov/"),
+  cryptoImpl: webcrypto,
+  DecompressionStreamImpl: DecompressionStream,
+  fetchImpl: async url => String(url).endsWith("manifest.json")
+    ? { ok: true, json: async () => manifest }
+    : { ok: true, arrayBuffer: async () => compressed.subarray(1).buffer }
+}), error => error.code === "native_oov_asset_corrupt");
+
+console.log("Native TLTK OOV synthetic parser and integrity-loader contracts: PASS");
