@@ -56,7 +56,7 @@ function syllableResult(rawIpa) {
     .filter(rule => rule !== "UA-DIACRITIC-NEUTRALIZATION");
   const neutralizedFeatures = [];
   for (const feature of adaptation.neutralizedFeatures ?? []) {
-    if (feature === "labio-velar glide approximated as Ukrainian в") continue;
+    if (["labio-velar glide approximated as Ukrainian в", "velar nasal has no single conventional Ukrainian grapheme"].includes(feature)) continue;
     if (feature === "length" || ["open-mid front vowel quality", "backness", "unroundedness", "height", "openness"].includes(feature)) {
       if (!neutralizedFeatures.includes("vowel quality") &&
           /[ɛɯɤɔ]/u.test(externalIpa)) {
