@@ -4619,5 +4619,63 @@
     "ukrainian_candidates": "PROVISIONAL",
     "audit_branch": "docs/repository-audit-2026-11-04",
     "audit_branch_disposition": "PRESERVED_UNMERGED_DIVERGED_503_AHEAD_4_BEHIND_AT_COMPARISON"
+  },
+  "repository_state_2026_11_06": {
+    "audited_at": "2026-11-06",
+    "default_branch": "main",
+    "starting_main_commit": "f7ce29d6bbae03a8d5a8d03e8c09dbbd5dd01662",
+    "active_pr": 214,
+    "active_branch": "feat/fastthaig2p-native-ts-port-2026-11-06",
+    "active_branch_head": "37e0ee6b6fb1385bd4c98bfdd582d8eee3dac5c1",
+    "branch_comparison": {
+      "ahead_by": 129,
+      "behind_by": 0
+    },
+    "merged_prs": [
+      210,
+      211,
+      212,
+      213
+    ],
+    "initial_failed_runs": {
+      "full_ci": 42193925476,
+      "web_static": 42193925539,
+      "site_api": 42193925514,
+      "pyodide_compatibility": 42193925617,
+      "diagnosis": "Test harness invoked deferred native worker response before async ready-promise continuation installed callback"
+    },
+    "correction_commit": "37e0ee6b6fb1385bd4c98bfdd582d8eee3dac5c1",
+    "corrected_head_runs": {
+      "web_static": {
+        "run_id": 42198840129,
+        "status": "SUCCESS"
+      },
+      "site_api": {
+        "run_id": 42198840133,
+        "status": "SUCCESS"
+      },
+      "full_ci": {
+        "run_id": 42198840130,
+        "status": "IN_PROGRESS_AT_AUDIT"
+      },
+      "pyodide_compatibility": {
+        "run_id": 42198840192,
+        "status": "IN_PROGRESS_AT_AUDIT"
+      }
+    },
+    "branch_disposition": {
+      "design_site_recomposition": "INTEGRATED_BY_PR_211_SOURCE_REF_PRESERVED",
+      "docs_post_211_pages_verification": "INTEGRATED_BY_PR_212_SOURCE_REF_PRESERVED",
+      "feat_ukrainian_first_ux": "INTEGRATED_BY_PR_213_SOURCE_REF_PRESERVED",
+      "feat_fastthaig2p_native_ts_port": "ACTIVE_PR_214_PENDING_EXACT_HEAD_GATES",
+      "docs_repository_audit": "PRESERVED_DIVERGED_503_AHEAD_7_BEHIND_NO_WHOLESALE_MERGE"
+    },
+    "native_port": "HYBRID_NATIVE_FIRST_DICTIONARY_ONLY_WITH_PYODIDE_OOV_FALLBACK",
+    "tltk_native_oov": "BLOCKED_PENDING_FILE_LEVEL_LICENSE_SCOPE",
+    "independent_ipa_gold_rows": 0,
+    "linguistic_accuracy": "NOT_MEASURED",
+    "manual_accessibility": "NOT_VERIFIED",
+    "performance": "NOT_MEASURED",
+    "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY"
   }
 }
