@@ -2145,3 +2145,10 @@ Latest verified code head: `d4f35892adc02eb03b1fd345a0193c46c07b1eb7`. Exact-hea
 
 
 | Post-merge GitHub Pages deployment for PR #216 | TODO | PR-head Pages build passed, but deploy job does not publish from pull_request. After merge, require main push workflow success plus live smoke for index, native worker, lazy TLTK manifest/data pack, SHA-256, notices, and Pyodide last-resort assets. |
+
+
+| PR #217 / mainline TLTK OOV parity | DONE_VERIFIED | PR #217 merged as `533cd3f8df6112b000f5c91524f8050026b4d79a`. Exact PR-head CI 42226080426 SUCCESS (401 passed, 1 skipped, 1211 subtests; Ruff and wheel-install smoke passed); Pages build 42226080435 SUCCESS (17,205,333-byte artifact; deploy skipped on PR event); Pyodide compatibility 42226080581 SUCCESS. TLTK OOV: 64/64 module parity, 64/64 Worker parity, Chromium checks passed. |
+| TLTK 1.9.1 package rights for six fallback assets | DONE_VERIFIED_WITH_CONDITIONS | BSD-3-Clause package scope evidenced by README, setup.py/package_data, MANIFEST.in, LICENSE.txt and PyPI metadata. Research use requires no special exception. Redistribution requires retained notice, conditions, disclaimer and no-endorsement clause. Separate root LGPL-3.0 and stale 1.1.7/GPLv3 metadata remain disclosed; no blanket license claim for all repository files. |
+| Post-merge main Pages deployment and live URL smoke | BLOCKED_EVIDENCE_ACCESS | Pages workflow's main-push trigger and live smoke commands are present. PR build passed, but PR deploy is skipped by design. Current GitHub connector exposes PR-triggered workflow runs only; combined status has no contexts; public Pages fetch was inaccessible and Firecrawl credits were exhausted. Acceptance: main push deploy SUCCESS and live fetch/hash checks for app, native worker, TLTK manifest/data, notices and Pyodide fallback. |
+| Performance, manual accessibility, independent linguistic accuracy | TODO / NOT_MEASURED | No cold/warm/offline/mobile or memory benchmark; no manual AT/device audit; no independently adjudicated Thai IPA gold or Ukrainian expert validation. |
+
