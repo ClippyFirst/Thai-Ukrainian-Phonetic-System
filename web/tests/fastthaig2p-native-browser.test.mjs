@@ -51,14 +51,18 @@ try {
         worker.terminate();
         reject(new Error(event.message || "Native worker failed"));
       };
+      let successfulResult = null;
       worker.onmessage = event => {
         const message = event.data || {};
         if (message.id === initId && message.type === "ready") {
           worker.postMessage({ type: "convert", id: convertId, text: input });
         } else if (message.id === convertId && message.type === "result") {
+          successfulResult = message.result;
+          worker.postMessage({ type: "convert", id: "native-oov", text: "🤖" });
+        } else if (message.id === "native-oov" && message.type === "error") {
           clearTimeout(timeout);
           worker.terminate();
-          resolve(message.result);
+          resolve({ result: successfulResult, oov: message });
         } else if (message.type === "error") {
           clearTimeout(timeout);
           worker.terminate();
@@ -68,9 +72,11 @@ try {
       worker.postMessage({ type: "init", id: initId });
     });
   }, expected.input);
-  assert.equal(actual.normalized_input, expected.normalized);
-  assert.deepEqual(actual.words.map(word => word.thai), expected.tokens);
-  assert.equal(actual.raw_ipa, expected.expected_ipa);
+  assert.equal(actual.result.normalized_input, expected.normalized);
+  assert.deepEqual(actual.result.words.map(word => word.thai), expected.tokens);
+  assert.equal(actual.result.raw_ipa, expected.expected_ipa);
+  assert.equal(actual.oov.code, "native_dictionary_miss");
+  assert.match(actual.oov.message, /Нативний порт поки не підтримує/);
 
   const forbidden = requests.filter(url =>
     /pyodide|\/wheels\/|\.whl(?:$|\?)|pyodide\.mjs|https?:\/\/(?!127\.0\.0\.1)/iu.test(url)
