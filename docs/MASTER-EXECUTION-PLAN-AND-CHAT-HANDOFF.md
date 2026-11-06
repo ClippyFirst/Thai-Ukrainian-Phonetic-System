@@ -2884,3 +2884,16 @@ This closes the data-transformation/provenance subtask, not the license-scope qu
 - PR #214 remains open pending review/merge. Do not claim the public GitHub Pages app is already running the native engine.
 
 The canonical task ledger is `docs/fastthaig2p-javascript-port.md` and `docs/validation-matrix.md`. Linguistic accuracy remains `NOT_MEASURED`.
+
+
+## Native-first browser integration update — 2026-11-06
+
+- Public UI integration has changed since the earlier handoff: `web/src/app.js` now calls the native JavaScript Worker first. Dictionary-covered inputs return without creating the Pyodide Worker. Only `native_dictionary_miss` triggers the existing full FastThaiG2P Pyodide fallback.
+- The input hint and `web/system.html` disclose the hybrid behavior. The app still uses the same FastThaiG2P engine and does not fall back to RTGS or a second G2P system.
+- A new pinned OOV fixture generator (`scripts/fastthaig2p_native_oov_reference.py`) and Chromium UI acceptance (`web/tests/fastthaig2p-browser.test.mjs`) verify that dictionary hits make no Pyodide/wheel requests, while an OOV input lazily loads Pyodide and returns the same pinned FastThaiG2P IPA.
+- Code head before this documentation reconciliation: `0e6479450d6205f0a2b65aa80fb1e3d6a13937b0`. CI, Web Static, site API and Pyodide compatibility runs were pending/queued; do not claim the native-first acceptance passed until current-head runs complete.
+- Concurrency groups in Web Static, Pyodide compatibility and site API now include the GitHub event name, so push and pull_request runs no longer cancel each other. The CI workflow remains PR-only on feature branches and push-on-main.
+- Native OOV algorithm is still not ported; Pyodide remains the OOV compatibility fallback. TLTK 1.9.1 package metadata/README/setup.py/LICENSE.txt indicate BSD-3-Clause, while the repository root LICENSE is an unchanged 2018 LGPL-3.0 file and PKG-INFO contains stale GPLv3 metadata. Preserve conflicting notices and do not bundle TLTK fallback assets into the native package until file-distribution scope is cleared.
+- No Python modules/wheels/WASM are requested for dictionary-covered inputs; JS modules and the approximately 2.2 MB native data assets are still fetched from same-origin Pages. OOV still downloads Pyodide. Cold/warm/offline/mobile performance, memory and accessibility-device acceptance remain TODO.
+
+The canonical native-port ledger remains `docs/fastthaig2p-javascript-port.md`; the validation register is `docs/validation-matrix.md`. Accuracy remains `NOT_MEASURED`.
