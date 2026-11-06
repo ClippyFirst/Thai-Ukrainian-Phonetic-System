@@ -15,8 +15,12 @@ on:
       - "scripts/extract_fastthaig2p_normalizer_data.py"
       - "scripts/fastthaig2p_normalizer_reference.py"
       - "scripts/fastthaig2p_tokenizer_reference.py"
+      - "scripts/fastthaig2p_native_pipeline_reference.py"
+      - "web/tests/fastthaig2p-native-pipeline.test.mjs"
       - "web/src/fastthaig2p-tokenizer.js"
       - "web/tests/fastthaig2p-tokenizer-parity.test.mjs"
+      - "scripts/fastthaig2p_native_pipeline_reference.py"
+      - "web/tests/fastthaig2p-native-pipeline.test.mjs"
       - "web/src/fastthaig2p-normalizer.js"
       - "web/tests/fastthaig2p-normalizer-parity.test.mjs"
       - "scripts/verify_tltk_fallback_provenance.py"
@@ -99,6 +103,7 @@ jobs:
           python scripts/fastthaig2p_pyodide_parity.py > build/fastthaig2p-native.json
           python scripts/fastthaig2p_normalizer_reference.py > build/fastthaig2p-normalizer-reference.json
           python scripts/fastthaig2p_tokenizer_reference.py > build/fastthaig2p-tokenizer-reference.json
+          python scripts/fastthaig2p_native_pipeline_reference.py > build/fastthaig2p-native-pipeline-reference.json
           python - <<'PY'
           import json
           from pathlib import Path
@@ -154,6 +159,7 @@ jobs:
           PY
           node web/tests/fastthaig2p-normalizer-parity.test.mjs build/fastthaig2p-normalizer-reference.json web/vendor/native/fastthaig2p-normalizer.json web/vendor/native/pythainlp-default-words.txt
           node web/tests/fastthaig2p-tokenizer-parity.test.mjs build/fastthaig2p-tokenizer-reference.json web/vendor/native/fastthaig2p-ipa.json
+          node web/tests/fastthaig2p-native-pipeline.test.mjs build/fastthaig2p-native-pipeline-reference.json web/vendor/native/fastthaig2p-ipa.json web/vendor/native/fastthaig2p-normalizer.json web/vendor/native/pythainlp-default-words.txt
       - name: Verify owner-approved public Pages bundle builds
         run: |
           python scripts/build_pyodide_bundle.py \

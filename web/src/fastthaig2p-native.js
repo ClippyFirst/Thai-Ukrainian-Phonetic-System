@@ -249,12 +249,16 @@ export function createFastThaiG2PNativePipeline({ dictionary, normalizerData, de
   }
   const defaultTokenizer = createFastThaiG2PNativeTokenizer(defaultWords);
   const customTokenizer = createFastThaiG2PNativeTokenizer(Object.keys(dictionary));
-  return createFastThaiG2PNativeEngine({
+  const adapter = createFastThaiG2PNativeEngine({
     dictionary,
     normalize: text => normalizeFastThaiG2PText(text, {
       data: normalizerData,
       wordTokenize: value => defaultTokenizer.tokenize(value)
     }),
     tokenize: text => customTokenizer.tokenize(text).filter(token => token.trim() !== "")
+  });
+  return Object.freeze({
+    ...adapter,
+    stage: "normalizer+default-newmm+custom-newmm+wiktionary-dictionary; no-oov-fallback"
   });
 }
