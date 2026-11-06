@@ -241,6 +241,11 @@ function renderResult(result) {
       copyButton('IPA', result.raw_ipa) + '</div><pre class="continuous-output-value ipa-output" lang="und-fonipa">' +
       esc(result.raw_ipa) + '</pre></section>' +
     '</div>' +
+    '<details class="rtgs-inline-result"><summary>Показати додатково: романізація латиницею (RTGS)</summary>' +
+      '<div class="rtgs-inline-body"><p>Окремий стандартний латинський запис. RTGS не є українською транскрипцією та не позначає всі тайські тони й довготу голосних.</p>' +
+      '<p class="rtgs-inline-status" role="status" aria-live="polite">Буде обчислено лише після відкриття цього розділу.</p>' +
+      '<pre class="rtgs-inline-value" lang="und-Latn" hidden></pre>' +
+      '<button class="copy rtgs-inline-copy" type="button" hidden>Копіювати RTGS</button></div></details>' +
     '<details class="word-breakdown"><summary>Показати складовий розбір і походження</summary>' +
     '<p>Рушій: <strong>' + esc(result.engine) + '</strong>; коміт вихідного проєкту: <code>' +
     esc(result.upstream_commit) + '</code>.</p>' + words + '</details>';
@@ -259,6 +264,49 @@ function renderResult(result) {
     }
   }));
 }
+
+async function handleRtgsDisclosure(event) {
+  const disclosure = event.target;
+  if (!disclosure.matches?.(".rtgs-inline-result") || !disclosure.open ||
+      disclosure.dataset.rtgsState === "loading" || disclosure.dataset.rtgsState === "loaded") return;
+
+  const sourceText = input.value;
+  const message = disclosure.querySelector(".rtgs-inline-status");
+  const value = disclosure.querySelector(".rtgs-inline-value");
+  const copy = disclosure.querySelector(".rtgs-inline-copy");
+  disclosure.dataset.rtgsState = "loading";
+  message.className = "rtgs-inline-status";
+  message.textContent = "Завантаження локального словника RTGS…";
+  try {
+    // The optional romanizer and its CC0 word list are loaded only after an explicit user request.
+    const { createRtgsRomanizer } = await import("./rtgs-romanizer.js");
+    const romanizer = await createRtgsRomanizer();
+    const result = romanizer.romanize(sourceText);
+    if (input.value !== sourceText || !disclosure.isConnected) return;
+    value.textContent = result.output;
+    value.hidden = false;
+    copy.hidden = false;
+    copy.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(result.output);
+        message.textContent = "Романізацію RTGS скопійовано.";
+      } catch {
+        message.className = "rtgs-inline-status error";
+        message.textContent = "Браузер не надав доступу до буфера обміну.";
+      }
+    });
+    message.textContent = result.unavailableCount
+      ? `RTGS готовий із застереженнями: ${result.unavailableCount} непідтриманих фрагм. залишено без здогадок.`
+      : `Готово · ${result.engine}; сегментація ${result.segmentation}.`;
+    disclosure.dataset.rtgsState = "loaded";
+  } catch (error) {
+    if (input.value !== sourceText || !disclosure.isConnected) return;
+    message.className = "rtgs-inline-status error";
+    message.textContent = error?.message || "Не вдалося завантажити модуль RTGS.";
+    disclosure.dataset.rtgsState = "error";
+  }
+}
+output.addEventListener("toggle", handleRtgsDisclosure, true);
 
 async function run() {
   if (analyzeButton.disabled) return;
