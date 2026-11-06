@@ -164,9 +164,9 @@ export function createFastThaiG2PNativeEngine({
         words,
         coverage: { dictionary_tokens: tokens.length, rule_fallback_tokens: 0 },
         warnings: [
-          "Український запис є попередньою практичною адаптацією IPA, не підтвердженою незалежними фахівцями.",
-          "FastThaiG2P IPA не класифіковано як фонемну або широку поверхневу IPA; сирий результат збережено окремо.",
-          "Тони та довгота показані в IPA/метаданих, але не повністю відтворюються українськими літерами."
+          "Це експериментальний нативний JavaScript-порт: нормалізація, newmm сегментація та словниковий IPA-пошук реалізовані окремими модулями.",
+          "TLTK OOV fallback ще не портований; невідомі токени відхиляються без здогадок, тому це поки не повна заміна FastThaiG2P.",
+          "Український запис є попередньою практичною адаптацією IPA, не підтвердженою незалежними фахівцями."
         ]
       };
     }
@@ -267,9 +267,21 @@ export function createFastThaiG2PNativePipeline({ dictionary, normalizerData, de
     }),
     tokenize: text => customTokenizer.tokenize(text).filter(token => token.trim() !== "")
   });
+  const convert = adapter.convert;
   return Object.freeze({
     ...adapter,
-    stage: "normalizer+default-newmm+custom-newmm+wiktionary-dictionary; no-oov-fallback"
+    stage: "normalizer+default-newmm+custom-newmm+wiktionary-dictionary; no-oov-fallback",
+    convert(text) {
+      const result = convert(text);
+      return {
+        ...result,
+        warnings: [
+          "Український запис є попередньою практичною адаптацією IPA, не підтвердженою незалежними фахівцями.",
+          "FastThaiG2P IPA не класифіковано як фонемну або широку поверхневу IPA; сирий результат збережено окремо.",
+          "Тони та довгота показані в IPA/метаданих, але не повністю відтворюються українськими літерами."
+        ]
+      };
+    }
   });
 }
 
