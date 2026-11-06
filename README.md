@@ -30,7 +30,7 @@ The repository retains a separate RTGS → Ukrainian research renderer and its c
 
 ## Website operating contract
 
-The public website has one G2P engine: FastThaiG2P. The current native-first implementation uses the browser JavaScript/TypeScript Worker for dictionary-covered inputs and lazily loads the existing Pyodide Worker only after a native dictionary miss; this is a hybrid path, not a complete Pyodide replacement. It shows the engine's IPA and a provisional Ukrainian practical adaptation. If FastThaiG2P returns incomplete IPA or unsupported symbols, the site reports the limitation and does not switch to the repository's research/reference engine, RTGS, or an orthographic heuristic. The Python CLI and research scripts continue to expose the project's internal reference engine for development and evaluation; this does not make it a website fallback.
+The mainline website implementation has one G2P engine: FastThaiG2P. It uses the browser JavaScript Worker for dictionary-covered inputs and lazily loads the existing Pyodide Worker only after a native dictionary miss; this is a hybrid path, not a complete Pyodide replacement. Verify the post-merge GitHub Pages deployment before assuming this mainline change is live at the public URL. It shows the engine's IPA and a provisional Ukrainian practical adaptation. If FastThaiG2P returns incomplete IPA or unsupported symbols, the site reports the limitation and does not switch to the repository's research/reference engine, RTGS, or an orthographic heuristic. The Python CLI and research scripts continue to expose the project's internal reference engine for development and evaluation; this does not make it a website fallback.
 
 ## Supplied text-only corpora
 
