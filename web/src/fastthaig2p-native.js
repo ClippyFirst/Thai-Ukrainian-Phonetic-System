@@ -290,6 +290,10 @@ export async function loadFastThaiG2PNativeAssets({
     manifest?.normalizer_license !== "Apache-2.0" ||
     manifest?.pythainlp_version !== "5.4.0" ||
     manifest?.pythainlp_wordlist_license !== "CC0-1.0" ||
+    manifest?.attribution_asset !== "WIKTIONARY-ATTRIBUTION.md" ||
+    !Array.isArray(manifest?.assets) ||
+    !manifest.assets.some(item => item.path === "native/browser-data-provenance.json") ||
+    !manifest.assets.some(item => item.path === "native/WIKTIONARY-ATTRIBUTION.md") ||
     !Number.isInteger(manifest?.dictionary_entries) ||
     !Number.isInteger(manifest?.pythainlp_wordlist_entries)
   ) {
