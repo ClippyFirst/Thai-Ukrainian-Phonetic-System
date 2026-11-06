@@ -183,6 +183,7 @@ def main() -> None:
         native_ipa = wheel_archive.read("fastthaig2p/data/ipa.json")
         native_provenance = wheel_archive.read("fastthaig2p/data/browser-data-provenance.json")
         native_normalizer = wheel_archive.read("fastthaig2p/data/normalizer-data.json")
+        native_attribution = wheel_archive.read("fastthaig2p/data/WIKTIONARY-ATTRIBUTION.md")
     with zipfile.ZipFile(pythainlp_wheel) as pythainlp_archive:
         native_default_words = pythainlp_archive.read("pythainlp/corpus/words_th.txt")
         corpus_license = pythainlp_archive.read("pythainlp/corpus/corpus_license.md").decode("utf-8", errors="replace")
@@ -192,6 +193,7 @@ def main() -> None:
     (native_out / "browser-data-provenance.json").write_bytes(native_provenance)
     (native_out / "fastthaig2p-normalizer.json").write_bytes(native_normalizer)
     (native_out / "pythainlp-default-words.txt").write_bytes(native_default_words)
+    (native_out / "WIKTIONARY-ATTRIBUTION.md").write_bytes(native_attribution)
     native_records = [{
         "path": path.relative_to(args.output).as_posix(),
         "sha256": sha256(path),
@@ -209,6 +211,7 @@ def main() -> None:
         "pythainlp_wordlist_license": "CC0-1.0",
         "pythainlp_wordlist_entries": len([word for word in native_default_words.decode("utf-8").splitlines() if word]),
         "attribution": ["Wiktionary contributors", "Kaikki.org / Wiktextract", "PyThaiNLP contributors"],
+        "attribution_asset": "WIKTIONARY-ATTRIBUTION.md",
         "assets": native_records,
     }
     (native_out / "manifest.json").write_text(
