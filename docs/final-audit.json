@@ -5189,10 +5189,10 @@
       "head_sha": "c7db5ce22de230b0cb7ffecb866db0e77ab0bb34",
       "conclusion": "SUCCESS"
     },
-    "working_branch": "docs/post-merge-rtgs-closeout-2026-11-06",
+    "working_branch": "docs/final-mainline-state-2026-11-06",
     "refs_total_at_start_including_main": 15,
     "refs_total_after_working_branch_including_main": 16,
-    "current_open_pull_request": 226,
+    "current_open_pull_request": 227,
     "tree_reconciliation": "All 14 historical non-main refs have zero added paths relative to main; one RTGS closeout branch is tree-identical, other refs are stale/different snapshots. No missing new file paths identified.",
     "merged_implementation_pr": 225,
     "merge_commit_sha": "1782064a530b7466962a1b1ea5503841fa88ba25",
@@ -5221,7 +5221,15 @@
       "run_id": 42293152547,
       "head_sha": "1782064a530b7466962a1b1ea5503841fa88ba25",
       "conclusion": "SUCCESS"
-    }
+    },
+    "refs_total_after_final_documentation_branch_including_main": 18,
+    "pr226_merge_commit_sha": "bc33b40bbbe57d5c2b8a597176447c09cdadf702",
+    "main_ci_after_pr226": {
+      "run_id": 42295345065,
+      "head_sha": "bc33b40bbbe57d5c2b8a597176447c09cdadf702",
+      "conclusion": "SUCCESS"
+    },
+    "final_state_after_pr227_merge": "main is the sole active working branch; no open PRs."
   },
   "homepage_rtgs_progressive_disclosure_2026_11_06": {
     "status": "DONE_VERIFIED",
