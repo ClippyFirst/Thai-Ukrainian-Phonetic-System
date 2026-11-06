@@ -138,7 +138,7 @@ export function createTltkOovFallback(data){
  const stable={...constants.stable_base,...Object.fromEntries(Object.entries(constants.stable_aliases).map(([key,base])=>[key,constants.stable_base[base]]))};
  const patterns=data.syllable_patterns.map(record=>({...record,expression:compilePattern(record)}));
  for(const [form,pronunciation] of data.syllable_dictionary){
-  const literalPattern=escapeRegex(form);
+  const literalPattern=form;
   patterns.push({
    pattern:literalPattern,
    pronunciation,
