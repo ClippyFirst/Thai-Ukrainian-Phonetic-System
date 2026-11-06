@@ -72,7 +72,7 @@ def main() -> None:
                     "totals": {"word": _th2ipa.TotalWord, "lex": _th2ipa.TotalLex},
                 }, ensure_ascii=False))
             selected[token] = response
-            if len(selected) >= 24:
+            if len(selected) >= 64:
                 break
         if len(selected) >= 24:
             break
