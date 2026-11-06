@@ -63,6 +63,8 @@ jobs:
         run: node web/tests/ipa-ua.test.mjs
       - name: Run native TLTK OOV parser contract tests
         run: node web/tests/tltk-oov.test.mjs
+      - name: Run exact pinned Python-to-browser TLTK OOV parity tests
+        run: node web/tests/tltk-oov-reference.test.mjs
       - name: Run browser parity test
         run: node web/tests/parity.test.mjs
       - name: Run article markup cleanup contract test
