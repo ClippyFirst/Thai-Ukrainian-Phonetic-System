@@ -140,7 +140,7 @@ jobs:
               provenance = json.loads(archive.read("browser-data-provenance.json"))
               assert provenance["retained_entries"] == 13144
           native_manifest = json.loads((Path("web/vendor") / "native" / "manifest.json").read_text())
-          assert native_manifest["stage"] == "dictionary-and-normalizer-data-only; not a complete runtime"
+          assert native_manifest["stage"] == "dictionary-normalizer-and-default-wordlist-data-only; not a complete runtime"
           assert native_manifest["dictionary_entries"] == 13144
           for item in native_manifest["assets"]:
               asset = Path("web/vendor") / item["path"]
@@ -148,7 +148,7 @@ jobs:
               assert asset.stat().st_size == item["size_bytes"]
               assert hashlib.sha256(asset.read_bytes()).hexdigest() == item["sha256"]
           PY
-          node web/tests/fastthaig2p-normalizer-parity.test.mjs build/fastthaig2p-normalizer-reference.json web/vendor/native/fastthaig2p-normalizer.json
+          node web/tests/fastthaig2p-normalizer-parity.test.mjs build/fastthaig2p-normalizer-reference.json web/vendor/native/fastthaig2p-normalizer.json web/vendor/native/pythainlp-default-words.txt
           node web/tests/fastthaig2p-tokenizer-parity.test.mjs build/fastthaig2p-tokenizer-reference.json web/vendor/native/fastthaig2p-ipa.json
       - name: Verify owner-approved public Pages bundle builds
         run: |
