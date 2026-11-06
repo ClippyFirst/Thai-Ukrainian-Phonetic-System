@@ -11,6 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 UPSTREAM = ROOT / "build" / "FastThaiG2P"
 sys.path.insert(0, str(UPSTREAM))
+sys.path.insert(0, str(ROOT / "src"))
 
 from thai_ukrainian.fastthaig2p_adapter import FastThaiG2PAdapter  # noqa: E402
 from thai_ukrainian.fastthaig2p_service import (  # noqa: E402
@@ -31,7 +32,6 @@ CANDIDATES = (
 
 
 def main() -> None:
-    sys.path.insert(0, str(ROOT / "src"))
     engine = FastThaiG2PAdapter()
     g2p = engine._engine
     normalize = engine._normalize
