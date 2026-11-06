@@ -21,11 +21,11 @@ class TltkOovDataExtractionTests(unittest.TestCase):
                 pickle.dump({"กา": 1, "ขา": 1}, target)
             parser_source = fallback / "_th2ipa.py"
             parser_source.write_text(
-                "def read_sylpattern(path):\\n"
-                "    stable['X'] = {'ก': 'k'}\\n"
-                "    stable['Y'] = {'ก': 'k'}\\n"
-                "    AK['ก'] = 'น'\\n"
-                "    EngAbbr = ['เอ']\\n",
+                "def read_sylpattern(path):\n"
+                "    stable['X'] = {'ก': 'k'}\n"
+                "    stable['Y'] = {'ก': 'k'}\n"
+                "    AK['ก'] = 'น'\n"
+                "    EngAbbr = ['เอ']\n",
                 encoding="utf-8",
             )
 
