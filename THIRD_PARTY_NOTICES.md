@@ -71,7 +71,7 @@ Primary package/source references:
 - [TLTK MANIFEST.in](https://github.com/attapol/tltk/blob/master/MANIFEST.in) — explicitly includes `LICENSE.txt`.
 - [TLTK LICENSE.txt](https://github.com/attapol/tltk/blob/master/LICENSE.txt) — BSD-3-Clause; [repository LICENSE](https://github.com/attapol/tltk/blob/master/LICENSE) is LGPL-3.
 
-The package-level evidence narrows the license ambiguity, but the exact 1.3.8 sdist contents and byte-level mapping to each FastThaiG2P fallback asset were not retrieved/verified. Do not treat this as blanket asset-level clearance.
+The repository evidence now verifies the six fallback-file transformations against pinned TLTK file snapshot `0cef4bcfbdd675f589783dd4134b87b9bb9fbb93`: five FastThaiG2P files are byte-identical to TLTK files, and `sylform_var.pkl` is the exact BZip2 decompression of `sylform_var.pklz`. SHA-256 values and deterministic gzip estimates are recorded by `scripts/verify_tltk_fallback_provenance.py`. This verifies file provenance/transformation, not redistribution rights: setup.py/package metadata and LICENSE.txt state BSD-3-Clause while the root LICENSE is LGPL-3.0 and PKG-INFO contains stale GPLv3 metadata. Retain all notices and do not redistribute these assets until the license scope is resolved.
 
 
 ### Browser-native FastThaiG2P assets (2026-11-06)
