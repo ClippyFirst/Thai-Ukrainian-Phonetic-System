@@ -74,7 +74,7 @@ def main() -> None:
             selected[token] = response
             if len(selected) >= 64:
                 break
-        if len(selected) >= 24:
+        if len(selected) >= 64:
             break
     if not selected:
         raise SystemExit(
