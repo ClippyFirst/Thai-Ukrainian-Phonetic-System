@@ -6,6 +6,8 @@
  * segmentation and the TLTK OOV fallback are still required for parity.
  */
 import { adaptIpaToUkrainian } from "./ipa-ua.js";
+import { normalizeFastThaiG2PText } from "./fastthaig2p-normalizer.js";
+import { createFastThaiG2PNativeTokenizer } from "./fastthaig2p-tokenizer.js";
 
 export const FASTTHAIG2P_UPSTREAM_COMMIT = "4e82a291b4cf2876326744c6580121e9986ad354";
 export const NATIVE_PORT_STAGE = "dictionary-adapter-only";
@@ -96,7 +98,10 @@ export function createFastThaiG2PNativeEngine({ dictionary, tokenize = text => t
       if (typeof text !== "string" || !text.trim()) {
         throw new NativeFastThaiG2PError("empty_input", "Введіть тайський текст.");
       }
-      const normalized = text.normalize("NFC").trim();
+      const normalized = normalize(text);
+      if (typeof normalized !== "string") {
+        throw new NativeFastThaiG2PError("normalization_failed", "Нормалізатор повернув не текст.");
+      }
       const tokens = tokenize(normalized);
       if (!Array.isArray(tokens) || !tokens.length || tokens.some(token => typeof token !== "string" || !token)) {
         throw new NativeFastThaiG2PError("tokenization_failed", "Не вдалося сегментувати текст.");
@@ -136,6 +141,7 @@ export function createFastThaiG2PNativeEngine({ dictionary, tokenize = text => t
 
       return {
         input: text,
+        normalized_input: normalized,
         engine: "FastThaiG2P",
         upstream_commit: FASTTHAIG2P_UPSTREAM_COMMIT,
         status: "provisional",
@@ -144,8 +150,8 @@ export function createFastThaiG2PNativeEngine({ dictionary, tokenize = text => t
         words,
         coverage: { dictionary_tokens: tokens.length, rule_fallback_tokens: 0 },
         warnings: [
-          "Це експериментальний нативний JavaScript-порт: наразі реалізовано лише словниковий адаптер.",
-          "Нормалізація, сегментація PyThaiNLP newmm та TLTK OOV fallback ще не портовані; цей модуль не є повною заміною FastThaiG2P.",
+          "Це експериментальний нативний JavaScript-порт: нормалізація, newmm сегментація та словниковий IPA-пошук реалізовані окремими модулями.",
+          "TLTK OOV fallback ще не портований; невідомі токени відхиляються без здогадок, тому це поки не повна заміна FastThaiG2P.",
           "Український запис є попередньою практичною адаптацією IPA, не підтвердженою незалежними фахівцями."
         ]
       };
@@ -176,6 +182,10 @@ export async function loadFastThaiG2PNativeDictionary({
     manifest?.upstream_commit !== FASTTHAIG2P_UPSTREAM_COMMIT ||
     manifest?.stage !== "dictionary-normalizer-and-default-wordlist-data-only; not a complete runtime" ||
     manifest?.dictionary_license !== "CC-BY-SA-4.0" ||
+    manifest?.normalizer_license !== "Apache-2.0" ||
+    manifest?.pythainlp_version !== "5.4.0" ||
+    manifest?.pythainlp_wordlist_license !== "CC0-1.0" ||
+    !Number.isInteger(manifest?.pythainlp_wordlist_entries) ||
     !Number.isInteger(manifest?.dictionary_entries)
   ) {
     throw new NativeFastThaiG2PError("native_manifest_invalid", "Native dictionary manifest does not match the reviewed source contract");
@@ -222,4 +232,25 @@ export async function loadFastThaiG2PNativeDictionary({
     throw new NativeFastThaiG2PError("native_dictionary_invalid", "Native IPA dictionary entry count does not match its manifest");
   }
   return dictionary;
+}
+
+/**
+ * Compose the native normalization, PyThaiNLP default newmm tokenizer,
+ * FastThaiG2P custom newmm tokenizer and filtered IPA dictionary. OOV words
+ * fail closed until a licensed, parity-tested fallback port is available.
+ */
+export function createFastThaiG2PNativePipeline({ dictionary, normalizerData, defaultWords }) {
+  if (!normalizerData || !Array.isArray(defaultWords) || !defaultWords.length) {
+    throw new TypeError("Native normalizer data and the pinned PyThaiNLP default wordlist are required");
+  }
+  const defaultTokenizer = createFastThaiG2PNativeTokenizer(defaultWords);
+  const customTokenizer = createFastThaiG2PNativeTokenizer(Object.keys(dictionary));
+  return createFastThaiG2PNativeEngine({
+    dictionary,
+    normalize: text => normalizeFastThaiG2PText(text, {
+      data: normalizerData,
+      wordTokenize: value => defaultTokenizer.tokenize(value)
+    }),
+    tokenize: text => customTokenizer.tokenize(text).filter(token => token.trim() !== "")
+  });
 }
