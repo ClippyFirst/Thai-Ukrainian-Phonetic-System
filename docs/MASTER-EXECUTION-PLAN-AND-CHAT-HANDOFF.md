@@ -1,3 +1,14 @@
+## Continuation — Ukrainian onset /j/ implementation (2026-11-06, PR #220)
+
+- Starting `main`: `3770fd4e64b6004af594061ed3997fb2dbba9704`. Work branch: `fix/ukrainian-onset-j-system-2026-11-06`; PR #220 is open against `main`.
+- Python IPA adapter now applies the same boundary-aware `/j/` + vowel rule as the browser adapter. It rewrites only at IPA start or after explicit `.` / whitespace; coda `/j/` stays `й`. Plain `/e, ɛ/` stay `е`; `/je, jɛ/` become `є`; `/jɯ, jɤ/` remain `йи/йе`.
+- Python unit tests cover all seven requested onset vowels, open-mid variants, explicit syllable boundaries, plain `e/ɛ`, coda `/j/`, and unspecified `jɯ/jɤ`. Browser regression tests and public `web/system.html` explanation are included in the PR.
+- The practical transcription article, Ukrainian methodology table, and Ukrainian-vs-Russian comparison now document the same contract.
+- Exact-head evidence at this checkpoint: Web Static #42243685711 SUCCESS; Site API #42243685705 SUCCESS; Pyodide compatibility #42243685724 IN_PROGRESS; full CI #42243685764 PENDING; Pages build #42243685819 PENDING. Do not claim the full test matrix passed until those runs complete.
+- Independent Thai phonetic gold and Ukrainian-native review are not supplied by parity tests and remain EVIDENCE-LIMITED. No accuracy claim is made.
+
+---
+
 ## Current continuation — Pages smoke repair merged; continue on main (2026-11-06)
 
 - Starting default branch: `main`; starting HEAD: `9f279ce04c14b81fa4728a15e81fb89ab046b753`.
