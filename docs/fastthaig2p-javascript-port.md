@@ -47,6 +47,7 @@ Do not conflate this work with the separate ClippyFirst Thai orthographic resear
 | TLTK OOV fallback | BLOCKED / PARTIAL | The current fallback depends on `_th2ipa.py`, six TLTK-derived data assets, trigram statistics and a pickled syllable-variant structure. The source repository contains conflicting LGPL-3.0/BSD-3-Clause evidence for the data package. Acceptance requires an explicit asset-level licensing disposition and deterministic JSON serialization of the pickle before porting. |
 | Typed IPA result contract | PARTIAL | Tone contours and segmental IPA are parsed; exact parity for uncertainty, unsupported symbols, word/syllable alignment and metadata remains TODO. |
 | IPA → Ukrainian adapter | REUSED | Existing `web/src/ipa-ua.js` remains the sole target adaptation boundary; it must not be duplicated. |
+| Native pipeline composition | PARTIAL | `createFastThaiG2PNativePipeline` composes normalizer, default/custom newmm tokenizers and Wiktionary-only IPA lookup; OOV fallback is fail-closed and still missing. |
 | Worker integration | TODO | Add a separate native worker and an explicit runtime selector for CI only; production remains on Pyodide until all gates pass. |
 | Python/JS differential suite | TODO | Same normalized text, tokens, IPA groups, typed fields and complete service JSON for the same frozen input set. |
 | Browser cold/warm tests | TODO | Chromium smoke proves no Pyodide, Python, wheel or API assets are requested by the native path; verify offline repeat use after dictionary cache. |
