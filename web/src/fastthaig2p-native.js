@@ -50,7 +50,7 @@ function syllableResult(rawIpa) {
   const toneMatch = TONE_SUFFIX.exec(rawIpa);
   const toneIpa = toneMatch?.[1] ?? null;
   const segmentalIpa = toneMatch ? rawIpa.slice(0, toneMatch.index) : rawIpa;
-  const externalIpa = segmentalIpa.replace(/t[\\u0361\\u035c]ɕ/gu, "tɕ");
+  const externalIpa = segmentalIpa.replace(/t[\u0361\u035c]ɕ/gu, "tɕ");
   const adaptation = adaptIpaToUkrainian(externalIpa);
   const warnings = [
     "FastThaiG2P output is not independently adjudicated phonetic gold.",
