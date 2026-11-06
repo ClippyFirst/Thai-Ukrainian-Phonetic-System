@@ -84,7 +84,7 @@ function allowedPronunciation(code,charmatch,form,phone,allowed){
 function mergeKaran(forms,pron){
  const out=[];let pending=null;const mergedSeen=new Set();
  for(const form of [...forms].reverse()){
-  if(/(.+)[ิุ]์/u.test(form)||(/(.+)์/u.test(form)&&length(form)<4)){pending=form;continue;}
+  if((/(.+)[ิุ]์/u.test(form)||/(.+)์/u.test(form))&&length(form)<4){pending=form;continue;}
   if(pending!==null){for(const phone of pron.get(form)||[]){const key=tuple(form+pending,phone);if(!mergedSeen.has(key)){addPron(pron,form+pending,phone);mergedSeen.add(key);}}out.push(form+pending);pending=null;}
   else out.push(form);
  }
