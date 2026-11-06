@@ -25,7 +25,7 @@ const pipeline = createFastThaiG2PNativePipeline({
   defaultWords: defaultWordsBytes.toString("utf8").split(/\r?\n/u).filter(Boolean)
 });
 for (const item of fixtures.cases) {
-  const trace = fallback.inspect(item.token);
+  const trace = fallback.inspect(item.token, { debug: true });
   const actual = pipeline.convert(item.token, { oovFallback: fallback.convert });
   if (actual.raw_ipa !== item.response.raw_ipa) {
     console.error("TLTK OOV trace:", JSON.stringify({ token: item.token, trace }, null, 2));
