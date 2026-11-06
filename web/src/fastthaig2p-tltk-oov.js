@@ -64,9 +64,9 @@ function toneAssign(form,phone,code,charmatch){
  return [phone,"9"];
 }
 function transformSyllable(form,phone){
- if(/xx[nmN][12]/u.test(phone))phone=phone.replace("xx","x");
- else if(/ee[nmN][12]/u.test(phone))phone=phone.replace("ee","e");
- else if(/@@[nmN][12]/u.test(phone))phone=phone.replace("@@","@");
+ if(/xx[nmN][12]/u.test(phone))phone=replaceAllLiteral(phone,"xx","x");
+ else if(/ee[nmN][12]/u.test(phone))phone=replaceAllLiteral(phone,"ee","e");
+ else if(/@@[nmN][12]/u.test(phone))phone=replaceAllLiteral(phone,"@@","@");
  if(/^(อย่า|อยู่|อย่าง|อยาก)$/u.test(form)&&phone.includes("'"))phone=phone.split("'").at(-1);
  else if(form.includes("ห")&&phone.includes("ha1")&&!/หนุ$|หก|หท|หพ|หฤ|หโ/u.test(form))phone=phone.split("'").at(-1);
  else if(/[จซศส]ร/u.test(form)&&/[cs]r/u.test(phone)&&/[^']/u.test(phone))phone=phone.replaceAll("r","");
@@ -161,7 +161,7 @@ export function createTltkOovFallback(data){
     [,phone]=transformSyllable(form,phone);
    }
    addPron(pron,form,phone);
-   if(/^ทร/u.test(form)&&/^thr/u.test(phone))addPron(pron,form,phone.replace("thr","s"));
+   if(/^ทร/u.test(form)&&/^thr/u.test(phone))addPron(pron,form,replaceAllLiteral(phone,"thr","s"));
   }
   for(let j=0;j<n;j++){
    const fromZero=chart.get(0),atJ=chart.get(j);if(!fromZero?.has(j)||!atJ)continue;
