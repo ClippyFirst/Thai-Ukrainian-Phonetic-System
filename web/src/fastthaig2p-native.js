@@ -174,7 +174,7 @@ export async function loadFastThaiG2PNativeDictionary({
   if (
     manifest?.schema_version !== 1 ||
     manifest?.upstream_commit !== FASTTHAIG2P_UPSTREAM_COMMIT ||
-    manifest?.stage !== "dictionary-and-normalizer-data-only; not a complete runtime" ||
+    manifest?.stage !== "dictionary-normalizer-and-default-wordlist-data-only; not a complete runtime" ||
     manifest?.dictionary_license !== "CC-BY-SA-4.0" ||
     !Number.isInteger(manifest?.dictionary_entries)
   ) {
