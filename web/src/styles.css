@@ -244,3 +244,30 @@ footer nav a:hover, footer > a:hover { text-decoration: underline; text-underlin
   color: var(--ink);
   font: .82rem/1.5 ui-monospace, SFMono-Regular, Consolas, monospace;
 }
+
+
+/* Practical transcription reference page */
+.system .evidence { overflow-x: auto; }
+.system .evidence table {
+  width: 100%;
+  margin: 18px 0;
+  border-collapse: collapse;
+  font-size: .9rem;
+  line-height: 1.55;
+}
+.system .evidence th,
+.system .evidence td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+.system .evidence th {
+  background: var(--wash);
+  color: var(--ink);
+  font-weight: 800;
+}
+.system .evidence tbody tr:nth-child(even) { background: #fafafe; }
+@media (max-width: 640px) {
+  .system .evidence table { min-width: 540px; }
+}
