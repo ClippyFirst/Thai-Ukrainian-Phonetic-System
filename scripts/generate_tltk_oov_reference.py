@@ -39,11 +39,11 @@ def main() -> None:
     if not data_pack.is_file():
         raise SystemExit("The extracted TLTK OOV data pack is required before generating parity fixtures.")
     tltk_words = json.loads(gzip.decompress(data_pack.read_bytes()))["word_dictionary"]
-    selected: dict[str, str] = {}
+    selected: dict[str, dict[str, object]] = {}
     rejected: dict[str, str] = {}
     for candidate in (*CANDIDATES, *tltk_words):
         normalized = normalize(candidate)
-        for token in engine._tokenizer.tokenize(normalized):
+        for token in g2p._tokenizer.tokenize(normalized):
             if not token or token in g2p._ipa or not re.fullmatch(r"[ก-๛]+", token):
                 continue
             if g2p._tokenizer.tokenize(normalize(token)) != [token]:
