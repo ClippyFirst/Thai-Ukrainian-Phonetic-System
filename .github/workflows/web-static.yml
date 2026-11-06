@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - "web/**"
+      - ".github/ISSUE_TEMPLATE/**"
       - ".github/workflows/web-static.yml"
   pull_request:
     paths:
