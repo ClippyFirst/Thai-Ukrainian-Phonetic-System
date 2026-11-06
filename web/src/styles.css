@@ -109,6 +109,14 @@ kbd { padding: 2px 5px; border: 1px solid var(--line); background: var(--wash); 
 .continuous-output-notice, .warning, .result-explanation { margin: 0; padding: 12px 15px; border-left: 4px solid var(--red); background: #fbf6f6; color: #55484c; font-size: .88rem; line-height: 1.6; }
 .copy { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; margin-top: 10px; padding: 6px 11px; border: 1px solid #767676; background: #fff; color: var(--blue); font-size: .8rem; font-weight: 750; }
 .copy:hover { border-color: var(--blue); background: var(--wash); }
+.rtgs-inline-result { margin-top: 8px; padding: 14px 0 4px; border-top: 1px solid var(--line); }
+.rtgs-inline-result summary { display: flex; align-items: center; min-height: 44px; color: var(--blue); font-weight: 800; cursor: pointer; }
+.rtgs-inline-body { padding: 8px 0 4px; }
+.rtgs-inline-body > p:first-child { margin: 0 0 8px; color: var(--muted); font-size: .86rem; line-height: 1.6; }
+.rtgs-inline-status { margin: 8px 0; color: var(--muted); font-size: .86rem; line-height: 1.6; }
+.rtgs-inline-status.error { color: #8b2635; }
+.rtgs-inline-value { margin: 12px 0 0; padding: 16px; border-left: 3px solid var(--blue); background: var(--wash); font-size: 1.12rem; line-height: 1.7; white-space: pre-wrap; overflow-wrap: anywhere; user-select: text; }
+.rtgs-inline-copy { margin-top: 10px; }
 .word-breakdown { margin-top: 8px; padding-top: 14px; border-top: 1px solid var(--line); }
 .word-breakdown summary { display: flex; align-items: center; min-height: 44px; color: var(--blue); font-weight: 800; cursor: pointer; }
 .word-breakdown > p { margin: 8px 0 14px; color: var(--muted); font-size: .83rem; line-height: 1.6; }
