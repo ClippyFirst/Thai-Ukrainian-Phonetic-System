@@ -73,6 +73,34 @@ def test_empty_surface_ipa_invalidates_typed_result_and_withholds_target():
     assert adapted["output"] is None
 
 
+
+def test_syllable_initial_j_uses_ukrainian_iotated_vowels_and_preserves_e_contrast():
+    base = PhoneticResult.from_syllable_analysis(analyze_syllable("กา"))
+    cases = [
+        ("jaː", "я", "UA-JA"),
+        ("jeː", "є", "UA-JE"),
+        ("jɛː", "є", "UA-JE-OPEN"),
+        ("jiː", "ї", "UA-JI"),
+        ("joː", "йо", "UA-JO"),
+        ("jɔː", "йо", "UA-JO-OPEN"),
+        ("juː", "ю", "UA-JU"),
+        ("eː", "е", "UA-E"),
+        ("ɛː", "е", "UA-EPSILON"),
+        ("jɯː", "йи", "UA-J"),
+        ("jɤː", "йе", "UA-J"),
+        (".jaː", ".я", "UA-JA"),
+        ("a.jaː", "а.я", "UA-JA"),
+        ("ajaː", "айа", "UA-J"),
+        ("aj", "ай", "UA-J"),
+    ]
+    for ipa, expected, rule in cases:
+        adapted = adapt_phonetic_result(replace(base, phonemic_ipa=ipa))
+        assert adapted["status"] == "adapted", ipa
+        assert adapted["output"] == expected, ipa
+        assert rule in adapted["rules_applied"], ipa
+
+
+
 def test_tone_and_provenance_survive_in_typed_phonetic_result():
     result = PhoneticResult.from_syllable_analysis(analyze_syllable("ไกล"))
     assert result.tone_category == "mid"
