@@ -12,7 +12,7 @@ body:
     attributes:
       label: Категорія відгуку
       options:
-        - Неочікуваний результат: тайський текст → IPA → український запис
+        - "Неочікуваний результат: тайський текст → IPA → український запис"
         - Непідтримуване введення або незрозуміле обмеження
         - Помилка сайту або обробки тексту
         - Доступність або зручність користування
@@ -47,14 +47,14 @@ body:
     id: browser
     attributes:
       label: Браузер і версія
-      placeholder: Наприклад: Firefox 132
+      placeholder: "Наприклад: Firefox 132"
     validations:
       required: false
   - type: input
     id: device
     attributes:
       label: Пристрій та операційна система
-      placeholder: Наприклад: Android 16, Windows 11
+      placeholder: "Наприклад: Android 16, Windows 11"
     validations:
       required: false
   - type: textarea
