@@ -217,3 +217,30 @@ footer nav a:hover, footer > a:hover { text-decoration: underline; text-underlin
   .primary { border: 1px solid ButtonText; }
   .local-badge { border: 1px solid CanvasText; }
 }
+
+/* Optional diagnostics stay collapsed unless a user chooses to inspect them. */
+.technical-diagnostics {
+  margin: 10px 0 20px;
+  padding: 12px 15px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--wash);
+  color: var(--muted);
+  font-size: .88rem;
+  line-height: 1.6;
+}
+.technical-diagnostics summary {
+  color: var(--ink);
+  cursor: pointer;
+  font-weight: 650;
+}
+.technical-diagnostics pre {
+  overflow-x: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  padding: 10px;
+  border-radius: 6px;
+  background: #ffffff;
+  color: var(--ink);
+  font: .82rem/1.5 ui-monospace, SFMono-Regular, Consolas, monospace;
+}
