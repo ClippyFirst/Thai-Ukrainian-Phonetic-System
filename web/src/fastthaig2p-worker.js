@@ -19,6 +19,11 @@ function failure(code, diagnostic) {
   return error;
 }
 
+function safeDiagnostic(value, inputText) {
+  const diagnostic = String(value || "Невідома технічна причина.");
+  return inputText ? diagnostic.split(inputText).join("[введений текст приховано]") : diagnostic;
+}
+
 async function fetchManifest() {
   const response = await fetch(MANIFEST_URL, {
     credentials: "same-origin",
@@ -159,7 +164,7 @@ json.dumps(payload, ensure_ascii=False, separators=(",", ":"))
       type: "error",
       requestId,
       code: error?.code || (phase === "runtime" ? "runtime_failed" : "analysis_failed"),
-      diagnostic: String(error?.diagnostic || error?.message || "Невідома технічна причина.")
+      diagnostic: safeDiagnostic(error?.diagnostic || error?.message, String(text ?? ""))
     });
   }
 });
