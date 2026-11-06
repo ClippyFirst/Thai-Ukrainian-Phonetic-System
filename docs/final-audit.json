@@ -4635,6 +4635,16 @@
           "test": "SUCCESS",
           "wheel_install_smoke": "SUCCESS",
           "master_artifact": "SUCCESS"
+        },
+        "test_summary": {
+          "pytest": "399 passed, 1 skipped, 1211 subtests passed",
+          "ruff": "PASS",
+          "skipped_test": "tests/test_fastthaig2p_site_api.py",
+          "skip_reason": "FastAPI is not installed in generic CI",
+          "separate_coverage": {
+            "workflow_run": 42199395069,
+            "status": "SUCCESS"
+          }
         }
       },
       "web_static": {
