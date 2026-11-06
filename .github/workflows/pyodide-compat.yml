@@ -38,6 +38,11 @@ on:
   pull_request:
     paths:
       - "src/thai_ukrainian/**"
+      - "scripts/fastthaig2p_native_oov_reference.py"
+      - "web/tests/fastthaig2p-browser.test.mjs"
+      - "web/index.html"
+      - "web/src/messages.uk.js"
+      - "web/src/app.js"
       - "web/src/fastthaig2p-native.js"
       - "web/src/fastthaig2p-native-worker.js"
       - "web/src/fastthaig2p-normalizer.js"
