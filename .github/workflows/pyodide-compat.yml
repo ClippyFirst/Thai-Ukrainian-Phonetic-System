@@ -182,6 +182,12 @@ jobs:
           node web/tests/fastthaig2p-normalizer-parity.test.mjs build/fastthaig2p-normalizer-reference.json web/vendor/native/fastthaig2p-normalizer.json web/vendor/native/pythainlp-default-words.txt
           node web/tests/fastthaig2p-tokenizer-parity.test.mjs build/fastthaig2p-tokenizer-reference.json web/vendor/native/fastthaig2p-ipa.json
           node web/tests/fastthaig2p-native-pipeline.test.mjs build/fastthaig2p-native-pipeline-reference.json web/vendor/native/fastthaig2p-ipa.json web/vendor/native/fastthaig2p-normalizer.json web/vendor/native/pythainlp-default-words.txt
+          python scripts/extract_tltk_oov_data.py --fallback-dir build/FastThaiG2P/data/fallback --parser-source build/FastThaiG2P/fastthaig2p/_th2ipa.py --output-dir web/vendor/native-oov
+          python -m unittest discover -s tests -p test_extract_tltk_oov_data.py -v
+          python scripts/generate_tltk_oov_reference.py
+          node web/tests/tltk-oov.test.mjs
+          node web/tests/tltk-oov-reference.test.mjs
+          node web/tests/tltk-oov-worker.test.mjs
       - name: Verify owner-approved public Pages bundle builds
         run: |
           python scripts/build_pyodide_bundle.py \
