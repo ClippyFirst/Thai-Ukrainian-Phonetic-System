@@ -95,7 +95,7 @@ function makeSyllableStats(records){
  for(const [a,b,c,n] of records){tri.set(tuple(a,b,c),n);const k=tuple(a,b);bi.set(k,get(bi,k)+n);biType.set(k,get(biType,k)+1);counts.set(b,get(counts,b)+n);}
  for(const key of bi.keys()){const [first]=JSON.parse(key);types.set(first,get(types,first)+1);}
  for(const n of counts.values()){totalLex++;totalWord+=n;}
- const score=forms=>{const separator="\u001f";let p1=separator,p2=separator,sum=0;for(const word of forms){const t=get(tri,tuple(p2,p1,word)),b=get(bi,tuple(p2,p1)),bt=get(biType,tuple(p2,p1)),b2=get(bi,tuple(p1,word)),c=get(counts,p1),ty=get(types,p1),cw=get(counts,word);const p=0.8*(t>0?t/(b+bt):0)+0.15*(b2>0?b2/(c+ty):0)+0.04*(cw>0?cw/(totalWord+totalLex):0)+1/((totalWord+totalLex)**2);sum+=Math.log(p);p2=p1;p1=word;}return sum;};
+ const score=forms=>{const separator="\u001f";let p1=separator,p2=separator,sum=0;for(const word of forms){const t=get(tri,tuple(word,p1,p2)),b=get(bi,tuple(word,p1)),bt=get(biType,tuple(word,p1)),b2=get(bi,tuple(p1,word)),c=get(counts,p1),ty=get(types,p1),cw=get(counts,word);const p=0.8*(t>0?t/(b+bt):0)+0.15*(b2>0?b2/(c+ty):0)+0.04*(cw>0?cw/(totalWord+totalLex):0)+1/((totalWord+totalLex)**2);sum+=Math.log(p);p2=p1;p1=word;}return sum;};
  const collocation=(a,b)=>{const k=tuple(a,b);let n=get(bi,k),ca=get(counts,a),cb=get(counts,b);if(n<1||ca<1||cb<1){bi.set(k,n+1);counts.set(a,ca+1);counts.set(b,cb+1);totalWord+=2;n=get(bi,k);ca=get(counts,a);cb=get(counts,b);}return Math.abs(Math.log2((n*totalWord)/(ca*cb)));};
  return {score,collocation};
 }
