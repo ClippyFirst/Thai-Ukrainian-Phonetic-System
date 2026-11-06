@@ -4,6 +4,12 @@ This directory contains project tooling, not production runtime modules. Scripts
 
 ## Registry and artifact builders
 
+## Географічний словник
+
+| Script | Responsibility | Inputs → outputs / evidence boundary |
+|---|---|---|
+| `build_geographic_dictionary.py` | Enrich a source CSV of Thai geographic names with RTGS, typed phonemic/broad-surface IPA, and Ukrainian adaptation | CSV Thai-name column → enriched CSV preserving source metadata; RTGS uses pinned PyThaiNLP 5.4.0 newmm/royin; Ukrainian is emitted only through the repository's typed IPA adapter and is withheld on incomplete analysis; model output is not adjudicated gold |
+
 | Script | Responsibility | Inputs → outputs / contract |
 |---|---|---|
 | `generate_derived.py` | Run structural repository validation and build the source-final manifest | Thai registries → `docs/generated-audit.json`, `docs/source-final-manifest.json`; generated files must be refreshed through this script |
