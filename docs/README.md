@@ -4,7 +4,7 @@ This page is the navigation layer for the repository. It distinguishes the maint
 
 ## Latest repository audit
 
-The latest structural and UX review is the [2026-11-05 repository audit](repository-audit-2026-11-04.md). It reconciles current main, the merged TextGrid work, the GitHub Pages beta, the merged UI/UX redesign and the preserved divergent audit branch. Older dated entries in audit/handoff files are retained as historical evidence.
+The latest structural and branch reconciliation checkpoint is recorded at the top of [final audit](final-audit.md), [validation matrix](validation-matrix.md), and [master handoff](MASTER-EXECUTION-PLAN-AND-CHAT-HANDOFF.md) (2026-11-06). The [2026-11-05 repository audit](repository-audit-2026-11-04.md) remains the detailed structural baseline; its historical branch counts are not current. PR #211, #212 and #213 are already integrated into main. PR #214 is the current native-first browser port candidate; do not merge until its exact-head Full CI and Pyodide compatibility checks pass. The 503-commit divergent audit branch remains preserved, not wholesale-merged.
 
 ## Public beta
 
