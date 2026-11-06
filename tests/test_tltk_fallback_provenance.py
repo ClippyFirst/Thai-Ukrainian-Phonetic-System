@@ -23,7 +23,7 @@ class TltkFallbackProvenanceTests(unittest.TestCase):
             (tltk / "setup.py").write_text(
                 "version='1.9.1'\nlicense='BSD-3-Clause'\n"
                 "'License :: OSI Approved :: BSD License'\n"
-                + "\\n".join(PAIRS),
+                + "\n".join(PAIRS),
                 encoding="utf-8",
             )
             (tltk / "README.rst").write_text(
@@ -31,7 +31,7 @@ class TltkFallbackProvenanceTests(unittest.TestCase):
                 "New BSD License (BSD-3-Clause).",
                 encoding="utf-8",
             )
-            (tltk / "MANIFEST.in").write_text("include LICENSE.txt\\n", encoding="utf-8")
+            (tltk / "MANIFEST.in").write_text("include LICENSE.txt\n", encoding="utf-8")
             (tltk / "LICENSE").write_text(
                 "GNU LESSER GENERAL PUBLIC LICENSE", encoding="utf-8"
             )
