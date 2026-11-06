@@ -76,7 +76,7 @@ function allowedPronunciation(code,charmatch,form,phone,allowed){
  if(form.includes("."))return true;
  if(code.includes("CR")&&/^(?:ผ ร|ด ล|ต ล|ท ล|ด ว|ต ว|ท ว|บ ว|ป ว|พ ว|ฟ ว|ผ ว|ส ล|ส ว|ร ร|ศ ล|ศ ว)/u.test(charmatch))return false;
  if(code.includes("AK")){const c=charmatch.split(" ");if(!(allowed[c[0]]||"").includes(c[1]||""))return false;}
- if(/\u0E31[่้๊๋]?ว/u.test(form)&&phone.includes("aw"))return false;
+ if(/\u0E31[\0E48-\u0E4B]?ว\]/u.test(form)&&phone.includes("aw"))return false;
  if(/[ก-ฮ] ข/u.test(charmatch)&&!/[ุัเ]/u.test(form))return false;
  if(/[ก-ฮ] ร$/u.test(charmatch)&&/.an/u.test(phone))return false;
  return true;
