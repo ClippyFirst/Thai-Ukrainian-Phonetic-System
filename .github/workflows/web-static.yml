@@ -1,6 +1,8 @@
 name: Web static validation
 on:
   push:
+    branches:
+      - main
     paths:
       - "web/**"
       - ".github/ISSUE_TEMPLATE/**"
