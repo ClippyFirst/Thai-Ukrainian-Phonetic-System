@@ -57,7 +57,7 @@ These tests are source-level contracts. They do not establish manual screen-read
 | Audit every public page and all accessible text | TODO | Inventory all visible strings, aria labels, placeholders, titles, feedback form and third-party notices; retain English only for proper names/legal source titles |
 | Manual mobile/keyboard/screen-reader/zoom acceptance | DEFERRED / NOT VERIFIED | Real-browser checks at narrow widths and 200%/400% zoom; keyboard-only and assistive-technology review |
 | Privacy explanation page | TODO / EVIDENCE REQUIRED | Verify current GitHub Pages request/logging practices and explain local input processing, storage and telemetry accurately |
-| User feedback workflow | IMPLEMENTED_PENDING_CI | GitHub beta feedback form is now Ukrainian; it warns against sharing private data and makes examples optional. Confirm the workflow and template render correctly. |
+| User feedback workflow | IMPLEMENTED_PENDING_CI | GitHub beta feedback form is now Ukrainian; it warns against sharing private data, makes examples optional and accepts the stable public error ID without requiring raw diagnostics. Confirm the workflow and template render correctly. |
 | Glossary and plain-language phonetics help | TODO | Ukrainian explanations of IPA, tones, vowel length, syllables and adaptation limitations, reviewed for linguistic accuracy |
 
 ## Out of scope for this UX change
