@@ -276,9 +276,9 @@ async function handleRtgsDisclosure(event) {
   const copy = disclosure.querySelector(".rtgs-inline-copy");
   disclosure.dataset.rtgsState = "loading";
   message.className = "rtgs-inline-status";
-  message.textContent = "Завантаження локального словника RTGS…";
+  message.textContent = "Підготовка локального RTGS-романізатора…";
   try {
-    // The optional romanizer and its CC0 word list are loaded only after an explicit user request.
+    // Import the optional romanizer only on request; it reuses the CC0 word list shared with the primary tokenizer.
     const { createRtgsRomanizer } = await import("./rtgs-romanizer.js");
     const romanizer = await createRtgsRomanizer();
     const result = romanizer.romanize(sourceText);
