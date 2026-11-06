@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Generate independent pinned FastThaiG2P OOV reference cases for the browser port."""
+"""Generate independent pinned FastThaiG2P OOV reference cases for the browser port.
+
+The diagnostic block records upstream segmentation/scoring internals for parity debugging.
+"""
 from __future__ import annotations
 
 import gzip
