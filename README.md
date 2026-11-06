@@ -30,7 +30,7 @@ The homepage keeps Ukrainian IPA adaptation as its primary result and offers RTG
 
 ## Географічні назви та пакетний словник
 
-Для збагачення власного CSV географічних назв див. [документацію географічного словника](docs/geographic-dictionary.md) і [шаблон CSV](data/geography/geographic-names-template.csv). Скрипт `scripts/build_geographic_dictionary.py` додає RTGS (PyThaiNLP 5.4.0), фонемний та широкий поверхневий IPA і український результат, отриманий лише через typed IPA → Ukrainian адаптер. Встановлення: `python -m pip install -e ".[geography]"`. Неповний IPA/UA результат утримується; RTGS є окремою, тонально неповною романізацією. Вихідні ліцензії та джерела набору потрібно фіксувати окремо.
+Для збагачення власного CSV географічних назв див. [документацію географічного словника](docs/geographic-dictionary.md) і [шаблон CSV](data/geography/geographic-names-template.csv). Скрипт `scripts/build_geographic_dictionary.py` додає RTGS (PyThaiNLP 5.4.0 newmm + royin з pinned CC0 словником), фонемний та широкий поверхневий IPA і український результат, отриманий лише через typed IPA → Ukrainian адаптер. Встановлення: `python -m pip install -e ".[geography]"`. Неповний IPA/UA результат утримується; RTGS є окремою, тонально неповною романізацією. Вихідні ліцензії та джерела набору потрібно фіксувати окремо.
 
 ## Thai → Ukrainian methodology table
 
