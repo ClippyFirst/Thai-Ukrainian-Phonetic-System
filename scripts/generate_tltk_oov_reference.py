@@ -2,6 +2,7 @@
 """Generate independent pinned FastThaiG2P OOV reference cases for the browser port."""
 from __future__ import annotations
 
+import gzip
 import json
 import re
 import sys
@@ -28,9 +29,13 @@ CANDIDATES = (
 
 def main() -> None:
     engine = G2P()
+    data_pack = ROOT / "web" / "vendor" / "native-oov" / "tltk-oov-data.json.gz"
+    if not data_pack.is_file():
+        raise SystemExit("The extracted TLTK OOV data pack is required before generating parity fixtures.")
+    tltk_words = json.loads(gzip.decompress(data_pack.read_bytes()))["word_dictionary"]
     selected: dict[str, str] = {}
     rejected: dict[str, str] = {}
-    for candidate in CANDIDATES:
+    for candidate in (*CANDIDATES, *tltk_words):
         normalized = normalize(candidate)
         for token in engine._tokenizer.tokenize(normalized):
             if not token or token in engine._ipa or not re.fullmatch(r"[ก-๛]+", token):
