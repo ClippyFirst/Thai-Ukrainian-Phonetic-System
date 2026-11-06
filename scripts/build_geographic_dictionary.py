@@ -135,7 +135,7 @@ def analyze_geographic_name(
                 warnings.extend(typed.get("uncertainty", []))
                 continue
             phonemic_syllables.append(str(phonemic))
-            surface_syllables.append(str(surface or phonemic))
+            surface_syllables.append(str(surface) if surface else "")
             ukrainian_syllables.append(str(ukrainian))
 
         if len(phonemic_syllables) != len(syllables):
@@ -150,7 +150,7 @@ def analyze_geographic_name(
     if complete and len(phonemic_words) == len(thai_tokens):
         status = "COMPLETE_MODEL_OUTPUT_NOT_ADJUDICATED"
         ipa_phonemic = " ".join(phonemic_words)
-        ipa_surface = " ".join(surface_words)
+        ipa_surface = " ".join(surface_words) if all(surface_words) else ""
         ukrainian = " ".join(ukrainian_words)
     else:
         status = "PARTIAL_OR_UNSUPPORTED_WITHHELD"
