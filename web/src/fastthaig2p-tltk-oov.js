@@ -148,7 +148,6 @@ export function createTltkOovFallback(data){
  }
  let lastMatches=[];
  let lastSyllablePaths=[];
- const patterns=data.syllable_patterns.map(record=>({...record,expression:compilePattern(record)}));
  const sylStats=makeSyllableStats(data.syllable_trigrams),phoneScore=makePhoneScorer(data.phone_trigrams),dictionary=new Set(data.word_dictionary);
  function parseSyllables(input, pron, {trace=false}={}){
   const chars=Array.from(input),n=chars.length,chart=new Map();lastMatches=trace?[]:null;
