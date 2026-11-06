@@ -22,9 +22,16 @@ class TltkFallbackProvenanceTests(unittest.TestCase):
             )
             (tltk / "setup.py").write_text(
                 "version='1.9.1'\nlicense='BSD-3-Clause'\n"
-                "'License :: OSI Approved :: BSD License'\n",
+                "'License :: OSI Approved :: BSD License'\n"
+                + "\\n".join(PAIRS),
                 encoding="utf-8",
             )
+            (tltk / "README.rst").write_text(
+                "As of version 1.2.2, the package license has changed to the "
+                "New BSD License (BSD-3-Clause).",
+                encoding="utf-8",
+            )
+            (tltk / "MANIFEST.in").write_text("include LICENSE.txt\\n", encoding="utf-8")
             (tltk / "LICENSE").write_text(
                 "GNU LESSER GENERAL PUBLIC LICENSE", encoding="utf-8"
             )
@@ -49,6 +56,13 @@ class TltkFallbackProvenanceTests(unittest.TestCase):
             report = verify(fast, tltk)
 
             self.assertEqual(report["verified_assets"], 6)
+            self.assertEqual(
+                report["license_scope"],
+                "BSD-3-CLAUSE_SUPPORTED_FOR_TLTK_1.9.1_PACKAGED_FALLBACK_ASSETS; RETAIN_REPOSITORY_LGPL_NOTICE_AS_HISTORICAL_CONTEXT",
+            )
+            self.assertTrue(report["pinned_tltk_package_manifest_includes_license"])
+            self.assertTrue(report["pinned_tltk_fallback_assets_in_package_data"])
+            self.assertEqual(report["pinned_tltk_package_license_file"], "BSD-3-Clause")
             self.assertEqual(
                 report["fallback_data_size_bytes"],
                 sum((fast / pair[0]).stat().st_size for pair in PAIRS.values()),
