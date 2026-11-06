@@ -8,8 +8,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
+from thai_ukrainian.fastthaig2p_adapter import FastThaiG2PAdapter
 from thai_ukrainian.fastthaig2p_service import analyze_with_fastthaig2p
-from fastthaig2p import G2P
 from fastthaig2p.normalizer import normalize
 from fastthaig2p.tokenizer import Tokenizer
 
@@ -20,19 +20,19 @@ CANDIDATES = [
     "การทดสอบระบบ",
 ]
 
-g2p = G2P()
+adapter = FastThaiG2PAdapter()
 tokenizer = Tokenizer()
 cases = []
 for text in CANDIDATES:
     normalized = normalize(text)
     tokens = [token for token in tokenizer.tokenize(normalized) if token.strip()]
-    if tokens and all(token in g2p._ipa for token in tokens):
+    if tokens and all(token in adapter._engine._ipa for token in tokens):
         cases.append({
             "input": text,
             "normalized": normalized,
             "tokens": tokens,
-            "expected_ipa": g2p.convert(text),
-            "expected_result": analyze_with_fastthaig2p(text),
+            "expected_ipa": adapter._engine.convert(text),
+            "expected_result": analyze_with_fastthaig2p(text, engine=adapter),
         })
 if len(cases) < 5:
     raise SystemExit(f"Not enough dictionary-only pipeline fixtures: {len(cases)}")
