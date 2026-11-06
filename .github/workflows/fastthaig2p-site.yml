@@ -31,6 +31,9 @@ on:
       - "pyproject.toml"
       - "requirements.txt"
       - ".github/workflows/fastthaig2p-site.yml"
+concurrency:
+  group: ${{ github.workflow }}-${{ github.repository }}-${{ github.event_name }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 jobs:
   site-api:
     runs-on: ubuntu-latest
