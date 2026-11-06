@@ -178,14 +178,15 @@ class TextPipelineTests(unittest.TestCase):
         self.assertTrue(result.phonemic_ipa.endswith("n"), result.phonemic_ipa)
         self.assertTrue(result.ukrainian_transliteration.endswith("н"), result.ukrainian_transliteration)
 
-    def test_w_glides_are_rendered_consistently_as_vocalic_u(self):
-        for word in ("ดาว", "หนาว", "เศร้า"):
+    def test_w_glides_are_rendered_as_ukrainian_v_in_all_positions(self):
+        expected = {"ดาว": "дав", "หนาว": "нав", "เศร้า": "сав"}
+        for word, ukrainian in expected.items():
             with self.subTest(word=word):
                 result = analyze_syllable(word)
                 self.assertEqual(result.status, "analyzed")
                 self.assertIsNone(result.coda)
                 self.assertTrue(result.phonemic_ipa.endswith("w"), result.phonemic_ipa)
-                self.assertTrue(result.ukrainian_transliteration.endswith("у"), result.ukrainian_transliteration)
+                self.assertEqual(result.ukrainian_transliteration, ukrainian)
         cold = analyze_syllable("หนาว")
         self.assertEqual(cold.onset, ["ห", "น"])
         self.assertEqual(cold.phonemic_ipa, "naːw")
