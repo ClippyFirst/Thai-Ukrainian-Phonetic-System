@@ -44,7 +44,9 @@ self.addEventListener("message", async event => {
       type: "error",
       id,
       code: typeof error?.code === "string" ? error.code : "native_engine_error",
-      message: typeof error?.message === "string" ? error.message : "Браузерний рушій не зміг обробити текст."
+      message: error?.name === "NativeFastThaiG2PError" && typeof error.message === "string"
+        ? error.message
+        : "Не вдалося ініціалізувати або виконати браузерну транскрипцію. Спробуйте оновити сторінку."
     });
   }
 });
