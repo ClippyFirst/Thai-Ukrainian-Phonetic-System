@@ -117,7 +117,7 @@ jobs:
               path = Path("web/vendor") / asset["path"]
               assert path.is_file() and path.stat().st_size == asset["size_bytes"]
           PY
-          python scripts/extract_tltk_oov_data.py --fallback-dir build/FastThaiG2P/data/fallback --output-dir web/vendor/native-oov
+          python scripts/extract_tltk_oov_data.py --fallback-dir build/FastThaiG2P/data/fallback --parser-source build/FastThaiG2P/fastthaig2p/_th2ipa.py --output-dir web/vendor/native-oov
           python -m unittest discover -s tests -p test_extract_tltk_oov_data.py -v
           python - <<'PY'
           import json
