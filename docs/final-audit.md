@@ -1,3 +1,19 @@
+## Follow-up — live Pages inspection, TLTK package rights and OOV preparation (2026-11-06)
+
+The public GitHub Pages site was inspected directly. The homepage currently discloses native-first FastThaiG2P processing; the deployed `src/app.js`, native Worker, native module, `vendor/native/manifest.json`, its five declared native assets, `vendor/bundle-manifest.json`, `system.html`, and `third-party-notices.html` are reachable. The live manifest still identifies the native stage as dictionary-only. This confirms current content/asset reachability, not a new deployment from the current work branch and not a completed native OOV runtime.
+
+The Pages workflow's post-deploy smoke was stale: it asserted pre-recomposition UI strings despite the current mainline native-first UI. The branch fixes these assertions, checks both same-origin workers, native/OOV manifests and data hashes, all third-party notices and retained Pyodide runtime assets, and adds a pull_request build trigger while keeping deployment main-only. The corrected workflow remains subject to PR and post-merge verification.
+
+TLTK package licensing is no longer treated as a blocker for the six fallback assets. The pinned 1.9.1 README, setup.py, package_data, MANIFEST.in, LICENSE.txt and PyPI release metadata consistently support BSD-3-Clause for the packaged fallback files. The root LGPL-3.0 notice and stale PKG-INFO 1.1.7/GPLv3 remain preserved as historical/repository context. BSD-3-Clause permits research use, modification and redistribution with its copyright notice, conditions, disclaimer and no-endorsement clause. This is a source-based compliance assessment, not legal advice.
+
+A build-time extractor now prepares a deterministic gzip-compressed JSON data pack from the five TLTK tables used in the g2p() -> sylparse() -> wordparse() path and extracts literal pronunciation tables from the pinned parser AST. The sixth asset, sylform_var.pkl, is provenance-verified but omitted from the runtime pack because static call-graph inspection found no reads of SYLVAR from that G2P path. This is data preparation, not the JavaScript algorithm.
+
+**Current limitation:** the TLTK OOV JavaScript parser is still TODO. The data pack is not used by the public UI; the existing same FastThaiG2P Pyodide Worker remains the OOV fallback. No guessed pronunciation is substituted. Native OOV acceptance requires complete raw IPA and full typed service JSON parity against multiple pinned Python OOV fixtures, followed by real browser Worker and lazy-load/hash verification.
+
+Draft PR [#215](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/215) contains the Pages smoke correction, TLTK license-evidence updates, and OOV data-extraction preparation. It must remain unmerged until its Pages build and tests pass; it does not yet complete the requested native OOV port.
+
+---
+
 ## Post-merge audit — native-first FastThaiG2P integrated (2026-11-06)
 
 PR #214 is merged into the default branch as `29b63b8f58db1f6d7ff068d131df0b0759895115`. The final PR head `0d4503ed55ff726807917e2cfbf14c0ad30eb624` passed all four required exact-head workflows: Full CI #42199395072, Web Static #42199395225, Site API #42199395069 and Pyodide compatibility #42199395284. The UI regression-fixture correction was test-only and passed on the final head.
