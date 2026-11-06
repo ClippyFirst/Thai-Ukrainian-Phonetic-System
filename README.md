@@ -158,6 +158,8 @@ See:
 
 ## User interface
 
+The public GitHub Pages service includes a dedicated [Thai–Ukrainian practical transcription system](web/transcription.html), the [interactive browser service](https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/), and a [method/runtime explanation](web/system.html). The practical system page documents consonant correspondences by syllable position, vowels, initial /j/ + vowel adaptation, rimes/glides, tone/length limitations, examples and the project's evidence status.
+
 The research core is also available as an installable `thai-ua` CLI with single-input analysis, TXT/CSV/TSV/XLSX batch processing and a local JSON API. Excel support is optional: `pip install ".[excel]"`.
 
 Examples:
