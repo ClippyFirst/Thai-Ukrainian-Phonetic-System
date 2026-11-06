@@ -3,8 +3,8 @@
 | Task | State | Evidence / acceptance |
 |---|---|---|
 | CSV batch builder | PARTIAL | `scripts/build_geographic_dictionary.py` створено; зберігає вхідні метадані й додає RTGS, фонемний/поверхневий IPA, IPA-derived Ukrainian, status/warnings. Потрібен точний-head CI та перевірка на реальному корпусі. |
-| RTGS integration | PARTIAL | Використовує optional PyThaiNLP 5.4.0 extra, newmm token boundaries і royin RTGS; unit tests із injected stubs додані. Потрібен CI та runtime smoke з установленим extra. |
-| IPA → Ukrainian boundary | PARTIAL | Скрипт викликає наявний `analyze_text_with_word_segmentation` і бере тільки typed `PhoneticResult` та штатний IPA adapter output; будь-який неповний запис утримує IPA/UA. Потрібні regression tests/CI. |
+| RTGS integration | PARTIAL | Використовує optional PyThaiNLP 5.4.0 extra, newmm із pinned CC0 custom trie та royin RTGS; unit tests із injected stubs і runtime smoke додані. Потрібен exact-head CI. |
+| IPA → Ukrainian boundary | PARTIAL | Скрипт викликає наявний `analyze_text_with_word_segmentation` і бере тільки typed `PhoneticResult` та штатний IPA adapter output; будь-який неповний запис утримує IPA/UA. Regression tests і реальний runtime smoke додані; потрібен exact-head CI. |
 | Dataset schema and provenance | DONE_VERIFIED (template only) | Додано заголовковий шаблон і правила джерельної атрибуції; жодних неперевірених географічних даних/ліцензій не внесено. |
 | Documentation/navigation | PARTIAL | README, docs index, script inventory та handoff оновлено; потрібні точний-head перевірки і review. |
 | Linguistic validation of geographic proper names | BLOCKED / NOT_MEASURED | Немає наданого географічного корпусу з ліцензіями та незалежної експертної транскрипції/українських форм. Acceptance: джерельно атестований набір + незалежне IPA adjudication + український native-speaker review. |
