@@ -2040,3 +2040,20 @@ The following replaces earlier, now-stale native-port status rows above. Histori
 | Cold/warm/offline/mobile performance and memory | TODO | Measure actual Pages transfer and browser cache behavior, startup and repeat latency, memory, offline reload and mobile devices against the same Pyodide baseline. |
 
 Current branch head at this verification: 24e4605b7921524b60dc1c5a3e3e9a66965a3206. Public site still uses Pyodide. Overall native port is a verified dictionary-covered prototype, not a complete FastThaiG2P replacement; accuracy remains NOT_MEASURED and no speedup is claimed.
+
+
+## Native-first UI reconciliation — 2026-11-06
+
+This section supersedes the earlier statement that the native Worker was not connected to the public UI. The code implementation is present; the current acceptance run is pending.
+
+| Work item | Current status | Evidence / acceptance |
+|---|---|---|
+| Native dictionary-covered runtime | DONE_VERIFIED (earlier exact head) | 16 complete service JSON cases match pinned CPython; real Chromium native Worker smoke passed with no Pyodide/Python/wheel/WASM/remote requests on head 24e4605b7921524b60dc1c5a3e3e9a66965a3206. |
+| Public UI native-first integration | PARTIAL — verification pending | app.js now calls native Worker first; a native_dictionary_miss alone starts the existing Pyodide Worker. Browser test asserts dictionary hits do not fetch Pyodide/wheels and a pinned OOV fixture does. Current code head before docs-only update: 0e6479450d6205f0a2b65aa80fb1e3d6a13937b0. |
+| OOV reference fixture | PARTIAL — verification pending | New Python fixture generator searches the pinned TLTK fallback dictionary for a complete rule-fallback result absent from the filtered IPA map. The Chromium test consumes this fixture. |
+| Full native TLTK OOV implementation | TODO / rights-limited | TLTK release metadata/README/setup.py/LICENSE.txt indicate BSD-3-Clause; root repository LICENSE remains LGPL-3.0 (unchanged since 2018) and stale PKG-INFO says GPLv3. Keep TLTK assets/code out of native bundle until package-file distribution scope is cleared; existing Pyodide fallback remains the compatibility path. |
+| Native UI user disclosure | DONE_VERIFIED (code present) | Input hint and system page explain native-first behavior and lazy Python/Pyodide loading on dictionary miss. |
+| Cold/warm/offline/mobile performance and memory | TODO | Measure same-origin transfer, cold/warm latency, browser cache, offline reload, memory and mobile performance against the Pyodide baseline. |
+| Latest CI/Web Static/Pyodide compatibility | BLOCKED — GitHub Actions pending | Runs for head 0e6479450d6205f0a2b65aa80fb1e3d6a13937b0 were queued/pending at the time of this update; no current-head pass is claimed. |
+
+The application is now hybrid native-first, not a full Pyodide replacement. For dictionary-covered inputs it should avoid Python module/wheel/WASM requests; it still fetches JS modules and the approximately 2.2 MB native data bundle. OOV inputs still load Pyodide. Accuracy remains NOT_MEASURED; no speedup is claimed.
