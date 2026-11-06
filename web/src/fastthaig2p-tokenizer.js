@@ -21,7 +21,7 @@ const TCC_RULES = [
     .replaceAll("k", "(cc?[dิ]?[์])?")
     .replaceAll("c", "[ก-ฮ]")
     .replaceAll("t", "[่-๋]?")
-    .replaceAll("d", "[ูุ]")
+    .replaceAll("d", "ูุ")
 );
 const PAT_TCC = new RegExp("^(?:" + TCC_RULES.join("|") + ")", "u");
 
