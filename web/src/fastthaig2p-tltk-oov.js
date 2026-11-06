@@ -53,7 +53,7 @@ function toneAssign(form,phone,code,charmatch){
  const dead=deadSyllable(phone), has=m=>form.includes(m);
  if(phone.includes("+'"))phone=phone.replaceAll("+",("ผฝถขสหฉศษ".includes(lead)||"กจดตบปอ".includes(lead))?"1":"3");
  if("กจดตฎฏบปอ".includes(init))return [phone,dead==="L"?(has("่")?"1":has("้")?"2":has("๊")?"3":has("๋")?"4":"0"):(has("่")?"9":has("้")?"2":has("๊")?"3":has("๋")?"4":"1")];
- if("ขฃฉฐถผฝสศษห".includes(init))return [phone,dead==="L"?(has("่")?"1":has("้")?"2":"9"):(has("่")?"9":has("้")?"2":"1")];
+ if("ขฃฉฐถผฝสศษห".includes(init))return [phone,dead==="L"?(has("่")?"1":has("้")?"2":has("๊")||has("๋")?"9":"4"):(has("่")?"9":has("้")?"2":has("๊")||has("๋")?"9":"1")];
  if("งญณนมยรลวฬ".includes(init)&&lead&&"ขฃฉฐถผฝสศษห".includes(lead))return [phone,dead==="L"?(has("่")?"1":has("้")?"2":"4"):(has("่")?"9":has("้")?"2":"1")];
  if("งญณนมยรลวฬ".includes(init)&&lead&&"กจดตฎฏบปอ".includes(lead))return [phone,dead==="L"?(has("่")?"1":has("้")?"2":has("๊")?"3":has("๋")?"4":"0"):(has("่")?"9":has("้")?"2":has("๊")?"3":has("๋")?"4":"1")];
  if("คฅฆชฌซฑฒทธพภฟฮงญณนมยรลวฬฤฦ".includes(init)){
