@@ -4699,7 +4699,7 @@
     "pages_post_merge_workflow": "MAIN_RUN_42226988467_BUILD_SUCCESS_DEPLOYMENT_REPORTED_SUCCESS_POST_DEPLOY_SMOKE_FAILED_ON_STALE_HEADING_ASSERTION",
     "pages_workflow_change": "pages.yml post-deploy smoke now checks current native-first UI, both same-origin workers, native and OOV manifests, compressed TLTK OOV data SHA-256, all notices, and retained Pyodide runtime; build now runs on pull_request with deploy main-only",
     "current_work_branch": "fix/pages-smoke-and-audit-consolidation-2026-11-06",
-    "superseded_open_pull_request": 215,
+    "superseded_closed_pull_request": 215,
     "draft_pull_request_head": "a54cab92f9008663b4b640003c7b21b8581fdf9d",
     "pages_workflow_fix": "PR #215 corrected stale post-deploy smoke assertions, added PR build trigger, and checks native assets, OOV manifest/data hash, notices and Pyodide fallback.",
     "branch_checks": {
@@ -4851,7 +4851,7 @@
       "acceptance": "PR exact-head CI and Pages build pass; after merge, main Pages deployment and live hash smoke pass."
     },
     "branch_reconciliation": {
-      "non_main_refs": 9,
+      "non_main_refs": 10,
       "superseded_pr": 215,
       "superseded_by": 216,
       "pr215_head_is_ancestor_of_pr216_head": true,

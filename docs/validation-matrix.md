@@ -16,9 +16,9 @@ This section supersedes earlier PR #215 preparation-only snapshots below. PR #21
 ### Branch and PR consolidation
 
 - Default branch remains `main`; the audited starting HEAD is `9f279ce04c14b81fa4728a15e81fb89ab046b753`.
-- PRs #211–#218 that represent the current site redesign, Ukrainian-first UX, native front-half, native TLTK OOV, parity follow-up and documentation checkpoints are merged into main.
-- PR #215 is an obsolete preparation PR: its head `5fd73a4abb489ac43b2531abcdb86a026ac6e48c` is an ancestor of the merged PR #216 branch head (74 commits later). Its work is superseded by #216; close the PR as superseded after this reconciliation, retaining its source branch as history.
-- The nine extant non-main refs are historical or merged PR source refs. Do not force-update or delete them. `docs/repository-audit-2026-11-04` remains highly divergent (503 commits ahead and 23 behind main at this audit) and must not be wholesale-merged; retain it and port only a separately evidenced missing change.
+- PRs #211–#214 and #216–#218 that represent the current site redesign, Ukrainian-first UX, native front-half, native TLTK OOV, parity follow-up and documentation checkpoints are merged into main.
+- PR #215 is an obsolete preparation PR: its head `5fd73a4abb489ac43b2531abcdb86a026ac6e48c` is an ancestor of the merged PR #216 branch head (74 commits later). Its work is superseded by #216; PR #215 was closed as superseded after this reconciliation, retaining its source branch as history.
+- The ten extant non-main refs comprise nine pre-existing historical/merged PR source refs plus this active repair branch. Do not force-update or delete them. `docs/repository-audit-2026-11-04` remains highly divergent (503 commits ahead and 23 behind main at this audit) and must not be wholesale-merged; retain it and port only a separately evidenced missing change.
 - Use one active continuation branch for this acceptance repair; merge it only after exact-head CI/Pages build pass. The deployment smoke itself must then be verified on main.
 
 ---

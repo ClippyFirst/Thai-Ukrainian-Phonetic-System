@@ -12,7 +12,7 @@ The native TLTK OOV implementation and its parity follow-up are already merged. 
 
 ### Branch reconciliation
 
-The current main tree incorporates the active work from the site redesign, Ukrainian-first UX, FastThaiG2P native front-half, TLTK OOV, parity follow-up and documentation PRs. PR #215 is superseded: PR #216's source branch is a descendant of #215's head, and #216 was merged. The #215 PR should be closed as superseded, with its branch retained. Historical source refs remain on GitHub; do not delete or force-update them. The 503-commit divergent repository-audit branch is not a safe merge base and remains preserved without wholesale import.
+The current main tree incorporates the active work from the site redesign, Ukrainian-first UX, FastThaiG2P native front-half, TLTK OOV, parity follow-up and documentation PRs. PR #215 is superseded: PR #216's source branch is a descendant of #215's head, and #216 was merged. PR #215 was closed as superseded, with its source branch retained. Historical source refs remain on GitHub; do not delete or force-update them. The 503-commit divergent repository-audit branch is not a safe merge base and remains preserved without wholesale import.
 
 ### Remaining acceptance gates
 
