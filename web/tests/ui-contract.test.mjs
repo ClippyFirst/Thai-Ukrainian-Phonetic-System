@@ -99,7 +99,7 @@ assert.match(output.innerHTML, /lang="th">พริก/);
 assert.match(output.innerHTML, /експертно підтверджено/);
 assert.match(output.innerHTML, /Цей результат попередній/);
 assert.doesNotMatch(output.innerHTML, /PROVISIONAL|not independently adjudicated/);
-assert.match(output.innerHTML, /upstream commit/);
+assert.match(output.innerHTML, /коміт вихідного проєкту/);
 assert.equal(status.className, "status notice");
 assert.match(status.textContent, /Український запис попередній/);
 assert.equal(requests.length, 1);
