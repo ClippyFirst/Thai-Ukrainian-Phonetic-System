@@ -1,13 +1,12 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
-import { webcrypto } from "node:crypto";
 
 const root = new URL("../../", import.meta.url);
 const fixtures = JSON.parse(await readFile(new URL("build/tltk-oov-reference.json", root), "utf8"));
 const messages = [];
 const listeners = {};
-globalThis.crypto = webcrypto;
+assert.ok(globalThis.crypto?.subtle, "Node must provide WebCrypto for the native worker integrity check");
 globalThis.self = {
   addEventListener(type, callback) { listeners[type] = callback; },
   postMessage(message) { messages.push(message); }
