@@ -12,6 +12,10 @@ const analyzeButton = document.getElementById('analyze');
 const diagnostics = document.getElementById('technical-diagnostics');
 const diagnosticDetails = document.getElementById('diagnostic-details');
 
+let nativeWorker;
+let nativeReadyPromise;
+let nextNativeRequestId = 1;
+const nativePendingRequests = new Map();
 let analysisWorker;
 let nextRequestId = 1;
 const pendingRequests = new Map();
@@ -72,7 +76,70 @@ function getAnalysisWorker() {
   return analysisWorker;
 }
 
-function analyzeLocally(text) {
+function getNativeWorker() {
+  if (nativeWorker) return nativeWorker;
+  nativeWorker = new Worker(new URL('./fastthaig2p-native-worker.js', import.meta.url), { type: 'module' });
+  nativeWorker.addEventListener('message', event => {
+    const message = event.data || {};
+    const pending = nativePendingRequests.get(message.id);
+    if (!pending) return;
+    if (message.type === 'error') {
+      nativePendingRequests.delete(message.id);
+      pending.reject({
+        code: message.code || 'native_engine_error',
+        diagnostic: message.message || 'Браузерний рушій не надав технічного пояснення.'
+      });
+      return;
+    }
+    if (message.type === 'ready' || message.type === 'result') {
+      nativePendingRequests.delete(message.id);
+      pending.resolve(message);
+    }
+  });
+  nativeWorker.addEventListener('error', () => {
+    const error = {
+      code: 'native_worker_crashed',
+      diagnostic: 'Браузер повідомив про аварійне завершення нативного Web Worker.'
+    };
+    for (const pending of nativePendingRequests.values()) pending.reject(error);
+    nativePendingRequests.clear();
+    nativeWorker?.terminate();
+    nativeWorker = undefined;
+    nativeReadyPromise = undefined;
+  });
+  return nativeWorker;
+}
+
+function sendNativeMessage(type, payload = {}) {
+  const id = 'native-' + nextNativeRequestId++;
+  return new Promise((resolve, reject) => {
+    nativePendingRequests.set(id, { resolve, reject });
+    try {
+      getNativeWorker().postMessage({ type, id, ...payload });
+    } catch (error) {
+      nativePendingRequests.delete(id);
+      reject({
+        code: 'native_worker_crashed',
+        diagnostic: String(error?.message || 'Не вдалося передати запит до нативного Web Worker.')
+      });
+    }
+  });
+}
+
+async function analyzeNative(text) {
+  if (!nativeReadyPromise) {
+    nativeReadyPromise = sendNativeMessage('init').catch(error => {
+      nativeReadyPromise = undefined;
+      throw error;
+    });
+  }
+  await nativeReadyPromise;
+  status.textContent = UI_TEXT.analyzing;
+  const response = await sendNativeMessage('convert', { text });
+  return response.result;
+}
+
+function analyzeWithPyodide(text) {
   const requestId = nextRequestId++;
   return new Promise((resolve, reject) => {
     pendingRequests.set(requestId, { resolve, reject });
@@ -86,6 +153,16 @@ function analyzeLocally(text) {
       });
     }
   });
+}
+
+async function analyzeLocally(text) {
+  try {
+    return await analyzeNative(text);
+  } catch (error) {
+    if (error?.code !== 'native_dictionary_miss') throw error;
+    status.textContent = UI_TEXT.downloading;
+    return analyzeWithPyodide(text);
+  }
 }
 
 function showError(error) {
