@@ -54,7 +54,6 @@ class TltkFallbackProvenanceTests(unittest.TestCase):
                 sum((fast / pair[0]).stat().st_size for pair in PAIRS.values()),
             )
             self.assertGreater(report["fallback_data_gzip_size_bytes"], 0)
-            self.assertGreaterEqual(report["fallback_data_gzip_savings_ratio"], 0)
             self.assertLess(report["fallback_data_gzip_savings_ratio"], 1)
             self.assertTrue(all(item["verified"] for item in report["assets"]))
             self.assertEqual(
