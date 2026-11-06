@@ -2014,7 +2014,8 @@ Implementation branch: `feat/ukrainian-first-ux-2026-11-06`. Do not mark the imp
 | PyThaiNLP newmm tokenizer | DONE_VERIFIED | #42181862972: 16 custom FastThaiG2P token-array cases passed; 18 default-wordlist cases also passed inside normalizer parity. |
 | TLTK OOV fallback | BLOCKED / PARTIAL | Exact asset-level license scope remains unresolved; do not redistribute/port fallback assets until a defensible rights disposition exists. |
 | Native front-half pipeline parity | DONE_VERIFIED | #42181862972: 16 dictionary-only CPython pipeline cases matched normalized text, tokens and raw IPA. Full typed/result JSON parity including OOV remains TODO. |
-| Native Worker and UI cutover | DEFERRED | No native Worker/browser smoke yet; only after TLTK rights, OOV parity, full result parity, cold/warm/offline, CSP and performance gates pass. |
+| Native Worker smoke | DONE_VERIFIED | #42182444849: Chromium native Worker matched CPython raw IPA with same-origin JS/data only; no Python/Pyodide/wheels/remote requests. | 
+| Public UI runtime selector and cutover | DEFERRED | Only after TLTK rights, OOV parity, full result parity, cold/warm/offline, CSP and performance gates pass. |
 | Pyodide removal | DEFERRED | Remove only after production cutover is verified and rollback path is retained. |
 
-The public site still uses Pyodide. The native normalizer, default/custom newmm tokenizers and dictionary-only pipeline have differential evidence, but the TLTK OOV fallback and native Worker are not complete; do not claim full replacement or a speed improvement. No IPA or Ukrainian phonetic rules were changed; linguistic accuracy remains `NOT_MEASURED`.
+The public site still uses Pyodide. The native normalizer, default/custom newmm tokenizers, dictionary-only pipeline and isolated Chromium Worker smoke have differential evidence, but the TLTK OOV fallback and UI cutover are not complete; do not claim full replacement or a speed improvement. No IPA or Ukrainian phonetic rules were changed; linguistic accuracy remains `NOT_MEASURED`.
