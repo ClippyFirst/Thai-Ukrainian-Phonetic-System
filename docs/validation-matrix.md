@@ -2014,7 +2014,7 @@ Implementation branch: `feat/ukrainian-first-ux-2026-11-06`. Do not mark the imp
 | PyThaiNLP newmm tokenizer | DONE_VERIFIED | #42181862972: 16 custom FastThaiG2P token-array cases passed; 18 default-wordlist cases also passed inside normalizer parity. |
 | TLTK OOV fallback | BLOCKED / PARTIAL | Provenance script verifies all six assets (five byte-identical; pickle is exact BZip2 decompression of TLTK .pklz). Rights scope still ambiguous (BSD package metadata/LICENSE.txt vs LGPL root LICENSE and stale GPLv3 PKG-INFO); algorithm and parity not yet ported. |
 | Native front-half pipeline parity | DONE_VERIFIED | #42181862972: 16 dictionary-only CPython pipeline cases matched normalized text, tokens and raw IPA. Full typed/result JSON parity including OOV remains TODO. |
-| Native Worker smoke | DONE_VERIFIED | #42183434605: Chromium native Worker matched CPython raw IPA with same-origin JS/data only; no Python/Pyodide/wheels/remote requests on latest PR head. | 
+| Native Worker smoke | DONE_VERIFIED | #42184407769: Chromium native Worker matched all 16 CPython front-half cases and fail-closed OOV; same-origin JS/data only, no Python/Pyodide/wheels/WASM/remote requests. | 
 | Cold/warm/offline and mobile performance | TODO | Isolated Worker smoke passes; still measure transfer size, cold/warm latency, cache reuse, offline reload, memory and mobile devices. |
 | Public UI runtime selector and cutover | DEFERRED | Only after TLTK rights, OOV parity, full result parity, cold/warm/offline, CSP and performance gates pass. |
 | Pyodide removal | DEFERRED | Remove only after production cutover is verified and rollback path is retained. |
