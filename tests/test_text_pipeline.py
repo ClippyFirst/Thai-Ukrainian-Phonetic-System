@@ -68,8 +68,8 @@ class TextPipelineTests(unittest.TestCase):
         self.assertEqual([s["input"] for s in token["syllables"]], ["ยู", "เครน"])
         self.assertEqual([s["phonemic_ipa"] for s in token["syllables"]], ["juː", "kʰreːn"])
         self.assertEqual([s["tone"]["tone"] for s in token["syllables"]], ["mid", "mid"])
-        self.assertEqual([s["ukrainian_transliteration"] for s in token["syllables"]], ["йу", "к'рен"])
-        self.assertEqual("".join(s["ukrainian_transliteration"] for s in token["syllables"]), "йук'рен")
+        self.assertEqual([s["ukrainian_transliteration"] for s in token["syllables"]], ["ю", "к'рен"])
+        self.assertEqual("".join(s["ukrainian_transliteration"] for s in token["syllables"]), "юк'рен")
 
     def test_source_attested_eastern_direction_uses_three_syllable_lexicon(self):
         # en.wiktionary revision 86398986 records ตะ-วัน-ออก and
@@ -92,8 +92,8 @@ class TextPipelineTests(unittest.TestCase):
         self.assertEqual(europe["segmentation_status"], "lexicon")
         self.assertEqual([s["phonemic_ipa"] for s in europe["syllables"]], ["ju", "roːp"])
         self.assertEqual([s["tone"]["tone"] for s in europe["syllables"]], ["high", "falling"])
-        self.assertEqual([s["ukrainian_transliteration"] for s in europe["syllables"]], ["йу", "роп"])
-        self.assertEqual("".join(s["ukrainian_transliteration"] for s in europe["syllables"]), "йуроп")
+        self.assertEqual([s["ukrainian_transliteration"] for s in europe["syllables"]], ["ю", "роп"])
+        self.assertEqual("".join(s["ukrainian_transliteration"] for s in europe["syllables"]), "юроп")
 
         phrase = "ยุโรปตะวันออก"
         self.assertEqual(segment_thai_word(phrase), (("ยุ", "โรป", "ตะ", "วัน", "ออก"), "lexicon"))
@@ -101,8 +101,8 @@ class TextPipelineTests(unittest.TestCase):
         self.assertEqual(result["segmentation_status"], "lexicon")
         self.assertEqual([s["phonemic_ipa"] for s in result["syllables"]], ["ju", "roːp", "ta", "wan", "ʔɔːk"])
         self.assertEqual([s["tone"]["tone"] for s in result["syllables"]], ["high", "falling", "low", "mid", "low"])
-        self.assertEqual([s["ukrainian_transliteration"] for s in result["syllables"]], ["йу", "роп", "та", "ван", "ок"])
-        self.assertEqual("".join(s["ukrainian_transliteration"] for s in result["syllables"]), "йуроптаванок")
+        self.assertEqual([s["ukrainian_transliteration"] for s in result["syllables"]], ["ю", "роп", "та", "ван", "ок"])
+        self.assertEqual("".join(s["ukrainian_transliteration"] for s in result["syllables"]), "юроптаванок")
 
     def test_unknown_text_is_not_falsely_segmented(self):
         for text in ("คำใหม่ที่ไม่อยู่ในพจนานุกรม", "กากล้าขายแล้วไหว้แสดง"):
