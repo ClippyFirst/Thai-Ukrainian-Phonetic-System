@@ -116,7 +116,8 @@ kbd { padding: 2px 5px; border: 1px solid var(--line); background: var(--wash); 
 .rtgs-inline-status { margin: 8px 0; color: var(--muted); font-size: .86rem; line-height: 1.6; }
 .rtgs-inline-status.error { color: #8b2635; }
 .rtgs-inline-value { margin: 12px 0 0; padding: 16px; border-left: 3px solid var(--blue); background: var(--wash); font-size: 1.12rem; line-height: 1.7; white-space: pre-wrap; overflow-wrap: anywhere; user-select: text; }
-.rtgs-inline-copy { margin-top: 10px; }\n.rtgs-inline-copy[hidden], .rtgs-inline-value[hidden] { display: none; }
+.rtgs-inline-copy { margin-top: 10px; }
+.rtgs-inline-copy[hidden], .rtgs-inline-value[hidden] { display: none; }
 .word-breakdown { margin-top: 8px; padding-top: 14px; border-top: 1px solid var(--line); }
 .word-breakdown summary { display: flex; align-items: center; min-height: 44px; color: var(--blue); font-weight: 800; cursor: pointer; }
 .word-breakdown > p { margin: 8px 0 14px; color: var(--muted); font-size: .83rem; line-height: 1.6; }
