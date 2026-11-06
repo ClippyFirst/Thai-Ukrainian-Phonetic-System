@@ -1,14 +1,15 @@
-## 2026-11-06 — Ukrainian syllable-initial /j/ rule (PR #220)
+## 2026-11-06 — Ukrainian syllable-initial /j/ rule (PR #220 merged)
 
 | Gate | Status | Evidence / acceptance |
 |---|---|---|
-| Browser IPA adapter | PARTIAL — implementation present | Boundary-aware `/ja/→я`, `/je,jɛ/→є`, `/ji/→ї`, `/jo,jɔ/→йо`, `/ju/→ю`; plain `/e,ɛ/→е`, coda `/j/→й`; `/jɯ,jɤ/` remain `йи/йе`. Web Static #42243685711 SUCCESS; full CI pending. |
-| Python IPA adapter parity | PARTIAL — implementation and unit cases present | Python adapter applies the same rule only at IPA start or after explicit `.`/space. Regression cases cover all mappings, plain e/ɛ, coda and boundaries. Exact-head CI #42243685764 pending. |
-| Public system and methodology | DONE_IMPLEMENTED / verification pending | System page and three method documents describe the same distinction. |
-| Exact-head regression/runtime parity | TODO / RUNNING | CI #42243685764 pending; Pyodide #42243685724 in progress; Web Static #42243685711 SUCCESS; Site API #42243685705 SUCCESS. |
-| Independent linguistic adjudication | BLOCKED / EVIDENCE-LIMITED | Code parity is not expert gold. Independent Thai IPA and Ukrainian-native reviews remain separate gates. |
+| Browser IPA adapter | DONE_VERIFIED | Boundary-aware `/ja/→я`, `/je,jɛ/→є`, `/ji/→ї`, `/jo,jɔ/→йо`, `/ju/→ю`; plain `/e,ɛ/→е`, coda `/j/→й`; `/jɯ,jɤ/` remain `йи/йе`. Exact-head Web Static #42244990532 SUCCESS; main push Web Static #42245944386 SUCCESS. |
+| Python IPA adapter parity | DONE_VERIFIED | Python adapter applies the same rule only at IPA start or after explicit `.`/space. Tests cover all mappings, plain e/ɛ, coda, explicit boundaries, and Thai `ยา` → /jaː/ → я. Exact-head Site API #42244990565 SUCCESS; full CI #42244990687 SUCCESS. |
+| Public system and methodology | DONE_VERIFIED | `web/system.html`, practical transcription article, methodology, and Ukrainian-vs-Russian comparison describe the same rule and distinguish **е** from **є**. Pages PR build #42244990505 SUCCESS. |
+| Exact-head regression/runtime parity | DONE_VERIFIED (PR head) | PR #220 merged as `e2cfba14815221d6f8cc05db5f1874dd43984ac9`. Exact-head CI #42244990687, Site API #42244990565, Web Static #42244990532, Pyodide compatibility #42244990520, and Pages build #42244990505 all SUCCESS. Full CI includes the complete Python suite, JS adapter/parity/UI tests, Ruff, generated-artifact checks, master artifact and wheel-install smoke. |
+| Mainline post-merge verification | PARTIAL / RUNNING | Main push Site API #42245944544 SUCCESS and Web Static #42245944386 SUCCESS. Main push CI #42245944388, Pyodide #42245944639 and Pages build/deploy/live smoke #42245944508 are running; do not mark production deployment verified until terminal success. |
+| Independent linguistic adjudication | BLOCKED / EVIDENCE-LIMITED | Code parity is not expert gold. Independent Thai IPA and Ukrainian-native reviews remain separate gates; no linguistic accuracy claim is made. |
 
-Rule contract: apply `/j/` + vowel as a Ukrainian iotated sequence only when `/j/` is syllable-initial and the boundary is explicit. Do not infer missing boundaries. Plain `/e, ɛ/` stay **е**; coda `/j/` stays **й**.
+Rule contract: apply `/j/` + vowel as a Ukrainian iotated sequence only when `/j/` is syllable-initial and the boundary is explicit. Do not infer missing boundaries. Plain `/e, ɛ/` stay **е**; `/je, jɛ/` become **є**; coda `/j/` stays **й**.
 
 ---
 
