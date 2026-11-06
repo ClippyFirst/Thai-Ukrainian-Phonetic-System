@@ -233,7 +233,7 @@ export function createTltkOovFallback(data){
    const forms=word.split("~");
    return {word, candidates:forms.map(form=>({form,phones:pron.get(form)||[]})), selected:selectPhones(forms,pron)};
   });
-  const raw=details.map(item=>item.selected).join("|");
+  const raw=details.map(item=>item.selected.join("~")).join("|");
   return {normalized,syllables,words,details,...(debug?{matches:lastMatches,syllablePaths:lastSyllablePaths}:{}),raw,ipa:phonesToIpa(raw)};
  }
  function convert(word){return inspect(word)?.ipa??null;}
