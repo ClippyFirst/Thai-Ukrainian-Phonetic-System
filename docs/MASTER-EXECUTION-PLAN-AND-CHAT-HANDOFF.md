@@ -2869,3 +2869,18 @@ This closes the data-transformation/provenance subtask, not the license-scope qu
 - Combined with the existing native front-half assets (~2.2 MB raw), the complete native runtime data is not tiny; however gzip could make the fallback payload ~5.9 MB. Before making any speed/size claim, measure actual transfer behavior and compare against gzip-compressed Pyodide JS/WASM/wheels on the same hosting path.
 - Web Static [#42185083614](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42185083614) SUCCESS on the same code head.
 - Full CI [#42185083671](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42185083671) IN_PROGRESS at the time of this note.
+
+
+## Exact-head native FastThaiG2P status — 2026-11-06
+
+- Feature branch: `feat/fastthaig2p-native-ts-port-2026-11-06`.
+- Exact code head verified by the three PR workflows: `24e4605b7921524b60dc1c5a3e3e9a66965a3206`.
+- [Web Static #42186383919](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42186383919): SUCCESS.
+- [FastThaiG2P Pyodide compatibility #42186384082](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42186384082): SUCCESS; native Chromium Worker and existing Pyodide Chromium Worker smoke both passed, and the Pages bundle built.
+- [Full CI #42186383939](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42186383939): SUCCESS; complete Python tests, JS tests, master artifact generation and validation passed.
+- Native dictionary-covered pipeline now has 16 exact full-service-JSON differential cases against Python. Native Chromium Worker checks all 16 front-half cases and fail-closed OOV; it does not yet implement TLTK fallback.
+- TLTK data transformation provenance is closed for six files (five byte-identical, one BZip2 decompression). License scope is still ambiguous; no fallback code/data is included in native browser assets.
+- No public UI cutover or Pyodide removal. Remaining blockers: rights disposition and native OOV algorithm/parity; then actual cold/warm/offline/mobile transfer/performance/memory measurements and production integration acceptance.
+- PR #214 remains open pending review/merge. Do not claim the public GitHub Pages app is already running the native engine.
+
+The canonical task ledger is `docs/fastthaig2p-javascript-port.md` and `docs/validation-matrix.md`. Linguistic accuracy remains `NOT_MEASURED`.
