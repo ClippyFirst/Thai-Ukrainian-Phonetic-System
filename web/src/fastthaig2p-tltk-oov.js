@@ -137,10 +137,11 @@ export function createTltkOovFallback(data){
  const constants=data.parser_constants;
  const stable={...constants.stable_base,...Object.fromEntries(Object.entries(constants.stable_aliases).map(([key,base])=>[key,constants.stable_base[base]]))};
  const basePron=new Map();for(const [form,phone] of data.syllable_dictionary)addPron(basePron,form,phone);
+ let lastMatches=[];
  const patterns=data.syllable_patterns.map(record=>({...record,expression:compilePattern(record)}));
  const sylStats=makeSyllableStats(data.syllable_trigrams),phoneScore=makePhoneScorer(data.phone_trigrams),dictionary=new Set(data.word_dictionary);
  function parseSyllables(input, pron){
-  const chars=Array.from(input),n=chars.length,chart=new Map();
+  const chars=Array.from(input),n=chars.length,chart=new Map();lastMatches=[];
   const set=(i,j,forms)=>{if(!chart.has(i))chart.set(i,new Map());chart.get(i).set(j,forms);};
   for(const {pronunciation,expression} of patterns)for(let i=0;i<n;i++){
    const match=expression.exec(chars.slice(i).join(""));if(!match)continue;
@@ -155,11 +156,15 @@ export function createTltkOovFallback(data){
    let phone;
    try { phone=replaceSound(pronunciation,code,charmatch,stable); }
    catch(error) { if(error?.code==="native_oov_stable_missing")continue; throw error; }
-   if(allowedPronunciation(code,charmatch,form,phone,constants.allowed_clusters)){
-    const [assigned,tone]=toneAssign(form,phone,code,charmatch);phone=assigned;
+   const allowed=allowedPronunciation(code,charmatch,form,phone,constants.allowed_clusters);
+   const beforeTone=phone;
+   let assignedTone=null;
+   if(allowed){
+    const [assigned,tone]=toneAssign(form,phone,code,charmatch);phone=assigned;assignedTone=tone;
     if(tone<"5")phone=phone.replaceAll("8",tone);
     [,phone]=transformSyllable(form,phone);
    }
+   lastMatches.push({form,pronunciation,code,charmatch,allowed,beforeTone,assignedTone,phone});
    addPron(pron,form,phone);
    if(/^ทร/u.test(form)&&/^thr/u.test(phone))addPron(pron,form,replaceAllLiteral(phone,"thr","s"));
   }
@@ -208,7 +213,7 @@ export function createTltkOovFallback(data){
    return {word, candidates:forms.map(form=>({form,phones:pron.get(form)||[]})), selected:selectPhones(forms,pron)};
   });
   const raw=details.map(item=>item.selected).join("|");
-  return {normalized,syllables,words,details,raw,ipa:phonesToIpa(raw)};
+  return {normalized,syllables,words,details,matches:lastMatches,raw,ipa:phonesToIpa(raw)};
  }
  function convert(word){return inspect(word)?.ipa??null;}
  return Object.freeze({sourceCommit:data.fastthaig2p_commit,tltkCommit:data.tltk_source_commit,packageVersion:data.tltk_package_version,convert,inspect});
