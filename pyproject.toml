@@ -12,6 +12,7 @@ license = {text = "MIT"}
 [project.optional-dependencies]
 excel = ["openpyxl>=3.1.5"]
 dev = ["ruff==0.17.3", "pytest==9.2.0"]
+geography = ["pythainlp==5.4.0"]
 fastthaig2p = [
     "fastapi==0.117.1",
     "pythainlp==5.4.0",
