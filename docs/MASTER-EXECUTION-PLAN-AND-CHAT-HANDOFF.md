@@ -4,7 +4,7 @@
 - PR [#214](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/214) was squash-merged into `main` as `29b63b8f58db1f6d7ff068d131df0b0759895115`; PR state is CLOSED/MERGED.
 - Final PR head: `0d4503ed55ff726807917e2cfbf14c0ad30eb624`; it was 138 commits ahead and 0 behind `main` immediately before merge. The squash merge preserves the reviewed final tree without importing the branch's entire commit history.
 - Exact-head verification on that final PR head:
-  - Full CI [42199395072](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42199395072) — SUCCESS; `test`, `wheel-install-smoke`, and `master-artifact` all passed.
+  - Full CI [42199395072](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42199395072) — SUCCESS; `test`, `wheel-install-smoke`, and `master-artifact` all passed. The Python suite reported 399 passed, 1 skipped, and 1,211 subtests passed; Ruff passed. The sole skip was `tests/test_fastthaig2p_site_api.py` because FastAPI is not installed in generic CI; the dedicated Site API workflow #42199395069 passed.
   - Web Static [42199395225](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42199395225) — SUCCESS.
   - FastThaiG2P Site API [42199395069](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42199395069) — SUCCESS.
   - Pyodide compatibility [42199395284](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42199395284) — SUCCESS, including real Chromium worker checks.
