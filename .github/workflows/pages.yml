@@ -81,24 +81,6 @@ jobs:
           git clone https://github.com/attapol/tltk.git build/TLTK
           git -C build/TLTK checkout 0cef4bcfbdd675f589783dd4134b87b9bb9fbb93
           python scripts/verify_tltk_fallback_provenance.py --fastthaig2p build/FastThaiG2P --tltk build/TLTK --report build/tltk-fallback-provenance.json
-          python scripts/extract_tltk_oov_data.py --fallback-dir build/FastThaiG2P/data/fallback --output-dir web/vendor/native-oov
-          python -m unittest discover -s tests -p test_extract_tltk_oov_data.py -v
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          manifest = json.loads(Path("web/vendor/native-oov/manifest.json").read_text())
-          payload = Path("web/vendor/native-oov/tltk-oov-data.json.gz")
-          assert manifest["schema_version"] == 1
-          assert manifest["license"] == "BSD-3-Clause"
-          assert manifest["tltk_package_version"] == "1.9.1"
-          assert payload.is_file()
-          assert payload.stat().st_size == manifest["compressed_size_bytes"]
-          assert manifest["record_counts"]["syllable_patterns"] > 0
-          assert manifest["record_counts"]["syllable_dictionary"] > 0
-          assert manifest["record_counts"]["phone_trigrams"] > 0
-          assert manifest["record_counts"]["syllable_trigrams"] > 0
-          assert manifest["record_counts"]["word_dictionary"] > 0
-          PY
           python scripts/prepare_fastthaig2p_browser_source.py --source build/FastThaiG2P --report build/fastthaig2p-data-provenance.json
           python scripts/extract_fastthaig2p_normalizer_data.py --source build/FastThaiG2P
           python -m unittest discover -s tests -p test_fastthaig2p_browser_data.py -v
@@ -134,6 +116,24 @@ jobs:
           for asset in manifest["assets"]:
               path = Path("web/vendor") / asset["path"]
               assert path.is_file() and path.stat().st_size == asset["size_bytes"]
+          PY
+          python scripts/extract_tltk_oov_data.py --fallback-dir build/FastThaiG2P/data/fallback --output-dir web/vendor/native-oov
+          python -m unittest discover -s tests -p test_extract_tltk_oov_data.py -v
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          manifest = json.loads(Path("web/vendor/native-oov/manifest.json").read_text())
+          payload = Path("web/vendor/native-oov/tltk-oov-data.json.gz")
+          assert manifest["schema_version"] == 1
+          assert manifest["license"] == "BSD-3-Clause"
+          assert manifest["tltk_package_version"] == "1.9.1"
+          assert payload.is_file()
+          assert payload.stat().st_size == manifest["compressed_size_bytes"]
+          assert manifest["record_counts"]["syllable_patterns"] > 0
+          assert manifest["record_counts"]["syllable_dictionary"] > 0
+          assert manifest["record_counts"]["phone_trigrams"] > 0
+          assert manifest["record_counts"]["syllable_trigrams"] > 0
+          assert manifest["record_counts"]["word_dictionary"] > 0
           PY
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v6
