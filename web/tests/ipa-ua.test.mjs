@@ -56,6 +56,30 @@ for (const [ipa, expected] of [
 assert.equal(adaptIpaToUkrainian("˥˩").status, "withheld");
 assert.equal(adaptIpaToUkrainian("[kʰaː☃]").status, "withheld");
 
+// Syllable-initial /j/ uses Ukrainian iotated vowels; plain /e, ɛ/ stay е.
+for (const [ipa, expected, rule] of [
+  ["jaː", "я", "UA-JA"],
+  ["jeː", "є", "UA-JE"],
+  ["jɛː", "є", "UA-JE-OPEN"],
+  ["jiː", "ї", "UA-JI"],
+  ["joː", "йо", "UA-JO"],
+  ["jɔː", "йо", "UA-JO-OPEN"],
+  ["juː", "ю", "UA-JU"],
+  ["eː", "е", "UA-E"],
+  ["ɛː", "е", "UA-EPSILON"],
+  ["jɯː", "йи", "UA-J"],
+  ["jɤː", "йе", "UA-J"],
+  [".jaː", ".я", "UA-JA"],
+  ["a.jaː", "а.я", "UA-JA"],
+  ["ajaː", "айа", "UA-J"],
+  ["aj", "ай", "UA-J"]
+]) {
+  const adapted = adaptIpaToUkrainian(ipa);
+  assert.equal(adapted.status, "adapted", ipa);
+  assert.equal(adapted.output, expected, ipa);
+  assert(adapted.rulesApplied.includes(rule), ipa);
+}
+
 // End-to-end boundary proof: the browser's final Ukrainian result is the
 // adaptation of the actual IPA intermediate, and a changed IPA changes output.
 const endToEnd = analyze("กา");
