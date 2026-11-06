@@ -1,3 +1,17 @@
+## Post-merge audit — native-first FastThaiG2P integrated (2026-11-06)
+
+PR #214 is merged into the default branch as `29b63b8f58db1f6d7ff068d131df0b0759895115`. The final PR head `0d4503ed55ff726807917e2cfbf14c0ad30eb624` passed all four required exact-head workflows: Full CI #42199395072, Web Static #42199395225, Site API #42199395069 and Pyodide compatibility #42199395284. The UI regression-fixture correction was test-only and passed on the final head.
+
+The browser implementation is now hybrid native-first, not a full Pyodide replacement: dictionary-covered tokens use the native JavaScript Worker; only a native dictionary miss loads the existing FastThaiG2P Pyodide Worker. The IPA→Ukrainian adapter remains the single target adaptation boundary. No linguistic rules, gold labels or accuracy claims were changed.
+
+The PR merge does not establish a successful post-merge main CI run or a deployed Pages cutover. The available GitHub connector returned no PR-filtered workflow runs and no combined status contexts for the merge commit; therefore main push CI and Pages deployment/live smoke are recorded as NOT VERIFIED, not passed.
+
+Branch review confirmed PR #210–#214 workstreams are integrated in main. The audit branch remains 503 commits ahead/8 behind. `data/corpus_sources.csv`, `scripts/build_ccost_review_worklist.py`, and `docs/ccost-label-review-2026-11-05.md` have identical blob SHAs on main and the audit branch, while the audit branch's `web/src/app.js` is older than main. Do not merge its history wholesale; retain it as a historical source and port only a concrete missing change if one is found.
+
+Remaining blockers are native TLTK OOV parity and rights disposition, measured desktop/mobile performance and memory, human accessibility/visual acceptance, and independent Thai/Ukrainian linguistic review. Independent IPA gold remains 0; accuracy remains NOT_MEASURED. Overall status remains ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY.
+
+---
+
 ## Current audit checkpoint — repository organization and branch reconciliation (2026-11-06)
 
 The repository already has a coherent documentation and engineering governance system: root agent instructions, canonical docs navigation, architecture and product contracts, a script ownership inventory, validation matrix, final audit, chronological handoff, machine-readable audit, schemas, evidence registries, generated-artifact ownership, and Python/browser test suites. The appropriate action is to keep these sources authoritative and reconcile their current status—not to create a parallel documentation hierarchy.
