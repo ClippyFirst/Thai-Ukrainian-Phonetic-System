@@ -35,10 +35,15 @@ def main() -> None:
     with fallback_dictionary_path.open("rb") as source:
         fallback_words = pickle.load(source)
     candidates = sorted(
-        (word for word in fallback_words if isinstance(word, str)),
+        (
+            word for word in fallback_words
+            if isinstance(word, str)
+            and len(word) >= 3
+            and all("\\u0e00" <= char <= "\\u0e7f" for char in word)
+        ),
         key=lambda word: (len(word), word),
     )
-    for word in candidates:
+    for word in candidates[:5000]:
         word = word.strip()
         if not word or word in engine._engine._ipa:
             continue
