@@ -13,7 +13,7 @@ A language port does not automatically transfer copyright in the upstream implem
 
 ## Current baseline
 
-- Repository production baseline: Pyodide 0.29.5 in a same-origin module Web Worker, with pinned wheels and integrity manifest.
+- Repository browser path: native-first JavaScript Worker for dictionary-covered tokens; the existing Pyodide 0.29.5 Worker is loaded lazily only after a native dictionary miss. Pyodide remains the full OOV reference/fallback path.
 - Upstream pin: `awslabs/FastThaiG2P@4e82a291b4cf2876326744c6580121e9986ad354`.
 - The current filtered dictionary contains 13,144 Wiktionary-labelled entries; generated/manual/unknown records are excluded.
 - The Python reference adapter is `src/thai_ukrainian/fastthaig2p_adapter.py`; the shared response contract is `src/thai_ukrainian/fastthaig2p_service.py`.
@@ -39,24 +39,24 @@ Do not conflate this work with the separate ClippyFirst Thai orthographic resear
 
 | Component | Status | Acceptance |
 |---|---|---|
-| JavaScript module/result adapter | PARTIAL | First dictionary adapter exists in `web/src/fastthaig2p-native.js`; unit tests cover parsing, tone extraction, IPA→Ukrainian adaptation and fail-closed dictionary misses. It is not wired into the public UI. |
+| JavaScript module/result adapter | PARTIAL | `web/src/fastthaig2p-native.js` composes the dictionary-covered service path and is now called by the public UI first. Full native OOV parity is not implemented; browser acceptance for native-first/lazy Pyodide fallback is pending on the current branch head. |
 | Source-filtered dictionary + normalizer + default wordlist assets | DONE_VERIFIED | Build emits `web/vendor/native/fastthaig2p-ipa.json` from the exact filtered wheel; provenance, entry count, size and SHA-256 are checked. |
 | Text normalization | DONE_VERIFIED | #42181862972: 18 pinned CPython cases passed with the extracted PyThaiNLP default wordlist, including maiyamok. |
 | PyThaiNLP newmm tokenizer | DONE_VERIFIED | #42181862972: 16 FastThaiG2P custom-dictionary cases and 18 PyThaiNLP default-wordlist cases passed token-array parity. |
 | Dictionary IPA lookup | PARTIAL | Native pipeline uses the 13,144-entry Wiktionary-only map and matches 16 dictionary-only CPython cases; OOV fallback is not yet available. |
 | TLTK OOV fallback | BLOCKED / PARTIAL | All six pinned asset transformations are verified. Payload is 19,883,873 bytes raw / 5,911,457 bytes deterministic gzip estimate (70.27% reduction). Rights scope still needs explicit disposition (BSD-3-Clause package metadata/LICENSE.txt vs repository LGPL-3.0 and stale GPLv3 PKG-INFO); native algorithm/data port and parity remain TODO. No fallback data is shipped publicly. |
-| Typed IPA result contract | PARTIAL | Tone contours and segmental IPA are parsed; exact parity for uncertainty, unsupported symbols, word/syllable alignment and metadata remains TODO. |
+| Typed IPA result contract | DONE_VERIFIED (dictionary-covered inputs) | 16 complete service JSON responses match pinned CPython, including tone/length, uncertainty, unsupported symbols, word/syllable alignment, provenance, warnings and IPA→Ukrainian adaptation. OOV parity remains outside this result. |
 | IPA → Ukrainian adapter | REUSED | Existing `web/src/ipa-ua.js` remains the sole target adaptation boundary; it must not be duplicated. |
 | Native pipeline composition | DONE_VERIFIED (dictionary-covered inputs) | `createFastThaiG2PNativePipeline` composes normalization, default/custom newmm, dictionary lookup and existing IPA→Ukrainian adapter; 16 complete service JSON responses match pinned CPython exactly. OOV fallback remains unavailable. |
 | Native Worker smoke | DONE_VERIFIED (front-half) | Exact-head Pyodide compatibility #42186384082: real Chromium module Worker matched all 16 pinned CPython normalized-input/token/raw-IPA cases and returned the Ukrainian fail-closed OOV response; request audit confirmed no Pyodide/Python/wheels/WASM/remote requests. |
 | Python/JS differential suite | DONE_VERIFIED (dictionary-covered inputs) | Exact-head CI #42186384082 passes 18 normalizer cases, 16 custom tokenizer cases, and 16 complete service JSON parity cases including typed IPA metadata, Ukrainian adaptation, tone/length, rules, provenance and warnings. OOV algorithm parity remains TODO. |
-| Browser cold/warm/offline tests | PARTIAL | Isolated Chromium native Worker smoke proves same-origin JS/data-only execution and no Pyodide/Python/wheel/remote requests. Cold-vs-warm timing, memory, cache reuse and offline reload remain TODO. |
+| Browser cold/warm/offline tests | PARTIAL | Isolated Chromium native Worker smoke proves same-origin JS/data-only execution and no Pyodide/Python/wheel/remote requests. New public-UI acceptance checks no Python downloads for dictionary hits and lazy Pyodide only on OOV; current run is pending. Cold-vs-warm timing, memory, cache reuse and offline reload remain TODO. |
 | Footprint/performance | TODO | Measure transferred bytes, cold-start, warm latency and memory on desktop and mobile; compare to the 20.5 MB baseline. |
 | Documentation and attribution | PARTIAL | This decision/ledger records the intended original port and required upstream/data notices. Update public product claims only after production cutover. |
 
 ## Implemented native front-half
 
-The browser-native front-half is split into inspectable modules:
+The browser-native front-half is split into inspectable modules and is now the first runtime path in the public UI:
 - `web/src/fastthaig2p-normalizer.js` ports the pinned normalization order and numeric/email/symbol/abbreviation rules. Its constant maps are AST-extracted from the pinned FastThaiG2P Python source at build time.
 - `web/src/fastthaig2p-tokenizer.js` ports PyThaiNLP 5.4.0 newmm, including TCC boundaries, trie prefix matching, graph traversal, unknown chunks and formatted-number rejoining.
 - Two tokenizer instances use the exact PyThaiNLP default wordlist (for mai yamok) and the FastThaiG2P custom filtered dictionary (for G2P segmentation).
@@ -70,7 +70,7 @@ Differential evidence on the exact tested code head:
 - 16 dictionary-only end-to-end front-half cases matched CPython raw IPA.
 - The same 16 cases also passed inside the real Chromium module Worker, including manifest/SHA-256 data loading; an OOV probe returned the expected Ukrainian fail-closed error without fetching Python/Pyodide/wheels/remote assets.
 
-This is not a complete FastThaiG2P port: the TLTK-derived OOV fallback and full typed IPA/result JSON parity are still missing. The fallback data is ~19.9 MB raw (5.91 MB gzip estimate), so it is not negligible; measure actual Pages transfer and compare with the Pyodide baseline before cutover. An isolated native module Worker is implemented and passes Chromium smoke, but is not yet integrated into the public application, which continues to use the verified Pyodide worker.
+This is not a complete FastThaiG2P port: the TLTK-derived OOV fallback still runs through the existing Pyodide Worker after a native dictionary miss. Dictionary-covered service JSON parity is verified; the full native OOV algorithm is not ported. The fallback data is ~19.9 MB raw (5.91 MB gzip estimate), so it is not negligible; measure actual Pages transfer and compare with the Pyodide baseline before considering a native OOV port. The public application now uses the native module Worker first and lazily creates the Pyodide Worker only when the native dictionary does not cover the input.
 
 ## Licensing and data boundary
 
@@ -110,3 +110,13 @@ Exact-head PR validation on 24e4605b7921524b60dc1c5a3e3e9a66965a3206 now passes 
 - The pipeline differential suite compares the complete service JSON for 16 dictionary-covered inputs, not just raw IPA. It does not establish OOV fallback parity.
 - TLTK's six data-file transformations are reproducibly verified (five byte-identical, one exact BZip2 decompression). License scope remains ambiguous; no TLTK fallback code/data is bundled into the native browser assets.
 - Native browser port remains PARTIAL overall: no public UI cutover, no TLTK OOV port, and no measured cold/warm/offline/mobile performance or memory benchmark.
+
+
+## Native-first public UI integration — 2026-11-06
+
+- `web/src/app.js` now initializes the native module Worker first. Dictionary-covered requests complete without creating the Pyodide Worker. Only the specific `native_dictionary_miss` response triggers the existing full FastThaiG2P Pyodide Worker; other native integrity/runtime errors remain visible rather than silently loading a 20 MB runtime.
+- `web/index.html` discloses this behavior to users. `web/system.html` describes the hybrid pipeline and does not claim Pyodide has been removed.
+- `scripts/fastthaig2p_native_oov_reference.py` searches the pinned TLTK fallback dictionary for a reproducible token that is not in the filtered IPA map and emits the Python service JSON reference.
+- `web/tests/fastthaig2p-browser.test.mjs` now asserts that two dictionary-covered examples make no `/vendor/pyodide/` or `/vendor/wheels/` requests, then verifies a pinned OOV input triggers the same FastThaiG2P Pyodide fallback and matches its IPA.
+- Current implementation head before this documentation reconciliation: `0e6479450d6205f0a2b65aa80fb1e3d6a13937b0`. The new native-first browser acceptance, full CI and Web Static runs are pending; do not mark this integration DONE_VERIFIED until those runs pass.
+- This is a hybrid browser-native-first deployment, not a full Pyodide replacement. No Python modules are loaded for dictionary-covered inputs; JS modules and the ~2.2 MB native data bundle are still fetched from same-origin GitHub Pages on first use. An OOV input still loads Pyodide and its wheels.
