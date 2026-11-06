@@ -196,17 +196,22 @@ export function createTltkOovFallback(data){
    return chosen;
   });
  }
- function convert(word){
+ function inspect(word){
   if(typeof word!=="string"||!word)return null;
   if(/^[^ก-์]+/u.test(word))return null;
   const pron=new Map([...basePron.entries()].map(([form,phones])=>[form,[...phones]]));
   const normalized=word.replaceAll("เเ","แ").replaceAll("ํา","ำ").replaceAll("ฤา","ฤๅ").replaceAll("ฦา","ฦๅ");
   const syllables=parseSyllables(normalized,pron);if(!syllables)return null;
   const words=parseWords(syllables);if(!words)return null;
-  const raw=words.map(w=>selectPhones(w.split("~"),pron).join("~")).join("|");
-  return phonesToIpa(raw);
+  const details=words.map(word=>{
+   const forms=word.split("~");
+   return {word, candidates:forms.map(form=>({form,phones:pron.get(form)||[]})), selected:selectPhones(forms,pron)};
+  });
+  const raw=details.map(item=>item.selected).join("|");
+  return {normalized,syllables,words,details,raw,ipa:phonesToIpa(raw)};
  }
- return Object.freeze({sourceCommit:data.fastthaig2p_commit,tltkCommit:data.tltk_source_commit,packageVersion:data.tltk_package_version,convert});
+ function convert(word){return inspect(word)?.ipa??null;}
+ return Object.freeze({sourceCommit:data.fastthaig2p_commit,tltkCommit:data.tltk_source_commit,packageVersion:data.tltk_package_version,convert,inspect});
 }
 
 export async function loadTltkOovData({
