@@ -15,6 +15,8 @@ def test_ukrainian_output_is_adapted_from_typed_ipa_result():
         ("ขอ", "к\u0027о"),
         ("งอ", "нго"),
         ("สอง", "сонг"),
+        ("เกา", "кав"),
+        ("เศร้า", "сав"),
     ]:
         analysis = analyze_syllable(text)
         result = PhoneticResult.from_syllable_analysis(analysis)

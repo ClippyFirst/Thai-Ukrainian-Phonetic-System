@@ -61,6 +61,12 @@ assert.equal(adaptIpaToUkrainian("[kʰaː☃]").status, "withheld");
 const endToEnd = analyze("กา");
 assert.equal(endToEnd.status, "analyzed");
 assert.equal(endToEnd.ukrainian, adaptIpaToUkrainian(endToEnd.phonemicIpa).output);
+for (const [thai, expected] of [["เกา", "кав"], ["เศร้า", "сав"]]) {
+  const rime = analyze(thai);
+  assert.equal(rime.status, "analyzed", thai);
+  assert.equal(rime.ukrainian, expected, thai);
+  assert.equal(rime.ukrainian, adaptIpaToUkrainian(rime.phonemicIpa).output, thai);
+}
 assert.notEqual(adaptIpaToUkrainian("ma").output, endToEnd.ukrainian);
 assert.equal(adaptIpaToUkrainian("ma").output, "ма");
 console.log("IPA → Ukrainian adaptation: canonical, feature-audit, inventory, and rejection tests passed");
