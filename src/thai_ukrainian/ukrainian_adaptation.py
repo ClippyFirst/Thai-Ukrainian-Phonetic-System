@@ -110,7 +110,7 @@ def adapt_phonetic_result(result: PhoneticResult) -> dict:
             tokens.append((ipa[i], ipa[i], None))
             i += 1
             continue
-        if ipa[i] in {"ː", "ˑ", "\\u032f", "\\u0329", "\\u031a"}:
+        if ipa[i] in {"ː", "ˑ", "\u032f", "\u0329", "\u031a"}:
             if ipa[i] in {"ː", "ˑ"}:
                 neutralized.append("vowel length")
             else:
