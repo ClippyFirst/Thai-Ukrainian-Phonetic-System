@@ -8,6 +8,7 @@ then gzip-compresses the result for lazy same-origin delivery on an OOV request.
 from __future__ import annotations
 
 import argparse
+import ast
 import gzip
 import hashlib
 import json
@@ -130,14 +131,55 @@ def parse_word_dictionary(path: Path) -> list[str]:
     return normalized
 
 
-def build(fallback_dir: Path) -> tuple[dict[str, Any], dict[str, Any]]:
+def parse_parser_constants(path: Path) -> dict[str, Any]:
+    """Extract only literal pronunciation tables from the pinned BSD parser source."""
+    module = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+    function = next(
+        (node for node in module.body if isinstance(node, ast.FunctionDef) and node.name == "read_sylpattern"),
+        None,
+    )
+    if function is None:
+        raise ValueError(f"{path}: read_sylpattern() was not found")
+    stable_base: dict[str, dict[str, str]] = {}
+    allowed_clusters: dict[str, str] = {}
+    english_abbreviations: list[str] | None = None
+    for node in ast.walk(function):
+        if not isinstance(node, ast.Assign):
+            continue
+        value = node.value
+        for target in node.targets:
+            if isinstance(target, ast.Subscript) and isinstance(target.value, ast.Name):
+                key = target.slice.value if isinstance(target.slice, ast.Constant) else None
+                if target.value.id == "stable" and key in {"X", "Y"}:
+                    stable_base[key] = ast.literal_eval(value)
+                elif target.value.id == "AK" and isinstance(key, str):
+                    allowed_clusters[key] = ast.literal_eval(value)
+            elif isinstance(target, ast.Name) and target.id == "EngAbbr":
+                english_abbreviations = ast.literal_eval(value)
+    if set(stable_base) != {"X", "Y"} or not allowed_clusters or not english_abbreviations:
+        raise ValueError(f"{path}: required stable/AK/EngAbbr literal tables were not extracted")
+    return {
+        "stable_base": stable_base,
+        "stable_aliases": {
+            "A": "X", "K": "X", "C": "X", "R": "X", "G": "X", "E": "X",
+            "D": "Y", "Z": "Y", "H": "Y", "F": "Y",
+        },
+        "allowed_clusters": allowed_clusters,
+        "english_abbreviations": english_abbreviations,
+    }
+
+
+def build(fallback_dir: Path, parser_source: Path) -> tuple[dict[str, Any], dict[str, Any]]:
     source_files = {name: fallback_dir / name for name in ASSET_NAMES}
     missing = [str(path) for path in source_files.values() if not path.is_file()]
     if missing:
         raise FileNotFoundError("Missing pinned TLTK fallback assets: " + ", ".join(missing))
 
+    parser_constants = parse_parser_constants(parser_source)
     data = {
         "schema_version": 1,
+        "parser_source_sha256": sha256(parser_source.read_bytes()),
+        "parser_constants": parser_constants,
         "fastthaig2p_commit": FASTTHAIG2P_COMMIT,
         "tltk_source_commit": TLTK_COMMIT,
         "tltk_package_version": "1.9.1",
@@ -171,6 +213,8 @@ def build(fallback_dir: Path) -> tuple[dict[str, Any], dict[str, Any]]:
             "phone_trigrams": len(data["phone_trigrams"]),
             "syllable_trigrams": len(data["syllable_trigrams"]),
             "word_dictionary": len(data["word_dictionary"]),
+            "allowed_cluster_initials": len(parser_constants["allowed_clusters"]),
+            "english_abbreviations": len(parser_constants["english_abbreviations"]),
         },
         "note": (
             "Build-time pickle decoding only. Browser runtime receives JSON, "
@@ -183,10 +227,11 @@ def build(fallback_dir: Path) -> tuple[dict[str, Any], dict[str, Any]]:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--fallback-dir", type=Path, required=True)
+    parser.add_argument("--parser-source", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
     args = parser.parse_args()
 
-    data, report = build(args.fallback_dir)
+    data, report = build(args.fallback_dir, args.parser_source)
     args.output_dir.mkdir(parents=True, exist_ok=True)
     payload = (json.dumps(data, ensure_ascii=False, separators=(",", ":")) + "\n").encode("utf-8")
     compressed = gzip.compress(payload, compresslevel=9, mtime=0)
