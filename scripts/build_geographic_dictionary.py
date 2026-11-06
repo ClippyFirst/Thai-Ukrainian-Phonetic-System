@@ -10,7 +10,7 @@ import argparse
 import csv
 import sys
 from pathlib import Path
-from typing import Callable
+from typing import Any, Callable
 
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT / "src") not in sys.path:
@@ -33,12 +33,21 @@ def _load_pythainlp() -> tuple[Callable[..., str], Callable[..., list[str]]]:
     try:
         from pythainlp.tokenize import word_tokenize
         from pythainlp.transliterate import romanize
+        from pythainlp.util.trie import Trie
+        from thai_ukrainian.segmentation import load_word_dictionary
     except ImportError as exc:
         raise RuntimeError(
             "Geographic RTGS output requires PyThaiNLP 5.4.0. "
             "Install with: pip install -e '.[geography]'"
         ) from exc
-    return romanize, word_tokenize
+    # Constrain newmm to the repository's source-pinned CC0 dictionary instead
+    # of silently using a separately downloaded PyThaiNLP default corpus.
+    dictionary = Trie(load_word_dictionary())
+
+    def tokenize_pinned(text: str, **kwargs: Any) -> list[str]:
+        return word_tokenize(text, custom_dict=dictionary, **kwargs)
+
+    return romanize, tokenize_pinned
 
 
 def _contains_thai(value: str) -> bool:
