@@ -181,8 +181,10 @@ def main() -> None:
     with zipfile.ZipFile(fastthaig2p_wheel) as wheel_archive:
         native_ipa = wheel_archive.read("fastthaig2p/data/ipa.json")
         native_provenance = wheel_archive.read("fastthaig2p/data/browser-data-provenance.json")
+        native_normalizer = wheel_archive.read("fastthaig2p/data/normalizer-data.json")
     (native_out / "fastthaig2p-ipa.json").write_bytes(native_ipa)
     (native_out / "browser-data-provenance.json").write_bytes(native_provenance)
+    (native_out / "fastthaig2p-normalizer.json").write_bytes(native_normalizer)
     native_records = [{
         "path": path.relative_to(args.output).as_posix(),
         "sha256": sha256(path),
@@ -192,9 +194,10 @@ def main() -> None:
         "schema_version": 1,
         "engine": "FastThaiG2P native JavaScript/TypeScript port",
         "upstream_commit": "4e82a291b4cf2876326744c6580121e9986ad354",
-        "stage": "dictionary-data-only; not a complete runtime",
+        "stage": "dictionary-and-normalizer-data-only; not a complete runtime",
         "dictionary_entries": len(json.loads(native_ipa)),
-        "license": "CC-BY-SA-4.0",
+        "dictionary_license": "CC-BY-SA-4.0",
+        "normalizer_license": "Apache-2.0",
         "attribution": ["Wiktionary contributors", "Kaikki.org / Wiktextract"],
         "assets": native_records,
     }

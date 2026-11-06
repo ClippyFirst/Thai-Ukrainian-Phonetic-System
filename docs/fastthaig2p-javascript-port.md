@@ -41,9 +41,10 @@ Do not conflate this work with the separate ClippyFirst Thai orthographic resear
 |---|---|---|
 | JavaScript module/result adapter | PARTIAL | First dictionary adapter exists in `web/src/fastthaig2p-native.js`; unit tests cover parsing, tone extraction, IPA→Ukrainian adaptation and fail-closed dictionary misses. It is not wired into the public UI. |
 | Source-filtered dictionary build asset | IMPLEMENTED_PENDING_EXACT_HEAD_CI | Build emits `web/vendor/native/fastthaig2p-ipa.json` from the exact filtered wheel; provenance, entry count, size and SHA-256 are checked. |
-| Text normalization | TODO | Port pinned `normalizer.py` and PyThaiNLP maiyamok behavior; exact fixtures for numbers, Thai numerals, emails, units, dates/times, abbreviations, Latin residue and punctuation. |
+| Text normalization | IMPLEMENTED_PENDING_EXACT_PARITY | JavaScript implementation and AST-extracted upstream data are added; the pinned CPython differential suite must pass. |
+| Text normalization acceptance | TODO | Port pinned `normalizer.py` and PyThaiNLP maiyamok behavior; exact fixtures for numbers, Thai numerals, emails, units, dates/times, abbreviations, Latin residue and punctuation. |
 | PyThaiNLP newmm tokenizer | TODO | Port the pinned tokenizer algorithm and exact effective default/custom dictionary inputs; token-array parity on a versioned corpus. |
-| Dictionary IPA lookup | PARTIAL | Adapter supports an injected map; generated data asset and provenance gate remain TODO. |
+| Dictionary IPA lookup | PARTIAL | Adapter supports an injected map; the exact filtered JSON asset is generated and integrity-manifested. Production tokenizer/lookup integration remains TODO. |
 | TLTK OOV fallback | BLOCKED / PARTIAL | The current fallback depends on `_th2ipa.py`, six TLTK-derived data assets, trigram statistics and a pickled syllable-variant structure. The source repository contains conflicting LGPL-3.0/BSD-3-Clause evidence for the data package. Acceptance requires an explicit asset-level licensing disposition and deterministic JSON serialization of the pickle before porting. |
 | Typed IPA result contract | PARTIAL | Tone contours and segmental IPA are parsed; exact parity for uncertainty, unsupported symbols, word/syllable alignment and metadata remains TODO. |
 | IPA → Ukrainian adapter | REUSED | Existing `web/src/ipa-ua.js` remains the sole target adaptation boundary; it must not be duplicated. |
@@ -61,6 +62,7 @@ Do not conflate this work with the separate ClippyFirst Thai orthographic resear
 - delegates segmental IPA adaptation to the existing `ipa-ua.js`;
 - refuses missing dictionary entries instead of guessing or invoking an unrelated engine;
 - labels itself `dictionary-adapter-only`.
+- `web/src/fastthaig2p-normalizer.js` ports the upstream normalization sequence; it consumes data maps extracted from the pinned Python source and receives the word tokenizer for maiyamok expansion.
 
 This is a development seam, not a complete FastThaiG2P port. It intentionally does not normalize text, segment unspaced Thai, or provide OOV fallback. The public application continues to use the verified Pyodide worker.
 

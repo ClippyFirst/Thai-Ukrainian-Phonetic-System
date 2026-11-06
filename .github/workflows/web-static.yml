@@ -32,6 +32,7 @@ jobs:
         run: |
           node --check web/src/app.js
           node --check web/src/fastthaig2p-native.js
+          node --check web/src/fastthaig2p-normalizer.js
           node --check web/src/messages.uk.js
           node --check web/src/fastthaig2p-worker.js
           node --check web/src/engine.js
