@@ -2829,3 +2829,15 @@ Canonical documents: `docs/beta-release-scope.md`, `docs/fastthaig2p-pyodide-por
 - Latest Web Static #42182453339 SUCCESS on workflow-only head `e4f587f4a868651c9bfcbbc981089c671853a6cd`.
 - Full CI #42182453368 was PENDING at the time of this update. The repeated Pyodide compatibility run #42182453326 is IN_PROGRESS on the same workflow-only head; the previous exact code head #42182444849 is already fully green.
 - Remaining blockers are unchanged: TLTK fallback file-level license scope; full OOV/typed IPA/result JSON parity; public UI runtime selector; mobile/offline/cold-warm performance evidence. The app remains on Pyodide.
+
+
+## Follow-up verification and licensing review (2026-11-06 09:52 EET)
+
+- Current branch head at follow-up: `7c5cb9fcd3861ad9177cabcb2e04132124cf4472`.
+- Latest native browser evidence: [Pyodide compatibility #42183434605](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42183434605) SUCCESS. Its real Chromium native Worker step passed; normalizer, newmm and dictionary-only pipeline differential assertions were present in the job log.
+- Web Static #42183434615 SUCCESS on the same head.
+- Full CI #42183434579 still IN_PROGRESS at handoff update; do not claim full CI green until terminal success.
+- Corrected stale ledger language: a native Worker now exists and has isolated smoke evidence. It is still not wired into the production UI.
+- TLTK license evidence narrowed but not cleared: PyPI TLTK 1.3.8 metadata identifies BSD-3-Clause; the upstream package setup.py at current repository HEAD declares BSD-3-Clause and package_data enumerates the relevant syllable assets; MANIFEST.in includes LICENSE.txt, whose text is BSD-3-Clause. The repository root LICENSE file is LGPL-3.0, creating a repository-vs-distribution discrepancy. The current FastThaiG2P vendored fallback files are not yet proven byte-for-byte or version-for-version to be the same files from the TLTK 1.3.8 sdist; the pickle filename/format also differs from setup.py's listed `sylform_var.pklz`. Therefore retain BLOCKED until exact sdist extraction/file mapping and asset provenance are verified. Do not describe this as blanket BSD clearance.
+- Firecrawl page retrieval was unavailable because connected-app credits were exhausted; no source archive was downloaded or inspected. Public PyPI metadata and upstream source files were read separately; no archive contents are claimed.
+- Remaining: exact TLTK fallback data provenance/license scope, port/validate fallback if cleared, full typed result parity, production UI integration, cold/warm/offline/mobile performance, and final cutover.
