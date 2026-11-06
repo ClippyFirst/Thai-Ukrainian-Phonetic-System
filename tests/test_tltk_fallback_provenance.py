@@ -23,7 +23,7 @@ class TltkFallbackProvenanceTests(unittest.TestCase):
             (tltk / "setup.py").write_text(
                 "version='1.9.1'\nlicense='BSD-3-Clause'\n"
                 "'License :: OSI Approved :: BSD License'\n"
-                + "\n".join(PAIRS),
+                + "\n".join(pair[1].split("/")[-1] for pair in PAIRS.values()),
                 encoding="utf-8",
             )
             (tltk / "README.rst").write_text(
