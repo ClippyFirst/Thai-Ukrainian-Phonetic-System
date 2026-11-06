@@ -370,7 +370,7 @@
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
   "latest_code_checkpoint": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
   "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY",
-  "latest_verified_repository_head": "bbbfeff944304e1010e3d0daed6fcc6710a27ba6",
+  "latest_verified_repository_head": "d0528deac04db9a3ed9e062e98ace45492e95f9f",
   "task_ledger": [
     {
       "id": "SEG-TRAIN-001",
@@ -714,12 +714,12 @@
       ]
     }
   },
-  "latest_implementation_commit_ci_verified": "69d56b52b7f687948cac4250e4c7eb98e86ab67f",
+  "latest_implementation_commit_ci_verified": "d0528deac04db9a3ed9e062e98ace45492e95f9f",
   "latest_documentation_head_ci_verified": "e7ebb28e64afd5ec70fc136a12d6723ccebdd59e",
   "latest_documentation_head_ci_run": "41643230493",
   "latest_documentation_head_web_validation_run": "41643230575",
-  "latest_implementation_ci_run": "41711547837",
-  "latest_implementation_web_validation_run": "41711547920",
+  "latest_implementation_ci_run": 42256973431,
+  "latest_implementation_web_validation_run": 42256973453,
   "segmentation_error_review": {
     "script": "scripts/analyze_segmentation_errors.py",
     "test": "tests/test_segmentation_error_analysis.py",
@@ -2215,9 +2215,9 @@
       167
     ]
   },
-  "latest_full_repository_head": "56fba86b4b8be2fe4e67284355e9928108527387",
-  "latest_full_repository_head_ci_run": 41918227400,
-  "latest_full_repository_head_web_validation_run": 41918227382,
+  "latest_full_repository_head": "d0528deac04db9a3ed9e062e98ace45492e95f9f",
+  "latest_full_repository_head_ci_run": 42256973431,
+  "latest_full_repository_head_web_validation_run": 42256973453,
   "latest_web_static_verified_code_commit": "536f03327f11d258a4e7638091797128754b6602",
   "latest_web_static_verified_code_run": "41342132990",
   "ccost_source_reconciliation_2026_10_31": {
@@ -2267,23 +2267,7 @@
     "non_main_branches": 1,
     "open_pull_requests": 1
   },
-  "open_prs_current": {
-    "only_open_pr": [
-      210
-    ],
-    "merged_prs": [
-      199
-    ],
-    "closed_unmerged_prs": [
-      184,
-      185,
-      186,
-      188,
-      190,
-      193
-    ],
-    "note": "PR #193 was closed unmerged; the integration is present on main through PR #199, merged 2026-11-04. PR #210 remains open; no merge performed."
-  },
+  "open_prs_current": [],
   "latest_pr_head_source": "PR #182 merged into main as 65584d9a3d3d64a8e520dbd32411bef4b0a3dd9e; no product PR remains open at this checkpoint.",
   "status_refresh_2026_10_31": {
     "main_sha": "8759fc5f12c1d27bd13f4d6c32a364d5cc7ac1c8",
@@ -4966,7 +4950,7 @@
   "site_practical_system_2026_11_06": {
     "working_branch": "docs/practical-system-site-2026-11-06",
     "starting_main_sha": "bbbfeff944304e1010e3d0daed6fcc6710a27ba6",
-    "status": "IN_PROGRESS_PENDING_PR_HEAD_AND_PAGES_VERIFICATION",
+    "status": "DONE_VERIFIED",
     "public_page": "web/transcription.html",
     "navigation": [
       "web/index.html",
@@ -4996,12 +4980,36 @@
     "baseline_ci_run": 42247363425,
     "functional_main_pages_live_smoke_run": 42245944508,
     "remaining_acceptance": [
-      "PR-head Pages build",
-      "post-merge Pages deployment and live page check",
-      "manual browser/device performance",
-      "manual accessibility acceptance",
-      "independent Thai IPA gold",
-      "independent Ukrainian-native adaptation review"
-    ]
+      "independent Thai IPA gold and adjudication",
+      "independent Ukrainian-native target-form review",
+      "instrumented real-device cold/warm/offline performance",
+      "manual keyboard/screen-reader/zoom/reflow/device acceptance"
+    ],
+    "pull_request": 221,
+    "merged_at": "2026-11-06T16:56:12Z",
+    "merge_commit_sha": "d0528deac04db9a3ed9e062e98ace45492e95f9f",
+    "pr_head_sha": "cc9e3be93e13e695baa3f2cafc9ec6259b297f4a",
+    "public_url": "https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/transcription.html",
+    "pr_checks": {
+      "ci": 42256019761,
+      "pages_build": 42256019692,
+      "web_static": 42256019665,
+      "site_api": 42256019815,
+      "pyodide_compatibility": 42256019619
+    },
+    "main_checks": {
+      "ci": 42256973431,
+      "web_static": 42256973453,
+      "site_api": 42256973448,
+      "pyodide_compatibility": 42256973545,
+      "pages_deploy_and_live_smoke": 42256973592
+    },
+    "page_contract_test": "web/tests/practical-transcription.test.mjs"
+  },
+  "post_merge_pages_smoke_enhancement_2026_11_06": {
+    "branch": "docs/post-merge-closeout-2026-11-06",
+    "purpose": "Explicitly check the deployed practical-system page, /j/ section, nav links and responsive stylesheet in future main Pages smoke runs",
+    "status": "PENDING_PR_222_MERGE_AND_MAIN_DEPLOY",
+    "source_commit": "d0528deac04db9a3ed9e062e98ace45492e95f9f"
   }
 }
