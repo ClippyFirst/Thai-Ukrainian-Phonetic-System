@@ -139,7 +139,7 @@ export function createTltkOovFallback(data){
  const pron=new Map();for(const [form,phone] of data.syllable_dictionary)addPron(pron,form,phone);
  const patterns=data.syllable_patterns.map(record=>({...record,expression:compilePattern(record)}));
  const sylStats=makeSyllableStats(data.syllable_trigrams),phoneScore=makePhoneScorer(data.phone_trigrams),dictionary=new Set(data.word_dictionary);
- function parseSyllables(input){
+ function parseSyllables(input, pron){
   const chars=Array.from(input),n=chars.length,chart=new Map();
   const set=(i,j,forms)=>{if(!chart.has(i))chart.set(i,new Map());chart.get(i).set(j,forms);};
   for(const {pronunciation,expression} of patterns)for(let i=0;i<n;i++){
@@ -153,7 +153,7 @@ export function createTltkOovFallback(data){
    if(allowedPronunciation(code,charmatch,form,phone,constants.allowed_clusters)){
     const [assigned,tone]=toneAssign(form,phone,code,charmatch);phone=assigned;
     if(tone<"5")phone=phone.replaceAll("8",tone);
-    [phone]=transformSyllable(form,phone);
+    [,phone]=transformSyllable(form,phone);
    }
    addPron(pron,form,phone);
    if(/^ทร/u.test(form)&&/^thr/u.test(phone))addPron(pron,form,phone.replace("thr","s"));
@@ -183,7 +183,7 @@ export function createTltkOovFallback(data){
   }}
   return best[n]?.words||null;
  }
- function selectPhones(forms){
+ function selectPhones(forms, pron){
   const padded=["|",...forms,"|"];
   return forms.map((form,i)=>{const candidates=pron.get(form)||[];if(candidates.length===1)return candidates[0];
    let chosen="",best=0;for(const phone of candidates){const score=phoneScore(phone,padded[i],form,padded[i+2]);
@@ -193,11 +193,12 @@ export function createTltkOovFallback(data){
  }
  function convert(word){
   if(typeof word!=="string"||!word)return null;
-  if(/^[^ก-์]+/u.test(word))return "/"+word+"/";
+  if(/^[^ก-์]+/u.test(word))return null;
+  const pron=new Map([...basePron.entries()].map(([form,phones])=>[form,[...phones]]));
   const normalized=word.replaceAll("เเ","แ").replaceAll("ํา","ำ").replaceAll("ฤา","ฤๅ").replaceAll("ฦา","ฦๅ");
-  const syllables=parseSyllables(normalized);if(!syllables)return null;
+  const syllables=parseSyllables(normalized,pron);if(!syllables)return null;
   const words=parseWords(syllables);if(!words)return null;
-  const raw=words.map(w=>selectPhones(w.split("~")).join("~")).join("|");
+  const raw=words.map(w=>selectPhones(w.split("~"),pron).join("~")).join("|");
   return phonesToIpa(raw);
  }
  return Object.freeze({sourceCommit:data.fastthaig2p_commit,tltkCommit:data.tltk_source_commit,packageVersion:data.tltk_package_version,convert});
