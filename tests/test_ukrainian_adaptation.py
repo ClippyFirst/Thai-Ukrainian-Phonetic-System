@@ -9,6 +9,7 @@ from thai_ukrainian.ua_orthography import candidates_for_ipa
 
 def test_ukrainian_output_is_adapted_from_typed_ipa_result():
     for text, expected in [
+        ("ยา", "я"),
         ("อา", "а"),
         ("อัน", "ан"),
         ("พอ", "п\u0027о"),
