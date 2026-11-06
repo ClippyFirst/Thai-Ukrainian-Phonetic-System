@@ -66,6 +66,8 @@ try {
   );
   assert.equal(pyodideRequestedBeforeOov, false,
     "Dictionary-covered inputs must stay on the native JavaScript worker without downloading Python modules");
+  assert.equal(requests.some(url => url.includes("/vendor/native-oov/")), false,
+    "Dictionary-covered inputs must not download the lazy TLTK OOV data pack");
 
   await page.locator("#thai-input").fill(oovReference.input);
   await page.locator("#analyze").click();
