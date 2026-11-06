@@ -102,7 +102,7 @@ function expandMaiyamok(text, wordTokenize) {
   for (const token of tokens.reverse()) {
     if (token === "ๆ") repeatCount += 1;
     else if (repeatCount === 0) output.push(token);
-    else if (!/^\\s+$/u.test(token)) {
+    else if (!/^\s+$/u.test(token)) {
       output.push(...Array(repeatCount + 1).fill(token));
       repeatCount = 0;
     }
@@ -122,15 +122,15 @@ export function normalizeFastThaiG2PText(sourceText, { data, wordTokenize } = {}
     text = text.replaceAll(thai, arabic);
   }
 
-  text = text.replace(/[A-Za-z0-9._-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}/gu, match => emailToThai(match, data));
+  text = text.replace(/[A-Za-z0-9._-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/gu, match => emailToThai(match, data));
   text = replaceMap(text, data.ENGLISH_ABBREVS, { flags: "giu", boundaries: true });
 
   const unitKeys = longestFirst(Object.keys(data.UNITS)).map(escapeRegex).join("|");
-  text = text.replace(new RegExp("(?<=[0-9])\\\\s*(" + unitKeys + ")", "gu"), (_match, unit) => data.UNITS[unit]);
+  text = text.replace(new RegExp("(?<=[0-9])\\s*(" + unitKeys + ")", "gu"), (_match, unit) => data.UNITS[unit]);
   text = replaceMap(text, data.SYMBOLS);
 
   text = text.replace(
-    /(?<![\\p{L}\\p{N}_])([0-9]{1,2}):([0-9]{2})(?:\\s*(?:นาฬิกา|น\\.))?/gu,
+    /(?<![\p{L}\p{N}_])([0-9]{1,2}):([0-9]{2})(?:\s*(?:นาฬิกา|น\.))?/gu,
     (_match, hours, minutes) => {
       const result = integerToThai(hours, digits) + "นาฬิกา";
       return Number(minutes) ? result + integerToThai(minutes, digits) + "นาที" : result;
@@ -150,11 +150,11 @@ export function normalizeFastThaiG2PText(sourceText, { data, wordTokenize } = {}
     }).join("")
   );
 
-  text = text.replace(/-?[0-9]{1,3}(?:,[0-9]{3})+(?:\\.[0-9]+)?/gu, match =>
+  text = text.replace(/-?[0-9]{1,3}(?:,[0-9]{3})+(?:\.[0-9]+)?/gu, match =>
     decimalToThai(match.replaceAll(",", ""), digits)
   );
 
-  text = text.replace(/-?[0-9]+(?:\\.[0-9]+)?/gu, match => {
+  text = text.replace(/-?[0-9]+(?:\.[0-9]+)?/gu, match => {
     const raw = match.replace(/^-/, "");
     const negative = match.startsWith("-");
     const integerPart = raw.split(".", 1)[0];
