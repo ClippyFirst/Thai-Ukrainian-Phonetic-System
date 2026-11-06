@@ -199,7 +199,7 @@ def main() -> None:
         "assets": native_records,
     }
     (native_out / "manifest.json").write_text(
-        json.dumps(native_manifest, ensure_ascii=False, indent=2) + "\\n",
+        json.dumps(native_manifest, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
     native_records = [{
