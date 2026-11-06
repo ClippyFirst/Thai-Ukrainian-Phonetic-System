@@ -1,18 +1,16 @@
 /**
- * Incremental browser-native FastThaiG2P port.
+ * Browser-native FastThaiG2P pipeline.
  *
- * This browser-native front-half composes normalization, PyThaiNLP newmm
- * tokenization, Wiktionary-only IPA lookup and the existing IPA→Ukrainian
- * adapter. The public UI runs this same-origin worker first for dictionary
- * hits and retains the verified Pyodide worker as the OOV fallback. Full
- * native TLTK OOV parity remains outstanding.
+ * This module composes normalization, PyThaiNLP newmm tokenization,
+ * Wiktionary-filtered IPA lookup, pinned TLTK OOV rules/data and the existing
+ * IPA→Ukrainian adapter. OOV parity remains gated by independent Python fixtures.
  */
 import { adaptIpaToUkrainian } from "./ipa-ua.js";
 import { normalizeFastThaiG2PText } from "./fastthaig2p-normalizer.js";
 import { createFastThaiG2PNativeTokenizer } from "./fastthaig2p-tokenizer.js";
 
 export const FASTTHAIG2P_UPSTREAM_COMMIT = "4e82a291b4cf2876326744c6580121e9986ad354";
-export const NATIVE_PORT_STAGE = "dictionary-adapter-only";
+export const NATIVE_PORT_STAGE = "normalizer+default-newmm+custom-newmm+wiktionary-dictionary+tltk-oov";
 
 const TONE_CATEGORIES = Object.freeze({
   "˧": "mid",
@@ -184,6 +182,7 @@ export function createFastThaiG2PNativeEngine({
 
       return {
         input: text,
+        normalized_input: normalized,
         engine: "FastThaiG2P",
         upstream_commit: FASTTHAIG2P_UPSTREAM_COMMIT,
         status: "provisional",
@@ -280,9 +279,9 @@ export async function loadFastThaiG2PNativeDictionary({
 }
 
 /**
- * Compose the native normalization, PyThaiNLP default newmm tokenizer,
- * FastThaiG2P custom newmm tokenizer and filtered IPA dictionary. OOV words
- * fail closed until a licensed, parity-tested fallback port is available.
+ * Compose normalization, PyThaiNLP default newmm, FastThaiG2P custom newmm,
+ * filtered IPA dictionary and an injectable TLTK OOV fallback. The worker
+ * loads the OOV data only after a native dictionary miss.
  */
 export function createFastThaiG2PNativePipeline({ dictionary, normalizerData, defaultWords }) {
   if (!normalizerData || !Array.isArray(defaultWords) || !defaultWords.length) {
