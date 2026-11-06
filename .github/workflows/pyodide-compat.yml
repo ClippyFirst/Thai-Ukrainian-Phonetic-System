@@ -16,6 +16,7 @@ on:
       - "scripts/fastthaig2p_normalizer_reference.py"
       - "scripts/fastthaig2p_tokenizer_reference.py"
       - "scripts/fastthaig2p_native_pipeline_reference.py"
+      - "scripts/fastthaig2p_native_oov_reference.py"
       - "web/tests/fastthaig2p-native-pipeline.test.mjs"
       - "web/tests/fastthaig2p-native.test.mjs"
       - "web/src/fastthaig2p-native-worker.js"
@@ -193,7 +194,9 @@ jobs:
           echo "Owner-approved public Pages bundle built and manifest verified"
       - name: Install headless Chromium
         run: npx playwright install --with-deps chromium
+      - name: Generate pinned OOV fallback browser reference
+        run: python scripts/fastthaig2p_native_oov_reference.py --output build/fastthaig2p-native-oov-reference.json
       - name: Test the real same-origin Pyodide worker in Chromium
-        run: node web/tests/fastthaig2p-browser.test.mjs
+        run: node web/tests/fastthaig2p-browser.test.mjs build/fastthaig2p-native-oov-reference.json
       - name: Test the native FastThaiG2P worker without Python or Pyodide
         run: node web/tests/fastthaig2p-native-browser.test.mjs build/fastthaig2p-native-pipeline-reference.json
