@@ -202,6 +202,15 @@ jobs:
               && grep -Fq 'нативний JavaScript-порт FastThaiG2P' /tmp/deployed-system.html \
               && grep -Fq 'Pyodide Worker' /tmp/deployed-system.html \
               && grep -Fq 'не надсилається на API або зовнішній сервер' /tmp/deployed-system.html \
+              && grep -Fq 'href="transcription.html"' /tmp/deployed-index.html \
+              && grep -Fq 'href="transcription.html"' /tmp/deployed-system.html \
+              && curl --fail --silent --show-error "$PAGE_URL/transcription.html" -o /tmp/deployed-transcription.html \
+              && grep -Fq 'Тайсько-українська практична транскрипція' /tmp/deployed-transcription.html \
+              && grep -Fq 'Початковий /j/ перед голосною' /tmp/deployed-transcription.html \
+              && grep -Fq '64/64' /tmp/deployed-system.html \
+              && grep -Fq 'blob/main/docs/thai-ukrainian-practical-transcription.md' /tmp/deployed-transcription.html \
+              && curl --fail --silent --show-error "$PAGE_URL/src/styles.css?v=20261106-practical-system-1" -o /tmp/deployed-transcription-styles.css \
+              && grep -Fq '.system .evidence table' /tmp/deployed-transcription-styles.css \
               && curl --fail --silent --show-error "$PAGE_URL/third-party-notices.html" -o /tmp/deployed-notices.html \
               && grep -Fq 'BSD-3-Clause' /tmp/deployed-notices.html \
               && grep -Fq 'LGPL-3.0' /tmp/deployed-notices.html \
