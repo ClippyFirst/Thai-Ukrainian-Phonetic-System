@@ -29,7 +29,7 @@ The primary job is simple: enter Thai text, request analysis, read the Ukrainian
 
 ## Optional RTGS result
 
-The primary result remains the provisional Ukrainian IPA adaptation, with external IPA beside it. A separate RTGS romanization is discoverable directly below as a collapsed native disclosure; it is dynamically imported only when the user opens it. The pinned CC0 word list is shared with the primary native tokenizer and may already be cached or fetched during the main analysis; the RTGS loader still validates the same-origin manifest, version, size and SHA-256. This keeps the additional capability visible without competing with the primary task or loading its data for users who do not request it. RTGS is labelled as a separate romanization method and never feeds the IPA → Ukrainian adapter.
+The primary result remains the provisional Ukrainian IPA adaptation, with external IPA beside it. A separate RTGS romanization is discoverable directly below as a collapsed native disclosure; it is dynamically imported only when the user opens it. The pinned CC0 word list is shared with the primary native tokenizer and may already be cached or fetched during the main analysis; the RTGS loader still validates the same-origin manifest, version, size and SHA-256. This keeps the additional capability visible without competing with the primary task or loading the optional RTGS module for users who do not request it. RTGS is labelled as a separate romanization method and never feeds the IPA → Ukrainian adapter.
 
 ## Interaction contracts
 
