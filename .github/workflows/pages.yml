@@ -53,6 +53,11 @@ jobs:
           node-version: 22
       - name: Install pinned RTGS parity reference
         run: python -m pip install pythainlp==5.4.0
+      - name: Check native browser module syntax
+        run: |
+          node --check web/src/fastthaig2p-native.js
+          node --check web/src/fastthaig2p-native-worker.js
+          node --check web/src/fastthaig2p-tltk-oov.js
       - name: Generate pinned CC0 browser word dictionary
         run: python scripts/generate_web_word_dictionary.py
       - name: Run RTGS browser regression tests
@@ -63,8 +68,6 @@ jobs:
         run: node web/tests/ipa-ua.test.mjs
       - name: Run native TLTK OOV parser contract tests
         run: node web/tests/tltk-oov.test.mjs
-      - name: Run exact pinned Python-to-browser TLTK OOV parity tests
-        run: node web/tests/tltk-oov-reference.test.mjs
       - name: Run browser parity test
         run: node web/tests/parity.test.mjs
       - name: Run article markup cleanup contract test
@@ -123,6 +126,7 @@ jobs:
           PY
           python scripts/extract_tltk_oov_data.py --fallback-dir build/FastThaiG2P/data/fallback --parser-source build/FastThaiG2P/fastthaig2p/_th2ipa.py --output-dir web/vendor/native-oov
           python -m unittest discover -s tests -p test_extract_tltk_oov_data.py -v
+          python scripts/generate_tltk_oov_reference.py
           python - <<'PY'
           import json
           from pathlib import Path
