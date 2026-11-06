@@ -27,6 +27,8 @@ The primary job is simple: enter Thai text, request analysis, read the Ukrainian
 6. Progressive detail: word/syllable breakdown, tone, vowel length, warnings and engine provenance.
 7. Support: method, evidence, feedback, GitHub and legal notices.
 
+**Current verification (2026-11-06):** Homepage RTGS progressive disclosure merged in PR #225 and passed exact-head plus post-merge CI, Chromium and GitHub Pages live smoke. The deployed homepage keeps Ukrainian IPA adaptation primary and exposes RTGS as a collapsed secondary answer.
+
 ## Optional RTGS result
 
 The primary result remains the provisional Ukrainian IPA adaptation, with external IPA beside it. A separate RTGS romanization is discoverable directly below as a collapsed native disclosure; it is dynamically imported only when the user opens it. The pinned CC0 word list is shared with the primary native tokenizer and may already be cached or fetched during the main analysis; the RTGS loader still validates the same-origin manifest, version, size and SHA-256. This keeps the additional capability visible without competing with the primary task or loading the optional RTGS module for users who do not request it. RTGS is labelled as a separate romanization method and never feeds the IPA → Ukrainian adapter.
