@@ -80,6 +80,8 @@ const status = element("status");
 const output = element("results");
 const analyze = element("analyze");
 const clear = element("clear");
+const diagnostics = element("technical-diagnostics");
+const diagnosticDetails = element("diagnostic-details");
 
 input.value = "พริก";
 await analyze.click();
@@ -95,7 +97,9 @@ assert.match(output.innerHTML, /короткий/);
 assert.match(output.innerHTML, /pʰrík/);
 assert.match(output.innerHTML, /lang="th">พริก/);
 assert.match(output.innerHTML, /експертно підтверджено/);
-assert.match(output.innerHTML, /upstream commit/);
+assert.match(output.innerHTML, /Цей результат попередній/);
+assert.doesNotMatch(output.innerHTML, /PROVISIONAL|not independently adjudicated/);
+assert.match(output.innerHTML, /коміт вихідного проєкту/);
 assert.equal(status.className, "status notice");
 assert.match(status.textContent, /Український запис попередній/);
 assert.equal(requests.length, 1);
@@ -134,12 +138,16 @@ assert.match(status.textContent, /Введіть тайський текст/);
 
 input.value = "ทดสอบ";
 nextWorkerMessage = {
-  type: "analysis-error",
-  message: "FastThaiG2P не зміг повернути повний IPA."
+  type: "error",
+  code: "incomplete_ipa",
+  diagnostic: "Upstream FastThaiG2P: unsupported token"
 };
 await analyze.click();
 assert.equal(status.className, "status error");
-assert.match(status.textContent, /FastThaiG2P не зміг повернути повний IPA/);
+assert.match(status.textContent, /Не вдалося визначити вимову всього тексту/);
+assert.doesNotMatch(status.textContent, /Upstream|unsupported|FastThaiG2P/);
+assert.equal(diagnostics.hidden, false, "technical diagnostics should be available after an error");
+assert.match(diagnosticDetails.textContent, /unsupported token/, "raw diagnostics stay in the optional details");
 assert.equal(output.hidden, true, "an incomplete upstream result must not fall back to the old engine");
 
 // A response for an input that changed while analysis was running must never render.
@@ -161,5 +169,6 @@ clear.click();
 assert.equal(input.value, "");
 assert.equal(output.hidden, true);
 assert.equal(status.textContent, "");
+assert.equal(diagnostics.hidden, true, "editing/clearing input hides stale diagnostics");
 
 console.log("FastThaiG2P-only UI contract: local worker routing, provisional disclosure and fail-closed behavior passed");

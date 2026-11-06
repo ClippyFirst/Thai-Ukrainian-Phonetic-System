@@ -36,7 +36,22 @@ def main() -> None:
                     capture_output=True,
                 )
                 checked_blocks += 1
-    print(f"Workflow YAML parsed; {checked_blocks} literal bash run blocks passed bash -n across {len(files)} workflows")
+    issue_templates = sorted(Path(".github/ISSUE_TEMPLATE").glob("*.y*ml"))
+    for path in issue_templates:
+        document = yaml.load(path.read_text(encoding="utf-8"), Loader=yaml.BaseLoader)
+        if not isinstance(document, dict) or not isinstance(document.get("body"), list):
+            raise SystemExit(f"Invalid GitHub issue form structure: {path}")
+        field_ids = []
+        for index, field in enumerate(document["body"], start=1):
+            if not isinstance(field, dict) or field.get("type") not in {"markdown", "dropdown", "textarea", "input", "checkboxes"}:
+                raise SystemExit(f"Invalid issue form field {index}: {path}")
+            if field.get("id"):
+                field_ids.append(field["id"])
+        if len(field_ids) != len(set(field_ids)):
+            raise SystemExit(f"Duplicate issue form field IDs: {path}")
+        if path.name == "beta-feedback.yml" and "error_code" not in field_ids:
+            raise SystemExit(f"Beta feedback form must expose the optional error_code field: {path}")
+    print(f"Workflow YAML parsed; {checked_blocks} literal bash run blocks passed bash -n across {len(files)} workflows; {len(issue_templates)} issue forms parsed")
 
 
 if __name__ == "__main__":

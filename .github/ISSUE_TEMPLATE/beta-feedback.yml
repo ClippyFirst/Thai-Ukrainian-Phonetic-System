@@ -1,73 +1,80 @@
-name: Beta feedback
-description: Report a beta usability issue, unexpected result, or accessibility problem.
-title: "[Beta feedback]: "
+name: Відгук про бета-версію
+description: Повідомте про проблему з користуванням, неочікуваний результат або питання доступності.
+title: "[Відгук про бета-версію]: "
 labels: []
 body:
   - type: markdown
     attributes:
       value: |
-        Thank you for helping improve the beta. Do not include personal, confidential, or otherwise sensitive text. Do not upload audio. Thai examples are optional; include only material you are permitted to share publicly.
+        Дякуємо, що допомагаєте вдосконалювати бета-версію. Не додавайте особистий, конфіденційний чи інший чутливий текст. Не завантажуйте аудіо. Тайські приклади необов’язкові: додавайте лише матеріали, які маєте право оприлюднювати.
   - type: dropdown
     id: category
     attributes:
-      label: Feedback category
+      label: Категорія відгуку
       options:
-        - Unexpected Thai → IPA → Ukrainian result
-        - Unsupported input or unclear limitation
-        - Website or API error
-        - Accessibility or usability
-        - Documentation or privacy notice
-        - Other
+        - "Неочікуваний результат: тайський текст → IPA → український запис"
+        - Непідтримуване введення або незрозуміле обмеження
+        - Помилка сайту або обробки тексту
+        - Доступність або зручність користування
+        - Документація або повідомлення про приватність
+        - Інше
     validations:
       required: true
   - type: textarea
     id: summary
     attributes:
-      label: What happened?
-      description: Describe the issue without including confidential content.
-      placeholder: What did you try, and what did you observe?
+      label: Що сталося?
+      description: Опишіть проблему, не додаючи конфіденційних даних.
+      placeholder: Що ви зробили та який результат побачили?
     validations:
       required: true
+  - type: input
+    id: error_code
+    attributes:
+      label: Код повідомлення про помилку (якщо відображається)
+      placeholder: "Наприклад: UA-LOAD-001"
+    validations:
+      required: false
   - type: textarea
     id: example
     attributes:
-      label: Optional public Thai example
-      description: Only include text you are allowed to share publicly. Do not include names, personal data, or private messages.
+      label: Необов’язковий публічний приклад тайською
+      description: Додавайте лише текст, який маєте право оприлюднювати. Не вказуйте імена, персональні дані чи приватні повідомлення.
       render: text
     validations:
       required: false
   - type: textarea
     id: expected
     attributes:
-      label: Expected behavior
-      description: What did you expect the beta to do?
+      label: Очікувана поведінка
+      description: Що, на вашу думку, мала зробити бета-версія?
     validations:
       required: false
   - type: input
     id: browser
     attributes:
-      label: Browser and version
-      placeholder: e.g. Firefox 132
+      label: Браузер і версія
+      placeholder: "Наприклад: Firefox 132"
     validations:
       required: false
   - type: input
     id: device
     attributes:
-      label: Device / operating system
-      placeholder: e.g. Android 16, Windows 11
+      label: Пристрій та операційна система
+      placeholder: "Наприклад: Android 16, Windows 11"
     validations:
       required: false
   - type: textarea
     id: reproduction
     attributes:
-      label: Steps to reproduce
-      description: List the smallest steps that reproduce the issue.
+      label: Кроки для відтворення
+      description: Перелічіть найкоротші кроки, після яких виникає проблема.
     validations:
       required: false
   - type: checkboxes
     id: privacy
     attributes:
-      label: Privacy confirmation
+      label: Підтвердження щодо приватності
       options:
-        - label: I have not included personal, confidential, or sensitive information, and I have permission to share any example text publicly.
+        - label: Підтверджую, що не додаю особистої, конфіденційної чи чутливої інформації та маю право публічно поширювати всі наведені приклади.
           required: true

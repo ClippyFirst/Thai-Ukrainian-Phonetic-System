@@ -1983,3 +1983,21 @@ Exact-head verification: `ba22872679869371e92ab9ad511db4ed74627da2`; workflows P
 | Linguistic accuracy | PARTIAL / NOT MEASURED | Independent IPA gold = 0; Ukrainian forms provisional. External Thai/Ukrainian expert audits and acoustic validation are deferred from beta scope. |
 
 Live beta: https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/ .
+
+
+## Ukrainian-first UX implementation checkpoint — 2026-11-06
+
+| Work item | Status | Evidence / remaining acceptance |
+|---|---|---|
+| Central Ukrainian user-message catalog | IMPLEMENTED_PENDING_EXACT_HEAD_CI | `web/src/messages.uk.js` defines progress, empty, success, clipboard and error copy plus stable `UA-*` support IDs. |
+| Prevent upstream English errors reaching user copy | IMPLEMENTED_PENDING_EXACT_HEAD_CI | Worker sends error codes and separate diagnostics; UI maps codes to Ukrainian copy and uses a generic Ukrainian fallback for unknown codes. |
+| Optional technical diagnostics | IMPLEMENTED_PENDING_EXACT_HEAD_CI | Collapsed details panel; raw diagnostic is separate from user copy; Worker redacts exact input text before posting exception details. |
+| Localize engine warnings and provenance caption | IMPLEMENTED_PENDING_EXACT_HEAD_CI | Result renderer maps known English warning classes to Ukrainian and uses a conservative Ukrainian fallback; provenance caption translated. |
+| Automated localization/UI regression tests | IMPLEMENTED_PENDING_EXACT_HEAD_CI | New `web/tests/ukrainian-first.test.mjs`; UI contract expanded; Web Static workflow runs both suites and syntax checks. |
+| GitHub beta feedback form | IMPLEMENTED_PENDING_EXACT_HEAD_CI | `.github/ISSUE_TEMPLATE/beta-feedback.yml` is now Ukrainian; test checks name, category, field labels, privacy confirmation and absence of English labels. Web Static also triggers when the template changes. |
+| Full public-page language inventory | TODO | Audit all static pages, aria labels, titles, placeholders, feedback templates and notices; preserve proper names and legal source titles. |
+| Manual browser and assistive-technology acceptance | DEFERRED / NOT VERIFIED | Keyboard, screen reader, 200%/400% zoom, narrow mobile reflow and real clipboard permissions require browser/device review. |
+| Privacy explanation | TODO / EVIDENCE REQUIRED | Verify GitHub Pages logging and any storage/telemetry facts before publishing claims. |
+| Ukrainian phonetics glossary and plain-language help | TODO | Explain IPA, tone, vowel length and provisional adaptation in Ukrainian; linguistic claims require evidence review. |
+
+Implementation branch: `feat/ukrainian-first-ux-2026-11-06`. Do not mark the implementation DONE_VERIFIED until exact-head CI and the Pages deployment/browser smoke succeed. No phonetic rules or linguistic accuracy claims changed. See [Ukrainian-first UX contract](ukrainian-first-ux.md).

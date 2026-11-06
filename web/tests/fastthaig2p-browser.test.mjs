@@ -7,6 +7,18 @@ const server = spawn("python", [
 ], { stdio: "inherit" });
 
 let browser;
+async function waitForAnalysis(page, timeout) {
+  await page.waitForFunction(() => {
+    const status = document.querySelector("#status");
+    return status?.textContent.includes("Готово") || status?.classList.contains("error");
+  }, null, { timeout });
+  const status = await page.locator("#status").innerText();
+  if (!status.includes("Готово")) {
+    const diagnostics = await page.locator("#technical-diagnostics").textContent();
+    throw new Error(`Browser analysis failed: ${status}\\n${diagnostics || "No technical diagnostics provided"}`);
+  }
+}
+
 try {
   await new Promise((resolve, reject) => {
     const timeout = setTimeout(() => reject(new Error("Static test server did not start")), 3000);
@@ -30,11 +42,7 @@ try {
   await page.goto("http://127.0.0.1:4173/", { waitUntil: "networkidle" });
   await page.locator("#thai-input").fill("สวน");
   await page.locator("#analyze").click();
-  await page.waitForFunction(
-    () => document.querySelector("#status")?.textContent.includes("Готово"),
-    null,
-    { timeout: 180000 }
-  );
+  await waitForAnalysis(page, 180000);
 
   const firstResult = await page.locator("#results").innerText();
   assert.match(firstResult, /\/sua̯n˩˩˦\//);
@@ -43,11 +51,7 @@ try {
 
   await page.locator("#thai-input").fill("กรุงเทพมหานคร");
   await page.locator("#analyze").click();
-  await page.waitForFunction(
-    () => document.querySelector("#status")?.textContent.includes("Готово"),
-    null,
-    { timeout: 30000 }
-  );
+  await waitForAnalysis(page, 30000);
   const secondResult = await page.locator("#results").innerText();
   assert.match(secondResult, /kruŋ/);
   assert.match(secondResult, /крунгт/);
