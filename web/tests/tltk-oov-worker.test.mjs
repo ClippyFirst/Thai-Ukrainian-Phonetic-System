@@ -34,7 +34,9 @@ for (let index = 0; index < fixtures.cases.length; index += 1) {
   await listeners.message({ data: { type: "convert", id: String(index), text: item.token } });
   const message = messages.at(-1);
   assert.equal(message?.type, "result", "worker must return native result for " + item.token);
-  assert.deepEqual(message.result, item.response, "worker typed JSON parity for " + item.token);
+  assert.equal(message.result.normalized_input, item.token);
+  const { normalized_input, ...serviceResult } = message.result;
+  assert.deepEqual(serviceResult, item.response, "worker typed JSON parity for " + item.token);
 }
 
 console.log("Native Worker TLTK OOV lazy-load and full Python-service parity: " + fixtures.cases.length + " cases PASS");
