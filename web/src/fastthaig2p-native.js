@@ -54,8 +54,21 @@ function syllableResult(rawIpa) {
   const adaptation = adaptIpaToUkrainian(externalIpa);
   const rulesApplied = (adaptation.rulesApplied ?? [])
     .filter(rule => rule !== "UA-DIACRITIC-NEUTRALIZATION");
-  const neutralizedFeatures = (adaptation.neutralizedFeatures ?? [])
-    .filter(feature => feature !== "length");
+  const neutralizedFeatures = [];
+  for (const feature of adaptation.neutralizedFeatures ?? []) {
+    if (feature === "length" || ["open-mid front vowel quality", "backness", "unroundedness", "height", "openness"].includes(feature)) {
+      if (!neutralizedFeatures.includes("vowel quality") &&
+          /[ɛɯɤɔ]/u.test(externalIpa)) {
+        neutralizedFeatures.push("vowel quality");
+      }
+      continue;
+    }
+    neutralizedFeatures.push(
+      feature === "glide-vowel sequence adapted as Ukrainian vowel spelling"
+        ? "glide-vowel sequence represented by Ukrainian vowel spelling"
+        : feature
+    );
+  }
   if (/[ːˑ]/u.test(externalIpa) && !neutralizedFeatures.includes("vowel length")) {
     neutralizedFeatures.push("vowel length");
   }
