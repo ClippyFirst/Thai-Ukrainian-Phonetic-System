@@ -1,9 +1,10 @@
 /**
  * Incremental browser-native FastThaiG2P port.
  *
- * This first slice ports the dictionary lookup/result adapter only. It is
- * intentionally NOT wired into the public UI: normalization, PyThaiNLP newmm
- * segmentation and the TLTK OOV fallback are still required for parity.
+ * This browser-native front-half composes normalization, PyThaiNLP newmm
+ * tokenization, Wiktionary-only IPA lookup and the existing IPA→Ukrainian
+ * adapter. The TLTK OOV fallback remains outstanding; the public UI stays on
+ * the verified Pyodide worker until complete parity is reached.
  */
 import { adaptIpaToUkrainian } from "./ipa-ua.js";
 import { normalizeFastThaiG2PText } from "./fastthaig2p-normalizer.js";
