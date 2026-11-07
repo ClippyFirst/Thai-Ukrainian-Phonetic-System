@@ -4,7 +4,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Пакетний рушій ClippyFirst для транскрипції тайського тексту: RTGS, IPA та українська адаптація через IPA.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; object-src 'none'; form-action 'self'">
-<title>Транскрипція тайського тексту — Тайська → українська</title><link rel="stylesheet" href="src/styles.css?v=20261107-geography-1">
+<title>Транскрипція тайського тексту — Тайська → українська</title><link rel="stylesheet" href="src/styles.css?v=20261107-thai-text-engine-1">
 </head>
 <body>
 <a class="skip-link" href="#main-content">Перейти до основного вмісту</a>
@@ -19,9 +19,9 @@
 <li><strong>Українська адаптація:</strong> форма створюється лише з типізованого IPA через наявний IPA → Ukrainian адаптер ClippyFirst.</li></ol>
 <p>RTGS не є джерелом української форми. Якщо IPA-аналіз неповний або не підтриманий, IPA та український результат утримуються, а не вгадуються. Технічно повний результат не означає, що власну назву вже перевірив фахівець.</p></section>
 <section class="evidence"><p class="eyebrow">ПАКЕТНА ОБРОБКА</p><h2>Як скористатися</h2>
-<p>Це пакетний Python CSV-інструмент у репозиторії, а не окреме поле введення на цій вебсторінці. Додайте тайський текст у колонку name_th (або задайте іншу назву через --thai-column). Підійдуть звичайні слова, фрази чи більші текстові фрагменти; для кожного рядка інструмент формує окремий результат.</p>
+<p>Це пакетний Python CSV-інструмент у репозиторії (початково оформлений як збирач географічного словника), а не окреме поле введення на цій вебсторінці. Додайте тайський текст у колонку name_th (або задайте іншу назву через --thai-column). Підійдуть звичайні слова, фрази чи більші текстові фрагменти; для кожного рядка інструмент формує окремий результат.</p>
 <pre><code>python -m pip install -e ".[geography]"
-python scripts/build_geographic_dictionary.py data/geography/input.csv \
+python scripts/build_geographic_dictionary.py input.csv \
   --thai-column name_th \
   --output build/transcription.csv</code></pre>
 <p>Скрипт зберігає початкові колонки й додає RTGS, фонемний IPA, широкий поверхневий IPA, український результат, статус, метод сегментації та попередження. RTGS — окрема латинська романізація; українська форма будується тільки через IPA.</p>
