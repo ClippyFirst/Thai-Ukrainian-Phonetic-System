@@ -32,6 +32,14 @@ The homepage keeps Ukrainian IPA adaptation as its primary result and offers RTG
 
 Для збагачення власного CSV географічних назв див. [документацію географічного словника](docs/geographic-dictionary.md) і [шаблон CSV](data/geography/geographic-names-template.csv). Скрипт `scripts/build_geographic_dictionary.py` додає RTGS (PyThaiNLP 5.4.0 newmm + royin з pinned CC0 словником), фонемний та широкий поверхневий IPA і український результат, отриманий лише через typed IPA → Ukrainian адаптер. Встановлення: `python -m pip install -e ".[geography]"`. Неповний IPA/UA результат утримується; RTGS є окремою, тонально неповною романізацією. Вихідні ліцензії та джерела набору потрібно фіксувати окремо.
 
+## Geographic-name batch engine
+
+The project also includes a separate Python CSV batch engine for Thai geographic names. It emits RTGS, phonemic IPA, optional broad-surface IPA and a Ukrainian result adapted only from typed IPA. RTGS is a separate output, not an input to Ukrainian adaptation; incomplete analyses are withheld. The public site has a [geographic-name engine overview](web/geography.html). This is a research batch tool, not a second browser pronunciation engine. Real geographic-corpus accuracy remains NOT_MEASURED pending source-licensed data and independent Thai/Ukrainian review.
+
+## Project licence
+
+Original project materials are governed by the custom [ClippyFirst Project License](LICENSE), version 1.0 (2026), adapted from the companion Korean–Ukrainian project. It is purpose-limited and not OSI-approved; reuse of the technical implementation, self-hosting, integration, modification and commercial use require prior written permission. Third-party components and data retain their own licences. See [licensing and permissions](docs/LICENSING-AND-PERMISSIONS.md) and the public [licence summary](web/licensing.html).
+
 ## Thai → Ukrainian methodology table
 
 The initial context-sensitive methodology matrix is documented in [`docs/ukrainian-transcription-methodology.md`](docs/ukrainian-transcription-methodology.md). It distinguishes onset/coda, phonemic vs surface IPA, contextual rules, tone/length, and evidence-gated cases. It is explicitly PARTIAL pending independent IPA and Ukrainian-form adjudication; it is not an official Ukrainian standard.
