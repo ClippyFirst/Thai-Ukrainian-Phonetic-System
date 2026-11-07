@@ -4,6 +4,8 @@ import { readFile } from "node:fs/promises";
 const html = await readFile(new URL("../index.html", import.meta.url), "utf8");
 const systemHtml = await readFile(new URL("../system.html", import.meta.url), "utf8");
 const noticesHtml = await readFile(new URL("../third-party-notices.html", import.meta.url), "utf8");
+const geographyHtml = await readFile(new URL("../geography.html", import.meta.url), "utf8");
+const licensingHtml = await readFile(new URL("../licensing.html", import.meta.url), "utf8");
 const css = await readFile(new URL("../src/styles.css", import.meta.url), "utf8");
 const app = await readFile(new URL("../src/app.js", import.meta.url), "utf8");
 
@@ -27,7 +29,13 @@ assert.match(noticesHtml, /CC BY-SA 4\.0/);
 assert.match(noticesHtml, /BSD-3-Clause/);
 assert.match(noticesHtml, /Apache License 2\.0/);
 assert.match(noticesHtml, /Mozilla Public License 2\.0/);
-assert.match(noticesHtml, /MIT License/);
+assert.match(noticesHtml, /ClippyFirst Project License/);
+assert.match(geographyHtml, /<html lang="uk">/);
+assert.match(geographyHtml, /<main[^>]+id="main-content"/);
+assert.match(geographyHtml, /<h1>Рушій для тайських географічних назв<\/h1>/);
+assert.match(licensingHtml, /<html lang="uk">/);
+assert.match(licensingHtml, /<main[^>]+id="main-content"/);
+assert.match(licensingHtml, /<h1>Ліцензія проєкту ClippyFirst<\/h1>/);
 
 // Every static form control has a programmatic label and its described-by targets exist.
 const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]);
@@ -115,7 +123,7 @@ for (const [foreground, background, label] of palettePairs) {
 
 console.log(JSON.stringify({
   result: "PASS",
-  static_documents: 3,
+  static_documents: 5,
   unique_service_ids: ids.length,
   wcag_aa_text_contrast_pairs: palettePairs.length,
   minimum_contrast_ratio: Math.min(...palettePairs.map(([foreground, background]) => contrast(foreground, background))),
