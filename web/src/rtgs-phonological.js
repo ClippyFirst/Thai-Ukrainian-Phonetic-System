@@ -57,7 +57,8 @@ const RTGS_SYLLABLE_SEGMENTATIONS = new Map([
 const RTGS_SOURCE_ATTESTED_READINGS = new Map([
   ["ทราย", { value:"sai", source:"BGN/PCGN 2002 Agreement, RTGS example", sourceUrl:"https://assets.publishing.service.gov.uk/media/5ab4e60aed915d78b9a459f5/ROMANIZATION_OF_THAI.pdf" }],
   ["ทรราช", { value:"thorarat", source:"BGN/PCGN 2002 Agreement, RTGS example", sourceUrl:"https://assets.publishing.service.gov.uk/media/5ab4e60aed915d78b9a459f5/ROMANIZATION_OF_THAI.pdf" }],
-  ["โปรดเกล้าฯ", { value:"protklao protkramom", source:"BGN/PCGN 2002 Agreement, RTGS abbreviation example", sourceUrl:"https://assets.publishing.service.gov.uk/media/5ab4e60aed915d78b9a459f5/ROMANIZATION_OF_THAI.pdf" }],\n  ["พรหม", { value:"phrom", source:"BGN/PCGN 2002 Agreement, RTGS example", sourceUrl:"https://assets.publishing.service.gov.uk/media/5ab4e60aed915d78b9a459f5/ROMANIZATION_OF_THAI.pdf" }]
+  ["โปรดเกล้าฯ", { value:"protklao protkramom", source:"BGN/PCGN 2002 Agreement, RTGS abbreviation example", sourceUrl:"https://assets.publishing.service.gov.uk/media/5ab4e60aed915d78b9a459f5/ROMANIZATION_OF_THAI.pdf" }],
+  ["พรหม", { value:"phrom", source:"BGN/PCGN 2002 Agreement, RTGS example", sourceUrl:"https://assets.publishing.service.gov.uk/media/5ab4e60aed915d78b9a459f5/ROMANIZATION_OF_THAI.pdf" }]
 ]);
 
 function effectiveOnset(onset) {
