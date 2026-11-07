@@ -7,7 +7,7 @@ authors:
     given-names: Vitalii
 version: 0.6.1
 repository-code: "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System"
-license: MIT
+license: LicenseRef-ClippyFirst-Project-License
 keywords:
   - Thai
   - Ukrainian

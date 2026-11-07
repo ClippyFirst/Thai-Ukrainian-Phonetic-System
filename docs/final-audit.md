@@ -1,3 +1,13 @@
+## Географічний рушій на сайті та ліцензійне узгодження — 2026-11-07
+
+Implemented on branch feat/geographic-engine-site-license-2026-11-07 from main checkpoint 529cf4cf50db1c08f12a7a0808e9f4a8d5c24dfc. Added a public geographic-engine overview page and homepage/method-page links. The copy accurately describes the existing Python CSV batch engine as separate from the browser FastThaiG2P runtime and preserves the NOT_MEASURED linguistic-validation caveat.
+
+Replaced the Thai repository's former MIT root licence with ClippyFirst Project License v1.0, aligned with the companion Korean–Ukrainian repository. Adapted covered-project and Thai-to-Ukrainian table references; retained the same limited scientific-research permission and prior-written-permission requirement for technical reuse, self-hosting, integration, modification and commercial exploitation. Added a licensing policy document and public summary page. Updated the historical MIT-Project notice path to state explicitly that it is not an MIT grant. Third-party licences remain separate and unchanged.
+
+This is a material change from permissive MIT to a custom restrictive licence. It is the explicit policy requested by the repository owner; it is not OSI-approved and may affect downstream reuse expectations. Legal enforceability is not independently assessed.
+
+Verification status at this audit update: changes are authored but require exact-head CI and Pages build/deploy/live smoke before DONE_VERIFIED. Geographic linguistic accuracy remains NOT_MEASURED.
+
 ## Географічний словник — 2026-11-07
 
 **Status: DONE_VERIFIED — engineering implementation.**
