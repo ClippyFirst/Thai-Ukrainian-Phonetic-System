@@ -391,4 +391,4 @@ export function analyzeThaiSyllablesForRomanization(input) {
   };
 }
 
-export {analyze,analyzeText,tokenizeText};
+export {analyzeText,tokenizeText};
