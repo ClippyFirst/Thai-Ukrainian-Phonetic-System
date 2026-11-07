@@ -35,6 +35,7 @@ assert.match(homepage, /geography\.html/);
 assert.match(projectLicense, /CLIPPYFIRST PROJECT LICENSE — VERSION 1\.0/);
 assert.match(projectLicense, /Thai–Ukrainian Phonetic System/);
 assert.match(projectLicensePointer, /NOT an MIT license/);
+assert.match(notices, /не надає MIT-дозволів/);
 assert.match(notices, /Apache License 2\.0/);
 assert.match(notices, /Mozilla Public License 2\.0/);
 assert.match(ccBySa, /Creative Commons Attribution-ShareAlike 4\.0 International/);
@@ -51,7 +52,6 @@ const requiredNotices = [
   "BSD-3-Clause-TLTK.txt",
   "LGPL-3.0-TLTK-repository-license.txt",
   "CC-BY-SA-4.0.txt",
-  "MIT-Project.txt",
 ];
 for (const filename of requiredNotices) {
   assert.ok(existsSync(`web/licenses/${filename}`), `missing notice: ${filename}`);
