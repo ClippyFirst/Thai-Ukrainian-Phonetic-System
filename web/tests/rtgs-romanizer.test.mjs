@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import {createHash,webcrypto} from "node:crypto";
 import {createRtgsRomanizer,RtgsRomanizerError} from "../src/rtgs-romanizer.js";
-import {romanizeRtgsTokenSequence} from "../src/rtgs-phonological.js";
+import {romanizeRtgsThaiToken,romanizeRtgsTokenSequence} from "../src/rtgs-phonological.js";
 const wordlist="สวัสดี\nประเทศไทย\n",bytes=new TextEncoder().encode(wordlist),hash=createHash("sha256").update(bytes).digest("hex");
 const manifest={schema_version:1,pythainlp_version:"5.4.0",pythainlp_wordlist_license:"CC0-1.0",pythainlp_wordlist_entries:2,assets:[{path:"native/pythainlp-default-words.txt",sha256:hash,size_bytes:bytes.byteLength}]};
 const calls=[],fetchImpl=async url=>{calls.push(String(url));if(String(url).endsWith("/manifest.json"))return {ok:true,json:async()=>manifest};return {ok:true,arrayBuffer:async()=>bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength)};};
@@ -9,7 +9,7 @@ const romanizer=await createRtgsRomanizer({baseUrl:new URL("https://example.test
 assert.equal(romanizer.engine,"ClippyFirst syllable-based RTGS");assert.equal(romanizer.segmentation,"PyThaiNLP 5.4.0 newmm + ClippyFirst structural syllable parser");assert.equal(romanizer.dictionaryEntries,2);
 const greeting=romanizer.romanize("สวัสดี");assert.equal(greeting.output,"sawatdi");assert.equal(greeting.unavailableCount,0);assert.equal(greeting.details[0].status,"transliterated");
 const punctuation=romanizer.romanize("สวัสดี!");assert.equal(punctuation.output,"sawatdi!");assert.equal(punctuation.details.at(-1).status,"passthrough");
-const six=romanizeRtgsTokenSequence([{input:"สิบ",kind:"thai"},{input:"หก",kind:"thai"}]);assert.equal(six.output,"sip-hok");assert.equal(six.unavailableCount,0);\nconst unsupported=romanizer.romanize("ๆ");assert.equal(unsupported.unavailableCount,1);assert.match(unsupported.output,/RTGS НЕ ПЕРЕВІРЕНО/);assert.equal(calls.length,2);
+const six=romanizeRtgsTokenSequence([{input:"สิบ",kind:"thai"},{input:"หก",kind:"thai"}]);assert.equal(six.output,"sip-hok");assert.equal(six.unavailableCount,0);\nassert.equal(romanizeRtgsThaiToken("กรรม").value,"kam");assert.equal(romanizeRtgsThaiToken("กรรไกร").value,"kankrai");assert.equal(romanizeRtgsThaiToken("กรรมการ").value,"kammakan");\nconst unsupported=romanizer.romanize("ๆ");assert.equal(unsupported.unavailableCount,1);assert.match(unsupported.output,/RTGS НЕ ПЕРЕВІРЕНО/);assert.equal(calls.length,2);
 await assert.rejects(createRtgsRomanizer({baseUrl:new URL("https://example.test/vendor/native/"),fetchImpl:async()=>({ok:true,json:async()=>({...manifest,pythainlp_wordlist_license:"UNKNOWN"})}),cryptoImpl:webcrypto}),e=>e instanceof RtgsRomanizerError&&e.code==="manifest_invalid");
 await assert.rejects(createRtgsRomanizer({baseUrl:new URL("https://example.test/vendor/native/"),fetchImpl:async url=>String(url).endsWith("/manifest.json")?{ok:true,json:async()=>manifest}:{ok:true,arrayBuffer:async()=>new TextEncoder().encode("tampered").buffer},cryptoImpl:webcrypto}),e=>e instanceof RtgsRomanizerError&&e.code==="wordlist_size_mismatch");
 console.log("RTGS syllable adapter, loader, hash guard and fail-closed behavior: PASS");
