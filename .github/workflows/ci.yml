@@ -26,19 +26,19 @@ jobs:
       - run: python scripts/generate_web_word_dictionary.py
       - run: node web/tests/mode-adversarial.test.mjs
       - run: python scripts/test_rtgs_parity.py
-      - name: Smoke-test the geographic dictionary with pinned RTGS and IPA adapter
+      - name: Smoke-test the Thai-text CSV batch engine with pinned RTGS and IPA adapter
         run: |
-          printf 'id,name_th,source_license\n1,กา,\n' > /tmp/geographic-input.csv
-          python scripts/build_geographic_dictionary.py /tmp/geographic-input.csv --output /tmp/geographic-output.csv
+          printf 'id,text_th,source_note\n1,กา,ordinary Thai word\n' > /tmp/thai-text-input.csv
+          python scripts/build_geographic_dictionary.py /tmp/thai-text-input.csv --thai-column text_th --output /tmp/thai-text-output.csv
           python - <<'PY'
           import csv
-          with open('/tmp/geographic-output.csv', encoding='utf-8-sig', newline='') as handle:
+          with open('/tmp/thai-text-output.csv', encoding='utf-8-sig', newline='') as handle:
               row = next(csv.DictReader(handle))
           assert row['romanization_rtgs'], row
           assert row['pipeline_status'] == 'COMPLETE_MODEL_OUTPUT_NOT_ADJUDICATED', row
           assert row['ipa_phonemic'] and row['ipa_broad_surface'] and row['ukrainian_from_ipa'], row
-          assert row['source_license'] == '', row
-          print({key: row[key] for key in ('name_th', 'romanization_rtgs', 'ipa_phonemic', 'ipa_broad_surface', 'ukrainian_from_ipa', 'pipeline_status')})
+          assert row['text_th'] == 'กา' and row['source_note'] == 'ordinary Thai word', row
+          print({key: row[key] for key in ('text_th', 'source_note', 'romanization_rtgs', 'ipa_phonemic', 'ipa_broad_surface', 'ukrainian_from_ipa', 'pipeline_status')})
           PY
       - run: python scripts/generate_derived.py
       - run: python scripts/generate_syllable_space.py

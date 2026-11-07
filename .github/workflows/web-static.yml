@@ -49,6 +49,7 @@ jobs:
         run: |
           test -s web/index.html
           test -s web/system.html
+          test -s web/thai-text-engine.html
           test -s web/src/styles.css
           test -s web/src/app.js
           test -s web/src/fastthaig2p-native-worker.js

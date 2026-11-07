@@ -182,6 +182,11 @@ jobs:
               && grep -Fq 'Спочатку працює нативний JavaScript-порт FastThaiG2P' /tmp/deployed-index.html \
               && grep -Fq 'id="thai-input"' /tmp/deployed-index.html \
               && grep -Fq 'id="analyze"' /tmp/deployed-index.html \
+              && grep -Fq 'href="thai-text-engine.html"' /tmp/deployed-index.html \
+              && curl --fail --silent --show-error "$PAGE_URL/thai-text-engine.html" -o /tmp/deployed-thai-text-engine.html \
+              && grep -Fq 'Рушій транскрипції тайського тексту' /tmp/deployed-thai-text-engine.html \
+              && grep -Fq 'пакетний Python CSV-інструмент' /tmp/deployed-thai-text-engine.html \
+              && grep -Fq 'RTGS' /tmp/deployed-thai-text-engine.html \
               && curl --fail --silent --show-error "$PAGE_URL/src/app.js?v=20261106-rtgs-inline-1" -o /tmp/deployed-app.js \
               && curl --fail --silent --show-error "$PAGE_URL/src/fastthaig2p-native-worker.js" -o /tmp/deployed-native-worker.js \
               && curl --fail --silent --show-error "$PAGE_URL/src/fastthaig2p-tltk-oov.js" -o /tmp/deployed-native-oov.js \
@@ -210,6 +215,7 @@ jobs:
               && grep -Fq 'не надсилається на API або зовнішній сервер' /tmp/deployed-system.html \
               && grep -Fq 'href="transcription.html"' /tmp/deployed-index.html \
               && grep -Fq 'href="transcription.html"' /tmp/deployed-system.html \
+              && grep -Fq 'href="thai-text-engine.html"' /tmp/deployed-system.html \
               && curl --fail --silent --show-error "$PAGE_URL/transcription.html" -o /tmp/deployed-transcription.html \
               && grep -Fq 'Тайсько-українська практична транскрипція' /tmp/deployed-transcription.html \
               && curl --fail --silent --show-error "$PAGE_URL/romanization.html" -o /tmp/deployed-romanization.html \
