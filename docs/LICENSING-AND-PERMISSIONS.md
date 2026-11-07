@@ -2,7 +2,7 @@
 
 **Current project policy:** original materials authored by Vitalii Volodymyrovych Tkachuk under the public pseudonym **ClippyFirst** are governed by the custom [ClippyFirst Project License](../LICENSE), version 1.0 (2026), copied in scope and structure from the companion Korean–Ukrainian project and adapted to this repository.
 
-This is a purpose-limited custom licence, **not** an OSI-approved open-source licence. Public repository visibility does not grant permission to reuse the source code or technical implementation.
+This is a purpose-limited custom licence, **not** an OSI-approved open-source licence. Public repository visibility does not grant permission to reuse the source code or technical implementation. This change is not retroactive: copies of earlier commits/releases that were distributed under MIT retain the permissions granted with those versions; replacing the current root LICENSE cannot revoke those prior grants.
 
 ## Permitted without an individual request
 
