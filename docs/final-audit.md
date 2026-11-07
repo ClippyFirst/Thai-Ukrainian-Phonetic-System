@@ -2312,3 +2312,14 @@ Final verified code head: `03b8dc5aee1faf98bbcbe5ca6dac1ef0f0b8e694` on `chore/r
 - Repository documentation now has one human contributor entry point (`CONTRIBUTING.md`), one agent-specific instruction file (`AGENTS.md`), one docs navigation layer, one canonical validation matrix/audit/handoff and one machine-readable audit register. No duplicate execution plan or upstream skill runtime was added.
 
 This establishes engineering acceptance for the RTGS code on the recorded head, not independent linguistic accuracy. Thai IPA expert-gold rows remain 0; RTGS accuracy is NOT_MEASURED; Ukrainian practical target forms remain provisional. Independent Thai-speaker/Ukrainian-native adjudication remains BLOCKED on qualified reviewers. Manual accessibility and physical-device performance remain DEFERRED/NOT_VERIFIED. The repository remains a research-oriented public beta/prototype, not a linguistically release-certified product.
+
+
+## Final documentation-head verification — 2026-11-07
+
+The documentation-only follow-up after code head `03b8dc5aee1faf98bbcbe5ca6dac1ef0f0b8e694` was verified on PR head `a8bb09d98cfb8c9de78e1c5f37a8c28f617ebed5`:
+
+- Web Static [#42398702456](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42398702456): SUCCESS, 16/16 steps.
+- Full CI [#42398702494](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42398702494): SUCCESS, test job 65/65 steps; wheel-install smoke 11/11.
+- Pages [#42398702509](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42398702509): SUCCESS, build 27/27 steps; deploy job skipped for pull-request event.
+
+No production deployment occurred in these PR checks. The code itself is unchanged from the already passing code head; the later commits reconcile documentation and evidence registers. Engineering acceptance is verified; independent linguistic certification is still not available.
