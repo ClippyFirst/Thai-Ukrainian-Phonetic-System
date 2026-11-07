@@ -377,16 +377,53 @@ export function analyzeThaiSyllablesForRomanization(input) {
   const key = normalize(input);
   if (!key) return { input: key, status: "unresolved", segmentation: "none", syllables: [] };
   const lexical = TEXT_LEXICON.get(key);
-  const syllables = lexical
-    ? lexical.map(analyze)
-    : softSyllabify(key);
+  let syllables;
+  let segmentation;
+  if (lexical) {
+    syllables = lexical.map(analyze);
+    segmentation = "curated-syllable-lexicon";
+  } else {
+    const chars = [...key];
+    const { ends } = clusterBoundaries(chars);
+    const boundaries = [...ends].filter(end => end > 0).sort((a,b) => a-b);
+    const memo = new Map();
+    const solve = offset => {
+      if (offset === chars.length) return [[]];
+      if (memo.has(offset)) return memo.get(offset);
+      const paths = [];
+      for (const end of boundaries) {
+        if (end <= offset || end - offset > 8) continue;
+        const candidate = chars.slice(offset,end).join("");
+        const item = analyze(candidate);
+        if (item.status !== "analyzed" || !item.phonemicIpa || !item.ukrainian) continue;
+        for (const suffix of solve(end)) paths.push([item,...suffix]);
+      }
+      if (!paths.length) {
+        memo.set(offset, []);
+        return [];
+      }
+      const maxSyllables = Math.max(...paths.map(path => path.length));
+      const unique = new Map();
+      for (const path of paths) {
+        if (path.length !== maxSyllables) continue;
+        unique.set(path.map(item => item.input).join("|"), path);
+        if (unique.size >= 16) break;
+      }
+      const best = [...unique.values()];
+      memo.set(offset,best);
+      return best;
+    };
+    const paths = solve(0);
+    syllables = paths.length === 1 ? paths[0] : [];
+    segmentation = paths.length === 1 ? "structural-dp-syllabifier" : "structural-dp-ambiguous-or-unresolved";
+  }
   const complete = syllables.length > 0 && syllables.every(item =>
     item.status === "analyzed" && typeof item.phonemicIpa === "string" && item.phonemicIpa.length > 0
   );
   return {
     input: key,
     status: complete ? "analyzed" : "unresolved",
-    segmentation: lexical ? "curated-syllable-lexicon" : "structural-soft-syllabifier",
+    segmentation,
     syllables
   };
 }
