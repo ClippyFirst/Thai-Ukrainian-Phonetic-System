@@ -3169,3 +3169,14 @@ Latest branch head: `228d80d51d58a4437ab0f70ba12597a1259902e8`. The UI contract 
 - Web Static #42382112665 SUCCESS; Pyodide compatibility #42382112705 SUCCESS; Pages build/deploy/live smoke #42382112704 SUCCESS. The published-site smoke now checks `/thai-text-engine.html` and its navigation. Site API #42381570708 SUCCESS on the PR #230 merge head; no API source changed afterward.
 - Remaining genuine blockers: independent Thai IPA gold and Ukrainian-native target adjudication (gold rows 0; accuracy NOT_MEASURED); manual accessibility acceptance; instrumented physical-device performance. Do not infer linguistic accuracy from CI or parity.
 - Readiness: engineering-verified public beta / research prototype; not ready for general linguistic-accuracy claims or a fully validated linguistic release.
+## Immediate continuation — systematic RTGS romanization, 2026-11-07
+
+- Working branch: `feat/rtgs-systematic-quality-2026-11-07`.
+- Base/default main at start: `5fb5cde9c31126e07b4285a04fff11e2314760a0`.
+- PR #231 was closed as superseded; use draft PR #232 only: https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/232 .
+- Main goal is a general syllable-based RTGS engine, not a growing table of output exceptions. Production uses `web/src/rtgs-phonological.js` and the source-phonology export in `web/src/engine.js`. PyThaiNLP royin remains a comparator.
+- Implemented in the branch: positional onset/rime/coda RTGS mapping; off-glide handling; dynamic structural syllable parsing; ambiguity abstention; contextual รร expansion; exact compound recombination; internal syllable hyphens vs inter-word spaces; source-example acceptance cases; official Bangkok proper-name form.
+- Important evidence qualification: BGN/PCGN publishes whole-word romanizations, not all internal syllable boundaries. Curated parses inferred from those outputs are project implementation decisions, not independently source-attested syllable boundaries.
+- Exact-head Web Static, CI and Pages checks are queued/pending at the checkpoint. Do not merge until all pass on the final head. Earlier-head runs were cancelled by subsequent commits and are not evidence. Local tests were not run because the environment could not resolve github.com.
+- Remaining acceptance: verify exact-head checks, inspect failures and fix them; update this handoff/matrix with actual final statuses and commit SHA; retain linguistic accuracy as NOT_MEASURED until independent Thai-speaker adjudication and separate Ukrainian-native review exist.
+- PR #232 stays draft; do not publish a linguistic-accuracy claim. If checks pass, squash-merge only after reviewing the final diff, then verify mainline CI and Pages deployment.

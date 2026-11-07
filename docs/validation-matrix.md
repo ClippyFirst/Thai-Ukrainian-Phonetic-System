@@ -2293,3 +2293,17 @@ Branch reconciliation rule: do not merge a stale branch merely because GitHub re
 | Site API | DONE_VERIFIED | Main run #42381570708 SUCCESS on the PR #230 merge commit. No Site API implementation changed in later documentation/workflow commits. |
 | Independent linguistic validation | NOT_MEASURED / BLOCKED | Independent Thai IPA gold rows remain 0; Ukrainian practical forms remain provisional. Requires qualified independent Thai reviewers, adjudication and separate Ukrainian-native target review. |
 | Manual accessibility and physical-device performance | DEFERRED / NOT_VERIFIED | Requires recorded keyboard/screen-reader/zoom/reflow/device acceptance and instrumented cold/warm/offline/mobile latency, transfer and memory measurements. |
+## RTGS systematic romanization engine — 2026-11-07
+
+| Work item | Status | Evidence / acceptance |
+|---|---|---|
+| Replace production whole-token grapheme heuristic with syllable-aware RTGS adapter | PARTIAL — implementation on PR #232; exact-head verification pending | Dedicated `web/src/rtgs-phonological.js` consumes shared Thai source-phonology analysis from `web/src/engine.js`, maps onset/rime/coda positionally, and preserves fail-closed behavior. |
+| Syllable parsing and ambiguity | PARTIAL | Bounded dynamic parser explores structurally valid syllable paths. It accepts only a unique RTGS rendering; excessive parse ambiguity is withheld rather than silently truncated. Existing curated `TEXT_LEXICON` is reused. |
+| RTGS syllable hyphenation vs word spacing | PARTIAL | Hyphens are inserted inside parsed words; tokenizer word boundaries remain spaces. Exact reviewed compounds split by newmm are recombined before rendering. |
+| Source-example acceptance corpus | PENDING_VERIFICATION | Published BGN/PCGN examples are tested separately from PyThaiNLP parity. Internal syllable boundaries inferred from whole-word examples are explicitly identified as project decisions, not source-attested boundaries. |
+| Official Bangkok name | IMPLEMENTED_PENDING_VERIFICATION | Exact official form `กรุงเทพมหานคร → krung thep maha nakhon` is supported by the Royal Society of Thailand directory; it is a proper-name entry, not a generic spelling rule. |
+| Reduce legacy exception reliance | PARTIAL | Generic legacy grapheme fallback is no longer used as a production fallback; only records marked as reviewed lexical corrections remain eligible. A small source-attested layer remains for genuinely irregular readings/proper names. |
+| Exact PR-head Web Static, full CI and Pages build | BLOCKED_PENDING_GITHUB_ACTIONS | PR #232 exact-head workflows are queued; no pass is claimed. Local clone/tests were unavailable because the environment could not resolve github.com. |
+| Independent linguistic validation | BLOCKED_EVIDENCE | No new independently adjudicated Thai-speaker gold or Ukrainian-native target review. RTGS overall accuracy remains NOT_MEASURED. |
+
+Branch: `feat/rtgs-systematic-quality-2026-11-07`; base main at `5fb5cde9c31126e07b4285a04fff11e2314760a0`. PR #231 was closed as superseded; PR #232 remains open and draft. Do not merge or publish until exact-head Web Static, CI and Pages checks pass. PyThaiNLP 5.4.0 royin is a comparator, not linguistic ground truth. Readiness for this RTGS change: PARTIAL PROTOTYPE, not a linguistically validated release.
