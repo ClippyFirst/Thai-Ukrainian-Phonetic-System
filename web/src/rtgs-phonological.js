@@ -35,6 +35,8 @@ const RTGS_PROPER_NAMES = new Map([
 // and the same RTGS onset/vowel/coda adapter.
 const RTGS_EXAMPLE_SOURCE = "https://assets.publishing.service.gov.uk/media/5ab4e60aed915d78b9a459f5/ROMANIZATION_OF_THAI.pdf";
 const RTGS_SYLLABLE_SEGMENTATIONS = new Map([
+  ["สิบหก", ["สิบ","หก"]],
+  ["ลูกเห็บ", ["ลูก","เห็บ"]],
   ["สิบ", ["สิบ"]],
   ["หก", ["หก"]],
   ["สะอาด", ["สะ","อาด"]],
@@ -257,12 +259,11 @@ export function romanizeRtgsTokenSequence(tokens) {
       continue;
     }
 
-    let separatorBefore = "";
-    if (previous && result.first && previous.last && needsHyphen(previous.last, result.first)) {
-      separatorBefore = "-";
-    } else if (previousWord) {
-      separatorBefore = " ";
-    }
+    // The tokenizer yields word tokens. Hyphens are decided only between
+    // syllables inside one word; distinct word tokens are separated by spaces.
+    // Known compounds split by newmm are recombined above via exact source-backed
+    // sequence keys before this boundary is reached.
+    const separatorBefore = previousWord ? " " : "";
     details.push({
       kind:"thai", input, status:"transliterated",
       value:result.value, romanized:result.value, separatorBefore,
