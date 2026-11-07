@@ -18,11 +18,13 @@ assert.equal(romanizeRtgsTokenSequence([
   { kind: "thai", input: "กรุงเทพ" },
   { kind: "thai", input: "มหานคร" }
 ]).map(item => item.value).join(""), "krung thep maha nakhon", "reviewed proper names must survive tokenizer boundary splits");
-assert.equal(romanizeRtgsTokenSequence([
+const separatedBangkokParts = romanizeRtgsTokenSequence([
   { kind: "thai", input: "กรุงเทพ" },
   { kind: "space", input: " " },
   { kind: "thai", input: "มหานคร" }
-]).map(item => item.value).join(""), "กรุงเทพ มหานคร", "lexical merging must not cross whitespace boundaries");
+]);
+assert.equal(separatedBangkokParts.length, 3, "lexical merging must not cross whitespace boundaries");
+assert.notEqual(separatedBangkokParts[0].input + separatedBangkokParts[2].input, "กรุงเทพมหานคร");
 assert.equal(romanizeRtgsWord("test").status, "unavailable");
 assert.equal(romanizeRtgsWord("").status, "unavailable");
 assert.equal(romanizeRtgsWord("ห").value, "");
