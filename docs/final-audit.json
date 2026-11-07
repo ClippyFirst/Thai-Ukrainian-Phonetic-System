@@ -5384,6 +5384,12 @@
       "integration_spike": 42366974837,
       "all": "SUCCESS",
       "pages_deploy": "SKIPPED_PR_CONTEXT"
+    },
+    "mainline_pages_deployment": {
+      "status": "NOT_VERIFIED",
+      "pr_build_run": 42366974912,
+      "pr_deploy": "SKIPPED_PR_CONTEXT",
+      "acceptance": "Verify deployed main Pages site serves geography.html and licensing.html."
     }
   }
 }
