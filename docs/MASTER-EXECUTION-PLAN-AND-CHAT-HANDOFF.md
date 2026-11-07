@@ -1,3 +1,13 @@
+## 2026-11-07 — Audit closeout after PR #229
+
+- PR #229 merged as 275be185cc788e693b37d015590087c37a301df1; exact-head CI #42366974836, Web static #42366974818, Pages artifact build #42366974912, Site API #42366974842, Pyodide compatibility #42366974877, external G2P smoke #42366974864 and integration spike #42366974837 all SUCCESS.
+- The matrix and structured audit mark the code/site content and licence alignment DONE_VERIFIED. Mainline Pages deployment/live smoke remains PARTIAL / NOT_VERIFIED: the PR Pages artifact build succeeded, but deployment was skipped in PR context and a post-merge live deployment could not be independently confirmed. Acceptance is a live check that the published site serves geography.html and licensing.html.
+- Final documentation/audit checkpoint before this entry: 71fdf177d9fdcf90f6bfb173092538e0719e3672. This handoff update is the final repository commit for this work session.
+- No open PRs remain. No local checkout/tests were run; CI evidence above is GitHub Actions evidence on exact PR head.
+- Linguistic accuracy for geographic proper names remains NOT_MEASURED pending a source-licensed corpus and independent Thai IPA/Ukrainian review.
+
+---
+
 ## 2026-11-07 — Географічний рушій на сайті та ліцензія: merge + exact-head verification
 
 - Робоча гілка: feat/geographic-engine-site-license-2026-11-07, створена від main `529cf4cf50db1c08f12a7a0808e9f4a8d5c24dfc`.
