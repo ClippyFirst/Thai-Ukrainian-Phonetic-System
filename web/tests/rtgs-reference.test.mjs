@@ -12,6 +12,17 @@ for (const [thai, expected] of examples) {
   assert.equal(result.value, expected, thai);
   assert.equal(result.source, "PyThaiNLP 5.4.0 royin port + ClippyFirst orthographic correction");
 }
+assert.equal(romanizeRtgsWord("กรุงเทพมหานคร").value, "krung thep maha nakhon", "Bangkok's official RTGS name must preserve all four lexical components");
+assert.equal(romanizeRtgsWord("กรุงเทพมหานคร").source, "Royal Society of Thailand official proper-name form");
+assert.equal(romanizeRtgsTokenSequence([
+  { kind: "thai", input: "กรุงเทพ" },
+  { kind: "thai", input: "มหานคร" }
+]).map(item => item.value).join(""), "krung thep maha nakhon", "reviewed proper names must survive tokenizer boundary splits");
+assert.equal(romanizeRtgsTokenSequence([
+  { kind: "thai", input: "กรุงเทพ" },
+  { kind: "space", input: " " },
+  { kind: "thai", input: "มหานคร" }
+]).map(item => item.value).join(""), "กรุงเทพ มหานคร", "lexical merging must not cross whitespace boundaries");
 assert.equal(romanizeRtgsWord("test").status, "unavailable");
 assert.equal(romanizeRtgsWord("").status, "unavailable");
 assert.equal(romanizeRtgsWord("ห").value, "");
