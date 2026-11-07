@@ -239,7 +239,6 @@ export function romanizeRtgsTokenSequence(tokens) {
         details.push({ kind:"thai", input:token.input, status:"unavailable", value, romanized:null, separatorBefore:"" });
         output += value;
       }
-      previous = null;
       continue;
     }
 
@@ -252,7 +251,6 @@ export function romanizeRtgsTokenSequence(tokens) {
       const value = "⟦RTGS НЕ ПЕРЕВІРЕНО: " + input + "⟧";
       details.push({ kind:"thai", input, status:"unavailable", value, romanized:null, separatorBefore:"" });
       output += value;
-      previous = null;
       previousWord = null;
       continue;
     }
