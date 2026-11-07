@@ -3207,3 +3207,14 @@ Latest branch head: `228d80d51d58a4437ab0f70ba12597a1259902e8`. The UI contract 
 - Linguistic release gates remain open: Thai IPA adjudicated gold = 0; RTGS linguistic accuracy NOT_MEASURED; Ukrainian target forms provisional; qualified independent Thai/Ukrainian reviewers unavailable. Manual accessibility and physical-device performance remain deferred/unverified.
 - Next: review PR #233 and merge only after review supports it; then inspect post-merge main CI. Preserve historical branch refs; do not delete them merely to create a single active working line.
 - Readiness: engineering-verified RTGS implementation candidate, research-ready for further evaluation, but not release-ready as a linguistically validated transcription system.
+
+
+## 2026-11-07 — final PR-head verification and merge decision
+
+- Final PR head: `a8bb09d98cfb8c9de78e1c5f37a8c28f617ebed5`; continuation branch is 85 commits ahead of main base `5fb5cde9c31126e07b4285a04fff11e2314760a0`, with no commits behind.
+- Web Static #42398702456: SUCCESS (16/16).
+- Full CI #42398702494: SUCCESS (65/65 test steps); wheel-install smoke SUCCESS (11/11).
+- Pages #42398702509: SUCCESS (27/27 build steps); deploy skipped for pull-request event.
+- PR #232 is closed as superseded; PR #233 is the only open PR for this work. The old geographic/general-text branches were reconciled against main and are retained as historical refs, not merged wholesale. The separate legacy RTGS branch's proper-name reading is already represented by the new production adapter.
+- Self-review was performed in two separate passes (pipeline/spec compliance and code/test quality); no independent human reviewer/subagent was available. The owner explicitly requested branch consolidation, and all automated acceptance checks pass, so PR #233 is ready for squash merge. After merge, verify main CI and Pages deployment separately.
+- Linguistic release status remains research-ready, not release-certified: no independent Thai-speaker gold, no Ukrainian-native target adjudication, RTGS accuracy NOT_MEASURED, manual accessibility and physical-device performance unverified.
