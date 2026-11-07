@@ -397,7 +397,7 @@ export function analyzeThaiSyllablesForRomanization(input) {
         if (end <= offset || end - offset > 8) continue;
         const candidate = chars.slice(offset,end).join("");
         const item = analyze(candidate);
-        if (item.status !== "analyzed" || !item.phonemicIpa || !item.ukrainian) continue;
+        if (item.status !== "analyzed" || !item.phonemicIpa) continue;
         for (const suffix of solve(end)) paths.push([item,...suffix]);
       }
       if (!paths.length) {
