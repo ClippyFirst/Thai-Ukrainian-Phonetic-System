@@ -1,3 +1,17 @@
+## 2026-11-07 — Географічний рушій на сайті та ліцензія: merge + exact-head verification
+
+- Робоча гілка: feat/geographic-engine-site-license-2026-11-07, створена від main `529cf4cf50db1c08f12a7a0808e9f4a8d5c24dfc`.
+- PR [#229](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/229) squash-merged у main як `275be185cc788e693b37d015590087c37a301df1`.
+- Додано web/geography.html; homepage та system.html ведуть до неї. Сторінка пояснює окремий Python CSV batch engine, RTGS side channel, typed Thai → IPA → Ukrainian pipeline, запуск, джерельні метадані та невиміряну точність географічних власних назв.
+- Додано web/licensing.html і docs/LICENSING-AND-PERMISSIONS.md. Root LICENSE, pyproject metadata і CITATION.cff переведені на ClippyFirst Project License v1.0 за моделлю корейського репозиторію. Third-party notices збережені окремо.
+- Перехід з MIT не має зворотної сили: попередні commits/releases, поширені під MIT, зберігають права, надані тодішньою ліцензією. Це прямо зазначено в LICENSE, public licensing page та docs.
+- Exact-head checks для PR head `15c99c2de05d301f39124971d879129a103304c5`: CI #42366974836 SUCCESS (повний Python/browser pipeline, wheel install smoke, registry/artifact checks); Web static #42366974818 SUCCESS; Pages build #42366974912 SUCCESS (artifact build; deploy skipped in PR context); Site API #42366974842 SUCCESS; Pyodide compatibility #42366974877 SUCCESS; external G2P smoke #42366974864 SUCCESS; integration spike #42366974837 SUCCESS.
+- Локальний checkout та локальний запуск тестів не виконувалися; верифікація проведена GitHub Actions на exact PR head.
+- Mainline CI та Pages deployment/live smoke після merge і документаційного closeout ще потрібно перевірити; не оголошувати production update завершеним до цих результатів.
+- Географічна точність залишається NOT_MEASURED: реального source-licensed корпусу та незалежної Thai IPA/Ukrainian редакторської перевірки немає.
+
+---
+
 ## 2026-11-07 — Публічна згадка географічного рушія та узгодження ліцензії
 
 - Стартовий main commit: 529cf4cf50db1c08f12a7a0808e9f4a8d5c24dfc.
