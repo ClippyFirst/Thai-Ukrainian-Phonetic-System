@@ -3211,7 +3211,7 @@ Latest branch head: `228d80d51d58a4437ab0f70ba12597a1259902e8`. The UI contract 
 
 ## 2026-11-07 — final PR-head verification and merge decision
 
-- Final PR head: `a8bb09d98cfb8c9de78e1c5f37a8c28f617ebed5`; continuation branch is 85 commits ahead of main base `5fb5cde9c31126e07b4285a04fff11e2314760a0`, with no commits behind.
+- Last fully tested candidate head: `a8bb09d98cfb8c9de78e1c5f37a8c28f617ebed5`. Subsequent commits through `d8e4d992bb9d57bcf21f901ad59efae470163b08` update only audit/navigation documents; no source code changed after the tested candidate. The continuation branch remains a fast-forward descendant of main base `5fb5cde9c31126e07b4285a04fff11e2314760a0`, with no commits behind.
 - Web Static #42398702456: SUCCESS (16/16).
 - Full CI #42398702494: SUCCESS (65/65 test steps); wheel-install smoke SUCCESS (11/11).
 - Pages #42398702509: SUCCESS (27/27 build steps); deploy skipped for pull-request event.
