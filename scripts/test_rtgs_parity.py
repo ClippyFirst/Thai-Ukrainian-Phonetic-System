@@ -24,7 +24,8 @@ CORPUS = ROOT / "docs" / "research" / "rtgs-parity-corpus.json"
 DICTIONARY = ROOT / "data" / "thai" / "words_th_cc0.txt"
 NODE = r"""
 import { readFile } from 'node:fs/promises';
-import { romanizeRtgsWord, romanizeRtgsWords } from './web/src/rtgs-reference.js';\nimport { romanizeRtgsTokenSequence } from './web/src/rtgs-phonological.js';
+import { romanizeRtgsWord, romanizeRtgsWords } from './web/src/rtgs-reference.js';
+import { romanizeRtgsTokenSequence } from './web/src/rtgs-phonological.js';
 import { createFastThaiG2PNativeTokenizer } from './web/src/fastthaig2p-tokenizer.js';
 let input = '';
 for await (const chunk of process.stdin) input += chunk;
