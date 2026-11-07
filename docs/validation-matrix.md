@@ -1,3 +1,11 @@
+## Уточнення публічного позиціювання рушія — 2026-11-07
+
+| Task | State | Evidence / acceptance |
+|---|---|---|
+| Public-facing description of the batch engine | DONE_VERIFIED (copy correction; CI pending) | Replaced the geography-only public page with web/thai-text-engine.html. Homepage, method page and licensing navigation now describe a general Thai-text CSV batch transcription tool. The implementation still lives in the historically named geographic-dictionary builder and optional geography dependency extra; the page explicitly discloses that origin and that it is a Python CSV utility, not an interactive browser form. RTGS remains a separate Latin romanization path; Ukrainian output remains IPA-derived. |
+| Old geography-only public page and links | DONE_VERIFIED (copy correction; CI pending) | Removed web/geography.html and updated public links/tests to the new page. The internal geographic-dictionary dataset/template/docs remain intact for their original corpus workflow. |
+| Linguistic quality claims | NOT_MEASURED | No new linguistic validation is claimed. The engine's supported outputs and fail-closed limitations remain unchanged. |
+
 ## Сайт географічного рушія та ліцензійна політика — 2026-11-07
 
 PR [#229](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/229) squash-merged into main as 275be185cc788e693b37d015590087c37a301df1. Exact-head CI #42366974836, Web static #42366974818, Pages build #42366974912, Site API #42366974842, Pyodide compatibility #42366974877, external G2P smoke #42366974864 and integration spike #42366974837 all SUCCESS. PR Pages deployment was skipped by design; mainline deployment/live smoke is tracked separately.
