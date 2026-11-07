@@ -422,30 +422,32 @@ export function analyzeThaiSyllablesForRomanization(input) {
         memo.set(offset, []);
         return [];
       }
-      const maxSyllables = Math.max(...paths.map(path => path.length));
       const unique = new Map();
       for (const path of paths) {
-        if (path.length !== maxSyllables) continue;
         unique.set(path.map(item => item.input).join("|"), path);
-        if (unique.size >= 16) break;
+        // Keep one overflow sentinel. The caller must abstain if this cap is hit;
+        // never silently discard competing parses and call the remainder unique.
+        if (unique.size > 16) break;
       }
-      const best = [...unique.values()];
-      memo.set(offset,best);
-      return best;
+      const candidates = [...unique.values()];
+      memo.set(offset,candidates);
+      return candidates;
     };
     paths = solve(0);
     syllables = paths.length === 1 ? paths[0] : [];
     segmentation = paths.length === 1 ? "structural-dp-syllabifier" : paths.length > 1 ? "structural-dp-multiple-candidates" : "structural-dp-unresolved";
   }
-  const complete = paths.length > 0 && paths.every(path => path.length > 0 && path.every(item =>
+  const pathsTruncated = !lexical && paths.length > 16;
+  const complete = paths.length > 0 && !pathsTruncated && paths.every(path => path.length > 0 && path.every(item =>
     item.status === "analyzed" && typeof item.phonemicIpa === "string" && item.phonemicIpa.length > 0
   ));
   return {
     input: key,
     status: complete ? "analyzed" : "unresolved",
-    segmentation,
+    segmentation: pathsTruncated ? "structural-dp-too-ambiguous" : segmentation,
     syllables,
-    paths: complete ? paths : []
+    paths: complete ? paths : [],
+    pathsTruncated
   };
 }
 
