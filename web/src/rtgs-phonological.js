@@ -241,6 +241,7 @@ export function romanizeRtgsTokenSequence(tokens) {
         details.push({ kind:"thai", input:token.input, status:"unavailable", value, romanized:null, separatorBefore:"" });
         output += value;
       }
+      hasPreviousThaiToken = true;
       continue;
     }
 
