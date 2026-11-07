@@ -2306,7 +2306,7 @@ Branch reconciliation rule: do not merge a stale branch merely because GitHub re
 | Exact PR-head Web Static, full CI and Pages build | DONE_VERIFIED (code head) | PR #233 code head `03b8dc5aee1faf98bbcbe5ca6dac1ef0f0b8e694`: Web Static #42398132500 PASS; CI #42398132548 PASS (65 steps); Pages build #42398132498 PASS, deploy skipped for PR. Documentation-only commits after this code head require a final exact-head rerun. |
 | Independent linguistic validation | BLOCKED_EVIDENCE | No new independently adjudicated Thai-speaker gold or Ukrainian-native target review. RTGS overall accuracy remains NOT_MEASURED. |
 
-Continuation branch: `chore/repository-structure-rtgs-closeout-2026-11-07`, a fast-forward descendant of main `5fb5cde9c31126e07b4285a04fff11e2314760a0` with 0 commits behind. PR #232 is closed as superseded; PR #233 is open and ready for review. The last fully tested candidate head `a8bb09d98cfb8c9de78e1c5f37a8c28f617ebed5` passed Web Static, full CI and Pages build; subsequent changes are audit/navigation documentation only, with no source-code changes. PyThaiNLP 5.4.0 royin is a comparator, not linguistic ground truth. Readiness: ENGINEERING_VERIFIED / RESEARCH_READY, not a linguistically validated release.
+Consolidated implementation is merged to `main`: PR #233 → `9d829f0bd505b8a9c7b23fe24418ae3511a776fb`; Pyodide workflow repair PR #234 → `8c91eabfa1f499f5fbea3bc42c8db9b4fcc0b12b`. PR #232 is closed as superseded; PRs #233 and #234 are merged. No open PRs remain. Historical branches are preserved but not active. PyThaiNLP 5.4.0 royin is a comparator, not linguistic ground truth. Readiness: ENGINEERING_VERIFIED / RESEARCH_READY, not a linguistically validated release.
 
 
 ## RTGS CI failure analysis and repository structure continuation — 2026-11-07
@@ -2324,4 +2324,21 @@ Continuation branch: `chore/repository-structure-rtgs-closeout-2026-11-07`, a fa
 | Manual accessibility / physical-device performance | DEFERRED / NOT_VERIFIED | Requires recorded human keyboard/screen-reader/zoom/reflow acceptance and instrumented physical-device cold/warm/offline latency, transfer and memory measurements. |
 
 Branch reconciliation: the RTGS feature branch was 60 commits ahead of main with no commits behind; this continuation branch is based on that descendant of main. The geographic-engine, geographic-dictionary and general-Thai-text branches are divergent/stale relative to main and their relevant changes are already represented on main; their histories are not merged a second time. The separate 10-commit `fix/rtgs-romanization-quality-2026-11-07` branch is based on the old main base and modifies the legacy royin renderer, not the new syllable-based production adapter; it is preserved as a comparison source, not merged wholesale. Historical refs are retained. One active continuation branch is used for the consolidated work.
+
+
+
+## Post-merge mainline and Pyodide workflow repair — 2026-11-07
+
+| Work item | Status | Evidence / acceptance |
+|---|---|---|
+| PR #233 post-merge Web Static | DONE_VERIFIED | Main commit `9d829f0bd505b8a9c7b23fe24418ae3511a776fb`, run [#42399176794 PASS](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42399176794). |
+| PR #233 post-merge full CI | DONE_VERIFIED | Run [#42399176802 PASS](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42399176802): test 65/65, wheel-install smoke 11/11, master-artifact 6/6. |
+| PR #233 post-merge Pages | DONE_VERIFIED | Run [#42399176759 PASS](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42399176759): build 27/27, deploy 4/4, published service/local-processing verification passed. |
+| First post-merge Pyodide compatibility | FAILED — ROOT CAUSE FOUND | Run [#42399176619](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42399176619): Chromium browser test received 404 for untracked `web/src/word-dictionary.generated.js`; the workflow omitted `scripts/generate_web_word_dictionary.py`. Runtime engine code was not the cause. |
+| Pyodide workflow fix | DONE_VERIFIED | PR #234 adds the existing pinned dictionary generator before browser tests and watches the generator plus CC0 source/manifest in both push and PR path filters. |
+| PR #234 Pyodide compatibility | DONE_VERIFIED | PR run [#42399472395 PASS](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42399472395), 20/20 steps including real Pyodide worker in Chromium and native worker. |
+| PR #234 full CI | DONE_VERIFIED | PR run [#42399472396 PASS](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42399472396): test 65/65 and wheel smoke 11/11. |
+| PR #234 post-merge Pyodide compatibility | DONE_VERIFIED | Main run [#42399972927 PASS](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42399972927), 20/20 steps. |
+| PR #234 post-merge full CI | DONE_VERIFIED | Main run [#42399972992 PASS](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42399972992): test 65/65, wheel smoke 11/11, master-artifact 6/6. |
+| Current PR / branch state | DONE_VERIFIED | PRs #233 and #234 merged; no open PRs. Main is the active line. Old branch refs are retained as history. |
 
