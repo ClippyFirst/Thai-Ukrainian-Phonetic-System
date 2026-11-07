@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Пакетний рушій ClippyFirst для транскрипції тайського тексту: RTGS, IPA та українська адаптація через IPA.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; object-src 'none'; form-action 'self'">
+<title>Транскрипція тайського тексту — Тайська → українська</title><link rel="stylesheet" href="src/styles.css?v=20261107-geography-1">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Перейти до основного вмісту</a>
+<header class="site-header"><a class="brand" href="./" aria-label="Тайська → українська">ТАЙСЬКА <span>→</span> УКРАЇНСЬКА</a>
+<nav aria-label="Основна навігація"><a href="./">Сервіс</a><a href="transcription.html">Практична система</a><a href="romanization.html">Романізація</a><a class="active" href="thai-text-engine.html" aria-current="page">Транскрипція</a><a href="system.html">Як це працює</a></nav></header>
+<main class="container system" id="main-content" tabindex="-1">
+<section class="hero"><p class="eyebrow">ДОДАТКОВИЙ ІНСТРУМЕНТ CLIPPYFIRST</p><h1>Рушій транскрипції тайського тексту</h1>
+<p class="lede">У проєкті є окремий пакетний Python-рушій для обробки тайського тексту. Він може додавати до рядків CSV латинську романізацію RTGS, IPA та попередній український запис, побудований через IPA. Це додатковий інструмент для тих, кому потрібна пакетна транскрипція слів і фраз; він не перекладає значення тексту.</p></section>
+<section class="evidence"><p class="eyebrow">ТРИ ПОДАННЯ — ДВА НЕЗАЛЕЖНІ МАРШРУТИ</p><h2>Що саме обчислює рушій</h2>
+<ol><li><strong>RTGS:</strong> окрема латинська романізація через PyThaiNLP 5.4.0 (newmm + royin) із закріпленим CC0 словником.</li>
+<li><strong>IPA:</strong> аналіз тайського написання на фонемний IPA та, коли підтримано, окремий широкий поверхневий IPA.</li>
+<li><strong>Українська адаптація:</strong> форма створюється лише з типізованого IPA через наявний IPA → Ukrainian адаптер ClippyFirst.</li></ol>
+<p>RTGS не є джерелом української форми. Якщо IPA-аналіз неповний або не підтриманий, IPA та український результат утримуються, а не вгадуються. Технічно повний результат не означає, що власну назву вже перевірив фахівець.</p></section>
+<section class="evidence"><p class="eyebrow">ПАКЕТНА ОБРОБКА</p><h2>Як скористатися</h2>
+<p>Це пакетний Python CSV-інструмент у репозиторії, а не окреме поле введення на цій вебсторінці. Додайте тайський текст у колонку name_th (або задайте іншу назву через --thai-column). Підійдуть звичайні слова, фрази чи більші текстові фрагменти; для кожного рядка інструмент формує окремий результат.</p>
+<pre><code>python -m pip install -e ".[geography]"
+python scripts/build_geographic_dictionary.py data/geography/input.csv \
+  --thai-column name_th \
+  --output build/transcription.csv</code></pre>
+<p>Скрипт зберігає початкові колонки й додає RTGS, фонемний IPA, широкий поверхневий IPA, український результат, статус, метод сегментації та попередження. RTGS — окрема латинська романізація; українська форма будується тільки через IPA.</p>
+<p><a href="https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/blob/main/docs/geographic-dictionary.md" rel="noopener noreferrer">Документація пакетного CSV-рушія →</a> · <a href="https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/blob/main/data/geography/geographic-names-template.csv" rel="noopener noreferrer">Приклад структури CSV →</a> · <a href="https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/tree/main/scripts" rel="noopener noreferrer">Скрипти репозиторію →</a></p></section>
+<section class="evidence"><p class="eyebrow">СТАН ДОКАЗІВ</p><h2>Дослідницький інструмент із попередніми результатами</h2>
+<p>Результати не є експертно підтвердженою транскрипцією. Технічний smoke test підтверджує роботу програмного маршруту, але не точність вимови кожного слова чи фрази. Для відповідального використання важливі результати слід перевіряти за надійними джерелами або з фахівцем тайської мови.</p></section>
+</main>
+<footer><span class="footer-brand">Тайська <strong>→</strong> українська</span><span class="footer-note">Дослідницький проєкт · Бета-версія</span>
+<nav aria-label="Додаткова навігація"><a href="./">Сервіс</a><a href="romanization.html">Романізація</a><a href="thai-text-engine.html">Транскрипція</a><a href="system.html">Метод</a><a href="licensing.html">Ліцензія проєкту</a><a href="third-party-notices.html">Сторонні компоненти</a></nav></footer>
+</body></html>
