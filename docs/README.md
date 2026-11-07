@@ -2,22 +2,17 @@
 
 This page is the navigation layer for the repository. It distinguishes the maintained product contract from research evidence and the chronological execution record.
 
-## Current repository state — 2026-11-07
+## Current repository state — 2026-11-07 (verified mainline closeout)
 
-- Default branch: `main`. Current starting point for this documentation pass: `7d4c7e8c693389a8ac3f0ca3c3a313bfeb05043e` (PR #230 squash merge).
-- PR #228 (CSV batch engine), #229 (project licensing and public licensing pages), and #230 (general Thai-text engine positioning) are merged. PR #230 exact-head checks all passed: CI #42369182862, Web Static #42369182837, Site API #42369182879, Pyodide compatibility #42369182854 and Pages build #42369182865.
-- Main-branch checks for `7d4c7e8c693389a8ac3f0ca3c3a313bfeb05043e` are running or have not yet completed at the time of this snapshot. Web Static #42381570719 has passed; CI #42381570725, Site API #42381570708, Pyodide compatibility #42381570767 and Pages #42381570753 were still in progress. Do not claim live publication until the Pages deploy and live smoke are successful.
-- Public batch-tool page: [Thai text transcription engine](../web/thai-text-engine.html). The page describes a general Thai-text CSV workflow. The current Python implementation still has its historical geographic-dictionary module/script/optional-extra naming; it is not an interactive browser form.
-- The browser service remains a separate FastThaiG2P runtime. RTGS romanization is a separate Thai → Latin method. The phonetic Ukrainian path remains Thai analysis → typed IPA → Ukrainian adaptation.
-- Evidence boundary: software/CI parity is not independent linguistic adjudication. Independent Thai IPA gold remains 0; linguistic accuracy is NOT_MEASURED; Ukrainian practical output remains provisional. Manual accessibility and instrumented physical-device performance gates remain open/deferred.
-
-## Batch engine and geographic dictionary
-
-For general Thai words and phrases in CSV, see the public [batch engine overview](../web/thai-text-engine.html). The implementation is currently packaged under the historical geographic-dictionary names: [technical contract](geographic-dictionary.md), [CSV template](../data/geography/geographic-names-template.csv), `scripts/build_geographic_dictionary.py`, and the optional PyThaiNLP 5.4.0 dependency extra. The tool preserves input metadata, emits RTGS separately from typed IPA → Ukrainian adaptation, and withholds incomplete IPA/UA outputs. The geography-specific data template and documentation remain appropriate for constructing an actual geographic corpus; they do not limit the engine's general text-processing purpose.
-
-## Historical audit notes
-
-The detailed dated entries below are retained as an audit trail. They describe earlier checkpoints and must not be read as the current repository state unless their commit and workflow evidence match the live default branch.
+- Default branch and sole active working branch: `main`. Verified application/workflow head: `8ccbe26ddca46542fe99c1b2673fcc89dfb296e0`.
+- Starting main commit for this pass: `447c54c1d78dfec941f8a97400fa4b63e0efd28b`. PR #230 merged as `7d4c7e8c693389a8ac3f0ca3c3a313bfeb05043e`; the follow-up documentation and workflow commits are on top of it.
+- PRs #227, #228, #229 and #230 are merged. PR #230 exact-head CI #42369182862, Web Static #42369182837, Site API #42369182879, Pyodide compatibility #42369182854 and Pages build #42369182865 all passed.
+- Exact-main CI #42382112543 SUCCESS on `8ccbe26d...`: Ruff passed; Thai-text CSV smoke passed; generated registries/master table and evidence validators passed; 412 Python tests passed, 1 skipped, and 1,211 subtests passed; wheel-install smoke and master-artifact validation passed (351,780 rows, 41 vowel-rime records).
+- Exact-main Web Static #42382112665 SUCCESS; FastThaiG2P Pyodide compatibility #42382112705 SUCCESS; Pages build, deployment and published-site smoke #42382112704 SUCCESS. The live smoke now fetches `/thai-text-engine.html` and verifies its heading, content, RTGS disclosure and navigation links from the homepage and method page. Site API #42381570708 also passed on the PR #230 merge commit; no Site API source changed afterward.
+- Current branch inventory: 5 refs — `main` plus four historical refs associated with merged PRs #227–#230. There are no open PRs. Historical refs are retained for provenance; their merged contributions are already in main, so their divergent branch histories are not merged a second time or deleted.
+- Public batch tool: [Thai text transcription engine](../web/thai-text-engine.html). It handles ordinary Thai words and phrases in CSV. The Python implementation retains its historical geographic-dictionary script/extra names; these are packaging history, not input restrictions. It is a batch Python utility, not an interactive browser form.
+- The browser service remains a separate FastThaiG2P runtime. RTGS is a separate Thai → Latin romanization. Ukrainian output follows Thai analysis → typed IPA → Ukrainian adaptation; RTGS never feeds the Ukrainian adapter.
+- Evidence boundary: engineering parity is not independent linguistic adjudication. Independent Thai IPA gold remains 0; linguistic accuracy is NOT_MEASURED; Ukrainian practical output remains provisional. Manual accessibility and instrumented physical-device performance remain open/deferred.
 
 ## Public beta
 

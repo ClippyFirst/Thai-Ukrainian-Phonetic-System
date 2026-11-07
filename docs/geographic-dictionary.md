@@ -19,23 +19,24 @@ RTGS не є джерелом українського запису. Він не
 python -m pip install -e ".[geography]"
 ```
 
-Підготувати CSV із заголовком `name_th` (інші колонки можна зберігати як метадані):
+Підготувати CSV із колонкою тайського тексту (за замовчуванням `name_th`; у прикладі використано `text_th`):
 
 ```csv
-id,name_th,feature_type,source_name,source_url,source_license
+id,text_th,source_note
+1,สวัสดี,example phrase
 ```
 
 Запустити:
 
 ```bash
-python scripts/build_geographic_dictionary.py data/geography/input.csv \
-  --thai-column name_th \
-  --output build/geographic-dictionary.csv
+python scripts/build_geographic_dictionary.py input.csv \
+  --thai-column text_th \
+  --output build/transcription.csv
 ```
 
 Назву вхідної колонки можна змінити через `--thai-column`. Для TSV можна вказати `--delimiter $'\\t'`; за замовчуванням читається CSV з комою. `--limit 20` дозволяє зробити пробний запуск на перших 20 рядках.
 
-Вихідний CSV записується в UTF-8 з BOM для сумісності з Excel. Усі вхідні колонки, зокрема ідентифікатори, координати, джерела й ліцензії, зберігаються; додаються:
+Вихідний CSV записується в UTF-8 з BOM для сумісності з Excel. Усі вхідні колонки зберігаються (наприклад, ідентифікатори, примітки, посилання на джерела та інші метадані); додаються:
 
 | Колонка | Значення |
 |---|---|
@@ -54,7 +55,7 @@ python scripts/build_geographic_dictionary.py data/geography/input.csv \
 - `PARTIAL_OR_UNSUPPORTED_WITHHELD` — принаймні одне слово/склад не має повного підтриманого шляху. IPA та український результат для всього рядка CSV залишаються порожніми; причини вказуються в `pipeline_warnings`.
 - `NO_THAI_INPUT` — у вибраній колонці немає тайських символів.
 
-Сегментація слова не доводить його вимову. Скрипт повторно використовує консервативний `analyze_text_with_word_segmentation` і не намагається автоматично вгадувати складову структуру невідомого власного імені. RTGS може бути заповнений, навіть якщо IPA та український результат утримано: це окремі методи з різними обмеженнями.
+Сегментація слова не доводить його вимову. Скрипт повторно використовує консервативний `analyze_text_with_word_segmentation` і не намагається автоматично вгадувати складову структуру невідомого слова. RTGS може бути заповнений, навіть якщо IPA та український результат утримано: це окремі методи з різними обмеженнями.
 
 ## Важливо для географічного корпусу
 
@@ -77,13 +78,14 @@ RTGS не передається в IPA-адаптер. Невідомі/неп�
 Тести `tests/test_geographic_dictionary.py` перевіряють розділення RTGS і IPA-маршрутів, збереження метаданих CSV, використання `newmm`/ `royin`, та заборону перезаписувати вхідний файл. Для повної перевірки запустити:
 
 ```bash
-python -m pytest -q
-python -m ruff check .
+python -m pip install -e ".[dev]"
+ruff check src tests scripts
+python -m pytest -q -ra
 ```
 
-PyThaiNLP 5.4.0 є обов'язковою лише для фактичного запуску географічного RTGS-експорту; тести ізольовують її виклик через залежності, що передаються в функції.
+PyThaiNLP 5.4.0 потрібна для фактичного RTGS-експорту будь-якого тайського тексту; тести ізольовують її виклик через залежності, що передаються в функції.
 
 
 ## Перевірений стан реалізації — 2026-11-07
 
-PR [#228](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/228) merged as `b7973b03961317abf3c5e2fed67c53c7b450eeee`. Exact-head CI #42303606383 and Pages build #42303606414 passed. Post-merge main CI #42304411797 and Pages build/deploy/live smoke #42304411720 passed, along with Site API, Pyodide compatibility and external G2P smoke. The CI runtime fixture verifies the software pipeline only; geographic proper-name accuracy remains NOT_MEASURED until independent sourced corpus review.
+PR [#228](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/228) merged as `b7973b03961317abf3c5e2fed67c53c7b450eeee`. Exact-head CI #42303606383 and Pages build #42303606414 passed. Post-merge main CI #42304411797 and Pages build/deploy/live smoke #42304411720 passed, along with Site API, Pyodide compatibility and external G2P smoke. The CI runtime fixture verifies the software pipeline only; general Thai-text linguistic accuracy remains NOT_MEASURED until independent source-backed expert review.
