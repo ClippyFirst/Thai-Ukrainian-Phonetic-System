@@ -31,7 +31,7 @@ assert.match(licensing, /попереднього письмового дозв�
 assert.match(thaiTextEngine, /Рушій транскрипції тайського тексту/);
 assert.match(thaiTextEngine, /RTGS/);
 assert.match(thaiTextEngine, /IPA/);
-assert.match(homepage, /geography\.html/);
+assert.match(homepage, /thai-text-engine\\.html/);
 assert.match(projectLicense, /CLIPPYFIRST PROJECT LICENSE — VERSION 1\.0/);
 assert.match(projectLicense, /Thai–Ukrainian\s+Phonetic System/);
 assert.match(projectLicensePointer, /NOT an MIT license/);
