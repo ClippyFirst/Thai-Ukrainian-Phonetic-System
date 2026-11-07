@@ -5478,7 +5478,7 @@
     "readiness": "ENGINEERING_VERIFIED_PUBLIC_BETA_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_VALIDATED_RELEASE"
   },
   "rtgs_continuation_2026_11_07": {
-    "status": "ENGINEERING_VERIFIED_READY_TO_MERGE_PENDING_POST_MERGE_CI",
+    "status": "MERGED_MAIN_ENGINEERING_VERIFIED",
     "starting_main": "5fb5cde9c31126e07b4285a04fff11e2314760a0",
     "verified_code_head": "a8bb09d98cfb8c9de78e1c5f37a8c28f617ebed5",
     "continuation_branch": "chore/repository-structure-rtgs-closeout-2026-11-07",
@@ -5548,7 +5548,7 @@
     "manual_accessibility": "DEFERRED_NOT_VERIFIED",
     "physical_device_performance": "DEFERRED_NOT_VERIFIED",
     "readiness": "ENGINEERING_VERIFIED_RESEARCH_READY_NOT_LINGUISTICALLY_RELEASE_CERTIFIED",
-    "acceptance": "The last tested candidate head passed Web Static, full CI and Pages build. Subsequent changes are documentation/audit-only with no source-code changes. Squash merge is authorized by the owner; verify post-merge main CI and Pages deployment. Linguistic certification remains separate and blocked on qualified reviewers.",
+    "acceptance": "PR #233 and PR #234 are merged. Main post-merge CI, Web Static, Pages deployment and Pyodide compatibility all pass. Linguistic certification remains separate and not measured; manual accessibility and physical-device performance remain deferred.",
     "final_pr_head": "a8bb09d98cfb8c9de78e1c5f37a8c28f617ebed5",
     "self_review": "Two separate self-review passes performed; no independent human reviewer/subagent available.",
     "post_verification_documentation_commits": [
@@ -5558,6 +5558,66 @@
       "1cdba972cf5ae287a66f47ab936af6990340cda8",
       "d8e4d992bb9d57bcf21f901ad59efae470163b08"
     ],
-    "source_code_changed_after_verification": false
+    "source_code_changed_after_verification": false,
+    "pr233": {
+      "number": 233,
+      "state": "merged",
+      "merge_commit": "9d829f0bd505b8a9c7b23fe24418ae3511a776fb"
+    },
+    "pr234": {
+      "number": 234,
+      "state": "merged",
+      "merge_commit": "8c91eabfa1f499f5fbea3bc42c8db9b4fcc0b12b"
+    },
+    "mainline_post_merge": {
+      "pr233_web_static": {
+        "run_id": 42399176794,
+        "conclusion": "success"
+      },
+      "pr233_ci": {
+        "run_id": 42399176802,
+        "conclusion": "success",
+        "test_steps_completed": 65,
+        "wheel_install_smoke": "success",
+        "master_artifact": "success"
+      },
+      "pages": {
+        "run_id": 42399176759,
+        "conclusion": "success",
+        "build_steps_completed": 27,
+        "deploy_steps_completed": 4,
+        "published_service_verification": "success"
+      },
+      "pyodide_initial": {
+        "run_id": 42399176619,
+        "conclusion": "failure",
+        "root_cause": "workflow omitted generated web/src/word-dictionary.generated.js prerequisite"
+      },
+      "pyodide_pr234": {
+        "run_id": 42399472395,
+        "conclusion": "success",
+        "steps_completed": 20
+      },
+      "ci_pr234": {
+        "run_id": 42399472396,
+        "conclusion": "success",
+        "test_steps_completed": 65,
+        "wheel_install_smoke": "success"
+      },
+      "pyodide_main_after_fix": {
+        "run_id": 42399972927,
+        "conclusion": "success",
+        "steps_completed": 20
+      },
+      "ci_main_after_fix": {
+        "run_id": 42399972992,
+        "conclusion": "success",
+        "test_steps_completed": 65,
+        "wheel_install_smoke": "success",
+        "master_artifact": "success"
+      }
+    },
+    "open_pull_requests": 0,
+    "active_development_branch": "main"
   }
 }
