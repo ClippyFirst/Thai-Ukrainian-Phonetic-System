@@ -2,17 +2,15 @@
 
 This page is the navigation layer for the repository. It distinguishes the maintained product contract from research evidence and the chronological execution record.
 
-## Current repository state — 2026-11-07 (verified mainline closeout)
+## Current repository state — 2026-11-07 (RTGS continuation checkpoint)
 
-- Default branch and sole active working branch: `main`. Verified application/workflow head: `8ccbe26ddca46542fe99c1b2673fcc89dfb296e0`.
-- Starting main commit for this pass: `447c54c1d78dfec941f8a97400fa4b63e0efd28b`. PR #230 merged as `7d4c7e8c693389a8ac3f0ca3c3a313bfeb05043e`; the follow-up documentation and workflow commits are on top of it.
-- PRs #227, #228, #229 and #230 are merged. PR #230 exact-head CI #42369182862, Web Static #42369182837, Site API #42369182879, Pyodide compatibility #42369182854 and Pages build #42369182865 all passed.
-- Exact-main CI #42382112543 SUCCESS on `8ccbe26d...`: Ruff passed; Thai-text CSV smoke passed; generated registries/master table and evidence validators passed; 412 Python tests passed, 1 skipped, and 1,211 subtests passed; wheel-install smoke and master-artifact validation passed (351,780 rows, 41 vowel-rime records).
-- Exact-main Web Static #42382112665 SUCCESS; FastThaiG2P Pyodide compatibility #42382112705 SUCCESS; Pages build, deployment and published-site smoke #42382112704 SUCCESS. The live smoke now fetches `/thai-text-engine.html` and verifies its heading, content, RTGS disclosure and navigation links from the homepage and method page. Site API #42381570708 also passed on the PR #230 merge commit; no Site API source changed afterward.
-- Current branch inventory: 5 refs — `main` plus four historical refs associated with merged PRs #227–#230. There are no open PRs. Historical refs are retained for provenance; their merged contributions are already in main, so their divergent branch histories are not merged a second time or deleted.
-- Public batch tool: [Thai text transcription engine](../web/thai-text-engine.html). It handles ordinary Thai words and phrases in CSV. The Python implementation retains its historical geographic-dictionary script/extra names; these are packaging history, not input restrictions. It is a batch Python utility, not an interactive browser form.
-- The browser service remains a separate FastThaiG2P runtime. RTGS is a separate Thai → Latin romanization. Ukrainian output follows Thai analysis → typed IPA → Ukrainian adaptation; RTGS never feeds the Ukrainian adapter.
-- Evidence boundary: engineering parity is not independent linguistic adjudication. Independent Thai IPA gold remains 0; linguistic accuracy is NOT_MEASURED; Ukrainian practical output remains provisional. Manual accessibility and instrumented physical-device performance remain open/deferred.
+- Default branch remains `main`, whose current base for this continuation is `5fb5cde9c31126e07b4285a04fff11e2314760a0`. The engineering-verified mainline snapshot and its CI evidence are recorded below as a historical baseline; they do not verify the RTGS feature branch.
+- Draft PR [#232](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/232) contains the syllable-based RTGS implementation (60 commits ahead of that main base). Its exact head `218809f717bf3a19d71a002d8794427a73762660` failed Web Static #42391530288, CI #42391530299 and Pages #42391530307. The failures exposed open-rime handling, duplicate diphthong glides and a reviewed lexical correction being bypassed by a structural parse. See the newest validation-matrix and handoff entries for the exact logs and follow-up.
+- A dedicated continuation branch `chore/repository-structure-rtgs-closeout-2026-11-07` was created from that descendant of main. It contains targeted RTGS fixes plus contributor documentation and a PR acceptance template. Those changes are **not verified yet**; do not treat the prior failed runs as passing or the new branch as release-ready.
+- Other geographic and general-Thai-text branches diverged from the current main history. Their useful changes are already represented in main; do not merge their stale histories a second time. The separate `fix/rtgs-romanization-quality-2026-11-07` branch is based directly on the older main base and changes the legacy renderer, not the new syllable adapter; it is retained for comparison rather than merged wholesale.
+- Public batch tool: [Thai text transcription engine](../web/thai-text-engine.html). It handles ordinary Thai words and phrases in CSV. Historical geographic-dictionary script/extra names are packaging history, not input restrictions.
+- The primary phonetic path remains Thai analysis → typed IPA → Ukrainian adaptation. RTGS is a separate Thai → Latin method and never feeds the IPA adapter.
+- Evidence boundary: PyThaiNLP parity and published whole-word RTGS examples are not independent linguistic adjudication. Thai IPA gold remains 0; linguistic accuracy is NOT_MEASURED; Ukrainian practical output remains provisional. Manual accessibility and instrumented physical-device performance remain open/deferred.
 
 ## Public beta
 
@@ -22,6 +20,8 @@ The current browser design contract is in [Website UX and visual system](ui-ux-r
 
 ## Start here
 
+- [Contributor guide](../CONTRIBUTING.md) — setup, architecture contracts, test commands and pull-request acceptance.
+- [Coding-agent workflow](../AGENTS.md) — repository-specific engineering and evidence gates.
 - [Thai-text batch transcription engine (public site)](../web/thai-text-engine.html)
 - [Geographic dictionary implementation and CSV contract](geographic-dictionary.md)
 - [ClippyFirst project licence and permissions](LICENSING-AND-PERMISSIONS.md)
@@ -40,6 +40,7 @@ The current browser design contract is in [Website UX and visual system](ui-ux-r
 | Concern | Canonical source | What belongs there |
 |---|---|---|
 | System boundaries | [Architecture](architecture.md) | Stable layers, invariants and data flow |
+| Contribution workflow | [Contributor guide](../CONTRIBUTING.md), [agent workflow](../AGENTS.md) | Setup, branch/PR discipline, TDD, verification and evidence rules |
 | Thai analysis | [Thai orthography](thai-orthography.md), [syllable structure](thai-syllable-structure.md), [phonological rules](phonological-rules.md), [contextual phonology](contextual-phonology.md) | Linguistic model and rule scope |
 | IPA contract | [IPA](ipa.md), [benchmarking and external IPA](benchmarking-and-external-ipa.md) | Typed IPA, provenance, uncertainty and comparator limits |
 | Ukrainian output | [Practical transcription overview](thai-ukrainian-practical-transcription.md), [technical specification](practical-transcription.md), [Target layer](ukrainian-target-layer.md), [transcription methodology](ukrainian-transcription-methodology.md), [correspondence matrices](ukrainian-correspondence-matrices.md) | User-facing Thai → Ukrainian system, IPA adaptation, practical orthography and evidence status |
