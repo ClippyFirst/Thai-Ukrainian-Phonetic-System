@@ -12,6 +12,8 @@ function split(s,q,v){
     if(sourcePositions.at(-1)?.ch===z)sourcePositions.pop();
   }
   if(v.glide&&v.id!=="V-X-AI"&&["ย","ว"].includes(q.at(-1)))return[q.slice(0,-1),null];
+  // ห นำ + low sonorant is an onset cluster even when the vowel is carried by อ.
+  if(q.length===2&&q[0]==="ห"&&LEAD.has(q[1]))return[q,null];
   const pre=chars(s).some(x=>PRE.has(x));
   if(q.length>=2&&pre){
     const ok=(FIRST.has(q[0])&&SECOND.has(q[1]))||(q[0]==="ห"&&LEAD.has(q[1]));
