@@ -7,6 +7,11 @@ identified below. It is not an OSI-approved Open Source license and does not
 grant general permission to copy, modify, redistribute, host, or commercially
 exploit the technical implementation.
 
+This version governs the current distribution of the Project Materials. It
+does not retroactively revoke permissions already granted under the MIT
+license to copies of earlier commits or releases that were distributed with
+that license.
+
 1. AUTHOR AND COVERED MATERIALS
 The author is Vitalii Volodymyrovych Tkachuk, publishing under the authorial
 pseudonym ClippyFirst. "ClippyFirst", "Author", and "Licensor" refer to that
