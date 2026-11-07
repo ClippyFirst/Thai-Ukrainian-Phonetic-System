@@ -29,7 +29,7 @@ import { createFastThaiG2PNativeTokenizer } from './web/src/fastthaig2p-tokenize
 let input = '';
 for await (const chunk of process.stdin) input += chunk;
 const corpus = JSON.parse(input);
-const words = (await readFile('data/thai/words_th_cc0.txt', 'utf8')).split(/\\r?\\n/u).filter(Boolean);
+const words = (await readFile('data/thai/words_th_cc0.txt', 'utf8')).split(/\r?\n/u).filter(Boolean);
 const tokenizer = createFastThaiG2PNativeTokenizer(words);
 const result = {
   words: corpus.words.map(word => romanizeRtgsWord(word).value),
@@ -110,7 +110,7 @@ def main() -> int:
 
     if failures:
         print("RTGS parity FAILED against PyThaiNLP 5.4.0:")
-        print("\\n".join(failures))
+        print("\n".join(failures))
         return 1
     print(
         "RTGS implementation parity PASS: "
@@ -120,7 +120,7 @@ def main() -> int:
     print("This is implementation parity only, not independent linguistic accuracy evidence.")
     if known_divergences:
         print("Documented orthographic corrections (intentional upstream divergences):")
-        print("\\n".join(known_divergences))
+        print("\n".join(known_divergences))
     return 0
 
 
