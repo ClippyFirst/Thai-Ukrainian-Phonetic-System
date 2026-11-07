@@ -2323,3 +2323,14 @@ The documentation-only follow-up after code head `03b8dc5aee1faf98bbcbe5ca6dac1e
 - Pages [#42398702509](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42398702509): SUCCESS, build 27/27 steps; deploy job skipped for pull-request event.
 
 No production deployment occurred in these PR checks. The code itself is unchanged from the already passing code head; the later commits reconcile documentation and evidence registers. Engineering acceptance is verified; independent linguistic certification is still not available.
+
+
+## 2026-11-07 — merged mainline and post-merge Pyodide repair
+
+PR #233 was squash-merged to main as `9d829f0bd505b8a9c7b23fe24418ae3511a776fb`. Post-merge checks passed: Web Static #42399176794; full CI #42399176802 (65/65 test steps, wheel smoke 11/11, master artifact 6/6); Pages #42399176759 (build 27/27, deploy 4/4 and published-service verification).
+
+The first post-merge FastThaiG2P Pyodide compatibility run #42399176619 failed because the browser test received 404 for the untracked generated asset `web/src/word-dictionary.generated.js`. The Pyodide workflow omitted the generator step that the main CI already ran. This was a workflow prerequisite defect, not an RTGS or Pyodide runtime defect.
+
+PR #234 added `python scripts/generate_web_word_dictionary.py` before browser tests and included the generator plus CC0 source/manifest in push and PR path filters. PR Pyodide #42399472395 passed 20/20 steps; PR CI #42399472396 passed 65/65 plus wheel smoke 11/11. PR #234 was squash-merged to main as `8c91eabfa1f499f5fbea3bc42c8db9b4fcc0b12b`. Post-merge Pyodide #42399972927 passed 20/20; post-merge CI #42399972992 passed 65/65, wheel smoke 11/11 and master artifact 6/6.
+
+Current mainline is engineering-verified, the public Pages deployment was verified, and the Pyodide runtime workflow is green. No open PRs remain. Historical branch refs are preserved; only main is the active development line. This does not constitute independent linguistic certification: Thai IPA gold rows remain 0, RTGS accuracy is NOT_MEASURED, Ukrainian target forms remain provisional, and manual accessibility/physical-device performance remain unverified/deferred.
