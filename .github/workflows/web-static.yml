@@ -34,6 +34,7 @@ jobs:
         run: |
           node --check web/src/app.js
           node --check web/src/rtgs-romanizer.js
+          node --check web/src/rtgs-phonological.js
           node --check web/src/fastthaig2p-native.js
           node --check web/src/fastthaig2p-tltk-oov.js
           node --check web/src/fastthaig2p-normalizer.js
