@@ -57,7 +57,7 @@ const RTGS_SYLLABLE_SEGMENTATIONS = new Map([
 const RTGS_SOURCE_ATTESTED_READINGS = new Map([
   ["ทราย", { value:"sai", source:"BGN/PCGN 2002 Agreement, RTGS example", sourceUrl:"https://assets.publishing.service.gov.uk/media/5ab4e60aed915d78b9a459f5/ROMANIZATION_OF_THAI.pdf" }],
   ["ทรราช", { value:"thorarat", source:"BGN/PCGN 2002 Agreement, RTGS example", sourceUrl:"https://assets.publishing.service.gov.uk/media/5ab4e60aed915d78b9a459f5/ROMANIZATION_OF_THAI.pdf" }],
-  ["โปรดเกล้าฯ", { value:"protklao protkramom", source:"BGN/PCGN 2002 Agreement, RTGS abbreviation example", sourceUrl:"https://assets.publishing.service.gov.uk/media/5ab4e60aed915d78b9a459f5/ROMANIZATION_OF_THAI.pdf" }]
+  ["โปรดเกล้าฯ", { value:"protklao protkramom", source:"BGN/PCGN 2002 Agreement, RTGS abbreviation example", sourceUrl:"https://assets.publishing.service.gov.uk/media/5ab4e60aed915d78b9a459f5/ROMANIZATION_OF_THAI.pdf" }],\n  ["พรหม", { value:"phrom", source:"BGN/PCGN 2002 Agreement, RTGS example", sourceUrl:"https://assets.publishing.service.gov.uk/media/5ab4e60aed915d78b9a459f5/ROMANIZATION_OF_THAI.pdf" }]
 ]);
 
 function effectiveOnset(onset) {
@@ -184,6 +184,30 @@ export function romanizeRtgsThaiToken(input) {
   return { status:"unavailable", input:word, value:null, source:null, reason:"unresolved-syllable-or-lexical-reading" };
 }
 
+const RTGS_SEQUENCE_KEYS = new Set([
+  ...RTGS_PROPER_NAMES.keys(),
+  ...RTGS_SOURCE_ATTESTED_READINGS.keys(),
+  ...RTGS_SYLLABLE_SEGMENTATIONS.keys()
+]);
+const RTGS_SEQUENCE_PREFIXES = new Set();
+for (const key of RTGS_SEQUENCE_KEYS) {
+  const chars = Array.from(key);
+  for (let i=1;i<chars.length;i++) RTGS_SEQUENCE_PREFIXES.add(chars.slice(0,i).join(""));
+}
+
+function longestKnownThaiSequence(tokens, start) {
+  let combined = "";
+  let match = null;
+  for (let end=start; end<Math.min(tokens.length,start+8); end++) {
+    const token = tokens[end];
+    if (token.kind !== "thai" || token.input === "ๆ") break;
+    combined += token.input;
+    if (RTGS_SEQUENCE_KEYS.has(combined)) match = { input:combined, end };
+    if (!RTGS_SEQUENCE_PREFIXES.has(combined) && !RTGS_SEQUENCE_KEYS.has(combined)) break;
+  }
+  return match;
+}
+
 export function romanizeRtgsTokenSequence(tokens) {
   const details = [];
   let previous = null;
@@ -191,7 +215,8 @@ export function romanizeRtgsTokenSequence(tokens) {
   let output = "";
   let unavailableCount = 0;
 
-  for (const token of tokens || []) {
+  for (let index=0; index<(tokens || []).length; index++) {
+    const token = tokens[index];
     if (token.kind !== "thai") {
       const value = token.input;
       details.push({ kind:token.kind, input:token.input, status:"passthrough", value, romanized:null, separatorBefore:"" });
@@ -215,11 +240,14 @@ export function romanizeRtgsTokenSequence(tokens) {
       continue;
     }
 
-    const result = romanizeRtgsThaiToken(token.input);
+    const sequence = longestKnownThaiSequence(tokens,index);
+    const input = sequence?.input || token.input;
+    if (sequence) index = sequence.end;
+    const result = romanizeRtgsThaiToken(input);
     if (result.status !== "transliterated") {
       unavailableCount += 1;
-      const value = "⟦RTGS НЕ ПЕРЕВІРЕНО: " + token.input + "⟧";
-      details.push({ kind:"thai", input:token.input, status:"unavailable", value, romanized:null, separatorBefore:"" });
+      const value = "⟦RTGS НЕ ПЕРЕВІРЕНО: " + input + "⟧";
+      details.push({ kind:"thai", input, status:"unavailable", value, romanized:null, separatorBefore:"" });
       output += value;
       previous = null;
       previousWord = null;
@@ -232,12 +260,11 @@ export function romanizeRtgsTokenSequence(tokens) {
     } else if (previousWord) {
       separatorBefore = " ";
     }
-    const detail = {
-      kind:"thai", input:result.input, status:"transliterated",
+    details.push({
+      kind:"thai", input, status:"transliterated",
       value:result.value, romanized:result.value, separatorBefore,
       source:result.source, segmentation:result.segmentation || null
-    };
-    details.push(detail);
+    });
     output += separatorBefore + result.value;
     previous = result;
     previousWord = result;
