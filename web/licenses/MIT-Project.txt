@@ -1,5 +1,5 @@
 This file is retained at its historical path for compatibility with the
-third-party-notices inventory. It is NOT an MIT license for this project.
+third-party-notices inventory. It is NOT an MIT license for the current repository version. Earlier commits/releases that were distributed under MIT retain the permissions granted with those versions; this pointer does not revoke them.
 
 Original Thai–Ukrainian project materials are governed by the custom
 ClippyFirst Project License v1.0 (2026), available at:
