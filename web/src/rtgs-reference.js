@@ -7,6 +7,12 @@
 const C = "กขฃคฅฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮ";
 // Reviewed lexical RTGS corrections, kept separate from the upstream parity port.
 const RTGS_UNSUPPORTED_TOKENS = new Set(["ๆ", "ฯ", "ฦ", "สตรีเศรษฐบุตรบำเพ็ญ"]);
+// Official proper-name forms published by the Royal Society of Thailand.
+// These are lexical names, not outputs inferred by the generic grapheme rules.
+const RTGS_OFFICIAL_NAME_OVERRIDES = new Map([
+  ["กรุงเทพมหานคร", "krung thep maha nakhon"],
+  ["กรุงเทพฯ", "krung thep maha nakhon"]
+]);
 const RTGS_LEXICAL_OVERRIDES = new Map([
   ["จริง", "ching"], ["สามารถ", "samat"], ["สวัสดี", "sawatdi"],
   ["สร้าง", "sang"], ["ศรี", "si"], ["เศร้า", "sao"], ["ไซร้", "sai"], ["ทรง", "song"], ["ทราม", "sam"],
@@ -134,6 +140,7 @@ export function romanizeRtgsWord(input) {
   const original = String(input ?? "").normalize("NFC");
   if (!original || [...original].some(ch => /[^\u0E00-\u0E7F]/u.test(ch)))
     return { status:"unavailable", value:null, source:null };
+  if (RTGS_OFFICIAL_NAME_OVERRIDES.has(original)) return { status:"transliterated", value:RTGS_OFFICIAL_NAME_OVERRIDES.get(original), source:"Royal Society of Thailand official proper-name form" };
   if (original === "ห") return { status:"transliterated", value:"", source:"PyThaiNLP 5.4.0 royin port + ClippyFirst orthographic correction" };
   if (RTGS_UNSUPPORTED_TOKENS.has(original)) return { status:"unavailable", value:null, source:null };
   if (RTGS_LEXICAL_OVERRIDES.has(original)) {
@@ -176,29 +183,51 @@ export function romanizeRtgsWords(words) {
 }
 /** Uses the existing analyzer's token boundaries; it does not call PyThaiNLP newmm. */
 export function romanizeRtgsTokenSequence(tokens) {
+  const source = tokens || [];
+  const output = [];
   let previousThai = null, previousRomanized = "";
-  return (tokens || []).map(token => {
+  for (let i = 0; i < source.length; i++) {
+    const token = source[i];
     if (token.kind !== "thai") {
       previousThai = null;
       previousRomanized = "";
-      return { kind: token.kind, input: token.input, status: "passthrough", value: token.input, romanized: null };
+      output.push({ kind: token.kind, input: token.input, status: "passthrough", value: token.input, romanized: null });
+      continue;
     }
-    const result = romanizeRtgsWord(token.input);
+
+    // Proper names can be split by a generic tokenizer even when the complete
+    // spelling has an authoritative, fixed RTGS form. Rejoin only exact,
+    // reviewed lexical entries; do not guess arbitrary multi-token readings.
+    let phrase = String(token.input ?? "");
+    let phraseEnd = i + 1;
+    if (!RTGS_OFFICIAL_NAME_OVERRIDES.has(phrase)) {
+      while (phraseEnd < source.length && source[phraseEnd].kind === "thai") {
+        phrase += String(source[phraseEnd].input ?? "");
+        phraseEnd += 1;
+        if (RTGS_OFFICIAL_NAME_OVERRIDES.has(phrase)) break;
+      }
+    }
+    const isOfficialPhrase = RTGS_OFFICIAL_NAME_OVERRIDES.has(phrase);
+    const input = isOfficialPhrase ? phrase : token.input;
+    const result = romanizeRtgsWord(input);
     if (result.status !== "transliterated") {
       previousThai = null;
       previousRomanized = "";
-      return {
+      output.push({
         kind: "thai", input: token.input, status: "unavailable",
         value: "⟦RTGS НЕ ПЕРЕВІРЕНО: " + token.input + "⟧", romanized: null
-      };
+      });
+      continue;
     }
     let value = result.value;
-    if (previousThai !== null && value &&
+    if (!isOfficialPhrase && previousThai !== null && value &&
         shouldAddSeparator(previousThai, token.input, previousRomanized)) value = "a" + value;
-    previousThai = token.input;
+    previousThai = input;
     previousRomanized = value;
-    return { kind: "thai", input: token.input, status: "transliterated", value, romanized: value, source: result.source };
-  });
+    output.push({ kind: "thai", input, status: "transliterated", value, romanized: value, source: result.source });
+    if (isOfficialPhrase) i = phraseEnd - 1;
+  }
+  return output;
 }
 
 export function renderRtgsTokens(tokens) {
