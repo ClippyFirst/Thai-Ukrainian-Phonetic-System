@@ -33,7 +33,7 @@ assert.match(geography, /RTGS/);
 assert.match(geography, /IPA/);
 assert.match(homepage, /geography\.html/);
 assert.match(projectLicense, /CLIPPYFIRST PROJECT LICENSE — VERSION 1\.0/);
-assert.match(projectLicense, /Thai–Ukrainian Phonetic System/);
+assert.match(projectLicense, /Thai–Ukrainian\\s+Phonetic System/);
 assert.match(projectLicensePointer, /NOT an MIT license/);
 assert.match(notices, /не надає MIT-дозволів/);
 assert.match(notices, /Apache License 2\.0/);
