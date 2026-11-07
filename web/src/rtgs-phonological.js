@@ -160,7 +160,8 @@ export function romanizeRtgsThaiToken(input) {
     if (rendered) {
       return {
         status:"transliterated", input:word, value:rendered.value,
-        source:lexicalSyllables ? "BGN/PCGN source-backed syllable boundaries + structural RTGS adapter" : rrExpanded ? "RTGS รร orthographic rule + structural syllable analysis" : "ClippyFirst structural syllable analysis → RTGS",\n        sourceUrl:lexicalSyllables ? RTGS_EXAMPLE_SOURCE : null,
+        source:lexicalSyllables ? "BGN/PCGN source-backed syllable boundaries + structural RTGS adapter" : rrExpanded ? "RTGS รร orthographic rule + structural syllable analysis" : "ClippyFirst structural syllable analysis → RTGS",
+        sourceUrl:lexicalSyllables ? RTGS_EXAMPLE_SOURCE : null,
         segmentation:analysis.segmentation, first:rendered.first, last:rendered.last,
         syllables:rendered.syllables
       };
