@@ -30,8 +30,9 @@ const RTGS_PROPER_NAMES = new Map([
   }]
 ]);
 
-// Source-backed syllable boundaries are data, not direct romanization
-// exceptions: every syllable still passes through the shared structural parser
+// Curated syllable parses are inferred from published RTGS example outputs;
+// the publication does not supply these internal boundaries. They are not direct
+// romanization answers: every component still passes through the shared parser
 // and the same RTGS onset/vowel/coda adapter.
 const RTGS_EXAMPLE_SOURCE = "https://assets.publishing.service.gov.uk/media/5ab4e60aed915d78b9a459f5/ROMANIZATION_OF_THAI.pdf";
 const RTGS_SYLLABLE_SEGMENTATIONS = new Map([
@@ -168,7 +169,7 @@ export function romanizeRtgsThaiToken(input) {
     const rendered = [...renderedByValue.values()][0];
     return {
       status:"transliterated", input:word, value:rendered.value,
-      source:lexicalSyllables ? "BGN/PCGN source-backed syllable boundaries + structural RTGS adapter" : rrExpanded ? "RTGS รร orthographic rule + structural syllable analysis" : "ClippyFirst structural syllable analysis → RTGS",
+      source:lexicalSyllables ? "BGN/PCGN published example + curated syllable parse + structural RTGS adapter" : rrExpanded ? "RTGS รร orthographic rule + structural syllable analysis" : "ClippyFirst structural syllable analysis → RTGS",
       sourceUrl:lexicalSyllables ? RTGS_EXAMPLE_SOURCE : null,
       segmentation:analysis.segmentation, first:rendered.first, last:rendered.last,
       syllables:rendered.syllables
