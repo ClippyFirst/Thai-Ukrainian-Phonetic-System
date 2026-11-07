@@ -5476,5 +5476,88 @@
     "manual_accessibility": "DEFERRED_NOT_VERIFIED",
     "physical_device_performance": "DEFERRED_NOT_VERIFIED",
     "readiness": "ENGINEERING_VERIFIED_PUBLIC_BETA_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_VALIDATED_RELEASE"
+  },
+  "rtgs_continuation_2026_11_07": {
+    "status": "ENGINEERING_VERIFIED_READY_TO_MERGE_PENDING_POST_MERGE_CI",
+    "starting_main": "5fb5cde9c31126e07b4285a04fff11e2314760a0",
+    "verified_code_head": "a8bb09d98cfb8c9de78e1c5f37a8c28f617ebed5",
+    "continuation_branch": "chore/repository-structure-rtgs-closeout-2026-11-07",
+    "replacement_pr": {
+      "number": 233,
+      "url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/233",
+      "state": "open",
+      "draft": false
+    },
+    "superseded_pr": {
+      "number": 232,
+      "state": "closed",
+      "merged": false
+    },
+    "final_workflows": {
+      "web_static": {
+        "run_id": 42398702456,
+        "conclusion": "success",
+        "steps_completed": 16
+      },
+      "ci": {
+        "run_id": 42398702494,
+        "conclusion": "success",
+        "test_steps_completed": 65,
+        "wheel_install_smoke": "success"
+      },
+      "pages": {
+        "run_id": 42398702509,
+        "conclusion": "success",
+        "build_steps_completed": 27,
+        "deploy": "skipped_for_pull_request"
+      }
+    },
+    "implementation_fixes": [
+      "Open RTGS rimes accept an empty coda.",
+      "Diphthong off-glides already encoded in the analyzer vowel are not emitted twice from coda metadata.",
+      "Reviewed lexical corrections precede structural parsing.",
+      "Glide/coda classification uses orthographic position.",
+      "Leading-h consonant clusters remain intact in syllabification.",
+      "The วย rime is recognized before generic ว+vowel fallback.",
+      "Component อ is included in vowel-position analysis."
+    ],
+    "regression_inputs": [
+      "ภาษา",
+      "ไทย",
+      "ผลไม้",
+      "เหงา",
+      "เขย่า",
+      "หวย",
+      "โวหาร",
+      "หวอ",
+      "หาร"
+    ],
+    "documentation": {
+      "contributor_guide": "CONTRIBUTING.md",
+      "agent_workflow": "AGENTS.md",
+      "pull_request_template": ".github/pull_request_template.md",
+      "navigation": "docs/README.md",
+      "architecture": "docs/architecture.md",
+      "validation": "docs/validation-matrix.md",
+      "audit": "docs/final-audit.md",
+      "handoff": "docs/MASTER-EXECUTION-PLAN-AND-CHAT-HANDOFF.md"
+    },
+    "independent_thai_ipa_gold_rows": 0,
+    "rtgs_linguistic_accuracy": "NOT_MEASURED",
+    "ukrainian_target_forms": "PROVISIONAL",
+    "manual_accessibility": "DEFERRED_NOT_VERIFIED",
+    "physical_device_performance": "DEFERRED_NOT_VERIFIED",
+    "readiness": "ENGINEERING_VERIFIED_RESEARCH_READY_NOT_LINGUISTICALLY_RELEASE_CERTIFIED",
+    "acceptance": "The last tested candidate head passed Web Static, full CI and Pages build. Subsequent changes are documentation/audit-only with no source-code changes. Squash merge is authorized by the owner; verify post-merge main CI and Pages deployment. Linguistic certification remains separate and blocked on qualified reviewers.",
+    "final_pr_head": "a8bb09d98cfb8c9de78e1c5f37a8c28f617ebed5",
+    "self_review": "Two separate self-review passes performed; no independent human reviewer/subagent available.",
+    "post_verification_documentation_commits": [
+      "1905c66865e703dcdd559f2a7df84705b41e3dbb",
+      "2cef408fcb0d3bde2584b91e45cdd541144a7ba5",
+      "51e2e1674da5ef24f9b83e942867d3a5b5903aa9",
+      "1cdba972cf5ae287a66f47ab936af6990340cda8",
+      "d8e4d992bb9d57bcf21f901ad59efae470163b08"
+    ],
+    "source_code_changed_after_verification": false
   }
 }

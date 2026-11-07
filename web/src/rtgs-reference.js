@@ -137,7 +137,7 @@ export function romanizeRtgsWord(input) {
   if (original === "ห") return { status:"transliterated", value:"", source:"PyThaiNLP 5.4.0 royin port + ClippyFirst orthographic correction" };
   if (RTGS_UNSUPPORTED_TOKENS.has(original)) return { status:"unavailable", value:null, source:null };
   if (RTGS_LEXICAL_OVERRIDES.has(original)) {
-    return { status:"transliterated", value:RTGS_LEXICAL_OVERRIDES.get(original), source:"PyThaiNLP 5.4.0 royin port + ClippyFirst orthographic correction" };
+    return { status:"transliterated", value:RTGS_LEXICAL_OVERRIDES.get(original), source:"PyThaiNLP 5.4.0 royin port + ClippyFirst orthographic correction", evidenceStatus:"reviewed_lexical_correction" };
   }
   // ทร is lexically variable; do not confidently romanize an unreviewed token by the generic consonant table.
   if (original.startsWith("ทร") || original.startsWith("แทร")) return { status:"unavailable", value:null, source:null };

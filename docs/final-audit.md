@@ -2277,3 +2277,49 @@ Exact-main Web Static [#42382112665](https://github.com/ClippyFirst/Thai-Ukraini
 Public URL: https://clippyfirst.github.io/Thai-Ukrainian-Phonetic-System/thai-text-engine.html . The public page describes ordinary Thai words and phrases in CSV, not only geographic names. It also states that the tool is a Python batch utility rather than an interactive browser input.
 
 Readiness remains engineering-verified public beta / research prototype, not a linguistically validated release. Independent Thai IPA gold remains 0; linguistic accuracy is NOT_MEASURED; Ukrainian practical output remains provisional. Manual accessibility and instrumented physical-device performance remain deferred/unverified.
+## RTGS systematic romanization follow-up — 2026-11-07
+
+A new dedicated branch `feat/rtgs-systematic-quality-2026-11-07` and draft PR #232 were created from main `5fb5cde9c31126e07b4285a04fff11e2314760a0`. PR #231 was closed as superseded; its narrow Bangkok-name correction was reconciled into the new syllable-based implementation.
+
+The production RTGS path now uses a dedicated positional adapter over shared Thai source-phonology analysis rather than the old generic whole-token grapheme heuristic. The adapter performs onset/vowel/coda mapping, handles off-glides, inserts hyphens inside words, keeps spaces between tokenizer word tokens, and recombines only exact reviewed compounds split by newmm. A bounded dynamic syllable parser considers structurally valid parses and abstains if competing paths yield different RTGS strings or the parse cap is exceeded. Contextual รร expansion is limited to supported orthographic patterns. A small auxiliary set preserves inferred syllable parses from published BGN/PCGN example outputs; those internal boundaries are project inferences, not claims made by the source. The official Bangkok proper-name form is separately grounded in the Royal Society of Thailand directory.
+
+Verification state at this checkpoint: exact PR-head Web Static, CI and Pages workflows have been triggered but remain queued/pending; none is claimed as passed. A local clone/test attempt was blocked by DNS resolution for github.com. PR #232 remains draft and unmerged. The general RTGS accuracy is NOT_MEASURED; no independent Thai-speaker adjudication or Ukrainian-native target review has been added. The branch must not be merged or described as release-ready until exact-head checks pass and the linguistic evidence gap is clearly retained.
+
+
+## 2026-11-07 — RTGS exact-head failure analysis and documentation structure
+
+The live GitHub state superseded the earlier pending-checkpoint entry for draft PR #232. Its exact head `218809f717bf3a19d71a002d8794427a73762660` failed all three relevant workflows: Web Static #42391530288, CI #42391530299 and Pages #42391530307. Web Static and Pages failed in `web/tests/rtgs-romanizer.test.mjs` because `ภาษาไทย` produced an explicit unavailable marker for `ภาษา` and the incorrect trailing `y` in `thaiy`. CI passed Ruff, the legacy RTGS reference test, generated dictionary, adversarial mode test and wheel-install smoke, then failed in `scripts/test_rtgs_parity.py`: six common words were unavailable, `ผลไม้` was rendered as `phlaim`, and multiple published BGN/PCGN acceptance examples were withheld. Full CI and Pages downstream steps were skipped after the failures.
+
+Source inspection identified three concrete causes: (1) the positional RTGS coda map did not represent an empty coda, rejecting otherwise analyzable open syllables; (2) certain analyzer results encode the same /j/ or /w/ glide in both the vowel string and coda field, so the RTGS adapter emitted the glide twice; (3) reviewed lexical corrections were checked only after a structural parse had already produced an output, allowing `ผลไม้` to bypass its reviewed form.
+
+Targeted fixes were committed on `chore/repository-structure-rtgs-closeout-2026-11-07`: `1e6a17f6cdeb195731ea85cb9d0ac13d7c676a6a` adds empty-coda support, de-duplicates analyzer off-glides and prioritizes reviewed lexical corrections; `c2beefa2f134db80fc13ede9ce9248f5b48107ae` adds explicit regression assertions for `ภาษา`, `ไทย` and `ผลไม้`. These are implementation changes only; their final exact-head verification remains pending until the replacement PR checks run.
+
+Repository documentation work: added a human contributor guide (`CONTRIBUTING.md`) and an evidence-focused `.github/pull_request_template.md`; linked the contributor guide and existing `AGENTS.md` from root/docs navigation; corrected the architecture description so the structural syllable adapter is the RTGS production path and PyThaiNLP 5.4.0 royin is a comparator. Existing matrices, source registries, generated-data ownership and handoff remain canonical; no duplicate execution plan was created.
+
+Branch reconciliation: the RTGS branch is a 60-commit descendant of main base `5fb5cde9c31126e07b4285a04fff11e2314760a0`. The continuation branch is based on that descendant. Divergent geography/general-text branches have their useful changes already on main and are not merged again. The 10-commit legacy RTGS follow-up branch was not merged wholesale because it is based on the old main base and its changed implementation is the legacy renderer, not the new production syllable adapter. Historical refs remain intact.
+
+Current status: RTGS implementation PARTIAL / remediation implemented but not yet verified; exact-head CI PENDING; linguistic accuracy NOT_MEASURED; independent Thai and Ukrainian adjudication BLOCKED on qualified human reviewers; manual accessibility and physical-device performance DEFERRED. Do not merge or publish an accuracy claim until the replacement PR exact-head checks pass and remaining evidence gates are honestly retained.
+
+
+## Final exact-head verification — 2026-11-07
+
+Final verified code head: `03b8dc5aee1faf98bbcbe5ca6dac1ef0f0b8e694` on `chore/repository-structure-rtgs-closeout-2026-11-07`, based on `main` `5fb5cde9c31126e07b4285a04fff11e2314760a0`.
+
+- Web Static [run #42398132500](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42398132500): **SUCCESS**. Browser syntax, page contracts, static accessibility, localization/UI and no-network RTGS contract completed.
+- Full CI [run #42398132548](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42398132548): **SUCCESS**, test job completed all 65 steps, and wheel-install smoke succeeded. This includes RTGS parity/official acceptance, the complete Python test suite, generated-artifact checks, source/reviewer registries, text-only TextGrid research exports, static dependency/test-overlap audit, challenge diagnostics and comparative segmentation checks.
+- Pages [run #42398132498](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42398132498): **SUCCESS** for the build job, including Python regression, browser parity, RTGS browser tests, native OOV, UI, static accessibility and self-hosted Pyodide packaging. The deploy job was skipped because the event is a pull request; no deployment is claimed.
+- The exact-head test suite caught and drove fixes for empty codas, duplicate off-glides, reviewed lexical-correction priority, leading-`ห` cluster boundaries, position-aware glide/coda parsing, `วย` rime priority and component-`อ` vowel position. The diagnostic-only logging used during investigation was removed before the final passing head.
+- Repository documentation now has one human contributor entry point (`CONTRIBUTING.md`), one agent-specific instruction file (`AGENTS.md`), one docs navigation layer, one canonical validation matrix/audit/handoff and one machine-readable audit register. No duplicate execution plan or upstream skill runtime was added.
+
+This establishes engineering acceptance for the RTGS code on the recorded head, not independent linguistic accuracy. Thai IPA expert-gold rows remain 0; RTGS accuracy is NOT_MEASURED; Ukrainian practical target forms remain provisional. Independent Thai-speaker/Ukrainian-native adjudication remains BLOCKED on qualified reviewers. Manual accessibility and physical-device performance remain DEFERRED/NOT_VERIFIED. The repository remains a research-oriented public beta/prototype, not a linguistically release-certified product.
+
+
+## Final documentation-head verification — 2026-11-07
+
+The documentation-only follow-up after code head `03b8dc5aee1faf98bbcbe5ca6dac1ef0f0b8e694` was verified on PR head `a8bb09d98cfb8c9de78e1c5f37a8c28f617ebed5`:
+
+- Web Static [#42398702456](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42398702456): SUCCESS, 16/16 steps.
+- Full CI [#42398702494](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42398702494): SUCCESS, test job 65/65 steps; wheel-install smoke 11/11.
+- Pages [#42398702509](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42398702509): SUCCESS, build 27/27 steps; deploy job skipped for pull-request event.
+
+No production deployment occurred in these PR checks. The code itself is unchanged from the already passing code head; the later commits reconcile documentation and evidence registers. Engineering acceptance is verified; independent linguistic certification is still not available.

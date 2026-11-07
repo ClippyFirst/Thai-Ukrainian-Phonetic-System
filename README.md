@@ -4,7 +4,7 @@ Research-oriented, machine-readable reference implementation for mapping contemp
 
 ## Repository guide
 
-See [docs/README.md](docs/README.md) for the canonical documentation map, code/data layout, document ownership and change discipline.
+See [docs/README.md](docs/README.md) for the canonical documentation map, code/data layout, document ownership and change discipline. Contributors should start with [CONTRIBUTING.md](CONTRIBUTING.md); repository-specific agent instructions are in [AGENTS.md](AGENTS.md).
 
 ## Research pipeline
 
@@ -26,7 +26,7 @@ The repository's user-facing system is described in [Тайсько-україн
 
 ## Thai romanization (Thai → Latin)
 
-The homepage keeps Ukrainian IPA adaptation as its primary result and offers RTGS as an optional collapsed, lazily loaded secondary result; a full [Thai romanization tool](web/romanization.html) is also available. Both use the official RTGS approach through PyThaiNLP 5.4.0 royin. It reuses the pinned PyThaiNLP newmm tokenizer and CC0 word list, verifies the local word-list asset by SHA-256, and runs entirely in the browser. RTGS is kept separate from IPA and Ukrainian transcription; tones and vowel length are not fully represented. See [the romanization method and limitations](docs/thai-romanization.md).
+The homepage keeps Ukrainian IPA adaptation as its primary result and offers ClippyFirst's syllable-based RTGS engine as an optional collapsed, lazily loaded secondary result; a full [Thai romanization tool](web/romanization.html) is also available. The RTGS path uses the pinned PyThaiNLP newmm tokenizer and CC0 word list, then performs structural syllable analysis and a separate RTGS onset/vowel/coda mapping. The PyThaiNLP 5.4.0 royin port is retained as a comparator, not as the production generator. The local word-list asset is verified by SHA-256 and all processing runs in the browser. RTGS remains separate from IPA and Ukrainian transcription; tones and vowel length are not fully represented, and overall linguistic accuracy is not yet independently measured. See [the romanization method and limitations](docs/thai-romanization.md).
 
 ## Рушій пакетної транскрипції тайського тексту
 

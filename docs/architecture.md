@@ -21,9 +21,9 @@ CCOST TextGrid ingestion is a separate, text-only source adapter. The supplied a
 
 The optional RTGS route is intentionally separate:
 
-Thai orthography → pinned RTGS reference implementation → RTGS Latin sequence → Ukrainian practical rendering of that sequence.
+Thai orthography → pinned newmm word boundaries → shared structural Thai syllable analysis → positional RTGS onset/rime/coda adapter → RTGS Latin sequence → separately labelled Ukrainian rendering of that sequence.
 
-It is not phonetic IPA, ISO 11940 transliteration, or an input to the primary IPA adapter. Tone and some vowel-length distinctions are not represented by RTGS.
+It is not phonetic IPA, ISO 11940 transliteration, or an input to the primary IPA adapter. The production renderer uses shared source-phonology analysis and a positional RTGS adapter; the pinned PyThaiNLP 5.4.0 royin implementation is a comparator, not the production generator. Tone and some vowel-length distinctions are not represented by RTGS.
 
 ## Code ownership
 
@@ -35,7 +35,7 @@ It is not phonetic IPA, ISO 11940 transliteration, or an input to the primary IP
 | Text-only CCOST import/export | `adapters/ccost.py`, `adapters/xsampa.py`, `scripts/inspect_ccost_textgrid.py`, `scripts/export_textgrid_text.py` | — | Praat long-text parsing, observed tier inventory, strict X-SAMPA → IPA conversion, text-only transcript export and source provenance |
 | Ukrainian IPA adaptation | `ukrainian_adaptation.py` | `ipa-ua.js` | Explicit project mapping; parity tests |
 | Text segmentation | `text.py`, `segmentation.py` | `engine.js` plus generated dictionary index | reviewed text lexicon and pinned CC0 word-boundary list |
-| RTGS | Python reference/parity script | `rtgs-reference.js`, `rtgs-ukrainian.js` | pinned RTGS source and method matrices |
+| RTGS | Python parity/acceptance script | `rtgs-phonological.js`, `rtgs-reference.js`, `rtgs-ukrainian.js` | shared Thai source-phonology analyzer, RTGS positional adapter, pinned PyThaiNLP royin comparator and method matrices |
 | Public interfaces | `api.py`, `batch.py`, `cli.py`, `server.py` | `app.js` | API and UI contract tests |
 | Derived research outputs | `scripts/` | generated browser index where applicable | source registries, generators and manifests |
 

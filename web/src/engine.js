@@ -4,6 +4,7 @@ const FIRST=new Set(["ก","ข","ค","ต","ป","ผ","พ","ท"]),SECOND=ne
 function special(s){const x=[["รร","SP-RR-001"],["ฤ","SP-RUE-001"],["ฤๅ","SP-RUE-LONG-001"],["ฦ","SP-LUE-001"],["ฦๅ","SP-LUE-LONG-001"],["์","SP-KARAN-001"],["ทร","SP-THR-001"],["จร","SP-JR-001"],["สร","SP-SR-001"],["ศร","SP-SR-HIGH-001"],["ซร","SP-ZR-001"],["อย","SP-O-NAM-001"]];return x.filter(z=>z[0]==="อย"?s.startsWith(z[0]):s.includes(z[0])).map(z=>({rule_id:z[1],status:"analysis-dependent"}))}
 function split(s,q,v){
   const sourcePositions=chars(s).map((ch,i)=>({ch,i})).filter(x=>C[x.ch]);
+  const lastVowelIndex=Math.max(-1,...chars(s).map((x,i)=>(VS.has(x)||(x==="อ"&&!s.startsWith("อ")))?i:-1));
   if(v.id==="V-X-UA"&&q.length>=3&&q[1]==="ว"){
     q.splice(1,1);
     sourcePositions.splice(1,1);
@@ -11,7 +12,12 @@ function split(s,q,v){
     if(q.at(-1)===z)q.pop();
     if(sourcePositions.at(-1)?.ch===z)sourcePositions.pop();
   }
-  if(v.glide&&v.id!=="V-X-AI"&&["ย","ว"].includes(q.at(-1)))return[q.slice(0,-1),null];
+  // A glide consonant is part of the rime only when it follows the written vowel.
+  // Before the vowel it remains an onset (e.g. ย in เย่า).
+  if(v.glide&&v.id!=="V-X-AI"&&["ย","ว"].includes(q.at(-1))&&(sourcePositions.at(-1)?.i??-1)>lastVowelIndex)return[q.slice(0,-1),null];
+  // ห นำ + low sonorant is an onset cluster only when both consonants precede the vowel.
+  // If the second consonant follows the vowel, it is a coda (e.g. ร in หาร).
+  if(q.length===2&&q[0]==="ห"&&LEAD.has(q[1])&&(sourcePositions.at(-1)?.i??-1)<=lastVowelIndex)return[q,null];
   const pre=chars(s).some(x=>PRE.has(x));
   if(q.length>=2&&pre){
     const ok=(FIRST.has(q[0])&&SECOND.has(q[1]))||(q[0]==="ห"&&LEAD.has(q[1]));
@@ -23,7 +29,7 @@ function split(s,q,v){
       return[[q[0]],null];
     }
   }
-  const lv=Math.max(-1,...chars(s).map((x,i)=>VS.has(x)?i:-1));
+  const lv=lastVowelIndex;
   const lc=sourcePositions.at(-1)?.i??-1;
   if(q.length>1&&lc>lv){
     const o=q.slice(0,-1);
@@ -179,8 +185,16 @@ const COMBINING = new Set([...VS].filter(char=>!PREPOSED.has(char)).concat([...O
 
 function nextThaiClusterEnd(chars, start){
   let i=start;
-  if(PREPOSED.has(chars[i]) && i+1<chars.length && C[chars[i+1]]) i+=2;
-  else i++;
+  if(PREPOSED.has(chars[i]) && i+1<chars.length && C[chars[i+1]]){
+    i+=2;
+    // A preposed vowel plus ห นำ + sonorant is one onset cluster.
+    if(chars[i-1]==="ห" && i<chars.length && C[chars[i]] && LEAD.has(chars[i])) i++;
+  }else{
+    const first=chars[i];
+    i++;
+    // Keep ห นำ + sonorant together even without a preposed vowel.
+    if(first==="ห" && i<chars.length && C[chars[i]] && LEAD.has(chars[i])) i++;
+  }
   while(i<chars.length && COMBINING.has(chars[i])) i++;
   return i;
 }
@@ -368,4 +382,85 @@ function analyzeText(text, options={}){
     return segmentThaiRun(token.input).map(part=>analyzeThaiSegment(part,mode));
   });
 }
+/**
+ * Expose source-language phonology independently of the Ukrainian target adapter.
+ * RTGS consumes the Thai phonemic analysis; a missing Ukrainian rendering must
+ * not invalidate an otherwise inspectable source IPA result.
+ */
+export function analyzeThaiSyllableForPhonology(input) {
+  const result = analyze(input);
+  const hasPhonemicIpa = typeof result.phonemicIpa === "string" && result.phonemicIpa.length > 0;
+  return {
+    ...result,
+    status: hasPhonemicIpa ? "analyzed" : "unresolved",
+    targetStatus: result.status,
+    reason: hasPhonemicIpa ? null : result.reason
+  };
+}
+
+/**
+ * Syllable analysis entry point for pronunciation-based transcription adapters.
+ * Uses the same reviewed lexical syllabification and structural parser as the
+ * primary engine; it does not invent an IPA result for unresolved fragments.
+ */
+export function analyzeThaiSyllablesForRomanization(input) {
+  const key = normalize(input);
+  if (!key) return { input: key, status: "unresolved", segmentation: "none", syllables: [] };
+  const lexical = TEXT_LEXICON.get(key);
+  let syllables;
+  let paths;
+  let segmentation;
+  if (lexical) {
+    syllables = lexical.map(analyzeThaiSyllableForPhonology);
+    paths = [syllables];
+    segmentation = "curated-syllable-lexicon";
+  } else {
+    const chars = [...key];
+    const { ends } = clusterBoundaries(chars);
+    const boundaries = [...ends].filter(end => end > 0).sort((a,b) => a-b);
+    const memo = new Map();
+    const solve = offset => {
+      if (offset === chars.length) return [[]];
+      if (memo.has(offset)) return memo.get(offset);
+      const paths = [];
+      for (const end of boundaries) {
+        if (end <= offset || end - offset > 8) continue;
+        const candidate = chars.slice(offset,end).join("");
+        const item = analyzeThaiSyllableForPhonology(candidate);
+        if (item.status !== "analyzed" || !item.phonemicIpa) continue;
+        for (const suffix of solve(end)) paths.push([item,...suffix]);
+      }
+      if (!paths.length) {
+        memo.set(offset, []);
+        return [];
+      }
+      const unique = new Map();
+      for (const path of paths) {
+        unique.set(path.map(item => item.input).join("|"), path);
+        // Keep one overflow sentinel. The caller must abstain if this cap is hit;
+        // never silently discard competing parses and call the remainder unique.
+        if (unique.size > 16) break;
+      }
+      const candidates = [...unique.values()];
+      memo.set(offset,candidates);
+      return candidates;
+    };
+    paths = solve(0);
+    syllables = paths.length === 1 ? paths[0] : [];
+    segmentation = paths.length === 1 ? "structural-dp-syllabifier" : paths.length > 1 ? "structural-dp-multiple-candidates" : "structural-dp-unresolved";
+  }
+  const pathsTruncated = !lexical && paths.length > 16;
+  const complete = paths.length > 0 && !pathsTruncated && paths.every(path => path.length > 0 && path.every(item =>
+    item.status === "analyzed" && typeof item.phonemicIpa === "string" && item.phonemicIpa.length > 0
+  ));
+  return {
+    input: key,
+    status: complete ? "analyzed" : "unresolved",
+    segmentation: pathsTruncated ? "structural-dp-too-ambiguous" : segmentation,
+    syllables,
+    paths: complete ? paths : [],
+    pathsTruncated
+  };
+}
+
 export {analyzeText,tokenizeText};

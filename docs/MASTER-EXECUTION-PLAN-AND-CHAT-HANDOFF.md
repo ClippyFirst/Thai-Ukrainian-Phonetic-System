@@ -3169,3 +3169,52 @@ Latest branch head: `228d80d51d58a4437ab0f70ba12597a1259902e8`. The UI contract 
 - Web Static #42382112665 SUCCESS; Pyodide compatibility #42382112705 SUCCESS; Pages build/deploy/live smoke #42382112704 SUCCESS. The published-site smoke now checks `/thai-text-engine.html` and its navigation. Site API #42381570708 SUCCESS on the PR #230 merge head; no API source changed afterward.
 - Remaining genuine blockers: independent Thai IPA gold and Ukrainian-native target adjudication (gold rows 0; accuracy NOT_MEASURED); manual accessibility acceptance; instrumented physical-device performance. Do not infer linguistic accuracy from CI or parity.
 - Readiness: engineering-verified public beta / research prototype; not ready for general linguistic-accuracy claims or a fully validated linguistic release.
+## Immediate continuation — systematic RTGS romanization, 2026-11-07
+
+- Working branch: `feat/rtgs-systematic-quality-2026-11-07`.
+- Base/default main at start: `5fb5cde9c31126e07b4285a04fff11e2314760a0`.
+- PR #231 was closed as superseded; use draft PR #232 only: https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/232 .
+- Main goal is a general syllable-based RTGS engine, not a growing table of output exceptions. Production uses `web/src/rtgs-phonological.js` and the source-phonology export in `web/src/engine.js`. PyThaiNLP royin remains a comparator.
+- Implemented in the branch: positional onset/rime/coda RTGS mapping; off-glide handling; dynamic structural syllable parsing; ambiguity abstention; contextual รร expansion; exact compound recombination; internal syllable hyphens vs inter-word spaces; source-example acceptance cases; official Bangkok proper-name form.
+- Important evidence qualification: BGN/PCGN publishes whole-word romanizations, not all internal syllable boundaries. Curated parses inferred from those outputs are project implementation decisions, not independently source-attested syllable boundaries.
+- Exact-head Web Static, CI and Pages checks are queued/pending at the checkpoint. Do not merge until all pass on the final head. Earlier-head runs were cancelled by subsequent commits and are not evidence. Local tests were not run because the environment could not resolve github.com.
+- Remaining acceptance: verify exact-head checks, inspect failures and fix them; update this handoff/matrix with actual final statuses and commit SHA; retain linguistic accuracy as NOT_MEASURED until independent Thai-speaker adjudication and separate Ukrainian-native review exist.
+- PR #232 stays draft; do not publish a linguistic-accuracy claim. If checks pass, squash-merge only after reviewing the final diff, then verify mainline CI and Pages deployment.
+
+
+## 2026-11-07 — repository structure and RTGS remediation continuation
+
+- Starting default branch: `main`, commit `5fb5cde9c31126e07b4285a04fff11e2314760a0`. The syllable-based RTGS branch was 60 commits ahead of this base with no commits behind. Its exact head was `218809f717bf3a19d71a002d8794427a73762660`.
+- The previous handoff's statement that exact-head checks were queued is superseded by completed results: Web Static #42391530288 FAILURE, CI #42391530299 FAILURE, Pages #42391530307 FAILURE. See the newest validation-matrix and final-audit entries for job-level outcomes and the exact assertion failures.
+- Failure causes found in code: no empty RTGS coda mapping; duplicate /j,w/ glide emission when analyzer vowel and coda both carried the glide; structural parsing could override a reviewed lexical correction (`ผลไม้`).
+- Targeted fixes are committed on `chore/repository-structure-rtgs-closeout-2026-11-07`: `1e6a17f6cdeb195731ea85cb9d0ac13d7c676a6a` (implementation) and `c2beefa2f134db80fc13ede9ce9248f5b48107ae` (regression assertions). Exact-head verification of these fixes is still pending.
+- Added `CONTRIBUTING.md` for human contributors and `.github/pull_request_template.md` for evidence-based PR acceptance. Existing `AGENTS.md` already contains the selective adaptations of Unlazy, UI UX Pro Max, Superpowers, Matt Pocock's skills and Ponytail; it is now linked from root/docs navigation. No upstream skill runtime or dependencies are vendored.
+- Corrected `docs/architecture.md`: production RTGS is shared Thai source-phonology analysis plus positional RTGS adaptation; PyThaiNLP 5.4.0 royin is a comparator. The primary IPA → Ukrainian pipeline remains separate.
+- Branch reconciliation: divergent geographic/general-Thai-text branches are stale relative to main and their useful changes are already present in main; do not merge their histories again. The 10-commit legacy RTGS follow-up branch is not merged wholesale because it modifies the old renderer rather than the new production syllable adapter. Preserve historical refs.
+- Next acceptance: create/review one replacement PR from the continuation branch; inspect exact-head Web Static, full CI and Pages jobs; fix and rerun any remaining failures; update this handoff, validation matrix, final audit and JSON register with the exact final SHA and run IDs. Do not merge before all required checks pass.
+- Readiness: main remains an engineering-verified public beta/research prototype. The RTGS continuation remains PARTIAL pending CI; linguistic accuracy remains NOT_MEASURED (Thai IPA gold 0); Ukrainian target forms remain provisional; human accessibility and physical-device performance remain deferred/unverified.
+
+
+## 2026-11-07 — final exact-head RTGS verification
+
+- Verified code head: `03b8dc5aee1faf98bbcbe5ca6dac1ef0f0b8e694` on `chore/repository-structure-rtgs-closeout-2026-11-07`; base main: `5fb5cde9c31126e07b4285a04fff11e2314760a0`.
+- Web Static #42398132500: SUCCESS.
+- Full CI #42398132548: SUCCESS; the test job completed all 65 steps, and wheel-install smoke succeeded.
+- Pages #42398132498: SUCCESS for the build job; deploy was skipped because the event was a PR, not a production deployment.
+- The final code resolves all RTGS parity and published acceptance examples in the corpus on this head. Tests also cover open syllables, diphthong glide de-duplication, lexical-correction priority, leading-`ห` cluster segmentation, position-aware onset/coda handling, `วย` rime priority and component `อ` vowel position.
+- The previous failed runs are historical and remain recorded in the validation matrix/audit. They are not counted as passes; only the exact final-head runs above establish engineering acceptance.
+- Contributor/docs structure is complete: `CONTRIBUTING.md`, existing `AGENTS.md`, PR template, docs map, architecture, validation matrix, audit, JSON register and handoff are aligned. One active continuation branch and one PR (#233) are used; PR #232 is closed as superseded.
+- Linguistic release gates remain open: Thai IPA adjudicated gold = 0; RTGS linguistic accuracy NOT_MEASURED; Ukrainian target forms provisional; qualified independent Thai/Ukrainian reviewers unavailable. Manual accessibility and physical-device performance remain deferred/unverified.
+- Next: review PR #233 and merge only after review supports it; then inspect post-merge main CI. Preserve historical branch refs; do not delete them merely to create a single active working line.
+- Readiness: engineering-verified RTGS implementation candidate, research-ready for further evaluation, but not release-ready as a linguistically validated transcription system.
+
+
+## 2026-11-07 — final PR-head verification and merge decision
+
+- Last fully tested candidate head: `a8bb09d98cfb8c9de78e1c5f37a8c28f617ebed5`. Subsequent commits through `d8e4d992bb9d57bcf21f901ad59efae470163b08` update only audit/navigation documents; no source code changed after the tested candidate. The continuation branch remains a fast-forward descendant of main base `5fb5cde9c31126e07b4285a04fff11e2314760a0`, with no commits behind.
+- Web Static #42398702456: SUCCESS (16/16).
+- Full CI #42398702494: SUCCESS (65/65 test steps); wheel-install smoke SUCCESS (11/11).
+- Pages #42398702509: SUCCESS (27/27 build steps); deploy skipped for pull-request event.
+- PR #232 is closed as superseded; PR #233 is the only open PR for this work. The old geographic/general-text branches were reconciled against main and are retained as historical refs, not merged wholesale. The separate legacy RTGS branch's proper-name reading is already represented by the new production adapter.
+- Self-review was performed in two separate passes (pipeline/spec compliance and code/test quality); no independent human reviewer/subagent was available. The owner explicitly requested branch consolidation, and all automated acceptance checks pass, so PR #233 is ready for squash merge. After merge, verify main CI and Pages deployment separately.
+- Linguistic release status remains research-ready, not release-certified: no independent Thai-speaker gold, no Ukrainian-native target adjudication, RTGS accuracy NOT_MEASURED, manual accessibility and physical-device performance unverified.
