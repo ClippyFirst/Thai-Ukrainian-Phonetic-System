@@ -396,9 +396,11 @@ export function analyzeThaiSyllablesForRomanization(input) {
   if (!key) return { input: key, status: "unresolved", segmentation: "none", syllables: [] };
   const lexical = TEXT_LEXICON.get(key);
   let syllables;
+  let paths;
   let segmentation;
   if (lexical) {
     syllables = lexical.map(analyzeThaiSyllableForPhonology);
+    paths = [syllables];
     segmentation = "curated-syllable-lexicon";
   } else {
     const chars = [...key];
@@ -431,18 +433,19 @@ export function analyzeThaiSyllablesForRomanization(input) {
       memo.set(offset,best);
       return best;
     };
-    const paths = solve(0);
+    paths = solve(0);
     syllables = paths.length === 1 ? paths[0] : [];
-    segmentation = paths.length === 1 ? "structural-dp-syllabifier" : "structural-dp-ambiguous-or-unresolved";
+    segmentation = paths.length === 1 ? "structural-dp-syllabifier" : paths.length > 1 ? "structural-dp-multiple-candidates" : "structural-dp-unresolved";
   }
-  const complete = syllables.length > 0 && syllables.every(item =>
+  const complete = paths.length > 0 && paths.every(path => path.length > 0 && path.every(item =>
     item.status === "analyzed" && typeof item.phonemicIpa === "string" && item.phonemicIpa.length > 0
-  );
+  ));
   return {
     input: key,
     status: complete ? "analyzed" : "unresolved",
     segmentation,
-    syllables
+    syllables,
+    paths: complete ? paths : []
   };
 }
 
