@@ -77,9 +77,10 @@ function romanizeSyllable(analysis) {
 
 function needsHyphen(previous, current) {
   if (!previous || !current) return false;
-  if (previous.coda == null && current.zeroOnset) return true;
+  // RTGS hyphenation before vowel-initial syllables, including carrier อ.
+  if (current.zeroOnset) return true;
   if (previous.coda == null && current.onset === "ng") return true;
-  if (previous.coda === "ŋ" && current.zeroOnset) return true;
+  // Prevent a coda stop + following h from being read as kh/ph/th.
   if (["p","t","k"].includes(previous.coda) && current.onset.startsWith("h")) return true;
   return false;
 }
@@ -145,7 +146,7 @@ export function romanizeRtgsThaiToken(input) {
   // Do not fall back to its generic grapheme heuristic for an unresolved word.
   const legacy = romanizeRtgsWord(word);
   if (legacy.status === "transliterated" &&
-      legacy.source === "PyThaiNLP 5.4.0 royin port + ClippyFirst orthographic correction") {
+      legacy.evidenceStatus === "reviewed_lexical_correction") {
     return {
       status:"transliterated", input:word, value:legacy.value,
       source:"Reviewed ClippyFirst lexical RTGS correction", first:null, last:null,
