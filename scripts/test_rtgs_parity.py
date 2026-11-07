@@ -38,6 +38,10 @@ const result = {
   texts: (corpus.text_inputs || []).map(text => {
     const tokens = tokenizer.tokenize(text);
     return { tokens, romanized: romanizeRtgsWords(tokens) };
+  }),
+  official: (corpus.official_examples || []).map(({ input }) => {
+    const tokens = tokenizer.tokenize(input);
+    return { input, tokens, romanized: romanizeRtgsWords(tokens) };
   })
 };
 process.stdout.write(JSON.stringify(result));
@@ -108,14 +112,22 @@ def main() -> int:
             )
         text_count += 1
 
+    for case, got in zip(corpus.get("official_examples", []), actual.get("official", []), strict=True):
+        if got["romanized"] != case["expected"]:
+            failures.append(
+                f"official RTGS {case['input']!r}: browser={got['romanized']!r}; "
+                f"published={case['expected']!r}; tokens={got['tokens']!r}"
+            )
+
     if failures:
-        print("RTGS parity FAILED against PyThaiNLP 5.4.0:")
+        print("RTGS parity / official acceptance FAILED:")
         print("\n".join(failures))
         return 1
     print(
         "RTGS implementation parity PASS: "
         f"{len(corpus['words'])} token inputs, {len(corpus['sequences'])} presegmented sequences, "
-        f"{text_count} end-to-end Thai text inputs; PyThaiNLP 5.4.0."
+        f"{text_count} end-to-end Thai text inputs; PyThaiNLP 5.4.0; "
+        f"{len(corpus.get('official_examples', []))} official-standard examples checked."
     )
     print("This is implementation parity only, not independent linguistic accuracy evidence.")
     if known_divergences:
