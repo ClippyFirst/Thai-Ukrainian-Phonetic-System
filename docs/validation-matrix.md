@@ -2306,7 +2306,7 @@ Branch reconciliation rule: do not merge a stale branch merely because GitHub re
 | Exact PR-head Web Static, full CI and Pages build | DONE_VERIFIED (code head) | PR #233 code head `03b8dc5aee1faf98bbcbe5ca6dac1ef0f0b8e694`: Web Static #42398132500 PASS; CI #42398132548 PASS (65 steps); Pages build #42398132498 PASS, deploy skipped for PR. Documentation-only commits after this code head require a final exact-head rerun. |
 | Independent linguistic validation | BLOCKED_EVIDENCE | No new independently adjudicated Thai-speaker gold or Ukrainian-native target review. RTGS overall accuracy remains NOT_MEASURED. |
 
-Continuation branch: `chore/repository-structure-rtgs-closeout-2026-11-07`, 85 commits ahead of main `5fb5cde9c31126e07b4285a04fff11e2314760a0` and 0 behind. PR #232 is closed as superseded; PR #233 is open and ready for review. The final PR head passed Web Static, full CI and Pages build. PyThaiNLP 5.4.0 royin is a comparator, not linguistic ground truth. Readiness: ENGINEERING_VERIFIED / RESEARCH_READY, not a linguistically validated release.
+Continuation branch: `chore/repository-structure-rtgs-closeout-2026-11-07`, a fast-forward descendant of main `5fb5cde9c31126e07b4285a04fff11e2314760a0` with 0 commits behind. PR #232 is closed as superseded; PR #233 is open and ready for review. The last fully tested candidate head `a8bb09d98cfb8c9de78e1c5f37a8c28f617ebed5` passed Web Static, full CI and Pages build; subsequent changes are audit/navigation documentation only, with no source-code changes. PyThaiNLP 5.4.0 royin is a comparator, not linguistic ground truth. Readiness: ENGINEERING_VERIFIED / RESEARCH_READY, not a linguistically validated release.
 
 
 ## RTGS CI failure analysis and repository structure continuation — 2026-11-07
