@@ -6,7 +6,7 @@ Replaced the Thai repository's former MIT root licence with ClippyFirst Project 
 
 This is a material change from permissive MIT to a custom restrictive licence. It is the explicit policy requested by the repository owner; it is not OSI-approved and may affect downstream reuse expectations. Legal enforceability is not independently assessed.
 
-Verification status at this audit update: changes are authored but require exact-head CI and Pages build/deploy/live smoke before DONE_VERIFIED. Geographic linguistic accuracy remains NOT_MEASURED.
+PR #229 was squash-merged into main as 275be185cc788e693b37d015590087c37a301df1. Exact-head CI #42366974836, Web static #42366974818, Pages build #42366974912, Site API #42366974842, Pyodide compatibility #42366974877, external G2P smoke #42366974864 and integration spike #42366974837 all passed. The Pages build uploaded its artifact; deployment was skipped in PR context. Mainline deployment/live smoke must still pass before claiming the public Pages site has been updated. Geographic linguistic accuracy remains NOT_MEASURED. The MIT transition is not retroactive: prior copies/releases distributed under MIT retain those previously granted permissions.
 
 ## Географічний словник — 2026-11-07
 
