@@ -185,8 +185,16 @@ const COMBINING = new Set([...VS].filter(char=>!PREPOSED.has(char)).concat([...O
 
 function nextThaiClusterEnd(chars, start){
   let i=start;
-  if(PREPOSED.has(chars[i]) && i+1<chars.length && C[chars[i+1]]) i+=2;
-  else i++;
+  if(PREPOSED.has(chars[i]) && i+1<chars.length && C[chars[i+1]]){
+    i+=2;
+    // A preposed vowel plus ห นำ + sonorant is one onset cluster.
+    if(chars[i-1]==="ห" && i<chars.length && C[chars[i]] && LEAD.has(chars[i])) i++;
+  }else{
+    const first=chars[i];
+    i++;
+    // Keep ห นำ + sonorant together even without a preposed vowel.
+    if(first==="ห" && i<chars.length && C[chars[i]] && LEAD.has(chars[i])) i++;
+  }
   while(i<chars.length && COMBINING.has(chars[i])) i++;
   return i;
 }
