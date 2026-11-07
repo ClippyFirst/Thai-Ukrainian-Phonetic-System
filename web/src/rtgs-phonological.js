@@ -84,6 +84,20 @@ function needsHyphen(previous, current) {
   return false;
 }
 
+function expandRrOrthography(word) {
+  const index = word.indexOf("รร");
+  if (index < 0) return null;
+  const before = word.slice(0,index);
+  const after = word.slice(index + 2);
+  // Productive รร patterns: short a + final m before a word-final ม;
+  // geminated m+a when ม begins the following syllable; an before a
+  // following preposed-vowel syllable (e.g. กรรไกร).
+  if (after === "ม") return before + "ัม";
+  if (after.startsWith("ม") && after.length > 1) return before + "ัมมะ" + after.slice(1);
+  if (/^[เแโใไ]/u.test(after)) return before + "ัน" + after;
+  return null;
+}
+
 function renderSyllables(syllables) {
   const rendered = [];
   for (const syllable of syllables) {
@@ -113,13 +127,14 @@ export function romanizeRtgsThaiToken(input) {
     return { status:"transliterated", input:word, value:record.value, source:record.source, sourceUrl:record.sourceUrl, first:null, last:null, lexicalPhrase:true };
   }
 
-  const analysis = analyzeThaiSyllablesForRomanization(word);
+  const rrExpanded = expandRrOrthography(word);
+  const analysis = analyzeThaiSyllablesForRomanization(rrExpanded || word);
   if (analysis.status === "analyzed") {
     const rendered = renderSyllables(analysis.syllables);
     if (rendered) {
       return {
         status:"transliterated", input:word, value:rendered.value,
-        source:rendered.syllables.some(item => item.source) ? "ClippyFirst structural syllable analysis → RTGS" : "ClippyFirst structural syllable analysis → RTGS",
+        source:rrExpanded ? "RTGS รร orthographic rule + structural syllable analysis" : "ClippyFirst structural syllable analysis → RTGS",
         segmentation:analysis.segmentation, first:rendered.first, last:rendered.last,
         syllables:rendered.syllables
       };
