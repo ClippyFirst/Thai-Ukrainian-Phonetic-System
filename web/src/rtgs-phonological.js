@@ -152,20 +152,22 @@ export function romanizeRtgsThaiToken(input) {
 
   const rrExpanded = expandRrOrthography(word);
   const lexicalSyllables = RTGS_SYLLABLE_SEGMENTATIONS.get(word);
+  const lexicalPath = lexicalSyllables ? lexicalSyllables.map(analyzeThaiSyllableForPhonology) : null;
   const analysis = lexicalSyllables
-    ? { status:"analyzed", segmentation:"source-backed-syllable-lexicon", syllables:lexicalSyllables.map(analyzeThaiSyllableForPhonology) }
+    ? { status:"analyzed", segmentation:"source-backed-syllable-lexicon", syllables:lexicalPath, paths:[lexicalPath] }
     : analyzeThaiSyllablesForRomanization(rrExpanded || word);
-  if (analysis.status === "analyzed" && analysis.syllables.every(item => item.status === "analyzed" && item.phonemicIpa)) {
-    const rendered = renderSyllables(analysis.syllables);
-    if (rendered) {
-      return {
-        status:"transliterated", input:word, value:rendered.value,
-        source:lexicalSyllables ? "BGN/PCGN source-backed syllable boundaries + structural RTGS adapter" : rrExpanded ? "RTGS รร orthographic rule + structural syllable analysis" : "ClippyFirst structural syllable analysis → RTGS",
-        sourceUrl:lexicalSyllables ? RTGS_EXAMPLE_SOURCE : null,
-        segmentation:analysis.segmentation, first:rendered.first, last:rendered.last,
-        syllables:rendered.syllables
-      };
-    }
+  const candidatePaths = analysis.paths?.length ? analysis.paths : analysis.status === "analyzed" ? [analysis.syllables] : [];
+  const renderedCandidates = candidatePaths.map(renderSyllables).filter(Boolean);
+  const renderedByValue = new Map(renderedCandidates.map(candidate => [candidate.value,candidate]));
+  if (renderedByValue.size === 1) {
+    const rendered = [...renderedByValue.values()][0];
+    return {
+      status:"transliterated", input:word, value:rendered.value,
+      source:lexicalSyllables ? "BGN/PCGN source-backed syllable boundaries + structural RTGS adapter" : rrExpanded ? "RTGS รร orthographic rule + structural syllable analysis" : "ClippyFirst structural syllable analysis → RTGS",
+      sourceUrl:lexicalSyllables ? RTGS_EXAMPLE_SOURCE : null,
+      segmentation:analysis.segmentation, first:rendered.first, last:rendered.last,
+      syllables:rendered.syllables
+    };
   }
 
   // Retain only reviewed lexical corrections from the legacy RTGS adapter.
