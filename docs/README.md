@@ -22,6 +22,9 @@ The current browser design contract is in [Website UX and visual system](ui-ux-r
 
 ## Start here
 
+- [Geographic-name batch engine (public site)](../web/geography.html)
+- [ClippyFirst project licence and permissions](LICENSING-AND-PERMISSIONS.md)
+
 1. [Project overview and user-facing capabilities](../README.md)
 2. [Public browser service](../web/index.html)
 3. [Thai–Ukrainian practical transcription system](../web/transcription.html)
