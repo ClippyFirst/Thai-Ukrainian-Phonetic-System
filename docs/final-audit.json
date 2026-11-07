@@ -5548,10 +5548,16 @@
     "manual_accessibility": "DEFERRED_NOT_VERIFIED",
     "physical_device_performance": "DEFERRED_NOT_VERIFIED",
     "readiness": "ENGINEERING_VERIFIED_RESEARCH_READY_NOT_LINGUISTICALLY_RELEASE_CERTIFIED",
-    "acceptance": "PR #233 exact-head Web Static, full CI and Pages build pass. Squash merge is authorized by the owner; verify post-merge main CI and Pages deployment. Linguistic certification remains separate and blocked on qualified reviewers.",
+    "acceptance": "The last tested candidate head passed Web Static, full CI and Pages build. Subsequent changes are documentation/audit-only with no source-code changes. Squash merge is authorized by the owner; verify post-merge main CI and Pages deployment. Linguistic certification remains separate and blocked on qualified reviewers.",
     "final_pr_head": "a8bb09d98cfb8c9de78e1c5f37a8c28f617ebed5",
-    "branch_ahead_of_main": 85,
-    "branch_behind_main": 0,
-    "self_review": "Two separate self-review passes performed; no independent human reviewer/subagent available."
+    "self_review": "Two separate self-review passes performed; no independent human reviewer/subagent available.",
+    "post_verification_documentation_commits": [
+      "1905c66865e703dcdd559f2a7df84705b41e3dbb",
+      "2cef408fcb0d3bde2584b91e45cdd541144a7ba5",
+      "51e2e1674da5ef24f9b83e942867d3a5b5903aa9",
+      "1cdba972cf5ae287a66f47ab936af6990340cda8",
+      "d8e4d992bb9d57bcf21f901ad59efae470163b08"
+    ],
+    "source_code_changed_after_verification": false
   }
 }
