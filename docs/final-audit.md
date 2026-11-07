@@ -1,3 +1,11 @@
+## Public copy correction — general Thai text transcription engine — 2026-11-07
+
+The previous public page framed the separate Python CSV batch engine too narrowly as a geographic-name tool. Replaced it with web/thai-text-engine.html and changed homepage, method-page and licensing-page navigation to describe a general Thai-text transcription utility. The page says it can process ordinary words and phrases in CSV rows, distinguishes RTGS from the typed Thai → IPA → Ukrainian path, and clearly states that this is a Python batch utility rather than an interactive browser form. It also discloses that the current implementation was originally packaged as a geographic-dictionary builder and still uses that internal script/optional-dependency naming. Internal geographic-dictionary schema, corpus template and documentation remain intact; only public positioning changed. Removed web/geography.html. Linguistic accuracy is not newly validated.
+
+Working branch: fix/general-thai-text-engine-copy-2026-11-07. PR/CI status pending at time of this audit entry; do not mark deployment complete until exact-head CI and post-merge Pages smoke verify /thai-text-engine.html and updated navigation.
+
+---
+
 ## Географічний рушій на сайті та ліцензійне узгодження — 2026-11-07
 
 Implemented on branch feat/geographic-engine-site-license-2026-11-07 from main checkpoint 529cf4cf50db1c08f12a7a0808e9f4a8d5c24dfc. Added a public geographic-engine overview page and homepage/method-page links. The copy accurately describes the existing Python CSV batch engine as separate from the browser FastThaiG2P runtime and preserves the NOT_MEASURED linguistic-validation caveat.
