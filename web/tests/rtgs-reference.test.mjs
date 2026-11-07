@@ -24,7 +24,7 @@ const separatedBangkokParts = romanizeRtgsTokenSequence([
   { kind: "thai", input: "มหานคร" }
 ]);
 assert.equal(separatedBangkokParts.length, 3, "lexical merging must not cross whitespace boundaries");
-assert.notEqual(separatedBangkokParts[0].input + separatedBangkokParts[2].input, "กรุงเทพมหานคร");
+assert.equal(separatedBangkokParts.some(item => item.source === "Royal Society of Thailand official proper-name form"), false);
 assert.equal(romanizeRtgsWord("test").status, "unavailable");
 assert.equal(romanizeRtgsWord("").status, "unavailable");
 assert.equal(romanizeRtgsWord("ห").value, "");
