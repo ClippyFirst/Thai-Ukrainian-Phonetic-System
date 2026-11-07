@@ -6,6 +6,7 @@ const manifest={schema_version:1,pythainlp_version:"5.4.0",pythainlp_wordlist_li
 const calls=[],fetchImpl=async url=>{calls.push(String(url));if(String(url).endsWith("/manifest.json"))return {ok:true,json:async()=>manifest};return {ok:true,arrayBuffer:async()=>bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength)};};
 const romanizer=await createRtgsRomanizer({baseUrl:new URL("https://example.test/vendor/native/"),fetchImpl,cryptoImpl:webcrypto});
 assert.equal(romanizer.engine,"PyThaiNLP 5.4.0 royin / RTGS");assert.equal(romanizer.segmentation,"PyThaiNLP 5.4.0 newmm");assert.equal(romanizer.dictionaryEntries,2);
+const bangkok=romanizer.romanize("กรุงเทพมหานคร");assert.equal(bangkok.output,"krung thep maha nakhon");assert.equal(bangkok.unavailableCount,0);
 const greeting=romanizer.romanize("สวัสดี");assert.equal(greeting.output,"sawatdi");assert.equal(greeting.unavailableCount,0);assert.equal(greeting.details[0].status,"transliterated");
 const punctuation=romanizer.romanize("สวัสดี!");assert.equal(punctuation.output,"sawatdi!");assert.equal(punctuation.details.at(-1).status,"passthrough");
 const unsupported=romanizer.romanize("ๆ");assert.equal(unsupported.unavailableCount,1);assert.match(unsupported.output,/RTGS НЕ ПЕРЕВІРЕНО/);assert.equal(calls.length,2);
