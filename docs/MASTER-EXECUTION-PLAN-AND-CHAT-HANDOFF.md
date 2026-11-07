@@ -3218,3 +3218,13 @@ Latest branch head: `228d80d51d58a4437ab0f70ba12597a1259902e8`. The UI contract 
 - PR #232 is closed as superseded; PR #233 is the only open PR for this work. The old geographic/general-text branches were reconciled against main and are retained as historical refs, not merged wholesale. The separate legacy RTGS branch's proper-name reading is already represented by the new production adapter.
 - Self-review was performed in two separate passes (pipeline/spec compliance and code/test quality); no independent human reviewer/subagent was available. The owner explicitly requested branch consolidation, and all automated acceptance checks pass, so PR #233 is ready for squash merge. After merge, verify main CI and Pages deployment separately.
 - Linguistic release status remains research-ready, not release-certified: no independent Thai-speaker gold, no Ukrainian-native target adjudication, RTGS accuracy NOT_MEASURED, manual accessibility and physical-device performance unverified.
+
+
+## 2026-11-07 — final merged mainline state
+
+- PR #233 merged by squash to main: `9d829f0bd505b8a9c7b23fe24418ae3511a776fb`. Post-merge Web Static #42399176794, full CI #42399176802 (65/65 test, wheel 11/11, master artifact 6/6) and Pages #42399176759 (build 27/27, deploy 4/4) all passed.
+- The post-merge Pyodide compatibility workflow initially failed (#42399176619) because it did not generate the untracked browser dictionary asset `web/src/word-dictionary.generated.js`. This was a CI prerequisite omission, not a runtime code failure.
+- PR #234 added the existing pinned generator before Pyodide browser tests and path filters for the generator/CC0 source/manifest. PR Pyodide #42399472395 passed 20/20; PR CI #42399472396 passed 65/65 plus wheel smoke 11/11.
+- PR #234 merged by squash to main: `8c91eabfa1f499f5fbea3bc42c8db9b4fcc0b12b`. Post-merge Pyodide #42399972927 passed 20/20; post-merge CI #42399972992 passed 65/65, wheel 11/11 and master artifact 6/6.
+- No open PRs remain. Main is the only active development line. Historical branches are retained as evidence/history, not deleted.
+- Final readiness: engineering-verified and research-ready; not linguistically release-certified. Thai independent IPA gold remains 0; RTGS accuracy NOT_MEASURED; Ukrainian practical forms provisional; manual accessibility and physical-device performance remain unverified/deferred.
