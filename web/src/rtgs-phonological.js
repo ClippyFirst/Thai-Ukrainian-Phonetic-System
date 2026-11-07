@@ -50,9 +50,20 @@ function romanizeSyllable(analysis) {
   const onset = effectiveOnset(analysis.onset || []);
   const initial = onset.map(grapheme => RTGS_INITIAL[grapheme]);
   if (initial.some(value => value === undefined)) return null;
-  const vowel = RTGS_VOWEL[String(analysis.vowel).replace(/ː|ˑ/gu, "")];
+  const vowelKey = String(analysis.vowel).replace(/ː|ˑ/gu, "");
+  let vowel = RTGS_VOWEL[vowelKey];
   if (vowel === undefined) return null;
-  const codaKey = analysis.codaIpa || "";
+  let codaKey = analysis.codaIpa || "";
+  // Thai off-glides belong to the RTGS vowel spelling, not to a consonantal
+  // y/w coda. This keeps /uaj/ as uai, /aj/ as ai, /aw/ as ao, etc.
+  const glide = {
+    "a:j":"ai","u:j":"ui","ua:j":"uai","ɯa:j":"ueai","ɔ:j":"oi","ɤ:j":"oei",
+    "a:w":"ao","i:w":"io","e:w":"eo","ɛ:w":"aeo","ia:w":"iao"
+  }[vowelKey + ":" + codaKey];
+  if (glide) {
+    vowel = glide;
+    codaKey = "";
+  }
   const coda = RTGS_CODA[codaKey];
   if (coda === undefined) return null;
   return {
