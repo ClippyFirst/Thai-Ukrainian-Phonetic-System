@@ -10,8 +10,7 @@ const RTGS_UNSUPPORTED_TOKENS = new Set(["ๆ", "ฯ", "ฦ", "สตรีเ�
 // Official proper-name forms published by the Royal Society of Thailand.
 // These are lexical names, not outputs inferred by the generic grapheme rules.
 const RTGS_OFFICIAL_NAME_OVERRIDES = new Map([
-  ["กรุงเทพมหานคร", "krung thep maha nakhon"],
-  ["กรุงเทพฯ", "krung thep maha nakhon"]
+  ["กรุงเทพมหานคร", "krung thep maha nakhon"]
 ]);
 const RTGS_LEXICAL_OVERRIDES = new Map([
   ["จริง", "ching"], ["สามารถ", "samat"], ["สวัสดี", "sawatdi"],
