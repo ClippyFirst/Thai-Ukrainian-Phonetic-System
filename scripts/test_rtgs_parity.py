@@ -39,14 +39,14 @@ const result = {
   texts: (corpus.text_inputs || []).map(text => {
     const tokens = tokenizer.tokenize(text);
     const result = romanizeRtgsTokenSequence(tokens.map(value => ({
-      input: value, kind: /[\\u0E00-\\u0E7F]/u.test(value) ? "thai" : "other"
+      input: value, kind: /[\u0E00-\u0E7F]/u.test(value) ? "thai" : "other"
     })));
     return { tokens, romanized: result.output };
   }),
   official: (corpus.official_examples || []).map(({ input }) => {
     const tokens = tokenizer.tokenize(input);
     const result = romanizeRtgsTokenSequence(tokens.map(value => ({
-      input: value, kind: /[\\u0E00-\\u0E7F]/u.test(value) ? "thai" : "other"
+      input: value, kind: /[\u0E00-\u0E7F]/u.test(value) ? "thai" : "other"
     })));
     return { input, tokens, romanized: result.output };
   })
