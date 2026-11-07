@@ -379,7 +379,7 @@
   "continuation_starting_commit": "cc7c0276c11df39c55edc4df8da4c82b988bd4ab",
   "latest_code_checkpoint": "cb775d6156f62392fa2d0f4bcf8d1aa30d219530",
   "readiness": "ENGINEERING_VERIFIED_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_RELEASE_READY",
-  "latest_verified_repository_head": "b7973b03961317abf3c5e2fed67c53c7b450eeee",
+  "latest_verified_repository_head": "7d4c7e8c693389a8ac3f0ca3c3a313bfeb05043e",
   "task_ledger": [
     {
       "id": "SEG-TRAIN-001",
@@ -5395,6 +5395,52 @@
     }
   },
   "notes": [
-    "Public page positioning corrected on 2026-11-07: general Thai text CSV batch transcription, not geography-only. Existing builder remains internally named for geographic dictionary; linguistic validation unchanged."
-  ]
+    "Public page positioning corrected on 2026-11-07: general Thai text CSV batch transcription, not geography-only. Existing builder remains internally named for geographic dictionary; linguistic validation unchanged.",
+    "PR #230 merged to main as 7d4c7e8c693389a8ac3f0ca3c3a313bfeb05043e. Public Thai-text engine page replaces the geography-only page; post-merge main Pages live smoke and CI were pending at the checkpoint. Documentation index/root README require alignment; independent linguistic accuracy remains NOT_MEASURED."
+  ],
+  "public_general_thai_text_engine_2026_11_07": {
+    "status": "DONE_VERIFIED_PR_MERGED_MAIN_DEPLOYMENT_PENDING_AT_CHECKPOINT",
+    "pr": 230,
+    "pr_head": "56b1c9d5b41aafa75c838ab2032fcc9ac3f57edb",
+    "merge_commit": "7d4c7e8c693389a8ac3f0ca3c3a313bfeb05043e",
+    "public_page": "web/thai-text-engine.html",
+    "implementation_contract": "Python CSV batch utility; historically packaged as geographic-dictionary builder; not a browser input form",
+    "routes": {
+      "rtgs": "separate Thai-to-Latin romanization",
+      "ukrainian": "typed Thai analysis to IPA to Ukrainian adapter"
+    },
+    "pr_checks": {
+      "ci": 42369182862,
+      "web_static": 42369182837,
+      "site_api": 42369182879,
+      "pyodide_compatibility": 42369182854,
+      "pages_build": 42369182865
+    },
+    "main_checks_at_checkpoint": {
+      "web_static": {
+        "run": 42381570719,
+        "status": "SUCCESS"
+      },
+      "ci": {
+        "run": 42381570725,
+        "status": "IN_PROGRESS"
+      },
+      "site_api": {
+        "run": 42381570708,
+        "status": "IN_PROGRESS"
+      },
+      "pyodide_compatibility": {
+        "run": 42381570767,
+        "status": "IN_PROGRESS"
+      },
+      "pages_deploy": {
+        "run": 42381570753,
+        "status": "IN_PROGRESS"
+      }
+    },
+    "linguistic_accuracy": "NOT_MEASURED",
+    "independent_ipa_gold_rows": 0,
+    "ukrainian_output": "PROVISIONAL",
+    "acceptance": "Confirm all exact-main workflows and Pages deployment/live smoke for /thai-text-engine.html and navigation."
+  }
 }

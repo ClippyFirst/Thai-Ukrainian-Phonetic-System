@@ -28,13 +28,22 @@ The repository's user-facing system is described in [Тайсько-україн
 
 The homepage keeps Ukrainian IPA adaptation as its primary result and offers RTGS as an optional collapsed, lazily loaded secondary result; a full [Thai romanization tool](web/romanization.html) is also available. Both use the official RTGS approach through PyThaiNLP 5.4.0 royin. It reuses the pinned PyThaiNLP newmm tokenizer and CC0 word list, verifies the local word-list asset by SHA-256, and runs entirely in the browser. RTGS is kept separate from IPA and Ukrainian transcription; tones and vowel length are not fully represented. See [the romanization method and limitations](docs/thai-romanization.md).
 
-## Географічні назви та пакетний словник
+## Рушій пакетної транскрипції тайського тексту
 
-Для збагачення власного CSV географічних назв див. [документацію географічного словника](docs/geographic-dictionary.md) і [шаблон CSV](data/geography/geographic-names-template.csv). Скрипт `scripts/build_geographic_dictionary.py` додає RTGS (PyThaiNLP 5.4.0 newmm + royin з pinned CC0 словником), фонемний та широкий поверхневий IPA і український результат, отриманий лише через typed IPA → Ukrainian адаптер. Встановлення: `python -m pip install -e ".[geography]"`. Неповний IPA/UA результат утримується; RTGS є окремою, тонально неповною романізацією. Вихідні ліцензії та джерела набору потрібно фіксувати окремо.
+У репозиторії є окремий **Python-рушій пакетної транскрипції тайського тексту**. Він призначений для обробки звичайних тайських слів і фраз у CSV, а не лише географічних назв. Публічний опис інструмента: [Рушій транскрипції тайського тексту](web/thai-text-engine.html).
 
-## Geographic-name batch engine
+Поточна реалізація історично оформлена як CSV-будівник географічного словника: `scripts/build_geographic_dictionary.py`, документація [geographic-dictionary.md](docs/geographic-dictionary.md), шаблон `data/geography/geographic-names-template.csv` та додаткова залежність `.[geography]` з PyThaiNLP 5.4.0. Це внутрішня назва/пакування реалізації, а не обмеження публічного сценарію використання. Інструмент працює пакетно, не додає інтерактивного поля на сайт і не замінює браузерний FastThaiG2P.
 
-The project also includes a separate Python CSV batch engine for Thai geographic names. It emits RTGS, phonemic IPA, optional broad-surface IPA and a Ukrainian result adapted only from typed IPA. RTGS is a separate output, not an input to Ukrainian adaptation; incomplete analyses are withheld. The public site has a [geographic-name engine overview](web/geography.html). This is a research batch tool, not a second browser pronunciation engine. Real geographic-corpus accuracy remains NOT_MEASURED pending source-licensed data and independent Thai/Ukrainian review.
+Приклад запуску для CSV із колонкою `name_th`:
+
+```bash
+python -m pip install -e ".[geography]"
+python scripts/build_geographic_dictionary.py input.csv --thai-column name_th --output build/output.csv
+```
+
+Результат зберігає початкові колонки й може містити окрему RTGS-романізацію, фонемний IPA, підтриманий широкий поверхневий IPA та українську адаптацію, що проходить лише через типізований IPA → Ukrainian адаптер. RTGS не є джерелом української форми. Неповний/непідтриманий IPA-маршрут утримує IPA та український результат. Технічна повнота не є незалежним підтвердженням вимови; точність для довільного тайського тексту залишається NOT_MEASURED до незалежної лінгвістичної перевірки.
+
+Для власних географічних корпусів додатково використовуйте [шаблон CSV](data/geography/geographic-names-template.csv) і правила фіксації джерел/ліцензій у [документації словника](docs/geographic-dictionary.md).
 
 ## Project licence
 

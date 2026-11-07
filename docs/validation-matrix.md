@@ -2268,3 +2268,14 @@ Branch reconciliation rule: do not merge a stale branch merely because GitHub re
 | Branch tree reconciliation | DONE_VERIFIED_WITH_PRESERVED_HISTORY | 19 refs total: main + 18 historical refs. Recursive Git tree comparison of all 18 non-main refs found zero file paths absent from main. Divergent histories are retained as historical source refs, not merged wholesale or deleted. |
 | Linguistic evidence | NOT_MEASURED / BLOCKED | Independent Thai IPA gold = 0; no independently adjudicated accuracy score; Ukrainian practical forms remain provisional. Requires qualified independent Thai reviewers, adjudicator and separately validated Ukrainian target decisions. |
 | Manual accessibility / physical-device performance | DEFERRED / NOT_VERIFIED | Requires hands-on keyboard/screen-reader/zoom/reflow/device acceptance and instrumented cold/warm/offline/mobile latency, transfer and memory measurements. |
+
+## General Thai-text batch engine public positioning — 2026-11-07
+
+| Work item | Status | Evidence / acceptance |
+|---|---|---|
+| Public positioning as general Thai-text transcription | DONE_VERIFIED (merged; main deployment pending verification) | PR #230 merged as `7d4c7e8c693389a8ac3f0ca3c3a313bfeb05043e`. Added `web/thai-text-engine.html`; homepage, method and licensing navigation now describe ordinary Thai words/phrases in CSV. |
+| Preserve the actual implementation contract | DONE_VERIFIED | The public page discloses that the current Python batch implementation is historically packaged as `scripts/build_geographic_dictionary.py`, uses the optional `geography` dependency extra and is not an interactive browser form. The internal geographic corpus template/docs remain available for geographic-corpus workflows. |
+| Keep phonetic and romanization routes distinct | DONE_VERIFIED (existing contract preserved) | RTGS remains a separate Thai → Latin route. Ukrainian adaptation remains typed Thai analysis → IPA → Ukrainian; incomplete IPA/UA results are withheld. |
+| Exact PR-head verification | DONE_VERIFIED | PR-head CI #42369182862, Web Static #42369182837, Site API #42369182879, Pyodide compatibility #42369182854 and Pages build #42369182865 all SUCCESS on `56b1c9d5b41aafa75c838ab2032fcc9ac3f57edb`. |
+| Post-merge main verification and publication | PARTIAL | Main commit `7d4c7e8c693389a8ac3f0ca3c3a313bfeb05043e`: Web Static #42381570719 SUCCESS. CI #42381570725, Site API #42381570708, Pyodide compatibility #42381570767 and Pages deploy #42381570753 were in progress at last observation. Acceptance: all exact-main workflows pass and Pages live smoke serves `/thai-text-engine.html` and updated navigation. |
+| Independent linguistic accuracy | NOT_MEASURED | No new gold or adjudication was created. Independent Thai IPA gold remains 0; Ukrainian practical output remains provisional. |

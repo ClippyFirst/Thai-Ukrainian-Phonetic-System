@@ -3146,3 +3146,15 @@ Latest branch head: `228d80d51d58a4437ab0f70ba12597a1259902e8`. The UI contract 
 - One active working branch remains: `main`. All relevant PRs are merged or superseded; PR #227 is merged and no open PR remains.
 - User-facing product state: homepage presents Ukrainian/IPA adaptation as the primary result and exposes RTGS as a collapsed, lazily loaded secondary result. RTGS remains methodologically separate from IPA → Ukrainian adaptation.
 - Genuine remaining gates: independent Thai IPA gold and expert Ukrainian target validation (gold rows 0; accuracy NOT_MEASURED); manual accessibility acceptance; instrumented physical-device performance. These are not implied by software CI and must not be marked passed.
+
+---
+
+## 2026-11-07 — PR #230 merged; documentation structure continuation
+
+- Starting default branch: `main`, commit `447c54c1d78dfec941f8a97400fa4b63e0efd28b`. Repository is public and the connected GitHub account has admin/push permission.
+- PR #230 (`fix/general-thai-text-engine-copy-2026-11-07`) was reviewed against main and squash-merged as `7d4c7e8c693389a8ac3f0ca3c3a313bfeb05043e`. It adds the general Thai-text batch engine public page and updates homepage/method/licensing navigation plus regression tests. Exact PR-head CI #42369182862, Web Static #42369182837, Site API #42369182879, Pyodide compatibility #42369182854 and Pages build #42369182865 all passed.
+- PR #228 and #229 are already merged. Their branch commits are historical source refs after squash merge; do not merge their full divergent histories on top of main. Preserve the CSV builder, data template, technical docs and licensing implementation already present on main.
+- Main post-merge checks on `7d4c7e8c693389a8ac3f0ca3c3a313bfeb05043e`: Web Static #42381570719 SUCCESS. CI #42381570725, Site API #42381570708, Pyodide compatibility #42381570767 and Pages deploy #42381570753 were still running at this checkpoint. Recheck exact workflow conclusions and the published Pages live smoke before marking deployment DONE_VERIFIED.
+- Documentation issues identified for correction: root README still presented the engine as geography-only; docs/README.md still linked the deleted `web/geography.html` and claimed no open PRs at an older checkpoint. This pass updates those current-facing navigation and status statements while preserving dated historical audit entries.
+- Current scope: improve canonical documentation/navigation and reconcile the existing matrix/audit/handoff in place. Do not create a parallel execution plan. Preserve `main` as the only active working branch; do not force-push or delete historical refs.
+- Linguistic acceptance remains separate: independent IPA gold = 0; accuracy NOT_MEASURED; Ukrainian practical output provisional. No claims of independent accuracy, manual accessibility conformance or instrumented device performance are made.
