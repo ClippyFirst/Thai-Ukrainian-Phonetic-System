@@ -1,4 +1,4 @@
-import { analyze, analyzeThaiSyllablesForRomanization } from "./engine.js";
+import { analyzeThaiSyllableForPhonology, analyzeThaiSyllablesForRomanization } from "./engine.js";
 import { romanizeRtgsWord } from "./rtgs-reference.js";
 
 const RTGS_INITIAL = Object.freeze({
@@ -153,7 +153,7 @@ export function romanizeRtgsThaiToken(input) {
   const rrExpanded = expandRrOrthography(word);
   const lexicalSyllables = RTGS_SYLLABLE_SEGMENTATIONS.get(word);
   const analysis = lexicalSyllables
-    ? { status:"analyzed", segmentation:"source-backed-syllable-lexicon", syllables:lexicalSyllables.map(analyze) }
+    ? { status:"analyzed", segmentation:"source-backed-syllable-lexicon", syllables:lexicalSyllables.map(analyzeThaiSyllableForPhonology) }
     : analyzeThaiSyllablesForRomanization(rrExpanded || word);
   if (analysis.status === "analyzed" && analysis.syllables.every(item => item.status === "analyzed" && item.phonemicIpa)) {
     const rendered = renderSyllables(analysis.syllables);
