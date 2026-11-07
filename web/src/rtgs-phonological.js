@@ -35,6 +35,8 @@ const RTGS_PROPER_NAMES = new Map([
 // and the same RTGS onset/vowel/coda adapter.
 const RTGS_EXAMPLE_SOURCE = "https://assets.publishing.service.gov.uk/media/5ab4e60aed915d78b9a459f5/ROMANIZATION_OF_THAI.pdf";
 const RTGS_SYLLABLE_SEGMENTATIONS = new Map([
+  ["สิบ", ["สิบ"]],
+  ["หก", ["หก"]],
   ["สะอาด", ["สะ","อาด"]],
   ["สำอาง", ["สำ","อาง"]],
   ["บังอร", ["บัง","อร"]],
