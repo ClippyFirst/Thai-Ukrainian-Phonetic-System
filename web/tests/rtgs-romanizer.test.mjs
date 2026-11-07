@@ -3,12 +3,6 @@ import {createHash,webcrypto} from "node:crypto";
 import {createRtgsRomanizer,RtgsRomanizerError} from "../src/rtgs-romanizer.js";
 import {romanizeRtgsThaiToken,romanizeRtgsTokenSequence} from "../src/rtgs-phonological.js";
 import {analyzeThaiSyllableForPhonology} from "../src/engine.js";
-for (const word of ["เหงา","ขะ","เย่า","หวย","โวหาร","โว","หาร"]) {
-  console.log("RTGS_DIAGNOSTIC", word, JSON.stringify({
-    syllable: analyzeThaiSyllableForPhonology(word),
-    token: romanizeRtgsThaiToken(word)
-  }));
-}
 const wordlist="สวัสดี\nประเทศไทย\n",bytes=new TextEncoder().encode(wordlist),hash=createHash("sha256").update(bytes).digest("hex");
 const manifest={schema_version:1,pythainlp_version:"5.4.0",pythainlp_wordlist_license:"CC0-1.0",pythainlp_wordlist_entries:2,assets:[{path:"native/pythainlp-default-words.txt",sha256:hash,size_bytes:bytes.byteLength}]};
 const calls=[],fetchImpl=async url=>{calls.push(String(url));if(String(url).endsWith("/manifest.json"))return {ok:true,json:async()=>manifest};return {ok:true,arrayBuffer:async()=>bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength)};};
@@ -18,6 +12,7 @@ const greeting=romanizer.romanize("สวัสดี");assert.equal(greeting.ou
 const punctuation=romanizer.romanize("สวัสดี!");assert.equal(punctuation.output,"sawatdi!");assert.equal(punctuation.details.at(-1).status,"passthrough");
 const six=romanizeRtgsTokenSequence([{input:"สิบ",kind:"thai"},{input:"หก",kind:"thai"}]);assert.equal(six.output,"sip-hok");assert.equal(six.unavailableCount,0);const phrase=romanizeRtgsTokenSequence([{input:"ภาษา",kind:"thai"},{input:"ไทย",kind:"thai"}]);assert.equal(phrase.output,"phasa thai");
 assert.equal(romanizeRtgsThaiToken("ภาษา").value,"phasa","open syllables must not be rejected when their coda is empty");assert.equal(romanizeRtgsThaiToken("ไทย").value,"thai","a glide already represented in the rime must not be emitted twice");assert.equal(romanizeRtgsThaiToken("ผลไม้").value,"phonlamai","reviewed lexical corrections must take precedence over an accidental structural parse");
+assert.equal(analyzeThaiSyllableForPhonology("หาร").codaIpa,"n","final ร after the vowel is a coda, not a ห นำ onset");assert.equal(romanizeRtgsThaiToken("เหงา").value,"ngao");assert.equal(romanizeRtgsThaiToken("เขย่า").value,"khayao");assert.equal(romanizeRtgsThaiToken("หวย").value,"huai");assert.equal(romanizeRtgsThaiToken("โวหาร").value,"wohan");
 assert.equal(romanizeRtgsThaiToken("สิบ").value,"sip");assert.equal(romanizeRtgsThaiToken("หก").value,"hok");assert.equal(romanizeRtgsThaiToken("สะอาด").value,"sa-at");assert.equal(romanizeRtgsThaiToken("สำอาง").value,"sam-ang");assert.equal(romanizeRtgsThaiToken("บังอร").value,"bang-on");assert.equal(romanizeRtgsThaiToken("หวอ").value,"wo");assert.equal(romanizeRtgsThaiToken("หวย").value,"huai");assert.equal(romanizeRtgsThaiToken("ใหม่").value,"mai");assert.equal(romanizeRtgsThaiToken("ไหม").value,"mai");assert.equal(romanizeRtgsThaiToken("เหงา").value,"ngao");assert.equal(romanizeRtgsThaiToken("ให้").value,"hai");assert.equal(romanizeRtgsThaiToken("ใกล้").value,"klai");assert.equal(romanizeRtgsThaiToken("ใคร").value,"khrai");
 assert.equal(romanizeRtgsThaiToken("กรรม").value,"kam");assert.equal(romanizeRtgsThaiToken("กรรไกร").value,"kankrai");assert.equal(romanizeRtgsThaiToken("กรรมการ").value,"kammakan");
 const unsupported=romanizer.romanize("ๆ");assert.equal(unsupported.unavailableCount,1);assert.match(unsupported.output,/RTGS НЕ ПЕРЕВІРЕНО/);assert.equal(calls.length,2);const afterUnknown=romanizeRtgsTokenSequence([{input:"ๆ",kind:"thai"},{input:"ภาษา",kind:"thai"}]);assert.match(afterUnknown.output,/НЕ ПЕРЕВІРЕНО: ๆ⟧ phasa/);
