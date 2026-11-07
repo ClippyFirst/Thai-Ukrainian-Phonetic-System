@@ -4,7 +4,7 @@ Research-oriented, machine-readable reference implementation for mapping contemp
 
 ## Repository guide
 
-See [docs/README.md](docs/README.md) for the canonical documentation map, code/data layout, document ownership and change discipline.
+See [docs/README.md](docs/README.md) for the canonical documentation map, code/data layout, document ownership and change discipline. Contributors should start with [CONTRIBUTING.md](CONTRIBUTING.md); repository-specific agent instructions are in [AGENTS.md](AGENTS.md).
 
 ## Research pipeline
 
