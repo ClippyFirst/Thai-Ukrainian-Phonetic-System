@@ -216,6 +216,7 @@ function longestKnownThaiSequence(tokens, start) {
 export function romanizeRtgsTokenSequence(tokens) {
   const details = [];
   let previousWord = null;
+  let hasPreviousThaiToken = false;
   let output = "";
   let unavailableCount = 0;
 
@@ -226,6 +227,7 @@ export function romanizeRtgsTokenSequence(tokens) {
       details.push({ kind:token.kind, input:token.input, status:"passthrough", value, romanized:null, separatorBefore:"" });
       output += value;
       previousWord = null;
+      hasPreviousThaiToken = false;
       continue;
     }
 
@@ -252,6 +254,7 @@ export function romanizeRtgsTokenSequence(tokens) {
       details.push({ kind:"thai", input, status:"unavailable", value, romanized:null, separatorBefore:"" });
       output += value;
       previousWord = null;
+      hasPreviousThaiToken = true;
       continue;
     }
 
@@ -259,7 +262,7 @@ export function romanizeRtgsTokenSequence(tokens) {
     // syllables inside one word; distinct word tokens are separated by spaces.
     // Known compounds split by newmm are recombined above via exact source-backed
     // sequence keys before this boundary is reached.
-    const separatorBefore = previousWord ? " " : "";
+    const separatorBefore = hasPreviousThaiToken ? " " : "";
     details.push({
       kind:"thai", input, status:"transliterated",
       value:result.value, romanized:result.value, separatorBefore,
@@ -267,6 +270,7 @@ export function romanizeRtgsTokenSequence(tokens) {
     });
     output += separatorBefore + result.value;
     previousWord = result;
+    hasPreviousThaiToken = true;
   }
 
   return { details, output, unavailableCount };
