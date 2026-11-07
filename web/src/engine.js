@@ -371,6 +371,22 @@ function analyzeText(text, options={}){
   });
 }
 /**
+ * Expose source-language phonology independently of the Ukrainian target adapter.
+ * RTGS consumes the Thai phonemic analysis; a missing Ukrainian rendering must
+ * not invalidate an otherwise inspectable source IPA result.
+ */
+export function analyzeThaiSyllableForPhonology(input) {
+  const result = analyze(input);
+  const hasPhonemicIpa = typeof result.phonemicIpa === "string" && result.phonemicIpa.length > 0;
+  return {
+    ...result,
+    status: hasPhonemicIpa ? "analyzed" : "unresolved",
+    targetStatus: result.status,
+    reason: hasPhonemicIpa ? null : result.reason
+  };
+}
+
+/**
  * Syllable analysis entry point for pronunciation-based transcription adapters.
  * Uses the same reviewed lexical syllabification and structural parser as the
  * primary engine; it does not invent an IPA result for unresolved fragments.
@@ -382,7 +398,7 @@ export function analyzeThaiSyllablesForRomanization(input) {
   let syllables;
   let segmentation;
   if (lexical) {
-    syllables = lexical.map(analyze);
+    syllables = lexical.map(analyzeThaiSyllableForPhonology);
     segmentation = "curated-syllable-lexicon";
   } else {
     const chars = [...key];
@@ -396,7 +412,7 @@ export function analyzeThaiSyllablesForRomanization(input) {
       for (const end of boundaries) {
         if (end <= offset || end - offset > 8) continue;
         const candidate = chars.slice(offset,end).join("");
-        const item = analyze(candidate);
+        const item = analyzeThaiSyllableForPhonology(candidate);
         if (item.status !== "analyzed" || !item.phonemicIpa) continue;
         for (const suffix of solve(end)) paths.push([item,...suffix]);
       }
