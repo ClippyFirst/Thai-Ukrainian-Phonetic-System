@@ -3,7 +3,6 @@ import {createHash,webcrypto} from "node:crypto";
 import {createRtgsRomanizer,RtgsRomanizerError} from "../src/rtgs-romanizer.js";
 import {romanizeRtgsThaiToken,romanizeRtgsTokenSequence} from "../src/rtgs-phonological.js";
 import {analyzeThaiSyllableForPhonology} from "../src/engine.js";
-console.log("RTGS_DIAGNOSTIC หวอ", JSON.stringify({analysis:analyzeThaiSyllableForPhonology("หวอ"),token:romanizeRtgsThaiToken("หวอ")}));
 const wordlist="สวัสดี\nประเทศไทย\n",bytes=new TextEncoder().encode(wordlist),hash=createHash("sha256").update(bytes).digest("hex");
 const manifest={schema_version:1,pythainlp_version:"5.4.0",pythainlp_wordlist_license:"CC0-1.0",pythainlp_wordlist_entries:2,assets:[{path:"native/pythainlp-default-words.txt",sha256:hash,size_bytes:bytes.byteLength}]};
 const calls=[],fetchImpl=async url=>{calls.push(String(url));if(String(url).endsWith("/manifest.json"))return {ok:true,json:async()=>manifest};return {ok:true,arrayBuffer:async()=>bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength)};};
