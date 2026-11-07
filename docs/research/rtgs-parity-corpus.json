@@ -119,7 +119,14 @@
     "source": "BGN/PCGN 2002 Agreement, ROMANIZATION OF THAI, checked November 2017; developed by the Royal Institute of Thailand and based on the official 2000 system",
     "url": "https://assets.publishing.service.gov.uk/media/5ab4e60aed915d78b9a459f5/ROMANIZATION_OF_THAI.pdf",
     "evidence_grade": "OFFICIAL_STANDARD_EXAMPLES_NOT_INDEPENDENT_REVIEW",
-    "note": "Short rule examples from the published standard document. These are acceptance targets, not PyThaiNLP parity expectations."
+    "note": "Short rule examples from the published standard document. These are acceptance targets, not PyThaiNLP parity expectations.",
+    "source_conflicts": [
+      {
+        "input": "หลับ",
+        "published": "luep",
+        "note": "The cited document's note 4 gives luep, which appears inconsistent with the ordinary Standard Thai pronunciation /lap/. Excluded from acceptance until independently adjudicated against a Thai pronunciation dictionary or primary Royal Society source."
+      }
+    ]
   },
   "official_examples": [
     {
@@ -221,10 +228,6 @@
     {
       "input": "หวอ",
       "expected": "wo"
-    },
-    {
-      "input": "หลับ",
-      "expected": "luep"
     },
     {
       "input": "หวย",
