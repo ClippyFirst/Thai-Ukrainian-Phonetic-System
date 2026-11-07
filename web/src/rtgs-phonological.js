@@ -10,7 +10,7 @@ const RTGS_INITIAL = Object.freeze({
   "ส":"s","ห":"h","ฬ":"l","อ":"","ฮ":"h"
 });
 const RTGS_CODA = Object.freeze({
-  "p":"p","t":"t","k":"k","m":"m","n":"n","ŋ":"ng","j":"y","w":"w","ʔ":""
+  "":"", "p":"p","t":"t","k":"k","m":"m","n":"n","ŋ":"ng","j":"y","w":"w","ʔ":""
 });
 const RTGS_VOWEL = Object.freeze({
   "a":"a","i":"i","ɯ":"ue","u":"u","e":"e","ɛ":"ae","ɤ":"oe","o":"o","ɔ":"o",
@@ -82,6 +82,11 @@ function romanizeSyllable(analysis) {
   let vowel = RTGS_VOWEL[vowelKey];
   if (vowel === undefined) return null;
   let codaKey = analysis.codaIpa || "";
+  // Some source analyses encode a diphthong in the vowel field and also expose
+  // its final glide as codaIpa. RTGS writes that glide once, in the rime.
+  if ((codaKey === "j" || codaKey === "w") && vowelKey.endsWith(codaKey) && RTGS_VOWEL[vowelKey] !== undefined) {
+    codaKey = "";
+  }
   // Thai off-glides belong to the RTGS vowel spelling, not to a consonantal
   // y/w coda. This keeps /uaj/ as uai, /aj/ as ai, /aw/ as ao, etc.
   const glide = {
@@ -156,6 +161,15 @@ export function romanizeRtgsThaiToken(input) {
     return { status:"transliterated", input:word, value:record.value, source:record.source, sourceUrl:record.sourceUrl, first:null, last:null, lexicalPhrase:true };
   }
 
+  const reviewedLegacy = romanizeRtgsWord(word);
+  if (reviewedLegacy.status === "transliterated" && reviewedLegacy.evidenceStatus === "reviewed_lexical_correction") {
+    return {
+      status:"transliterated", input:word, value:reviewedLegacy.value,
+      source:"Reviewed ClippyFirst lexical RTGS correction", first:null, last:null,
+      lexicalPhrase:true
+    };
+  }
+
   const rrExpanded = expandRrOrthography(word);
   const lexicalSyllables = RTGS_SYLLABLE_SEGMENTATIONS.get(word);
   const lexicalPath = lexicalSyllables ? lexicalSyllables.map(analyzeThaiSyllableForPhonology) : null;
@@ -176,17 +190,7 @@ export function romanizeRtgsThaiToken(input) {
     };
   }
 
-  // Retain only reviewed lexical corrections from the legacy RTGS adapter.
-  // Do not fall back to its generic grapheme heuristic for an unresolved word.
-  const legacy = romanizeRtgsWord(word);
-  if (legacy.status === "transliterated" &&
-      legacy.evidenceStatus === "reviewed_lexical_correction") {
-    return {
-      status:"transliterated", input:word, value:legacy.value,
-      source:"Reviewed ClippyFirst lexical RTGS correction", first:null, last:null,
-      lexicalPhrase:true
-    };
-  }
+  // Do not fall back to the legacy adapter's generic grapheme heuristic for an unresolved word.
   return { status:"unavailable", input:word, value:null, source:null, reason:"unresolved-syllable-or-lexical-reading" };
 }
 
