@@ -33,9 +33,9 @@ const RTGS_PROPER_NAMES = new Map([
 // A small evidence-backed layer is reserved for readings that the spelling
 // alone does not resolve productively (notably ทร and the abbreviation ฯ).
 const RTGS_SOURCE_ATTESTED_READINGS = new Map([
-  ["ทราย", { value:"sai", source:"BGN/PCGN 2002 Agreement, RTGS example" }],
-  ["ทรราช", { value:"thorarat", source:"BGN/PCGN 2002 Agreement, RTGS example" }],
-  ["โปรดเกล้าฯ", { value:"protklao protkramom", source:"BGN/PCGN 2002 Agreement, RTGS abbreviation example" }]
+  ["ทราย", { value:"sai", source:"BGN/PCGN 2002 Agreement, RTGS example", sourceUrl:"https://assets.publishing.service.gov.uk/media/5ab4e60aed915d78b9a459f5/ROMANIZATION_OF_THAI.pdf" }],
+  ["ทรราช", { value:"thorarat", source:"BGN/PCGN 2002 Agreement, RTGS example", sourceUrl:"https://assets.publishing.service.gov.uk/media/5ab4e60aed915d78b9a459f5/ROMANIZATION_OF_THAI.pdf" }],
+  ["โปรดเกล้าฯ", { value:"protklao protkramom", source:"BGN/PCGN 2002 Agreement, RTGS abbreviation example", sourceUrl:"https://assets.publishing.service.gov.uk/media/5ab4e60aed915d78b9a459f5/ROMANIZATION_OF_THAI.pdf" }]
 ]);
 
 function effectiveOnset(onset) {
@@ -99,7 +99,7 @@ export function romanizeRtgsThaiToken(input) {
   }
   if (RTGS_SOURCE_ATTESTED_READINGS.has(word)) {
     const record = RTGS_SOURCE_ATTESTED_READINGS.get(word);
-    return { status:"transliterated", input:word, value:record.value, source:record.source, first:null, last:null, lexicalPhrase:true };
+    return { status:"transliterated", input:word, value:record.value, source:record.source, sourceUrl:record.sourceUrl, first:null, last:null, lexicalPhrase:true };
   }
 
   const analysis = analyzeThaiSyllablesForRomanization(word);
