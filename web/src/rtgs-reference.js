@@ -12,6 +12,11 @@ const RTGS_UNSUPPORTED_TOKENS = new Set(["ๆ", "ฯ", "ฦ", "สตรีเ�
 const RTGS_OFFICIAL_NAME_OVERRIDES = new Map([
   ["กรุงเทพมหานคร", "krung thep maha nakhon"]
 ]);
+const RTGS_OFFICIAL_NAME_PREFIXES = new Set();
+for (const name of RTGS_OFFICIAL_NAME_OVERRIDES.keys()) {
+  const chars = Array.from(name);
+  for (let i = 1; i < chars.length; i++) RTGS_OFFICIAL_NAME_PREFIXES.add(chars.slice(0, i).join(""));
+}
 const RTGS_LEXICAL_OVERRIDES = new Map([
   ["จริง", "ching"], ["สามารถ", "samat"], ["สวัสดี", "sawatdi"],
   ["สร้าง", "sang"], ["ศรี", "si"], ["เศร้า", "sao"], ["ไซร้", "sai"], ["ทรง", "song"], ["ทราม", "sam"],
@@ -204,6 +209,7 @@ export function romanizeRtgsTokenSequence(tokens) {
         phrase += String(source[phraseEnd].input ?? "");
         phraseEnd += 1;
         if (RTGS_OFFICIAL_NAME_OVERRIDES.has(phrase)) break;
+        if (!RTGS_OFFICIAL_NAME_PREFIXES.has(phrase)) break;
       }
     }
     const isOfficialPhrase = RTGS_OFFICIAL_NAME_OVERRIDES.has(phrase);
