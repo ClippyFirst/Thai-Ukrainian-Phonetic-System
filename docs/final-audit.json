@@ -5478,49 +5478,74 @@
     "readiness": "ENGINEERING_VERIFIED_PUBLIC_BETA_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_VALIDATED_RELEASE"
   },
   "rtgs_continuation_2026_11_07": {
-    "status": "IMPLEMENTED_PENDING_EXACT_HEAD_VERIFICATION",
+    "status": "ENGINEERING_VERIFIED_PENDING_REVIEW_AND_MERGE",
     "starting_main": "5fb5cde9c31126e07b4285a04fff11e2314760a0",
-    "prior_pr": 232,
-    "prior_pr_head": "218809f717bf3a19d71a002d8794427a73762660",
-    "prior_workflows": {
+    "verified_code_head": "03b8dc5aee1faf98bbcbe5ca6dac1ef0f0b8e694",
+    "continuation_branch": "chore/repository-structure-rtgs-closeout-2026-11-07",
+    "replacement_pr": {
+      "number": 233,
+      "url": "https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/233",
+      "state": "open",
+      "draft": false
+    },
+    "superseded_pr": {
+      "number": 232,
+      "state": "closed",
+      "merged": false
+    },
+    "final_workflows": {
       "web_static": {
-        "run_id": 42391530288,
-        "conclusion": "FAILURE",
-        "job": "validate"
+        "run_id": 42398132500,
+        "conclusion": "success"
       },
       "ci": {
-        "run_id": 42391530299,
-        "conclusion": "FAILURE",
-        "job": "test"
+        "run_id": 42398132548,
+        "conclusion": "success",
+        "test_steps_completed": 65
       },
       "pages": {
-        "run_id": 42391530307,
-        "conclusion": "FAILURE",
-        "job": "build"
+        "run_id": 42398132498,
+        "conclusion": "success",
+        "build": "success",
+        "deploy": "skipped_for_pull_request"
       }
     },
-    "root_causes": [
-      "RTGS positional coda map omitted the empty-coda case, rejecting open syllables.",
-      "Some source analyzer results expose the same j/w off-glide in both vowel and coda fields, duplicating it in RTGS.",
-      "Reviewed lexical corrections were applied after structural parsing and could be bypassed by an accidental structural output."
+    "implementation_fixes": [
+      "Open RTGS rimes accept an empty coda.",
+      "Diphthong off-glides already encoded in the analyzer vowel are not emitted twice from coda metadata.",
+      "Reviewed lexical corrections precede structural parsing.",
+      "Glide/coda classification uses orthographic position.",
+      "Leading-h consonant clusters remain intact in syllabification.",
+      "The วย rime is recognized before generic ว+vowel fallback.",
+      "Component อ is included in vowel-position analysis."
     ],
-    "fixes": {
-      "branch": "chore/repository-structure-rtgs-closeout-2026-11-07",
-      "implementation_commit": "1e6a17f6cdeb195731ea85cb9d0ac13d7c676a6a",
-      "regression_commit": "c2beefa2f134db80fc13ede9ce9248f5b48107ae",
-      "status": "IMPLEMENTED_PENDING_VERIFICATION"
-    },
+    "regression_inputs": [
+      "ภาษา",
+      "ไทย",
+      "ผลไม้",
+      "เหงา",
+      "เขย่า",
+      "หวย",
+      "โวหาร",
+      "หวอ",
+      "หาร"
+    ],
     "documentation": {
       "contributor_guide": "CONTRIBUTING.md",
+      "agent_workflow": "AGENTS.md",
       "pull_request_template": ".github/pull_request_template.md",
+      "navigation": "docs/README.md",
       "architecture": "docs/architecture.md",
-      "agent_guidance": "AGENTS.md already existed; root/docs navigation now links to it"
+      "validation": "docs/validation-matrix.md",
+      "audit": "docs/final-audit.md",
+      "handoff": "docs/MASTER-EXECUTION-PLAN-AND-CHAT-HANDOFF.md"
     },
     "independent_thai_ipa_gold_rows": 0,
     "rtgs_linguistic_accuracy": "NOT_MEASURED",
     "ukrainian_target_forms": "PROVISIONAL",
     "manual_accessibility": "DEFERRED_NOT_VERIFIED",
     "physical_device_performance": "DEFERRED_NOT_VERIFIED",
-    "acceptance": "Replacement PR exact-head Web Static, full CI and Pages checks must pass; inspect every failed/skipped job. Independent linguistic review remains a separate gate."
+    "readiness": "ENGINEERING_VERIFIED_RESEARCH_READY_NOT_LINGUISTICALLY_RELEASE_CERTIFIED",
+    "acceptance": "Review PR #233, merge only with review support, then verify post-merge main CI."
   }
 }
