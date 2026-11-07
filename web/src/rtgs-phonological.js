@@ -215,7 +215,6 @@ function longestKnownThaiSequence(tokens, start) {
 
 export function romanizeRtgsTokenSequence(tokens) {
   const details = [];
-  let previous = null;
   let previousWord = null;
   let output = "";
   let unavailableCount = 0;
@@ -226,7 +225,6 @@ export function romanizeRtgsTokenSequence(tokens) {
       const value = token.input;
       details.push({ kind:token.kind, input:token.input, status:"passthrough", value, romanized:null, separatorBefore:"" });
       output += value;
-      previous = null;
       previousWord = null;
       continue;
     }
@@ -270,7 +268,6 @@ export function romanizeRtgsTokenSequence(tokens) {
       source:result.source, segmentation:result.segmentation || null
     });
     output += separatorBefore + result.value;
-    previous = result;
     previousWord = result;
   }
 
