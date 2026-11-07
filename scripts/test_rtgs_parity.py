@@ -25,7 +25,7 @@ DICTIONARY = ROOT / "data" / "thai" / "words_th_cc0.txt"
 NODE = r"""
 import { readFile } from 'node:fs/promises';
 import { romanizeRtgsWord, romanizeRtgsWords } from './web/src/rtgs-reference.js';
-import { romanizeRtgsTokenSequence } from './web/src/rtgs-phonological.js';
+import { romanizeRtgsThaiToken, romanizeRtgsTokenSequence } from './web/src/rtgs-phonological.js';
 import { createFastThaiG2PNativeTokenizer } from './web/src/fastthaig2p-tokenizer.js';
 let input = '';
 for await (const chunk of process.stdin) input += chunk;
@@ -34,6 +34,7 @@ const words = (await readFile('data/thai/words_th_cc0.txt', 'utf8')).split(/\r?\
 const tokenizer = createFastThaiG2PNativeTokenizer(words);
 const result = {
   words: corpus.words.map(word => romanizeRtgsWord(word).value),
+  production_words: corpus.words.map(word => ({ word, ...romanizeRtgsThaiToken(word) })),
   sequences: corpus.sequences.map(words => romanizeRtgsWords(words)),
   unsupported: (corpus.unsupported || []).map(word => ({ word, status: romanizeRtgsWord(word).status })),
   texts: (corpus.text_inputs || []).map(text => {
@@ -97,6 +98,16 @@ def main() -> int:
         if item["status"] != "unavailable":
             failures.append(f"unsupported token {item['word']!r} did not abstain: {item['status']!r}")
 
+    production_by_word = {item["word"]: item for item in actual.get("production_words", [])}
+    for word, expected in ORTHOGRAPHIC_CORRECTIONS.items():
+        if word in production_by_word:
+            item = production_by_word[word]
+            if item["status"] != "transliterated" or item["value"] != expected:
+                failures.append(
+                    f"production regression {word!r}: status={item['status']!r}; "
+                    f"browser={item.get('value')!r}; expected={expected!r}"
+                )
+
     for words, got in zip(corpus["sequences"], actual["sequences"], strict=True):
         expected = romanize_reference_tokens(words)
         if got != expected:
@@ -130,6 +141,11 @@ def main() -> int:
         f"{text_count} end-to-end Thai text inputs; PyThaiNLP 5.4.0; "
         f"{len(corpus.get('official_examples', []))} official-standard examples checked."
     )
+    source_counts: dict[str, int] = {}
+    for item in actual.get("production_words", []):
+        source = item.get("source") or item.get("segmentation") or item["status"]
+        source_counts[source] = source_counts.get(source, 0) + 1
+    print("Production word source counts:", json.dumps(source_counts, ensure_ascii=False, sort_keys=True))
     print("Tokenizer parity is implementation parity only; official examples are the independent rule-source acceptance gate.")
     if known_divergences:
         print("Documented orthographic corrections (intentional upstream divergences):")
