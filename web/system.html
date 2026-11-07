@@ -12,7 +12,7 @@
 <a class="skip-link" href="#main-content">Перейти до основного вмісту</a>
 <header class="site-header">
 <a class="brand" href="./" aria-label="Тайська → українська">ТАЙСЬКА <span>→</span> УКРАЇНСЬКА</a>
-<nav aria-label="Основна навігація"><a href="./">Сервіс</a><a href="transcription.html">Практична система</a><a href="romanization.html">Романізація</a><a href="geography.html">Географічні назви</a><a class="active" href="system.html">Як це працює</a><a href="licensing.html">Ліцензія</a><a href="https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System" rel="noopener noreferrer">Проєкт на GitHub</a></nav>
+<nav aria-label="Основна навігація"><a href="./">Сервіс</a><a href="transcription.html">Практична система</a><a href="romanization.html">Романізація</a><a href="thai-text-engine.html">Транскрипція тайського тексту</a><a class="active" href="system.html">Як це працює</a><a href="licensing.html">Ліцензія</a><a href="https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System" rel="noopener noreferrer">Проєкт на GitHub</a></nav>
 </header>
 <div class="beta-notice" role="note" aria-label="Статус тестової версії"><strong>ТЕСТОВА ВЕРСІЯ</strong><p>Сервіс використовує FastThaiG2P як єдиний рушій вимови. Український результат є попередньою адаптацією IPA, а не експертно підтвердженою транскрипцією. <a href="#beta-evidence">Що перевірено →</a></p></div>
 <main class="container system" id="main-content" tabindex="-1">
@@ -53,10 +53,10 @@
 </ul>
 <p>Тони й довгота показуються в IPA та метаданих, але не повністю відтворюються українськими літерами. Через це два записи не можуть бути тотожними.</p>
 </section>
-<section class="evidence" id="geographic-engine">
-<p class="eyebrow">ОКРЕМИЙ ДОСЛІДНИЦЬКИЙ РУШІЙ</p><h2>Пакетна обробка географічних назв</h2>
-<p>Поза браузерним FastThaiG2P у репозиторії є окремий Python CSV-рушій для тайських географічних назв. Він має два незалежні маршрути: RTGS через PyThaiNLP та ClippyFirst Thai → typed IPA → Ukrainian. RTGS не використовується для українського результату. Неповні IPA-випадки утримуються, а точність власних назв ще потребує незалежної перевірки.</p>
-<p><a href="geography.html">Опис географічного рушія та інструкція запуску →</a></p>
+<section class="evidence" id="thai-text-engine">
+<p class="eyebrow">ОКРЕМИЙ ДОСЛІДНИЦЬКИЙ РУШІЙ</p><h2>Пакетна транскрипція тайського тексту</h2>
+<p>Поза браузерним FastThaiG2P у репозиторії є окремий пакетний Python CSV-рушій для тайського тексту. Він має два незалежні маршрути: RTGS через PyThaiNLP та ClippyFirst Thai → typed IPA → Ukrainian. RTGS не використовується для українського результату. Можна обробляти звичайні слова й фрази в колонці CSV; неповні IPA-випадки утримуються, а результати не слід вважати експертно перевіреними.</p>
+<p><a href="thai-text-engine.html">Опис рушія транскрипції та інструкція запуску →</a></p>
 </section>
 <div class="system-grid">
 <article><p class="eyebrow">01</p><h2>Введення тексту</h2><p>Текст передається з інтерфейсу до локального Web Worker у цьому браузері. Він не надсилається на API або зовнішній сервер.</p></article>

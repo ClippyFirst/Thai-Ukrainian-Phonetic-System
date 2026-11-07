@@ -1,3 +1,12 @@
+## 2026-11-07 — Public positioning correction: general Thai text transcription
+
+- User clarified that the additional engine should not be advertised as being for geographic names only; it should be presented as a useful tool for Thai text transcription generally.
+- Branch: fix/general-thai-text-engine-copy-2026-11-07, based on main after PR #229.
+- Replaced web/geography.html with web/thai-text-engine.html; updated homepage, system and licensing navigation and both relevant web regression tests. Internal geographic-dictionary builder/schema/template/docs remain intact and are identified as the historical implementation packaging. Page accurately describes CSV batch input, ordinary words/phrases, separate RTGS side channel, typed IPA → Ukrainian path, no browser input form, and unadjudicated outputs.
+- PR and CI are pending. Verify exact-head CI and live Pages smoke for /thai-text-engine.html before claiming publication. Linguistic validation was not expanded.
+
+---
+
 ## 2026-11-07 — Audit closeout after PR #229
 
 - PR #229 merged as 275be185cc788e693b37d015590087c37a301df1; exact-head CI #42366974836, Web static #42366974818, Pages artifact build #42366974912, Site API #42366974842, Pyodide compatibility #42366974877, external G2P smoke #42366974864 and integration spike #42366974837 all SUCCESS.
