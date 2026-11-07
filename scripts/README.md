@@ -4,11 +4,11 @@ This directory contains project tooling, not production runtime modules. Scripts
 
 ## Registry and artifact builders
 
-## Географічний словник
+## Пакетний CSV-рушій транскрипції тайського тексту
 
 | Script | Responsibility | Inputs → outputs / evidence boundary |
 |---|---|---|
-| `build_geographic_dictionary.py` | Enrich a source CSV of Thai geographic names with RTGS, typed phonemic/broad-surface IPA, and Ukrainian adaptation | CSV Thai-name column → enriched CSV preserving source metadata; RTGS uses PyThaiNLP 5.4.0 newmm with the repository-pinned CC0 trie + royin; Ukrainian is emitted only through the repository's typed IPA adapter and is withheld on incomplete analysis; model output is not adjudicated gold |
+| `build_geographic_dictionary.py` | Enrich a CSV column containing Thai words or phrases with separate RTGS, typed phonemic/broad-surface IPA, and Ukrainian adaptation | CSV Thai-text column → enriched CSV preserving all source columns and metadata; RTGS uses PyThaiNLP 5.4.0 newmm with the repository-pinned CC0 trie + royin; Ukrainian is emitted only through the repository's typed IPA adapter and is withheld on incomplete analysis; model output is not adjudicated gold |
 
 | Script | Responsibility | Inputs → outputs / contract |
 |---|---|---|
@@ -19,6 +19,8 @@ This directory contains project tooling, not production runtime modules. Scripts
 | `generate_web_fixtures.py` | Refresh Python-produced browser parity fixtures | Curated Thai probes through Python API → `web/tests/fixtures.python.json`; use when intentionally refreshing parity fixtures |
 | `build_word_segmentation_dictionary.py` | Reconstruct the pinned Thai word list | Exact upstream source snapshot with expected Git blob hash → `data/thai/words_th_cc0.txt`; refuses unpinned source data |
 | `build_ukrainian_target_candidates.py` | Build or check the source-attested IPA → Ukrainian candidate registry | `data/benchmark/source-attested-ipa.tsv` → `data/benchmark/ukrainian-target-candidates.tsv`; candidates are adapter outputs, not native-speaker gold |
+
+The filename `build_geographic_dictionary.py` and optional extra `.[geography]` are historical compatibility names; the script does not require geographic semantics in the input text. Use the geographic template only when building a geographic corpus.
 
 ## Evaluation and external engine research
 
