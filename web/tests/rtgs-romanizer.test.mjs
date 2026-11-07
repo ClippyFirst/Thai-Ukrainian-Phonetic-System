@@ -10,6 +10,7 @@ assert.equal(romanizer.engine,"ClippyFirst syllable-based RTGS");assert.equal(ro
 const greeting=romanizer.romanize("สวัสดี");assert.equal(greeting.output,"sawatdi");assert.equal(greeting.unavailableCount,0);assert.equal(greeting.details[0].status,"transliterated");
 const punctuation=romanizer.romanize("สวัสดี!");assert.equal(punctuation.output,"sawatdi!");assert.equal(punctuation.details.at(-1).status,"passthrough");
 const six=romanizeRtgsTokenSequence([{input:"สิบ",kind:"thai"},{input:"หก",kind:"thai"}]);assert.equal(six.output,"sip-hok");assert.equal(six.unavailableCount,0);
+assert.equal(romanizeRtgsThaiToken("สะอาด").value,"sa-at");assert.equal(romanizeRtgsThaiToken("สำอาง").value,"sam-ang");assert.equal(romanizeRtgsThaiToken("บังอร").value,"bang-on");assert.equal(romanizeRtgsThaiToken("หวอ").value,"wo");assert.equal(romanizeRtgsThaiToken("หวย").value,"huai");
 assert.equal(romanizeRtgsThaiToken("กรรม").value,"kam");assert.equal(romanizeRtgsThaiToken("กรรไกร").value,"kankrai");assert.equal(romanizeRtgsThaiToken("กรรมการ").value,"kammakan");
 const unsupported=romanizer.romanize("ๆ");assert.equal(unsupported.unavailableCount,1);assert.match(unsupported.output,/RTGS НЕ ПЕРЕВІРЕНО/);assert.equal(calls.length,2);
 await assert.rejects(createRtgsRomanizer({baseUrl:new URL("https://example.test/vendor/native/"),fetchImpl:async()=>({ok:true,json:async()=>({...manifest,pythainlp_wordlist_license:"UNKNOWN"})}),cryptoImpl:webcrypto}),e=>e instanceof RtgsRomanizerError&&e.code==="manifest_invalid");
