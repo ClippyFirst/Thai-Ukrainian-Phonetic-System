@@ -1,11 +1,13 @@
 ## Сайт географічного рушія та ліцензійна політика — 2026-11-07
 
+PR [#229](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/229) squash-merged into main as 275be185cc788e693b37d015590087c37a301df1. Exact-head CI #42366974836, Web static #42366974818, Pages build #42366974912, Site API #42366974842, Pyodide compatibility #42366974877, external G2P smoke #42366974864 and integration spike #42366974837 all SUCCESS. PR Pages deployment was skipped by design; mainline deployment/live smoke is tracked separately.
+
 | Task | State | Evidence / acceptance |
 |---|---|---|
-| Public geographic-engine overview | IMPLEMENTED_PENDING_CI | Added web/geography.html and linked it from homepage and method page. It distinguishes the Python batch tool from the browser FastThaiG2P engine and states linguistic evidence limitations. |
-| Homepage discovery link | IMPLEMENTED_PENDING_CI | Homepage now advertises the separate geographic-name CSV engine without implying it is part of browser runtime. |
-| Project licence alignment | IMPLEMENTED_PENDING_CI | Root LICENSE replaced MIT with ClippyFirst Project License v1.0, matching the companion Korean repo's purpose-limited research permissions and prior-written-permission restrictions; adapted project/table references to Thai–Ukrainian. |
-| Public licensing disclosure | IMPLEMENTED_PENDING_CI | Added docs/LICENSING-AND-PERMISSIONS.md and web/licensing.html; third-party notice page separates project terms from dependency/data licences. Historical web/licenses/MIT-Project.txt explicitly says it is not an MIT grant. |
+| Public geographic-engine overview | DONE_VERIFIED | Added web/geography.html and linked it from homepage and method page. It distinguishes the Python batch tool from the browser FastThaiG2P engine and states linguistic evidence limitations. |
+| Homepage discovery link | DONE_VERIFIED | Homepage now advertises the separate geographic-name CSV engine without implying it is part of browser runtime. |
+| Project licence alignment | DONE_VERIFIED | Root LICENSE replaced MIT with ClippyFirst Project License v1.0, matching the companion Korean repo's purpose-limited research permissions and prior-written-permission restrictions; adapted project/table references to Thai–Ukrainian. |
+| Public licensing disclosure | DONE_VERIFIED | Added docs/LICENSING-AND-PERMISSIONS.md and web/licensing.html; third-party notice page separates project terms from dependency/data licences. Historical web/licenses/MIT-Project.txt explicitly says it is not an MIT grant. |
 | Linguistic and corpus validation | BLOCKED / NOT_MEASURED | Still requires a licensed geographic-name corpus and independent Thai IPA/Ukrainian editorial review; website copy does not imply completed accuracy validation. |
 
 ## Географічний словник — 2026-11-07
