@@ -102,7 +102,9 @@
     "geographic_name_rtgs_pythainlp_5_4_0_newmm_royin_pinned_cc0_trie",
     "geographic_name_typed_ipa_to_ukrainian_adapter_outputs",
     "geographic_dictionary_fail_closed_incomplete_record_handling",
-    "geographic_dictionary_actual_runtime_ci_smoke"
+    "geographic_dictionary_actual_runtime_ci_smoke",
+    "public_general_thai_text_transcription_engine_page",
+    "homepage_and_method_navigation_for_general_thai_text_engine"
   ],
   "not_claimed": [
     "complete_lexical_segmentation",
@@ -5391,5 +5393,8 @@
       "pr_deploy": "SKIPPED_PR_CONTEXT",
       "acceptance": "Verify deployed main Pages site serves geography.html and licensing.html."
     }
-  }
+  },
+  "notes": [
+    "Public page positioning corrected on 2026-11-07: general Thai text CSV batch transcription, not geography-only. Existing builder remains internally named for geographic dictionary; linguistic validation unchanged."
+  ]
 }
