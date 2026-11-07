@@ -3193,3 +3193,17 @@ Latest branch head: `228d80d51d58a4437ab0f70ba12597a1259902e8`. The UI contract 
 - Branch reconciliation: divergent geographic/general-Thai-text branches are stale relative to main and their useful changes are already present in main; do not merge their histories again. The 10-commit legacy RTGS follow-up branch is not merged wholesale because it modifies the old renderer rather than the new production syllable adapter. Preserve historical refs.
 - Next acceptance: create/review one replacement PR from the continuation branch; inspect exact-head Web Static, full CI and Pages jobs; fix and rerun any remaining failures; update this handoff, validation matrix, final audit and JSON register with the exact final SHA and run IDs. Do not merge before all required checks pass.
 - Readiness: main remains an engineering-verified public beta/research prototype. The RTGS continuation remains PARTIAL pending CI; linguistic accuracy remains NOT_MEASURED (Thai IPA gold 0); Ukrainian target forms remain provisional; human accessibility and physical-device performance remain deferred/unverified.
+
+
+## 2026-11-07 — final exact-head RTGS verification
+
+- Verified code head: `03b8dc5aee1faf98bbcbe5ca6dac1ef0f0b8e694` on `chore/repository-structure-rtgs-closeout-2026-11-07`; base main: `5fb5cde9c31126e07b4285a04fff11e2314760a0`.
+- Web Static #42398132500: SUCCESS.
+- Full CI #42398132548: SUCCESS; the test job completed all 65 steps, and wheel-install smoke succeeded.
+- Pages #42398132498: SUCCESS for the build job; deploy was skipped because the event was a PR, not a production deployment.
+- The final code resolves all RTGS parity and published acceptance examples in the corpus on this head. Tests also cover open syllables, diphthong glide de-duplication, lexical-correction priority, leading-`ห` cluster segmentation, position-aware onset/coda handling, `วย` rime priority and component `อ` vowel position.
+- The previous failed runs are historical and remain recorded in the validation matrix/audit. They are not counted as passes; only the exact final-head runs above establish engineering acceptance.
+- Contributor/docs structure is complete: `CONTRIBUTING.md`, existing `AGENTS.md`, PR template, docs map, architecture, validation matrix, audit, JSON register and handoff are aligned. One active continuation branch and one PR (#233) are used; PR #232 is closed as superseded.
+- Linguistic release gates remain open: Thai IPA adjudicated gold = 0; RTGS linguistic accuracy NOT_MEASURED; Ukrainian target forms provisional; qualified independent Thai/Ukrainian reviewers unavailable. Manual accessibility and physical-device performance remain deferred/unverified.
+- Next: review PR #233 and merge only after review supports it; then inspect post-merge main CI. Preserve historical branch refs; do not delete them merely to create a single active working line.
+- Readiness: engineering-verified RTGS implementation candidate, research-ready for further evaluation, but not release-ready as a linguistically validated transcription system.
