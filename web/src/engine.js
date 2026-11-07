@@ -368,4 +368,27 @@ function analyzeText(text, options={}){
     return segmentThaiRun(token.input).map(part=>analyzeThaiSegment(part,mode));
   });
 }
-export {analyzeText,tokenizeText};
+/**
+ * Syllable analysis entry point for pronunciation-based transcription adapters.
+ * Uses the same reviewed lexical syllabification and structural parser as the
+ * primary engine; it does not invent an IPA result for unresolved fragments.
+ */
+export function analyzeThaiSyllablesForRomanization(input) {
+  const key = normalize(input);
+  if (!key) return { input: key, status: "unresolved", segmentation: "none", syllables: [] };
+  const lexical = TEXT_LEXICON.get(key);
+  const syllables = lexical
+    ? lexical.map(analyze)
+    : softSyllabify(key);
+  const complete = syllables.length > 0 && syllables.every(item =>
+    item.status === "analyzed" && typeof item.phonemicIpa === "string" && item.phonemicIpa.length > 0
+  );
+  return {
+    input: key,
+    status: complete ? "analyzed" : "unresolved",
+    segmentation: lexical ? "curated-syllable-lexicon" : "structural-soft-syllabifier",
+    syllables
+  };
+}
+
+export {analyze,analyzeText,tokenizeText};
