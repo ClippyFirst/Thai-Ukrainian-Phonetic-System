@@ -5478,9 +5478,9 @@
     "readiness": "ENGINEERING_VERIFIED_PUBLIC_BETA_RESEARCH_PROTOTYPE_NOT_LINGUISTICALLY_VALIDATED_RELEASE"
   },
   "rtgs_continuation_2026_11_07": {
-    "status": "ENGINEERING_VERIFIED_PENDING_REVIEW_AND_MERGE",
+    "status": "ENGINEERING_VERIFIED_READY_TO_MERGE_PENDING_POST_MERGE_CI",
     "starting_main": "5fb5cde9c31126e07b4285a04fff11e2314760a0",
-    "verified_code_head": "03b8dc5aee1faf98bbcbe5ca6dac1ef0f0b8e694",
+    "verified_code_head": "a8bb09d98cfb8c9de78e1c5f37a8c28f617ebed5",
     "continuation_branch": "chore/repository-structure-rtgs-closeout-2026-11-07",
     "replacement_pr": {
       "number": 233,
@@ -5495,18 +5495,20 @@
     },
     "final_workflows": {
       "web_static": {
-        "run_id": 42398132500,
-        "conclusion": "success"
+        "run_id": 42398702456,
+        "conclusion": "success",
+        "steps_completed": 16
       },
       "ci": {
-        "run_id": 42398132548,
+        "run_id": 42398702494,
         "conclusion": "success",
-        "test_steps_completed": 65
+        "test_steps_completed": 65,
+        "wheel_install_smoke": "success"
       },
       "pages": {
-        "run_id": 42398132498,
+        "run_id": 42398702509,
         "conclusion": "success",
-        "build": "success",
+        "build_steps_completed": 27,
         "deploy": "skipped_for_pull_request"
       }
     },
@@ -5546,6 +5548,10 @@
     "manual_accessibility": "DEFERRED_NOT_VERIFIED",
     "physical_device_performance": "DEFERRED_NOT_VERIFIED",
     "readiness": "ENGINEERING_VERIFIED_RESEARCH_READY_NOT_LINGUISTICALLY_RELEASE_CERTIFIED",
-    "acceptance": "Review PR #233, merge only with review support, then verify post-merge main CI."
+    "acceptance": "PR #233 exact-head Web Static, full CI and Pages build pass. Squash merge is authorized by the owner; verify post-merge main CI and Pages deployment. Linguistic certification remains separate and blocked on qualified reviewers.",
+    "final_pr_head": "a8bb09d98cfb8c9de78e1c5f37a8c28f617ebed5",
+    "branch_ahead_of_main": 85,
+    "branch_behind_main": 0,
+    "self_review": "Two separate self-review passes performed; no independent human reviewer/subagent available."
   }
 }
