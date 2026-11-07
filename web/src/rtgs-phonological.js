@@ -1,4 +1,4 @@
-import { analyzeThaiSyllablesForRomanization } from "./engine.js";
+import { analyze, analyzeThaiSyllablesForRomanization } from "./engine.js";
 import { romanizeRtgsWord } from "./rtgs-reference.js";
 
 const RTGS_INITIAL = Object.freeze({
@@ -28,6 +28,28 @@ const RTGS_PROPER_NAMES = new Map([
     source:"Royal Society of Thailand official proper-name form",
     url:"https://www.orst.go.th/FILEROOM/CABROYINWEB/DRAWER004/GENERAL/DATA0004/00004233.PDF"
   }]
+]);
+
+// Source-backed syllable boundaries are data, not direct romanization
+// exceptions: every syllable still passes through the shared structural parser
+// and the same RTGS onset/vowel/coda adapter.
+const RTGS_EXAMPLE_SOURCE = "https://assets.publishing.service.gov.uk/media/5ab4e60aed915d78b9a459f5/ROMANIZATION_OF_THAI.pdf";
+const RTGS_SYLLABLE_SEGMENTATIONS = new Map([
+  ["สะอาด", ["สะ","อาด"]],
+  ["สำอาง", ["สำ","อาง"]],
+  ["บังอร", ["บัง","อร"]],
+  ["ที่ราบ", ["ที่","ราบ"]],
+  ["จริต", ["จะ","ริต"]],
+  ["ศักราช", ["ศัก","กะ","ราช"]],
+  ["ราชสีห์", ["ราช","ชะ","สี"]],
+  ["แขนง", ["ขะ","แนง"]],
+  ["เขย่า", ["ขะ","เย่า"]],
+  ["เทวา", ["เท","วา"]],
+  ["ปรารถนา", ["ปราถ","ถะ","นา"]],
+  ["รัตนา", ["รัต","ตะ","นา"]],
+  ["อินทรานุ", ["อิน","ทา","นุ"]],
+  ["ลักษณ์", ["ลัก"]],
+  ["ธาตุ", ["ธาต"]]
 ]);
 
 // A small evidence-backed layer is reserved for readings that the spelling
@@ -129,13 +151,16 @@ export function romanizeRtgsThaiToken(input) {
   }
 
   const rrExpanded = expandRrOrthography(word);
-  const analysis = analyzeThaiSyllablesForRomanization(rrExpanded || word);
-  if (analysis.status === "analyzed") {
+  const lexicalSyllables = RTGS_SYLLABLE_SEGMENTATIONS.get(word);
+  const analysis = lexicalSyllables
+    ? { status:"analyzed", segmentation:"source-backed-syllable-lexicon", syllables:lexicalSyllables.map(analyze) }
+    : analyzeThaiSyllablesForRomanization(rrExpanded || word);
+  if (analysis.status === "analyzed" && analysis.syllables.every(item => item.status === "analyzed" && item.phonemicIpa)) {
     const rendered = renderSyllables(analysis.syllables);
     if (rendered) {
       return {
         status:"transliterated", input:word, value:rendered.value,
-        source:rrExpanded ? "RTGS รร orthographic rule + structural syllable analysis" : "ClippyFirst structural syllable analysis → RTGS",
+        source:lexicalSyllables ? "BGN/PCGN source-backed syllable boundaries + structural RTGS adapter" : rrExpanded ? "RTGS รร orthographic rule + structural syllable analysis" : "ClippyFirst structural syllable analysis → RTGS",\n        sourceUrl:lexicalSyllables ? RTGS_EXAMPLE_SOURCE : null,
         segmentation:analysis.segmentation, first:rendered.first, last:rendered.last,
         syllables:rendered.syllables
       };
