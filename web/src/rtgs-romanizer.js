@@ -1,5 +1,5 @@
 import { createFastThaiG2PNativeTokenizer } from "./fastthaig2p-tokenizer.js";
-import { romanizeRtgsTokenSequence } from "./rtgs-reference.js";
+import { romanizeRtgsTokenSequence } from "./rtgs-phonological.js";
 export class RtgsRomanizerError extends Error {
   constructor(code,message){super(message);this.name="RtgsRomanizerError";this.code=code;}
 }
@@ -21,7 +21,7 @@ export async function createRtgsRomanizer({baseUrl=new URL("../vendor/native/",i
   const words=new TextDecoder().decode(bytes).split(/\r?\n/u).filter(Boolean);
   if(words.length!==m.pythainlp_wordlist_entries)throw new RtgsRomanizerError("wordlist_count_mismatch","Кількість слів не збігається з маніфестом.");
   const tokenizer=createFastThaiG2PNativeTokenizer(words);
-  return Object.freeze({engine:"PyThaiNLP 5.4.0 royin / RTGS",segmentation:"PyThaiNLP 5.4.0 newmm",dictionaryEntries:words.length,
-    romanize(text){const input=String(text??"");const tokens=tokenizer.tokenize(input).map(value=>({input:value,kind:/[\u0E00-\u0E7F]/u.test(value)?"thai":"other"}));const details=romanizeRtgsTokenSequence(tokens);return {input,output:details.map(x=>x.value).join(""),details,unavailableCount:details.filter(x=>x.status==="unavailable").length,engine:"PyThaiNLP 5.4.0 royin / RTGS",segmentation:"PyThaiNLP 5.4.0 newmm"};}
+  return Object.freeze({engine:"ClippyFirst syllable-based RTGS",segmentation:"PyThaiNLP 5.4.0 newmm + ClippyFirst structural syllable parser",dictionaryEntries:words.length,
+    romanize(text){const input=String(text??"");const tokens=tokenizer.tokenize(input).map(value=>({input:value,kind:/[\u0E00-\u0E7F]/u.test(value)?"thai":"other"}));const result=romanizeRtgsTokenSequence(tokens);return {input,output:result.output,details:result.details,unavailableCount:result.unavailableCount,engine:"ClippyFirst syllable-based RTGS",segmentation:"PyThaiNLP 5.4.0 newmm + ClippyFirst structural syllable parser"};}
   });
 }
