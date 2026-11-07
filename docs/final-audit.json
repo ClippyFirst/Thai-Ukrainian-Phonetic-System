@@ -5347,7 +5347,7 @@
     "historical_branch_disposition": "PRESERVED_NOT_MERGED_STALE_DOCUMENTATION_SNAPSHOT; identical 371 path set to main and no unique paths; five audit/index file versions are older than current main."
   },
   "licensing_policy_2026_11_07": {
-    "status": "IMPLEMENTED_PENDING_CI",
+    "status": "DONE_VERIFIED",
     "source": "ClippyFirst/Korean-Ukrainian-Phonetic-System LICENSE v1.0",
     "applied": "ClippyFirst Project License v1.0, adapted to Thai–Ukrainian Project Materials and correspondence tables",
     "previous_root_license": "MIT",
@@ -5358,10 +5358,12 @@
       "commercial use outside the express research permission requires prior written permission"
     ],
     "third_party_terms": "Unaffected; FastThaiG2P, TLTK, PyThaiNLP, Wiktionary-derived data, CC0 assets and external corpora retain their own terms.",
-    "legal_review": "Not independently assessed; custom licence is not OSI-approved."
+    "legal_review": "Not independently assessed; custom licence is not OSI-approved.",
+    "merged_commit": "275be185cc788e693b37d015590087c37a301df1",
+    "non_retroactive_prior_mit_grants": true
   },
   "geographic_engine_public_site_2026_11_07": {
-    "status": "IMPLEMENTED_PENDING_CI",
+    "status": "DONE_VERIFIED",
     "pages": [
       "web/geography.html",
       "web/licensing.html"
@@ -5369,6 +5371,19 @@
     "homepage_discovery": true,
     "system_page_reference": true,
     "engine_scope": "Python CSV batch utility; separate from browser FastThaiG2P runtime",
-    "linguistic_accuracy": "NOT_MEASURED"
+    "linguistic_accuracy": "NOT_MEASURED",
+    "merged_commit": "275be185cc788e693b37d015590087c37a301df1",
+    "accuracy": "NOT_MEASURED",
+    "exact_head_ci": {
+      "ci": 42366974836,
+      "web_static": 42366974818,
+      "pages_build": 42366974912,
+      "site_api": 42366974842,
+      "pyodide_compatibility": 42366974877,
+      "external_g2p_smoke": 42366974864,
+      "integration_spike": 42366974837,
+      "all": "SUCCESS",
+      "pages_deploy": "SKIPPED_PR_CONTEXT"
+    }
   }
 }
