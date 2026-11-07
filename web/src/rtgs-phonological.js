@@ -70,7 +70,7 @@ function romanizeSyllable(analysis) {
     value: initial.join("") + vowel + coda,
     onset: initial.join(""),
     zeroOnset: initial.join("") === "",
-    coda: codaKey || null,
+    coda: codaKey && codaKey !== "ʔ" ? codaKey : null,
     source: "ClippyFirst structural syllable analysis → RTGS positional adapter"
   };
 }
