@@ -2342,3 +2342,32 @@ Branch reconciliation: the RTGS feature branch was 60 commits ahead of main with
 | PR #234 post-merge full CI | DONE_VERIFIED | Main run [#42399972992 PASS](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42399972992): test 65/65, wheel smoke 11/11, master-artifact 6/6. |
 | Current PR / branch state | DONE_VERIFIED | PRs #233 and #234 merged; no open PRs. Main is the active line. Old branch refs are retained as history. |
 
+
+
+## 2026-11-09 — one-pass transcription of the supplied db.csv test slice
+
+| Work item | Status | Evidence / acceptance |
+|---|---|---|
+| Dedicated branch from current main | DONE_VERIFIED | `feat/transcribe-db-csv-all-names-2026-11-09`, based on main `a05b0347f59afe128004e662bf418d030e1a3b77`. |
+| Process all source rows | DONE_VERIFIED | `data/db.csv` has 8,441 records; generated `data/geography/db-transcribed.csv` preserves all 8,441 rows, IDs and Thai source names. |
+| RTGS romanization | DONE_VERIFIED (software output coverage) | 8,441/8,441 nonempty via PyThaiNLP 5.4.0 `newmm` + `royin`; this is a lossy side channel, not an IPA input. |
+| Internal typed IPA and Ukrainian | DONE_VERIFIED (limited coverage) | 40/8,441 names have complete internal phonemic IPA and Ukrainian output. Broad-surface IPA is populated for the same 40. |
+| External FastThaiG2P IPA → Ukrainian fallback | DONE_VERIFIED (provisional) | 8,388 rows use complete external IPA with provisional IPA→Ukrainian adaptation. External IPA remains separately typed/unclassified; it is not relabelled phonemic or broad-surface IPA. |
+| Whole-name TLTK fallback | DONE_VERIFIED (low confidence) | 7 additional rows use the pinned TLTK OOV fallback on the entire name after dictionary tokenization fails. They have a distinct low-confidence status and warning. |
+| Overall IPA and Ukrainian output | PARTIAL | 8,435/8,441 rows (99.93%) have IPA and Ukrainian candidates; 6 remain withheld because TLTK output is malformed/unsupported or phonetic interpretation remains ambiguous. |
+| Geographic batch regression tests | DONE_VERIFIED | Workflow #42699878389: `python -m pytest -q tests/test_geographic_dictionary.py` — 9 passed. |
+| Representative external-G2P check | DONE_VERIFIED | 500/500 sampled names returned complete external IPA and Ukrainian adaptation. |
+| Full row preservation and output report | DONE_VERIFIED | Workflow #42699878389 succeeded; report at `data/geography/db-transcription-report.json`. |
+| Independent linguistic adjudication | BLOCKED | No independently reviewed Thai IPA gold or Ukrainian-native adjudication was available in this run. Model output is not a verified official exonym. |
+
+Exact remaining rows withheld:
+- `3_2413` — ขุหลุ (TLTK output contains a non-IPA hyphen / unresolved leading-`ห` analysis).
+- `3_4178` — ช่างเคิ่ง (TLTK output contains an unsupported backslash marker; vowel length remains lexically ambiguous).
+- `3_5885` — ปิล๊อก (TLTK output contains an unsupported `8` marker after the coda).
+- `3_7334` — บาโร๊ะ (TLTK output contains an unsupported `8` marker).
+- `3_7341` — กอตอตือร๊ะ (TLTK output contains an unsupported `8` marker).
+- `3_7353` — ตะโล๊ะหะลอ (TLTK output contains an unsupported `8` marker).
+
+The exact unresolved diagnostics and syllable-level fallback probes are recorded in `data/geography/db-transcription-report.json`. Do not coerce these markers into IPA or derive Ukrainian directly from RTGS. The six rows remain PARTIAL/withheld pending source-backed lexical readings or a validated phonetic route.
+
+Final generated-data commit: `4715d596f0b56dedd9b58b240710df53bd290bad`. Final workflow run: [#42699878389 SUCCESS](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42699878389). Main was unchanged at base `a05b0347f59afe128004e662bf418d030e1a3b77`; no PR was open at the inspection point. The branch is ready for review, not yet merged. This test slice is not the full Thai geographic gazetteer and carries no inferred licensing/coordinate metadata.
