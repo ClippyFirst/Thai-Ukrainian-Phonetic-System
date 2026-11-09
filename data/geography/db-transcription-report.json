@@ -4,46 +4,24 @@
   "output_rows": 8441,
   "romanization_nonempty": 8441,
   "ipa_phonemic_nonempty": 40,
-  "ipa_external_fastthaig2p_nonempty": 8388,
-  "ipa_any_nonempty": 8428,
+  "ipa_external_fastthaig2p_nonempty": 8395,
+  "ipa_any_nonempty": 8435,
   "ipa_broad_surface_nonempty": 40,
-  "ukrainian_nonempty": 8428,
+  "ukrainian_nonempty": 8435,
   "provisional_external_ukrainian_nonempty": 8388,
+  "low_confidence_tltk_ukrainian_nonempty": 7,
   "status_counts": {
     "PROVISIONAL_EXTERNAL_IPA_NOT_ADJUDICATED": 8388,
     "COMPLETE_MODEL_OUTPUT_NOT_ADJUDICATED": 40,
-    "PARTIAL_OR_UNSUPPORTED_WITHHELD": 13
+    "PROVISIONAL_EXTERNAL_IPA_WHOLE_NAME_TLTK_NOT_ADJUDICATED": 7,
+    "PARTIAL_OR_UNSUPPORTED_WITHHELD": 6
   },
   "unresolved_records": [
-    {
-      "id": "3_122",
-      "name_en": "Bang Khlo",
-      "name_th": "บางโคล่",
-      "pipeline_warnings": "The conservative text endpoint does not apply automatic word segmentation; use analyze_text_with_word_segmentation for dictionary-based word boundaries. IPA and Ukrainian output are withheld until syllable segmentation and pronunciation are supported. | Unknown grapheme cluster in dictionary segmentation; IPA and Ukrainian output are withheld."
-    },
-    {
-      "id": "3_275",
-      "name_en": "Bang Tanai",
-      "name_th": "บางตะไนย์",
-      "pipeline_warnings": "The conservative text endpoint does not apply automatic word segmentation; use analyze_text_with_word_segmentation for dictionary-based word boundaries. IPA and Ukrainian output are withheld until syllable segmentation and pronunciation are supported. | Unknown grapheme cluster in dictionary segmentation; IPA and Ukrainian output are withheld."
-    },
-    {
-      "id": "3_1038",
-      "name_en": "Bang Sare",
-      "name_th": "บางเสร่",
-      "pipeline_warnings": "The conservative text endpoint does not apply automatic word segmentation; use analyze_text_with_word_segmentation for dictionary-based word boundaries. IPA and Ukrainian output are withheld until syllable segmentation and pronunciation are supported. | Unknown grapheme cluster in dictionary segmentation; IPA and Ukrainian output are withheld."
-    },
     {
       "id": "3_2413",
       "name_en": "Khulu",
       "name_th": "ขุหลุ",
       "pipeline_warnings": "Unknown grapheme cluster in dictionary segmentation; IPA and Ukrainian output are withheld. | The conservative text endpoint does not apply automatic word segmentation; use analyze_text_with_word_segmentation for dictionary-based word boundaries. IPA and Ukrainian output are withheld until syllable segmentation and pronunciation are supported."
-    },
-    {
-      "id": "3_3342",
-      "name_en": "Loei Wang Sai",
-      "name_th": "เลยวังไสย์",
-      "pipeline_warnings": "The conservative text endpoint does not apply automatic word segmentation; use analyze_text_with_word_segmentation for dictionary-based word boundaries. IPA and Ukrainian output are withheld until syllable segmentation and pronunciation are supported. | Unknown grapheme cluster in dictionary segmentation; IPA and Ukrainian output are withheld."
     },
     {
       "id": "3_4178",
@@ -52,28 +30,10 @@
       "pipeline_warnings": "The conservative text endpoint does not apply automatic word segmentation; use analyze_text_with_word_segmentation for dictionary-based word boundaries. IPA and Ukrainian output are withheld until syllable segmentation and pronunciation are supported. | Unknown grapheme cluster in dictionary segmentation; IPA and Ukrainian output are withheld."
     },
     {
-      "id": "3_4253",
-      "name_en": "Pa Nai",
-      "name_th": "ป่าไหน่",
-      "pipeline_warnings": "The conservative text endpoint does not apply automatic word segmentation; use analyze_text_with_word_segmentation for dictionary-based word boundaries. IPA and Ukrainian output are withheld until syllable segmentation and pronunciation are supported. | Unknown grapheme cluster in dictionary segmentation; IPA and Ukrainian output are withheld."
-    },
-    {
       "id": "3_5885",
       "name_en": "Pi Lok",
       "name_th": "ปิล๊อก",
       "pipeline_warnings": "Unknown grapheme cluster in dictionary segmentation; IPA and Ukrainian output are withheld. | The conservative text endpoint does not apply automatic word segmentation; use analyze_text_with_word_segmentation for dictionary-based word boundaries. IPA and Ukrainian output are withheld until syllable segmentation and pronunciation are supported."
-    },
-    {
-      "id": "3_6630",
-      "name_en": "Rawai",
-      "name_th": "ราไวย์",
-      "pipeline_warnings": "The conservative text endpoint does not apply automatic word segmentation; use analyze_text_with_word_segmentation for dictionary-based word boundaries. IPA and Ukrainian output are withheld until syllable segmentation and pronunciation are supported. | Unknown grapheme cluster in dictionary segmentation; IPA and Ukrainian output are withheld."
-    },
-    {
-      "id": "3_7267",
-      "name_en": "Talo Kapo",
-      "name_th": "ตะโละกาโปร์",
-      "pipeline_warnings": "The conservative text endpoint does not apply automatic word segmentation; use analyze_text_with_word_segmentation for dictionary-based word boundaries. IPA and Ukrainian output are withheld until syllable segmentation and pronunciation are supported. | Unknown grapheme cluster in dictionary segmentation; IPA and Ukrainian output are withheld."
     },
     {
       "id": "3_7334",
@@ -95,116 +55,6 @@
     }
   ],
   "unresolved_syllable_diagnostics": [
-    {
-      "id": "3_122",
-      "name_th": "บางโคล่",
-      "dict_syllables": [
-        "บาง",
-        "โค",
-        "ล่"
-      ],
-      "syllable_statuses": [
-        "analyzed",
-        "analyzed",
-        "unresolved:implicit-vowel"
-      ],
-      "parsed_ipa": [
-        "baːŋ",
-        "kʰoː",
-        null
-      ],
-      "warnings": [
-        "Implicit vowel could not be resolved without lexical or morphological evidence.",
-        "Phonemic IPA withheld because the vowel is unresolved."
-      ],
-      "tltk_syllable_fallback": [
-        "/baːŋ˧/",
-        "/kʰoː˧/",
-        "ล่"
-      ],
-      "grouped_tltk_fallback": [
-        "/baːŋ˧/",
-        "/kʰoː˧/",
-        "ล่"
-      ],
-      "merged_final_tltk_fallback": "/kʰloː˥˩/",
-      "whole_name_tltk_fallback": "/baːŋ˧.kʰloː˥˩/"
-    },
-    {
-      "id": "3_275",
-      "name_th": "บางตะไนย์",
-      "dict_syllables": [
-        "บาง",
-        "ตะ",
-        "ไน",
-        "ย์"
-      ],
-      "syllable_statuses": [
-        "analyzed",
-        "analyzed",
-        "analyzed",
-        "analysis-dependent:special-orthography"
-      ],
-      "parsed_ipa": [
-        "baːŋ",
-        "ta",
-        "naj",
-        null
-      ],
-      "warnings": [
-        "Special Thai orthography requires lexical/contextual adjudication; no single IPA was forced.",
-        "Phonemic IPA withheld because the vowel is unresolved."
-      ],
-      "tltk_syllable_fallback": [
-        "/baːŋ˧/",
-        "/ta˨˩/",
-        "/naj˧/",
-        "ย์"
-      ],
-      "grouped_tltk_fallback": [
-        "/baːŋ˧/",
-        "/ta˨˩/",
-        "/naj˧/",
-        "ย์"
-      ],
-      "merged_final_tltk_fallback": "/naj˧/",
-      "whole_name_tltk_fallback": "/baːŋ˧.ta˨˩.naj˧/"
-    },
-    {
-      "id": "3_1038",
-      "name_th": "บางเสร่",
-      "dict_syllables": [
-        "บาง",
-        "เส",
-        "ร่"
-      ],
-      "syllable_statuses": [
-        "analyzed",
-        "analyzed",
-        "unresolved:implicit-vowel"
-      ],
-      "parsed_ipa": [
-        "baːŋ",
-        "seː",
-        null
-      ],
-      "warnings": [
-        "Implicit vowel could not be resolved without lexical or morphological evidence.",
-        "Phonemic IPA withheld because the vowel is unresolved."
-      ],
-      "tltk_syllable_fallback": [
-        "/baːŋ˧/",
-        "/seː˩˩˦/",
-        "ร่"
-      ],
-      "grouped_tltk_fallback": [
-        "/baːŋ˧/",
-        "/seː˩˩˦/",
-        "ร่"
-      ],
-      "merged_final_tltk_fallback": "/seː˨˩/",
-      "whole_name_tltk_fallback": "/baːŋ˧.seː˨˩/"
-    },
     {
       "id": "3_2413",
       "name_th": "ขุหลุ",
@@ -240,45 +90,6 @@
       "whole_name_tltk_fallback": "/kʰu-˨˩.lu˦˥/"
     },
     {
-      "id": "3_3342",
-      "name_th": "เลยวังไสย์",
-      "dict_syllables": [
-        "เลย",
-        "วัง",
-        "ไสย",
-        "์"
-      ],
-      "syllable_statuses": [
-        "analyzed",
-        "analyzed",
-        "analyzed",
-        "analysis-dependent:special-orthography"
-      ],
-      "parsed_ipa": [
-        "lɤːj",
-        "waŋ",
-        "sajj",
-        null
-      ],
-      "warnings": [
-        "Special Thai orthography requires lexical/contextual adjudication; no single IPA was forced.",
-        "Phonemic IPA withheld because the vowel is unresolved."
-      ],
-      "tltk_syllable_fallback": [
-        "/lɤːj˧/",
-        "/waŋ˧/",
-        "/saj˩˩˦/",
-        "์"
-      ],
-      "grouped_tltk_fallback": [
-        "/lɤːj˧/",
-        "/waŋ˧/",
-        "/saj˩˩˦/"
-      ],
-      "merged_final_tltk_fallback": "/saj˩˩˦/",
-      "whole_name_tltk_fallback": "/lɤːj˧.waŋ˧.saj˩˩˦/"
-    },
-    {
       "id": "3_4178",
       "name_th": "ช่างเคิ่ง",
       "dict_syllables": [
@@ -309,41 +120,6 @@
       "whole_name_tltk_fallback": "/t͡ɕʰaŋ˥˩.kʰ\\ɤŋ˥˩/"
     },
     {
-      "id": "3_4253",
-      "name_th": "ป่าไหน่",
-      "dict_syllables": [
-        "ป่า",
-        "ไห",
-        "น่"
-      ],
-      "syllable_statuses": [
-        "analyzed",
-        "analyzed",
-        "unresolved:implicit-vowel"
-      ],
-      "parsed_ipa": [
-        "paː",
-        "haj",
-        null
-      ],
-      "warnings": [
-        "Implicit vowel could not be resolved without lexical or morphological evidence.",
-        "Phonemic IPA withheld because the vowel is unresolved."
-      ],
-      "tltk_syllable_fallback": [
-        "/paː˨˩/",
-        "/haj˩˩˦/",
-        "น่"
-      ],
-      "grouped_tltk_fallback": [
-        "/paː˨˩/",
-        "/haj˩˩˦/",
-        "น่"
-      ],
-      "merged_final_tltk_fallback": "/naj˨˩/",
-      "whole_name_tltk_fallback": "/paː˨˩.naj˨˩/"
-    },
-    {
       "id": "3_5885",
       "name_th": "ปิล๊อก",
       "dict_syllables": [
@@ -372,85 +148,6 @@
       ],
       "merged_final_tltk_fallback": "/pi˨˩.lɔːk8˧/",
       "whole_name_tltk_fallback": "/pi˨˩.lɔːk8˧/"
-    },
-    {
-      "id": "3_6630",
-      "name_th": "ราไวย์",
-      "dict_syllables": [
-        "รา",
-        "ไว",
-        "ย์"
-      ],
-      "syllable_statuses": [
-        "analyzed",
-        "analyzed",
-        "analysis-dependent:special-orthography"
-      ],
-      "parsed_ipa": [
-        "raː",
-        "waj",
-        null
-      ],
-      "warnings": [
-        "Special Thai orthography requires lexical/contextual adjudication; no single IPA was forced.",
-        "Phonemic IPA withheld because the vowel is unresolved."
-      ],
-      "tltk_syllable_fallback": [
-        "/raː˧/",
-        "/waj˧/",
-        "ย์"
-      ],
-      "grouped_tltk_fallback": [
-        "/raː˧/",
-        "/waj˧/",
-        "ย์"
-      ],
-      "merged_final_tltk_fallback": "/waj˧/",
-      "whole_name_tltk_fallback": "/raː˧.waj˧/"
-    },
-    {
-      "id": "3_7267",
-      "name_th": "ตะโละกาโปร์",
-      "dict_syllables": [
-        "ตะ",
-        "โละ",
-        "กา",
-        "โปร",
-        "์"
-      ],
-      "syllable_statuses": [
-        "analyzed",
-        "analyzed",
-        "analyzed",
-        "analyzed",
-        "analysis-dependent:special-orthography"
-      ],
-      "parsed_ipa": [
-        "ta",
-        "lo",
-        "kaː",
-        "proː",
-        null
-      ],
-      "warnings": [
-        "Special Thai orthography requires lexical/contextual adjudication; no single IPA was forced.",
-        "Phonemic IPA withheld because the vowel is unresolved."
-      ],
-      "tltk_syllable_fallback": [
-        "/ta˨˩/",
-        "/lo˦˥/",
-        "/kaː˧/",
-        "/proː˧/",
-        "์"
-      ],
-      "grouped_tltk_fallback": [
-        "/ta˨˩/",
-        "/lo˦˥/",
-        "/kaː˧/",
-        "/poː˧/"
-      ],
-      "merged_final_tltk_fallback": "/poː˧/",
-      "whole_name_tltk_fallback": "/ta˨˩.lo˦˥.kaː˧.poː˧/"
     },
     {
       "id": "3_7334",
