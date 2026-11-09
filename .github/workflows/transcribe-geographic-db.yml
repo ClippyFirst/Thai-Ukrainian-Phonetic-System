@@ -123,7 +123,8 @@ jobs:
               "ukrainian_nonempty": sum(bool(r["ukrainian_from_ipa"]) for r in rows),
               "provisional_external_ukrainian_nonempty": sum(bool(r["ukrainian_from_ipa"]) and r["pipeline_status"] == "PROVISIONAL_EXTERNAL_IPA_NOT_ADJUDICATED" for r in rows),
               "status_counts": statuses,
-              "unresolved_records": unresolved,\n              "unresolved_syllable_diagnostics": diagnostics,
+              "unresolved_records": unresolved,
+              "unresolved_syllable_diagnostics": diagnostics,
               "note": "Model candidates; not independently adjudicated linguistic gold."
           }
           Path("build/db-transcription-report.json").write_text(
