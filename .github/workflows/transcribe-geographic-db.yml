@@ -38,6 +38,28 @@ jobs:
       - name: Install geographic transcription dependency
         run: python -m pip install -e ".[geography]"
 
+      - name: Evaluate SSG syllable fallback on a representative sample
+        run: |
+          python - <<'PY'
+          import csv, json
+          from pythainlp.tokenize import syllable_tokenize
+          from thai_ukrainian.api import analyze_syllable
+          with open("data/db.csv", encoding="utf-8-sig", newline="") as stream:
+              rows = list(csv.DictReader(stream, delimiter=";"))[:500]
+          counts = {"names": len(rows), "all_syllables_parse": 0, "some_syllables_parse": 0, "none_parse": 0, "syllable_count": 0, "examples": []}
+          for row in rows:
+              syllables = [x for x in syllable_tokenize(row["name_th"], engine="ssg", keep_whitespace=False) if x.strip()]
+              results = [analyze_syllable(s) for s in syllables]
+              ok = [a.status == "analyzed" and bool(a.phonemic_ipa) and bool(a.ukrainian_transliteration) for a in results]
+              counts["syllable_count"] += len(syllables)
+              if ok and all(ok): counts["all_syllables_parse"] += 1
+              elif any(ok): counts["some_syllables_parse"] += 1
+              else: counts["none_parse"] += 1
+              if len(counts["examples"]) < 20 and (not ok or not all(ok)):
+                  counts["examples"].append({"id": row["id"], "name_th": row["name_th"], "syllables": syllables, "statuses": [a.status for a in results]})
+          print(json.dumps(counts, ensure_ascii=False, indent=2))
+          PY
+
       - name: Transcribe every source row
         run: |
           mkdir -p build
