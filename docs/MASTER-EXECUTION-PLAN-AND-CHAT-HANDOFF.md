@@ -3228,3 +3228,36 @@ Latest branch head: `228d80d51d58a4437ab0f70ba12597a1259902e8`. The UI contract 
 - PR #234 merged by squash to main: `8c91eabfa1f499f5fbea3bc42c8db9b4fcc0b12b`. Post-merge Pyodide #42399972927 passed 20/20; post-merge CI #42399972992 passed 65/65, wheel 11/11 and master artifact 6/6.
 - No open PRs remain. Main is the only active development line. Historical branches are retained as evidence/history, not deleted.
 - Final readiness: engineering-verified and research-ready; not linguistically release-certified. Thai independent IPA gold remains 0; RTGS accuracy NOT_MEASURED; Ukrainian practical forms provisional; manual accessibility and physical-device performance remain unverified/deferred.
+
+
+## 2026-11-09 — one-pass db.csv transcription handoff
+
+**Owner intent:** `data/db.csv` is a temporary test slice of a larger dataset. The requested operation is to process every row and add Latin romanization, IPA and Ukrainian output. Do not treat the slice as the full future gazetteer.
+
+**Branch/base:** `feat/transcribe-db-csv-all-names-2026-11-09`, created from main `a05b0347f59afe128004e662bf418d030e1a3b77`. Main remained unchanged during this run. The final generated-data commit at the batch checkpoint was `4715d596f0b56dedd9b58b240710df53bd290bad`; subsequent documentation/audit commits are on the same branch. No PR was open at the initial inspection point.
+
+**Artifacts:**
+- `data/geography/db-transcribed.csv` — 8,441 output rows; original IDs and Thai names preserved.
+- `data/geography/db-transcription-report.json` — counts, statuses and exact unresolved rows/diagnostics.
+- `scripts/build_geographic_dictionary.py` — explicit `--external-g2p` fallback.
+- `.github/workflows/transcribe-geographic-db.yml` — reproducible GitHub Actions batch.
+- `docs/geographic-dictionary.md` — command, fields, statuses and limitations.
+
+**Verified output coverage:**
+- RTGS: 8,441/8,441.
+- Internal phonemic/broad-surface IPA: 40/8,441.
+- External FastThaiG2P IPA: 8,388.
+- Whole-name TLTK low-confidence fallback: 7.
+- Total IPA + Ukrainian candidates: 8,435/8,441 (99.93%).
+- 6 withheld: `3_2413` ขุหลุ, `3_4178` ช่างเคิ่ง, `3_5885` ปิล๊อก, `3_7334` บาโร๊ะ, `3_7341` กอตอตือร๊ะ, `3_7353` ตะโล๊ะหะลอ. They contain unresolved phonetic readings or malformed external output markers (hyphen, backslash, or `8`). Do not coerce these into IPA or create Ukrainian directly from RTGS.
+
+**Verification:**
+- Workflow [#42699878389](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42699878389): SUCCESS.
+- The workflow installed `.[dev,geography,fastthaig2p]`, verified a 500-name sample (500 complete external IPA + Ukrainian), ran `python -m pytest -q tests/test_geographic_dictionary.py` (9 passed), processed all 8,441 rows, checked row/id/name preservation and committed the generated CSV/report.
+- Earlier exploratory workflow attempts had transient YAML/Python formatting failures while diagnostics were being added; these were corrected. Only the final successful run is acceptance evidence.
+
+**Next genuine blocker:** 6 records require lexical/phonetic evidence or a validated route that can handle the special orthography. Acceptance criterion: each must have a source-backed pronunciation or a valid typed IPA candidate accepted by the IPA adapter; no unsupported marker coercion. Independent Thai-speaker IPA adjudication and Ukrainian-native review remain unavailable, so all model-generated Ukrainian forms remain provisional.
+
+**Task ledger:** batch execution and row preservation DONE_VERIFIED; RTGS coverage DONE_VERIFIED; IPA/UA coverage PARTIAL (99.93%); 6 unresolved names BLOCKED/evidence-limited; linguistic accuracy NOT_MEASURED; official exonyms DEFERRED. The test slice is not the complete Thai geographic gazetteer and no missing source license, coordinates, feature types or official Ukrainian exonyms were inferred.
+
+**Readiness:** engineering batch is reproducible and research-usable; not release-ready as a linguistically certified gazetteer. Review the branch before merge; do not merge or publish a linguistic-accuracy claim solely on the basis of software coverage.
