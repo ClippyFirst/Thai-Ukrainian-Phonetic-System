@@ -94,5 +94,315 @@
       "pipeline_warnings": "The conservative text endpoint does not apply automatic word segmentation; use analyze_text_with_word_segmentation for dictionary-based word boundaries. IPA and Ukrainian output are withheld until syllable segmentation and pronunciation are supported. | Unknown grapheme cluster in dictionary segmentation; IPA and Ukrainian output are withheld."
     }
   ],
+  "unresolved_syllable_diagnostics": [
+    {
+      "id": "3_122",
+      "name_th": "บางโคล่",
+      "dict_syllables": [
+        "บาง",
+        "โค",
+        "ล่"
+      ],
+      "syllable_statuses": [
+        "analyzed",
+        "analyzed",
+        "unresolved:implicit-vowel"
+      ],
+      "parsed_ipa": [
+        "baːŋ",
+        "kʰoː",
+        null
+      ],
+      "warnings": [
+        "Implicit vowel could not be resolved without lexical or morphological evidence.",
+        "Phonemic IPA withheld because the vowel is unresolved."
+      ]
+    },
+    {
+      "id": "3_275",
+      "name_th": "บางตะไนย์",
+      "dict_syllables": [
+        "บาง",
+        "ตะ",
+        "ไน",
+        "ย์"
+      ],
+      "syllable_statuses": [
+        "analyzed",
+        "analyzed",
+        "analyzed",
+        "analysis-dependent:special-orthography"
+      ],
+      "parsed_ipa": [
+        "baːŋ",
+        "ta",
+        "naj",
+        null
+      ],
+      "warnings": [
+        "Special Thai orthography requires lexical/contextual adjudication; no single IPA was forced.",
+        "Phonemic IPA withheld because the vowel is unresolved."
+      ]
+    },
+    {
+      "id": "3_1038",
+      "name_th": "บางเสร่",
+      "dict_syllables": [
+        "บาง",
+        "เส",
+        "ร่"
+      ],
+      "syllable_statuses": [
+        "analyzed",
+        "analyzed",
+        "unresolved:implicit-vowel"
+      ],
+      "parsed_ipa": [
+        "baːŋ",
+        "seː",
+        null
+      ],
+      "warnings": [
+        "Implicit vowel could not be resolved without lexical or morphological evidence.",
+        "Phonemic IPA withheld because the vowel is unresolved."
+      ]
+    },
+    {
+      "id": "3_2413",
+      "name_th": "ขุหลุ",
+      "dict_syllables": [
+        "ขุ",
+        "ห",
+        "ลุ"
+      ],
+      "syllable_statuses": [
+        "analyzed",
+        "unresolved:implicit-vowel",
+        "analyzed"
+      ],
+      "parsed_ipa": [
+        "kʰu",
+        null,
+        "lu"
+      ],
+      "warnings": [
+        "Implicit vowel could not be resolved without lexical or morphological evidence.",
+        "Phonemic IPA withheld because the vowel is unresolved."
+      ]
+    },
+    {
+      "id": "3_3342",
+      "name_th": "เลยวังไสย์",
+      "dict_syllables": [
+        "เลย",
+        "วัง",
+        "ไสย",
+        "์"
+      ],
+      "syllable_statuses": [
+        "analyzed",
+        "analyzed",
+        "analyzed",
+        "analysis-dependent:special-orthography"
+      ],
+      "parsed_ipa": [
+        "lɤːj",
+        "waŋ",
+        "sajj",
+        null
+      ],
+      "warnings": [
+        "Special Thai orthography requires lexical/contextual adjudication; no single IPA was forced.",
+        "Phonemic IPA withheld because the vowel is unresolved."
+      ]
+    },
+    {
+      "id": "3_4178",
+      "name_th": "ช่างเคิ่ง",
+      "dict_syllables": [
+        "ช่าง",
+        "เคิ่ง"
+      ],
+      "syllable_statuses": [
+        "analyzed",
+        "analysis-dependent:vowel-length"
+      ],
+      "parsed_ipa": [
+        "tɕʰaːŋ",
+        null
+      ],
+      "warnings": [
+        "The closed เ-ิ- spelling does not determine /ɤ/ vs /ɤː/ without lexical evidence; no IPA or tone was forced.",
+        "Phonemic IPA withheld because the vowel is unresolved."
+      ]
+    },
+    {
+      "id": "3_4253",
+      "name_th": "ป่าไหน่",
+      "dict_syllables": [
+        "ป่า",
+        "ไห",
+        "น่"
+      ],
+      "syllable_statuses": [
+        "analyzed",
+        "analyzed",
+        "unresolved:implicit-vowel"
+      ],
+      "parsed_ipa": [
+        "paː",
+        "haj",
+        null
+      ],
+      "warnings": [
+        "Implicit vowel could not be resolved without lexical or morphological evidence.",
+        "Phonemic IPA withheld because the vowel is unresolved."
+      ]
+    },
+    {
+      "id": "3_5885",
+      "name_th": "ปิล๊อก",
+      "dict_syllables": [
+        "ปิ",
+        "ล๊อก"
+      ],
+      "syllable_statuses": [
+        "analyzed",
+        "invalid:tone-combination"
+      ],
+      "parsed_ipa": [
+        "pi",
+        null
+      ],
+      "warnings": [
+        "mai_tri is restricted to mid-class spellings in the standard rule system",
+        "Phonemic IPA withheld because the vowel is unresolved."
+      ]
+    },
+    {
+      "id": "3_6630",
+      "name_th": "ราไวย์",
+      "dict_syllables": [
+        "รา",
+        "ไว",
+        "ย์"
+      ],
+      "syllable_statuses": [
+        "analyzed",
+        "analyzed",
+        "analysis-dependent:special-orthography"
+      ],
+      "parsed_ipa": [
+        "raː",
+        "waj",
+        null
+      ],
+      "warnings": [
+        "Special Thai orthography requires lexical/contextual adjudication; no single IPA was forced.",
+        "Phonemic IPA withheld because the vowel is unresolved."
+      ]
+    },
+    {
+      "id": "3_7267",
+      "name_th": "ตะโละกาโปร์",
+      "dict_syllables": [
+        "ตะ",
+        "โละ",
+        "กา",
+        "โปร",
+        "์"
+      ],
+      "syllable_statuses": [
+        "analyzed",
+        "analyzed",
+        "analyzed",
+        "analyzed",
+        "analysis-dependent:special-orthography"
+      ],
+      "parsed_ipa": [
+        "ta",
+        "lo",
+        "kaː",
+        "proː",
+        null
+      ],
+      "warnings": [
+        "Special Thai orthography requires lexical/contextual adjudication; no single IPA was forced.",
+        "Phonemic IPA withheld because the vowel is unresolved."
+      ]
+    },
+    {
+      "id": "3_7334",
+      "name_th": "บาโร๊ะ",
+      "dict_syllables": [
+        "บา",
+        "โร๊ะ"
+      ],
+      "syllable_statuses": [
+        "analyzed",
+        "invalid:tone-combination"
+      ],
+      "parsed_ipa": [
+        "baː",
+        null
+      ],
+      "warnings": [
+        "mai_tri is restricted to mid-class spellings in the standard rule system",
+        "Phonemic IPA withheld because the vowel is unresolved."
+      ]
+    },
+    {
+      "id": "3_7341",
+      "name_th": "กอตอตือร๊ะ",
+      "dict_syllables": [
+        "กอ",
+        "ตอ",
+        "ตือ",
+        "ร๊ะ"
+      ],
+      "syllable_statuses": [
+        "analyzed",
+        "analyzed",
+        "analyzed",
+        "invalid:tone-combination"
+      ],
+      "parsed_ipa": [
+        "kɔː",
+        "tɔː",
+        "tɯː",
+        null
+      ],
+      "warnings": [
+        "mai_tri is restricted to mid-class spellings in the standard rule system",
+        "Phonemic IPA withheld because the vowel is unresolved."
+      ]
+    },
+    {
+      "id": "3_7353",
+      "name_th": "ตะโล๊ะหะลอ",
+      "dict_syllables": [
+        "ตะ",
+        "โล๊ะ",
+        "หะ",
+        "ลอ"
+      ],
+      "syllable_statuses": [
+        "analyzed",
+        "invalid:tone-combination",
+        "analyzed",
+        "analyzed"
+      ],
+      "parsed_ipa": [
+        "ta",
+        null,
+        "ha",
+        "lɔː"
+      ],
+      "warnings": [
+        "mai_tri is restricted to mid-class spellings in the standard rule system",
+        "Phonemic IPA withheld because the vowel is unresolved."
+      ]
+    }
+  ],
   "note": "Model candidates; not independently adjudicated linguistic gold."
 }\n
