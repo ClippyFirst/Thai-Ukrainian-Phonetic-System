@@ -93,7 +93,11 @@ jobs:
           statuses = {}
           for row in rows:
               statuses[row["pipeline_status"]] = statuses.get(row["pipeline_status"], 0) + 1
-          unresolved = [\n              {"id": r["id"], "name_en": r["name_en"], "name_th": r["name_th"], "pipeline_warnings": r["pipeline_warnings"]}\n              for r in rows if not r["ipa_phonemic"] and not r["ipa_external_fastthaig2p"]\n          ]\n          report = {
+          unresolved = [
+              {"id": r["id"], "name_en": r["name_en"], "name_th": r["name_th"], "pipeline_warnings": r["pipeline_warnings"]}
+              for r in rows if not r["ipa_phonemic"] and not r["ipa_external_fastthaig2p"]
+          ]
+          report = {
               "source": str(source),
               "source_rows": len(src),
               "output_rows": len(rows),
@@ -104,7 +108,8 @@ jobs:
               "ipa_broad_surface_nonempty": sum(bool(r["ipa_broad_surface"]) for r in rows),
               "ukrainian_nonempty": sum(bool(r["ukrainian_from_ipa"]) for r in rows),
               "provisional_external_ukrainian_nonempty": sum(bool(r["ukrainian_from_ipa"]) and r["pipeline_status"] == "PROVISIONAL_EXTERNAL_IPA_NOT_ADJUDICATED" for r in rows),
-              "status_counts": statuses,\n              "unresolved_records": unresolved,
+              "status_counts": statuses,
+              "unresolved_records": unresolved,
               "note": "Model candidates; not independently adjudicated linguistic gold."
           }
           Path("build/db-transcription-report.json").write_text(
