@@ -146,9 +146,9 @@ jobs:
           Path("build/db-transcription-report.json").write_text(
               json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
           )
-          python -m json.tool build/db-transcription-report.json > /dev/null
           print(json.dumps(report, ensure_ascii=False, indent=2))
           PY
+          python -m json.tool build/db-transcription-report.json > /dev/null
 
       - name: Publish generated CSV and report on this branch
         env:
