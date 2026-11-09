@@ -2352,8 +2352,8 @@ The owner clarified that `data/db.csv` is a temporary test slice of the larger s
 - Withheld: **6** due malformed external markers or unresolved phonetic analysis; exact IDs, Thai names and diagnostics are listed in `data/geography/db-transcription-report.json`.
 - Targeted tests: `python -m pytest -q tests/test_geographic_dictionary.py` — **9 passed**.
 - Sample check: 500/500 names had complete external IPA and Ukrainian adaptation.
-- Exact final batch workflow: [#42699878389 SUCCESS](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42699878389).
-- Generated-data commit: `4715d596f0b56dedd9b58b240710df53bd290bad`.
+- Exact final batch workflow: [#42700485666 SUCCESS](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42700485666).
+- Generated-data commit: `d96899b2c5f36f73f1119e83b8f262a378078d1e`.
 
 ### Pipeline and confidence boundary
 
@@ -2372,3 +2372,11 @@ RTGS remains a separate side channel. Canonical phonemic/broad-surface IPA is re
 | Official Ukrainian exonyms | DEFERRED | Not inferable from a phonetic candidate alone |
 
 The repository remains a research-oriented prototype, not linguistically release-certified. The generated file is a test-slice artifact, not a complete geographic gazetteer; no coordinates, feature types, official exonyms or data licenses were inferred. Branch review/merge remains a separate step; main was unchanged during this run.
+
+
+## 2026-11-09 — finalized JSON report and draft PR
+
+- Corrected the batch workflow to write a valid JSON report and added `python -m json.tool build/db-transcription-report.json` as a required gate.
+- Final regeneration workflow [#42700485666](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42700485666): SUCCESS; 8,441 rows preserved, RTGS 8,441, IPA+Ukrainian candidates 8,435, six withheld.
+- Generated data/report commit: `d96899b2c5f36f73f1119e83b8f262a378078d1e`.
+- Draft PR #235 opened against main for review: https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/235. Do not merge until PR CI/Pages checks complete and the six unresolved rows are accepted as evidence-limited.
