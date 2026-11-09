@@ -104,6 +104,16 @@ jobs:
           for row in unresolved:
               syllables = [x for x in syllable_tokenize(row["name_th"], engine="dict", keep_whitespace=False) if x.strip()]
               analyses = [analyze_syllable(x) for x in syllables]
+              grouped_syllables = []
+              for index, part in enumerate(syllables):
+                  if part == "์" and grouped_syllables:
+                      grouped_syllables[-1] += part
+                  elif part == "ห" and index + 1 < len(syllables) and syllables[index + 1][:1] in "งญนมยรลว":
+                      grouped_syllables.append(part + syllables[index + 1])
+                  elif index and syllables[index - 1] == "ห":
+                      continue
+                  else:
+                      grouped_syllables.append(part)
               diagnostics.append({
                   "id": row["id"],
                   "name_th": row["name_th"],
@@ -112,6 +122,7 @@ jobs:
                   "parsed_ipa": [a.phonemic_ipa for a in analyses],
                   "warnings": [warning for a in analyses for warning in a.warnings],
                   "tltk_syllable_fallback": [fallback_g2p(x) for x in syllables],
+                  "grouped_tltk_fallback": [fallback_g2p(x) for x in grouped_syllables],
               })
           report = {
               "source": str(source),
