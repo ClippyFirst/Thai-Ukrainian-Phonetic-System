@@ -34,6 +34,17 @@ python scripts/build_geographic_dictionary.py input.csv \
   --output build/transcription.csv
 ```
 
+Для максимального покриття власних назв із provisional fallback через зовнішній IPA:
+
+```bash
+python -m pip install -e ".[geography,fastthaig2p]"
+python scripts/build_geographic_dictionary.py input.csv \
+  --thai-column text_th \
+  --output build/transcription.csv \
+  --external-g2p
+```
+
+
 Назву вхідної колонки можна змінити через `--thai-column`. Для TSV можна вказати `--delimiter $'\\t'`; за замовчуванням читається CSV з комою. `--limit 20` дозволяє зробити пробний запуск на перших 20 рядках.
 
 Вихідний CSV записується в UTF-8 з BOM для сумісності з Excel. Усі вхідні колонки зберігаються (наприклад, ідентифікатори, примітки, посилання на джерела та інші метадані); додаються:
@@ -58,7 +69,6 @@ python scripts/build_geographic_dictionary.py input.csv \
 - `COMPLETE_MODEL_OUTPUT_NOT_ADJUDICATED` — технічно повний результат внутрішнього рушія; це **не** означає незалежно перевірену правильність вимови.
 - `PROVISIONAL_EXTERNAL_IPA_NOT_ADJUDICATED` — внутрішній шлях не завершився, тому використано повний FastThaiG2P IPA. Він залишається в `ipa_external_fastthaig2p`, а не в `ipa_phonemic` чи `ipa_broad_surface`; український запис — provisional-кандидат із зовнішнього IPA.
 - `PARTIAL_OR_UNSUPPORTED_WITHHELD` — навіть зовнішній рушій не повернув повного IPA → український результат залишається порожнім.
-- `PARTIAL_OR_UNSUPPORTED_WITHHELD` — принаймні одне слово/склад не має повного підтриманого шляху. IPA та український результат для всього рядка CSV залишаються порожніми; причини вказуються в `pipeline_warnings`.
 - `NO_THAI_INPUT` — у вибраній колонці немає тайських символів.
 
 Сегментація слова не доводить його вимову. Скрипт повторно використовує консервативний `analyze_text_with_word_segmentation` і не намагається автоматично вгадувати складову структуру невідомого слова. RTGS може бути заповнений, навіть якщо IPA та український результат утримано: це окремі методи з різними обмеженнями.
