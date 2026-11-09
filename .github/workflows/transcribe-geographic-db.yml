@@ -36,7 +36,7 @@ jobs:
           cache: pip
 
       - name: Install geographic transcription dependency
-        run: python -m pip install -e ".[geography,fastthaig2p]"
+        run: python -m pip install -e ".[dev,geography,fastthaig2p]"
 
       - name: Evaluate FastThaiG2P provisional IPA coverage on a representative sample
         run: |
@@ -65,13 +65,16 @@ jobs:
           print(json.dumps(counts, ensure_ascii=False, indent=2))
           PY
 
+      - name: Run geographic batch regression tests
+        run: python -m pytest -q tests/test_geographic_dictionary.py
+
       - name: Transcribe every source row
         run: |
           mkdir -p build
           python scripts/build_geographic_dictionary.py data/db.csv \
             --thai-column name_th \
             --delimiter ";" \
-            --output build/db-transcribed.csv
+            --output build/db-transcribed.csv \\\n            --external-g2p
 
       - name: Validate row preservation and report coverage
         run: |
@@ -94,9 +97,9 @@ jobs:
               "source_rows": len(src),
               "output_rows": len(rows),
               "romanization_nonempty": sum(bool(r["romanization_rtgs"]) for r in rows),
-              "ipa_phonemic_nonempty": sum(bool(r["ipa_phonemic"]) for r in rows),
+              "ipa_phonemic_nonempty": sum(bool(r["ipa_phonemic"]) for r in rows),\n              "ipa_external_fastthaig2p_nonempty": sum(bool(r["ipa_external_fastthaig2p"]) for r in rows),\n              "ipa_any_nonempty": sum(bool(r["ipa_phonemic"] or r["ipa_external_fastthaig2p"]) for r in rows),
               "ipa_broad_surface_nonempty": sum(bool(r["ipa_broad_surface"]) for r in rows),
-              "ukrainian_nonempty": sum(bool(r["ukrainian_from_ipa"]) for r in rows),
+              "ukrainian_nonempty": sum(bool(r["ukrainian_from_ipa"]) for r in rows),\n              "provisional_external_ukrainian_nonempty": sum(bool(r["ukrainian_from_ipa"]) and r["pipeline_status"] == "PROVISIONAL_EXTERNAL_IPA_NOT_ADJUDICATED" for r in rows),
               "status_counts": statuses,
               "note": "Model candidates; not independently adjudicated linguistic gold."
           }
