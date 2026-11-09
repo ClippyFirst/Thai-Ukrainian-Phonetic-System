@@ -144,8 +144,9 @@ jobs:
               "note": "Model candidates; not independently adjudicated linguistic gold."
           }
           Path("build/db-transcription-report.json").write_text(
-              json.dumps(report, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8"
+              json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
           )
+          python -m json.tool build/db-transcription-report.json > /dev/null
           print(json.dumps(report, ensure_ascii=False, indent=2))
           PY
 
