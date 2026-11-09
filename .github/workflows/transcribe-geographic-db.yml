@@ -99,6 +99,7 @@ jobs:
           ]
           from pythainlp.tokenize import syllable_tokenize
           from thai_ukrainian.api import analyze_syllable
+          from fastthaig2p.fallback import fallback_g2p
           diagnostics = []
           for row in unresolved:
               syllables = [x for x in syllable_tokenize(row["name_th"], engine="dict", keep_whitespace=False) if x.strip()]
@@ -110,6 +111,7 @@ jobs:
                   "syllable_statuses": [a.status for a in analyses],
                   "parsed_ipa": [a.phonemic_ipa for a in analyses],
                   "warnings": [warning for a in analyses for warning in a.warnings],
+                  "tltk_syllable_fallback": [fallback_g2p(x) for x in syllables],
               })
           report = {
               "source": str(source),
