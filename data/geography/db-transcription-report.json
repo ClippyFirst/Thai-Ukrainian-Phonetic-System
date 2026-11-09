@@ -126,7 +126,9 @@
         "/baːŋ˧/",
         "/kʰoː˧/",
         "ล่"
-      ]
+      ],
+      "merged_final_tltk_fallback": "/kʰloː˥˩/",
+      "whole_name_tltk_fallback": "/baːŋ˧.kʰloː˥˩/"
     },
     {
       "id": "3_275",
@@ -164,7 +166,9 @@
         "/ta˨˩/",
         "/naj˧/",
         "ย์"
-      ]
+      ],
+      "merged_final_tltk_fallback": "/naj˧/",
+      "whole_name_tltk_fallback": "/baːŋ˧.ta˨˩.naj˧/"
     },
     {
       "id": "3_1038",
@@ -197,7 +201,9 @@
         "/baːŋ˧/",
         "/seː˩˩˦/",
         "ร่"
-      ]
+      ],
+      "merged_final_tltk_fallback": "/seː˨˩/",
+      "whole_name_tltk_fallback": "/baːŋ˧.seː˨˩/"
     },
     {
       "id": "3_2413",
@@ -229,7 +235,9 @@
       "grouped_tltk_fallback": [
         "/kʰu˨˩/",
         "/hɔː˩˩˦.lu˦˥/"
-      ]
+      ],
+      "merged_final_tltk_fallback": "/hɔː˩˩˦.lu˦˥/",
+      "whole_name_tltk_fallback": "/kʰu-˨˩.lu˦˥/"
     },
     {
       "id": "3_3342",
@@ -266,7 +274,9 @@
         "/lɤːj˧/",
         "/waŋ˧/",
         "/saj˩˩˦/"
-      ]
+      ],
+      "merged_final_tltk_fallback": "/saj˩˩˦/",
+      "whole_name_tltk_fallback": "/lɤːj˧.waŋ˧.saj˩˩˦/"
     },
     {
       "id": "3_4178",
@@ -294,7 +304,9 @@
       "grouped_tltk_fallback": [
         "/t͡ɕʰaŋ˥˩/",
         "/kʰ\\ɤŋ˥˩/"
-      ]
+      ],
+      "merged_final_tltk_fallback": "/t͡ɕʰaŋ˥˩.kʰ\\ɤŋ˥˩/",
+      "whole_name_tltk_fallback": "/t͡ɕʰaŋ˥˩.kʰ\\ɤŋ˥˩/"
     },
     {
       "id": "3_4253",
@@ -327,7 +339,9 @@
         "/paː˨˩/",
         "/haj˩˩˦/",
         "น่"
-      ]
+      ],
+      "merged_final_tltk_fallback": "/naj˨˩/",
+      "whole_name_tltk_fallback": "/paː˨˩.naj˨˩/"
     },
     {
       "id": "3_5885",
@@ -355,7 +369,9 @@
       "grouped_tltk_fallback": [
         "/pi˨˩/",
         "/lɔːk8˧/"
-      ]
+      ],
+      "merged_final_tltk_fallback": "/pi˨˩.lɔːk8˧/",
+      "whole_name_tltk_fallback": "/pi˨˩.lɔːk8˧/"
     },
     {
       "id": "3_6630",
@@ -388,7 +404,9 @@
         "/raː˧/",
         "/waj˧/",
         "ย์"
-      ]
+      ],
+      "merged_final_tltk_fallback": "/waj˧/",
+      "whole_name_tltk_fallback": "/raː˧.waj˧/"
     },
     {
       "id": "3_7267",
@@ -430,7 +448,9 @@
         "/lo˦˥/",
         "/kaː˧/",
         "/poː˧/"
-      ]
+      ],
+      "merged_final_tltk_fallback": "/poː˧/",
+      "whole_name_tltk_fallback": "/ta˨˩.lo˦˥.kaː˧.poː˧/"
     },
     {
       "id": "3_7334",
@@ -458,7 +478,9 @@
       "grouped_tltk_fallback": [
         "/baː˧/",
         "/ro8˧/"
-      ]
+      ],
+      "merged_final_tltk_fallback": "/baː˧.ro8˧/",
+      "whole_name_tltk_fallback": "/baː˧.ro8˧/"
     },
     {
       "id": "3_7341",
@@ -496,7 +518,9 @@
         "/tɔː˧/",
         "/tɯː˧/",
         "/ra8˧/"
-      ]
+      ],
+      "merged_final_tltk_fallback": "/tɯː˧.ra8˧/",
+      "whole_name_tltk_fallback": "/kɔː˧.tɔː˧.tɯː˧.ra8˧/"
     },
     {
       "id": "3_7353",
@@ -534,7 +558,9 @@
         "/lo8˧/",
         "/ha˨˩/",
         "/lɔː˧/"
-      ]
+      ],
+      "merged_final_tltk_fallback": "/ha˨˩.lɔː˧/",
+      "whole_name_tltk_fallback": "/ta˨˩.lo8˧.ha˨˩.lɔː˧/"
     }
   ],
   "note": "Model candidates; not independently adjudicated linguistic gold."
