@@ -14,5 +14,85 @@
     "COMPLETE_MODEL_OUTPUT_NOT_ADJUDICATED": 40,
     "PARTIAL_OR_UNSUPPORTED_WITHHELD": 13
   },
+  "unresolved_records": [
+    {
+      "id": "3_122",
+      "name_en": "Bang Khlo",
+      "name_th": "บางโคล่",
+      "pipeline_warnings": "The conservative text endpoint does not apply automatic word segmentation; use analyze_text_with_word_segmentation for dictionary-based word boundaries. IPA and Ukrainian output are withheld until syllable segmentation and pronunciation are supported. | Unknown grapheme cluster in dictionary segmentation; IPA and Ukrainian output are withheld."
+    },
+    {
+      "id": "3_275",
+      "name_en": "Bang Tanai",
+      "name_th": "บางตะไนย์",
+      "pipeline_warnings": "The conservative text endpoint does not apply automatic word segmentation; use analyze_text_with_word_segmentation for dictionary-based word boundaries. IPA and Ukrainian output are withheld until syllable segmentation and pronunciation are supported. | Unknown grapheme cluster in dictionary segmentation; IPA and Ukrainian output are withheld."
+    },
+    {
+      "id": "3_1038",
+      "name_en": "Bang Sare",
+      "name_th": "บางเสร่",
+      "pipeline_warnings": "The conservative text endpoint does not apply automatic word segmentation; use analyze_text_with_word_segmentation for dictionary-based word boundaries. IPA and Ukrainian output are withheld until syllable segmentation and pronunciation are supported. | Unknown grapheme cluster in dictionary segmentation; IPA and Ukrainian output are withheld."
+    },
+    {
+      "id": "3_2413",
+      "name_en": "Khulu",
+      "name_th": "ขุหลุ",
+      "pipeline_warnings": "Unknown grapheme cluster in dictionary segmentation; IPA and Ukrainian output are withheld. | The conservative text endpoint does not apply automatic word segmentation; use analyze_text_with_word_segmentation for dictionary-based word boundaries. IPA and Ukrainian output are withheld until syllable segmentation and pronunciation are supported."
+    },
+    {
+      "id": "3_3342",
+      "name_en": "Loei Wang Sai",
+      "name_th": "เลยวังไสย์",
+      "pipeline_warnings": "The conservative text endpoint does not apply automatic word segmentation; use analyze_text_with_word_segmentation for dictionary-based word boundaries. IPA and Ukrainian output are withheld until syllable segmentation and pronunciation are supported. | Unknown grapheme cluster in dictionary segmentation; IPA and Ukrainian output are withheld."
+    },
+    {
+      "id": "3_4178",
+      "name_en": "Chang Khoeng",
+      "name_th": "ช่างเคิ่ง",
+      "pipeline_warnings": "The conservative text endpoint does not apply automatic word segmentation; use analyze_text_with_word_segmentation for dictionary-based word boundaries. IPA and Ukrainian output are withheld until syllable segmentation and pronunciation are supported. | Unknown grapheme cluster in dictionary segmentation; IPA and Ukrainian output are withheld."
+    },
+    {
+      "id": "3_4253",
+      "name_en": "Pa Nai",
+      "name_th": "ป่าไหน่",
+      "pipeline_warnings": "The conservative text endpoint does not apply automatic word segmentation; use analyze_text_with_word_segmentation for dictionary-based word boundaries. IPA and Ukrainian output are withheld until syllable segmentation and pronunciation are supported. | Unknown grapheme cluster in dictionary segmentation; IPA and Ukrainian output are withheld."
+    },
+    {
+      "id": "3_5885",
+      "name_en": "Pi Lok",
+      "name_th": "ปิล๊อก",
+      "pipeline_warnings": "Unknown grapheme cluster in dictionary segmentation; IPA and Ukrainian output are withheld. | The conservative text endpoint does not apply automatic word segmentation; use analyze_text_with_word_segmentation for dictionary-based word boundaries. IPA and Ukrainian output are withheld until syllable segmentation and pronunciation are supported."
+    },
+    {
+      "id": "3_6630",
+      "name_en": "Rawai",
+      "name_th": "ราไวย์",
+      "pipeline_warnings": "The conservative text endpoint does not apply automatic word segmentation; use analyze_text_with_word_segmentation for dictionary-based word boundaries. IPA and Ukrainian output are withheld until syllable segmentation and pronunciation are supported. | Unknown grapheme cluster in dictionary segmentation; IPA and Ukrainian output are withheld."
+    },
+    {
+      "id": "3_7267",
+      "name_en": "Talo Kapo",
+      "name_th": "ตะโละกาโปร์",
+      "pipeline_warnings": "The conservative text endpoint does not apply automatic word segmentation; use analyze_text_with_word_segmentation for dictionary-based word boundaries. IPA and Ukrainian output are withheld until syllable segmentation and pronunciation are supported. | Unknown grapheme cluster in dictionary segmentation; IPA and Ukrainian output are withheld."
+    },
+    {
+      "id": "3_7334",
+      "name_en": "Baro",
+      "name_th": "บาโร๊ะ",
+      "pipeline_warnings": "The conservative text endpoint does not apply automatic word segmentation; use analyze_text_with_word_segmentation for dictionary-based word boundaries. IPA and Ukrainian output are withheld until syllable segmentation and pronunciation are supported. | Unknown grapheme cluster in dictionary segmentation; IPA and Ukrainian output are withheld."
+    },
+    {
+      "id": "3_7341",
+      "name_en": "Koto Tuera",
+      "name_th": "กอตอตือร๊ะ",
+      "pipeline_warnings": "The conservative text endpoint does not apply automatic word segmentation; use analyze_text_with_word_segmentation for dictionary-based word boundaries. IPA and Ukrainian output are withheld until syllable segmentation and pronunciation are supported. | Unknown grapheme cluster in dictionary segmentation; IPA and Ukrainian output are withheld."
+    },
+    {
+      "id": "3_7353",
+      "name_en": "Talo Halo",
+      "name_th": "ตะโล๊ะหะลอ",
+      "pipeline_warnings": "The conservative text endpoint does not apply automatic word segmentation; use analyze_text_with_word_segmentation for dictionary-based word boundaries. IPA and Ukrainian output are withheld until syllable segmentation and pronunciation are supported. | Unknown grapheme cluster in dictionary segmentation; IPA and Ukrainian output are withheld."
+    }
+  ],
   "note": "Model candidates; not independently adjudicated linguistic gold."
 }\n
