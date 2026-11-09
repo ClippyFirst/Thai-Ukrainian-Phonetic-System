@@ -2334,3 +2334,41 @@ The first post-merge FastThaiG2P Pyodide compatibility run #42399176619 failed b
 PR #234 added `python scripts/generate_web_word_dictionary.py` before browser tests and included the generator plus CC0 source/manifest in push and PR path filters. PR Pyodide #42399472395 passed 20/20 steps; PR CI #42399472396 passed 65/65 plus wheel smoke 11/11. PR #234 was squash-merged to main as `8c91eabfa1f499f5fbea3bc42c8db9b4fcc0b12b`. Post-merge Pyodide #42399972927 passed 20/20; post-merge CI #42399972992 passed 65/65, wheel smoke 11/11 and master artifact 6/6.
 
 Current mainline is engineering-verified, the public Pages deployment was verified, and the Pyodide runtime workflow is green. No open PRs remain. Historical branch refs are preserved; only main is the active development line. This does not constitute independent linguistic certification: Thai IPA gold rows remain 0, RTGS accuracy is NOT_MEASURED, Ukrainian target forms remain provisional, and manual accessibility/physical-device performance remain unverified/deferred.
+
+
+## 2026-11-09 — db.csv all-row transcription execution
+
+The owner clarified that `data/db.csv` is a temporary test slice of the larger source dataset and requested one batch pass that adds RTGS romanization, IPA and Ukrainian output to every Thai name. Work was performed on `feat/transcribe-db-csv-all-names-2026-11-09`, based on main `a05b0347f59afe128004e662bf418d030e1a3b77`.
+
+### Verified result
+
+- Source rows: **8,441**.
+- Output rows: **8,441**, with source IDs and Thai names preserved.
+- RTGS romanization: **8,441/8,441**.
+- Internal typed phonemic IPA and Ukrainian: **40/8,441**.
+- External FastThaiG2P IPA and provisional IPA→Ukrainian: **8,388/8,441**.
+- Additional low-confidence whole-name TLTK fallback: **7**.
+- Total with IPA and Ukrainian candidate: **8,435/8,441 (99.93%)**.
+- Withheld: **6** due malformed external markers or unresolved phonetic analysis; exact IDs, Thai names and diagnostics are listed in `data/geography/db-transcription-report.json`.
+- Targeted tests: `python -m pytest -q tests/test_geographic_dictionary.py` — **9 passed**.
+- Sample check: 500/500 names had complete external IPA and Ukrainian adaptation.
+- Exact final batch workflow: [#42699878389 SUCCESS](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42699878389).
+- Generated-data commit: `4715d596f0b56dedd9b58b240710df53bd290bad`.
+
+### Pipeline and confidence boundary
+
+RTGS remains a separate side channel. Canonical phonemic/broad-surface IPA is retained only for the 40 complete internal results. The external FastThaiG2P IPA is stored in its own column and is not silently relabelled as phonemic or broad-surface IPA. The 7 whole-name TLTK results have a separate lower-confidence status. Ukrainian candidates are produced only through the existing IPA→Ukrainian adapter; no RTGS→Ukrainian path was added. The 6 unsupported rows remain withheld rather than fabricating IPA or Ukrainian spellings.
+
+### Task ledger
+
+| Task | Status | Evidence |
+|---|---|---|
+| Run all 8,441 rows | DONE_VERIFIED | Generated CSV and row-preservation assertions |
+| Fill RTGS for all rows | DONE_VERIFIED | 8,441 nonempty |
+| Fill IPA and Ukrainian candidates | PARTIAL | 8,435/8,441; 6 unresolved |
+| Keep IPA provenance/layer distinction | DONE_VERIFIED | Separate external IPA column and statuses |
+| Test fallback and CSV batch | DONE_VERIFIED | 9 targeted tests + successful exact-head workflow |
+| Linguistic correctness of names | BLOCKED / NOT_MEASURED | No independent Thai-speaker gold or Ukrainian-native review |
+| Official Ukrainian exonyms | DEFERRED | Not inferable from a phonetic candidate alone |
+
+The repository remains a research-oriented prototype, not linguistically release-certified. The generated file is a test-slice artifact, not a complete geographic gazetteer; no coordinates, feature types, official exonyms or data licenses were inferred. Branch review/merge remains a separate step; main was unchanged during this run.
