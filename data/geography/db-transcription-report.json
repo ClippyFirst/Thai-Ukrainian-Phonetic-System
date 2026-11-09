@@ -116,6 +116,11 @@
       "warnings": [
         "Implicit vowel could not be resolved without lexical or morphological evidence.",
         "Phonemic IPA withheld because the vowel is unresolved."
+      ],
+      "tltk_syllable_fallback": [
+        "/baːŋ˧/",
+        "/kʰoː˧/",
+        "ล่"
       ]
     },
     {
@@ -142,6 +147,12 @@
       "warnings": [
         "Special Thai orthography requires lexical/contextual adjudication; no single IPA was forced.",
         "Phonemic IPA withheld because the vowel is unresolved."
+      ],
+      "tltk_syllable_fallback": [
+        "/baːŋ˧/",
+        "/ta˨˩/",
+        "/naj˧/",
+        "ย์"
       ]
     },
     {
@@ -165,6 +176,11 @@
       "warnings": [
         "Implicit vowel could not be resolved without lexical or morphological evidence.",
         "Phonemic IPA withheld because the vowel is unresolved."
+      ],
+      "tltk_syllable_fallback": [
+        "/baːŋ˧/",
+        "/seː˩˩˦/",
+        "ร่"
       ]
     },
     {
@@ -188,6 +204,11 @@
       "warnings": [
         "Implicit vowel could not be resolved without lexical or morphological evidence.",
         "Phonemic IPA withheld because the vowel is unresolved."
+      ],
+      "tltk_syllable_fallback": [
+        "/kʰu˨˩/",
+        "/hɔː˩˩˦/",
+        "/lu˦˥/"
       ]
     },
     {
@@ -214,6 +235,12 @@
       "warnings": [
         "Special Thai orthography requires lexical/contextual adjudication; no single IPA was forced.",
         "Phonemic IPA withheld because the vowel is unresolved."
+      ],
+      "tltk_syllable_fallback": [
+        "/lɤːj˧/",
+        "/waŋ˧/",
+        "/saj˩˩˦/",
+        "์"
       ]
     },
     {
@@ -234,6 +261,10 @@
       "warnings": [
         "The closed เ-ิ- spelling does not determine /ɤ/ vs /ɤː/ without lexical evidence; no IPA or tone was forced.",
         "Phonemic IPA withheld because the vowel is unresolved."
+      ],
+      "tltk_syllable_fallback": [
+        "/t͡ɕʰaŋ˥˩/",
+        "/kʰ\\ɤŋ˥˩/"
       ]
     },
     {
@@ -257,6 +288,11 @@
       "warnings": [
         "Implicit vowel could not be resolved without lexical or morphological evidence.",
         "Phonemic IPA withheld because the vowel is unresolved."
+      ],
+      "tltk_syllable_fallback": [
+        "/paː˨˩/",
+        "/haj˩˩˦/",
+        "น่"
       ]
     },
     {
@@ -277,6 +313,10 @@
       "warnings": [
         "mai_tri is restricted to mid-class spellings in the standard rule system",
         "Phonemic IPA withheld because the vowel is unresolved."
+      ],
+      "tltk_syllable_fallback": [
+        "/pi˨˩/",
+        "/lɔːk8˧/"
       ]
     },
     {
@@ -300,6 +340,11 @@
       "warnings": [
         "Special Thai orthography requires lexical/contextual adjudication; no single IPA was forced.",
         "Phonemic IPA withheld because the vowel is unresolved."
+      ],
+      "tltk_syllable_fallback": [
+        "/raː˧/",
+        "/waj˧/",
+        "ย์"
       ]
     },
     {
@@ -329,6 +374,13 @@
       "warnings": [
         "Special Thai orthography requires lexical/contextual adjudication; no single IPA was forced.",
         "Phonemic IPA withheld because the vowel is unresolved."
+      ],
+      "tltk_syllable_fallback": [
+        "/ta˨˩/",
+        "/lo˦˥/",
+        "/kaː˧/",
+        "/proː˧/",
+        "์"
       ]
     },
     {
@@ -349,6 +401,10 @@
       "warnings": [
         "mai_tri is restricted to mid-class spellings in the standard rule system",
         "Phonemic IPA withheld because the vowel is unresolved."
+      ],
+      "tltk_syllable_fallback": [
+        "/baː˧/",
+        "/ro8˧/"
       ]
     },
     {
@@ -375,6 +431,12 @@
       "warnings": [
         "mai_tri is restricted to mid-class spellings in the standard rule system",
         "Phonemic IPA withheld because the vowel is unresolved."
+      ],
+      "tltk_syllable_fallback": [
+        "/kɔː˧/",
+        "/tɔː˧/",
+        "/tɯː˧/",
+        "/ra8˧/"
       ]
     },
     {
@@ -401,6 +463,12 @@
       "warnings": [
         "mai_tri is restricted to mid-class spellings in the standard rule system",
         "Phonemic IPA withheld because the vowel is unresolved."
+      ],
+      "tltk_syllable_fallback": [
+        "/ta˨˩/",
+        "/lo8˧/",
+        "/ha˨˩/",
+        "/lɔː˧/"
       ]
     }
   ],
