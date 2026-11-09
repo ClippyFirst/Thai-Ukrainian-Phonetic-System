@@ -123,6 +123,8 @@ jobs:
                   "warnings": [warning for a in analyses for warning in a.warnings],
                   "tltk_syllable_fallback": [fallback_g2p(x) for x in syllables],
                   "grouped_tltk_fallback": [fallback_g2p(x) for x in grouped_syllables],
+                  "merged_final_tltk_fallback": fallback_g2p("".join(syllables[-2:])),
+                  "whole_name_tltk_fallback": fallback_g2p(row["name_th"]),
               })
           report = {
               "source": str(source),
