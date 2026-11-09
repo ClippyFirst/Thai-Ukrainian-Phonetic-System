@@ -68,6 +68,7 @@ python scripts/build_geographic_dictionary.py input.csv \
 
 - `COMPLETE_MODEL_OUTPUT_NOT_ADJUDICATED` — технічно повний результат внутрішнього рушія; це **не** означає незалежно перевірену правильність вимови.
 - `PROVISIONAL_EXTERNAL_IPA_NOT_ADJUDICATED` — внутрішній шлях не завершився, тому використано повний FastThaiG2P IPA. Він залишається в `ipa_external_fastthaig2p`, а не в `ipa_phonemic` чи `ipa_broad_surface`; український запис — provisional-кандидат із зовнішнього IPA.
+- `PROVISIONAL_EXTERNAL_IPA_WHOLE_NAME_TLTK_NOT_ADJUDICATED` — tokenizer не зміг дати повний результат, тому TLTK OOV-модуль запущено на цілій назві. Це ще нижча впевненість; результат позначений окремо, а некоректний IPA відхиляється.
 - `PARTIAL_OR_UNSUPPORTED_WITHHELD` — навіть зовнішній рушій не повернув повного IPA → український результат залишається порожнім.
 - `NO_THAI_INPUT` — у вибраній колонці немає тайських символів.
 
