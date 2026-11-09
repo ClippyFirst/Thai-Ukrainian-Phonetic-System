@@ -88,6 +88,7 @@ def romanize_rtgs(
 
 def _external_ipa_candidate(thai_name: str, adapter: Any) -> dict[str, str] | None:
     """Return complete provisional external IPA and IPA-adapted Ukrainian only."""
+    from thai_ukrainian.fastthaig2p_adapter import UPSTREAM_COMMIT
     from thai_ukrainian.ukrainian_adaptation import adapt_phonetic_result
 
     output = adapter.convert(thai_name)
@@ -118,7 +119,7 @@ def _external_ipa_candidate(thai_name: str, adapter: Any) -> dict[str, str] | No
         "ipa_external_fastthaig2p": output.raw_ipa,
         "ukrainian_from_ipa": " ".join(ukrainian_words),
         "pipeline_status": "PROVISIONAL_EXTERNAL_IPA_NOT_ADJUDICATED",
-        "ipa_source": f"FastThaiG2P@{output.__class__.__module__}; upstream commit pinned in adapter",
+        "ipa_source": f"FastThaiG2P@{UPSTREAM_COMMIT} (external IPA; layer unclassified)",
         "analysis_confidence": "PROVISIONAL_EXTERNAL_G2P",
         "external_g2p_coverage": coverage,
         "pipeline_warnings": " | ".join(warnings),
