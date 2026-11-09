@@ -121,6 +121,11 @@
         "/baːŋ˧/",
         "/kʰoː˧/",
         "ล่"
+      ],
+      "grouped_tltk_fallback": [
+        "/baːŋ˧/",
+        "/kʰoː˧/",
+        "ล่"
       ]
     },
     {
@@ -153,6 +158,12 @@
         "/ta˨˩/",
         "/naj˧/",
         "ย์"
+      ],
+      "grouped_tltk_fallback": [
+        "/baːŋ˧/",
+        "/ta˨˩/",
+        "/naj˧/",
+        "ย์"
       ]
     },
     {
@@ -178,6 +189,11 @@
         "Phonemic IPA withheld because the vowel is unresolved."
       ],
       "tltk_syllable_fallback": [
+        "/baːŋ˧/",
+        "/seː˩˩˦/",
+        "ร่"
+      ],
+      "grouped_tltk_fallback": [
         "/baːŋ˧/",
         "/seː˩˩˦/",
         "ร่"
@@ -209,6 +225,10 @@
         "/kʰu˨˩/",
         "/hɔː˩˩˦/",
         "/lu˦˥/"
+      ],
+      "grouped_tltk_fallback": [
+        "/kʰu˨˩/",
+        "/hɔː˩˩˦.lu˦˥/"
       ]
     },
     {
@@ -241,6 +261,11 @@
         "/waŋ˧/",
         "/saj˩˩˦/",
         "์"
+      ],
+      "grouped_tltk_fallback": [
+        "/lɤːj˧/",
+        "/waŋ˧/",
+        "/saj˩˩˦/"
       ]
     },
     {
@@ -263,6 +288,10 @@
         "Phonemic IPA withheld because the vowel is unresolved."
       ],
       "tltk_syllable_fallback": [
+        "/t͡ɕʰaŋ˥˩/",
+        "/kʰ\\ɤŋ˥˩/"
+      ],
+      "grouped_tltk_fallback": [
         "/t͡ɕʰaŋ˥˩/",
         "/kʰ\\ɤŋ˥˩/"
       ]
@@ -293,6 +322,11 @@
         "/paː˨˩/",
         "/haj˩˩˦/",
         "น่"
+      ],
+      "grouped_tltk_fallback": [
+        "/paː˨˩/",
+        "/haj˩˩˦/",
+        "น่"
       ]
     },
     {
@@ -315,6 +349,10 @@
         "Phonemic IPA withheld because the vowel is unresolved."
       ],
       "tltk_syllable_fallback": [
+        "/pi˨˩/",
+        "/lɔːk8˧/"
+      ],
+      "grouped_tltk_fallback": [
         "/pi˨˩/",
         "/lɔːk8˧/"
       ]
@@ -342,6 +380,11 @@
         "Phonemic IPA withheld because the vowel is unresolved."
       ],
       "tltk_syllable_fallback": [
+        "/raː˧/",
+        "/waj˧/",
+        "ย์"
+      ],
+      "grouped_tltk_fallback": [
         "/raː˧/",
         "/waj˧/",
         "ย์"
@@ -381,6 +424,12 @@
         "/kaː˧/",
         "/proː˧/",
         "์"
+      ],
+      "grouped_tltk_fallback": [
+        "/ta˨˩/",
+        "/lo˦˥/",
+        "/kaː˧/",
+        "/poː˧/"
       ]
     },
     {
@@ -403,6 +452,10 @@
         "Phonemic IPA withheld because the vowel is unresolved."
       ],
       "tltk_syllable_fallback": [
+        "/baː˧/",
+        "/ro8˧/"
+      ],
+      "grouped_tltk_fallback": [
         "/baː˧/",
         "/ro8˧/"
       ]
@@ -437,6 +490,12 @@
         "/tɔː˧/",
         "/tɯː˧/",
         "/ra8˧/"
+      ],
+      "grouped_tltk_fallback": [
+        "/kɔː˧/",
+        "/tɔː˧/",
+        "/tɯː˧/",
+        "/ra8˧/"
       ]
     },
     {
@@ -465,6 +524,12 @@
         "Phonemic IPA withheld because the vowel is unresolved."
       ],
       "tltk_syllable_fallback": [
+        "/ta˨˩/",
+        "/lo8˧/",
+        "/ha˨˩/",
+        "/lɔː˧/"
+      ],
+      "grouped_tltk_fallback": [
         "/ta˨˩/",
         "/lo8˧/",
         "/ha˨˩/",
