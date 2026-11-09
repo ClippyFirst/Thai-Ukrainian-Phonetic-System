@@ -97,6 +97,20 @@ jobs:
               {"id": r["id"], "name_en": r["name_en"], "name_th": r["name_th"], "pipeline_warnings": r["pipeline_warnings"]}
               for r in rows if not r["ipa_phonemic"] and not r["ipa_external_fastthaig2p"]
           ]
+          from pythainlp.tokenize import syllable_tokenize
+          from thai_ukrainian.api import analyze_syllable
+          diagnostics = []
+          for row in unresolved:
+              syllables = [x for x in syllable_tokenize(row["name_th"], engine="dict", keep_whitespace=False) if x.strip()]
+              analyses = [analyze_syllable(x) for x in syllables]
+              diagnostics.append({
+                  "id": row["id"],
+                  "name_th": row["name_th"],
+                  "dict_syllables": syllables,
+                  "syllable_statuses": [a.status for a in analyses],
+                  "parsed_ipa": [a.phonemic_ipa for a in analyses],
+                  "warnings": [warning for a in analyses for warning in a.warnings],
+              })
           report = {
               "source": str(source),
               "source_rows": len(src),
@@ -109,7 +123,7 @@ jobs:
               "ukrainian_nonempty": sum(bool(r["ukrainian_from_ipa"]) for r in rows),
               "provisional_external_ukrainian_nonempty": sum(bool(r["ukrainian_from_ipa"]) and r["pipeline_status"] == "PROVISIONAL_EXTERNAL_IPA_NOT_ADJUDICATED" for r in rows),
               "status_counts": statuses,
-              "unresolved_records": unresolved,
+              "unresolved_records": unresolved,\n              "unresolved_syllable_diagnostics": diagnostics,
               "note": "Model candidates; not independently adjudicated linguistic gold."
           }
           Path("build/db-transcription-report.json").write_text(
