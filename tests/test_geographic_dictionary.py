@@ -124,9 +124,15 @@ class GeographicDictionaryTests(unittest.TestCase):
         self.assertEqual(result["analysis_confidence"], "PROVISIONAL_EXTERNAL_G2P")
 
     def test_whole_name_tltk_fallback_is_low_confidence_and_ipa_adapted(self):
+        import sys
+        from types import ModuleType
         from unittest.mock import patch
 
-        with patch("fastthaig2p.fallback.fallback_g2p", return_value="/kaː˧.ta˨˩/"):
+        package = ModuleType("fastthaig2p")
+        package.__path__ = []
+        fallback = ModuleType("fastthaig2p.fallback")
+        fallback.fallback_g2p = lambda text: "/kaː˧.ta˨˩/"
+        with patch.dict(sys.modules, {"fastthaig2p": package, "fastthaig2p.fallback": fallback}):
             result = _tltk_whole_name_candidate("กาตา")
         self.assertIsNotNone(result)
         self.assertEqual(result["ipa_external_fastthaig2p"], "/kaː˧.ta˨˩/")
@@ -135,9 +141,15 @@ class GeographicDictionaryTests(unittest.TestCase):
         self.assertEqual(result["analysis_confidence"], "LOW_CONFIDENCE_WHOLE_NAME_TLTK")
 
     def test_whole_name_tltk_fallback_rejects_non_ipa_markers(self):
+        import sys
+        from types import ModuleType
         from unittest.mock import patch
 
-        with patch("fastthaig2p.fallback.fallback_g2p", return_value="/ka8˧/"):
+        package = ModuleType("fastthaig2p")
+        package.__path__ = []
+        fallback = ModuleType("fastthaig2p.fallback")
+        fallback.fallback_g2p = lambda text: "/ka8˧/"
+        with patch.dict(sys.modules, {"fastthaig2p": package, "fastthaig2p.fallback": fallback}):
             self.assertIsNone(_tltk_whole_name_candidate("กะ"))
 
 
