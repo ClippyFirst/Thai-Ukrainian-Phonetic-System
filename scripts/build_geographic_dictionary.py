@@ -86,6 +86,42 @@ def romanize_rtgs(
     return "".join(output)
 
 
+def _tltk_whole_name_candidate(thai_name: str) -> dict[str, str] | None:
+    """Try the pinned FastThaiG2P/TLTK OOV engine on a whole name when tokenization fails.
+
+    This bypasses dictionary tokenization, so the result is deliberately labelled
+    lower-confidence and remains external IPA; malformed/unsupported IPA is rejected.
+    """
+    from thai_ukrainian.fastthaig2p_adapter import UPSTREAM_COMMIT, _typed_syllable_result
+    from thai_ukrainian.ukrainian_adaptation import adapt_phonetic_result
+
+    try:
+        from fastthaig2p.fallback import fallback_g2p
+        raw = fallback_g2p(thai_name)
+    except Exception:
+        return None
+    if not (raw.startswith("/") and raw.endswith("/") and len(raw) > 2):
+        return None
+    syllables = [part for part in raw[1:-1].split(".") if part]
+    if not syllables:
+        return None
+    typed = [_typed_syllable_result(part) for part in syllables]
+    if any(item.status != "PROVISIONAL" or not item.external_ipa for item in typed):
+        return None
+    adapted = [adapt_phonetic_result(item) for item in typed]
+    if any(item.get("output") is None for item in adapted):
+        return None
+    return {
+        "ipa_external_fastthaig2p": raw,
+        "ukrainian_from_ipa": "".join(str(item["output"]) for item in adapted),
+        "pipeline_status": "PROVISIONAL_EXTERNAL_IPA_WHOLE_NAME_TLTK_NOT_ADJUDICATED",
+        "ipa_source": f"FastThaiG2P TLTK whole-name fallback@{UPSTREAM_COMMIT} (external IPA; layer unclassified)",
+        "analysis_confidence": "LOW_CONFIDENCE_WHOLE_NAME_TLTK",
+        "external_g2p_coverage": "tltk_whole_name_fallback=1",
+        "pipeline_warnings": "Whole-name TLTK fallback bypassed dictionary tokenization; syllable segmentation and lexical reading are provisional. External IPA layer is unclassified; Ukrainian is an unvalidated IPA-derived candidate.",
+    }
+
+
 def _external_ipa_candidate(thai_name: str, adapter: Any) -> dict[str, str] | None:
     """Return complete provisional external IPA and IPA-adapted Ukrainian only."""
     from thai_ukrainian.fastthaig2p_adapter import UPSTREAM_COMMIT
@@ -93,7 +129,7 @@ def _external_ipa_candidate(thai_name: str, adapter: Any) -> dict[str, str] | No
 
     output = adapter.convert(thai_name)
     if not output.complete_ipa:
-        return None
+        return _tltk_whole_name_candidate(thai_name)
     typed_groups = output.to_phonetic_results()
     ukrainian_words: list[str] = []
     for group in typed_groups:
