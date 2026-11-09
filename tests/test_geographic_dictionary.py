@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from scripts.build_geographic_dictionary import analyze_geographic_name, main, romanize_rtgs, _external_ipa_candidate
+from scripts.build_geographic_dictionary import analyze_geographic_name, main, romanize_rtgs, _external_ipa_candidate, _tltk_whole_name_candidate
 
 
 class GeographicDictionaryTests(unittest.TestCase):
@@ -122,6 +122,23 @@ class GeographicDictionaryTests(unittest.TestCase):
         self.assertEqual(result["ukrainian_from_ipa"], "ка")
         self.assertEqual(result["pipeline_status"], "PROVISIONAL_EXTERNAL_IPA_NOT_ADJUDICATED")
         self.assertEqual(result["analysis_confidence"], "PROVISIONAL_EXTERNAL_G2P")
+
+    def test_whole_name_tltk_fallback_is_low_confidence_and_ipa_adapted(self):
+        from unittest.mock import patch
+
+        with patch("fastthaig2p.fallback.fallback_g2p", return_value="/kaː˧.ta˨˩/"):
+            result = _tltk_whole_name_candidate("กาตา")
+        self.assertIsNotNone(result)
+        self.assertEqual(result["ipa_external_fastthaig2p"], "/kaː˧.ta˨˩/")
+        self.assertEqual(result["ukrainian_from_ipa"], "ката")
+        self.assertEqual(result["pipeline_status"], "PROVISIONAL_EXTERNAL_IPA_WHOLE_NAME_TLTK_NOT_ADJUDICATED")
+        self.assertEqual(result["analysis_confidence"], "LOW_CONFIDENCE_WHOLE_NAME_TLTK")
+
+    def test_whole_name_tltk_fallback_rejects_non_ipa_markers(self):
+        from unittest.mock import patch
+
+        with patch("fastthaig2p.fallback.fallback_g2p", return_value="/ka8˧/"):
+            self.assertIsNone(_tltk_whole_name_candidate("กะ"))
 
 
 if __name__ == "__main__":
