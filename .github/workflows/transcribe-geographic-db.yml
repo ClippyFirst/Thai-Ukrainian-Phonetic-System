@@ -74,7 +74,8 @@ jobs:
           python scripts/build_geographic_dictionary.py data/db.csv \
             --thai-column name_th \
             --delimiter ";" \
-            --output build/db-transcribed.csv \\\n            --external-g2p
+            --output build/db-transcribed.csv \
+            --external-g2p
 
       - name: Validate row preservation and report coverage
         run: |
@@ -97,9 +98,12 @@ jobs:
               "source_rows": len(src),
               "output_rows": len(rows),
               "romanization_nonempty": sum(bool(r["romanization_rtgs"]) for r in rows),
-              "ipa_phonemic_nonempty": sum(bool(r["ipa_phonemic"]) for r in rows),\n              "ipa_external_fastthaig2p_nonempty": sum(bool(r["ipa_external_fastthaig2p"]) for r in rows),\n              "ipa_any_nonempty": sum(bool(r["ipa_phonemic"] or r["ipa_external_fastthaig2p"]) for r in rows),
+              "ipa_phonemic_nonempty": sum(bool(r["ipa_phonemic"]) for r in rows),
+              "ipa_external_fastthaig2p_nonempty": sum(bool(r["ipa_external_fastthaig2p"]) for r in rows),
+              "ipa_any_nonempty": sum(bool(r["ipa_phonemic"] or r["ipa_external_fastthaig2p"]) for r in rows),
               "ipa_broad_surface_nonempty": sum(bool(r["ipa_broad_surface"]) for r in rows),
-              "ukrainian_nonempty": sum(bool(r["ukrainian_from_ipa"]) for r in rows),\n              "provisional_external_ukrainian_nonempty": sum(bool(r["ukrainian_from_ipa"]) and r["pipeline_status"] == "PROVISIONAL_EXTERNAL_IPA_NOT_ADJUDICATED" for r in rows),
+              "ukrainian_nonempty": sum(bool(r["ukrainian_from_ipa"]) for r in rows),
+              "provisional_external_ukrainian_nonempty": sum(bool(r["ukrainian_from_ipa"]) and r["pipeline_status"] == "PROVISIONAL_EXTERNAL_IPA_NOT_ADJUDICATED" for r in rows),
               "status_counts": statuses,
               "note": "Model candidates; not independently adjudicated linguistic gold."
           }
