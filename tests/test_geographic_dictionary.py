@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from scripts.build_geographic_dictionary import analyze_geographic_name, main, romanize_rtgs
+from scripts.build_geographic_dictionary import analyze_geographic_name, main, romanize_rtgs, _external_ipa_candidate, _tltk_whole_name_candidate
 
 
 class GeographicDictionaryTests(unittest.TestCase):
@@ -91,6 +91,66 @@ class GeographicDictionaryTests(unittest.TestCase):
             with patch("scripts.build_geographic_dictionary._load_pythainlp"):
                 with self.assertRaises(SystemExit):
                     main([str(path), "--output", str(path)])
+
+    def test_external_g2p_fallback_is_explicitly_provisional_and_ipa_driven(self):
+        from types import SimpleNamespace
+        from thai_ukrainian.phonetic_result import PhoneticResult
+
+        typed = PhoneticResult(
+            phonemic_ipa=None,
+            broad_surface_ipa=None,
+            segments=(),
+            status="PROVISIONAL",
+            provenance=("FastThaiG2P@test-pin",),
+            uncertainty=("External IPA layer is unclassified.",),
+            external_ipa="kaː",
+        )
+        class FakeAdapter:
+            def convert(self, text):
+                self.text = text
+                return SimpleNamespace(
+                    complete_ipa=True,
+                    raw_ipa="/kaː˧/",
+                    word_groups=("kaː˧",),
+                    dictionary_hit_count=1,
+                    oov_rule_fallback_count=0,
+                    to_phonetic_results=lambda: ((typed,),),
+                )
+
+        result = _external_ipa_candidate("กา", FakeAdapter())
+        self.assertEqual(result["ipa_external_fastthaig2p"], "/kaː˧/")
+        self.assertEqual(result["ukrainian_from_ipa"], "ка")
+        self.assertEqual(result["pipeline_status"], "PROVISIONAL_EXTERNAL_IPA_NOT_ADJUDICATED")
+        self.assertEqual(result["analysis_confidence"], "PROVISIONAL_EXTERNAL_G2P")
+
+    def test_whole_name_tltk_fallback_is_low_confidence_and_ipa_adapted(self):
+        import sys
+        from types import ModuleType
+        from unittest.mock import patch
+
+        package = ModuleType("fastthaig2p")
+        package.__path__ = []
+        fallback = ModuleType("fastthaig2p.fallback")
+        fallback.fallback_g2p = lambda text: "/kaː˧.ta˨˩/"
+        with patch.dict(sys.modules, {"fastthaig2p": package, "fastthaig2p.fallback": fallback}):
+            result = _tltk_whole_name_candidate("กาตา")
+        self.assertIsNotNone(result)
+        self.assertEqual(result["ipa_external_fastthaig2p"], "/kaː˧.ta˨˩/")
+        self.assertEqual(result["ukrainian_from_ipa"], "ката")
+        self.assertEqual(result["pipeline_status"], "PROVISIONAL_EXTERNAL_IPA_WHOLE_NAME_TLTK_NOT_ADJUDICATED")
+        self.assertEqual(result["analysis_confidence"], "LOW_CONFIDENCE_WHOLE_NAME_TLTK")
+
+    def test_whole_name_tltk_fallback_rejects_non_ipa_markers(self):
+        import sys
+        from types import ModuleType
+        from unittest.mock import patch
+
+        package = ModuleType("fastthaig2p")
+        package.__path__ = []
+        fallback = ModuleType("fastthaig2p.fallback")
+        fallback.fallback_g2p = lambda text: "/ka8˧/"
+        with patch.dict(sys.modules, {"fastthaig2p": package, "fastthaig2p.fallback": fallback}):
+            self.assertIsNone(_tltk_whole_name_candidate("กะ"))
 
 
 if __name__ == "__main__":

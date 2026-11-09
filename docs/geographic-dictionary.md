@@ -7,7 +7,7 @@
 1. **RTGS** — латинська романізація за PyThaiNLP 5.4.0 (`newmm` для меж слів + `royin` для RTGS), причому `newmm` отримує source-pinned CC0-1.0 словник репозиторію.
 2. **Фонемний IPA** — результат внутрішнього ClippyFirst Thai → IPA рушія.
 3. **Широкий поверхневий IPA** — окремий типізований шар, якщо він підтриманий.
-4. **Український запис з IPA** — результат штатного IPA → Ukrainian адаптера репозиторію.
+4. **Український запис з IPA** — результат штатного IPA → Ukrainian адаптера репозиторію. Для непідтриманих внутрішнім аналізатором власних назв можна явно ввімкнути provisional FastThaiG2P fallback: його IPA зберігається окремо як зовнішній, не класифікований фонемний/поверхневий шар, а український кандидат усе одно формується тільки через IPA → Ukrainian адаптер.
 
 RTGS не є джерелом українського запису. Він не передає тон і не зберігає всіх відмінностей довготи голосних. Український результат створюється тільки через наявний `PhoneticResult` та `adapt_syllable_to_ukrainian` pipeline.
 
@@ -34,6 +34,17 @@ python scripts/build_geographic_dictionary.py input.csv \
   --output build/transcription.csv
 ```
 
+Для максимального покриття власних назв із provisional fallback через зовнішній IPA:
+
+```bash
+python -m pip install -e ".[geography,fastthaig2p]"
+python scripts/build_geographic_dictionary.py input.csv \
+  --thai-column text_th \
+  --output build/transcription.csv \
+  --external-g2p
+```
+
+
 Назву вхідної колонки можна змінити через `--thai-column`. Для TSV можна вказати `--delimiter $'\\t'`; за замовчуванням читається CSV з комою. `--limit 20` дозволяє зробити пробний запуск на перших 20 рядках.
 
 Вихідний CSV записується в UTF-8 з BOM для сумісності з Excel. Усі вхідні колонки зберігаються (наприклад, ідентифікатори, примітки, посилання на джерела та інші метадані); додаються:
@@ -42,7 +53,11 @@ python scripts/build_geographic_dictionary.py input.csv \
 |---|---|
 | `romanization_rtgs` | RTGS-кандидат PyThaiNLP 5.4.0 |
 | `ipa_phonemic` | Фонемний IPA; заповнюється лише за повного підтриманого аналізу |
-| `ipa_broad_surface` | Широкий поверхневий IPA |
+| `ipa_broad_surface` | Широкий поверхневий IPA внутрішнього рушія |
+| `ipa_external_fastthaig2p` | Зовнішній IPA FastThaiG2P; не перейменовується на фонемний або поверхневий IPA |
+| `ipa_source` | Джерело IPA та точний upstream pin |
+| `analysis_confidence` | Межа впевненості/статус перевірки |
+| `external_g2p_coverage` | Кількість словникових і rule-fallback токенів зовнішнього рушія |
 | `ukrainian_from_ipa` | Українська адаптація через типізований IPA |
 | `pipeline_status` | Статус повноти/обмежень |
 | `segmentation_method` | Метод меж слів, який повернув рушій |
@@ -51,8 +66,10 @@ python scripts/build_geographic_dictionary.py input.csv \
 
 ## Статуси та правила утримання
 
-- `COMPLETE_MODEL_OUTPUT_NOT_ADJUDICATED` — технічно повний результат рушія; це **не** означає незалежно перевірену правильність вимови.
-- `PARTIAL_OR_UNSUPPORTED_WITHHELD` — принаймні одне слово/склад не має повного підтриманого шляху. IPA та український результат для всього рядка CSV залишаються порожніми; причини вказуються в `pipeline_warnings`.
+- `COMPLETE_MODEL_OUTPUT_NOT_ADJUDICATED` — технічно повний результат внутрішнього рушія; це **не** означає незалежно перевірену правильність вимови.
+- `PROVISIONAL_EXTERNAL_IPA_NOT_ADJUDICATED` — внутрішній шлях не завершився, тому використано повний FastThaiG2P IPA. Він залишається в `ipa_external_fastthaig2p`, а не в `ipa_phonemic` чи `ipa_broad_surface`; український запис — provisional-кандидат із зовнішнього IPA.
+- `PROVISIONAL_EXTERNAL_IPA_WHOLE_NAME_TLTK_NOT_ADJUDICATED` — tokenizer не зміг дати повний результат, тому TLTK OOV-модуль запущено на цілій назві. Це ще нижча впевненість; результат позначений окремо, а некоректний IPA відхиляється.
+- `PARTIAL_OR_UNSUPPORTED_WITHHELD` — навіть зовнішній рушій не повернув повного IPA → український результат залишається порожнім.
 - `NO_THAI_INPUT` — у вибраній колонці немає тайських символів.
 
 Сегментація слова не доводить його вимову. Скрипт повторно використовує консервативний `analyze_text_with_word_segmentation` і не намагається автоматично вгадувати складову структуру невідомого слова. RTGS може бути заповнений, навіть якщо IPA та український результат утримано: це окремі методи з різними обмеженнями.
@@ -71,7 +88,7 @@ python scripts/build_geographic_dictionary.py input.csv \
 
 `Thai CSV field → ClippyFirst word segmentation → Thai analysis → PhoneticResult IPA → Ukrainian IPA adapter`
 
-RTGS не передається в IPA-адаптер. Невідомі/неповні випадки fail closed. Скрипт не змінює браузерний runtime та не додає зовнішній G2P у production.
+RTGS не передається в IPA-адаптер. Невідомі/неповні випадки внутрішнього рушія за замовчуванням fail closed. Лише з `--external-g2p` використовується окремий FastThaiG2P fallback; його IPA має тип `external_ipa` та статус `PROVISIONAL`, після чого проходить наявний IPA → Ukrainian адаптер. Скрипт не змінює браузерний runtime.
 
 ## Перевірка
 

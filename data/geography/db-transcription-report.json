@@ -1,0 +1,264 @@
+{
+  "source": "data/db.csv",
+  "source_rows": 8441,
+  "output_rows": 8441,
+  "romanization_nonempty": 8441,
+  "ipa_phonemic_nonempty": 40,
+  "ipa_external_fastthaig2p_nonempty": 8395,
+  "ipa_any_nonempty": 8435,
+  "ipa_broad_surface_nonempty": 40,
+  "ukrainian_nonempty": 8435,
+  "provisional_external_ukrainian_nonempty": 8388,
+  "low_confidence_tltk_ukrainian_nonempty": 7,
+  "status_counts": {
+    "PROVISIONAL_EXTERNAL_IPA_NOT_ADJUDICATED": 8388,
+    "COMPLETE_MODEL_OUTPUT_NOT_ADJUDICATED": 40,
+    "PROVISIONAL_EXTERNAL_IPA_WHOLE_NAME_TLTK_NOT_ADJUDICATED": 7,
+    "PARTIAL_OR_UNSUPPORTED_WITHHELD": 6
+  },
+  "unresolved_records": [
+    {
+      "id": "3_2413",
+      "name_en": "Khulu",
+      "name_th": "ขุหลุ",
+      "pipeline_warnings": "Unknown grapheme cluster in dictionary segmentation; IPA and Ukrainian output are withheld. | The conservative text endpoint does not apply automatic word segmentation; use analyze_text_with_word_segmentation for dictionary-based word boundaries. IPA and Ukrainian output are withheld until syllable segmentation and pronunciation are supported."
+    },
+    {
+      "id": "3_4178",
+      "name_en": "Chang Khoeng",
+      "name_th": "ช่างเคิ่ง",
+      "pipeline_warnings": "The conservative text endpoint does not apply automatic word segmentation; use analyze_text_with_word_segmentation for dictionary-based word boundaries. IPA and Ukrainian output are withheld until syllable segmentation and pronunciation are supported. | Unknown grapheme cluster in dictionary segmentation; IPA and Ukrainian output are withheld."
+    },
+    {
+      "id": "3_5885",
+      "name_en": "Pi Lok",
+      "name_th": "ปิล๊อก",
+      "pipeline_warnings": "Unknown grapheme cluster in dictionary segmentation; IPA and Ukrainian output are withheld. | The conservative text endpoint does not apply automatic word segmentation; use analyze_text_with_word_segmentation for dictionary-based word boundaries. IPA and Ukrainian output are withheld until syllable segmentation and pronunciation are supported."
+    },
+    {
+      "id": "3_7334",
+      "name_en": "Baro",
+      "name_th": "บาโร๊ะ",
+      "pipeline_warnings": "The conservative text endpoint does not apply automatic word segmentation; use analyze_text_with_word_segmentation for dictionary-based word boundaries. IPA and Ukrainian output are withheld until syllable segmentation and pronunciation are supported. | Unknown grapheme cluster in dictionary segmentation; IPA and Ukrainian output are withheld."
+    },
+    {
+      "id": "3_7341",
+      "name_en": "Koto Tuera",
+      "name_th": "กอตอตือร๊ะ",
+      "pipeline_warnings": "The conservative text endpoint does not apply automatic word segmentation; use analyze_text_with_word_segmentation for dictionary-based word boundaries. IPA and Ukrainian output are withheld until syllable segmentation and pronunciation are supported. | Unknown grapheme cluster in dictionary segmentation; IPA and Ukrainian output are withheld."
+    },
+    {
+      "id": "3_7353",
+      "name_en": "Talo Halo",
+      "name_th": "ตะโล๊ะหะลอ",
+      "pipeline_warnings": "The conservative text endpoint does not apply automatic word segmentation; use analyze_text_with_word_segmentation for dictionary-based word boundaries. IPA and Ukrainian output are withheld until syllable segmentation and pronunciation are supported. | Unknown grapheme cluster in dictionary segmentation; IPA and Ukrainian output are withheld."
+    }
+  ],
+  "unresolved_syllable_diagnostics": [
+    {
+      "id": "3_2413",
+      "name_th": "ขุหลุ",
+      "dict_syllables": [
+        "ขุ",
+        "ห",
+        "ลุ"
+      ],
+      "syllable_statuses": [
+        "analyzed",
+        "unresolved:implicit-vowel",
+        "analyzed"
+      ],
+      "parsed_ipa": [
+        "kʰu",
+        null,
+        "lu"
+      ],
+      "warnings": [
+        "Implicit vowel could not be resolved without lexical or morphological evidence.",
+        "Phonemic IPA withheld because the vowel is unresolved."
+      ],
+      "tltk_syllable_fallback": [
+        "/kʰu˨˩/",
+        "/hɔː˩˩˦/",
+        "/lu˦˥/"
+      ],
+      "grouped_tltk_fallback": [
+        "/kʰu˨˩/",
+        "/hɔː˩˩˦.lu˦˥/"
+      ],
+      "merged_final_tltk_fallback": "/hɔː˩˩˦.lu˦˥/",
+      "whole_name_tltk_fallback": "/kʰu-˨˩.lu˦˥/"
+    },
+    {
+      "id": "3_4178",
+      "name_th": "ช่างเคิ่ง",
+      "dict_syllables": [
+        "ช่าง",
+        "เคิ่ง"
+      ],
+      "syllable_statuses": [
+        "analyzed",
+        "analysis-dependent:vowel-length"
+      ],
+      "parsed_ipa": [
+        "tɕʰaːŋ",
+        null
+      ],
+      "warnings": [
+        "The closed เ-ิ- spelling does not determine /ɤ/ vs /ɤː/ without lexical evidence; no IPA or tone was forced.",
+        "Phonemic IPA withheld because the vowel is unresolved."
+      ],
+      "tltk_syllable_fallback": [
+        "/t͡ɕʰaŋ˥˩/",
+        "/kʰ\\ɤŋ˥˩/"
+      ],
+      "grouped_tltk_fallback": [
+        "/t͡ɕʰaŋ˥˩/",
+        "/kʰ\\ɤŋ˥˩/"
+      ],
+      "merged_final_tltk_fallback": "/t͡ɕʰaŋ˥˩.kʰ\\ɤŋ˥˩/",
+      "whole_name_tltk_fallback": "/t͡ɕʰaŋ˥˩.kʰ\\ɤŋ˥˩/"
+    },
+    {
+      "id": "3_5885",
+      "name_th": "ปิล๊อก",
+      "dict_syllables": [
+        "ปิ",
+        "ล๊อก"
+      ],
+      "syllable_statuses": [
+        "analyzed",
+        "invalid:tone-combination"
+      ],
+      "parsed_ipa": [
+        "pi",
+        null
+      ],
+      "warnings": [
+        "mai_tri is restricted to mid-class spellings in the standard rule system",
+        "Phonemic IPA withheld because the vowel is unresolved."
+      ],
+      "tltk_syllable_fallback": [
+        "/pi˨˩/",
+        "/lɔːk8˧/"
+      ],
+      "grouped_tltk_fallback": [
+        "/pi˨˩/",
+        "/lɔːk8˧/"
+      ],
+      "merged_final_tltk_fallback": "/pi˨˩.lɔːk8˧/",
+      "whole_name_tltk_fallback": "/pi˨˩.lɔːk8˧/"
+    },
+    {
+      "id": "3_7334",
+      "name_th": "บาโร๊ะ",
+      "dict_syllables": [
+        "บา",
+        "โร๊ะ"
+      ],
+      "syllable_statuses": [
+        "analyzed",
+        "invalid:tone-combination"
+      ],
+      "parsed_ipa": [
+        "baː",
+        null
+      ],
+      "warnings": [
+        "mai_tri is restricted to mid-class spellings in the standard rule system",
+        "Phonemic IPA withheld because the vowel is unresolved."
+      ],
+      "tltk_syllable_fallback": [
+        "/baː˧/",
+        "/ro8˧/"
+      ],
+      "grouped_tltk_fallback": [
+        "/baː˧/",
+        "/ro8˧/"
+      ],
+      "merged_final_tltk_fallback": "/baː˧.ro8˧/",
+      "whole_name_tltk_fallback": "/baː˧.ro8˧/"
+    },
+    {
+      "id": "3_7341",
+      "name_th": "กอตอตือร๊ะ",
+      "dict_syllables": [
+        "กอ",
+        "ตอ",
+        "ตือ",
+        "ร๊ะ"
+      ],
+      "syllable_statuses": [
+        "analyzed",
+        "analyzed",
+        "analyzed",
+        "invalid:tone-combination"
+      ],
+      "parsed_ipa": [
+        "kɔː",
+        "tɔː",
+        "tɯː",
+        null
+      ],
+      "warnings": [
+        "mai_tri is restricted to mid-class spellings in the standard rule system",
+        "Phonemic IPA withheld because the vowel is unresolved."
+      ],
+      "tltk_syllable_fallback": [
+        "/kɔː˧/",
+        "/tɔː˧/",
+        "/tɯː˧/",
+        "/ra8˧/"
+      ],
+      "grouped_tltk_fallback": [
+        "/kɔː˧/",
+        "/tɔː˧/",
+        "/tɯː˧/",
+        "/ra8˧/"
+      ],
+      "merged_final_tltk_fallback": "/tɯː˧.ra8˧/",
+      "whole_name_tltk_fallback": "/kɔː˧.tɔː˧.tɯː˧.ra8˧/"
+    },
+    {
+      "id": "3_7353",
+      "name_th": "ตะโล๊ะหะลอ",
+      "dict_syllables": [
+        "ตะ",
+        "โล๊ะ",
+        "หะ",
+        "ลอ"
+      ],
+      "syllable_statuses": [
+        "analyzed",
+        "invalid:tone-combination",
+        "analyzed",
+        "analyzed"
+      ],
+      "parsed_ipa": [
+        "ta",
+        null,
+        "ha",
+        "lɔː"
+      ],
+      "warnings": [
+        "mai_tri is restricted to mid-class spellings in the standard rule system",
+        "Phonemic IPA withheld because the vowel is unresolved."
+      ],
+      "tltk_syllable_fallback": [
+        "/ta˨˩/",
+        "/lo8˧/",
+        "/ha˨˩/",
+        "/lɔː˧/"
+      ],
+      "grouped_tltk_fallback": [
+        "/ta˨˩/",
+        "/lo8˧/",
+        "/ha˨˩/",
+        "/lɔː˧/"
+      ],
+      "merged_final_tltk_fallback": "/ha˨˩.lɔː˧/",
+      "whole_name_tltk_fallback": "/ta˨˩.lo8˧.ha˨˩.lɔː˧/"
+    }
+  ],
+  "note": "Model candidates; not independently adjudicated linguistic gold."
+}

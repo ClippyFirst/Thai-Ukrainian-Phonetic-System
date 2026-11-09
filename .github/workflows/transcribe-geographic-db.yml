@@ -1,0 +1,168 @@
+name: Transcribe all names in data/db.csv
+
+on:
+  push:
+    branches:
+      - feat/transcribe-db-csv-all-names-2026-11-09
+    paths:
+      - ".github/workflows/transcribe-geographic-db.yml"
+      - "data/db.csv"
+      - "scripts/build_geographic_dictionary.py"
+      - "src/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: transcribe-geographic-db-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  transcribe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install geographic transcription dependency
+        run: python -m pip install -e ".[dev,geography,fastthaig2p]"
+
+      - name: Evaluate FastThaiG2P provisional IPA coverage on a representative sample
+        run: |
+          python - <<'PY'
+          import csv, json
+          from thai_ukrainian.fastthaig2p_adapter import FastThaiG2PAdapter
+          from thai_ukrainian.ukrainian_adaptation import adapt_phonetic_result
+          engine = FastThaiG2PAdapter()
+          with open("data/db.csv", encoding="utf-8-sig", newline="") as stream:
+              rows = list(csv.DictReader(stream, delimiter=";"))[:500]
+          counts = {"names": len(rows), "complete_external_ipa": 0, "complete_ukrainian": 0, "dictionary_tokens": 0, "rule_fallback_tokens": 0, "examples": []}
+          for row in rows:
+              output = engine.convert(row["name_th"])
+              counts["dictionary_tokens"] += output.dictionary_hit_count
+              counts["rule_fallback_tokens"] += output.oov_rule_fallback_count
+              if output.complete_ipa:
+                  counts["complete_external_ipa"] += 1
+                  typed_groups = output.to_phonetic_results()
+                  adapted = [[adapt_phonetic_result(item)["output"] for item in group] for group in typed_groups]
+                  if all(all(part is not None for part in group) for group in adapted):
+                      counts["complete_ukrainian"] += 1
+                  elif len(counts["examples"]) < 20:
+                      counts["examples"].append({"id": row["id"], "name_th": row["name_th"], "ipa": output.raw_ipa, "ukrainian": adapted})
+              elif len(counts["examples"]) < 20:
+                  counts["examples"].append({"id": row["id"], "name_th": row["name_th"], "passthrough": output.passthrough_text})
+          print(json.dumps(counts, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Run geographic batch regression tests
+        run: python -m pytest -q tests/test_geographic_dictionary.py
+
+      - name: Transcribe every source row
+        run: |
+          mkdir -p build
+          python scripts/build_geographic_dictionary.py data/db.csv \
+            --thai-column name_th \
+            --delimiter ";" \
+            --output build/db-transcribed.csv \
+            --external-g2p
+
+      - name: Validate row preservation and report coverage
+        run: |
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          source = Path("data/db.csv")
+          output = Path("build/db-transcribed.csv")
+          with source.open(encoding="utf-8-sig", newline="") as f:
+              src = list(csv.DictReader(f, delimiter=";"))
+          with output.open(encoding="utf-8-sig", newline="") as f:
+              rows = list(csv.DictReader(f, delimiter=";"))
+          assert len(rows) == len(src), (len(src), len(rows))
+          assert all(a["id"] == b["id"] and a["name_th"] == b["name_th"] for a, b in zip(src, rows))
+          statuses = {}
+          for row in rows:
+              statuses[row["pipeline_status"]] = statuses.get(row["pipeline_status"], 0) + 1
+          unresolved = [
+              {"id": r["id"], "name_en": r["name_en"], "name_th": r["name_th"], "pipeline_warnings": r["pipeline_warnings"]}
+              for r in rows if not r["ipa_phonemic"] and not r["ipa_external_fastthaig2p"]
+          ]
+          from pythainlp.tokenize import syllable_tokenize
+          from thai_ukrainian.api import analyze_syllable
+          from fastthaig2p.fallback import fallback_g2p
+          diagnostics = []
+          for row in unresolved:
+              syllables = [x for x in syllable_tokenize(row["name_th"], engine="dict", keep_whitespace=False) if x.strip()]
+              analyses = [analyze_syllable(x) for x in syllables]
+              grouped_syllables = []
+              for index, part in enumerate(syllables):
+                  if part == "์" and grouped_syllables:
+                      grouped_syllables[-1] += part
+                  elif part == "ห" and index + 1 < len(syllables) and syllables[index + 1][:1] in "งญนมยรลว":
+                      grouped_syllables.append(part + syllables[index + 1])
+                  elif index and syllables[index - 1] == "ห":
+                      continue
+                  else:
+                      grouped_syllables.append(part)
+              diagnostics.append({
+                  "id": row["id"],
+                  "name_th": row["name_th"],
+                  "dict_syllables": syllables,
+                  "syllable_statuses": [a.status for a in analyses],
+                  "parsed_ipa": [a.phonemic_ipa for a in analyses],
+                  "warnings": [warning for a in analyses for warning in a.warnings],
+                  "tltk_syllable_fallback": [fallback_g2p(x) for x in syllables],
+                  "grouped_tltk_fallback": [fallback_g2p(x) for x in grouped_syllables],
+                  "merged_final_tltk_fallback": fallback_g2p("".join(syllables[-2:])),
+                  "whole_name_tltk_fallback": fallback_g2p(row["name_th"]),
+              })
+          report = {
+              "source": str(source),
+              "source_rows": len(src),
+              "output_rows": len(rows),
+              "romanization_nonempty": sum(bool(r["romanization_rtgs"]) for r in rows),
+              "ipa_phonemic_nonempty": sum(bool(r["ipa_phonemic"]) for r in rows),
+              "ipa_external_fastthaig2p_nonempty": sum(bool(r["ipa_external_fastthaig2p"]) for r in rows),
+              "ipa_any_nonempty": sum(bool(r["ipa_phonemic"] or r["ipa_external_fastthaig2p"]) for r in rows),
+              "ipa_broad_surface_nonempty": sum(bool(r["ipa_broad_surface"]) for r in rows),
+              "ukrainian_nonempty": sum(bool(r["ukrainian_from_ipa"]) for r in rows),
+              "provisional_external_ukrainian_nonempty": sum(bool(r["ukrainian_from_ipa"]) and r["pipeline_status"] == "PROVISIONAL_EXTERNAL_IPA_NOT_ADJUDICATED" for r in rows),
+              "low_confidence_tltk_ukrainian_nonempty": sum(bool(r["ukrainian_from_ipa"]) and r["pipeline_status"] == "PROVISIONAL_EXTERNAL_IPA_WHOLE_NAME_TLTK_NOT_ADJUDICATED" for r in rows),
+              "status_counts": statuses,
+              "unresolved_records": unresolved,
+              "unresolved_syllable_diagnostics": diagnostics,
+              "note": "Model candidates; not independently adjudicated linguistic gold."
+          }
+          Path("build/db-transcription-report.json").write_text(
+              json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+          )
+          print(json.dumps(report, ensure_ascii=False, indent=2))
+          PY
+          python -m json.tool build/db-transcription-report.json > /dev/null
+
+      - name: Publish generated CSV and report on this branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p data/geography
+          cp build/db-transcribed.csv data/geography/db-transcribed.csv
+          cp build/db-transcription-report.json data/geography/db-transcription-report.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/geography/db-transcribed.csv data/geography/db-transcription-report.json
+          if git diff --cached --quiet; then
+            echo "Generated output is unchanged."
+          else
+            git commit -m "data: transcribe all Thai names from db.csv"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
