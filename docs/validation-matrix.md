@@ -2355,9 +2355,9 @@ Branch reconciliation: the RTGS feature branch was 60 commits ahead of main with
 | External FastThaiG2P IPA → Ukrainian fallback | DONE_VERIFIED (provisional) | 8,388 rows use complete external IPA with provisional IPA→Ukrainian adaptation. External IPA remains separately typed/unclassified; it is not relabelled phonemic or broad-surface IPA. |
 | Whole-name TLTK fallback | DONE_VERIFIED (low confidence) | 7 additional rows use the pinned TLTK OOV fallback on the entire name after dictionary tokenization fails. They have a distinct low-confidence status and warning. |
 | Overall IPA and Ukrainian output | PARTIAL | 8,435/8,441 rows (99.93%) have IPA and Ukrainian candidates; 6 remain withheld because TLTK output is malformed/unsupported or phonetic interpretation remains ambiguous. |
-| Geographic batch regression tests | DONE_VERIFIED | Workflow #42699878389: `python -m pytest -q tests/test_geographic_dictionary.py` — 9 passed. |
+| Geographic batch regression tests | DONE_VERIFIED | Workflow #42700485666: `python -m pytest -q tests/test_geographic_dictionary.py` — 9 passed. |
 | Representative external-G2P check | DONE_VERIFIED | 500/500 sampled names returned complete external IPA and Ukrainian adaptation. |
-| Full row preservation and output report | DONE_VERIFIED | Workflow #42699878389 succeeded; report at `data/geography/db-transcription-report.json`. |
+| Full row preservation and output report | DONE_VERIFIED | Workflow #42700485666 succeeded; report at `data/geography/db-transcription-report.json`. |
 | Independent linguistic adjudication | BLOCKED | No independently reviewed Thai IPA gold or Ukrainian-native adjudication was available in this run. Model output is not a verified official exonym. |
 
 Exact remaining rows withheld:
@@ -2370,4 +2370,12 @@ Exact remaining rows withheld:
 
 The exact unresolved diagnostics and syllable-level fallback probes are recorded in `data/geography/db-transcription-report.json`. Do not coerce these markers into IPA or derive Ukrainian directly from RTGS. The six rows remain PARTIAL/withheld pending source-backed lexical readings or a validated phonetic route.
 
-Final generated-data commit: `4715d596f0b56dedd9b58b240710df53bd290bad`. Final workflow run: [#42699878389 SUCCESS](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42699878389). Main was unchanged at base `a05b0347f59afe128004e662bf418d030e1a3b77`; no PR was open at the inspection point. The branch is ready for review, not yet merged. This test slice is not the full Thai geographic gazetteer and carries no inferred licensing/coordinate metadata.
+Final generated-data commit: `d96899b2c5f36f73f1119e83b8f262a378078d1e`. Final workflow run: [#42700485666 SUCCESS](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42700485666). Main was unchanged at base `a05b0347f59afe128004e662bf418d030e1a3b77`; no PR was open at the inspection point. The branch is ready for review, not yet merged. This test slice is not the full Thai geographic gazetteer and carries no inferred licensing/coordinate metadata.
+
+
+## 2026-11-09 — finalized JSON report and draft PR
+
+- Corrected the batch workflow to write a valid JSON report and added `python -m json.tool build/db-transcription-report.json` as a required gate.
+- Final regeneration workflow [#42700485666](https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/actions/runs/42700485666): SUCCESS; 8,441 rows preserved, RTGS 8,441, IPA+Ukrainian candidates 8,435, six withheld.
+- Generated data/report commit: `d96899b2c5f36f73f1119e83b8f262a378078d1e`.
+- Draft PR #235 opened against main for review: https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/pull/235. Do not merge until PR CI/Pages checks complete and the six unresolved rows are accepted as evidence-limited.
