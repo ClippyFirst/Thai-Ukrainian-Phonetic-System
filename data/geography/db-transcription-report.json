@@ -1,0 +1,14 @@
+{
+  "source": "data/db.csv",
+  "source_rows": 8441,
+  "output_rows": 8441,
+  "romanization_nonempty": 8441,
+  "ipa_phonemic_nonempty": 40,
+  "ipa_broad_surface_nonempty": 40,
+  "ukrainian_nonempty": 40,
+  "status_counts": {
+    "PARTIAL_OR_UNSUPPORTED_WITHHELD": 8401,
+    "COMPLETE_MODEL_OUTPUT_NOT_ADJUDICATED": 40
+  },
+  "note": "Model candidates; not independently adjudicated linguistic gold."
+}\n
