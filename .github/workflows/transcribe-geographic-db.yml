@@ -48,7 +48,7 @@ jobs:
               rows = list(csv.DictReader(stream, delimiter=";"))[:500]
           counts = {"names": len(rows), "all_syllables_parse": 0, "some_syllables_parse": 0, "none_parse": 0, "syllable_count": 0, "examples": []}
           for row in rows:
-              syllables = [x for x in syllable_tokenize(row["name_th"], engine="ssg", keep_whitespace=False) if x.strip()]
+              syllables = [x for x in syllable_tokenize(row["name_th"], engine="dict", keep_whitespace=False) if x.strip()]
               results = [analyze_syllable(s) for s in syllables]
               ok = [a.status == "analyzed" and bool(a.phonemic_ipa) and bool(a.ukrainian_transliteration) for a in results]
               counts["syllable_count"] += len(syllables)
