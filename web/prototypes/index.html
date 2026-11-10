@@ -7,7 +7,7 @@
 <meta name="description" content="П'ять незалежних візуальних концепцій сервісу читання тайської українською.">
 <title>П'ять візуальних напрямів — Тайська українською</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+/* Local font stacks: no third-party font requests. */
 :root{color-scheme:light;--ease:cubic-bezier(.23,1,.32,1);font-synthesis:none;text-rendering:optimizeLegibility}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -192,7 +192,7 @@ button:active{transform:scale(.985)}
         <p class="kicker" style="color:#777eaa">ORTHOGRAPHY AS MATERIAL · UKRAINIAN READING TOOL</p>
       </div>
       <div class="glyph-stage" aria-label="Великий тайський знак у переливчастій об'ємній композиції">
-        <div class="glyph-orbit"></div><span class="glyph-tag t1">CONSONANT / ฐІЛЬ</span><span class="glyph-tag t2">VOWEL LAYER</span><span class="glyph-tag t3">TONE MARK</span>
+        <div class="glyph-orbit"></div><span class="glyph-tag t1">CONSONANT / BASE GLYPH</span><span class="glyph-tag t2">VOWEL LAYER</span><span class="glyph-tag t3">TONE MARK</span>
         <div class="hero-glyph thai" lang="th">ก้</div>
       </div>
     </div>
@@ -263,7 +263,7 @@ button:active{transform:scale(.985)}
   <div class="workbench"><div class="wrap"><div class="workbench-inner">
     <div class="input-area"><p class="kicker">THE PHONETIC INSTRUMENT</p><h2>Запустіть демонстрацію структури</h2><label for="in-instrument">Текст тайською</label><textarea id="in-instrument" lang="th" spellcheck="false" placeholder="Вставте слово або речення тайською"></textarea><div class="input-actions"><button class="show-demo" type="button" data-analyze="instrument">Показати макет результату</button><button class="clear" type="button" data-clear="instrument">Очистити</button></div><div class="example-row"><span>ПРИКЛАДИ</span><button type="button" data-example="instrument" data-value="สวัสดี" lang="th">สวัสดี</button><button type="button" data-example="instrument" data-value="ภาษาไทย" lang="th">ภาษาไทย</button><button type="button" data-example="instrument" data-value="ใหม่" lang="th">ใหม่</button></div></div>
     <aside class="demo-panel" data-demo-result="instrument" aria-live="polite"><h3>Інструментальний ланцюг</h3><p>У реальному сервісі кожен наступний рівень спирається на попередній і зберігає походження даних.</p><div class="demo-state" hidden><div><small>01 / THAI STRUCTURE</small><strong class="thai" lang="th">—</strong></div><div><small>02 / PHONOLOGY + IPA</small><strong>Макет фонетичного шару</strong></div><div><small>03 / UKRAINIAN ADAPTATION</small><strong>Макетний кандидат</strong></div></div><p class="disclaimer">Демо не запускає рушій, не обчислює IPA й не перевіряє український запис.</p></aside>
-  </div><div class="i-flow" aria-label="Логіка реального сервісу"><div><small>ВХІД</small><strong>Thai orthography</strong></div><div><small>ПРОМІЖНИЙ РІВЕНЬ</small><strong>Phonology → typed IPA</strong></div><div><small>ВИХІД</small><strong>Українська адаптація</strong></div></div><p class="explain"><strong>Візуальна ідея:</strong> тут сходяться живі графеми, тональні сигнали та призматичний перехід через IPA. Це найбільш цілісна «обкладинка» сервісу — виразна на вході, але структурна й перевірювана в роботі.</p><div class="footer"><span>LOCAL PROCESSING · PROVISIONAL UKRAINIAN CANDIDATE</span><span>Концепт 05 / 05</span></div></div></div>
+  </div><div class="i-flow" aria-label="Логіка реального сервісу"><div><small>ВХІД</small><strong>Thai orthography</strong></div><div><small>ПРОМІЖНИЙ РІВЕНЬ</small><strong>Phonology → typed IPA</strong></div><div><small>ВИХІД</small><strong>Українська адаптація</strong></div></div><p class="explain"><strong>Візуальна ідея:</strong> тут сходяться живі графеми, тональні сигнали та призматичний перехід через IPA. Це найбільш цілісна «обкладинка» сервісу — виразна на вході, але структурна й перевірювана в роботі.</p><div class="footer"><span>NO TEXT UPLOAD IN THE REAL SERVICE · PROVISIONAL UKRAINIAN CANDIDATE</span><span>Концепт 05 / 05</span></div></div></div>
 </section>
 </main>
 <script>
