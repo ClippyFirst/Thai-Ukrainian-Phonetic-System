@@ -25,7 +25,7 @@ button:focus-visible,a:focus-visible,textarea:focus-visible{outline:3px solid #f
 .switcher button{border:1px solid #ffffff30;border-radius:999px;background:transparent;color:#c6cfdd;padding:9px 13px;font:500 11px 'DM Mono',monospace;transition:background .18s ease,color .18s ease,border-color .18s ease}
 .switcher button[aria-pressed=true]{background:#f4f6f8;color:#111827;border-color:#f4f6f8}
 .topnote{margin-left:auto;font:10px 'DM Mono',monospace;color:#8693a8;white-space:nowrap}
-.concept{min-height:100vh;overflow:hidden}
+.concept{min-height:100vh;overflow:hidden;scroll-margin-top:100px}
 .wrap{width:min(1320px,calc(100% - 64px));margin:auto}
 .thai{font-family:'Noto Sans Thai','Leelawadee UI',Tahoma,sans-serif}
 .kicker{font:10px 'DM Mono',monospace;letter-spacing:.16em;text-transform:uppercase}
@@ -269,7 +269,7 @@ button:active{transform:scale(.985)}
 <script>
 (() => {
   const switches = [...document.querySelectorAll('[data-switch]')];
-  const concepts = [...document.querySelectorAll('[data-concept]')];
+  const concepts = [...document.querySelectorAll('main .concept[data-concept]')];
   function activate(id) {
     document.documentElement.dataset.concept = id;
     concepts.forEach(section => { section.hidden = section.dataset.concept !== id; });
