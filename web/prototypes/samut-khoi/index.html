@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<meta name="description" content="Інтерактивний цифровий рукопис для читання тайського тексту: від письма через IPA до попередньої української адаптації.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+<title>Самут Кхой — Тайська українською</title>
+<link rel="stylesheet" href="../../src/styles.css?v=20261106-practical-system-1">
+<link rel="stylesheet" href="samut-khoi.css?v=1">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Перейти до основного вмісту</a>
+<header class="site-header">
+<a class="brand" href="../../" aria-label="Тайська українською — головна"><span class="brand-mark">Т<span>→</span>У</span><span class="brand-name">Тайська <span>українською</span></span></a>
+<nav aria-label="Основна навігація">
+<a class="active" href="#reader" aria-current="page">Читати</a>
+<a href="../../transcription.html">Практична система</a>
+<a href="../../romanization.html">Романізація</a>
+<a href="../../thai-text-engine.html">Рушій тексту</a>
+<a href="../../system.html">Метод</a>
+<a href="https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System" rel="noopener noreferrer">GitHub ↗</a>
+</nav>
+</header>
+<div class="beta-notice" role="note" aria-label="Статус бета-версії"><span class="beta-label">БЕТА</span><p>Український запис — попередня підказка, а не експертно підтверджена транскрипція. <a href="../../system.html#beta-evidence">Що вже перевірено</a></p></div>
+<main class="container" id="main-content" tabindex="-1">
+<section class="hero" aria-labelledby="page-title">
+<div class="hero-copy">
+<p class="eyebrow">ЦИФРОВИЙ РУКОПИС · ПРАКТИЧНЕ ЧИТАННЯ</p>
+<h1 id="page-title">Розгорніть <em>звучання</em> тайського письма</h1>
+<p class="lede">Самут Кхой — не переклад і не побуквена заміна знаків. Це спосіб уважно пройти шлях від тайського написання до звукової структури, IPA та її попередньої адаптації українськими літерами. Кожен розворот відкриває новий рівень читання.</p>
+<div class="hero-facts"><span><i></i> Аналіз локально у браузері</span><span><i></i> FastThaiG2P → IPA → українська</span></div>
+</div>
+<div class="manuscript-stage" aria-label="Ілюстрація розгорнутого рукопису з тайським написом">
+<span class="stage-caption">FOLIO 01 · READING THE SOUND</span>
+<div class="book">
+<div class="book-spine"></div>
+<div class="book-page left"><span class="folio">สมุดไทย · FOLIO I</span><div class="thai-calligraphy" lang="th">ภาษา</div><div class="page-rule"></div><div class="page-note"><strong>ПИСЬМО</strong>Форма знака — лише початок аналізу.</div></div>
+<div class="book-page right"><span class="folio">CLIPPYFIRST · FIELD NOTES</span><div class="page-mark">01 — 05</div><div class="thai-calligraphy" lang="th">เสียง</div><div class="page-rule"></div><div class="page-note"><strong>ЗВУЧАННЯ</strong>Від структури складу до фонетичного запису.</div></div>
+</div>
+<span class="orbit one" aria-hidden="true">SCRIPT</span><span class="orbit two" aria-hidden="true">SOUND<br>↗ IPA</span><span class="orbit three" aria-hidden="true">UA</span>
+</div>
+</section>
+
+<section class="workbench" id="reader" aria-labelledby="input-heading">
+<div class="workbench-heading"><div><p class="section-kicker">РОЗВОРОТ 01 · ВАШ ТЕКСТ</p><h2 class="section-title" id="input-heading">Покладіть слово на сторінку</h2><p class="section-copy">Введіть тайське слово або речення. Рушій побудує IPA, а потім покаже попередню українську адаптацію.</p></div><span class="local-badge"><i></i> Локальна обробка</span></div>
+<label class="input-label" for="thai-input">Тайський текст</label>
+<div class="input-shell"><textarea id="thai-input" lang="th" rows="3" spellcheck="false" autocomplete="off" autocapitalize="off" aria-describedby="input-hint input-count" placeholder="Наприклад: สวัสดี"></textarea></div>
+<div class="input-meta"><p class="input-hint" id="input-hint">Ваш текст залишається у браузері. Спершу працює нативний JavaScript-порт FastThaiG2P; для непокритих словником слів використовується локальний TLTK OOV-модуль, а Pyodide — лише як резерв сумісності.</p><span class="input-count" id="input-count" aria-live="off">Знаків: 0</span></div>
+<div class="examples" aria-label="Приклади тайського тексту"><span class="examples-label">Закладки:</span><button type="button" data-example="กา" lang="th">กา</button><button type="button" data-example="พริก" lang="th">พริก</button><button type="button" data-example="มา" lang="th">มา</button><button type="button" data-example="ไฟ" lang="th">ไฟ</button><button type="button" data-example="หมา" lang="th">หมา</button><button type="button" data-example="ใหม่" lang="th">ใหม่</button><button type="button" data-example="จริง" lang="th">จริง</button></div>
+<div class="action-row"><button class="primary" id="analyze" type="button">Відкрити звуковий шар <span aria-hidden="true">↗</span></button><button class="text-button" id="clear" type="button">Очистити сторінку</button><span class="action-note"><kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>Enter</kbd> — запустити аналіз</span></div>
+</section>
+<section id="status" class="status" role="status" aria-live="polite" aria-atomic="true"></section>
+<details id="technical-diagnostics" class="technical-diagnostics" hidden><summary>Технічні подробиці (необов’язково)</summary><p>Ці дані допоможуть повідомити про помилку. Вони не містять введеного тексту.</p><pre id="diagnostic-details"></pre></details>
+<section id="results" class="results" aria-label="Результати" aria-live="off" hidden></section>
+
+<nav class="folio-index" aria-label="Зміст рукопису"><a href="#chapter-script"><b>01</b><span>Письмо</span></a><a href="#chapter-structure"><b>02</b><span>Структура</span></a><a href="#chapter-sound"><b>03</b><span>Звук та IPA</span></a><a href="#chapter-ukrainian"><b>04</b><span>Українська</span></a></nav>
+
+<section class="chapters" aria-labelledby="chapters-title">
+<div class="chapter-heading"><div><p class="section-kicker">ПОЛЯ ТА ПРИМІТКИ</p><h2 class="section-title" id="chapters-title">П’ять шарів читання</h2></div><p>Розгорніть кожну сторінку, щоб побачити, яку роботу виконує відповідний рівень. Це не взаємозамінні системи запису.</p></div>
+<article class="chapter" id="chapter-script"><span class="chapter-number">FOLIO 01</span><details open><summary><span><span class="chapter-title">Тайське письмо</span><span class="chapter-subtitle">Графеми, орфографічні позиції та контекст</span></span></summary><div class="chapter-body"><p>Тайські голосні можуть записуватися навколо приголосного, а приголосна літера не завжди має однакове звукове значення в усіх позиціях. Тому читання не зводиться до заміни одного символу іншим.</p><div class="chapter-plate"><div class="plate-cell"><small>НАПИСАННЯ</small><strong lang="th">กา</strong></div><div class="plate-cell"><small>ПОЗИЦІЯ</small><strong>склад</strong></div><div class="plate-cell"><small>КОНТЕКСТ</small><strong>фонологія</strong></div></div><p>Пробіли не завжди позначають межі слів. Сегментація й орфографічні винятки можуть впливати на подальший результат.</p></div></details></article>
+<article class="chapter" id="chapter-structure"><span class="chapter-number">FOLIO 02</span><details><summary><span><span class="chapter-title">Структура складу</span><span class="chapter-subtitle">Початок, рима, кода, голосна та тон</span></span></summary><div class="chapter-body"><p>Структурний аналіз допомагає визначити, як графеми співвідносяться з початковим приголосним, голосною та кінцевим звуком. Тон і довгота зберігаються як окремі характеристики, а не губляться в декоративному записі.</p><p><strong>Важливо:</strong> межі складів, сегментація й тонові класи залежать від якості аналізу тайського написання.</p></div></details></article>
+<article class="chapter" id="chapter-sound"><span class="chapter-number">FOLIO 03</span><details><summary><span><span class="chapter-title">Тайська фонологія та IPA</span><span class="chapter-subtitle">Проміжний фонетичний запис FastThaiG2P</span></span></summary><div class="chapter-body"><p>Браузерний FastThaiG2P повертає IPA. У сервісі зберігається сирий запис рушія та складові подробиці, де доступні сегментна IPA, тон і довгота голосного.</p><p>IPA — не прикраса сторінки, а проміжний рівень, з якого формується український кандидат. Зовнішній IPA FastThaiG2P ще не класифіковано незалежно як фонемний або широкий поверхневий.</p><a href="../../system.html">Докладніше про контракт IPA та обмеження →</a></div></details></article>
+<article class="chapter" id="chapter-ukrainian"><span class="chapter-number">FOLIO 04</span><details><summary><span><span class="chapter-title">Українська адаптація</span><span class="chapter-subtitle">Контекстне відображення IPA, а не тайських літер</span></span></summary><div class="chapter-body"><p>Український рядок будується з IPA за правилами практичної системи. Позиція в складі має значення: наприклад, початкові та кінцеві приголосні можуть мати різні українські відповідники.</p><p><strong>Тони та довгота не відтворюються повністю</strong> звичайним українським письмом. Результат є попереднім кандидатом, а не затвердженою нормою.</p><a href="../../transcription.html">Відкрити повну практичну систему →</a></div></details></article>
+<article class="chapter" id="chapter-notes"><span class="chapter-number">FOLIO 05</span><details><summary><span><span class="chapter-title">Примітки редактора</span><span class="chapter-subtitle">Походження, невизначеність і межі застосування</span></span></summary><div class="chapter-body"><p>Автоматичні тести підтверджують поведінку програми за заданими правилами, але не вимірюють загальну точність вимови. Незалежний IPA gold set не завершений; точність не виміряна.</p><p>Для важливих слів перевіряйте вимову за надійним словником або з носієм тайської мови. Сервіс не перекладає й не визначає значення тексту.</p><a href="../../system.html#beta-evidence">Що перевірено і чого сервіс не гарантує →</a></div></details></article>
+</section>
+
+<section class="method-note" aria-labelledby="method-heading"><div class="method-heading"><p class="eyebrow">ПРОЄКТ І ПРИВАТНІСТЬ</p><h2 id="method-heading">Рукопис дослідницької системи, не офіційний стандарт</h2></div><div class="method-copy"><p>Тайський текст обробляється локально у браузері й не надсилається на сервер. Рушій — FastThaiG2P; український рядок є попередньою адаптацією IPA. Це інструмент читання й вимови, а не перекладач.</p><p>Незалежна оцінка загальної точності ще не проведена. Невизначені або непідтримані фрагменти не повинні перетворюватися на здогадки.</p><div class="method-links"><a href="../../system.html">Як це працює →</a><a href="../../transcription.html">Практична система →</a><a href="../../third-party-notices.html">Ліцензії та джерела даних →</a></div></div></section>
+</main>
+<footer><span class="footer-brand">Тайська <strong>→</strong> українська</span><span>Дослідницький проєкт · Бета-версія</span><nav aria-label="Додаткова навігація"><a href="../../">Сервіс</a><a href="../../system.html">Метод</a><a href="https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System" rel="noopener noreferrer">GitHub</a><a href="https://github.com/ClippyFirst/Thai-Ukrainian-Phonetic-System/issues/new?template=beta-feedback.yml" rel="noopener noreferrer">Зворотний зв’язок</a></nav></footer>
+<script type="module" src="../../src/app.js?v=20261106-rtgs-inline-1"></script>
+</body></html>
