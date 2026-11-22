@@ -212,7 +212,7 @@ function renderSyllable(syllable) {
       '<div class="data"><span class="label">Сегментна IPA</span><div class="value ipa-output" lang="und-fonipa">' +
         esc(syllable.ipa || '—') + '</div>' + (syllable.ipa ? copyButton('IPA', syllable.ipa) : '') + '</div>' +
       '<div class="data"><span class="label">Український кандидат · попередній</span><div class="value">' +
-        esc(syllable.ukrainian || '—') + '</div>' + (syllable.ukrainian ? copyButton('український запис', syllable.ukrainian) : '') + '</div>' +
+        esc(syllable.ukrainian || '???') + '</div>' + (syllable.ukrainian ? copyButton('український запис', syllable.ukrainian) : '') + '</div>' +
       '<div class="data"><span class="label">Тон</span><div class="value">' + tone + '</div></div>' +
       '<div class="data"><span class="label">Довгота голосного</span><div class="value">' +
         esc(lengthNames[syllable.vowel_length] || 'Не визначено') + '</div></div>' +
@@ -223,7 +223,7 @@ function renderResult(result) {
   const words = (result.words || []).map((word, index) =>
     '<article class="word-card"><h3 class="word-heading">Слово ' + (index + 1) + (word.thai ? ' · <span lang="th">' + esc(word.thai) + '</span>' : '') + '</h3>' +
     '<p class="word-ipa ipa-output" lang="und-fonipa">' + esc(word.fastthaig2p_ipa) + '</p>' +
-    '<p class="word-ua">' + esc(word.ukrainian) + '</p>' +
+    '<p class="word-ua">' + esc(word.ukrainian || '???') + '</p>' +
     (word.syllables || []).map(renderSyllable).join('') + '</article>'
   ).join('');
   const warnings = (result.warnings || []).map(warning =>
@@ -236,7 +236,7 @@ function renderResult(result) {
     '<div class="result-feature-grid">' +
       '<section class="continuous-output ua-continuous" aria-labelledby="result-ua-heading"><div class="continuous-output-head"><div><h3 id="result-ua-heading">Українськими літерами</h3><p>Попередній практичний кандидат</p></div>' +
       copyButton('український запис', result.ukrainian) + '</div><pre class="continuous-output-value">' +
-      esc(result.ukrainian) + '</pre></section>' +
+      esc(result.ukrainian || '???') + '</pre></section>' +
       '<section class="continuous-output ipa-continuous" aria-labelledby="result-ipa-heading"><div class="continuous-output-head"><div><h3 id="result-ipa-heading">IPA FastThaiG2P</h3><p>Проміжний фонетичний запис рушія</p></div>' +
       copyButton('IPA', result.raw_ipa) + '</div><pre class="continuous-output-value ipa-output" lang="und-fonipa">' +
       esc(result.raw_ipa) + '</pre></section>' +
