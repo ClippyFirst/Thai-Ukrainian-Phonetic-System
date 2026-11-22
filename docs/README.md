@@ -103,3 +103,5 @@ PR #182 remains open on `research/independent-adjudication-gates-20261101`. A na
 
 - [FastThaiG2P license review](fastthaig2p-license-review-2026-11-05.md) — component-level upstream license evidence, including TLTK 1.9.1 package scope.
 - [FastThaiG2P JavaScript port](fastthaig2p-javascript-port.md) — native-first browser runtime, parity gates and remaining OOV work.
+
+- [Output contract](OUTPUT-CONTRACT.md) — strict-only default, candidate separation, `???` display placeholder, and typed API/Python unavailable states.
