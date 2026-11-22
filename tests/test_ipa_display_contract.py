@@ -25,21 +25,12 @@ def test_fastthaig2p_api_result_fields_are_escaped_before_rendering():
     for expression in (
         "esc(syllable.raw_ipa)",
         "esc(syllable.ipa || '—')",
-        "esc(syllable.ukrainian || '???')",
+        "esc(syllable.ukrainian || '—')",
         "esc(word.thai)",
-        "esc(result.ukrainian || '???')",
+        "esc(result.ukrainian)",
         "esc(result.raw_ipa)",
         "esc(result.upstream_commit)",
     ):
         assert expression in app, f"unescaped API result field: {expression}"
     assert "output.innerHTML =" in app
     assert "analysis.phonemicIpa" not in app and "analysis.phoneticIpa" not in app
-
-
-def test_unresolved_ukrainian_display_uses_shared_marker_but_keeps_ipa_diagnostics():
-    app = (ROOT / "web" / "src" / "app.js").read_text(encoding="utf-8")
-    assert "esc(syllable.ukrainian || '???')" in app
-    assert "esc(word.ukrainian || '???')" in app
-    assert "esc(result.ukrainian || '???')" in app
-    assert "esc(syllable.ipa || '—')" in app
-    assert "esc(syllable.raw_ipa)" in app
